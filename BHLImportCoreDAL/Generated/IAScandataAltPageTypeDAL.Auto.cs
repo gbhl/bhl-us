@@ -1,8 +1,8 @@
 
-// Generated 11/23/2010 11:26:17 AM
+// Generated 1/5/2021 2:15:33 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class IAScandataAltPageTypeDAL is based upon IAScandataAltPageType.
+// This partial class IAScandataAltPageTypeDAL is based upon dbo.IAScandataAltPageType.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from IAScandataAltPageType by primary key(s).
+		/// Select values from dbo.IAScandataAltPageType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 			
 		/// <summary>
-		/// Select values from IAScandataAltPageType by primary key(s).
+		/// Select values from dbo.IAScandataAltPageType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAScandataAltPageType> helper = new CustomSqlHelper<IAScandataAltPageType>())
 				{
-					CustomGenericList<IAScandataAltPageType> list = helper.ExecuteReader(command);
+					List<IAScandataAltPageType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAScandataAltPageType o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IAScandataAltPageType by primary key(s).
+		/// Select values from dbo.IAScandataAltPageType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="scandataAltPageTypeID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IAScandataAltPageTypeSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAScandataAltPageTypeSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int scandataAltPageTypeID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IAScandataAltPageType by primary key(s).
+		/// Select values from dbo.IAScandataAltPageType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="scandataAltPageTypeID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IAScandataAltPageTypeSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAScandataAltPageTypeSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into IAScandataAltPageType.
+		/// Insert values into dbo.IAScandataAltPageType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -149,7 +150,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into IAScandataAltPageType.
+		/// Insert values into dbo.IAScandataAltPageType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -175,7 +176,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAScandataAltPageType> helper = new CustomSqlHelper<IAScandataAltPageType>())
 				{
-					CustomGenericList<IAScandataAltPageType> list = helper.ExecuteReader(command);
+					List<IAScandataAltPageType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAScandataAltPageType o = list[0];
@@ -191,7 +192,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into IAScandataAltPageType. Returns an object of type IAScandataAltPageType.
+		/// Insert values into dbo.IAScandataAltPageType. Returns an object of type IAScandataAltPageType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -206,7 +207,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into IAScandataAltPageType. Returns an object of type IAScandataAltPageType.
+		/// Insert values into dbo.IAScandataAltPageType. Returns an object of type IAScandataAltPageType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -229,7 +230,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from IAScandataAltPageType by primary key(s).
+		/// Delete values from dbo.IAScandataAltPageType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -244,7 +245,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from IAScandataAltPageType by primary key(s).
+		/// Delete values from dbo.IAScandataAltPageType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -287,7 +288,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in IAScandataAltPageType. Returns an object of type IAScandataAltPageType.
+		/// Update values in dbo.IAScandataAltPageType. Returns an object of type IAScandataAltPageType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -306,7 +307,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAScandataAltPageType. Returns an object of type IAScandataAltPageType.
+		/// Update values in dbo.IAScandataAltPageType. Returns an object of type IAScandataAltPageType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -334,7 +335,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAScandataAltPageType> helper = new CustomSqlHelper<IAScandataAltPageType>())
 				{
-					CustomGenericList<IAScandataAltPageType> list = helper.ExecuteReader(command);
+					List<IAScandataAltPageType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAScandataAltPageType o = list[0];
@@ -350,7 +351,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAScandataAltPageType. Returns an object of type IAScandataAltPageType.
+		/// Update values in dbo.IAScandataAltPageType. Returns an object of type IAScandataAltPageType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -365,7 +366,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAScandataAltPageType. Returns an object of type IAScandataAltPageType.
+		/// Update values in dbo.IAScandataAltPageType. Returns an object of type IAScandataAltPageType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -389,9 +390,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage IAScandataAltPageType object.
+		/// Manage dbo.IAScandataAltPageType object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IAScandataAltPageType.
+		/// then either insert values into, delete values from, or update values in dbo.IAScandataAltPageType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -406,9 +407,9 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Manage IAScandataAltPageType object.
+		/// Manage dbo.IAScandataAltPageType object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IAScandataAltPageType.
+		/// then either insert values into, delete values from, or update values in dbo.IAScandataAltPageType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -473,4 +474,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

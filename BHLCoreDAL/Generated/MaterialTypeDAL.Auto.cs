@@ -1,5 +1,5 @@
 
-// Generated 6/29/2017 4:37:03 PM
+// Generated 1/5/2021 3:26:12 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class MaterialTypeDAL is based upon dbo.MaterialType.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<MaterialType> helper = new CustomSqlHelper<MaterialType>())
 				{
-					CustomGenericList<MaterialType> list = helper.ExecuteReader(command);
+					List<MaterialType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						MaterialType o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="materialTypeID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> MaterialTypeSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> MaterialTypeSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int materialTypeID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="materialTypeID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> MaterialTypeSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> MaterialTypeSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -180,7 +181,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<MaterialType> helper = new CustomSqlHelper<MaterialType>())
 				{
-					CustomGenericList<MaterialType> list = helper.ExecuteReader(command);
+					List<MaterialType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						MaterialType o = list[0];
@@ -345,7 +346,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<MaterialType> helper = new CustomSqlHelper<MaterialType>())
 				{
-					CustomGenericList<MaterialType> list = helper.ExecuteReader(command);
+					List<MaterialType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						MaterialType o = list[0];

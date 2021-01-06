@@ -1,7 +1,7 @@
 
-// Generated 9/18/2012 12:12:30 PM
+// Generated 1/5/2021 3:26:58 PM
 // Do not modify the contents of this code file.
-// This abstract class __SegmentClusterSegment is based upon SegmentClusterSegment.
+// This abstract class __SegmentClusterSegment is based upon dbo.SegmentClusterSegment.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __SegmentClusterSegment : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -128,7 +128,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedUserID = (int)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -136,7 +136,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region SegmentID
 		
@@ -173,7 +173,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: SegmentClusterID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("SegmentClusterID", DbTargetType=SqlDbType.Int, Ordinal=2, NumericPrecision=10, IsInForeignKey=true)]
+		[ColumnDefinition("SegmentClusterID", DbTargetType=SqlDbType.Int, Ordinal=2, NumericPrecision=10, IsInForeignKey=true, IsInPrimaryKey=true)]
 		public int SegmentClusterID
 		{
 			get
@@ -328,7 +328,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion LastModifiedUserID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -471,7 +471,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __SegmentClusterSegment.SortColumn.SegmentID);
 		/// </summary>
 		[Serializable]
@@ -490,3 +489,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

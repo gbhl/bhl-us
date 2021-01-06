@@ -1,7 +1,7 @@
 
-// Generated 5/29/2012 12:59:27 PM
+// Generated 1/5/2021 3:24:56 PM
 // Do not modify the contents of this code file.
-// This abstract class __AuthorName is based upon AuthorName.
+// This abstract class __AuthorName is based upon dbo.AuthorName.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __AuthorName : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -160,7 +160,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedUserID = (int?)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -168,7 +168,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region AuthorNameID
 		
@@ -473,7 +473,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion LastModifiedUserID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -620,7 +620,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __AuthorName.SortColumn.AuthorNameID);
 		/// </summary>
 		[Serializable]
@@ -643,3 +642,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

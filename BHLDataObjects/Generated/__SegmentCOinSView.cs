@@ -1,7 +1,7 @@
 
-// Generated 2/14/2013 11:19:30 AM
+// Generated 1/5/2021 3:46:42 PM
 // Do not modify the contents of this code file.
-// This abstract class __SegmentCOinSView is based upon SegmentCOinSView.
+// This abstract class __SegmentCOinSView is based upon dbo.SegmentCOinSView.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __SegmentCOinSView : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -224,7 +224,7 @@ namespace MOBOT.BHL.DataObjects
 						_Rft_contributor = (string)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -232,7 +232,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region SegmentID
 		
@@ -291,13 +291,13 @@ namespace MOBOT.BHL.DataObjects
 		
 		#region Rft_jtitle
 		
-		private string _Rft_jtitle = string.Empty;
+		private string _Rft_jtitle = null;
 		
 		/// <summary>
 		/// Column: rft_jtitle;
-		/// DBMS data type: nvarchar(2000);
+		/// DBMS data type: nvarchar(2000); Nullable;
 		/// </summary>
-		[ColumnDefinition("rft_jtitle", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=2000)]
+		[ColumnDefinition("rft_jtitle", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=2000, IsNullable=true)]
 		public string Rft_jtitle
 		{
 			get
@@ -319,13 +319,13 @@ namespace MOBOT.BHL.DataObjects
 		
 		#region Rft_date
 		
-		private string _Rft_date = string.Empty;
+		private string _Rft_date = null;
 		
 		/// <summary>
 		/// Column: rft_date;
-		/// DBMS data type: nvarchar(20);
+		/// DBMS data type: nvarchar(20); Nullable;
 		/// </summary>
-		[ColumnDefinition("rft_date", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=20)]
+		[ColumnDefinition("rft_date", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=20, IsNullable=true)]
 		public string Rft_date
 		{
 			get
@@ -739,13 +739,13 @@ namespace MOBOT.BHL.DataObjects
 		
 		#region Rft_contributor
 		
-		private string _Rft_contributor = null;
+		private string _Rft_contributor = string.Empty;
 		
 		/// <summary>
 		/// Column: rft_contributor;
-		/// DBMS data type: nvarchar(255); Nullable;
+		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
-		[ColumnDefinition("rft_contributor", DbTargetType=SqlDbType.NVarChar, Ordinal=19, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("rft_contributor", DbTargetType=SqlDbType.NVarChar, Ordinal=19, CharacterMaxLength=1073741823)]
 		public string Rft_contributor
 		{
 			get
@@ -754,7 +754,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 255);
+				if (value != null) value = CalibrateValue(value, 1073741823);
 				if (_Rft_contributor != value)
 				{
 					_Rft_contributor = value;
@@ -766,7 +766,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion Rft_contributor
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -921,7 +921,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __SegmentCOinSView.SortColumn.SegmentID);
 		/// </summary>
 		[Serializable]
@@ -952,3 +951,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

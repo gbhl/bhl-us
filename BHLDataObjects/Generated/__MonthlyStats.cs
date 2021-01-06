@@ -1,7 +1,7 @@
 
-// Generated 10/29/2008 10:12:36 AM
+// Generated 1/5/2021 3:26:14 PM
 // Do not modify the contents of this code file.
-// This abstract class __MonthlyStats is based upon MonthlyStats.
+// This abstract class __MonthlyStats is based upon dbo.MonthlyStats.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __MonthlyStats : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -45,25 +45,31 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Overloaded constructor specifying each column value.
 		/// </summary>
+		/// <param name="monthlyStatID"></param>
 		/// <param name="year"></param>
 		/// <param name="month"></param>
-		/// <param name="institutionName"></param>
+		/// <param name="institutionCode"></param>
 		/// <param name="statType"></param>
+		/// <param name="statLevel"></param>
 		/// <param name="statValue"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
-		public __MonthlyStats(int year, 
+		public __MonthlyStats(int monthlyStatID, 
+			int year, 
 			int month, 
-			string institutionName, 
+			string institutionCode, 
 			string statType, 
+			string statLevel, 
 			int statValue, 
 			DateTime creationDate, 
 			DateTime lastModifiedDate) : this()
 		{
+			_MonthlyStatID = monthlyStatID;
 			Year = year;
 			Month = month;
-			InstitutionName = institutionName;
+			InstitutionCode = institutionCode;
 			StatType = statType;
+			StatLevel = statLevel;
 			StatValue = statValue;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
@@ -93,6 +99,11 @@ namespace MOBOT.BHL.DataObjects
 			{
 				switch (column.Name)
 				{
+					case "MonthlyStatID" :
+					{
+						_MonthlyStatID = (int)column.Value;
+						break;
+					}
 					case "Year" :
 					{
 						_Year = (int)column.Value;
@@ -103,14 +114,19 @@ namespace MOBOT.BHL.DataObjects
 						_Month = (int)column.Value;
 						break;
 					}
-					case "InstitutionName" :
+					case "InstitutionCode" :
 					{
-						_InstitutionName = (string)column.Value;
+						_InstitutionCode = (string)column.Value;
 						break;
 					}
 					case "StatType" :
 					{
 						_StatType = (string)column.Value;
+						break;
+					}
+					case "StatLevel" :
+					{
+						_StatLevel = (string)column.Value;
 						break;
 					}
 					case "StatValue" :
@@ -128,7 +144,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -136,7 +152,35 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
+		
+		#region MonthlyStatID
+		
+		private int _MonthlyStatID = default(int);
+		
+		/// <summary>
+		/// Column: MonthlyStatID;
+		/// DBMS data type: int; Auto key;
+		/// </summary>
+		[ColumnDefinition("MonthlyStatID", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsAutoKey=true, IsInPrimaryKey=true)]
+		public int MonthlyStatID
+		{
+			get
+			{
+				return _MonthlyStatID;
+			}
+			set
+			{
+				// NOTE: This dummy setter provides a work-around for the following: Read-only properties cannot be exposed by XML Web Services
+				// see http://support.microsoft.com/kb/313584
+				// Cause: When an object is passed i.e. marshalled to or from a Web service, it must be serialized into an XML stream and then deserialized back into an object.
+				// The XML Serializer cannot deserialize the XML back into an object because it cannot load the read-only properties. 
+				// Thus the read-only properties are not exposed through the Web Services Description Language (WSDL). 
+				// Because the Web service proxy is generated from the WSDL, the proxy also excludes any read-only properties.
+			}
+		}
+		
+		#endregion MonthlyStatID
 		
 		#region Year
 		
@@ -146,7 +190,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Year;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("Year", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsInPrimaryKey=true)]
+		[ColumnDefinition("Year", DbTargetType=SqlDbType.Int, Ordinal=2, NumericPrecision=10)]
 		public int Year
 		{
 			get
@@ -173,7 +217,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Month;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("Month", DbTargetType=SqlDbType.Int, Ordinal=2, NumericPrecision=10, IsInPrimaryKey=true)]
+		[ColumnDefinition("Month", DbTargetType=SqlDbType.Int, Ordinal=3, NumericPrecision=10)]
 		public int Month
 		{
 			get
@@ -192,33 +236,33 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Month
 		
-		#region InstitutionName
+		#region InstitutionCode
 		
-		private string _InstitutionName = string.Empty;
+		private string _InstitutionCode = null;
 		
 		/// <summary>
-		/// Column: InstitutionName;
-		/// DBMS data type: nvarchar(255);
+		/// Column: InstitutionCode;
+		/// DBMS data type: nvarchar(10); Nullable;
 		/// </summary>
-		[ColumnDefinition("InstitutionName", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=255, IsInPrimaryKey=true)]
-		public string InstitutionName
+		[ColumnDefinition("InstitutionCode", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=10, IsNullable=true)]
+		public string InstitutionCode
 		{
 			get
 			{
-				return _InstitutionName;
+				return _InstitutionCode;
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 255);
-				if (_InstitutionName != value)
+				if (value != null) value = CalibrateValue(value, 10);
+				if (_InstitutionCode != value)
 				{
-					_InstitutionName = value;
+					_InstitutionCode = value;
 					_IsDirty = true;
 				}
 			}
 		}
 		
-		#endregion InstitutionName
+		#endregion InstitutionCode
 		
 		#region StatType
 		
@@ -228,7 +272,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: StatType;
 		/// DBMS data type: nvarchar(100);
 		/// </summary>
-		[ColumnDefinition("StatType", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=100, IsInPrimaryKey=true)]
+		[ColumnDefinition("StatType", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=100)]
 		public string StatType
 		{
 			get
@@ -248,6 +292,34 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion StatType
 		
+		#region StatLevel
+		
+		private string _StatLevel = string.Empty;
+		
+		/// <summary>
+		/// Column: StatLevel;
+		/// DBMS data type: nvarchar(100);
+		/// </summary>
+		[ColumnDefinition("StatLevel", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=100)]
+		public string StatLevel
+		{
+			get
+			{
+				return _StatLevel;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 100);
+				if (_StatLevel != value)
+				{
+					_StatLevel = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion StatLevel
+		
 		#region StatValue
 		
 		private int _StatValue = default(int);
@@ -256,7 +328,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: StatValue;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("StatValue", DbTargetType=SqlDbType.Int, Ordinal=5, NumericPrecision=10)]
+		[ColumnDefinition("StatValue", DbTargetType=SqlDbType.Int, Ordinal=7, NumericPrecision=10)]
 		public int StatValue
 		{
 			get
@@ -283,7 +355,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=6)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=8)]
 		public DateTime CreationDate
 		{
 			get
@@ -310,7 +382,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=7)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=9)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -330,7 +402,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -372,10 +444,12 @@ namespace MOBOT.BHL.DataObjects
 				if (
 					o.IsNew == IsNew &&
 					o.IsDeleted == IsDeleted &&
+					o.MonthlyStatID == MonthlyStatID &&
 					o.Year == Year &&
 					o.Month == Month &&
-					GetComparisonString(o.InstitutionName) == GetComparisonString(InstitutionName) &&
+					GetComparisonString(o.InstitutionCode) == GetComparisonString(InstitutionCode) &&
 					GetComparisonString(o.StatType) == GetComparisonString(StatType) &&
+					GetComparisonString(o.StatLevel) == GetComparisonString(StatLevel) &&
 					o.StatValue == StatValue &&
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate 
@@ -473,16 +547,17 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
-		/// list.Sort(SortOrder.Ascending, __MonthlyStats.SortColumn.Year);
+		/// list.Sort(SortOrder.Ascending, __MonthlyStats.SortColumn.MonthlyStatID);
 		/// </summary>
 		[Serializable]
 		public sealed class SortColumn
 		{	
+			public const string MonthlyStatID = "MonthlyStatID";	
 			public const string Year = "Year";	
 			public const string Month = "Month";	
-			public const string InstitutionName = "InstitutionName";	
+			public const string InstitutionCode = "InstitutionCode";	
 			public const string StatType = "StatType";	
+			public const string StatLevel = "StatLevel";	
 			public const string StatValue = "StatValue";	
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";
@@ -492,3 +567,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

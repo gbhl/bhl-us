@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<AnnotationSubject> helper = new CustomSqlHelper<AnnotationSubject>())
 				{
-					CustomGenericList<AnnotationSubject> list = helper.ExecuteReader(command);
+					List<AnnotationSubject> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						AnnotationSubject o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="annotationSubjectID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> AnnotationSubjectSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> AnnotationSubjectSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int annotationSubjectID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="annotationSubjectID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> AnnotationSubjectSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> AnnotationSubjectSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -185,7 +186,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<AnnotationSubject> helper = new CustomSqlHelper<AnnotationSubject>())
 				{
-					CustomGenericList<AnnotationSubject> list = helper.ExecuteReader(command);
+					List<AnnotationSubject> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						AnnotationSubject o = list[0];
@@ -356,7 +357,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<AnnotationSubject> helper = new CustomSqlHelper<AnnotationSubject>())
 				{
-					CustomGenericList<AnnotationSubject> list = helper.ExecuteReader(command);
+					List<AnnotationSubject> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						AnnotationSubject o = list[0];

@@ -1,5 +1,5 @@
 
-// Generated 5/5/2017 4:51:32 PM
+// Generated 1/5/2021 2:18:00 PM
 // Do not modify the contents of this code file.
 // This abstract class __PageFlickrNote is based upon dbo.PageFlickrNote.
 
@@ -554,7 +554,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: NoteValue;
-		/// DBMS data type: nvarchar(1073741823);
+		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
 		[ColumnDefinition("NoteValue", DbTargetType=SqlDbType.NVarChar, Ordinal=13, CharacterMaxLength=1073741823)]
 		public string NoteValue
@@ -838,7 +838,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __PageFlickrNote.SortColumn.PageFlickrNoteID);
 		/// </summary>
 		[Serializable]

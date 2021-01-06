@@ -1,7 +1,7 @@
 
-// Generated 5/1/2012 2:41:41 PM
+// Generated 1/5/2021 3:25:16 PM
 // Do not modify the contents of this code file.
-// This abstract class __Identifier is based upon Identifier.
+// This abstract class __Identifier is based upon dbo.Identifier.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Identifier : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -136,7 +136,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedUserID = (int?)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -144,7 +144,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region IdentifierID
 		
@@ -366,7 +366,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion LastModifiedUserID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -510,7 +510,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Identifier.SortColumn.IdentifierID);
 		/// </summary>
 		[Serializable]
@@ -530,3 +529,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

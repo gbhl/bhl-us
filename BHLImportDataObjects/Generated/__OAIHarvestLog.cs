@@ -1,7 +1,7 @@
 
-// Generated 10/16/2013 3:40:53 PM
+// Generated 1/5/2021 2:16:46 PM
 // Do not modify the contents of this code file.
-// This abstract class __OAIHarvestLog is based upon OAIHarvestLog.
+// This abstract class __OAIHarvestLog is based upon dbo.OAIHarvestLog.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __OAIHarvestLog : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -152,7 +152,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -160,7 +160,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region HarvestLogID
 		
@@ -170,7 +170,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: HarvestLogID;
 		/// DBMS data type: int; Auto key;
 		/// </summary>
-		[ColumnDefinition("HarvestLogID", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsAutoKey=true, IsInPrimaryKey=true)]
+		[ColumnDefinition("HarvestLogID", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsAutoKey=true, IsInForeignKey=true, IsInPrimaryKey=true)]
 		public int HarvestLogID
 		{
 			get
@@ -435,7 +435,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -581,7 +581,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __OAIHarvestLog.SortColumn.HarvestLogID);
 		/// </summary>
 		[Serializable]
@@ -603,3 +602,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

@@ -1,5 +1,5 @@
 
-// Generated 3/31/2020 12:15:15 PM
+// Generated 1/5/2021 3:25:24 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class InstitutionGroupInstitutionDAL is based upon dbo.InstitutionGroupInstitution.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<InstitutionGroupInstitution> helper = new CustomSqlHelper<InstitutionGroupInstitution>())
 				{
-					CustomGenericList<InstitutionGroupInstitution> list = helper.ExecuteReader(command);
+					List<InstitutionGroupInstitution> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						InstitutionGroupInstitution o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="institutionGroupInstitutionID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> InstitutionGroupInstitutionSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> InstitutionGroupInstitutionSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int institutionGroupInstitutionID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="institutionGroupInstitutionID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> InstitutionGroupInstitutionSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> InstitutionGroupInstitutionSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -180,7 +181,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<InstitutionGroupInstitution> helper = new CustomSqlHelper<InstitutionGroupInstitution>())
 				{
-					CustomGenericList<InstitutionGroupInstitution> list = helper.ExecuteReader(command);
+					List<InstitutionGroupInstitution> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						InstitutionGroupInstitution o = list[0];
@@ -340,7 +341,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<InstitutionGroupInstitution> helper = new CustomSqlHelper<InstitutionGroupInstitution>())
 				{
-					CustomGenericList<InstitutionGroupInstitution> list = helper.ExecuteReader(command);
+					List<InstitutionGroupInstitution> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						InstitutionGroupInstitution o = list[0];

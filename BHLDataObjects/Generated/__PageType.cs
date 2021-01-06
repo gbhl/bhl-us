@@ -1,5 +1,5 @@
 
-// Generated 12/14/2020 4:22:57 PM
+// Generated 1/5/2021 3:26:40 PM
 // Do not modify the contents of this code file.
 // This abstract class __PageType is based upon dbo.PageType.
 
@@ -510,7 +510,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __PageType.SortColumn.PageTypeID);
 		/// </summary>
 		[Serializable]

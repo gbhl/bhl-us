@@ -1,5 +1,5 @@
 
-// Generated 6/23/2020 4:38:51 PM
+// Generated 1/5/2021 3:24:49 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class ApplicationCacheDAL is based upon dbo.ApplicationCache.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ApplicationCache> helper = new CustomSqlHelper<ApplicationCache>())
 				{
-					CustomGenericList<ApplicationCache> list = helper.ExecuteReader(command);
+					List<ApplicationCache> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ApplicationCache o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="cacheKey"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ApplicationCacheSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ApplicationCacheSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string cacheKey)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="cacheKey"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ApplicationCacheSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ApplicationCacheSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -189,7 +190,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ApplicationCache> helper = new CustomSqlHelper<ApplicationCache>())
 				{
-					CustomGenericList<ApplicationCache> list = helper.ExecuteReader(command);
+					List<ApplicationCache> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ApplicationCache o = list[0];
@@ -361,7 +362,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ApplicationCache> helper = new CustomSqlHelper<ApplicationCache>())
 				{
-					CustomGenericList<ApplicationCache> list = helper.ExecuteReader(command);
+					List<ApplicationCache> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ApplicationCache o = list[0];

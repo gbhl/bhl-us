@@ -1,8 +1,8 @@
 
-// Generated 2/4/2010 3:26:40 PM
+// Generated 1/5/2021 3:18:36 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class APIKeyDAL is based upon APIKey.
+// This partial class APIKeyDAL is based upon dbo.APIKey.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from APIKey by primary key(s).
+		/// Select values from dbo.APIKey by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from APIKey by primary key(s).
+		/// Select values from dbo.APIKey by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<APIKey> helper = new CustomSqlHelper<APIKey>())
 				{
-					CustomGenericList<APIKey> list = helper.ExecuteReader(command);
+					List<APIKey> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						APIKey o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from APIKey by primary key(s).
+		/// Select values from dbo.APIKey by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="apiKeyID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> APIKeySelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> APIKeySelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int apiKeyID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from APIKey by primary key(s).
+		/// Select values from dbo.APIKey by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="apiKeyID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> APIKeySelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> APIKeySelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into APIKey.
+		/// Insert values into dbo.APIKey.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -153,7 +154,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into APIKey.
+		/// Insert values into dbo.APIKey.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -185,7 +186,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<APIKey> helper = new CustomSqlHelper<APIKey>())
 				{
-					CustomGenericList<APIKey> list = helper.ExecuteReader(command);
+					List<APIKey> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						APIKey o = list[0];
@@ -201,7 +202,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into APIKey. Returns an object of type APIKey.
+		/// Insert values into dbo.APIKey. Returns an object of type APIKey.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -216,7 +217,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into APIKey. Returns an object of type APIKey.
+		/// Insert values into dbo.APIKey. Returns an object of type APIKey.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -241,7 +242,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from APIKey by primary key(s).
+		/// Delete values from dbo.APIKey by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -256,7 +257,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from APIKey by primary key(s).
+		/// Delete values from dbo.APIKey by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -299,7 +300,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in APIKey. Returns an object of type APIKey.
+		/// Update values in dbo.APIKey. Returns an object of type APIKey.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -322,7 +323,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in APIKey. Returns an object of type APIKey.
+		/// Update values in dbo.APIKey. Returns an object of type APIKey.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -356,7 +357,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<APIKey> helper = new CustomSqlHelper<APIKey>())
 				{
-					CustomGenericList<APIKey> list = helper.ExecuteReader(command);
+					List<APIKey> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						APIKey o = list[0];
@@ -372,7 +373,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in APIKey. Returns an object of type APIKey.
+		/// Update values in dbo.APIKey. Returns an object of type APIKey.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -387,7 +388,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in APIKey. Returns an object of type APIKey.
+		/// Update values in dbo.APIKey. Returns an object of type APIKey.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -413,9 +414,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage APIKey object.
+		/// Manage dbo.APIKey object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in APIKey.
+		/// then either insert values into, delete values from, or update values in dbo.APIKey.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -430,9 +431,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage APIKey object.
+		/// Manage dbo.APIKey object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in APIKey.
+		/// then either insert values into, delete values from, or update values in dbo.APIKey.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -501,4 +502,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

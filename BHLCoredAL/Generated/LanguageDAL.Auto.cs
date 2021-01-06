@@ -1,8 +1,8 @@
 
-// Generated 1/18/2008 11:10:47 AM
+// Generated 1/5/2021 3:25:59 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class LanguageDAL is based upon Language.
+// This partial class LanguageDAL is based upon dbo.Language.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,18 +38,35 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Language by primary key(s).
+		/// Select values from dbo.Language by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="languageCode">Code for a language.</param>
+		/// <param name="languageCode"></param>
 		/// <returns>Object of type Language.</returns>
 		public Language LanguageSelectAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string languageCode)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return LanguageSelectAuto(	sqlConnection, sqlTransaction, "BHL",	languageCode );
+		}
+			
+		/// <summary>
+		/// Select values from dbo.Language by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="languageCode"></param>
+		/// <returns>Object of type Language.</returns>
+		public Language LanguageSelectAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			string languageCode )
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings( connectionKeyName ), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("LanguageSelectAuto", connection, transaction, 
@@ -56,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Language> helper = new CustomSqlHelper<Language>())
 				{
-					CustomGenericList<Language> list = helper.ExecuteReader(command);
+					List<Language> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Language o = list[0];
@@ -72,18 +90,35 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Language by primary key(s).
+		/// Select values from dbo.Language by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="languageCode">Code for a language.</param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> LanguageSelectAutoRaw(
+		/// <param name="languageCode"></param>
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> LanguageSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string languageCode)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return LanguageSelectAutoRaw( sqlConnection, sqlTransaction, "BHL", languageCode );
+		}
+		
+		/// <summary>
+		/// Select values from dbo.Language by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="languageCode"></param>
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> LanguageSelectAutoRaw(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			string languageCode)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("LanguageSelectAuto", connection, transaction,
@@ -94,17 +129,17 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Language.
+		/// Insert values into dbo.Language.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="languageCode">Code for a language.</param>
-		/// <param name="languageName">Name used for the language.</param>
-		/// <param name="note">Notes about this Language and its use.</param>
+		/// <param name="languageCode"></param>
+		/// <param name="languageName"></param>
+		/// <param name="note"></param>
 		/// <returns>Object of type Language.</returns>
 		public Language LanguageInsertAuto(
 			SqlConnection sqlConnection, 
@@ -113,7 +148,28 @@ namespace MOBOT.BHL.DAL
 			string languageName,
 			string note)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return LanguageInsertAuto( sqlConnection, sqlTransaction, "BHL", languageCode, languageName, note );
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.Language.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="languageCode"></param>
+		/// <param name="languageName"></param>
+		/// <param name="note"></param>
+		/// <returns>Object of type Language.</returns>
+		public Language LanguageInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			string languageCode,
+			string languageName,
+			string note)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("LanguageInsertAuto", connection, transaction, 
@@ -124,7 +180,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Language> helper = new CustomSqlHelper<Language>())
 				{
-					CustomGenericList<Language> list = helper.ExecuteReader(command);
+					List<Language> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Language o = list[0];
@@ -140,7 +196,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Language. Returns an object of type Language.
+		/// Insert values into dbo.Language. Returns an object of type Language.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -151,7 +207,24 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			Language value)
 		{
-			return LanguageInsertAuto(sqlConnection, sqlTransaction, 
+			return LanguageInsertAuto(sqlConnection, sqlTransaction, "BHL", value);
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.Language. Returns an object of type Language.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type Language.</param>
+		/// <returns>Object of type Language.</returns>
+		public Language LanguageInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			Language value)
+		{
+			return LanguageInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.LanguageCode,
 				value.LanguageName,
 				value.Note);
@@ -162,18 +235,35 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Language by primary key(s).
+		/// Delete values from dbo.Language by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="languageCode">Code for a language.</param>
+		/// <param name="languageCode"></param>
 		/// <returns>true if successful otherwise false.</returns>
 		public bool LanguageDeleteAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string languageCode)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return LanguageDeleteAuto( sqlConnection, sqlTransaction, "BHL", languageCode );
+		}
+		
+		/// <summary>
+		/// Delete values from dbo.Language by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="languageCode"></param>
+		/// <returns>true if successful otherwise false.</returns>
+		public bool LanguageDeleteAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			string languageCode)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("LanguageDeleteAuto", connection, transaction, 
@@ -203,13 +293,13 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Language. Returns an object of type Language.
+		/// Update values in dbo.Language. Returns an object of type Language.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="languageCode">Code for a language.</param>
-		/// <param name="languageName">Name used for the language.</param>
-		/// <param name="note">Notes about this Language and its use.</param>
+		/// <param name="languageCode"></param>
+		/// <param name="languageName"></param>
+		/// <param name="note"></param>
 		/// <returns>Object of type Language.</returns>
 		public Language LanguageUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -218,7 +308,28 @@ namespace MOBOT.BHL.DAL
 			string languageName,
 			string note)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return LanguageUpdateAuto( sqlConnection, sqlTransaction, "BHL", languageCode, languageName, note);
+		}
+		
+		/// <summary>
+		/// Update values in dbo.Language. Returns an object of type Language.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="languageCode"></param>
+		/// <param name="languageName"></param>
+		/// <param name="note"></param>
+		/// <returns>Object of type Language.</returns>
+		public Language LanguageUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			string languageCode,
+			string languageName,
+			string note)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("LanguageUpdateAuto", connection, transaction, 
@@ -229,7 +340,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Language> helper = new CustomSqlHelper<Language>())
 				{
-					CustomGenericList<Language> list = helper.ExecuteReader(command);
+					List<Language> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Language o = list[0];
@@ -245,7 +356,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Language. Returns an object of type Language.
+		/// Update values in dbo.Language. Returns an object of type Language.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -256,7 +367,24 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			Language value)
 		{
-			return LanguageUpdateAuto(sqlConnection, sqlTransaction,
+			return LanguageUpdateAuto(sqlConnection, sqlTransaction, "BHL", value );
+		}
+		
+		/// <summary>
+		/// Update values in dbo.Language. Returns an object of type Language.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type Language.</param>
+		/// <returns>Object of type Language.</returns>
+		public Language LanguageUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			Language value)
+		{
+			return LanguageUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.LanguageCode,
 				value.LanguageName,
 				value.Note);
@@ -267,9 +395,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Language object.
+		/// Manage dbo.Language object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Language.
+		/// then either insert values into, delete values from, or update values in dbo.Language.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -280,11 +408,30 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			Language value  )
 		{
+			return LanguageManageAuto( sqlConnection, sqlTransaction, "BHL", value  );
+		}
+		
+		/// <summary>
+		/// Manage dbo.Language object.
+		/// If the object is of type CustomObjectBase, 
+		/// then either insert values into, delete values from, or update values in dbo.Language.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type Language.</param>
+		/// <returns>Object of type CustomDataAccessStatus<Language>.</returns>
+		public CustomDataAccessStatus<Language> LanguageManageAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			Language value  )
+		{
 			if (value.IsNew && !value.IsDeleted)
 			{
 				
 				
-				Language returnValue = LanguageInsertAuto(sqlConnection, sqlTransaction, 
+				Language returnValue = LanguageInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.LanguageCode,
 						value.LanguageName,
 						value.Note);
@@ -295,7 +442,7 @@ namespace MOBOT.BHL.DAL
 			}
 			else if (!value.IsNew && value.IsDeleted)
 			{
-				if (LanguageDeleteAuto(sqlConnection, sqlTransaction, 
+				if (LanguageDeleteAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.LanguageCode))
 				{
 				return new CustomDataAccessStatus<Language>(
@@ -312,7 +459,7 @@ namespace MOBOT.BHL.DAL
 			else if (value.IsDirty && !value.IsDeleted)
 			{
 				
-				Language returnValue = LanguageUpdateAuto(sqlConnection, sqlTransaction, 
+				Language returnValue = LanguageUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.LanguageCode,
 						value.LanguageName,
 						value.Note);
@@ -333,4 +480,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

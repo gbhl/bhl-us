@@ -1,5 +1,5 @@
 
-// Generated 1/24/2020 4:10:26 PM
+// Generated 1/5/2021 2:15:43 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class IASegmentDAL is based upon dbo.IASegment.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IASegment> helper = new CustomSqlHelper<IASegment>())
 				{
-					CustomGenericList<IASegment> list = helper.ExecuteReader(command);
+					List<IASegment> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IASegment o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="segmentID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IASegmentSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IASegmentSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int segmentID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="segmentID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IASegmentSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IASegmentSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -220,7 +221,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IASegment> helper = new CustomSqlHelper<IASegment>())
 				{
-					CustomGenericList<IASegment> list = helper.ExecuteReader(command);
+					List<IASegment> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IASegment o = list[0];
@@ -433,7 +434,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IASegment> helper = new CustomSqlHelper<IASegment>())
 				{
-					CustomGenericList<IASegment> list = helper.ExecuteReader(command);
+					List<IASegment> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IASegment o = list[0];

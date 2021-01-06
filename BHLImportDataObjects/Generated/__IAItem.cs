@@ -1,5 +1,5 @@
 
-// Generated 5/23/2017 3:34:32 PM
+// Generated 1/5/2021 2:13:57 PM
 // Do not modify the contents of this code file.
 // This abstract class __IAItem is based upon dbo.IAItem.
 
@@ -1359,7 +1359,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: LicenseUrl;
-		/// DBMS data type: nvarchar(1073741823);
+		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
 		[ColumnDefinition("LicenseUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=31, CharacterMaxLength=1073741823)]
 		public string LicenseUrl
@@ -1387,7 +1387,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: Rights;
-		/// DBMS data type: nvarchar(1073741823);
+		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
 		[ColumnDefinition("Rights", DbTargetType=SqlDbType.NVarChar, Ordinal=32, CharacterMaxLength=1073741823)]
 		public string Rights
@@ -1415,7 +1415,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: DueDiligence;
-		/// DBMS data type: nvarchar(1073741823);
+		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
 		[ColumnDefinition("DueDiligence", DbTargetType=SqlDbType.NVarChar, Ordinal=33, CharacterMaxLength=1073741823)]
 		public string DueDiligence
@@ -1443,7 +1443,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: PossibleCopyrightStatus;
-		/// DBMS data type: nvarchar(1073741823);
+		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
 		[ColumnDefinition("PossibleCopyrightStatus", DbTargetType=SqlDbType.NVarChar, Ordinal=34, CharacterMaxLength=1073741823)]
 		public string PossibleCopyrightStatus
@@ -1499,7 +1499,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: CopyrightComment;
-		/// DBMS data type: nvarchar(1073741823);
+		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
 		[ColumnDefinition("CopyrightComment", DbTargetType=SqlDbType.NVarChar, Ordinal=36, CharacterMaxLength=1073741823)]
 		public string CopyrightComment
@@ -1527,7 +1527,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: CopyrightEvidence;
-		/// DBMS data type: nvarchar(1073741823);
+		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
 		[ColumnDefinition("CopyrightEvidence", DbTargetType=SqlDbType.NVarChar, Ordinal=37, CharacterMaxLength=1073741823)]
 		public string CopyrightEvidence
@@ -1722,7 +1722,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: ItemDescription;
-		/// DBMS data type: nvarchar(1073741823);
+		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
 		[ColumnDefinition("ItemDescription", DbTargetType=SqlDbType.NVarChar, Ordinal=44, CharacterMaxLength=1073741823)]
 		public string ItemDescription
@@ -2244,7 +2244,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __IAItem.SortColumn.ItemID);
 		/// </summary>
 		[Serializable]

@@ -1,7 +1,7 @@
 
-// Generated 9/4/2008 2:16:32 PM
+// Generated 1/5/2021 2:18:57 PM
 // Do not modify the contents of this code file.
-// This abstract class __TitleTag is based upon TitleTag.
+// This abstract class __TitleTag is based upon dbo.TitleTag.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __TitleTag : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -168,7 +168,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -176,7 +176,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region TitleTagID
 		
@@ -508,7 +508,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -656,7 +656,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __TitleTag.SortColumn.TitleTagID);
 		/// </summary>
 		[Serializable]
@@ -680,3 +679,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

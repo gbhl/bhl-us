@@ -1,5 +1,5 @@
 
-// Generated 9/27/2019 3:36:32 PM
+// Generated 1/5/2021 2:14:58 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class IAMarcSubFieldDAL is based upon dbo.IAMarcSubField.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAMarcSubField> helper = new CustomSqlHelper<IAMarcSubField>())
 				{
-					CustomGenericList<IAMarcSubField> list = helper.ExecuteReader(command);
+					List<IAMarcSubField> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAMarcSubField o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="marcSubFieldID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IAMarcSubFieldSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAMarcSubFieldSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int marcSubFieldID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="marcSubFieldID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IAMarcSubFieldSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAMarcSubFieldSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -180,7 +181,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAMarcSubField> helper = new CustomSqlHelper<IAMarcSubField>())
 				{
-					CustomGenericList<IAMarcSubField> list = helper.ExecuteReader(command);
+					List<IAMarcSubField> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAMarcSubField o = list[0];
@@ -345,7 +346,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAMarcSubField> helper = new CustomSqlHelper<IAMarcSubField>())
 				{
-					CustomGenericList<IAMarcSubField> list = helper.ExecuteReader(command);
+					List<IAMarcSubField> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAMarcSubField o = list[0];

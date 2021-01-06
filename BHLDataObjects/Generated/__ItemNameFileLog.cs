@@ -1,7 +1,7 @@
 
-// Generated 11/19/2009 2:21:40 PM
+// Generated 1/5/2021 3:25:44 PM
 // Do not modify the contents of this code file.
-// This abstract class __ItemNameFileLog is based upon ItemNameFileLog.
+// This abstract class __ItemNameFileLog is based upon dbo.ItemNameFileLog.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __ItemNameFileLog : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -136,7 +136,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -144,7 +144,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region LogID
 		
@@ -364,7 +364,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -508,7 +508,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __ItemNameFileLog.SortColumn.LogID);
 		/// </summary>
 		[Serializable]
@@ -528,3 +527,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

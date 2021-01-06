@@ -1,7 +1,7 @@
 
-// Generated 1/17/2008 3:54:35 PM
+// Generated 1/5/2021 2:10:51 PM
 // Do not modify the contents of this code file.
-// This abstract class __BotanicusHarvestLog is based upon BotanicusHarvestLog.
+// This abstract class __BotanicusHarvestLog is based upon dbo.BotanicusHarvestLog.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __BotanicusHarvestLog : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -184,7 +184,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_PageName = (int)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -192,7 +192,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region BotanicusHarvestLogID
 		
@@ -574,7 +574,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion PageName
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -724,7 +724,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __BotanicusHarvestLog.SortColumn.BotanicusHarvestLogID);
 		/// </summary>
 		[Serializable]
@@ -750,3 +749,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

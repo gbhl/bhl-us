@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<AnnotatedPageType> helper = new CustomSqlHelper<AnnotatedPageType>())
 				{
-					CustomGenericList<AnnotatedPageType> list = helper.ExecuteReader(command);
+					List<AnnotatedPageType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						AnnotatedPageType o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="annotatedPageTypeID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> AnnotatedPageTypeSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> AnnotatedPageTypeSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int annotatedPageTypeID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="annotatedPageTypeID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> AnnotatedPageTypeSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> AnnotatedPageTypeSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -175,7 +176,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<AnnotatedPageType> helper = new CustomSqlHelper<AnnotatedPageType>())
 				{
-					CustomGenericList<AnnotatedPageType> list = helper.ExecuteReader(command);
+					List<AnnotatedPageType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						AnnotatedPageType o = list[0];
@@ -334,7 +335,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<AnnotatedPageType> helper = new CustomSqlHelper<AnnotatedPageType>())
 				{
-					CustomGenericList<AnnotatedPageType> list = helper.ExecuteReader(command);
+					List<AnnotatedPageType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						AnnotatedPageType o = list[0];

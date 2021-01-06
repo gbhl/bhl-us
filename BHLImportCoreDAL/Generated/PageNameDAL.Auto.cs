@@ -1,8 +1,8 @@
 
-// Generated 1/16/2008 1:54:48 PM
+// Generated 1/5/2021 2:18:12 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class PageNameDAL is based upon PageName.
+// This partial class PageNameDAL is based upon dbo.PageName.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from PageName by primary key(s).
+		/// Select values from dbo.PageName by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -48,7 +49,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int pageNameID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return PageNameSelectAuto(	sqlConnection, sqlTransaction, "BHLImport",	pageNameID );
+		}
+			
+		/// <summary>
+		/// Select values from dbo.PageName by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="pageNameID"></param>
+		/// <returns>Object of type PageName.</returns>
+		public PageName PageNameSelectAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int pageNameID )
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings( connectionKeyName ), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageNameSelectAuto", connection, transaction, 
@@ -56,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<PageName> helper = new CustomSqlHelper<PageName>())
 				{
-					CustomGenericList<PageName> list = helper.ExecuteReader(command);
+					List<PageName> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageName o = list[0];
@@ -72,18 +90,35 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from PageName by primary key(s).
+		/// Select values from dbo.PageName by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="pageNameID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> PageNameSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PageNameSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int pageNameID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return PageNameSelectAutoRaw( sqlConnection, sqlTransaction, "BHLImport", pageNameID );
+		}
+		
+		/// <summary>
+		/// Select values from dbo.PageName by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="pageNameID"></param>
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PageNameSelectAutoRaw(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int pageNameID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageNameSelectAuto", connection, transaction,
@@ -94,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into PageName.
+		/// Insert values into dbo.PageName.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -135,7 +170,50 @@ namespace MOBOT.BHLImport.DAL
 			bool? isCommonName,
 			DateTime? productionDate)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return PageNameInsertAuto( sqlConnection, sqlTransaction, "BHLImport", importStatusID, importSourceID, barCode, fileNamePrefix, sequenceOrder, source, nameFound, nameConfirmed, nameBankID, active, externalCreateDate, externalLastUpdateDate, isCommonName, productionDate );
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.PageName.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="importStatusID"></param>
+		/// <param name="importSourceID"></param>
+		/// <param name="barCode"></param>
+		/// <param name="fileNamePrefix"></param>
+		/// <param name="sequenceOrder"></param>
+		/// <param name="source"></param>
+		/// <param name="nameFound"></param>
+		/// <param name="nameConfirmed"></param>
+		/// <param name="nameBankID"></param>
+		/// <param name="active"></param>
+		/// <param name="externalCreateDate"></param>
+		/// <param name="externalLastUpdateDate"></param>
+		/// <param name="isCommonName"></param>
+		/// <param name="productionDate"></param>
+		/// <returns>Object of type PageName.</returns>
+		public PageName PageNameInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int importStatusID,
+			int? importSourceID,
+			string barCode,
+			string fileNamePrefix,
+			int? sequenceOrder,
+			string source,
+			string nameFound,
+			string nameConfirmed,
+			int? nameBankID,
+			bool? active,
+			DateTime? externalCreateDate,
+			DateTime? externalLastUpdateDate,
+			bool? isCommonName,
+			DateTime? productionDate)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageNameInsertAuto", connection, transaction, 
@@ -158,7 +236,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<PageName> helper = new CustomSqlHelper<PageName>())
 				{
-					CustomGenericList<PageName> list = helper.ExecuteReader(command);
+					List<PageName> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageName o = list[0];
@@ -174,7 +252,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into PageName. Returns an object of type PageName.
+		/// Insert values into dbo.PageName. Returns an object of type PageName.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -185,7 +263,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			PageName value)
 		{
-			return PageNameInsertAuto(sqlConnection, sqlTransaction, 
+			return PageNameInsertAuto(sqlConnection, sqlTransaction, "BHLImport", value);
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.PageName. Returns an object of type PageName.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type PageName.</param>
+		/// <returns>Object of type PageName.</returns>
+		public PageName PageNameInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			PageName value)
+		{
+			return PageNameInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.ImportStatusID,
 				value.ImportSourceID,
 				value.BarCode,
@@ -207,7 +302,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from PageName by primary key(s).
+		/// Delete values from dbo.PageName by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -218,7 +313,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int pageNameID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return PageNameDeleteAuto( sqlConnection, sqlTransaction, "BHLImport", pageNameID );
+		}
+		
+		/// <summary>
+		/// Delete values from dbo.PageName by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="pageNameID"></param>
+		/// <returns>true if successful otherwise false.</returns>
+		public bool PageNameDeleteAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int pageNameID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageNameDeleteAuto", connection, transaction, 
@@ -248,7 +360,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in PageName. Returns an object of type PageName.
+		/// Update values in dbo.PageName. Returns an object of type PageName.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -287,7 +399,52 @@ namespace MOBOT.BHLImport.DAL
 			bool? isCommonName,
 			DateTime? productionDate)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return PageNameUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", pageNameID, importStatusID, importSourceID, barCode, fileNamePrefix, sequenceOrder, source, nameFound, nameConfirmed, nameBankID, active, externalCreateDate, externalLastUpdateDate, isCommonName, productionDate);
+		}
+		
+		/// <summary>
+		/// Update values in dbo.PageName. Returns an object of type PageName.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="pageNameID"></param>
+		/// <param name="importStatusID"></param>
+		/// <param name="importSourceID"></param>
+		/// <param name="barCode"></param>
+		/// <param name="fileNamePrefix"></param>
+		/// <param name="sequenceOrder"></param>
+		/// <param name="source"></param>
+		/// <param name="nameFound"></param>
+		/// <param name="nameConfirmed"></param>
+		/// <param name="nameBankID"></param>
+		/// <param name="active"></param>
+		/// <param name="externalCreateDate"></param>
+		/// <param name="externalLastUpdateDate"></param>
+		/// <param name="isCommonName"></param>
+		/// <param name="productionDate"></param>
+		/// <returns>Object of type PageName.</returns>
+		public PageName PageNameUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int pageNameID,
+			int importStatusID,
+			int? importSourceID,
+			string barCode,
+			string fileNamePrefix,
+			int? sequenceOrder,
+			string source,
+			string nameFound,
+			string nameConfirmed,
+			int? nameBankID,
+			bool? active,
+			DateTime? externalCreateDate,
+			DateTime? externalLastUpdateDate,
+			bool? isCommonName,
+			DateTime? productionDate)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageNameUpdateAuto", connection, transaction, 
@@ -310,7 +467,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<PageName> helper = new CustomSqlHelper<PageName>())
 				{
-					CustomGenericList<PageName> list = helper.ExecuteReader(command);
+					List<PageName> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageName o = list[0];
@@ -326,7 +483,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in PageName. Returns an object of type PageName.
+		/// Update values in dbo.PageName. Returns an object of type PageName.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -337,7 +494,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			PageName value)
 		{
-			return PageNameUpdateAuto(sqlConnection, sqlTransaction,
+			return PageNameUpdateAuto(sqlConnection, sqlTransaction, "BHLImport", value );
+		}
+		
+		/// <summary>
+		/// Update values in dbo.PageName. Returns an object of type PageName.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type PageName.</param>
+		/// <returns>Object of type PageName.</returns>
+		public PageName PageNameUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			PageName value)
+		{
+			return PageNameUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.PageNameID,
 				value.ImportStatusID,
 				value.ImportSourceID,
@@ -360,9 +534,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage PageName object.
+		/// Manage dbo.PageName object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in PageName.
+		/// then either insert values into, delete values from, or update values in dbo.PageName.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -373,11 +547,30 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			PageName value  )
 		{
+			return PageNameManageAuto( sqlConnection, sqlTransaction, "BHLImport", value  );
+		}
+		
+		/// <summary>
+		/// Manage dbo.PageName object.
+		/// If the object is of type CustomObjectBase, 
+		/// then either insert values into, delete values from, or update values in dbo.PageName.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type PageName.</param>
+		/// <returns>Object of type CustomDataAccessStatus<PageName>.</returns>
+		public CustomDataAccessStatus<PageName> PageNameManageAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			PageName value  )
+		{
 			if (value.IsNew && !value.IsDeleted)
 			{
 				
 				
-				PageName returnValue = PageNameInsertAuto(sqlConnection, sqlTransaction, 
+				PageName returnValue = PageNameInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.ImportStatusID,
 						value.ImportSourceID,
 						value.BarCode,
@@ -399,7 +592,7 @@ namespace MOBOT.BHLImport.DAL
 			}
 			else if (!value.IsNew && value.IsDeleted)
 			{
-				if (PageNameDeleteAuto(sqlConnection, sqlTransaction, 
+				if (PageNameDeleteAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.PageNameID))
 				{
 				return new CustomDataAccessStatus<PageName>(
@@ -416,7 +609,7 @@ namespace MOBOT.BHLImport.DAL
 			else if (value.IsDirty && !value.IsDeleted)
 			{
 				
-				PageName returnValue = PageNameUpdateAuto(sqlConnection, sqlTransaction, 
+				PageName returnValue = PageNameUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.PageNameID,
 						value.ImportStatusID,
 						value.ImportSourceID,
@@ -449,4 +642,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

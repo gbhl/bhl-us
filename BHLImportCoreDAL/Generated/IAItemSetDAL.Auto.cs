@@ -1,8 +1,8 @@
 
-// Generated 1/15/2008 11:27:51 AM
+// Generated 1/5/2021 2:14:23 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class IAItemSetDAL is based upon IAItemSet.
+// This partial class IAItemSetDAL is based upon dbo.IAItemSet.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from IAItemSet by primary key(s).
+		/// Select values from dbo.IAItemSet by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -50,7 +51,26 @@ namespace MOBOT.BHLImport.DAL
 			int itemID,
 			int setID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return IAItemSetSelectAuto(	sqlConnection, sqlTransaction, "BHLImport",	itemID, setID );
+		}
+			
+		/// <summary>
+		/// Select values from dbo.IAItemSet by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="itemID"></param>
+		/// <param name="setID"></param>
+		/// <returns>Object of type IAItemSet.</returns>
+		public IAItemSet IAItemSetSelectAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int itemID,
+			int setID )
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings( connectionKeyName ), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAItemSetSelectAuto", connection, transaction, 
@@ -59,7 +79,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAItemSet> helper = new CustomSqlHelper<IAItemSet>())
 				{
-					CustomGenericList<IAItemSet> list = helper.ExecuteReader(command);
+					List<IAItemSet> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAItemSet o = list[0];
@@ -75,20 +95,39 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IAItemSet by primary key(s).
+		/// Select values from dbo.IAItemSet by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="itemID"></param>
 		/// <param name="setID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IAItemSetSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAItemSetSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int itemID,
 			int setID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return IAItemSetSelectAutoRaw( sqlConnection, sqlTransaction, "BHLImport", itemID, setID );
+		}
+		
+		/// <summary>
+		/// Select values from dbo.IAItemSet by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="itemID"></param>
+		/// <param name="setID"></param>
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAItemSetSelectAutoRaw(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int itemID,
+			int setID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAItemSetSelectAuto", connection, transaction,
@@ -100,11 +139,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into IAItemSet.
+		/// Insert values into dbo.IAItemSet.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -117,7 +156,26 @@ namespace MOBOT.BHLImport.DAL
 			int itemID,
 			int setID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return IAItemSetInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, setID );
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.IAItemSet.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="itemID"></param>
+		/// <param name="setID"></param>
+		/// <returns>Object of type IAItemSet.</returns>
+		public IAItemSet IAItemSetInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int itemID,
+			int setID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAItemSetInsertAuto", connection, transaction, 
@@ -127,7 +185,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAItemSet> helper = new CustomSqlHelper<IAItemSet>())
 				{
-					CustomGenericList<IAItemSet> list = helper.ExecuteReader(command);
+					List<IAItemSet> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAItemSet o = list[0];
@@ -143,7 +201,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into IAItemSet. Returns an object of type IAItemSet.
+		/// Insert values into dbo.IAItemSet. Returns an object of type IAItemSet.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -154,7 +212,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			IAItemSet value)
 		{
-			return IAItemSetInsertAuto(sqlConnection, sqlTransaction, 
+			return IAItemSetInsertAuto(sqlConnection, sqlTransaction, "BHLImport", value);
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.IAItemSet. Returns an object of type IAItemSet.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type IAItemSet.</param>
+		/// <returns>Object of type IAItemSet.</returns>
+		public IAItemSet IAItemSetInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			IAItemSet value)
+		{
+			return IAItemSetInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.ItemID,
 				value.SetID);
 		}
@@ -164,7 +239,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from IAItemSet by primary key(s).
+		/// Delete values from dbo.IAItemSet by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -177,7 +252,26 @@ namespace MOBOT.BHLImport.DAL
 			int itemID,
 			int setID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return IAItemSetDeleteAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, setID );
+		}
+		
+		/// <summary>
+		/// Delete values from dbo.IAItemSet by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="itemID"></param>
+		/// <param name="setID"></param>
+		/// <returns>true if successful otherwise false.</returns>
+		public bool IAItemSetDeleteAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int itemID,
+			int setID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAItemSetDeleteAuto", connection, transaction, 
@@ -208,7 +302,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in IAItemSet. Returns an object of type IAItemSet.
+		/// Update values in dbo.IAItemSet. Returns an object of type IAItemSet.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -221,7 +315,26 @@ namespace MOBOT.BHLImport.DAL
 			int itemID,
 			int setID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return IAItemSetUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, setID);
+		}
+		
+		/// <summary>
+		/// Update values in dbo.IAItemSet. Returns an object of type IAItemSet.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="itemID"></param>
+		/// <param name="setID"></param>
+		/// <returns>Object of type IAItemSet.</returns>
+		public IAItemSet IAItemSetUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int itemID,
+			int setID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAItemSetUpdateAuto", connection, transaction, 
@@ -231,7 +344,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAItemSet> helper = new CustomSqlHelper<IAItemSet>())
 				{
-					CustomGenericList<IAItemSet> list = helper.ExecuteReader(command);
+					List<IAItemSet> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAItemSet o = list[0];
@@ -247,7 +360,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAItemSet. Returns an object of type IAItemSet.
+		/// Update values in dbo.IAItemSet. Returns an object of type IAItemSet.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -258,7 +371,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			IAItemSet value)
 		{
-			return IAItemSetUpdateAuto(sqlConnection, sqlTransaction,
+			return IAItemSetUpdateAuto(sqlConnection, sqlTransaction, "BHLImport", value );
+		}
+		
+		/// <summary>
+		/// Update values in dbo.IAItemSet. Returns an object of type IAItemSet.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type IAItemSet.</param>
+		/// <returns>Object of type IAItemSet.</returns>
+		public IAItemSet IAItemSetUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			IAItemSet value)
+		{
+			return IAItemSetUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.ItemID,
 				value.SetID);
 		}
@@ -268,9 +398,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage IAItemSet object.
+		/// Manage dbo.IAItemSet object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IAItemSet.
+		/// then either insert values into, delete values from, or update values in dbo.IAItemSet.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -281,11 +411,30 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			IAItemSet value  )
 		{
+			return IAItemSetManageAuto( sqlConnection, sqlTransaction, "BHLImport", value  );
+		}
+		
+		/// <summary>
+		/// Manage dbo.IAItemSet object.
+		/// If the object is of type CustomObjectBase, 
+		/// then either insert values into, delete values from, or update values in dbo.IAItemSet.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type IAItemSet.</param>
+		/// <returns>Object of type CustomDataAccessStatus<IAItemSet>.</returns>
+		public CustomDataAccessStatus<IAItemSet> IAItemSetManageAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			IAItemSet value  )
+		{
 			if (value.IsNew && !value.IsDeleted)
 			{
 				
 				
-				IAItemSet returnValue = IAItemSetInsertAuto(sqlConnection, sqlTransaction, 
+				IAItemSet returnValue = IAItemSetInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.ItemID,
 						value.SetID);
 				
@@ -295,7 +444,7 @@ namespace MOBOT.BHLImport.DAL
 			}
 			else if (!value.IsNew && value.IsDeleted)
 			{
-				if (IAItemSetDeleteAuto(sqlConnection, sqlTransaction, 
+				if (IAItemSetDeleteAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.ItemID,
 						value.SetID))
 				{
@@ -313,7 +462,7 @@ namespace MOBOT.BHLImport.DAL
 			else if (value.IsDirty && !value.IsDeleted)
 			{
 				
-				IAItemSet returnValue = IAItemSetUpdateAuto(sqlConnection, sqlTransaction, 
+				IAItemSet returnValue = IAItemSetUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.ItemID,
 						value.SetID);
 					
@@ -333,4 +482,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

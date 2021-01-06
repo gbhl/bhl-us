@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<AnnotatedTitle> helper = new CustomSqlHelper<AnnotatedTitle>())
 				{
-					CustomGenericList<AnnotatedTitle> list = helper.ExecuteReader(command);
+					List<AnnotatedTitle> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						AnnotatedTitle o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="annotatedTitleID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> AnnotatedTitleSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> AnnotatedTitleSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int annotatedTitleID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="annotatedTitleID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> AnnotatedTitleSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> AnnotatedTitleSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -225,7 +226,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<AnnotatedTitle> helper = new CustomSqlHelper<AnnotatedTitle>())
 				{
-					CustomGenericList<AnnotatedTitle> list = helper.ExecuteReader(command);
+					List<AnnotatedTitle> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						AnnotatedTitle o = list[0];
@@ -444,7 +445,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<AnnotatedTitle> helper = new CustomSqlHelper<AnnotatedTitle>())
 				{
-					CustomGenericList<AnnotatedTitle> list = helper.ExecuteReader(command);
+					List<AnnotatedTitle> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						AnnotatedTitle o = list[0];

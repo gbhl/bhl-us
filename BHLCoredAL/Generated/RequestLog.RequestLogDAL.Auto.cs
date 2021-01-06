@@ -21,6 +21,7 @@
 #endregion How To Implement
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -69,7 +70,7 @@ namespace MOBOT.BHL.RequestLog.DAL
 			{
                 using (CustomSqlHelper<MOBOT.BHL.RequestLog.DataObjects.RequestLog> helper = new CustomSqlHelper<MOBOT.BHL.RequestLog.DataObjects.RequestLog>())
 				{
-                    CustomGenericList<MOBOT.BHL.RequestLog.DataObjects.RequestLog> list = helper.ExecuteReader(command);
+                    List<MOBOT.BHL.RequestLog.DataObjects.RequestLog> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
                         MOBOT.BHL.RequestLog.DataObjects.RequestLog o = list[0];
@@ -90,8 +91,8 @@ namespace MOBOT.BHL.RequestLog.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="requestLogID"></param>
-		/// <returns>CustomGenericList&lt;DataItemRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> RequestLogSelectAutoRaw(
+		/// <returns>List&lt;DataItemRow&gt;</returns>
+		public List<CustomDataRow> RequestLogSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int requestLogID)
@@ -106,8 +107,8 @@ namespace MOBOT.BHL.RequestLog.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="requestLogID"></param>
-		/// <returns>CustomGenericList&lt;DataItemRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> RequestLogSelectAutoRaw(
+		/// <returns>List&lt;DataItemRow&gt;</returns>
+		public List<CustomDataRow> RequestLogSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -186,7 +187,7 @@ namespace MOBOT.BHL.RequestLog.DAL
 			{
                 using (CustomSqlHelper<MOBOT.BHL.RequestLog.DataObjects.RequestLog> helper = new CustomSqlHelper<MOBOT.BHL.RequestLog.DataObjects.RequestLog>())
 				{
-                    CustomGenericList<MOBOT.BHL.RequestLog.DataObjects.RequestLog> list = helper.ExecuteReader(command);
+                    List<MOBOT.BHL.RequestLog.DataObjects.RequestLog> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
                         MOBOT.BHL.RequestLog.DataObjects.RequestLog o = list[0];
@@ -363,7 +364,7 @@ namespace MOBOT.BHL.RequestLog.DAL
 			{
                 using (CustomSqlHelper<MOBOT.BHL.RequestLog.DataObjects.RequestLog> helper = new CustomSqlHelper<MOBOT.BHL.RequestLog.DataObjects.RequestLog>())
 				{
-                    CustomGenericList<MOBOT.BHL.RequestLog.DataObjects.RequestLog> list = helper.ExecuteReader(command);
+                    List<MOBOT.BHL.RequestLog.DataObjects.RequestLog> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
                         MOBOT.BHL.RequestLog.DataObjects.RequestLog o = list[0];

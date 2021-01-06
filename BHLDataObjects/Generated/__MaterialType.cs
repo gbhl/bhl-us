@@ -1,5 +1,5 @@
 
-// Generated 6/29/2017 4:37:03 PM
+// Generated 1/5/2021 3:26:12 PM
 // Do not modify the contents of this code file.
 // This abstract class __MaterialType is based upon dbo.MaterialType.
 
@@ -367,7 +367,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __MaterialType.SortColumn.MaterialTypeID);
 		/// </summary>
 		[Serializable]

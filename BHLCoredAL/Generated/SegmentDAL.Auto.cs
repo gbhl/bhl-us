@@ -1,5 +1,5 @@
 
-// Generated 10/28/2020 3:25:03 PM
+// Generated 1/5/2021 3:26:54 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class SegmentDAL is based upon dbo.Segment.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
 				{
-					CustomGenericList<Segment> list = helper.ExecuteReader(command);
+					List<Segment> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Segment o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="segmentID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> SegmentSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> SegmentSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int segmentID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="segmentID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> SegmentSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> SegmentSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -366,7 +367,7 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("LicenseName", SqlDbType.NVarChar, 200, false, licenseName),
 					CustomSqlHelper.CreateInputParameter("LicenseUrl", SqlDbType.NVarChar, 200, false, licenseUrl),
 					CustomSqlHelper.CreateInputParameter("RightsStatus", SqlDbType.NVarChar, 500, false, rightsStatus),
-					CustomSqlHelper.CreateInputParameter("RightsStatement", SqlDbType.NVarChar, 500, false, rightsStatement),
+					CustomSqlHelper.CreateInputParameter("RightsStatement", SqlDbType.NVarChar, 1073741823, false, rightsStatement),
 					CustomSqlHelper.CreateInputParameter("CopyrightStatus", SqlDbType.NVarChar, 1073741823, false, copyrightStatus),
 					CustomSqlHelper.CreateInputParameter("CopyrightRegion", SqlDbType.NVarChar, 50, false, copyrightRegion),
 					CustomSqlHelper.CreateInputParameter("CopyrightComment", SqlDbType.NVarChar, 1073741823, false, copyrightComment),
@@ -385,7 +386,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
 				{
-					CustomGenericList<Segment> list = helper.ExecuteReader(command);
+					List<Segment> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Segment o = list[0];
@@ -773,7 +774,7 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("LicenseName", SqlDbType.NVarChar, 200, false, licenseName),
 					CustomSqlHelper.CreateInputParameter("LicenseUrl", SqlDbType.NVarChar, 200, false, licenseUrl),
 					CustomSqlHelper.CreateInputParameter("RightsStatus", SqlDbType.NVarChar, 500, false, rightsStatus),
-					CustomSqlHelper.CreateInputParameter("RightsStatement", SqlDbType.NVarChar, 500, false, rightsStatement),
+					CustomSqlHelper.CreateInputParameter("RightsStatement", SqlDbType.NVarChar, 1073741823, false, rightsStatement),
 					CustomSqlHelper.CreateInputParameter("CopyrightStatus", SqlDbType.NVarChar, 1073741823, false, copyrightStatus),
 					CustomSqlHelper.CreateInputParameter("CopyrightRegion", SqlDbType.NVarChar, 50, false, copyrightRegion),
 					CustomSqlHelper.CreateInputParameter("CopyrightComment", SqlDbType.NVarChar, 1073741823, false, copyrightComment),
@@ -791,7 +792,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
 				{
-					CustomGenericList<Segment> list = helper.ExecuteReader(command);
+					List<Segment> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Segment o = list[0];

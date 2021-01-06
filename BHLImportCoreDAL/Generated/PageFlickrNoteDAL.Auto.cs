@@ -1,5 +1,5 @@
 
-// Generated 5/5/2017 4:51:32 PM
+// Generated 1/5/2021 2:18:01 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class PageFlickrNoteDAL is based upon dbo.PageFlickrNote.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<PageFlickrNote> helper = new CustomSqlHelper<PageFlickrNote>())
 				{
-					CustomGenericList<PageFlickrNote> list = helper.ExecuteReader(command);
+					List<PageFlickrNote> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageFlickrNote o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="pageFlickrNoteID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> PageFlickrNoteSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PageFlickrNoteSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int pageFlickrNoteID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="pageFlickrNoteID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> PageFlickrNoteSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PageFlickrNoteSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -235,7 +236,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<PageFlickrNote> helper = new CustomSqlHelper<PageFlickrNote>())
 				{
-					CustomGenericList<PageFlickrNote> list = helper.ExecuteReader(command);
+					List<PageFlickrNote> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageFlickrNote o = list[0];
@@ -466,7 +467,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<PageFlickrNote> helper = new CustomSqlHelper<PageFlickrNote>())
 				{
-					CustomGenericList<PageFlickrNote> list = helper.ExecuteReader(command);
+					List<PageFlickrNote> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageFlickrNote o = list[0];

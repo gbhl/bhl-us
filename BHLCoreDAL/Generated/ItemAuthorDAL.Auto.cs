@@ -1,5 +1,5 @@
 
-// Generated 10/19/2020 1:12:13 PM
+// Generated 1/5/2021 3:25:31 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class ItemAuthorDAL is based upon dbo.ItemAuthor.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ItemAuthor> helper = new CustomSqlHelper<ItemAuthor>())
 				{
-					CustomGenericList<ItemAuthor> list = helper.ExecuteReader(command);
+					List<ItemAuthor> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ItemAuthor o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="itemAuthorID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ItemAuthorSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ItemAuthorSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int itemAuthorID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="itemAuthorID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ItemAuthorSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ItemAuthorSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -190,7 +191,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ItemAuthor> helper = new CustomSqlHelper<ItemAuthor>())
 				{
-					CustomGenericList<ItemAuthor> list = helper.ExecuteReader(command);
+					List<ItemAuthor> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ItemAuthor o = list[0];
@@ -362,7 +363,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ItemAuthor> helper = new CustomSqlHelper<ItemAuthor>())
 				{
-					CustomGenericList<ItemAuthor> list = helper.ExecuteReader(command);
+					List<ItemAuthor> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ItemAuthor o = list[0];

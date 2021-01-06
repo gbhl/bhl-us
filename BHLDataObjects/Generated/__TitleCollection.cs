@@ -1,7 +1,7 @@
 
-// Generated 7/30/2010 2:09:29 PM
+// Generated 1/5/2021 3:27:16 PM
 // Do not modify the contents of this code file.
-// This abstract class __TitleCollection is based upon TitleCollection.
+// This abstract class __TitleCollection is based upon dbo.TitleCollection.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __TitleCollection : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DataObjects
 						_CreationDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -112,7 +112,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region TitleCollectionID
 		
@@ -224,7 +224,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion CreationDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -364,7 +364,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __TitleCollection.SortColumn.TitleCollectionID);
 		/// </summary>
 		[Serializable]
@@ -380,3 +379,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

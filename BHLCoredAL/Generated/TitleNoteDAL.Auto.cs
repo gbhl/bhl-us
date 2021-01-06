@@ -1,8 +1,8 @@
 
-// Generated 2/27/2015 2:20:32 PM
+// Generated 1/5/2021 3:27:24 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class TitleNoteDAL is based upon TitleNote.
+// This partial class TitleNoteDAL is based upon dbo.TitleNote.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -32,12 +33,12 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class TitleNoteDAL : ITitleNoteDAL
+	partial class TitleNoteDAL 
 	{
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from TitleNote by primary key(s).
+		/// Select values from dbo.TitleNote by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from TitleNote by primary key(s).
+		/// Select values from dbo.TitleNote by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleNote> helper = new CustomSqlHelper<TitleNote>())
 				{
-					CustomGenericList<TitleNote> list = helper.ExecuteReader(command);
+					List<TitleNote> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleNote o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from TitleNote by primary key(s).
+		/// Select values from dbo.TitleNote by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="titleNoteID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleNoteSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleNoteSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int titleNoteID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from TitleNote by primary key(s).
+		/// Select values from dbo.TitleNote by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="titleNoteID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleNoteSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleNoteSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into TitleNote.
+		/// Insert values into dbo.TitleNote.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -155,7 +156,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into TitleNote.
+		/// Insert values into dbo.TitleNote.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -190,7 +191,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleNote> helper = new CustomSqlHelper<TitleNote>())
 				{
-					CustomGenericList<TitleNote> list = helper.ExecuteReader(command);
+					List<TitleNote> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleNote o = list[0];
@@ -206,7 +207,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into TitleNote. Returns an object of type TitleNote.
+		/// Insert values into dbo.TitleNote. Returns an object of type TitleNote.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -221,7 +222,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into TitleNote. Returns an object of type TitleNote.
+		/// Insert values into dbo.TitleNote. Returns an object of type TitleNote.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -247,7 +248,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from TitleNote by primary key(s).
+		/// Delete values from dbo.TitleNote by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -262,7 +263,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from TitleNote by primary key(s).
+		/// Delete values from dbo.TitleNote by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -305,7 +306,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in TitleNote. Returns an object of type TitleNote.
+		/// Update values in dbo.TitleNote. Returns an object of type TitleNote.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -328,7 +329,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleNote. Returns an object of type TitleNote.
+		/// Update values in dbo.TitleNote. Returns an object of type TitleNote.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -362,7 +363,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleNote> helper = new CustomSqlHelper<TitleNote>())
 				{
-					CustomGenericList<TitleNote> list = helper.ExecuteReader(command);
+					List<TitleNote> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleNote o = list[0];
@@ -378,7 +379,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleNote. Returns an object of type TitleNote.
+		/// Update values in dbo.TitleNote. Returns an object of type TitleNote.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -393,7 +394,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleNote. Returns an object of type TitleNote.
+		/// Update values in dbo.TitleNote. Returns an object of type TitleNote.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -419,9 +420,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage TitleNote object.
+		/// Manage dbo.TitleNote object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in TitleNote.
+		/// then either insert values into, delete values from, or update values in dbo.TitleNote.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -436,9 +437,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage TitleNote object.
+		/// Manage dbo.TitleNote object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in TitleNote.
+		/// then either insert values into, delete values from, or update values in dbo.TitleNote.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -508,4 +509,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

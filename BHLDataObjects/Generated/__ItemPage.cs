@@ -1,5 +1,5 @@
 
-// Generated 10/22/2020 8:48:38 AM
+// Generated 1/5/2021 3:25:46 PM
 // Do not modify the contents of this code file.
 // This abstract class __ItemPage is based upon dbo.ItemPage.
 
@@ -113,7 +113,7 @@ namespace MOBOT.BHL.DataObjects
 					}
 					case "SequenceOrder" :
 					{
-						_SequenceOrder = Convert.ToInt32(column.Value);
+						_SequenceOrder = (int)column.Value;
 						break;
 					}
 					case "CreationDate" :
@@ -508,7 +508,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __ItemPage.SortColumn.ItemPageID);
 		/// </summary>
 		[Serializable]

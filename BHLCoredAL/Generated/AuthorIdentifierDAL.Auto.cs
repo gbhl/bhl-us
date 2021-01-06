@@ -1,8 +1,8 @@
 
-// Generated 5/18/2012 11:11:49 AM
+// Generated 1/5/2021 3:24:54 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class AuthorIdentifierDAL is based upon AuthorIdentifier.
+// This partial class AuthorIdentifierDAL is based upon dbo.AuthorIdentifier.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from AuthorIdentifier by primary key(s).
+		/// Select values from dbo.AuthorIdentifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from AuthorIdentifier by primary key(s).
+		/// Select values from dbo.AuthorIdentifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<AuthorIdentifier> helper = new CustomSqlHelper<AuthorIdentifier>())
 				{
-					CustomGenericList<AuthorIdentifier> list = helper.ExecuteReader(command);
+					List<AuthorIdentifier> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						AuthorIdentifier o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from AuthorIdentifier by primary key(s).
+		/// Select values from dbo.AuthorIdentifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="authorIdentifierID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> AuthorIdentifierSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> AuthorIdentifierSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int authorIdentifierID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from AuthorIdentifier by primary key(s).
+		/// Select values from dbo.AuthorIdentifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="authorIdentifierID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> AuthorIdentifierSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> AuthorIdentifierSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into AuthorIdentifier.
+		/// Insert values into dbo.AuthorIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -155,7 +156,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into AuthorIdentifier.
+		/// Insert values into dbo.AuthorIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -190,7 +191,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<AuthorIdentifier> helper = new CustomSqlHelper<AuthorIdentifier>())
 				{
-					CustomGenericList<AuthorIdentifier> list = helper.ExecuteReader(command);
+					List<AuthorIdentifier> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						AuthorIdentifier o = list[0];
@@ -206,7 +207,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into AuthorIdentifier. Returns an object of type AuthorIdentifier.
+		/// Insert values into dbo.AuthorIdentifier. Returns an object of type AuthorIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -221,7 +222,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into AuthorIdentifier. Returns an object of type AuthorIdentifier.
+		/// Insert values into dbo.AuthorIdentifier. Returns an object of type AuthorIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -247,7 +248,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from AuthorIdentifier by primary key(s).
+		/// Delete values from dbo.AuthorIdentifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -262,7 +263,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from AuthorIdentifier by primary key(s).
+		/// Delete values from dbo.AuthorIdentifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -305,7 +306,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in AuthorIdentifier. Returns an object of type AuthorIdentifier.
+		/// Update values in dbo.AuthorIdentifier. Returns an object of type AuthorIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -328,7 +329,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in AuthorIdentifier. Returns an object of type AuthorIdentifier.
+		/// Update values in dbo.AuthorIdentifier. Returns an object of type AuthorIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -362,7 +363,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<AuthorIdentifier> helper = new CustomSqlHelper<AuthorIdentifier>())
 				{
-					CustomGenericList<AuthorIdentifier> list = helper.ExecuteReader(command);
+					List<AuthorIdentifier> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						AuthorIdentifier o = list[0];
@@ -378,7 +379,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in AuthorIdentifier. Returns an object of type AuthorIdentifier.
+		/// Update values in dbo.AuthorIdentifier. Returns an object of type AuthorIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -393,7 +394,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in AuthorIdentifier. Returns an object of type AuthorIdentifier.
+		/// Update values in dbo.AuthorIdentifier. Returns an object of type AuthorIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -419,9 +420,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage AuthorIdentifier object.
+		/// Manage dbo.AuthorIdentifier object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in AuthorIdentifier.
+		/// then either insert values into, delete values from, or update values in dbo.AuthorIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -436,9 +437,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage AuthorIdentifier object.
+		/// Manage dbo.AuthorIdentifier object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in AuthorIdentifier.
+		/// then either insert values into, delete values from, or update values in dbo.AuthorIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -508,4 +509,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

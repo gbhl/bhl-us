@@ -1,5 +1,5 @@
 
-// Generated 10/1/2018 8:24:59 PM
+// Generated 1/5/2021 3:26:38 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class PageTextLogDAL is based upon dbo.PageTextLog.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PageTextLog> helper = new CustomSqlHelper<PageTextLog>())
 				{
-					CustomGenericList<PageTextLog> list = helper.ExecuteReader(command);
+					List<PageTextLog> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageTextLog o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="pageTextLogID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> PageTextLogSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PageTextLogSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int pageTextLogID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="pageTextLogID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> PageTextLogSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PageTextLogSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -185,7 +186,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PageTextLog> helper = new CustomSqlHelper<PageTextLog>())
 				{
-					CustomGenericList<PageTextLog> list = helper.ExecuteReader(command);
+					List<PageTextLog> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageTextLog o = list[0];
@@ -351,7 +352,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PageTextLog> helper = new CustomSqlHelper<PageTextLog>())
 				{
-					CustomGenericList<PageTextLog> list = helper.ExecuteReader(command);
+					List<PageTextLog> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageTextLog o = list[0];

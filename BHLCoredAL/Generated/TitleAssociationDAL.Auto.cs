@@ -1,5 +1,5 @@
 
-// Generated 5/9/2016 1:54:17 PM
+// Generated 1/5/2021 3:27:07 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class TitleAssociationDAL is based upon dbo.TitleAssociation.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -32,7 +33,7 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class TitleAssociationDAL : ITitleAssociationDAL
+	partial class TitleAssociationDAL 
 	{
  		#region ===== SELECT =====
 
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleAssociation> helper = new CustomSqlHelper<TitleAssociation>())
 				{
-					CustomGenericList<TitleAssociation> list = helper.ExecuteReader(command);
+					List<TitleAssociation> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleAssociation o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="titleAssociationID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleAssociationSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleAssociationSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int titleAssociationID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="titleAssociationID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleAssociationSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleAssociationSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -225,7 +226,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleAssociation> helper = new CustomSqlHelper<TitleAssociation>())
 				{
-					CustomGenericList<TitleAssociation> list = helper.ExecuteReader(command);
+					List<TitleAssociation> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleAssociation o = list[0];
@@ -439,7 +440,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleAssociation> helper = new CustomSqlHelper<TitleAssociation>())
 				{
-					CustomGenericList<TitleAssociation> list = helper.ExecuteReader(command);
+					List<TitleAssociation> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleAssociation o = list[0];

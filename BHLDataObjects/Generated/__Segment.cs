@@ -1,5 +1,5 @@
 
-// Generated 10/28/2020 3:25:03 PM
+// Generated 1/5/2021 3:26:54 PM
 // Do not modify the contents of this code file.
 // This abstract class __Segment is based upon dbo.Segment.
 
@@ -220,7 +220,7 @@ namespace MOBOT.BHL.DataObjects
 					}
 					case "ItemID" :
 					{
-						_ItemID = Utility.ZeroIfNull(column.Value);
+						_ItemID = (int)column.Value;
 						break;
 					}
 					case "RedirectSegmentID" :
@@ -1299,9 +1299,9 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: RightsStatement;
-		/// DBMS data type: nvarchar(500);
+		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
-		[ColumnDefinition("RightsStatement", DbTargetType=SqlDbType.NVarChar, Ordinal=31, CharacterMaxLength=500)]
+		[ColumnDefinition("RightsStatement", DbTargetType=SqlDbType.NVarChar, Ordinal=31, CharacterMaxLength=1073741823)]
 		public string RightsStatement
 		{
 			get
@@ -1310,7 +1310,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 500);
+				if (value != null) value = CalibrateValue(value, 1073741823);
 				if (_RightsStatement != value)
 				{
 					_RightsStatement = value;
@@ -1942,7 +1942,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Segment.SortColumn.SegmentID);
 		/// </summary>
 		[Serializable]

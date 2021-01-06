@@ -6,6 +6,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
@@ -22,10 +23,10 @@ namespace MOBOT.BHL.DAL
 		TitleCollection TitleCollectionSelectAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
 			int titleCollectionID);
 
-		CustomGenericList<CustomDataRow> TitleCollectionSelectAutoRaw(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+		List<CustomDataRow> TitleCollectionSelectAutoRaw(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
 			int titleCollectionID);
 
-		CustomGenericList<CustomDataRow> TitleCollectionSelectAutoRaw(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
+		List<CustomDataRow> TitleCollectionSelectAutoRaw(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
 			int titleCollectionID);
 
 		TitleCollection TitleCollectionInsertAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction,

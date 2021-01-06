@@ -1,5 +1,5 @@
 
-// Generated 10/23/2020 4:14:57 PM
+// Generated 1/5/2021 3:26:32 PM
 // Do not modify the contents of this code file.
 // This abstract class __Page is based upon dbo.Page.
 
@@ -1095,7 +1095,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Page.SortColumn.PageID);
 		/// </summary>
 		[Serializable]

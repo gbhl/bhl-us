@@ -1,7 +1,7 @@
 
-// Generated 1/23/2009 8:46:39 AM
+// Generated 1/5/2021 3:26:49 PM
 // Do not modify the contents of this code file.
-// This abstract class __PDFStatus is based upon PDFStatus.
+// This abstract class __PDFStatus is based upon dbo.PDFStatus.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __PDFStatus : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -88,7 +88,7 @@ namespace MOBOT.BHL.DataObjects
 						_PdfStatusName = (string)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -96,7 +96,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region PdfStatusID
 		
@@ -154,7 +154,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion PdfStatusName
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -292,7 +292,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __PDFStatus.SortColumn.PdfStatusID);
 		/// </summary>
 		[Serializable]
@@ -306,3 +305,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

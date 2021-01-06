@@ -1,5 +1,5 @@
 
-// Generated 5/23/2017 3:34:43 PM
+// Generated 1/5/2021 2:16:35 PM
 // Do not modify the contents of this code file.
 // This abstract class __Item is based upon dbo.Item.
 
@@ -929,7 +929,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: ItemDescription;
-		/// DBMS data type: ntext(1073741823); Nullable;
+		/// DBMS data type: ntext; Nullable;
 		/// </summary>
 		[ColumnDefinition("ItemDescription", DbTargetType=SqlDbType.NText, Ordinal=14, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string ItemDescription
@@ -1610,7 +1610,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: LicenseUrl;
-		/// DBMS data type: nvarchar(1073741823); Nullable;
+		/// DBMS data type: nvarchar(MAX); Nullable;
 		/// </summary>
 		[ColumnDefinition("LicenseUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=39, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string LicenseUrl
@@ -1638,7 +1638,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: Rights;
-		/// DBMS data type: nvarchar(1073741823); Nullable;
+		/// DBMS data type: nvarchar(MAX); Nullable;
 		/// </summary>
 		[ColumnDefinition("Rights", DbTargetType=SqlDbType.NVarChar, Ordinal=40, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string Rights
@@ -1666,7 +1666,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: DueDiligence;
-		/// DBMS data type: nvarchar(1073741823); Nullable;
+		/// DBMS data type: nvarchar(MAX); Nullable;
 		/// </summary>
 		[ColumnDefinition("DueDiligence", DbTargetType=SqlDbType.NVarChar, Ordinal=41, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string DueDiligence
@@ -1694,7 +1694,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: CopyrightStatus;
-		/// DBMS data type: nvarchar(1073741823); Nullable;
+		/// DBMS data type: nvarchar(MAX); Nullable;
 		/// </summary>
 		[ColumnDefinition("CopyrightStatus", DbTargetType=SqlDbType.NVarChar, Ordinal=42, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string CopyrightStatus
@@ -1750,7 +1750,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: CopyrightComment;
-		/// DBMS data type: nvarchar(1073741823); Nullable;
+		/// DBMS data type: nvarchar(MAX); Nullable;
 		/// </summary>
 		[ColumnDefinition("CopyrightComment", DbTargetType=SqlDbType.NVarChar, Ordinal=44, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string CopyrightComment
@@ -1778,7 +1778,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: CopyrightEvidence;
-		/// DBMS data type: nvarchar(1073741823); Nullable;
+		/// DBMS data type: nvarchar(MAX); Nullable;
 		/// </summary>
 		[ColumnDefinition("CopyrightEvidence", DbTargetType=SqlDbType.NVarChar, Ordinal=45, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string CopyrightEvidence
@@ -2417,7 +2417,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Item.SortColumn.ItemID);
 		/// </summary>
 		[Serializable]

@@ -1,8 +1,8 @@
 
-// Generated 9/4/2008 2:16:32 PM
+// Generated 1/5/2021 2:18:42 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class TitleAssociationDAL is based upon TitleAssociation.
+// This partial class TitleAssociationDAL is based upon dbo.TitleAssociation.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from TitleAssociation by primary key(s).
+		/// Select values from dbo.TitleAssociation by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 			
 		/// <summary>
-		/// Select values from TitleAssociation by primary key(s).
+		/// Select values from dbo.TitleAssociation by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<TitleAssociation> helper = new CustomSqlHelper<TitleAssociation>())
 				{
-					CustomGenericList<TitleAssociation> list = helper.ExecuteReader(command);
+					List<TitleAssociation> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleAssociation o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from TitleAssociation by primary key(s).
+		/// Select values from dbo.TitleAssociation by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="titleAssociationID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleAssociationSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleAssociationSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int titleAssociationID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from TitleAssociation by primary key(s).
+		/// Select values from dbo.TitleAssociation by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="titleAssociationID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleAssociationSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleAssociationSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into TitleAssociation.
+		/// Insert values into dbo.TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -144,11 +145,11 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="title"></param>
 		/// <param name="section"></param>
 		/// <param name="volume"></param>
+		/// <param name="active"></param>
+		/// <param name="productionDate"></param>
 		/// <param name="heading"></param>
 		/// <param name="publication"></param>
 		/// <param name="relationship"></param>
-		/// <param name="active"></param>
-		/// <param name="productionDate"></param>
 		/// <returns>Object of type TitleAssociation.</returns>
 		public TitleAssociation TitleAssociationInsertAuto(
 			SqlConnection sqlConnection, 
@@ -161,17 +162,17 @@ namespace MOBOT.BHLImport.DAL
 			string title,
 			string section,
 			string volume,
+			bool active,
+			DateTime? productionDate,
 			string heading,
 			string publication,
-			string relationship,
-			bool active,
-			DateTime? productionDate)
+			string relationship)
 		{
-			return TitleAssociationInsertAuto( sqlConnection, sqlTransaction, "BHLImport", importKey, importStatusID, importSourceID, mARCTag, mARCIndicator2, title, section, volume, heading, publication, relationship, active, productionDate );
+			return TitleAssociationInsertAuto( sqlConnection, sqlTransaction, "BHLImport", importKey, importStatusID, importSourceID, mARCTag, mARCIndicator2, title, section, volume, active, productionDate, heading, publication, relationship );
 		}
 		
 		/// <summary>
-		/// Insert values into TitleAssociation.
+		/// Insert values into dbo.TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -184,11 +185,11 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="title"></param>
 		/// <param name="section"></param>
 		/// <param name="volume"></param>
+		/// <param name="active"></param>
+		/// <param name="productionDate"></param>
 		/// <param name="heading"></param>
 		/// <param name="publication"></param>
 		/// <param name="relationship"></param>
-		/// <param name="active"></param>
-		/// <param name="productionDate"></param>
 		/// <returns>Object of type TitleAssociation.</returns>
 		public TitleAssociation TitleAssociationInsertAuto(
 			SqlConnection sqlConnection, 
@@ -202,11 +203,11 @@ namespace MOBOT.BHLImport.DAL
 			string title,
 			string section,
 			string volume,
+			bool active,
+			DateTime? productionDate,
 			string heading,
 			string publication,
-			string relationship,
-			bool active,
-			DateTime? productionDate)
+			string relationship)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -221,16 +222,16 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 500, false, title),
 					CustomSqlHelper.CreateInputParameter("Section", SqlDbType.NVarChar, 500, false, section),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 500, false, volume),
+					CustomSqlHelper.CreateInputParameter("Active", SqlDbType.Bit, null, false, active),
+					CustomSqlHelper.CreateInputParameter("ProductionDate", SqlDbType.DateTime, null, true, productionDate),
 					CustomSqlHelper.CreateInputParameter("Heading", SqlDbType.NVarChar, 500, false, heading),
 					CustomSqlHelper.CreateInputParameter("Publication", SqlDbType.NVarChar, 500, false, publication),
-					CustomSqlHelper.CreateInputParameter("Relationship", SqlDbType.NVarChar, 500, false, relationship),
-					CustomSqlHelper.CreateInputParameter("Active", SqlDbType.Bit, null, false, active),
-					CustomSqlHelper.CreateInputParameter("ProductionDate", SqlDbType.DateTime, null, true, productionDate), 
+					CustomSqlHelper.CreateInputParameter("Relationship", SqlDbType.NVarChar, 500, false, relationship), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<TitleAssociation> helper = new CustomSqlHelper<TitleAssociation>())
 				{
-					CustomGenericList<TitleAssociation> list = helper.ExecuteReader(command);
+					List<TitleAssociation> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleAssociation o = list[0];
@@ -246,7 +247,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into TitleAssociation. Returns an object of type TitleAssociation.
+		/// Insert values into dbo.TitleAssociation. Returns an object of type TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -261,7 +262,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into TitleAssociation. Returns an object of type TitleAssociation.
+		/// Insert values into dbo.TitleAssociation. Returns an object of type TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -283,11 +284,11 @@ namespace MOBOT.BHLImport.DAL
 				value.Title,
 				value.Section,
 				value.Volume,
+				value.Active,
+				value.ProductionDate,
 				value.Heading,
 				value.Publication,
-				value.Relationship,
-				value.Active,
-				value.ProductionDate);
+				value.Relationship);
 		}
 		
 		#endregion ===== INSERT =====
@@ -295,7 +296,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from TitleAssociation by primary key(s).
+		/// Delete values from dbo.TitleAssociation by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -310,7 +311,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from TitleAssociation by primary key(s).
+		/// Delete values from dbo.TitleAssociation by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -353,7 +354,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in TitleAssociation. Returns an object of type TitleAssociation.
+		/// Update values in dbo.TitleAssociation. Returns an object of type TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -366,11 +367,11 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="title"></param>
 		/// <param name="section"></param>
 		/// <param name="volume"></param>
+		/// <param name="active"></param>
+		/// <param name="productionDate"></param>
 		/// <param name="heading"></param>
 		/// <param name="publication"></param>
 		/// <param name="relationship"></param>
-		/// <param name="active"></param>
-		/// <param name="productionDate"></param>
 		/// <returns>Object of type TitleAssociation.</returns>
 		public TitleAssociation TitleAssociationUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -384,17 +385,17 @@ namespace MOBOT.BHLImport.DAL
 			string title,
 			string section,
 			string volume,
+			bool active,
+			DateTime? productionDate,
 			string heading,
 			string publication,
-			string relationship,
-			bool active,
-			DateTime? productionDate)
+			string relationship)
 		{
-			return TitleAssociationUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", titleAssociationID, importKey, importStatusID, importSourceID, mARCTag, mARCIndicator2, title, section, volume, heading, publication, relationship, active, productionDate);
+			return TitleAssociationUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", titleAssociationID, importKey, importStatusID, importSourceID, mARCTag, mARCIndicator2, title, section, volume, active, productionDate, heading, publication, relationship);
 		}
 		
 		/// <summary>
-		/// Update values in TitleAssociation. Returns an object of type TitleAssociation.
+		/// Update values in dbo.TitleAssociation. Returns an object of type TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -408,11 +409,11 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="title"></param>
 		/// <param name="section"></param>
 		/// <param name="volume"></param>
+		/// <param name="active"></param>
+		/// <param name="productionDate"></param>
 		/// <param name="heading"></param>
 		/// <param name="publication"></param>
 		/// <param name="relationship"></param>
-		/// <param name="active"></param>
-		/// <param name="productionDate"></param>
 		/// <returns>Object of type TitleAssociation.</returns>
 		public TitleAssociation TitleAssociationUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -427,11 +428,11 @@ namespace MOBOT.BHLImport.DAL
 			string title,
 			string section,
 			string volume,
+			bool active,
+			DateTime? productionDate,
 			string heading,
 			string publication,
-			string relationship,
-			bool active,
-			DateTime? productionDate)
+			string relationship)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -446,16 +447,16 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 500, false, title),
 					CustomSqlHelper.CreateInputParameter("Section", SqlDbType.NVarChar, 500, false, section),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 500, false, volume),
+					CustomSqlHelper.CreateInputParameter("Active", SqlDbType.Bit, null, false, active),
+					CustomSqlHelper.CreateInputParameter("ProductionDate", SqlDbType.DateTime, null, true, productionDate),
 					CustomSqlHelper.CreateInputParameter("Heading", SqlDbType.NVarChar, 500, false, heading),
 					CustomSqlHelper.CreateInputParameter("Publication", SqlDbType.NVarChar, 500, false, publication),
-					CustomSqlHelper.CreateInputParameter("Relationship", SqlDbType.NVarChar, 500, false, relationship),
-					CustomSqlHelper.CreateInputParameter("Active", SqlDbType.Bit, null, false, active),
-					CustomSqlHelper.CreateInputParameter("ProductionDate", SqlDbType.DateTime, null, true, productionDate), 
+					CustomSqlHelper.CreateInputParameter("Relationship", SqlDbType.NVarChar, 500, false, relationship), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<TitleAssociation> helper = new CustomSqlHelper<TitleAssociation>())
 				{
-					CustomGenericList<TitleAssociation> list = helper.ExecuteReader(command);
+					List<TitleAssociation> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleAssociation o = list[0];
@@ -471,7 +472,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleAssociation. Returns an object of type TitleAssociation.
+		/// Update values in dbo.TitleAssociation. Returns an object of type TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -486,7 +487,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleAssociation. Returns an object of type TitleAssociation.
+		/// Update values in dbo.TitleAssociation. Returns an object of type TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -509,11 +510,11 @@ namespace MOBOT.BHLImport.DAL
 				value.Title,
 				value.Section,
 				value.Volume,
+				value.Active,
+				value.ProductionDate,
 				value.Heading,
 				value.Publication,
-				value.Relationship,
-				value.Active,
-				value.ProductionDate);
+				value.Relationship);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -521,9 +522,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage TitleAssociation object.
+		/// Manage dbo.TitleAssociation object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in TitleAssociation.
+		/// then either insert values into, delete values from, or update values in dbo.TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -538,9 +539,9 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Manage TitleAssociation object.
+		/// Manage dbo.TitleAssociation object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in TitleAssociation.
+		/// then either insert values into, delete values from, or update values in dbo.TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -566,11 +567,11 @@ namespace MOBOT.BHLImport.DAL
 						value.Title,
 						value.Section,
 						value.Volume,
+						value.Active,
+						value.ProductionDate,
 						value.Heading,
 						value.Publication,
-						value.Relationship,
-						value.Active,
-						value.ProductionDate);
+						value.Relationship);
 				
 				return new CustomDataAccessStatus<TitleAssociation>(
 					CustomDataAccessContext.Insert, 
@@ -605,11 +606,11 @@ namespace MOBOT.BHLImport.DAL
 						value.Title,
 						value.Section,
 						value.Volume,
+						value.Active,
+						value.ProductionDate,
 						value.Heading,
 						value.Publication,
-						value.Relationship,
-						value.Active,
-						value.ProductionDate);
+						value.Relationship);
 					
 				return new CustomDataAccessStatus<TitleAssociation>(
 					CustomDataAccessContext.Update, 
@@ -627,4 +628,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

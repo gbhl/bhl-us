@@ -1,7 +1,7 @@
 
-// Generated 11/24/2008 4:39:21 PM
+// Generated 1/5/2021 3:26:47 PM
 // Do not modify the contents of this code file.
-// This abstract class __PDFPage is based upon PDFPage.
+// This abstract class __PDFPage is based upon dbo.PDFPage.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __PDFPage : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -96,7 +96,7 @@ namespace MOBOT.BHL.DataObjects
 						_PageID = (int)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region PdfPageID
 		
@@ -189,7 +189,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion PageID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -328,7 +328,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __PDFPage.SortColumn.PdfPageID);
 		/// </summary>
 		[Serializable]
@@ -343,3 +342,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

@@ -1,5 +1,5 @@
 
-// Generated 11/6/2018 1:46:48 PM
+// Generated 1/5/2021 3:27:18 PM
 // Do not modify the contents of this code file.
 // This abstract class __TitleInstitution is based upon dbo.TitleInstitution.
 
@@ -546,7 +546,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __TitleInstitution.SortColumn.TitleInstitutionID);
 		/// </summary>
 		[Serializable]

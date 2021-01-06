@@ -1,5 +1,5 @@
 
-// Generated 6/19/2020 3:21:49 PM
+// Generated 1/5/2021 3:26:27 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class NameSourceGNFinderDAL is based upon dbo.NameSourceGNFinder.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<NameSourceGNFinder> helper = new CustomSqlHelper<NameSourceGNFinder>())
 				{
-					CustomGenericList<NameSourceGNFinder> list = helper.ExecuteReader(command);
+					List<NameSourceGNFinder> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						NameSourceGNFinder o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="dataSourceID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> NameSourceGNFinderSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> NameSourceGNFinderSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int dataSourceID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="dataSourceID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> NameSourceGNFinderSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> NameSourceGNFinderSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -189,12 +190,12 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("BHLIdentifierID", SqlDbType.Int, null, false, bHLIdentifierID),
 					CustomSqlHelper.CreateInputParameter("GNDataSourceLabel", SqlDbType.NVarChar, 200, false, gNDataSourceLabel),
 					CustomSqlHelper.CreateInputParameter("GNDataSourceIcon", SqlDbType.NVarChar, 300, false, gNDataSourceIcon),
-					CustomSqlHelper.CreateInputParameter("GNDataSourceURLFormat", SqlDbType.NVarChar, 300, true, gNDataSourceURLFormat), 
+					CustomSqlHelper.CreateInputParameter("GNDataSourceURLFormat", SqlDbType.NVarChar, 300, false, gNDataSourceURLFormat), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<NameSourceGNFinder> helper = new CustomSqlHelper<NameSourceGNFinder>())
 				{
-					CustomGenericList<NameSourceGNFinder> list = helper.ExecuteReader(command);
+					List<NameSourceGNFinder> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						NameSourceGNFinder o = list[0];
@@ -367,12 +368,12 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("BHLIdentifierID", SqlDbType.Int, null, false, bHLIdentifierID),
 					CustomSqlHelper.CreateInputParameter("GNDataSourceLabel", SqlDbType.NVarChar, 200, false, gNDataSourceLabel),
 					CustomSqlHelper.CreateInputParameter("GNDataSourceIcon", SqlDbType.NVarChar, 300, false, gNDataSourceIcon),
-					CustomSqlHelper.CreateInputParameter("GNDataSourceURLFormat", SqlDbType.NVarChar, 300, true, gNDataSourceURLFormat), 
+					CustomSqlHelper.CreateInputParameter("GNDataSourceURLFormat", SqlDbType.NVarChar, 300, false, gNDataSourceURLFormat), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<NameSourceGNFinder> helper = new CustomSqlHelper<NameSourceGNFinder>())
 				{
-					CustomGenericList<NameSourceGNFinder> list = helper.ExecuteReader(command);
+					List<NameSourceGNFinder> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						NameSourceGNFinder o = list[0];

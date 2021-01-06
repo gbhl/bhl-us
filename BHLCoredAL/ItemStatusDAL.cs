@@ -40,7 +40,7 @@ namespace MOBOT.BHL.DAL
 			{
 				transaction = CustomSqlHelper.BeginTransaction( connection, transaction, isTransactionCoordinator );
 
-				new ItemStatusDAL().ItemStatusManageAuto( connection, transaction, itemStatus );
+				new ItemStatusDAL().ItemStatusManageAuto( connection, transaction, itemStatus, itemStatus.LastModifiedUserID );
 
 				CustomSqlHelper.CommitTransaction( transaction, isTransactionCoordinator );
 			}

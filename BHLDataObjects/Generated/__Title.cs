@@ -1,5 +1,5 @@
 
-// Generated 6/28/2017 2:38:16 PM
+// Generated 1/5/2021 3:27:05 PM
 // Do not modify the contents of this code file.
 // This abstract class __Title is based upon dbo.Title.
 
@@ -934,9 +934,9 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: Note;
-		/// DBMS data type: nvarchar(255); Nullable;
+		/// DBMS data type: nvarchar(MAX); Nullable;
 		/// </summary>
-		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=22, IsNullable=true)]
+		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=22, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string Note
 		{
 			get
@@ -1428,7 +1428,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Title.SortColumn.TitleID);
 		/// </summary>
 		[Serializable]

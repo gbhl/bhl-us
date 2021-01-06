@@ -1,8 +1,8 @@
 
-// Generated 1/23/2009 8:46:39 AM
+// Generated 1/5/2021 3:26:49 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class PDFStatusDAL is based upon PDFStatus.
+// This partial class PDFStatusDAL is based upon dbo.PDFStatus.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from PDFStatus by primary key(s).
+		/// Select values from dbo.PDFStatus by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from PDFStatus by primary key(s).
+		/// Select values from dbo.PDFStatus by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PDFStatus> helper = new CustomSqlHelper<PDFStatus>())
 				{
-					CustomGenericList<PDFStatus> list = helper.ExecuteReader(command);
+					List<PDFStatus> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PDFStatus o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from PDFStatus by primary key(s).
+		/// Select values from dbo.PDFStatus by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="pdfStatusID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> PDFStatusSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PDFStatusSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int pdfStatusID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from PDFStatus by primary key(s).
+		/// Select values from dbo.PDFStatus by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="pdfStatusID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> PDFStatusSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PDFStatusSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into PDFStatus.
+		/// Insert values into dbo.PDFStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -149,7 +150,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into PDFStatus.
+		/// Insert values into dbo.PDFStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -174,7 +175,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PDFStatus> helper = new CustomSqlHelper<PDFStatus>())
 				{
-					CustomGenericList<PDFStatus> list = helper.ExecuteReader(command);
+					List<PDFStatus> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PDFStatus o = list[0];
@@ -190,7 +191,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into PDFStatus. Returns an object of type PDFStatus.
+		/// Insert values into dbo.PDFStatus. Returns an object of type PDFStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -205,7 +206,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into PDFStatus. Returns an object of type PDFStatus.
+		/// Insert values into dbo.PDFStatus. Returns an object of type PDFStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -228,7 +229,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from PDFStatus by primary key(s).
+		/// Delete values from dbo.PDFStatus by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -243,7 +244,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from PDFStatus by primary key(s).
+		/// Delete values from dbo.PDFStatus by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -286,7 +287,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in PDFStatus. Returns an object of type PDFStatus.
+		/// Update values in dbo.PDFStatus. Returns an object of type PDFStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -303,7 +304,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in PDFStatus. Returns an object of type PDFStatus.
+		/// Update values in dbo.PDFStatus. Returns an object of type PDFStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -328,7 +329,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PDFStatus> helper = new CustomSqlHelper<PDFStatus>())
 				{
-					CustomGenericList<PDFStatus> list = helper.ExecuteReader(command);
+					List<PDFStatus> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PDFStatus o = list[0];
@@ -344,7 +345,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in PDFStatus. Returns an object of type PDFStatus.
+		/// Update values in dbo.PDFStatus. Returns an object of type PDFStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -359,7 +360,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in PDFStatus. Returns an object of type PDFStatus.
+		/// Update values in dbo.PDFStatus. Returns an object of type PDFStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -382,9 +383,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage PDFStatus object.
+		/// Manage dbo.PDFStatus object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in PDFStatus.
+		/// then either insert values into, delete values from, or update values in dbo.PDFStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -399,9 +400,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage PDFStatus object.
+		/// Manage dbo.PDFStatus object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in PDFStatus.
+		/// then either insert values into, delete values from, or update values in dbo.PDFStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -465,4 +466,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

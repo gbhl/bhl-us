@@ -1,8 +1,8 @@
 
-// Generated 4/2/2012 3:02:06 PM
+// Generated 1/5/2021 3:25:07 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class CollectionDAL is based upon Collection.
+// This partial class CollectionDAL is based upon dbo.Collection.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Collection by primary key(s).
+		/// Select values from dbo.Collection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from Collection by primary key(s).
+		/// Select values from dbo.Collection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
 				{
-					CustomGenericList<Collection> list = helper.ExecuteReader(command);
+					List<Collection> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Collection o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Collection by primary key(s).
+		/// Select values from dbo.Collection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="collectionID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> CollectionSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> CollectionSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int collectionID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Collection by primary key(s).
+		/// Select values from dbo.Collection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="collectionID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> CollectionSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> CollectionSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,28 +129,28 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Collection.
+		/// Insert values into dbo.Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="collectionName"></param>
 		/// <param name="collectionDescription"></param>
 		/// <param name="collectionURL"></param>
-		/// <param name="imageURL"></param>
 		/// <param name="htmlContent"></param>
 		/// <param name="canContainTitles"></param>
 		/// <param name="canContainItems"></param>
 		/// <param name="institutionCode"></param>
 		/// <param name="languageCode"></param>
+		/// <param name="active"></param>
 		/// <param name="collectionTarget"></param>
 		/// <param name="iTunesImageURL"></param>
 		/// <param name="iTunesURL"></param>
+		/// <param name="imageURL"></param>
 		/// <param name="featured"></param>
-		/// <param name="active"></param>
 		/// <returns>Object of type Collection.</returns>
 		public Collection CollectionInsertAuto(
 			SqlConnection sqlConnection, 
@@ -157,23 +158,23 @@ namespace MOBOT.BHL.DAL
 			string collectionName,
 			string collectionDescription,
 			string collectionURL,
-			string imageURL,
 			string htmlContent,
 			short canContainTitles,
 			short canContainItems,
 			string institutionCode,
 			string languageCode,
+			short active,
 			string collectionTarget,
 			string iTunesImageURL,
 			string iTunesURL,
-			short featured,
-			short active)
+			string imageURL,
+			short featured)
 		{
-			return CollectionInsertAuto( sqlConnection, sqlTransaction, "BHL", collectionName, collectionDescription, collectionURL, imageURL, htmlContent, canContainTitles, canContainItems, institutionCode, languageCode, collectionTarget, iTunesImageURL, iTunesURL, featured, active );
+			return CollectionInsertAuto( sqlConnection, sqlTransaction, "BHL", collectionName, collectionDescription, collectionURL, htmlContent, canContainTitles, canContainItems, institutionCode, languageCode, active, collectionTarget, iTunesImageURL, iTunesURL, imageURL, featured );
 		}
 		
 		/// <summary>
-		/// Insert values into Collection.
+		/// Insert values into dbo.Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -181,17 +182,17 @@ namespace MOBOT.BHL.DAL
 		/// <param name="collectionName"></param>
 		/// <param name="collectionDescription"></param>
 		/// <param name="collectionURL"></param>
-		/// <param name="imageURL"></param>
 		/// <param name="htmlContent"></param>
 		/// <param name="canContainTitles"></param>
 		/// <param name="canContainItems"></param>
 		/// <param name="institutionCode"></param>
 		/// <param name="languageCode"></param>
+		/// <param name="active"></param>
 		/// <param name="collectionTarget"></param>
 		/// <param name="iTunesImageURL"></param>
 		/// <param name="iTunesURL"></param>
+		/// <param name="imageURL"></param>
 		/// <param name="featured"></param>
-		/// <param name="active"></param>
 		/// <returns>Object of type Collection.</returns>
 		public Collection CollectionInsertAuto(
 			SqlConnection sqlConnection, 
@@ -200,17 +201,17 @@ namespace MOBOT.BHL.DAL
 			string collectionName,
 			string collectionDescription,
 			string collectionURL,
-			string imageURL,
 			string htmlContent,
 			short canContainTitles,
 			short canContainItems,
 			string institutionCode,
 			string languageCode,
+			short active,
 			string collectionTarget,
 			string iTunesImageURL,
 			string iTunesURL,
-			short featured,
-			short active)
+			string imageURL,
+			short featured)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -220,22 +221,22 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("CollectionName", SqlDbType.NVarChar, 50, false, collectionName),
 					CustomSqlHelper.CreateInputParameter("CollectionDescription", SqlDbType.NVarChar, 4000, false, collectionDescription),
 					CustomSqlHelper.CreateInputParameter("CollectionURL", SqlDbType.NVarChar, 50, false, collectionURL),
-					CustomSqlHelper.CreateInputParameter("ImageURL", SqlDbType.NVarChar, 100, false, imageURL),
 					CustomSqlHelper.CreateInputParameter("HtmlContent", SqlDbType.NVarChar, 1073741823, false, htmlContent),
 					CustomSqlHelper.CreateInputParameter("CanContainTitles", SqlDbType.SmallInt, null, false, canContainTitles),
 					CustomSqlHelper.CreateInputParameter("CanContainItems", SqlDbType.SmallInt, null, false, canContainItems),
 					CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, true, institutionCode),
 					CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, true, languageCode),
+					CustomSqlHelper.CreateInputParameter("Active", SqlDbType.SmallInt, null, false, active),
 					CustomSqlHelper.CreateInputParameter("CollectionTarget", SqlDbType.NVarChar, 30, false, collectionTarget),
 					CustomSqlHelper.CreateInputParameter("ITunesImageURL", SqlDbType.NVarChar, 100, false, iTunesImageURL),
 					CustomSqlHelper.CreateInputParameter("ITunesURL", SqlDbType.NVarChar, 100, false, iTunesURL),
-					CustomSqlHelper.CreateInputParameter("Featured", SqlDbType.SmallInt, null, false, featured),
-					CustomSqlHelper.CreateInputParameter("Active", SqlDbType.SmallInt, null, false, active), 
+					CustomSqlHelper.CreateInputParameter("ImageURL", SqlDbType.NVarChar, 100, false, imageURL),
+					CustomSqlHelper.CreateInputParameter("Featured", SqlDbType.SmallInt, null, false, featured), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
 				{
-					CustomGenericList<Collection> list = helper.ExecuteReader(command);
+					List<Collection> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Collection o = list[0];
@@ -251,7 +252,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Collection. Returns an object of type Collection.
+		/// Insert values into dbo.Collection. Returns an object of type Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -266,7 +267,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Collection. Returns an object of type Collection.
+		/// Insert values into dbo.Collection. Returns an object of type Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -283,17 +284,17 @@ namespace MOBOT.BHL.DAL
 				value.CollectionName,
 				value.CollectionDescription,
 				value.CollectionURL,
-				value.ImageURL,
 				value.HtmlContent,
 				value.CanContainTitles,
 				value.CanContainItems,
 				value.InstitutionCode,
 				value.LanguageCode,
+				value.Active,
 				value.CollectionTarget,
 				value.ITunesImageURL,
 				value.ITunesURL,
-				value.Featured,
-				value.Active);
+				value.ImageURL,
+				value.Featured);
 		}
 		
 		#endregion ===== INSERT =====
@@ -301,7 +302,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Collection by primary key(s).
+		/// Delete values from dbo.Collection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -316,7 +317,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from Collection by primary key(s).
+		/// Delete values from dbo.Collection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -359,7 +360,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Collection. Returns an object of type Collection.
+		/// Update values in dbo.Collection. Returns an object of type Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -367,17 +368,17 @@ namespace MOBOT.BHL.DAL
 		/// <param name="collectionName"></param>
 		/// <param name="collectionDescription"></param>
 		/// <param name="collectionURL"></param>
-		/// <param name="imageURL"></param>
 		/// <param name="htmlContent"></param>
 		/// <param name="canContainTitles"></param>
 		/// <param name="canContainItems"></param>
 		/// <param name="institutionCode"></param>
 		/// <param name="languageCode"></param>
+		/// <param name="active"></param>
 		/// <param name="collectionTarget"></param>
 		/// <param name="iTunesImageURL"></param>
 		/// <param name="iTunesURL"></param>
+		/// <param name="imageURL"></param>
 		/// <param name="featured"></param>
-		/// <param name="active"></param>
 		/// <returns>Object of type Collection.</returns>
 		public Collection CollectionUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -386,23 +387,23 @@ namespace MOBOT.BHL.DAL
 			string collectionName,
 			string collectionDescription,
 			string collectionURL,
-			string imageURL,
 			string htmlContent,
 			short canContainTitles,
 			short canContainItems,
 			string institutionCode,
 			string languageCode,
+			short active,
 			string collectionTarget,
 			string iTunesImageURL,
 			string iTunesURL,
-			short featured,
-			short active)
+			string imageURL,
+			short featured)
 		{
-			return CollectionUpdateAuto( sqlConnection, sqlTransaction, "BHL", collectionID, collectionName, collectionDescription, collectionURL, imageURL, htmlContent, canContainTitles, canContainItems, institutionCode, languageCode, collectionTarget, iTunesImageURL, iTunesURL, featured, active);
+			return CollectionUpdateAuto( sqlConnection, sqlTransaction, "BHL", collectionID, collectionName, collectionDescription, collectionURL, htmlContent, canContainTitles, canContainItems, institutionCode, languageCode, active, collectionTarget, iTunesImageURL, iTunesURL, imageURL, featured);
 		}
 		
 		/// <summary>
-		/// Update values in Collection. Returns an object of type Collection.
+		/// Update values in dbo.Collection. Returns an object of type Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -411,17 +412,17 @@ namespace MOBOT.BHL.DAL
 		/// <param name="collectionName"></param>
 		/// <param name="collectionDescription"></param>
 		/// <param name="collectionURL"></param>
-		/// <param name="imageURL"></param>
 		/// <param name="htmlContent"></param>
 		/// <param name="canContainTitles"></param>
 		/// <param name="canContainItems"></param>
 		/// <param name="institutionCode"></param>
 		/// <param name="languageCode"></param>
+		/// <param name="active"></param>
 		/// <param name="collectionTarget"></param>
 		/// <param name="iTunesImageURL"></param>
 		/// <param name="iTunesURL"></param>
+		/// <param name="imageURL"></param>
 		/// <param name="featured"></param>
-		/// <param name="active"></param>
 		/// <returns>Object of type Collection.</returns>
 		public Collection CollectionUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -431,17 +432,17 @@ namespace MOBOT.BHL.DAL
 			string collectionName,
 			string collectionDescription,
 			string collectionURL,
-			string imageURL,
 			string htmlContent,
 			short canContainTitles,
 			short canContainItems,
 			string institutionCode,
 			string languageCode,
+			short active,
 			string collectionTarget,
 			string iTunesImageURL,
 			string iTunesURL,
-			short featured,
-			short active)
+			string imageURL,
+			short featured)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -451,22 +452,22 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("CollectionName", SqlDbType.NVarChar, 50, false, collectionName),
 					CustomSqlHelper.CreateInputParameter("CollectionDescription", SqlDbType.NVarChar, 4000, false, collectionDescription),
 					CustomSqlHelper.CreateInputParameter("CollectionURL", SqlDbType.NVarChar, 50, false, collectionURL),
-					CustomSqlHelper.CreateInputParameter("ImageURL", SqlDbType.NVarChar, 100, false, imageURL),
 					CustomSqlHelper.CreateInputParameter("HtmlContent", SqlDbType.NVarChar, 1073741823, false, htmlContent),
 					CustomSqlHelper.CreateInputParameter("CanContainTitles", SqlDbType.SmallInt, null, false, canContainTitles),
 					CustomSqlHelper.CreateInputParameter("CanContainItems", SqlDbType.SmallInt, null, false, canContainItems),
 					CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, true, institutionCode),
 					CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, true, languageCode),
+					CustomSqlHelper.CreateInputParameter("Active", SqlDbType.SmallInt, null, false, active),
 					CustomSqlHelper.CreateInputParameter("CollectionTarget", SqlDbType.NVarChar, 30, false, collectionTarget),
 					CustomSqlHelper.CreateInputParameter("ITunesImageURL", SqlDbType.NVarChar, 100, false, iTunesImageURL),
 					CustomSqlHelper.CreateInputParameter("ITunesURL", SqlDbType.NVarChar, 100, false, iTunesURL),
-					CustomSqlHelper.CreateInputParameter("Featured", SqlDbType.SmallInt, null, false, featured),
-					CustomSqlHelper.CreateInputParameter("Active", SqlDbType.SmallInt, null, false, active), 
+					CustomSqlHelper.CreateInputParameter("ImageURL", SqlDbType.NVarChar, 100, false, imageURL),
+					CustomSqlHelper.CreateInputParameter("Featured", SqlDbType.SmallInt, null, false, featured), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
 				{
-					CustomGenericList<Collection> list = helper.ExecuteReader(command);
+					List<Collection> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Collection o = list[0];
@@ -482,7 +483,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Collection. Returns an object of type Collection.
+		/// Update values in dbo.Collection. Returns an object of type Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -497,7 +498,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Collection. Returns an object of type Collection.
+		/// Update values in dbo.Collection. Returns an object of type Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -515,17 +516,17 @@ namespace MOBOT.BHL.DAL
 				value.CollectionName,
 				value.CollectionDescription,
 				value.CollectionURL,
-				value.ImageURL,
 				value.HtmlContent,
 				value.CanContainTitles,
 				value.CanContainItems,
 				value.InstitutionCode,
 				value.LanguageCode,
+				value.Active,
 				value.CollectionTarget,
 				value.ITunesImageURL,
 				value.ITunesURL,
-				value.Featured,
-				value.Active);
+				value.ImageURL,
+				value.Featured);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -533,9 +534,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Collection object.
+		/// Manage dbo.Collection object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Collection.
+		/// then either insert values into, delete values from, or update values in dbo.Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -550,9 +551,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage Collection object.
+		/// Manage dbo.Collection object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Collection.
+		/// then either insert values into, delete values from, or update values in dbo.Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -573,17 +574,17 @@ namespace MOBOT.BHL.DAL
 					value.CollectionName,
 						value.CollectionDescription,
 						value.CollectionURL,
-						value.ImageURL,
 						value.HtmlContent,
 						value.CanContainTitles,
 						value.CanContainItems,
 						value.InstitutionCode,
 						value.LanguageCode,
+						value.Active,
 						value.CollectionTarget,
 						value.ITunesImageURL,
 						value.ITunesURL,
-						value.Featured,
-						value.Active);
+						value.ImageURL,
+						value.Featured);
 				
 				return new CustomDataAccessStatus<Collection>(
 					CustomDataAccessContext.Insert, 
@@ -613,17 +614,17 @@ namespace MOBOT.BHL.DAL
 						value.CollectionName,
 						value.CollectionDescription,
 						value.CollectionURL,
-						value.ImageURL,
 						value.HtmlContent,
 						value.CanContainTitles,
 						value.CanContainItems,
 						value.InstitutionCode,
 						value.LanguageCode,
+						value.Active,
 						value.CollectionTarget,
 						value.ITunesImageURL,
 						value.ITunesURL,
-						value.Featured,
-						value.Active);
+						value.ImageURL,
+						value.Featured);
 					
 				return new CustomDataAccessStatus<Collection>(
 					CustomDataAccessContext.Update, 
@@ -641,4 +642,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

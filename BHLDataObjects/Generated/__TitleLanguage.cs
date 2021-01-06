@@ -1,7 +1,7 @@
 
-// Generated 2/4/2011 12:08:43 PM
+// Generated 1/5/2021 3:27:22 PM
 // Do not modify the contents of this code file.
-// This abstract class __TitleLanguage is based upon TitleLanguage.
+// This abstract class __TitleLanguage is based upon dbo.TitleLanguage.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __TitleLanguage : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -112,7 +112,7 @@ namespace MOBOT.BHL.DataObjects
 						_CreationUserID = (int?)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -120,7 +120,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region TitleLanguageID
 		
@@ -260,7 +260,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion CreationUserID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -401,7 +401,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __TitleLanguage.SortColumn.TitleLanguageID);
 		/// </summary>
 		[Serializable]
@@ -418,3 +417,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

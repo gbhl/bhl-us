@@ -1,7 +1,7 @@
 
-// Generated 11/24/2010 3:52:48 PM
+// Generated 1/5/2021 2:15:15 PM
 // Do not modify the contents of this code file.
-// This abstract class __IAScandata is based upon IAScandata.
+// This abstract class __IAScandata is based upon dbo.IAScandata.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __IAScandata : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -50,35 +50,35 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="sequence"></param>
 		/// <param name="pageType"></param>
 		/// <param name="pageNumber"></param>
+		/// <param name="createdDate"></param>
+		/// <param name="lastModifiedDate"></param>
 		/// <param name="year"></param>
 		/// <param name="volume"></param>
 		/// <param name="issue"></param>
 		/// <param name="issuePrefix"></param>
-		/// <param name="createdDate"></param>
-		/// <param name="lastModifiedDate"></param>
 		public __IAScandata(int scandataID, 
 			int itemID, 
 			int sequence, 
 			string pageType, 
 			string pageNumber, 
+			DateTime createdDate, 
+			DateTime lastModifiedDate, 
 			string year, 
 			string volume, 
 			string issue, 
-			string issuePrefix, 
-			DateTime createdDate, 
-			DateTime lastModifiedDate) : this()
+			string issuePrefix) : this()
 		{
 			_ScandataID = scandataID;
 			ItemID = itemID;
 			Sequence = sequence;
 			PageType = pageType;
 			PageNumber = pageNumber;
+			CreatedDate = createdDate;
+			LastModifiedDate = lastModifiedDate;
 			Year = year;
 			Volume = volume;
 			Issue = issue;
 			IssuePrefix = issuePrefix;
-			CreatedDate = createdDate;
-			LastModifiedDate = lastModifiedDate;
 		}
 		
 		#endregion Constructors
@@ -130,6 +130,16 @@ namespace MOBOT.BHLImport.DataObjects
 						_PageNumber = (string)column.Value;
 						break;
 					}
+					case "CreatedDate" :
+					{
+						_CreatedDate = (DateTime)column.Value;
+						break;
+					}
+					case "LastModifiedDate" :
+					{
+						_LastModifiedDate = (DateTime)column.Value;
+						break;
+					}
 					case "Year" :
 					{
 						_Year = (string)column.Value;
@@ -150,17 +160,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_IssuePrefix = (string)column.Value;
 						break;
 					}
-					case "CreatedDate" :
-					{
-						_CreatedDate = (DateTime)column.Value;
-						break;
-					}
-					case "LastModifiedDate" :
-					{
-						_LastModifiedDate = (DateTime)column.Value;
-						break;
-					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -168,7 +168,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region ScandataID
 		
@@ -308,6 +308,60 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion PageNumber
 		
+		#region CreatedDate
+		
+		private DateTime _CreatedDate;
+		
+		/// <summary>
+		/// Column: CreatedDate;
+		/// DBMS data type: datetime;
+		/// </summary>
+		[ColumnDefinition("CreatedDate", DbTargetType=SqlDbType.DateTime, Ordinal=6)]
+		public DateTime CreatedDate
+		{
+			get
+			{
+				return _CreatedDate;
+			}
+			set
+			{
+				if (_CreatedDate != value)
+				{
+					_CreatedDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreatedDate
+		
+		#region LastModifiedDate
+		
+		private DateTime _LastModifiedDate;
+		
+		/// <summary>
+		/// Column: LastModifiedDate;
+		/// DBMS data type: datetime;
+		/// </summary>
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=7)]
+		public DateTime LastModifiedDate
+		{
+			get
+			{
+				return _LastModifiedDate;
+			}
+			set
+			{
+				if (_LastModifiedDate != value)
+				{
+					_LastModifiedDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedDate
+		
 		#region Year
 		
 		private string _Year = null;
@@ -316,7 +370,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Year;
 		/// DBMS data type: nvarchar(20); Nullable;
 		/// </summary>
-		[ColumnDefinition("Year", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=20, IsNullable=true)]
+		[ColumnDefinition("Year", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=20, IsNullable=true)]
 		public string Year
 		{
 			get
@@ -344,7 +398,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Volume;
 		/// DBMS data type: nvarchar(20); Nullable;
 		/// </summary>
-		[ColumnDefinition("Volume", DbTargetType=SqlDbType.NVarChar, Ordinal=7, CharacterMaxLength=20, IsNullable=true)]
+		[ColumnDefinition("Volume", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=20, IsNullable=true)]
 		public string Volume
 		{
 			get
@@ -372,7 +426,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Issue;
 		/// DBMS data type: nvarchar(20); Nullable;
 		/// </summary>
-		[ColumnDefinition("Issue", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=20, IsNullable=true)]
+		[ColumnDefinition("Issue", DbTargetType=SqlDbType.NVarChar, Ordinal=10, CharacterMaxLength=20, IsNullable=true)]
 		public string Issue
 		{
 			get
@@ -400,7 +454,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: IssuePrefix;
 		/// DBMS data type: nvarchar(20); Nullable;
 		/// </summary>
-		[ColumnDefinition("IssuePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=20, IsNullable=true)]
+		[ColumnDefinition("IssuePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=11, CharacterMaxLength=20, IsNullable=true)]
 		public string IssuePrefix
 		{
 			get
@@ -419,63 +473,9 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion IssuePrefix
-		
-		#region CreatedDate
-		
-		private DateTime _CreatedDate;
-		
-		/// <summary>
-		/// Column: CreatedDate;
-		/// DBMS data type: datetime;
-		/// </summary>
-		[ColumnDefinition("CreatedDate", DbTargetType=SqlDbType.DateTime, Ordinal=10)]
-		public DateTime CreatedDate
-		{
-			get
-			{
-				return _CreatedDate;
-			}
-			set
-			{
-				if (_CreatedDate != value)
-				{
-					_CreatedDate = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion CreatedDate
-		
-		#region LastModifiedDate
-		
-		private DateTime _LastModifiedDate;
-		
-		/// <summary>
-		/// Column: LastModifiedDate;
-		/// DBMS data type: datetime;
-		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=11)]
-		public DateTime LastModifiedDate
-		{
-			get
-			{
-				return _LastModifiedDate;
-			}
-			set
-			{
-				if (_LastModifiedDate != value)
-				{
-					_LastModifiedDate = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -522,12 +522,12 @@ namespace MOBOT.BHLImport.DataObjects
 					o.Sequence == Sequence &&
 					GetComparisonString(o.PageType) == GetComparisonString(PageType) &&
 					GetComparisonString(o.PageNumber) == GetComparisonString(PageNumber) &&
+					o.CreatedDate == CreatedDate &&
+					o.LastModifiedDate == LastModifiedDate &&
 					GetComparisonString(o.Year) == GetComparisonString(Year) &&
 					GetComparisonString(o.Volume) == GetComparisonString(Volume) &&
 					GetComparisonString(o.Issue) == GetComparisonString(Issue) &&
-					GetComparisonString(o.IssuePrefix) == GetComparisonString(IssuePrefix) &&
-					o.CreatedDate == CreatedDate &&
-					o.LastModifiedDate == LastModifiedDate 
+					GetComparisonString(o.IssuePrefix) == GetComparisonString(IssuePrefix) 
 				)
 				{
 					o = null;
@@ -622,7 +622,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __IAScandata.SortColumn.ScandataID);
 		/// </summary>
 		[Serializable]
@@ -633,15 +632,16 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string Sequence = "Sequence";	
 			public const string PageType = "PageType";	
 			public const string PageNumber = "PageNumber";	
+			public const string CreatedDate = "CreatedDate";	
+			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string Year = "Year";	
 			public const string Volume = "Volume";	
 			public const string Issue = "Issue";	
-			public const string IssuePrefix = "IssuePrefix";	
-			public const string CreatedDate = "CreatedDate";	
-			public const string LastModifiedDate = "LastModifiedDate";
+			public const string IssuePrefix = "IssuePrefix";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

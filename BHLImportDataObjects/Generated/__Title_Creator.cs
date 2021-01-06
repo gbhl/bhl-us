@@ -1,7 +1,7 @@
 
-// Generated 9/4/2008 2:16:32 PM
+// Generated 1/5/2021 2:18:24 PM
 // Do not modify the contents of this code file.
-// This abstract class __Title_Creator is based upon Title_Creator.
+// This abstract class __Title_Creator is based upon dbo.Title_Creator.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Title_Creator : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -47,10 +47,6 @@ namespace MOBOT.BHLImport.DataObjects
 		/// </summary>
 		/// <param name="titleCreatorID"></param>
 		/// <param name="creatorName"></param>
-		/// <param name="mARCCreator_a"></param>
-		/// <param name="mARCCreator_b"></param>
-		/// <param name="mARCCreator_c"></param>
-		/// <param name="mARCCreator_d"></param>
 		/// <param name="creatorRoleTypeID"></param>
 		/// <param name="importKey"></param>
 		/// <param name="importStatusID"></param>
@@ -62,12 +58,16 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="productionDate"></param>
 		/// <param name="createdDate"></param>
 		/// <param name="lastModifiedDate"></param>
+		/// <param name="mARCCreator_a"></param>
+		/// <param name="mARCCreator_b"></param>
+		/// <param name="mARCCreator_c"></param>
+		/// <param name="mARCCreator_d"></param>
+		/// <param name="mARCCreator_e"></param>
+		/// <param name="mARCCreator_q"></param>
+		/// <param name="mARCCreator_t"></param>
+		/// <param name="sequenceOrder"></param>
 		public __Title_Creator(int titleCreatorID, 
 			string creatorName, 
-			string mARCCreator_a, 
-			string mARCCreator_b, 
-			string mARCCreator_c, 
-			string mARCCreator_d, 
 			int creatorRoleTypeID, 
 			string importKey, 
 			int importStatusID, 
@@ -78,14 +78,18 @@ namespace MOBOT.BHLImport.DataObjects
 			int? externalLastModifiedUser, 
 			DateTime? productionDate, 
 			DateTime createdDate, 
-			DateTime lastModifiedDate) : this()
+			DateTime lastModifiedDate, 
+			string mARCCreator_a, 
+			string mARCCreator_b, 
+			string mARCCreator_c, 
+			string mARCCreator_d, 
+			string mARCCreator_e, 
+			string mARCCreator_q, 
+			string mARCCreator_t, 
+			short? sequenceOrder) : this()
 		{
 			_TitleCreatorID = titleCreatorID;
 			CreatorName = creatorName;
-			MARCCreator_a = mARCCreator_a;
-			MARCCreator_b = mARCCreator_b;
-			MARCCreator_c = mARCCreator_c;
-			MARCCreator_d = mARCCreator_d;
 			CreatorRoleTypeID = creatorRoleTypeID;
 			ImportKey = importKey;
 			ImportStatusID = importStatusID;
@@ -97,6 +101,14 @@ namespace MOBOT.BHLImport.DataObjects
 			ProductionDate = productionDate;
 			CreatedDate = createdDate;
 			LastModifiedDate = lastModifiedDate;
+			MARCCreator_a = mARCCreator_a;
+			MARCCreator_b = mARCCreator_b;
+			MARCCreator_c = mARCCreator_c;
+			MARCCreator_d = mARCCreator_d;
+			MARCCreator_e = mARCCreator_e;
+			MARCCreator_q = mARCCreator_q;
+			MARCCreator_t = mARCCreator_t;
+			SequenceOrder = sequenceOrder;
 		}
 		
 		#endregion Constructors
@@ -131,26 +143,6 @@ namespace MOBOT.BHLImport.DataObjects
 					case "CreatorName" :
 					{
 						_CreatorName = (string)column.Value;
-						break;
-					}
-					case "MARCCreator_a" :
-					{
-						_MARCCreator_a = (string)column.Value;
-						break;
-					}
-					case "MARCCreator_b" :
-					{
-						_MARCCreator_b = (string)column.Value;
-						break;
-					}
-					case "MARCCreator_c" :
-					{
-						_MARCCreator_c = (string)column.Value;
-						break;
-					}
-					case "MARCCreator_d" :
-					{
-						_MARCCreator_d = (string)column.Value;
 						break;
 					}
 					case "CreatorRoleTypeID" :
@@ -208,7 +200,47 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+					case "MARCCreator_a" :
+					{
+						_MARCCreator_a = (string)column.Value;
+						break;
+					}
+					case "MARCCreator_b" :
+					{
+						_MARCCreator_b = (string)column.Value;
+						break;
+					}
+					case "MARCCreator_c" :
+					{
+						_MARCCreator_c = (string)column.Value;
+						break;
+					}
+					case "MARCCreator_d" :
+					{
+						_MARCCreator_d = (string)column.Value;
+						break;
+					}
+					case "MARCCreator_e" :
+					{
+						_MARCCreator_e = (string)column.Value;
+						break;
+					}
+					case "MARCCreator_q" :
+					{
+						_MARCCreator_q = (string)column.Value;
+						break;
+					}
+					case "MARCCreator_t" :
+					{
+						_MARCCreator_t = (string)column.Value;
+						break;
+					}
+					case "SequenceOrder" :
+					{
+						_SequenceOrder = (short?)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -216,7 +248,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region TitleCreatorID
 		
@@ -274,118 +306,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion CreatorName
 		
-		#region MARCCreator_a
-		
-		private string _MARCCreator_a = null;
-		
-		/// <summary>
-		/// Column: MARCCreator_a;
-		/// DBMS data type: nvarchar(450); Nullable;
-		/// </summary>
-		[ColumnDefinition("MARCCreator_a", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=450, IsNullable=true)]
-		public string MARCCreator_a
-		{
-			get
-			{
-				return _MARCCreator_a;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 450);
-				if (_MARCCreator_a != value)
-				{
-					_MARCCreator_a = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion MARCCreator_a
-		
-		#region MARCCreator_b
-		
-		private string _MARCCreator_b = null;
-		
-		/// <summary>
-		/// Column: MARCCreator_b;
-		/// DBMS data type: nvarchar(450); Nullable;
-		/// </summary>
-		[ColumnDefinition("MARCCreator_b", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=450, IsNullable=true)]
-		public string MARCCreator_b
-		{
-			get
-			{
-				return _MARCCreator_b;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 450);
-				if (_MARCCreator_b != value)
-				{
-					_MARCCreator_b = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion MARCCreator_b
-		
-		#region MARCCreator_c
-		
-		private string _MARCCreator_c = null;
-		
-		/// <summary>
-		/// Column: MARCCreator_c;
-		/// DBMS data type: nvarchar(450); Nullable;
-		/// </summary>
-		[ColumnDefinition("MARCCreator_c", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=450, IsNullable=true)]
-		public string MARCCreator_c
-		{
-			get
-			{
-				return _MARCCreator_c;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 450);
-				if (_MARCCreator_c != value)
-				{
-					_MARCCreator_c = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion MARCCreator_c
-		
-		#region MARCCreator_d
-		
-		private string _MARCCreator_d = null;
-		
-		/// <summary>
-		/// Column: MARCCreator_d;
-		/// DBMS data type: nvarchar(450); Nullable;
-		/// </summary>
-		[ColumnDefinition("MARCCreator_d", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=450, IsNullable=true)]
-		public string MARCCreator_d
-		{
-			get
-			{
-				return _MARCCreator_d;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 450);
-				if (_MARCCreator_d != value)
-				{
-					_MARCCreator_d = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion MARCCreator_d
-		
 		#region CreatorRoleTypeID
 		
 		private int _CreatorRoleTypeID = default(int);
@@ -394,7 +314,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: CreatorRoleTypeID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("CreatorRoleTypeID", DbTargetType=SqlDbType.Int, Ordinal=7, NumericPrecision=10)]
+		[ColumnDefinition("CreatorRoleTypeID", DbTargetType=SqlDbType.Int, Ordinal=3, NumericPrecision=10)]
 		public int CreatorRoleTypeID
 		{
 			get
@@ -421,7 +341,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ImportKey;
 		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("ImportKey", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=50)]
+		[ColumnDefinition("ImportKey", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=50)]
 		public string ImportKey
 		{
 			get
@@ -449,7 +369,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ImportStatusID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("ImportStatusID", DbTargetType=SqlDbType.Int, Ordinal=9, NumericPrecision=10, IsInForeignKey=true)]
+		[ColumnDefinition("ImportStatusID", DbTargetType=SqlDbType.Int, Ordinal=5, NumericPrecision=10, IsInForeignKey=true)]
 		public int ImportStatusID
 		{
 			get
@@ -476,7 +396,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ImportSourceID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("ImportSourceID", DbTargetType=SqlDbType.Int, Ordinal=10, NumericPrecision=10, IsInForeignKey=true, IsNullable=true)]
+		[ColumnDefinition("ImportSourceID", DbTargetType=SqlDbType.Int, Ordinal=6, NumericPrecision=10, IsInForeignKey=true, IsNullable=true)]
 		public int? ImportSourceID
 		{
 			get
@@ -503,7 +423,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ExternalCreationDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalCreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=11, IsNullable=true)]
+		[ColumnDefinition("ExternalCreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=7, IsNullable=true)]
 		public DateTime? ExternalCreationDate
 		{
 			get
@@ -530,7 +450,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ExternalLastModifiedDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalLastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=12, IsNullable=true)]
+		[ColumnDefinition("ExternalLastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=8, IsNullable=true)]
 		public DateTime? ExternalLastModifiedDate
 		{
 			get
@@ -557,7 +477,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ExternalCreationUser;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalCreationUser", DbTargetType=SqlDbType.Int, Ordinal=13, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("ExternalCreationUser", DbTargetType=SqlDbType.Int, Ordinal=9, NumericPrecision=10, IsNullable=true)]
 		public int? ExternalCreationUser
 		{
 			get
@@ -584,7 +504,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ExternalLastModifiedUser;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalLastModifiedUser", DbTargetType=SqlDbType.Int, Ordinal=14, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("ExternalLastModifiedUser", DbTargetType=SqlDbType.Int, Ordinal=10, NumericPrecision=10, IsNullable=true)]
 		public int? ExternalLastModifiedUser
 		{
 			get
@@ -611,7 +531,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ProductionDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("ProductionDate", DbTargetType=SqlDbType.DateTime, Ordinal=15, IsNullable=true)]
+		[ColumnDefinition("ProductionDate", DbTargetType=SqlDbType.DateTime, Ordinal=11, IsNullable=true)]
 		public DateTime? ProductionDate
 		{
 			get
@@ -638,7 +558,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: CreatedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreatedDate", DbTargetType=SqlDbType.DateTime, Ordinal=16)]
+		[ColumnDefinition("CreatedDate", DbTargetType=SqlDbType.DateTime, Ordinal=12)]
 		public DateTime CreatedDate
 		{
 			get
@@ -665,7 +585,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=17)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=13)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -683,9 +603,232 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion LastModifiedDate
+		
+		#region MARCCreator_a
+		
+		private string _MARCCreator_a = null;
+		
+		/// <summary>
+		/// Column: MARCCreator_a;
+		/// DBMS data type: nvarchar(450); Nullable;
+		/// </summary>
+		[ColumnDefinition("MARCCreator_a", DbTargetType=SqlDbType.NVarChar, Ordinal=14, CharacterMaxLength=450, IsNullable=true)]
+		public string MARCCreator_a
+		{
+			get
+			{
+				return _MARCCreator_a;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 450);
+				if (_MARCCreator_a != value)
+				{
+					_MARCCreator_a = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion MARCCreator_a
+		
+		#region MARCCreator_b
+		
+		private string _MARCCreator_b = null;
+		
+		/// <summary>
+		/// Column: MARCCreator_b;
+		/// DBMS data type: nvarchar(450); Nullable;
+		/// </summary>
+		[ColumnDefinition("MARCCreator_b", DbTargetType=SqlDbType.NVarChar, Ordinal=15, CharacterMaxLength=450, IsNullable=true)]
+		public string MARCCreator_b
+		{
+			get
+			{
+				return _MARCCreator_b;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 450);
+				if (_MARCCreator_b != value)
+				{
+					_MARCCreator_b = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion MARCCreator_b
+		
+		#region MARCCreator_c
+		
+		private string _MARCCreator_c = null;
+		
+		/// <summary>
+		/// Column: MARCCreator_c;
+		/// DBMS data type: nvarchar(450); Nullable;
+		/// </summary>
+		[ColumnDefinition("MARCCreator_c", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=450, IsNullable=true)]
+		public string MARCCreator_c
+		{
+			get
+			{
+				return _MARCCreator_c;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 450);
+				if (_MARCCreator_c != value)
+				{
+					_MARCCreator_c = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion MARCCreator_c
+		
+		#region MARCCreator_d
+		
+		private string _MARCCreator_d = null;
+		
+		/// <summary>
+		/// Column: MARCCreator_d;
+		/// DBMS data type: nvarchar(450); Nullable;
+		/// </summary>
+		[ColumnDefinition("MARCCreator_d", DbTargetType=SqlDbType.NVarChar, Ordinal=17, CharacterMaxLength=450, IsNullable=true)]
+		public string MARCCreator_d
+		{
+			get
+			{
+				return _MARCCreator_d;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 450);
+				if (_MARCCreator_d != value)
+				{
+					_MARCCreator_d = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion MARCCreator_d
+		
+		#region MARCCreator_e
+		
+		private string _MARCCreator_e = null;
+		
+		/// <summary>
+		/// Column: MARCCreator_e;
+		/// DBMS data type: nvarchar(450); Nullable;
+		/// </summary>
+		[ColumnDefinition("MARCCreator_e", DbTargetType=SqlDbType.NVarChar, Ordinal=18, CharacterMaxLength=450, IsNullable=true)]
+		public string MARCCreator_e
+		{
+			get
+			{
+				return _MARCCreator_e;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 450);
+				if (_MARCCreator_e != value)
+				{
+					_MARCCreator_e = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion MARCCreator_e
+		
+		#region MARCCreator_q
+		
+		private string _MARCCreator_q = null;
+		
+		/// <summary>
+		/// Column: MARCCreator_q;
+		/// DBMS data type: nvarchar(450); Nullable;
+		/// </summary>
+		[ColumnDefinition("MARCCreator_q", DbTargetType=SqlDbType.NVarChar, Ordinal=19, CharacterMaxLength=450, IsNullable=true)]
+		public string MARCCreator_q
+		{
+			get
+			{
+				return _MARCCreator_q;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 450);
+				if (_MARCCreator_q != value)
+				{
+					_MARCCreator_q = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion MARCCreator_q
+		
+		#region MARCCreator_t
+		
+		private string _MARCCreator_t = null;
+		
+		/// <summary>
+		/// Column: MARCCreator_t;
+		/// DBMS data type: nvarchar(450); Nullable;
+		/// </summary>
+		[ColumnDefinition("MARCCreator_t", DbTargetType=SqlDbType.NVarChar, Ordinal=20, CharacterMaxLength=450, IsNullable=true)]
+		public string MARCCreator_t
+		{
+			get
+			{
+				return _MARCCreator_t;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 450);
+				if (_MARCCreator_t != value)
+				{
+					_MARCCreator_t = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion MARCCreator_t
+		
+		#region SequenceOrder
+		
+		private short? _SequenceOrder = null;
+		
+		/// <summary>
+		/// Column: SequenceOrder;
+		/// DBMS data type: smallint; Nullable;
+		/// </summary>
+		[ColumnDefinition("SequenceOrder", DbTargetType=SqlDbType.SmallInt, Ordinal=21, NumericPrecision=5, IsNullable=true)]
+		public short? SequenceOrder
+		{
+			get
+			{
+				return _SequenceOrder;
+			}
+			set
+			{
+				if (_SequenceOrder != value)
+				{
+					_SequenceOrder = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion SequenceOrder
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -729,10 +872,6 @@ namespace MOBOT.BHLImport.DataObjects
 					o.IsDeleted == IsDeleted &&
 					o.TitleCreatorID == TitleCreatorID &&
 					GetComparisonString(o.CreatorName) == GetComparisonString(CreatorName) &&
-					GetComparisonString(o.MARCCreator_a) == GetComparisonString(MARCCreator_a) &&
-					GetComparisonString(o.MARCCreator_b) == GetComparisonString(MARCCreator_b) &&
-					GetComparisonString(o.MARCCreator_c) == GetComparisonString(MARCCreator_c) &&
-					GetComparisonString(o.MARCCreator_d) == GetComparisonString(MARCCreator_d) &&
 					o.CreatorRoleTypeID == CreatorRoleTypeID &&
 					GetComparisonString(o.ImportKey) == GetComparisonString(ImportKey) &&
 					o.ImportStatusID == ImportStatusID &&
@@ -743,7 +882,15 @@ namespace MOBOT.BHLImport.DataObjects
 					o.ExternalLastModifiedUser == ExternalLastModifiedUser &&
 					o.ProductionDate == ProductionDate &&
 					o.CreatedDate == CreatedDate &&
-					o.LastModifiedDate == LastModifiedDate 
+					o.LastModifiedDate == LastModifiedDate &&
+					GetComparisonString(o.MARCCreator_a) == GetComparisonString(MARCCreator_a) &&
+					GetComparisonString(o.MARCCreator_b) == GetComparisonString(MARCCreator_b) &&
+					GetComparisonString(o.MARCCreator_c) == GetComparisonString(MARCCreator_c) &&
+					GetComparisonString(o.MARCCreator_d) == GetComparisonString(MARCCreator_d) &&
+					GetComparisonString(o.MARCCreator_e) == GetComparisonString(MARCCreator_e) &&
+					GetComparisonString(o.MARCCreator_q) == GetComparisonString(MARCCreator_q) &&
+					GetComparisonString(o.MARCCreator_t) == GetComparisonString(MARCCreator_t) &&
+					o.SequenceOrder == SequenceOrder 
 				)
 				{
 					o = null;
@@ -838,7 +985,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Title_Creator.SortColumn.TitleCreatorID);
 		/// </summary>
 		[Serializable]
@@ -846,10 +992,6 @@ namespace MOBOT.BHLImport.DataObjects
 		{	
 			public const string TitleCreatorID = "TitleCreatorID";	
 			public const string CreatorName = "CreatorName";	
-			public const string MARCCreator_a = "MARCCreator_a";	
-			public const string MARCCreator_b = "MARCCreator_b";	
-			public const string MARCCreator_c = "MARCCreator_c";	
-			public const string MARCCreator_d = "MARCCreator_d";	
 			public const string CreatorRoleTypeID = "CreatorRoleTypeID";	
 			public const string ImportKey = "ImportKey";	
 			public const string ImportStatusID = "ImportStatusID";	
@@ -860,10 +1002,19 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string ExternalLastModifiedUser = "ExternalLastModifiedUser";	
 			public const string ProductionDate = "ProductionDate";	
 			public const string CreatedDate = "CreatedDate";	
-			public const string LastModifiedDate = "LastModifiedDate";
+			public const string LastModifiedDate = "LastModifiedDate";	
+			public const string MARCCreator_a = "MARCCreator_a";	
+			public const string MARCCreator_b = "MARCCreator_b";	
+			public const string MARCCreator_c = "MARCCreator_c";	
+			public const string MARCCreator_d = "MARCCreator_d";	
+			public const string MARCCreator_e = "MARCCreator_e";	
+			public const string MARCCreator_q = "MARCCreator_q";	
+			public const string MARCCreator_t = "MARCCreator_t";	
+			public const string SequenceOrder = "SequenceOrder";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

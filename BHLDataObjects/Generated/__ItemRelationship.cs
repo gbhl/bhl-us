@@ -1,5 +1,5 @@
 
-// Generated 10/19/2020 12:51:49 PM
+// Generated 1/5/2021 3:25:48 PM
 // Do not modify the contents of this code file.
 // This abstract class __ItemRelationship is based upon dbo.ItemRelationship.
 
@@ -508,7 +508,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __ItemRelationship.SortColumn.RelationshipID);
 		/// </summary>
 		[Serializable]

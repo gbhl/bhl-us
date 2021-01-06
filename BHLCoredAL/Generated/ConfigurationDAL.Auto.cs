@@ -1,8 +1,8 @@
 
-// Generated 6/10/2011 4:56:25 PM
+// Generated 1/5/2021 3:25:09 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class ConfigurationDAL is based upon Configuration.
+// This partial class ConfigurationDAL is based upon dbo.Configuration.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Configuration by primary key(s).
+		/// Select values from dbo.Configuration by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from Configuration by primary key(s).
+		/// Select values from dbo.Configuration by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Configuration> helper = new CustomSqlHelper<Configuration>())
 				{
-					CustomGenericList<Configuration> list = helper.ExecuteReader(command);
+					List<Configuration> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Configuration o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Configuration by primary key(s).
+		/// Select values from dbo.Configuration by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="configurationID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ConfigurationSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ConfigurationSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int configurationID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Configuration by primary key(s).
+		/// Select values from dbo.Configuration by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="configurationID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ConfigurationSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ConfigurationSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Configuration.
+		/// Insert values into dbo.Configuration.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -151,7 +152,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Configuration.
+		/// Insert values into dbo.Configuration.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -179,7 +180,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Configuration> helper = new CustomSqlHelper<Configuration>())
 				{
-					CustomGenericList<Configuration> list = helper.ExecuteReader(command);
+					List<Configuration> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Configuration o = list[0];
@@ -195,7 +196,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Configuration. Returns an object of type Configuration.
+		/// Insert values into dbo.Configuration. Returns an object of type Configuration.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -210,7 +211,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Configuration. Returns an object of type Configuration.
+		/// Insert values into dbo.Configuration. Returns an object of type Configuration.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -234,7 +235,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Configuration by primary key(s).
+		/// Delete values from dbo.Configuration by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -249,7 +250,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from Configuration by primary key(s).
+		/// Delete values from dbo.Configuration by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -292,7 +293,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Configuration. Returns an object of type Configuration.
+		/// Update values in dbo.Configuration. Returns an object of type Configuration.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -311,7 +312,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Configuration. Returns an object of type Configuration.
+		/// Update values in dbo.Configuration. Returns an object of type Configuration.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -339,7 +340,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Configuration> helper = new CustomSqlHelper<Configuration>())
 				{
-					CustomGenericList<Configuration> list = helper.ExecuteReader(command);
+					List<Configuration> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Configuration o = list[0];
@@ -355,7 +356,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Configuration. Returns an object of type Configuration.
+		/// Update values in dbo.Configuration. Returns an object of type Configuration.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -370,7 +371,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Configuration. Returns an object of type Configuration.
+		/// Update values in dbo.Configuration. Returns an object of type Configuration.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -394,9 +395,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Configuration object.
+		/// Manage dbo.Configuration object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Configuration.
+		/// then either insert values into, delete values from, or update values in dbo.Configuration.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -411,9 +412,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage Configuration object.
+		/// Manage dbo.Configuration object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Configuration.
+		/// then either insert values into, delete values from, or update values in dbo.Configuration.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -479,4 +480,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

@@ -1,8 +1,8 @@
 
-// Generated 1/24/2008 10:03:58 AM
+// Generated 1/5/2021 3:27:33 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class VaultDAL is based upon Vault.
+// This partial class VaultDAL is based upon dbo.Vault.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,18 +38,35 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Vault by primary key(s).
+		/// Select values from dbo.Vault by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="vaultID">Unique identifier for each Vault entry.</param>
+		/// <param name="vaultID"></param>
 		/// <returns>Object of type Vault.</returns>
 		public Vault VaultSelectAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int vaultID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return VaultSelectAuto(	sqlConnection, sqlTransaction, "BHL",	vaultID );
+		}
+			
+		/// <summary>
+		/// Select values from dbo.Vault by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="vaultID"></param>
+		/// <returns>Object of type Vault.</returns>
+		public Vault VaultSelectAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int vaultID )
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings( connectionKeyName ), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("VaultSelectAuto", connection, transaction, 
@@ -56,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Vault> helper = new CustomSqlHelper<Vault>())
 				{
-					CustomGenericList<Vault> list = helper.ExecuteReader(command);
+					List<Vault> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Vault o = list[0];
@@ -72,18 +90,35 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Vault by primary key(s).
+		/// Select values from dbo.Vault by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="vaultID">Unique identifier for each Vault entry.</param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> VaultSelectAutoRaw(
+		/// <param name="vaultID"></param>
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> VaultSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int vaultID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return VaultSelectAutoRaw( sqlConnection, sqlTransaction, "BHL", vaultID );
+		}
+		
+		/// <summary>
+		/// Select values from dbo.Vault by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="vaultID"></param>
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> VaultSelectAutoRaw(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int vaultID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("VaultSelectAuto", connection, transaction,
@@ -94,18 +129,18 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Vault.
+		/// Insert values into dbo.Vault.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="vaultID">Unique identifier for each Vault entry.</param>
-		/// <param name="server">Name of server for this Vault entry.</param>
-		/// <param name="folderShare">Name for the folder share for this Vault entry.</param>
-		/// <param name="webVirtualDirectory">Name for the Web Virtual Directory for this Vault entry.</param>
+		/// <param name="vaultID"></param>
+		/// <param name="server"></param>
+		/// <param name="folderShare"></param>
+		/// <param name="webVirtualDirectory"></param>
 		/// <param name="oCRFolderShare"></param>
 		/// <returns>Object of type Vault.</returns>
 		public Vault VaultInsertAuto(
@@ -117,7 +152,32 @@ namespace MOBOT.BHL.DAL
 			string webVirtualDirectory,
 			string oCRFolderShare)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return VaultInsertAuto( sqlConnection, sqlTransaction, "BHL", vaultID, server, folderShare, webVirtualDirectory, oCRFolderShare );
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.Vault.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="vaultID"></param>
+		/// <param name="server"></param>
+		/// <param name="folderShare"></param>
+		/// <param name="webVirtualDirectory"></param>
+		/// <param name="oCRFolderShare"></param>
+		/// <returns>Object of type Vault.</returns>
+		public Vault VaultInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int vaultID,
+			string server,
+			string folderShare,
+			string webVirtualDirectory,
+			string oCRFolderShare)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("VaultInsertAuto", connection, transaction, 
@@ -130,7 +190,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Vault> helper = new CustomSqlHelper<Vault>())
 				{
-					CustomGenericList<Vault> list = helper.ExecuteReader(command);
+					List<Vault> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Vault o = list[0];
@@ -146,7 +206,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Vault. Returns an object of type Vault.
+		/// Insert values into dbo.Vault. Returns an object of type Vault.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -157,7 +217,24 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			Vault value)
 		{
-			return VaultInsertAuto(sqlConnection, sqlTransaction, 
+			return VaultInsertAuto(sqlConnection, sqlTransaction, "BHL", value);
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.Vault. Returns an object of type Vault.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type Vault.</param>
+		/// <returns>Object of type Vault.</returns>
+		public Vault VaultInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			Vault value)
+		{
+			return VaultInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.VaultID,
 				value.Server,
 				value.FolderShare,
@@ -170,18 +247,35 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Vault by primary key(s).
+		/// Delete values from dbo.Vault by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="vaultID">Unique identifier for each Vault entry.</param>
+		/// <param name="vaultID"></param>
 		/// <returns>true if successful otherwise false.</returns>
 		public bool VaultDeleteAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int vaultID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return VaultDeleteAuto( sqlConnection, sqlTransaction, "BHL", vaultID );
+		}
+		
+		/// <summary>
+		/// Delete values from dbo.Vault by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="vaultID"></param>
+		/// <returns>true if successful otherwise false.</returns>
+		public bool VaultDeleteAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int vaultID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("VaultDeleteAuto", connection, transaction, 
@@ -211,14 +305,14 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Vault. Returns an object of type Vault.
+		/// Update values in dbo.Vault. Returns an object of type Vault.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="vaultID">Unique identifier for each Vault entry.</param>
-		/// <param name="server">Name of server for this Vault entry.</param>
-		/// <param name="folderShare">Name for the folder share for this Vault entry.</param>
-		/// <param name="webVirtualDirectory">Name for the Web Virtual Directory for this Vault entry.</param>
+		/// <param name="vaultID"></param>
+		/// <param name="server"></param>
+		/// <param name="folderShare"></param>
+		/// <param name="webVirtualDirectory"></param>
 		/// <param name="oCRFolderShare"></param>
 		/// <returns>Object of type Vault.</returns>
 		public Vault VaultUpdateAuto(
@@ -230,7 +324,32 @@ namespace MOBOT.BHL.DAL
 			string webVirtualDirectory,
 			string oCRFolderShare)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return VaultUpdateAuto( sqlConnection, sqlTransaction, "BHL", vaultID, server, folderShare, webVirtualDirectory, oCRFolderShare);
+		}
+		
+		/// <summary>
+		/// Update values in dbo.Vault. Returns an object of type Vault.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="vaultID"></param>
+		/// <param name="server"></param>
+		/// <param name="folderShare"></param>
+		/// <param name="webVirtualDirectory"></param>
+		/// <param name="oCRFolderShare"></param>
+		/// <returns>Object of type Vault.</returns>
+		public Vault VaultUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int vaultID,
+			string server,
+			string folderShare,
+			string webVirtualDirectory,
+			string oCRFolderShare)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("VaultUpdateAuto", connection, transaction, 
@@ -243,7 +362,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Vault> helper = new CustomSqlHelper<Vault>())
 				{
-					CustomGenericList<Vault> list = helper.ExecuteReader(command);
+					List<Vault> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Vault o = list[0];
@@ -259,7 +378,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Vault. Returns an object of type Vault.
+		/// Update values in dbo.Vault. Returns an object of type Vault.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -270,7 +389,24 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			Vault value)
 		{
-			return VaultUpdateAuto(sqlConnection, sqlTransaction,
+			return VaultUpdateAuto(sqlConnection, sqlTransaction, "BHL", value );
+		}
+		
+		/// <summary>
+		/// Update values in dbo.Vault. Returns an object of type Vault.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type Vault.</param>
+		/// <returns>Object of type Vault.</returns>
+		public Vault VaultUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			Vault value)
+		{
+			return VaultUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.VaultID,
 				value.Server,
 				value.FolderShare,
@@ -283,9 +419,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Vault object.
+		/// Manage dbo.Vault object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Vault.
+		/// then either insert values into, delete values from, or update values in dbo.Vault.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -296,11 +432,30 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			Vault value  )
 		{
+			return VaultManageAuto( sqlConnection, sqlTransaction, "BHL", value  );
+		}
+		
+		/// <summary>
+		/// Manage dbo.Vault object.
+		/// If the object is of type CustomObjectBase, 
+		/// then either insert values into, delete values from, or update values in dbo.Vault.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type Vault.</param>
+		/// <returns>Object of type CustomDataAccessStatus<Vault>.</returns>
+		public CustomDataAccessStatus<Vault> VaultManageAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			Vault value  )
+		{
 			if (value.IsNew && !value.IsDeleted)
 			{
 				
 				
-				Vault returnValue = VaultInsertAuto(sqlConnection, sqlTransaction, 
+				Vault returnValue = VaultInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.VaultID,
 						value.Server,
 						value.FolderShare,
@@ -313,7 +468,7 @@ namespace MOBOT.BHL.DAL
 			}
 			else if (!value.IsNew && value.IsDeleted)
 			{
-				if (VaultDeleteAuto(sqlConnection, sqlTransaction, 
+				if (VaultDeleteAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.VaultID))
 				{
 				return new CustomDataAccessStatus<Vault>(
@@ -330,7 +485,7 @@ namespace MOBOT.BHL.DAL
 			else if (value.IsDirty && !value.IsDeleted)
 			{
 				
-				Vault returnValue = VaultUpdateAuto(sqlConnection, sqlTransaction, 
+				Vault returnValue = VaultUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.VaultID,
 						value.Server,
 						value.FolderShare,
@@ -353,4 +508,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

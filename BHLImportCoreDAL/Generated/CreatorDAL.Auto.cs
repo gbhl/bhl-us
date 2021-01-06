@@ -1,8 +1,8 @@
 
-// Generated 4/4/2008 9:03:06 AM
+// Generated 1/5/2021 2:13:31 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class CreatorDAL is based upon Creator.
+// This partial class CreatorDAL is based upon dbo.Creator.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Creator by primary key(s).
+		/// Select values from dbo.Creator by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -48,7 +49,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int creatorID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return CreatorSelectAuto(	sqlConnection, sqlTransaction, "BHLImport",	creatorID );
+		}
+			
+		/// <summary>
+		/// Select values from dbo.Creator by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="creatorID"></param>
+		/// <returns>Object of type Creator.</returns>
+		public Creator CreatorSelectAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int creatorID )
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings( connectionKeyName ), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("CreatorSelectAuto", connection, transaction, 
@@ -56,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<Creator> helper = new CustomSqlHelper<Creator>())
 				{
-					CustomGenericList<Creator> list = helper.ExecuteReader(command);
+					List<Creator> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Creator o = list[0];
@@ -72,18 +90,35 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Creator by primary key(s).
+		/// Select values from dbo.Creator by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="creatorID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> CreatorSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> CreatorSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int creatorID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return CreatorSelectAutoRaw( sqlConnection, sqlTransaction, "BHLImport", creatorID );
+		}
+		
+		/// <summary>
+		/// Select values from dbo.Creator by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="creatorID"></param>
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> CreatorSelectAutoRaw(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int creatorID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("CreatorSelectAuto", connection, transaction,
@@ -94,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Creator.
+		/// Insert values into dbo.Creator.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -120,6 +155,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="externalCreationDate"></param>
 		/// <param name="externalLastModifiedDate"></param>
 		/// <param name="productionDate"></param>
+		/// <param name="mARCCreator_q"></param>
 		/// <returns>Object of type Creator.</returns>
 		public Creator CreatorInsertAuto(
 			SqlConnection sqlConnection, 
@@ -141,9 +177,63 @@ namespace MOBOT.BHLImport.DAL
 			string mARCCreator_Full,
 			DateTime? externalCreationDate,
 			DateTime? externalLastModifiedDate,
-			DateTime? productionDate)
+			DateTime? productionDate,
+			string mARCCreator_q)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return CreatorInsertAuto( sqlConnection, sqlTransaction, "BHLImport", importStatusID, importSourceID, creatorName, firstNameFirst, simpleName, dOB, dOD, biography, creatorNote, mARCDataFieldTag, mARCCreator_a, mARCCreator_b, mARCCreator_c, mARCCreator_d, mARCCreator_Full, externalCreationDate, externalLastModifiedDate, productionDate, mARCCreator_q );
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.Creator.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="importStatusID"></param>
+		/// <param name="importSourceID"></param>
+		/// <param name="creatorName"></param>
+		/// <param name="firstNameFirst"></param>
+		/// <param name="simpleName"></param>
+		/// <param name="dOB"></param>
+		/// <param name="dOD"></param>
+		/// <param name="biography"></param>
+		/// <param name="creatorNote"></param>
+		/// <param name="mARCDataFieldTag"></param>
+		/// <param name="mARCCreator_a"></param>
+		/// <param name="mARCCreator_b"></param>
+		/// <param name="mARCCreator_c"></param>
+		/// <param name="mARCCreator_d"></param>
+		/// <param name="mARCCreator_Full"></param>
+		/// <param name="externalCreationDate"></param>
+		/// <param name="externalLastModifiedDate"></param>
+		/// <param name="productionDate"></param>
+		/// <param name="mARCCreator_q"></param>
+		/// <returns>Object of type Creator.</returns>
+		public Creator CreatorInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int importStatusID,
+			int? importSourceID,
+			string creatorName,
+			string firstNameFirst,
+			string simpleName,
+			string dOB,
+			string dOD,
+			string biography,
+			string creatorNote,
+			string mARCDataFieldTag,
+			string mARCCreator_a,
+			string mARCCreator_b,
+			string mARCCreator_c,
+			string mARCCreator_d,
+			string mARCCreator_Full,
+			DateTime? externalCreationDate,
+			DateTime? externalLastModifiedDate,
+			DateTime? productionDate,
+			string mARCCreator_q)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("CreatorInsertAuto", connection, transaction, 
@@ -165,12 +255,13 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("MARCCreator_Full", SqlDbType.NVarChar, 450, true, mARCCreator_Full),
 					CustomSqlHelper.CreateInputParameter("ExternalCreationDate", SqlDbType.DateTime, null, true, externalCreationDate),
 					CustomSqlHelper.CreateInputParameter("ExternalLastModifiedDate", SqlDbType.DateTime, null, true, externalLastModifiedDate),
-					CustomSqlHelper.CreateInputParameter("ProductionDate", SqlDbType.DateTime, null, true, productionDate), 
+					CustomSqlHelper.CreateInputParameter("ProductionDate", SqlDbType.DateTime, null, true, productionDate),
+					CustomSqlHelper.CreateInputParameter("MARCCreator_q", SqlDbType.NVarChar, 450, true, mARCCreator_q), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Creator> helper = new CustomSqlHelper<Creator>())
 				{
-					CustomGenericList<Creator> list = helper.ExecuteReader(command);
+					List<Creator> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Creator o = list[0];
@@ -186,7 +277,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Creator. Returns an object of type Creator.
+		/// Insert values into dbo.Creator. Returns an object of type Creator.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -197,7 +288,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			Creator value)
 		{
-			return CreatorInsertAuto(sqlConnection, sqlTransaction, 
+			return CreatorInsertAuto(sqlConnection, sqlTransaction, "BHLImport", value);
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.Creator. Returns an object of type Creator.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type Creator.</param>
+		/// <returns>Object of type Creator.</returns>
+		public Creator CreatorInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			Creator value)
+		{
+			return CreatorInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.ImportStatusID,
 				value.ImportSourceID,
 				value.CreatorName,
@@ -215,7 +323,8 @@ namespace MOBOT.BHLImport.DAL
 				value.MARCCreator_Full,
 				value.ExternalCreationDate,
 				value.ExternalLastModifiedDate,
-				value.ProductionDate);
+				value.ProductionDate,
+				value.MARCCreator_q);
 		}
 		
 		#endregion ===== INSERT =====
@@ -223,7 +332,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Creator by primary key(s).
+		/// Delete values from dbo.Creator by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -234,7 +343,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int creatorID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return CreatorDeleteAuto( sqlConnection, sqlTransaction, "BHLImport", creatorID );
+		}
+		
+		/// <summary>
+		/// Delete values from dbo.Creator by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="creatorID"></param>
+		/// <returns>true if successful otherwise false.</returns>
+		public bool CreatorDeleteAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int creatorID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("CreatorDeleteAuto", connection, transaction, 
@@ -264,7 +390,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Creator. Returns an object of type Creator.
+		/// Update values in dbo.Creator. Returns an object of type Creator.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -287,6 +413,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="externalCreationDate"></param>
 		/// <param name="externalLastModifiedDate"></param>
 		/// <param name="productionDate"></param>
+		/// <param name="mARCCreator_q"></param>
 		/// <returns>Object of type Creator.</returns>
 		public Creator CreatorUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -309,9 +436,65 @@ namespace MOBOT.BHLImport.DAL
 			string mARCCreator_Full,
 			DateTime? externalCreationDate,
 			DateTime? externalLastModifiedDate,
-			DateTime? productionDate)
+			DateTime? productionDate,
+			string mARCCreator_q)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return CreatorUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", creatorID, importStatusID, importSourceID, creatorName, firstNameFirst, simpleName, dOB, dOD, biography, creatorNote, mARCDataFieldTag, mARCCreator_a, mARCCreator_b, mARCCreator_c, mARCCreator_d, mARCCreator_Full, externalCreationDate, externalLastModifiedDate, productionDate, mARCCreator_q);
+		}
+		
+		/// <summary>
+		/// Update values in dbo.Creator. Returns an object of type Creator.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="creatorID"></param>
+		/// <param name="importStatusID"></param>
+		/// <param name="importSourceID"></param>
+		/// <param name="creatorName"></param>
+		/// <param name="firstNameFirst"></param>
+		/// <param name="simpleName"></param>
+		/// <param name="dOB"></param>
+		/// <param name="dOD"></param>
+		/// <param name="biography"></param>
+		/// <param name="creatorNote"></param>
+		/// <param name="mARCDataFieldTag"></param>
+		/// <param name="mARCCreator_a"></param>
+		/// <param name="mARCCreator_b"></param>
+		/// <param name="mARCCreator_c"></param>
+		/// <param name="mARCCreator_d"></param>
+		/// <param name="mARCCreator_Full"></param>
+		/// <param name="externalCreationDate"></param>
+		/// <param name="externalLastModifiedDate"></param>
+		/// <param name="productionDate"></param>
+		/// <param name="mARCCreator_q"></param>
+		/// <returns>Object of type Creator.</returns>
+		public Creator CreatorUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int creatorID,
+			int importStatusID,
+			int? importSourceID,
+			string creatorName,
+			string firstNameFirst,
+			string simpleName,
+			string dOB,
+			string dOD,
+			string biography,
+			string creatorNote,
+			string mARCDataFieldTag,
+			string mARCCreator_a,
+			string mARCCreator_b,
+			string mARCCreator_c,
+			string mARCCreator_d,
+			string mARCCreator_Full,
+			DateTime? externalCreationDate,
+			DateTime? externalLastModifiedDate,
+			DateTime? productionDate,
+			string mARCCreator_q)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("CreatorUpdateAuto", connection, transaction, 
@@ -333,12 +516,13 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("MARCCreator_Full", SqlDbType.NVarChar, 450, true, mARCCreator_Full),
 					CustomSqlHelper.CreateInputParameter("ExternalCreationDate", SqlDbType.DateTime, null, true, externalCreationDate),
 					CustomSqlHelper.CreateInputParameter("ExternalLastModifiedDate", SqlDbType.DateTime, null, true, externalLastModifiedDate),
-					CustomSqlHelper.CreateInputParameter("ProductionDate", SqlDbType.DateTime, null, true, productionDate), 
+					CustomSqlHelper.CreateInputParameter("ProductionDate", SqlDbType.DateTime, null, true, productionDate),
+					CustomSqlHelper.CreateInputParameter("MARCCreator_q", SqlDbType.NVarChar, 450, true, mARCCreator_q), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Creator> helper = new CustomSqlHelper<Creator>())
 				{
-					CustomGenericList<Creator> list = helper.ExecuteReader(command);
+					List<Creator> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Creator o = list[0];
@@ -354,7 +538,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Creator. Returns an object of type Creator.
+		/// Update values in dbo.Creator. Returns an object of type Creator.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -365,7 +549,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			Creator value)
 		{
-			return CreatorUpdateAuto(sqlConnection, sqlTransaction,
+			return CreatorUpdateAuto(sqlConnection, sqlTransaction, "BHLImport", value );
+		}
+		
+		/// <summary>
+		/// Update values in dbo.Creator. Returns an object of type Creator.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type Creator.</param>
+		/// <returns>Object of type Creator.</returns>
+		public Creator CreatorUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			Creator value)
+		{
+			return CreatorUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.CreatorID,
 				value.ImportStatusID,
 				value.ImportSourceID,
@@ -384,7 +585,8 @@ namespace MOBOT.BHLImport.DAL
 				value.MARCCreator_Full,
 				value.ExternalCreationDate,
 				value.ExternalLastModifiedDate,
-				value.ProductionDate);
+				value.ProductionDate,
+				value.MARCCreator_q);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -392,9 +594,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Creator object.
+		/// Manage dbo.Creator object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Creator.
+		/// then either insert values into, delete values from, or update values in dbo.Creator.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -405,11 +607,30 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			Creator value  )
 		{
+			return CreatorManageAuto( sqlConnection, sqlTransaction, "BHLImport", value  );
+		}
+		
+		/// <summary>
+		/// Manage dbo.Creator object.
+		/// If the object is of type CustomObjectBase, 
+		/// then either insert values into, delete values from, or update values in dbo.Creator.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type Creator.</param>
+		/// <returns>Object of type CustomDataAccessStatus<Creator>.</returns>
+		public CustomDataAccessStatus<Creator> CreatorManageAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			Creator value  )
+		{
 			if (value.IsNew && !value.IsDeleted)
 			{
 				
 				
-				Creator returnValue = CreatorInsertAuto(sqlConnection, sqlTransaction, 
+				Creator returnValue = CreatorInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.ImportStatusID,
 						value.ImportSourceID,
 						value.CreatorName,
@@ -427,7 +648,8 @@ namespace MOBOT.BHLImport.DAL
 						value.MARCCreator_Full,
 						value.ExternalCreationDate,
 						value.ExternalLastModifiedDate,
-						value.ProductionDate);
+						value.ProductionDate,
+						value.MARCCreator_q);
 				
 				return new CustomDataAccessStatus<Creator>(
 					CustomDataAccessContext.Insert, 
@@ -435,7 +657,7 @@ namespace MOBOT.BHLImport.DAL
 			}
 			else if (!value.IsNew && value.IsDeleted)
 			{
-				if (CreatorDeleteAuto(sqlConnection, sqlTransaction, 
+				if (CreatorDeleteAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.CreatorID))
 				{
 				return new CustomDataAccessStatus<Creator>(
@@ -452,7 +674,7 @@ namespace MOBOT.BHLImport.DAL
 			else if (value.IsDirty && !value.IsDeleted)
 			{
 				
-				Creator returnValue = CreatorUpdateAuto(sqlConnection, sqlTransaction, 
+				Creator returnValue = CreatorUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.CreatorID,
 						value.ImportStatusID,
 						value.ImportSourceID,
@@ -471,7 +693,8 @@ namespace MOBOT.BHLImport.DAL
 						value.MARCCreator_Full,
 						value.ExternalCreationDate,
 						value.ExternalLastModifiedDate,
-						value.ProductionDate);
+						value.ProductionDate,
+						value.MARCCreator_q);
 					
 				return new CustomDataAccessStatus<Creator>(
 					CustomDataAccessContext.Update, 
@@ -489,4 +712,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

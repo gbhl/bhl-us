@@ -1,7 +1,7 @@
 
-// Generated 2/27/2008 3:53:58 PM
+// Generated 1/5/2021 2:16:16 PM
 // Do not modify the contents of this code file.
-// This abstract class __ImportError is based upon ImportError.
+// This abstract class __ImportError is based upon dbo.ImportError.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __ImportError : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -152,7 +152,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_Message = (string)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -160,7 +160,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region ImportErrorID
 		
@@ -438,7 +438,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion Message
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -584,7 +584,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __ImportError.SortColumn.ImportErrorID);
 		/// </summary>
 		[Serializable]
@@ -606,3 +605,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

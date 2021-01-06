@@ -1,7 +1,7 @@
 
-// Generated 4/30/2009 3:40:16 PM
+// Generated 1/5/2021 3:25:50 PM
 // Do not modify the contents of this code file.
-// This abstract class __ItemSource is based upon ItemSource.
+// This abstract class __ItemSource is based upon dbo.ItemSource.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __ItemSource : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -48,22 +48,22 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="itemSourceID"></param>
 		/// <param name="sourceName"></param>
 		/// <param name="downloadUrl"></param>
-		/// <param name="imageServerUrlFormat"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
+		/// <param name="imageServerUrlFormat"></param>
 		public __ItemSource(int itemSourceID, 
 			string sourceName, 
 			string downloadUrl, 
-			string imageServerUrlFormat, 
 			DateTime creationDate, 
-			DateTime lastModifiedDate) : this()
+			DateTime lastModifiedDate, 
+			string imageServerUrlFormat) : this()
 		{
 			_ItemSourceID = itemSourceID;
 			SourceName = sourceName;
 			DownloadUrl = downloadUrl;
-			ImageServerUrlFormat = imageServerUrlFormat;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
+			ImageServerUrlFormat = imageServerUrlFormat;
 		}
 		
 		#endregion Constructors
@@ -105,11 +105,6 @@ namespace MOBOT.BHL.DataObjects
 						_DownloadUrl = (string)column.Value;
 						break;
 					}
-					case "ImageServerUrlFormat" :
-					{
-						_ImageServerUrlFormat = (string)column.Value;
-						break;
-					}
 					case "CreationDate" :
 					{
 						_CreationDate = (DateTime)column.Value;
@@ -120,7 +115,12 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+					case "ImageServerUrlFormat" :
+					{
+						_ImageServerUrlFormat = (string)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -128,7 +128,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region ItemSourceID
 		
@@ -214,34 +214,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion DownloadUrl
 		
-		#region ImageServerUrlFormat
-		
-		private string _ImageServerUrlFormat = string.Empty;
-		
-		/// <summary>
-		/// Column: ImageServerUrlFormat;
-		/// DBMS data type: nvarchar(200);
-		/// </summary>
-		[ColumnDefinition("ImageServerUrlFormat", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=200)]
-		public string ImageServerUrlFormat
-		{
-			get
-			{
-				return _ImageServerUrlFormat;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 200);
-				if (_ImageServerUrlFormat != value)
-				{
-					_ImageServerUrlFormat = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion ImageServerUrlFormat
-		
 		#region CreationDate
 		
 		private DateTime _CreationDate;
@@ -250,7 +222,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=5)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=4)]
 		public DateTime CreationDate
 		{
 			get
@@ -277,7 +249,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=6)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=5)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -295,9 +267,37 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion LastModifiedDate
+		
+		#region ImageServerUrlFormat
+		
+		private string _ImageServerUrlFormat = string.Empty;
+		
+		/// <summary>
+		/// Column: ImageServerUrlFormat;
+		/// DBMS data type: nvarchar(200);
+		/// </summary>
+		[ColumnDefinition("ImageServerUrlFormat", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=200)]
+		public string ImageServerUrlFormat
+		{
+			get
+			{
+				return _ImageServerUrlFormat;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 200);
+				if (_ImageServerUrlFormat != value)
+				{
+					_ImageServerUrlFormat = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ImageServerUrlFormat
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -342,9 +342,9 @@ namespace MOBOT.BHL.DataObjects
 					o.ItemSourceID == ItemSourceID &&
 					GetComparisonString(o.SourceName) == GetComparisonString(SourceName) &&
 					GetComparisonString(o.DownloadUrl) == GetComparisonString(DownloadUrl) &&
-					GetComparisonString(o.ImageServerUrlFormat) == GetComparisonString(ImageServerUrlFormat) &&
 					o.CreationDate == CreationDate &&
-					o.LastModifiedDate == LastModifiedDate 
+					o.LastModifiedDate == LastModifiedDate &&
+					GetComparisonString(o.ImageServerUrlFormat) == GetComparisonString(ImageServerUrlFormat) 
 				)
 				{
 					o = null;
@@ -439,7 +439,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __ItemSource.SortColumn.ItemSourceID);
 		/// </summary>
 		[Serializable]
@@ -448,12 +447,13 @@ namespace MOBOT.BHL.DataObjects
 			public const string ItemSourceID = "ItemSourceID";	
 			public const string SourceName = "SourceName";	
 			public const string DownloadUrl = "DownloadUrl";	
-			public const string ImageServerUrlFormat = "ImageServerUrlFormat";	
 			public const string CreationDate = "CreationDate";	
-			public const string LastModifiedDate = "LastModifiedDate";
+			public const string LastModifiedDate = "LastModifiedDate";	
+			public const string ImageServerUrlFormat = "ImageServerUrlFormat";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

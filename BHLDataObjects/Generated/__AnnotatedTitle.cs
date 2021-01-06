@@ -1,7 +1,7 @@
 
-// Generated 7/14/2010 1:25:28 PM
+// Generated 1/5/2021 3:36:27 PM
 // Do not modify the contents of this code file.
-// This abstract class __AnnotatedTitle is based upon AnnotatedTitle.
+// This abstract class __AnnotatedTitle is based upon annotation.AnnotatedTitle.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __AnnotatedTitle : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -192,7 +192,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -200,7 +200,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region AnnotatedTitleID
 		
@@ -619,7 +619,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -770,7 +770,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __AnnotatedTitle.SortColumn.AnnotatedTitleID);
 		/// </summary>
 		[Serializable]
@@ -797,3 +796,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

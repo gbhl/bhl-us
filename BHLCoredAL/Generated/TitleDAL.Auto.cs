@@ -1,5 +1,5 @@
 
-// Generated 6/28/2017 2:38:16 PM
+// Generated 1/5/2021 3:27:05 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class TitleDAL is based upon dbo.Title.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
 				{
-					CustomGenericList<Title> list = helper.ExecuteReader(command);
+					List<Title> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Title o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="titleID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int titleID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="titleID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -301,7 +302,7 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("TL2Author", SqlDbType.NVarChar, 100, true, tL2Author),
 					CustomSqlHelper.CreateInputParameter("PublishReady", SqlDbType.Bit, null, false, publishReady),
 					CustomSqlHelper.CreateInputParameter("RareBooks", SqlDbType.Bit, null, false, rareBooks),
-					CustomSqlHelper.CreateInputParameter("Note", SqlDbType.NVarChar, null, true, note),
+					CustomSqlHelper.CreateInputParameter("Note", SqlDbType.NVarChar, 1073741823, true, note),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
 					CustomSqlHelper.CreateInputParameter("OriginalCatalogingSource", SqlDbType.NVarChar, 100, true, originalCatalogingSource),
@@ -315,7 +316,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
 				{
-					CustomGenericList<Title> list = helper.ExecuteReader(command);
+					List<Title> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Title o = list[0];
@@ -624,7 +625,7 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("TL2Author", SqlDbType.NVarChar, 100, true, tL2Author),
 					CustomSqlHelper.CreateInputParameter("PublishReady", SqlDbType.Bit, null, false, publishReady),
 					CustomSqlHelper.CreateInputParameter("RareBooks", SqlDbType.Bit, null, false, rareBooks),
-					CustomSqlHelper.CreateInputParameter("Note", SqlDbType.NVarChar, null, true, note),
+					CustomSqlHelper.CreateInputParameter("Note", SqlDbType.NVarChar, 1073741823, true, note),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
 					CustomSqlHelper.CreateInputParameter("OriginalCatalogingSource", SqlDbType.NVarChar, 100, true, originalCatalogingSource),
 					CustomSqlHelper.CreateInputParameter("EditionStatement", SqlDbType.NVarChar, 450, true, editionStatement),
@@ -637,7 +638,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
 				{
-					CustomGenericList<Title> list = helper.ExecuteReader(command);
+					List<Title> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Title o = list[0];

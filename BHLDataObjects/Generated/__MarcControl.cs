@@ -1,5 +1,5 @@
 
-// Generated 2/15/2017 3:14:49 PM
+// Generated 1/5/2021 3:26:04 PM
 // Do not modify the contents of this code file.
 // This abstract class __MarcControl is based upon dbo.MarcControl.
 
@@ -438,7 +438,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __MarcControl.SortColumn.MarcControlID);
 		/// </summary>
 		[Serializable]

@@ -1,8 +1,8 @@
 
-// Generated 1/15/2008 11:27:51 AM
+// Generated 1/5/2021 2:14:38 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class IAMarcDAL is based upon IAMarc.
+// This partial class IAMarcDAL is based upon dbo.IAMarc.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from IAMarc by primary key(s).
+		/// Select values from dbo.IAMarc by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -48,7 +49,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int marcID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return IAMarcSelectAuto(	sqlConnection, sqlTransaction, "BHLImport",	marcID );
+		}
+			
+		/// <summary>
+		/// Select values from dbo.IAMarc by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="marcID"></param>
+		/// <returns>Object of type IAMarc.</returns>
+		public IAMarc IAMarcSelectAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int marcID )
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings( connectionKeyName ), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAMarcSelectAuto", connection, transaction, 
@@ -56,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAMarc> helper = new CustomSqlHelper<IAMarc>())
 				{
-					CustomGenericList<IAMarc> list = helper.ExecuteReader(command);
+					List<IAMarc> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAMarc o = list[0];
@@ -72,18 +90,35 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IAMarc by primary key(s).
+		/// Select values from dbo.IAMarc by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="marcID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IAMarcSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAMarcSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int marcID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return IAMarcSelectAutoRaw( sqlConnection, sqlTransaction, "BHLImport", marcID );
+		}
+		
+		/// <summary>
+		/// Select values from dbo.IAMarc by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="marcID"></param>
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAMarcSelectAutoRaw(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int marcID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAMarcSelectAuto", connection, transaction,
@@ -94,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into IAMarc.
+		/// Insert values into dbo.IAMarc.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -111,7 +146,26 @@ namespace MOBOT.BHLImport.DAL
 			int itemID,
 			string leader)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return IAMarcInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, leader );
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.IAMarc.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="itemID"></param>
+		/// <param name="leader"></param>
+		/// <returns>Object of type IAMarc.</returns>
+		public IAMarc IAMarcInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int itemID,
+			string leader)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAMarcInsertAuto", connection, transaction, 
@@ -122,7 +176,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAMarc> helper = new CustomSqlHelper<IAMarc>())
 				{
-					CustomGenericList<IAMarc> list = helper.ExecuteReader(command);
+					List<IAMarc> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAMarc o = list[0];
@@ -138,7 +192,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into IAMarc. Returns an object of type IAMarc.
+		/// Insert values into dbo.IAMarc. Returns an object of type IAMarc.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -149,7 +203,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			IAMarc value)
 		{
-			return IAMarcInsertAuto(sqlConnection, sqlTransaction, 
+			return IAMarcInsertAuto(sqlConnection, sqlTransaction, "BHLImport", value);
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.IAMarc. Returns an object of type IAMarc.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type IAMarc.</param>
+		/// <returns>Object of type IAMarc.</returns>
+		public IAMarc IAMarcInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			IAMarc value)
+		{
+			return IAMarcInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.ItemID,
 				value.Leader);
 		}
@@ -159,7 +230,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from IAMarc by primary key(s).
+		/// Delete values from dbo.IAMarc by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -170,7 +241,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int marcID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return IAMarcDeleteAuto( sqlConnection, sqlTransaction, "BHLImport", marcID );
+		}
+		
+		/// <summary>
+		/// Delete values from dbo.IAMarc by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="marcID"></param>
+		/// <returns>true if successful otherwise false.</returns>
+		public bool IAMarcDeleteAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int marcID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAMarcDeleteAuto", connection, transaction, 
@@ -200,7 +288,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in IAMarc. Returns an object of type IAMarc.
+		/// Update values in dbo.IAMarc. Returns an object of type IAMarc.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -215,7 +303,28 @@ namespace MOBOT.BHLImport.DAL
 			int itemID,
 			string leader)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return IAMarcUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", marcID, itemID, leader);
+		}
+		
+		/// <summary>
+		/// Update values in dbo.IAMarc. Returns an object of type IAMarc.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="marcID"></param>
+		/// <param name="itemID"></param>
+		/// <param name="leader"></param>
+		/// <returns>Object of type IAMarc.</returns>
+		public IAMarc IAMarcUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int marcID,
+			int itemID,
+			string leader)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAMarcUpdateAuto", connection, transaction, 
@@ -226,7 +335,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAMarc> helper = new CustomSqlHelper<IAMarc>())
 				{
-					CustomGenericList<IAMarc> list = helper.ExecuteReader(command);
+					List<IAMarc> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAMarc o = list[0];
@@ -242,7 +351,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAMarc. Returns an object of type IAMarc.
+		/// Update values in dbo.IAMarc. Returns an object of type IAMarc.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -253,7 +362,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			IAMarc value)
 		{
-			return IAMarcUpdateAuto(sqlConnection, sqlTransaction,
+			return IAMarcUpdateAuto(sqlConnection, sqlTransaction, "BHLImport", value );
+		}
+		
+		/// <summary>
+		/// Update values in dbo.IAMarc. Returns an object of type IAMarc.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type IAMarc.</param>
+		/// <returns>Object of type IAMarc.</returns>
+		public IAMarc IAMarcUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			IAMarc value)
+		{
+			return IAMarcUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.MarcID,
 				value.ItemID,
 				value.Leader);
@@ -264,9 +390,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage IAMarc object.
+		/// Manage dbo.IAMarc object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IAMarc.
+		/// then either insert values into, delete values from, or update values in dbo.IAMarc.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -277,11 +403,30 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			IAMarc value  )
 		{
+			return IAMarcManageAuto( sqlConnection, sqlTransaction, "BHLImport", value  );
+		}
+		
+		/// <summary>
+		/// Manage dbo.IAMarc object.
+		/// If the object is of type CustomObjectBase, 
+		/// then either insert values into, delete values from, or update values in dbo.IAMarc.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type IAMarc.</param>
+		/// <returns>Object of type CustomDataAccessStatus<IAMarc>.</returns>
+		public CustomDataAccessStatus<IAMarc> IAMarcManageAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			IAMarc value  )
+		{
 			if (value.IsNew && !value.IsDeleted)
 			{
 				
 				
-				IAMarc returnValue = IAMarcInsertAuto(sqlConnection, sqlTransaction, 
+				IAMarc returnValue = IAMarcInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.ItemID,
 						value.Leader);
 				
@@ -291,7 +436,7 @@ namespace MOBOT.BHLImport.DAL
 			}
 			else if (!value.IsNew && value.IsDeleted)
 			{
-				if (IAMarcDeleteAuto(sqlConnection, sqlTransaction, 
+				if (IAMarcDeleteAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.MarcID))
 				{
 				return new CustomDataAccessStatus<IAMarc>(
@@ -308,7 +453,7 @@ namespace MOBOT.BHLImport.DAL
 			else if (value.IsDirty && !value.IsDeleted)
 			{
 				
-				IAMarc returnValue = IAMarcUpdateAuto(sqlConnection, sqlTransaction, 
+				IAMarc returnValue = IAMarcUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.MarcID,
 						value.ItemID,
 						value.Leader);
@@ -329,4 +474,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

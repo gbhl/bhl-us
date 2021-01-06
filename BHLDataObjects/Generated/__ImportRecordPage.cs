@@ -1,5 +1,5 @@
 
-// Generated 10/24/2017 12:44:16 PM
+// Generated 1/5/2021 3:42:46 PM
 // Do not modify the contents of this code file.
 // This abstract class __ImportRecordPage is based upon import.ImportRecordPage.
 
@@ -508,7 +508,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __ImportRecordPage.SortColumn.ImportRecordPageID);
 		/// </summary>
 		[Serializable]

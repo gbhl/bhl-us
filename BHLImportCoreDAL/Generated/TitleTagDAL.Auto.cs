@@ -1,8 +1,8 @@
 
-// Generated 9/4/2008 2:16:32 PM
+// Generated 1/5/2021 2:18:57 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class TitleTagDAL is based upon TitleTag.
+// This partial class TitleTagDAL is based upon dbo.TitleTag.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from TitleTag by primary key(s).
+		/// Select values from dbo.TitleTag by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 			
 		/// <summary>
-		/// Select values from TitleTag by primary key(s).
+		/// Select values from dbo.TitleTag by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<TitleTag> helper = new CustomSqlHelper<TitleTag>())
 				{
-					CustomGenericList<TitleTag> list = helper.ExecuteReader(command);
+					List<TitleTag> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleTag o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from TitleTag by primary key(s).
+		/// Select values from dbo.TitleTag by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="titleTagID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleTagSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleTagSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int titleTagID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from TitleTag by primary key(s).
+		/// Select values from dbo.TitleTag by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="titleTagID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleTagSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleTagSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into TitleTag.
+		/// Insert values into dbo.TitleTag.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -163,7 +164,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into TitleTag.
+		/// Insert values into dbo.TitleTag.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -210,7 +211,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<TitleTag> helper = new CustomSqlHelper<TitleTag>())
 				{
-					CustomGenericList<TitleTag> list = helper.ExecuteReader(command);
+					List<TitleTag> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleTag o = list[0];
@@ -226,7 +227,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into TitleTag. Returns an object of type TitleTag.
+		/// Insert values into dbo.TitleTag. Returns an object of type TitleTag.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -241,7 +242,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into TitleTag. Returns an object of type TitleTag.
+		/// Insert values into dbo.TitleTag. Returns an object of type TitleTag.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -271,7 +272,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from TitleTag by primary key(s).
+		/// Delete values from dbo.TitleTag by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -286,7 +287,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from TitleTag by primary key(s).
+		/// Delete values from dbo.TitleTag by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -329,7 +330,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in TitleTag. Returns an object of type TitleTag.
+		/// Update values in dbo.TitleTag. Returns an object of type TitleTag.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -362,7 +363,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleTag. Returns an object of type TitleTag.
+		/// Update values in dbo.TitleTag. Returns an object of type TitleTag.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -411,7 +412,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<TitleTag> helper = new CustomSqlHelper<TitleTag>())
 				{
-					CustomGenericList<TitleTag> list = helper.ExecuteReader(command);
+					List<TitleTag> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleTag o = list[0];
@@ -427,7 +428,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleTag. Returns an object of type TitleTag.
+		/// Update values in dbo.TitleTag. Returns an object of type TitleTag.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -442,7 +443,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleTag. Returns an object of type TitleTag.
+		/// Update values in dbo.TitleTag. Returns an object of type TitleTag.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -473,9 +474,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage TitleTag object.
+		/// Manage dbo.TitleTag object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in TitleTag.
+		/// then either insert values into, delete values from, or update values in dbo.TitleTag.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -490,9 +491,9 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Manage TitleTag object.
+		/// Manage dbo.TitleTag object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in TitleTag.
+		/// then either insert values into, delete values from, or update values in dbo.TitleTag.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -571,4 +572,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

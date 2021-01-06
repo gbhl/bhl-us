@@ -1,5 +1,5 @@
 
-// Generated 10/16/2020 2:39:29 PM
+// Generated 1/5/2021 3:25:55 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class ItemTitleDAL is based upon dbo.ItemTitle.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ItemTitle> helper = new CustomSqlHelper<ItemTitle>())
 				{
-					CustomGenericList<ItemTitle> list = helper.ExecuteReader(command);
+					List<ItemTitle> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ItemTitle o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="itemTitleID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ItemTitleSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ItemTitleSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int itemTitleID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="itemTitleID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ItemTitleSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ItemTitleSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -195,7 +196,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ItemTitle> helper = new CustomSqlHelper<ItemTitle>())
 				{
-					CustomGenericList<ItemTitle> list = helper.ExecuteReader(command);
+					List<ItemTitle> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ItemTitle o = list[0];
@@ -373,7 +374,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ItemTitle> helper = new CustomSqlHelper<ItemTitle>())
 				{
-					CustomGenericList<ItemTitle> list = helper.ExecuteReader(command);
+					List<ItemTitle> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ItemTitle o = list[0];

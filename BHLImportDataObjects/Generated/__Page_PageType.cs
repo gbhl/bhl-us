@@ -1,7 +1,7 @@
 
-// Generated 1/16/2008 1:54:48 PM
+// Generated 1/5/2021 2:17:49 PM
 // Do not modify the contents of this code file.
-// This abstract class __Page_PageType is based upon Page_PageType.
+// This abstract class __Page_PageType is based upon dbo.Page_PageType.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Page_PageType : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -192,7 +192,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -200,7 +200,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region PagePageTypeID
 		
@@ -264,7 +264,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: FileNamePrefix;
-		/// DBMS data type: nvarchar(50);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
 		[ColumnDefinition("FileNamePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=200)]
 		public string FileNamePrefix
@@ -611,7 +611,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -762,7 +762,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Page_PageType.SortColumn.PagePageTypeID);
 		/// </summary>
 		[Serializable]
@@ -789,3 +788,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

@@ -1,7 +1,7 @@
 
-// Generated 4/21/2009 3:39:50 PM
+// Generated 1/5/2021 3:26:01 PM
 // Do not modify the contents of this code file.
-// This abstract class __Marc is based upon Marc.
+// This abstract class __Marc is based upon dbo.Marc.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Marc : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -144,7 +144,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -152,7 +152,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region MarcID
 		
@@ -402,7 +402,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -547,7 +547,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Marc.SortColumn.MarcID);
 		/// </summary>
 		[Serializable]
@@ -568,3 +567,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

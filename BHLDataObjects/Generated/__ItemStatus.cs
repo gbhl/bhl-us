@@ -1,7 +1,7 @@
 
-// Generated 1/18/2008 11:10:47 AM
+// Generated 1/5/2021 3:25:52 PM
 // Do not modify the contents of this code file.
-// This abstract class __ItemStatus is based upon ItemStatus.
+// This abstract class __ItemStatus is based upon dbo.ItemStatus.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __ItemStatus : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -47,11 +47,26 @@ namespace MOBOT.BHL.DataObjects
 		/// </summary>
 		/// <param name="itemStatusID"></param>
 		/// <param name="itemStatusName"></param>
+		/// <param name="itemStatusDescription"></param>
+		/// <param name="creationDate"></param>
+		/// <param name="lastModifiedDate"></param>
+		/// <param name="creationUserID"></param>
+		/// <param name="lastModifiedUserID"></param>
 		public __ItemStatus(int itemStatusID, 
-			string itemStatusName) : this()
+			string itemStatusName, 
+			string itemStatusDescription, 
+			DateTime creationDate, 
+			DateTime lastModifiedDate, 
+			int creationUserID, 
+			int lastModifiedUserID) : this()
 		{
 			ItemStatusID = itemStatusID;
 			ItemStatusName = itemStatusName;
+			ItemStatusDescription = itemStatusDescription;
+			CreationDate = creationDate;
+			LastModifiedDate = lastModifiedDate;
+			CreationUserID = creationUserID;
+			LastModifiedUserID = lastModifiedUserID;
 		}
 		
 		#endregion Constructors
@@ -88,7 +103,32 @@ namespace MOBOT.BHL.DataObjects
 						_ItemStatusName = (string)column.Value;
 						break;
 					}
-				}
+					case "ItemStatusDescription" :
+					{
+						_ItemStatusDescription = (string)column.Value;
+						break;
+					}
+					case "CreationDate" :
+					{
+						_CreationDate = (DateTime)column.Value;
+						break;
+					}
+					case "LastModifiedDate" :
+					{
+						_LastModifiedDate = (DateTime)column.Value;
+						break;
+					}
+					case "CreationUserID" :
+					{
+						_CreationUserID = (int)column.Value;
+						break;
+					}
+					case "LastModifiedUserID" :
+					{
+						_LastModifiedUserID = (int)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -96,7 +136,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region ItemStatusID
 		
@@ -152,9 +192,145 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion ItemStatusName
+		
+		#region ItemStatusDescription
+		
+		private string _ItemStatusDescription = string.Empty;
+		
+		/// <summary>
+		/// Column: ItemStatusDescription;
+		/// DBMS data type: nvarchar(MAX);
+		/// </summary>
+		[ColumnDefinition("ItemStatusDescription", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=1073741823)]
+		public string ItemStatusDescription
+		{
+			get
+			{
+				return _ItemStatusDescription;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 1073741823);
+				if (_ItemStatusDescription != value)
+				{
+					_ItemStatusDescription = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ItemStatusDescription
+		
+		#region CreationDate
+		
+		private DateTime _CreationDate;
+		
+		/// <summary>
+		/// Column: CreationDate;
+		/// DBMS data type: datetime;
+		/// </summary>
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=4)]
+		public DateTime CreationDate
+		{
+			get
+			{
+				return _CreationDate;
+			}
+			set
+			{
+				if (_CreationDate != value)
+				{
+					_CreationDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreationDate
+		
+		#region LastModifiedDate
+		
+		private DateTime _LastModifiedDate;
+		
+		/// <summary>
+		/// Column: LastModifiedDate;
+		/// DBMS data type: datetime;
+		/// </summary>
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=5)]
+		public DateTime LastModifiedDate
+		{
+			get
+			{
+				return _LastModifiedDate;
+			}
+			set
+			{
+				if (_LastModifiedDate != value)
+				{
+					_LastModifiedDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedDate
+		
+		#region CreationUserID
+		
+		private int _CreationUserID = default(int);
+		
+		/// <summary>
+		/// Column: CreationUserID;
+		/// DBMS data type: int;
+		/// </summary>
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=6, NumericPrecision=10)]
+		public int CreationUserID
+		{
+			get
+			{
+				return _CreationUserID;
+			}
+			set
+			{
+				if (_CreationUserID != value)
+				{
+					_CreationUserID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreationUserID
+		
+		#region LastModifiedUserID
+		
+		private int _LastModifiedUserID = default(int);
+		
+		/// <summary>
+		/// Column: LastModifiedUserID;
+		/// DBMS data type: int;
+		/// </summary>
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=7, NumericPrecision=10)]
+		public int LastModifiedUserID
+		{
+			get
+			{
+				return _LastModifiedUserID;
+			}
+			set
+			{
+				if (_LastModifiedUserID != value)
+				{
+					_LastModifiedUserID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedUserID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -197,7 +373,12 @@ namespace MOBOT.BHL.DataObjects
 					o.IsNew == IsNew &&
 					o.IsDeleted == IsDeleted &&
 					o.ItemStatusID == ItemStatusID &&
-					GetComparisonString(o.ItemStatusName) == GetComparisonString(ItemStatusName) 
+					GetComparisonString(o.ItemStatusName) == GetComparisonString(ItemStatusName) &&
+					GetComparisonString(o.ItemStatusDescription) == GetComparisonString(ItemStatusDescription) &&
+					o.CreationDate == CreationDate &&
+					o.LastModifiedDate == LastModifiedDate &&
+					o.CreationUserID == CreationUserID &&
+					o.LastModifiedUserID == LastModifiedUserID 
 				)
 				{
 					o = null;
@@ -292,17 +473,22 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __ItemStatus.SortColumn.ItemStatusID);
 		/// </summary>
 		[Serializable]
 		public sealed class SortColumn
 		{	
 			public const string ItemStatusID = "ItemStatusID";	
-			public const string ItemStatusName = "ItemStatusName";
+			public const string ItemStatusName = "ItemStatusName";	
+			public const string ItemStatusDescription = "ItemStatusDescription";	
+			public const string CreationDate = "CreationDate";	
+			public const string LastModifiedDate = "LastModifiedDate";	
+			public const string CreationUserID = "CreationUserID";	
+			public const string LastModifiedUserID = "LastModifiedUserID";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

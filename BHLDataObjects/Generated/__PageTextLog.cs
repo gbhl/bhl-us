@@ -1,5 +1,5 @@
 
-// Generated 9/14/2018 6:43:09 PM
+// Generated 1/5/2021 3:26:38 PM
 // Do not modify the contents of this code file.
 // This abstract class __PageTextLog is based upon dbo.PageTextLog.
 
@@ -437,7 +437,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __PageTextLog.SortColumn.PageTextLogID);
 		/// </summary>
 		[Serializable]

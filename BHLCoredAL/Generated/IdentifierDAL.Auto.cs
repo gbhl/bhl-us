@@ -1,8 +1,8 @@
 
-// Generated 5/1/2012 2:41:41 PM
+// Generated 1/5/2021 3:25:16 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class IdentifierDAL is based upon Identifier.
+// This partial class IdentifierDAL is based upon dbo.Identifier.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Identifier by primary key(s).
+		/// Select values from dbo.Identifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from Identifier by primary key(s).
+		/// Select values from dbo.Identifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Identifier> helper = new CustomSqlHelper<Identifier>())
 				{
-					CustomGenericList<Identifier> list = helper.ExecuteReader(command);
+					List<Identifier> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Identifier o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Identifier by primary key(s).
+		/// Select values from dbo.Identifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="identifierID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IdentifierSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IdentifierSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int identifierID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Identifier by primary key(s).
+		/// Select values from dbo.Identifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="identifierID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IdentifierSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IdentifierSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Identifier.
+		/// Insert values into dbo.Identifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -155,7 +156,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Identifier.
+		/// Insert values into dbo.Identifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -190,7 +191,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Identifier> helper = new CustomSqlHelper<Identifier>())
 				{
-					CustomGenericList<Identifier> list = helper.ExecuteReader(command);
+					List<Identifier> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Identifier o = list[0];
@@ -206,7 +207,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Identifier. Returns an object of type Identifier.
+		/// Insert values into dbo.Identifier. Returns an object of type Identifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -221,7 +222,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Identifier. Returns an object of type Identifier.
+		/// Insert values into dbo.Identifier. Returns an object of type Identifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -247,7 +248,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Identifier by primary key(s).
+		/// Delete values from dbo.Identifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -262,7 +263,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from Identifier by primary key(s).
+		/// Delete values from dbo.Identifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -305,7 +306,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Identifier. Returns an object of type Identifier.
+		/// Update values in dbo.Identifier. Returns an object of type Identifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -328,7 +329,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Identifier. Returns an object of type Identifier.
+		/// Update values in dbo.Identifier. Returns an object of type Identifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -362,7 +363,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Identifier> helper = new CustomSqlHelper<Identifier>())
 				{
-					CustomGenericList<Identifier> list = helper.ExecuteReader(command);
+					List<Identifier> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Identifier o = list[0];
@@ -378,7 +379,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Identifier. Returns an object of type Identifier.
+		/// Update values in dbo.Identifier. Returns an object of type Identifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -393,7 +394,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Identifier. Returns an object of type Identifier.
+		/// Update values in dbo.Identifier. Returns an object of type Identifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -419,9 +420,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Identifier object.
+		/// Manage dbo.Identifier object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Identifier.
+		/// then either insert values into, delete values from, or update values in dbo.Identifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -436,9 +437,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage Identifier object.
+		/// Manage dbo.Identifier object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Identifier.
+		/// then either insert values into, delete values from, or update values in dbo.Identifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -508,4 +509,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

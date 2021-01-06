@@ -1,7 +1,7 @@
 
-// Generated 1/15/2008 11:27:51 AM
+// Generated 1/5/2021 2:15:07 PM
 // Do not modify the contents of this code file.
-// This abstract class __IAPage is based upon IAPage.
+// This abstract class __IAPage is based upon dbo.IAPage.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __IAPage : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -128,7 +128,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -136,7 +136,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region PageID
 		
@@ -199,7 +199,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: LocalFileName;
-		/// DBMS data type: nvarchar(50);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
 		[ColumnDefinition("LocalFileName", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=200)]
 		public string LocalFileName
@@ -331,7 +331,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -474,7 +474,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __IAPage.SortColumn.PageID);
 		/// </summary>
 		[Serializable]
@@ -493,3 +492,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

@@ -1,5 +1,5 @@
 
-// Generated 6/23/2020 4:38:51 PM
+// Generated 1/5/2021 3:24:49 PM
 // Do not modify the contents of this code file.
 // This abstract class __ApplicationCache is based upon dbo.ApplicationCache.
 
@@ -437,7 +437,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __ApplicationCache.SortColumn.CacheKey);
 		/// </summary>
 		[Serializable]

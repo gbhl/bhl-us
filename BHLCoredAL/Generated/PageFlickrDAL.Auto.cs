@@ -1,8 +1,8 @@
 
-// Generated 1/25/2012 9:05:46 AM
+// Generated 1/5/2021 3:26:36 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class PageFlickrDAL is based upon PageFlickr.
+// This partial class PageFlickrDAL is based upon dbo.PageFlickr.
 
 #region How To Implement
 
@@ -20,11 +20,16 @@
 
 #endregion How To Implement
 
+#region using
+
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+
+#endregion using
 
 namespace MOBOT.BHL.DAL
 {
@@ -33,7 +38,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from PageFlickr by primary key(s).
+		/// Select values from dbo.PageFlickr by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -48,7 +53,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from PageFlickr by primary key(s).
+		/// Select values from dbo.PageFlickr by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -61,15 +66,15 @@ namespace MOBOT.BHL.DAL
 			string connectionKeyName,
 			int pageFlickrID )
 		{
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings( connectionKeyName ), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("[dbo].[PageFlickrSelectAuto]", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("PageFlickrID", SqlDbType.Int, null, false, pageFlickrID)))
+			
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageFlickrSelectAuto", connection, transaction, 
+				CustomSqlHelper.CreateInputParameter("PageFlickrID", SqlDbType.Int, null, false, pageFlickrID)))
 			{
-                using (CustomSqlHelper<PageFlickr> helper = new CustomSqlHelper<PageFlickr>())
+				using (CustomSqlHelper<PageFlickr> helper = new CustomSqlHelper<PageFlickr>())
 				{
-                    CustomGenericList<PageFlickr> list = helper.ExecuteReader(command);
+					List<PageFlickr> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageFlickr o = list[0];
@@ -85,13 +90,13 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from PageFlickr by primary key(s).
+		/// Select values from dbo.PageFlickr by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="pageFlickrID"></param>
-		/// <returns>DataCollection&lt;DataItemRow&gt;</returns>
-        public CustomGenericList<CustomDataRow> PageFlickrSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PageFlickrSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int pageFlickrID)
@@ -100,35 +105,35 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from PageFlickr by primary key(s).
+		/// Select values from dbo.PageFlickr by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="pageFlickrID"></param>
-		/// <returns>DataCollection&lt;DataItemRow&gt;</returns>
-        public CustomGenericList<CustomDataRow> PageFlickrSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PageFlickrSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
 			int pageFlickrID)
 		{
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("[dbo].[PageFlickrSelectAuto]", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("PageFlickrID", SqlDbType.Int, null, false, pageFlickrID)))
+			
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageFlickrSelectAuto", connection, transaction,
+				CustomSqlHelper.CreateInputParameter("PageFlickrID", SqlDbType.Int, null, false, pageFlickrID)))
 			{
-                return CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+				return CustomSqlHelper.ExecuteReaderAndReturnRows(command);
 			}
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into PageFlickr.
+		/// Insert values into dbo.PageFlickr.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -147,7 +152,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into PageFlickr.
+		/// Insert values into dbo.PageFlickr.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -164,19 +169,19 @@ namespace MOBOT.BHL.DAL
 			string flickrURL,
 			int? creationUserID)
 		{
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.PageFlickrInsertAuto", connection, transaction,
-                CustomSqlHelper.CreateOutputParameter("PageFlickrID", SqlDbType.Int, null, false),
-                    CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID),
-                    CustomSqlHelper.CreateInputParameter("FlickrURL", SqlDbType.VarChar, 500, false, flickrURL),
-                    CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
-                    CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
+			
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageFlickrInsertAuto", connection, transaction, 
+				CustomSqlHelper.CreateOutputParameter("PageFlickrID", SqlDbType.Int, null, false),
+					CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID),
+					CustomSqlHelper.CreateInputParameter("FlickrURL", SqlDbType.VarChar, 500, false, flickrURL),
+					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID), 
+					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
-                using (CustomSqlHelper<PageFlickr> helper = new CustomSqlHelper<PageFlickr>())
+				using (CustomSqlHelper<PageFlickr> helper = new CustomSqlHelper<PageFlickr>())
 				{
-                    CustomGenericList<PageFlickr> list = helper.ExecuteReader(command);
+					List<PageFlickr> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageFlickr o = list[0];
@@ -192,7 +197,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into PageFlickr. Returns an object of type PageFlickr.
+		/// Insert values into dbo.PageFlickr. Returns an object of type PageFlickr.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -207,7 +212,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into PageFlickr. Returns an object of type PageFlickr.
+		/// Insert values into dbo.PageFlickr. Returns an object of type PageFlickr.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -231,7 +236,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from PageFlickr by primary key(s).
+		/// Delete values from dbo.PageFlickr by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -246,7 +251,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from PageFlickr by primary key(s).
+		/// Delete values from dbo.PageFlickr by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -259,18 +264,18 @@ namespace MOBOT.BHL.DAL
 			string connectionKeyName,
 			int pageFlickrID)
 		{
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.PageFlickrDeleteAuto", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("PageFlickrID", SqlDbType.Int, null, false, pageFlickrID),
-                    CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
+			
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageFlickrDeleteAuto", connection, transaction, 
+				CustomSqlHelper.CreateInputParameter("PageFlickrID", SqlDbType.Int, null, false, pageFlickrID), 
+					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
-                int returnCode = CustomSqlHelper.ExecuteNonQuery(command, "ReturnCode");
+				int returnCode = CustomSqlHelper.ExecuteNonQuery(command, "ReturnCode");
 				
 				if (transaction == null)
 				{
-                    CustomSqlHelper.CloseConnection(connection);
+					CustomSqlHelper.CloseConnection(connection);
 				}
 				
 				if (returnCode == 0)
@@ -289,7 +294,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in PageFlickr. Returns an object of type PageFlickr.
+		/// Update values in dbo.PageFlickr. Returns an object of type PageFlickr.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -308,7 +313,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in PageFlickr. Returns an object of type PageFlickr.
+		/// Update values in dbo.PageFlickr. Returns an object of type PageFlickr.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -325,18 +330,18 @@ namespace MOBOT.BHL.DAL
 			int pageID,
 			string flickrURL)
 		{
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.PageFlickrUpdateAuto", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("PageFlickrID", SqlDbType.Int, null, false, pageFlickrID),
-                    CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID),
-                    CustomSqlHelper.CreateInputParameter("FlickrURL", SqlDbType.VarChar, 500, false, flickrURL),
-                    CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
+			
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageFlickrUpdateAuto", connection, transaction, 
+				CustomSqlHelper.CreateInputParameter("PageFlickrID", SqlDbType.Int, null, false, pageFlickrID),
+					CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID),
+					CustomSqlHelper.CreateInputParameter("FlickrURL", SqlDbType.VarChar, 500, false, flickrURL), 
+					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
-                using (CustomSqlHelper<PageFlickr> helper = new CustomSqlHelper<PageFlickr>())
+				using (CustomSqlHelper<PageFlickr> helper = new CustomSqlHelper<PageFlickr>())
 				{
-                    CustomGenericList<PageFlickr> list = helper.ExecuteReader(command);
+					List<PageFlickr> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageFlickr o = list[0];
@@ -352,7 +357,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in PageFlickr. Returns an object of type PageFlickr.
+		/// Update values in dbo.PageFlickr. Returns an object of type PageFlickr.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -367,7 +372,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in PageFlickr. Returns an object of type PageFlickr.
+		/// Update values in dbo.PageFlickr. Returns an object of type PageFlickr.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -391,15 +396,15 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage PageFlickr object.
-		/// If the object is of type ObjectBase, 
-		/// then either insert values into, delete values from, or update values in PageFlickr.
+		/// Manage dbo.PageFlickr object.
+		/// If the object is of type CustomObjectBase, 
+		/// then either insert values into, delete values from, or update values in dbo.PageFlickr.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="value">Object of type PageFlickr.</param>
-		/// <returns>Object of type DataAccessStatus<PageFlickr>.</returns>
-        public CustomDataAccessStatus<PageFlickr> PageFlickrManageAuto(
+		/// <returns>Object of type CustomDataAccessStatus<PageFlickr>.</returns>
+		public CustomDataAccessStatus<PageFlickr> PageFlickrManageAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			PageFlickr value , int userId )
@@ -408,16 +413,16 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage PageFlickr object.
-		/// If the object is of type ObjectBase, 
-		/// then either insert values into, delete values from, or update values in PageFlickr.
+		/// Manage dbo.PageFlickr object.
+		/// If the object is of type CustomObjectBase, 
+		/// then either insert values into, delete values from, or update values in dbo.PageFlickr.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="value">Object of type PageFlickr.</param>
-		/// <returns>Object of type DataAccessStatus<PageFlickr>.</returns>
-        public CustomDataAccessStatus<PageFlickr> PageFlickrManageAuto(
+		/// <returns>Object of type CustomDataAccessStatus<PageFlickr>.</returns>
+		public CustomDataAccessStatus<PageFlickr> PageFlickrManageAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -431,9 +436,9 @@ namespace MOBOT.BHL.DAL
 					value.PageID,
 						value.FlickrURL,
 						value.CreationUserID);
-
-                return new CustomDataAccessStatus<PageFlickr>(
-                    CustomDataAccessContext.Insert, 
+				
+				return new CustomDataAccessStatus<PageFlickr>(
+					CustomDataAccessContext.Insert, 
 					true, returnValue);
 			}
 			else if (!value.IsNew && value.IsDeleted)
@@ -441,14 +446,14 @@ namespace MOBOT.BHL.DAL
 				if (PageFlickrDeleteAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.PageFlickrID))
 				{
-                    return new CustomDataAccessStatus<PageFlickr>(
-                    CustomDataAccessContext.Delete, 
+				return new CustomDataAccessStatus<PageFlickr>(
+					CustomDataAccessContext.Delete, 
 					true, value);
 				}
 				else
 				{
-                    return new CustomDataAccessStatus<PageFlickr>(
-                    CustomDataAccessContext.Delete, 
+				return new CustomDataAccessStatus<PageFlickr>(
+					CustomDataAccessContext.Delete, 
 					false, value);
 				}
 			}
@@ -459,15 +464,15 @@ namespace MOBOT.BHL.DAL
 					value.PageFlickrID,
 						value.PageID,
 						value.FlickrURL);
-
-                return new CustomDataAccessStatus<PageFlickr>(
-                    CustomDataAccessContext.Update, 
+					
+				return new CustomDataAccessStatus<PageFlickr>(
+					CustomDataAccessContext.Update, 
 					true, returnValue);
 			}
 			else
 			{
-                return new CustomDataAccessStatus<PageFlickr>(
-                    CustomDataAccessContext.NA, 
+				return new CustomDataAccessStatus<PageFlickr>(
+					CustomDataAccessContext.NA, 
 					false, value);
 			}
 		}
@@ -476,4 +481,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

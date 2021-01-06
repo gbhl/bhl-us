@@ -1,5 +1,5 @@
 
-// Generated 2/28/2019 2:07:31 PM
+// Generated 1/5/2021 2:14:15 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class IAItemIdentifierDAL is based upon dbo.IAItemIdentifier.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAItemIdentifier> helper = new CustomSqlHelper<IAItemIdentifier>())
 				{
-					CustomGenericList<IAItemIdentifier> list = helper.ExecuteReader(command);
+					List<IAItemIdentifier> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAItemIdentifier o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="itemIdentifierID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IAItemIdentifierSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAItemIdentifierSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int itemIdentifierID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="itemIdentifierID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IAItemIdentifierSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAItemIdentifierSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -180,7 +181,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAItemIdentifier> helper = new CustomSqlHelper<IAItemIdentifier>())
 				{
-					CustomGenericList<IAItemIdentifier> list = helper.ExecuteReader(command);
+					List<IAItemIdentifier> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAItemIdentifier o = list[0];
@@ -345,7 +346,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAItemIdentifier> helper = new CustomSqlHelper<IAItemIdentifier>())
 				{
-					CustomGenericList<IAItemIdentifier> list = helper.ExecuteReader(command);
+					List<IAItemIdentifier> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAItemIdentifier o = list[0];

@@ -1,5 +1,5 @@
 
-// Generated 6/19/2020 3:21:49 PM
+// Generated 1/5/2021 3:26:27 PM
 // Do not modify the contents of this code file.
 // This abstract class __NameSourceGNFinder is based upon dbo.NameSourceGNFinder.
 
@@ -270,13 +270,13 @@ namespace MOBOT.BHL.DataObjects
 		
 		#region GNDataSourceURLFormat
 		
-		private string _GNDataSourceURLFormat = null;
+		private string _GNDataSourceURLFormat = string.Empty;
 		
 		/// <summary>
 		/// Column: GNDataSourceURLFormat;
-		/// DBMS data type: nvarchar(300); Nullable;
+		/// DBMS data type: nvarchar(300);
 		/// </summary>
-		[ColumnDefinition("GNDataSourceURLFormat", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=300, IsNullable=true)]
+		[ColumnDefinition("GNDataSourceURLFormat", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=300)]
 		public string GNDataSourceURLFormat
 		{
 			get
@@ -439,7 +439,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __NameSourceGNFinder.SortColumn.DataSourceID);
 		/// </summary>
 		[Serializable]

@@ -1,7 +1,7 @@
 
-// Generated 1/18/2008 11:10:47 AM
+// Generated 1/5/2021 3:26:43 PM
 // Do not modify the contents of this code file.
-// This abstract class __Page_PageType is based upon Page_PageType.
+// This abstract class __Page_PageType is based upon dbo.Page_PageType.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Page_PageType : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -128,7 +128,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedUserID = (int?)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -136,7 +136,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region PageID
 		
@@ -145,9 +145,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Column: PageID;
 		/// DBMS data type: int;
-		/// Description: Unique identifier for each Page record.
 		/// </summary>
-		[ColumnDefinition("PageID", DbTargetType=SqlDbType.Int, Ordinal=1, Description="Unique identifier for each Page record.", NumericPrecision=10, IsInForeignKey=true, IsInPrimaryKey=true)]
+		[ColumnDefinition("PageID", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsInForeignKey=true, IsInPrimaryKey=true)]
 		public int PageID
 		{
 			get
@@ -173,9 +172,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Column: PageTypeID;
 		/// DBMS data type: int;
-		/// Description: Unique identifier for each Page Type record.
 		/// </summary>
-		[ColumnDefinition("PageTypeID", DbTargetType=SqlDbType.Int, Ordinal=2, Description="Unique identifier for each Page Type record.", NumericPrecision=10, IsInForeignKey=true, IsInPrimaryKey=true)]
+		[ColumnDefinition("PageTypeID", DbTargetType=SqlDbType.Int, Ordinal=2, NumericPrecision=10, IsInForeignKey=true, IsInPrimaryKey=true)]
 		public int PageTypeID
 		{
 			get
@@ -330,7 +328,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion LastModifiedUserID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -473,7 +471,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Page_PageType.SortColumn.PageID);
 		/// </summary>
 		[Serializable]
@@ -492,3 +489,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

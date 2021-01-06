@@ -1,5 +1,5 @@
 
-// Generated 12/19/2016 1:43:52 PM
+// Generated 1/5/2021 2:13:02 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class BSSegmentDAL is based upon dbo.BSSegment.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<BSSegment> helper = new CustomSqlHelper<BSSegment>())
 				{
-					CustomGenericList<BSSegment> list = helper.ExecuteReader(command);
+					List<BSSegment> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						BSSegment o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="segmentID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> BSSegmentSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> BSSegmentSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int segmentID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="segmentID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> BSSegmentSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> BSSegmentSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -285,7 +286,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<BSSegment> helper = new CustomSqlHelper<BSSegment>())
 				{
-					CustomGenericList<BSSegment> list = helper.ExecuteReader(command);
+					List<BSSegment> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						BSSegment o = list[0];
@@ -576,7 +577,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<BSSegment> helper = new CustomSqlHelper<BSSegment>())
 				{
-					CustomGenericList<BSSegment> list = helper.ExecuteReader(command);
+					List<BSSegment> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						BSSegment o = list[0];

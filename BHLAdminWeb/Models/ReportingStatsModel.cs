@@ -139,7 +139,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             int prevMonth = -1;
             foreach(MonthlyStats stat in stats)
             {
-                if (prevInstitution != stat.InstitutionName ||
+                if (prevInstitution != stat.InstitutionCode ||
                     prevYear != stat.Year ||
                     prevMonth != stat.Month)
                 {
@@ -179,7 +179,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                         break;
                 }
 
-                prevInstitution = stat.InstitutionName;
+                prevInstitution = stat.InstitutionCode;
                 prevYear = stat.Year;
                 prevMonth = stat.Month;
             }

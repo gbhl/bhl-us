@@ -1,7 +1,7 @@
 
-// Generated 1/18/2008 11:10:47 AM
+// Generated 1/5/2021 3:25:59 PM
 // Do not modify the contents of this code file.
-// This abstract class __Language is based upon Language.
+// This abstract class __Language is based upon dbo.Language.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Language : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -96,7 +96,7 @@ namespace MOBOT.BHL.DataObjects
 						_Note = (string)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region LanguageCode
 		
@@ -113,9 +113,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Column: LanguageCode;
 		/// DBMS data type: nvarchar(10);
-		/// Description: Code for a language.
 		/// </summary>
-		[ColumnDefinition("LanguageCode", DbTargetType=SqlDbType.NVarChar, Ordinal=1, Description="Code for a language.", CharacterMaxLength=10, IsInForeignKey=true, IsInPrimaryKey=true)]
+		[ColumnDefinition("LanguageCode", DbTargetType=SqlDbType.NVarChar, Ordinal=1, CharacterMaxLength=10, IsInForeignKey=true, IsInPrimaryKey=true)]
 		public string LanguageCode
 		{
 			get
@@ -142,9 +141,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Column: LanguageName;
 		/// DBMS data type: nvarchar(20);
-		/// Description: Name used for the language.
 		/// </summary>
-		[ColumnDefinition("LanguageName", DbTargetType=SqlDbType.NVarChar, Ordinal=2, Description="Name used for the language.", CharacterMaxLength=20)]
+		[ColumnDefinition("LanguageName", DbTargetType=SqlDbType.NVarChar, Ordinal=2, CharacterMaxLength=20)]
 		public string LanguageName
 		{
 			get
@@ -171,9 +169,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Column: Note;
 		/// DBMS data type: nvarchar(255); Nullable;
-		/// Description: Notes about this Language and its use.
 		/// </summary>
-		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=3, Description="Notes about this Language and its use.", CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=255, IsNullable=true)]
 		public string Note
 		{
 			get
@@ -194,7 +191,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion Note
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -333,7 +330,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Language.SortColumn.LanguageCode);
 		/// </summary>
 		[Serializable]
@@ -348,3 +344,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

@@ -1,5 +1,5 @@
 
-// Generated 10/16/2020 2:39:29 PM
+// Generated 1/5/2021 3:25:55 PM
 // Do not modify the contents of this code file.
 // This abstract class __ItemTitle is based upon dbo.ItemTitle.
 
@@ -544,7 +544,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __ItemTitle.SortColumn.ItemTitleID);
 		/// </summary>
 		[Serializable]

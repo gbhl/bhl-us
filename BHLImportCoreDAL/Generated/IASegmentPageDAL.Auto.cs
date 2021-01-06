@@ -1,5 +1,5 @@
 
-// Generated 1/24/2020 4:10:31 PM
+// Generated 1/5/2021 2:15:55 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class IASegmentPageDAL is based upon dbo.IASegmentPage.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IASegmentPage> helper = new CustomSqlHelper<IASegmentPage>())
 				{
-					CustomGenericList<IASegmentPage> list = helper.ExecuteReader(command);
+					List<IASegmentPage> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IASegmentPage o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="segmentPageID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IASegmentPageSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IASegmentPageSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int segmentPageID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="segmentPageID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IASegmentPageSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IASegmentPageSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -175,7 +176,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IASegmentPage> helper = new CustomSqlHelper<IASegmentPage>())
 				{
-					CustomGenericList<IASegmentPage> list = helper.ExecuteReader(command);
+					List<IASegmentPage> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IASegmentPage o = list[0];
@@ -334,7 +335,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IASegmentPage> helper = new CustomSqlHelper<IASegmentPage>())
 				{
-					CustomGenericList<IASegmentPage> list = helper.ExecuteReader(command);
+					List<IASegmentPage> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IASegmentPage o = list[0];

@@ -1,8 +1,8 @@
 
-// Generated 1/15/2008 11:27:51 AM
+// Generated 1/5/2021 2:13:41 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class IADCMetadataDAL is based upon IADCMetadata.
+// This partial class IADCMetadataDAL is based upon dbo.IADCMetadata.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from IADCMetadata by primary key(s).
+		/// Select values from dbo.IADCMetadata by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -48,7 +49,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int dCMetadataID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return IADCMetadataSelectAuto(	sqlConnection, sqlTransaction, "BHLImport",	dCMetadataID );
+		}
+			
+		/// <summary>
+		/// Select values from dbo.IADCMetadata by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="dCMetadataID"></param>
+		/// <returns>Object of type IADCMetadata.</returns>
+		public IADCMetadata IADCMetadataSelectAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int dCMetadataID )
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings( connectionKeyName ), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IADCMetadataSelectAuto", connection, transaction, 
@@ -56,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IADCMetadata> helper = new CustomSqlHelper<IADCMetadata>())
 				{
-					CustomGenericList<IADCMetadata> list = helper.ExecuteReader(command);
+					List<IADCMetadata> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IADCMetadata o = list[0];
@@ -72,18 +90,35 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IADCMetadata by primary key(s).
+		/// Select values from dbo.IADCMetadata by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="dCMetadataID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IADCMetadataSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IADCMetadataSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int dCMetadataID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return IADCMetadataSelectAutoRaw( sqlConnection, sqlTransaction, "BHLImport", dCMetadataID );
+		}
+		
+		/// <summary>
+		/// Select values from dbo.IADCMetadata by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="dCMetadataID"></param>
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IADCMetadataSelectAutoRaw(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int dCMetadataID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IADCMetadataSelectAuto", connection, transaction,
@@ -94,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into IADCMetadata.
+		/// Insert values into dbo.IADCMetadata.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -115,7 +150,30 @@ namespace MOBOT.BHLImport.DAL
 			string dCElementValue,
 			string source)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return IADCMetadataInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, dCElementName, dCElementValue, source );
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.IADCMetadata.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="itemID"></param>
+		/// <param name="dCElementName"></param>
+		/// <param name="dCElementValue"></param>
+		/// <param name="source"></param>
+		/// <returns>Object of type IADCMetadata.</returns>
+		public IADCMetadata IADCMetadataInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int itemID,
+			string dCElementName,
+			string dCElementValue,
+			string source)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IADCMetadataInsertAuto", connection, transaction, 
@@ -128,7 +186,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IADCMetadata> helper = new CustomSqlHelper<IADCMetadata>())
 				{
-					CustomGenericList<IADCMetadata> list = helper.ExecuteReader(command);
+					List<IADCMetadata> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IADCMetadata o = list[0];
@@ -144,7 +202,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into IADCMetadata. Returns an object of type IADCMetadata.
+		/// Insert values into dbo.IADCMetadata. Returns an object of type IADCMetadata.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -155,7 +213,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			IADCMetadata value)
 		{
-			return IADCMetadataInsertAuto(sqlConnection, sqlTransaction, 
+			return IADCMetadataInsertAuto(sqlConnection, sqlTransaction, "BHLImport", value);
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.IADCMetadata. Returns an object of type IADCMetadata.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type IADCMetadata.</param>
+		/// <returns>Object of type IADCMetadata.</returns>
+		public IADCMetadata IADCMetadataInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			IADCMetadata value)
+		{
+			return IADCMetadataInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.ItemID,
 				value.DCElementName,
 				value.DCElementValue,
@@ -167,7 +242,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from IADCMetadata by primary key(s).
+		/// Delete values from dbo.IADCMetadata by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -178,7 +253,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int dCMetadataID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return IADCMetadataDeleteAuto( sqlConnection, sqlTransaction, "BHLImport", dCMetadataID );
+		}
+		
+		/// <summary>
+		/// Delete values from dbo.IADCMetadata by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="dCMetadataID"></param>
+		/// <returns>true if successful otherwise false.</returns>
+		public bool IADCMetadataDeleteAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int dCMetadataID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IADCMetadataDeleteAuto", connection, transaction, 
@@ -208,7 +300,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in IADCMetadata. Returns an object of type IADCMetadata.
+		/// Update values in dbo.IADCMetadata. Returns an object of type IADCMetadata.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -227,7 +319,32 @@ namespace MOBOT.BHLImport.DAL
 			string dCElementValue,
 			string source)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return IADCMetadataUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", dCMetadataID, itemID, dCElementName, dCElementValue, source);
+		}
+		
+		/// <summary>
+		/// Update values in dbo.IADCMetadata. Returns an object of type IADCMetadata.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="dCMetadataID"></param>
+		/// <param name="itemID"></param>
+		/// <param name="dCElementName"></param>
+		/// <param name="dCElementValue"></param>
+		/// <param name="source"></param>
+		/// <returns>Object of type IADCMetadata.</returns>
+		public IADCMetadata IADCMetadataUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int dCMetadataID,
+			int itemID,
+			string dCElementName,
+			string dCElementValue,
+			string source)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IADCMetadataUpdateAuto", connection, transaction, 
@@ -240,7 +357,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IADCMetadata> helper = new CustomSqlHelper<IADCMetadata>())
 				{
-					CustomGenericList<IADCMetadata> list = helper.ExecuteReader(command);
+					List<IADCMetadata> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IADCMetadata o = list[0];
@@ -256,7 +373,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IADCMetadata. Returns an object of type IADCMetadata.
+		/// Update values in dbo.IADCMetadata. Returns an object of type IADCMetadata.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -267,7 +384,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			IADCMetadata value)
 		{
-			return IADCMetadataUpdateAuto(sqlConnection, sqlTransaction,
+			return IADCMetadataUpdateAuto(sqlConnection, sqlTransaction, "BHLImport", value );
+		}
+		
+		/// <summary>
+		/// Update values in dbo.IADCMetadata. Returns an object of type IADCMetadata.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type IADCMetadata.</param>
+		/// <returns>Object of type IADCMetadata.</returns>
+		public IADCMetadata IADCMetadataUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			IADCMetadata value)
+		{
+			return IADCMetadataUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.DCMetadataID,
 				value.ItemID,
 				value.DCElementName,
@@ -280,9 +414,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage IADCMetadata object.
+		/// Manage dbo.IADCMetadata object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IADCMetadata.
+		/// then either insert values into, delete values from, or update values in dbo.IADCMetadata.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -293,11 +427,30 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			IADCMetadata value  )
 		{
+			return IADCMetadataManageAuto( sqlConnection, sqlTransaction, "BHLImport", value  );
+		}
+		
+		/// <summary>
+		/// Manage dbo.IADCMetadata object.
+		/// If the object is of type CustomObjectBase, 
+		/// then either insert values into, delete values from, or update values in dbo.IADCMetadata.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type IADCMetadata.</param>
+		/// <returns>Object of type CustomDataAccessStatus<IADCMetadata>.</returns>
+		public CustomDataAccessStatus<IADCMetadata> IADCMetadataManageAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			IADCMetadata value  )
+		{
 			if (value.IsNew && !value.IsDeleted)
 			{
 				
 				
-				IADCMetadata returnValue = IADCMetadataInsertAuto(sqlConnection, sqlTransaction, 
+				IADCMetadata returnValue = IADCMetadataInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.ItemID,
 						value.DCElementName,
 						value.DCElementValue,
@@ -309,7 +462,7 @@ namespace MOBOT.BHLImport.DAL
 			}
 			else if (!value.IsNew && value.IsDeleted)
 			{
-				if (IADCMetadataDeleteAuto(sqlConnection, sqlTransaction, 
+				if (IADCMetadataDeleteAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.DCMetadataID))
 				{
 				return new CustomDataAccessStatus<IADCMetadata>(
@@ -326,7 +479,7 @@ namespace MOBOT.BHLImport.DAL
 			else if (value.IsDirty && !value.IsDeleted)
 			{
 				
-				IADCMetadata returnValue = IADCMetadataUpdateAuto(sqlConnection, sqlTransaction, 
+				IADCMetadata returnValue = IADCMetadataUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.DCMetadataID,
 						value.ItemID,
 						value.DCElementName,
@@ -349,4 +502,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

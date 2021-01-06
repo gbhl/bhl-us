@@ -1,8 +1,8 @@
 
-// Generated 2/15/2011 12:02:06 PM
+// Generated 1/5/2021 3:27:27 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class TitleVariantDAL is based upon TitleVariant.
+// This partial class TitleVariantDAL is based upon dbo.TitleVariant.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from TitleVariant by primary key(s).
+		/// Select values from dbo.TitleVariant by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from TitleVariant by primary key(s).
+		/// Select values from dbo.TitleVariant by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleVariant> helper = new CustomSqlHelper<TitleVariant>())
 				{
-					CustomGenericList<TitleVariant> list = helper.ExecuteReader(command);
+					List<TitleVariant> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleVariant o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from TitleVariant by primary key(s).
+		/// Select values from dbo.TitleVariant by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="titleVariantID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleVariantSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleVariantSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int titleVariantID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from TitleVariant by primary key(s).
+		/// Select values from dbo.TitleVariant by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="titleVariantID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleVariantSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleVariantSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into TitleVariant.
+		/// Insert values into dbo.TitleVariant.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -161,7 +162,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into TitleVariant.
+		/// Insert values into dbo.TitleVariant.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -205,7 +206,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleVariant> helper = new CustomSqlHelper<TitleVariant>())
 				{
-					CustomGenericList<TitleVariant> list = helper.ExecuteReader(command);
+					List<TitleVariant> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleVariant o = list[0];
@@ -221,7 +222,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into TitleVariant. Returns an object of type TitleVariant.
+		/// Insert values into dbo.TitleVariant. Returns an object of type TitleVariant.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -236,7 +237,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into TitleVariant. Returns an object of type TitleVariant.
+		/// Insert values into dbo.TitleVariant. Returns an object of type TitleVariant.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -265,7 +266,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from TitleVariant by primary key(s).
+		/// Delete values from dbo.TitleVariant by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -280,7 +281,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from TitleVariant by primary key(s).
+		/// Delete values from dbo.TitleVariant by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -323,7 +324,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in TitleVariant. Returns an object of type TitleVariant.
+		/// Update values in dbo.TitleVariant. Returns an object of type TitleVariant.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -352,7 +353,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleVariant. Returns an object of type TitleVariant.
+		/// Update values in dbo.TitleVariant. Returns an object of type TitleVariant.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -395,7 +396,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleVariant> helper = new CustomSqlHelper<TitleVariant>())
 				{
-					CustomGenericList<TitleVariant> list = helper.ExecuteReader(command);
+					List<TitleVariant> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleVariant o = list[0];
@@ -411,7 +412,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleVariant. Returns an object of type TitleVariant.
+		/// Update values in dbo.TitleVariant. Returns an object of type TitleVariant.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -426,7 +427,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleVariant. Returns an object of type TitleVariant.
+		/// Update values in dbo.TitleVariant. Returns an object of type TitleVariant.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -455,9 +456,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage TitleVariant object.
+		/// Manage dbo.TitleVariant object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in TitleVariant.
+		/// then either insert values into, delete values from, or update values in dbo.TitleVariant.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -472,9 +473,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage TitleVariant object.
+		/// Manage dbo.TitleVariant object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in TitleVariant.
+		/// then either insert values into, delete values from, or update values in dbo.TitleVariant.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -550,4 +551,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

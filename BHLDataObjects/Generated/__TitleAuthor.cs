@@ -1,5 +1,5 @@
 
-// Generated 6/14/2019 5:14:33 PM
+// Generated 1/5/2021 3:27:14 PM
 // Do not modify the contents of this code file.
 // This abstract class __TitleAuthor is based upon dbo.TitleAuthor.
 
@@ -49,36 +49,36 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="titleID"></param>
 		/// <param name="authorID"></param>
 		/// <param name="authorRoleID"></param>
+		/// <param name="sequenceOrder"></param>
 		/// <param name="relationship"></param>
 		/// <param name="titleOfWork"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="sequenceOrder"></param>
 		public __TitleAuthor(int titleAuthorID, 
 			int titleID, 
 			int authorID, 
 			int? authorRoleID, 
+			short sequenceOrder, 
 			string relationship, 
 			string titleOfWork, 
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int? creationUserID, 
-			int? lastModifiedUserID, 
-			short sequenceOrder) : this()
+			int? lastModifiedUserID) : this()
 		{
 			_TitleAuthorID = titleAuthorID;
 			TitleID = titleID;
 			AuthorID = authorID;
 			AuthorRoleID = authorRoleID;
+			SequenceOrder = sequenceOrder;
 			Relationship = relationship;
 			TitleOfWork = titleOfWork;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
-			SequenceOrder = sequenceOrder;
 		}
 		
 		#endregion Constructors
@@ -125,6 +125,11 @@ namespace MOBOT.BHL.DataObjects
 						_AuthorRoleID = (int?)column.Value;
 						break;
 					}
+					case "SequenceOrder" :
+					{
+						_SequenceOrder = (short)column.Value;
+						break;
+					}
 					case "Relationship" :
 					{
 						_Relationship = (string)column.Value;
@@ -153,11 +158,6 @@ namespace MOBOT.BHL.DataObjects
 					case "LastModifiedUserID" :
 					{
 						_LastModifiedUserID = (int?)column.Value;
-						break;
-					}
-					case "SequenceOrder" :
-					{
-						_SequenceOrder = (short)column.Value;
 						break;
 					}
 								}
@@ -279,6 +279,33 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion AuthorRoleID
 		
+		#region SequenceOrder
+		
+		private short _SequenceOrder = default(short);
+		
+		/// <summary>
+		/// Column: SequenceOrder;
+		/// DBMS data type: smallint;
+		/// </summary>
+		[ColumnDefinition("SequenceOrder", DbTargetType=SqlDbType.SmallInt, Ordinal=5, NumericPrecision=5)]
+		public short SequenceOrder
+		{
+			get
+			{
+				return _SequenceOrder;
+			}
+			set
+			{
+				if (_SequenceOrder != value)
+				{
+					_SequenceOrder = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion SequenceOrder
+		
 		#region Relationship
 		
 		private string _Relationship = string.Empty;
@@ -287,7 +314,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Relationship;
 		/// DBMS data type: nvarchar(150);
 		/// </summary>
-		[ColumnDefinition("Relationship", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=150)]
+		[ColumnDefinition("Relationship", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=150)]
 		public string Relationship
 		{
 			get
@@ -315,7 +342,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: TitleOfWork;
 		/// DBMS data type: nvarchar(500);
 		/// </summary>
-		[ColumnDefinition("TitleOfWork", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=500)]
+		[ColumnDefinition("TitleOfWork", DbTargetType=SqlDbType.NVarChar, Ordinal=7, CharacterMaxLength=500)]
 		public string TitleOfWork
 		{
 			get
@@ -343,7 +370,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=7)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=8)]
 		public DateTime CreationDate
 		{
 			get
@@ -370,7 +397,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=8)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=9)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -397,7 +424,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationUserID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=9, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=10, NumericPrecision=10, IsNullable=true)]
 		public int? CreationUserID
 		{
 			get
@@ -424,7 +451,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedUserID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=10, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=11, NumericPrecision=10, IsNullable=true)]
 		public int? LastModifiedUserID
 		{
 			get
@@ -442,33 +469,6 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion LastModifiedUserID
-		
-		#region SequenceOrder
-		
-		private short _SequenceOrder = default(short);
-		
-		/// <summary>
-		/// Column: SequenceOrder;
-		/// DBMS data type: smallint;
-		/// </summary>
-		[ColumnDefinition("SequenceOrder", DbTargetType=SqlDbType.SmallInt, Ordinal=11, NumericPrecision=5)]
-		public short SequenceOrder
-		{
-			get
-			{
-				return _SequenceOrder;
-			}
-			set
-			{
-				if (_SequenceOrder != value)
-				{
-					_SequenceOrder = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion SequenceOrder
 			
 		#endregion Properties
 
@@ -517,13 +517,13 @@ namespace MOBOT.BHL.DataObjects
 					o.TitleID == TitleID &&
 					o.AuthorID == AuthorID &&
 					o.AuthorRoleID == AuthorRoleID &&
+					o.SequenceOrder == SequenceOrder &&
 					GetComparisonString(o.Relationship) == GetComparisonString(Relationship) &&
 					GetComparisonString(o.TitleOfWork) == GetComparisonString(TitleOfWork) &&
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
-					o.LastModifiedUserID == LastModifiedUserID &&
-					o.SequenceOrder == SequenceOrder 
+					o.LastModifiedUserID == LastModifiedUserID 
 				)
 				{
 					o = null;
@@ -618,7 +618,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __TitleAuthor.SortColumn.TitleAuthorID);
 		/// </summary>
 		[Serializable]
@@ -628,13 +627,13 @@ namespace MOBOT.BHL.DataObjects
 			public const string TitleID = "TitleID";	
 			public const string AuthorID = "AuthorID";	
 			public const string AuthorRoleID = "AuthorRoleID";	
+			public const string SequenceOrder = "SequenceOrder";	
 			public const string Relationship = "Relationship";	
 			public const string TitleOfWork = "TitleOfWork";	
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";	
-			public const string SequenceOrder = "SequenceOrder";
+			public const string LastModifiedUserID = "LastModifiedUserID";
 		}
 				
 		#endregion SortColumn

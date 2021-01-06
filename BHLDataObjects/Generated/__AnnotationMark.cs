@@ -1,7 +1,7 @@
 
-// Generated 5/5/2010 11:11:49 AM
+// Generated 1/5/2021 3:36:34 PM
 // Do not modify the contents of this code file.
-// This abstract class __AnnotationMark is based upon AnnotationMark.
+// This abstract class __AnnotationMark is based upon annotation.AnnotationMark.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __AnnotationMark : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -192,7 +192,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -200,7 +200,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region AnnotationMarkID
 		
@@ -238,7 +238,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: AnnotationID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("AnnotationID", DbTargetType=SqlDbType.Int, Ordinal=2, NumericPrecision=10, IsInForeignKey=true)]
+		[ColumnDefinition("AnnotationID", DbTargetType=SqlDbType.Int, Ordinal=2, NumericPrecision=10)]
 		public int AnnotationID
 		{
 			get
@@ -614,7 +614,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -765,7 +765,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __AnnotationMark.SortColumn.AnnotationMarkID);
 		/// </summary>
 		[Serializable]
@@ -792,3 +791,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

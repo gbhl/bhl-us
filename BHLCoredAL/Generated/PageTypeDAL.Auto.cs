@@ -1,5 +1,5 @@
 
-// Generated 12/14/2020 4:22:57 PM
+// Generated 1/5/2021 3:26:40 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class PageTypeDAL is based upon dbo.PageType.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PageType> helper = new CustomSqlHelper<PageType>())
 				{
-					CustomGenericList<PageType> list = helper.ExecuteReader(command);
+					List<PageType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageType o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="pageTypeID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> PageTypeSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PageTypeSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int pageTypeID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="pageTypeID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> PageTypeSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PageTypeSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -190,7 +191,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PageType> helper = new CustomSqlHelper<PageType>())
 				{
-					CustomGenericList<PageType> list = helper.ExecuteReader(command);
+					List<PageType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageType o = list[0];
@@ -362,7 +363,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PageType> helper = new CustomSqlHelper<PageType>())
 				{
-					CustomGenericList<PageType> list = helper.ExecuteReader(command);
+					List<PageType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageType o = list[0];

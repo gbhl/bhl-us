@@ -1,7 +1,7 @@
 
-// Generated 5/19/2009 10:35:29 AM
+// Generated 1/5/2021 2:18:18 PM
 // Do not modify the contents of this code file.
-// This abstract class __Title is based upon Title.
+// This abstract class __Title is based upon dbo.Title.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Title : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -55,8 +55,6 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="shortTitle"></param>
 		/// <param name="uniformTitle"></param>
 		/// <param name="sortTitle"></param>
-		/// <param name="partNumber"></param>
-		/// <param name="partName"></param>
 		/// <param name="callNumber"></param>
 		/// <param name="publicationDetails"></param>
 		/// <param name="startYear"></param>
@@ -69,19 +67,21 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="titleDescription"></param>
 		/// <param name="tL2Author"></param>
 		/// <param name="publishReady"></param>
-		/// <param name="rareBooks"></param>
-		/// <param name="originalCatalogingSource"></param>
-		/// <param name="editionStatement"></param>
-		/// <param name="currentPublicationFrequency"></param>
 		/// <param name="note"></param>
 		/// <param name="externalCreationDate"></param>
 		/// <param name="externalLastModifiedDate"></param>
 		/// <param name="externalCreationUser"></param>
 		/// <param name="externalLastModifiedUser"></param>
 		/// <param name="productionDate"></param>
-		/// <param name="productionTitleID"></param>
 		/// <param name="createdDate"></param>
 		/// <param name="lastModifiedDate"></param>
+		/// <param name="rareBooks"></param>
+		/// <param name="originalCatalogingSource"></param>
+		/// <param name="editionStatement"></param>
+		/// <param name="currentPublicationFrequency"></param>
+		/// <param name="productionTitleID"></param>
+		/// <param name="partNumber"></param>
+		/// <param name="partName"></param>
 		public __Title(int titleID, 
 			string importKey, 
 			int importStatusID, 
@@ -92,8 +92,6 @@ namespace MOBOT.BHLImport.DataObjects
 			string shortTitle, 
 			string uniformTitle, 
 			string sortTitle, 
-			string partNumber, 
-			string partName, 
 			string callNumber, 
 			string publicationDetails, 
 			short? startYear, 
@@ -106,19 +104,21 @@ namespace MOBOT.BHLImport.DataObjects
 			string titleDescription, 
 			string tL2Author, 
 			bool? publishReady, 
-			bool? rareBooks, 
-			string originalCatalogingSource, 
-			string editionStatement, 
-			string currentPublicationFrequency, 
 			string note, 
 			DateTime? externalCreationDate, 
 			DateTime? externalLastModifiedDate, 
 			int? externalCreationUser, 
 			int? externalLastModifiedUser, 
 			DateTime? productionDate, 
-			int? productionTitleID, 
 			DateTime createdDate, 
-			DateTime lastModifiedDate) : this()
+			DateTime lastModifiedDate, 
+			bool? rareBooks, 
+			string originalCatalogingSource, 
+			string editionStatement, 
+			string currentPublicationFrequency, 
+			int? productionTitleID, 
+			string partNumber, 
+			string partName) : this()
 		{
 			_TitleID = titleID;
 			ImportKey = importKey;
@@ -130,8 +130,6 @@ namespace MOBOT.BHLImport.DataObjects
 			ShortTitle = shortTitle;
 			UniformTitle = uniformTitle;
 			SortTitle = sortTitle;
-			PartNumber = partNumber;
-			PartName = partName;
 			CallNumber = callNumber;
 			PublicationDetails = publicationDetails;
 			StartYear = startYear;
@@ -144,19 +142,21 @@ namespace MOBOT.BHLImport.DataObjects
 			TitleDescription = titleDescription;
 			TL2Author = tL2Author;
 			PublishReady = publishReady;
-			RareBooks = rareBooks;
-			OriginalCatalogingSource = originalCatalogingSource;
-			EditionStatement = editionStatement;
-			CurrentPublicationFrequency = currentPublicationFrequency;
 			Note = note;
 			ExternalCreationDate = externalCreationDate;
 			ExternalLastModifiedDate = externalLastModifiedDate;
 			ExternalCreationUser = externalCreationUser;
 			ExternalLastModifiedUser = externalLastModifiedUser;
 			ProductionDate = productionDate;
-			ProductionTitleID = productionTitleID;
 			CreatedDate = createdDate;
 			LastModifiedDate = lastModifiedDate;
+			RareBooks = rareBooks;
+			OriginalCatalogingSource = originalCatalogingSource;
+			EditionStatement = editionStatement;
+			CurrentPublicationFrequency = currentPublicationFrequency;
+			ProductionTitleID = productionTitleID;
+			PartNumber = partNumber;
+			PartName = partName;
 		}
 		
 		#endregion Constructors
@@ -233,16 +233,6 @@ namespace MOBOT.BHLImport.DataObjects
 						_SortTitle = (string)column.Value;
 						break;
 					}
-					case "PartNumber" :
-					{
-						_PartNumber = (string)column.Value;
-						break;
-					}
-					case "PartName" :
-					{
-						_PartName = (string)column.Value;
-						break;
-					}
 					case "CallNumber" :
 					{
 						_CallNumber = (string)column.Value;
@@ -303,26 +293,6 @@ namespace MOBOT.BHLImport.DataObjects
 						_PublishReady = (bool?)column.Value;
 						break;
 					}
-					case "RareBooks" :
-					{
-						_RareBooks = (bool?)column.Value;
-						break;
-					}
-					case "OriginalCatalogingSource" :
-					{
-						_OriginalCatalogingSource = (string)column.Value;
-						break;
-					}
-					case "EditionStatement" :
-					{
-						_EditionStatement = (string)column.Value;
-						break;
-					}
-					case "CurrentPublicationFrequency" :
-					{
-						_CurrentPublicationFrequency = (string)column.Value;
-						break;
-					}
 					case "Note" :
 					{
 						_Note = (string)column.Value;
@@ -353,11 +323,6 @@ namespace MOBOT.BHLImport.DataObjects
 						_ProductionDate = (DateTime?)column.Value;
 						break;
 					}
-					case "ProductionTitleID" :
-					{
-						_ProductionTitleID = (int?)column.Value;
-						break;
-					}
 					case "CreatedDate" :
 					{
 						_CreatedDate = (DateTime)column.Value;
@@ -368,7 +333,42 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+					case "RareBooks" :
+					{
+						_RareBooks = (bool?)column.Value;
+						break;
+					}
+					case "OriginalCatalogingSource" :
+					{
+						_OriginalCatalogingSource = (string)column.Value;
+						break;
+					}
+					case "EditionStatement" :
+					{
+						_EditionStatement = (string)column.Value;
+						break;
+					}
+					case "CurrentPublicationFrequency" :
+					{
+						_CurrentPublicationFrequency = (string)column.Value;
+						break;
+					}
+					case "ProductionTitleID" :
+					{
+						_ProductionTitleID = (int?)column.Value;
+						break;
+					}
+					case "PartNumber" :
+					{
+						_PartNumber = (string)column.Value;
+						break;
+					}
+					case "PartName" :
+					{
+						_PartName = (string)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -376,7 +376,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region TitleID
 		
@@ -656,62 +656,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion SortTitle
 		
-		#region PartNumber
-		
-		private string _PartNumber = null;
-		
-		/// <summary>
-		/// Column: PartNumber;
-		/// DBMS data type: nvarchar(255); Nullable;
-		/// </summary>
-		[ColumnDefinition("PartNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=11, CharacterMaxLength=255, IsNullable=true)]
-		public string PartNumber
-		{
-			get
-			{
-				return _PartNumber;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 255);
-				if (_PartNumber != value)
-				{
-					_PartNumber = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion PartNumber
-		
-		#region PartName
-		
-		private string _PartName = null;
-		
-		/// <summary>
-		/// Column: PartName;
-		/// DBMS data type: nvarchar(255); Nullable;
-		/// </summary>
-		[ColumnDefinition("PartName", DbTargetType=SqlDbType.NVarChar, Ordinal=12, CharacterMaxLength=255, IsNullable=true)]
-		public string PartName
-		{
-			get
-			{
-				return _PartName;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 255);
-				if (_PartName != value)
-				{
-					_PartName = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion PartName
-		
 		#region CallNumber
 		
 		private string _CallNumber = null;
@@ -720,7 +664,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: CallNumber;
 		/// DBMS data type: nvarchar(100); Nullable;
 		/// </summary>
-		[ColumnDefinition("CallNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=13, CharacterMaxLength=100, IsNullable=true)]
+		[ColumnDefinition("CallNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=11, CharacterMaxLength=100, IsNullable=true)]
 		public string CallNumber
 		{
 			get
@@ -748,7 +692,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: PublicationDetails;
 		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("PublicationDetails", DbTargetType=SqlDbType.NVarChar, Ordinal=14, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("PublicationDetails", DbTargetType=SqlDbType.NVarChar, Ordinal=12, CharacterMaxLength=255, IsNullable=true)]
 		public string PublicationDetails
 		{
 			get
@@ -776,7 +720,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: StartYear;
 		/// DBMS data type: smallint; Nullable;
 		/// </summary>
-		[ColumnDefinition("StartYear", DbTargetType=SqlDbType.SmallInt, Ordinal=15, NumericPrecision=5, IsNullable=true)]
+		[ColumnDefinition("StartYear", DbTargetType=SqlDbType.SmallInt, Ordinal=13, NumericPrecision=5, IsNullable=true)]
 		public short? StartYear
 		{
 			get
@@ -803,7 +747,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: EndYear;
 		/// DBMS data type: smallint; Nullable;
 		/// </summary>
-		[ColumnDefinition("EndYear", DbTargetType=SqlDbType.SmallInt, Ordinal=16, NumericPrecision=5, IsNullable=true)]
+		[ColumnDefinition("EndYear", DbTargetType=SqlDbType.SmallInt, Ordinal=14, NumericPrecision=5, IsNullable=true)]
 		public short? EndYear
 		{
 			get
@@ -830,7 +774,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Datafield_260_a;
 		/// DBMS data type: nvarchar(150); Nullable;
 		/// </summary>
-		[ColumnDefinition("Datafield_260_a", DbTargetType=SqlDbType.NVarChar, Ordinal=17, CharacterMaxLength=150, IsNullable=true)]
+		[ColumnDefinition("Datafield_260_a", DbTargetType=SqlDbType.NVarChar, Ordinal=15, CharacterMaxLength=150, IsNullable=true)]
 		public string Datafield_260_a
 		{
 			get
@@ -858,7 +802,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Datafield_260_b;
 		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("Datafield_260_b", DbTargetType=SqlDbType.NVarChar, Ordinal=18, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("Datafield_260_b", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=255, IsNullable=true)]
 		public string Datafield_260_b
 		{
 			get
@@ -886,7 +830,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Datafield_260_c;
 		/// DBMS data type: nvarchar(100); Nullable;
 		/// </summary>
-		[ColumnDefinition("Datafield_260_c", DbTargetType=SqlDbType.NVarChar, Ordinal=19, CharacterMaxLength=100, IsNullable=true)]
+		[ColumnDefinition("Datafield_260_c", DbTargetType=SqlDbType.NVarChar, Ordinal=17, CharacterMaxLength=100, IsNullable=true)]
 		public string Datafield_260_c
 		{
 			get
@@ -914,7 +858,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: InstitutionCode;
 		/// DBMS data type: nvarchar(10); Nullable;
 		/// </summary>
-		[ColumnDefinition("InstitutionCode", DbTargetType=SqlDbType.NVarChar, Ordinal=20, CharacterMaxLength=10, IsNullable=true)]
+		[ColumnDefinition("InstitutionCode", DbTargetType=SqlDbType.NVarChar, Ordinal=18, CharacterMaxLength=10, IsNullable=true)]
 		public string InstitutionCode
 		{
 			get
@@ -942,7 +886,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: LanguageCode;
 		/// DBMS data type: nvarchar(10); Nullable;
 		/// </summary>
-		[ColumnDefinition("LanguageCode", DbTargetType=SqlDbType.NVarChar, Ordinal=21, CharacterMaxLength=10, IsNullable=true)]
+		[ColumnDefinition("LanguageCode", DbTargetType=SqlDbType.NVarChar, Ordinal=19, CharacterMaxLength=10, IsNullable=true)]
 		public string LanguageCode
 		{
 			get
@@ -970,7 +914,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: TitleDescription;
 		/// DBMS data type: ntext; Nullable;
 		/// </summary>
-		[ColumnDefinition("TitleDescription", DbTargetType=SqlDbType.NText, Ordinal=22, CharacterMaxLength=1073741823, IsNullable=true)]
+		[ColumnDefinition("TitleDescription", DbTargetType=SqlDbType.NText, Ordinal=20, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string TitleDescription
 		{
 			get
@@ -998,7 +942,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: TL2Author;
 		/// DBMS data type: nvarchar(100); Nullable;
 		/// </summary>
-		[ColumnDefinition("TL2Author", DbTargetType=SqlDbType.NVarChar, Ordinal=23, CharacterMaxLength=100, IsNullable=true)]
+		[ColumnDefinition("TL2Author", DbTargetType=SqlDbType.NVarChar, Ordinal=21, CharacterMaxLength=100, IsNullable=true)]
 		public string TL2Author
 		{
 			get
@@ -1026,7 +970,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: PublishReady;
 		/// DBMS data type: bit; Nullable;
 		/// </summary>
-		[ColumnDefinition("PublishReady", DbTargetType=SqlDbType.Bit, Ordinal=24, IsNullable=true)]
+		[ColumnDefinition("PublishReady", DbTargetType=SqlDbType.Bit, Ordinal=22, IsNullable=true)]
 		public bool? PublishReady
 		{
 			get
@@ -1045,117 +989,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion PublishReady
 		
-		#region RareBooks
-		
-		private bool? _RareBooks = null;
-		
-		/// <summary>
-		/// Column: RareBooks;
-		/// DBMS data type: bit; Nullable;
-		/// </summary>
-		[ColumnDefinition("RareBooks", DbTargetType=SqlDbType.Bit, Ordinal=25, IsNullable=true)]
-		public bool? RareBooks
-		{
-			get
-			{
-				return _RareBooks;
-			}
-			set
-			{
-				if (_RareBooks != value)
-				{
-					_RareBooks = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion RareBooks
-		
-		#region OriginalCatalogingSource
-		
-		private string _OriginalCatalogingSource = null;
-		
-		/// <summary>
-		/// Column: OriginalCatalogingSource;
-		/// DBMS data type: nvarchar(100); Nullable;
-		/// </summary>
-		[ColumnDefinition("OriginalCatalogingSource", DbTargetType=SqlDbType.NVarChar, Ordinal=26, CharacterMaxLength=100, IsNullable=true)]
-		public string OriginalCatalogingSource
-		{
-			get
-			{
-				return _OriginalCatalogingSource;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 100);
-				if (_OriginalCatalogingSource != value)
-				{
-					_OriginalCatalogingSource = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion OriginalCatalogingSource
-		
-		#region EditionStatement
-		
-		private string _EditionStatement = null;
-		
-		/// <summary>
-		/// Column: EditionStatement;
-		/// DBMS data type: nvarchar(450); Nullable;
-		/// </summary>
-		[ColumnDefinition("EditionStatement", DbTargetType=SqlDbType.NVarChar, Ordinal=27, CharacterMaxLength=450, IsNullable=true)]
-		public string EditionStatement
-		{
-			get
-			{
-				return _EditionStatement;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 450);
-				if (_EditionStatement != value)
-				{
-					_EditionStatement = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion EditionStatement
-		
-		#region CurrentPublicationFrequency
-		
-		private string _CurrentPublicationFrequency = null;
-		
-		/// <summary>
-		/// Column: CurrentPublicationFrequency;
-		/// DBMS data type: nvarchar(100); Nullable;
-		/// </summary>
-		[ColumnDefinition("CurrentPublicationFrequency", DbTargetType=SqlDbType.NVarChar, Ordinal=28, CharacterMaxLength=100, IsNullable=true)]
-		public string CurrentPublicationFrequency
-		{
-			get
-			{
-				return _CurrentPublicationFrequency;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 100);
-				if (_CurrentPublicationFrequency != value)
-				{
-					_CurrentPublicationFrequency = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion CurrentPublicationFrequency
-		
 		#region Note
 		
 		private string _Note = null;
@@ -1164,7 +997,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Note;
 		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=29, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=23, CharacterMaxLength=255, IsNullable=true)]
 		public string Note
 		{
 			get
@@ -1192,7 +1025,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ExternalCreationDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalCreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=30, IsNullable=true)]
+		[ColumnDefinition("ExternalCreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=24, IsNullable=true)]
 		public DateTime? ExternalCreationDate
 		{
 			get
@@ -1219,7 +1052,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ExternalLastModifiedDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalLastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=31, IsNullable=true)]
+		[ColumnDefinition("ExternalLastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=25, IsNullable=true)]
 		public DateTime? ExternalLastModifiedDate
 		{
 			get
@@ -1246,7 +1079,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ExternalCreationUser;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalCreationUser", DbTargetType=SqlDbType.Int, Ordinal=32, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("ExternalCreationUser", DbTargetType=SqlDbType.Int, Ordinal=26, NumericPrecision=10, IsNullable=true)]
 		public int? ExternalCreationUser
 		{
 			get
@@ -1273,7 +1106,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ExternalLastModifiedUser;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalLastModifiedUser", DbTargetType=SqlDbType.Int, Ordinal=33, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("ExternalLastModifiedUser", DbTargetType=SqlDbType.Int, Ordinal=27, NumericPrecision=10, IsNullable=true)]
 		public int? ExternalLastModifiedUser
 		{
 			get
@@ -1300,7 +1133,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ProductionDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("ProductionDate", DbTargetType=SqlDbType.DateTime, Ordinal=34, IsNullable=true)]
+		[ColumnDefinition("ProductionDate", DbTargetType=SqlDbType.DateTime, Ordinal=28, IsNullable=true)]
 		public DateTime? ProductionDate
 		{
 			get
@@ -1318,6 +1151,171 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion ProductionDate
+		
+		#region CreatedDate
+		
+		private DateTime _CreatedDate;
+		
+		/// <summary>
+		/// Column: CreatedDate;
+		/// DBMS data type: datetime;
+		/// </summary>
+		[ColumnDefinition("CreatedDate", DbTargetType=SqlDbType.DateTime, Ordinal=29)]
+		public DateTime CreatedDate
+		{
+			get
+			{
+				return _CreatedDate;
+			}
+			set
+			{
+				if (_CreatedDate != value)
+				{
+					_CreatedDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreatedDate
+		
+		#region LastModifiedDate
+		
+		private DateTime _LastModifiedDate;
+		
+		/// <summary>
+		/// Column: LastModifiedDate;
+		/// DBMS data type: datetime;
+		/// </summary>
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=30)]
+		public DateTime LastModifiedDate
+		{
+			get
+			{
+				return _LastModifiedDate;
+			}
+			set
+			{
+				if (_LastModifiedDate != value)
+				{
+					_LastModifiedDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedDate
+		
+		#region RareBooks
+		
+		private bool? _RareBooks = null;
+		
+		/// <summary>
+		/// Column: RareBooks;
+		/// DBMS data type: bit; Nullable;
+		/// </summary>
+		[ColumnDefinition("RareBooks", DbTargetType=SqlDbType.Bit, Ordinal=31, IsNullable=true)]
+		public bool? RareBooks
+		{
+			get
+			{
+				return _RareBooks;
+			}
+			set
+			{
+				if (_RareBooks != value)
+				{
+					_RareBooks = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion RareBooks
+		
+		#region OriginalCatalogingSource
+		
+		private string _OriginalCatalogingSource = null;
+		
+		/// <summary>
+		/// Column: OriginalCatalogingSource;
+		/// DBMS data type: nvarchar(100); Nullable;
+		/// </summary>
+		[ColumnDefinition("OriginalCatalogingSource", DbTargetType=SqlDbType.NVarChar, Ordinal=32, CharacterMaxLength=100, IsNullable=true)]
+		public string OriginalCatalogingSource
+		{
+			get
+			{
+				return _OriginalCatalogingSource;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 100);
+				if (_OriginalCatalogingSource != value)
+				{
+					_OriginalCatalogingSource = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion OriginalCatalogingSource
+		
+		#region EditionStatement
+		
+		private string _EditionStatement = null;
+		
+		/// <summary>
+		/// Column: EditionStatement;
+		/// DBMS data type: nvarchar(450); Nullable;
+		/// </summary>
+		[ColumnDefinition("EditionStatement", DbTargetType=SqlDbType.NVarChar, Ordinal=33, CharacterMaxLength=450, IsNullable=true)]
+		public string EditionStatement
+		{
+			get
+			{
+				return _EditionStatement;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 450);
+				if (_EditionStatement != value)
+				{
+					_EditionStatement = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion EditionStatement
+		
+		#region CurrentPublicationFrequency
+		
+		private string _CurrentPublicationFrequency = null;
+		
+		/// <summary>
+		/// Column: CurrentPublicationFrequency;
+		/// DBMS data type: nvarchar(100); Nullable;
+		/// </summary>
+		[ColumnDefinition("CurrentPublicationFrequency", DbTargetType=SqlDbType.NVarChar, Ordinal=34, CharacterMaxLength=100, IsNullable=true)]
+		public string CurrentPublicationFrequency
+		{
+			get
+			{
+				return _CurrentPublicationFrequency;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 100);
+				if (_CurrentPublicationFrequency != value)
+				{
+					_CurrentPublicationFrequency = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CurrentPublicationFrequency
 		
 		#region ProductionTitleID
 		
@@ -1346,62 +1344,64 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion ProductionTitleID
 		
-		#region CreatedDate
+		#region PartNumber
 		
-		private DateTime _CreatedDate;
+		private string _PartNumber = null;
 		
 		/// <summary>
-		/// Column: CreatedDate;
-		/// DBMS data type: datetime;
+		/// Column: PartNumber;
+		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("CreatedDate", DbTargetType=SqlDbType.DateTime, Ordinal=36)]
-		public DateTime CreatedDate
+		[ColumnDefinition("PartNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=36, CharacterMaxLength=255, IsNullable=true)]
+		public string PartNumber
 		{
 			get
 			{
-				return _CreatedDate;
+				return _PartNumber;
 			}
 			set
 			{
-				if (_CreatedDate != value)
+				if (value != null) value = CalibrateValue(value, 255);
+				if (_PartNumber != value)
 				{
-					_CreatedDate = value;
+					_PartNumber = value;
 					_IsDirty = true;
 				}
 			}
 		}
 		
-		#endregion CreatedDate
+		#endregion PartNumber
 		
-		#region LastModifiedDate
+		#region PartName
 		
-		private DateTime _LastModifiedDate;
+		private string _PartName = null;
 		
 		/// <summary>
-		/// Column: LastModifiedDate;
-		/// DBMS data type: datetime;
+		/// Column: PartName;
+		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=37)]
-		public DateTime LastModifiedDate
+		[ColumnDefinition("PartName", DbTargetType=SqlDbType.NVarChar, Ordinal=37, CharacterMaxLength=255, IsNullable=true)]
+		public string PartName
 		{
 			get
 			{
-				return _LastModifiedDate;
+				return _PartName;
 			}
 			set
 			{
-				if (_LastModifiedDate != value)
+				if (value != null) value = CalibrateValue(value, 255);
+				if (_PartName != value)
 				{
-					_LastModifiedDate = value;
+					_PartName = value;
 					_IsDirty = true;
 				}
 			}
 		}
 		
-		#endregion LastModifiedDate
+		#endregion PartName
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -1453,8 +1453,6 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.ShortTitle) == GetComparisonString(ShortTitle) &&
 					GetComparisonString(o.UniformTitle) == GetComparisonString(UniformTitle) &&
 					GetComparisonString(o.SortTitle) == GetComparisonString(SortTitle) &&
-					GetComparisonString(o.PartNumber) == GetComparisonString(PartNumber) &&
-					GetComparisonString(o.PartName) == GetComparisonString(PartName) &&
 					GetComparisonString(o.CallNumber) == GetComparisonString(CallNumber) &&
 					GetComparisonString(o.PublicationDetails) == GetComparisonString(PublicationDetails) &&
 					o.StartYear == StartYear &&
@@ -1467,19 +1465,21 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.TitleDescription) == GetComparisonString(TitleDescription) &&
 					GetComparisonString(o.TL2Author) == GetComparisonString(TL2Author) &&
 					o.PublishReady == PublishReady &&
-					o.RareBooks == RareBooks &&
-					GetComparisonString(o.OriginalCatalogingSource) == GetComparisonString(OriginalCatalogingSource) &&
-					GetComparisonString(o.EditionStatement) == GetComparisonString(EditionStatement) &&
-					GetComparisonString(o.CurrentPublicationFrequency) == GetComparisonString(CurrentPublicationFrequency) &&
 					GetComparisonString(o.Note) == GetComparisonString(Note) &&
 					o.ExternalCreationDate == ExternalCreationDate &&
 					o.ExternalLastModifiedDate == ExternalLastModifiedDate &&
 					o.ExternalCreationUser == ExternalCreationUser &&
 					o.ExternalLastModifiedUser == ExternalLastModifiedUser &&
 					o.ProductionDate == ProductionDate &&
-					o.ProductionTitleID == ProductionTitleID &&
 					o.CreatedDate == CreatedDate &&
-					o.LastModifiedDate == LastModifiedDate 
+					o.LastModifiedDate == LastModifiedDate &&
+					o.RareBooks == RareBooks &&
+					GetComparisonString(o.OriginalCatalogingSource) == GetComparisonString(OriginalCatalogingSource) &&
+					GetComparisonString(o.EditionStatement) == GetComparisonString(EditionStatement) &&
+					GetComparisonString(o.CurrentPublicationFrequency) == GetComparisonString(CurrentPublicationFrequency) &&
+					o.ProductionTitleID == ProductionTitleID &&
+					GetComparisonString(o.PartNumber) == GetComparisonString(PartNumber) &&
+					GetComparisonString(o.PartName) == GetComparisonString(PartName) 
 				)
 				{
 					o = null;
@@ -1574,7 +1574,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Title.SortColumn.TitleID);
 		/// </summary>
 		[Serializable]
@@ -1590,8 +1589,6 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string ShortTitle = "ShortTitle";	
 			public const string UniformTitle = "UniformTitle";	
 			public const string SortTitle = "SortTitle";	
-			public const string PartNumber = "PartNumber";	
-			public const string PartName = "PartName";	
 			public const string CallNumber = "CallNumber";	
 			public const string PublicationDetails = "PublicationDetails";	
 			public const string StartYear = "StartYear";	
@@ -1604,22 +1601,25 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string TitleDescription = "TitleDescription";	
 			public const string TL2Author = "TL2Author";	
 			public const string PublishReady = "PublishReady";	
-			public const string RareBooks = "RareBooks";	
-			public const string OriginalCatalogingSource = "OriginalCatalogingSource";	
-			public const string EditionStatement = "EditionStatement";	
-			public const string CurrentPublicationFrequency = "CurrentPublicationFrequency";	
 			public const string Note = "Note";	
 			public const string ExternalCreationDate = "ExternalCreationDate";	
 			public const string ExternalLastModifiedDate = "ExternalLastModifiedDate";	
 			public const string ExternalCreationUser = "ExternalCreationUser";	
 			public const string ExternalLastModifiedUser = "ExternalLastModifiedUser";	
 			public const string ProductionDate = "ProductionDate";	
-			public const string ProductionTitleID = "ProductionTitleID";	
 			public const string CreatedDate = "CreatedDate";	
-			public const string LastModifiedDate = "LastModifiedDate";
+			public const string LastModifiedDate = "LastModifiedDate";	
+			public const string RareBooks = "RareBooks";	
+			public const string OriginalCatalogingSource = "OriginalCatalogingSource";	
+			public const string EditionStatement = "EditionStatement";	
+			public const string CurrentPublicationFrequency = "CurrentPublicationFrequency";	
+			public const string ProductionTitleID = "ProductionTitleID";	
+			public const string PartNumber = "PartNumber";	
+			public const string PartName = "PartName";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

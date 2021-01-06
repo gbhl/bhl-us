@@ -1,5 +1,5 @@
 
-// Generated 9/26/2018 8:45:51 PM
+// Generated 1/5/2021 3:45:09 PM
 // Do not modify the contents of this code file.
 // This abstract class __TextImportBatchFile is based upon txtimport.TextImportBatchFile.
 
@@ -619,7 +619,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __TextImportBatchFile.SortColumn.TextImportBatchFileID);
 		/// </summary>
 		[Serializable]

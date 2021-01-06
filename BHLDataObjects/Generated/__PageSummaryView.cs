@@ -1,5 +1,5 @@
 
-// Generated 10/22/2020 9:42:37 AM
+// Generated 1/5/2021 3:46:41 PM
 // Do not modify the contents of this code file.
 // This abstract class __PageSummaryView is based upon dbo.PageSummaryView.
 
@@ -98,7 +98,7 @@ namespace MOBOT.BHL.DataObjects
 			int pageID, 
 			string fileNamePrefix, 
 			string pageDescription, 
-			short sequenceOrder, 
+			int sequenceOrder, 
 			bool illustration, 
 			bool active, 
 			string externalBaseURL, 
@@ -886,9 +886,9 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: FileNamePrefix;
-		/// DBMS data type: nvarchar(200);
+		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("FileNamePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=21, CharacterMaxLength=200)]
+		[ColumnDefinition("FileNamePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=21, CharacterMaxLength=50)]
 		public string FileNamePrefix
 		{
 			get
@@ -897,7 +897,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 200);
+				if (value != null) value = CalibrateValue(value, 50);
 				if (_FileNamePrefix != value)
 				{
 					_FileNamePrefix = value;
@@ -942,7 +942,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: SequenceOrder;
-		/// DBMS data type: smallint;
+		/// DBMS data type: int;
 		/// </summary>
 		[ColumnDefinition("SequenceOrder", DbTargetType=SqlDbType.Int, Ordinal=23, NumericPrecision=10)]
 		public int SequenceOrder
@@ -1353,7 +1353,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __PageSummaryView.SortColumn.MARCBibID);
 		/// </summary>
 		[Serializable]

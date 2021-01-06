@@ -6,6 +6,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
@@ -19,7 +20,7 @@ namespace MOBOT.BHL.DAL
 		NoteType NoteTypeSelectAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
 			int noteTypeID);
 
-		CustomGenericList<CustomDataRow> NoteTypeSelectAutoRaw(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+		List<CustomDataRow> NoteTypeSelectAutoRaw(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
 			int noteTypeID);
 
 		NoteType NoteTypeInsertAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction,

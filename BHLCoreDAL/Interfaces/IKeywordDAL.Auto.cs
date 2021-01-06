@@ -6,6 +6,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
@@ -22,10 +23,10 @@ namespace MOBOT.BHL.DAL
 		Keyword KeywordSelectAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
 			int keywordID);
 
-		CustomGenericList<CustomDataRow> KeywordSelectAutoRaw(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+		List<CustomDataRow> KeywordSelectAutoRaw(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
 			int keywordID);
 
-		CustomGenericList<CustomDataRow> KeywordSelectAutoRaw(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
+		List<CustomDataRow> KeywordSelectAutoRaw(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
 			int keywordID);
 
 		Keyword KeywordInsertAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
