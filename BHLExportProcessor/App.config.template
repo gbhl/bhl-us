@@ -107,18 +107,22 @@
     <add key="TSVPageNameFile" value="\\SERVER\FOLDER\data\pagename.txt" />
     <add key="TSVPartFile" value="\\SERVER\FOLDER\data\part.txt" />
     <add key="TSVPartAuthorFile" value="\\SERVER\FOLDER\data\partcreator.txt" />
+    <add key="TSVPartIdentifierFile" value="\\SERVER\FOLDER\data\partidentifier.txt"/>
     <add key="TSVKeywordFile" value="\\SERVER\FOLDER\data\subject.txt" />
     <add key="TSVTitleFile" value="\\SERVER\FOLDER\data\title.txt" />
     <add key="TSVTitleIdentifierFile" value="\\SERVER\FOLDER\data\titleidentifier.txt" />
+    <add key="TSVAuthorIdentifierFile" value="\\SERVER\FOLDER\data\creatoridentifier.txt"/>
 
     <add key="TSVInternalDOIFile" value="\\SERVER\FOLDER\data\doiint.txt" />
     <add key="TSVInternalAuthorFile" value="\\SERVER\FOLDER\data\creatorint.txt" />
     <add key="TSVInternalItemFile" value="\\SERVER\FOLDER\data\itemint.txt" />
     <add key="TSVInternalPartFile" value="\\SERVER\FOLDER\data\partint.txt" />
     <add key="TSVInternalPartAuthorFile" value="\\SERVER\FOLDER\data\partcreatorint.txt" />
+    <add key="TSVInternalPartIdentifierFile" value="\\SERVER\FOLDER\data\partidentifierint.txt"/>
     <add key="TSVInternalKeywordFile" value="\\SERVER\FOLDER\data\subjectint.txt" />
     <add key="TSVInternalTitleFile" value="\\SERVER\FOLDER\data\titleint.txt" />
     <add key="TSVInternalTitleIdentifierFile" value="\\SERVER\FOLDER\data\titleidentifierint.txt" />
+    <add key="TSVInternalAuthorIdentifierFile" value="\\SERVER\FOLDER\data\creatoridentifierint.txt"/>
 
     <add key="TSVItemURLFormat" value="https://www.biodiversitylibrary.org/item/{0} "/>
     <add key="TSVItemTextURLFormat" value="https://www.biodiversitylibrary.org/itemtext/{0} "/>
@@ -160,8 +164,8 @@
       <appender-ref ref="RollingLogFileAppender"/>
     </root>
   </log4net>
-  <startup> 
-    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.2" />
+  <startup>
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8"/>
   </startup>
   <system.serviceModel>
     <bindings>
