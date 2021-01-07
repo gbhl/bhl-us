@@ -62,6 +62,8 @@ namespace BHL.Export.TSV
             Export("ExportItem", configParms.ItemFile, configParms.InternalItemFile, WriteItemHeader, GetItemRow, "Items");
             Export("ExportSegment", configParms.PartFile, configParms.InternalPartFile, WriteSegmentHeader, GetSegmentRow, "Segments");
             Export("ExportSegmentAuthor", configParms.PartAuthorFile, configParms.InternalPartAuthorFile, WriteSegmentAuthorHeader, GetSegmentAuthorRow, "Segment Authors");
+            Export("ExportSegmentIdentifier", configParms.PartIdentifierFile, configParms.InternalPartIdentifierFile, WriteSegmentIdentifierHeader, GetSegmentIdentifierRow, "Segment Identifiers");
+            Export("ExportAuthorIdentifier", configParms.AuthorIdentifierFile, configParms.InternalAuthorIdentifierFile, WriteAuthorIdentifierHeader, GetAuthorIdentifierRow, "Author Identifiers");
             Export("ExportPageName", configParms.PageNameFile, null, WritePageNameHeader, GetPageNameRow, "Page Names");
             Export("ExportPage", configParms.PageFile, null, WritePageHeader, GetPageRow, "Pages");
         }
@@ -182,6 +184,11 @@ namespace BHL.Export.TSV
             File.AppendAllText(filePath, "PartID\tCreatorID\tCreatorName\tCreationDate" + Environment.NewLine, Encoding.UTF8);
         }
 
+        public void WriteSegmentIdentifierHeader(string filePath)
+        {
+            File.AppendAllText(filePath, "PartID\tIdentifierName\tIdentifierValue\tCreationDate" + Environment.NewLine, Encoding.UTF8);
+        }
+
         public void WriteKeywordHeader(string filePath)
         {
             File.AppendAllText(filePath, "TitleID\tSubject\tCreationDate" + Environment.NewLine, Encoding.UTF8);
@@ -196,6 +203,12 @@ namespace BHL.Export.TSV
         {
             File.AppendAllText(filePath, "TitleID\tIdentifierName\tIdentifierValue\tCreationDate" + Environment.NewLine, Encoding.UTF8);
         }
+
+        public void WriteAuthorIdentifierHeader(string filePath)
+        {
+            File.AppendAllText(filePath, "CreatorID\tIdentifierName\tIdentifierValue\tCreationDate" + Environment.NewLine, Encoding.UTF8);
+        }
+
 
         #endregion FileHeader delegates
 
@@ -345,6 +358,15 @@ namespace BHL.Export.TSV
             return string.Format("{0}\t{1}\t{2}\t{3}", partID, creatorID, creatorName, creationDate);
         }
 
+        public string GetSegmentIdentifierRow(SqlDataReader reader, string statType)
+        {
+            string partID = GetDBInt32(reader, "SegmentID");
+            string identifierName = GetDBString(reader, "IdentifierName");
+            string identifierValue = GetDBString(reader, "IdentifierValue");
+            string creationDate = GetDBString(reader, "CreationDate");
+            return string.Format("{0}\t{1}\t{2}\t{3}", partID, identifierName, identifierValue, creationDate);
+        }
+
         public string GetKeywordRow(SqlDataReader reader, string statType)
         {
             string titleID = GetDBInt32(reader, "TitleID");
@@ -380,6 +402,15 @@ namespace BHL.Export.TSV
             string identifierValue = GetDBString(reader, "IdentifierValue");
             string creationDate = GetDBString(reader, "CreationDate");
             return string.Format("{0}\t{1}\t{2}\t{3}", titleID, identifierName, identifierValue, creationDate);
+        }
+
+        public string GetAuthorIdentifierRow(SqlDataReader reader, string statType)
+        {
+            string authorID = GetDBInt32(reader, "AuthorID");
+            string identifierName = GetDBString(reader, "IdentifierName");
+            string identifierValue = GetDBString(reader, "IdentifierValue");
+            string creationDate = GetDBString(reader, "CreationDate");
+            return string.Format("{0}\t{1}\t{2}\t{3}", authorID, identifierName, identifierValue, creationDate);
         }
 
         #endregion GetExportRow delegates

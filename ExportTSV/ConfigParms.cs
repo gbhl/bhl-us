@@ -11,9 +11,11 @@ namespace BHL.Export.TSV
         public string PageNameFile { get; set; } = string.Empty;
         public string PartFile { get; set; } = string.Empty;
         public string PartAuthorFile { get; set; } = string.Empty;
+        public string PartIdentifierFile { get; set; } = string.Empty;
         public string KeywordFile { get; set; } = string.Empty;
         public string TitleFile { get; set; } = string.Empty;
         public string TitleIdentifierFile { get; set; } = string.Empty;
+        public string AuthorIdentifierFile { get; set; } = string.Empty;
         public string ItemUrlFormat { get; set; } = string.Empty;
         public string ItemTextUrlFormat { get; set; } = string.Empty;
         public string ItemPDFUrlFormat { get; set; } = string.Empty;
@@ -24,9 +26,11 @@ namespace BHL.Export.TSV
         public string InternalItemFile { get; set; } = string.Empty;
         public string InternalPartFile { get; set; } = string.Empty;
         public string InternalPartAuthorFile { get; set; } = string.Empty;
+        public string InternalPartIdentifierFile { get; set; } = string.Empty;
         public string InternalKeywordFile { get; set; } = string.Empty;
         public string InternalTitleFile { get; set; } = string.Empty;
         public string InternalTitleIdentifierFile { get; set; } = string.Empty;
+        public string InternalAuthorIdentifierFile { get; set; } = string.Empty;
 
 
         public void LoadAppConfig()
@@ -38,9 +42,11 @@ namespace BHL.Export.TSV
             PageNameFile = ConfigurationManager.AppSettings["TSVPageNameFile"];
             PartFile = ConfigurationManager.AppSettings["TSVPartFile"];
             PartAuthorFile = ConfigurationManager.AppSettings["TSVPartAuthorFile"];
+            PartIdentifierFile = ConfigurationManager.AppSettings["TSVPartIdentifierFile"];
             KeywordFile = ConfigurationManager.AppSettings["TSVKeywordFile"];
             TitleFile = ConfigurationManager.AppSettings["TSVTitleFile"];
             TitleIdentifierFile = ConfigurationManager.AppSettings["TSVTitleIdentifierFile"];
+            AuthorIdentifierFile = ConfigurationManager.AppSettings["TSVAuthorIdentifierFile"];
             ItemUrlFormat = ConfigurationManager.AppSettings["TSVItemURLFormat"];
             ItemTextUrlFormat = ConfigurationManager.AppSettings["TSVItemTextURLFormat"];
             ItemPDFUrlFormat = ConfigurationManager.AppSettings["TSVItemPDFURLFormat"];
@@ -51,9 +57,11 @@ namespace BHL.Export.TSV
             InternalItemFile = ConfigurationManager.AppSettings["TSVInternalItemFile"];
             InternalPartFile = ConfigurationManager.AppSettings["TSVInternalPartFile"];
             InternalPartAuthorFile = ConfigurationManager.AppSettings["TSVInternalPartAuthorFile"];
+            InternalPartIdentifierFile = ConfigurationManager.AppSettings["TSVInternalPartIdentifierFile"];
             InternalKeywordFile = ConfigurationManager.AppSettings["TSVInternalKeywordFile"];
             InternalTitleFile = ConfigurationManager.AppSettings["TSVInternalTitleFile"];
             InternalTitleIdentifierFile = ConfigurationManager.AppSettings["TSVInternalTitleIdentifierFile"];
+            InternalAuthorIdentifierFile = ConfigurationManager.AppSettings["TSVInternalAuthorIdentifierFile"];
         }
     }
 }

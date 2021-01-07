@@ -1115,6 +1115,8 @@
     <None Include="Data\dbo.TitleInstitution.Table.sql" />
     <None Include="dbo\Stored Procedures\ApiSegmentSelectForSegmentID.sql" />
     <None Include="dbo\Functions\fnReverseAuthorNameISV.sql" />
+    <None Include="dbo\Stored Procedures\ExportSegmentIdentifier.sql" />
+    <None Include="dbo\Stored Procedures\ExportAuthorIdentifier.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
