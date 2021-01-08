@@ -469,6 +469,8 @@
         // Page info Json object
         var pages = <%= Pages %>;
 
+        br.pageProgression = 'rl';
+
         var pdfPages = [];
         var pdfBar = $('#mypdfbar');
         var PdfModeType = {
@@ -1101,10 +1103,22 @@
 
         // Return which side, left or right, that a given page should be displayed on
         br.getPageSide = function (index) {
-            if (0 == (index & 0x1)) {
-                return 'R';
+            if ('rl' != this.pageProgression) {
+                // If pageProgression is not set RTL we assume it is LTR
+                if (0 == (index & 0x1)) {
+                    // Even-numbered page
+                    return 'R';
+                } else {
+                    // Odd-numbered page
+                    return 'L';
+                }
             } else {
-                return 'L';
+                // RTL
+                if (0 == (index & 0x1)) {
+                    return 'L';
+                } else {
+                    return 'R';
+                }
             }
         }
 
