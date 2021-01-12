@@ -1071,6 +1071,9 @@
 <tr valign="top">
 <td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
 </tr>
+<tr valign="top">
+<td class="tdTableDefinition">PageProgression</td><td class="tdTableDefinition">PageProgression</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
 </table>
 <div class="references">
 <p class="subTitle">References</p>
@@ -1833,11 +1836,7 @@
 <li>
 <a href="#ItemTitle">ItemTitle</a> referencing (ItemID)</li>
 <li>
-<a href="#Segment">Segment</a> referencing (ItemID)</li>
-<li>
 <a href="#ItemPage">ItemPage</a> referencing (ItemID)</li>
-<li>
-<a href="#Book">Book</a> referencing (ItemID)</li>
 <li>
 <a href="#ItemRelationship">ItemRelationship</a> referencing (ItemID)</li>
 <li>
@@ -1848,6 +1847,10 @@
 <a href="#ItemIdentifier">ItemIdentifier</a> referencing (ItemID)</li>
 <li>
 <a href="#ItemAuthor">ItemAuthor</a> referencing (ItemID)</li>
+<li>
+<a href="#Book">Book</a> referencing (ItemID)</li>
+<li>
+<a href="#Segment">Segment</a> referencing (ItemID)</li>
 </ul>
 </div>
 </div>
@@ -2514,9 +2517,9 @@
 <li>
 <a href="#ItemLanguage">ItemLanguage</a> referencing (LanguageCode)</li>
 <li>
-<a href="#Segment">Segment</a> referencing (LanguageCode)</li>
-<li>
 <a href="#Book">Book</a> referencing (LanguageCode)</li>
+<li>
+<a href="#Segment">Segment</a> referencing (LanguageCode)</li>
 </ul>
 </div>
 </div>
@@ -3317,9 +3320,9 @@
 <li>
 <a href="#IndicatedPage">IndicatedPage</a> referencing (PageID)</li>
 <li>
-<a href="#Segment">Segment</a> referencing (PageID)</li>
-<li>
 <a href="#ItemPage">ItemPage</a> referencing (PageID)</li>
+<li>
+<a href="#Segment">Segment</a> referencing (PageID)</li>
 </ul>
 </div>
 </div>
@@ -3486,9 +3489,9 @@
 <p class="subTitle">Referenced By</p>
 <ul>
 <li>
-<a href="#Segment">Segment</a> referencing (PaginationStatusID)</li>
-<li>
 <a href="#Book">Book</a> referencing (PaginationStatusID)</li>
+<li>
+<a href="#Segment">Segment</a> referencing (PaginationStatusID)</li>
 </ul>
 </div>
 </div>
@@ -4020,9 +4023,7 @@
 <td class="tdTableDefinition">EndPageNumber</td><td class="tdTableDefinition">EndPageNumber</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">StartPageID
-                &nbsp;(<a href="#Page">FK</a>)
-              </td><td class="tdTableDefinition">StartPageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+<td class="tdTableDefinition">StartPageID</td><td class="tdTableDefinition">StartPageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">LanguageCode
@@ -4063,9 +4064,7 @@
 <td class="tdTableDefinition">SortTitle</td><td class="tdTableDefinition">SortTitle</td><td class="tdTableDefinition">NVARCHAR(2000)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">RedirectSegmentID
-                &nbsp;(<a href="#Segment">FK</a>)
-              </td><td class="tdTableDefinition">RedirectSegmentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">RedirectSegmentID</td><td class="tdTableDefinition">RedirectSegmentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">ThumbnailPageID</td><td class="tdTableDefinition">ThumbnailPageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
@@ -4114,6 +4113,11 @@
 <tr valign="top">
 <td class="tdTableDefinition">LastPageNameLookupDate</td><td class="tdTableDefinition">LastPageNameLookupDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
 </tr>
+<tr valign="top">
+<td class="tdTableDefinition">PageID
+                &nbsp;(<a href="#Page">FK</a>)
+              </td><td class="tdTableDefinition">PageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
 </table>
 <div class="references">
 <p class="subTitle">References</p>
@@ -4123,18 +4127,14 @@
 <li>
 <a href="#PaginationStatus">PaginationStatus</a> through (PaginationStatusID)</li>
 <li>
-<a href="#Page">Page</a> through (StartPageID)</li>
+<a href="#Page">Page</a> through (PageID)</li>
 <li>
 <a href="#SegmentGenre">SegmentGenre</a> through (SegmentGenreID)</li>
-<li>
-<a href="#Segment">Segment</a> through (RedirectSegmentID)</li>
 <li>
 <a href="#Item">Item</a> through (ItemID)</li>
 </ul>
 <p class="subTitle">Referenced By</p>
 <ul>
-<li>
-<a href="#Segment">Segment</a> referencing (SegmentID)</li>
 <li>
 <a href="#SegmentClusterSegment">SegmentClusterSegment</a> referencing (SegmentID)</li>
 </ul>

@@ -849,9 +849,7 @@
 <td class="tdTableDefinition">ItemID (PK)</td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">ItemStatusID
-                &nbsp;(<a href="#IAItemStatus">FK</a>)
-              </td><td class="tdTableDefinition">ItemStatusID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">ItemStatusID</td><td class="tdTableDefinition">ItemStatusID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">IAIdentifierPrefix</td><td class="tdTableDefinition">IAIdentifierPrefix</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
@@ -1012,27 +1010,27 @@
 <tr valign="top">
 <td class="tdTableDefinition">EndPart</td><td class="tdTableDefinition">EndPart</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
+<tr valign="top">
+<td class="tdTableDefinition">PageProgression</td><td class="tdTableDefinition">PageProgression</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
 </table>
 <div class="references">
-<p class="subTitle">References</p>
-<ul>
-<li>
-<a href="#IAItemStatus">IAItemStatus</a> through (ItemStatusID)</li>
-</ul>
 <p class="subTitle">Referenced By</p>
 <ul>
 <li>
-<a href="#IAFile">IAFile</a> referencing (ItemID)</li>
-<li>
-<a href="#IAItemSet">IAItemSet</a> referencing (ItemID)</li>
+<a href="#IAItemError">IAItemError</a> referencing (ItemID)</li>
 <li>
 <a href="#IAPage">IAPage</a> referencing (ItemID)</li>
 <li>
-<a href="#IAScandata">IAScandata</a> referencing (ItemID)</li>
-<li>
-<a href="#IAItemError">IAItemError</a> referencing (ItemID)</li>
+<a href="#IAItemSet">IAItemSet</a> referencing (ItemID)</li>
 <li>
 <a href="#IADCMetadata">IADCMetadata</a> referencing (ItemID)</li>
+<li>
+<a href="#IAItemStatus">IAItemStatus</a> referencing (ItemID)</li>
+<li>
+<a href="#IAFile">IAFile</a> referencing (ItemID)</li>
+<li>
+<a href="#IAScandata">IAScandata</a> referencing (ItemID)</li>
 <li>
 <a href="#IAMarc">IAMarc</a> referencing (ItemID)</li>
 </ul>
@@ -1118,9 +1116,9 @@
 <p class="subTitle">References</p>
 <ul>
 <li>
-<a href="#IAItem">IAItem</a> through (ItemID)</li>
-<li>
 <a href="#IASet">IASet</a> through (SetID)</li>
+<li>
+<a href="#IAItem">IAItem</a> through (ItemID)</li>
 </ul>
 </div>
 </div>
@@ -1151,12 +1149,17 @@
 <tr valign="top">
 <td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemID
+                &nbsp;(<a href="#IAItem">FK</a>)
+              </td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
 </table>
 <div class="references">
-<p class="subTitle">Referenced By</p>
+<p class="subTitle">References</p>
 <ul>
 <li>
-<a href="#IAItem">IAItem</a> referencing (ItemStatusID)</li>
+<a href="#IAItem">IAItem</a> through (ItemID)</li>
 </ul>
 </div>
 </div>
@@ -1797,8 +1800,6 @@
 <p class="subTitle">Referenced By</p>
 <ul>
 <li>
-<a href="#Item">Item</a> referencing (ImportSourceID)</li>
-<li>
 <a href="#Page">Page</a> referencing (ImportSourceID)</li>
 <li>
 <a href="#Title">Title</a> referencing (ImportSourceID)</li>
@@ -1826,6 +1827,8 @@
 <a href="#IndicatedPage">IndicatedPage</a> referencing (ImportSourceID)</li>
 <li>
 <a href="#Creator">Creator</a> referencing (ImportSourceID)</li>
+<li>
+<a href="#Item">Item</a> referencing (ImportSourceID)</li>
 </ul>
 </div>
 </div>
@@ -1882,8 +1885,6 @@
 <p class="subTitle">Referenced By</p>
 <ul>
 <li>
-<a href="#Item">Item</a> referencing (ImportStatusID)</li>
-<li>
 <a href="#ItemLanguage">ItemLanguage</a> referencing (ImportStatusID)</li>
 <li>
 <a href="#Page">Page</a> referencing (ImportStatusID)</li>
@@ -1911,6 +1912,8 @@
 <a href="#IndicatedPage">IndicatedPage</a> referencing (ImportStatusID)</li>
 <li>
 <a href="#Creator">Creator</a> referencing (ImportStatusID)</li>
+<li>
+<a href="#Item">Item</a> referencing (ImportStatusID)</li>
 </ul>
 </div>
 </div>
@@ -2018,7 +2021,7 @@
 <tr valign="top">
 <td class="tdTableDefinition">ImportSourceID
                 &nbsp;(<a href="#ImportSource">FK</a>)
-              </td><td class="tdTableDefinition">ImportSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+              </td><td class="tdTableDefinition">ImportSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">MARCBibID</td><td class="tdTableDefinition">MARCBibID</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
@@ -2187,6 +2190,9 @@
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">EndPart</td><td class="tdTableDefinition">EndPart</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PageProgression</td><td class="tdTableDefinition">PageProgression</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 </table>
 <div class="references">

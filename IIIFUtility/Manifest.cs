@@ -56,6 +56,7 @@ namespace BHL.IIIF
                   "\"description\": \"\"," +
                   "\"logo\": \"\"," +
                   "\"label\": \"" + Helper.CleanManifestData(title.FullTitle) + "\"," +
+                  "\"viewingDirection\": \"" + (book.PageProgression == "rl" ? "right-to-left" : "left-to-right") + "\"," +
                   thumbnailAttr +
                   GetMetadata(title, book) +
                   GetSeeAlso(itemId, book.BarCode) +
