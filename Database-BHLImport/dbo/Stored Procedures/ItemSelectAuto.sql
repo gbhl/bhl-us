@@ -66,7 +66,8 @@ SELECT
 	[StartSeries],
 	[EndSeries],
 	[StartPart],
-	[EndPart]
+	[EndPart],
+	[PageProgression]
 FROM	
 	[dbo].[Item]
 WHERE	

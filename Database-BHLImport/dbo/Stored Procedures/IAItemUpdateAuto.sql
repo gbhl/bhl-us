@@ -52,7 +52,8 @@
 @StartSeries NVARCHAR(10),
 @EndSeries NVARCHAR(10),
 @StartPart NVARCHAR(10),
-@EndPart NVARCHAR(10)
+@EndPart NVARCHAR(10),
+@PageProgression NVARCHAR(10)
 
 AS 
 
@@ -112,7 +113,8 @@ SET
 	[StartSeries] = @StartSeries,
 	[EndSeries] = @EndSeries,
 	[StartPart] = @StartPart,
-	[EndPart] = @EndPart
+	[EndPart] = @EndPart,
+	[PageProgression] = @PageProgression
 WHERE
 	[ItemID] = @ItemID
 		
@@ -178,7 +180,8 @@ ELSE BEGIN
 		[StartSeries],
 		[EndSeries],
 		[StartPart],
-		[EndPart]
+		[EndPart],
+		[PageProgression]
 	FROM [dbo].[IAItem]
 	WHERE
 		[ItemID] = @ItemID

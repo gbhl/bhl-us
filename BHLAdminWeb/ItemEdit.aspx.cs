@@ -295,6 +295,12 @@ namespace MOBOT.BHL.AdminWeb
                     ddlThumbnailPageID.SelectedIndex = 0;
                 }
 
+                ddlPageProgression.SelectedValue = "";
+                if (!string.IsNullOrWhiteSpace(book.PageProgression))
+                    ddlPageProgression.SelectedValue = book.PageProgression;
+                else
+                    ddlPageProgression.SelectedIndex = 0;
+
                 if (book.LanguageCode != null && book.LanguageCode.Length > 0)
                 {
                     ddlLang.SelectedValue = book.LanguageCode.ToUpper();
@@ -1262,6 +1268,7 @@ namespace MOBOT.BHL.AdminWeb
 				book.VaultID = ( ddlVault.SelectedIndex == 0 ? i : int.Parse(ddlVault.SelectedValue) );
 				book.ItemStatusID = int.Parse( ddlItemStatus.SelectedValue );
                 book.ThumbnailPageID = ddlThumbnailPageID.SelectedValue == "" ? (int?)null : int.Parse(ddlThumbnailPageID.SelectedValue);
+                book.PageProgression = ddlPageProgression.SelectedValue;
 
 				book.IsNew = false;
 

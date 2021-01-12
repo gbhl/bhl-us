@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 2:16:35 PM
+// Generated 1/11/2021 2:02:41 PM
 // Do not modify the contents of this code file.
 // This abstract class __Item is based upon dbo.Item.
 
@@ -105,6 +105,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="endSeries"></param>
 		/// <param name="startPart"></param>
 		/// <param name="endPart"></param>
+		/// <param name="pageProgression"></param>
 		public __Item(int itemID, 
 			string importKey, 
 			int importStatusID, 
@@ -164,7 +165,8 @@ namespace MOBOT.BHLImport.DataObjects
 			string startSeries, 
 			string endSeries, 
 			string startPart, 
-			string endPart) : this()
+			string endPart, 
+			string pageProgression) : this()
 		{
 			_ItemID = itemID;
 			ImportKey = importKey;
@@ -226,6 +228,7 @@ namespace MOBOT.BHLImport.DataObjects
 			EndSeries = endSeries;
 			StartPart = startPart;
 			EndPart = endPart;
+			PageProgression = pageProgression;
 		}
 		
 		#endregion Constructors
@@ -550,6 +553,11 @@ namespace MOBOT.BHLImport.DataObjects
 					case "EndPart" :
 					{
 						_EndPart = (string)column.Value;
+						break;
+					}
+					case "PageProgression" :
+					{
+						_PageProgression = (string)column.Value;
 						break;
 					}
 								}
@@ -2219,6 +2227,34 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion EndPart
+		
+		#region PageProgression
+		
+		private string _PageProgression = string.Empty;
+		
+		/// <summary>
+		/// Column: PageProgression;
+		/// DBMS data type: nvarchar(10);
+		/// </summary>
+		[ColumnDefinition("PageProgression", DbTargetType=SqlDbType.NVarChar, Ordinal=61, CharacterMaxLength=10)]
+		public string PageProgression
+		{
+			get
+			{
+				return _PageProgression;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 10);
+				if (_PageProgression != value)
+				{
+					_PageProgression = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion PageProgression
 			
 		#endregion Properties
 
@@ -2322,7 +2358,8 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.StartSeries) == GetComparisonString(StartSeries) &&
 					GetComparisonString(o.EndSeries) == GetComparisonString(EndSeries) &&
 					GetComparisonString(o.StartPart) == GetComparisonString(StartPart) &&
-					GetComparisonString(o.EndPart) == GetComparisonString(EndPart) 
+					GetComparisonString(o.EndPart) == GetComparisonString(EndPart) &&
+					GetComparisonString(o.PageProgression) == GetComparisonString(PageProgression) 
 				)
 				{
 					o = null;
@@ -2481,7 +2518,8 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string StartSeries = "StartSeries";	
 			public const string EndSeries = "EndSeries";	
 			public const string StartPart = "StartPart";	
-			public const string EndPart = "EndPart";
+			public const string EndPart = "EndPart";	
+			public const string PageProgression = "PageProgression";
 		}
 				
 		#endregion SortColumn

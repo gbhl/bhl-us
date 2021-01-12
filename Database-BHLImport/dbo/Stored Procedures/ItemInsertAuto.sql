@@ -57,7 +57,8 @@
 @StartSeries NVARCHAR(10),
 @EndSeries NVARCHAR(10),
 @StartPart NVARCHAR(10),
-@EndPart NVARCHAR(10)
+@EndPart NVARCHAR(10),
+@PageProgression NVARCHAR(10)
 
 AS 
 
@@ -122,7 +123,8 @@ INSERT INTO [dbo].[Item]
 	[StartSeries],
 	[EndSeries],
 	[StartPart],
-	[EndPart] )
+	[EndPart],
+	[PageProgression] )
 VALUES
 ( 	@ImportKey,
 	@ImportStatusID,
@@ -182,7 +184,8 @@ VALUES
 	@StartSeries,
 	@EndSeries,
 	@StartPart,
-	@EndPart )
+	@EndPart,
+	@PageProgression )
 
 SET @ItemID = Scope_Identity()
 
@@ -253,7 +256,8 @@ ELSE BEGIN
 		[StartSeries],
 		[EndSeries],
 		[StartPart],
-		[EndPart]	
+		[EndPart],
+		[PageProgression]	
 	FROM [dbo].[Item]
 	WHERE
 		[ItemID] = @ItemID

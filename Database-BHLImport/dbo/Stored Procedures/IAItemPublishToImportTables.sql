@@ -272,7 +272,8 @@ BEGIN TRY
 		[StartSeries] [nvarchar](10) NULL,
 		[EndSeries] [nvarchar](10) NULL,
 		[StartPart] [nvarchar](10) NULL,
-		[EndPart] [nvarchar](10) NULL
+		[EndPart] [nvarchar](10) NULL,
+		[PageProgression] [nvarchar](10) NULL
 		)
 
 	CREATE TABLE #tmpItemLanguage(
@@ -1606,7 +1607,8 @@ BEGIN TRY
 			StartSeries = i.StartSeries,
 			EndSeries = i.EndSeries,
 			StartPart = i.StartPart,
-			EndPart = i.EndPart
+			EndPart = i.EndPart,
+			PageProgression = ISNULL(i.PageProgression, '')
 	FROM	#tmpItem t INNER JOIN dbo.IAItem i
 				ON t.ItemID = i.ItemID
 
@@ -2159,7 +2161,8 @@ BEGIN TRY
 			CopyrightComment, CopyrightEvidence, CopyrightEvidenceOperator,
 			CopyrightEvidenceDate, ImportKey, ScanningInstitutionCode, RightsHolderCode,
 			ItemDescription, EndYear, StartVolume, EndVolume, StartIssue, EndIssue,
-			StartNumber, EndNumber, StartSeries, EndSeries, StartPart, EndPart)
+			StartNumber, EndNumber, StartSeries, EndSeries, StartPart, EndPart, 
+			PageProgression)
 		SELECT	10, @ImportSourceID, t.MARCBibID, t.Sponsor, t.BarCode,
 				t.MaxExistingItemSequence + t.ItemSequence, t.MARCItemID, t.Volume, 
 				t.InstitutionCode, t.LanguageCode, t.VaultID, t.ItemStatusID, 
@@ -2169,7 +2172,7 @@ BEGIN TRY
 				t.CopyrightEvidenceDate, CONVERT(nvarchar(50), t.ItemID), 
 				ScanningInstitutionCode, RightsHolderCode, ItemDescription, EndYear, 
 				StartVolume, EndVolume, StartIssue, EndIssue, StartNumber, EndNumber, 
-				StartSeries, EndSeries, StartPart, EndPart
+				StartSeries, EndSeries, StartPart, EndPart, PageProgression
 		FROM	#tmpItem t
 
 		-- =======================================================================

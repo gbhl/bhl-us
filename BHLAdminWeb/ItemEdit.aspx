@@ -456,6 +456,19 @@
                 </td>
             </tr>
 			<tr>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
+					Page Progression:
+				</td>
+				<td>
+					<asp:DropDownList ID="ddlPageProgression" runat="server">
+						<asp:ListItem Value=""></asp:ListItem>
+						<asp:ListItem Value="lr">Left-to-Right</asp:ListItem>
+						<asp:ListItem Value="rl">Right-to-Left</asp:ListItem>
+					</asp:DropDownList><br />
+					(If no value is selected, the item will default to Left-to-Right page progression.)
+				</td>
+			</tr>
+			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">
 					Scanned By:
 				</td>

@@ -54,6 +54,7 @@
 	[EndSeries]                 NVARCHAR(10)   CONSTRAINT [DF_IAItem_EndSeries] DEFAULT '' NOT NULL,
 	[StartPart]                 NVARCHAR(10)   CONSTRAINT [DF_IAItem_StartPart] DEFAULT '' NOT NULL,
 	[EndPart]                   NVARCHAR(10)   CONSTRAINT [DF_IAItem_EndPart] DEFAULT '' NOT NULL,
+    [PageProgression]           NVARCHAR(10)   CONSTRAINT [DF_IAItem_PageProgression] DEFAULT '' NOT NULL,
     CONSTRAINT [PK_Item] PRIMARY KEY CLUSTERED ([ItemID] ASC),
     CONSTRAINT [FK_Item_ItemStatus] FOREIGN KEY ([ItemStatusID]) REFERENCES [dbo].[IAItemStatus] ([ItemStatusID])
 );

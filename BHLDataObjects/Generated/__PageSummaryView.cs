@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:46:41 PM
+// Generated 1/11/2021 2:21:25 PM
 // Do not modify the contents of this code file.
 // This abstract class __PageSummaryView is based upon dbo.PageSummaryView.
 
@@ -63,6 +63,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="volume"></param>
 		/// <param name="fileRootFolder"></param>
 		/// <param name="sponsor"></param>
+		/// <param name="pageProgression"></param>
 		/// <param name="itemSequence"></param>
 		/// <param name="pageID"></param>
 		/// <param name="fileNamePrefix"></param>
@@ -94,6 +95,7 @@ namespace MOBOT.BHL.DataObjects
 			string volume, 
 			string fileRootFolder, 
 			string sponsor, 
+			string pageProgression, 
 			short? itemSequence, 
 			int pageID, 
 			string fileNamePrefix, 
@@ -126,6 +128,7 @@ namespace MOBOT.BHL.DataObjects
 			Volume = volume;
 			FileRootFolder = fileRootFolder;
 			Sponsor = sponsor;
+			PageProgression = pageProgression;
 			ItemSequence = itemSequence;
 			PageID = pageID;
 			FileNamePrefix = fileNamePrefix;
@@ -253,6 +256,11 @@ namespace MOBOT.BHL.DataObjects
 					case "Sponsor" :
 					{
 						_Sponsor = (string)column.Value;
+						break;
+					}
+					case "PageProgression" :
+					{
+						_PageProgression = (string)column.Value;
 						break;
 					}
 					case "ItemSequence" :
@@ -826,6 +834,34 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Sponsor
 		
+		#region PageProgression
+		
+		private string _PageProgression = string.Empty;
+		
+		/// <summary>
+		/// Column: PageProgression;
+		/// DBMS data type: nvarchar(10);
+		/// </summary>
+		[ColumnDefinition("PageProgression", DbTargetType=SqlDbType.NVarChar, Ordinal=19, CharacterMaxLength=10)]
+		public string PageProgression
+		{
+			get
+			{
+				return _PageProgression;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 10);
+				if (_PageProgression != value)
+				{
+					_PageProgression = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion PageProgression
+		
 		#region ItemSequence
 		
 		private short? _ItemSequence = null;
@@ -834,7 +870,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ItemSequence;
 		/// DBMS data type: smallint; Nullable;
 		/// </summary>
-		[ColumnDefinition("ItemSequence", DbTargetType=SqlDbType.SmallInt, Ordinal=19, NumericPrecision=5, IsNullable=true)]
+		[ColumnDefinition("ItemSequence", DbTargetType=SqlDbType.SmallInt, Ordinal=20, NumericPrecision=5, IsNullable=true)]
 		public short? ItemSequence
 		{
 			get
@@ -861,7 +897,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: PageID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("PageID", DbTargetType=SqlDbType.Int, Ordinal=20, NumericPrecision=10)]
+		[ColumnDefinition("PageID", DbTargetType=SqlDbType.Int, Ordinal=21, NumericPrecision=10)]
 		public int PageID
 		{
 			get
@@ -886,9 +922,9 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: FileNamePrefix;
-		/// DBMS data type: nvarchar(50);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("FileNamePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=21, CharacterMaxLength=50)]
+		[ColumnDefinition("FileNamePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=22, CharacterMaxLength=200)]
 		public string FileNamePrefix
 		{
 			get
@@ -897,7 +933,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 50);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_FileNamePrefix != value)
 				{
 					_FileNamePrefix = value;
@@ -916,7 +952,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: PageDescription;
 		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("PageDescription", DbTargetType=SqlDbType.NVarChar, Ordinal=22, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("PageDescription", DbTargetType=SqlDbType.NVarChar, Ordinal=23, CharacterMaxLength=255, IsNullable=true)]
 		public string PageDescription
 		{
 			get
@@ -944,7 +980,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: SequenceOrder;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("SequenceOrder", DbTargetType=SqlDbType.Int, Ordinal=23, NumericPrecision=10)]
+		[ColumnDefinition("SequenceOrder", DbTargetType=SqlDbType.Int, Ordinal=24, NumericPrecision=10)]
 		public int SequenceOrder
 		{
 			get
@@ -971,7 +1007,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Illustration;
 		/// DBMS data type: bit;
 		/// </summary>
-		[ColumnDefinition("Illustration", DbTargetType=SqlDbType.Bit, Ordinal=24)]
+		[ColumnDefinition("Illustration", DbTargetType=SqlDbType.Bit, Ordinal=25)]
 		public bool Illustration
 		{
 			get
@@ -998,7 +1034,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Active;
 		/// DBMS data type: bit;
 		/// </summary>
-		[ColumnDefinition("Active", DbTargetType=SqlDbType.Bit, Ordinal=25)]
+		[ColumnDefinition("Active", DbTargetType=SqlDbType.Bit, Ordinal=26)]
 		public bool Active
 		{
 			get
@@ -1025,7 +1061,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ExternalBaseURL;
 		/// DBMS data type: nvarchar(1000); Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalBaseURL", DbTargetType=SqlDbType.NVarChar, Ordinal=26, CharacterMaxLength=1000, IsNullable=true)]
+		[ColumnDefinition("ExternalBaseURL", DbTargetType=SqlDbType.NVarChar, Ordinal=27, CharacterMaxLength=1000, IsNullable=true)]
 		public string ExternalBaseURL
 		{
 			get
@@ -1053,7 +1089,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ExternalURL;
 		/// DBMS data type: nvarchar(1500); Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=27, CharacterMaxLength=1500, IsNullable=true)]
+		[ColumnDefinition("ExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=28, CharacterMaxLength=1500, IsNullable=true)]
 		public string ExternalURL
 		{
 			get
@@ -1081,7 +1117,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: WebVirtualDirectory;
 		/// DBMS data type: nvarchar(30); Nullable;
 		/// </summary>
-		[ColumnDefinition("WebVirtualDirectory", DbTargetType=SqlDbType.NVarChar, Ordinal=28, CharacterMaxLength=30, IsNullable=true)]
+		[ColumnDefinition("WebVirtualDirectory", DbTargetType=SqlDbType.NVarChar, Ordinal=29, CharacterMaxLength=30, IsNullable=true)]
 		public string WebVirtualDirectory
 		{
 			get
@@ -1109,7 +1145,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: OCRFolderShare;
 		/// DBMS data type: nvarchar(100); Nullable;
 		/// </summary>
-		[ColumnDefinition("OCRFolderShare", DbTargetType=SqlDbType.NVarChar, Ordinal=29, CharacterMaxLength=100, IsNullable=true)]
+		[ColumnDefinition("OCRFolderShare", DbTargetType=SqlDbType.NVarChar, Ordinal=30, CharacterMaxLength=100, IsNullable=true)]
 		public string OCRFolderShare
 		{
 			get
@@ -1137,7 +1173,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: DownloadUrl;
 		/// DBMS data type: nvarchar(100);
 		/// </summary>
-		[ColumnDefinition("DownloadUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=30, CharacterMaxLength=100)]
+		[ColumnDefinition("DownloadUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=31, CharacterMaxLength=100)]
 		public string DownloadUrl
 		{
 			get
@@ -1165,7 +1201,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ImageServerUrlFormat;
 		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("ImageServerUrlFormat", DbTargetType=SqlDbType.NVarChar, Ordinal=31, CharacterMaxLength=200)]
+		[ColumnDefinition("ImageServerUrlFormat", DbTargetType=SqlDbType.NVarChar, Ordinal=32, CharacterMaxLength=200)]
 		public string ImageServerUrlFormat
 		{
 			get
@@ -1246,6 +1282,7 @@ namespace MOBOT.BHL.DataObjects
 					GetComparisonString(o.Volume) == GetComparisonString(Volume) &&
 					GetComparisonString(o.FileRootFolder) == GetComparisonString(FileRootFolder) &&
 					GetComparisonString(o.Sponsor) == GetComparisonString(Sponsor) &&
+					GetComparisonString(o.PageProgression) == GetComparisonString(PageProgression) &&
 					o.ItemSequence == ItemSequence &&
 					o.PageID == PageID &&
 					GetComparisonString(o.FileNamePrefix) == GetComparisonString(FileNamePrefix) &&
@@ -1376,6 +1413,7 @@ namespace MOBOT.BHL.DataObjects
 			public const string Volume = "Volume";	
 			public const string FileRootFolder = "FileRootFolder";	
 			public const string Sponsor = "Sponsor";	
+			public const string PageProgression = "PageProgression";	
 			public const string ItemSequence = "ItemSequence";	
 			public const string PageID = "PageID";	
 			public const string FileNamePrefix = "FileNamePrefix";	

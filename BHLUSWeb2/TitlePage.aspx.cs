@@ -30,6 +30,7 @@ namespace MOBOT.BHL.Web2
         protected int CurrentBookID { get; set; }
         protected string UrlRoot { get; set; }
         protected string Genre { get; set; }
+        protected string PageProgression { get; set; } = string.Empty;
 
         //Page Annotation additions
         private bool _showAnnotations = true;
@@ -323,16 +324,20 @@ namespace MOBOT.BHL.Web2
                     List<SiteService.ViewerPage> viewerPages = new List<SiteService.ViewerPage>();
 
                     List<PageSummaryView> pageviews = bhlProvider.PageSummarySelectForViewerByItemID(PageSummary.BookID);
-                    foreach (PageSummaryView pageview in pageviews)
+                    if (pageviews.Count > 0)
                     {
-                        SiteService.ViewerPage viewerPage = new SiteService.ViewerPage
+                        PageProgression = pageviews[0].PageProgression;
+                        foreach (PageSummaryView pageview in pageviews)
                         {
-                            ExternalBaseUrl = pageview.ExternalBaseURL,
-                            BarCode = pageview.BarCode,
-                            FlickrUrl = pageview.FlickrUrl,
-                            SequenceOrder = pageview.SequenceOrder
-                        };
-                        viewerPages.Add(viewerPage);
+                            SiteService.ViewerPage viewerPage = new SiteService.ViewerPage
+                            {
+                                ExternalBaseUrl = pageview.ExternalBaseURL,
+                                BarCode = pageview.BarCode,
+                                FlickrUrl = pageview.FlickrUrl,
+                                SequenceOrder = pageview.SequenceOrder
+                            };
+                            viewerPages.Add(viewerPage);
+                        }
                     }
 
                     viewerPages = (new SiteService.SiteServiceSoapClient().PageGetImageDimensions(viewerPages.ToArray(), PageSummary.BookID)).ToList();

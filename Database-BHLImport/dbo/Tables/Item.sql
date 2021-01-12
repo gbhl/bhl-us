@@ -59,6 +59,7 @@
 	[EndSeries]                 NVARCHAR(10)   CONSTRAINT [DF_Item_EndSeries] DEFAULT '' NOT NULL,
 	[StartPart]                 NVARCHAR(10)   CONSTRAINT [DF_Item_StartPart] DEFAULT '' NOT NULL,
 	[EndPart]                   NVARCHAR(10)   CONSTRAINT [DF_Item_EndPart] DEFAULT '' NOT NULL,
+    [PageProgression]           NVARCHAR(10)   CONSTRAINT [DF_Item_PageProgression] DEFAULT '' NOT NULL,
     CONSTRAINT [aaaaaItem_PK] PRIMARY KEY CLUSTERED ([ItemID] ASC),
     CONSTRAINT [FK_Item_ImportSource] FOREIGN KEY ([ImportSourceID]) REFERENCES [dbo].[ImportSource] ([ImportSourceID]),
     CONSTRAINT [FK_Item_ImportStatus] FOREIGN KEY ([ImportStatusID]) REFERENCES [dbo].[ImportStatus] ([ImportStatusID])

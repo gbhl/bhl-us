@@ -173,7 +173,7 @@ namespace MOBOT.BHLImport.Server
             string licenseUrl, string rights, string dueDiligence, string possibleCopyrightStatus,
             string copyrightRegion, string copyrightComment, string copyrightEvidence,
             string copyrightEvidenceOperator, string copyrightEvidenceDate, string scanningInstitution,
-            string rightsHolder, string itemDescription)
+            string rightsHolder, string itemDescription, string pageProgression)
         {
             // Standardize the format of the year value
             year = DataCleaner.CleanYear(year);
@@ -218,6 +218,7 @@ namespace MOBOT.BHLImport.Server
                 savedItem.ScanningInstitution = scanningInstitution;
                 savedItem.RightsHolder = rightsHolder;
                 savedItem.ItemDescription = itemDescription;
+                savedItem.PageProgression = pageProgression;
                 savedItem.EndYear = string.IsNullOrWhiteSpace(year) ? volumeData.EndYear : yearData.EndYear;
                 savedItem.StartVolume = volumeData.StartVolume;
                 savedItem.EndVolume = volumeData.EndVolume;

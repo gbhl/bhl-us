@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:25:05 PM
+// Generated 1/11/2021 2:20:54 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class BookDAL is based upon dbo.Book.
@@ -179,6 +179,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="isVirtual"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="pageProgression"></param>
 		/// <returns>Object of type Book.</returns>
 		public Book BookInsertAuto(
 			SqlConnection sqlConnection, 
@@ -224,9 +225,10 @@ namespace MOBOT.BHL.DAL
 			DateTime? lastPageNameLookupDate,
 			byte isVirtual,
 			int? creationUserID,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string pageProgression)
 		{
-			return BookInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, redirectBookID, thumbnailPageID, languageCode, barCode, mARCItemID, callNumber, volume, startYear, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, identifierBib, zQuery, sponsor, externalUrl, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, isVirtual, creationUserID, lastModifiedUserID );
+			return BookInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, redirectBookID, thumbnailPageID, languageCode, barCode, mARCItemID, callNumber, volume, startYear, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, identifierBib, zQuery, sponsor, externalUrl, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, isVirtual, creationUserID, lastModifiedUserID, pageProgression );
 		}
 		
 		/// <summary>
@@ -277,6 +279,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="isVirtual"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="pageProgression"></param>
 		/// <returns>Object of type Book.</returns>
 		public Book BookInsertAuto(
 			SqlConnection sqlConnection, 
@@ -323,7 +326,8 @@ namespace MOBOT.BHL.DAL
 			DateTime? lastPageNameLookupDate,
 			byte isVirtual,
 			int? creationUserID,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string pageProgression)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -371,7 +375,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("LastPageNameLookupDate", SqlDbType.DateTime, null, true, lastPageNameLookupDate),
 					CustomSqlHelper.CreateInputParameter("IsVirtual", SqlDbType.TinyInt, null, false, isVirtual),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("PageProgression", SqlDbType.NVarChar, 10, false, pageProgression), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Book> helper = new CustomSqlHelper<Book>())
@@ -462,7 +467,8 @@ namespace MOBOT.BHL.DAL
 				value.LastPageNameLookupDate,
 				value.IsVirtual,
 				value.CreationUserID,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.PageProgression);
 		}
 		
 		#endregion ===== INSERT =====
@@ -574,6 +580,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="lastPageNameLookupDate"></param>
 		/// <param name="isVirtual"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="pageProgression"></param>
 		/// <returns>Object of type Book.</returns>
 		public Book BookUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -619,9 +626,10 @@ namespace MOBOT.BHL.DAL
 			int? paginationCompleteUserID,
 			DateTime? lastPageNameLookupDate,
 			byte isVirtual,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string pageProgression)
 		{
-			return BookUpdateAuto( sqlConnection, sqlTransaction, "BHL", bookID, itemID, redirectBookID, thumbnailPageID, languageCode, barCode, mARCItemID, callNumber, volume, startYear, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, identifierBib, zQuery, sponsor, externalUrl, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, isVirtual, lastModifiedUserID);
+			return BookUpdateAuto( sqlConnection, sqlTransaction, "BHL", bookID, itemID, redirectBookID, thumbnailPageID, languageCode, barCode, mARCItemID, callNumber, volume, startYear, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, identifierBib, zQuery, sponsor, externalUrl, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, isVirtual, lastModifiedUserID, pageProgression);
 		}
 		
 		/// <summary>
@@ -672,6 +680,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="lastPageNameLookupDate"></param>
 		/// <param name="isVirtual"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="pageProgression"></param>
 		/// <returns>Object of type Book.</returns>
 		public Book BookUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -718,7 +727,8 @@ namespace MOBOT.BHL.DAL
 			int? paginationCompleteUserID,
 			DateTime? lastPageNameLookupDate,
 			byte isVirtual,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string pageProgression)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -765,7 +775,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("PaginationCompleteUserID", SqlDbType.Int, null, true, paginationCompleteUserID),
 					CustomSqlHelper.CreateInputParameter("LastPageNameLookupDate", SqlDbType.DateTime, null, true, lastPageNameLookupDate),
 					CustomSqlHelper.CreateInputParameter("IsVirtual", SqlDbType.TinyInt, null, false, isVirtual),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("PageProgression", SqlDbType.NVarChar, 10, false, pageProgression), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Book> helper = new CustomSqlHelper<Book>())
@@ -856,7 +867,8 @@ namespace MOBOT.BHL.DAL
 				value.PaginationCompleteUserID,
 				value.LastPageNameLookupDate,
 				value.IsVirtual,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.PageProgression);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -942,7 +954,8 @@ namespace MOBOT.BHL.DAL
 						value.LastPageNameLookupDate,
 						value.IsVirtual,
 						value.CreationUserID,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.PageProgression);
 				
 				return new CustomDataAccessStatus<Book>(
 					CustomDataAccessContext.Insert, 
@@ -1009,7 +1022,8 @@ namespace MOBOT.BHL.DAL
 						value.PaginationCompleteUserID,
 						value.LastPageNameLookupDate,
 						value.IsVirtual,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.PageProgression);
 					
 				return new CustomDataAccessStatus<Book>(
 					CustomDataAccessContext.Update, 

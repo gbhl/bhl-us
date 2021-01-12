@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:26:54 PM
+// Generated 1/11/2021 2:20:59 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class SegmentDAL is based upon dbo.Segment.
@@ -181,6 +181,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="lastPageNameLookupDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="pageProgression"></param>
 		/// <returns>Object of type Segment.</returns>
 		public Segment SegmentInsertAuto(
 			SqlConnection sqlConnection, 
@@ -228,9 +229,10 @@ namespace MOBOT.BHL.DAL
 			int? paginationCompleteUserID,
 			DateTime? lastPageNameLookupDate,
 			int? creationUserID,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string pageProgression)
 		{
-			return SegmentInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, redirectSegmentID, segmentGenreID, startPageID, thumbnailPageID, languageCode, barCode, mARCItemID, title, sortTitle, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, summary, volume, series, issue, edition, date, pageRange, startPageNumber, endPageNumber, url, downloadUrl, licenseName, licenseUrl, rightsStatus, rightsStatement, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, creationUserID, lastModifiedUserID );
+			return SegmentInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, redirectSegmentID, segmentGenreID, startPageID, thumbnailPageID, languageCode, barCode, mARCItemID, title, sortTitle, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, summary, volume, series, issue, edition, date, pageRange, startPageNumber, endPageNumber, url, downloadUrl, licenseName, licenseUrl, rightsStatus, rightsStatement, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, creationUserID, lastModifiedUserID, pageProgression );
 		}
 		
 		/// <summary>
@@ -283,6 +285,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="lastPageNameLookupDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="pageProgression"></param>
 		/// <returns>Object of type Segment.</returns>
 		public Segment SegmentInsertAuto(
 			SqlConnection sqlConnection, 
@@ -331,7 +334,8 @@ namespace MOBOT.BHL.DAL
 			int? paginationCompleteUserID,
 			DateTime? lastPageNameLookupDate,
 			int? creationUserID,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string pageProgression)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -381,7 +385,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("PaginationCompleteUserID", SqlDbType.Int, null, true, paginationCompleteUserID),
 					CustomSqlHelper.CreateInputParameter("LastPageNameLookupDate", SqlDbType.DateTime, null, true, lastPageNameLookupDate),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("PageProgression", SqlDbType.NVarChar, 10, false, pageProgression), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
@@ -474,7 +479,8 @@ namespace MOBOT.BHL.DAL
 				value.PaginationCompleteUserID,
 				value.LastPageNameLookupDate,
 				value.CreationUserID,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.PageProgression);
 		}
 		
 		#endregion ===== INSERT =====
@@ -588,6 +594,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="paginationCompleteUserID"></param>
 		/// <param name="lastPageNameLookupDate"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="pageProgression"></param>
 		/// <returns>Object of type Segment.</returns>
 		public Segment SegmentUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -635,9 +642,10 @@ namespace MOBOT.BHL.DAL
 			DateTime? paginationCompleteDate,
 			int? paginationCompleteUserID,
 			DateTime? lastPageNameLookupDate,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string pageProgression)
 		{
-			return SegmentUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentID, itemID, redirectSegmentID, segmentGenreID, startPageID, thumbnailPageID, languageCode, barCode, mARCItemID, title, sortTitle, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, summary, volume, series, issue, edition, date, pageRange, startPageNumber, endPageNumber, url, downloadUrl, licenseName, licenseUrl, rightsStatus, rightsStatement, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, lastModifiedUserID);
+			return SegmentUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentID, itemID, redirectSegmentID, segmentGenreID, startPageID, thumbnailPageID, languageCode, barCode, mARCItemID, title, sortTitle, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, summary, volume, series, issue, edition, date, pageRange, startPageNumber, endPageNumber, url, downloadUrl, licenseName, licenseUrl, rightsStatus, rightsStatement, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, lastModifiedUserID, pageProgression);
 		}
 		
 		/// <summary>
@@ -690,6 +698,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="paginationCompleteUserID"></param>
 		/// <param name="lastPageNameLookupDate"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="pageProgression"></param>
 		/// <returns>Object of type Segment.</returns>
 		public Segment SegmentUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -738,7 +747,8 @@ namespace MOBOT.BHL.DAL
 			DateTime? paginationCompleteDate,
 			int? paginationCompleteUserID,
 			DateTime? lastPageNameLookupDate,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string pageProgression)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -787,7 +797,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("PaginationCompleteDate", SqlDbType.DateTime, null, true, paginationCompleteDate),
 					CustomSqlHelper.CreateInputParameter("PaginationCompleteUserID", SqlDbType.Int, null, true, paginationCompleteUserID),
 					CustomSqlHelper.CreateInputParameter("LastPageNameLookupDate", SqlDbType.DateTime, null, true, lastPageNameLookupDate),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("PageProgression", SqlDbType.NVarChar, 10, false, pageProgression), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
@@ -880,7 +891,8 @@ namespace MOBOT.BHL.DAL
 				value.PaginationCompleteDate,
 				value.PaginationCompleteUserID,
 				value.LastPageNameLookupDate,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.PageProgression);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -968,7 +980,8 @@ namespace MOBOT.BHL.DAL
 						value.PaginationCompleteUserID,
 						value.LastPageNameLookupDate,
 						value.CreationUserID,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.PageProgression);
 				
 				return new CustomDataAccessStatus<Segment>(
 					CustomDataAccessContext.Insert, 
@@ -1037,7 +1050,8 @@ namespace MOBOT.BHL.DAL
 						value.PaginationCompleteDate,
 						value.PaginationCompleteUserID,
 						value.LastPageNameLookupDate,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.PageProgression);
 					
 				return new CustomDataAccessStatus<Segment>(
 					CustomDataAccessContext.Update, 

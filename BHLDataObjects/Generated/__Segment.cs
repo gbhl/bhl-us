@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:26:54 PM
+// Generated 1/11/2021 2:20:59 PM
 // Do not modify the contents of this code file.
 // This abstract class __Segment is based upon dbo.Segment.
 
@@ -92,6 +92,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="pageProgression"></param>
 		public __Segment(int segmentID, 
 			int itemID, 
 			int? redirectSegmentID, 
@@ -138,7 +139,8 @@ namespace MOBOT.BHL.DataObjects
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int? creationUserID, 
-			int? lastModifiedUserID) : this()
+			int? lastModifiedUserID, 
+			string pageProgression) : this()
 		{
 			_SegmentID = segmentID;
 			ItemID = itemID;
@@ -187,6 +189,7 @@ namespace MOBOT.BHL.DataObjects
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
+			PageProgression = pageProgression;
 		}
 		
 		#endregion Constructors
@@ -446,6 +449,11 @@ namespace MOBOT.BHL.DataObjects
 					case "LastModifiedUserID" :
 					{
 						_LastModifiedUserID = (int?)column.Value;
+						break;
+					}
+					case "PageProgression" :
+					{
+						_PageProgression = (string)column.Value;
 						break;
 					}
 								}
@@ -1757,6 +1765,34 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion LastModifiedUserID
+		
+		#region PageProgression
+		
+		private string _PageProgression = string.Empty;
+		
+		/// <summary>
+		/// Column: PageProgression;
+		/// DBMS data type: nvarchar(10);
+		/// </summary>
+		[ColumnDefinition("PageProgression", DbTargetType=SqlDbType.NVarChar, Ordinal=48, CharacterMaxLength=10)]
+		public string PageProgression
+		{
+			get
+			{
+				return _PageProgression;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 10);
+				if (_PageProgression != value)
+				{
+					_PageProgression = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion PageProgression
 			
 		#endregion Properties
 
@@ -1847,7 +1883,8 @@ namespace MOBOT.BHL.DataObjects
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
-					o.LastModifiedUserID == LastModifiedUserID 
+					o.LastModifiedUserID == LastModifiedUserID &&
+					GetComparisonString(o.PageProgression) == GetComparisonString(PageProgression) 
 				)
 				{
 					o = null;
@@ -1993,7 +2030,8 @@ namespace MOBOT.BHL.DataObjects
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";
+			public const string LastModifiedUserID = "LastModifiedUserID";	
+			public const string PageProgression = "PageProgression";
 		}
 				
 		#endregion SortColumn

@@ -469,7 +469,7 @@
         // Page info Json object
         var pages = <%= Pages %>;
 
-        br.pageProgression = 'rl';
+        br.pageProgression = "<%= PageProgression %>";
 
         var pdfPages = [];
         var pdfBar = $('#mypdfbar');
