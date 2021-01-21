@@ -4,6 +4,7 @@ using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -76,6 +77,7 @@ namespace MOBOT.BHL.AdminWeb
         /// <param name="e"></param>
         protected void btnChange_Click(object sender, EventArgs e)
         {
+            int? userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
             string updateMsg = string.Empty;
             litUpdateResult.Text = string.Empty;
 
@@ -99,7 +101,7 @@ namespace MOBOT.BHL.AdminWeb
                         {
                             // Update the DOI
                             string id = ids[x].Replace("jqg_list_", "");
-                            service.DOIUpdateStatus(Convert.ToInt32(id), Convert.ToInt32(ddlStatusChange.SelectedValue));
+                            service.DOIUpdateStatus(Convert.ToInt32(id), Convert.ToInt32(ddlStatusChange.SelectedValue), userId);
                         }
                     }
                 }
@@ -117,16 +119,12 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         private const string DOISTATUS_NONESELECTED = "0";
-        private const string DOISTATUS_NODOI = "10";
-        private const string DOISTATUS_DOIASSIGNED = "20";
-        private const string DOISTATUS_PENDINGRESUBMIT = "30";
-        private const string DOISTATUS_BATCHIDASSSIGNED = "40";
+        private const string DOISTATUS_QUEUED = "30";
+        private const string DOISTATUS_REJECTED = "40";
         private const string DOISTATUS_SUBMITTED = "50";
-        private const string DOISTATUS_SUBMITERROR = "60";
-        private const string DOISTATUS_GETSUBMITLOGERROR = "70";
-        private const string DOISTATUS_CROSSREFERROR = "80";
-        private const string DOISTATUS_CROSSREFWARNING = "90";
+        private const string DOISTATUS_ERROR = "80";
         private const string DOISTATUS_DOIAPPROVED = "100";
+        private const string DOISTATUS_EXTERNAL = "200";
 
         /// <summary>
         /// Add the appropriate items to the StatusChange dropdown, based on the status of the currently displayed items
@@ -142,21 +140,17 @@ namespace MOBOT.BHL.AdminWeb
             switch (selectedStatus)
             {
                 case DOISTATUS_NONESELECTED:
-                case DOISTATUS_NODOI:
-                case DOISTATUS_DOIASSIGNED:
-                case DOISTATUS_PENDINGRESUBMIT:
-                case DOISTATUS_BATCHIDASSSIGNED:
+                case DOISTATUS_QUEUED:
+                case DOISTATUS_EXTERNAL:
                     ddlStatusChange.Enabled = false;
                     btnChange.Enabled = false;
                     break;
+                case DOISTATUS_REJECTED:
                 case DOISTATUS_SUBMITTED:
-                case DOISTATUS_SUBMITERROR:
-                case DOISTATUS_GETSUBMITLOGERROR:
-                case DOISTATUS_CROSSREFERROR:
-                case DOISTATUS_CROSSREFWARNING:
+                case DOISTATUS_ERROR:
                 case DOISTATUS_DOIAPPROVED:
                 default:
-                    ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(DOISTATUS_PENDINGRESUBMIT).Text, DOISTATUS_PENDINGRESUBMIT));
+                    ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(DOISTATUS_QUEUED).Text, DOISTATUS_QUEUED));
                     break;
             }
         }

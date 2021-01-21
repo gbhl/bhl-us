@@ -54,15 +54,9 @@
     <add key="BHLPartUrlFormat" value="https://www.biodiversitylibrary.org/part/{0}"/>
     <!-- DOI Status codes.  These should match the rows in the DOIStatus database table. -->
     <add key="DOIStatus_Null" value="0"/>
-    <add key="DOIStatus_None" value="10"/>
-    <add key="DOIStatus_Assigned" value="20"/>
-    <add key="DOIStatus_Resubmit" value="30"/>
-    <add key="DOIStatus_BatchAssigned" value="40"/>
+    <add key="DOIStatus_Queued" value="30"/>
     <add key="DOIStatus_Submitted" value="50"/>
-    <add key="DOIStatus_SubmitError" value="60"/>
-    <add key="DOIStatus_GetLogError" value="70"/>
-    <add key="DOIStatus_CrossRefError" value="80"/>
-    <add key="DOIStatus_CrossRefWarning" value="90"/>
+    <add key="DOIStatus_Error" value="80"/>
     <add key="DOIStatus_Approved" value="100"/>
     <add key="DOIStatus_External" value="200"/>
     <!-- DOI Entity Types.  These should match the rows in the DOIEntityType database table. -->

@@ -27,28 +27,28 @@ namespace MOBOT.BHL.WebService
 
         [WebMethod]
         public DOI DOIInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId,
-            string doiName, string message, short isValid)
+            string doiName, string message, short isValid, int userId)
         {
             return new BHLProvider().DOInsertAuto(doiEntityTypeId, 
-                entityId, doiStatusId, doiBatchId, doiName, message, isValid);
+                entityId, doiStatusId, doiBatchId, doiName, message, isValid, userId);
         }
 
         [WebMethod]
-        public DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, short? setValid)
+        public DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, short? setValid, int? userId)
         {
-            return new BHLProvider().DOIUpdateStatus(doiID, doiStatusId, message, setValid);
+            return new BHLProvider().DOIUpdateStatus(doiID, doiStatusId, message, setValid, userId);
         }
 
         [WebMethod]
-        public DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName)
+        public DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName, int? userId)
         {
-            return new BHLProvider().DOIUpdateDOIName(doiID, doiStatusId, doiName);
+            return new BHLProvider().DOIUpdateDOIName(doiID, doiStatusId, doiName, userId);
         }
 
         [WebMethod]
-        public DOI DOIUpdateBatchID(int doiID, int doiStatusId, string doiBatchID)
+        public DOI DOIUpdateBatchID(int doiID, int doiStatusId, string doiBatchID, int? userId)
         {
-            return new BHLProvider().DOIUpdateBatchID(doiID, doiStatusId, doiBatchID);
+            return new BHLProvider().DOIUpdateBatchID(doiID, doiStatusId, doiBatchID, userId);
         }
 
         [WebMethod]

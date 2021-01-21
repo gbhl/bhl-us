@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:25:11 PM
+// Generated 1/20/2021 12:05:35 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class DOIDAL is based upon dbo.DOI.
@@ -145,6 +145,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="statusDate"></param>
 		/// <param name="statusMessage"></param>
 		/// <param name="isValid"></param>
+		/// <param name="creationUserID"></param>
+		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type DOI.</returns>
 		public DOI DOIInsertAuto(
 			SqlConnection sqlConnection, 
@@ -156,9 +158,11 @@ namespace MOBOT.BHL.DAL
 			string dOIName,
 			DateTime statusDate,
 			string statusMessage,
-			short isValid)
+			short isValid,
+			int creationUserID,
+			int lastModifiedUserID)
 		{
-			return DOIInsertAuto( sqlConnection, sqlTransaction, "BHL", dOIEntityTypeID, entityID, dOIStatusID, dOIBatchID, dOIName, statusDate, statusMessage, isValid );
+			return DOIInsertAuto( sqlConnection, sqlTransaction, "BHL", dOIEntityTypeID, entityID, dOIStatusID, dOIBatchID, dOIName, statusDate, statusMessage, isValid, creationUserID, lastModifiedUserID );
 		}
 		
 		/// <summary>
@@ -175,6 +179,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="statusDate"></param>
 		/// <param name="statusMessage"></param>
 		/// <param name="isValid"></param>
+		/// <param name="creationUserID"></param>
+		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type DOI.</returns>
 		public DOI DOIInsertAuto(
 			SqlConnection sqlConnection, 
@@ -187,7 +193,9 @@ namespace MOBOT.BHL.DAL
 			string dOIName,
 			DateTime statusDate,
 			string statusMessage,
-			short isValid)
+			short isValid,
+			int creationUserID,
+			int lastModifiedUserID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -201,7 +209,9 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("DOIName", SqlDbType.NVarChar, 50, false, dOIName),
 					CustomSqlHelper.CreateInputParameter("StatusDate", SqlDbType.DateTime, null, false, statusDate),
 					CustomSqlHelper.CreateInputParameter("StatusMessage", SqlDbType.NVarChar, 1000, false, statusMessage),
-					CustomSqlHelper.CreateInputParameter("IsValid", SqlDbType.SmallInt, null, false, isValid), 
+					CustomSqlHelper.CreateInputParameter("IsValid", SqlDbType.SmallInt, null, false, isValid),
+					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, false, creationUserID),
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<DOI> helper = new CustomSqlHelper<DOI>())
@@ -258,7 +268,9 @@ namespace MOBOT.BHL.DAL
 				value.DOIName,
 				value.StatusDate,
 				value.StatusMessage,
-				value.IsValid);
+				value.IsValid,
+				value.CreationUserID,
+				value.LastModifiedUserID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -337,6 +349,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="statusDate"></param>
 		/// <param name="statusMessage"></param>
 		/// <param name="isValid"></param>
+		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type DOI.</returns>
 		public DOI DOIUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -349,9 +362,10 @@ namespace MOBOT.BHL.DAL
 			string dOIName,
 			DateTime statusDate,
 			string statusMessage,
-			short isValid)
+			short isValid,
+			int lastModifiedUserID)
 		{
-			return DOIUpdateAuto( sqlConnection, sqlTransaction, "BHL", dOIID, dOIEntityTypeID, entityID, dOIStatusID, dOIBatchID, dOIName, statusDate, statusMessage, isValid);
+			return DOIUpdateAuto( sqlConnection, sqlTransaction, "BHL", dOIID, dOIEntityTypeID, entityID, dOIStatusID, dOIBatchID, dOIName, statusDate, statusMessage, isValid, lastModifiedUserID);
 		}
 		
 		/// <summary>
@@ -369,6 +383,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="statusDate"></param>
 		/// <param name="statusMessage"></param>
 		/// <param name="isValid"></param>
+		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type DOI.</returns>
 		public DOI DOIUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -382,7 +397,8 @@ namespace MOBOT.BHL.DAL
 			string dOIName,
 			DateTime statusDate,
 			string statusMessage,
-			short isValid)
+			short isValid,
+			int lastModifiedUserID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -396,7 +412,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("DOIName", SqlDbType.NVarChar, 50, false, dOIName),
 					CustomSqlHelper.CreateInputParameter("StatusDate", SqlDbType.DateTime, null, false, statusDate),
 					CustomSqlHelper.CreateInputParameter("StatusMessage", SqlDbType.NVarChar, 1000, false, statusMessage),
-					CustomSqlHelper.CreateInputParameter("IsValid", SqlDbType.SmallInt, null, false, isValid), 
+					CustomSqlHelper.CreateInputParameter("IsValid", SqlDbType.SmallInt, null, false, isValid),
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<DOI> helper = new CustomSqlHelper<DOI>())
@@ -454,7 +471,8 @@ namespace MOBOT.BHL.DAL
 				value.DOIName,
 				value.StatusDate,
 				value.StatusMessage,
-				value.IsValid);
+				value.IsValid,
+				value.LastModifiedUserID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -473,9 +491,9 @@ namespace MOBOT.BHL.DAL
 		public CustomDataAccessStatus<DOI> DOIManageAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
-			DOI value  )
+			DOI value , int userId )
 		{
-			return DOIManageAuto( sqlConnection, sqlTransaction, "BHL", value  );
+			return DOIManageAuto( sqlConnection, sqlTransaction, "BHL", value , userId );
 		}
 		
 		/// <summary>
@@ -492,12 +510,12 @@ namespace MOBOT.BHL.DAL
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
-			DOI value  )
+			DOI value , int userId )
 		{
 			if (value.IsNew && !value.IsDeleted)
 			{
-				
-				
+				value.CreationUserID = userId;
+				value.LastModifiedUserID = userId;
 				DOI returnValue = DOIInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.DOIEntityTypeID,
 						value.EntityID,
@@ -506,7 +524,9 @@ namespace MOBOT.BHL.DAL
 						value.DOIName,
 						value.StatusDate,
 						value.StatusMessage,
-						value.IsValid);
+						value.IsValid,
+						value.CreationUserID,
+						value.LastModifiedUserID);
 				
 				return new CustomDataAccessStatus<DOI>(
 					CustomDataAccessContext.Insert, 
@@ -530,7 +550,7 @@ namespace MOBOT.BHL.DAL
 			}
 			else if (value.IsDirty && !value.IsDeleted)
 			{
-				
+				value.LastModifiedUserID = userId;
 				DOI returnValue = DOIUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.DOIID,
 						value.DOIEntityTypeID,
@@ -540,7 +560,8 @@ namespace MOBOT.BHL.DAL
 						value.DOIName,
 						value.StatusDate,
 						value.StatusMessage,
-						value.IsValid);
+						value.IsValid,
+						value.LastModifiedUserID);
 					
 				return new CustomDataAccessStatus<DOI>(
 					CustomDataAccessContext.Update, 

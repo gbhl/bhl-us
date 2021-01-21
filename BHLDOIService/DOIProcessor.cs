@@ -64,7 +64,7 @@ namespace MOBOT.BHL.BHLDOIService
 
         private void ProcessEntitiesWithoutDOIs(int entityTypeId, EntitySelectWithoutSubmittedDOI entitySelect)
         {
-            this.LogMessage(string.Format("Processing {0}s without DOIs", GetEntityTypeName(entityTypeId)));
+            this.LogMessage(string.Format("Processing {0}s", GetEntityTypeName(entityTypeId)));
 
             BHLWSSoapClient wsClient = null;
 
@@ -84,28 +84,27 @@ namespace MOBOT.BHL.BHLDOIService
                     {
                         case DOICheckResult.NotFound:
 
-                            // If no DOI record exists, create one (set status to "None" or "No DOI")
+                            // If no DOI record exists, create one (set status to "Queued")
                             if (doi.DOIID == 0)
                             {
-                                DOI newDoi = wsClient.DOIInsertAuto(entityTypeId, doi.EntityID, configParms.DoiStatusNone,
-                                    string.Empty, string.Empty, string.Empty, 0);
+                                DOI newDoi = wsClient.DOIInsertAuto(entityTypeId, doi.EntityID, configParms.DoiStatusQueued,
+                                    string.Empty, doi.DOIName, string.Empty, 0, 1);
                                 doi.DOIID = newDoi.DOIID;
                                 doi.DOIStatusID = newDoi.DOIStatusID;
                                 doi.DOIEntityTypeID = newDoi.DOIEntityTypeID;
                             }
 
-                            if (doi.DOIStatusID == configParms.DoiStatusNone)
+                            // Add the DOI name, if one has not already been assigned
+                            if (string.IsNullOrWhiteSpace(doi.DOIName))
                             {
-                                // Generate a DOI and assign it to the title
-                                string doiName = string.Empty;
-                                doiName = this.GenerateDOIName(configParms.DoiPrefix, entityTypeId, doi.EntityID);
-                                wsClient.DOIUpdateDOIName(doi.DOIID, configParms.DoiStatusAssigned, doiName);
+                                string doiName = this.GenerateDOIName(configParms.DoiPrefix, entityTypeId, doi.EntityID);
+                                wsClient.DOIUpdateDOIName(doi.DOIID, doi.DOIStatusID, doiName, null);
                                 doi.DOIName = doiName;
                             }
 
-                            // Generate a batch identifier for this DOI
+                            // Generate a batch identifier for this DOI (and set status to "Queued")
                             string doiBatchID = this.GenerateDOIBatchID(doi.DOIID);
-                            wsClient.DOIUpdateBatchID(doi.DOIID, configParms.DoiStatusBatchAssigned, doiBatchID);
+                            wsClient.DOIUpdateBatchID(doi.DOIID, doi.DOIStatusID, doiBatchID, null);
                             doi.DOIBatchID = doiBatchID;
 
                             // Create a CrossRef deposit record for this DOI
@@ -119,7 +118,7 @@ namespace MOBOT.BHL.BHLDOIService
                             {
                                 // Submit the new DOI to CrossRef and update the DOI status to "Submitted"
                                 this.SubmitDOI(doiDeposit, string.Format(configParms.DepositFileFormat, doiBatchID));
-                                wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusSubmitted, string.Empty, null);
+                                wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusSubmitted, string.Empty, null, null);
                                 submittedDOIs.Add(doi.DOIName);
                             }
                             catch (Exception ex)
@@ -127,7 +126,7 @@ namespace MOBOT.BHL.BHLDOIService
                                 // Set DOI error status and record the error
                                 log.Error("Exception submitting DOI " + doi.DOIName, ex);
                                 errorMessages.Add("Exception submitting DOI " + doi.DOIName + ": " + ex.Message);
-                                wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusSubmitError, ex.Message, null);
+                                wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusError, "ERROR (SUBMIT): " + ex.Message, null, null);
                             }
 
                             this.LogMessage("DOI " + doi.DOIName + " processed");
@@ -136,7 +135,7 @@ namespace MOBOT.BHL.BHLDOIService
                         case DOICheckResult.Found:
                             // Add the DOI to the database
                             wsClient.DOIInsertAuto(entityTypeId, doi.EntityID, configParms.DoiStatusExternal,
-                                string.Empty, result.DoiList.First(), string.Empty, 1);
+                                string.Empty, result.DoiList.First(), string.Empty, 1, 1);
                             foundDOIs.Add(result.DoiList.First());
 
                             this.LogMessage("DOI " + result.DoiList.First() + " added");
@@ -182,7 +181,7 @@ namespace MOBOT.BHL.BHLDOIService
                 }
             }
 
-            this.LogMessage(string.Format("Done processing {0}s without DOIs", GetEntityTypeName(entityTypeId)));
+            this.LogMessage(string.Format("Done processing {0}s", GetEntityTypeName(entityTypeId)));
         }
 
         /// <summary>
@@ -906,7 +905,7 @@ namespace MOBOT.BHL.BHLDOIService
                         // Set DOI error status and record the error
                         log.Error("Exception getting submission log for batch " + doi.DOIBatchID, ex);
                         errorMessages.Add("Exception getting submission log for batch " + doi.DOIBatchID + ":" + ex.Message);
-                        wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusGetLogError, ex.Message, null);
+                        wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusError, "ERROR (SUBMIT LOG): " + ex.Message, null, null);
                     }
 
                     // Parse the submission log to determine current status of DOI
@@ -919,14 +918,22 @@ namespace MOBOT.BHL.BHLDOIService
                             // Make sure the batch processing is complete
                             if (batchStatusAttrib.Value == "completed")
                             {
-                                XElement recordDiagnostic = submitLog.Root.Element("record_diagnostic");
+                                XElement recordDiagnostic = null;
+                                foreach(XElement rd in submitLog.Root.Elements("record_diagnostic"))
+                                {
+                                    recordDiagnostic = rd;
+                                    if (rd.Element("doi") != null)
+                                    {
+                                        if (rd.Element("doi").Value == doi.DOIName) break;
+                                    }
+                                }
 
                                 switch (recordDiagnostic.Attribute("status").Value)
                                 {
                                     case  "Success":
                                         {
                                             // DOI accepted by CrossRef
-                                            wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusApproved, string.Empty, 1);
+                                            wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusApproved, string.Empty, 1, null);
                                             this.LogMessage("DOI " + doi.DOIName + " Verified");
                                             approvedDOIs.Add(doi.DOIName);
                                             break;
@@ -935,8 +942,8 @@ namespace MOBOT.BHL.BHLDOIService
                                         {
                                             // Warning; DOI deposited, but has a metadata conflict with another DOI
                                             XElement diagnosticMessage = recordDiagnostic.Element("msg");
-                                            wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusCrossRefWarning,
-                                                diagnosticMessage.Value, null);
+                                            wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusError,
+                                                "WARNING (CROSSREF): " + diagnosticMessage.Value, null, null);
                                             this.LogMessage("DOI " + doi.DOIName + " Verification WARNING: " + diagnosticMessage.Value);
                                             warningDOIs.Add(doi.DOIName);
                                             break;
@@ -945,8 +952,8 @@ namespace MOBOT.BHL.BHLDOIService
                                         {
                                             // Error reported by CrossRef; set status and record the error message
                                             XElement diagnosticMessage = recordDiagnostic.Element("msg");
-                                            wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusCrossRefError,
-                                                diagnosticMessage.Value, null);
+                                            wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusError,
+                                                "ERROR (CROSSREF): " + diagnosticMessage.Value, null, null);
                                             this.LogMessage("DOI " + doi.DOIName + " Verification FAILURE: " + diagnosticMessage.Value);
                                             rejectedDOIs.Add(doi.DOIName);
                                             break;
@@ -956,14 +963,14 @@ namespace MOBOT.BHL.BHLDOIService
                             else if (batchStatusAttrib.Value == "unknown_submission")
                             {
                                 // Something went wrong; set the DOI status and log the message from CrossRef
-                                wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusCrossRefError, batchStatusAttrib.Value, null);
+                                wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusError, "ERROR (CROSSREF): " + batchStatusAttrib.Value, null, null);
                                 this.LogMessage("DOI " + doi.DOIName + " NOT Verified: " + batchStatusAttrib.Value);
                                 unverifiedDOIs.Add(doi.DOIName);
                             }
                             else
                             {
                                 // Keep the current local DOI Status, and record the current CrossRef status
-                                wsClient.DOIUpdateStatus(doi.DOIID, doi.DOIStatusID, batchStatusAttrib.Value, null);
+                                wsClient.DOIUpdateStatus(doi.DOIID, doi.DOIStatusID, batchStatusAttrib.Value, null, null);
                                 this.LogMessage("DOI " + doi.DOIName + " NOT Verified: " + batchStatusAttrib.Value);
                                 unverifiedDOIs.Add(doi.DOIName);
                             }
@@ -973,7 +980,7 @@ namespace MOBOT.BHL.BHLDOIService
                             // Set DOI error status and record the error
                             log.Error("Exception parsing submission log for batch " + doi.DOIBatchID, ex);
                             errorMessages.Add("Exception parsing submission log for batch " + doi.DOIBatchID + ":" + ex.Message);
-                            wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusCrossRefError, ex.Message, null);
+                            wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusError, "ERROR (CROSSREF): " + ex.Message, null, null);
                         }
                     }
                 }

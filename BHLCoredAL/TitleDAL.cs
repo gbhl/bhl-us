@@ -410,7 +410,7 @@ namespace MOBOT.BHL.DAL
                         doi.IsDeleted = true;
                     }
                 }
-                if (doi != null) doiDAL.DOIManageAuto(connection, transaction, doi);
+                if (doi != null) doiDAL.DOIManageAuto(connection, transaction, doi, userId);
 
                 if ( title.TitleAuthors.Count > 0 )
 				{

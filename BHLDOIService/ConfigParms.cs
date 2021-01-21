@@ -246,32 +246,11 @@ namespace MOBOT.BHL.BHLDOIService
             set { _doiStatusNull = value; }
         }
 
-        private int _doiStatusNone = 10;
-        public int DoiStatusNone
+        private int _doiStatusQueued = 30;
+        public int DoiStatusQueued
         {
-            get { return _doiStatusNone; }
-            set { _doiStatusNone = value; }
-        }
-
-        private int _doiStatusAssigned = 20;
-        public int DoiStatusAssigned
-        {
-            get { return _doiStatusAssigned; }
-            set { _doiStatusAssigned = value; }
-        }
-
-        private int _doiStatusResubmit = 30;
-        public int DoiStatusResubmit
-        {
-            get { return _doiStatusResubmit; }
-            set { _doiStatusResubmit = value; }
-        }
-
-        private int _doiStatusBatchAssigned = 40;
-        public int DoiStatusBatchAssigned
-        {
-            get { return _doiStatusBatchAssigned; }
-            set { _doiStatusBatchAssigned = value; }
+            get { return _doiStatusQueued; }
+            set { _doiStatusQueued = value; }
         }
 
         private int _doiStatusSubmitted = 50;
@@ -281,32 +260,11 @@ namespace MOBOT.BHL.BHLDOIService
             set { _doiStatusSubmitted = value; }
         }
 
-        private int _doiStatusSubmitError = 60;
-        public int DoiStatusSubmitError
+        private int _doiStatusError = 80;
+        public int DoiStatusError
         {
-            get { return _doiStatusSubmitError; }
-            set { _doiStatusSubmitError = value; }
-        }
-
-        private int _doiStatusGetLogError = 70;
-        public int DoiStatusGetLogError
-        {
-            get { return _doiStatusGetLogError; }
-            set { _doiStatusGetLogError = value; }
-        }
-
-        private int _doiStatusCrossRefError = 80;
-        public int DoiStatusCrossRefError
-        {
-            get { return _doiStatusCrossRefError; }
-            set { _doiStatusCrossRefError = value; }
-        }
-
-        private int _doiStatusCrossRefWarning = 90;
-        public int DoiStatusCrossRefWarning
-        {
-            get { return _doiStatusCrossRefWarning; }
-            set { _doiStatusCrossRefWarning = value; }
+            get { return _doiStatusError; }
+            set { _doiStatusError = value; }
         }
 
         private int _doiStatusApproved = 100;
@@ -608,41 +566,17 @@ namespace MOBOT.BHL.BHLDOIService
                     {
                         this.DoiStatusNull = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
                     }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_None")
+                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_Queued")
                     {
-                        this.DoiStatusNone = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_Assigned")
-                    {
-                        this.DoiStatusAssigned = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_Resubmit")
-                    {
-                        this.DoiStatusResubmit = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_BatchAssigned")
-                    {
-                        this.DoiStatusBatchAssigned = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
+                        this.DoiStatusQueued = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
                     }
                     if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_Submitted")
                     {
                         this.DoiStatusSubmitted = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
                     }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_SubmitError")
+                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_Error")
                     {
-                        this.DoiStatusSubmitError = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_GetLogError")
-                    {
-                        this.DoiStatusGetLogError = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_CrossRefError")
-                    {
-                        this.DoiStatusCrossRefError = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_CrossRefWarning")
-                    {
-                        this.DoiStatusCrossRefWarning = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
+                        this.DoiStatusError = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
                     }
                     if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_Approved")
                     {

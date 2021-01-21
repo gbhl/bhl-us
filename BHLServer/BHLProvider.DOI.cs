@@ -34,10 +34,10 @@ namespace MOBOT.BHL.Server
         }
 
         public DOI DOInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, 
-            string doiBatchId, string doiName, string message, short isValid)
+            string doiBatchId, string doiName, string message, short isValid, int userId)
         {
             return new DOIDAL().DOIInsertAuto(null, null, 
-                doiEntityTypeId, entityId, doiStatusId, doiBatchId, doiName, DateTime.Now, message, isValid);
+                doiEntityTypeId, entityId, doiStatusId, doiBatchId, doiName, DateTime.Now, message, isValid, userId, userId);
         }
 
         public List<DOI> DOISelectByStatus(int doiStatusId, int numRows, int pageNum, string sortColumn, string sortOrder)
@@ -45,17 +45,17 @@ namespace MOBOT.BHL.Server
             return new DOIDAL().DOISelectByStatus(null, null, doiStatusId, numRows, pageNum, sortColumn, sortOrder);
         }
 
-        public DOI DOIUpdateStatus(int doiID, int doiStatusId)
+        public DOI DOIUpdateStatus(int doiID, int doiStatusId, int? userId)
         {
-            return this.DOIUpdateStatus(doiID, doiStatusId, string.Empty, null, null, null);
+            return this.DOIUpdateStatus(doiID, doiStatusId, string.Empty, null, null, null, userId);
         }
 
-        public DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, short? setValid)
+        public DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, short? setValid, int? userId)
         {
-            return this.DOIUpdateStatus(doiID, doiStatusId, message, null, null, setValid);
+            return this.DOIUpdateStatus(doiID, doiStatusId, message, null, null, setValid, userId);
         }
 
-        private DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, string doiName, string doiBatchID, short? isValid)
+        private DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, string doiName, string doiBatchID, short? isValid, int? userId)
         {
             DOIDAL dal = new DOIDAL();
             DOI doi = dal.DOISelectAuto(null, null, doiID);
@@ -68,6 +68,7 @@ namespace MOBOT.BHL.Server
                 doi.DOIName = (doiName ?? doi.DOIName);
                 doi.DOIBatchID = (doiBatchID ?? doi.DOIBatchID);
                 doi.IsValid = (isValid ?? doi.IsValid);
+                doi.LastModifiedUserID = (userId ?? doi.LastModifiedUserID);
                 doi = dal.DOIUpdateAuto(null, null, doi);
             }
             else
@@ -77,14 +78,14 @@ namespace MOBOT.BHL.Server
             return doi;
         }
 
-        public DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName)
+        public DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName, int? userId)
         {
-            return this.DOIUpdateStatus(doiID, doiStatusId, null, doiName, null, null);
+            return this.DOIUpdateStatus(doiID, doiStatusId, null, doiName, null, null, userId);
         }
 
-        public DOI DOIUpdateBatchID(int doiID, int doiStatusID, string doiBatchID)
+        public DOI DOIUpdateBatchID(int doiID, int doiStatusID, string doiBatchID, int? userId)
         {
-            return this.DOIUpdateStatus(doiID, doiStatusID, null, null, doiBatchID, null);
+            return this.DOIUpdateStatus(doiID, doiStatusID, null, null, doiBatchID, null, userId);
         }
 
         public List<DOIStatus> DOIStatusSelectAll()

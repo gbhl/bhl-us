@@ -18,7 +18,9 @@ SELECT	d.DOIID,
 		d.StatusMessage,
 		d.IsValid,
 		d.CreationDate,
-		d.LastModifiedDate
+		d.LastModifiedDate,
+		d.CreationUserID,
+		d.LastModifiedUserID
 FROM	dbo.DOI d INNER JOIN dbo.DOIEntityType t
 			ON d.DOIEntityTypeID = t.DOIEntityTypeID
 			AND t.DOIEntityTypeName = 'Title'

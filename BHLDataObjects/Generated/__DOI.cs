@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:25:11 PM
+// Generated 1/20/2021 12:05:35 PM
 // Do not modify the contents of this code file.
 // This abstract class __DOI is based upon dbo.DOI.
 
@@ -56,6 +56,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="isValid"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
+		/// <param name="creationUserID"></param>
+		/// <param name="lastModifiedUserID"></param>
 		public __DOI(int dOIID, 
 			int dOIEntityTypeID, 
 			int entityID, 
@@ -66,7 +68,9 @@ namespace MOBOT.BHL.DataObjects
 			string statusMessage, 
 			short isValid, 
 			DateTime creationDate, 
-			DateTime lastModifiedDate) : this()
+			DateTime lastModifiedDate, 
+			int creationUserID, 
+			int lastModifiedUserID) : this()
 		{
 			_DOIID = dOIID;
 			DOIEntityTypeID = dOIEntityTypeID;
@@ -79,6 +83,8 @@ namespace MOBOT.BHL.DataObjects
 			IsValid = isValid;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
+			CreationUserID = creationUserID;
+			LastModifiedUserID = lastModifiedUserID;
 		}
 		
 		#endregion Constructors
@@ -158,6 +164,16 @@ namespace MOBOT.BHL.DataObjects
 					case "LastModifiedDate" :
 					{
 						_LastModifiedDate = (DateTime)column.Value;
+						break;
+					}
+					case "CreationUserID" :
+					{
+						_CreationUserID = (int)column.Value;
+						break;
+					}
+					case "LastModifiedUserID" :
+					{
+						_LastModifiedUserID = (int)column.Value;
 						break;
 					}
 								}
@@ -470,6 +486,60 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion LastModifiedDate
+		
+		#region CreationUserID
+		
+		private int _CreationUserID = default(int);
+		
+		/// <summary>
+		/// Column: CreationUserID;
+		/// DBMS data type: int;
+		/// </summary>
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=12, NumericPrecision=10)]
+		public int CreationUserID
+		{
+			get
+			{
+				return _CreationUserID;
+			}
+			set
+			{
+				if (_CreationUserID != value)
+				{
+					_CreationUserID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreationUserID
+		
+		#region LastModifiedUserID
+		
+		private int _LastModifiedUserID = default(int);
+		
+		/// <summary>
+		/// Column: LastModifiedUserID;
+		/// DBMS data type: int;
+		/// </summary>
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=13, NumericPrecision=10)]
+		public int LastModifiedUserID
+		{
+			get
+			{
+				return _LastModifiedUserID;
+			}
+			set
+			{
+				if (_LastModifiedUserID != value)
+				{
+					_LastModifiedUserID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedUserID
 			
 		#endregion Properties
 
@@ -524,7 +594,9 @@ namespace MOBOT.BHL.DataObjects
 					GetComparisonString(o.StatusMessage) == GetComparisonString(StatusMessage) &&
 					o.IsValid == IsValid &&
 					o.CreationDate == CreationDate &&
-					o.LastModifiedDate == LastModifiedDate 
+					o.LastModifiedDate == LastModifiedDate &&
+					o.CreationUserID == CreationUserID &&
+					o.LastModifiedUserID == LastModifiedUserID 
 				)
 				{
 					o = null;
@@ -634,7 +706,9 @@ namespace MOBOT.BHL.DataObjects
 			public const string StatusMessage = "StatusMessage";	
 			public const string IsValid = "IsValid";	
 			public const string CreationDate = "CreationDate";	
-			public const string LastModifiedDate = "LastModifiedDate";
+			public const string LastModifiedDate = "LastModifiedDate";	
+			public const string CreationUserID = "CreationUserID";	
+			public const string LastModifiedUserID = "LastModifiedUserID";
 		}
 				
 		#endregion SortColumn
