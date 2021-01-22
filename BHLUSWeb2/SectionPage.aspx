@@ -21,92 +21,12 @@
 
     <div class="tabs js-hide">
         <ul class="tab-nav no-js-hide">
-            <li class="summary first-child"><a href="#/summary">Summary</a></li>
-            <li class="details"><a href="#/details">Details</a></li>
-            <li class="mods"><a href="#/mods">MODS</a></li>
-            <li class="bibtex"><a href="#/bibtex">BibTeX</a></li>
-            <li class="ris last-child"><a href="#/ris">RIS</a></li>
+            <li class="details first-child" style="display:none"><a href="#/details">Details</a></li>
+            <li class="mods" style="display:none"><a href="#/mods">MODS</a></li>
+            <li class="bibtex" style="display:none"><a href="#/bibtex">BibTeX</a></li>
+            <li class="ris last-child" style="display:none"><a href="#/ris">RIS</a></li>
         </ul>            
         <uc:COinS ID="COinS" runat="server" />
-        <div id="summary" class="tab-body">
-
-            <div class="segmentdetails"><h3>Title</h3> 
-            <span itemprop="url" style="display:none"><%: String.Format(ConfigurationManager.AppSettings["PartPageUrl"], BhlSegment.SegmentID.ToString()) %></span>
-            <p><span itemprop="name"><%: BhlSegment.Title %></p></span></div>
-            <% if (!String.IsNullOrEmpty(BhlSegment.TranslatedTitle)) { %>
-                <div class="segmentdetails"><h3>Translated Title</h3> <p><%: BhlSegment.TranslatedTitle%></p></div>
-            <% } %>
-            <% if (BhlSegment.AuthorList.Count > 0) { %>
-                <h3>By</h3>
-                <p>
-                    <% foreach (ItemAuthor author in BhlSegment.AuthorList)
-                    { %>
-                        <span itemprop="author" itemscope itemtype='https://schema.org/Person'>
-                        <a href="/creator/<%: author.AuthorID %>">
-							<span itemprop="name"><%: author.NameExtended%></span>
-						</a>
-                        <span itemprop='url' style='display:none'><%: string.Format(ConfigurationManager.AppSettings["AuthorPageUrl"], author.AuthorID.ToString()) %></span>
-                        </span>
-                        <br />
-                    <% } %>
-                </p>
-            <% } %>
-            <% if (!String.IsNullOrEmpty(BhlSegment.GenreName)) { %>
-            <div class="segmentdetails"><h3>Type</h3> <p><span itemprop="genre"><%: BhlSegment.GenreName %></span></p></div>
-            <% } %>
-            <% if (!String.IsNullOrEmpty(BhlSegment.Date)) { %>
-            <div class="segmentdetails"><h3>Date of Publication</h3> <p><span itemprop="datePublished"><%: BhlSegment.Date%></span></p></div>
-            <% } %>
-            <% if (!String.IsNullOrEmpty(BhlSegment.ContainerTitle)) { %>
-            <div class="segmentdetails"><h3>Original Publication</h3> <p><%: BhlSegment.ContainerTitle %></p></div>
-            <% } %>
-            <% if (!String.IsNullOrEmpty(BhlSegment.Volume)) { %>
-            <div class="segmentdetails"><h3>Volume</h3> <p><%: BhlSegment.Volume%></p></div>
-            <% } %>
-            <% if (!String.IsNullOrEmpty(BhlSegment.Series) || !String.IsNullOrWhiteSpace(BhlSegment.Issue)) { %>
-                <div class="segmentdetails"><h3>Series / Issue</h3> 
-                    <p><% if (!String.IsNullOrWhiteSpace(BhlSegment.Series)) { %>Series: <%: BhlSegment.Series%><br /> <% } %>
-                    <% if (!String.IsNullOrWhiteSpace(BhlSegment.Issue)) { %>Issue: <%: BhlSegment.Issue%> <% } %>
-                    </p>
-                </div>
-            <% } %>
-            <% if (!String.IsNullOrEmpty(BhlSegment.PageRange)) { %>
-            <div class="segmentdetails"><h3>Pages</h3> <p><%: BhlSegment.PageRange%></p></div>
-            <% } %>
-            <% if (BhlSegment.KeywordList.Count > 0) { %>
-                <h3>Subjects</h3>
-                <p><span itemprop="keywords">
-                <% for (int i = 0; i < BhlSegment.KeywordList.Count; i++)
-                    { %>
-                    <a href="/subject/<%: Server.UrlPathEncode(BhlSegment.KeywordList[i].Keyword) %>">
-                        <%: BhlSegment.KeywordList[i].Keyword%>
-                    </a>
-                    <%: (i < BhlSegment.KeywordList.Count - 1) ? ", " : string.Empty%>
-                <% } %>
-                </span></p>
-            <% } %>
-            <% if (!String.IsNullOrEmpty(BhlSegment.ContributorName)) { %>
-                <div class="segmentdetails"><h3>Contributed by</h3> <p>
-                    <%foreach (Institution institution in BhlSegment.ContributorList) {
-                        if (!string.IsNullOrWhiteSpace(institution.InstitutionUrl)) {%>
-                            <a target="_blank" rel="noopener noreferrer" class="ExtLinkBrowse" style="line-height:19px" href="<%: institution.InstitutionUrl %>" title="Contributor"><%: institution.InstitutionName %></a>
-                        <%}
-                        else
-                        {%>
-                            <%: institution.InstitutionName%><br />
-                        <%}
-                    }%>
-                    </p>
-                </div>
-            <% } %>
-            <% if (DOI != string.Empty) { %>
-            <h3>DOI</h3>
-            <p>
-                <a href="<%= DOI%>" title="DOI"><span itemprop="DOI"><%= DOI%></span></a>
-            </p>
-            <% } %>
-
-        </div>
         <div id="details" class="tab-body">
 
             <div class="segmentdetails"><h3>Title</h3> <p><%: BhlSegment.Title %></p></div>
@@ -256,7 +176,7 @@
             <% } %>
 
         </div>
-        <div id="mods" class="tab-body">                                
+        <div id="mods" class="tab-body" style="display:none">
             <p>
                 <a class="button" href="/handlers/modsdownload.ashx?pid=<%: BhlSegment.SegmentID %>">Download MODS</a>
             </p>
@@ -264,7 +184,7 @@
                 <asp:Literal ID="litMods" runat="server"></asp:Literal>
             </p>
         </div>
-        <div id="bibtex" class="tab-body">
+        <div id="bibtex" class="tab-body" style="display:none">
             <% if (!string.IsNullOrEmpty(litBibTeX.Text)) { %>
             <p>
                 <a class="button" href="/handlers/bibtexdownload.ashx?pid=<%: BhlSegment.SegmentID %>">Download BibTeX citation</a>
@@ -274,7 +194,7 @@
             </p>
             <% } %>
         </div>
-        <div id="ris" class="tab-body">
+        <div id="ris" class="tab-body" style="display:none">
             <% if (!string.IsNullOrEmpty(litRIS.Text)) { %>
             <p>
                 <a class="button" href="/handlers/risdownload.ashx?pid=<%: BhlSegment.SegmentID %>">Download RIS citation</a>
@@ -313,6 +233,12 @@
                         <a href="<%: BhlSegment.DownloadUrl %>">Download  <%: BhlSegment.GenreName%></a> <br />
                     <% } %>
                 </div>
+            </div>
+            <div class="download">
+                <div class="downloadlabel">Cite:</div>
+                <a class="icon mods" title="download mods" download="bhlpart<%: BhlSegment.SegmentID %>_mods.xml" href="/handlers/modsdownload.ashx?pid=<%: BhlSegment.SegmentID %>">MODS</a>
+                <a class="icon ris" title="download ris" download="bhlpart<%: BhlSegment.SegmentID %>.ris" href="/handlers/risdownload.ashx?pid=<%: BhlSegment.SegmentID %>">RIS</a>
+                <a class="icon bibtex" title="download bibtex" download="bhlpart<%: BhlSegment.SegmentID %>.bib" href="/handlers/bibtexdownload.ashx?pid=<%: BhlSegment.SegmentID %>">BibTeX</a>
             </div>
         </div>
     </div>
@@ -391,13 +317,12 @@
         // Update the Altmetric badge
         $(".altmetric-embed").attr("data-uri", "https://www.biodiversitylibrary.org/part/" + "<%: BhlSegment.SegmentID %>");
         if (typeof _altmetric_embed_init === 'function') _altmetric_embed_init();
-
-        
+/*
         var tabBodys = $('.tab-body').hide();
 
         // Navigate to the default sub-section if no hash
         if (!location.hash) {
-            $.History.go('/summary');
+            $.History.go('/details');
         }
 
         $.History.bind(function (state) {
@@ -415,12 +340,13 @@
 
             // If no default sub-section found then head on to the default otherwise show selected sub-section
             if (!tabBody.length) {
-                $.History.go('/summary');
+                $.History.go('/details');
                 return false;
             } else {
                 tabBody.show();
             }
         });
+*/
     });
 //]]>
 </script>

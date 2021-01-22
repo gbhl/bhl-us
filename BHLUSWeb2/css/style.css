@@ -2383,6 +2383,7 @@ ul.data.collections li .collectiontitle
 {
     color: #607890; 
 }
+.partlink .download,
 .volume .download
 {
 	background:#c5ced3;
@@ -2391,10 +2392,19 @@ ul.data.collections li .collectiontitle
 	padding:0 15px;
 	border-bottom: 1px solid #000;
 }
+.partlink .downloadlabel,
+.volume .downloadlabel {
+    margin:0 0 0 2px;
+    float:left;
+}
 .volume .icon
 {
-	float:right;
-	margin:6px 0 0 11px;
+	float:left;
+	margin:6px 2px 0 3px;
+}
+.partlink .icon {
+    float: left;
+    margin: 6px 0 0 11px;
 }
 .icon
 {
@@ -2443,6 +2453,15 @@ ul.data.collections li .collectiontitle
 .large-icon.all
 {
 	background:url("../images/large_icon_all.png") 0 0 no-repeat;	
+}
+.icon.mods {
+    background:url("../images/icon_mods.png") 0 0 no-repeat;
+}
+.icon.ris {
+    background:url("../images/icon_ris.png") 0 0 no-repeat;
+}
+.icon.bibtex {
+    background: url("../images/icon_bibtex.png") 0 0 no-repeat;
 }
 .volume .view-book
 {

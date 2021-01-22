@@ -402,9 +402,12 @@
     <Content Include="images\home_shadow_search.png" />
     <Content Include="images\howToGraphic.png" />
     <Content Include="images\icon_all.png" />
+    <Content Include="images\icon_bibtex.png" />
     <Content Include="images\icon_jp2.png" />
+    <Content Include="images\icon_mods.png" />
     <Content Include="images\icon_ocr.png" />
     <Content Include="images\icon_pdf.png" />
+    <Content Include="images\icon_ris.png" />
     <Content Include="images\image_about.jpg" />
     <Content Include="images\image_contact.jpg" />
     <Content Include="images\image_general.jpg" />
