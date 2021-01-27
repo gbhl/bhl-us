@@ -4,7 +4,7 @@
 <%@ Register TagPrefix="uc" TagName="Mendeley" Src="~/controls/MendeleyShareControl.ascx" %>
 <asp:content id="mainContent" contentplaceholderid="mainContentPlaceHolder" runat="server">
     <div id="page-title">
-        <div id="volumebar"  style="float:right;" class="js-invisible no-js-hide">
+        <div id="volumebar"  style="float:right;" classcss="js-invisible no-js-hide">
             <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>" title="FAQ" class="report"><img alt="FAQ" src="/images/rpterror.png" /></a>
             <uc:Mendeley id="mendeley" runat="server" />
             <% if (!string.IsNullOrWhiteSpace(PageSummary.DownloadUrl)) { %>
@@ -426,7 +426,7 @@
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder"
     runat="server">
     <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=4" />
-    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=7" />
+    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=8" />
     <link rel="stylesheet" type="text/css" href="/css/nspop.css?v=1" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
