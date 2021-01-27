@@ -665,19 +665,48 @@ a.BRButtonFeatured {
     font-size: 12px !important; 
 } 
 
-.downloadcontents 
+#dlcitation-dialog .head a { float: right !important; }
+/*.jqmWindow .head { padding-bottom: 1px; }
+.jqmWindow .delete { background: url("../images/bhlau images/bg_small_delete.png") no-repeat scroll 0 0 transparent } 
+.jqmClose { background: url("../images/bhlau images/bg_large_close.png") no-repeat scroll 0 0 transparent; }
+*/
+.large-icon.ris { background: url("../images/bhlau images/large_icon_ris.png") no-repeat scroll 0 0 transparent }
+.large-icon.bibtex { background: url("../images/bhlau images/large_icon_bibtex.png") no-repeat scroll 0 0 transparent }
+#dlcitation-dialog a.large-icon  
 {
+    margin-left: 50px !important; 
+    line-height: 15px; 
+    color: #666666 !important; 
+    font-size: 12px !important; 
+}
+#dlcitation-dialog .bookcitationlinks
+{
+    float: left;
+}
+#dlcitation-dialog .bookcitelinklabel,
+#dlcitation-dialog .partcitelinklabel
+{
+    color:#000000;
+    text-align:center;
+}
+#dlcitation-dialog .partcitationlinks 
+{
+    float: left;
+    display: none;
+}
+
+.downloadcontents {
     display: none;
     position: fixed;
     top: 120px;
     right: 125px;
     background: #f4f3ec;
     z-index: 99;
-    line-height: 20px; 
+    line-height: 20px;
     padding: 15px;
     -webkit-border-radius: 7px;
-    border-radius: 7px; 
-    width: 133px; 
+    border-radius: 7px;
+    width: 133px;
 }
 .downloadcontents div a
 {

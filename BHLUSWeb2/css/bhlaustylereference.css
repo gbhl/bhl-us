@@ -2691,7 +2691,8 @@ ul.creator-titles li
 }
 
 /* modal dialogs */
-#download-dialog
+#download-dialog,
+#dlcitation-dialog
 {
     height:300px;
     margin-top:-150px;
@@ -2720,7 +2721,8 @@ ul.creator-titles li
 	margin:18px 20px 0 30px;
 	float:left;
 }
-#download-dialog h2
+#download-dialog h2,
+#dlcitation-dialog h2
 {
 	margin:8px 20px 0 30px;
 }
@@ -2904,17 +2906,29 @@ ul.creator-titles li
 	margin-bottom:5px;
 }
 #download-dialog .large-icon, #download-dialog .large-icon:active, #download-dialog .large-icon:visited
-{	
-	height:0;
-	text-indent:0;
-	float:left;
-	margin:40px 0 0 58px;
-	padding-top:128px;
-	text-align:center;
-	color:#666;
-	font-size:12px;
-	text-decoration:none;
+{
+	height: 0;
+	text-indent: 0;
+	float: left;
+	margin: 40px 0 0 58px;
+	padding-top: 128px;
+	text-align: center;
+	color: #666;
+	font-size: 12px;
+	text-decoration: none;
 }
+#dlcitation-dialog .large-icon, #dlcitation-dialog .large-icon:active, #dlcitation-dialog .large-icon:visited 
+{
+		height: 0;
+		text-indent: 0;
+		float: left;
+		margin: 0px 0 0 58px;
+		padding-top: 128px;
+		text-align: center;
+		color: #666;
+		font-size: 12px;
+		text-decoration: none;
+	}
 .jqmWindow .delete
 {
 	text-indent:-9999px;

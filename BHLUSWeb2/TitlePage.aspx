@@ -14,6 +14,7 @@
                     <div><a href="#" class="selectpages">Select pages to download</a></div>
                     <div><a href="#" class="selectpart">Download Part</a></div>
                     <div><a href="#" class="downloadbook">Download Book</a></div>
+                    <div><a href="#" class="downloadcitation">Download Citation</a></div>
                     <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PageSummary.BarCode) %>" rel="noopener noreferrer" target="_blank">View at Internet Archive</a></div>
                 </div>
                 <div class="jqmWindow" id="download-dialog">
@@ -26,6 +27,23 @@
                     <a class="large-icon all" href="<%= PageSummary.DownloadUrl + PageSummary.BarCode %>">Download All</a>
                     <a class="large-icon jp2" href="/itemimages/<%: PageSummary.BookID %>">Download JPEG 2000</a>
                     <a class="large-icon ocr" download="<%: PageSummary.BookID %>.txt" href="/itemtext/<%: PageSummary.BookID %>">Download Text</a>                
+                </div>
+                <div class="jqmWindow" id="dlcitation-dialog">
+                    <div class="head">
+                        <a class="jqmClose" title="Close Dialog">Close Dialog</a>
+                        <h2>Download citation</h2>
+                        <hr />
+                    </div>
+                    <div class="bookcitationlinks">
+                        <div class="bookcitelinklabel">BOOK</div>
+                        <a class="large-icon ris" title="download ris" download="bhlitem<%: PageSummary.BookID %>.ris" href="/risdownload/<%: PageSummary.BookID %>">Download RIS</a>
+                        <a class="large-icon bibtex" title="download bibtex" download="bhlitem<%= PageSummary.BookID %>.bib" href="/bibtexdownload/<%= PageSummary.BookID %>">Download BibTeX</a>
+                    </div>
+                    <div class="partcitationlinks">
+                        <div class="partcitelinklabel">CURRENT ARTICLE</div>
+                        <a class="large-icon ris" title="download ris" download="bhlpart<%: PageSummary.BookID %>.ris" href="/handlers/risdownload.ashx?pid=<%: PageSummary.BookID %>">Download RIS</a>
+                        <a class="large-icon bibtex" title="download bibtex" download="bhlpart<%= PageSummary.BookID %>.bib" href="/handlers/bibtexdownload.ashx?pid=<%= PageSummary.BookID %>">Download BibTeX</a>
+                    </div>
                 </div>
             <% } %>
 
@@ -775,6 +793,10 @@
             onHide: onHideAction,
             trigger: '.downloadbook'
         });
+        $("#dlcitation-dialog").jqm({
+            onHide: onHideAction,
+            trigger: '.downloadcitation'
+        });
         $('#review-dialog').jqm({
             toTop: true,
             onHide: onHideAction,
@@ -1190,13 +1212,20 @@
                 }
             }
 
-            // Update the Download Part menu item
+            // Update the Download Part and Download Citation menu items
             if (pages[index].SegmentID != null) {
                 $(".selectpart").html("Download " + pages[index].GenreName);
                 $(".selectpart").show();
+                $(".partcitelinklabel").html("CURRENT " + pages[index].GenreName.toUpperCase());
+                $(".partcitationlinks a.large-icon.ris").attr("href", "/handlers/risdownload.ashx?pid=" + pages[index].SegmentID);
+                $(".partcitationlinks a.large-icon.ris").attr("download", "bhlpart" + pages[index].SegmentID + ".ris");
+                $(".partcitationlinks a.large-icon.bibtex").attr("href", "/handlers/bibtexdownload.ashx?pid=" + pages[index].SegmentID);
+                $(".partcitationlinks a.large-icon.bibtex").attr("download", "bhlpart" + pages[index].SegmentID + ".bib");
+                $(".partcitationlinks").show();
             }
             else {
                 $(".selectpart").hide();
+                $(".partcitationlinks").hide();
             }
 
             // Update the Altmetric badge
