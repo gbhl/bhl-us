@@ -2,14 +2,12 @@
 <%@ Import Namespace="MOBOT.BHL.DataObjects" %>
 <%@ Register TagPrefix="uc" TagName="NavBar" Src="~/controls/NavBar.ascx" %>
 <%@ Register TagPrefix="uc" TagName="COinS" Src="~/controls/COinSControl.ascx" %>
-<%@ Register TagPrefix="uc" TagName="Mendeley" Src="~/controls/MendeleyShareControl.ascx" %>
 <asp:Content ID="mainContent" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
 <uc:NavBar runat="server" />
 <div id="page-title" class="bibliography">
     <div class="column-wrap">
         <div class="ellipsis bibtitle"><%: BhlTitle.ShortTitle %></div>
         <div class="bibtitleicons">
-            <uc:Mendeley id="mendeley" runat="server" />
             <a href="/contact/" title="Report an error" class="report"><img alt="Report an error" src="/images/rpterror.png" /></a>
         </div>
     </div>

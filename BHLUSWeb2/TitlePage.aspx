@@ -1,12 +1,10 @@
 ﻿<%@ Page Title="Biodiversity Heritage Library" Language="C#" MasterPageFile="~/Book.Master" AutoEventWireup="true" CodeBehind="TitlePage.aspx.cs" Inherits="MOBOT.BHL.Web2.TitlePage" %>
 <%@ Import Namespace="MOBOT.BHL.DataObjects" %>
 <%@ Register TagPrefix="uc" TagName="COinS" Src="~/controls/COinSControl.ascx" %>
-<%@ Register TagPrefix="uc" TagName="Mendeley" Src="~/controls/MendeleyShareControl.ascx" %>
 <asp:content id="mainContent" contentplaceholderid="mainContentPlaceHolder" runat="server">
     <div id="page-title">
         <div id="volumebar"  style="float:right;" classcss="js-invisible no-js-hide">
             <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>" title="FAQ" class="report"><img alt="FAQ" src="/images/rpterror.png" /></a>
-            <uc:Mendeley id="mendeley" runat="server" />
             <% if (!string.IsNullOrWhiteSpace(PageSummary.DownloadUrl)) { %>
                 <div class="buttondrop download">Download Contents<div class="play"></div></div> 
                 <div class="downloadcontents">
@@ -1197,20 +1195,6 @@
                 segTitleLink.attr("href", "/part/" + pages[index].SegmentID);
             }
             highlightSeg(segTitle);
-
-            // Update the Mendeley link
-            if (pages[index].SegmentID != null)
-            {
-                if (updateMendeleyLink !== undefined) {
-                    updateMendeleyLink('part', pages[index].SegmentID);
-                }
-            }
-            else
-            {
-                if (updateMendeleyLink !== undefined) {
-                    updateMendeleyLink('item', '<%: CurrentBookID %>');
-                }
-            }
 
             // Update the Download Part and Download Citation menu items
             if (pages[index].SegmentID != null) {

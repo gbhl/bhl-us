@@ -2,7 +2,6 @@
 <%@ Import Namespace="MOBOT.BHL.DataObjects" %>
 <%@ Register TagPrefix="uc" TagName="NavBar" Src="~/controls/NavBar.ascx" %>
 <%@ Register TagPrefix="uc" TagName="COinS" Src="~/controls/COinSControl.ascx" %>
-<%@ Register TagPrefix="uc" TagName="Mendeley" Src="~/controls/MendeleyShareControl.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
@@ -11,7 +10,6 @@
     <div class="column-wrap">
         <div class="ellipsis bibtitle"><%: BhlSegment.GenreName%>: <%: BhlSegment.Title %></div>
         <div class="bibtitleicons">
-            <uc:Mendeley id="mendeley" runat="server" />
             <a href="/contact/" title="Report an error" class="report"><img alt="Report an error" src="/images/rpterror.png" /></a>
         </div>
     </div>
@@ -174,7 +172,10 @@
                 <% } %>
             </p></div>
             <% } %>
-
+            <p>&nbsp;</p>
+            <p>
+                <a class="button" href="/handlers/modsdownload.ashx?pid=<%: BhlSegment.SegmentID %>">Download MODS</a>
+            </p>
         </div>
         <div id="mods" class="tab-body" style="display:none">
             <p>
@@ -235,8 +236,11 @@
                 </div>
             </div>
             <div class="download">
+                <!--
+                <div class="downloadlabel">Download:</div>
+                <a class="icon mods" title="download mods" download="bhlpart %: BhlSegment.SegmentID % _mods.xml" href="/handlers/modsdownload.ashx?pid=%: BhlSegment.SegmentID %">MODS</a>
+                -->
                 <div class="downloadlabel">Cite:</div>
-                <a class="icon mods" title="download mods" download="bhlpart<%: BhlSegment.SegmentID %>_mods.xml" href="/handlers/modsdownload.ashx?pid=<%: BhlSegment.SegmentID %>">MODS</a>
                 <a class="icon ris" title="download ris" download="bhlpart<%: BhlSegment.SegmentID %>.ris" href="/handlers/risdownload.ashx?pid=<%: BhlSegment.SegmentID %>">RIS</a>
                 <a class="icon bibtex" title="download bibtex" download="bhlpart<%: BhlSegment.SegmentID %>.bib" href="/handlers/bibtexdownload.ashx?pid=<%: BhlSegment.SegmentID %>">BibTeX</a>
             </div>

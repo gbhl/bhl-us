@@ -193,7 +193,6 @@ namespace MOBOT.BHL.Web2
 
                     Page firstPage = null;
                     int? sequenceOrder = PageSummary.SequenceOrder;
-                    mendeley.ItemID = PageSummary.BookID;
 
                     UrlRoot = Request.Url.GetLeftPart(UriPartial.Authority);
 
