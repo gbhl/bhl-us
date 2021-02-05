@@ -14,6 +14,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
     {
         private int _doiTypeTitle = 10;
         private int _doiTypeSegment = 40;
+        private int _doiStatusQueued = 30;
 
         public DoiController()
         {
@@ -110,8 +111,6 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> QueueAdd(QueueAddViewModel model)
         {
-            int userId = Helper.GetCurrentUserUID(Request);
-
             if (ModelState.IsValid)
             {
                 try
@@ -160,6 +159,31 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             List<int> titleIDs = (List<int>)TempData["Titles"];
             List<int> segmentIDs = (List<int>)TempData["Segments"];
             return View(new QueueAddConfirmViewModel(titleIDs, segmentIDs));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> QueueAddConfirm(QueueAddConfirmViewModel model)
+        {
+            int userId = Helper.GetCurrentUserUID(Request);
+
+            if (model.TitleIDs != null)
+            {
+                foreach(int titleID in model.TitleIDs)
+                {
+                    new BHLProvider().DOInsertAuto(_doiTypeTitle, titleID, _doiStatusQueued, string.Empty, string.Empty, string.Empty, 0, userId);
+                }
+            }
+
+            if (model.SegmentIDs != null)
+            {
+                foreach (int segmentID in model.SegmentIDs)
+                {
+                    new BHLProvider().DOInsertAuto(_doiTypeSegment, segmentID, _doiStatusQueued, string.Empty, string.Empty, string.Empty, 0, userId);
+                }
+            }
+
+            return RedirectToAction("Queue", "Doi");
         }
 
         public IEnumerable<SelectListItem> GetDOIEntityTypes()

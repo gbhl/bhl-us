@@ -21,12 +21,17 @@
         <p>&nbsp;</p>
         <p>
             @Html.Label("Titles")
-            <br />
-
-            @foreach (var title in Model.TitleIDs)
+            @for (int i = 0; i < Model.TitleIDs.Count; i++)
             {
-            <div>@title</div>
+                @Html.HiddenFor(m => m.TitleIDs[i])
             }
+            <br />
+            <select size="5" style="width:150px">
+                @foreach (var title in Model.TitleIDs)
+                {
+                    <option disabled>@title</option>
+                }
+            </select>
         </p>
     }
     if (Model.SegmentIDs.Count > 0)
@@ -34,17 +39,23 @@
         <p>&nbsp;</p>
         <p>
             @Html.Label("Segments")
-
-            @foreach (var segment in Model.SegmentIDs)
+            @for (int i = 0; i < Model.SegmentIDs.Count; i++)
             {
-            <div>@segment</div>
+                @Html.HiddenFor(m => m.SegmentIDs[i])
             }
+            <br />
+            <select size="5" style="width:150px">
+                @foreach (var segment in Model.SegmentIDs)
+                {
+                    <option disabled>@segment</option>
+                }
+            </select>
         </p>
     }
     <p>&nbsp;</p>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div class="col-md-offset-0 col-md-12">
             <input type="submit" id="confirmButton" class="btn btn-default" value="Confirm" />
             <input type="button" id="backButton" class="btn" value="Back" onclick="doBack();" />
             <input type="button" id="cancelButton" class="btn" value="Cancel" onclick="doCancel();" />
