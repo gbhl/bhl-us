@@ -312,6 +312,56 @@ namespace MOBOT.BHL.DAL
         }
 
         /// <summary>
+        /// Select the segments associated with the specified item
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="itemId">Identifier of the item</param>
+        /// <returns>A list of type segment</returns>
+        public List<Segment> SegmentSelectWithoutDOIByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemId)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectWithoutDOIByItemID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemId)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+
+                    return list;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Select the segments associated with the specified title
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="titleId">Identifier of the title</param>
+        /// <returns>A list of type segment</returns>
+        public List<Segment> SegmentSelectWithoutDOIByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int titleId)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectWithoutDOIByTitleID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleId)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+
+                    return list;
+                }
+            }
+        }
+
+        /// <summary>
         /// Select segment data for BibTex citations.
         /// </summary>
         /// <param name="sqlConnection">Sql connection or null.</param>
