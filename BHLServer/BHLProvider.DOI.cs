@@ -13,6 +13,11 @@ namespace MOBOT.BHL.Server
             return new DOIDAL().DOISelectSubmitted(null, null, minutesSinceSubmit);
         }
 
+        public List<DOI> DOISelectQueued()
+        {
+            return new DOIDAL().DOISelectQueued(null, null);
+        }
+
         public List<DOI> DOISelectValidForTitle(int titleID)
         {
             return new DOIDAL().DOISelectValidForTitle(null, null, titleID);
@@ -91,6 +96,11 @@ namespace MOBOT.BHL.Server
         public List<DOIStatus> DOIStatusSelectAll()
         {
             return new DOIDAL().DOIStatusSelectAll(null, null);
+        }
+
+        public List<DOIEntityType> DOIEntityTypeSelectAll()
+        {
+            return new DOIDAL().DOIEntityTypeSelectAll(null, null);
         }
 
         public string DOIGetFileContents(string batchId, string type)

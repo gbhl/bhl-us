@@ -1,0 +1,63 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.QueueAddConfirmViewModel
+@{
+    ViewBag.Title = "QueueAddConfirm";
+}
+
+<br />
+<span class="pageHeader">Confirm Add to DOI Queue</span>
+<hr />
+<br />
+
+@using (Html.BeginForm("QueueAddConfirm", "DOI", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div>
+        <p><h5>The following items will be added to the DOI assignment queue.  Please click the "Confirm" button to confirm.</h5></p>
+    </div>
+
+    if (Model.TitleIDs.Count > 0)
+    {
+        <p>&nbsp;</p>
+        <p>
+            @Html.Label("Titles")
+            <br />
+
+            @foreach (var title in Model.TitleIDs)
+            {
+            <div>@title</div>
+            }
+        </p>
+    }
+    if (Model.SegmentIDs.Count > 0)
+    {
+        <p>&nbsp;</p>
+        <p>
+            @Html.Label("Segments")
+
+            @foreach (var segment in Model.SegmentIDs)
+            {
+            <div>@segment</div>
+            }
+        </p>
+    }
+    <p>&nbsp;</p>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" id="confirmButton" class="btn btn-default" value="Confirm" />
+            <input type="button" id="backButton" class="btn" value="Back" onclick="doBack();" />
+            <input type="button" id="cancelButton" class="btn" value="Cancel" onclick="doCancel();" />
+        </div>
+    </div>
+}
+
+<script lang="javascript">
+    function doBack() {
+        window.location.href = "/doi/queueadd";
+    }
+
+    function doCancel() {
+        window.location.href = "/doi/queue";
+    }
+</script>

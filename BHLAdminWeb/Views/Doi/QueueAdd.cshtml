@@ -1,0 +1,98 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.QueueAddViewModel
+@{
+    ViewBag.Title = "QueueAdd";
+}
+
+<style>
+    .custom-control-label {
+        padding-top: 0px;
+        margin-bottom: 0px;
+        text-align: right;
+    }
+
+    .formField {
+        padding-top: 0px;
+    }
+
+    .validation-summary-errors {
+        color: red;
+    }
+</style>
+<div>
+    @Html.ActionLink("< Return to Queue", "Queue")
+</div>
+<br />
+<span class="pageHeader">Add to DOI Queue</span>
+<hr />
+<br />
+
+@using (Html.BeginForm("QueueAdd", "DOI", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div>
+        <p><h5>Items added to the DOI queue will be assigned a DOI within 24 hours.</h5></p>
+        <p>&nbsp;</p>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.EntityTypeID, new { @class = "custom-control-label col-md-2" })
+        <div class="formField col-md-10">
+            @Html.DropDownListFor(model => model.EntityTypeID, new System.Web.Mvc.SelectList(ViewBag.EntityTypes, "Value", "Text"), htmlAttributes: new { @class = "formField form-control", id = "dllEntityType", onchange = "showForms();" })
+        </div>
+    </div>
+    <div id="titleform" style="display:none">
+        <div class="form-group">
+            @Html.LabelFor(m => m.TitleIDs, new { @class = "col-md-2 custom-control-label" })
+            <div class="formField col-md-10">
+                @Html.TextAreaFor(model => model.TitleIDs, 10, 40, null)
+                <div>Enter Title IDs to be added to the queue, one ID per line.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="segmentform" style="display:none">
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" id="addButton" class="btn btn-default" value="Add" disabled />
+            <input type="button" id="cancelButton" class="btn" value="Cancel" onclick="doCancel();"/>
+        </div>
+    </div>
+
+}
+
+<script lang="javascript">
+
+    (function () {
+        showForms();    // set up the forms on page load
+    })();
+
+    function doCancel() {
+        window.location.href = "/doi/queue";
+    }
+
+    function showForms() {
+
+        var type = document.getElementById("dllEntityType").value;
+        var button = document.getElementById("addButton");
+
+        if (type === "10") {
+            document.getElementById("titleform").style.display = "block";
+            document.getElementById("segmentform").style.display = "none";
+            button.disabled = false;
+        }
+        else if (type === "40") {
+            document.getElementById("titleform").style.display = "none";
+            document.getElementById("segmentform").style.display = "block";
+            button.disabled = false;
+        }
+        else {
+            document.getElementById("titleform").style.display = "none";
+            document.getElementById("segmentform").style.display = "none";
+            button.disabled = true;
+        }
+    }
+</script>

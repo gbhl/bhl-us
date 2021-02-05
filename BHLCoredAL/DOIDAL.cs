@@ -25,6 +25,20 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public List<DOI> DOISelectQueued(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("DOISelectQueued", connection, transaction))
+            {
+                using (CustomSqlHelper<DOI> helper = new CustomSqlHelper<DOI>())
+                {
+                    List<DOI> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
         public List<DOI> DOISelectValidForTitle(SqlConnection sqlConnection,
         SqlTransaction sqlTransaction, int titleID)
         {
@@ -91,6 +105,21 @@ namespace MOBOT.BHL.DAL
                 using (CustomSqlHelper<DOIStatus> helper = new CustomSqlHelper<DOIStatus>())
                 {
                     List<DOIStatus> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        public List<DOIEntityType> DOIEntityTypeSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("DOIEntityTypeSelectAll",
+                connection, transaction))
+            {
+                using (CustomSqlHelper<DOIEntityType> helper = new CustomSqlHelper<DOIEntityType>())
+                {
+                    List<DOIEntityType> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

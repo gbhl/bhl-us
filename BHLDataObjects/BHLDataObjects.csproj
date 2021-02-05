@@ -96,6 +96,7 @@
     <Compile Include="Concrete\Book.cs" />
     <Compile Include="Concrete\Collection.cs" />
     <Compile Include="Concrete\Configuration.cs" />
+    <Compile Include="Concrete\DOIEntityType.cs" />
     <Compile Include="Concrete\EditHistory.cs" />
     <Compile Include="Concrete\IAHarvestItem.cs" />
     <Compile Include="Concrete\DOI.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="Generated\__Book.cs" />
     <Compile Include="Generated\__Collection.cs" />
     <Compile Include="Generated\__DOI.cs" />
+    <Compile Include="Generated\__DOIEntityType.cs" />
     <Compile Include="Generated\__DOIStatus.cs" />
     <Compile Include="Generated\__Identifier.cs" />
     <Compile Include="Generated\__ImportFile.cs" />
