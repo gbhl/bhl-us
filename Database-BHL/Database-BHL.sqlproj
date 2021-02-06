@@ -1120,6 +1120,8 @@
     <None Include="dbo\Stored Procedures\DOIInsertEligibleEntities.sql" />
     <None Include="dbo\Stored Procedures\DOISelectQueued.sql" />
     <None Include="dbo\Stored Procedures\DOIEntityTypeSelectAll.sql" />
+    <None Include="dbo\Stored Procedures\DOISelectByTypeAndID.sql" />
+    <None Include="dbo\Stored Procedures\DOIDeleteByTypeAndID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

@@ -12,11 +12,15 @@ namespace MOBOT.BHL.AdminWeb.Models
         // Allow Initialization with an instance of ApplicationUser:
         public EditDoiQueueViewModel(DOI doi)
         {
+            this.EntityTypeID = doi.DOIEntityTypeID;
             this.EntityType = doi.DOIEntityTypeName;
             this.EntityID = doi.EntityID;
             this.DateQueued = doi.StatusDate;
             this.AddedBy = doi.CreationUserName;
         }
+
+
+        public int EntityTypeID { get; set; }
 
         [Required]
         [Display(Name = "Entity Type")]
@@ -39,6 +43,12 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         [Display(Name = "Title IDs")]
         public string TitleIDs { get; set; }
+
+        [Display(Name = "Title ID")]
+        public string TitleID { get; set; }
+
+        [Display(Name = "ItemID")]
+        public string ItemID { get; set; }
     }
 
     public class QueueAddConfirmViewModel

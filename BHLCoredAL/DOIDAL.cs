@@ -95,6 +95,37 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public DOI DOISelectByTypeAndID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string doiEntityTypeName, int entityID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("DOISelectByTypeAndID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("DOIEntityTypeName", SqlDbType.NVarChar, 50, false, doiEntityTypeName),
+                CustomSqlHelper.CreateInputParameter("EntityID", SqlDbType.Int, null, false, entityID)))
+            {
+                using (CustomSqlHelper<DOI> helper = new CustomSqlHelper<DOI>())
+                {
+                    List<DOI> list = helper.ExecuteReader(command);
+                    if (list.Count > 0)
+                        return list[0];
+                    else
+                        return null;
+                }
+            }
+        }
+
+        public void DOIDeleteByTypeAndID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int doiEntityTypeID, int entityID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("DOIDeleteByTypeAndID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("DOIEntityTypeID", SqlDbType.Int, null, false, doiEntityTypeID),
+                CustomSqlHelper.CreateInputParameter("EntityID", SqlDbType.Int, null, false, entityID)))
+            {
+                command.ExecuteNonQuery();
+            }
+        }
+
         public List<DOIStatus> DOIStatusSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);

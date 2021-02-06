@@ -98,6 +98,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         }
 
         // GET: /QueueAdd
+        [Authorize(Roles = "BHL.Admin.PortalEditor, BHL.Admin.Admin, BHL.Admin.SysAdmin")]
         public ActionResult QueueAdd()
         {
 
@@ -109,6 +110,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         // POST: /QueueAdd
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "BHL.Admin.PortalEditor, BHL.Admin.Admin, BHL.Admin.SysAdmin")]
         public async Task<ActionResult> QueueAdd(QueueAddViewModel model)
         {
             if (ModelState.IsValid)
@@ -154,6 +156,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         }
 
         // GET: /QueueAddConfirm
+        [Authorize(Roles = "BHL.Admin.PortalEditor, BHL.Admin.Admin, BHL.Admin.SysAdmin")]
         public ActionResult QueueAddConfirm()
         {
             List<int> titleIDs = (List<int>)TempData["Titles"];
@@ -163,6 +166,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "BHL.Admin.PortalEditor, BHL.Admin.Admin, BHL.Admin.SysAdmin")]
         public async Task<ActionResult> QueueAddConfirm(QueueAddConfirmViewModel model)
         {
             int userId = Helper.GetCurrentUserUID(Request);
@@ -184,6 +188,29 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             }
 
             return RedirectToAction("Queue", "Doi");
+        }
+
+        [Authorize(Roles = "BHL.Admin.PortalEditor, BHL.Admin.Admin, BHL.Admin.SysAdmin")]
+        public ActionResult QueueDelete(string id = null, string type = null)
+        {
+            //string type = "0";
+
+            DOI doi = new BHLProvider().DOISelectByTypeAndID(type, Convert.ToInt32(id));
+            var model = new EditDoiQueueViewModel(doi);
+            if (doi == null)
+            {
+                return HttpNotFound();
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "BHL.Admin.PortalEditor, BHL.Admin.Admin, BHL.Admin.SysAdmin")]
+        public ActionResult QueueDelete(EditDoiQueueViewModel model)
+        {
+            new BHLProvider().DOIDeleteByTypeAndID(model.EntityTypeID, model.EntityID);
+            return RedirectToAction("Queue");
         }
 
         public IEnumerable<SelectListItem> GetDOIEntityTypes()

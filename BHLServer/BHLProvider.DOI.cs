@@ -50,6 +50,16 @@ namespace MOBOT.BHL.Server
             return new DOIDAL().DOISelectByStatus(null, null, doiStatusId, numRows, pageNum, sortColumn, sortOrder);
         }
 
+        public DOI DOISelectByTypeAndID(string doiEntityTypeName, int entityID)
+        {
+            return new DOIDAL().DOISelectByTypeAndID(null, null, doiEntityTypeName, entityID);
+        }
+
+        public void DOIDeleteByTypeAndID(int doiEntityTypeID, int entityID)
+        {
+            new DOIDAL().DOIDeleteByTypeAndID(null, null, doiEntityTypeID, entityID);
+        }
+
         public DOI DOIUpdateStatus(int doiID, int doiStatusId, int? userId)
         {
             return this.DOIUpdateStatus(doiID, doiStatusId, string.Empty, null, null, null, userId);
