@@ -7,21 +7,25 @@ AS
 
 SET NOCOUNT ON
 
-SELECT DISTINCT 
-		ins.InstitutionCode,
-		ins.InstitutionName,
-		ins.Note,
-		ISNULL(ins.InstitutionUrl, '') AS InstitutionUrl,
-		ins.BHLMemberLibrary
+SELECT	ins.InstitutionCode
+INTO	#tmpInstitution
 FROM	dbo.Institution ins WITH (NOLOCK)
 		INNER JOIN dbo.ItemInstitution ii WITH (NOLOCK) ON ins.InstitutionCode = ii.InstitutionCode
 		INNER JOIN dbo.Item it WITH (NOLOCK) ON ii.ItemID = it.ItemID
+		INNER JOIN dbo.Book b WITH (NOLOCK) ON it.ItemID = b.ItemID
 		INNER JOIN dbo.InstitutionRole r WITH (NOLOCK) ON ii.InstitutionRoleID = r.InstitutionRoleID
 WHERE	it.ItemStatusID = 40
 AND		((ins.BHLMemberLibrary = 1 AND @OnlyMemberLibraries = 1) OR	@OnlyMemberLibraries = 0)
 AND		(r.InstitutionRoleName = @InstitutionRoleName OR @InstitutionRoleName IS NULL)
-ORDER BY
-		ins.InstitutionName
+
+SELECT	InstitutionCode,
+		InstitutionName,
+		Note,
+		ISNULL(InstitutionUrl, '') AS InstitutionUrl,
+		BHLMemberLibrary
+FROM	dbo.Institution
+WHERE	InstitutionCode IN (SELECT DISTINCT InstitutionCode FROM #tmpInstitution)
+ORDER BY InstitutionName
 
 IF @@ERROR <> 0
 BEGIN
