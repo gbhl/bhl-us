@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "DOI Queue";
 }
-
 <a href="/">&lt; Return to Dashboard</a><br />
 <br />
 <div>
@@ -14,13 +13,14 @@
 @using (@Html.BeginForm())
 {
     @Html.Hidden("SortBy", (string)ViewBag.SortBy)
-    <div style="float:left; padding-bottom:5px;">
+    <div style="padding-bottom:5px;">
         @Html.ActionLink("Add to Queue", "QueueAdd")
     </div>
 }
 
-<table class="table">
+<table class="table-condensed table-bordered">
     <tr>
+        <th></th>
         <th>
             @Html.ActionLink("Type", "Queue", new { sort = ViewBag.ETypeSort })
         </th>
@@ -33,12 +33,14 @@
         <th>
             @Html.ActionLink("Queued Date/Time", "Queue", new { sort = ViewBag.DateQueuedSort })
         </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
+            <td>
+                @Html.ActionLink("Delete", "QueueDelete", new { type = item.EntityType, id = item.EntityID})
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EntityType)
             </td>
@@ -50,9 +52,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateQueued)
-            </td>
-            <td>
-                @Html.ActionLink("Delete", "QueueDelete", new { type = item.EntityType, id = item.EntityID})
             </td>
         </tr>
     }

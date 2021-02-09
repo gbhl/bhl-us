@@ -1136,6 +1136,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectByInstitutionAndSta
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectByInstitutionAndStartsWithout.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectByItemID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectByStatusID.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectByTitleID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectByTitleLike.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectByTitleNotLike.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectForAuthorID.sql"

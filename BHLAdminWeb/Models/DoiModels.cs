@@ -49,6 +49,9 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         [Display(Name = "ItemID")]
         public string ItemID { get; set; }
+
+        [Display(Name = "Segment IDs")]
+        public string SegmentIDs { get; set; }
     }
 
     public class QueueAddConfirmViewModel

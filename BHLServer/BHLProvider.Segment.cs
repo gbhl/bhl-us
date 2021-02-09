@@ -49,6 +49,11 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectByItemID(null, null, itemID, 0);
         }
 
+        public List<Segment> SegmentSelectByTitleID(int titleID)
+        {
+            return new SegmentDAL().SegmentSelectByTitleID(null, null, titleID);
+        }
+
         public List<TitleBibTeX> SegmentSelectAllBibTeXCitations()
         {
             return new SegmentDAL().SegmentSelectAllBibTeXCitations(null, null);

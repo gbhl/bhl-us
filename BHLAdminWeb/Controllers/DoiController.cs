@@ -134,11 +134,47 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     }
                     else
                     {
-                        // TODO: Handle segment adds
+                        switch (Request.Form["chkOption"])
+                        {
+                            case "Title":
+                                if (ValidateTitle(model.TitleID, false))
+                                {
+                                    List<Segment> segments = new BHLProvider().SegmentSelectByTitleID(Convert.ToInt32(model.TitleID));
+                                    foreach(Segment segment in segments)
+                                    {
+                                        segmentIDs.Add(segment.SegmentID);
+                                    }
+                                }
+                                break;
+                            case "Item":
+                                if (ValidateItem(model.ItemID))
+                                {
+                                    List<Segment> segments = new BHLProvider().SegmentSelectByItemID(Convert.ToInt32(model.ItemID));
+                                    foreach(Segment segment in segments)
+                                    {
+                                        segmentIDs.Add(segment.SegmentID);
+                                    }
+                                }
+                                break;
+                            case "Segment":
+                                if (string.IsNullOrWhiteSpace(model.SegmentIDs)) throw new Exception("One or more Segment IDs are required.");
+
+                                string[] modelIDs = model.SegmentIDs.Split('\n');
+
+                                List<int> ids = new List<int>();
+                                foreach (string segmentId in modelIDs)
+                                {
+                                    if (ValidateSegment(segmentId)) segmentIDs.Add(Convert.ToInt32(segmentId));
+                                }
+
+                                break;
+                        }
                     }
 
                     if (ModelState.IsValid)
                     {
+                        titleIDs.Sort();
+                        segmentIDs.Sort();
                         TempData["Titles"] = titleIDs;
                         TempData["Segments"] = segmentIDs;
                         return RedirectToAction("QueueAddConfirm", "Doi");
@@ -229,7 +265,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             return new SelectList(doiEntityTypes, "Value", "Text");
         }
 
-        private bool ValidateTitle(string titleID)
+        private bool ValidateTitle(string titleID, bool validateDOI = true)
         {
             bool isValid = true;
             int titleInt;
@@ -258,7 +294,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     isValid = false;
                 }
 
-                if (isValid)
+                if (isValid && validateDOI)
                 {
                     // Make sure a DOI has not already been assigned to this title.
                     // NOTE: At some point will be allowed, but for now we do not handle resubmission of metadata for existing DOIs.
@@ -268,6 +304,77 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                         foreach (DOI doi in dois) AddErrors(string.Format("DOI {0} exists for Title {1}", doi.DOIName, doi.EntityID));
                         isValid = false;
                     }
+                }
+            }
+
+            return isValid;
+        }
+
+        private bool ValidateItem(string itemID)
+        {
+            bool isValid = true;
+            int itemInt;
+
+            // Make sure ID is numeric
+            if (!Int32.TryParse(itemID, out itemInt))
+            {
+                AddErrors(string.Format("Item ID {0} must be numeric", itemID));
+                isValid = false;
+            }
+
+            if (isValid)
+            {
+                BHLProvider provider = new BHLProvider();
+
+                // Make sure ID points to a published BHL item
+                Book book = provider.BookSelectAuto(itemInt);
+                if (book == null)
+                {
+                    AddErrors(string.Format("{0} is not a valid BHL Item ID", itemID));
+                    isValid = false;
+                }
+
+                if (isValid)
+                {
+                    Item item = provider.ItemSelectAuto(book.ItemID);
+                    if (item.ItemStatusID != 40)
+                    {
+                        AddErrors(string.Format("{0} is not a published BHL Item", itemID));
+                        isValid = false;
+                    }
+                }
+            }
+
+            return isValid;
+        }
+
+        private bool ValidateSegment(string segmentID)
+        {
+            bool isValid = true;
+            int segmentInt;
+
+            // Make sure ID is numeric
+            if (!Int32.TryParse(segmentID, out segmentInt))
+            {
+                AddErrors(string.Format("Segment ID {0} must be numeric", segmentID));
+                isValid = false;
+            }
+
+            if (isValid)
+            {
+                BHLProvider provider = new BHLProvider();
+
+                // Make sure ID points to a published BHL segment
+                Segment segment = provider.SegmentSelectForSegmentID(segmentInt);
+                if (segment == null)
+                {
+                    AddErrors(string.Format("{0} is not a valid BHL Segment ID", segmentID));
+                    isValid = false;
+                }
+                else if (segment.SegmentStatusID != 40 && segment.SegmentStatusID != 30)
+                {
+                    AddErrors(string.Format("{0} is not a published BHL Segment", segmentID));
+                    isValid = false;
                 }
             }
 

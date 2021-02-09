@@ -312,6 +312,31 @@ namespace MOBOT.BHL.DAL
         }
 
         /// <summary>
+        /// Select the segments associated with the specified title
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="titleId">Identifier of the title</param>
+        /// <returns>A list of type segment</returns>
+        public List<Segment> SegmentSelectByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int titleId)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByTitleID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleId)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+
+                    return list;
+                }
+            }
+        }
+
+        /// <summary>
         /// Select segment data for BibTex citations.
         /// </summary>
         /// <param name="sqlConnection">Sql connection or null.</param>

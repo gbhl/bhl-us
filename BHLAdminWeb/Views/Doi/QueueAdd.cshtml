@@ -52,7 +52,36 @@
     </div>
 
     <div id="segmentform" style="display:none">
-
+        <div class="form-group">
+            <div class="formField col-md-2" style="text-align:right">
+                @Html.RadioButton("chkOption", "Title", true, new { @class = "custom-control-label", id = "rdoTitle", onclick = "enableOption(this);" })
+                @Html.LabelFor(m => m.TitleID, new { @class = "custom-control-label", @for = "rdoTitle" })
+            </div>
+            <div class="formField col-md-10">
+                @Html.TextBoxFor(model => model.TitleID)
+                <div>All Segment IDs related to the specified Title will be added to the queue.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="formField col-md-2" style="text-align:right">
+                @Html.RadioButton("chkOption", "Item", false, new { @class = "custom-control-label", id = "rdoItem", onclick = "enableOption(this);" })
+                @Html.LabelFor(m => m.ItemID, new { @class = "custom-control-label", @for = "rdoItem" })
+            </div>
+            <div class="formField col-md-10">
+                @Html.TextBoxFor(model => model.ItemID, new { disabled = "disabled" })
+                <div>All Segment IDs related to the specified Item will be added to the queue.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="formField col-md-2" style="text-align:right">
+                @Html.RadioButton("chkOption", "Segment", false, new { @class = "custom-control-label", id = "rdoSegment", onclick = "enableOption(this);" })
+                @Html.LabelFor(m => m.SegmentIDs, new { @class = "custom-control-label", @for = "rdoSegment" })
+            </div>
+            <div class="formField col-md-10">
+                @Html.TextAreaFor(model => model.SegmentIDs, 10, 40, new { disabled = "disabled" })
+                <div>Enter Segment IDs to be added to the queue, one ID per line.</div>
+            </div>
+        </div>
     </div>
 
     <div class="form-group">
@@ -93,6 +122,30 @@
             document.getElementById("titleform").style.display = "none";
             document.getElementById("segmentform").style.display = "none";
             button.disabled = true;
+        }
+    }
+
+    function enableOption(selectedOption) {
+        var txtTitle = document.getElementById("TitleID");
+        var txtItem = document.getElementById("ItemID");
+        var txtSegment = document.getElementById("SegmentIDs");
+
+        switch (selectedOption.value) {
+            case "Title":
+                txtTitle.disabled = false;
+                txtItem.disabled = true; txtItem.value = "";
+                txtSegment.disabled = true; txtSegment.value = "";
+                break;
+            case "Item":
+                txtTitle.disabled = true; txtTitle.value = "";
+                txtItem.disabled = false;
+                txtSegment.disabled = true; txtSegment.value = "";
+                break;
+            case "Segment":
+                txtTitle.disabled = true; txtTitle.value = "";
+                txtItem.disabled = true; txtItem.value = "";
+                txtSegment.disabled = false;
+                break;
         }
     }
 </script>
