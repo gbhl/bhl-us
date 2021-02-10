@@ -49,7 +49,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         [Display(Name = "Title ID")]
         public string TitleID { get; set; }
 
-        [Display(Name = "ItemID")]
+        [Display(Name = "Item ID")]
         public string ItemID { get; set; }
 
         [Display(Name = "Segment IDs")]
