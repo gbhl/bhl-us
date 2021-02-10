@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[SegmentSelectByTitleID]
+﻿CREATE PROCEDURE [dbo].[SegmentSelectWithoutDOIByTitleID]
 
 @TitleID int
 
@@ -7,6 +7,9 @@ AS
 BEGIN
 
 SET NOCOUNT ON
+
+DECLARE @DOIEntityTypeSegmentID int
+SELECT @DOIEntityTypeSegmentID = DOIEntityTypeID FROM dbo.DOIEntityType WHERE DOIEntityTypeName = 'Segment'
 
 SELECT	s.SegmentID,
 		s.BookID,
@@ -60,8 +63,10 @@ FROM	dbo.vwSegment s
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.ItemStatus st ON s.SegmentStatusID = st.ItemStatusID
 		LEFT JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
+		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = @DOIEntityTypeSegmentID
 WHERE	it.TitleID = @TitleID
 AND		s.SegmentStatusID IN (30, 40)  -- New, Published
+AND		d.DOIID IS NULL	-- Does not have a DOI
 ORDER BY
 		it.TitleID
 

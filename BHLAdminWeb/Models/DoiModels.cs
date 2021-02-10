@@ -38,6 +38,8 @@ namespace MOBOT.BHL.AdminWeb.Models
 
     public class QueueAddViewModel
     {
+        public string SegmentOption { get; set; } = "Segment";
+
         [Display(Name = "Type")]
         public int EntityTypeID { get; set; }
 

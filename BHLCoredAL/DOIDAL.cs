@@ -155,5 +155,29 @@ namespace MOBOT.BHL.DAL
                 }
             }
         }
+
+        public void DOIInsert(
+            SqlConnection sqlConnection, SqlTransaction sqlTransaction, int dOIEntityTypeID, int entityID, int dOIStatusID, 
+            string dOIBatchID, string dOIName, string statusMessage, short isValid, int creationUserID, int lastModifiedUserID,
+            short allowDuplicate)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.DOIInsert", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("DOIEntityTypeID", SqlDbType.Int, null, false, dOIEntityTypeID),
+                    CustomSqlHelper.CreateInputParameter("EntityID", SqlDbType.Int, null, false, entityID),
+                    CustomSqlHelper.CreateInputParameter("DOIStatusID", SqlDbType.Int, null, false, dOIStatusID),
+                    CustomSqlHelper.CreateInputParameter("DOIBatchID", SqlDbType.NVarChar, 50, false, dOIBatchID),
+                    CustomSqlHelper.CreateInputParameter("DOIName", SqlDbType.NVarChar, 50, false, dOIName),
+                    CustomSqlHelper.CreateInputParameter("StatusMessage", SqlDbType.NVarChar, 1000, false, statusMessage),
+                    CustomSqlHelper.CreateInputParameter("IsValid", SqlDbType.SmallInt, null, false, isValid),
+                    CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, false, creationUserID),
+                    CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
+                    CustomSqlHelper.CreateInputParameter("AllowDuplicate", SqlDbType.SmallInt, null, false, allowDuplicate)))
+            {
+                command.ExecuteNonQuery();
+            }
+        }
     }
 }

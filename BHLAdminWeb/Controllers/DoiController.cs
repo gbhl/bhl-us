@@ -12,9 +12,11 @@ namespace MOBOT.BHL.AdminWeb.Controllers
     [Authorize]
     public class DoiController : Controller
     {
-        private int _doiTypeTitle = 10;
-        private int _doiTypeSegment = 40;
-        private int _doiStatusQueued = 30;
+        private int _doiTypeTitleID = 10;
+        private string _doiTypeTitleName = "Title";
+        private int _doiTypeSegmentID = 40;
+        private string _doiTypeSegmentName = "Segment";
+        private int _doiStatusQueuedID = 30;
 
         public DoiController()
         {
@@ -103,7 +105,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         {
 
             ViewBag.EntityTypes = GetDOIEntityTypes();
-            return View();
+            return View(new QueueAddViewModel());
         }
 
         //
@@ -120,7 +122,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     List<int> titleIDs = new List<int>();
                     List<int> segmentIDs = new List<int>();
 
-                    if (model.EntityTypeID == _doiTypeTitle)
+                    if (model.EntityTypeID == _doiTypeTitleID)
                     {
                         if (string.IsNullOrWhiteSpace(model.TitleIDs)) throw new Exception("One or more Title IDs are required.");
 
@@ -134,12 +136,12 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     }
                     else
                     {
-                        switch (Request.Form["chkOption"])
+                        switch (model.SegmentOption)//Request.Form["chkOption"])
                         {
                             case "Title":
                                 if (ValidateTitle(model.TitleID, false))
                                 {
-                                    List<Segment> segments = new BHLProvider().SegmentSelectByTitleID(Convert.ToInt32(model.TitleID));
+                                    List<Segment> segments = new BHLProvider().SegmentSelectWithoutDOIByTitleID(Convert.ToInt32(model.TitleID));
                                     foreach(Segment segment in segments)
                                     {
                                         segmentIDs.Add(segment.SegmentID);
@@ -149,7 +151,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                             case "Item":
                                 if (ValidateItem(model.ItemID))
                                 {
-                                    List<Segment> segments = new BHLProvider().SegmentSelectByItemID(Convert.ToInt32(model.ItemID));
+                                    List<Segment> segments = new BHLProvider().SegmentSelectWithoutDOIByItemID(Convert.ToInt32(model.ItemID));
                                     foreach(Segment segment in segments)
                                     {
                                         segmentIDs.Add(segment.SegmentID);
@@ -211,7 +213,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             {
                 foreach(int titleID in model.TitleIDs)
                 {
-                    new BHLProvider().DOInsertAuto(_doiTypeTitle, titleID, _doiStatusQueued, string.Empty, string.Empty, string.Empty, 0, userId);
+                    new BHLProvider().DOIInsert(_doiTypeTitleID, titleID, _doiStatusQueuedID, string.Empty, string.Empty, string.Empty, 0, userId, 0);
                 }
             }
 
@@ -219,7 +221,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             {
                 foreach (int segmentID in model.SegmentIDs)
                 {
-                    new BHLProvider().DOInsertAuto(_doiTypeSegment, segmentID, _doiStatusQueued, string.Empty, string.Empty, string.Empty, 0, userId);
+                    new BHLProvider().DOIInsert(_doiTypeSegmentID, segmentID, _doiStatusQueuedID, string.Empty, string.Empty, string.Empty, 0, userId, 0);
                 }
             }
 
@@ -252,7 +254,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public IEnumerable<SelectListItem> GetDOIEntityTypes()
         {
             List<SelectListItem> doiEntityTypes = new BHLProvider().DOIEntityTypeSelectAll()
-                .Where(n => n.DOIEntityTypeID == _doiTypeTitle || n.DOIEntityTypeID == _doiTypeSegment)
+                .Where(n => n.DOIEntityTypeID == _doiTypeTitleID || n.DOIEntityTypeID == _doiTypeSegmentID)
                 .OrderBy(n => n.DOIEntityTypeName)
                 .Select(n => new SelectListItem
                 {
@@ -296,12 +298,12 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
                 if (isValid && validateDOI)
                 {
-                    // Make sure a DOI has not already been assigned to this title.
+                    // Make sure an entry in the DOI table does not already exist for this title.
                     // NOTE: At some point will be allowed, but for now we do not handle resubmission of metadata for existing DOIs.
-                    List<DOI> dois = provider.DOISelectValidForTitle(titleInt);
-                    if (dois.Count > 0)
+                    DOI doi = provider.DOISelectByTypeAndID(_doiTypeTitleName, titleInt);
+                    if (doi != null)
                     {
-                        foreach (DOI doi in dois) AddErrors(string.Format("DOI {0} exists for Title {1}", doi.DOIName, doi.EntityID));
+                        AddErrors(string.Format("DOI {0} exists for Title {1}", doi.DOIName, doi.EntityID));
                         isValid = false;
                     }
                 }
@@ -375,6 +377,18 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 {
                     AddErrors(string.Format("{0} is not a published BHL Segment", segmentID));
                     isValid = false;
+                }
+
+                if (isValid)
+                {
+                    // Make sure an entry in the DOI table does not already exist for this segmemt.
+                    // NOTE: At some point will be allowed, but for now we do not handle resubmission of metadata for existing DOIs.
+                    DOI doi = provider.DOISelectByTypeAndID(_doiTypeSegmentName, segmentInt);
+                    if (doi != null)
+                    {
+                        AddErrors(string.Format("DOI {0} exists for Segment {1}", doi.DOIName, doi.EntityID));
+                        isValid = false;
+                    }
                 }
             }
 

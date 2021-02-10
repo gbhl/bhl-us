@@ -38,6 +38,13 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectWithoutSubmittedDOI(null, null, numberToReturn);
         }
 
+        public void DOIInsert(int doiEntityTypeId, int entityId, int doiStatusId,
+            string doiBatchId, string doiName, string message, short isValid, int userId, short allowDuplicate)
+        {
+            new DOIDAL().DOIInsert(null, null,
+                doiEntityTypeId, entityId, doiStatusId, doiBatchId, doiName, message, isValid, userId, userId, allowDuplicate);
+        }
+
         public DOI DOInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, 
             string doiBatchId, string doiName, string message, short isValid, int userId)
         {
