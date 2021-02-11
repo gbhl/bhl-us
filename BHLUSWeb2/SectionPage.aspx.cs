@@ -65,9 +65,6 @@ namespace MOBOT.BHL.Web2
 
                 COinS.SegmentID = SegmentID;
                 
-                // Set up the Mendeley share control
-                mendeley.SegmentID = SegmentID;
-
                 // Set the Schema.org itemtype
                 switch (BhlSegment.GenreName)
                 {

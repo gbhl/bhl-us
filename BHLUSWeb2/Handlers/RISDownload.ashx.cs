@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using MOBOT.BHL.Server;
+using System;
 using System.Web;
 
 namespace MOBOT.BHL.Web2
@@ -14,9 +13,13 @@ namespace MOBOT.BHL.Web2
         {
             int id;
             string idString = context.Request.RequestContext.RouteData.Values["id"] as string;
-            string idType = "title";
+            string idType = "item";
 
-            idString = context.Request.RequestContext.RouteData.Values["id"] as string;
+            if (string.IsNullOrEmpty(idString))
+            {
+                idString = context.Request.QueryString["tid"] as string;
+                idType = "title";
+            }
 
             if (string.IsNullOrEmpty(idString))
             {
@@ -32,13 +35,17 @@ namespace MOBOT.BHL.Web2
                 try
                 {
                     filename += idType + idString;
-                    if (idType == "title")
+                    switch (idType)
                     {
-                        response = new MOBOT.BHL.Server.BHLProvider().ItemSelectRISCitationsForTitleID(id);
-                    }
-                    else
-                    {
-                        response = new MOBOT.BHL.Server.BHLProvider().SegmentGetRISCitationStringForSegmentID(id);
+                        case "title":
+                            response = new BHLProvider().ItemSelectRISCitationsForTitleID(id);
+                            break;
+                        case "part":
+                            response = new BHLProvider().SegmentGetRISCitationStringForSegmentID(id);
+                            break;
+                        case "item":
+                            response = new BHLProvider().BookSelectRISCitationStringForBookID(id);
+                            break;
                     }
                 }
                 catch

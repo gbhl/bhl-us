@@ -340,9 +340,11 @@
     <Content Include="images\BHLAU Images\image_not_found.jpg" />
     <Content Include="images\BHLAU Images\image_resources.jpg" />
     <Content Include="images\BHLAU Images\large_icon_all.png" />
+    <Content Include="images\BHLAU Images\large_icon_bibtex.png" />
     <Content Include="images\BHLAU Images\large_icon_jp2.png" />
     <Content Include="images\BHLAU Images\large_icon_ocr.png" />
     <Content Include="images\BHLAU Images\large_icon_pdf.png" />
+    <Content Include="images\BHLAU Images\large_icon_ris.png" />
     <Content Include="images\BHLAU Images\left_edges.png" />
     <Content Include="images\BHLAU Images\logo_ala.png" />
     <Content Include="images\BHLAU Images\logo_mv.png" />
@@ -402,9 +404,12 @@
     <Content Include="images\home_shadow_search.png" />
     <Content Include="images\howToGraphic.png" />
     <Content Include="images\icon_all.png" />
+    <Content Include="images\icon_bibtex.png" />
     <Content Include="images\icon_jp2.png" />
+    <Content Include="images\icon_mods.png" />
     <Content Include="images\icon_ocr.png" />
     <Content Include="images\icon_pdf.png" />
+    <Content Include="images\icon_ris.png" />
     <Content Include="images\image_about.jpg" />
     <Content Include="images\image_contact.jpg" />
     <Content Include="images\image_general.jpg" />

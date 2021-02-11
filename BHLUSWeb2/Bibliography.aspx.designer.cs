@@ -7,20 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.Web2 {
-    
-    
-    public partial class Bibliography {
-        
-        /// <summary>
-        /// mendeley control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::MOBOT.BHL.Web2.controls.MendeleyShareControl mendeley;
-        
+namespace MOBOT.BHL.Web2
+{
+
+
+    public partial class Bibliography
+    {
+
         /// <summary>
         /// COinS control.
         /// </summary>
@@ -29,7 +22,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.Web2.COinSControl COinS;
-        
+
         /// <summary>
         /// litMods control.
         /// </summary>
@@ -38,7 +31,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litMods;
-        
+
         /// <summary>
         /// litBibTeX control.
         /// </summary>
@@ -47,7 +40,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litBibTeX;
-        
+
         /// <summary>
         /// litRIS control.
         /// </summary>

@@ -1118,6 +1118,8 @@
     <None Include="dbo\Stored Procedures\ExportSegmentIdentifier.sql" />
     <None Include="dbo\Stored Procedures\ExportAuthorIdentifier.sql" />
     <None Include="dbo\Stored Procedures\DOIInsertEligibleEntities.sql" />
+    <None Include="dbo\Stored Procedures\BookBibTeXSelectForBookID.sql" />
+    <None Include="dbo\Stored Procedures\BookSelectRISCitationsForBookID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

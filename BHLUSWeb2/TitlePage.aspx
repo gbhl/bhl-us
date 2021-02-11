@@ -1,12 +1,10 @@
 ﻿<%@ Page Title="Biodiversity Heritage Library" Language="C#" MasterPageFile="~/Book.Master" AutoEventWireup="true" CodeBehind="TitlePage.aspx.cs" Inherits="MOBOT.BHL.Web2.TitlePage" %>
 <%@ Import Namespace="MOBOT.BHL.DataObjects" %>
 <%@ Register TagPrefix="uc" TagName="COinS" Src="~/controls/COinSControl.ascx" %>
-<%@ Register TagPrefix="uc" TagName="Mendeley" Src="~/controls/MendeleyShareControl.ascx" %>
 <asp:content id="mainContent" contentplaceholderid="mainContentPlaceHolder" runat="server">
     <div id="page-title">
-        <div id="volumebar"  style="float:right;" class="js-invisible no-js-hide">
+        <div id="volumebar"  style="float:right;" classcss="js-invisible no-js-hide">
             <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>" title="FAQ" class="report"><img alt="FAQ" src="/images/rpterror.png" /></a>
-            <uc:Mendeley id="mendeley" runat="server" />
             <% if (!string.IsNullOrWhiteSpace(PageSummary.DownloadUrl)) { %>
                 <div class="buttondrop download">Download Contents<div class="play"></div></div> 
                 <div class="downloadcontents">
@@ -14,6 +12,7 @@
                     <div><a href="#" class="selectpages">Select pages to download</a></div>
                     <div><a href="#" class="selectpart">Download Part</a></div>
                     <div><a href="#" class="downloadbook">Download Book</a></div>
+                    <div><a href="#" class="downloadcitation">Download Citation</a></div>
                     <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PageSummary.BarCode) %>" rel="noopener noreferrer" target="_blank">View at Internet Archive</a></div>
                 </div>
                 <div class="jqmWindow" id="download-dialog">
@@ -26,6 +25,23 @@
                     <a class="large-icon all" href="<%= PageSummary.DownloadUrl + PageSummary.BarCode %>">Download All</a>
                     <a class="large-icon jp2" href="/itemimages/<%: PageSummary.BookID %>">Download JPEG 2000</a>
                     <a class="large-icon ocr" download="<%: PageSummary.BookID %>.txt" href="/itemtext/<%: PageSummary.BookID %>">Download Text</a>                
+                </div>
+                <div class="jqmWindow" id="dlcitation-dialog">
+                    <div class="head">
+                        <a class="jqmClose" title="Close Dialog">Close Dialog</a>
+                        <h2>Download citation</h2>
+                        <hr />
+                    </div>
+                    <div class="bookcitationlinks">
+                        <div class="bookcitelinklabel">BOOK</div>
+                        <a class="large-icon ris" title="download ris" download="bhlitem<%: PageSummary.BookID %>.ris" href="/risdownload/<%: PageSummary.BookID %>">Download RIS</a>
+                        <a class="large-icon bibtex" title="download bibtex" download="bhlitem<%= PageSummary.BookID %>.bib" href="/bibtexdownload/<%= PageSummary.BookID %>">Download BibTeX</a>
+                    </div>
+                    <div class="partcitationlinks">
+                        <div class="partcitelinklabel">CURRENT ARTICLE</div>
+                        <a class="large-icon ris" title="download ris" download="bhlpart<%: PageSummary.BookID %>.ris" href="/handlers/risdownload.ashx?pid=<%: PageSummary.BookID %>">Download RIS</a>
+                        <a class="large-icon bibtex" title="download bibtex" download="bhlpart<%= PageSummary.BookID %>.bib" href="/handlers/bibtexdownload.ashx?pid=<%= PageSummary.BookID %>">Download BibTeX</a>
+                    </div>
                 </div>
             <% } %>
 
@@ -408,7 +424,7 @@
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder"
     runat="server">
     <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=4" />
-    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=7" />
+    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=8" />
     <link rel="stylesheet" type="text/css" href="/css/nspop.css?v=1" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
@@ -774,6 +790,10 @@
         $('#download-dialog').jqm({
             onHide: onHideAction,
             trigger: '.downloadbook'
+        });
+        $("#dlcitation-dialog").jqm({
+            onHide: onHideAction,
+            trigger: '.downloadcitation'
         });
         $('#review-dialog').jqm({
             toTop: true,
@@ -1176,27 +1196,20 @@
             }
             highlightSeg(segTitle);
 
-            // Update the Mendeley link
-            if (pages[index].SegmentID != null)
-            {
-                if (updateMendeleyLink !== undefined) {
-                    updateMendeleyLink('part', pages[index].SegmentID);
-                }
-            }
-            else
-            {
-                if (updateMendeleyLink !== undefined) {
-                    updateMendeleyLink('item', '<%: CurrentBookID %>');
-                }
-            }
-
-            // Update the Download Part menu item
+            // Update the Download Part and Download Citation menu items
             if (pages[index].SegmentID != null) {
                 $(".selectpart").html("Download " + pages[index].GenreName);
                 $(".selectpart").show();
+                $(".partcitelinklabel").html("CURRENT " + pages[index].GenreName.toUpperCase());
+                $(".partcitationlinks a.large-icon.ris").attr("href", "/handlers/risdownload.ashx?pid=" + pages[index].SegmentID);
+                $(".partcitationlinks a.large-icon.ris").attr("download", "bhlpart" + pages[index].SegmentID + ".ris");
+                $(".partcitationlinks a.large-icon.bibtex").attr("href", "/handlers/bibtexdownload.ashx?pid=" + pages[index].SegmentID);
+                $(".partcitationlinks a.large-icon.bibtex").attr("download", "bhlpart" + pages[index].SegmentID + ".bib");
+                $(".partcitationlinks").show();
             }
             else {
                 $(".selectpart").hide();
+                $(".partcitationlinks").hide();
             }
 
             // Update the Altmetric badge

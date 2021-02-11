@@ -99,9 +99,6 @@ namespace MOBOT.BHL.Web2
             // Set the title for the COinS
             COinS.TitleID = titleId;
 
-            // Set up the Mendeley share control
-            mendeley.TitleID = titleId;
-
             // Assign Authors
             Authors = new List<Author>();
             AuthorsDetail = new List<Author>();

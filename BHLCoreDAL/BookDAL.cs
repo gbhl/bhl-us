@@ -439,6 +439,55 @@ namespace MOBOT.BHL.DAL
 				}
 			}
 		}
+
+		/// <summary>
+		/// Select data for all item RIS citations for the specified Book.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <returns>List of type RISCitation.</returns>
+		public List<RISCitation> BookSelectRISCitationsForItemID(
+						SqlConnection sqlConnection,
+						SqlTransaction sqlTransaction,
+						int bookID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			SqlTransaction transaction = sqlTransaction;
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("BookSelectRISCitationsForBookID", connection, transaction,
+				CustomSqlHelper.CreateInputParameter("BookID", SqlDbType.Int, null, false, bookID)))
+			{
+				using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
+				{
+					List<RISCitation> list = helper.ExecuteReader(command);
+					return (list);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Select data for BibTex references for the specified Book.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="bookId">Title identifier for which to get BibTex data</param>
+		/// <returns>List of type TitleBibTeX.</returns>
+		public List<TitleBibTeX> BookBibTeXSelectForBookID(
+						SqlConnection sqlConnection,
+						SqlTransaction sqlTransaction,
+						int bookId)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			SqlTransaction transaction = sqlTransaction;
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("BookBibTeXSelectForBookID", connection, transaction,
+				CustomSqlHelper.CreateInputParameter("BookID", SqlDbType.Int, null, false, bookId)))
+			{
+				using (CustomSqlHelper<TitleBibTeX> helper = new CustomSqlHelper<TitleBibTeX>())
+				{
+					List<TitleBibTeX> list = helper.ExecuteReader(command);
+					return (list);
+				}
+			}
+		}
 	}
 }
 

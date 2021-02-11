@@ -7,20 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.Web2 {
-    
-    
-    public partial class TitlePage {
-        
-        /// <summary>
-        /// mendeley control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::MOBOT.BHL.Web2.controls.MendeleyShareControl mendeley;
-        
+namespace MOBOT.BHL.Web2
+{
+
+
+    public partial class TitlePage
+    {
+
         /// <summary>
         /// ddlVolumes control.
         /// </summary>
@@ -29,7 +22,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlVolumes;
-        
+
         /// <summary>
         /// COinS control.
         /// </summary>
@@ -38,7 +31,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.Web2.COinSControl COinS;
-        
+
         /// <summary>
         /// lstPages control.
         /// </summary>
@@ -47,7 +40,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox lstPages;
-        
+
         /// <summary>
         /// lbSegments control.
         /// </summary>
@@ -56,7 +49,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox lbSegments;
-        
+
         /// <summary>
         /// tbImages control.
         /// </summary>
@@ -65,7 +58,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton tbImages;
-        
+
         /// <summary>
         /// tbImagesOcr control.
         /// </summary>
@@ -74,7 +67,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton tbImagesOcr;
-        
+
         /// <summary>
         /// attributionPlaceHolder control.
         /// </summary>
@@ -83,7 +76,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder attributionPlaceHolder;
-        
+
         /// <summary>
         /// ltlBookIndicator control.
         /// </summary>
@@ -92,7 +85,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlBookIndicator;
-        
+
         /// <summary>
         /// ltlAnnotationContent control.
         /// </summary>
@@ -101,7 +94,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlAnnotationContent;
-        
+
         /// <summary>
         /// ltlPageSequence control.
         /// </summary>
