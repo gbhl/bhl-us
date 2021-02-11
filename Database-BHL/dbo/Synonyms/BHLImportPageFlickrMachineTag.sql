@@ -1,0 +1,2 @@
+CREATE SYNONYM dbo.BHLImportPageFlickrMachineTag FOR BHLImportQA.dbo.vwPageFlickrMachineTag
+GO
