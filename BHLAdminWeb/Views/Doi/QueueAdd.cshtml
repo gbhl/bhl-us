@@ -72,16 +72,6 @@
                 <div>All Segment IDs related to the specified Item will be added to the queue.</div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="formField col-md-2" style="text-align:right">
-                @Html.RadioButtonFor(m => m.SegmentOption, "Title", new { @class = "custom-control-label", id = "rdoTitle", onclick = "enableOption(this);" })
-                @Html.LabelFor(m => m.TitleID, new { @class = "custom-control-label", @for = "rdoTitle" })
-            </div>
-            <div class="formField col-md-10">
-                @Html.TextBoxFor(model => model.TitleID)
-                <div>All Segment IDs related to the specified Title will be added to the queue.</div>
-            </div>
-        </div>
     </div>
 
     <div class="form-group">
@@ -127,23 +117,20 @@
     }
 
     function enableOption(selectedOption) {
-        var txtTitle = document.getElementById("TitleID");
+        //var txtTitle = document.getElementById("TitleID");
         var txtItem = document.getElementById("ItemID");
         var txtSegment = document.getElementById("SegmentIDs");
 
         switch (selectedOption.value) {
             case "Title":
-                txtTitle.disabled = false;
                 txtItem.disabled = true; txtItem.value = "";
                 txtSegment.disabled = true; txtSegment.value = "";
                 break;
             case "Item":
-                txtTitle.disabled = true; txtTitle.value = "";
                 txtItem.disabled = false;
                 txtSegment.disabled = true; txtSegment.value = "";
                 break;
             case "Segment":
-                txtTitle.disabled = true; txtTitle.value = "";
                 txtItem.disabled = true; txtItem.value = "";
                 txtSegment.disabled = false;
                 break;

@@ -115,6 +115,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [Authorize(Roles = "BHL.Admin.PortalEditor, BHL.Admin.Admin, BHL.Admin.SysAdmin")]
         public async Task<ActionResult> QueueAdd(QueueAddViewModel model)
         {
+            HttpContext.Server.ScriptTimeout = 600;  // 10 minutes
+
             if (ModelState.IsValid)
             {
                 try
@@ -207,6 +209,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [Authorize(Roles = "BHL.Admin.PortalEditor, BHL.Admin.Admin, BHL.Admin.SysAdmin")]
         public async Task<ActionResult> QueueAddConfirm(QueueAddConfirmViewModel model)
         {
+            HttpContext.Server.ScriptTimeout = 600;  // 10 minutes
+
             int userId = Helper.GetCurrentUserUID(Request);
 
             if (model.TitleIDs != null)
