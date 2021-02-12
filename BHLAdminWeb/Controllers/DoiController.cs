@@ -12,11 +12,13 @@ namespace MOBOT.BHL.AdminWeb.Controllers
     [Authorize]
     public class DoiController : Controller
     {
-        private int _doiTypeTitleID = 10;
-        private string _doiTypeTitleName = "Title";
-        private int _doiTypeSegmentID = 40;
-        private string _doiTypeSegmentName = "Segment";
-        private int _doiStatusQueuedID = 30;
+        private const int _doiTypeTitleID = 10;
+        private const string _doiTypeTitleName = "Title";
+        private const int _doiTypeSegmentID = 40;
+        private const string _doiTypeSegmentName = "Segment";
+        private const int _doiStatusQueuedID = 30;
+        private const int _doiStatusSubmittedID = 50;
+        private const int _doiStatusErrorID = 80;
 
         public DoiController()
         {
@@ -46,7 +48,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         private List<EditDoiQueueViewModel> QueueAction(string sort)
         {
             // Set up the sort variables
-            string sortBy = String.IsNullOrWhiteSpace(sort) ? "datequeued" : sort;
+            string sortBy = String.IsNullOrWhiteSpace(sort) ? "datequeued_desc" : sort;
             ViewBag.SortBy = sortBy;
             ViewBag.ETypeSort = "entitytype";
             ViewBag.EIDSort = "entityid";
@@ -54,7 +56,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             ViewBag.DateQueuedSort = "datequeued";
 
             // Get list of queued DOIs
-            List<DOI> dois = new BHLProvider().DOISelectQueued(); // new List<DOI>(); //   Db.Users.Where(r => r.Id != 1).OrderBy(r => r.UserName);
+            List<DOI> dois = new BHLProvider().DOISelectQueued();
 
             List<EditDoiQueueViewModel> model = new List<EditDoiQueueViewModel>();
             foreach (var doi in dois)
@@ -133,20 +135,30 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                         List<int> ids = new List<int>();
                         foreach (string titleId in modelIDs)
                         {
-                            if (ValidateTitle(titleId)) titleIDs.Add(Convert.ToInt32(titleId));
+                            if (!string.IsNullOrWhiteSpace(titleId))
+                            {
+                                if (ValidateTitle(titleId)) titleIDs.Add(Convert.ToInt32(titleId));
+                            }
                         }
                     }
                     else
                     {
-                        switch (model.SegmentOption)//Request.Form["chkOption"])
+                        switch (model.SegmentOption)
                         {
                             case "Title":
                                 if (ValidateTitle(model.TitleID, false))
                                 {
                                     List<Segment> segments = new BHLProvider().SegmentSelectWithoutDOIByTitleID(Convert.ToInt32(model.TitleID));
-                                    foreach(Segment segment in segments)
+                                    if (segments.Count > 0)
                                     {
-                                        segmentIDs.Add(segment.SegmentID);
+                                        foreach (Segment segment in segments)
+                                        {
+                                            segmentIDs.Add(segment.SegmentID);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        AddErrors(string.Format("No Segments have been defined for Title {0}", model.TitleID));
                                     }
                                 }
                                 break;
@@ -154,9 +166,16 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                                 if (ValidateItem(model.ItemID))
                                 {
                                     List<Segment> segments = new BHLProvider().SegmentSelectWithoutDOIByItemID(Convert.ToInt32(model.ItemID));
-                                    foreach(Segment segment in segments)
+                                    if (segments.Count > 0)
                                     {
-                                        segmentIDs.Add(segment.SegmentID);
+                                        foreach (Segment segment in segments)
+                                        {
+                                            segmentIDs.Add(segment.SegmentID);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        AddErrors(string.Format("No Segments have been defined for Item {0}", model.ItemID));
                                     }
                                 }
                                 break;
@@ -164,11 +183,12 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                                 if (string.IsNullOrWhiteSpace(model.SegmentIDs)) throw new Exception("One or more Segment IDs are required.");
 
                                 string[] modelIDs = model.SegmentIDs.Split('\n');
-
-                                List<int> ids = new List<int>();
                                 foreach (string segmentId in modelIDs)
                                 {
-                                    if (ValidateSegment(segmentId)) segmentIDs.Add(Convert.ToInt32(segmentId));
+                                    if (!string.IsNullOrWhiteSpace(segmentId))
+                                    {
+                                        if (ValidateSegment(segmentId)) segmentIDs.Add(Convert.ToInt32(segmentId));
+                                    }
                                 }
 
                                 break;
@@ -307,7 +327,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     DOI doi = provider.DOISelectByTypeAndID(_doiTypeTitleName, titleInt);
                     if (doi != null)
                     {
-                        AddErrors(string.Format("DOI {0} exists for Title {1}", doi.DOIName, doi.EntityID));
+                        AddErrors(GetDOIError("Title", doi));
                         isValid = false;
                     }
                 }
@@ -390,13 +410,36 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     DOI doi = provider.DOISelectByTypeAndID(_doiTypeSegmentName, segmentInt);
                     if (doi != null)
                     {
-                        AddErrors(string.Format("DOI {0} exists for Segment {1}", doi.DOIName, doi.EntityID));
+                        AddErrors(GetDOIError("Segment", doi));
                         isValid = false;
                     }
                 }
             }
 
             return isValid;
+        }
+
+        private string GetDOIError(string type, DOI doi)
+        {
+            string errorMessage;
+
+            switch (doi.DOIStatusID)
+            {
+                case _doiStatusQueuedID:
+                    errorMessage = string.Format("{0} {1} has already been queued for DOI assignment", type, doi.EntityID);
+                    break;
+                case _doiStatusSubmittedID:
+                    errorMessage = string.Format("DOI {0} for {1} {2} has already been submitted to CrossRef", doi.DOIName, type, doi.EntityID);
+                    break;
+                case _doiStatusErrorID:
+                    errorMessage = string.Format("DOI {0} for {1} {2} was rejected by CrossRef", doi.DOIName, type, doi.EntityID);
+                    break;
+                default:
+                    errorMessage = string.Format("DOI {0} exists for {1} {2}", doi.DOIName, type, doi.EntityID);
+                    break;
+            }
+
+            return errorMessage;
         }
 
         private void AddErrors(string error)
