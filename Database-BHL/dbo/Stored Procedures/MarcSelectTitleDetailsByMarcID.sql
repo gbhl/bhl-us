@@ -133,6 +133,15 @@ WHERE	df.DataFieldTag = '245'
 AND		df.Code = 'p'
 AND		df.MarcID = @MarcID;
 
+-- Strip forward slashes, commas, and semicolons from the end of title parts
+UPDATE	#tmpTitle
+SET		PartNumber = RTRIM(SUBSTRING(PartNumber, 1, LEN(PartNumber) - 1))
+WHERE	SUBSTRING(REVERSE(RTRIM(PartNumber)), 1, 1) in ('/', ',', ';')
+
+UPDATE	#tmpTitle
+SET		PartName = RTRIM(SUBSTRING(PartName, 1, LEN(PartName) - 1))
+WHERE	SUBSTRING(REVERSE(RTRIM(PartName)), 1, 1) in ('/', ',', ';');
+
 -- Get datafield 260/264 information
 /*
 IF     * 260 with blank ind 1 or ind 1=0 or ind 1=1
