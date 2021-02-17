@@ -123,8 +123,9 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             {
                 try
                 {
-                    List<int> titleIDs = new List<int>();
-                    List<int> segmentIDs = new List<int>();
+                    List<string> titleIDs = new List<string>();
+                    List<string> segmentIDs = new List<string>();
+                    bool copyrightWarning = false;
 
                     if (model.EntityTypeID == _doiTypeTitleID)
                     {
@@ -137,7 +138,9 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                         {
                             if (!string.IsNullOrWhiteSpace(titleId))
                             {
-                                if (ValidateTitle(titleId)) titleIDs.Add(Convert.ToInt32(titleId));
+                                ValidationOutput validation = ValidateTitle(titleId);
+                                if (validation.IsValid) titleIDs.Add(titleId + "|" + validation.Title);
+                                copyrightWarning = copyrightWarning ? copyrightWarning : validation.CopyrightWarning;
                             }
                         }
                     }
@@ -146,36 +149,42 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                         switch (model.SegmentOption)
                         {
                             case "Title":
-                                if (ValidateTitle(model.TitleID, false))
+                                ValidationOutput titleValidation = ValidateTitle(model.TitleID, false);
+                                if (titleValidation.IsValid)
                                 {
                                     List<Segment> segments = new BHLProvider().SegmentSelectWithoutDOIByTitleID(Convert.ToInt32(model.TitleID));
                                     if (segments.Count > 0)
                                     {
+                                        copyrightWarning = titleValidation.CopyrightWarning;
+
                                         foreach (Segment segment in segments)
                                         {
-                                            segmentIDs.Add(segment.SegmentID);
+                                            segmentIDs.Add(segment.SegmentID.ToString() + "|" + segment.Title);
                                         }
                                     }
                                     else
                                     {
-                                        AddErrors(string.Format("No Segments have been defined for Title {0}", model.TitleID));
+                                        AddErrors(string.Format("Title {0} - No eligible Segments have been defined for this Title", model.TitleID));
                                     }
                                 }
                                 break;
                             case "Item":
-                                if (ValidateItem(model.ItemID))
+                                ValidationOutput itemValidation = ValidateItem(model.ItemID);
+                                if (itemValidation.IsValid)
                                 {
                                     List<Segment> segments = new BHLProvider().SegmentSelectWithoutDOIByItemID(Convert.ToInt32(model.ItemID));
                                     if (segments.Count > 0)
                                     {
+                                         copyrightWarning = itemValidation.CopyrightWarning;
+
                                         foreach (Segment segment in segments)
                                         {
-                                            segmentIDs.Add(segment.SegmentID);
+                                            segmentIDs.Add(segment.SegmentID.ToString() + "|" + segment.Title);
                                         }
                                     }
                                     else
                                     {
-                                        AddErrors(string.Format("No Segments have been defined for Item {0}", model.ItemID));
+                                        AddErrors(string.Format("Item {0} - No eligible Segments have been defined for this Item", model.ItemID));
                                     }
                                 }
                                 break;
@@ -187,7 +196,12 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                                 {
                                     if (!string.IsNullOrWhiteSpace(segmentId))
                                     {
-                                        if (ValidateSegment(segmentId)) segmentIDs.Add(Convert.ToInt32(segmentId));
+                                        ValidationOutput segmentValidation = ValidateSegment(segmentId);
+                                        if (segmentValidation.IsValid)
+                                        {
+                                            copyrightWarning = copyrightWarning ? copyrightWarning : segmentValidation.CopyrightWarning;
+                                            segmentIDs.Add(segmentId + "|" + segmentValidation.Title);
+                                        }
                                     }
                                 }
 
@@ -199,6 +213,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     {
                         titleIDs.Sort();
                         segmentIDs.Sort();
+                        TempData["CopyrightWarning"] = copyrightWarning;
                         TempData["Titles"] = titleIDs;
                         TempData["Segments"] = segmentIDs;
                         return RedirectToAction("QueueAddConfirm", "Doi");
@@ -219,9 +234,11 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [Authorize(Roles = "BHL.Admin.PortalEditor, BHL.Admin.Admin, BHL.Admin.SysAdmin")]
         public ActionResult QueueAddConfirm()
         {
-            List<int> titleIDs = (List<int>)TempData["Titles"];
-            List<int> segmentIDs = (List<int>)TempData["Segments"];
-            return View(new QueueAddConfirmViewModel(titleIDs, segmentIDs));
+            bool copyrightWarning = (bool)TempData["CopyrightWarning"];
+            if (copyrightWarning) ModelState.AddModelError("Copyright", "One or more of these items may be in copyright. Please ensure you have permission to assign DOIs before proceeding.");
+            List<string> titles = (List<string>)TempData["Titles"];
+            List<string> segments = (List<string>)TempData["Segments"];
+            return View(new QueueAddConfirmViewModel(copyrightWarning, titles, segments));
         }
 
         [HttpPost]
@@ -233,19 +250,19 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
             int userId = Helper.GetCurrentUserUID(Request);
 
-            if (model.TitleIDs != null)
+            if (model.Titles != null)
             {
-                foreach(int titleID in model.TitleIDs)
+                foreach(string title in model.Titles)
                 {
-                    new BHLProvider().DOIInsert(_doiTypeTitleID, titleID, _doiStatusQueuedID, string.Empty, string.Empty, string.Empty, 0, userId, 0);
+                    new BHLProvider().DOIInsert(_doiTypeTitleID, Convert.ToInt32(title.Split('|')[0]), _doiStatusQueuedID, string.Empty, string.Empty, string.Empty, 0, userId, 0);
                 }
             }
 
-            if (model.SegmentIDs != null)
+            if (model.Segments != null)
             {
-                foreach (int segmentID in model.SegmentIDs)
+                foreach (string segment in model.Segments)
                 {
-                    new BHLProvider().DOIInsert(_doiTypeSegmentID, segmentID, _doiStatusQueuedID, string.Empty, string.Empty, string.Empty, 0, userId, 0);
+                    new BHLProvider().DOIInsert(_doiTypeSegmentID, Convert.ToInt32(segment.Split('|')[1]), _doiStatusQueuedID, string.Empty, string.Empty, string.Empty, 0, userId, 0);
                 }
             }
 
@@ -291,19 +308,20 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             return new SelectList(doiEntityTypes, "Value", "Text");
         }
 
-        private bool ValidateTitle(string titleID, bool validateDOI = true)
+        private ValidationOutput ValidateTitle(string titleID, bool validateDOI = true)
         {
-            bool isValid = true;
+            ValidationOutput output = new ValidationOutput(true, false);
             int titleInt;
+            int copyrightYear = DateTime.Now.Year - 95;
 
             // Make sure Title ID is numeric
             if (!Int32.TryParse(titleID, out titleInt))
             {
-                AddErrors(string.Format("Title ID {0} must be numeric", titleID));
-                isValid = false;
+                AddErrors(string.Format("Title {0} - ID must be numeric", titleID));
+                output.IsValid = false;
             }
 
-            if (isValid)
+            if (output.IsValid)
             {
                 BHLProvider provider = new BHLProvider();
 
@@ -311,16 +329,20 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 Title title = provider.TitleSelectAuto(titleInt);
                 if (title == null)
                 {
-                    AddErrors(string.Format("{0} is not a valid BHL Title ID", titleID));
-                    isValid = false;
+                    AddErrors(string.Format("Title {0} - Not a valid BHL ID", titleID));
+                    output.IsValid = false;
                 }
                 else if (title.PublishReady == false)
                 {
-                    AddErrors(string.Format("{0} is not a published BHL Title", titleID));
-                    isValid = false;
+                    AddErrors(string.Format("Title {0}  - Not a published BHL Title", titleID));
+                    output.IsValid = false;
+                }
+                else if ((title.StartYear ?? 0) >= copyrightYear)
+                {
+                    output.CopyrightWarning = true;
                 }
 
-                if (isValid && validateDOI)
+                if (output.IsValid && validateDOI)
                 {
                     // Make sure an entry in the DOI table does not already exist for this title.
                     // NOTE: At some point will be allowed, but for now we do not handle resubmission of metadata for existing DOIs.
@@ -328,65 +350,87 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     if (doi != null)
                     {
                         AddErrors(GetDOIError("Title", doi));
-                        isValid = false;
+                        output.IsValid = false;
                     }
                 }
+
+                if (output.IsValid) output.Title = title.ShortTitle;
             }
 
-            return isValid;
+            return output;
         }
 
-        private bool ValidateItem(string itemID)
+        private ValidationOutput ValidateItem(string itemID)
         {
-            bool isValid = true;
+            ValidationOutput output = new ValidationOutput(true, false);
             int itemInt;
+            int copyrightYear = DateTime.Now.Year - 95;
 
             // Make sure ID is numeric
             if (!Int32.TryParse(itemID, out itemInt))
             {
-                AddErrors(string.Format("Item ID {0} must be numeric", itemID));
-                isValid = false;
+                AddErrors(string.Format("Item {0} - ID must be numeric", itemID));
+                output.IsValid = false;
             }
 
-            if (isValid)
+            if (output.IsValid)
             {
                 BHLProvider provider = new BHLProvider();
 
                 // Make sure ID points to a published BHL item
-                Book book = provider.BookSelectAuto(itemInt);
+                Book book = provider.BookSelectByBarcodeOrItemID(itemInt, null);
                 if (book == null)
                 {
-                    AddErrors(string.Format("{0} is not a valid BHL Item ID", itemID));
-                    isValid = false;
+                    AddErrors(string.Format("Item {0} - Not a valid BHL ID", itemID));
+                    output.IsValid = false;
                 }
 
-                if (isValid)
+                if (output.IsValid)
                 {
                     Item item = provider.ItemSelectAuto(book.ItemID);
                     if (item.ItemStatusID != 40)
                     {
-                        AddErrors(string.Format("{0} is not a published BHL Item", itemID));
-                        isValid = false;
+                        AddErrors(string.Format("Item {0} - Not a published BHL Item", itemID));
+                        output.IsValid = false;
                     }
+                }
+
+                if (output.IsValid)
+                {
+                    int bookYear;
+                    if (Int32.TryParse(book.StartYear, out bookYear))
+                    {
+                        if (bookYear >= copyrightYear) output.CopyrightWarning = true;
+                    }
+                    else if (book.PrimaryTitleID != null)
+                    {
+                        Title title = provider.TitleSelectAuto((int)book.PrimaryTitleID);
+                        if (title != null)
+                        {
+                            if ((title.StartYear ?? 0) >= copyrightYear) output.CopyrightWarning = true;
+                        }
+                    }
+
                 }
             }
 
-            return isValid;
+            return output;
         }
 
-        private bool ValidateSegment(string segmentID)
+        private ValidationOutput ValidateSegment(string segmentID)
         {
-            bool isValid = true;
+            ValidationOutput output = new ValidationOutput(true, false);
             int segmentInt;
+            int copyrightYear = DateTime.Now.Year - 95;
 
             // Make sure ID is numeric
             if (!Int32.TryParse(segmentID, out segmentInt))
             {
-                AddErrors(string.Format("Segment ID {0} must be numeric", segmentID));
-                isValid = false;
+                AddErrors(string.Format("Segment {0} - ID must be numeric", segmentID));
+                output.IsValid = false;
             }
 
-            if (isValid)
+            if (output.IsValid)
             {
                 BHLProvider provider = new BHLProvider();
 
@@ -394,16 +438,30 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 Segment segment = provider.SegmentSelectForSegmentID(segmentInt);
                 if (segment == null)
                 {
-                    AddErrors(string.Format("{0} is not a valid BHL Segment ID", segmentID));
-                    isValid = false;
+                    AddErrors(string.Format("Segment {0} - Not a valid BHL ID", segmentID));
+                    output.IsValid = false;
                 }
                 else if (segment.SegmentStatusID != 40 && segment.SegmentStatusID != 30)
                 {
-                    AddErrors(string.Format("{0} is not a published BHL Segment", segmentID));
-                    isValid = false;
+                    AddErrors(string.Format("Segment {0} - Not a published BHL Segment", segmentID));
+                    output.IsValid = false;
+                }
+                else 
+                {
+                    // If the date cannot be parsed, then the copyright status cannot be determined, and no warning will be given.
+                    DateTime segmentDate;
+                    int segmentYear;
+                    if (Int32.TryParse(segment.Date, out segmentYear) && segment.Date.Trim().Length == 4)
+                    {
+                        if (segmentYear >= copyrightYear) output.CopyrightWarning = true;
+                    }
+                    if (DateTime.TryParse(segment.Date, out segmentDate))
+                    {
+                        if (segmentDate.Year >= copyrightYear) output.CopyrightWarning = true;
+                    }
                 }
 
-                if (isValid)
+                if (output.IsValid)
                 {
                     // Make sure an entry in the DOI table does not already exist for this segmemt.
                     // NOTE: At some point will be allowed, but for now we do not handle resubmission of metadata for existing DOIs.
@@ -411,12 +469,14 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     if (doi != null)
                     {
                         AddErrors(GetDOIError("Segment", doi));
-                        isValid = false;
+                        output.IsValid = false;
                     }
                 }
+
+                if (output.IsValid) output.Title = segment.Title;
             }
 
-            return isValid;
+            return output;
         }
 
         private string GetDOIError(string type, DOI doi)
@@ -426,16 +486,16 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             switch (doi.DOIStatusID)
             {
                 case _doiStatusQueuedID:
-                    errorMessage = string.Format("{0} {1} has already been queued for DOI assignment", type, doi.EntityID);
+                    errorMessage = string.Format("{0} {1} - Already queued for DOI assignment", type, doi.EntityID);
                     break;
                 case _doiStatusSubmittedID:
-                    errorMessage = string.Format("DOI {0} for {1} {2} has already been submitted to CrossRef", doi.DOIName, type, doi.EntityID);
+                    errorMessage = string.Format("{0} {1} - DOI {2} already submitted to CrossRef", type, doi.EntityID, doi.DOIName);
                     break;
                 case _doiStatusErrorID:
-                    errorMessage = string.Format("DOI {0} for {1} {2} was rejected by CrossRef", doi.DOIName, type, doi.EntityID);
+                    errorMessage = string.Format("{0} {1} - DOI {2} previously rejected by CrossRef", type, doi.EntityID, doi.DOIName);
                     break;
                 default:
-                    errorMessage = string.Format("DOI {0} exists for {1} {2}", doi.DOIName, type, doi.EntityID);
+                    errorMessage = string.Format("{0} {1} - DOI {2} already assigned", type, doi.EntityID, doi.DOIName);
                     break;
             }
 
@@ -445,6 +505,20 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         private void AddErrors(string error)
         {
             ModelState.AddModelError("", error);
+        }
+    }
+
+    class ValidationOutput
+    {
+        public bool IsValid { get; set; }
+        public bool CopyrightWarning { get; set; }
+
+        public string Title { get; set; } = string.Empty;
+
+        public ValidationOutput(bool isValid, bool copyrightWarning)
+        {
+            IsValid = isValid;
+            CopyrightWarning = copyrightWarning;
         }
     }
 }

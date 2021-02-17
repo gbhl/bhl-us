@@ -58,17 +58,19 @@ namespace MOBOT.BHL.AdminWeb.Models
 
     public class QueueAddConfirmViewModel
     {
-        public List<int> TitleIDs { get; set; } = new List<int>();
-        public List<int> SegmentIDs { get; set; } = new List<int>();
+        public bool CopyrightWarning { get; set; } = false;
+        public List<string> Titles { get; set; } = new List<string>();
+        public List<string> Segments { get; set; } = new List<string>();
 
         public QueueAddConfirmViewModel()
         {
         }
 
-        public QueueAddConfirmViewModel(List<int> titleIDs, List<int> segmentIDs)
+        public QueueAddConfirmViewModel(bool copyrightWarning, List<string> titles, List<string> segments)
         {
-            TitleIDs = titleIDs;
-            SegmentIDs = segmentIDs;
+            CopyrightWarning = copyrightWarning;
+            Titles = titles;
+            Segments = segments;
         }
     }
 }
