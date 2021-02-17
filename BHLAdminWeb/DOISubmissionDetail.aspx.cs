@@ -5,6 +5,7 @@ using System.IO;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Xml;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
 
@@ -16,6 +17,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (!this.IsPostBack)
             {
+                string output = string.Empty;
                 try
                 {
                     string type = Request.QueryString["type"] as string;
@@ -26,19 +28,29 @@ namespace MOBOT.BHL.AdminWeb
                     if (!string.IsNullOrEmpty(batchId) && (type == "d" || type == "s"))
                     {
                         SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-                        litDetail.Text = service.DOIGetFileContents(batchId, type);
+                        output = service.DOIGetFileContents(batchId, type);
                     }
+
+                    if (!output.Contains("<")) output = "<doi_submission_detail>" + output + "</doi_submission_detail>";
                 }
                 catch (Exception ex)
                 {
-                    string message = "Error retrieving File.<br><br>;";
+                    string message = "<error_details><error>Error retrieving File.</error>";
                     if (new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request))
                     {
-                        message += ex.Message + "<br><br>";
-                        if (ex.StackTrace != null) message += ex.StackTrace;
+                        message += "<message>" + ex.Message + "</message>";
+                        if (ex.StackTrace != null) message += "<stack_trace>" + ex.StackTrace + "</stack_trace>";
                     }
-                    litDetail.Text = message;
+                    message += "</error_details>";
+                    output = message;
                 }
+
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(output);
+                Response.ContentType = "text/xml";
+                Response.ContentEncoding = System.Text.Encoding.UTF8;
+                Response.Expires = -1;
+                doc.Save(Response.Output);
             }
         }
     }
