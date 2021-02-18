@@ -250,6 +250,7 @@ namespace BHLFlickrTagHarvest
         /// <returns></returns>
         private List<PageFlickrTag> CompareTags(List<PageFlickrTag> bhlTags, List<PageFlickrTag> flickrTags)
         {
+            List<PageFlickrTag> updateTags = new List<PageFlickrTag>();
             DateTime updateDate = DateTime.Now;
 
             // Add and update tags
@@ -263,12 +264,17 @@ namespace BHLFlickrTagHarvest
                         flickrTag.TagValue == bhlTag.TagValue &&
                         flickrTag.FlickrAuthorID == bhlTag.FlickrAuthorID)
                     {
-                        // Tag found; update it
+                        // Tag found; if necessary, update it
                         inBhl = true;
-                        bhlTag.IsActive = 1;
-                        bhlTag.LastModifiedDate = updateDate;
-                        bhlTag.DeleteDate = null;
-                        tagsUpdated.Add(bhlTag.TagValue);
+                        if (bhlTag.IsActive == 0 || bhlTag.DeleteDate != null)
+                        {
+                            bhlTag.IsActive = 1;
+                            bhlTag.LastModifiedDate = updateDate;
+                            bhlTag.DeleteDate = null;
+                            updateTags.Add(bhlTag);
+                            tagsUpdated.Add(bhlTag.TagValue);
+                        }
+                        break;
                     }
                 }
 
@@ -279,7 +285,7 @@ namespace BHLFlickrTagHarvest
                     newBhlTag.IsActive = 1;
                     newBhlTag.CreationDate = updateDate;
                     newBhlTag.LastModifiedDate = updateDate;
-                    bhlTags.Add(newBhlTag);
+                    updateTags.Add(newBhlTag);
                     tagsAdded.Add(newBhlTag.TagValue);
                 }
             }
@@ -300,18 +306,19 @@ namespace BHLFlickrTagHarvest
                     }
                 }
 
-                if (!inFlickr)
+                // Tag not found in Flickr; mark it deleted (if not already)
+                if (!inFlickr && (bhlTag.IsActive == 1 || bhlTag.DeleteDate == null))
                 {
-                    // Tag not found in Flickr; mark it deleted
                     bhlTag.IsActive = 0;
                     bhlTag.LastModifiedDate = updateDate;
                     bhlTag.DeleteDate = updateDate;
+                    updateTags.Add(bhlTag);
                     tagsRemoved.Add(bhlTag.TagValue);
                 }
             }
 
             // Return the updated list of tags in BHL
-            return bhlTags;
+            return updateTags;
         }
 
         /// <summary>
@@ -323,6 +330,7 @@ namespace BHLFlickrTagHarvest
         /// <returns></returns>
         private List<PageFlickrNote> CompareNotes(List<PageFlickrNote> bhlNotes, List<PageFlickrNote> flickrNotes)
         {
+            List<PageFlickrNote> updateNotes = new List<PageFlickrNote>();
             DateTime updateDate = DateTime.Now;
 
             // Add and update tags
@@ -334,18 +342,30 @@ namespace BHLFlickrTagHarvest
                     // Look for the flickr note in the list of notes in bhl
                     if (flickrNote.FlickrNoteID == bhlNote.FlickrNoteID)
                     {
-                        // Tag found; update it
+                        // Tag found; if necessary, update it
                         inBhl = true;
-                        bhlNote.NoteValue = flickrNote.NoteValue;
-                        bhlNote.XCoord = flickrNote.XCoord;
-                        bhlNote.YCoord = flickrNote.YCoord;
-                        bhlNote.Width = flickrNote.Width;
-                        bhlNote.Height = flickrNote.Height;
-                        bhlNote.AuthorIsPro = flickrNote.AuthorIsPro;
-                        bhlNote.IsActive = 1;
-                        bhlNote.LastModifiedDate = updateDate;
-                        bhlNote.DeleteDate = null;
-                        notesUpdated.Add(bhlNote.NoteValue);
+                        if (bhlNote.NoteValue != flickrNote.NoteValue ||
+                            bhlNote.XCoord != flickrNote.XCoord ||
+                            bhlNote.YCoord != flickrNote.YCoord ||
+                            bhlNote.Width != flickrNote.Width ||
+                            bhlNote.Height != flickrNote.Height ||
+                            bhlNote.AuthorIsPro != flickrNote.AuthorIsPro ||
+                            bhlNote.IsActive != 1 ||
+                            bhlNote.DeleteDate != null)
+                        {
+                            bhlNote.NoteValue = flickrNote.NoteValue;
+                            bhlNote.XCoord = flickrNote.XCoord;
+                            bhlNote.YCoord = flickrNote.YCoord;
+                            bhlNote.Width = flickrNote.Width;
+                            bhlNote.Height = flickrNote.Height;
+                            bhlNote.AuthorIsPro = flickrNote.AuthorIsPro;
+                            bhlNote.IsActive = 1;
+                            bhlNote.LastModifiedDate = updateDate;
+                            bhlNote.DeleteDate = null;
+                            updateNotes.Add(bhlNote);
+                            notesUpdated.Add(bhlNote.NoteValue);
+                        }
+                        break;
                     }
                 }
 
@@ -356,7 +376,7 @@ namespace BHLFlickrTagHarvest
                     newBhlNote.IsActive = 1;
                     newBhlNote.CreationDate = updateDate;
                     newBhlNote.LastModifiedDate = updateDate;
-                    bhlNotes.Add(newBhlNote);
+                    updateNotes.Add(newBhlNote);
                     notesAdded.Add(newBhlNote.NoteValue);
                 }
             }
@@ -375,18 +395,19 @@ namespace BHLFlickrTagHarvest
                     }
                 }
 
-                if (!inFlickr)
+                // Note not found in Flickr; mark it deleted (if not already)
+                if (!inFlickr && (bhlNote.IsActive == 1 || bhlNote.DeleteDate == null))
                 {
-                    // Tag not found in Flickr; mark it deleted
                     bhlNote.IsActive = 0;
                     bhlNote.LastModifiedDate = updateDate;
                     bhlNote.DeleteDate = updateDate;
+                    updateNotes.Add(bhlNote);
                     notesRemoved.Add(bhlNote.NoteValue);
                 }
             }
 
             // Return the updated list of notes in BHL
-            return bhlNotes;
+            return updateNotes;
         }
 
 
