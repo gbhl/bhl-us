@@ -544,6 +544,13 @@
     <Content Include="Views\Shared\_layoutBook.cshtml" />
     <Content Include="Views\IIIF\Item.cshtml" />
     <Content Include="Views\IIIF\Page.cshtml" />
+    <Content Include="Views\Browse\Titles.cshtml" />
+    <Content Include="Views\Browse\Authors.cshtml" />
+    <Content Include="Views\Browse\Year.cshtml" />
+    <Content Include="Views\Browse\Collection.cshtml" />
+    <Content Include="Views\Browse\Contributor.cshtml" />
+    <Content Include="Views\Creator\Index.cshtml" />
+    <Content Include="Views\Subject\Index.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -670,6 +677,7 @@
     <Compile Include="BrowseContributors.aspx.designer.cs">
       <DependentUpon>BrowseContributors.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BrowseOutputCacheAttribute.cs" />
     <Compile Include="BrowsePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -694,10 +702,13 @@
     <Compile Include="ContributorPage.aspx.designer.cs">
       <DependentUpon>ContributorPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\BrowseController.cs" />
+    <Compile Include="Controllers\CreatorController.cs" />
     <Compile Include="Controllers\IIIFController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="controls\BookBrowseControl.ascx.cs">
       <DependentUpon>BookBrowseControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -884,6 +895,8 @@
     <Compile Include="ItemPage.aspx.designer.cs">
       <DependentUpon>ItemPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\CreatorModel.cs" />
+    <Compile Include="Models\SubjectModel.cs" />
     <Compile Include="TitleUnavailable.aspx.cs">
       <DependentUpon>TitleUnavailable.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

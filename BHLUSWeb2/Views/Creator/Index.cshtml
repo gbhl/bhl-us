@@ -1,0 +1,170 @@
+﻿@model MOBOT.BHL.Web2.Models.CreatorModel
+
+@{
+    ViewBag.Title = Model.Author.FullName + " - Biodiversity Heritage Library";
+}
+
+<nav id="sub-nav-tabs" class="no-js-hide">
+    <div class="column-wrap">
+        <div id="linkbar">
+            <h3>By "@Model.Author.NameExtended"</h3>
+            <ul>
+                <li id="spanTitleSummary" class="titles">
+                    <a href="#/titles" title="Books">Books/Journals (@Model.BookResults.Count)</a>
+                </li>
+                <li id="spanSectionSummary" class="sections">
+                    <a href="#/sections" title="Parts">Chapters/Articles/Treatments (@Model.SegmentResults.Count)</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div id="sortbar">
+    <div class="column-wrap">
+        <span>Sort By:</span>
+        <ul>
+            <li class="@(Model.Sort == "title" || Model.Sort == "" ? "activesort" : "")"><a href="/creator/@Model.Author.AuthorID/title/@Model.Page/@Model.NumPerPage">Title</a></li>
+            <li class="@(Model.Sort == "author" ? "activesort" : "")"><a href="/creator/@Model.Author.AuthorID/author/@Model.Page/@Model.NumPerPage">Author</a></li>
+            <li class="@(Model.Sort == "year" ? "activesort" : "")"><a href="/creator/@Model.Author.AuthorID/year/@Model.Page/@Model.NumPerPage">Year</a></li>
+        </ul>
+        <div class="floatclear"></div>
+    </div>
+</div>
+<div id="content" class="column-wrap clearfix">
+    <section class="browse">
+        <div id="sub-sections" class="column-wrap clearfix">
+            <div id="titles">
+                <div id="titlecontent" class="content">
+                    <section>
+                        <ol class="data titles">
+                            <!--
+                            <li class="titlelisting">
+                                <div style="display:inline-block; width:620px">
+                                    <div style="float:left">
+                                        <a target="_self" class="title" href="/item/17049">The South pole; an account of the Norwegian Antarctic expedition in the "Fram," 1910-1912  </a>
+                                    </div>
+                                    <div style="float:right">
+                                        <a class="titleviewbook" href="/bibliography/6095">View Metadata</a>
+                                    </div>
+                                </div>
+                                <div class="titledetails">By: Amundsen, Roald, - Chater, Arthur G.</div>
+                                <div class="titledetails">Publication info: London,J. Murray;1913.</div>
+                                <div class="titledetails">Holding Institution: MBLWHOI Library</div>
+                                <div class="titledetails">BHL Collections: Antarctic Exploration & Discovery</div>
+                            </li>
+                            -->
+                        </ol>
+                    </section>
+                </div>
+            </div>
+            <div id="sections" class="floatclear">
+                <div id="segmentcontent" class="content">
+                    <section>
+                        <ol class="data titles">
+                        </ol>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+    <aside>
+        @Html.Action("_DonateFeature", "Partial")
+        @Html.Action("_CollectionFeature", "Partial")
+    </aside>
+</div>
+
+@section scripts {
+    <script src="/js/libs/jquery.hoverintent.min.js"></script>
+    <script src="/js/libs/jquery.text-overflow.min.js"></script>
+
+    <script type="text/javascript">
+//<![CDATA[
+$(document).ready(function () {
+    var subSections = $('#sub-sections').children(); //.hide();
+
+    // Navigate to the default sub-section if no hash
+    if (!location.hash) {
+        if (@Model.BookResults.Count > 0) {
+            window.location.replace('#/titles');
+        }
+        else if (@Model.SegmentResults.Count > 0) {
+            window.location.replace('#/sections');
+        }
+        else {
+            window.location.replace('#/titles');
+        }
+    }
+
+    selectTab();
+});
+
+$(window).on('hashchange', function () {
+    selectTab();
+});
+
+function selectTab() {
+    var state = location.hash;
+    var subSections = $('#sub-sections').children();
+
+    if (!$('#sub-sections').is(':visible')) {
+        $('#sub-sections').show();
+    }
+    var stateName = state.replace(/[^a-zA-Z0-9\s]/gi, '');
+    var subSection = $('#' + stateName);
+    subSections.hide();
+
+    // Highlight selected link
+    $('#linkbar a').removeClass('active');
+    $('#linkbar .' + stateName + ' a').addClass('active').blur();
+
+    // Special case
+    if (stateName == 'all') {
+        subSections.show();
+        return false;
+    }
+
+    // If no default sub-section found then head on to the default otherwise show selected sub-section
+    if (!subSection.length) {
+        $('#titles').show();
+    } else {
+        subSection.show();
+    }
+}
+
+function pagerClick(tab) {
+    var qs = buildQS();
+    if (tab === '') {
+        window.location.href = '/search?' + qs;
+    }
+    else {
+        window.location.href = '/search?' + qs + '#' + tab; // set tab to which to return
+    }
+}
+
+function buildQS() {
+    var qs = 'searchTerm=' + encodeURIComponent( $('#Params_SearchTerm').val() ) +
+        "&tinc=" + $('#Params_TermInclude').val() +
+        '&searchCat=' + $('#Params_SearchCategory').val() +
+        '&stype=' + $('#Params_SearchType').val() +
+        '&lname=' + encodeURIComponent( $('#Params_LastName').val() ) +
+        "&ninc=" + $('#Params_LastNameInclude').val() +
+        '&vol=' + encodeURIComponent( $('#Params_Volume').val() ) +
+        '&yr=' + encodeURIComponent( $('#Params_Year').val() ) +
+        '&subj=' + encodeURIComponent( $('#Params_Subject').val() ) +
+        "&sinc=" + $('#Params_SubjectInclude').val() +
+        '&lang=' + $('#Params_Language').val() +
+        '&col=' + encodeURIComponent( $('#Params_Collection').val() ) +
+        '&nt=' + encodeURIComponent( $('#Params_Notes').val() ) +
+        '&ntinc=' + $('#Params_NotesInclude').val() +
+        '&txt=' + encodeURIComponent( $('#Params_Text').val() ) +
+        '&txinc=' + $('#Params_TextInclude').val() +
+        '&ppage=' + $('#ItemPage').val() +
+        '&apage=' + $('#AuthorPage').val() +
+        '&kpage=' + $('#KeywordPage').val() +
+        '&npage=' + $('#NamePage').val();
+
+    return qs;
+}
+//]]>
+    </script>
+}

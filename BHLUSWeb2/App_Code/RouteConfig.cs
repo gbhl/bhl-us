@@ -53,25 +53,38 @@ namespace MOBOT.BHL.Web2
                 routes.MapPageRoute("Advanced-Search", "advsearch", "~/AdvancedSearch.aspx");
             }
 
+            routes.MapRoute("BrowseTitles", "browse/titles/{start}/{sort}/{page}/{numPerPage}", new { controller = "Browse", action = "Titles", start = "a", sort="title", page = 1, numPerPage = 250 });
+            routes.MapRoute("BrowseAuthors", "browse/authors/{start}/{page}/{numPerPage}", new { controller = "Browse", action = "Authors", start = "a", page = 1, numPerPage = 250 });
+            routes.MapRoute("BrowseYear", "browse/year/{start}/{end}/{sort}/{page}/{numPerPage}", new { controller = "Browse", action = "Year", start = 1450, end = 1580, sort = "title", page = 1, numPerPage = 250 });
+            routes.MapRoute("BrowseCollection", "browse/collection/{name}/{start}/{sort}/{page}/{numPerPage}", new { controller = "Browse", action = "Collection", start = "a", sort = "title", page = 1, numPerPage = 250 });
+            routes.MapRoute("BrowseContributor", "browse/contributor/{id}/{start}/{sort}/{page}/{numPerPage}", new { controller = "Browse", action = "Contributor", start = "a", sort = "title", page = 1, numPerPage = 250 });
+
+            /*
             routes.MapPageRoute("Browse-TitleList", "browse/titles/{start}/{*sort}", "~/TitleList.aspx", false,
                 new RouteValueDictionary { {"start", "a"}, {"sort",""} } );
 
             routes.MapPageRoute("Browse-CreatorList", "browse/authors/{*start}", "~/CreatorList.aspx");
+            */
 
             routes.MapPageRoute("Browse-ContributorList", "browse/contributors", "~/BrowseContributors.aspx");
 
+            /*
             routes.MapPageRoute("Contributor-Titles", "browse/contributor/{contributorid}/{start}/{sort}/",
                 "~/ContributorPage.aspx", false,
                 new RouteValueDictionary { {"start", ""}, {"sort", ""}, {"contributorid", "-1"} } );
+            */
 
             routes.MapPageRoute("Browse-CollectionList", "browse/collections", "~/BrowseCollections.aspx");
 
+            /*
             routes.MapPageRoute("Collection - Titles", "browse/collection/{collectionID}/{start}/{sort}/",
                 "~/CollectionPage.aspx", false,
                 new RouteValueDictionary { {"start", ""}, {"sort", ""}, {"collectionID", "-1"} } );
+            */
 
             routes.MapPageRoute("Collection-details", "collection/{collectionid}", "~/CollectionDetails.aspx");
 
+            /*
             routes.MapPageRoute("Browse-Year", "browse/year/{startdate}/{enddate}/{sort}",
                 "~/BrowseByYear.aspx", false,
                 new RouteValueDictionary {
@@ -84,6 +97,7 @@ namespace MOBOT.BHL.Web2
                         { "startdate", @"\d{4}" },
                         { "enddate", @"\d{4}" }
                     });
+            */
 
             routes.MapPageRoute("Name", "name/{name}", "~/NameList.aspx");
 
@@ -162,11 +176,16 @@ namespace MOBOT.BHL.Web2
             routes.MapPageRoute("Recent", "recent/{top}/{lang}/{inst}", "~/recent.aspx", false, new RouteValueDictionary { { "top", "100" }, { "lang", "" }, { "inst", "" } });
             routes.MapPageRoute("RecentRSS", "recentrss/{top}/{lang}/{inst}", "~/recentrss.aspx", false, new RouteValueDictionary { { "top", "100" }, { "lang", "" }, { "inst", "" } });
 
+            routes.MapRoute("BrowseCreator", "creator/{creatorid}/{sort}/{page}/{numPerPage}", new { controller = "Creator", action = "Index", sort = "title", page = 1, numPerPage = 250 });
+            routes.MapRoute("BrowseSubject", "subject/{subject}/{sort}/{page}/{numPerPage}", new { controller = "Subject", action = "Index", sort = "title", page = 1, numPerPage = 250 });
+
+            /*
             routes.MapPageRoute("Creator", "creator/{creatorid}/{sort}", "~/CreatorPage.aspx", false,
                 new RouteValueDictionary { {"creatorid",0}, {"sort",""} } );
 
             routes.MapPageRoute("Subject","subject/{subject}/{sort}", "~/BrowseByTitleTag.aspx", false,
                 new RouteValueDictionary { {"subject",""}, {"sort",""} } );
+            */
 
             routes.MapPageRoute("Error-TitleNotFound", "titlenotfound", "~/TitleNotFound.aspx");
             routes.MapPageRoute("Error-TitleUnavailable", "titleunavailable", "~/TitleUnavailable.aspx");
