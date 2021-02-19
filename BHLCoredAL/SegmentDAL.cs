@@ -176,6 +176,30 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public Tuple<int, List<Segment>> SegmentSelectForAuthorIDPaged(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+                int authorId, int pageNum, int numPages, string sort)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.SegmentSelectForAuthorIDPaged", connection, transaction,
+                            CustomSqlHelper.CreateInputParameter("AuthorId", SqlDbType.Int, null, false, authorId),
+                            CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                            CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                            CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                            CustomSqlHelper.CreateOutputParameter("TotalSegments", SqlDbType.Int, null, false)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    // Get the page of segments for the author
+                    List<Segment> list = helper.ExecuteReader(command);
+                    // Get the total number of segments for the author from the output parameter
+                    int totalSegments = (int)command.Parameters[4].Value;
+                    return new Tuple<int, List<Segment>>(totalSegments, list);
+                }
+            }
+        }
+
         /// <summary>
         /// Select detailed information about the segments published between the specified dates
         /// </summary>
@@ -184,8 +208,8 @@ namespace MOBOT.BHL.DAL
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns>A list of type Segment</returns>
-        public List<Segment> SegmentSelectByDateRange(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, string startDate, string endDate)
+        public Tuple<int, List<Segment>> SegmentSelectByDateRange(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
+            string startDate, string endDate, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -193,13 +217,19 @@ namespace MOBOT.BHL.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByDateRange", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.VarChar, 20, false, startDate),
-                CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.VarChar, 20, false, endDate)))
+                CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.VarChar, 20, false, endDate),
+                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                CustomSqlHelper.CreateOutputParameter("TotalSegments", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
+                    // Get the page of segments
                     List<Segment> list = helper.ExecuteReader(command);
-
-                    return list;
+                    // Get the total number of segments
+                    int totalSegments = (int)command.Parameters[5].Value;
+                    return new Tuple<int, List<Segment>>(totalSegments, list);
                 }
             }
         }
@@ -212,21 +242,27 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="title"></param>
         /// <returns></returns>
-        public List<Segment> SegmentSelectByTitleLike(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, string title)
+        public Tuple<int, List<Segment>> SegmentSelectByTitleLike(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
+            string title, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByTitleLike", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title)))
+                CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title),
+                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                CustomSqlHelper.CreateOutputParameter("TotalSegments", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
+                    // Get the page of segments
                     List<Segment> list = helper.ExecuteReader(command);
-
-                    return list;
+                    // Get the total number of segments
+                    int totalSegments = (int)command.Parameters[4].Value;
+                    return new Tuple<int, List<Segment>>(totalSegments, list);
                 }
             }
         }
@@ -280,6 +316,30 @@ namespace MOBOT.BHL.DAL
                     List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
+                }
+            }
+        }
+
+        public Tuple<int, List<Segment>> SegmentSelectForKeywordPaged(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+                string keyword, int pageNum, int numPages, string sort)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.SegmentSelectForKeywordPaged", connection, transaction,
+                            CustomSqlHelper.CreateInputParameter("Keyword", SqlDbType.NVarChar, 50, false, keyword),
+                            CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                            CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                            CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                            CustomSqlHelper.CreateOutputParameter("TotalSegments", SqlDbType.Int, null, false)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    // Get the page of segments for the author
+                    List<Segment> list = helper.ExecuteReader(command);
+                    // Get the total number of segments for the author from the output parameter
+                    int totalSegments = (int)command.Parameters[4].Value;
+                    return new Tuple<int, List<Segment>>(totalSegments, list);
                 }
             }
         }
@@ -532,42 +592,50 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public List<Segment> SegmentSelectByInstitutionAndStartsWith(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction,
-                        String institutionCode,
-                        String startsWith)
+        public Tuple<int, List<Segment>> SegmentSelectByInstitutionAndStartsWith(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+                        String institutionCode, String startsWith, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByInstitutionAndStartsWith", connection, transaction,
-                     CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
-                     CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith)))
+                    CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
+                    CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith),
+                    CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                    CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                    CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                    CustomSqlHelper.CreateOutputParameter("TotalSegments", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
+                    // Get the page of segments
                     List<Segment> list = helper.ExecuteReader(command);
-                    return list;
+                    // Get the total number of segments for the author from the output parameter
+                    int totalSegments = (int)command.Parameters[5].Value;
+                    return new Tuple<int, List<Segment>>(totalSegments, list);
                 }
             }
         }
 
-        public List<Segment> SegmentSelectByInstitutionAndStartsWithout(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction,
-                        String institutionCode,
-                        String startsWith)
+        public Tuple<int, List<Segment>> SegmentSelectByInstitutionAndStartsWithout(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+                        String institutionCode, String startsWith, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByInstitutionAndStartsWithout", connection, transaction,
-                     CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
-                     CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith)))
+                    CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
+                    CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith),
+                    CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                    CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                    CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                    CustomSqlHelper.CreateOutputParameter("TotalSegments", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
+                    // Get the page of segments
                     List<Segment> list = helper.ExecuteReader(command);
-                    return list;
+                    // Get the total number of segments for the author from the output parameter
+                    int totalSegments = (int)command.Parameters[5].Value;
+                    return new Tuple<int, List<Segment>>(totalSegments, list);
                 }
             }
         }
