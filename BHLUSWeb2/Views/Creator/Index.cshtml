@@ -36,32 +36,14 @@
             <div id="titles">
                 <div id="titlecontent" class="content">
                     <section>
-                        <ol class="data titles">
-                            <!--
-                            <li class="titlelisting">
-                                <div style="display:inline-block; width:620px">
-                                    <div style="float:left">
-                                        <a target="_self" class="title" href="/item/17049">The South pole; an account of the Norwegian Antarctic expedition in the "Fram," 1910-1912  </a>
-                                    </div>
-                                    <div style="float:right">
-                                        <a class="titleviewbook" href="/bibliography/6095">View Metadata</a>
-                                    </div>
-                                </div>
-                                <div class="titledetails">By: Amundsen, Roald, - Chater, Arthur G.</div>
-                                <div class="titledetails">Publication info: London,J. Murray;1913.</div>
-                                <div class="titledetails">Holding Institution: MBLWHOI Library</div>
-                                <div class="titledetails">BHL Collections: Antarctic Exploration & Discovery</div>
-                            </li>
-                            -->
-                        </ol>
+                        @Html.Partial("_BookBrowse", new ViewDataDictionary { { "searchResult", Model.BookResults }, { "showVolume", false} })
                     </section>
                 </div>
             </div>
             <div id="sections" class="floatclear">
                 <div id="segmentcontent" class="content">
                     <section>
-                        <ol class="data titles">
-                        </ol>
+                        @Html.Partial("_SegmentBrowse", new ViewDataDictionary { { "searchResult", Model.SegmentResults } })
                     </section>
                 </div>
             </div>

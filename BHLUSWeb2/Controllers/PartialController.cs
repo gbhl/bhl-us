@@ -256,6 +256,16 @@ namespace MOBOT.BHL.Web2.Controllers
             return PartialView();
         }
 
+        public ActionResult _BookBrowse()
+        {
+            return PartialView();
+        }
+
+        public ActionResult _SegmentBrowse()
+        {
+            return PartialView();
+        }
+
         public ActionResult _CollectionFeature()
         {
             Collection collection = GetFeaturedCollection();

@@ -551,6 +551,8 @@
     <Content Include="Views\Browse\Contributor.cshtml" />
     <Content Include="Views\Creator\Index.cshtml" />
     <Content Include="Views\Subject\Index.cshtml" />
+    <Content Include="Views\Shared\_BookBrowse.cshtml" />
+    <Content Include="Views\Shared\_SegmentBrowse.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>
