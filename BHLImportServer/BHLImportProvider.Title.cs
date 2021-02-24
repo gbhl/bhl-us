@@ -1,7 +1,7 @@
-using System;
-using CustomDataAccess;
+using MOBOT.BHL.Utility;
 using MOBOT.BHLImport.DAL;
 using MOBOT.BHLImport.DataObjects;
+using System;
 
 namespace MOBOT.BHLImport.Server
 {
@@ -15,6 +15,8 @@ namespace MOBOT.BHLImport.Server
             bool? publishReady, bool? rareBooks, string note, DateTime? externalCreationDate, 
             DateTime? externalLastModifiedDate, int? externalCreationUser, int? externalLastModifiedUser)
         {
+            sortTitle = DataCleaner.CleanSortTitle(sortTitle);
+
             TitleDAL dal = new TitleDAL();
             Title savedTitle = dal.TitleSelectNewByKeyAndSource(null, null, marcBibID, importSourceID);
 

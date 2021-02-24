@@ -63,29 +63,32 @@ BEGIN
 	UPDATE	dbo.BHLTitle
 	SET		FullTitle = @Title,
 			ShortTitle = LEFT(@Title, 255),
-			SortTitle = LEFT(
-				CASE
-				WHEN LEFT(@Title, 1) = '"' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
-				WHEN LEFT(@Title, 1) = '''' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
-				WHEN LEFT(@Title, 1) = '[' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1)) 
-				WHEN LEFT(@Title, 1) = '(' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
-				WHEN LEFT(@Title, 1) = '|' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
-				WHEN LOWER(LEFT(@Title, 2)) = 'a ' AND @Title <> 'a' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 2)) 
-				WHEN LOWER(LEFT(@Title, 3)) = 'an ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
-				WHEN LOWER(LEFT(@Title, 3)) = 'el ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
-				WHEN LOWER(LEFT(@Title, 3)) = 'il ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
-				WHEN LOWER(LEFT(@Title, 3)) = 'la ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
-				WHEN LOWER(LEFT(@Title, 3)) = 'le ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'das ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'der ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'die ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'ein ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'las ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'les ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'los ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'the ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				ELSE @Title
-				END, 60),
+			SortTitle = 
+				dbo.fnGetSortString(
+				LEFT(
+					CASE
+						WHEN LEFT(@Title, 1) = '"' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
+						WHEN LEFT(@Title, 1) = '''' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
+						WHEN LEFT(@Title, 1) = '[' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1)) 
+						WHEN LEFT(@Title, 1) = '(' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
+						WHEN LEFT(@Title, 1) = '|' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
+						WHEN LOWER(LEFT(@Title, 2)) = 'a ' AND @Title <> 'a' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 2)) 
+						WHEN LOWER(LEFT(@Title, 3)) = 'an ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
+						WHEN LOWER(LEFT(@Title, 3)) = 'el ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
+						WHEN LOWER(LEFT(@Title, 3)) = 'il ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
+						WHEN LOWER(LEFT(@Title, 3)) = 'la ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
+						WHEN LOWER(LEFT(@Title, 3)) = 'le ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'das ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'der ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'die ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'ein ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'las ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'les ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'los ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'the ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						ELSE @Title
+					END, 60)
+				),
 			UniformTitle = @UniformTitle,
 			CallNumber = @CallNumber,
 			PublicationDetails = LEFT(@PublicationPlace + ' ' + @Publisher + ' ' + @PublicationDate, 255),
@@ -221,4 +224,3 @@ BEGIN
 END
 
 END 
-

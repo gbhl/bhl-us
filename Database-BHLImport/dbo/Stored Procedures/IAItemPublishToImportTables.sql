@@ -723,12 +723,12 @@ BEGIN TRY
 
 	-- Use Indicator2 of the 245a field to build the appropriate SortTitle for all titles
 	UPDATE	#tmpTitle
-	SET		SortTitle = LTRIM(RTRIM(SUBSTRING(	FullTitle, 
+	SET		SortTitle = dbo.fnGetSortString(SUBSTRING(
+												FullTitle, 
 												CASE WHEN ISNUMERIC(ISNULL(Indicator2, '')) = 1 THEN 
 													CASE WHEN Indicator2 = '0' THEN 1 ELSE CONVERT(int, Indicator2) END
 												ELSE 1 END, 
-												60)
-									))
+												60))
 	FROM	#tmpTitle t LEFT JOIN dbo.vwIAMarcDataField v
 				ON t.ItemID = v.ItemID
 				AND v.DataFieldTag = '245'
@@ -1882,28 +1882,30 @@ BEGIN TRY
 			s.Sequence,
 			s.BHLSegmentGenreID,
 			s.Title,
-			CASE
-				WHEN LEFT(s.Title, 1) = '"' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
-				WHEN LEFT(s.Title, 1) = '''' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
-				WHEN LEFT(s.Title, 1) = '[' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1)) 
-				WHEN LEFT(s.Title, 1) = '(' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
-				WHEN LEFT(s.Title, 1) = '|' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
-				WHEN LOWER(LEFT(s.Title, 2)) = 'a ' AND s.Title <> 'a' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 2)) 
-				WHEN LOWER(LEFT(s.Title, 3)) = 'an ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
-				WHEN LOWER(LEFT(s.Title, 3)) = 'el ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
-				WHEN LOWER(LEFT(s.Title, 3)) = 'il ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
-				WHEN LOWER(LEFT(s.Title, 3)) = 'la ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
-				WHEN LOWER(LEFT(s.Title, 3)) = 'le ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'das ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'der ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'die ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'ein ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'las ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'les ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'los ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'the ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				ELSE s.Title
-			END AS SortTitle,
+			dbo.fnGetSortString(
+				CASE
+					WHEN LEFT(s.Title, 1) = '"' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
+					WHEN LEFT(s.Title, 1) = '''' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
+					WHEN LEFT(s.Title, 1) = '[' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1)) 
+					WHEN LEFT(s.Title, 1) = '(' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
+					WHEN LEFT(s.Title, 1) = '|' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
+					WHEN LOWER(LEFT(s.Title, 2)) = 'a ' AND s.Title <> 'a' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 2)) 
+					WHEN LOWER(LEFT(s.Title, 3)) = 'an ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+					WHEN LOWER(LEFT(s.Title, 3)) = 'el ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+					WHEN LOWER(LEFT(s.Title, 3)) = 'il ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+					WHEN LOWER(LEFT(s.Title, 3)) = 'la ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+					WHEN LOWER(LEFT(s.Title, 3)) = 'le ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'das ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'der ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'die ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'ein ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'las ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'les ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'los ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'the ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					ELSE s.Title
+				END 
+			) AS SortTitle,
 			SUBSTRING(t.FullTitle, 1, 2000) AS ContainerTitle,
 			ISNULL(t.PublicationDetails, ''),
 			SUBSTRING(ISNULL(t.Datafield_260_b, ''), 1, 250) AS PublisherName,

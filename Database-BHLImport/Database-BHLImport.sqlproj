@@ -439,6 +439,7 @@
     <None Include="dbo\Tables\SegmentAuthorIdentifier.sql" />
     <None Include="dbo\Tables\SegmentIdentifier.sql" />
     <None Include="dbo\Functions\fnRemoveNonAlphaNumericCharacters.sql" />
+    <None Include="dbo\Functions\fnGetSortString.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />

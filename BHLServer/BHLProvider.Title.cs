@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Utility;
 using MOBOT.BHL.Web.Utilities;
 
 namespace MOBOT.BHL.Server
@@ -244,6 +245,9 @@ namespace MOBOT.BHL.Server
                     new TitleDAL().TitleUpdateAuto(null, null, targetTitle);
                 }
             }
+
+            // Clean up the sort title
+            title.SortTitle = DataCleaner.CleanSortTitle(title.SortTitle);
 
             return new TitleDAL().Save( null, null, title, userId );
 		}

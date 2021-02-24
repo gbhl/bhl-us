@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Utility;
 using MOBOT.BHL.Web.Utilities;
 
 namespace MOBOT.BHL.Server
@@ -181,6 +182,9 @@ namespace MOBOT.BHL.Server
                     segment.SortTitle = segment.Title;
                 }
             }
+
+            // Clean up the sort title
+            segment.SortTitle = DataCleaner.CleanSortTitle(segment.SortTitle);
 
             return new SegmentDAL().Save(null, null, segment, userId);
         }
