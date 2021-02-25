@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "DOI Queue Information";
+}
+
+<div>
+    @Html.ActionLink("< Return to Queue", "Queue")
+</div>
+<br />
+<span class="pageHeader">Before Adding a Publication to the DOI Assignment Queue</span>
+<hr />
+
+@Html.AntiForgeryToken()
+@Html.ValidationSummary()
+<div class="col-md-12">
+    <ol>
+        <li><h5>Read the guide to <a target="_blank" href="#">Assigning BHL DOIs</a></h5></li>
+        <li>
+            <h5>Check your metadata</h5>
+            <div>The article data sent to Crossref via this DOI assignment tool is the data currently associated with the article(s) in BHL.  
+            Please ensure this data is complete, accurate and complies with Crossref guidelines (summarised in the guide to <a target="_blank" href="#">Assigning BHL DOIs</a>).</div>
+        </li>
+        <li>
+            <h5>Check you have the rights to assign a DOI</h5>
+            <div>If a publication is in copyright, you can only assign a DOI to it if a) you are the rights holder, or b) you have obtained permission from the rights holder.</div>
+        </li>
+        <li>
+            <h5>Check whether a DOI already exists – do not create duplicate DOIs!</h5>
+            <div>Each publication should only have one DOI, regardless of how many copies there are online.  
+            Please check whether a DOI already exists using <a target="_blank" href="https://doi.crossref.org/simpleTextQuery">this tool</a>.</div>
+        </li>
+    </ol>
+</div>
+
+<p> &nbsp;</p>
+
+<div class="form-group">
+    <div class="col-md-offset-0 col-md-12">
+        <input type="submit" id="proceedButton" class="btn btn-default" value="Proceed" onclick="doProceed();" />
+        <input type="button" id="cancelButton" class="btn" value="Cancel" onclick="doCancel();" />
+    </div>
+</div>
+
+<script lang="javascript">
+    function doProceed() {
+        window.location.href = "/doi/queueadd";
+    }
+
+    function doCancel() {
+        window.location.href = "/doi/queue";
+    }
+</script>

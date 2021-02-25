@@ -101,7 +101,14 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             return model;
         }
 
-        // GET: /QueueAdd
+        // GET: Doi/QueueAddInfo
+        [Authorize(Roles = "BHL.Admin.PortalEditor, BHL.Admin.Admin, BHL.Admin.SysAdmin")]
+        public ActionResult QueueAddInfo()
+        {
+            return View();
+        }
+
+        // GET: Doi/QueueAdd
         [Authorize(Roles = "BHL.Admin.PortalEditor, BHL.Admin.Admin, BHL.Admin.SysAdmin")]
         public ActionResult QueueAdd()
         {
@@ -111,7 +118,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         }
 
         //
-        // POST: /QueueAdd
+        // POST: Doi/QueueAdd
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "BHL.Admin.PortalEditor, BHL.Admin.Admin, BHL.Admin.SysAdmin")]
@@ -230,7 +237,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             return View(model);
         }
 
-        // GET: /QueueAddConfirm
+        // GET: Doi/QueueAddConfirm
         [Authorize(Roles = "BHL.Admin.PortalEditor, BHL.Admin.Admin, BHL.Admin.SysAdmin")]
         public ActionResult QueueAddConfirm()
         {

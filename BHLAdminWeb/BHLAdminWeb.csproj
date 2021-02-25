@@ -1139,6 +1139,7 @@
     <Content Include="Views\Doi\QueueAdd.cshtml" />
     <Content Include="Views\Doi\QueueAddConfirm.cshtml" />
     <Content Include="Views\Doi\QueueDelete.cshtml" />
+    <Content Include="Views\Doi\QueueAddInfo.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
