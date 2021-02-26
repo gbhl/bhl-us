@@ -553,6 +553,7 @@
     <Content Include="Views\Subject\Index.cshtml" />
     <Content Include="Views\Shared\_BookBrowse.cshtml" />
     <Content Include="Views\Shared\_SegmentBrowse.cshtml" />
+    <Content Include="Views\Shared\_BrowsePager.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>

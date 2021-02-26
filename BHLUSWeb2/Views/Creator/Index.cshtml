@@ -36,14 +36,18 @@
             <div id="titles">
                 <div id="titlecontent" class="content">
                     <section>
-                        @Html.Partial("_BookBrowse", new ViewDataDictionary { { "searchResult", Model.BookResults }, { "showVolume", false} })
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "page", Model.Page }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.BookResults.Count }, { "hash", "#/titles" } })
+                        @Html.Partial("_BookBrowse", new ViewDataDictionary { { "searchResult", Model.BookResults }, { "showVolume", false } })
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "page", Model.Page }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.BookResults.Count }, { "hash", "#/titles" } })
                     </section>
                 </div>
             </div>
             <div id="sections" class="floatclear">
                 <div id="segmentcontent" class="content">
                     <section>
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "page", Model.Page }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.SegmentResults.Count }, { "hash", "#/sections" } })
                         @Html.Partial("_SegmentBrowse", new ViewDataDictionary { { "searchResult", Model.SegmentResults } })
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "page", Model.Page }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.SegmentResults.Count }, { "hash", "#/sections" } })
                     </section>
                 </div>
             </div>

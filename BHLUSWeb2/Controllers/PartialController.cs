@@ -266,6 +266,11 @@ namespace MOBOT.BHL.Web2.Controllers
             return PartialView();
         }
 
+        public ActionResult _BrowsePager()
+        {
+            return PartialView();
+        }
+
         public ActionResult _CollectionFeature()
         {
             Collection collection = GetFeaturedCollection();

@@ -1,0 +1,55 @@
+﻿@{
+    var path = ViewData["path"] as string;
+    var sort = ViewData["sort"] as string;
+    var page = Convert.ToInt32(ViewData["page"]);
+    var numPerPage = Convert.ToInt32(ViewData["numPerPage"]);
+    var totalPublications = Convert.ToInt32(ViewData["totalPublications"]);
+    var hash = ViewData["hash"] as string;
+    var totalPages = (totalPublications % numPerPage == 0 ?  totalPublications / numPerPage : totalPublications / numPerPage + 1);
+
+}
+@if (totalPublications > numPerPage)
+{
+    <div class="searchPagerContainer">
+        <div class="searchPager">
+            @{
+                long start = 1;
+                long end = (totalPages > 10) ? 10 : totalPages;
+                if (page - 5 > 1)
+                {
+                    if ((page + 4) <= totalPages)
+                    {
+                        start = page - 5; end = page + 4;
+                    }
+                    else
+                    {
+                        start = totalPages - 9; end = totalPages;
+                    }
+                }
+            }
+
+            @if (page > 1)
+            {
+                <a href="@path/@sort/@(page-1)/@numPerPage@hash" class="searchPagerControl">< Prev</a><text>&nbsp;&nbsp;</text>
+            }
+
+            @for (long x = start; x <= end; x++)
+            {
+                if (x == page)
+                {
+                    <text>@x</text>
+                }
+                else
+                {
+                    <a href="@path/@sort/@x/@numPerPage@hash" class="searchPagerPage">@x</a>
+                }
+            }
+            @if (page < totalPages)
+            {
+                <text>&nbsp; &nbsp;</text><a href="@path/@sort/@(page+1)/@numPerPage@hash" class="searchPagerControl">Next ></a>
+            }
+        </div>
+    </div>
+}
+
+
