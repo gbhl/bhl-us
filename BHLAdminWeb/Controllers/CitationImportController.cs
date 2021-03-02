@@ -151,6 +151,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             CitationImportModel model = (CitationImportModel)TempData["Model"] ?? new CitationImportModel();
 
             int userId = Helper.GetCurrentUserUID(Request);//  new HttpRequestWrapper(Request));
+            model.GetRowCount();
             model.GetRows(true, false, userId);
 
             ViewBag.PageTitle += "Segment Import";

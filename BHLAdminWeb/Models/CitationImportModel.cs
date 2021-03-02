@@ -169,6 +169,14 @@ namespace MOBOT.BHL.AdminWeb.Models
             set { _rows = value; }
         }
 
+        private int _numRows = 0;
+
+        public int NumRows
+        {
+            get { return _numRows; }
+            set { _numRows = value; }
+        }
+
         #endregion Properties
 
         #region Enum
@@ -369,6 +377,29 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             this.Rows = rows;
+        }
+
+        /// <summary>
+        /// Count the number of data rows in the specified file
+        /// </summary>
+        public void GetRowCount()
+        {
+            int numRows = 0;
+
+            switch(this.DataSourceType)
+            {
+                case "text/plain":
+                    numRows = GetRowCountFromTextFile();
+                    break;
+                case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+                    numRows = GetRowCountFromExcel(ExcelType.Xlsx);
+                    break;
+                case "application/vnd.ms-excel":
+                    numRows = GetRowCountFromExcel(ExcelType.Xls);
+                    break;
+            }
+
+            this.NumRows = numRows;
         }
 
         /// <summary>
@@ -580,7 +611,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             if (line != null)
             {
                 // Get the column values
-                string[] columns = line.Split(GetDelimiterChar(this.ColumnDelimiter), StringSplitOptions.RemoveEmptyEntries);
+                string[] columns = line.Split(GetDelimiterChar(this.ColumnDelimiter));//, StringSplitOptions.RemoveEmptyEntries);
 
                 // Parse the details of each column
                 for (int x = 0; x < columns.Length; x++)
@@ -714,10 +745,14 @@ namespace MOBOT.BHL.AdminWeb.Models
                         row.Add(value);
                     }
 
-                    if (persist)
-                        this.SaveCitation(row, userId);
-                    else
-                        importRows.Add(row);
+                    // Skip blank rows
+                    if (!IsRowBlank(row))
+                    {
+                        if (persist)
+                            this.SaveCitation(row, userId);
+                        else
+                            importRows.Add(row);
+                    }
                     count++;
                 }
             }
@@ -769,11 +804,15 @@ namespace MOBOT.BHL.AdminWeb.Models
                             row.Add(value);
                         }
 
-                        // Save the row
-                        if (persist)
-                            this.SaveCitation(row, userId);
-                        else
-                            importRows.Add(row);
+                        // Skip blank rows
+                        if (!IsRowBlank(row))
+                        {
+                            // Save the row
+                            if (persist)
+                                this.SaveCitation(row, userId);
+                            else
+                                importRows.Add(row);
+                        }
                     }
                     count++;
                 }
@@ -789,6 +828,87 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             return importRows;
+        }
+
+        /// <summary>
+        /// Count the total number of rows in a text file
+        /// </summary>
+        /// <returns></returns>
+        private int GetRowCountFromTextFile()
+        {
+            int numRows = 0;
+
+            using (System.IO.StreamReader file = new System.IO.StreamReader(this.FilePath, Encoding.GetEncoding(Convert.ToInt32(this.CodePage))))
+            {
+                string line = null;
+
+                // Skip the specified number of rows
+                if (this.HeaderRowsToSkip > 0)
+                {
+                    int counter = 0;
+                    while ((line = ReadTextLine(file, this.RowDelimiter)) != null && counter < this.HeaderRowsToSkip) counter++;
+                }
+
+                // Skip the row with the column names
+                if (this.ColumnNamesInFirstRow) if (file.Peek() >= 0) line = ReadTextLine(file, this.RowDelimiter);
+
+                // Read the rows
+                while ((line = ReadTextLine(file, this.RowDelimiter)) != null) numRows++;
+            }
+
+            return numRows;
+        }
+
+        /// <summary>
+        /// Count the total number of rows in an Excel file
+        /// </summary>
+        /// <param name="excelType"></param>
+        /// <returns></returns>
+        private int GetRowCountFromExcel(ExcelType excelType)
+        {
+            int numRows = 0;
+
+            FileStream stream = File.Open(this.FilePath, FileMode.Open, System.IO.FileAccess.Read);
+            IExcelDataReader excelReader = null;
+            try
+            {
+                if (excelType == ExcelType.Xls)
+                    // Reading from a binary Excel file ('97-2003 format; *.xls)
+                    excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
+                else
+                    // Reading from a OpenXml Excel file (2007 format; *.xlsx)
+                    excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+
+                numRows = excelReader.AsDataSet().Tables[excelReader.Name].Rows.Count;
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                // Free resources (IExcelDataReader is IDisposable)
+                if (!excelReader.IsClosed) excelReader.Close();
+            }
+
+            return numRows;
+        }
+
+        /// <summary>
+        /// Checks all the elements in the row for blank values
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns>True if all values are blank, otherwise False</returns>
+        private bool IsRowBlank(List<string> row)
+        {
+            bool isBlank = true;
+
+            foreach(string value in row) 
+            {
+                if (!string.IsNullOrWhiteSpace(value)) { isBlank = false; break; }
+            }
+
+            return isBlank;
         }
 
         /// <summary>
