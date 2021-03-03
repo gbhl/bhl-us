@@ -421,6 +421,27 @@ namespace MOBOT.BHL.BHLDOIService
             set { _authorRole711 = value; }
         }
 
+        private int _authorTypePerson = 1;
+        public int AuthorTypePerson
+        {  
+            get { return _authorTypePerson; } 
+            set { _authorTypePerson = value; }
+        }
+
+        private int _authorTypeCorporation = 2;
+        public int AuthorTypeCorporation
+        {
+            get { return _authorTypeCorporation; }
+            set { _authorTypeCorporation = value; }
+        }
+
+        private int _authorTypeMeeting = 3;
+        public int AuthorTypeMeeting
+        {
+            get { return _authorTypeMeeting; }
+            set { _authorTypeMeeting = value; }
+        }
+
         public void LoadAppConfig()
         {
             XmlDocument doc = new XmlDocument();
@@ -665,6 +686,18 @@ namespace MOBOT.BHL.BHLDOIService
                     if (node.Attributes.GetNamedItem("key").Value == "AuthorRole_711")
                     {
                         this.AuthorRole711 = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "AuthorTypePerson")
+                    {
+                        this.AuthorTypePerson = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "AuthorTypeCorporation")
+                    {
+                        this.AuthorTypeCorporation = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "AuthorTypeMeeting")
+                    {
+                        this.AuthorTypeMeeting = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
                     }
                 }
             }

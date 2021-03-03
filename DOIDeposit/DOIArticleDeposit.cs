@@ -153,25 +153,35 @@ namespace MOBOT.BHL.DOIDeposit
                 foreach (DOIDepositData.Contributor contributor in Data.Contributors)
                 {
                     string sequence = this.GetSequenceString(contributor.Sequence);
+                    string role = this.GetRoleString(contributor.Role);
 
-                    string lastName = string.Empty;
-                    string firstName = string.Empty;
-                    if (contributor.PersonName.IndexOf(',') >= 0)
+                    if (!string.IsNullOrEmpty(contributor.PersonName))
                     {
-                        lastName = contributor.PersonName.Substring(0, contributor.PersonName.IndexOf(','));
-                        firstName = contributor.PersonName.Substring(contributor.PersonName.IndexOf(',') + 1);
+                        string lastName = string.Empty;
+                        string firstName = string.Empty;
+                        if (contributor.PersonName.IndexOf(',') >= 0)
+                        {
+                            lastName = contributor.PersonName.Substring(0, contributor.PersonName.IndexOf(','));
+                            firstName = contributor.PersonName.Substring(contributor.PersonName.IndexOf(',') + 1);
+                        }
+                        else
+                        {
+                            lastName = contributor.PersonName;
+                        }
+
+                        firstName = firstName.TrimEnd(',').Trim();
+
+                        content.AppendLine("<person_name sequence=\"" + sequence + "\" contributor_role=\"" + role + "\">");
+                        if (firstName.Length > 0) content.AppendLine("<given_name>" + HttpUtility.HtmlEncode(firstName) + "</given_name>");
+                        content.AppendLine("<surname>" + HttpUtility.HtmlEncode(lastName) + "</surname>");
+                        content.AppendLine("</person_name>");
                     }
                     else
                     {
-                        lastName = contributor.PersonName;
+                        content.Append("<organization sequence=\"" + sequence + "\" contributor_role=\"" + role + "\">");
+                        content.Append(HttpUtility.HtmlEncode(contributor.OrganizationName));
+                        content.Append("</organization>\n");
                     }
-
-                    firstName = firstName.TrimEnd(',').Trim();
-
-                    content.AppendLine("<person_name sequence=\"" + sequence + "\" contributor_role=\"author\">");
-                    if (firstName.Length > 0) content.AppendLine("<given_name>" + HttpUtility.HtmlEncode(firstName) + "</given_name>");
-                    content.AppendLine("<surname>" + HttpUtility.HtmlEncode(lastName) + "</surname>");
-                    content.AppendLine("</person_name>");
                 }
                 content.AppendLine("</contributors>");
             }
@@ -223,6 +233,34 @@ namespace MOBOT.BHL.DOIDeposit
             }
 
             return sequenceString;
+        }
+
+        /// <summary>
+        /// Return a string representation of the specified contributor role
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns></returns>
+        private string GetRoleString(DOIDepositData.ContributorRole role)
+        {
+            string roleString = string.Empty;
+
+            switch (role)
+            {
+                case DOIDepositData.ContributorRole.Author:
+                    roleString = "author";
+                    break;
+                case DOIDepositData.ContributorRole.Editor:
+                    roleString = "editor";
+                    break;
+                case DOIDepositData.ContributorRole.Chair:
+                    roleString = "chair";
+                    break;
+                case DOIDepositData.ContributorRole.Translator:
+                    roleString = "translator";
+                    break;
+            }
+
+            return roleString;
         }
     }
 }

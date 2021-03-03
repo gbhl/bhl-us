@@ -84,6 +84,10 @@
     <add key="AuthorRole_700" value="4"/>
     <add key="AuthorRole_710" value="5"/>
     <add key="AuthorRole_711" value="6"/>
+    <!-- Author Types.  These should match the rows in teh AuthorType database table. -->
+    <add key="AuthorTypePerson" value="1"/>
+    <add key="AuthorTypeCorporation" value="2"/>
+    <add key="AuthorTypeMeeting" value="3"/>
   </appSettings>
   <!-- This section contains the log4net configuration settings -->
   <log4net>

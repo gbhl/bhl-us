@@ -433,7 +433,7 @@ namespace MOBOT.BHL.BHLDOIService
                     if (titleAuthor.AuthorRoleID == configParms.AuthorRole100 ||
                         titleAuthor.AuthorRoleID == configParms.AuthorRole700)
                     {
-                        contributor.PersonName = titleAuthor.FullName;
+                        contributor.PersonName = titleAuthor.FullName.TrimEnd(',');
                         contributor.Role = DOIDepositData.ContributorRole.Author;
                         contributor.Sequence = (titleAuthor.AuthorRoleID == configParms.AuthorRole100 ?
                                                 DOIDepositData.PersonNameSequence.First :
@@ -441,7 +441,7 @@ namespace MOBOT.BHL.BHLDOIService
                     }
                     else
                     {
-                        contributor.OrganizationName = titleAuthor.FullName;
+                        contributor.OrganizationName = titleAuthor.FullName.TrimEnd(',');
                         contributor.Role = DOIDepositData.ContributorRole.Author;
                         contributor.Sequence = (titleAuthor.AuthorRoleID == configParms.AuthorRole110 ||
                                                 titleAuthor.AuthorRoleID == configParms.AuthorRole111 ?
@@ -522,11 +522,16 @@ namespace MOBOT.BHL.BHLDOIService
                 {
                     DOIDepositData.Contributor contributor = new DOIDepositData.Contributor();
 
-                    contributor.PersonName = itemAuthor.FullName;
+                    if (itemAuthor.Author.AuthorTypeID == configParms.AuthorTypePerson)
+                        contributor.PersonName = itemAuthor.FullName.TrimEnd(',');
+                    else
+                        contributor.OrganizationName = itemAuthor.FullName.TrimEnd(',');
+
                     contributor.Role = DOIDepositData.ContributorRole.Author;
                     contributor.Sequence = (first ?
                                             DOIDepositData.PersonNameSequence.First :
                                             DOIDepositData.PersonNameSequence.Additional);
+
                     first = false;
 
                     data.Contributors.Add(contributor);
