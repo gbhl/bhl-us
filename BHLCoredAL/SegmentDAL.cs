@@ -102,6 +102,7 @@ namespace MOBOT.BHL.DAL
                     foreach (ItemAuthor itemAuthor in segment.AuthorList)
                     {
                         itemAuthor.Author = authorDAL.AuthorSelectAuto(connection, transaction, itemAuthor.AuthorID);
+                        itemAuthor.Author.AuthorIdentifiers = new AuthorIdentifierDAL().AuthorIdentifierSelectByAuthorID(connection, transaction, itemAuthor.Author.AuthorID);
                     }
                 }
 

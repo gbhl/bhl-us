@@ -434,7 +434,6 @@ namespace MOBOT.BHL.BHLDOIService
                         titleAuthor.AuthorRoleID == configParms.AuthorRole700)
                     {
                         contributor.PersonName = titleAuthor.FullName.TrimEnd(',');
-                        contributor.Role = DOIDepositData.ContributorRole.Author;
                         contributor.Sequence = (titleAuthor.AuthorRoleID == configParms.AuthorRole100 ?
                                                 DOIDepositData.PersonNameSequence.First :
                                                 DOIDepositData.PersonNameSequence.Additional);
@@ -442,12 +441,18 @@ namespace MOBOT.BHL.BHLDOIService
                     else
                     {
                         contributor.OrganizationName = titleAuthor.FullName.TrimEnd(',');
-                        contributor.Role = DOIDepositData.ContributorRole.Author;
                         contributor.Sequence = (titleAuthor.AuthorRoleID == configParms.AuthorRole110 ||
                                                 titleAuthor.AuthorRoleID == configParms.AuthorRole111 ?
                                                 DOIDepositData.PersonNameSequence.First :
                                                 DOIDepositData.PersonNameSequence.Additional);
                     }
+
+                    foreach (AuthorIdentifier authorIdentifier in titleAuthor.Author.AuthorIdentifiers)
+                    {
+                        if (authorIdentifier.IdentifierName == "ORCID") { contributor.ORCID = authorIdentifier.IdentifierValue; break; }
+                    }
+
+                    contributor.Role = DOIDepositData.ContributorRole.Author;
 
                     data.Contributors.Add(contributor);
                 }
@@ -526,6 +531,11 @@ namespace MOBOT.BHL.BHLDOIService
                         contributor.PersonName = itemAuthor.FullName.TrimEnd(',');
                     else
                         contributor.OrganizationName = itemAuthor.FullName.TrimEnd(',');
+
+                    foreach(AuthorIdentifier authorIdentifier in itemAuthor.Author.AuthorIdentifiers)
+                    {
+                        if (authorIdentifier.IdentifierName == "ORCID") { contributor.ORCID = authorIdentifier.IdentifierValue; break; }
+                    }
 
                     contributor.Role = DOIDepositData.ContributorRole.Author;
                     contributor.Sequence = (first ?

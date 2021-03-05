@@ -174,6 +174,7 @@ namespace MOBOT.BHL.DOIDeposit
                         content.AppendLine("<person_name sequence=\"" + sequence + "\" contributor_role=\"" + role + "\">");
                         if (firstName.Length > 0) content.AppendLine("<given_name>" + HttpUtility.HtmlEncode(firstName) + "</given_name>");
                         content.AppendLine("<surname>" + HttpUtility.HtmlEncode(lastName) + "</surname>");
+                        if (!string.IsNullOrWhiteSpace(contributor.ORCID)) content.Append("<ORCID authenticated=\"false\">" + HttpUtility.HtmlEncode(contributor.ORCID) + "</ORCID>\n");
                         content.AppendLine("</person_name>");
                     }
                     else

@@ -29,8 +29,9 @@ namespace MOBOT.BHL.DAL
                     foreach (TitleAuthor titleAuthor in title.TitleAuthors)
 					{
 						titleAuthor.Author = authorDAL.AuthorSelectAuto( connection, transaction, titleAuthor.AuthorID);
-					}
-				}
+                        titleAuthor.Author.AuthorIdentifiers = new AuthorIdentifierDAL().AuthorIdentifierSelectByAuthorID(connection, transaction, titleAuthor.Author.AuthorID);
+                    }
+                }
 
                 List<DOI> dois = new DOIDAL().DOISelectValidForTitle(connection, transaction, titleId);
                 foreach (DOI doi in dois)
