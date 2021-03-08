@@ -23,9 +23,9 @@
     <div class="column-wrap">
         <span>Sort By:</span>
         <ul>
-            <li class="@(Model.Sort == "title" || Model.Sort == "" ? "activesort" : "")"><a href="/creator/@Model.Author.AuthorID/title/@Model.Page/@Model.NumPerPage">Title</a></li>
-            <li class="@(Model.Sort == "author" ? "activesort" : "")"><a href="/creator/@Model.Author.AuthorID/author/@Model.Page/@Model.NumPerPage">Author</a></li>
-            <li class="@(Model.Sort == "year" ? "activesort" : "")"><a href="/creator/@Model.Author.AuthorID/year/@Model.Page/@Model.NumPerPage">Year</a></li>
+            <li class="@(Model.Sort == "title" || Model.Sort == "" ? "activesort" : "")"><a href="/creator/@Model.Author.AuthorID/title?bpg=1&ppg=1&psize=@Model.NumPerPage">Title</a></li>
+            <li class="@(Model.Sort == "author" ? "activesort" : "")"><a href="/creator/@Model.Author.AuthorID/author?bpg1&ppg=1&psize=@Model.NumPerPage">Author</a></li>
+            <li class="@(Model.Sort == "year" ? "activesort" : "")"><a href="/creator/@Model.Author.AuthorID/year?bpg=1&ppg=1&psize=@Model.NumPerPage">Year</a></li>
         </ul>
         <div class="floatclear"></div>
     </div>
@@ -36,18 +36,18 @@
             <div id="titles">
                 <div id="titlecontent" class="content">
                     <section>
-                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "page", Model.Page }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.BookResults.Count }, { "hash", "#/titles" } })
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "target", "book" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.BookResults.Count }, { "hash", "#/titles" } })
                         @Html.Partial("_BookBrowse", new ViewDataDictionary { { "searchResult", Model.BookResults }, { "showVolume", false } })
-                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "page", Model.Page }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.BookResults.Count }, { "hash", "#/titles" } })
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "target", "book" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.BookResults.Count }, { "hash", "#/titles" } })
                     </section>
                 </div>
             </div>
             <div id="sections" class="floatclear">
                 <div id="segmentcontent" class="content">
                     <section>
-                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "page", Model.Page }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.SegmentResults.Count }, { "hash", "#/sections" } })
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "target", "part" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.SegmentResults.Count }, { "hash", "#/sections" } })
                         @Html.Partial("_SegmentBrowse", new ViewDataDictionary { { "searchResult", Model.SegmentResults } })
-                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "page", Model.Page }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.SegmentResults.Count }, { "hash", "#/sections" } })
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "target", "part" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.SegmentResults.Count }, { "hash", "#/sections" } })
                     </section>
                 </div>
             </div>

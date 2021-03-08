@@ -179,7 +179,8 @@ namespace MOBOT.BHL.Web2
             routes.MapPageRoute("Recent", "recent/{top}/{lang}/{inst}", "~/recent.aspx", false, new RouteValueDictionary { { "top", "100" }, { "lang", "" }, { "inst", "" } });
             routes.MapPageRoute("RecentRSS", "recentrss/{top}/{lang}/{inst}", "~/recentrss.aspx", false, new RouteValueDictionary { { "top", "100" }, { "lang", "" }, { "inst", "" } });
 
-            routes.MapRoute("BrowseCreator", "creator/{creatorid}/{sort}/{page}/{numPerPage}", new { controller = "Creator", action = "Index", sort = "title", page = 1, numPerPage = browseNumPerPage });
+            //routes.MapRoute("BrowseCreator", "creator/{creatorid}/{sort}/{page}/{numPerPage}", new { controller = "Creator", action = "Index", sort = "title", page = 1, numPerPage = browseNumPerPage });
+            routes.MapRoute("BrowseCreator", "creator/{creatorid}/{sort}", new { controller = "Creator", action = "Index", sort = "title" });
             routes.MapRoute("BrowseSubject", "subject/{subject}/{sort}/{page}/{numPerPage}", new { controller = "Subject", action = "Index", sort = "title", page = 1, numPerPage = browseNumPerPage });
 
             /*

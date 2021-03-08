@@ -7,7 +7,8 @@ namespace MOBOT.BHL.Web2.Models
     {
         public Author Author { get; set; }
         public string Sort { get; set; }
-        public int Page { get; set; }
+        public int BookPage { get; set; }
+        public int PartPage { get; set; }
         public int NumPerPage { get; set; }
         public List<SearchBookResult> BookResults { get; set; } =  new List<SearchBookResult>();
         public List<Segment> SegmentResults { get; set; }  = new List<Segment>();
