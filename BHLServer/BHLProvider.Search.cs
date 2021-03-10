@@ -54,14 +54,14 @@ namespace MOBOT.BHL.Server
             return (new SearchDAL().TitleSelectByAuthorPaged(null, null, authorId, pageNum, numPages, sort));
         }
 
-        public List<SearchBookResult> TitleSelectByInstitutionAndStartsWith(string institutionCode, string startsWith)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByInstitutionAndStartsWith(string institutionCode, string startsWith, int pageNum, int numPages, string sort)
         {
-            return new SearchDAL().TitleSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith);
+            return new SearchDAL().TitleSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith, pageNum, numPages, sort);
         }
 
-        public List<SearchBookResult> TitleSelectByInstitutionAndStartsWithout(string institutionCode, string startsWith)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByInstitutionAndStartsWithout(string institutionCode, string startsWith, int pageNum, int numPages, string sort)
         {
-            return new SearchDAL().TitleSelectByInstitutionAndStartsWithout(null, null, institutionCode, startsWith);
+            return new SearchDAL().TitleSelectByInstitutionAndStartsWithout(null, null, institutionCode, startsWith, pageNum, numPages, sort);
         }
 
         public List<SearchBookResult> TitleSelectByKeyword(string keyword)

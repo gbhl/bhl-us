@@ -45,7 +45,7 @@ namespace MOBOT.BHL.Web2.Controllers
             var bookResults = GetInstitutionBooks(model.Institution.InstitutionCode, model.Start, model.BookPage, model.NumPerPage, model.Sort);
             model.TotalBooks = bookResults.Item1;
             model.BookResults = bookResults.Item2;
-            var segmentResults = GetInstitutionSegments(model.Institution.InstitutionCode, model.Start, model.BookPage, model.NumPerPage, model.Sort);
+            var segmentResults = GetInstitutionSegments(model.Institution.InstitutionCode, model.Start, model.PartPage, model.NumPerPage, model.Sort);
             model.TotalSegments = segmentResults.Item1;
             model.SegmentResults = segmentResults.Item2;
             var stats = new BHLProvider().StatsSelectForInstitution(model.Institution.InstitutionCode);
@@ -66,11 +66,11 @@ namespace MOBOT.BHL.Web2.Controllers
             {
                 if (startString == "0")
                 {
-                    //list = new BHLProvider().TitleSelectByInstitutionAndStartsWithout(institutionCode, "[a-z]");
+                    list = new BHLProvider().TitleSelectByInstitutionAndStartsWithout(institutionCode, "[a-z]", pageNum, numPages, sort);
                 }
                 else
                 {
-                    //list = new BHLProvider().TitleSelectByInstitutionAndStartsWith(institutionCode, startString);
+                    list = new BHLProvider().TitleSelectByInstitutionAndStartsWith(institutionCode, startString, pageNum, numPages, sort);
                 }
             }
 
@@ -86,11 +86,11 @@ namespace MOBOT.BHL.Web2.Controllers
             {
                 if (startString == "0")
                 {
-                    //list = new BHLProvider().SegmentSelectByInstitutionAndStartsWithout(institutionCode, "[a-z]");
+                    list = new BHLProvider().SegmentSelectByInstitutionAndStartsWithout(institutionCode, "[a-z]", pageNum, numPages, sort);
                 }
                 else
                 {
-                    //list = new BHLProvider().SegmentSelectByInstitutionAndStartsWith(institutionCode, startString);
+                    list = new BHLProvider().SegmentSelectByInstitutionAndStartsWith(institutionCode, startString, pageNum, numPages, sort);
                 }
             }
 

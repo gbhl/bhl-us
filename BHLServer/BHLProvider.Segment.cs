@@ -242,14 +242,14 @@ namespace MOBOT.BHL.Server
             return (new ItemIdentifierDAL().ItemIdentifierSelectBySegmentID(null, null, segmentID, 1));
         }
 
-        public List<Segment> SegmentSelectByInstitutionAndStartsWith(string institutionCode, string startsWith)
+        public Tuple<int, List<Segment>> SegmentSelectByInstitutionAndStartsWith(string institutionCode, string startsWith, int pageNum, int numPages, string sort)
         {
-            return new SegmentDAL().SegmentSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith);
+            return new SegmentDAL().SegmentSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith, pageNum, numPages, sort);
         }
 
-        public List<Segment> SegmentSelectByInstitutionAndStartsWithout(string institutionCode, string startsWith)
+        public Tuple<int, List<Segment>> SegmentSelectByInstitutionAndStartsWithout(string institutionCode, string startsWith, int pageNum, int numPages, string sort)
         {
-            return new SegmentDAL().SegmentSelectByInstitutionAndStartsWithout(null, null, institutionCode, startsWith);
+            return new SegmentDAL().SegmentSelectByInstitutionAndStartsWithout(null, null, institutionCode, startsWith, pageNum, numPages, sort);
         }
 
         public List<Segment> SegmentResolve(string doi, int startPageID)

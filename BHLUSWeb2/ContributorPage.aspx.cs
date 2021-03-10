@@ -87,11 +87,11 @@ namespace MOBOT.BHL.Web2
                 {
                     if (startString == "0")
                     {
-                        list = bhlProvider.TitleSelectByInstitutionAndStartsWithout(institutionCode, "[a-z]");
+                        //list = bhlProvider.TitleSelectByInstitutionAndStartsWithout(institutionCode, "[a-z]");
                     }
                     else
                     {
-                        list = provider.TitleSelectByInstitutionAndStartsWith(institutionCode, startString);
+                        //list = provider.TitleSelectByInstitutionAndStartsWith(institutionCode, startString);
                     }
 
                     // Cache the HTML fragment
@@ -122,11 +122,11 @@ namespace MOBOT.BHL.Web2
                 {
                     if (startString == "0")
                     {
-                        list = bhlProvider.SegmentSelectByInstitutionAndStartsWithout(institutionCode, "[a-z]");
+                        //list = bhlProvider.SegmentSelectByInstitutionAndStartsWithout(institutionCode, "[a-z]");
                     }
                     else
                     {
-                        list = provider.SegmentSelectByInstitutionAndStartsWith(institutionCode, startString);
+                        //list = provider.SegmentSelectByInstitutionAndStartsWith(institutionCode, startString);
                     }
 
                     // Cache the HTML fragment

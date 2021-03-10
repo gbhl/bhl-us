@@ -65,7 +65,7 @@ BEGIN
 	INSERT		#Title
 	SELECT		x.TitleID, @AuthorId AS AuthorID
 	FROM		(
-				SELECT DISTINCT t.TitleID, b.StartYear as BookYear, t.StartYear AS TitleYear
+				SELECT DISTINCT t.TitleID, t.StartYear
 				FROM		dbo.Title t WITH (NOLOCK)
 							INNER JOIN dbo.TitleAuthor ta WITH (NOLOCK) ON t.TitleID = ta.TitleID
 							INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON t.TitleID = it.TitleID AND it.IsPrimary = 1
@@ -74,7 +74,7 @@ BEGIN
 				WHERE		t.PublishReady = 1
 				AND			ta.AuthorID = @AuthorId
 				) x
-	ORDER BY	CASE WHEN ISNULL(x.BookYear, '') = '' THEN CONVERT(nvarchar(20), x.TitleYear) ELSE x.BookYear END
+	ORDER BY	x.StartYear
 	OFFSET		@NumRows * (@PageNum - 1) ROWS
 	FETCH NEXT	@NumRows ROWS ONLY OPTION (RECOMPILE)
 END
