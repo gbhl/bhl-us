@@ -3,9 +3,15 @@ using System.Collections.Generic;
 
 namespace MOBOT.BHL.Web2.Models
 {
-    public class SubjectModel
+    public class ContributorBrowseModel
     {
-        public string Keyword { get; set; }
+        public Institution Institution { get; set; }
+        public string Start { get; set; }
+        public string DisplayStart { get; set; }
+        public int NumTitles { get; set; }
+        public int NumBooks { get; set; }
+        public int NumPages { get; set; }
+        public int NumSegments { get; set; }
         public string Sort { get; set; }
         public int BookPage { get; set; }
         public int PartPage { get; set; }

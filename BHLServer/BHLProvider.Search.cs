@@ -1,5 +1,6 @@
 ﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System;
 using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
@@ -48,6 +49,11 @@ namespace MOBOT.BHL.Server
             return (new SearchDAL().TitleSelectByAuthor(null, null, authorId));
         }
 
+        public Tuple<int, List<SearchBookResult>> TitleSelectByAuthorPaged(int authorId, int pageNum, int numPages, string sort)
+        {
+            return (new SearchDAL().TitleSelectByAuthorPaged(null, null, authorId, pageNum, numPages, sort));
+        }
+
         public List<SearchBookResult> TitleSelectByInstitutionAndStartsWith(string institutionCode, string startsWith)
         {
             return new SearchDAL().TitleSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith);
@@ -61,6 +67,11 @@ namespace MOBOT.BHL.Server
         public List<SearchBookResult> TitleSelectByKeyword(string keyword)
         {
             return new SearchDAL().TitleSelectByKeyword(null, null, keyword);
+        }
+
+        public Tuple<int, List<SearchBookResult>> TitleSelectByKeywordPaged(string keyword, int pageNum, int numPages, string sort)
+        {
+            return new SearchDAL().TitleSelectByKeywordPaged(null, null, keyword, pageNum, numPages, sort);
         }
 
         /// <summary>

@@ -10,7 +10,9 @@ namespace MOBOT.BHL.Web2.Models
         public int BookPage { get; set; }
         public int PartPage { get; set; }
         public int NumPerPage { get; set; }
-        public List<SearchBookResult> BookResults { get; set; } =  new List<SearchBookResult>();
-        public List<Segment> SegmentResults { get; set; }  = new List<Segment>();
+        public int TotalBooks { get; set; }
+        public int TotalSegments { get; set; }
+        public List<SearchBookResult> BookResults { get; set; } = new List<SearchBookResult>();
+        public List<Segment> SegmentResults { get; set; } = new List<Segment>();
     }
 }

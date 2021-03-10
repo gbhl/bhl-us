@@ -60,7 +60,7 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("BrowseAuthors", "browse/authors/{start}/{page}/{numPerPage}", new { controller = "Browse", action = "Authors", start = "a", page = 1, numPerPage = browseNumPerPage });
             routes.MapRoute("BrowseYear", "browse/year/{start}/{end}/{sort}/{page}/{numPerPage}", new { controller = "Browse", action = "Year", start = 1450, end = 1580, sort = "title", page = 1, numPerPage = browseNumPerPage });
             routes.MapRoute("BrowseCollection", "browse/collection/{name}/{start}/{sort}/{page}/{numPerPage}", new { controller = "Browse", action = "Collection", start = "a", sort = "title", page = 1, numPerPage = browseNumPerPage });
-            routes.MapRoute("BrowseContributor", "browse/contributor/{id}/{start}/{sort}/{page}/{numPerPage}", new { controller = "Browse", action = "Contributor", start = "a", sort = "title", page = 1, numPerPage = browseNumPerPage });
+            routes.MapRoute("BrowseContributor", "browse/contributor/{id}/{start}/{sort}", new { controller = "Browse", action = "Contributor", start = "a", sort = "title" });
 
             /*
             routes.MapPageRoute("Browse-TitleList", "browse/titles/{start}/{*sort}", "~/TitleList.aspx", false,
@@ -179,9 +179,8 @@ namespace MOBOT.BHL.Web2
             routes.MapPageRoute("Recent", "recent/{top}/{lang}/{inst}", "~/recent.aspx", false, new RouteValueDictionary { { "top", "100" }, { "lang", "" }, { "inst", "" } });
             routes.MapPageRoute("RecentRSS", "recentrss/{top}/{lang}/{inst}", "~/recentrss.aspx", false, new RouteValueDictionary { { "top", "100" }, { "lang", "" }, { "inst", "" } });
 
-            //routes.MapRoute("BrowseCreator", "creator/{creatorid}/{sort}/{page}/{numPerPage}", new { controller = "Creator", action = "Index", sort = "title", page = 1, numPerPage = browseNumPerPage });
             routes.MapRoute("BrowseCreator", "creator/{creatorid}/{sort}", new { controller = "Creator", action = "Index", sort = "title" });
-            routes.MapRoute("BrowseSubject", "subject/{subject}/{sort}/{page}/{numPerPage}", new { controller = "Subject", action = "Index", sort = "title", page = 1, numPerPage = browseNumPerPage });
+            routes.MapRoute("BrowseSubject", "subject/{subject}/{sort}", new { controller = "Subject", action = "Index", sort = "title" });
 
             /*
             routes.MapPageRoute("Creator", "creator/{creatorid}/{sort}", "~/CreatorPage.aspx", false,

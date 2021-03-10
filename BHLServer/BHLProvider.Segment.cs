@@ -24,6 +24,11 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectForAuthorID(null, null, authorID);
         }
 
+        public Tuple<int, List<Segment>> SegmentSelectForAuthorIDPaged(int authorID, int pageNum, int numPages, string sort)
+        {
+            return new SegmentDAL().SegmentSelectForAuthorIDPaged(null, null, authorID, pageNum, numPages, sort);
+        }
+
         public List<Segment> SegmentSelectByDateRange(string startDate, string endDate)
         {
             return new SegmentDAL().SegmentSelectByDateRange(null, null, startDate, endDate);
@@ -42,6 +47,11 @@ namespace MOBOT.BHL.Server
         public List<Segment> SegmentSelectForKeyword(string keyword)
         {
             return new SegmentDAL().SegmentSelectForKeyword(null, null, keyword);
+        }
+
+        public Tuple<int, List<Segment>> SegmentSelectForKeywordPaged(string keyword, int pageNum, int numPages, string sort)
+        {
+            return new SegmentDAL().SegmentSelectForKeywordPaged(null, null, keyword, pageNum, numPages, sort);
         }
 
         public List<Segment> SegmentSelectByItemID(int itemID)

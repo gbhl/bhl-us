@@ -147,6 +147,31 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public Tuple<int, List<SearchBookResult>> TitleSelectByAuthorPaged(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+                        int authorId, int pageNum, int numPages, string sort)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.TitleSelectByAuthorPaged", connection, transaction,
+                            CustomSqlHelper.CreateInputParameter("AuthorId", SqlDbType.Int, null, false, authorId),
+                            CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                            CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                            CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                            CustomSqlHelper.CreateOutputParameter("TotalTitles", SqlDbType.Int, null, false)))
+            {
+                using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
+                {
+                    // Get the page of titles for the author
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
+                    // Get the total number of titles for the author from the output parameter
+                    int totalTitles = (int)command.Parameters[4].Value;
+
+                    return new Tuple<int, List<SearchBookResult>>(totalTitles, list);
+                }
+            }
+        }
+
         public List<SearchBookResult> TitleSelectByInstitutionAndStartsWith(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
@@ -225,6 +250,31 @@ namespace MOBOT.BHL.DAL
                 {
                     List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
+                }
+            }
+        }
+
+        public Tuple<int, List<SearchBookResult>> TitleSelectByKeywordPaged(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string keyword, int pageNum, int numPages, string sort)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.TitleSelectByKeywordPaged", connection, transaction,
+                            CustomSqlHelper.CreateInputParameter("Keyword", SqlDbType.NVarChar, 50, false, keyword),
+                            CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                            CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                            CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                            CustomSqlHelper.CreateOutputParameter("TotalTitles", SqlDbType.Int, null, false)))
+            {
+                using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
+                {
+                    // Get the page of titles for the keyword
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
+                    // Get the total number of titles for the keyword from the output parameter
+                    int totalTitles = (int)command.Parameters[4].Value;
+
+                    return new Tuple<int, List<SearchBookResult>>(totalTitles, list);
                 }
             }
         }

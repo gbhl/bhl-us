@@ -10,10 +10,10 @@
             <h3>By "@Model.Author.NameExtended"</h3>
             <ul>
                 <li id="spanTitleSummary" class="titles">
-                    <a href="#/titles" title="Books">Books/Journals (@Model.BookResults.Count)</a>
+                    <a href="#/titles" title="Books">Books/Journals (@Model.TotalBooks)</a>
                 </li>
                 <li id="spanSectionSummary" class="sections">
-                    <a href="#/sections" title="Parts">Chapters/Articles/Treatments (@Model.SegmentResults.Count)</a>
+                    <a href="#/sections" title="Parts">Chapters/Articles/Treatments (@Model.TotalSegments)</a>
                 </li>
             </ul>
         </div>
@@ -36,18 +36,18 @@
             <div id="titles">
                 <div id="titlecontent" class="content">
                     <section>
-                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "target", "book" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.BookResults.Count }, { "hash", "#/titles" } })
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "target", "book" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.TotalBooks }, { "hash", "#/titles" } })
                         @Html.Partial("_BookBrowse", new ViewDataDictionary { { "searchResult", Model.BookResults }, { "showVolume", false } })
-                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "target", "book" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.BookResults.Count }, { "hash", "#/titles" } })
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "target", "book" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.TotalBooks }, { "hash", "#/titles" } })
                     </section>
                 </div>
             </div>
             <div id="sections" class="floatclear">
                 <div id="segmentcontent" class="content">
                     <section>
-                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "target", "part" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.SegmentResults.Count }, { "hash", "#/sections" } })
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "target", "part" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.TotalSegments}, { "hash", "#/sections" } })
                         @Html.Partial("_SegmentBrowse", new ViewDataDictionary { { "searchResult", Model.SegmentResults } })
-                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "target", "part" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.SegmentResults.Count }, { "hash", "#/sections" } })
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/creator/" + Model.Author.AuthorID.ToString() }, { "sort", Model.Sort }, { "target", "part" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.TotalSegments}, { "hash", "#/sections" } })
                     </section>
                 </div>
             </div>
@@ -115,41 +115,6 @@ function selectTab() {
     } else {
         subSection.show();
     }
-}
-
-function pagerClick(tab) {
-    var qs = buildQS();
-    if (tab === '') {
-        window.location.href = '/search?' + qs;
-    }
-    else {
-        window.location.href = '/search?' + qs + '#' + tab; // set tab to which to return
-    }
-}
-
-function buildQS() {
-    var qs = 'searchTerm=' + encodeURIComponent( $('#Params_SearchTerm').val() ) +
-        "&tinc=" + $('#Params_TermInclude').val() +
-        '&searchCat=' + $('#Params_SearchCategory').val() +
-        '&stype=' + $('#Params_SearchType').val() +
-        '&lname=' + encodeURIComponent( $('#Params_LastName').val() ) +
-        "&ninc=" + $('#Params_LastNameInclude').val() +
-        '&vol=' + encodeURIComponent( $('#Params_Volume').val() ) +
-        '&yr=' + encodeURIComponent( $('#Params_Year').val() ) +
-        '&subj=' + encodeURIComponent( $('#Params_Subject').val() ) +
-        "&sinc=" + $('#Params_SubjectInclude').val() +
-        '&lang=' + $('#Params_Language').val() +
-        '&col=' + encodeURIComponent( $('#Params_Collection').val() ) +
-        '&nt=' + encodeURIComponent( $('#Params_Notes').val() ) +
-        '&ntinc=' + $('#Params_NotesInclude').val() +
-        '&txt=' + encodeURIComponent( $('#Params_Text').val() ) +
-        '&txinc=' + $('#Params_TextInclude').val() +
-        '&ppage=' + $('#ItemPage').val() +
-        '&apage=' + $('#AuthorPage').val() +
-        '&kpage=' + $('#KeywordPage').val() +
-        '&npage=' + $('#NamePage').val();
-
-    return qs;
 }
 //]]>
     </script>

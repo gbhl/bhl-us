@@ -22,8 +22,12 @@ namespace MOBOT.BHL.Web2.Controllers
             model.BookPage = bpg ?? 1;
             model.PartPage = ppg ?? 1;
             model.NumPerPage = psize ?? browseNumPerPage;
-            model.BookResults = bhlProvider.TitleSelectByKeyword(model.Keyword);
-            model.SegmentResults = bhlProvider.SegmentSelectForKeyword(model.Keyword);
+            var bookResults = bhlProvider.TitleSelectByKeywordPaged(model.Keyword, model.BookPage, model.NumPerPage, model.Sort);
+            model.TotalBooks = bookResults.Item1;
+            model.BookResults = bookResults.Item2;
+            var segmentResults = bhlProvider.SegmentSelectForKeywordPaged(model.Keyword, model.PartPage, model.NumPerPage, model.Sort);
+            model.TotalSegments = segmentResults.Item1;
+            model.SegmentResults = segmentResults.Item2;
 
             return View(model);
         }
