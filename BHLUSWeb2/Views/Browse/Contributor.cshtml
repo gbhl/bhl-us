@@ -170,8 +170,8 @@ function selectTab() {
     subSections.hide();
 
     // Highlight selected link
-    $('#linkbar a').removeClass('active');
-    $('#linkbar .' + stateName + ' a').addClass('active').blur();
+    $('#sub-nav-tabs a').removeClass('active');
+    $('#sub-nav-tabs .' + stateName + ' a').addClass('active').blur();
 
     // Special case
     if (stateName == 'all') {
@@ -185,25 +185,11 @@ function selectTab() {
     } else {
         subSection.show();
     }
-    /*
+
     // Set the hash on the main nav links
     $('#sub-nav a').each(function () {
         $(this).attr('href', $(this).attr('href').replace('#/sections', '').replace('#/titles', '') + '#/' + stateName);
     });
-
-    // Set the hash on the sort links
-    $('#sortbar a').each(function () {
-        $(this).attr('href', $(this).attr('href').replace('#/sections', '').replace('#/titles', '') + '#/' + stateName);
-    });
-
-    // If no default sub-section found then head on to the default otherwise show selected sub-section
-    if (!subSection.length) {
-        $.History.go('/titles');
-        return false;
-    } else {
-        subSection.show();
-    }
-    */
 }
 //]]>
     </script>
