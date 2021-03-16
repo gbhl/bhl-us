@@ -29,9 +29,9 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectForAuthorIDPaged(null, null, authorID, pageNum, numPages, sort);
         }
 
-        public List<Segment> SegmentSelectByDateRange(string startDate, string endDate)
+        public Tuple<int, List<Segment>> SegmentSelectByDateRange(int startDate, int endDate, int pageNum, int numPages, string sort)
         {
-            return new SegmentDAL().SegmentSelectByDateRange(null, null, startDate, endDate);
+            return new SegmentDAL().SegmentSelectByDateRange(null, null, startDate.ToString(), endDate.ToString(), pageNum, numPages, sort);
         }
 
         public List<Segment> SegmentSelectByTitleLike(string title)

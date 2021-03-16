@@ -44,16 +44,16 @@
     <h1 class="column-wrap">
         @if (Model.Start.ToUpper() == "ALL")
         {
-            @Html.Raw("All " + Model.NumBooks.ToString() + " ")
+            @Html.Raw("All " + Model.TotalBooks.ToString() + " ")
         }
         else
         {
-            @Html.Raw(Model.NumBooks.ToString() + " ")
+            @Html.Raw(Model.TotalBooks.ToString() + " ")
         }
         items in @Model.Collection.CollectionName
         @if (Model.Start.ToUpper() != "ALL")
         {
-            @Html.Raw(" beginning with A")
+            @Html.Raw(" beginning with " + (Model.Start == "0" ? " a number" : Model.Start.ToUpper()))
         }
     </h1>
 </nav>
@@ -72,7 +72,7 @@
     <section>
         <p>This collection contains <span style='font-weight:bolder'>@Model.NumBooks</span> volumes from <span style='font-weight:bolder'>@Model.NumTitles</span> titles, containing <span style='font-weight:bolder'>@Model.NumPages</span> pages.</p>
         @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/browse/collection/" + Model.Collection.PreferredUrl + "/" + Model.Start }, { "sort", Model.Sort }, { "target", "book" }, { "bookPage", Model.BookPage }, { "partPage", "0" }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.TotalBooks }, { "hash", "#/titles" } })
-        @Html.Partial("_BookBrowse", new ViewDataDictionary { { "searchResult", Model.BookResults }, { "showVolume", false } })
+        @Html.Partial("_BookBrowse", new ViewDataDictionary { { "searchResult", Model.BookResults }, { "showVolume", Model.ShowVolume } })
         @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/browse/collection/" + Model.Collection.PreferredUrl + "/" + Model.Start }, { "sort", Model.Sort }, { "target", "book" }, { "bookPage", Model.BookPage }, { "partPage", "0" }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.TotalBooks }, { "hash", "#/titles" } })
     </section>
     <aside>

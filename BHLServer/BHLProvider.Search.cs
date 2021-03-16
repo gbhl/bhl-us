@@ -88,9 +88,9 @@ namespace MOBOT.BHL.Server
         /// Select Titles for a particular date range
         /// </summary>
         /// <returns>List of SearchBookResults.</returns>
-        public List<SearchBookResult> TitleSelectByDateRange(int startDate, int endDate)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByDateRange(int startDate, int endDate, int pageNum, int numPages, string sort)
         {
-            return (new SearchDAL().TitleSelectByDateRange(null, null, startDate, endDate));
+            return (new SearchDAL().TitleSelectByDateRange(null, null, startDate, endDate, pageNum, numPages, sort));
         }
 
         /// <summary>
@@ -99,9 +99,9 @@ namespace MOBOT.BHL.Server
         /// <param name="collectionID"></param>
         /// <param name="startString"></param>
         /// <returns>List of SearchBookResults</returns>
-        public List<SearchBookResult> TitleSelectByCollectionAndStartsWith(int collectionID, string startString)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByCollectionAndStartsWith(int collectionID, string startString, int pageNum, int numPages, string sort)
         {
-            return new SearchDAL().TitleSelectByCollectionAndStartsWith(null, null, collectionID, startString);
+            return new SearchDAL().TitleSelectByCollectionAndStartsWith(null, null, collectionID, startString, pageNum, numPages, sort);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace MOBOT.BHL.Server
         /// <param name="collectionID"></param>
         /// <param name="startsWith"></param>
         /// <returns>List of SearchBookResult</returns>
-        public List<SearchBookResult> ItemSelectByCollectionAndStartsWith(int collectionID, string startsWith)
+        public Tuple<int, List<SearchBookResult>> ItemSelectByCollectionAndStartsWith(int collectionID, string startsWith, int pageNum, int numPages, string sort)
         {
-            return new SearchDAL().ItemSelectByCollectionAndStartsWith(null, null, collectionID, startsWith);
+            return new SearchDAL().ItemSelectByCollectionAndStartsWith(null, null, collectionID, startsWith, pageNum, numPages, sort);
         }
 
         /// <summary>

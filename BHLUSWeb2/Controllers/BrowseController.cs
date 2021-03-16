@@ -63,6 +63,7 @@ namespace MOBOT.BHL.Web2.Controllers
         private Tuple<int, List<SearchBookResult>> GetCollectionBooks(Collection collection, string startString, int pageNum, int numPages, string sort)
         {
             Tuple<int, List<SearchBookResult>> list = new Tuple<int, List<SearchBookResult>>(0, new List<SearchBookResult>());
+            if (startString.ToUpper() == "ALL") startString = string.Empty;
 
             if (collection != null)
             {
@@ -70,25 +71,11 @@ namespace MOBOT.BHL.Web2.Controllers
 
                 if (collection.CanContainItems > 0)
                 {
-                    if (startString == "0")
-                    {
-                        //list = bhlProvider.ItemSelectByCollectionAndStartsWithout(collection.CollectionID, "[a-z]", pageNum, numPages, sort);
-                    }
-                    else
-                    {
-                        //list = bhlProvider.ItemSelectByCollectionAndStartsWith(collection.CollectionID, startString, pageNum, numPages, sort);
-                    }
+                    list = bhlProvider.ItemSelectByCollectionAndStartsWith(collection.CollectionID, (startString == "0" ? "[^a-z]" : startString), pageNum, numPages, sort);
                 }
                 if (collection.CanContainTitles > 0)
                 {
-                    if (startString == "0")
-                    {
-                        //list = bhlProvider.TitleSelectByCollectionAndStartsWithout(collection.CollectionID, "[a-z]", pageNum, numPages, sort);
-                    }
-                    else
-                    {
-                        //list = bhlProvider.TitleSelectByCollectionAndStartsWith(collection.CollectionID, startString, pageNum, numPages, sort);
-                    }
+                    list = bhlProvider.TitleSelectByCollectionAndStartsWith(collection.CollectionID, (startString == "0" ? "[^a-z]" : startString), pageNum, numPages, sort);
                 }
             }
 
@@ -133,14 +120,7 @@ namespace MOBOT.BHL.Web2.Controllers
 
             if (!string.IsNullOrWhiteSpace(institutionCode))
             {
-                if (startString == "0")
-                {
-                    list = new BHLProvider().TitleSelectByInstitutionAndStartsWithout(institutionCode, "[a-z]", pageNum, numPages, sort);
-                }
-                else
-                {
-                    list = new BHLProvider().TitleSelectByInstitutionAndStartsWith(institutionCode, startString, pageNum, numPages, sort);
-                }
+                list = new BHLProvider().TitleSelectByInstitutionAndStartsWithout(institutionCode, (startString == "0" ? "[^a-z]" : startString), pageNum, numPages, sort);
             }
 
             return list;
@@ -153,14 +133,7 @@ namespace MOBOT.BHL.Web2.Controllers
 
             if (!string.IsNullOrWhiteSpace(institutionCode))
             {
-                if (startString == "0")
-                {
-                    list = new BHLProvider().SegmentSelectByInstitutionAndStartsWithout(institutionCode, "[a-z]", pageNum, numPages, sort);
-                }
-                else
-                {
-                    list = new BHLProvider().SegmentSelectByInstitutionAndStartsWith(institutionCode, startString, pageNum, numPages, sort);
-                }
+                list = new BHLProvider().SegmentSelectByInstitutionAndStartsWithout(institutionCode, (startString == "0" ? "[^a-z]" : startString), pageNum, numPages, sort);
             }
 
             return list;
@@ -175,9 +148,31 @@ namespace MOBOT.BHL.Web2.Controllers
 
         // GET: Browse/Year
         [BrowseOutputCache(VaryByParam = "*")]
-        public ActionResult Year(int start, int end, string sort, int page, int numPerPage)
+        public ActionResult Year(string start, string end, string sort, int? bpg, int? ppg, int? psize)
         {
-            return View();
+            int browseNumPerPage = Convert.ToInt32(ConfigurationManager.AppSettings["DefaultBrowseNumPerPage"]);
+
+            YearBrowseModel model = new YearBrowseModel();
+            BHLProvider bhlProvider = new BHLProvider();
+
+            model.StartYear = start;
+            model.EndYear = end;
+            model.Sort = sort.ToLower();
+            model.BookPage = bpg ?? 1;
+            model.PartPage = ppg ?? 1;
+            model.NumPerPage = psize ?? browseNumPerPage;
+
+            if (Int32.TryParse(model.StartYear, out int sYear) && Int32.TryParse(model.EndYear, out int eYear))
+            {
+                var bookResults = bhlProvider.TitleSelectByDateRange(sYear, eYear, model.BookPage, model.NumPerPage, model.Sort);
+                model.TotalBooks = bookResults.Item1;
+                model.BookResults = bookResults.Item2;
+                var segmentResults = bhlProvider.SegmentSelectByDateRange(sYear, eYear, model.PartPage, model.NumPerPage, model.Sort);
+                model.TotalSegments = segmentResults.Item1;
+                model.SegmentResults = segmentResults.Item2;
+            }
+
+            return View(model);
         }
     }
 }

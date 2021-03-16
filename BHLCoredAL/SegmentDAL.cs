@@ -208,8 +208,8 @@ namespace MOBOT.BHL.DAL
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns>A list of type Segment</returns>
-        public List<Segment> SegmentSelectByDateRange(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, string startDate, string endDate)
+        public Tuple<int, List<Segment>> SegmentSelectByDateRange(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
+            string startDate, string endDate, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -217,13 +217,19 @@ namespace MOBOT.BHL.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByDateRange", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.VarChar, 20, false, startDate),
-                CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.VarChar, 20, false, endDate)))
+                CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.VarChar, 20, false, endDate),
+                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                CustomSqlHelper.CreateOutputParameter("TotalSegments", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
+                    // Get the page of segments
                     List<Segment> list = helper.ExecuteReader(command);
-
-                    return list;
+                    // Get the total number of segments
+                    int totalSegments = (int)command.Parameters[5].Value;
+                    return new Tuple<int, List<Segment>>(totalSegments, list);
                 }
             }
         }

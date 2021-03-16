@@ -42,7 +42,7 @@ namespace MOBOT.BHL.Web2
             }
             else
             {
-                searchBookResultList = bhlProvider.TitleSelectByDateRange(StartDate, EndDate);
+                //searchBookResultList = bhlProvider.TitleSelectByDateRange(StartDate, EndDate);
 
                 Cache.Add(cacheKey, searchBookResultList, null,
                     DateTime.Now.AddMinutes(Convert.ToDouble(ConfigurationManager.AppSettings["BrowseQueryCacheTime"])),
@@ -63,7 +63,7 @@ namespace MOBOT.BHL.Web2
             }
             else
             {
-                segmentResultList = bhlProvider.SegmentSelectByDateRange(StartDate.ToString(), EndDate.ToString());
+                //segmentResultList = bhlProvider.SegmentSelectByDateRange(StartDate.ToString(), EndDate.ToString());
 
                 Cache.Add(cacheKey, segmentResultList, null,
                     DateTime.Now.AddMinutes(Convert.ToDouble(ConfigurationManager.AppSettings["BrowseQueryCacheTime"])),

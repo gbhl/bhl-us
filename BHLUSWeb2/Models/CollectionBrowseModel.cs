@@ -6,7 +6,7 @@ namespace MOBOT.BHL.Web2.Models
     public class CollectionBrowseModel
     {
         public Collection Collection { get; set; }
-        public bool ShowVolume { get; set; }
+        public bool ShowVolume { get; set; } = false;
         public string Start { get; set; }
         public string DisplayStart { get; set; }
         public int NumTitles { get; set; }

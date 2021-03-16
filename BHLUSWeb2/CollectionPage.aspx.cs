@@ -146,7 +146,7 @@ namespace MOBOT.BHL.Web2
                         }
                         else
                         {
-                            list = provider.ItemSelectByCollectionAndStartsWith(collectionID, startString);
+                            //list = provider.ItemSelectByCollectionAndStartsWith(collectionID, startString);
                         }
                     }
 
@@ -158,7 +158,7 @@ namespace MOBOT.BHL.Web2
                         }
                         else
                         {
-                            list = provider.TitleSelectByCollectionAndStartsWith(collectionID, startString);
+                            //list = provider.TitleSelectByCollectionAndStartsWith(collectionID, startString);
                         }
                     }
 

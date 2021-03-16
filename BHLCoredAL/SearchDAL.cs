@@ -294,22 +294,28 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of SearchBookResults.</returns>
-        public List<SearchBookResult> TitleSelectByDateRange(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction,
-                        int startYear, int endYear)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByDateRange(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+                        int startYear, int endYear, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByDateRange", connection, transaction,
                             CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.Int, null, false, startYear),
-                            CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.Int, null, false, endYear)))
+                            CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.Int, null, false, endYear),
+                            CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                            CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                            CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                            CustomSqlHelper.CreateOutputParameter("TotalTitles", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
+                    // Get the page of titles
                     List<SearchBookResult> list = helper.ExecuteReader(command);
-                    return (list);
+                    // Get the total number of titles
+                    int totalTitles = (int)command.Parameters[5].Value;
+
+                    return new Tuple<int, List<SearchBookResult>>(totalTitles, list);
                 }
             }
         }
@@ -323,23 +329,28 @@ namespace MOBOT.BHL.DAL
         /// <param name="collectionID"></param>
         /// <param name="startString"></param>
         /// <returns>List of SearchBookResults</returns>
-        public List<SearchBookResult> TitleSelectByCollectionAndStartsWith(
-            SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction,
-            int collectionID,
-            string startString)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByCollectionAndStartsWith(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int collectionID, string startString, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByCollectionAndStartsWith",
                 connection, transaction,
                 CustomSqlHelper.CreateInputParameter("CollectionID", SqlDbType.Int, null, false, collectionID),
-                CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.VarChar, 1000, false, startString)))
+                CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.VarChar, 1000, false, startString),
+                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                CustomSqlHelper.CreateOutputParameter("TotalTitles", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
+                    // Get the page of titles
                     List<SearchBookResult> list = helper.ExecuteReader(command);
-                    return (list);
+                    // Get the total number of titles
+                    int totalTitles = (int)command.Parameters[5].Value;
+
+                    return new Tuple<int, List<SearchBookResult>>(totalTitles, list);
                 }
             }
         }
@@ -383,23 +394,28 @@ namespace MOBOT.BHL.DAL
         /// <param name="collectionID"></param>
         /// <param name="startString"></param>
         /// <returns>List of SearchBookResult</returns>
-        public List<SearchBookResult> ItemSelectByCollectionAndStartsWith(
-            SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction,
-            int collectionID,
-            string startString)
+        public Tuple<int, List<SearchBookResult>> ItemSelectByCollectionAndStartsWith(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int collectionID, string startString, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectByCollectionAndStartsWith",
                 connection, transaction,
                 CustomSqlHelper.CreateInputParameter("CollectionID", SqlDbType.Int, null, false, collectionID),
-                CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.VarChar, 255, false, startString)))
+                CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.VarChar, 255, false, startString),
+                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                CustomSqlHelper.CreateOutputParameter("TotalItems", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
+                    // Get the page of items
                     List<SearchBookResult> list = helper.ExecuteReader(command);
-                    return (list);
+                    // Get the total number of items
+                    int totalItems = (int)command.Parameters[5].Value;
+
+                    return new Tuple<int, List<SearchBookResult>>(totalItems, list);
                 }
             }
         }
