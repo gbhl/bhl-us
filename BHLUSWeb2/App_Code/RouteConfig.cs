@@ -59,7 +59,7 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("BrowseTitles", "browse/titles/{start}/{sort}/{page}/{numPerPage}", new { controller = "Browse", action = "Titles", start = "a", sort="title", page = 1, numPerPage = browseNumPerPage });
             routes.MapRoute("BrowseAuthors", "browse/authors/{start}/{page}/{numPerPage}", new { controller = "Browse", action = "Authors", start = "a", page = 1, numPerPage = browseNumPerPage });
             routes.MapRoute("BrowseYear", "browse/year/{start}/{end}/{sort}/{page}/{numPerPage}", new { controller = "Browse", action = "Year", start = 1450, end = 1580, sort = "title", page = 1, numPerPage = browseNumPerPage });
-            routes.MapRoute("BrowseCollection", "browse/collection/{name}/{start}/{sort}/{page}/{numPerPage}", new { controller = "Browse", action = "Collection", start = "a", sort = "title", page = 1, numPerPage = browseNumPerPage });
+            routes.MapRoute("BrowseCollection", "browse/collection/{id}/{start}/{sort}", new { controller = "Browse", action = "Collection", start = "a", sort = "title" });
             routes.MapRoute("BrowseContributor", "browse/contributor/{id}/{start}/{sort}", new { controller = "Browse", action = "Contributor", start = "a", sort = "title" });
 
             /*

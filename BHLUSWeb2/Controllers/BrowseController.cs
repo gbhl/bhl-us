@@ -21,9 +21,78 @@ namespace MOBOT.BHL.Web2.Controllers
 
         // GET: Browse/Collection
         [BrowseOutputCache(VaryByParam = "*")]
-        public ActionResult Collection(string name, string start, string sort, int page, int numPerPage)
+        public ActionResult Collection(string id, string start, string sort, int? bpg, int? psize)
         {
-            return View();
+            int browseNumPerPage = Convert.ToInt32(ConfigurationManager.AppSettings["DefaultBrowseNumPerPage"]);
+
+            CollectionBrowseModel model = new CollectionBrowseModel();
+            BHLProvider bhlProvider = new BHLProvider();
+
+            int collectionID;
+            List<Collection> collections = (string.IsNullOrWhiteSpace(id) ? new List<Collection>() : bhlProvider.CollectionSelectByUrl(id));
+            if (collections.Count > 0)
+            {
+                int.TryParse(collections[0].CollectionID.ToString(), out collectionID);
+            }
+            else
+            {
+                if (!int.TryParse(id, out collectionID))
+                { 
+                    return new RedirectResult("~/collectionnotfound");
+                }
+            }
+
+            model.Collection = bhlProvider.CollectionSelectAuto(collectionID);
+            if (model.Collection.CanContainItems > 0) model.ShowVolume = true;
+            model.Start = start;
+            model.Sort = sort.ToLower();
+            model.BookPage = bpg ?? 1;
+            model.NumPerPage = psize ?? browseNumPerPage;
+
+            var bookResults = GetCollectionBooks(model.Collection, model.Start, model.BookPage, model.NumPerPage, model.Sort);
+            model.TotalBooks = bookResults.Item1;
+            model.BookResults = bookResults.Item2;
+            var stats = new BHLProvider().StatsSelectForCollection(model.Collection.CollectionID);
+            model.NumTitles = stats.TitleCount;
+            model.NumBooks = stats.VolumeCount;
+            model.NumPages = stats.PageCount;
+
+            return View(model);
+        }
+
+        private Tuple<int, List<SearchBookResult>> GetCollectionBooks(Collection collection, string startString, int pageNum, int numPages, string sort)
+        {
+            Tuple<int, List<SearchBookResult>> list = new Tuple<int, List<SearchBookResult>>(0, new List<SearchBookResult>());
+
+            if (collection != null)
+            {
+                BHLProvider bhlProvider = new BHLProvider();
+
+                if (collection.CanContainItems > 0)
+                {
+                    if (startString == "0")
+                    {
+                        //list = bhlProvider.ItemSelectByCollectionAndStartsWithout(collection.CollectionID, "[a-z]", pageNum, numPages, sort);
+                    }
+                    else
+                    {
+                        //list = bhlProvider.ItemSelectByCollectionAndStartsWith(collection.CollectionID, startString, pageNum, numPages, sort);
+                    }
+                }
+                if (collection.CanContainTitles > 0)
+                {
+                    if (startString == "0")
+                    {
+                        //list = bhlProvider.TitleSelectByCollectionAndStartsWithout(collection.CollectionID, "[a-z]", pageNum, numPages, sort);
+                    }
+                    else
+                    {
+                        //list = bhlProvider.TitleSelectByCollectionAndStartsWith(collection.CollectionID, startString, pageNum, numPages, sort);
+                    }
+                }
+            }
+
+            return list;
         }
 
         // GET: Browse/Contributor
