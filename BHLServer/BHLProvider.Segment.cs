@@ -34,9 +34,9 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectByDateRange(null, null, startDate.ToString(), endDate.ToString(), pageNum, numPages, sort);
         }
 
-        public List<Segment> SegmentSelectByTitleLike(string title)
+        public Tuple<int, List<Segment>> SegmentSelectByTitleLike(string title, int pageNum, int numPages, string sort)
         {
-            return new SegmentDAL().SegmentSelectByTitleLike(null, null, title);
+            return new SegmentDAL().SegmentSelectByTitleLike(null, null, title, pageNum, numPages, sort);
         }
 
         public List<Segment> SegmentSelectByTitleNotLike(string title)

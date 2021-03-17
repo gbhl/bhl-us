@@ -78,21 +78,28 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of SearchBookResults.</returns>
-        public List<SearchBookResult> TitleSelectByNameLike(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction,
-                        string name)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByNameLike(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string name, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByNameLike", connection, transaction,
-                            CustomSqlHelper.CreateInputParameter("Name", SqlDbType.VarChar, 1000, false, name)))
+                            CustomSqlHelper.CreateInputParameter("Name", SqlDbType.VarChar, 1000, false, name),
+                            CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                            CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                            CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                            CustomSqlHelper.CreateOutputParameter("TotalTitles", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
+                    // Get the page of titles
                     List<SearchBookResult> list = helper.ExecuteReader(command);
-                    return (list);
+                    // Get the total number of titles
+                    int totalTitles = (int)command.Parameters[4].Value;
+
+                    return new Tuple<int, List<SearchBookResult>>(totalTitles, list);
+
                 }
             }
         }

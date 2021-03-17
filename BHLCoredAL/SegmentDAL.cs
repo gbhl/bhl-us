@@ -242,21 +242,27 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="title"></param>
         /// <returns></returns>
-        public List<Segment> SegmentSelectByTitleLike(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, string title)
+        public Tuple<int, List<Segment>> SegmentSelectByTitleLike(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
+            string title, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByTitleLike", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title)))
+                CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title),
+                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                CustomSqlHelper.CreateOutputParameter("TotalSegments", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
+                    // Get the page of segments
                     List<Segment> list = helper.ExecuteReader(command);
-
-                    return list;
+                    // Get the total number of segments
+                    int totalSegments = (int)command.Parameters[4].Value;
+                    return new Tuple<int, List<Segment>>(totalSegments, list);
                 }
             }
         }

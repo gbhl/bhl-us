@@ -211,7 +211,6 @@
     <Content Include="controls\SocialLinksPanel.ascx" />
     <Content Include="controls\TwitterFeedControl.ascx" />
     <Content Include="controls\ucFeatureBox.ascx" />
-    <Content Include="CreatorList.aspx" />
     <Content Include="css\bhlaustylereference.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -572,7 +571,6 @@
     <Content Include="services\PageSummaryService.asmx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="TitleList.aspx" />
     <Content Include="TitleNotFound.aspx" />
     <Content Include="TitlePage.aspx" />
     <Content Include="Search.aspx" />
@@ -749,13 +747,6 @@
     <Compile Include="controls\ucFeatureBox.ascx.designer.cs">
       <DependentUpon>ucFeatureBox.ascx</DependentUpon>
     </Compile>
-    <Compile Include="CreatorList.aspx.cs">
-      <DependentUpon>CreatorList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CreatorList.aspx.designer.cs">
-      <DependentUpon>CreatorList.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -858,10 +849,12 @@
     <Compile Include="ItemPage.aspx.designer.cs">
       <DependentUpon>ItemPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\AuthorsBrowseModel.cs" />
     <Compile Include="Models\CollectionBrowseModel.cs" />
     <Compile Include="Models\ContributorBrowseModel.cs" />
     <Compile Include="Models\CreatorModel.cs" />
     <Compile Include="Models\SubjectModel.cs" />
+    <Compile Include="Models\TitleBrowseModel.cs" />
     <Compile Include="Models\YearBrowseModel.cs" />
     <Compile Include="TitleUnavailable.aspx.cs">
       <DependentUpon>TitleUnavailable.aspx</DependentUpon>
@@ -996,13 +989,6 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
-    </Compile>
-    <Compile Include="TitleList.aspx.cs">
-      <DependentUpon>TitleList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TitleList.aspx.designer.cs">
-      <DependentUpon>TitleList.aspx</DependentUpon>
     </Compile>
     <Compile Include="TitleNotFound.aspx.cs">
       <DependentUpon>TitleNotFound.aspx</DependentUpon>

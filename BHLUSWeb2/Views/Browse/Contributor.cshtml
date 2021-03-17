@@ -190,6 +190,11 @@ function selectTab() {
     $('#sub-nav a').each(function () {
         $(this).attr('href', $(this).attr('href').replace('#/sections', '').replace('#/titles', '') + '#/' + stateName);
     });
+
+    // Set the hash on the sort links
+    $('#sortbar a').each(function () {
+        $(this).attr('href', $(this).attr('href').replace('#/sections', '').replace('#/titles', '') + '#/' + stateName);
+    });
 }
 //]]>
     </script>

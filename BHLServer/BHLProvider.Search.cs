@@ -25,9 +25,9 @@ namespace MOBOT.BHL.Server
         /// Select all values from Title like a particular string.
         /// </summary>
         /// <returns>List of SearchBookResults.</returns>
-        public List<SearchBookResult> TitleSelectByNameLike(string name)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByNameLike(string name, int pageNum, int numPages, string sort)
         {
-            return (new SearchDAL().TitleSelectByNameLike(null, null, name));
+            return (new SearchDAL().TitleSelectByNameLike(null, null, name, pageNum, numPages, sort));
         }
 
         /// <summary>

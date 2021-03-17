@@ -41,7 +41,7 @@ namespace MOBOT.BHL.DAL
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("AuthorSelectByNameLike", connection, transaction,
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.AuthorSelectByNameLike", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("FullName", SqlDbType.NVarChar, 255, false, fullName),
                 CustomSqlHelper.CreateInputParameter("ReturnCount", SqlDbType.Int, null, false, returnCount)))
             {
@@ -49,6 +49,29 @@ namespace MOBOT.BHL.DAL
                 {
                     List<Author> list = helper.ExecuteReader(command);
                     return list;
+                }
+            }
+        }
+
+        public Tuple<int, List<Author>> AuthorSelectByNameLikePaged(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string startsWith, int pageNum, int numPerPage)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.AuthorSelectByNameLikePaged", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 255, false, startsWith),
+                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPerPage),
+                CustomSqlHelper.CreateOutputParameter("TotalAuthors", SqlDbType.Int, null, false)))
+            {
+                using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
+                {
+                    // Get the page of authors
+                    List<Author> list = helper.ExecuteReader(command);
+                    // Get the total number of authors from the output parameter
+                    int totalAuthors = (int)command.Parameters[3].Value;
+                    return new Tuple<int, List<Author>>(totalAuthors, list);
                 }
             }
         }

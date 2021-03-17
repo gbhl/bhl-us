@@ -14,9 +14,22 @@ namespace MOBOT.BHL.Web2.Controllers
     {
         // GET: Browse/Authors
         [BrowseOutputCache(VaryByParam = "*")]
-        public ActionResult Authors(string start, int page, int numPerPage)
+        public ActionResult Authors(string start, int? bpg, int? psize)
         {
-            return View();
+            int browseNumPerPage = Convert.ToInt32(ConfigurationManager.AppSettings["DefaultBrowseNumPerPage"]);
+
+            AuthorsBrowseModel model = new AuthorsBrowseModel();
+            BHLProvider bhlProvider = new BHLProvider();
+
+            model.Start = start;
+            model.AuthorPage = bpg ?? 1;
+            model.NumPerPage = psize ?? browseNumPerPage;
+
+            var authorResults = bhlProvider.AuthorSelectByNameLikePaged(model.Start, model.AuthorPage, model.NumPerPage);
+            model.TotalAuthors = authorResults.Item1;
+            model.AuthorResults = authorResults.Item2;
+
+            return View(model);
         }
 
         // GET: Browse/Collection
@@ -141,9 +154,27 @@ namespace MOBOT.BHL.Web2.Controllers
 
         // GET: Browse/Titles
         [BrowseOutputCache(VaryByParam = "*")]
-        public ActionResult Titles(string start, string sort, int page, int numPerPage)
+        public ActionResult Titles(string start, string sort, int? bpg, int? ppg, int? psize)
         {
-            return View();
+            int browseNumPerPage = Convert.ToInt32(ConfigurationManager.AppSettings["DefaultBrowseNumPerPage"]);
+
+            TitleBrowseModel model = new TitleBrowseModel();
+            BHLProvider bhlProvider = new BHLProvider();
+
+            model.Start = start;
+            model.DisplayStart = (model.Start == "0") ? "a number" : "\"" + model.Start.ToUpper() + "\"";
+            model.Sort = sort.ToLower();
+            model.BookPage = bpg ?? 1;
+            model.PartPage = ppg ?? 1;
+            model.NumPerPage = psize ?? browseNumPerPage;
+            var bookResults = bhlProvider.TitleSelectByNameLike((model.Start == "0" ? "[^a-z]" : model.Start), model.BookPage, model.NumPerPage, model.Sort);
+            model.TotalBooks = bookResults.Item1;
+            model.BookResults = bookResults.Item2;
+            var segmentResults = bhlProvider.SegmentSelectByTitleLike((model.Start == "0" ? "[^a-z]" : model.Start), model.PartPage, model.NumPerPage, model.Sort);
+            model.TotalSegments = segmentResults.Item1;
+            model.SegmentResults = segmentResults.Item2;
+
+            return View(model);
         }
 
         // GET: Browse/Year
