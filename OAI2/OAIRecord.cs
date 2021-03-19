@@ -523,7 +523,7 @@ namespace MOBOT.BHL.OAI2
                 this.JournalVolume = book.Volume;
                 this.Date = book.StartYear;
 
-                List<Institution> contributors = provider.ItemHoldingInstitutionSelectByItemID(book.BookID);
+                List<Institution> contributors = provider.ItemHoldingInstitutionSelectByItemID(book.ItemID);
                 if (contributors.Count > 0)
                 {
                     foreach(Institution contributor in contributors)

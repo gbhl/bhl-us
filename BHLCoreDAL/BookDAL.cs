@@ -67,16 +67,13 @@ namespace MOBOT.BHL.DAL
 			}
 		}
 
-		public Book BookSelectOAIDetail(
-			SqlConnection sqlConnection,
-			SqlTransaction sqlTransaction,
-			int itemID)
+		public Book BookSelectOAIDetail(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int bookID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectOAIDetail", connection, transaction,
-							CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
+							CustomSqlHelper.CreateInputParameter("BookID", SqlDbType.Int, null, false, bookID)))
 			{
 				using (CustomSqlHelper<Book> helper = new CustomSqlHelper<Book>())
 				{

@@ -20,9 +20,9 @@ namespace MOBOT.BHL.Server
 			return dal.BookSelectAuto(null, null, itemID);
 		}
 
-		public Book BookSelectOAIDetail(int itemID)
+		public Book BookSelectOAIDetail(int bookID)
 		{
-			return new BookDAL().BookSelectOAIDetail(null, null, itemID);
+			return new BookDAL().BookSelectOAIDetail(null, null, bookID);
 		}
 
 		public Book BookSelectTextPathForItemID(int itemID)
