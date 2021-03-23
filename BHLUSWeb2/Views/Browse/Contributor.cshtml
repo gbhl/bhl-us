@@ -1,0 +1,201 @@
+﻿@model MOBOT.BHL.Web2.Models.ContributorBrowseModel
+
+@{
+    ViewBag.Title = "Browse " + Model.Institution.InstitutionName + " - Biodiversity Heritage Library";
+}
+
+<nav id="page-title-contribs">
+    <div class="column-wrap">
+        <div>Contributions from "@Model.Institution.InstitutionName"</div>
+    </div>
+</nav>
+<nav id="sub-nav">
+    <div class="column-wrap">
+        <div id="linkbar" class="lettersandnumbers">
+            <ul>
+                <li class="first-child"><a class="@GetStartClass(Model.Start, "a")" href="/browse/contributor/@Model.Institution.InstitutionCode/a#/titles">A</a></li>
+                <li><a class="@GetStartClass(Model.Start, "b")" href="/browse/contributor/@Model.Institution.InstitutionCode/b#/titles">B</a></li>
+                <li><a class="@GetStartClass(Model.Start, "c")" href="/browse/contributor/@Model.Institution.InstitutionCode/c#/titles">C</a></li>
+                <li><a class="@GetStartClass(Model.Start, "d")" href="/browse/contributor/@Model.Institution.InstitutionCode/d#/titles">D</a></li>
+                <li><a class="@GetStartClass(Model.Start, "e")" href="/browse/contributor/@Model.Institution.InstitutionCode/e#/titles">E</a></li>
+                <li><a class="@GetStartClass(Model.Start, "f")" href="/browse/contributor/@Model.Institution.InstitutionCode/f#/titles">F</a></li>
+                <li><a class="@GetStartClass(Model.Start, "g")" href="/browse/contributor/@Model.Institution.InstitutionCode/g#/titles">G</a></li>
+                <li><a class="@GetStartClass(Model.Start, "h")" href="/browse/contributor/@Model.Institution.InstitutionCode/h#/titles">H</a></li>
+                <li><a class="@GetStartClass(Model.Start, "i")" href="/browse/contributor/@Model.Institution.InstitutionCode/i#/titles">I</a></li>
+                <li><a class="@GetStartClass(Model.Start, "j")" href="/browse/contributor/@Model.Institution.InstitutionCode/j#/titles">J</a></li>
+                <li><a class="@GetStartClass(Model.Start, "k")" href="/browse/contributor/@Model.Institution.InstitutionCode/k#/titles">K</a></li>
+                <li><a class="@GetStartClass(Model.Start, "l")" href="/browse/contributor/@Model.Institution.InstitutionCode/l#/titles">L</a></li>
+                <li><a class="@GetStartClass(Model.Start, "m")" href="/browse/contributor/@Model.Institution.InstitutionCode/m#/titles">M</a></li>
+                <li><a class="@GetStartClass(Model.Start, "n")" href="/browse/contributor/@Model.Institution.InstitutionCode/n#/titles">N</a></li>
+                <li><a class="@GetStartClass(Model.Start, "o")" href="/browse/contributor/@Model.Institution.InstitutionCode/o#/titles">O</a></li>
+                <li><a class="@GetStartClass(Model.Start, "p")" href="/browse/contributor/@Model.Institution.InstitutionCode/p#/titles">P</a></li>
+                <li><a class="@GetStartClass(Model.Start, "q")" href="/browse/contributor/@Model.Institution.InstitutionCode/q#/titles">Q</a></li>
+                <li><a class="@GetStartClass(Model.Start, "r")" href="/browse/contributor/@Model.Institution.InstitutionCode/r#/titles">R</a></li>
+                <li><a class="@GetStartClass(Model.Start, "s")" href="/browse/contributor/@Model.Institution.InstitutionCode/s#/titles">S</a></li>
+                <li><a class="@GetStartClass(Model.Start, "t")" href="/browse/contributor/@Model.Institution.InstitutionCode/t#/titles">T</a></li>
+                <li><a class="@GetStartClass(Model.Start, "u")" href="/browse/contributor/@Model.Institution.InstitutionCode/u#/titles">U</a></li>
+                <li><a class="@GetStartClass(Model.Start, "v")" href="/browse/contributor/@Model.Institution.InstitutionCode/v#/titles">V</a></li>
+                <li><a class="@GetStartClass(Model.Start, "w")" href="/browse/contributor/@Model.Institution.InstitutionCode/w#/titles">W</a></li>
+                <li><a class="@GetStartClass(Model.Start, "x")" href="/browse/contributor/@Model.Institution.InstitutionCode/x#/titles">X</a></li>
+                <li><a class="@GetStartClass(Model.Start, "y")" href="/browse/contributor/@Model.Institution.InstitutionCode/y#/titles">Y</a></li>
+                <li><a class="@GetStartClass(Model.Start, "z")" href="/browse/contributor/@Model.Institution.InstitutionCode/z#/titles">Z</a></li>
+                <li><a class="@GetStartClass(Model.Start, "0")" href="/browse/contributor/@Model.Institution.InstitutionCode/0#/titles">#</a></li>
+                <li><a class="@GetStartClass(Model.Start, "All")" href="/browse/contributor/@Model.Institution.InstitutionCode/all#/titles">All</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<nav id="sub-nav-tabs" class="no-js-hide">
+    <div class="column-wrap">
+        <div id="linkbar">
+            <ul>
+                <li id="spanTitleSummary" class="titles">
+                    <a href="#/titles" title="Books">
+                        @if (Model.Start.ToUpper() == "ALL")
+                        {
+                            @Html.Raw("All <span class='highlight-tab'>Books/Journals</span>")
+                        }
+                        else
+                        {
+                            @Html.Raw("<span class='highlight-tab'>Books/Journals</span> beginning with " + Model.DisplayStart)
+                        }
+                        (@Model.TotalBooks)
+                    </a>
+                </li>
+                <li id="spanSectionSummary" class="sections">
+                    <a href="#/sections" title="Parts">
+                        @if (Model.Start.ToUpper() == "ALL")
+                        {
+                            @Html.Raw("All <span class='highlight-tab'>Chapters/Articles/Treatments</span>")
+                        }
+                        else
+                        {
+                            @Html.Raw("<span class='highlight-tab'>Chapters/Articles/Treatments</span> beginning with " + Model.DisplayStart)
+                        }
+                        (@Model.TotalSegments)
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div id="sortbar">
+    <div class="column-wrap">
+        <span>Sort By:</span>
+        <ul>
+            <li class="@(Model.Sort == "title" || Model.Sort == "" ? "activesort" : "")"><a href="/browse/contributor/@Model.Institution.InstitutionCode/@Model.Start/title?bpg=1&ppg=1&psize=@Model.NumPerPage">Title</a></li>
+            <li class="@(Model.Sort == "author" ? "activesort" : "")"><a href="/browse/contributor/@Model.Institution.InstitutionCode/@Model.Start/author?bpg=1&ppg=1&psize=@Model.NumPerPage">Author</a></li>
+            <li class="@(Model.Sort == "year" ? "activesort" : "")"><a href="/browse/contributor/@Model.Institution.InstitutionCode/@Model.Start/year?bpg=1&ppg=1&psize=@Model.NumPerPage">Year</a></li>
+        </ul>
+        <div class="floatclear"></div>
+    </div>
+</div>
+
+<div id="content" class="column-wrap clearfix">
+    <section class="browse">
+        <p>This contributor has added <span style='font-weight:bolder'>@Model.NumBooks</span> volumes from <span style='font-weight:bolder'>@Model.NumTitles</span> titles, containing <span style='font-weight:bolder'>@Model.NumPages</span> pages.<br />This contributor has added <span style='font-weight:bolder'>@Model.NumSegments</span> chapters/articles/treatments.</p>
+        <div id="sub-sections" class="column-wrap clearfix">
+            <div id="titles">
+                <div id="titlecontent" class="content">
+                    <section>
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/browse/contributor/" + Model.Institution.InstitutionCode + "/" + Model.Start }, { "sort", Model.Sort }, { "target", "book" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.TotalBooks }, { "hash", "#/titles" } })
+                        @Html.Partial("_BookBrowse", new ViewDataDictionary { { "searchResult", Model.BookResults }, { "showVolume", false } })
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/browse/contributor/" + Model.Institution.InstitutionCode + "/" + Model.Start }, { "sort", Model.Sort }, { "target", "book" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.TotalBooks }, { "hash", "#/titles" } })
+                    </section>
+                </div>
+            </div>
+            <div id="sections" class="floatclear">
+                <div id="segmentcontent" class="content">
+                    <section>
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/browse/contributor/" + Model.Institution.InstitutionCode + "/" + Model.Start }, { "sort", Model.Sort }, { "target", "part" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.TotalSegments }, { "hash", "#/sections" } })
+                        @Html.Partial("_SegmentBrowse", new ViewDataDictionary { { "searchResult", Model.SegmentResults } })
+                        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/browse/contributor/" + Model.Institution.InstitutionCode + "/" + Model.Start }, { "sort", Model.Sort }, { "target", "part" }, { "bookPage", Model.BookPage }, { "partPage", Model.PartPage }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.TotalSegments }, { "hash", "#/sections" } })
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+    <aside>
+        @Html.Action("_DonateFeature", "Partial")
+        @Html.Action("_CollectionFeature", "Partial")
+    </aside>
+</div>
+
+@functions {
+    public static string GetStartClass(string modelStart, string start)
+    {
+        return (modelStart ?? string.Empty).Equals(start, StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
+    }
+}
+
+@section scripts {
+    <script src="/js/libs/jquery.hoverintent.min.js"></script>
+    <script src="/js/libs/jquery.text-overflow.min.js"></script>
+
+    <script type="text/javascript">
+//<![CDATA[
+$(document).ready(function () {
+    var subSections = $('#sub-sections').children();
+
+    // Navigate to the default sub-section if no hash
+    if (!location.hash) {
+        if (@Model.BookResults.Count > 0) {
+            window.location.replace('#/titles');
+        }
+        else if (@Model.SegmentResults.Count > 0) {
+            window.location.replace('#/sections');
+        }
+        else {
+            window.location.replace('#/titles');
+        }
+    }
+
+    selectTab();
+});
+
+$(window).on('hashchange', function () {
+    selectTab();
+});
+
+//$.History.bind(function (state) {
+function selectTab() {
+    var state = location.hash;
+    var subSections = $('#sub-sections').children();
+
+    if (!$('#sub-sections').is(':visible')) {
+        $('#sub-sections').show();
+    }
+    var stateName = state.replace(/[^a-zA-Z0-9\s]/gi, '');
+    var subSection = $('#' + stateName);
+    subSections.hide();
+
+    // Highlight selected link
+    $('#sub-nav-tabs a').removeClass('active');
+    $('#sub-nav-tabs .' + stateName + ' a').addClass('active').blur();
+
+    // Special case
+    if (stateName == 'all') {
+        subSections.show();
+        return false;
+    }
+
+    // If no default sub-section found then head on to the default otherwise show selected sub-section
+    if (!subSection.length) {
+        $('#titles').show();
+    } else {
+        subSection.show();
+    }
+
+    // Set the hash on the main nav links
+    $('#sub-nav a').each(function () {
+        $(this).attr('href', $(this).attr('href').replace('#/sections', '').replace('#/titles', '') + '#/' + stateName);
+    });
+
+    // Set the hash on the sort links
+    $('#sortbar a').each(function () {
+        $(this).attr('href', $(this).attr('href').replace('#/sections', '').replace('#/titles', '') + '#/' + stateName);
+    });
+}
+//]]>
+    </script>
+}

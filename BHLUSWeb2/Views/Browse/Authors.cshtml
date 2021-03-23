@@ -1,0 +1,78 @@
+﻿@model MOBOT.BHL.Web2.Models.AuthorsBrowseModel
+
+@{
+    ViewBag.Title = "Browsing Authors beginning with \"" + Model.Start.ToUpper() + "\" - Biodiversity Heritage Library";
+}
+
+<nav id="sub-nav">
+    <div class="column-wrap">
+        <div id="linkbar" class="lettersandnumbers">
+            <ul>
+                <li class="first-child"><a class="@GetStartClass(Model.Start, "a")" href="/browse/authors/a#/titles">A</a></li>
+                <li><a class="@GetStartClass(Model.Start, "b")" href="/browse/authors/b#/titles">B</a></li>
+                <li><a class="@GetStartClass(Model.Start, "c")" href="/browse/authors/c#/titles">C</a></li>
+                <li><a class="@GetStartClass(Model.Start, "d")" href="/browse/authors/d#/titles">D</a></li>
+                <li><a class="@GetStartClass(Model.Start, "e")" href="/browse/authors/e#/titles">E</a></li>
+                <li><a class="@GetStartClass(Model.Start, "f")" href="/browse/authors/f#/titles">F</a></li>
+                <li><a class="@GetStartClass(Model.Start, "g")" href="/browse/authors/g#/titles">G</a></li>
+                <li><a class="@GetStartClass(Model.Start, "h")" href="/browse/authors/h#/titles">H</a></li>
+                <li><a class="@GetStartClass(Model.Start, "i")" href="/browse/authors/i#/titles">I</a></li>
+                <li><a class="@GetStartClass(Model.Start, "j")" href="/browse/authors/j#/titles">J</a></li>
+                <li><a class="@GetStartClass(Model.Start, "k")" href="/browse/authors/k#/titles">K</a></li>
+                <li><a class="@GetStartClass(Model.Start, "l")" href="/browse/authors/l#/titles">L</a></li>
+                <li><a class="@GetStartClass(Model.Start, "m")" href="/browse/authors/m#/titles">M</a></li>
+                <li><a class="@GetStartClass(Model.Start, "n")" href="/browse/authors/n#/titles">N</a></li>
+                <li><a class="@GetStartClass(Model.Start, "o")" href="/browse/authors/o#/titles">O</a></li>
+                <li><a class="@GetStartClass(Model.Start, "p")" href="/browse/authors/p#/titles">P</a></li>
+                <li><a class="@GetStartClass(Model.Start, "q")" href="/browse/authors/q#/titles">Q</a></li>
+                <li><a class="@GetStartClass(Model.Start, "r")" href="/browse/authors/r#/titles">R</a></li>
+                <li><a class="@GetStartClass(Model.Start, "s")" href="/browse/authors/s#/titles">S</a></li>
+                <li><a class="@GetStartClass(Model.Start, "t")" href="/browse/authors/t#/titles">T</a></li>
+                <li><a class="@GetStartClass(Model.Start, "u")" href="/browse/authors/u#/titles">U</a></li>
+                <li><a class="@GetStartClass(Model.Start, "v")" href="/browse/authors/v#/titles">V</a></li>
+                <li><a class="@GetStartClass(Model.Start, "w")" href="/browse/authors/w#/titles">W</a></li>
+                <li><a class="@GetStartClass(Model.Start, "x")" href="/browse/authors/x#/titles">X</a></li>
+                <li><a class="@GetStartClass(Model.Start, "y")" href="/browse/authors/y#/titles">Y</a></li>
+                <li><a class="@GetStartClass(Model.Start, "z")" href="/browse/authors/z#/titles">Z</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<nav id="page-title">
+    <h1 class="column-wrap">
+        @Model.TotalAuthors.ToString() <span class="highlight">Authors</span> beginning with "@Model.Start.ToUpper()"
+    </h1>
+</nav>
+<div id="content" class="column-wrap clearfix">
+    <section style="margin-top:30px">
+        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/browse/authors/" + Model.Start }, { "sort", "" }, { "target", "book" }, { "bookPage", Model.AuthorPage }, { "partPage", "0" }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.TotalAuthors }, { "hash", "" } })
+        @if (Model.AuthorResults.Count > 0)
+        {
+            <ul class="data authors">
+                @foreach (var creator in Model.AuthorResults)
+                {
+                <li>
+                    <a href="/creator/@creator.AuthorID">@creator.NameExtended</a>
+                </li>
+                }
+            </ul>
+        }
+        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/browse/authors/" + Model.Start }, { "sort", "" }, { "target", "book" }, { "bookPage", Model.AuthorPage }, { "partPage", "0" }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.TotalAuthors }, { "hash", "" } })
+    </section>
+    <aside>
+        @Html.Action("_DonateFeature", "Partial")
+        @Html.Action("_CollectionFeature", "Partial")
+    </aside>
+</div>
+
+@functions {
+    public static string GetStartClass(string modelStart, string start)
+    {
+        return (modelStart ?? string.Empty).Equals(start, StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
+    }
+}
+
+@section scripts {
+    <script src="/js/libs/jquery.hoverintent.min.js"></script>
+    <script src="/js/libs/jquery.text-overflow.min.js"></script>
+}

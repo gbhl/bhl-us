@@ -198,13 +198,9 @@
     <Content Include="Bibliography.aspx" />
     <Content Include="BiblioSelect.aspx" />
     <Content Include="bot_list.txt" />
-    <Content Include="BrowseByTitleTag.aspx" />
-    <Content Include="BrowseByYear.aspx" />
     <Content Include="BrowseCollections.aspx" />
     <Content Include="BrowseContributors.aspx" />
     <Content Include="CollectionDetails.aspx" />
-    <Content Include="CollectionPage.aspx" />
-    <Content Include="ContributorPage.aspx" />
     <Content Include="controls\BookBrowseControl.ascx" />
     <Content Include="controls\COinSControl.ascx" />
     <Content Include="controls\CollectionListControl.ascx" />
@@ -215,8 +211,6 @@
     <Content Include="controls\SocialLinksPanel.ascx" />
     <Content Include="controls\TwitterFeedControl.ascx" />
     <Content Include="controls\ucFeatureBox.ascx" />
-    <Content Include="CreatorList.aspx" />
-    <Content Include="CreatorPage.aspx" />
     <Content Include="css\bhlaustylereference.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -544,6 +538,16 @@
     <Content Include="Views\Shared\_layoutBook.cshtml" />
     <Content Include="Views\IIIF\Item.cshtml" />
     <Content Include="Views\IIIF\Page.cshtml" />
+    <Content Include="Views\Browse\Titles.cshtml" />
+    <Content Include="Views\Browse\Authors.cshtml" />
+    <Content Include="Views\Browse\Year.cshtml" />
+    <Content Include="Views\Browse\Collection.cshtml" />
+    <Content Include="Views\Browse\Contributor.cshtml" />
+    <Content Include="Views\Creator\Index.cshtml" />
+    <Content Include="Views\Subject\Index.cshtml" />
+    <Content Include="Views\Shared\_BookBrowse.cshtml" />
+    <Content Include="Views\Shared\_SegmentBrowse.cshtml" />
+    <Content Include="Views\Shared\_BrowsePager.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -567,7 +571,6 @@
     <Content Include="services\PageSummaryService.asmx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="TitleList.aspx" />
     <Content Include="TitleNotFound.aspx" />
     <Content Include="TitlePage.aspx" />
     <Content Include="Search.aspx" />
@@ -642,20 +645,6 @@
     <Compile Include="Book.Master.designer.cs">
       <DependentUpon>Book.Master</DependentUpon>
     </Compile>
-    <Compile Include="BrowseByTitleTag.aspx.cs">
-      <DependentUpon>BrowseByTitleTag.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="BrowseByTitleTag.aspx.designer.cs">
-      <DependentUpon>BrowseByTitleTag.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="BrowseByYear.aspx.cs">
-      <DependentUpon>BrowseByYear.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="BrowseByYear.aspx.designer.cs">
-      <DependentUpon>BrowseByYear.aspx</DependentUpon>
-    </Compile>
     <Compile Include="BrowseCollections.aspx.cs">
       <DependentUpon>BrowseCollections.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -670,6 +659,7 @@
     <Compile Include="BrowseContributors.aspx.designer.cs">
       <DependentUpon>BrowseContributors.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BrowseOutputCacheAttribute.cs" />
     <Compile Include="BrowsePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -680,24 +670,13 @@
     <Compile Include="CollectionDetails.aspx.designer.cs">
       <DependentUpon>CollectionDetails.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CollectionPage.aspx.cs">
-      <DependentUpon>CollectionPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CollectionPage.aspx.designer.cs">
-      <DependentUpon>CollectionPage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ContributorPage.aspx.cs">
-      <DependentUpon>ContributorPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ContributorPage.aspx.designer.cs">
-      <DependentUpon>ContributorPage.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="Controllers\BrowseController.cs" />
+    <Compile Include="Controllers\CreatorController.cs" />
     <Compile Include="Controllers\IIIFController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="controls\BookBrowseControl.ascx.cs">
       <DependentUpon>BookBrowseControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -767,20 +746,6 @@
     </Compile>
     <Compile Include="controls\ucFeatureBox.ascx.designer.cs">
       <DependentUpon>ucFeatureBox.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="CreatorList.aspx.cs">
-      <DependentUpon>CreatorList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CreatorList.aspx.designer.cs">
-      <DependentUpon>CreatorList.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CreatorPage.aspx.cs">
-      <DependentUpon>CreatorPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CreatorPage.aspx.designer.cs">
-      <DependentUpon>CreatorPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -884,6 +849,13 @@
     <Compile Include="ItemPage.aspx.designer.cs">
       <DependentUpon>ItemPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\AuthorsBrowseModel.cs" />
+    <Compile Include="Models\CollectionBrowseModel.cs" />
+    <Compile Include="Models\ContributorBrowseModel.cs" />
+    <Compile Include="Models\CreatorModel.cs" />
+    <Compile Include="Models\SubjectModel.cs" />
+    <Compile Include="Models\TitleBrowseModel.cs" />
+    <Compile Include="Models\YearBrowseModel.cs" />
     <Compile Include="TitleUnavailable.aspx.cs">
       <DependentUpon>TitleUnavailable.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1017,13 +989,6 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
-    </Compile>
-    <Compile Include="TitleList.aspx.cs">
-      <DependentUpon>TitleList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TitleList.aspx.designer.cs">
-      <DependentUpon>TitleList.aspx</DependentUpon>
     </Compile>
     <Compile Include="TitleNotFound.aspx.cs">
       <DependentUpon>TitleNotFound.aspx</DependentUpon>

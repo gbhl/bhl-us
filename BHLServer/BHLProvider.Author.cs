@@ -24,6 +24,11 @@ namespace MOBOT.BHL.Server
             return new AuthorDAL().AuthorSelectByNameLike(null, null, fullName, returnCount);
         }
 
+        public Tuple<int, List<Author>> AuthorSelectByNameLikePaged(string start, int pageNum, int numPerPage)
+        {
+            return new AuthorDAL().AuthorSelectByNameLikePaged(null, null, start, pageNum, numPerPage);
+        }
+
         public List<Author> AuthorSelectByTitleId(int titleId)
         {
             return new AuthorDAL().AuthorSelectByTitleId(null, null, titleId);

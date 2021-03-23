@@ -1205,7 +1205,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
     padding:26px;
     border:1px solid #ccd4d9;
     /*final box width 312px */
-    width: 258px; /*312 - (26 +1)*2 */
+    /*width: 258px; */   /*312 - (26 +1)*2 */
     background-color: #fafaf7; 
     -webkit-border-radius:3px;
     -moz-border-radius:3px;
@@ -1649,6 +1649,10 @@ aside
     font:14px/20px Georgia;
     color: #364555;
     width:530px;
+}
+#content section.browse {
+    margin-top: 30px;
+    width: 645px;
 }
 #content section.search
 {

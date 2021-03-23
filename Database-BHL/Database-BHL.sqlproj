@@ -1121,6 +1121,11 @@
     <None Include="dbo\Stored Procedures\BookBibTeXSelectForBookID.sql" />
     <None Include="dbo\Stored Procedures\BookSelectRISCitationsForBookID.sql" />
     <None Include="dbo\Functions\fnGetSortString.sql" />
+    <None Include="dbo\Stored Procedures\TitleSelectByAuthorPaged.sql" />
+    <None Include="dbo\Stored Procedures\SegmentSelectForAuthorIDPaged.sql" />
+    <None Include="dbo\Stored Procedures\TitleSelectByKeywordPaged.sql" />
+    <None Include="dbo\Stored Procedures\SegmentSelectForKeywordPaged.sql" />
+    <None Include="dbo\Stored Procedures\AuthorSelectByNameLikePaged.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

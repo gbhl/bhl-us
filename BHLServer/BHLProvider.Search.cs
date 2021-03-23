@@ -1,5 +1,6 @@
 ﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System;
 using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
@@ -24,9 +25,9 @@ namespace MOBOT.BHL.Server
         /// Select all values from Title like a particular string.
         /// </summary>
         /// <returns>List of SearchBookResults.</returns>
-        public List<SearchBookResult> TitleSelectByNameLike(string name)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByNameLike(string name, int pageNum, int numPages, string sort)
         {
-            return (new SearchDAL().TitleSelectByNameLike(null, null, name));
+            return (new SearchDAL().TitleSelectByNameLike(null, null, name, pageNum, numPages, sort));
         }
 
         /// <summary>
@@ -48,19 +49,29 @@ namespace MOBOT.BHL.Server
             return (new SearchDAL().TitleSelectByAuthor(null, null, authorId));
         }
 
-        public List<SearchBookResult> TitleSelectByInstitutionAndStartsWith(string institutionCode, string startsWith)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByAuthorPaged(int authorId, int pageNum, int numPages, string sort)
         {
-            return new SearchDAL().TitleSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith);
+            return (new SearchDAL().TitleSelectByAuthorPaged(null, null, authorId, pageNum, numPages, sort));
         }
 
-        public List<SearchBookResult> TitleSelectByInstitutionAndStartsWithout(string institutionCode, string startsWith)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByInstitutionAndStartsWith(string institutionCode, string startsWith, int pageNum, int numPages, string sort)
         {
-            return new SearchDAL().TitleSelectByInstitutionAndStartsWithout(null, null, institutionCode, startsWith);
+            return new SearchDAL().TitleSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith, pageNum, numPages, sort);
+        }
+
+        public Tuple<int, List<SearchBookResult>> TitleSelectByInstitutionAndStartsWithout(string institutionCode, string startsWith, int pageNum, int numPages, string sort)
+        {
+            return new SearchDAL().TitleSelectByInstitutionAndStartsWithout(null, null, institutionCode, startsWith, pageNum, numPages, sort);
         }
 
         public List<SearchBookResult> TitleSelectByKeyword(string keyword)
         {
             return new SearchDAL().TitleSelectByKeyword(null, null, keyword);
+        }
+
+        public Tuple<int, List<SearchBookResult>> TitleSelectByKeywordPaged(string keyword, int pageNum, int numPages, string sort)
+        {
+            return new SearchDAL().TitleSelectByKeywordPaged(null, null, keyword, pageNum, numPages, sort);
         }
 
         /// <summary>
@@ -77,9 +88,9 @@ namespace MOBOT.BHL.Server
         /// Select Titles for a particular date range
         /// </summary>
         /// <returns>List of SearchBookResults.</returns>
-        public List<SearchBookResult> TitleSelectByDateRange(int startDate, int endDate)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByDateRange(int startDate, int endDate, int pageNum, int numPages, string sort)
         {
-            return (new SearchDAL().TitleSelectByDateRange(null, null, startDate, endDate));
+            return (new SearchDAL().TitleSelectByDateRange(null, null, startDate, endDate, pageNum, numPages, sort));
         }
 
         /// <summary>
@@ -88,9 +99,9 @@ namespace MOBOT.BHL.Server
         /// <param name="collectionID"></param>
         /// <param name="startString"></param>
         /// <returns>List of SearchBookResults</returns>
-        public List<SearchBookResult> TitleSelectByCollectionAndStartsWith(int collectionID, string startString)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByCollectionAndStartsWith(int collectionID, string startString, int pageNum, int numPages, string sort)
         {
-            return new SearchDAL().TitleSelectByCollectionAndStartsWith(null, null, collectionID, startString);
+            return new SearchDAL().TitleSelectByCollectionAndStartsWith(null, null, collectionID, startString, pageNum, numPages, sort);
         }
 
         /// <summary>
@@ -110,9 +121,9 @@ namespace MOBOT.BHL.Server
         /// <param name="collectionID"></param>
         /// <param name="startsWith"></param>
         /// <returns>List of SearchBookResult</returns>
-        public List<SearchBookResult> ItemSelectByCollectionAndStartsWith(int collectionID, string startsWith)
+        public Tuple<int, List<SearchBookResult>> ItemSelectByCollectionAndStartsWith(int collectionID, string startsWith, int pageNum, int numPages, string sort)
         {
-            return new SearchDAL().ItemSelectByCollectionAndStartsWith(null, null, collectionID, startsWith);
+            return new SearchDAL().ItemSelectByCollectionAndStartsWith(null, null, collectionID, startsWith, pageNum, numPages, sort);
         }
 
         /// <summary>
