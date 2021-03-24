@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.AuthorSelectByNameLikePaged
+﻿CREATE PROCEDURE [dbo].[AuthorSelectByNameLikePaged]
 
 @StartsWith nvarchar(255),
 @PageNum int = 1,
@@ -74,7 +74,7 @@ SELECT	a.AuthorID,
 		a.StartDate + CASE WHEN a.StartDate <> '' THEN '-' ELSE '' END + a.EndDate AS Dates,
 		n.FullerForm,
 		a.StartDate,
-		a.Enddate,
+		a.EndDate,
 		a.IsActive
 FROM	#Author t 
 		INNER JOIN dbo.Author a WITH (NOLOCK) ON t.AuthorID = a.AuthorID
