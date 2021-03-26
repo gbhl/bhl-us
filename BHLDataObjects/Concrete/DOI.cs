@@ -27,6 +27,13 @@ namespace MOBOT.BHL.DataObjects
             set { _totalDOIs = value; }
         }
 
+        private string _creationUserName = string.Empty;
+        public string CreationUserName
+        { 
+            get { return _creationUserName; } 
+            set { _creationUserName = value; }
+        }
+
         public override void SetValues(CustomDataRow row)
         {
             foreach (CustomDataColumn column in row)
@@ -46,6 +53,11 @@ namespace MOBOT.BHL.DataObjects
                     case "TotalDOIs":
                         {
                             _totalDOIs = (int)column.Value;
+                            break;
+                        }
+                    case "CreationUserName":
+                        {
+                            _creationUserName = Utility.EmptyIfNull(column.Value);
                             break;
                         }
                 }

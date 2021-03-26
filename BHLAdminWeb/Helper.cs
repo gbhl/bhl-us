@@ -97,6 +97,7 @@ namespace MOBOT.BHL.AdminWeb
             else if (path.Contains("report/")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("biostorharvest")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("biostorsegmentsforitem")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
+            else if (path.Contains("doi/queue")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("doilist")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("doistatusabout")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("doisubmissiondetail")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);

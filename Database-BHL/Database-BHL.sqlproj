@@ -1126,6 +1126,13 @@
     <None Include="dbo\Stored Procedures\TitleSelectByKeywordPaged.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectForKeywordPaged.sql" />
     <None Include="dbo\Stored Procedures\AuthorSelectByNameLikePaged.sql" />
+    <None Include="dbo\Stored Procedures\DOISelectQueued.sql" />
+    <None Include="dbo\Stored Procedures\DOIEntityTypeSelectAll.sql" />
+    <None Include="dbo\Stored Procedures\DOISelectByTypeAndID.sql" />
+    <None Include="dbo\Stored Procedures\DOIDeleteByTypeAndID.sql" />
+    <None Include="dbo\Stored Procedures\SegmentSelectWithoutDOIByTitleID.sql" />
+    <None Include="dbo\Stored Procedures\SegmentSelectWithoutDOIByItemID.sql" />
+    <None Include="dbo\Stored Procedures\DOIInsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

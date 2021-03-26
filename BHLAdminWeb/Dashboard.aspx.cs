@@ -184,6 +184,7 @@ namespace MOBOT.BHL.AdminWeb
                 tdViewUpdateIA.InnerHtml = GetMenuText(tdViewUpdateIA.InnerHtml);
                 tdIAHarvestDash.InnerHtml = GetMenuText(tdIAHarvestDash.InnerHtml);
                 tdViewUpdateBioStor.InnerHtml = GetMenuText(tdViewUpdateBioStor.InnerHtml);
+                tdManageDoiQueue.InnerHtml = GetMenuText(tdManageDoiQueue.InnerHtml);
                 tdViewUpdateDoi.InnerHtml = GetMenuText(tdViewUpdateDoi.InnerHtml);
 
                 tdRptReportingStats.InnerHtml = GetMenuText(tdRptReportingStats.InnerHtml);

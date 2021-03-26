@@ -13,6 +13,11 @@ namespace MOBOT.BHL.Server
             return new DOIDAL().DOISelectSubmitted(null, null, minutesSinceSubmit);
         }
 
+        public List<DOI> DOISelectQueued()
+        {
+            return new DOIDAL().DOISelectQueued(null, null);
+        }
+
         public List<DOI> DOISelectValidForTitle(int titleID)
         {
             return new DOIDAL().DOISelectValidForTitle(null, null, titleID);
@@ -33,6 +38,13 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectWithoutSubmittedDOI(null, null, numberToReturn);
         }
 
+        public void DOIInsert(int doiEntityTypeId, int entityId, int doiStatusId,
+            string doiBatchId, string doiName, string message, short isValid, int userId, short allowDuplicate)
+        {
+            new DOIDAL().DOIInsert(null, null,
+                doiEntityTypeId, entityId, doiStatusId, doiBatchId, doiName, message, isValid, userId, userId, allowDuplicate);
+        }
+
         public DOI DOInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, 
             string doiBatchId, string doiName, string message, short isValid, int userId)
         {
@@ -43,6 +55,16 @@ namespace MOBOT.BHL.Server
         public List<DOI> DOISelectByStatus(int doiStatusId, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
             return new DOIDAL().DOISelectByStatus(null, null, doiStatusId, numRows, pageNum, sortColumn, sortOrder);
+        }
+
+        public DOI DOISelectByTypeAndID(string doiEntityTypeName, int entityID)
+        {
+            return new DOIDAL().DOISelectByTypeAndID(null, null, doiEntityTypeName, entityID);
+        }
+
+        public void DOIDeleteByTypeAndID(int doiEntityTypeID, int entityID)
+        {
+            new DOIDAL().DOIDeleteByTypeAndID(null, null, doiEntityTypeID, entityID);
         }
 
         public DOI DOIUpdateStatus(int doiID, int doiStatusId, int? userId)
@@ -91,6 +113,11 @@ namespace MOBOT.BHL.Server
         public List<DOIStatus> DOIStatusSelectAll()
         {
             return new DOIDAL().DOIStatusSelectAll(null, null);
+        }
+
+        public List<DOIEntityType> DOIEntityTypeSelectAll()
+        {
+            return new DOIDAL().DOIEntityTypeSelectAll(null, null);
         }
 
         public string DOIGetFileContents(string batchId, string type)

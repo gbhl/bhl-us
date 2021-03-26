@@ -273,6 +273,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CitationImportController.cs" />
+    <Compile Include="Controllers\DoiController.cs" />
     <Compile Include="Controllers\DownloadsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibraryController.cs" />
@@ -455,6 +456,7 @@
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\CitationImportHistoryModel.cs" />
     <Compile Include="Models\CitationImportModel.cs" />
+    <Compile Include="Models\DoiModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryModel.cs" />
     <Compile Include="Models\MonitorModel.cs" />
@@ -1133,6 +1135,11 @@
     <Content Include="Views\Admin\Groups.cshtml" />
     <Content Include="Views\Admin\GroupEdit.cshtml" />
     <Content Include="Views\Admin\GroupInstitutions.cshtml" />
+    <Content Include="Views\Doi\Queue.cshtml" />
+    <Content Include="Views\Doi\QueueAdd.cshtml" />
+    <Content Include="Views\Doi\QueueAddConfirm.cshtml" />
+    <Content Include="Views\Doi\QueueDelete.cshtml" />
+    <Content Include="Views\Doi\QueueAddInfo.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
