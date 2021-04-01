@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.ApiTitleSelectByDOI
+﻿CREATE PROCEDURE [dbo].[ApiTitleSelectByDOI]
 
 @DOIName nvarchar(50)
 
@@ -15,6 +15,8 @@ SELECT	@TitleID = t.TitleID,
 		@RedirectTitleID = t.RedirectTitleID
 FROM	dbo.Title t INNER JOIN dbo.DOI d
 			ON t.TitleID = d.EntityID
+			AND d.IsValid = 1 
+			AND d.DOIStatusID IN (100, 200)
 		INNER JOIN dbo.DOIEntityType et
 			ON d.DOIEntityTypeID = et.DOIEntityTypeID
 			AND	et.DOIEntityTypeName = 'Title'
@@ -27,3 +29,4 @@ ELSE
 
 END
 
+GO

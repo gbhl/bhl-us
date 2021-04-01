@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[OpenUrlCitationSelectByDOI]
+﻿CREATE PROCEDURE [dbo].[OpenUrlCitationSelectByDOI]
 
 @DOIName nvarchar(50)
 
@@ -18,6 +17,7 @@ SELECT	@DOIEntityTypeName = et.DOIEntityTypeName,
 FROM	dbo.DOI d WITH (NOLOCK) INNER JOIN dbo.DOIEntityType et WITH (NOLOCK)
 			ON d.DOIEntityTypeID = et.DOIEntityTypeID
 WHERE	d.DOIName = @DOIName
+AND		d.IsValid = 1
 
 -- Call the appropriate OpenUrl Citation resolver for the entity type
 IF @DOIEntityTypeName = 'Title' exec dbo.OpenUrlCitationSelectByTitleID @EntityID
@@ -27,5 +27,4 @@ IF @DOIEntityTypeName = 'Segment' exec dbo.OpenUrlCitationSelectBySegmentID @Ent
 
 END
 
-
-
+GO
