@@ -440,6 +440,7 @@
     <None Include="dbo\Tables\SegmentIdentifier.sql" />
     <None Include="dbo\Functions\fnRemoveNonAlphaNumericCharacters.sql" />
     <None Include="dbo\Functions\fnGetSortString.sql" />
+    <None Include="dbo\Functions\fnBSIsDate.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />
