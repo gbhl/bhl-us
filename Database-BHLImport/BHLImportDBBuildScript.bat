@@ -163,6 +163,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Synonyms\IAAnalysisrptCombined.sql"
 REM --------------------------------------
 REM  Build Functions
 REM --------------------------------------
+sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnBSIsDate.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnFilterString.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnGetDatesFromString.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnGetSortString.sql"
