@@ -29,6 +29,11 @@
     <!-- BHLImport database value for the BioStor ImportSource -->
     <add key="ImportSourceID" value="3"/>
 
+    <!-- BHLImport database values for the Segment Status -->
+    <add key="SegmentStatusHarvestedID" value="10"/>
+    <add key="SegmentStatusPublishedID" value="20"/>
+    <add key="SegmentStatusSkippedID" value="90"/>
+
     <!-- Indicates whether the process should get new items from BioStor (false), or just harvest articles for items already in the log (true).-->
     <add key="NoDownload" value="true"/>
 

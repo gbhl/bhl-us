@@ -441,6 +441,8 @@
     <None Include="dbo\Functions\fnRemoveNonAlphaNumericCharacters.sql" />
     <None Include="dbo\Functions\fnGetSortString.sql" />
     <None Include="dbo\Functions\fnBSIsDate.sql" />
+    <None Include="dbo\Tables\BSSegmentStatus.sql" />
+    <None Include="Data\dbo.BSSegmentStatus.Table.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />

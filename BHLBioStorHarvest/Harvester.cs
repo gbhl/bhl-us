@@ -30,6 +30,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         private List<string> articlesPreprocessed = new List<string>();
         private List<string> itemsPublished = new List<string>();
         private List<string> articlesPublished = new List<string>();
+        private List<string> articlesSkipped = new List<string>();
         private List<string> errorMessages = new List<string>();
 
         private const string MODE_SINCEDATE = "SINCE";
@@ -212,6 +213,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             EFModel.BSSegment segment = new EFModel.BSSegment();
             segment.ItemID = itemID;
             segment.SequenceOrder = sequenceOrder;
+            segment.SegmentStatusID = configParms.SegmentStatusHarvestedID;
 
             segment.Genre = ((string)article["genre"]) ?? string.Empty;
             segment.BioStorReferenceID = ((string)article["reference_id"]) ?? string.Empty;
@@ -527,19 +529,23 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                     // Get all of the ready-to-publish segments for the item
                     List<EFModel.BSSegment> segments = provider.SelectSegmentsForPublishing(itemID);
 
+                    int published = 0;
+                    int skipped = 0;
+
                     foreach (EFModel.BSSegment segment in segments)
                     {
                         // Check the production database to see if we aleady have records for this segment's authors
                         provider.ResolveSegmentAuthors(segment.SegmentID);
 
                         // Publish the segment to production
-                        provider.PublishSegment(Convert.ToInt32(item.BHLItemID), segment.SegmentID);
-
-                        articlesPublished.Add(segment.SegmentID.ToString());
+                        int segmentStatusID = provider.PublishSegment(Convert.ToInt32(item.BHLItemID), segment.SegmentID);
+                        if (segmentStatusID == configParms.SegmentStatusPublishedID) { articlesPublished.Add(segment.SegmentID.ToString()); published++; }
+                        if (segmentStatusID == configParms.SegmentStatusSkippedID) { articlesSkipped.Add(segment.SegmentID.ToString()); skipped++; }
                     }
 
                     // Log the articles inserted/updated
-                    this.LogMessage(string.Format("Published {0} articles for item {1}.", segments.Count().ToString(), item.BHLItemID.ToString()));
+                    this.LogMessage(string.Format("Published {0} articles for item {1}.", published.ToString(), item.BHLItemID.ToString()));
+                    this.LogMessage(string.Format("Skipped {0} articles for item {1}.", skipped.ToString(), item.BHLItemID.ToString()));
 
                     provider.SetItemPublished(itemID);
                     itemsPublished.Add(itemID.ToString());
@@ -710,20 +716,17 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         #region Process results
 
         /// <summary>
-        /// Examine the results of the item/page processing and take the appropriate 
-        /// actions (log, send email, do nothing).
+        /// Examine the results of the harvest and take the appropriate actions (log, send email, do nothing).
         /// </summary>
         private void ProcessResults()
         {
             try
             {
-                // Send email if PDFS were deleted, or if an error occurred.
-                // Don't send an email each time a PDF is generated.
                 if (itemsDownloaded.Count > 0 || itemsUnavailable.Count > 0 ||
                     itemsHarvested.Count > 0 || articlesHarvested.Count > 0 || 
                     itemsPreprocessed.Count > 0 || articlesPreprocessed.Count > 0 ||
                     itemsPublished.Count > 0 || articlesPublished.Count > 0 ||
-                    errorMessages.Count > 0)
+                    articlesSkipped.Count > 0 || errorMessages.Count > 0)
                 {
                     String subject = String.Empty;
                     String thisComputer = Environment.MachineName;
@@ -739,7 +742,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                     this.LogMessage("Sending Email....");
                     String message = this.GetCompletionEmailBody();
                     this.LogMessage(message);
-                    this.SendEmail(subject, message, configParms.EmailFromAddress, configParms.EmailToAddress, "");
+                    this.SendEmail(subject, message, configParms.EmailFromAddress, configParms.EmailToAddress);
                 }
                 else
                 {
@@ -767,39 +770,43 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             sb.Append("BHLBioStorHarvest: BioStor harvesting on " + thisComputer + " complete." + endOfLine);
             if (this.itemsDownloaded.Count > 0)
             {
-                sb.Append(endOfLine + this.itemsDownloaded.Count.ToString() + " Items were Downloaded from BioStor" + endOfLine);
+                sb.Append(endOfLine + this.itemsDownloaded.Count.ToString() + " Items were Downloaded from BioStor." + endOfLine);
             }
             if (this.itemsUnavailable.Count > 0)
             {
-                sb.Append(endOfLine + this.itemsUnavailable.Count.ToString() + " Items are Unavailable in BHL" + endOfLine);
+                sb.Append(endOfLine + this.itemsUnavailable.Count.ToString() + " Items are Unavailable in BHL." + endOfLine);
             }
             if (this.itemsHarvested.Count > 0)
             {
-                sb.Append(endOfLine + this.itemsHarvested.Count.ToString() + " Items were Harvested" + endOfLine);
+                sb.Append(endOfLine + this.itemsHarvested.Count.ToString() + " Items were Harvested." + endOfLine);
             }
             if (this.articlesHarvested.Count > 0)
             {
-                sb.Append(endOfLine + this.articlesHarvested.Count.ToString() + " Articles were Harvested" + endOfLine);
+                sb.Append(endOfLine + this.articlesHarvested.Count.ToString() + " Articles were Harvested." + endOfLine);
             }
             if (this.itemsPreprocessed.Count > 0)
             {
-                sb.Append(endOfLine + this.itemsPreprocessed.Count.ToString() + " Items were Preprocessed" + endOfLine);
+                sb.Append(endOfLine + this.itemsPreprocessed.Count.ToString() + " Items were Preprocessed." + endOfLine);
             }
             if (this.articlesPreprocessed.Count > 0)
             {
-                sb.Append(endOfLine + this.articlesPreprocessed.Count.ToString() + " Articles were Preprocessed" + endOfLine);
+                sb.Append(endOfLine + this.articlesPreprocessed.Count.ToString() + " Articles were Preprocessed." + endOfLine);
             }
             if (this.itemsPublished.Count > 0)
             {
-                sb.Append(endOfLine + this.itemsPublished.Count.ToString() + " Items were Published to Production" + endOfLine);
+                sb.Append(endOfLine + this.itemsPublished.Count.ToString() + " Items were Published to Production." + endOfLine);
             }
             if (this.articlesPublished.Count > 0)
             {
-                sb.Append(endOfLine + this.articlesPublished.Count.ToString() + " Articles were Published to Production" + endOfLine);
+                sb.Append(endOfLine + this.articlesPublished.Count.ToString() + " Articles were Published to Production." + endOfLine);
+            }
+            if (this.articlesSkipped.Count > 0)
+            {
+                sb.Append(endOfLine + this.articlesSkipped.Count.ToString() + " Articles were Skipped.  They already have BHL-assigned DOIs and cannot be updated by this process." + endOfLine);
             }
             if (this.errorMessages.Count > 0)
             {
-                sb.Append(endOfLine + this.errorMessages.Count.ToString() + " Errors Occurred" + endOfLine + "See the log file for details" + endOfLine + endOfLine);
+                sb.Append(endOfLine + this.errorMessages.Count.ToString() + " Errors Occurred." + endOfLine + "See the log file for details." + endOfLine + endOfLine);
                 foreach (string message in errorMessages)
                 {
                     sb.Append(message + endOfLine);
@@ -813,8 +820,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         /// Send the specified email message 
         /// </summary>
         /// <param name="message">Body of the message to be sent</param>
-        private void SendEmail(String subject, String message, String fromAddress,
-            String toAddress, String ccAddresses)
+        private void SendEmail(String subject, String message, String fromAddress, String toAddress)
         {
             try
             {
@@ -822,7 +828,6 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                 MailAddress mailAddress = new MailAddress(fromAddress);
                 mailMessage.From = mailAddress;
                 mailMessage.To.Add(toAddress);
-                if (ccAddresses != String.Empty) mailMessage.CC.Add(ccAddresses);
                 mailMessage.Subject = subject;
                 mailMessage.Body = message;
 

@@ -46,6 +46,7 @@
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="LastModifiedDate" Type="datetime" Nullable="false" />
           <Property Name="ContributorName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="SegmentStatusID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="BSSegmentAuthor">
           <Key>
@@ -94,6 +95,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_BSSegmentAuthor_ImportSource">
+          <End Role="ImportSource" Type="Self.ImportSource" Multiplicity="1" />
+          <End Role="BSSegmentAuthor" Type="Self.BSSegmentAuthor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportSource">
+              <PropertyRef Name="ImportSourceID" />
+            </Principal>
+            <Dependent Role="BSSegmentAuthor">
+              <PropertyRef Name="ImportSourceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BSSegmentPage_BSSegment">
           <End Role="BSSegment" Type="Self.BSSegment" Multiplicity="1" />
           <End Role="BSSegmentPage" Type="Self.BSSegmentPage" Multiplicity="*" />
@@ -103,18 +116,6 @@
             </Principal>
             <Dependent Role="BSSegmentPage">
               <PropertyRef Name="SegmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SegmentAuthor_ImportSource">
-          <End Role="ImportSource" Type="Self.ImportSource" Multiplicity="1" />
-          <End Role="BSSegmentAuthor" Type="Self.BSSegmentAuthor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportSource">
-              <PropertyRef Name="ImportSourceID" />
-            </Principal>
-            <Dependent Role="BSSegmentAuthor">
-              <PropertyRef Name="ImportSourceID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -131,6 +132,7 @@
         <Function Name="BSSegmentPublishToProduction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ItemID" Type="int" Mode="In" />
           <Parameter Name="SegmentID" Type="int" Mode="In" />
+          <Parameter Name="SegmentStatusID" Type="int" Mode="InOut" />
         </Function>
         <Function Name="BSSegmentResolveAuthors" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SegmentID" Type="int" Mode="In" />
@@ -145,13 +147,13 @@
             <End Role="BSItem" EntitySet="BSItem" />
             <End Role="BSSegment" EntitySet="BSSegment" />
           </AssociationSet>
+          <AssociationSet Name="FK_BSSegmentAuthor_ImportSource" Association="Self.FK_BSSegmentAuthor_ImportSource">
+            <End Role="ImportSource" EntitySet="ImportSource" />
+            <End Role="BSSegmentAuthor" EntitySet="BSSegmentAuthor" />
+          </AssociationSet>
           <AssociationSet Name="FK_BSSegmentPage_BSSegment" Association="Self.FK_BSSegmentPage_BSSegment">
             <End Role="BSSegment" EntitySet="BSSegment" />
             <End Role="BSSegmentPage" EntitySet="BSSegmentPage" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SegmentAuthor_ImportSource" Association="Self.FK_SegmentAuthor_ImportSource">
-            <End Role="ImportSource" EntitySet="ImportSource" />
-            <End Role="BSSegmentAuthor" EntitySet="BSSegmentAuthor" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -184,6 +186,7 @@
           <FunctionImport Name="BSSegmentPublishToProduction">
             <Parameter Name="ItemID" Mode="In" Type="Int32" />
             <Parameter Name="SegmentID" Mode="In" Type="Int32" />
+            <Parameter Name="SegmentStatusID" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="BSItemAvailabilityCheck" EntitySet="BSItems" ReturnType="Collection(BHLImportModel.BSItem)" >
           <Parameter Name="BHLItemID" Mode="In" Type="Int32" />
@@ -238,6 +241,7 @@
           <Property Name="OCLC" Type="String" Nullable="false" MaxLength="125" FixedLength="false" Unicode="true" />
           <Property Name="JSTOR" Type="String" Nullable="false" MaxLength="125" FixedLength="false" Unicode="true" />
           <Property Name="ContributorName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SegmentStatusID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="BSSegmentPage">
           <Key>
@@ -327,7 +331,8 @@
             <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="BSSegments"><EntityTypeMapping TypeName="BHLImportModel.BSSegment"><MappingFragment StoreEntitySet="BSSegment">
-            <ScalarProperty Name="ContributorName" ColumnName="ContributorName" />
+            <ScalarProperty Name="SegmentStatusID" ColumnName="SegmentStatusID" />
+                <ScalarProperty Name="ContributorName" ColumnName="ContributorName" />
                 <ScalarProperty Name="JSTOR" ColumnName="JSTOR" />
                 <ScalarProperty Name="OCLC" ColumnName="OCLC" />
                 <ScalarProperty Name="PublisherPlace" ColumnName="PublisherPlace" />

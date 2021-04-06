@@ -83,10 +83,12 @@ namespace MOBOT.BHLImport.BHLImportEFDataService
             context.BSSegmentResolveAuthors(segmentID);
         }
 
-        public void PublishSegment(int itemID, int segmentID)
+        public int PublishSegment(int itemID, int segmentID)
         {
+            int segmentStatusID = int.MinValue;
             BHLImportEntities context = GetDataContext();
-            context.BSSegmentPublishToProduction(itemID, segmentID);
+            context.BSSegmentPublishToProduction(itemID, segmentID, new System.Data.Objects.ObjectParameter("SegmentStatusID", segmentStatusID));
+            return segmentStatusID;
         }
     }
 }

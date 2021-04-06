@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[BSSegment] (
     [SegmentID]                   INT             IDENTITY (1, 1) NOT NULL,
     [ItemID]                      INT             NOT NULL,
+    [SegmentStatusID]             INT             NOT NULL,
     [BioStorReferenceID]          NVARCHAR (100)  CONSTRAINT [DF_Table_1_BioStorSegmentID] DEFAULT ('') NOT NULL,
     [SequenceOrder]               SMALLINT        CONSTRAINT [DF_BSSegment_SequenceOrder] DEFAULT ((0)) NOT NULL,
     [Genre]                       NVARCHAR (50)   CONSTRAINT [DF_BSSegment_Genre] DEFAULT ('') NOT NULL,
@@ -27,6 +28,7 @@
     [CreationDate]                DATETIME        CONSTRAINT [DF_BSSegment_CreationDate] DEFAULT (getdate()) NOT NULL,
     [LastModifiedDate]            DATETIME        CONSTRAINT [DF_BSSegment_LastModifiedDate] DEFAULT (getdate()) NOT NULL,
     CONSTRAINT [PK_BSSegment] PRIMARY KEY CLUSTERED ([SegmentID] ASC),
-    CONSTRAINT [FK_BSSegment_BSItem] FOREIGN KEY ([ItemID]) REFERENCES [dbo].[BSItem] ([ItemID])
+    CONSTRAINT [FK_BSSegment_BSItem] FOREIGN KEY ([ItemID]) REFERENCES [dbo].[BSItem] ([ItemID]),
+    CONSTRAINT [FK_BSSegment_BSSegmentStatus ] FOREIGN KEY ([SegmentStatusID]) REFERENCES [dbo].[BSSegmentStatus] ([SegmentStatusID])
 );
 

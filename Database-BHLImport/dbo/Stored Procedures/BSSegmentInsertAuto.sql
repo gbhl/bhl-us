@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[BSSegmentInsertAuto]
+﻿CREATE PROCEDURE dbo.BSSegmentInsertAuto
 
 @SegmentID INT OUTPUT,
 @ItemID INT,
@@ -24,7 +24,8 @@
 @ContributorCreationDate DATETIME = null,
 @ContributorLastModifiedDate DATETIME = null,
 @BHLSegmentID INT = null,
-@ContributorName NVARCHAR(255)
+@ContributorName NVARCHAR(255),
+@SegmentStatusID INT
 
 AS 
 
@@ -56,7 +57,8 @@ INSERT INTO [dbo].[BSSegment]
 	[BHLSegmentID],
 	[CreationDate],
 	[LastModifiedDate],
-	[ContributorName] )
+	[ContributorName],
+	[SegmentStatusID] )
 VALUES
 ( 	@ItemID,
 	@BioStorReferenceID,
@@ -83,7 +85,8 @@ VALUES
 	@BHLSegmentID,
 	getdate(),
 	getdate(),
-	@ContributorName )
+	@ContributorName,
+	@SegmentStatusID )
 
 SET @SegmentID = Scope_Identity()
 
@@ -121,7 +124,8 @@ ELSE BEGIN
 		[BHLSegmentID],
 		[CreationDate],
 		[LastModifiedDate],
-		[ContributorName]	
+		[ContributorName],
+		[SegmentStatusID]	
 	FROM [dbo].[BSSegment]
 	WHERE
 		[SegmentID] = @SegmentID

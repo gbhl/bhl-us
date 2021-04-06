@@ -24,6 +24,7 @@ REM  Build Tables
 REM --------------------------------------
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\BotanicusHarvestLog.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\BSItemStatus.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Tables\BSSegmentStatus.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\IAAnalysisHarvestLog.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\IAFileFormat.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\IAItemStatus.sql"
@@ -193,6 +194,7 @@ REM --------------------------------------
 REM  Insert Data
 REM --------------------------------------
 sqlcmd -E -S %1 -d %2 -i "data\dbo.BSItemStatus.Table.sql"
+sqlcmd -E -S %1 -d %2 -i "data\dbo.BSSegmentStatus.Table.sql"
 sqlcmd -E -S %1 -d %2 -i "data\dbo.IAFileFormat.Table.sql"
 sqlcmd -E -S %1 -d %2 -i "data\dbo.IAItemStatus.Table.sql"
 sqlcmd -E -S %1 -d %2 -i "data\dbo.IAScanCenterInstitution.Table.sql"

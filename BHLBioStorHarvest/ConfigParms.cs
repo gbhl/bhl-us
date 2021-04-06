@@ -17,6 +17,10 @@ namespace MOBOT.BHL.BHLBioStorHarvest
 
         public int ImportSourceID { get; set; }
 
+        public int SegmentStatusHarvestedID { get; set; }
+        public int SegmentStatusPublishedID { get; set; }
+        public int SegmentStatusSkippedID { get; set; }
+        
         public bool NoDownload { get; set; }
         public bool NoPublish { get; set; }
         public bool NoCluster { get; set; }
@@ -40,6 +44,9 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             File = ConfigurationManager.AppSettings["File"];
 
             ImportSourceID = Convert.ToInt32(ConfigurationManager.AppSettings["ImportSourceID"]);
+            SegmentStatusHarvestedID = Convert.ToInt32(ConfigurationManager.AppSettings["SegmentStatusHarvestedID"]);
+            SegmentStatusPublishedID = Convert.ToInt32(ConfigurationManager.AppSettings["SegmentStatusPublishedID"]);
+            SegmentStatusSkippedID = Convert.ToInt32(ConfigurationManager.AppSettings["SegmentStatusSkippedID"]);
 
             NoDownload = (ConfigurationManager.AppSettings["NoDownload"] == "true");
             NoPublish = (ConfigurationManager.AppSettings["NoPublish"] == "true");

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.BSSegmentSelectByItem
+﻿CREATE PROCEDURE [dbo].[BSSegmentSelectByItem]
 
 @ItemID int
 
@@ -10,6 +10,7 @@ SET NOCOUNT ON
 
 SELECT	SegmentID,
 		ItemID,
+		ss.StatusLabel,
 		BioStorReferenceID,
 		SequenceOrder,
 		Genre,
@@ -27,12 +28,12 @@ SELECT	SegmentID,
 		ContributorCreationDate,
 		ContributorLastModifiedDate,
 		BHLSegmentID,
-		CreationDate,
-		LastModifiedDate
-FROM	dbo.BSSegment
+		s.CreationDate,
+		s.LastModifiedDate
+FROM	dbo.BSSegment s
+		INNER JOIN dbo.BSSegmentStatus ss ON s.SegmentStatusID = ss.SegmentStatusID
 WHERE	ItemID = @ItemID
 ORDER BY
 		SequenceOrder
 
 END
-
