@@ -28,6 +28,14 @@ namespace MOBOT.BHL.DataObjects
             set { _bookID = value; }
         }
 
+        private byte? _bookIsVirtual = null;
+
+        public byte? BookIsVirtual
+        {
+            get { return _bookIsVirtual; }
+            set { _bookIsVirtual = value; }
+        }
+
         private int? _segmentClusterId = null;
 
         public int? SegmentClusterId
@@ -297,6 +305,10 @@ namespace MOBOT.BHL.DataObjects
                 if (column.Name == "BookID")
                 {
                     _bookID = (int?)(column.Value);
+                }
+				if (column.Name == "BookIsVirtual")
+				{
+                    _bookIsVirtual = (byte?)column.Value;
                 }
                 if (column.Name == "TitleID")
                 {

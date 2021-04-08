@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 2:17:49 PM
+// Generated 4/27/2021 10:42:17 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class Page_PageTypeDAL is based upon dbo.Page_PageType.
@@ -210,7 +210,7 @@ namespace MOBOT.BHLImport.DAL
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("Page_PageTypeInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("PagePageTypeID", SqlDbType.Int, null, false),
-					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
+					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, false, barCode),
 					CustomSqlHelper.CreateInputParameter("FileNamePrefix", SqlDbType.NVarChar, 200, false, fileNamePrefix),
 					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.Int, null, true, sequenceOrder),
 					CustomSqlHelper.CreateInputParameter("PageTypeID", SqlDbType.Int, null, false, pageTypeID),
@@ -429,7 +429,7 @@ namespace MOBOT.BHLImport.DAL
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("Page_PageTypeUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("PagePageTypeID", SqlDbType.Int, null, false, pagePageTypeID),
-					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
+					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, false, barCode),
 					CustomSqlHelper.CreateInputParameter("FileNamePrefix", SqlDbType.NVarChar, 200, false, fileNamePrefix),
 					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.Int, null, true, sequenceOrder),
 					CustomSqlHelper.CreateInputParameter("PageTypeID", SqlDbType.Int, null, false, pageTypeID),

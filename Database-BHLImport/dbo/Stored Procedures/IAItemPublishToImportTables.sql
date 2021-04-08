@@ -130,7 +130,7 @@ BEGIN TRY
 
 	CREATE TABLE #tmpTitle (
 		[ItemID] int NOT NULL,
-		[IAIdentifier] [nvarchar](50) NOT NULL,
+		[IAIdentifier] [nvarchar](200) NOT NULL,
 		[MARCBibID] [nvarchar](50) NOT NULL,
 		[MARCLeader] [nvarchar](24) NULL,
 		[FullTitle] [ntext] NOT NULL,
@@ -232,13 +232,13 @@ BEGIN TRY
 
 	CREATE TABLE #tmpItem(
 		[ItemID] int NOT NULL,
-		[IAIdentifier] [nvarchar](50) NOT NULL,
+		[IAIdentifier] [nvarchar](200) NOT NULL,
 		[MARCBibID] [nvarchar](50) NOT NULL,
 		[TitleID] [int] NOT NULL,
-		[BarCode] [nvarchar](40) NOT NULL,
+		[BarCode] [nvarchar](200) NOT NULL,
 		[ItemSequence] [smallint] NULL,
 		[MaxExistingItemSequence] [smallint] NULL DEFAULT(0),	-- highest existing production sequence for this barcode
-		[MARCItemID] [nvarchar](50) NULL,
+		[MARCItemID] [nvarchar](200) NULL,
 		[Volume] [nvarchar](100) NULL,
 		[InstitutionCode] [nvarchar](10) NULL,
 		[LanguageCode] [nvarchar](10) NULL,
@@ -278,14 +278,14 @@ BEGIN TRY
 
 	CREATE TABLE #tmpItemLanguage(
 		[ItemID] [int] NOT NULL,
-		[BarCode] [nvarchar](40) NOT NULL,
+		[BarCode] [nvarchar](200) NOT NULL,
 		[LanguageCode] [nvarchar](10) NOT NULL DEFAULT('')
 		)		
 
 	CREATE TABLE #tmpPage (
 		[ItemID] [int] NOT NULL,
 		[BHLItemID] [int] NOT NULL,
-		[BarCode] [nvarchar](40) NOT NULL,
+		[BarCode] [nvarchar](200) NOT NULL,
 		[FileNamePrefix] [nvarchar](200) NOT NULL,
 		[SequenceOrder] [int] NULL,
 		[SequenceOrderCorrected] [int] NULL,
@@ -299,7 +299,7 @@ BEGIN TRY
 		)
 
 	CREATE TABLE #tmpPage_PageType (
-		[BarCode] [nvarchar](40) NOT NULL,
+		[BarCode] [nvarchar](200) NOT NULL,
 		[FileNamePrefix] [nvarchar](200) NOT NULL,
 		[SequenceOrder] [int] NOT NULL,
 		[SequenceOrderCorrected] [int] NULL,
@@ -307,7 +307,7 @@ BEGIN TRY
 		)
 
 	CREATE TABLE #tmpIndicatedPage (
-		[BarCode] [nvarchar](40) NOT NULL,
+		[BarCode] [nvarchar](200) NOT NULL,
 		[FileNamePrefix] [nvarchar](200) NOT NULL,
 		[SequenceOrder] [int] NOT NULL,
 		[SequenceOrderCorrected] [int] NULL,
@@ -320,7 +320,7 @@ BEGIN TRY
 
 	CREATE TABLE #tmpSegment (
 		ItemID int NOT NULL,
-		BarCode nvarchar(40) NOT NULL,
+		BarCode nvarchar(200) NOT NULL,
 		SequenceOrder smallint NOT NULL DEFAULT ((1)),
 		SegmentGenreID int NOT NULL,
 		Title nvarchar(2000) NOT NULL DEFAULT (''),
@@ -347,7 +347,7 @@ BEGIN TRY
 
 	CREATE TABLE #tmpSegmentPage (
 		ItemID int NOT NULL,
-		BarCode nvarchar(40) NOT NULL,
+		BarCode nvarchar(200) NOT NULL,
 		SegmentSequenceOrder smallint NOT NULL,
 		PageSequenceOrder int NULL
 		)
@@ -355,7 +355,7 @@ BEGIN TRY
 	CREATE TABLE #tmpSegmentIdentifier
 		(
 		ItemID int NOT NULL,
-		BarCode nvarchar(40) NOT NULL,
+		BarCode nvarchar(200) NOT NULL,
 		SegmentSequenceOrder smallint NOT NULL,
 		IdentifierName nvarchar(40) NOT NULL,
 		IdentifierValue nvarchar(125) NULL,
@@ -364,7 +364,7 @@ BEGIN TRY
 	CREATE TABLE #tmpSegmentAuthor
 		(
 		ItemID int NOT NULL,
-		BarCode	nvarchar(40) NOT NULL DEFAULT(''),
+		BarCode	nvarchar(200) NOT NULL DEFAULT(''),
 		SegmentSequenceOrder int NOT NULL,
 		SequenceOrder int NOT NULL,
 		BHLAuthorID int NULL,
@@ -377,7 +377,7 @@ BEGIN TRY
 	CREATE TABLE #tmpSegmentAuthorIdentifier
 		(
 		ItemID int NOT NULL,
-		BarCode	nvarchar(40) NOT NULL DEFAULT(''),
+		BarCode	nvarchar(200) NOT NULL DEFAULT(''),
 		SegmentSequenceOrder int NOT NULL,
 		SequenceOrder int NOT NULL,
 		ProductionIdentifierID int NOT NULL,
@@ -2391,3 +2391,5 @@ END CATCH
 SET NOCOUNT OFF
 
 END
+
+GO

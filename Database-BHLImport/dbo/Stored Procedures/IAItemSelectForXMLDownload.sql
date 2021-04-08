@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[IAItemSelectForXMLDownload]
 
-@IAIdentifier NVARCHAR(50) = ''
+@IAIdentifier NVARCHAR(200) = ''
 
 AS
 SET NOCOUNT ON

@@ -110,6 +110,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj">
+      <Project>{65499e9e-4829-469e-8b5e-3f96012649af}</Project>
+      <Name>BHLDataObjects</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BHLServer\BHLServer.csproj">
       <Project>{20fc0f67-c32a-46fe-9ff2-ba5fc74725af}</Project>
       <Name>BHLServer</Name>

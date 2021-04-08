@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 using System.Linq;
+using MOBOT.BHL.DataObjects.Enum;
 
 namespace MOBOT.BHL.AdminWeb.Services
 {
@@ -71,7 +72,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                     }
 
                     // Add the height and width of each page to the list
-                    viewerPages = (new SiteService.SiteServiceSoapClient().PageGetImageDimensions(viewerPages.ToArray(), itemID)).ToList();
+                    viewerPages = (new SiteService.SiteServiceSoapClient().PageGetImageDimensions(viewerPages.ToArray(), (int)ItemType.Book, itemID)).ToList();
 
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     return js.Serialize(viewerPages);

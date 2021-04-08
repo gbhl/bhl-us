@@ -32,7 +32,12 @@ namespace MOBOT.BHL.Server
 			return ( new PageDAL().PageMetadataSelectByItemID( null, null, itemID ) );
 		}
 
-        public Page PageMetadataSelectByPageID(int pageID)
+		public List<Page> PageMetadataSelectBySegmentID(int segmentID)
+        {
+			return new PageDAL().PageMetadataSelectBySegmentID(null, null, segmentID);
+		}
+
+		public Page PageMetadataSelectByPageID(int pageID)
         {
             return (new PageDAL().PageMetadataSelectByPageID(null, null, pageID));
         }

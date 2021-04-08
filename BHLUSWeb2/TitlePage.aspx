@@ -5,26 +5,29 @@
     <div id="page-title">
         <div id="volumebar"  style="float:right;" classcss="js-invisible no-js-hide">
             <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>" title="FAQ" class="report"><img alt="FAQ" src="/images/rpterror.png" /></a>
-            <% if (!string.IsNullOrWhiteSpace(PageSummary.DownloadUrl)) { %>
+            <% if (!string.IsNullOrWhiteSpace(PublicationDetail.DownloadUrl)) { %>
                 <div class="buttondrop download">Download Contents<div class="play"></div></div> 
                 <div class="downloadcontents">
-                    <div><a href="<%: (Titles.Count > 1) ? "/biblioselect/" + PageSummary.BookID : "/bibliography/" + PageSummary.TitleID %>">View Metadata</a></div>
+                    <div><a href="<%: (PublicationDetail.TitleCount > 1) ? "/biblioselect/" + PublicationDetail.ID : "/bibliography/" + PublicationDetail.TitleID %>">View Metadata</a></div>
                     <div><a href="#" class="selectpages">Select pages to download</a></div>
                     <div><a href="#" class="selectpart">Download Part</a></div>
                     <div><a href="#" class="downloadbook">Download Book</a></div>
                     <div><a href="#" class="downloadcitation">Download Citation</a></div>
-                    <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PageSummary.BarCode) %>" rel="noopener noreferrer" target="_blank">View at Internet Archive</a></div>
+                    <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PublicationDetail.BarCode) %>" rel="noopener noreferrer" target="_blank">View at Internet Archive</a></div>
                 </div>
                 <div class="jqmWindow" id="download-dialog">
                     <div class="head">
                         <a class="jqmClose" title="Close Dialog">Close Dialog</a>
-                        <h2>Download book</h2>
+                        <h2>Download <%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? "book" : PublicationDetail.Genre %></h2>
                         <hr />
                     </div>
-                    <a class="large-icon pdf" download="<%: PageSummary.BookID %>.pdf" href="/itempdf/<%: PageSummary.BookID %>">Download PDF</a>
-                    <a class="large-icon all" href="<%= PageSummary.DownloadUrl + PageSummary.BarCode %>">Download All</a>
-                    <a class="large-icon jp2" href="/itemimages/<%: PageSummary.BookID %>">Download JPEG 2000</a>
-                    <a class="large-icon ocr" download="<%: PageSummary.BookID %>.txt" href="/itemtext/<%: PageSummary.BookID %>">Download Text</a>                
+                    <a class="large-icon pdf" download="<%: PublicationDetail.ID %>.pdf" 
+                        href="/<%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? "item" : "part"%>pdf/<%: PublicationDetail.ID %>">Download PDF</a>
+                    <a class="large-icon all" href="<%= PublicationDetail.DownloadUrl + PublicationDetail.BarCode %>">Download All</a>
+                    <a class="large-icon jp2" 
+                        href="/<%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? "item" : "part"%>images/<%: PublicationDetail.ID %>">Download JPEG 2000</a>
+                    <a class="large-icon ocr" download="<%: PublicationDetail.ID %>.txt" 
+                        href="/<%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? "item" : "part"%>text/<%: PublicationDetail.ID %>">Download Text</a>
                 </div>
                 <div class="jqmWindow" id="dlcitation-dialog">
                     <div class="head">
@@ -34,13 +37,17 @@
                     </div>
                     <div class="bookcitationlinks">
                         <div class="bookcitelinklabel">BOOK</div>
-                        <a class="large-icon ris" title="download ris" download="bhlitem<%: PageSummary.BookID %>.ris" href="/risdownload/<%: PageSummary.BookID %>">Download RIS</a>
-                        <a class="large-icon bibtex" title="download bibtex" download="bhlitem<%= PageSummary.BookID %>.bib" href="/bibtexdownload/<%= PageSummary.BookID %>">Download BibTeX</a>
+                        <a class="large-icon ris" title="download ris" 
+                            download="bhlitem<%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? PublicationDetail.ID : PublicationDetail.ContainerID %>.ris" 
+                            href="/risdownload/<%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? PublicationDetail.ID : PublicationDetail.ContainerID %>">Download RIS</a>
+                        <a class="large-icon bibtex" title="download bibtex" 
+                            download="bhlitem<%= (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? PublicationDetail.ID : PublicationDetail.ContainerID %>.bib" 
+                            href="/bibtexdownload/<%= (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? PublicationDetail.ID : PublicationDetail.ContainerID %>">Download BibTeX</a>
                     </div>
                     <div class="partcitationlinks">
                         <div class="partcitelinklabel">CURRENT ARTICLE</div>
-                        <a class="large-icon ris" title="download ris" download="bhlpart<%: PageSummary.BookID %>.ris" href="/handlers/risdownload.ashx?pid=<%: PageSummary.BookID %>">Download RIS</a>
-                        <a class="large-icon bibtex" title="download bibtex" download="bhlpart<%= PageSummary.BookID %>.bib" href="/handlers/bibtexdownload.ashx?pid=<%= PageSummary.BookID %>">Download BibTeX</a>
+                        <a class="large-icon ris" title="download ris" download="bhlpart<%: PublicationDetail.ID %>.ris" href="/handlers/risdownload.ashx?pid=<%: PublicationDetail.ID %>">Download RIS</a>
+                        <a class="large-icon bibtex" title="download bibtex" download="bhlpart<%= PublicationDetail.ID %>.bib" href="/handlers/bibtexdownload.ashx?pid=<%= PublicationDetail.ID %>">Download BibTeX</a>
                     </div>
                 </div>
             <% } %>
@@ -53,8 +60,10 @@
             <% } %>
         </div>
         <div id="titletext">
-            <a class="ellipsis journaltitlelink" href="<%: (Titles.Count > 1) ? "/biblioselect/" + PageSummary.BookID : "/bibliography/" + PageSummary.TitleID %>"><%: PageSummary.FullTitle %></a>
-            <a id="articleTitleLink" class="ellipsis articletitlelink" href="#"></a>
+            <a class="ellipsis journaltitlelink" href="<%: (PublicationDetail.TitleCount > 1) ? "/biblioselect/" + PublicationDetail.ID : "/bibliography/" + PublicationDetail.TitleID %>"><%: PublicationDetail.FullTitle %></a>
+            <a id="articleTitleLink" class="ellipsis articletitlelink" href="<%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Segment) ? "/part/" + PublicationDetail.ID.ToString() : "#" %>">
+                <%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Segment) ? PublicationDetail.Genre + ": " + PublicationDetail.ArticleTitle : "" %>
+            </a>
         </div>
     <uc:COinS ID="COinS" runat="server" />
     </div> <!-- page-title -->
@@ -79,14 +88,21 @@
                             <!-- non-iDevices -->
                             <div id="lstSegments" class="ui-pg-selbox pagelist">
                             <ul>
-                                <% foreach (Segment segment in Segments)
+                                <% foreach (Segment segment in PublicationDetail.Children)
                                 { %>
                                     <li id="<%= segment.SegmentID %>">
-                                        <a class="viewSegLinkTitle" id="<%= segment.StartPageID %>" href="#" style="text-decoration:none"><%= segment.Title %></a>
+                                        <a class="viewSegLinkTitle" id="<%= segment.StartPageID %>" href="<%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? "#" : "/segment/" + segment.SegmentID.ToString() %>" style="text-decoration:none"><%= segment.Title %></a>
                                         <div class="segListVolPage">
-                                            <% if (segment.Volume != string.Empty) { %>Volume <%= segment.Volume %><%} %>
-                                            <% if (segment.Volume != string.Empty && segment.StartPageNumber != string.Empty) { %>, <%} %>
-                                            <% if (segment.StartPageNumber != string.Empty) { %>Page <%= segment.StartPageNumber%><%} %>
+                                            <%
+                                            List<string> vs = new List<string>();
+                                            if (!string.IsNullOrWhiteSpace(segment.Series)) vs.Add("Ser " + segment.Series);
+                                            if (!string.IsNullOrWhiteSpace(segment.Volume)) vs.Add("Vol " + segment.Volume);
+                                            if (!string.IsNullOrWhiteSpace(segment.Issue)) vs.Add("Iss " + segment.Issue);
+                                            if (!string.IsNullOrWhiteSpace(segment.StartPageNumber)) vs.Add("Page " + segment.StartPageNumber);
+                                            if (vs.Count > 0)
+                                            {%>
+                                                <%: string.Join(", ", vs.ToArray()) %>
+                                            <%}%>
                                         </div>
                                     </li>
                                     <%
@@ -126,32 +142,48 @@
                 <div id="right-panel-content">
                     <div id="pageInfo-panel"> 
                         <div id="pageInfoDetails" class="text">
-                            <div class="header"><%: Genre %> Title</div>
-                            <div class="detail"><%if (PageSummary.FullTitle.Length > 200) {%><%: PageSummary.FullTitle.Substring(0, 200) %>...<%} else {%><%: PageSummary.FullTitle %><%}%></div>
-                            <%if (Authors.Count > 0 || AdditionalAuthors.Count > 0) { %>
+                            <div class="header"><%: PublicationDetail.TitleGenre %> Title</div>
+                            <div class="detail"><%if (PublicationDetail.FullTitle.Length > 200) {%><%: PublicationDetail.FullTitle.Substring(0, 200) %>...<%} else {%><%: PublicationDetail.FullTitle %><%}%></div>
+
+                            <%if (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Segment) { %>
+                                <div class="header"><%: PublicationDetail.Genre %> Title</div>
+                                <div class="detail"><%if (PublicationDetail.ArticleTitle.Length > 200) {%><%: PublicationDetail.ArticleTitle.Substring(0, 200) %>...<%} else {%><%: PublicationDetail.ArticleTitle %><%}%></div>
+                            <%} %>
+
+                            <%if (PublicationDetail.Authors.Count > 0 || PublicationDetail.AdditionalAuthors.Count > 0) { %>
                                 <div class="header">By</div>
                                 <div class="detail">
-                                    <%foreach (Author a in Authors) { %>
+                                    <%foreach (Author a in PublicationDetail.Authors) { %>
                                         <a href="/creator/<%: a.AuthorID.ToString() %>"><%: a.NameExtended %></a><br />
                                     <%} %>
-                                    <% if (Authors.Count > 0 && AdditionalAuthors.Count > 0) Response.Write("<br />"); %>
-                                    <%foreach (Author a in AdditionalAuthors) { %>
+                                    <% if (PublicationDetail.Authors.Count > 0 && PublicationDetail.AdditionalAuthors.Count > 0) Response.Write("<br />"); %>
+                                    <%foreach (Author a in PublicationDetail.AdditionalAuthors) { %>
                                         <a href="/creator/<%: a.AuthorID.ToString() %>"><%: a.NameExtended %></a><br />
                                     <%} %>
                                 </div>
                             <%} %>
-                            <%if (!string.IsNullOrWhiteSpace(CurrentTitle.PublicationDetails)) { %>
+                            <%if (!string.IsNullOrWhiteSpace(PublicationDetail.PublicationDetails)) { %>
                                 <div class="header">Publication Details</div>
-                                <div class="detail"><%: CurrentTitle.PublicationDetails %></div>
+                                <div class="detail"><%: PublicationDetail.PublicationDetails %></div>
                             <%} %>
-                            <%if (!string.IsNullOrWhiteSpace(CurrentBook.StartYear)) { %>
+                            <%if (!string.IsNullOrWhiteSpace(PublicationDetail.StartYear)) { %>
                                 <div class="header">Year</div>
-                                <div class="detail"><%: CurrentBook.StartYear %></div>
+                                <div class="detail"><%: PublicationDetail.StartYear %></div>
                             <%} %>
-                            <%foreach (Institution institution in ItemInstitutions)
+                            <%if (!string.IsNullOrWhiteSpace(PublicationDetail.DOI)) { %>
+                                <div class="header">DOI</div>
+                                <div class="detail"><a href="<%= PublicationDetail.DOI%>" title="DOI"><%: PublicationDetail.DOI%></a></div>
+                            <%} %>
+                            <%foreach (Institution institution in PublicationDetail.Institutions)
                             {
-                                if (institution.InstitutionRoleName == "Holding Institution") { %>
-                                    <div class="header">Holding Institution</div>
+                                if (institution.InstitutionRoleName == "Holding Institution" || institution.InstitutionRoleName == "Rights Holder") { %>
+                                    <div class="header">
+                                        <%if (institution.InstitutionRoleName == "Holding Institution") { %>
+                                            Holding Institution
+                                        <%} else {%>
+                                            Rights Holder
+                                        <%} %>
+                                    </div>
                                     <div class="detail">
                                         <%if (string.IsNullOrWhiteSpace(institution.InstitutionUrl))
                                         { %>
@@ -164,67 +196,54 @@
                                     </div>
                                 <%}
                             }%>
-                            <%if (!string.IsNullOrWhiteSpace(PageSummary.Sponsor)) { %>
+                            <%if (!string.IsNullOrWhiteSpace(PublicationDetail.Sponsor)) { %>
                                 <div class="header">Sponsor</div>
-                                <div class="detail"><%: PageSummary.Sponsor %></div>
+                                <div class="detail"><%: PublicationDetail.Sponsor %></div>
                             <%} %>
-                            <%if (!string.IsNullOrWhiteSpace(CurrentBook.ItemDescription)) { %>
+                            <%if (!string.IsNullOrWhiteSpace(PublicationDetail.Description)) { %>
                                 <div class="header">Copy-specific Information</div>
-                                <div class="detail"><%: CurrentBook.ItemDescription %></div>
+                                <div class="detail"><%: PublicationDetail.Description %></div>
                             <%} %>
                             <div class="header">Copyright & Usage</div>
                             <div class="detail">
                                 <%  bool showNone = true;
-                                                                        if (!string.IsNullOrWhiteSpace(CurrentBook.LicenseUrl)) { %>
+                                                                        if (!string.IsNullOrWhiteSpace(PublicationDetail.LicenseUrl)) { %>
                                         License Type:<br />
-                                        <%if (System.Text.RegularExpressions.Regex.IsMatch(CurrentBook.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
-                                            <a rel="noopener noreferrer" target="_blank" href="<%: CurrentBook.LicenseUrl%>"><%: CurrentBook.LicenseUrl%></a>
+                                        <%if (System.Text.RegularExpressions.Regex.IsMatch(PublicationDetail.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
+                                            <a rel="noopener noreferrer" target="_blank" href="<%: PublicationDetail.LicenseUrl%>"><%: PublicationDetail.LicenseUrl%></a>
                                         <% } else {%>
-                                            <%: CurrentBook.LicenseUrl%>
+                                            <%: PublicationDetail.LicenseUrl%>
                                         <% }
                                         showNone = false;%>
                                         <br /><br />
                                 <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(CurrentBook.Rights)) { %>
+                                <% if (!string.IsNullOrWhiteSpace(PublicationDetail.Rights)) { %>
                                         Rights:<br />
-                                        <%if (System.Text.RegularExpressions.Regex.IsMatch(CurrentBook.Rights, "^(https?|ftp|file)://.+$")) { %>
-                                            <a rel="noopener noreferrer" target="_blank" href="<%: CurrentBook.Rights%>"><%: CurrentBook.Rights%></a>
+                                        <%if (System.Text.RegularExpressions.Regex.IsMatch(PublicationDetail.Rights, "^(https?|ftp|file)://.+$")) { %>
+                                            <a rel="noopener noreferrer" target="_blank" href="<%: PublicationDetail.Rights%>"><%: PublicationDetail.Rights%></a>
                                         <% } else { %>
-                                            <%: CurrentBook.Rights%>
+                                            <%: PublicationDetail.Rights%>
                                         <% }
                                         showNone = false;%>
                                         <br /><br />
                                 <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(CurrentBook.DueDiligence)) { %>
+                                <% if (!string.IsNullOrWhiteSpace(PublicationDetail.DueDiligence)) { %>
                                         Due Diligence:<br />
-                                        <%if (System.Text.RegularExpressions.Regex.IsMatch(CurrentBook.DueDiligence, "^(https?|ftp|file)://.+$"))
+                                        <%if (System.Text.RegularExpressions.Regex.IsMatch(PublicationDetail.DueDiligence, "^(https?|ftp|file)://.+$"))
                                                                         { %>
-                                            <a rel="noopener noreferrer" target="_blank" href="<%: CurrentBook.DueDiligence%>"><%: CurrentBook.DueDiligence%></a>
+                                            <a rel="noopener noreferrer" target="_blank" href="<%: PublicationDetail.DueDiligence%>"><%: PublicationDetail.DueDiligence%></a>
                                         <% } else { %>
-                                            <%: CurrentBook.DueDiligence%>
+                                            <%: PublicationDetail.DueDiligence%>
                                         <% }
                                         showNone = false;%>
                                         <br /><br />
                                 <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(CurrentBook.CopyrightStatus)) { %>
-                                    Copyright Status:<br /><%: CurrentBook.CopyrightStatus%><br /><br />
-                                    <%showNone = false;%>
-                                <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(CurrentBook.CopyrightRegion)) { %>
-                                    Copyright Region:<br /><%: CurrentBook.CopyrightRegion%><br /><br />
-                                    <%showNone = false;%>
-                                <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(CurrentBook.CopyrightComment)) { %>
-                                    Copyright Comments:<br /><%: CurrentBook.CopyrightComment%><br /><br />
-                                    <%showNone = false;%>
-                                <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(CurrentBook.CopyrightEvidence)) { %>
-                                    Copyright Evidence:<br /><%: CurrentBook.CopyrightEvidence%><br /><br />
+                                <% if (!string.IsNullOrWhiteSpace(PublicationDetail.CopyrightStatus)) { %>
+                                    Copyright Status:<br /><%: PublicationDetail.CopyrightStatus%><br /><br />
                                     <%showNone = false;%>
                                 <% } %>
 
-
-                                <%foreach (Institution institution in ItemInstitutions)
+                                <%foreach (Institution institution in PublicationDetail.Institutions)
                                     {
                                         if (institution.InstitutionRoleName == "Rights Holder") { %>
                                             Rights Holder:<br />
@@ -483,9 +502,9 @@
         br = new BookReader();
 
         // Page info Json object
-        var pages = <%= Pages %>;
+        var pages = <%= PublicationDetail.Pages %>;
 
-        br.pageProgression = "<%= PageProgression %>";
+        br.pageProgression = "<%= PublicationDetail.PageProgression %>";
 
         var pdfPages = [];
         var pdfBar = $('#mypdfbar');
@@ -744,7 +763,7 @@
             $.ajax({
                 type: 'get',
                 url: '/search/pages',
-                data: 'q=' + encodeURIComponent($("#sibSearchText").val()) + '&itemId=' + <%: PageSummary.BookID %>,
+                data: 'q=' + encodeURIComponent($("#sibSearchText").val()) + '&itemId=' + <%: PublicationDetail.ID %>,
                 success: function (data, textStatus, jqXHR) {
                     if (data.length > 0) {
                         $("#sibNumResults").html("(" + data.length + ")");
@@ -784,6 +803,17 @@
                     isAnimating = false;
                 }
             });
+        });
+
+        // Change binder for volumes dropdown
+        $('#ddlVolumes').live("change", function () {
+            var ids = $(this).val().split("|");
+            if (ids[0] == 0) { // IsVirtual
+                location.href = '/item/' + ids[1];  // BookID
+            }
+            else {
+                location.href = "/segment/" + ids[2];   // FirstSegmentID
+            }
         });
 
         // Create Modal Dialogs
@@ -1056,7 +1086,7 @@
                     type: 'post',
                     url: '/generatepdf/',
                     data: {
-                        'itemId': <%= PageSummary.ItemID %>,
+                        'itemId': <%= PublicationDetail.ItemID %>,
                         'pages': pageIds.toString(),
                         'email': $('#tbEmail').val(),
                         'title': $('#tbTitle').val(),
@@ -1183,6 +1213,7 @@
             var segListItem = $("#lstSegments li[id='" + pages[index].SegmentID + "']");
             var segTitleLink = $("#articleTitleLink");
 
+            <%// if (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) { %>
             // Update the segment list
             var segTitle = $(segListItem).children("a.viewSegLinkTitle");
             if (segTitle != null) {
@@ -1195,8 +1226,10 @@
                 segTitleLink.attr("href", "/part/" + pages[index].SegmentID);
             }
             highlightSeg(segTitle);
+            <%// } %>
 
             // Update the Download Part and Download Citation menu items
+            <% if (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) { %>
             if (pages[index].SegmentID != null) {
                 $(".selectpart").html("Download " + pages[index].GenreName);
                 $(".selectpart").show();
@@ -1211,14 +1244,23 @@
                 $(".selectpart").hide();
                 $(".partcitationlinks").hide();
             }
+            <% } else if (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Segment) { %>
+                $(".selectpart").hide();
+                $(".partcitelinklabel").html("<%: PublicationDetail.Genre.ToUpper() %>");
+                $(".partcitationlinks").show();
+            <% } %>
 
             // Update the Altmetric badge
-            $(".altmetric-embed").attr("data-uri", "https://www.biodiversitylibrary.org/item/" + "<%: CurrentBookID %>");
+            <%if (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) { %>
+                $(".altmetric-embed").attr("data-uri", "https://www.biodiversitylibrary.org/item/" + "<%: PublicationDetail.ID %>");
+            <%} else if (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Segment) { %>
+                $(".altmetric-embed").attr("data-uri", "https://www.biodiversitylibrary.org/segment/" + "<%: PublicationDetail.ID %>");
+            <%}%>
             if (typeof _altmetric_embed_init === 'function') _altmetric_embed_init();
 
             // Update page URL and names
-            $("#currentpageURL").text("<%: UrlRoot %>/page/" + pages[index].PageID);
-            $("#currentpageURL").attr("href", "<%: UrlRoot %>/page/" + pages[index].PageID);
+            $("#currentpageURL").text("<%: Request.Url.GetLeftPart(UriPartial.Authority) %>/page/" + pages[index].PageID);
+            $("#currentpageURL").attr("href", "<%: Request.Url.GetLeftPart(UriPartial.Authority) %>/page/" + pages[index].PageID);
             var currentFlickrUrl = $("#currentFlickrURL");
             var flickrUrlSpan = $("#flickrurlspan");
             if (pages[index].FlickrUrl == "")
@@ -1396,10 +1438,10 @@
             });
         }
 
-        br.numLeafs = <%: PageCount %>;
+        br.numLeafs = <%: PublicationDetail.PageCount %>;
         br.bookTitle = '';
         br.imagesBaseURL = '/images/';
-        br.titleLeaf = <%: StartPage %>;
+        br.titleLeaf = <%: PublicationDetail.PageSequence %>;
 
         BookReader.prototype.addPageToolBox = function (index, page) {
             var pageToolbox = this.getPageToolbox(index);
@@ -1441,7 +1483,7 @@
                             classNameToAdd: 'printPopup'
                         },
                         "leaveOpen": true,
-                        pageTitle: '<%: PageSummary.ShortTitle %>' + ((pages[br.currentIndex()].WebDisplay) ? ' - ' + pages[br.currentIndex()].WebDisplay : '')
+                        pageTitle: '<%: PublicationDetail.ShortTitle %>' + ((pages[br.currentIndex()].WebDisplay) ? ' - ' + pages[br.currentIndex()].WebDisplay : '')
                     });
             });
 
@@ -1547,7 +1589,7 @@
                 resetSearchBox();
             });
 
-            if ("<%=HasAnnotations.ToLower()%>" === "false") {
+            if ("<%=PublicationDetail.HasAnnotations.ToLower()%>" === "false") {
                 showAnnotationsButton.hide();
             } else {
                 showAnnotationsButton.trigger('click');
@@ -1697,10 +1739,15 @@
 		    //	Do nothing when tab is clicked
 		    return false;
 	    });
-        var segmentCount = <%: SegmentCount %>; 
+        var segmentCount = <%: PublicationDetail.Children.Count %>; 
         if (segmentCount == 0) {
             $('#segmentstab').hide();
         }
+
+        <%if (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Segment) { %>
+            // Default to table of contents for virtual items
+            $('#segmentstab').click();
+        <%}%>
     });
 
 //]]>

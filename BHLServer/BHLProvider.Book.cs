@@ -30,6 +30,11 @@ namespace MOBOT.BHL.Server
 			return new BookDAL().BookSelectTextPathForItemID(null, null, itemID);
 		}
 
+		public Book BookSelectTextPathForSegmentID(int segmentID)
+		{
+			return new BookDAL().BookSelectTextPathForSegmentID(null, null, segmentID);
+		}
+
 		public List<Book> BookSelectRecent(int top, string languageCode, string institutionCode)
 		{
 			return new BookDAL().BookSelectRecent(null, null, top, languageCode, institutionCode);
@@ -43,6 +48,11 @@ namespace MOBOT.BHL.Server
 		public Book BookSelectByItemID(int itemID)
 		{
 			return new BookDAL().BookSelectByItemID(null, null, itemID);
+		}
+
+		public Book BookSelectByPageID(int pageID)
+		{
+			return new BookDAL().BookSelectByPageID(null, null, pageID);
 		}
 
 		public Book BookUpdatePaginationStatus(int bookID, int paginationStatusID, int userID)

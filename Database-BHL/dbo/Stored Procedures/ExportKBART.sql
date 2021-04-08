@@ -93,7 +93,7 @@ FROM	dbo.Title t
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND b.BookID = c.ItemID
 WHERE	t.PublishReady = 1
 AND		i.ItemStatusID = 40
-AND		c.HasLocalContent = 1
+AND		(c.HasLocalContent = 1 OR b.IsVirtual = 1)
 AND		bl.MARCCode NOT IN ('c', 'd') -- Omit collections until we decide appropriate 'publication_type' value
 
 -- Trim trailing punctuation from Titles and Publisher Names
@@ -241,6 +241,5 @@ ORDER BY SortTitle, SortVolume, SortIssue
 DROP TABLE #kbart
 
 END
-
 
 GO

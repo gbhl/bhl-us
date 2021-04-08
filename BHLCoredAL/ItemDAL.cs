@@ -27,7 +27,7 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction transaction = sqlTransaction;
 
 			using ( SqlCommand command = CustomSqlHelper.CreateCommand( "ItemSelectByBarCode", connection, transaction,
-							CustomSqlHelper.CreateInputParameter( "BarCode", SqlDbType.NVarChar, 40, false, barCode ) ) )
+							CustomSqlHelper.CreateInputParameter( "BarCode", SqlDbType.NVarChar, 200, false, barCode ) ) )
 			{
 				using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
 				{
@@ -539,6 +539,25 @@ namespace MOBOT.BHL.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectFilenames", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("ItemId", SqlDbType.Int, null, false, itemId)))
+            {
+                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
+                {
+                    List<Item> list = helper.ExecuteReader(command);
+                    if (list == null || list.Count == 0)
+                        return null;
+                    else
+                        return list[0];
+                }
+            }
+        }
+
+        public Item ItemSelectFilenamesBySegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectFilenamesBySegmentID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {

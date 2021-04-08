@@ -1133,6 +1133,16 @@
     <None Include="dbo\Stored Procedures\SegmentSelectWithoutDOIByTitleID.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectWithoutDOIByItemID.sql" />
     <None Include="dbo\Stored Procedures\DOIInsert.sql" />
+    <None Include="dbo\Stored Procedures\SegmentSelectByBarCode.sql" />
+    <None Include="dbo\Stored Procedures\PageSummarySegmentSelectBySegmentID.sql" />
+    <None Include="dbo\Stored Procedures\BookSelectByPageID.sql" />
+    <None Include="dbo\Stored Procedures\PageSummarySegmentSelectByPageID.sql" />
+    <None Include="dbo\Stored Procedures\PageMetadataSelectBySegmentID.sql" />
+    <None Include="dbo\Stored Procedures\SegmentSelectChildSegmentsBySegmentID.sql" />
+    <None Include="dbo\Stored Procedures\PageSummarySelectForViewerBySegmentID.sql" />
+    <None Include="dbo\Stored Procedures\ItemSelectFilenamesBySegmentID.sql" />
+    <None Include="dbo\Stored Procedures\ItemSelectTextPathForSegmentID.sql" />
+    <None Include="dbo\Stored Procedures\SegmentSelectSiblingSegmentsBySegmentID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

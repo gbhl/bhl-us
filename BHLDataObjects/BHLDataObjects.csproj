@@ -201,6 +201,7 @@
     <Compile Include="Concrete\vwMarcDataField.cs" />
     <Compile Include="EntityCount.cs" />
     <Compile Include="Enum\ImportRecordStatus.cs" />
+    <Compile Include="Enum\ItemType.cs" />
     <Compile Include="Generated\RequestLog.__Application.cs" />
     <Compile Include="Generated\RequestLog.__RequestLog.cs" />
     <Compile Include="Generated\__AnnotatedItem.cs" />

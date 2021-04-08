@@ -301,12 +301,16 @@ namespace MOBOT.BHL.Web2.SiteService {
     public partial class GetItemTextRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public int itemType;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
         public int itemID;
         
         public GetItemTextRequestBody() {
         }
         
-        public GetItemTextRequestBody(int itemID) {
+        public GetItemTextRequestBody(int itemType, int itemID) {
+            this.itemType = itemType;
             this.itemID = itemID;
         }
     }
@@ -786,13 +790,17 @@ namespace MOBOT.BHL.Web2.SiteService {
         public MOBOT.BHL.Web2.SiteService.ViewerPage[] pages;
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public int itemType;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
         public int itemID;
         
         public PageGetImageDimensionsRequestBody() {
         }
         
-        public PageGetImageDimensionsRequestBody(MOBOT.BHL.Web2.SiteService.ViewerPage[] pages, int itemID) {
+        public PageGetImageDimensionsRequestBody(MOBOT.BHL.Web2.SiteService.ViewerPage[] pages, int itemType, int itemID) {
             this.pages = pages;
+            this.itemType = itemType;
             this.itemID = itemID;
         }
     }
@@ -964,9 +972,10 @@ namespace MOBOT.BHL.Web2.SiteService {
             return base.Channel.GetItemText(request);
         }
         
-        public string GetItemText(int itemID) {
+        public string GetItemText(int itemType, int itemID) {
             MOBOT.BHL.Web2.SiteService.GetItemTextRequest inValue = new MOBOT.BHL.Web2.SiteService.GetItemTextRequest();
             inValue.Body = new MOBOT.BHL.Web2.SiteService.GetItemTextRequestBody();
+            inValue.Body.itemType = itemType;
             inValue.Body.itemID = itemID;
             MOBOT.BHL.Web2.SiteService.GetItemTextResponse retVal = ((MOBOT.BHL.Web2.SiteService.SiteServiceSoap)(this)).GetItemText(inValue);
             return retVal.Body.GetItemTextResult;
@@ -1066,10 +1075,11 @@ namespace MOBOT.BHL.Web2.SiteService {
             return base.Channel.PageGetImageDimensions(request);
         }
         
-        public MOBOT.BHL.Web2.SiteService.ViewerPage[] PageGetImageDimensions(MOBOT.BHL.Web2.SiteService.ViewerPage[] pages, int itemID) {
+        public MOBOT.BHL.Web2.SiteService.ViewerPage[] PageGetImageDimensions(MOBOT.BHL.Web2.SiteService.ViewerPage[] pages, int itemType, int itemID) {
             MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsRequest inValue = new MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsRequest();
             inValue.Body = new MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsRequestBody();
             inValue.Body.pages = pages;
+            inValue.Body.itemType = itemType;
             inValue.Body.itemID = itemID;
             MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsResponse retVal = ((MOBOT.BHL.Web2.SiteService.SiteServiceSoap)(this)).PageGetImageDimensions(inValue);
             return retVal.Body.PageGetImageDimensionsResult;

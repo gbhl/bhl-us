@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects.Enum;
+using System;
 using System.Configuration;
 using System.Web;
 
@@ -27,7 +28,7 @@ namespace MOBOT.BHL.Web2
                 {
                     // Refresh cache
                     SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-                    itemText = service.GetItemText(itemID);
+                    itemText = service.GetItemText((int)ItemType.Book, itemID);
                     context.Cache.Add(cacheKey, itemText, null, DateTime.Now.AddMinutes(
                         Convert.ToDouble(ConfigurationManager.AppSettings["ItemTextCacheTime"])),
                         System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);

@@ -28,7 +28,7 @@ namespace MOBOT.IAAnalysis.DAL
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectByIdentifier", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("Identifier", SqlDbType.NVarChar, 50, false, identifier)))
+                CustomSqlHelper.CreateInputParameter("Identifier", SqlDbType.NVarChar, 200, false, identifier)))
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {

@@ -177,34 +177,6 @@
                     <a class="button" style="float:right" href="/modsdownload/<%: BhlTitle.TitleID %>">Download MODS</a>
                 </p>
             </div>
-            <div id="mods" class="tab-body" style="display:none">
-                <p>
-                    <a class="button" href="/modsdownload/<%: BhlTitle.TitleID %>">Download MODS</a>
-                </p>
-                <p class="header">
-                    <asp:Literal ID="litMods" runat="server"></asp:Literal>
-                </p>
-            </div>
-            <div id="bibtex" class="tab-body" style="display:none">
-                <% if (!string.IsNullOrEmpty(litBibTeX.Text)) { %>
-                <p>
-                    <a class="button" href="/bibtexdownload/<%: BhlTitle.TitleID %>">Download BibTeX citations</a>
-                </p>                
-                <p class="header">
-                    <asp:Literal ID="litBibTeX" runat="server"></asp:Literal>
-                </p>
-                <% } %>
-            </div>
-            <div id="ris" class="tab-body" style="display:none">
-                <% if (!string.IsNullOrEmpty(litRIS.Text)) { %>
-                <p>
-                    <a class="button" href="/risdownload/<%: BhlTitle.TitleID %>">Download RIS citations</a>
-                </p>
-                <p class="header">
-                    <asp:Literal ID="litRIS" runat="server" ></asp:Literal>
-                </p>
-                <% } %>
-            </div>
         </div>
     </section>
     <aside>
@@ -216,7 +188,7 @@
                 <h4 class="title">
                     <a class="expand no-js-hide" title="expand or collapse volume description">expand</a>
                     <span class="text"><%: bibliographyItem.Book.Volume%></span>
-                     <a class="viewbook" href="/item/<%: bibliographyItem.Book.BookID%>" title="View Volume">view volume</a>
+                     <a class="viewbook" href="/item/<%: bibliographyItem.Book.BookID%>" title="View">view</a>
                 </h4>
                 <div class="body">
                     <% if(!string.IsNullOrWhiteSpace(bibliographyItem.ThumbUrl)) { %>
@@ -272,15 +244,16 @@
                         <% } %>
 
                         <div class="booklinks">
-                            <%if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.ExternalUrl))  { %>
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.ExternalUrl))  { %>
                                 <a target="_blank" rel="noopener noreferrer" href="/item/<%: bibliographyItem.Book.BookID %>">View Volume (External)</a>
-                            <% } else { %>
+                            <% } else if (bibliographyItem.Book.IsVirtual == 0) { %>
                                 <a target="_self" href="/item/<%: bibliographyItem.Book.BookID %>">View Volume</a>
                             <%} %>
-                            <% if (bibliographyItem.Book.NumberOfSegments > 0)
-                                { %>
-                                <br />
-                                <a href="/itemdetails/<%: bibliographyItem.Book.BookID %>">View Identified Parts</a>
+                            <% if (bibliographyItem.Book.NumberOfSegments > 0) { 
+                                if (bibliographyItem.Book.IsVirtual == 0 || !string.IsNullOrWhiteSpace(bibliographyItem.Book.ExternalUrl)) {%>
+                                    <br />
+                                <%} %>
+                                <a href="/itemdetails/<%: bibliographyItem.Book.BookID %>">View Parts</a>
                             <%} %>
                         </div>
 
@@ -374,11 +347,13 @@
                     </div>
                     <% if (bibliographyItem.Book.ItemSourceID.ToString().Trim() == "1") { %>
                     <div class="download">
-                        <div class="downloadlabel">Download:</div>
-                        <a class="icon all" title="download all" href="<%: bibliographyItem.Book.DownloadUrl %>">All</a>
-                        <a class="icon jp2" title="download jp2" href="/itemimages/<%: bibliographyItem.Book.BookID %>">JP2</a>
-                        <a class="icon ocr" title="download ocr" download="<%: bibliographyItem.Book.BookID %>.txt" href="/itemtext/<%: bibliographyItem.Book.BookID %>">OCR</a>
-                        <a class="icon pdf" title="download pdf" download="<%: bibliographyItem.Book.BookID %>.pdf" href="/itempdf/<%: bibliographyItem.Book.BookID %>">PDF</a>
+                        <% if (bibliographyItem.Book.IsVirtual == 0) { %>
+                            <div class="downloadlabel">Download:</div>
+                            <a class="icon all" title="download all" href="<%: bibliographyItem.Book.DownloadUrl %>">All</a>
+                            <a class="icon jp2" title="download jp2" href="/itemimages/<%: bibliographyItem.Book.BookID %>">JP2</a>
+                            <a class="icon ocr" title="download ocr" download="<%: bibliographyItem.Book.BookID %>.txt" href="/itemtext/<%: bibliographyItem.Book.BookID %>">OCR</a>
+                            <a class="icon pdf" title="download pdf" download="<%: bibliographyItem.Book.BookID %>.pdf" href="/itempdf/<%: bibliographyItem.Book.BookID %>">PDF</a>
+                        <%} %>
                         <div class="downloadlabel">Cite:</div>
                         <a class="icon ris" title="download ris" download="bhlitem<%: bibliographyItem.Book.BookID %>.ris" href="/risdownload/<%: bibliographyItem.Book.BookID %>">RIS</a>
                         <a class="icon bibtex" title="download bibtex" download="bhlitem<%: bibliographyItem.Book.BookID %>.bib" href="/bibtexdownload/<%: bibliographyItem.Book.BookID %>">BibTeX</a>

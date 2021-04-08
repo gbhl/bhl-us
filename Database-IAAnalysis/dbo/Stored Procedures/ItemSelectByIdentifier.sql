@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[ItemSelectByIdentifier]
 
-@Identifier NVARCHAR(50)
+@Identifier NVARCHAR(200)
 
 AS
 SET NOCOUNT ON
@@ -42,3 +42,5 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
+
+GO

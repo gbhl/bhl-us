@@ -1,9 +1,9 @@
-﻿CREATE PROCEDURE dbo.IAItemInsertAuto
+CREATE PROCEDURE dbo.IAItemInsertAuto
 
 @ItemID INT OUTPUT,
 @ItemStatusID INT,
 @IAIdentifierPrefix NVARCHAR(50),
-@IAIdentifier NVARCHAR(50),
+@IAIdentifier NVARCHAR(200),
 @Sponsor NVARCHAR(100),
 @SponsorName NVARCHAR(50) = null,
 @ScanningCenter NVARCHAR(50),
@@ -16,7 +16,7 @@
 @ScanDate NVARCHAR(50),
 @ExternalStatus NVARCHAR(50),
 @MARCBibID NVARCHAR(50),
-@BarCode NVARCHAR(40),
+@BarCode NVARCHAR(200),
 @IADateStamp DATETIME = null,
 @IAAddedDate DATETIME = null,
 @LastOAIDataHarvestDate DATETIME = null,
@@ -244,3 +244,4 @@ ELSE BEGIN
 	
 	RETURN -- insert successful
 END
+GO

@@ -1,5 +1,5 @@
 
-// Generated 1/11/2021 2:02:35 PM
+// Generated 4/27/2021 10:41:53 AM
 // Do not modify the contents of this code file.
 // This abstract class __IAItem is based upon dbo.IAItem.
 
@@ -619,9 +619,9 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: IAIdentifier;
-		/// DBMS data type: nvarchar(50);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("IAIdentifier", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=50)]
+		[ColumnDefinition("IAIdentifier", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=200)]
 		public string IAIdentifier
 		{
 			get
@@ -630,7 +630,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 50);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_IAIdentifier != value)
 				{
 					_IAIdentifier = value;
@@ -982,9 +982,9 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: BarCode;
-		/// DBMS data type: nvarchar(40);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=17, CharacterMaxLength=40)]
+		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=17, CharacterMaxLength=200)]
 		public string BarCode
 		{
 			get
@@ -993,7 +993,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 40);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_BarCode != value)
 				{
 					_BarCode = value;

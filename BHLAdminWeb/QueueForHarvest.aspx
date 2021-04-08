@@ -8,7 +8,7 @@
 	<br />	
     <div>
 		Internet Archive Identifier:
-        <asp:TextBox ID="txtIdentifier" runat="server" MaxLength="50" Width="200"></asp:TextBox>
+        <asp:TextBox ID="txtIdentifier" runat="server" MaxLength="200" Width="200"></asp:TextBox>
         <asp:Button ID="btnQueue" runat="server" Text="Queue Item" onclick="btnQueue_Click" />
 	</div>
 	<br />

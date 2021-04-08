@@ -17,7 +17,7 @@ SET @ItemCount = 0
 
 BEGIN TRY
 	CREATE TABLE #tmpItem (
-		IAIdentifier nvarchar(50) NOT NULL,
+		IAIdentifier nvarchar(200) NOT NULL,
 		ItemStatusID int NOT NULL,
 		LocalFileFolder nvarchar(200) NOT NULL,
 		IADateStamp datetime NULL,
@@ -74,3 +74,5 @@ BEGIN
 END
 
 END
+
+GO

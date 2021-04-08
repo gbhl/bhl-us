@@ -143,11 +143,6 @@ $(document).ready(function () {
         });
     }
 
-    $('#ddlVolumes').live("change", function () {
-        location.href = '/item/' + $(this).val();
-    });
-
-
     // Featured books accordian
     var accordion = $('#accordion');
     // Default state

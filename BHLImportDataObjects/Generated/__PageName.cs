@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 2:18:12 PM
+// Generated 4/27/2021 10:42:14 AM
 // Do not modify the contents of this code file.
 // This abstract class __PageName is based upon dbo.PageName.
 
@@ -306,9 +306,9 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: BarCode;
-		/// DBMS data type: nvarchar(40);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=40)]
+		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=200)]
 		public string BarCode
 		{
 			get
@@ -317,7 +317,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 40);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_BarCode != value)
 				{
 					_BarCode = value;

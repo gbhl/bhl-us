@@ -19,6 +19,7 @@ using MOBOT.FileAccess;
 using System.Web.ModelBinding;
 using System.Web.Hosting;
 using Newtonsoft.Json.Schema;
+using MOBOT.BHL.DataObjects.Enum;
 
 namespace MOBOT.BHL.Server
 {
@@ -63,13 +64,13 @@ namespace MOBOT.BHL.Server
         /// <param name="pages"></param>
         /// <param name="itemID"></param>
         /// <returns></returns>
-        public List<BHLProvider.ViewerPage> PageGetImageDimensions(List<BHLProvider.ViewerPage> pages, int itemID)
+        public List<BHLProvider.ViewerPage> PageGetImageDimensions(List<BHLProvider.ViewerPage> pages, ItemType itemType, int entityID)
         {
             try
             {
                 var xml = new XDocument();
                 bool scanDataLoaded = false;
-                string scanData = this.ScandataGetFileContents(itemID);
+                string scanData = this.ScandataGetFileContents(itemType, entityID);
                 if (!string.IsNullOrWhiteSpace(scanData))
                 {
                     try
@@ -86,7 +87,7 @@ namespace MOBOT.BHL.Server
                 if (!scanDataLoaded)
                 {
                     // Local file not loaded; look for a remote copy (at Internet Archive)
-                    Item item = this.ItemSelectFilenames(itemID);
+                    Item item = this.ItemSelectFilenames(itemType, entityID);
                     xml = XDocument.Load(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.ScandataFilename));
                 }
 
@@ -896,9 +897,17 @@ namespace MOBOT.BHL.Server
             return ocrText;
         }
 
-        public string GetItemText(int itemID)
+        public string GetItemText(ItemType itemType, int entityID)
         {
-            Book book = this.BookSelectTextPathForItemID(itemID);
+            Book book = null;
+            if (itemType == ItemType.Book)
+            {
+                book = this.BookSelectTextPathForItemID(entityID);
+            }
+            else if (itemType == ItemType.Segment)
+            {
+                book = this.BookSelectTextPathForSegmentID(entityID);
+            }
             string itemText = "Text unavailable for this item.";
 
             // Make sure we found an active item
@@ -1007,12 +1016,21 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Path to the file</returns>
-        public string ScandataFileExists(int id)
+        public string ScandataFileExists(ItemType itemType, int id)
         {
             string filepath = string.Empty;
             IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
 
-            PageSummaryView ps = this.PageSummarySelectByItemId(id, false);
+            PageSummaryView ps = null;
+            if (itemType == ItemType.Book)
+            {
+                ps = this.PageSummarySelectByItemId(id, false);
+            }
+            else if (itemType == ItemType.Segment)
+            {
+                var pages = this.PageSummarySegmentSelectBySegmentID(id);
+                if (pages.Count > 0) ps = pages[0];
+            }
             if (ps != null)
             {
                 if (fileAccessProvider.FileExists(ps.ScandataXmlLocation)) filepath = ps.ScandataXmlLocation;
@@ -1026,13 +1044,13 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public string ScandataGetFileContents(int id)
+        public string ScandataGetFileContents(ItemType itemType, int id)
         {
             string fileContents = string.Empty;
             string filepath = string.Empty;
 
             IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
-            filepath = this.ScandataFileExists(id);
+            filepath = this.ScandataFileExists(itemType, id);
             if (!string.IsNullOrWhiteSpace(filepath))
             {
                 fileContents = fileAccessProvider.GetFileText(filepath);

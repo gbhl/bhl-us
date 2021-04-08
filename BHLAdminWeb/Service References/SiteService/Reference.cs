@@ -822,13 +822,17 @@ namespace MOBOT.BHL.AdminWeb.SiteService {
         public MOBOT.BHL.AdminWeb.SiteService.ViewerPage[] pages;
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public int itemType;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
         public int itemID;
         
         public PageGetImageDimensionsRequestBody() {
         }
         
-        public PageGetImageDimensionsRequestBody(MOBOT.BHL.AdminWeb.SiteService.ViewerPage[] pages, int itemID) {
+        public PageGetImageDimensionsRequestBody(MOBOT.BHL.AdminWeb.SiteService.ViewerPage[] pages, int itemType, int itemID) {
             this.pages = pages;
+            this.itemType = itemType;
             this.itemID = itemID;
         }
     }
@@ -1211,10 +1215,11 @@ namespace MOBOT.BHL.AdminWeb.SiteService {
             return base.Channel.PageGetImageDimensions(request);
         }
         
-        public MOBOT.BHL.AdminWeb.SiteService.ViewerPage[] PageGetImageDimensions(MOBOT.BHL.AdminWeb.SiteService.ViewerPage[] pages, int itemID) {
+        public MOBOT.BHL.AdminWeb.SiteService.ViewerPage[] PageGetImageDimensions(MOBOT.BHL.AdminWeb.SiteService.ViewerPage[] pages, int itemType, int itemID) {
             MOBOT.BHL.AdminWeb.SiteService.PageGetImageDimensionsRequest inValue = new MOBOT.BHL.AdminWeb.SiteService.PageGetImageDimensionsRequest();
             inValue.Body = new MOBOT.BHL.AdminWeb.SiteService.PageGetImageDimensionsRequestBody();
             inValue.Body.pages = pages;
+            inValue.Body.itemType = itemType;
             inValue.Body.itemID = itemID;
             MOBOT.BHL.AdminWeb.SiteService.PageGetImageDimensionsResponse retVal = ((MOBOT.BHL.AdminWeb.SiteService.SiteServiceSoap)(this)).PageGetImageDimensions(inValue);
             return retVal.Body.PageGetImageDimensionsResult;
@@ -1225,10 +1230,11 @@ namespace MOBOT.BHL.AdminWeb.SiteService {
             return base.Channel.PageGetImageDimensionsAsync(request);
         }
         
-        public System.Threading.Tasks.Task<MOBOT.BHL.AdminWeb.SiteService.PageGetImageDimensionsResponse> PageGetImageDimensionsAsync(MOBOT.BHL.AdminWeb.SiteService.ViewerPage[] pages, int itemID) {
+        public System.Threading.Tasks.Task<MOBOT.BHL.AdminWeb.SiteService.PageGetImageDimensionsResponse> PageGetImageDimensionsAsync(MOBOT.BHL.AdminWeb.SiteService.ViewerPage[] pages, int itemType, int itemID) {
             MOBOT.BHL.AdminWeb.SiteService.PageGetImageDimensionsRequest inValue = new MOBOT.BHL.AdminWeb.SiteService.PageGetImageDimensionsRequest();
             inValue.Body = new MOBOT.BHL.AdminWeb.SiteService.PageGetImageDimensionsRequestBody();
             inValue.Body.pages = pages;
+            inValue.Body.itemType = itemType;
             inValue.Body.itemID = itemID;
             return ((MOBOT.BHL.AdminWeb.SiteService.SiteServiceSoap)(this)).PageGetImageDimensionsAsync(inValue);
         }

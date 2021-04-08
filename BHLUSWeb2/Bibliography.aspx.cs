@@ -193,32 +193,6 @@ namespace MOBOT.BHL.Web2
                     TitleIdentifiers.Remove(titleIdentifier);
                 }
             }
-
-            // Get the MODS for this title
-            //hypMODS.NavigateUrl += title.TitleID.ToString();
-            OAI2.OAIRecord record = new OAI2.OAIRecord("oai:" + ConfigurationManager.AppSettings["OAIIdentifierNamespace"] + ":title/" + TitleId);
-            OAIMODS.Convert mods = new OAIMODS.Convert(record);
-            litMods.Text = Server.HtmlEncode(mods.ToString()).Replace("\n", "<br />");
-
-            // Get the BibTex citations for this title
-            try
-            {
-                litBibTeX.Text = bhlProvider.TitleBibTeXGetCitationStringForTitleID(BhlTitle.TitleID).Replace("\n", "<br />");
-            }
-            catch
-            {
-                litBibTeX.Text = string.Empty;
-            }
-
-            // Get the RIS citation for this title
-            try
-            {
-                litRIS.Text = bhlProvider.ItemSelectRISCitationsForTitleID(BhlTitle.TitleID).Replace("\n", "<br />");
-            }
-            catch
-            {
-                litRIS.Text = string.Empty;
-            }
         }
 
         private bool ListContainsAuthor(IList<Author> list, int authorID, string relationship)

@@ -2,7 +2,7 @@
 	[ImportLogID]                           int           IDENTITY(1,1) NOT NULL,
 	[ImportDate]                            datetime      NOT NULL,
 	[ImportSourceID]                        int           NULL,
-	[BarCode]                               nvarchar(40)  NULL,
+	[BarCode]                               nvarchar(200) NULL,
 	[ImportResult]                          nvarchar(30)  NOT NULL,
 	[TableName]                             nvarchar(100) NOT NULL,
 	[Action]                                nvarchar(20)  NOT NULL,

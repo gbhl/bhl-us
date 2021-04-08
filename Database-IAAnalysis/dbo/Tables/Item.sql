@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Item] (
     [ItemID]                  INT            IDENTITY (1, 1) NOT NULL,
-    [Identifier]              NVARCHAR (50)  CONSTRAINT [DF__Item__Identifier] DEFAULT ('') NOT NULL,
+    [Identifier]              NVARCHAR (200) CONSTRAINT [DF__Item__Identifier] DEFAULT ('') NOT NULL,
     [MARCLeader]              NVARCHAR (200) NOT NULL,
     [Sponsor]                 NVARCHAR (50)  CONSTRAINT [DF__Item__Sponsor] DEFAULT ('') NOT NULL,
     [Contributor]             NVARCHAR (100) CONSTRAINT [DF__Item__Contributor] DEFAULT ('') NOT NULL,

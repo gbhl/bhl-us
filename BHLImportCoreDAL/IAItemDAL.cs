@@ -29,7 +29,7 @@ namespace MOBOT.BHLImport.DAL
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("IAItemSelectByIAIdentifier", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 50, false, iaIdentifier)))
+                CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 200, false, iaIdentifier)))
             {
                 using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
                 {
@@ -62,7 +62,7 @@ namespace MOBOT.BHLImport.DAL
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("IAItemSelectForXMLDownload", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 50, false, iaIdentifier)))
+                CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 200, false, iaIdentifier)))
             {
                 using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
                 {
@@ -116,7 +116,7 @@ namespace MOBOT.BHLImport.DAL
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("IAItemSelectForPublishToImportTables", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 50, false, iaIdentifier)))
+                CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 200, false, iaIdentifier)))
             {
                 using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
                 {
@@ -216,7 +216,7 @@ namespace MOBOT.BHLImport.DAL
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("IAItemResetForDownload", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 50, false, iaIdentifier)))
+                CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 200, false, iaIdentifier)))
             {
                 CustomSqlHelper.ExecuteScalar(command);
             }

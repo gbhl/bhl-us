@@ -1,7 +1,6 @@
-﻿
-CREATE PROCEDURE [dbo].[IAItemSelectByIAIdentifier]
+﻿CREATE PROCEDURE [dbo].[IAItemSelectByIAIdentifier]
 
-@IAIdentifier NVARCHAR(50)
+@IAIdentifier NVARCHAR(200)
 
 AS
 SET NOCOUNT ON
@@ -64,5 +63,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
-

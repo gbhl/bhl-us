@@ -57,8 +57,8 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("BrowseTitles", "browse/titles/{start}/{sort}", new { controller = "Browse", action = "Titles", start = "a", sort="title" });
             routes.MapRoute("BrowseAuthors", "browse/authors/{start}", new { controller = "Browse", action = "Authors", start = "a" });
             routes.MapRoute("BrowseYear", "browse/year/{start}/{end}/{sort}", new { controller = "Browse", action = "Year", start = 1450, end = 1580, sort = "title" });
-            routes.MapRoute("BrowseCollection", "browse/collection/{id}/{start}/{sort}", new { controller = "Browse", action = "Collection", start = "a", sort = "title" });
-            routes.MapRoute("BrowseContributor", "browse/contributor/{id}/{start}/{sort}", new { controller = "Browse", action = "Contributor", start = "a", sort = "title" });
+            routes.MapRoute("BrowseCollection", "browse/collection/{id}/{start}/{sort}", new { controller = "Browse", action = "Collection", start = "all", sort = "title" });
+            routes.MapRoute("BrowseContributor", "browse/contributor/{id}/{start}/{sort}", new { controller = "Browse", action = "Contributor", start = "all", sort = "title" });
 
             routes.MapPageRoute("Browse-ContributorList", "browse/contributors", "~/BrowseContributors.aspx");
             routes.MapPageRoute("Browse-CollectionList", "browse/collections", "~/BrowseCollections.aspx");
@@ -75,6 +75,8 @@ namespace MOBOT.BHL.Web2
             routes.MapPageRoute("IA", "ia/{iabarcode}", "~/TitlePage.aspx");
 
             routes.MapPageRoute("Title", "title/{titleid}", "~/TitlePage.aspx");
+
+            routes.MapPageRoute("Segment", "segment/{segmentid}", "~/TitlePage.aspx");
 
             if (ConfigurationManager.AppSettings["IIIFState"] == "off") // IIIF disabled
             {
@@ -115,6 +117,12 @@ namespace MOBOT.BHL.Web2
             routes.Add("ItemPdf", new Route("itempdf/{itemid}", new HttpHandlerRouteHandler<GetItemPdf>()));
 
             routes.Add("ItemImages", new Route("itemimages/{itemid}", new HttpHandlerRouteHandler<GetItemImages>()));
+
+            routes.Add("PartText", new Route("parttext/{id}", new HttpHandlerRouteHandler<GetPartText>()));
+
+            routes.Add("PartPdf", new Route("partpdf/{id}", new HttpHandlerRouteHandler<GetPartPdf>()));
+
+            routes.Add("PartImages", new Route("partimages/{id}", new HttpHandlerRouteHandler<GetPartImages>()));
 
             routes.MapPageRoute("Bibliography", "bibliography/{titleid}", "~/bibliography.aspx");
 

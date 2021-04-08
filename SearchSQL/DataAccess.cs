@@ -116,6 +116,7 @@ namespace BHL.Search.SQL
                             if (!reader.IsDBNull(reader.GetOrdinal(SQLField.TITLEID))) hit.TitleId = reader.GetInt32(reader.GetOrdinal(SQLField.TITLEID));
                             if (!reader.IsDBNull(reader.GetOrdinal(SQLField.ITEMID))) hit.ItemId = reader.GetInt32(reader.GetOrdinal(SQLField.ITEMID));
                             if (!reader.IsDBNull(reader.GetOrdinal(SQLField.SEGMENTID))) hit.SegmentId = reader.GetInt32(reader.GetOrdinal(SQLField.SEGMENTID));
+                            if (!reader.IsDBNull(reader.GetOrdinal(SQLField.BOOKISVIRTUAL))) hit.BookIsVirtual = (reader.GetByte(reader.GetOrdinal(SQLField.BOOKISVIRTUAL)) == 1);
                             hit.Title = reader.GetString(reader.GetOrdinal(SQLField.TITLE));
                             if (!string.IsNullOrWhiteSpace(reader.GetString(reader.GetOrdinal(SQLField.AUTHORS))))
                             {
@@ -231,6 +232,7 @@ namespace BHL.Search.SQL
                             if (!reader.IsDBNull(reader.GetOrdinal(SQLField.TITLEID))) hit.TitleId = reader.GetInt32(reader.GetOrdinal(SQLField.TITLEID));
                             if (!reader.IsDBNull(reader.GetOrdinal(SQLField.ITEMID))) hit.ItemId = reader.GetInt32(reader.GetOrdinal(SQLField.ITEMID));
                             if (!reader.IsDBNull(reader.GetOrdinal(SQLField.SEGMENTID))) hit.SegmentId = reader.GetInt32(reader.GetOrdinal(SQLField.SEGMENTID));
+                            if (!reader.IsDBNull(reader.GetOrdinal(SQLField.BOOKISVIRTUAL))) hit.BookIsVirtual = (reader.GetByte(reader.GetOrdinal(SQLField.BOOKISVIRTUAL)) == 1);
                             hit.Title = reader.GetString(reader.GetOrdinal(SQLField.TITLE));
                             if (!string.IsNullOrWhiteSpace(reader.GetString(reader.GetOrdinal(SQLField.AUTHORS))))
                             {

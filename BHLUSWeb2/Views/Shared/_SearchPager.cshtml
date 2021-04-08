@@ -18,7 +18,7 @@
                     }
                     else
                     {
-                        start = result.TotalPages - 9; end = result.TotalPages;
+                        start = ((result.TotalPages - 9) < 1 ? 1 : result.TotalPages - 9); end = result.TotalPages;
                     }
                 }
             }

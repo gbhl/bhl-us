@@ -44,6 +44,7 @@ namespace MOBOT.BHL.DataObjects
         private int _numberOfPages = 0;
         private int _totalItems = 0;
         private int? _firstPageID = null;
+        private int? _firstSegmentID = null;
         private bool _hasFlickrImages = false;
         private bool _hasLocalContent = true;
         private bool _hasExternalContent = false;
@@ -303,6 +304,11 @@ namespace MOBOT.BHL.DataObjects
             set { _firstPageID = value; }
         }
 
+        public int? FirstSegmentID
+        {
+            get { return _firstSegmentID; }
+            set { _firstSegmentID = value; }
+        }
         public bool HasFlickrImages
         {
             get { return _hasFlickrImages; }
@@ -530,6 +536,11 @@ namespace MOBOT.BHL.DataObjects
                     case "FirstPageID":
                         {
                             _firstPageID = (int?)column.Value;
+                            break;
+                        }
+                    case "FirstSegmentID":
+                        {
+                            _firstSegmentID = (int?)column.Value;
                             break;
                         }
                     case "HasFlickrImages":
