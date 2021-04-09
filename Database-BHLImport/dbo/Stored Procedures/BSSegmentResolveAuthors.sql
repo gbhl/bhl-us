@@ -54,15 +54,14 @@ FROM	dbo.BSSegment s
 WHERE	s.SegmentID = @SegmentID
 AND		sa.BHLAuthorID IS NULL	-- only authors not already resolved
 
--- Only update import DB if a single matching author is found
-IF (@@ROWCOUNT = 1)
-BEGIN
-	-- Do the update
-	UPDATE	dbo.BSSegmentAuthor
-	SET		BHLAuthorID = AuthorID
-	FROM	dbo.BSSegmentAuthor sa INNER JOIN #tmpNameAuthorID t 
-				ON sa.SegmentAuthorID = t.SegmentAuthorID
-END
+-- Update the BHLAuthorIDs in the import DB for which a single matching author was found
+UPDATE	sa
+SET		BHLAuthorID = x.AuthorID
+FROM	dbo.BSSegmentAuthor sa INNER JOIN (
+			SELECT	SegmentAuthorID, MIN(AuthorID) AS AuthorID
+			FROM	#tmpNameAuthorID
+			GROUP BY SegmentAuthorID HAVING COUNT(*) = 1
+			) x ON sa.SegmentAuthorID = x.SegmentAuthorID
 
 -- If the selected production author ID has been redirected to a different 
 -- author, then use that author instead.  Follow the "redirect" chain up 
