@@ -560,7 +560,7 @@ namespace MOBOT.BHL.OAI2
                     if (itemTitle.TitleID == book.PrimaryTitleID) this.Sequence = itemTitle.ItemSequence.ToString();
                 }
 
-                this.Url = "https://www.biodiversitylibrary.org/item/" + book.ItemID.ToString();
+                this.Url = "https://www.biodiversitylibrary.org/item/" + book.BookID.ToString();
                 this.ParentUrl = "https://www.biodiversitylibrary.org/bibliography/" + book.PrimaryTitleID.ToString();
                 if (book.ThumbnailPageID != null) this.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + book.ThumbnailPageID.ToString();
 
