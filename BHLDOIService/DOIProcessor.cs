@@ -490,7 +490,7 @@ namespace MOBOT.BHL.BHLDOIService
                 data.ArticlePublicationDate = segment.Date;
                 data.PublisherName = segment.PublisherName;
                 data.PublisherPlace = segment.PublisherPlace;
-                data.PublicationDate = this.GetPublicationDate(segment);
+                data.PublicationDate = segment.Date;  // this.GetPublicationDate(segment);
                 data.FirstPage = segment.StartPageNumber;
                 data.LastPage = segment.EndPageNumber;
 
