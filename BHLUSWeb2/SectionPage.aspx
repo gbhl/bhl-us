@@ -31,22 +31,6 @@
             <% if (!String.IsNullOrEmpty(BhlSegment.TranslatedTitle)) { %>
                 <div class="segmentdetails"><h3>Translated Title</h3> <p><%: BhlSegment.TranslatedTitle%></p></div>
             <% } %>
-            <% if (BhlSegment.RelatedSegmentList.Count > 0) { %>
-                <h3>Related To</h3>
-                <p>
-                    <%foreach (Segment segment in BhlSegment.RelatedSegmentList)
-                    { %>
-                        <%: segment.SegmentClusterTypeLabel %> :
-                        <a href="/part/<%: segment.SegmentID %>">
-                            <%: segment.Title %>
-                        </a>
-                    <% if (!string.IsNullOrWhiteSpace(segment.Authors)) { %> - <%: segment.Authors %> <% } %> 
-                    <% if (!string.IsNullOrWhiteSpace(segment.ContainerTitle)) { %> - <%: segment.ContainerTitle%> <% } %> 
-                    <% if (!string.IsNullOrWhiteSpace(segment.Date)) { %> - <%: segment.Date%> <% } %> 
-                    <% if (!string.IsNullOrWhiteSpace(segment.PageRange)) { %> - p.<%: segment.PageRange%> <br /> <% } %> 
-                    <% } %>
-                </p>
-            <% } %>
             <% if (BhlSegment.AuthorList.Count > 0) { %>
                 <h3>By</h3>
                 <p>
