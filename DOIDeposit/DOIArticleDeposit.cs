@@ -124,7 +124,7 @@ namespace MOBOT.BHL.DOIDeposit
 
                 content.AppendLine("<publication_date media_type=\"print\">");
                 if (doiDate.Month != null) content.AppendLine("<month>" + HttpUtility.HtmlEncode(doiDate.Month) + "</month>");
-                if (doiDate.Day != null) content.AppendLine("<day>" + HttpUtility.HtmlEncode(doiDate.Day) + "</dat>");
+                if (doiDate.Day != null) content.AppendLine("<day>" + HttpUtility.HtmlEncode(doiDate.Day) + "</day>");
                 content.AppendLine("<year>" + HttpUtility.HtmlEncode(doiDate.Year ?? doiDate.DateString) + "</year>");
                 content.AppendLine("</publication_date>");
             }
