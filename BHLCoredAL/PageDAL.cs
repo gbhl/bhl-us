@@ -389,7 +389,7 @@ namespace MOBOT.BHL.DAL
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("PageInsertIntoItem", connection, transaction,
-                    CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 40, false, barCode),
+                    CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 200, false, barCode),
                     CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID),
                     CustomSqlHelper.CreateInputParameter("NumPagesToAdd", SqlDbType.Int, null, false, numPagesToAdd)))
             {
@@ -404,7 +404,7 @@ namespace MOBOT.BHL.DAL
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("PageDeleteFromItem", connection, transaction,
-                    CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 40, false, barCode),
+                    CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 200, false, barCode),
                     CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID),
                     CustomSqlHelper.CreateInputParameter("NumPagesToDelete", SqlDbType.Int, null, false, numPagesToDelete)))
             {

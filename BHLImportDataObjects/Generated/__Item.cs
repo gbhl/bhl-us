@@ -1,5 +1,5 @@
 
-// Generated 1/11/2021 2:02:41 PM
+// Generated 4/27/2021 1:08:33 PM
 // Do not modify the contents of this code file.
 // This abstract class __Item is based upon dbo.Item.
 
@@ -714,9 +714,9 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: BarCode;
-		/// DBMS data type: nvarchar(40);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=40)]
+		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=200)]
 		public string BarCode
 		{
 			get
@@ -725,7 +725,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 40);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_BarCode != value)
 				{
 					_BarCode = value;
@@ -769,9 +769,9 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: MARCItemID;
-		/// DBMS data type: nvarchar(50); Nullable;
+		/// DBMS data type: nvarchar(200); Nullable;
 		/// </summary>
-		[ColumnDefinition("MARCItemID", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=50, IsNullable=true)]
+		[ColumnDefinition("MARCItemID", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=200, IsNullable=true)]
 		public string MARCItemID
 		{
 			get
@@ -780,7 +780,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 50);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_MARCItemID != value)
 				{
 					_MARCItemID = value;

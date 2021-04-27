@@ -16,7 +16,7 @@ DECLARE curBarCodes CURSOR READ_ONLY
 FOR	SELECT BarCode FROM dbo.Item 
 	WHERE ImportStatusID = 10 AND ImportSourceID = 1
 
-DECLARE @BarCode varchar(40)
+DECLARE @BarCode varchar(200)
 OPEN curBarCodes
 
 FETCH NEXT FROM curBarCodes INTO @BarCode
@@ -33,6 +33,5 @@ CLOSE curBarCodes
 DEALLOCATE curBarCodes
 
 END
-
 
 

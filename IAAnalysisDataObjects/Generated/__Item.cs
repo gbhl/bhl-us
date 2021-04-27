@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 12:28:40 PM
+// Generated 4/27/2021 9:49:50 AM
 // Do not modify the contents of this code file.
 // This abstract class __Item is based upon dbo.Item.
 
@@ -284,9 +284,9 @@ namespace MOBOT.IAAnalysis.DataObjects
 		
 		/// <summary>
 		/// Column: Identifier;
-		/// DBMS data type: nvarchar(50);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("Identifier", DbTargetType=SqlDbType.NVarChar, Ordinal=2, CharacterMaxLength=50)]
+		[ColumnDefinition("Identifier", DbTargetType=SqlDbType.NVarChar, Ordinal=2, CharacterMaxLength=200)]
 		public string Identifier
 		{
 			get
@@ -295,7 +295,7 @@ namespace MOBOT.IAAnalysis.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 50);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_Identifier != value)
 				{
 					_Identifier = value;

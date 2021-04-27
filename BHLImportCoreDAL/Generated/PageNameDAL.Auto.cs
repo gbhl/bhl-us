@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 2:18:12 PM
+// Generated 4/27/2021 10:42:14 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class PageNameDAL is based upon dbo.PageName.
@@ -220,7 +220,7 @@ namespace MOBOT.BHLImport.DAL
 				CustomSqlHelper.CreateOutputParameter("PageNameID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("ImportStatusID", SqlDbType.Int, null, false, importStatusID),
 					CustomSqlHelper.CreateInputParameter("ImportSourceID", SqlDbType.Int, null, true, importSourceID),
-					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
+					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, false, barCode),
 					CustomSqlHelper.CreateInputParameter("FileNamePrefix", SqlDbType.NVarChar, 200, false, fileNamePrefix),
 					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.Int, null, true, sequenceOrder),
 					CustomSqlHelper.CreateInputParameter("Source", SqlDbType.NVarChar, 50, true, source),
@@ -451,7 +451,7 @@ namespace MOBOT.BHLImport.DAL
 				CustomSqlHelper.CreateInputParameter("PageNameID", SqlDbType.Int, null, false, pageNameID),
 					CustomSqlHelper.CreateInputParameter("ImportStatusID", SqlDbType.Int, null, false, importStatusID),
 					CustomSqlHelper.CreateInputParameter("ImportSourceID", SqlDbType.Int, null, true, importSourceID),
-					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
+					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, false, barCode),
 					CustomSqlHelper.CreateInputParameter("FileNamePrefix", SqlDbType.NVarChar, 200, false, fileNamePrefix),
 					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.Int, null, true, sequenceOrder),
 					CustomSqlHelper.CreateInputParameter("Source", SqlDbType.NVarChar, 50, true, source),

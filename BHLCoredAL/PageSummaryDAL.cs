@@ -122,7 +122,7 @@ namespace MOBOT.BHL.DAL
       SqlTransaction transaction = sqlTransaction;
 
       using ( SqlCommand command = CustomSqlHelper.CreateCommand( "PageSummarySelectByBarcode", connection, transaction,
-          CustomSqlHelper.CreateInputParameter( "Barcode", SqlDbType.VarChar, 40, false, barcode ) ) )
+          CustomSqlHelper.CreateInputParameter( "Barcode", SqlDbType.VarChar, 200, false, barcode ) ) )
       {
         using ( CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>() )
         {

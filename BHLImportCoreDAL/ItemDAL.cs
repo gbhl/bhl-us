@@ -31,7 +31,7 @@ namespace MOBOT.BHLImport.DAL
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectNewByBarCodeAndSource", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
+                CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, false, barCode),
                 CustomSqlHelper.CreateInputParameter("ImportSourceID", SqlDbType.Int, null, false, importSourceID)))
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())

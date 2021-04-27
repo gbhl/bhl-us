@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[IAItemSelectForPublishToImportTables]
 
-@IAIdentifier NVARCHAR(50) = ''
+@IAIdentifier NVARCHAR(200) = ''
 
 AS
 SET NOCOUNT ON
@@ -48,4 +48,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-

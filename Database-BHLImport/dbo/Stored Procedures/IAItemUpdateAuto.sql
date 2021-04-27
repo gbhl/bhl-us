@@ -1,9 +1,9 @@
-﻿CREATE PROCEDURE dbo.IAItemUpdateAuto
+CREATE PROCEDURE dbo.IAItemUpdateAuto
 
 @ItemID INT,
 @ItemStatusID INT,
 @IAIdentifierPrefix NVARCHAR(50),
-@IAIdentifier NVARCHAR(50),
+@IAIdentifier NVARCHAR(200),
 @Sponsor NVARCHAR(100),
 @SponsorName NVARCHAR(50),
 @ScanningCenter NVARCHAR(50),
@@ -16,7 +16,7 @@
 @ScanDate NVARCHAR(50),
 @ExternalStatus NVARCHAR(50),
 @MARCBibID NVARCHAR(50),
-@BarCode NVARCHAR(40),
+@BarCode NVARCHAR(200),
 @IADateStamp DATETIME,
 @IAAddedDate DATETIME,
 @LastOAIDataHarvestDate DATETIME,
@@ -188,3 +188,4 @@ ELSE BEGIN
 	
 	RETURN -- update successful
 END
+GO

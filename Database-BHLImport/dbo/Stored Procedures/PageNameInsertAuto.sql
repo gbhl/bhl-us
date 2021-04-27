@@ -1,15 +1,9 @@
-﻿
--- PageNameInsertAuto PROCEDURE
--- Generated 1/16/2008 1:54:48 PM
--- Do not modify the contents of this procedure.
--- Insert Procedure for PageName
-
-CREATE PROCEDURE PageNameInsertAuto
+CREATE PROCEDURE dbo.PageNameInsertAuto
 
 @PageNameID INT OUTPUT,
 @ImportStatusID INT,
 @ImportSourceID INT = null,
-@BarCode NVARCHAR(40),
+@BarCode NVARCHAR(200),
 @FileNamePrefix NVARCHAR(200),
 @SequenceOrder INT = null,
 @Source NVARCHAR(50) = null,
@@ -27,8 +21,7 @@ AS
 SET NOCOUNT ON
 
 INSERT INTO [dbo].[PageName]
-(
-	[ImportStatusID],
+( 	[ImportStatusID],
 	[ImportSourceID],
 	[BarCode],
 	[FileNamePrefix],
@@ -43,11 +36,9 @@ INSERT INTO [dbo].[PageName]
 	[IsCommonName],
 	[ProductionDate],
 	[CreatedDate],
-	[LastModifiedDate]
-)
+	[LastModifiedDate] )
 VALUES
-(
-	@ImportStatusID,
+( 	@ImportStatusID,
 	@ImportSourceID,
 	@BarCode,
 	@FileNamePrefix,
@@ -62,20 +53,18 @@ VALUES
 	@IsCommonName,
 	@ProductionDate,
 	getdate(),
-	getdate()
-)
+	getdate() )
 
 SET @PageNameID = Scope_Identity()
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure PageNameInsertAuto. No information was inserted as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.PageNameInsertAuto. No information was inserted as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[PageNameID],
 		[ImportStatusID],
 		[ImportSourceID],
@@ -93,12 +82,10 @@ ELSE BEGIN
 		[ProductionDate],
 		[CreatedDate],
 		[LastModifiedDate]	
-
 	FROM [dbo].[PageName]
-	
 	WHERE
 		[PageNameID] = @PageNameID
 	
 	RETURN -- insert successful
 END
-
+GO

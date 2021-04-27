@@ -208,7 +208,7 @@ namespace MOBOT.BHL.DAL
 
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectByBarCodeOrItemID", connection, transaction,
 				CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemId),
-				CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, true, barCode)))
+				CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, true, barCode)))
 			{
 				using (CustomSqlHelper<Book> helper = new CustomSqlHelper<Book>())
 				{
@@ -349,7 +349,7 @@ namespace MOBOT.BHL.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectByInstitutionAndRole", connection, transaction,
 				CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
 				CustomSqlHelper.CreateInputParameter("InstitutionRoleID", SqlDbType.Int, null, false, institutionRoleID),
-				CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 50, false, barcode),
+				CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 200, false, barcode),
 				CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numRows),
 				CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
 				CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sortColumn),

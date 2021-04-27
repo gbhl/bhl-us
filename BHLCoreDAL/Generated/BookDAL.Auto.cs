@@ -1,5 +1,5 @@
 
-// Generated 1/11/2021 2:20:54 PM
+// Generated 4/27/2021 1:21:13 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class BookDAL is based upon dbo.Book.
@@ -339,7 +339,7 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("ThumbnailPageID", SqlDbType.Int, null, true, thumbnailPageID),
 					CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, true, languageCode),
 					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, false, barCode),
-					CustomSqlHelper.CreateInputParameter("MARCItemID", SqlDbType.NVarChar, 50, true, mARCItemID),
+					CustomSqlHelper.CreateInputParameter("MARCItemID", SqlDbType.NVarChar, 200, true, mARCItemID),
 					CustomSqlHelper.CreateInputParameter("CallNumber", SqlDbType.NVarChar, 100, true, callNumber),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, true, volume),
 					CustomSqlHelper.CreateInputParameter("StartYear", SqlDbType.NVarChar, 20, true, startYear),
@@ -740,7 +740,7 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("ThumbnailPageID", SqlDbType.Int, null, true, thumbnailPageID),
 					CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, true, languageCode),
 					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, false, barCode),
-					CustomSqlHelper.CreateInputParameter("MARCItemID", SqlDbType.NVarChar, 50, true, mARCItemID),
+					CustomSqlHelper.CreateInputParameter("MARCItemID", SqlDbType.NVarChar, 200, true, mARCItemID),
 					CustomSqlHelper.CreateInputParameter("CallNumber", SqlDbType.NVarChar, 100, true, callNumber),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, true, volume),
 					CustomSqlHelper.CreateInputParameter("StartYear", SqlDbType.NVarChar, 20, true, startYear),

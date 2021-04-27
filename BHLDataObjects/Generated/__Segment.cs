@@ -1,5 +1,5 @@
 
-// Generated 1/11/2021 2:20:59 PM
+// Generated 4/27/2021 1:21:19 PM
 // Do not modify the contents of this code file.
 // This abstract class __Segment is based upon dbo.Segment.
 
@@ -691,9 +691,9 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: MARCItemID;
-		/// DBMS data type: nvarchar(50); Nullable;
+		/// DBMS data type: nvarchar(200); Nullable;
 		/// </summary>
-		[ColumnDefinition("MARCItemID", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=50, IsNullable=true)]
+		[ColumnDefinition("MARCItemID", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=200, IsNullable=true)]
 		public string MARCItemID
 		{
 			get
@@ -702,7 +702,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 50);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_MARCItemID != value)
 				{
 					_MARCItemID = value;

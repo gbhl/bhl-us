@@ -1,13 +1,13 @@
-﻿CREATE PROCEDURE dbo.ItemInsertAuto
+CREATE PROCEDURE dbo.ItemInsertAuto
 
 @ItemID INT OUTPUT,
 @ImportKey NVARCHAR(50),
 @ImportStatusID INT,
 @ImportSourceID INT = null,
 @MARCBibID NVARCHAR(50),
-@BarCode NVARCHAR(40),
+@BarCode NVARCHAR(200),
 @ItemSequence SMALLINT = null,
-@MARCItemID NVARCHAR(50) = null,
+@MARCItemID NVARCHAR(200) = null,
 @CallNumber NVARCHAR(100) = null,
 @Volume NVARCHAR(100) = null,
 @InstitutionCode NVARCHAR(10) = null,
@@ -264,3 +264,4 @@ ELSE BEGIN
 	
 	RETURN -- insert successful
 END
+GO

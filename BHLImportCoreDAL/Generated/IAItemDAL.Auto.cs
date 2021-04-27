@@ -1,5 +1,5 @@
 
-// Generated 1/11/2021 2:02:35 PM
+// Generated 4/27/2021 10:41:53 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class IAItemDAL is based upon dbo.IAItem.
@@ -376,7 +376,7 @@ namespace MOBOT.BHLImport.DAL
 				CustomSqlHelper.CreateOutputParameter("ItemID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("ItemStatusID", SqlDbType.Int, null, false, itemStatusID),
 					CustomSqlHelper.CreateInputParameter("IAIdentifierPrefix", SqlDbType.NVarChar, 50, false, iAIdentifierPrefix),
-					CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 50, false, iAIdentifier),
+					CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 200, false, iAIdentifier),
 					CustomSqlHelper.CreateInputParameter("Sponsor", SqlDbType.NVarChar, 100, false, sponsor),
 					CustomSqlHelper.CreateInputParameter("SponsorName", SqlDbType.NVarChar, 50, true, sponsorName),
 					CustomSqlHelper.CreateInputParameter("ScanningCenter", SqlDbType.NVarChar, 50, false, scanningCenter),
@@ -389,7 +389,7 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("ScanDate", SqlDbType.NVarChar, 50, false, scanDate),
 					CustomSqlHelper.CreateInputParameter("ExternalStatus", SqlDbType.NVarChar, 50, false, externalStatus),
 					CustomSqlHelper.CreateInputParameter("MARCBibID", SqlDbType.NVarChar, 50, false, mARCBibID),
-					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
+					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, false, barCode),
 					CustomSqlHelper.CreateInputParameter("IADateStamp", SqlDbType.DateTime, null, true, iADateStamp),
 					CustomSqlHelper.CreateInputParameter("IAAddedDate", SqlDbType.DateTime, null, true, iAAddedDate),
 					CustomSqlHelper.CreateInputParameter("LastOAIDataHarvestDate", SqlDbType.DateTime, null, true, lastOAIDataHarvestDate),
@@ -841,7 +841,7 @@ namespace MOBOT.BHLImport.DAL
 				CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
 					CustomSqlHelper.CreateInputParameter("ItemStatusID", SqlDbType.Int, null, false, itemStatusID),
 					CustomSqlHelper.CreateInputParameter("IAIdentifierPrefix", SqlDbType.NVarChar, 50, false, iAIdentifierPrefix),
-					CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 50, false, iAIdentifier),
+					CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 200, false, iAIdentifier),
 					CustomSqlHelper.CreateInputParameter("Sponsor", SqlDbType.NVarChar, 100, false, sponsor),
 					CustomSqlHelper.CreateInputParameter("SponsorName", SqlDbType.NVarChar, 50, true, sponsorName),
 					CustomSqlHelper.CreateInputParameter("ScanningCenter", SqlDbType.NVarChar, 50, false, scanningCenter),
@@ -854,7 +854,7 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("ScanDate", SqlDbType.NVarChar, 50, false, scanDate),
 					CustomSqlHelper.CreateInputParameter("ExternalStatus", SqlDbType.NVarChar, 50, false, externalStatus),
 					CustomSqlHelper.CreateInputParameter("MARCBibID", SqlDbType.NVarChar, 50, false, mARCBibID),
-					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
+					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, false, barCode),
 					CustomSqlHelper.CreateInputParameter("IADateStamp", SqlDbType.DateTime, null, true, iADateStamp),
 					CustomSqlHelper.CreateInputParameter("IAAddedDate", SqlDbType.DateTime, null, true, iAAddedDate),
 					CustomSqlHelper.CreateInputParameter("LastOAIDataHarvestDate", SqlDbType.DateTime, null, true, lastOAIDataHarvestDate),

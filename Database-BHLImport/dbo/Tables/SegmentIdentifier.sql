@@ -2,7 +2,7 @@
 	SegmentIdentifierID int IDENTITY(1,1) NOT NULL,
 	ImportStatusID int NOT NULL,
 	ImportSourceID int NULL,
-	BarCode nvarchar(40) NOT NULL,
+	BarCode nvarchar(200) NOT NULL,
 	SegmentSequenceOrder smallint NOT NULL,
 	IdentifierName nvarchar(40) NOT NULL,
 	IdentifierValue nvarchar(125) NOT NULL,

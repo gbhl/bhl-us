@@ -1,19 +1,13 @@
-﻿
--- IndicatedPageUpdateAuto PROCEDURE
--- Generated 1/16/2008 1:54:48 PM
--- Do not modify the contents of this procedure.
--- Update Procedure for IndicatedPage
-
-CREATE PROCEDURE IndicatedPageUpdateAuto
+CREATE PROCEDURE dbo.IndicatedPageUpdateAuto
 
 @IndicatedPageID INT,
-@BarCode NVARCHAR(40),
+@BarCode NVARCHAR(200),
 @FileNamePrefix NVARCHAR(200),
 @SequenceOrder INT,
 @Sequence SMALLINT,
 @ImportStatusID INT,
 @ImportSourceID INT,
-@PagePrefix NVARCHAR(20),
+@PagePrefix NVARCHAR(40),
 @PageNumber NVARCHAR(20),
 @Implied BIT,
 @ExternalCreationDate DATETIME,
@@ -27,9 +21,7 @@ AS
 SET NOCOUNT ON
 
 UPDATE [dbo].[IndicatedPage]
-
 SET
-
 	[BarCode] = @BarCode,
 	[FileNamePrefix] = @FileNamePrefix,
 	[SequenceOrder] = @SequenceOrder,
@@ -45,19 +37,17 @@ SET
 	[ExternalLastModifiedUser] = @ExternalLastModifiedUser,
 	[ProductionDate] = @ProductionDate,
 	[LastModifiedDate] = getdate()
-
 WHERE
 	[IndicatedPageID] = @IndicatedPageID
 		
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure IndicatedPageUpdateAuto. No information was updated as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.IndicatedPageUpdateAuto. No information was updated as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[IndicatedPageID],
 		[BarCode],
 		[FileNamePrefix],
@@ -75,12 +65,10 @@ ELSE BEGIN
 		[ProductionDate],
 		[CreatedDate],
 		[LastModifiedDate]
-
 	FROM [dbo].[IndicatedPage]
-	
 	WHERE
 		[IndicatedPageID] = @IndicatedPageID
 	
 	RETURN -- update successful
 END
-
+GO

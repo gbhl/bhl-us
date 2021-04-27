@@ -37,7 +37,7 @@ namespace MOBOT.BHLImport.DAL
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("Page_PageTypeSelectNewByKeyValuesAndSource", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
+                CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, false, barCode),
                 CustomSqlHelper.CreateInputParameter("FileNamePrefix", SqlDbType.NVarChar, 200, false, fileNamePrefix),
                 CustomSqlHelper.CreateInputParameter("PageTypeID", SqlDbType.Int, null, false, pageTypeID),
                 CustomSqlHelper.CreateInputParameter("ImportSourceID", SqlDbType.Int, null, false, importSourceID)))

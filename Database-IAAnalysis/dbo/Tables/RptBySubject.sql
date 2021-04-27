@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[RptBySubject] (
     [ItemID]       INT             NOT NULL,
-    [Identifier]   NVARCHAR (50)   NOT NULL,
+    [Identifier]   NVARCHAR (200)  NOT NULL,
     [Sponsor]      NVARCHAR (50)   NOT NULL,
     [Contributor]  NVARCHAR (100)  NOT NULL,
     [DataFieldTag] NCHAR (3)       NOT NULL,

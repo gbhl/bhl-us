@@ -27,7 +27,7 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction transaction = sqlTransaction;
 
 			using ( SqlCommand command = CustomSqlHelper.CreateCommand( "ItemSelectByBarCode", connection, transaction,
-							CustomSqlHelper.CreateInputParameter( "BarCode", SqlDbType.NVarChar, 40, false, barCode ) ) )
+							CustomSqlHelper.CreateInputParameter( "BarCode", SqlDbType.NVarChar, 200, false, barCode ) ) )
 			{
 				using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
 				{

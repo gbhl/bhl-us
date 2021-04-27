@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 12:28:40 PM
+// Generated 4/27/2021 9:49:51 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class ItemDAL is based upon dbo.Item.
@@ -238,7 +238,7 @@ namespace MOBOT.IAAnalysis.DAL
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("ItemID", SqlDbType.Int, null, false),
-					CustomSqlHelper.CreateInputParameter("Identifier", SqlDbType.NVarChar, 50, false, identifier),
+					CustomSqlHelper.CreateInputParameter("Identifier", SqlDbType.NVarChar, 200, false, identifier),
 					CustomSqlHelper.CreateInputParameter("MARCLeader", SqlDbType.NVarChar, 200, false, mARCLeader),
 					CustomSqlHelper.CreateInputParameter("Sponsor", SqlDbType.NVarChar, 50, false, sponsor),
 					CustomSqlHelper.CreateInputParameter("Contributor", SqlDbType.NVarChar, 100, false, contributor),
@@ -499,7 +499,7 @@ namespace MOBOT.IAAnalysis.DAL
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
-					CustomSqlHelper.CreateInputParameter("Identifier", SqlDbType.NVarChar, 50, false, identifier),
+					CustomSqlHelper.CreateInputParameter("Identifier", SqlDbType.NVarChar, 200, false, identifier),
 					CustomSqlHelper.CreateInputParameter("MARCLeader", SqlDbType.NVarChar, 200, false, mARCLeader),
 					CustomSqlHelper.CreateInputParameter("Sponsor", SqlDbType.NVarChar, 50, false, sponsor),
 					CustomSqlHelper.CreateInputParameter("Contributor", SqlDbType.NVarChar, 100, false, contributor),

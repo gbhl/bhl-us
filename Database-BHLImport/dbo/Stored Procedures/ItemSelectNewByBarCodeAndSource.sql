@@ -1,7 +1,6 @@
-﻿
-CREATE PROCEDURE [dbo].[ItemSelectNewByBarCodeAndSource]
+﻿CREATE PROCEDURE [dbo].[ItemSelectNewByBarCodeAndSource]
 
-@BarCode NVARCHAR(40),
+@BarCode NVARCHAR(200),
 @ImportSourceID INT
 
 AS 

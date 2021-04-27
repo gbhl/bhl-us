@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 2:17:49 PM
+// Generated 4/27/2021 10:42:17 AM
 // Do not modify the contents of this code file.
 // This abstract class __Page_PageType is based upon dbo.Page_PageType.
 
@@ -236,9 +236,9 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: BarCode;
-		/// DBMS data type: nvarchar(40);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=2, CharacterMaxLength=40)]
+		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=2, CharacterMaxLength=200)]
 		public string BarCode
 		{
 			get
@@ -247,7 +247,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 40);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_BarCode != value)
 				{
 					_BarCode = value;
