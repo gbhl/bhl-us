@@ -16,7 +16,7 @@ DECLARE @TotalItems INT
 CREATE TABLE #Step1
 	(
 	ItemID int NOT NULL,
-	IAIdentifier nvarchar(50) NOT NULL,
+	IAIdentifier nvarchar(200) NOT NULL,
 	Sponsor nvarchar(100) NOT NULL,
 	ScanningCenter nvarchar(50) NOT NULL,
 	Volume nvarchar(50) NOT NULL,
@@ -40,7 +40,7 @@ WHERE	ItemStatusID = @ItemStatusID
 CREATE TABLE #Step2
 	(
 	ItemID int NOT NULL,
-	IAIdentifier nvarchar(50) NOT NULL,
+	IAIdentifier nvarchar(200) NOT NULL,
 	Sponsor nvarchar(100) NOT NULL,
 	ScanningCenter nvarchar(50) NOT NULL,
 	Volume nvarchar(50) NOT NULL,
@@ -139,5 +139,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
-

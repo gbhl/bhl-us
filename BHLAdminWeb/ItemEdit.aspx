@@ -245,7 +245,7 @@
 					Marc Item ID:
 				</td>
 				<td>
-					<asp:TextBox ID="marcItemIDTextBox" runat="server" MaxLength="50" Width="400px"></asp:TextBox>
+					<asp:TextBox ID="marcItemIDTextBox" runat="server" MaxLength="200" Width="400px"></asp:TextBox>
 				</td>
 			</tr>
 			<tr>
