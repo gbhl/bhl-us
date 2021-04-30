@@ -443,6 +443,7 @@
     <None Include="dbo\Functions\fnBSIsDate.sql" />
     <None Include="dbo\Tables\BSSegmentStatus.sql" />
     <None Include="Data\dbo.BSSegmentStatus.Table.sql" />
+    <None Include="dbo\Tables\DOIHarvestLog.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />

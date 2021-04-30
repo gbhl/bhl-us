@@ -25,6 +25,7 @@ REM --------------------------------------
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\BotanicusHarvestLog.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\BSItemStatus.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\BSSegmentStatus.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Tables\DOIHarvestLog.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\IAAnalysisHarvestLog.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\IAFileFormat.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\IAItemStatus.sql"
