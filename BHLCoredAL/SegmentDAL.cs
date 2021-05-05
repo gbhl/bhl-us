@@ -373,6 +373,32 @@ namespace MOBOT.BHL.DAL
         }
 
         /// <summary>
+        /// Select the segments associated with the specified title
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="titleID">Identifier of the title.</param>
+        /// <returns>A list of type segment</returns>
+        public List<Segment> SegmentSelectByTitleID(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int titleID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByTitleID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+
+                    return list;
+                }
+            }
+        }
+
+        /// <summary>
         /// Select the segments associated with the specified item
         /// </summary>
         /// <param name="sqlConnection"></param>

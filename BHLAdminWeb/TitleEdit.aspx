@@ -881,7 +881,10 @@
 	</fieldset>
 	<br />
 	<asp:Button ID="saveButton" runat="server" OnClick="saveButton_Click" Text="Save" />
-	<div style="float:right;"><mobot:EditHistoryControl runat="server" id="editHistoryControl" /></div>
+	<div style="float:right;">
+		<a id="hypSegmentDownload" runat="server" href="" style="margin-right:10px;">Download Segments</a>
+		<mobot:EditHistoryControl runat="server" id="editHistoryControl" />
+	</div>
 </div>
 <div id="overlayauthor" class="overlay">
     <div style="top:1000px">

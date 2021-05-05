@@ -246,7 +246,11 @@ namespace MOBOT.BHL.AdminWeb
                 }
             }
 
-			Session[ "Title" + title.TitleID.ToString()] = title;
+            // Enable segment download link if segments exist
+            hypSegmentDownload.HRef = "~/downloads/SegmentsForTitle/" + title.TitleID.ToString();
+            hypSegmentDownload.Visible = (bp.SegmentSelectByTitleID(title.TitleID).Count > 0 ? true : false);
+
+            Session[ "Title" + title.TitleID.ToString()] = title;
 
             doiTextBox.Text = title.DOIName;
             replacedByTextBox.Text = title.RedirectTitleID.ToString();

@@ -140,6 +140,14 @@ namespace MOBOT.BHL.DataObjects
             set { _languageName = value; }
         }
 
+        private int? _endPageID = null;
+
+        public int? EndPageID
+        {
+            get { return _endPageID; }
+            set { _endPageID = value; }
+        }
+
         private string _doiName = string.Empty;
 
         public string DOIName
@@ -162,6 +170,14 @@ namespace MOBOT.BHL.DataObjects
         {
             get { return _keywords; }
             set { _keywords = value; }
+        }
+
+        private string _additionalPages = string.Empty;
+
+        public string AdditionalPages
+        {
+            get { return _additionalPages; }
+            set { _additionalPages = value; }
         }
 
         private short _isPrimary = 0;
@@ -338,6 +354,10 @@ namespace MOBOT.BHL.DataObjects
                 {
                     _languageName = Utility.EmptyIfNull(column.Value);
                 }
+                if (column.Name == "EndPageID")
+                {
+                    _endPageID = (int?)column.Value;
+                }
                 if (column.Name == "DOIName")
                 {
                     _doiName = Utility.EmptyIfNull(column.Value);
@@ -349,6 +369,10 @@ namespace MOBOT.BHL.DataObjects
                 if (column.Name == "Subjects")
                 {
                     _keywords = Utility.EmptyIfNull(column.Value);
+                }
+                if (column.Name == "AdditionalPages")
+                {
+                    _additionalPages = Utility.EmptyIfNull(column.Value);
                 }
                 if (column.Name == "IsPrimary")
                 {
