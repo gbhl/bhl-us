@@ -15,7 +15,7 @@ namespace BHLFlickrTagHarvest
 
         private ConfigParms configParms = new ConfigParms();
         private List<string> pagesProcessed = new List<string>();
-        private List<string> photosNotFound = new List<string>();
+        private List<(string PageID, string PhotoID)> photosNotFound = new List<(string PageID, string PhotoID)>();
         private List<string> tagsAdded = new List<string>();
         private List<string> tagsUpdated = new List<string>();
         private List<string> tagsRemoved = new List<string>();
@@ -107,7 +107,7 @@ namespace BHLFlickrTagHarvest
             {
                 if (fex.Code == 1)  // Photo not found
                 {
-                    photosNotFound.Add(photoID);
+                    photosNotFound.Add((page.PageID.ToString(), photoID));
                 }
                 else
                 {
@@ -511,9 +511,9 @@ namespace BHLFlickrTagHarvest
             if (this.photosNotFound.Count > 0)
             {
                 sb.Append(endOfLine + this.photosNotFound.Count.ToString() + " Photos not found at Flickr" + endOfLine);
-                foreach(string pageID in photosNotFound)
+                foreach((string PageID, string PhotoID) photo in photosNotFound)
                 {
-                    sb.Append(endOfLine + "Flickr Photo ID " + pageID + " not found" + endOfLine);
+                    sb.Append(endOfLine + "Flickr Photo ID " + photo.PhotoID + " (associated with BHL Page ID " + photo.PageID + ") not found" + endOfLine);
                 }
             }
             if (this.errorMessages.Count > 0)
