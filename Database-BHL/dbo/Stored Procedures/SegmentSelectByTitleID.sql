@@ -19,7 +19,7 @@ FROM	vwSegment s
 		INNER JOIN dbo.Item i ON b.ItemID = i.ItemID
 		INNER JOIN dbo.ItemTitle it ON i.ItemID = it.ItemID
 		INNER JOIN dbo.Title t ON it.TitleID = t.TitleID
-		-- LEFT JOIN here to account for virtual items
+		-- LEFT JOIN here to include virtual items
 		LEFT JOIN dbo.ItemPage bip ON b.ItemID = bip.ItemID AND ip.PageID = bip.PageID		
 WHERE	i.ItemStatusID = 40
 AND		s.SegmentStatusID IN (30, 40)
@@ -132,15 +132,16 @@ SELECT	s.SegmentID,
 		d.DOIName
 FROM	dbo.Title t
 		INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID
-		INNER JOIN dbo.Item i ON it.ItemID = i.ItemID
-		INNER JOIN dbo.Book b ON i.ItemID = b.ItemID
-		INNER JOIN dbo.ItemRelationship ir ON i.ItemID = ir.ParentID
-		INNER JOIN dbo.vwSegment s ON ir.ChildID = s.ItemID
+		INNER JOIN dbo.Item bi ON it.ItemID = bi.ItemID
+		INNER JOIN dbo.Book b ON bi.ItemID = b.ItemID
+		INNER JOIN dbo.ItemRelationship ir ON bi.ItemID = ir.ParentID
+		INNER JOIN dbo.Item si ON ir.ChildID = si.ItemID
+		INNER JOIN dbo.Segment s ON si.ItemID = s.ItemID
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = 40
 		LEFT JOIN #SegmentPages sp ON s.SegmentID = sp.SegmentID
-WHERE	i.ItemStatusID = 40
-AND		s.SegmentStatusID IN (30, 40)
+WHERE	bi.ItemStatusID = 40
+AND		si.ItemStatusID IN (30, 40)
 AND		t.TitleID = @TitleID
 ORDER BY
 		it.ItemSequence, ir.SequenceOrder
