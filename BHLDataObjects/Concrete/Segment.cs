@@ -164,6 +164,14 @@ namespace MOBOT.BHL.DataObjects
             set { _authors = value; }
         }
 
+        private string _authorIDs = string.Empty;
+
+        public string AuthorIDs
+        {
+            get { return _authorIDs; }
+            set { _authorIDs = value; }
+        }
+
         private string _keywords = string.Empty;
 
         public string Keywords
@@ -365,6 +373,10 @@ namespace MOBOT.BHL.DataObjects
                 if (column.Name == "Authors")
                 {
                     _authors = Utility.EmptyIfNull(column.Value);
+                }
+                if (column.Name == "AuthorIDs")
+                {
+                    _authorIDs = Utility.EmptyIfNull(column.Value);
                 }
                 if (column.Name == "Subjects")
                 {

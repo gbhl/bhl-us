@@ -15,7 +15,7 @@ BEGIN
 					CONVERT(NVARCHAR(20), x.AuthorID),
 			@CurrentRecord = @CurrentRecord + 1
 	FROM	(
-			SELECT	MIN(ia.SequenceOrder) AS SequenceOrder, a.AuthorID
+			SELECT	MIN(ia.SequenceOrder) AS SequenceOrder, a.AuthorID, n.FullName
 			FROM	dbo.Segment s
 					INNER JOIN dbo.ItemAuthor ia ON s.ItemID = ia.ItemID
 					INNER JOIN dbo.Author a ON ia.AuthorID = a.AuthorID
@@ -23,9 +23,9 @@ BEGIN
 			WHERE	s.SegmentID = @SegmentID
 			AND		a.IsActive = 1
 			AND		n.IsPreferredName = 1
-			GROUP BY a.AuthorID
+			GROUP BY a.AuthorID, n.FullName
 			) x
-	ORDER BY x.SequenceOrder, x.AuthorID
+	ORDER BY x.SequenceOrder, x.FullName
 
 	RETURN COALESCE(@AuthorString, '')
 END
