@@ -27,7 +27,9 @@ BEGIN TRY
 
 	-- Get the IDs of the records to be imported
 	DECLARE	curRecord CURSOR 
-	FOR SELECT ImportRecordID FROM import.ImportRecord WHERE ImportFileID = @ImportFileID AND ImportRecordStatusID = @ImportRecordNewID
+	FOR		SELECT ImportRecordID FROM import.ImportRecord 
+			WHERE ImportFileID = @ImportFileID AND ImportRecordStatusID = @ImportRecordNewID
+			ORDER BY ImportRecordID
 	
 	OPEN curRecord
 	FETCH NEXT FROM curRecord INTO @ImportRecordID
