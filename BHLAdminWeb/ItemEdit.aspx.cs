@@ -110,9 +110,6 @@ namespace MOBOT.BHL.AdminWeb
 				}
 			}
 
-            editHistoryControl.EntityName = "item";
-            editHistoryControl.EntityId = itemIdTextBox.Text;
-
             litMessage.Text = "";
             errorControl.Visible = false;
 			Page.MaintainScrollPositionOnPostBack = true;
@@ -208,6 +205,9 @@ namespace MOBOT.BHL.AdminWeb
                 copyrightCommentTextBox.Text = book.CopyrightComment;
                 copyrightEvidenceTextBox.Text = book.CopyrightEvidence;
                 externalUrlTextBox.Text = book.ExternalUrl;
+
+                editHistoryControl.EntityName = "item";
+                editHistoryControl.EntityId = book.BookID.ToString();
 
                 List<DataObjects.ItemTitle> itemTitles = new List<DataObjects.ItemTitle>();
                 foreach (DataObjects.ItemTitle it in book.ItemTitles)
