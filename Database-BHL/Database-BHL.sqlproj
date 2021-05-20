@@ -1133,6 +1133,8 @@
     <None Include="dbo\Stored Procedures\SegmentSelectWithoutDOIByTitleID.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectWithoutDOIByItemID.sql" />
     <None Include="dbo\Stored Procedures\DOIInsert.sql" />
+    <None Include="dbo\Functions\fnAuthorIDStringForSegment.sql" />
+    <None Include="dbo\Stored Procedures\SegmentSelectByTitleID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
