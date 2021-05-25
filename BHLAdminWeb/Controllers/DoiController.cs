@@ -259,18 +259,16 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
             if (model.Titles != null)
             {
-                foreach(string title in model.Titles)
-                {
-                    new BHLProvider().DOIInsert(_doiTypeTitleID, Convert.ToInt32(title.Split('|')[0]), _doiStatusQueuedID, string.Empty, string.Empty, string.Empty, 0, userId, 0);
-                }
+                List<int> ids = new List<int>();
+                foreach(string title in model.Titles) ids.Add(Convert.ToInt32(title.Split('|')[0]));
+                new BHLProvider().DOIInsert(_doiTypeTitleID, ids, _doiStatusQueuedID, string.Empty, string.Empty, string.Empty, 0, userId, 0);
             }
 
             if (model.Segments != null)
             {
-                foreach (string segment in model.Segments)
-                {
-                    new BHLProvider().DOIInsert(_doiTypeSegmentID, Convert.ToInt32(segment.Split('|')[0]), _doiStatusQueuedID, string.Empty, string.Empty, string.Empty, 0, userId, 0);
-                }
+                List<int> ids = new List<int>();
+                foreach (string segment in model.Segments) ids.Add(Convert.ToInt32(segment.Split('|')[0]));
+                new BHLProvider().DOIInsert(_doiTypeSegmentID, ids, _doiStatusQueuedID, string.Empty, string.Empty, string.Empty, 0, userId, 0);
             }
 
             return RedirectToAction("Queue", "Doi");
