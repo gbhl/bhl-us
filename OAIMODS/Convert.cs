@@ -398,6 +398,7 @@ namespace MOBOT.BHL.OAIMODS
 
             string mods30Header = "<mods xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"3.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.loc.gov/mods/v3\" xsi:schemaLocation=\"http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-0.xsd\">\n";
             string mods33Header = "<mods xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"3.3\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.loc.gov/mods/v3\" xsi:schemaLocation=\"http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-3.xsd\">\n";
+            string mods37Header = "<mods xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"3.7\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.loc.gov/mods/v3\" xsi:schemaLocation=\"http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd\">\n";
 
             // MODS needs to be formatted differently for articles, issues, and books, so check the type
             // of record we have and get the appropriate MODS body
@@ -405,15 +406,15 @@ namespace MOBOT.BHL.OAIMODS
             {
                 case OAIRecord.RecordType.Article:
                 case OAIRecord.RecordType.Segment:
-                    sb.Append(mods30Header);
+                    sb.Append(mods37Header);
                     sb.Append(this.ArticleToString());
                     break;
                 case OAIRecord.RecordType.Issue:
-                    sb.Append(mods33Header);
+                    sb.Append(mods37Header);
                     sb.Append(this.IssueToString());
                     break;
                 default:
-                    sb.Append(mods30Header);
+                    sb.Append(mods37Header);
                     sb.Append(this.BookToString());
                     break;
             }

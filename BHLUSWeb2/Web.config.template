@@ -97,7 +97,7 @@
         olef | http://www.bhle.eu/bhl-schema/v1/ | http://www.bhle.eu/bhl-schema/v1/OLEF_v1.0.xsd | MOBOT.BHL.OAIOLEF | true | 10
 		-->
     <add key="OAIMetadataFormats" value="oai_dc | http://www.openarchives.org/OAI/2.0/ | http://www.openarchives.org/OAI/2.0/oai_dc.xsd | MOBOT.BHL.OAIDC | false | 100
-       mods | http://www.loc.gov/mods/v3 | http://www.loc.gov/standards/mods/v3/mods-3-0.xsd | MOBOT.BHL.OAIMODS | false | 100
+       mods | http://www.loc.gov/mods/v3 | http://www.loc.gov/standards/mods/v3/mods-3-7.xsd | MOBOT.BHL.OAIMODS | false | 100
        olef | http://www.bhle.eu/bhl-schema/v1/ | http://www.bhle.eu/bhl-schema/v1/OLEF_v1.0.xsd | MOBOT.BHL.OAIOLEF | true | 10"/>
 
     <!-- Valid values for NameFinderService are "TaxonFinder", "GNFinder", and "GNFinderLocal" -->
