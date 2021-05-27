@@ -1538,9 +1538,12 @@
               <s:element minOccurs="0" maxOccurs="1" name="GenreName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="StatusName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="LanguageName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="EndPageID" nillable="true" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="DOIName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Authors" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AuthorIDs" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Keywords" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AdditionalPages" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="IsPrimary" type="s:short" />
               <s:element minOccurs="1" maxOccurs="1" name="HasLocalContent" type="s:boolean" />
               <s:element minOccurs="1" maxOccurs="1" name="HasExternalContent" type="s:boolean" />
@@ -2759,6 +2762,7 @@
               <s:element minOccurs="0" maxOccurs="1" name="DOIEntityTypeName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="EntityDetail" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="TotalDOIs" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="CreationUserName" type="s:string" />
             </s:sequence>
           </s:extension>
         </s:complexContent>

@@ -2052,6 +2052,8 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         
         private int totalDOIsField;
         
+        private string creationUserNameField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public string DOIEntityTypeName {
@@ -2085,6 +2087,18 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
             set {
                 this.totalDOIsField = value;
                 this.RaisePropertyChanged("TotalDOIs");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string CreationUserName {
+            get {
+                return this.creationUserNameField;
+            }
+            set {
+                this.creationUserNameField = value;
+                this.RaisePropertyChanged("CreationUserName");
             }
         }
     }
@@ -5922,11 +5936,17 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         
         private string languageNameField;
         
+        private System.Nullable<int> endPageIDField;
+        
         private string dOINameField;
         
         private string authorsField;
         
+        private string authorIDsField;
+        
         private string keywordsField;
+        
+        private string additionalPagesField;
         
         private short isPrimaryField;
         
@@ -6163,7 +6183,19 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=17)]
+        public System.Nullable<int> EndPageID {
+            get {
+                return this.endPageIDField;
+            }
+            set {
+                this.endPageIDField = value;
+                this.RaisePropertyChanged("EndPageID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
         public string DOIName {
             get {
                 return this.dOINameField;
@@ -6175,7 +6207,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
         public string Authors {
             get {
                 return this.authorsField;
@@ -6187,7 +6219,19 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
+        public string AuthorIDs {
+            get {
+                return this.authorIDsField;
+            }
+            set {
+                this.authorIDsField = value;
+                this.RaisePropertyChanged("AuthorIDs");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
         public string Keywords {
             get {
                 return this.keywordsField;
@@ -6199,7 +6243,19 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
+        public string AdditionalPages {
+            get {
+                return this.additionalPagesField;
+            }
+            set {
+                this.additionalPagesField = value;
+                this.RaisePropertyChanged("AdditionalPages");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
         public short IsPrimary {
             get {
                 return this.isPrimaryField;
@@ -6211,7 +6267,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
         public bool HasLocalContent {
             get {
                 return this.hasLocalContentField;
@@ -6223,7 +6279,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
         public bool HasExternalContent {
             get {
                 return this.hasExternalContentField;
@@ -6235,7 +6291,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=23)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=26)]
         public System.Nullable<int> SequenceOrder {
             get {
                 return this.sequenceOrderField;
@@ -6247,7 +6303,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
         public int SegmentStatusID {
             get {
                 return this.segmentStatusIDField;
@@ -6259,7 +6315,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=28)]
         public string Notes {
             get {
                 return this.notesField;
@@ -6271,7 +6327,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=29)]
         public Item Item {
             get {
                 return this.itemField;
@@ -6283,7 +6339,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=27)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=30)]
         public ItemAuthor[] AuthorList {
             get {
                 return this.authorListField;
@@ -6295,7 +6351,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=28)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=31)]
         public ItemKeyword[] KeywordList {
             get {
                 return this.keywordListField;
@@ -6307,7 +6363,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=29)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=32)]
         public ItemIdentifier[] IdentifierList {
             get {
                 return this.identifierListField;
@@ -6319,7 +6375,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=30)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=33)]
         public Institution[] ContributorList {
             get {
                 return this.contributorListField;
@@ -6331,7 +6387,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=31)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=34)]
         public ItemPage[] PageList {
             get {
                 return this.pageListField;
@@ -6343,7 +6399,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=32)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=35)]
         public Name[] NameList {
             get {
                 return this.nameListField;
@@ -6355,7 +6411,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=33)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=36)]
         public Segment[] RelatedSegmentList {
             get {
                 return this.relatedSegmentListField;
@@ -6367,7 +6423,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=34)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=37)]
         public ItemRelationship[] RelationshipList {
             get {
                 return this.relationshipListField;
