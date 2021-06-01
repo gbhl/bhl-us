@@ -120,6 +120,11 @@
               <s:element minOccurs="1" maxOccurs="1" name="PageTypeID" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="PageTypeName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="PageTypeDescription" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreationDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreationUserID" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastModifiedUserID" nillable="true" type="s:int" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -210,6 +215,8 @@
         <s:complexContent mixed="false">
           <s:extension base="tns:__PDF">
             <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="BookID" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SegmentID" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="NumberOfPages" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="MinutesToGenerate" type="s:int" />
             </s:sequence>
@@ -222,13 +229,15 @@
             <s:sequence>
               <s:element minOccurs="1" maxOccurs="1" name="PdfID" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="ItemID" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="FileLocation" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ShareWithEmailAddresses" type="s:string" />
-              <s:element minOccurs="1" maxOccurs="1" name="ImagesOnly" type="s:boolean" />
               <s:element minOccurs="0" maxOccurs="1" name="ArticleTitle" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ArticleCreators" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ArticleTags" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="FileLocation" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="ImagesOnly" type="s:boolean" />
               <s:element minOccurs="0" maxOccurs="1" name="FileUrl" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="FileGenerationDate" nillable="true" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="FileDeletionDate" nillable="true" type="s:dateTime" />
@@ -236,8 +245,6 @@
               <s:element minOccurs="1" maxOccurs="1" name="NumberImagesMissing" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="NumberOcrMissing" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="Comment" type="s:string" />
-              <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
-              <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" type="s:dateTime" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -316,6 +323,7 @@
               <s:element minOccurs="0" maxOccurs="1" name="Volume" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="FileRootFolder" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Sponsor" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PageProgression" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="ItemSequence" nillable="true" type="s:short" />
               <s:element minOccurs="1" maxOccurs="1" name="PageID" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="FileNamePrefix" type="s:string" />
@@ -973,13 +981,13 @@
               <s:element minOccurs="1" maxOccurs="1" name="TitleID" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="AuthorID" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="AuthorRoleID" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SequenceOrder" type="s:short" />
               <s:element minOccurs="0" maxOccurs="1" name="Relationship" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="TitleOfWork" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="CreationUserID" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedUserID" nillable="true" type="s:int" />
-              <s:element minOccurs="1" maxOccurs="1" name="SequenceOrder" type="s:short" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -1243,6 +1251,7 @@
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" nillable="true" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="CreationUserID" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedUserID" nillable="true" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="PageProgression" type="s:string" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -1529,9 +1538,12 @@
               <s:element minOccurs="0" maxOccurs="1" name="GenreName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="StatusName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="LanguageName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="EndPageID" nillable="true" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="DOIName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Authors" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AuthorIDs" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Keywords" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AdditionalPages" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="IsPrimary" type="s:short" />
               <s:element minOccurs="1" maxOccurs="1" name="HasLocalContent" type="s:boolean" />
               <s:element minOccurs="1" maxOccurs="1" name="HasExternalContent" type="s:boolean" />
@@ -1602,6 +1614,7 @@
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="CreationUserID" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedUserID" nillable="true" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="PageProgression" type="s:string" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -2749,6 +2762,7 @@
               <s:element minOccurs="0" maxOccurs="1" name="DOIEntityTypeName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="EntityDetail" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="TotalDOIs" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="CreationUserName" type="s:string" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -2768,6 +2782,8 @@
               <s:element minOccurs="1" maxOccurs="1" name="IsValid" type="s:short" />
               <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreationUserID" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastModifiedUserID" type="s:int" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -2810,6 +2826,7 @@
             <s:element minOccurs="0" maxOccurs="1" name="doiName" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
             <s:element minOccurs="1" maxOccurs="1" name="isValid" type="s:short" />
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -2827,6 +2844,7 @@
             <s:element minOccurs="1" maxOccurs="1" name="doiStatusId" type="s:int" />
             <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
             <s:element minOccurs="1" maxOccurs="1" name="setValid" nillable="true" type="s:short" />
+            <s:element minOccurs="1" maxOccurs="1" name="userId" nillable="true" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -2843,6 +2861,7 @@
             <s:element minOccurs="1" maxOccurs="1" name="doiID" type="s:int" />
             <s:element minOccurs="1" maxOccurs="1" name="doiStatusId" type="s:int" />
             <s:element minOccurs="0" maxOccurs="1" name="doiName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="userId" nillable="true" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -2859,6 +2878,7 @@
             <s:element minOccurs="1" maxOccurs="1" name="doiID" type="s:int" />
             <s:element minOccurs="1" maxOccurs="1" name="doiStatusId" type="s:int" />
             <s:element minOccurs="0" maxOccurs="1" name="doiBatchID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="userId" nillable="true" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>

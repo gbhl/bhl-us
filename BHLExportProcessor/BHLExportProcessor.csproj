@@ -101,6 +101,12 @@
     <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.DOI.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.DOIUpdateBatchIDResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.DOIUpdateDOINameResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.DOIUpdateStatusResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

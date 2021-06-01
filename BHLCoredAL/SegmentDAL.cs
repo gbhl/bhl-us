@@ -79,19 +79,24 @@ namespace MOBOT.BHL.DAL
 
                 if (segment.BookID != null)
                 {
-                    Book book = new BookDAL().BookSelectByBarCodeOrItemID(connection, transaction, segment.BookID, null);
+                    Book book = new BookDAL().BookSelectAuto(connection, transaction, (int)segment.BookID);
                     segment.ItemVolume = book.Volume;
                     segment.ItemYear = book.StartYear ?? string.Empty;
 
-                    if (book.PrimaryTitleID != null)
+                    List<ItemTitle> itemTitles = new ItemTitleDAL().ItemTitleSelectByItem(connection, transaction, (int)segment.BookID);
+                    foreach (ItemTitle itemTitle in itemTitles)
                     {
-                        Title title = new TitleDAL().TitleSelectAuto(connection, transaction, (int)book.PrimaryTitleID);
-                        segment.TitleId = title.TitleID;
-                        segment.TitleFullTitle = title.FullTitle;
-                        segment.TitleShortTitle = title.ShortTitle;
-                        segment.TitlePublicationPlace = title.Datafield_260_a;
-                        segment.TitlePublisherName = title.Datafield_260_b;
-                        segment.TitlePublicationDate = (title.StartYear == null ? "" : title.StartYear.ToString());
+                        if (itemTitle.IsPrimary == 1)
+                        {
+                            Title title = new TitleDAL().TitleSelectAuto(connection, transaction, itemTitle.TitleID);
+                            segment.TitleId = title.TitleID;
+                            segment.TitleFullTitle = title.FullTitle;
+                            segment.TitleShortTitle = title.ShortTitle;
+                            segment.TitlePublicationPlace = title.Datafield_260_a;
+                            segment.TitlePublisherName = title.Datafield_260_b;
+                            segment.TitlePublicationDate = (title.StartYear == null ? "" : title.StartYear.ToString());
+                            break;
+                        }
                     }
                 }
 
