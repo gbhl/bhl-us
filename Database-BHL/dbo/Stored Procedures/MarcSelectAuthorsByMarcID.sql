@@ -150,18 +150,20 @@ SET		FullName = RTRIM(REPLACE(FullName, '[from old catalog]', '')),
 -- =======================================================================
 -- Add new author and authorname records, if necessary
 BEGIN TRY
-	-- Get the new authors
-	DECLARE curNew CURSOR
-	FOR 	
+	-- Get the existing authors that match the incoming authors
 	SELECT DISTINCT
-			t.FullName,
-			t.AuthorTypeID,
-			ISNULL(t.StartDate, ''),
-			ISNULL(t.EndDate, ''),
-			ISNULL(t.MARCCreator_b, ''),
-			ISNULL(t.MARCCreator_c, ''),
-			ISNULL(t.MARCCreator_q, '')
-	FROM	#tmpAuthor t LEFT JOIN (SELECT a.AuthorID, AuthorTypeID, StartDate, EndDate, FullName,
+			a.AuthorID,
+			a.FullName,
+			a.AuthorTypeID,
+			ISNULL(a.StartDate, '') AS StartDate,
+			ISNULL(a.EndDate, '') AS EndDate,
+			ISNULL(a.Numeration, '') AS Numeration,
+			ISNULL(a.Title, '') AS Title,
+			ISNULL(a.Unit, '') AS Unit,
+			ISNULL(a.Location, '') AS [Location],
+			ISNULL(a.FullerForm, '') AS FullerForm
+	INTO	#ExistingAuthors
+	FROM	#tmpAuthor t INNER JOIN (SELECT a.AuthorID, AuthorTypeID, StartDate, EndDate, FullName,
 											a.Numeration, a.Title, a.Unit, a.Location, n.FullerForm
 									FROM dbo.Author a INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID) a
 				ON t.AuthorTypeID = a.AuthorTypeID
@@ -181,15 +183,37 @@ BEGIN TRY
 						(ISNULL(t.MARCCreator_c, '') = ISNULL(a.Title, '') OR ISNULL(t.MARCCreator_c, '') = ISNULL(a.Location, ''))) 
 					)
 				AND ISNULL(t.MARCCreator_q, '') = ISNULL(a.FullerForm, '')
-	WHERE	a.AuthorID IS NULL
-	GROUP BY
+
+	-- Get the new authors
+	DECLARE curNew CURSOR
+	FOR 	
+	SELECT DISTINCT
 			t.FullName,
 			t.AuthorTypeID,
-			t.StartDate,
-			t.EndDate,
-			t.MARCCreator_b,
-			t.MARCCreator_c,
-			t.MARCCreator_q
+			ISNULL(t.StartDate, '') AS StartDate,
+			ISNULL(t.EndDate, '') AS EndDate,
+			ISNULL(t.MARCCreator_b, '') AS MARCCreator_b,
+			ISNULL(t.MARCCreator_c, '') AS MARCCreator_c,
+			ISNULL(t.MARCCreator_q, '') AS MARCCreator_q
+	FROM	#tmpAuthor t LEFT JOIN #ExistingAuthors a
+				ON t.AuthorTypeID = a.AuthorTypeID
+				AND ISNULL(dbo.fnRemoveNonNumericCharacters(t.StartDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.StartDate), '')
+				AND ISNULL(dbo.fnRemoveNonNumericCharacters(t.EndDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.EndDate), '')
+				AND dbo.fnRemoveNonAlphaNumericCharacters(t.FullName) = dbo.fnRemoveNonAlphaNumericCharacters(a.FullName) 
+				AND	(  -- If b is blank, match records with blank Numeration/Unit values
+					(ISNULL(t.MARCCreator_b, '') = '' AND ISNULL(a.Numeration, '') = '' AND ISNULL(a.Unit, '') = '') 
+					OR  -- If b is not blank, find records with matching Numeration/Unit values
+					(ISNULL(t.MARCCreator_b, '') <> '' AND
+						(ISNULL(t.MARCCreator_b, '') = ISNULL(a.Numeration, '') OR ISNULL(t.MARCCreator_b, '') = ISNULL(a.Unit, ''))) 
+					)
+				AND	(  -- If c is blank, match records with blank Numeration/Unit values
+					(ISNULL(t.MARCCreator_c, '') = '' AND ISNULL(a.Title, '') = '' AND ISNULL(a.Location, '') = '')
+					OR  -- If c is not blank, find records with matching Numeration/Unit values
+					(ISNULL(t.MARCCreator_c, '') <> '' AND
+						(ISNULL(t.MARCCreator_c, '') = ISNULL(a.Title, '') OR ISNULL(t.MARCCreator_c, '') = ISNULL(a.Location, ''))) 
+					)
+				AND ISNULL(t.MARCCreator_q, '') = ISNULL(a.FullerForm, '')
+	WHERE	a.AuthorID IS NULL
 			
 	DECLARE @FullName nvarchar(255)
 	DECLARE @TypeID int
