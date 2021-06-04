@@ -12,7 +12,6 @@
     @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div style="margin-bottom:10px">
-            <div><div class="label">Contributor:</div><div class="field">@Html.DropDownList("Contributor")</div></div>
             <div><div class="label">Type:</div><div class="field">@Html.DropDownList("Genre")</div></div>
             <div><div class="label">Data source:</div><div class="field">@Html.DropDownList("DataSourceType")</div></div>
         </div>

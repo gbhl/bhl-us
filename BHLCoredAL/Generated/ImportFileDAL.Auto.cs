@@ -1,5 +1,5 @@
 
-// Generated 9/20/2017 11:00:01 AM
+// Generated 6/28/2021 12:51:29 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class ImportFileDAL is based upon import.ImportFile.
@@ -33,7 +33,7 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class ImportFileDAL
+	partial class ImportFileDAL 
 	{
  		#region ===== SELECT =====
 
@@ -140,9 +140,9 @@ namespace MOBOT.BHL.DAL
 		/// <param name="importFileStatusID"></param>
 		/// <param name="importFileName"></param>
 		/// <param name="contributorCode"></param>
+		/// <param name="segmentGenreID"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="segmentGenreID"></param>
 		/// <returns>Object of type ImportFile.</returns>
 		public ImportFile ImportFileInsertAuto(
 			SqlConnection sqlConnection, 
@@ -150,11 +150,11 @@ namespace MOBOT.BHL.DAL
 			int importFileStatusID,
 			string importFileName,
 			string contributorCode,
+			int? segmentGenreID,
 			int creationUserID,
-			int lastModifiedUserID,
-			int? segmentGenreID)
+			int lastModifiedUserID)
 		{
-			return ImportFileInsertAuto( sqlConnection, sqlTransaction, "BHL", importFileStatusID, importFileName, contributorCode, creationUserID, lastModifiedUserID, segmentGenreID );
+			return ImportFileInsertAuto( sqlConnection, sqlTransaction, "BHL", importFileStatusID, importFileName, contributorCode, segmentGenreID, creationUserID, lastModifiedUserID );
 		}
 		
 		/// <summary>
@@ -166,9 +166,9 @@ namespace MOBOT.BHL.DAL
 		/// <param name="importFileStatusID"></param>
 		/// <param name="importFileName"></param>
 		/// <param name="contributorCode"></param>
+		/// <param name="segmentGenreID"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="segmentGenreID"></param>
 		/// <returns>Object of type ImportFile.</returns>
 		public ImportFile ImportFileInsertAuto(
 			SqlConnection sqlConnection, 
@@ -177,9 +177,9 @@ namespace MOBOT.BHL.DAL
 			int importFileStatusID,
 			string importFileName,
 			string contributorCode,
+			int? segmentGenreID,
 			int creationUserID,
-			int lastModifiedUserID,
-			int? segmentGenreID)
+			int lastModifiedUserID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -188,10 +188,10 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateOutputParameter("ImportFileID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("ImportFileStatusID", SqlDbType.Int, null, false, importFileStatusID),
 					CustomSqlHelper.CreateInputParameter("ImportFileName", SqlDbType.NVarChar, 200, false, importFileName),
-					CustomSqlHelper.CreateInputParameter("ContributorCode", SqlDbType.NVarChar, 10, false, contributorCode),
+					CustomSqlHelper.CreateInputParameter("ContributorCode", SqlDbType.NVarChar, 10, true, contributorCode),
+					CustomSqlHelper.CreateInputParameter("SegmentGenreID", SqlDbType.Int, null, true, segmentGenreID),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, false, creationUserID),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
-					CustomSqlHelper.CreateInputParameter("SegmentGenreID", SqlDbType.Int, null, true, segmentGenreID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<ImportFile> helper = new CustomSqlHelper<ImportFile>())
@@ -244,9 +244,9 @@ namespace MOBOT.BHL.DAL
 				value.ImportFileStatusID,
 				value.ImportFileName,
 				value.ContributorCode,
+				value.SegmentGenreID,
 				value.CreationUserID,
-				value.LastModifiedUserID,
-				value.SegmentGenreID);
+				value.LastModifiedUserID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -320,8 +320,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="importFileStatusID"></param>
 		/// <param name="importFileName"></param>
 		/// <param name="contributorCode"></param>
-		/// <param name="lastModifiedUserID"></param>
 		/// <param name="segmentGenreID"></param>
+		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type ImportFile.</returns>
 		public ImportFile ImportFileUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -330,10 +330,10 @@ namespace MOBOT.BHL.DAL
 			int importFileStatusID,
 			string importFileName,
 			string contributorCode,
-			int lastModifiedUserID,
-			int? segmentGenreID)
+			int? segmentGenreID,
+			int lastModifiedUserID)
 		{
-			return ImportFileUpdateAuto( sqlConnection, sqlTransaction, "BHL", importFileID, importFileStatusID, importFileName, contributorCode, lastModifiedUserID, segmentGenreID);
+			return ImportFileUpdateAuto( sqlConnection, sqlTransaction, "BHL", importFileID, importFileStatusID, importFileName, contributorCode, segmentGenreID, lastModifiedUserID);
 		}
 		
 		/// <summary>
@@ -346,8 +346,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="importFileStatusID"></param>
 		/// <param name="importFileName"></param>
 		/// <param name="contributorCode"></param>
-		/// <param name="lastModifiedUserID"></param>
 		/// <param name="segmentGenreID"></param>
+		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type ImportFile.</returns>
 		public ImportFile ImportFileUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -357,8 +357,8 @@ namespace MOBOT.BHL.DAL
 			int importFileStatusID,
 			string importFileName,
 			string contributorCode,
-			int lastModifiedUserID,
-			int? segmentGenreID)
+			int? segmentGenreID,
+			int lastModifiedUserID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -367,9 +367,9 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateInputParameter("ImportFileID", SqlDbType.Int, null, false, importFileID),
 					CustomSqlHelper.CreateInputParameter("ImportFileStatusID", SqlDbType.Int, null, false, importFileStatusID),
 					CustomSqlHelper.CreateInputParameter("ImportFileName", SqlDbType.NVarChar, 200, false, importFileName),
-					CustomSqlHelper.CreateInputParameter("ContributorCode", SqlDbType.NVarChar, 10, false, contributorCode),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
-					CustomSqlHelper.CreateInputParameter("SegmentGenreID", SqlDbType.Int, null, true, segmentGenreID), 
+					CustomSqlHelper.CreateInputParameter("ContributorCode", SqlDbType.NVarChar, 10, true, contributorCode),
+					CustomSqlHelper.CreateInputParameter("SegmentGenreID", SqlDbType.Int, null, true, segmentGenreID),
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<ImportFile> helper = new CustomSqlHelper<ImportFile>())
@@ -423,8 +423,8 @@ namespace MOBOT.BHL.DAL
 				value.ImportFileStatusID,
 				value.ImportFileName,
 				value.ContributorCode,
-				value.LastModifiedUserID,
-				value.SegmentGenreID);
+				value.SegmentGenreID,
+				value.LastModifiedUserID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -472,9 +472,9 @@ namespace MOBOT.BHL.DAL
 					value.ImportFileStatusID,
 						value.ImportFileName,
 						value.ContributorCode,
+						value.SegmentGenreID,
 						value.CreationUserID,
-						value.LastModifiedUserID,
-						value.SegmentGenreID);
+						value.LastModifiedUserID);
 				
 				return new CustomDataAccessStatus<ImportFile>(
 					CustomDataAccessContext.Insert, 
@@ -504,8 +504,8 @@ namespace MOBOT.BHL.DAL
 						value.ImportFileStatusID,
 						value.ImportFileName,
 						value.ContributorCode,
-						value.LastModifiedUserID,
-						value.SegmentGenreID);
+						value.SegmentGenreID,
+						value.LastModifiedUserID);
 					
 				return new CustomDataAccessStatus<ImportFile>(
 					CustomDataAccessContext.Update, 

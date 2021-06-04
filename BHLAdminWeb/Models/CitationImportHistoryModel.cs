@@ -7,12 +7,12 @@ namespace MOBOT.BHL.AdminWeb.Models
 {
     public class CitationImportHistoryModel
     {
-        private string _institution = string.Empty;
+        private string _user = string.Empty;
 
-        public string Institution
+        public string User
         {
-            get { return _institution; }
-            set { _institution = value; }
+            get { return _user; }
+            set { _user = value; }
         }
 
         private string _importFileStatus = string.Empty;
@@ -43,7 +43,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         {
             int fileStatus = string.IsNullOrWhiteSpace(this.ImportFileStatus) ? 0 : Convert.ToInt32(this.ImportFileStatus);
             int numDays = string.IsNullOrWhiteSpace(this.ReportDateRange) ? 10000 : Convert.ToInt32(this.ReportDateRange);
-            _importFileList = new BHLProvider().ImportFileSelectDetails(this.Institution, fileStatus, numDays);
+            _importFileList = new BHLProvider().ImportFileSelectDetails(this.User, fileStatus, numDays);
         }
     }
 }

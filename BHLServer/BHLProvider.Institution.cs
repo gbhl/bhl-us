@@ -77,6 +77,11 @@ namespace MOBOT.BHL.Server
 			return ( new InstitutionDAL().InstitutionSelectAuto( null, null, institutionCode ) );
 		}
 
+        public Institution InstitutionSelectByName(string institutionName)
+        {
+            return (new InstitutionDAL().InstitutionSelectByName(null, null, institutionName));
+        }
+
 		public void SaveInstitution( Institution institution, int userID )
 		{
 			new InstitutionDAL().Save( null, null, institution, userID );

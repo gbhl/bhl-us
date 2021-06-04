@@ -1,5 +1,6 @@
 ﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System;
 using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
@@ -23,7 +24,7 @@ namespace MOBOT.BHL.Server
 
         public ImportFile ImportFileInsertAuto(int fileStatusID, string fileName, string contributor, int userID, int? segmentGenreID)
         {
-            return new ImportFileDAL().ImportFileInsertAuto(null, null, fileStatusID, fileName, contributor, userID, userID, segmentGenreID);
+            return new ImportFileDAL().ImportFileInsertAuto(null, null, fileStatusID, fileName, contributor, segmentGenreID, userID, userID);
         }
 
         public ImportFile ImportFileUpdateAuto(ImportFile importFile)
@@ -46,9 +47,9 @@ namespace MOBOT.BHL.Server
             new ImportFileDAL().ImportFileRejectFile(null, null, importFileID, userID);
         }
 
-        public List<ImportFile> ImportFileSelectDetails(string institutionCode, int fileStatusID, int numberOfDays)
+        public List<ImportFile> ImportFileSelectDetails(string userId, int fileStatusID, int numberOfDays)
         {
-            return new ImportFileDAL().ImportFileSelectDetails(null, null, institutionCode, fileStatusID, numberOfDays);
+            return new ImportFileDAL().ImportFileSelectDetails(null, null, Convert.ToInt32(string.IsNullOrWhiteSpace(userId) ? "0" : userId), fileStatusID, numberOfDays);
         }
 
         public ImportFile ImportFileSelectByFileName(string importFileName)

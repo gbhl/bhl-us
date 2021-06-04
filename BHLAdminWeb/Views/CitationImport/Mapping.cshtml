@@ -13,7 +13,6 @@
 @using (Html.BeginForm(null, null, FormMethod.Post))
 {
 
-    @Html.HiddenFor(m => m.Contributor)
     @Html.HiddenFor(m => m.DataSourceType)
     @Html.HiddenFor(m => m.Genre)
     @Html.HiddenFor(m => m.GenreName)
@@ -45,8 +44,8 @@
                 <tr id="column_@Model.Columns[x].Position">
                     <td>@Html.DisplayTextFor(m => m.Columns[x].Position) @Html.HiddenFor(m => m.Columns[x].Position)</td>
                     <td>@Html.DisplayTextFor(m => m.Columns[x].ColumnName) @Html.HiddenFor(m => m.Columns[x].ColumnName)</td>
-                    <td>@Html.DropDownListFor(m => m.Columns[x].MappedColumn, new SelectList(ViewBag.MappedColumns, "key", "value", Model.Columns[x].MappedColumn))</td>
-                    <td>@Html.TextBoxFor(m => m.Columns[x].ValueDelimiter, new { Class = "importMapDelimiter" })</td>
+                    <td>@Html.DropDownListFor(m => m.Columns[x].MappedColumn, new SelectList(ViewBag.MappedColumns, "key", "value", Model.Columns[x].MappedColumn), new { @id = "MappedColumn" + x.ToString(), @onchange = "mapColChange(this, '#ValueDelimiter" + x.ToString() + "');" })</td>
+                    <td>@Html.TextBoxFor(m => m.Columns[x].ValueDelimiter, new { ID = "ValueDelimiter" + x.ToString(), Class = "importMapDelimiter" })</td>
                 </tr>
             }
 
@@ -71,6 +70,18 @@
         });
 
     });
+
+    function mapColChange(column, delimiterId) {
+        if ((column.value === 'Additional Page IDs') ||
+            (column.value === 'Author Name(s)') ||
+            (column.value === 'Contributors') ||
+            (column.value === 'Keyword(s)')) {
+            $(delimiterId).val(";");
+        }
+        else {
+            $(delimiterId).val("");
+        }
+    }
 
 </script>
 

@@ -31,13 +31,13 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         }
 
         /// <summary>
-        /// Provide the list of institutions (read from the DB) to be used during the segment import process
+        /// Provide the list of users that have uploaded segments
         /// </summary>
         /// <returns></returns>
-        public List<Institution> InstitutionList()
+        public Dictionary<int, string> UserList()
         {
             BHLProvider provider = new BHLProvider();
-            return provider.InstituationSelectAll();
+            return provider.AspNetUserSelectWithImportFiles();
         }
 
         public List<SegmentGenre> GenreList()
@@ -272,6 +272,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             //mappedColumns.Add(Models.CitationImportModel.MappedColumn.AUTHORTYPE.name.ToString(), Models.CitationImportModel.MappedColumn.AUTHORTYPE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ABSTRACT.name.ToString(), Models.CitationImportModel.MappedColumn.ABSTRACT.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ADDITIONALPAGES.name.ToString(), Models.CitationImportModel.MappedColumn.ADDITIONALPAGES.name);
+            mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARK.name.ToString(), Models.CitationImportModel.MappedColumn.ARK.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.DOI.name.ToString(), Models.CitationImportModel.MappedColumn.DOI.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARTICLEPAGERANGE.name.ToString(), Models.CitationImportModel.MappedColumn.ARTICLEPAGERANGE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARTICLEENDPAGE.name.ToString(), Models.CitationImportModel.MappedColumn.ARTICLEENDPAGE.name);
@@ -280,7 +281,9 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARTICLESTARTPAGEID.name.ToString(), Models.CitationImportModel.MappedColumn.ARTICLESTARTPAGEID.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARTICLETITLE.name.ToString(), Models.CitationImportModel.MappedColumn.ARTICLETITLE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.AUTHORNAMES.name.ToString(), Models.CitationImportModel.MappedColumn.AUTHORNAMES.name);
+            mappedColumns.Add(Models.CitationImportModel.MappedColumn.BIOSTOR.name.ToString(), Models.CitationImportModel.MappedColumn.BIOSTOR.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.BOOKJOURNALTITLE.name.ToString(), Models.CitationImportModel.MappedColumn.BOOKJOURNALTITLE.name);
+            mappedColumns.Add(Models.CitationImportModel.MappedColumn.CONTRIBUTORS.name.ToString(), Models.CitationImportModel.MappedColumn.CONTRIBUTORS.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.COPYRIGHTSTATUS.name.ToString(), Models.CitationImportModel.MappedColumn.COPYRIGHTSTATUS.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.DOWNLOADURL.name.ToString(), Models.CitationImportModel.MappedColumn.DOWNLOADURL.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.DUEDILIGENCE.name.ToString(), Models.CitationImportModel.MappedColumn.DUEDILIGENCE.name);
@@ -289,8 +292,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ISSN.name.ToString(), Models.CitationImportModel.MappedColumn.ISSN.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ISSUE.name.ToString(), Models.CitationImportModel.MappedColumn.ISSUE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ITEMID.name.ToString(), Models.CitationImportModel.MappedColumn.ITEMID.name);
-            mappedColumns.Add(Models.CitationImportModel.MappedColumn.JOURNALENDYEAR.name.ToString(), Models.CitationImportModel.MappedColumn.JOURNALENDYEAR.name);
-            mappedColumns.Add(Models.CitationImportModel.MappedColumn.JOURNALSTARTYEAR.name.ToString(), Models.CitationImportModel.MappedColumn.JOURNALSTARTYEAR.name);
+            mappedColumns.Add(Models.CitationImportModel.MappedColumn.JSTOR.name.ToString(), Models.CitationImportModel.MappedColumn.JSTOR.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.KEYWORDS.name.ToString(), Models.CitationImportModel.MappedColumn.KEYWORDS.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.LANGUAGE.name.ToString(), Models.CitationImportModel.MappedColumn.LANGUAGE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.LCCN.name.ToString(), Models.CitationImportModel.MappedColumn.LCCN.name);
@@ -302,10 +304,13 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.PUBLISHERNAME.name.ToString(), Models.CitationImportModel.MappedColumn.PUBLISHERNAME.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.PUBLISHERPLACE.name.ToString(), Models.CitationImportModel.MappedColumn.PUBLISHERPLACE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.RIGHTS.name.ToString(), Models.CitationImportModel.MappedColumn.RIGHTS.name);
+            mappedColumns.Add(Models.CitationImportModel.MappedColumn.SEGMENTID.name.ToString(), Models.CitationImportModel.MappedColumn.SEGMENTID.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.SERIES.name.ToString(), Models.CitationImportModel.MappedColumn.SERIES.name);
+            mappedColumns.Add(Models.CitationImportModel.MappedColumn.TL2.name.ToString(), Models.CitationImportModel.MappedColumn.TL2.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.TRANSLATEDTITLE.name.ToString(), Models.CitationImportModel.MappedColumn.TRANSLATEDTITLE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.URL.name.ToString(), Models.CitationImportModel.MappedColumn.URL.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.VOLUME.name.ToString(), Models.CitationImportModel.MappedColumn.VOLUME.name);
+            mappedColumns.Add(Models.CitationImportModel.MappedColumn.WIKIDATA.name.ToString(), Models.CitationImportModel.MappedColumn.WIKIDATA.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.YEAR.name.ToString(), Models.CitationImportModel.MappedColumn.YEAR.name);
 
             return mappedColumns;

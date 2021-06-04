@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:42:38 PM
+// Generated 7/13/2021 2:42:30 PM
 // Do not modify the contents of this code file.
 // This abstract class __ImportRecord is based upon import.ImportRecord.
 
@@ -89,6 +89,12 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="importSegmentID"></param>
+		/// <param name="aRK"></param>
+		/// <param name="biostor"></param>
+		/// <param name="jSTOR"></param>
+		/// <param name="tL2"></param>
+		/// <param name="wikidata"></param>
 		public __ImportRecord(int importRecordID, 
 			int importFileID, 
 			int importRecordStatusID, 
@@ -132,7 +138,13 @@ namespace MOBOT.BHL.DataObjects
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int creationUserID, 
-			int lastModifiedUserID) : this()
+			int lastModifiedUserID, 
+			int? importSegmentID, 
+			string aRK, 
+			string biostor, 
+			string jSTOR, 
+			string tL2, 
+			string wikidata) : this()
 		{
 			_ImportRecordID = importRecordID;
 			ImportFileID = importFileID;
@@ -178,6 +190,12 @@ namespace MOBOT.BHL.DataObjects
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
+			ImportSegmentID = importSegmentID;
+			ARK = aRK;
+			Biostor = biostor;
+			JSTOR = jSTOR;
+			TL2 = tL2;
+			Wikidata = wikidata;
 		}
 		
 		#endregion Constructors
@@ -422,6 +440,36 @@ namespace MOBOT.BHL.DataObjects
 					case "LastModifiedUserID" :
 					{
 						_LastModifiedUserID = (int)column.Value;
+						break;
+					}
+					case "ImportSegmentID" :
+					{
+						_ImportSegmentID = (int?)column.Value;
+						break;
+					}
+					case "ARK" :
+					{
+						_ARK = (string)column.Value;
+						break;
+					}
+					case "Biostor" :
+					{
+						_Biostor = (string)column.Value;
+						break;
+					}
+					case "JSTOR" :
+					{
+						_JSTOR = (string)column.Value;
+						break;
+					}
+					case "TL2" :
+					{
+						_TL2 = (string)column.Value;
+						break;
+					}
+					case "Wikidata" :
+					{
+						_Wikidata = (string)column.Value;
 						break;
 					}
 								}
@@ -1652,6 +1700,173 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion LastModifiedUserID
+		
+		#region ImportSegmentID
+		
+		private int? _ImportSegmentID = null;
+		
+		/// <summary>
+		/// Column: ImportSegmentID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("ImportSegmentID", DbTargetType=SqlDbType.Int, Ordinal=45, NumericPrecision=10, IsNullable=true)]
+		public int? ImportSegmentID
+		{
+			get
+			{
+				return _ImportSegmentID;
+			}
+			set
+			{
+				if (_ImportSegmentID != value)
+				{
+					_ImportSegmentID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ImportSegmentID
+		
+		#region ARK
+		
+		private string _ARK = string.Empty;
+		
+		/// <summary>
+		/// Column: ARK;
+		/// DBMS data type: nvarchar(125);
+		/// </summary>
+		[ColumnDefinition("ARK", DbTargetType=SqlDbType.NVarChar, Ordinal=46, CharacterMaxLength=125)]
+		public string ARK
+		{
+			get
+			{
+				return _ARK;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 125);
+				if (_ARK != value)
+				{
+					_ARK = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ARK
+		
+		#region Biostor
+		
+		private string _Biostor = string.Empty;
+		
+		/// <summary>
+		/// Column: Biostor;
+		/// DBMS data type: nvarchar(125);
+		/// </summary>
+		[ColumnDefinition("Biostor", DbTargetType=SqlDbType.NVarChar, Ordinal=47, CharacterMaxLength=125)]
+		public string Biostor
+		{
+			get
+			{
+				return _Biostor;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 125);
+				if (_Biostor != value)
+				{
+					_Biostor = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Biostor
+		
+		#region JSTOR
+		
+		private string _JSTOR = string.Empty;
+		
+		/// <summary>
+		/// Column: JSTOR;
+		/// DBMS data type: nvarchar(125);
+		/// </summary>
+		[ColumnDefinition("JSTOR", DbTargetType=SqlDbType.NVarChar, Ordinal=48, CharacterMaxLength=125)]
+		public string JSTOR
+		{
+			get
+			{
+				return _JSTOR;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 125);
+				if (_JSTOR != value)
+				{
+					_JSTOR = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion JSTOR
+		
+		#region TL2
+		
+		private string _TL2 = string.Empty;
+		
+		/// <summary>
+		/// Column: TL2;
+		/// DBMS data type: nvarchar(125);
+		/// </summary>
+		[ColumnDefinition("TL2", DbTargetType=SqlDbType.NVarChar, Ordinal=49, CharacterMaxLength=125)]
+		public string TL2
+		{
+			get
+			{
+				return _TL2;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 125);
+				if (_TL2 != value)
+				{
+					_TL2 = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion TL2
+		
+		#region Wikidata
+		
+		private string _Wikidata = string.Empty;
+		
+		/// <summary>
+		/// Column: Wikidata;
+		/// DBMS data type: nvarchar(125);
+		/// </summary>
+		[ColumnDefinition("Wikidata", DbTargetType=SqlDbType.NVarChar, Ordinal=50, CharacterMaxLength=125)]
+		public string Wikidata
+		{
+			get
+			{
+				return _Wikidata;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 125);
+				if (_Wikidata != value)
+				{
+					_Wikidata = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Wikidata
 			
 		#endregion Properties
 
@@ -1739,7 +1954,13 @@ namespace MOBOT.BHL.DataObjects
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
-					o.LastModifiedUserID == LastModifiedUserID 
+					o.LastModifiedUserID == LastModifiedUserID &&
+					o.ImportSegmentID == ImportSegmentID &&
+					GetComparisonString(o.ARK) == GetComparisonString(ARK) &&
+					GetComparisonString(o.Biostor) == GetComparisonString(Biostor) &&
+					GetComparisonString(o.JSTOR) == GetComparisonString(JSTOR) &&
+					GetComparisonString(o.TL2) == GetComparisonString(TL2) &&
+					GetComparisonString(o.Wikidata) == GetComparisonString(Wikidata) 
 				)
 				{
 					o = null;
@@ -1882,7 +2103,13 @@ namespace MOBOT.BHL.DataObjects
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";
+			public const string LastModifiedUserID = "LastModifiedUserID";	
+			public const string ImportSegmentID = "ImportSegmentID";	
+			public const string ARK = "ARK";	
+			public const string Biostor = "Biostor";	
+			public const string JSTOR = "JSTOR";	
+			public const string TL2 = "TL2";	
+			public const string Wikidata = "Wikidata";
 		}
 				
 		#endregion SortColumn

@@ -3,50 +3,80 @@
 {
     <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesPath"])" type="text/javascript"></script>
     <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryJEditablePath"])" type="text/javascript"></script>
-	<script type="text/javascript" charset="utf-8">
+    <script type="text/javascript" charset="utf-8">
         function formatDetails ( d ) {
             if (typeof d !== 'undefined') {
-                var segDetails = "";
-                if (d.segmentID !== "") segDetails += formatDetail("Segment ID", d.segmentID);
-                if (d.itemID !== "") segDetails += formatDetail("Item ID", d.itemID);
-                segDetails += formatDetailAuthor("Authors", d.authors, d.status === "Imported");
-                if (d.keywords !== "") segDetails += formatDetailKeyword("Keywords", d.keywords);
-                if (d.translatedTitle !== "") segDetails += formatDetail("Translated Title", d.translatedTitle);
-                if (d.series !== "") segDetails += formatDetail("Series", d.series);
-                if (d.edition !== "") segDetails += formatDetail("Edition", d.edition);
-                if (d.publicationName === "" && d.publicationPlace === "") segDetails += formatDetail("Publication Details", d.publicationDetails);
-                if (d.publisherName !== "") segDetails += formatDetail("Publisher Name", d.publisherName);
-                if (d.publisherPlace !== "") segDetails += formatDetail("Publication Place", d.publisherPlace);
-                if (d.language !== "") segDetails += formatDetail("Language", d.language);
-                if (d.issn !== "") segDetails += formatDetail("ISSN", d.issn);
-                if (d.isbn !== "") segDetails += formatDetail("ISBN", d.isbn);
-                if (d.oclc !== "") segDetails += formatDetail("OCLC", d.oclc);
-                if (d.lccn !== "") segDetails += formatDetail("LCCN", d.lccn);
-                if (d.doi !== "") segDetails += formatDetail("Article DOI", d.doi);
-                if (d.rights !== "") segDetails += formatDetail("Rights", d.rights);
-                if (d.dueDiligence !== "") segDetails += formatDetail("Due Diligence", d.dueDiligence);
-                if (d.copyrightStatus !== "") segDetails += formatDetail("Copyright", d.copyrightStatus);
-                if (d.license !== "") segDetails += formatDetail("License", d.license);
-                if (d.licenseUrl !== "") segDetails += formatDetail("License Url", d.licenseUrl);
-                if (d.url !== "") segDetails += formatDetail("Url", d.url);
-                if (d.summary !== "") segDetails += formatDetail("Abstract", d.summary);
-                if (d.notes !== "") segDetails += formatDetail("Notes", d.notes);
-                if (d.errors !== "") segDetails += formatDetailError("ERRORS", d.errors, 'ErrorText');
-                if (d.warnings !== "") segDetails += formatDetailError("WARNINGS", d.warnings, 'WarningText');
-                return "<div class='container'>" + segDetails + "</div>";
+                if (d.importSegmentID)
+                    formatter = new formatUpdateDetail(d);
+                else
+                    formatter = new formatAddDetail(d);
+                return formatter.getDetail();
             }
             else return "";
         }
 
-        function formatDetail(label, value)
-        {
-            var detail = formatLabel(label);
-            return detail + value + "</div>";
+        function formatAddDetail(data) { this.d = data; }
+
+        formatAddDetail.prototype.getDetail = function() {
+            var segDetails = "";
+            if (this.d.errors !== "") segDetails += this.formatDetailError("ERRORS", this.d.errors, 'ErrorText');
+            if (this.d.warnings !== "") segDetails += this.formatDetailError("WARNINGS", this.d.warnings, 'WarningText');
+            segDetails += this.formatHeader("", "New Values");
+            if (this.d.segmentID !== "") segDetails += this.formatDetail("Segment ID", this.d.segmentID);
+            if (this.d.ncItemID !== "") segDetails += this.formatDetail("Item ID", this.d.ncItemID);
+            if (this.d.nsGenre !== "") segDetails += this.formatDetail("Genre", this.d.nsGenre);
+            if (this.d.nsTitle !== "") segDetails += this.formatDetail("Title", this.d.nsTitle);
+            if (this.d.nsTranslatedTitle !== "") segDetails += this.formatDetail("Translated Title", this.d.nsTranslatedTitle);
+            if (this.d.nsContainerTitle !== "") segDetails += this.formatDetail("Journal Title", this.d.nsContainerTitle);
+            if (this.d.nsAuthors !== "") segDetails += this.formatDetailAuthor("Authors", this.d.nsAuthors, this.d.status === "Imported");
+            if (this.d.nsVolume !== "") segDetails += this.formatDetail("Volume", this.d.nsVolume);
+            if (this.d.nsSeries !== "") segDetails += this.formatDetail("Series", this.d.nsSeries);
+            if (this.d.nsIssue !== "") segDetails += this.formatDetail("Issue", this.d.nsIssue);
+            if (this.d.nsEdition !== "") segDetails += this.formatDetail("Edition", this.d.nsEdition);
+            if (this.d.nsPublicationName === "" && this.d.nsPublicationPlace === "") segDetails += this.formatDetail("Publication Details", this.d.nsPublicationDetails);
+            if (this.d.nsPublisherName !== "") segDetails += this.formatDetail("Publisher Name", this.d.nsPublisherName);
+            if (this.d.nsPublisherPlace !== "") segDetails += this.formatDetail("Publication Place", this.d.nsPublisherPlace);
+            if (this.d.nsYear !== "") segDetails += this.formatDetail("Year", this.d.nsYear);
+            if (this.d.nsPageRange !== "") segDetails += this.formatDetail("PageRange", this.d.nsPageRange);
+            if (this.d.nsStartPage !== "") segDetails += this.formatDetail("Start Page Number", this.d.nsStartPage);
+            if (this.d.nsEndPage !== "") segDetails += this.formatDetail("End Page Number", this.d.nsEndPage);
+            if (this.d.nsLanguage !== "") segDetails += this.formatDetail("Language", this.d.nsLanguage);
+            if (this.d.nsDoi !== "") segDetails += this.formatDetail("Article DOI", this.d.nsDoi);
+            if (this.d.nsIssn !== "") segDetails += this.formatDetail("ISSN", this.d.nsIssn);
+            if (this.d.nsIsbn !== "") segDetails += this.formatDetail("ISBN", this.d.nsIsbn);
+            if (this.d.nsOclc !== "") segDetails += this.formatDetail("OCLC", this.d.nsOclc);
+            if (this.d.nsLccn !== "") segDetails += this.formatDetail("LCCN", this.d.nsLccn);
+            if (this.d.nsArk !== "") segDetails += this.formatDetail("ARK", this.d.nsArk);
+            if (this.d.nsBiostor !== "") segDetails += this.formatDetail("Biostor ID", this.d.nsBiostor);
+            if (this.d.nsJstor !== "") segDetails += this.formatDetail("JSTOR", this.d.nsJstor);
+            if (this.d.nsTl2 !== "") segDetails += this.formatDetail("TL2", this.d.nsTl2);
+            if (this.d.nsWikidata !== "") segDetails += this.formatDetail("Wikidata ID", this.d.nsWikidata);
+            if (this.d.nsSummary != "") segDetails += this.formatDetail("Abstract", this.d.nsSummary);
+            if (this.d.nsNotes !== "") segDetails += this.formatDetail("Notes", this.d.nsNotes);
+            if (this.d.nsRights !== "") segDetails += this.formatDetail("Rights", this.d.nsRights);
+            if (this.d.nsCopyrightStatus !== "") segDetails += this.formatDetail("Copyright", this.d.nsCopyrightStatus);
+            if (this.d.nsLicense !== "") segDetails += this.formatDetail("License", this.d.nsLicense);
+            if (this.d.nsLicenseUrl !== "") segDetails += this.formatDetail("License Url", this.d.nsLicenseUrl);
+            if (this.d.nsUrl !== "") segDetails += this.formatDetail("Url", this.d.nsUrl);
+            if (this.d.nsDownloadUrl !== "") segDetails += this.formatDetail("Download Url", this.d.nsDownloadUrl);
+            if (this.d.nsContributors !== "") segDetails += this.formatDetailSimpleList("Contributors", this.d.nsContributors);
+            if (this.d.nsKeywords !== "") segDetails += this.formatDetailSimpleList("Keywords", this.d.nsKeywords);
+            if (this.d.nsPages !== "") segDetails += this.formatDetailSimpleList("Pages", this.d.nsPages);
+            return "<div class='container'>" + segDetails + "</div>";
         }
 
-        function formatDetailAuthor(label, value, isImported)
+        formatAddDetail.prototype.formatHeader = function (label, value) {
+            return this.formatDetailRow(label, value, "ImportSegReviewSubHead");
+        }
+
+        formatAddDetail.prototype.formatDetail = function (label, value)
         {
-            var detail = formatLabel(label);
+            return this.formatDetailRow(label, value);
+        }
+
+        formatAddDetail.prototype.formatDetailAuthor = function(label, value, isImported)
+        {
+            var detail = "";
             if (value !== "") {
                 var values = value.split("+++");
                 values.forEach(function(val) {
@@ -62,29 +92,190 @@
             {
                 detail += "<br/>";
             }
-            return detail + "</div>";
+            return this.formatDetailRow(label, detail);
         }
 
-        function formatDetailKeyword(label, value)
+        formatAddDetail.prototype.formatDetailSimpleList = function(label, value)
         {
-            var detail = formatLabel(label);
+            var detail = "";
             var values = value.split("+++");
             values.forEach(function(val) { detail += val + "<br/>"; });
-            return detail + "</div>";
+            return this.formatDetailRow(label, detail);
         }
 
-        function formatDetailError(label, value, style)
+        formatAddDetail.prototype.formatDetailError = function(label, value, style)
         {
-            var detail = formatLabel(label, style);
+            var detail = "";
             var values = value.split("+++");
             values.forEach(function(val) { detail += val + "<br/>"; });
-            return detail + "</div>";
+            return this.formatDetailRow(label, detail, style) + "<div class='row'><div class='col-sm-11'>&nbsp;</div></div>";
         }
 
-        function formatLabel(label, style)
+        formatAddDetail.prototype.formatDetailRow = function(label, value, style)
         {
             style = (typeof style !== 'undefined') ?  style + ' ' : '';
-            return "<div class='" + style + "col-sm-3'>" + label + "</div><div class='" + style + "col-sm-8'>";
+            return "<div class='row'><div class='" + style + "col-sm-2'>" + label +
+                "</div><div class='" + style + "col-sm-9'>" + value + "</div></div>";
+        }
+
+
+        function formatUpdateDetail(data) { this.d = data; }
+
+        formatUpdateDetail.prototype.getDetail = function () {
+            var segDetails = "";
+            if (this.d.errors !== "") segDetails += this.formatDetailError("ERRORS", this.d.errors, 'ErrorText');
+            if (this.d.warnings !== "") segDetails += this.formatDetailError("WARNINGS", this.d.warnings, 'WarningText');
+            if (this.d.status === "Imported")
+                segDetails += this.formatHeader("", "Imported Values", "", "");
+            else
+                segDetails += this.formatHeader("", "New Values", "Action", "Existing Values");
+            segDetails += this.formatDetail("Item ID", this.d.ncItemID, this.d.ecItemID);
+
+            segDetails += this.formatDetail("Genre", this.d.nsGenre, this.d.esGenre);
+            segDetails += this.formatDetail("Title", this.d.nsTitle, this.d.esTitle);
+            segDetails += this.formatDetail("Translated Title", this.d.nsTranslatedTitle, this.d.esTranslatedTitle);
+            segDetails += this.formatDetail("Journal Title", this.d.nsContainerTitle, this.d.esContainerTitle);
+            segDetails += this.formatDetailAuthor("Authors", this.d.nsAuthors, this.d.esAuthors);
+            segDetails += this.formatDetail("Volume", this.d.nsVolume, this.d.esVolume);
+            segDetails += this.formatDetail("Series", this.d.nsSeries, this.d.esSeries);
+            segDetails += this.formatDetail("Issue", this.d.nsIssue, this.d.esIssue);
+            segDetails += this.formatDetail("Edition", this.d.nsEdition, this.d.esEdition);
+            segDetails += this.formatDetail("Publication Details", this.d.nsPublicationDetails, this.d.esPublicationDetails);
+            segDetails += this.formatDetail("Publisher Name", this.d.nsPublisherName, this.d.esPublisherName);
+            segDetails += this.formatDetail("Publication Place", this.d.nsPublisherPlace, this.d.esPublisherPlace);
+            segDetails += this.formatDetail("Year", this.d.nsYear, this.d.esYear);
+            segDetails += this.formatDetail("PageRange", this.d.nsPageRange, this.d.esPageRange);
+            segDetails += this.formatDetail("Start Page Number", this.d.nsStartPage, this.d.esStartPage);
+            segDetails += this.formatDetail("End Page Number", this.d.nsEndPage, this.d.esEndPage);
+            segDetails += this.formatDetail("Language", this.d.nsLanguage, this.d.esLanguage);
+            segDetails += this.formatDetail("Article DOI", this.d.nsDoi, this.d.esDoi);
+            segDetails += this.formatDetail("ISSN", this.d.nsIssn, this.d.esIssn);
+            segDetails += this.formatDetail("ISBN", this.d.nsIsbn, this.d.esIsbn);
+            segDetails += this.formatDetail("OCLC", this.d.nsOclc, this.d.esOclc);
+            segDetails += this.formatDetail("LCCN", this.d.nsLccn, this.d.esLccn);
+            segDetails += this.formatDetail("Ark", this.d.nsArk, this.d.esArk);
+            segDetails += this.formatDetail("Biostor ID", this.d.nsBiostor, this.d.esBiostor);
+            segDetails += this.formatDetail("JSTOR", this.d.nsJstor, this.d.esJstor);
+            segDetails += this.formatDetail("TL2", this.d.nsTl2, this.d.esTl2);
+            segDetails += this.formatDetail("Wikidata ID", this.d.nsWikidata, this.d.esWikidata);
+            segDetails += this.formatDetail("Abstract", this.d.nsSummary, this.d.esSummary);
+            segDetails += this.formatDetail("Notes", this.d.nsNotes, this.d.esNotes);
+            segDetails += this.formatDetail("Rights", this.d.nsRights, this.d.esRights);
+            segDetails += this.formatDetail("Copyright", this.d.nsCopyrightStatus, this.d.esCopyrightStatus);
+            segDetails += this.formatDetail("License", this.d.nsLicense, this.d.esLicense);
+            segDetails += this.formatDetail("License Url", this.d.nsLicenseUrl, this.d.esLicenseUrl);
+            segDetails += this.formatDetail("Url", this.d.nsUrl, this.d.esUrl);
+            segDetails += this.formatDetail("Download Url", this.d.nsDownloadUrl, this.d.esDownloadUrl);
+            segDetails += this.formatDetailSimpleList("Contributors", this.d.nsContributors, this.d.esContributors);
+            segDetails += this.formatDetailSimpleList("Keywords", this.d.nsKeywords, this.d.esKeywords);
+            segDetails += this.formatDetailSimpleList("Pages", this.d.nsPages, this.d.esPages);
+            return "<div class='container'>" + segDetails + "</div>";
+        }
+
+        formatUpdateDetail.prototype.formatHeader = function (label, value1, action, value2) {
+            return this.formatDetailRow(label, value1, action, value2, "ImportSegReviewSubHead");
+        }
+
+        formatUpdateDetail.prototype.formatDetail = function (label, value1, value2) {
+            if (this.d.status === "Imported") {
+                return (value1 ? this.formatDetailRow(label, value1) : "");
+            }
+            else if (value1 && (!value2 || value1 != value2)) {
+                var action = (value1.toUpperCase() === "NULL") ? "REMOVE" : "REPLACE";
+                return this.formatDetailRow(label, value1, action, value2);
+            }
+            else {
+                return "";
+            }
+        }
+
+        formatUpdateDetail.prototype.formatDetailAuthor = function (label, value1, value2) {
+
+            var detail1 = "";
+            if (value1 !== "") {
+                var values = value1.split("+++");
+                values.forEach(function (val) {
+                    var valDetail = val.split("|");
+                    detail1 += valDetail[1].trim();
+                    detail1 += " <span id='selectedAuthorViewDiv" + valDetail[0].trim() + "' style='display:" + ((valDetail[2].trim() === "") ? "none" : "inline") + "'>(<a id='selectedAuthorViewLink" + valDetail[0].trim() + "' target='_blank' href='/AuthorEdit.aspx?id=" + valDetail[2].trim() + "'>BHL ID <span id='selectedAuthorViewSpan" + valDetail[0].trim() + "'>" + valDetail[2].trim() + "</span></a> - <span id='selectedAuthorNameViewSpan" + valDetail[0].trim() + "'>" + valDetail[3].trim() + "</span>)</span>";
+                    detail1 += "<br/>";
+                });
+            }
+            else {
+                detail1 += "<br/>";
+            }
+
+            // Trim the "extra" info from value1 so that a direct comparison between value1 and value2 can be made
+            var value1simple = [];
+            value1.split("+++").forEach(function (val) { value1simple.push(val.split("|").slice(2, 4).join("|")); });
+
+            if (this.d.status === "Imported") {
+                return (value1 ? this.formatDetailRow(label, detail1) : "");
+            }
+            else if (value1 && (!value2 || value1simple.join(" +++ ") != value2)) {
+                var action = (value1.toUpperCase() === "NULL") ? "REMOVE" : "REPLACE";
+
+                var detail2 = "";
+                if (value2 !== "") {
+                    var values = value2.split("+++");
+                    values.forEach(function (val) {
+                        var valDetail = val.split("|");
+                        detail2 += "BHL ID " + valDetail[0].trim() + " - " + valDetail[1].trim();
+                        detail2 += "<br/>";
+                    });
+                }
+                else {
+                    detail2 += "<br/>";
+                }
+
+                return this.formatDetailRow(label, detail1, action, detail2);
+            }
+            else {
+                return "";
+            }
+        }
+
+        formatUpdateDetail.prototype.formatDetailSimpleList = function (label, value1, value2) {
+
+            if (value1 !== "") {
+                var detail1 = "";
+                var values = value1.split("+++");
+                values.forEach(function (val) { detail1 += val + "<br/>"; });
+            }
+            value2 = value2.replaceAll("|", " +++ ");
+
+            if (this.d.status === "Imported") {
+                return (value1 ? this.formatDetailRow(label, detail1) : "");
+            }
+            else if (value1 && (!value2 || value1 != value2)) {
+                action = (value1.toUpperCase() === "NULL") ? "REMOVE" : "REPLACE";
+
+                var detail2 = "";
+                var values = value2.split("+++");
+                values.forEach(function (val) { detail2 += val + "<br/>"; });
+
+                return this.formatDetailRow(label, detail1, action, detail2);
+            }
+            else {
+                return "";
+            }
+        }
+
+        formatUpdateDetail.prototype.formatDetailError = function (label, value, style) {
+            style = (typeof style !== 'undefined') ? style + ' ' : '';
+            var detail = "<div class='row'><div class='" + style + "col-sm-2'>" + label + "</div><div class='" + style + "col-sm-9'>";
+            var values = value.split("+++");
+            values.forEach(function (val) { detail += val + "<br/>"; });
+            return detail + "</div></div><div class='row'><div class='col-sm-11'>&nbsp;</div></div>";
+        }
+
+        formatUpdateDetail.prototype.formatDetailRow = function (label, value1, action, value2, style) {
+            style = (typeof style !== 'undefined') ? style + ' ' : '';
+            value1 = (value1.toUpperCase().startsWith("NULL")) ? "" : value1;
+            return "<div class='row'><div class='" + style + "col-sm-2'>" + label +
+                "</div><div class='" + style + "col-sm-4'>" + (value1 ? value1 : "&nbsp;") +
+                "</div><div class='" + style + "col-sm-2'>" + (action ? action : "&nbsp;") +
+                "</div><div class='" + style + "col-sm-4'>" + (value2 ? value2 : "&nbsp;") + "</div></div>";
         }
 
 		$(document).ready(function() {
@@ -94,20 +285,22 @@
 				,"serverSide": true
 				,"filter": false
 				,"lengthChange": false
-				,"displayLength": 100
+				,"displayLength": 50
                 ,"scrollY": 500
                 ,"scrollX": true
 				,"paginationType": "full_numbers"
 				,"ajaxSource": '/CitationImport/GetRecords?importFileID=@Model.ImportFileID'
 				,"columns": [
 					{ "data": "id", "visible": false } /* ID column */
-                    ,{ "data": null, "sortable": false, "defaultContent": "", "class": "import-detail", "defaultcontent": "" }
-					,{ "data": "title", "sortable": true }
-					,{ "data": "journal", "sortable": true }
-					,{ "data": "year", "sortable": false }
-					,{ "data": "volume", "sortable": false }
-					,{ "data": "issue", "sortable": false }
-					,{ "data": "startPageID", "sortable": false
+                    , { "data": null, "sortable": false, "defaultContent": "", "class": "import-detail", "defaultcontent": "" }
+                    , { "data": "actRow", "sortable": false }
+                    , { "data": "segmentID", "sortable": false }
+					, { "data": "sumTitle", "sortable": true }
+					, { "data": "sumJournal", "sortable": true }
+					, { "data": "sumYear", "sortable": false }
+					, { "data": "sumVolume", "sortable": false }
+					, { "data": "sumIssue", "sortable": false }
+					, { "data": "sumStartPageID", "sortable": false
                       ,"mRender" : function (id, type, full) {
                             if (id != '')
                                 return "<a href='#' title='Show First Page Image' onclick='window.open(\"@System.Configuration.ConfigurationManager.AppSettings["BaseUrl"]/pagethumb/" + id + ",500,800\", \"Page " + id + "\", \"resizeable=0,scrollbars=1,height=800,width=500,status=0,toolbar=0,menubar=0,location=0\");'><img src='/images/textpage.png' /></a>";
@@ -115,9 +308,9 @@
                                 return "";
                         }
                     }
-					,{ "data": "startPage", "sortable": false }
-					,{ "data": "endPage", "sortable": false }
-					,{ "data": "status", "sortable": true, "sClass": "editCol" }
+					, { "data": "sumStartPage", "sortable": false }
+					, { "data": "sumEndPage", "sortable": false }
+					, { "data": "status", "sortable": true, "sClass": "editCol" }
 				]
 				,"drawCallback": function() { $("td.editCol").filter(":not(:contains('Imported'))").editable('/CitationImport/UpdateRecordStatus', {
 					"callback": function (sValue, settings) {
@@ -153,7 +346,8 @@
                 }
                 else {
                     tr.addClass( 'import-detail-row' );
-                    if (row.child()) { row.child.show(); } else { row.child(formatDetails(row.data())).show(); }
+                    //if (row.child()) { row.child.show(); } else { row.child(formatDetails(row.data())).show(); if (row.child()) row.child().attr('style', 'background-color:#f1f1f1'); }
+                    if (row.child()) { row.child.show(); } else { setRowDetails(row); }
 
                     // Add to the 'open' array
                     if ( idx === -1 ) {
@@ -179,9 +373,9 @@
                         detailRows.splice( idx, 1 );
                     }
                     else if (!row.child.isShown() && expanded) {
-                        tr.addClass( 'import-detail-row' );
-                        //row.child( formatDetails(row.data())).show();
-                        if (row.child()) { row.child.show(); } else { row.child(formatDetails(row.data())).show(); }
+                        tr.addClass('import-detail-row');
+                        //if (row.child()) { row.child.show(); } else { row.child(formatDetails(row.data())).show(); if (row.child()) row.child().attr('style', 'background-color:#f1f1f1'); }
+                        if (row.child()) { row.child.show(); } else { setRowDetails(row); }
  
                         // Add to the 'open' array
                         if ( idx === -1 ) {
@@ -190,6 +384,17 @@
                     }
                 });
             } );
+
+            function setRowDetails(row) {
+                if (row.data()) {
+                    $.getJSON("/CitationImport/GetRecord?importRecordID=" + row.data().id,
+                        function (data) {
+                            row.child(formatDetails(data.aaData[0])).show();
+                            if (row.child()) row.child().attr('style', 'background-color:#f1f1f1');
+                        }
+                    );
+                }
+            }
 
             // On each draw, loop over the 'detailRows' array and show any child rows
             oTable.on( 'draw', function () {
@@ -299,7 +504,7 @@
             modal.find('.modal-body #selectedAuthorID').text(id);
             modal.find('.modal-body #selectedAuthorName').text(name);
         }
-	</script>
+    </script>
 }
 @section CSS
 {
@@ -371,7 +576,7 @@
     <div>
         <div style="margin:10px 0px">
             <div style="display:inline">Data Source: @Html.DisplayFor(m => m.FileNameClean)</div>
-            <div style="float:right"><a href="/services/citationimportservice.ashx?fid=@Model.ImportFileID"><strong>Download ALL segment details</strong></a></div>
+            <div style="float:right"><a href="/services/citationimportservice.ashx?fid=@Model.ImportFileID"><strong>Download import details</strong></a></div>
         </div>
         @if (Model.IsOldFile)
         {
@@ -394,19 +599,21 @@
 
     <table cellpadding="0" cellspacing="0" border="0" class="display" id="recordlist" style="width:100%">
 	    <thead>
-		    <tr>
-			    <th></th>
+            <tr>
+                <th></th>
                 <th class="import-detail"></th>
-			    <th width="26%">Title</th>
-			    <th width="25%">Journal</th>
+                <th width="7%">Action</th>
+                <th width="9%">Segment ID</th>
+                <th width="25%">Title</th>
+                <th width="17%">Journal</th>
                 <th width="4%">Year</th>
-			    <th width="4%">Vol</th>
-			    <th width="4%">Issue</th>
+                <th width="4%">Vol</th>
+                <th width="4%">Issue</th>
                 <th width="2%"></th>
-                <th width="10%">Start Page</th>
-                <th width="5%">End Page</th>
-			    <th width="10%">Status</th>
-		    </tr>
+                <th width="4%">Start Page</th>
+                <th width="4%">End Page</th>
+                <th width="10%">Status</th>
+            </tr>
 	    </thead>
 	    <tbody>
 					

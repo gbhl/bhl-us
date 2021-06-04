@@ -93,7 +93,12 @@ namespace MOBOT.BHL.Server
             return GetPageDalInstance().PageSelectByItemAndPageNumber(null, null, itemID, volume, issue, pageNumber);
         }
 
-        #endregion
+		public List<Page> PageSelectBySegmentAndPageNumber(int segmentID, string pageNumber)
+		{
+			return GetPageDalInstance().PageSelectBySegmentAndPageNumber(null, null, segmentID, pageNumber);
+		}
+
+		#endregion
 
 		public Page PageUpdateYear( int pageID, string year, int userID )
 		{

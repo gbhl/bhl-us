@@ -28,5 +28,20 @@ namespace MOBOT.BHL.Server
 
             return (returnRows);
         }
+
+        public Dictionary<int, string> AspNetUserSelectWithImportFiles()
+        {
+            List<CustomDataRow> rows = new AspNetUserDAL().AspNetUserSelectWithImportFiles(null, null);
+
+            Dictionary<int, string> returnRows = new Dictionary<int, string>();
+            foreach(CustomDataRow row in rows)
+            {
+                string fullName = (row["FirstName"].Value.ToString() + " " + row["LastName"].Value.ToString()).Trim();
+                if (!string.IsNullOrWhiteSpace(row["InstitutionName"].Value.ToString())) fullName += " (" + row["InstitutionName"].Value.ToString() + ")";
+                returnRows.Add(Convert.ToInt32(row["Id"].Value), fullName);
+            }
+
+            return returnRows;
+        }
     }
 }

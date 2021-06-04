@@ -37,13 +37,18 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             List<DataObjects.Segment> segments = provider.SegmentSelectByTitleID(id);
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Segment ID\tTitle\tTranslated Title\tItem ID\tVolume\tIssue\tSeries\tDate\tLanguage\tAuthor IDs\tAuthor Names\tStart Page\tEnd Page\tStart Page BHL ID\tEnd Page BHL ID\tAdditional Page IDs\tArticle DOI");
+            sb.AppendLine("Segment ID\tTitle\tTranslated Title\tItem ID\tVolume\tIssue\tSeries\tDate\tLanguage\tAuthor IDs\tAuthor Names\tStart Page\tEnd Page\tStart Page BHL ID\tEnd Page BHL ID\tAdditional Page IDs\tArticle DOI\tContributors");
             foreach(DataObjects.Segment segment in segments)
             {
-                sb.AppendLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}\t{16}",
+                List<string> contributorList = new List<string>();
+                string contributors = string.Empty;
+                foreach (DataObjects.Institution contributor in segment.ContributorList) contributorList.Add(contributor.InstitutionCode);
+                if (contributorList.Count > 0) contributors = string.Join(";", contributorList);
+
+                sb.AppendLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}\t{16}\t{17}",
                     segment.SegmentID.ToString(), segment.Title, segment.TranslatedTitle, segment.BookID, segment.Volume, segment.Issue, segment.Series, segment.Date, 
                     segment.LanguageName, segment.AuthorIDs, segment.Authors.Replace('|', ';'), segment.StartPageNumber, segment.EndPageNumber, segment.StartPageID, segment.EndPageID,
-                    segment.AdditionalPages, segment.DOIName));
+                    segment.AdditionalPages, segment.DOIName, contributors));
             }
 
             byte[] tsvData = Encoding.UTF8.GetBytes(sb.ToString());
