@@ -53,6 +53,7 @@ namespace BHL.IIIF
                   "\"@id\": \"" + _rootUrl + "/iiif/" + itemId.ToString() + "/manifest\"," +
                   "\"@type\": \"sc:Manifest\"," +
                   "\"attribution\": \"\"," +
+                  "\"behavior\": \"paged\"," +
                   "\"description\": \"\"," +
                   "\"logo\": \"\"," +
                   "\"label\": \"" + Helper.CleanManifestData(title.FullTitle) + "\"," +
@@ -256,7 +257,6 @@ namespace BHL.IIIF
 //                        "\"@context\": \"http://iiif.io/api/image/2/context.json\"," +
                         "\"@id\": \"" + _rootUrl + "/iiif/" + itemId.ToString() + "/canvas/default\"," +
                         "\"@type\": \"sc:Sequence\"," +
-                        "\"viewingDirection\": \"left-to-right\"," +
                         "\"viewingHint\": \"paged\"," +
                         GetCanvases(itemId, barCode, pages, scanData) +
                         "\"label\": \"default\"" +
