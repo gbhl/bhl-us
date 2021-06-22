@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Xml;
 using System.Configuration;
+using MOBOT.BHL.DataObjects.Enum;
 
 namespace BHL.IIIF
 {
@@ -25,7 +26,7 @@ namespace BHL.IIIF
 
         public ScanData GetScanData(int itemId, string barCode)
         {
-            Item item = new BHLProvider().ItemSelectFilenames(itemId);
+            Item item = new BHLProvider().ItemSelectFilenames(ItemType.Book, itemId);
             if (string.IsNullOrWhiteSpace(item.ScandataFilename)) item.ScandataFilename = barCode + "_scandata.xml";
 
             WebClient wc = new WebClient();

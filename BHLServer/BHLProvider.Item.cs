@@ -1,5 +1,6 @@
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.DataObjects.Enum;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -81,9 +82,16 @@ namespace MOBOT.BHL.Server
             return risString.ToString();
         }
 
-        public Item ItemSelectFilenames(int itemID)
+        public Item ItemSelectFilenames(ItemType itemType, int entityID)
         {
-            return (new ItemDAL().ItemSelectFilenames(null, null, itemID));
+            if (itemType == ItemType.Book)
+            {
+                return (new ItemDAL().ItemSelectFilenames(null, null, entityID));
+            }
+            else
+            {
+                return new ItemDAL().ItemSelectFilenamesBySegmentID(null, null, entityID);
+            }
         }
 
         public List<Item> ItemResolve(string title, string issn, string isbn, string oclc,

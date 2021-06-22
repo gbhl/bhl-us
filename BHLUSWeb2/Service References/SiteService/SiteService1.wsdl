@@ -19,6 +19,7 @@
       <s:element name="GetItemText">
         <s:complexType>
           <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="itemType" type="s:int" />
             <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
           </s:sequence>
         </s:complexType>
@@ -144,6 +145,7 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="pages" type="tns:ArrayOfViewerPage" />
+            <s:element minOccurs="1" maxOccurs="1" name="itemType" type="s:int" />
             <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
           </s:sequence>
         </s:complexType>
@@ -538,10 +540,10 @@
   </wsdl:binding>
   <wsdl:service name="SiteService">
     <wsdl:port name="SiteServiceSoap" binding="tns:SiteServiceSoap">
-      <soap:address location="http://localhost:55786/SiteService.asmx" />
+      <soap:address location="http://localhost:60786/SiteService.asmx" />
     </wsdl:port>
     <wsdl:port name="SiteServiceSoap12" binding="tns:SiteServiceSoap12">
-      <soap12:address location="http://localhost:55786/SiteService.asmx" />
+      <soap12:address location="http://localhost:60786/SiteService.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

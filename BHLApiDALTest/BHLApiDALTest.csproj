@@ -58,6 +58,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api3DALTest.cs" />
     <Compile Include="Api2DALTest.cs" />
     <Compile Include="NameApiDALTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,6 +67,10 @@
     <ProjectReference Include="..\BHLApiDataObjects2\BHLApiDataObjects2.csproj">
       <Project>{A4039079-6627-4D17-8B92-3B8B73B187E2}</Project>
       <Name>BHLApiDataObjects2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLApiDataObjects3\BHLApiDataObjects3.csproj">
+      <Project>{c5a231c5-6079-4204-b023-ac180388c10a}</Project>
+      <Name>BHLApiDataObjects3</Name>
     </ProjectReference>
     <ProjectReference Include="..\NameServiceDAL\BHLApiDAL.csproj">
       <Project>{DB3BF959-1D08-441B-8622-F4E066DE91DC}</Project>

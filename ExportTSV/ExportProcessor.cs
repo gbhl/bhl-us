@@ -241,6 +241,16 @@ namespace BHL.Export.TSV
             return columnValue;
         }
 
+        private string GetDBByte(SqlDataReader reader, string columnName)
+        {
+            string columnValue = string.Empty;
+            if (!reader.IsDBNull(reader.GetOrdinal(columnName)))
+            {
+                columnValue = reader.GetByte(reader.GetOrdinal(columnName)).ToString();
+            }
+            return columnValue;
+        }
+
         private string GetDBDateTime(SqlDataReader reader, string columnName)
         {
             return reader.IsDBNull(reader.GetOrdinal(columnName)) ? string.Empty : reader.GetDateTime(reader.GetOrdinal(columnName)).ToString("yyyy-MM-dd HH:mm:ss.fffffff");
@@ -281,9 +291,17 @@ namespace BHL.Export.TSV
             string callNumber = GetDBString(reader, "CallNumber");
             string volumeInfo = GetDBString(reader, "VolumeInfo");
             string itemURL = string.Format(configParms.ItemUrlFormat, itemID);
-            string itemTextURL = string.Format(configParms.ItemTextUrlFormat, itemID);
-            string itemPDFURL = string.Format(configParms.ItemPDFUrlFormat, itemID);
-            string itemImagesURL = string.Format(configParms.ItemImagesUrlFormat, itemID);
+
+            string itemTextURL = "";
+            string itemPDFURL = "";
+            string itemImagesURL = "";
+            if (GetDBByte(reader, "IsVirtual") == "0") // Only build these links if the item is not "virtual"
+            {
+                itemTextURL = string.Format(configParms.ItemTextUrlFormat, itemID);
+                itemPDFURL = string.Format(configParms.ItemPDFUrlFormat, itemID);
+                itemImagesURL = string.Format(configParms.ItemImagesUrlFormat, itemID);
+            }
+
             string identifierBib = GetDBString(reader, "LocalID");
             string year = GetDBString(reader, "Year");
             string institutionName = GetDBString(reader, "InstitutionName");

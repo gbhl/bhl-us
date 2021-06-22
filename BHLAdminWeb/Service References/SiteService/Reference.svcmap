@@ -19,11 +19,11 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:55786/SiteService.asmx" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:60786/SiteService.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="SiteService.wsdl" MetadataType="Wsdl" ID="4faf48c3-3ef9-48ba-92f9-26b7fabdb130" SourceId="1" SourceUrl="http://localhost:55786/SiteService.asmx?wsdl" />
-    <MetadataFile FileName="SiteService.disco" MetadataType="Disco" ID="0e3d29a5-07d7-4a76-963c-b04cad021a5a" SourceId="1" SourceUrl="http://localhost:55786/SiteService.asmx?disco" />
+    <MetadataFile FileName="SiteService1.disco" MetadataType="Disco" ID="cd93f3bc-ea1c-409a-9bb5-df928ae67b38" SourceId="1" SourceUrl="http://localhost:60786/SiteService.asmx?disco" />
+    <MetadataFile FileName="SiteService1.wsdl" MetadataType="Wsdl" ID="5b81542e-3a42-4e5e-afad-e844fae4a94f" SourceId="1" SourceUrl="http://localhost:60786/SiteService.asmx?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -106,6 +106,30 @@ namespace MOBOT.BHL.DAL
         }
     }
 
+    public List<PageSummaryView> PageSummarySelectForViewerBySegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentId)
+    {
+        SqlConnection connection = CustomSqlHelper.CreateConnection(
+            CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+        SqlTransaction transaction = sqlTransaction;
+
+        using (SqlCommand command = CustomSqlHelper.CreateCommand("PageSummarySelectForViewerBySegmentID", connection, transaction,
+            CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentId)))
+        {
+            using (CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>())
+            {
+                List<PageSummaryView> list = helper.ExecuteReader(command);
+                if (list.Count > 0)
+                {
+                    return list;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// Select values from PageSummaryView by Barcode.
     /// </summary>
@@ -267,6 +291,45 @@ namespace MOBOT.BHL.DAL
             {
                 List<PageSummaryView> list = helper.ExecuteReader(command);
                 return list;
+            }
+        }
+    }
+
+    public List<PageSummaryView> PageSummarySegmentSelectBySegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentID)
+    {
+        SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+        SqlTransaction transaction = sqlTransaction;
+
+        using (SqlCommand command = CustomSqlHelper.CreateCommand("PageSummarySegmentSelectBySegmentID", connection, transaction,
+            CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
+        {
+            using (CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>())
+            {
+                List<PageSummaryView> list = helper.ExecuteReader(command);
+                return list;
+            }
+        }
+    }
+
+    public PageSummaryView PageSummarySegmentSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID)
+    {
+        SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+        SqlTransaction transaction = sqlTransaction;
+
+        using (SqlCommand command = CustomSqlHelper.CreateCommand("PageSummarySegmentSelectByPageID", connection, transaction,
+            CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID)))
+        {
+            using (CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>())
+            {
+                List<PageSummaryView> list = helper.ExecuteReader(command);
+                if (list.Count > 0)
+                {
+                    return list[0];
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
     }

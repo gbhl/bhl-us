@@ -76,6 +76,8 @@ namespace MOBOT.BHL.Web2
 
             routes.MapPageRoute("Title", "title/{titleid}", "~/TitlePage.aspx");
 
+            routes.MapPageRoute("Segment", "segment/{segmentid}", "~/TitlePage.aspx");
+
             if (ConfigurationManager.AppSettings["IIIFState"] == "off") // IIIF disabled
             {
                 routes.MapPageRoute("Item", "item/{itemid}", "~/TitlePage.aspx");
@@ -115,6 +117,12 @@ namespace MOBOT.BHL.Web2
             routes.Add("ItemPdf", new Route("itempdf/{itemid}", new HttpHandlerRouteHandler<GetItemPdf>()));
 
             routes.Add("ItemImages", new Route("itemimages/{itemid}", new HttpHandlerRouteHandler<GetItemImages>()));
+
+            routes.Add("PartText", new Route("parttext/{id}", new HttpHandlerRouteHandler<GetPartText>()));
+
+            routes.Add("PartPdf", new Route("partpdf/{id}", new HttpHandlerRouteHandler<GetPartPdf>()));
+
+            routes.Add("PartImages", new Route("partimages/{id}", new HttpHandlerRouteHandler<GetPartImages>()));
 
             routes.MapPageRoute("Bibliography", "bibliography/{titleid}", "~/bibliography.aspx");
 

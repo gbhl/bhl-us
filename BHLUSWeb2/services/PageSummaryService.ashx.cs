@@ -1,4 +1,5 @@
 using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
@@ -190,7 +191,7 @@ namespace MOBOT.BHL.Web2.Services
                     }
 
                     // Add the height and width of each page to the list
-                    viewerPages = (new SiteService.SiteServiceSoapClient().PageGetImageDimensions(viewerPages.ToArray(), itemID)).ToList();
+                    viewerPages = (new SiteService.SiteServiceSoapClient().PageGetImageDimensions(viewerPages.ToArray(), (int)ItemType.Book, itemID)).ToList();
 
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     return js.Serialize(viewerPages);

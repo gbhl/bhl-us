@@ -16,17 +16,21 @@ var result = ViewData["searchResult"] as List<MOBOT.BHL.DataObjects.Segment>;
         {
             <div style="display:inline-block; width:620px">
                 <div style="float:left">
-                    @if (segment.StartPageID == null && segment.Url == string.Empty)
+                    @if (segment.StartPageID == null && segment.Url == string.Empty && (segment.BookIsVirtual ?? 0) == 0)
                     {
                         @segment.Title
                     }
-                    @if (segment.StartPageID != null && segment.Url == string.Empty)
+                    @if (segment.StartPageID != null && segment.Url == string.Empty && (segment.BookIsVirtual ?? 0) == 0)
                     {
                         <a class="title" href="/page/@segment.StartPageID.ToString()">@segment.Title</a>
                     }
-                    @if (segment.StartPageID == null && segment.Url != string.Empty)
+                    @if (segment.StartPageID == null && segment.Url != string.Empty && (segment.BookIsVirtual ?? 0) == 0)
                     {
                         <a target="_blank" rel="noopener noreferrer" class="title ExtLinkBrowse" href="@segment.Url">@segment.Title</a>
+                    }
+                    @if ((segment.BookIsVirtual ?? 0) == 1)
+                    {
+                        <a class="title" href="/segment/@segment.SegmentID.ToString()">@segment.Title</a>
                     }
                 </div>
                 <div style="float:right">
@@ -57,9 +61,13 @@ var result = ViewData["searchResult"] as List<MOBOT.BHL.DataObjects.Segment>;
             <div class="titledetails" @(segment.PageRange == string.Empty ? "hidden" : "")>Page Range: @segment.PageRange</div>
             <div class="titledetails" @(segment.PublicationDetails == string.Empty ? "hidden" : "")>Publication Info: @segment.PublicationDetails</div>
             <div class="titledetails" @(segment.Keywords == string.Empty ? "hidden" : "")>Subjects: @Html.Raw(segment.Keywords.ToString().Replace("|", "&nbsp;&nbsp;"))</div>
-            if (segment.StartPageID != null)
+            if (segment.StartPageID != null && (segment.BookIsVirtual ?? 0) == 0)
             {
                 <a class="titleviewbook" style="position:relative;top:-25px;" href="/page/@segment.StartPageID">View @segment.GenreName</a>
+            }
+            if ((segment.BookIsVirtual ?? 0) == 1)
+            {
+                <a class="titleviewbook" style="position:relative;top:-25px;" href="/segment/@segment.SegmentID">View @segment.GenreName</a>
             }
             if (segment.Url != string.Empty)
             {
@@ -69,7 +77,7 @@ var result = ViewData["searchResult"] as List<MOBOT.BHL.DataObjects.Segment>;
             {
                 <a class="titleviewbook" style="position:relative;top:-25px;" href="@segment.DownloadUrl">Download @segment.GenreName</a>
             }
-            }
-        </li>
+        }
+    </li>
     }
 </ol>

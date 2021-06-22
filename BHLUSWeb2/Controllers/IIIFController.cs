@@ -29,7 +29,7 @@ namespace MOBOT.BHL.Web2.Controllers
             if (page.ItemStatusID != 40) return new RedirectResult("~/itemunavailable");
 
             // Get the details of the first page to display
-            Page firstPage = provider.PageSelectFirstPageForItem(Convert.ToInt32(itemId));
+            Page firstPage = provider.PageSelectFirstPageForItem(page.ItemID);
 
             ViewBag.IIIFLinkTarget = "/item/" + itemId; // Used for IIIF toggle
             ViewBag.ItemID = itemId;

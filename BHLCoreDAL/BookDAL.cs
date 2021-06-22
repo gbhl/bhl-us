@@ -67,6 +67,30 @@ namespace MOBOT.BHL.DAL
 			}
 		}
 
+		public Book BookSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(
+			CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			SqlTransaction transaction = sqlTransaction;
+
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("BookSelectByPageID", connection, transaction,
+					CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID)))
+			{
+				using (CustomSqlHelper<Book> helper = new CustomSqlHelper<Book>())
+				{
+					List<Book> list = helper.ExecuteReader(command);
+					if (list.Count > 0)
+					{
+						return list[0];
+					}
+					else
+					{
+						return null;
+					}
+				}
+			}
+		}
+
 		public Book BookSelectOAIDetail(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int bookID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -242,6 +266,26 @@ namespace MOBOT.BHL.DAL
 
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectTextPathForItemID", connection, transaction,
 				CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
+			{
+				using (CustomSqlHelper<Book> helper = new CustomSqlHelper<Book>())
+				{
+					List<Book> list = helper.ExecuteReader(command);
+					if (list.Count > 0)
+						return list[0];
+					else
+						return null;
+				}
+			}
+		}
+
+		public Book BookSelectTextPathForSegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(
+				CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			SqlTransaction transaction = sqlTransaction;
+
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectTextPathForSegmentID", connection, transaction,
+				CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
 			{
 				using (CustomSqlHelper<Book> helper = new CustomSqlHelper<Book>())
 				{

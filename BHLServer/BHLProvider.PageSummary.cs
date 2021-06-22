@@ -55,6 +55,11 @@ namespace MOBOT.BHL.Server
         return (new PageSummaryDAL().PageSummarySelectForViewerByItemID(null, null, itemId));
     }
 
+    public List<PageSummaryView> PageSummarySelectForViewerBySegmentID(int segmentId)
+    {
+        return (new PageSummaryDAL().PageSummarySelectForViewerBySegmentID(null, null, segmentId));
+    }
+
     /// <summary>
     /// Select values from PageSummaryView by Barcode.
     /// </summary>
@@ -136,6 +141,16 @@ namespace MOBOT.BHL.Server
     public List<PageSummaryView> PageSummarySelectBarcodeForTitleID(int titleID)
     {
         return (new PageSummaryDAL().PageSummarySelectBarcodeForTitleID(null, null, titleID));
+    }
+
+    public List<PageSummaryView> PageSummarySegmentSelectBySegmentID(int segmentID)
+    {
+        return new PageSummaryDAL().PageSummarySegmentSelectBySegmentID(null, null, segmentID);
+    }
+
+    public PageSummaryView PageSummarySegmentSelectByPageID(int pageID)
+    {
+        return new PageSummaryDAL().PageSummarySegmentSelectByPageID(null, null, pageID);
     }
   }
 }

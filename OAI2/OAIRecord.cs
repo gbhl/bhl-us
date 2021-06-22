@@ -856,6 +856,8 @@ namespace MOBOT.BHL.OAI2
                 switch (segment.GenreName)
                 {
                     case OAI2Util.SegmentGenre.ARTICLE:
+                        this.Type = RecordType.Article;
+                        break;
                     case OAI2Util.SegmentGenre.CHAPTER:
                     case OAI2Util.SegmentGenre.TREATMENT:
                         this.Type = RecordType.Segment;

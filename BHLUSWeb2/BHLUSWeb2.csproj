@@ -434,6 +434,10 @@
     <Content Include="ItemNotFound.aspx" />
     <Content Include="ItemPage.aspx" />
     <Content Include="js\nspop.js" />
+    <Content Include="Handlers\GetPartPdf.ashx" />
+    <Content Include="Handlers\GetPartImages.ashx" />
+    <Content Include="Handlers\GetPartText.ashx" />
+    <None Include="Service References\SiteService\SiteService1.disco" />
     <Content Include="tify\tify.html" />
     <Content Include="tify\tifysrc\supporters\sub-logo.svg" />
     <Content Include="tify\tifysrc\tify-logo-white.svg" />
@@ -513,7 +517,7 @@
     <Content Include="Service References\SiteService\MOBOT.BHL.Web2.SiteService.ViewerPage.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\SiteService\SiteService.wsdl" />
+    <None Include="Service References\SiteService\SiteService1.wsdl" />
     <None Include="services\Name\Web.config.template" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_layout.cshtml" />
@@ -560,7 +564,6 @@
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\SiteService\SiteService.disco" />
     <None Include="Service References\SiteService\configuration91.svcinfo" />
     <None Include="Service References\SiteService\configuration.svcinfo" />
     <None Include="Service References\SiteService\Reference.svcmap">
@@ -823,6 +826,15 @@
     <Compile Include="Handlers\GetPageThumb.ashx.cs">
       <DependentUpon>GetPageThumb.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\GetPartImages.ashx.cs">
+      <DependentUpon>GetPartImages.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\GetPartPdf.ashx.cs">
+      <DependentUpon>GetPartPdf.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\GetPartText.ashx.cs">
+      <DependentUpon>GetPartText.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handlers\ITunesRSS.ashx.cs">
       <DependentUpon>ITunesRSS.ashx</DependentUpon>
     </Compile>
@@ -947,9 +959,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="services\DOIService.ashx.cs">
-      <DependentUpon>DOIService.ashx</DependentUpon>
     </Compile>
     <Compile Include="services\GeneratePdf.ashx.cs">
       <DependentUpon>GeneratePdf.ashx</DependentUpon>
@@ -1125,7 +1134,6 @@
     <Content Include="Handlers\MODSDownload.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="services\DOIService.ashx" />
     <Content Include="services\NameListDownloadService.ashx" />
     <Content Include="services\NameListService.ashx" />
     <Content Include="services\oai2.ashx" />

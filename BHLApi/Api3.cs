@@ -166,9 +166,12 @@ namespace MOBOT.BHL.API.BHLApi
                 item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
                 item.TitleUrl = (item.TitleID == null) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.TitleID.ToString();
                 item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
-                item.ItemTextUrl = "https://www.biodiversitylibrary.org/itemtext/" + item.ItemID.ToString();
-                item.ItemPDFUrl = "https://www.biodiversitylibrary.org/itempdf/" + item.ItemID.ToString();
-                item.ItemImagesUrl = "https://www.biodiversitylibrary.org/itemimages/" + item.ItemID.ToString();
+                if ((item.IsVirtual ?? "0") == "0")
+                {
+                    item.ItemTextUrl = "https://www.biodiversitylibrary.org/itemtext/" + item.ItemID.ToString();
+                    item.ItemPDFUrl = "https://www.biodiversitylibrary.org/itempdf/" + item.ItemID.ToString();
+                    item.ItemImagesUrl = "https://www.biodiversitylibrary.org/itemimages/" + item.ItemID.ToString();
+                }
 
                 List<Contributor> scanningInstitutions = dal.InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
                 if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;

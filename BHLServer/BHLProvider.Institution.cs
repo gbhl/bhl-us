@@ -32,6 +32,11 @@ namespace MOBOT.BHL.Server
             return GetInstitutionDalInstance().InstitutionSelectByItemIDAndRole(null, null, itemID, role);
         }
 
+        public List<Institution> InstitutionSelectBySegmentIDAndRole(int segmentID, string role)
+        {
+            return GetInstitutionDalInstance().InstitutionSelectBySegmentIDAndRole(null, null, segmentID, role);
+        }
+
         public List<Institution> InstitutionSelectByTitleID(int titleID)
         {
             return GetInstitutionDalInstance().InstitutionSelectByTitleID(null, null, titleID);

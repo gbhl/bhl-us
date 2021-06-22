@@ -159,9 +159,13 @@
                                                                         {
                                                                             if (string.IsNullOrWhiteSpace(item.Url))
                                                                             {
-                                                                                if (item.StartPageId > 0)
+                                                                                if (item.StartPageId > 0 && !item.BookIsVirtual)
                                                                                 {
                                                                                     <a href="~/page/@item.StartPageId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                                }
+                                                                                else if (item.BookIsVirtual)
+                                                                                {
+                                                                                    <a href="~/segment/@item.SegmentId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
                                                                                 }
                                                                                 else
                                                                                 {

@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Services;
 using BHL.QueueUtility;
 using Newtonsoft.Json.Linq;
+using MOBOT.BHL.DataObjects.Enum;
 
 namespace BHL.SiteServices
 {
@@ -39,11 +40,11 @@ namespace BHL.SiteServices
         }
 
         [WebMethod]
-        public string GetItemText(int itemID)
+        public string GetItemText(int itemType, int itemID)
         {
             try
             {
-                return new BHLProvider().GetItemText(itemID);
+                return new BHLProvider().GetItemText((ItemType)itemType, itemID);
             }
             catch (Exception ex)
             {
@@ -262,9 +263,9 @@ namespace BHL.SiteServices
         /// <param name="itemID"></param>
         /// <returns></returns>
         [WebMethod]
-        public List<BHLProvider.ViewerPage> PageGetImageDimensions(List<BHLProvider.ViewerPage> pages, int itemID)
+        public List<BHLProvider.ViewerPage> PageGetImageDimensions(List<BHLProvider.ViewerPage> pages, int itemType, int itemID)
         {
-            return new BHLProvider().PageGetImageDimensions(pages, itemID);
+            return new BHLProvider().PageGetImageDimensions(pages, (ItemType)itemType, itemID);
         }
 
         #region Email Methods

@@ -1,4 +1,5 @@
-﻿using MOBOT.BHL.Server;
+﻿using MOBOT.BHL.DataObjects.Enum;
+using MOBOT.BHL.Server;
 using System;
 using System.Configuration;
 using System.Web;
@@ -20,7 +21,7 @@ namespace MOBOT.BHL.Web2
             if (Int32.TryParse(itemIDString, out itemID))
             {
                 BHLProvider provider = new BHLProvider();
-                DataObjects.Item item = provider.ItemSelectFilenames(itemID);
+                DataObjects.Item item = provider.ItemSelectFilenames(ItemType.Book, itemID);
 
                 context.Response.ContentType = "application/pdf";
                 if (!string.IsNullOrWhiteSpace(item.PdfFilename))

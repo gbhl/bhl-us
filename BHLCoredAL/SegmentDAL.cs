@@ -378,6 +378,7 @@ namespace MOBOT.BHL.DAL
         }
 
         /// <summary>
+<<<<<<< HEAD
         /// Select the segments associated with the specified title
         /// </summary>
         /// <param name="sqlConnection"></param>
@@ -386,19 +387,40 @@ namespace MOBOT.BHL.DAL
         /// <returns>A list of type segment</returns>
         public List<Segment> SegmentSelectByTitleID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int titleID)
+=======
+        /// Select the segment with the specified barcode
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="barcode">Barcode for the segment</param>
+        /// <returns>An object type Segment</returns>
+        public Segment SegmentSelectByBarCode(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string barcode)
+>>>>>>> vipublic
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
+<<<<<<< HEAD
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByTitleID", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID)))
+=======
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByBarCode", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 200, false, barcode)))
+>>>>>>> vipublic
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
                     List<Segment> list = helper.ExecuteReader(command);
 
+<<<<<<< HEAD
                     return list;
+=======
+                    if (list.Count > 0)
+                        return list[0];
+                    else
+                        return null;
+>>>>>>> vipublic
                 }
             }
         }
@@ -664,6 +686,42 @@ namespace MOBOT.BHL.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectRecentlyClustered", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("NumClusters", SqlDbType.Int, null, false, numberOfClusters)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+
+                    return list;
+                }
+            }
+        }
+
+        public List<Segment> SegmentSelectChildSegmentsBySegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectChildSegmentsBySegmentID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+
+                    return list;
+                }
+            }
+        }
+
+        public List<Segment> SegmentSelectSiblingSegmentsBySegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectSiblingSegmentsBySegmentID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {

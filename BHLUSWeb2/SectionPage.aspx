@@ -161,35 +161,6 @@
                 <a class="button" href="/handlers/modsdownload.ashx?pid=<%: BhlSegment.SegmentID %>">Download MODS</a>
             </p>
         </div>
-        <div id="mods" class="tab-body" style="display:none">
-            <p>
-                <a class="button" href="/handlers/modsdownload.ashx?pid=<%: BhlSegment.SegmentID %>">Download MODS</a>
-            </p>
-            <p class="header">
-                <asp:Literal ID="litMods" runat="server"></asp:Literal>
-            </p>
-        </div>
-        <div id="bibtex" class="tab-body" style="display:none">
-            <% if (!string.IsNullOrEmpty(litBibTeX.Text)) { %>
-            <p>
-                <a class="button" href="/handlers/bibtexdownload.ashx?pid=<%: BhlSegment.SegmentID %>">Download BibTeX citation</a>
-            </p>                
-            <p class="header">
-                <asp:Literal ID="litBibTeX" runat="server"></asp:Literal>
-            </p>
-            <% } %>
-        </div>
-        <div id="ris" class="tab-body" style="display:none">
-            <% if (!string.IsNullOrEmpty(litRIS.Text)) { %>
-            <p>
-                <a class="button" href="/handlers/risdownload.ashx?pid=<%: BhlSegment.SegmentID %>">Download RIS citation</a>
-            </p>
-            <p class="header">
-                <asp:Literal ID="litRIS" runat="server"></asp:Literal>
-            </p>
-            <% } %>
-        </div>
-
     </div>
 </section>
 <aside>
@@ -203,10 +174,13 @@
             <div class="body" style="border-bottom: 1px solid #C5CED3; padding: 20px 0 0;">
                 <div class="partlinks">
 
-                    <% if ((BhlSegment.StartPageID != null) && BhlSegment.StartPageID > 0)
-                    { %>
-                        <a href="/page/<%: BhlSegment.StartPageID %>">View <%: BhlSegment.GenreName%></a> <br />
-                    <% } %>
+                    <%if (IsVirtual == 1) { %>
+                        <a href="/segment/<%: BhlSegment.SegmentID %>">View <%: BhlSegment.GenreName%></a> <br />
+                    <%} else { 
+                        if ((BhlSegment.StartPageID != null) && BhlSegment.StartPageID > 0) { %>
+                            <a href="/page/<%: BhlSegment.StartPageID %>">View <%: BhlSegment.GenreName%></a> <br />
+                        <%}
+                    } %>
 
                     <% if (! string.IsNullOrEmpty(BhlSegment.Url))
                     { %>
@@ -224,6 +198,13 @@
                 <div class="downloadlabel">Download:</div>
                 <a class="icon mods" title="download mods" download="bhlpart %: BhlSegment.SegmentID % _mods.xml" href="/handlers/modsdownload.ashx?pid=%: BhlSegment.SegmentID %">MODS</a>
                 -->
+                <% if (IsVirtual == 1) { %>
+                    <div class="downloadlabel">Download:</div>
+                    <a class="icon all" title="download all" href="https://www.archive.org/download/<%: BhlSegment.BarCode %>">All</a>
+                    <a class="icon jp2" title="download jp2" href="/partimages/<%: BhlSegment.SegmentID %>">JP2</a>
+                    <a class="icon ocr" title="download ocr" download="<%: BhlSegment.SegmentID %>.txt" href="/parttext/<%: BhlSegment.SegmentID %>">OCR</a>
+                    <a class="icon pdf" title="download pdf" download="<%: BhlSegment.SegmentID %>.pdf" href="/partpdf/<%: BhlSegment.SegmentID %>">PDF</a>
+                <%} %>
                 <div class="downloadlabel">Cite:</div>
                 <a class="icon ris" title="download ris" download="bhlpart<%: BhlSegment.SegmentID %>.ris" href="/handlers/risdownload.ashx?pid=<%: BhlSegment.SegmentID %>">RIS</a>
                 <a class="icon bibtex" title="download bibtex" download="bhlpart<%: BhlSegment.SegmentID %>.bib" href="/handlers/bibtexdownload.ashx?pid=<%: BhlSegment.SegmentID %>">BibTeX</a>

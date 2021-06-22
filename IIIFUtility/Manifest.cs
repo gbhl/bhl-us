@@ -32,7 +32,7 @@ namespace BHL.IIIF
             int? thumbnailPageID = book.ThumbnailPageID;
             if (thumbnailPageID == null)
             {
-                Page firstPage = provider.PageSelectFirstPageForItem(Convert.ToInt32(itemId));
+                Page firstPage = provider.PageSelectFirstPageForItem(book.ItemID);
                 thumbnailPageID = (firstPage == null ? thumbnailPageID : firstPage.PageID);
             }
             if (thumbnailPageID != null) thumbnailAttr = 

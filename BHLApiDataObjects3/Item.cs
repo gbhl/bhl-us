@@ -56,6 +56,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _SourceIdentifier = value; }
         }
 
+        private string _IsVirtual = null;
+        public string IsVirtual
+        {
+            get { return _IsVirtual; }
+            set { _IsVirtual = value; }
+        }
+
         private string _Volume = null;
         public string Volume
         {
@@ -365,6 +372,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "SourceName":
                         {
                             _Source = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "IsVirtual":
+                        {
+                            _IsVirtual = (column.Value == null) ? (string)null : column.Value.ToString();
                             break;
                         }
                     case "Barcode":

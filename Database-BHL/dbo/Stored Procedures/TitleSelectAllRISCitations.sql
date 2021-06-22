@@ -15,12 +15,14 @@ SELECT @ISBNID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'ISBN'
 SELECT @DOITITLEID = DOIEntityTypeID FROM dbo.DOIEntityType WHERE DOIEntityTypeName = 'Title'
 
 SELECT	DISTINCT
+		c.TitleID,
+		bk.ItemID,
 		ISNULL(b.BibliographicLevelName, '') AS Genre,
 		t.FullTitle + ' ' + ISNULL(t.PartNumber, '') + ' ' + ISNULL(t.PartName, '') AS Title,
 		'https://www.biodiversitylibrary.org/bibliography/' + CONVERT(NVARCHAR(10), t.TitleID) AS Url,
 		ISNULL(t.Datafield_260_b, '') AS Publisher,
 		ISNULL(t.Datafield_260_a, '') AS PublicationPlace,
-		CASE WHEN ISNULL(CONVERT(NVARCHAR(20), StartYear), '') = '' THEN ISNULL(t.Datafield_260_c, '') ELSE ISNULL(CONVERT(NVARCHAR(20), StartYear), '') END [Year],
+		CASE WHEN ISNULL(CONVERT(NVARCHAR(20), t.StartYear), '') = '' THEN ISNULL(t.Datafield_260_c, '') ELSE ISNULL(CONVERT(NVARCHAR(20), t.StartYear), '') END [Year],
 		c.Authors,
 		c.Subjects AS Keywords,
 		ISNULL(d.DOIName, '') AS DOI,
@@ -38,7 +40,24 @@ FROM	dbo.Title t WITH (NOLOCK)
 		LEFT JOIN dbo.Language l WITH (NOLOCK) ON t.LanguageCode = l.LanguageCode
 		LEFT JOIN dbo.DOI d WITH (NOLOCK) ON t.TitleID = d.EntityID AND d.DOIEntityTypeID = @DOITITLEID AND d.IsValid = 1
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID
-WHERE	t.PublishReady = 1
+		INNER JOIN dbo.Book bk ON c.ItemID = bk.BookID
+WHERE	t.PublishReady = 1;
+
+-- Check titles with no local content to make sure there are no related virtual issues that DO have local content
+WITH TitleCTE (TitleID, ItemID, HasLocalContent)  
+AS  
+(  
+	SELECT	t.TitleID, t.ItemID, MAX(c.HasLocalContent)
+	FROM	#RIS t
+			INNER JOIN dbo.ItemRelationship ir ON t.ItemID = ir.ParentID
+			INNER JOIN dbo.vwSegment s ON ir.ChildID = s.ItemID
+			INNER JOIN dbo.SearchCatalogSegment c ON s.SegmentID = c.SegmentID
+	WHERE	t.HasLocalContent = 0
+	GROUP BY t.TitleID, t.ItemID
+)  
+UPDATE	#RIS
+SET		HasLocalContent = cte.HasLocalContent
+FROM	#RIS t INNER JOIN TitleCTE cte ON t.TitleID = cte.TitleID AND t.ItemID = cte.ItemID;
 
 SELECT 	Genre,
 		Title,
@@ -71,3 +90,5 @@ GROUP BY
 		Notes
 
 END
+
+GO

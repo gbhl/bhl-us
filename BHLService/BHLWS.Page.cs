@@ -32,6 +32,13 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
+        public List<Page> PageMetadataSelectBySegmentID(int segmentID)
+        {
+            BHLProvider bhlServer = new BHLProvider();
+            return bhlServer.PageMetadataSelectBySegmentID(segmentID);
+        }
+
+        [WebMethod]
         public List<Page> PageSelectWithExpiredPageNamesByItemID(int itemID, int maxAge)
         {
             BHLProvider bhlServer = new BHLProvider();

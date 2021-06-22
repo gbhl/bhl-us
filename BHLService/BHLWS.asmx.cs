@@ -1,4 +1,5 @@
 using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Utility;
 using MOBOT.BHL.Web.Utilities;
@@ -126,7 +127,7 @@ namespace MOBOT.BHL.WebService
         public Item ItemSelectFilenames(int itemID)
         {
             BHLProvider bhlServer = new BHLProvider();
-            return bhlServer.ItemSelectFilenames(itemID);
+            return bhlServer.ItemSelectFilenames(ItemType.Book, itemID);
         }
 
         [WebMethod]
@@ -155,6 +156,13 @@ namespace MOBOT.BHL.WebService
         {
             BHLProvider provider = new BHLProvider();
             return provider.BookSelectAuto(bookID);
+        }
+
+        [WebMethod]
+        public Segment SegmentSelectAuto(int segmentID)
+        {
+            BHLProvider provider = new BHLProvider();
+            return provider.SegmentSelectAuto(segmentID);
         }
 
         [WebMethod]
@@ -324,6 +332,13 @@ namespace MOBOT.BHL.WebService
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.InstitutionSelectByItemIDAndRole(itemID, role);
+        }
+
+        [WebMethod]
+        public List<Institution> InstitutionSelectBySegmentIDAndRole(int segmentID, string role)
+        {
+            BHLProvider bhlServer = new BHLProvider();
+            return bhlServer.InstitutionSelectBySegmentIDAndRole(segmentID, role);
         }
 
         #endregion

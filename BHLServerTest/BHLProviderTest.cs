@@ -4,6 +4,7 @@ using MOBOT.BHL.Server;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using System.Collections.Generic;
+using MOBOT.BHL.DataObjects.Enum;
 
 namespace BHLServerTest
 {
@@ -102,6 +103,7 @@ namespace BHLServerTest
         {
             BHLProvider target = new BHLProvider();
 
+            ItemType itemType = ItemType.Book;
             int itemid = 22010;
             List<BHLProvider.ViewerPage> actual = new List<BHLProvider.ViewerPage>();
             BHLProvider.ViewerPage page = new BHLProvider.ViewerPage();
@@ -110,7 +112,7 @@ namespace BHLServerTest
             page.Height = 0;
             page.Width = 0;
             actual.Add(page);
-            actual = target.PageGetImageDimensions(actual, itemid);
+            actual = target.PageGetImageDimensions(actual, itemType, itemid);
             Assert.IsTrue(actual[0].Height > 0);
         }
 

@@ -60,9 +60,15 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectByItemID(null, null, itemID, 0);
         }
 
+<<<<<<< HEAD
         public List<Segment> SegmentSelectByTitleID(int titleID)
         {
             return new SegmentDAL().SegmentSelectByTitleID(null, null, titleID);
+=======
+        public Segment SegmentSelectByBarCode(string barcode)
+        {
+            return new SegmentDAL().SegmentSelectByBarCode(null, null, barcode);
+>>>>>>> vipublic
         }
 
         public List<Segment> SegmentSelectWithoutDOIByItemID(int itemID)
@@ -249,6 +255,21 @@ namespace MOBOT.BHL.Server
         public List<Segment> SegmentSelectRecentlyClustered(int numberOfClusters)
         {
             return new SegmentDAL().SegmentSelectRecentlyClustered(null, null, numberOfClusters);
+        }
+
+        public List<Segment> SegmentSelectChildSegmentsBySegmentID(int segmentID)
+        {
+            return new SegmentDAL().SegmentSelectChildSegmentsBySegmentID(null, null, segmentID);
+        }
+
+        public List<Segment> SegmentSelectSiblingSegmentsBySegmentID(int segmentID)
+        {
+            return new SegmentDAL().SegmentSelectSiblingSegmentsBySegmentID(null, null, segmentID);
+        }
+
+        public List<ItemAuthor> SegmentAuthorSelectBySegmentID(int segmentID)
+        {
+            return new ItemAuthorDAL().ItemAuthorSelectBySegmentID(null, null, segmentID);
         }
 
         /// <summary>
