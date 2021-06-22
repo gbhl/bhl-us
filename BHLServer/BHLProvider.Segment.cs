@@ -60,15 +60,14 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectByItemID(null, null, itemID, 0);
         }
 
-<<<<<<< HEAD
         public List<Segment> SegmentSelectByTitleID(int titleID)
         {
             return new SegmentDAL().SegmentSelectByTitleID(null, null, titleID);
-=======
+        }
+
         public Segment SegmentSelectByBarCode(string barcode)
         {
             return new SegmentDAL().SegmentSelectByBarCode(null, null, barcode);
->>>>>>> vipublic
         }
 
         public List<Segment> SegmentSelectWithoutDOIByItemID(int itemID)
