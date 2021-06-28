@@ -151,7 +151,7 @@
         <asp:ContentPlaceHolder ID="scriptContentPlaceHolder" runat="server" />
 
         <script src="/js/plugins.js?v=2"></script> 
-          <script src="/js/script.js?v=4"></script> 
+          <script src="/js/script.js?v=6"></script> 
         <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
     </form>
 </body>
