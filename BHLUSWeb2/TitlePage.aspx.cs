@@ -184,6 +184,7 @@ namespace MOBOT.BHL.Web2
 
                 if (pageviews.Count > 0)
                 {
+                    PublicationDetail.PageProgression = pageviews[0].PageProgression;
                     foreach (PageSummaryView pageview in pageviews)
                     {
                         SiteService.ViewerPage viewerPage = new SiteService.ViewerPage
