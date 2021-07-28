@@ -28,9 +28,9 @@ namespace MOBOT.BHL.DataObjects
             set { _bookID = value; }
         }
 
-        private byte? _bookIsVirtual = null;
+        private byte _bookIsVirtual = 0;
 
-        public byte? BookIsVirtual
+        public byte BookIsVirtual
         {
             get { return _bookIsVirtual; }
             set { _bookIsVirtual = value; }
@@ -332,7 +332,7 @@ namespace MOBOT.BHL.DataObjects
                 }
 				if (column.Name == "BookIsVirtual")
 				{
-                    _bookIsVirtual = (byte?)column.Value;
+                    _bookIsVirtual = column.Value == null ? (byte)0 : (byte)column.Value;
                 }
                 if (column.Name == "TitleID")
                 {
