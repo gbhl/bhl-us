@@ -390,7 +390,7 @@
                 <asp:Label ID="itemIDLabel" ClientIDMode="Static" runat="server" />&nbsp;
                 <asp:Label ID="itemDescLabel" Text="Not Selected" style="font-style:italic" runat="server" /><br />
                 <input type="button" onclick="overlay();document.getElementById('srchTitleID').focus();" id="btnAddItem" value="Select Item" />
-                <input type="button" onclick="if (document.getElementById('pagesList')) alert('Remove all Pages before removing the Item.'); else clearItem();"; id="btnClearItem" value="Remove Item" />
+                <input type="button" onclick="clearItem();"; id="btnClearItem" value="Remove Item" />
             </td>
         </tr>
         <tr>

@@ -4,6 +4,7 @@ using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -55,8 +56,23 @@ namespace MOBOT.BHL.AdminWeb
                 String selectedItemId = this.selectedItem.Value;
                 if (selectedItemId == string.Empty)
                 {
-                    itemIDLabel.Text = "";
-                    itemDescLabel.Text = "Not Selected";
+                    if (!string.IsNullOrWhiteSpace(itemIDLabel.Text))
+                    {
+                        // Item has been removed
+                        removeItem(idLabel.Text, itemIDLabel.Text);
+                        /*
+                        Segment segment = (Segment)Session["Segment" + idLabel.Text];
+                        foreach (ItemRelationship relationship in segment.RelationshipList)
+                        {
+                            if (segment.ItemID == relationship.ChildID && itemIDLabel.Text == relationship.BookID.ToString()) relationship.IsDeleted = true;
+                        }
+                        foreach (ItemPage page in segment.PageList) page.IsDeleted = true;
+                        bindSegmentPageData();
+                        Session["Segment" + segment.SegmentID.ToString()] = segment;
+                        */
+                        itemIDLabel.Text = "";
+                        itemDescLabel.Text = "Not Selected";
+                    }
                 }
                 else if (itemIDLabel.Text != selectedItemId)
                 {
@@ -65,6 +81,7 @@ namespace MOBOT.BHL.AdminWeb
                     List<Institution> institutions = provider.InstitutionSelectByItemIDAndRole(Convert.ToInt32(book.ItemID), InstitutionRole.Contributor);
                     Title title = provider.TitleSelectAuto((int)book.PrimaryTitleID);
 
+                    string oldBookID = itemIDLabel.Text;
                     itemIDLabel.Text = selectedItemId;
                     itemDescLabel.Text = title.ShortTitle + " " + book.Volume;
 
@@ -77,6 +94,12 @@ namespace MOBOT.BHL.AdminWeb
                     ddlLanguage.SelectedValue = book.LanguageCode ?? string.Empty;
                     volumeTextBox.Text = book.Volume ?? string.Empty;
                     dateTextBox.Text = string.IsNullOrWhiteSpace(book.StartYear) ? (title.StartYear == null ? string.Empty : title.StartYear.ToString()) : book.StartYear;
+
+                    // Update the list of segments associated with this item
+                    Segment segment = (Segment)Session["Segment" + idLabel.Text];
+                    if (!string.IsNullOrWhiteSpace(oldBookID)) removeItem(idLabel.Text, oldBookID);
+                    segment.RelationshipList.AddRange(provider.ItemRelationshipSelectByItemID(book.ItemID));
+                    Session["Segment" + segment.SegmentID.ToString()] = segment;
                 }
 
                 // Check for newly added authors
@@ -204,7 +227,7 @@ namespace MOBOT.BHL.AdminWeb
                             int pageSequence = 0;
                             foreach (ItemPage segmentPage in segment.PageList)
                             {
-                                if (segmentPage.SequenceOrder > pageSequence) pageSequence = segmentPage.SequenceOrder;
+                                if (segmentPage.SequenceOrder > pageSequence && !segmentPage.IsDeleted) pageSequence = segmentPage.SequenceOrder;
                             }
 
                             // Get the page types and numbers for the selected page
@@ -412,6 +435,24 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         #endregion Fill methods
+
+        /// <summary>
+        /// Remove the ItemRelationship and ItemPages related to the specified segment and book
+        /// </summary>
+        /// <param name="segmentID"></param>
+        /// <param name="bookID"></param>
+        protected void removeItem(string segmentID, string bookID)
+        {
+            Segment segment = (Segment)Session["Segment" + segmentID];
+            foreach (ItemRelationship relationship in segment.RelationshipList)
+            {
+                if (segment.ItemID == relationship.ChildID && bookID == relationship.BookID.ToString()) relationship.IsDeleted = true;
+            }
+            foreach (ItemPage page in segment.PageList) page.IsDeleted = true;
+            bindSegmentPageData();
+            Session["Segment" + segment.SegmentID.ToString()] = segment;
+
+        }
 
         #region SegmentAuthor methods
 
@@ -1254,7 +1295,7 @@ namespace MOBOT.BHL.AdminWeb
                     bool existing = false;
                     foreach(ItemRelationship ir in segment.RelationshipList)
                     {
-                        if (ir.IsChild == 1)
+                        if (ir.IsChild == 1 && !ir.IsDeleted)
                         {
                             existing = true;
                             if (segment.BookID == null)
@@ -1266,12 +1307,13 @@ namespace MOBOT.BHL.AdminWeb
 
                     if (!existing && book != null)
                     {
+                        int maxSeq = (from x in segment.RelationshipList where !(x.IsDeleted) select x.SequenceOrder).Max();
                         segment.RelationshipList.Add(
                             new ItemRelationship
                             {
                                 ParentID = book.ItemID,
                                 ChildID = segment.ItemID,
-                                SequenceOrder = 1,
+                                SequenceOrder = maxSeq + 1,
                                 IsNew = true
                             });
                     }
