@@ -1307,7 +1307,7 @@ namespace MOBOT.BHL.AdminWeb
 
                     if (!existing && book != null)
                     {
-                        int maxSeq = segment.RelationshipList.Count == 0 ? 0 : (from x in segment.RelationshipList where !(x.IsDeleted) select x.SequenceOrder).Max();
+                        int maxSeq = (from x in segment.RelationshipList where !(x.IsDeleted) select x.SequenceOrder).DefaultIfEmpty(0).Max();
                         segment.RelationshipList.Add(
                             new ItemRelationship
                             {
