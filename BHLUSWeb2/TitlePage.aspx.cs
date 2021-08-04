@@ -64,7 +64,7 @@ namespace MOBOT.BHL.Web2
 
                 if (getFirstPage)
                 {
-                    Page firstPage = bhlProvider.PageSelectFirstPageForItem(PublicationDetail.ItemID);
+                    Page firstPage = bhlProvider.PageSelectFirstPageForItem(PublicationDetail.ID);
                     PublicationDetail.PageSequence = firstPage.SequenceOrder ?? PublicationDetail.PageSequence;
                     pageid = firstPage.PageID;
                 }

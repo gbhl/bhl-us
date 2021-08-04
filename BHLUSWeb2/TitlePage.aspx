@@ -166,9 +166,9 @@
                                 <div class="header">Publication Details</div>
                                 <div class="detail"><%: PublicationDetail.PublicationDetails %></div>
                             <%} %>
-                            <%if (!string.IsNullOrWhiteSpace(PublicationDetail.StartYear)) { %>
+                            <%if (!string.IsNullOrWhiteSpace(PublicationDetail.StartYear) || !string.IsNullOrWhiteSpace(PublicationDetail.EndYear)) { %>
                                 <div class="header">Year</div>
-                                <div class="detail"><%: PublicationDetail.StartYear %></div>
+                                <div class="detail"><%: PublicationDetail.StartYear %><%if (!string.IsNullOrWhiteSpace(PublicationDetail.StartYear) && !string.IsNullOrWhiteSpace(PublicationDetail.EndYear)) {%>-<%} %><%:PublicationDetail.EndYear%></div>
                             <%} %>
                             <%if (!string.IsNullOrWhiteSpace(PublicationDetail.DOI)) { %>
                                 <div class="header">DOI</div>
