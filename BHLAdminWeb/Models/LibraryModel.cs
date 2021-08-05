@@ -262,13 +262,13 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-            if (service.OcrJobExists(book.ItemID))
+            if (service.OcrJobExists(book.BookID))
             {
                 this.Message = string.Format("Ocr regeneration job pending for item {0} ({1}).", this.OcrItemID, this.OcrIAID);
                 return;
             }
 
-            service.OcrCreateJob(book.ItemID);
+            service.OcrCreateJob(book.BookID);
             this.Message = string.Format("Ocr regeneration job created for item {0} ({1}).", this.OcrItemID, this.OcrIAID);
         }
 
