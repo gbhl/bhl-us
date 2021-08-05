@@ -1,12 +1,7 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
@@ -151,24 +146,20 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             BHLProvider provider = new BHLProvider();
-            Item item = null;
+            Book book = null;
             if (!string.IsNullOrWhiteSpace(this.AddIAID))
-            {
-                item = provider.ItemSelectByBarCode(this.AddIAID);
-            }
+                book = provider.BookSelectByBarcodeOrItemID(null, this.AddIAID);
             else
-            {
-                item = provider.ItemSelectAuto(itemID);
-            }
+                book = provider.BookSelectAuto(itemID);
 
-            if (item == null)
+            if (book == null)
             {
                 this.Message = "Item not found.";
                 return;
             }
 
-            this.AddItemID = item.ItemID.ToString();
-            this.AddIAID = item.BarCode;
+            this.AddItemID = book.BookID.ToString();
+            this.AddIAID = book.BarCode;
 
             try
             {
@@ -211,24 +202,20 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             BHLProvider provider = new BHLProvider();
-            Item item = null;
+            Book book = null;
             if (!string.IsNullOrWhiteSpace(this.DelIAID))
-            {
-                item = provider.ItemSelectByBarCode(this.DelIAID);
-            }
+                book = provider.BookSelectByBarcodeOrItemID(null, this.DelIAID);
             else
-            {
-                item = provider.ItemSelectAuto(itemID);
-            }
+                book = provider.BookSelectAuto(itemID);
 
-            if (item == null)
+            if (book == null)
             {
                 this.Message = "Item not found.";
                 return;
             }
 
-            this.DelItemID = item.ItemID.ToString();
-            this.DelIAID = item.BarCode;
+            this.DelItemID = book.BookID.ToString();
+            this.DelIAID = book.BarCode;
 
             try
             {
@@ -253,39 +240,35 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             BHLProvider provider = new BHLProvider();
-            Item item = null;
+            Book book = null;
             if (!string.IsNullOrWhiteSpace(this.OcrIAID))
-            {
-                item = provider.ItemSelectByBarCode(this.OcrIAID);
-            }
+                book = provider.BookSelectByBarcodeOrItemID(null, this.OcrIAID);
             else
-            {
-                item = provider.ItemSelectAuto(itemID);
-            }
+                book = provider.BookSelectAuto(itemID);
 
-            if (item == null)
+            if (book == null)
             {
                 this.Message = "Item not found.";
                 return;
             }
 
-            this.OcrItemID = item.ItemID.ToString();
-            this.OcrIAID = item.BarCode;
+            this.OcrItemID = book.BookID.ToString();
+            this.OcrIAID = book.BarCode;
 
-            if (provider.PageTextLogSelectNonOCRForItem(item.ItemID).Count > 0 && !this.ForceOverwrite)
+            if (provider.PageTextLogSelectNonOCRForItem(book.ItemID).Count > 0 && !this.ForceOverwrite)
             {
                 this.Message = "Existing text for item is NOT derived from OCR.  Check 'Force Override' to update the text anyway.";
                 return;
             }
 
             SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-            if (service.OcrJobExists(item.ItemID))
+            if (service.OcrJobExists(book.ItemID))
             {
                 this.Message = string.Format("Ocr regeneration job pending for item {0} ({1}).", this.OcrItemID, this.OcrIAID);
                 return;
             }
 
-            service.OcrCreateJob(item.ItemID);
+            service.OcrCreateJob(book.ItemID);
             this.Message = string.Format("Ocr regeneration job created for item {0} ({1}).", this.OcrItemID, this.OcrIAID);
         }
 
