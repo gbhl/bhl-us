@@ -268,6 +268,7 @@ namespace MOBOT.BHL.DOIDeposit
         {
             public string PersonName;
             public string OrganizationName;
+            public string Suffix;
             public PersonNameSequence Sequence;
             public ContributorRole Role;
             public string ORCID;
