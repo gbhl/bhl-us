@@ -81,7 +81,9 @@ namespace MOBOT.BHL.DAL
                 {
                     Book book = new BookDAL().BookSelectAuto(connection, transaction, (int)segment.BookID);
                     segment.ItemVolume = book.Volume;
-                    segment.ItemYear = book.StartYear ?? string.Empty;
+                    segment.ItemSeries = string.Join("-", (new string[] { book.StartSeries ?? string.Empty, book.EndSeries ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s)));
+                    segment.ItemIssue = string.Join("-", (new string[] { book.StartIssue ?? string.Empty, book.EndIssue ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s)));
+                    segment.ItemYear = string.Join("-", (new string[] { book.StartYear ?? string.Empty, book.EndYear ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s)));
 
                     List<ItemTitle> itemTitles = new ItemTitleDAL().ItemTitleSelectByItem(connection, transaction, (int)segment.BookID);
                     foreach (ItemTitle itemTitle in itemTitles)

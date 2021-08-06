@@ -303,6 +303,15 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.TextBox volumeTextBox;
 
         /// <summary>
+        /// litVolume control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litVolume;
+
+        /// <summary>
         /// seriesTextBox control.
         /// </summary>
         /// <remarks>
@@ -310,6 +319,15 @@ namespace MOBOT.BHL.AdminWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox seriesTextBox;
+
+        /// <summary>
+        /// litSeries control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litSeries;
 
         /// <summary>
         /// issueTextBox control.
@@ -321,6 +339,15 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.TextBox issueTextBox;
 
         /// <summary>
+        /// litIssue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litIssue;
+
+        /// <summary>
         /// dateTextBox control.
         /// </summary>
         /// <remarks>
@@ -328,6 +355,15 @@ namespace MOBOT.BHL.AdminWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox dateTextBox;
+
+        /// <summary>
+        /// litDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litDate;
 
         /// <summary>
         /// authorsList control.

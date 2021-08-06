@@ -477,7 +477,7 @@
 	</table>
     <br />
     <fieldset>
-        <legend class="dataHeader">Original Publication Details</legend>
+        <legend class="dataHeader">Publication Details</legend>
         <table cellpadding="4" width="100%">
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Title:</td>
@@ -501,19 +501,19 @@
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">Volume:</td>
-				<td><asp:TextBox ID="volumeTextBox" runat="server" MaxLength="100" Width="400px"></asp:TextBox></td>
+				<td><asp:TextBox ID="volumeTextBox" runat="server" MaxLength="100" Width="200px"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litVolume" runat="server"></asp:Literal></td>
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">Series:</td>
-				<td><asp:TextBox ID="seriesTextBox" runat="server" MaxLength="100" Width="400px"></asp:TextBox></td>
+				<td><asp:TextBox ID="seriesTextBox" runat="server" MaxLength="100" Width="200px"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litSeries" runat="server"></asp:Literal></td>
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">Issue:</td>
-				<td><asp:TextBox ID="issueTextBox" runat="server" MaxLength="100" Width="400px"></asp:TextBox></td>
+				<td><asp:TextBox ID="issueTextBox" runat="server" MaxLength="100" Width="200px"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litIssue" runat="server"></asp:Literal></td>
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">Date:</td>
-				<td><asp:TextBox ID="dateTextBox" runat="server" MaxLength="20" Width="200px"></asp:TextBox></td>
+				<td><asp:TextBox ID="dateTextBox" runat="server" MaxLength="20" Width="200px"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litDate" runat="server"></asp:Literal></td>
 			</tr>
         </table>
     </fieldset>

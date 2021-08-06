@@ -72,6 +72,7 @@ namespace MOBOT.BHL.AdminWeb
                         */
                         itemIDLabel.Text = "";
                         itemDescLabel.Text = "Not Selected";
+                        fillItemDetails("", "", "", "");
                     }
                 }
                 else if (itemIDLabel.Text != selectedItemId)
@@ -92,8 +93,13 @@ namespace MOBOT.BHL.AdminWeb
                     publisherNameTextBox.Text = title.Datafield_260_b ?? string.Empty;
                     publisherPlaceTextBox.Text = title.Datafield_260_a ?? string.Empty;
                     ddlLanguage.SelectedValue = book.LanguageCode ?? string.Empty;
-                    volumeTextBox.Text = book.Volume ?? string.Empty;
-                    dateTextBox.Text = string.IsNullOrWhiteSpace(book.StartYear) ? (title.StartYear == null ? string.Empty : title.StartYear.ToString()) : book.StartYear;
+
+                    fillItemDetails((book.Volume ?? string.Empty),
+                        string.Join("-", (new string[] { book.StartIssue ?? string.Empty, book.EndIssue ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s))),
+                        string.Join("-", (new string[] { book.StartSeries ?? string.Empty, book.EndSeries ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s))),
+                        string.Join("-", (new string[] { book.StartYear ?? string.Empty, book.EndYear ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s))));
+                    //volumeTextBox.Text = book.Volume ?? string.Empty;
+                    //dateTextBox.Text = string.IsNullOrWhiteSpace(book.StartYear) ? (title.StartYear == null ? string.Empty : title.StartYear.ToString()) : book.StartYear;
 
                     // Update the list of segments associated with this item
                     Segment segment = (Segment)Session["Segment" + idLabel.Text];
@@ -373,6 +379,7 @@ namespace MOBOT.BHL.AdminWeb
                 seriesTextBox.Text = segment.Series;
                 issueTextBox.Text = segment.Issue;
                 dateTextBox.Text = segment.Date;
+                fillItemDetails(segment.ItemVolume, segment.ItemIssue, segment.ItemSeries, segment.ItemYear);
                 pageRangeTextBox.Text = segment.PageRange;
                 startPageTextBox.Text = segment.StartPageNumber;
                 endPageTextBox.Text = segment.EndPageNumber;
@@ -432,6 +439,14 @@ namespace MOBOT.BHL.AdminWeb
                 relatedSegmentsList.DataSource = segment.RelatedSegmentList;
                 relatedSegmentsList.DataBind();
             }
+        }
+
+        private void fillItemDetails(string volume, string issue, string series, string date)
+        {
+            litVolume.Text = string.Format("Item Volume: {0}", volume);
+            litIssue.Text = string.Format("Item Issue: {0}", issue);
+            litSeries.Text = string.Format("Item Series: {0}", series);
+            litDate.Text = string.Format("Item Date: {0}", date);
         }
 
         #endregion Fill methods
