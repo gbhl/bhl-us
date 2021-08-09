@@ -332,6 +332,25 @@
                 checkboxes[x].checked = true;
             }
         }
+	}
+
+	function isYearValid(date) {
+		var regex = RegExp('^$|^([12]\\d{3}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\\d|3[01]))?)?)$');
+		var isValid = regex.test(date);
+		if (!isValid)
+			$('#dateErr').html("<p>Date must be in one of the following formats: YYYY, YYYY-MM, YYYY-MM-DD</p>");
+		else
+			$('#dateErr').html("");
+		return isValid;
+	}
+
+	function isVolIssValid(value, label, errField) {
+		var regex = RegExp('(^$|^\\d*$)');
+		var isValid = regex.test(value);
+		if (!isValid)
+			errField.html("<p>" + label + " must be a simple numeric value, with no prefix.</p>");
+		else
+			errField.html("");
     }
 
     function executeServiceCall(url, callback) {
@@ -500,20 +519,20 @@
 				<td colspan="4" style="width: 100%"><asp:DropDownList ID="ddlLanguage" DataTextField="LanguageName" DataValueField="LanguageCode" runat="server"></asp:DropDownList></td>
 			</tr>
 			<tr>
-				<td style="white-space: nowrap" align="right" class="dataHeader">Volume:</td>
-				<td><asp:TextBox ID="volumeTextBox" runat="server" MaxLength="100" Width="200px"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litVolume" runat="server"></asp:Literal></td>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Volume:</td>
+				<td><asp:TextBox ID="volumeTextBox" ClientIDMode="Static" runat="server" MaxLength="100" Width="200px" onblur="isVolIssValid(this.value, 'Volume', $('#volumeErr'));"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litVolume" runat="server"></asp:Literal><span id="volumeErr" class="ErrorText"></span></td>
 			</tr>
 			<tr>
-				<td style="white-space: nowrap" align="right" class="dataHeader">Series:</td>
-				<td><asp:TextBox ID="seriesTextBox" runat="server" MaxLength="100" Width="200px"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litSeries" runat="server"></asp:Literal></td>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Series:</td>
+				<td><asp:TextBox ID="seriesTextBox" ClientIDMode="Static" runat="server" MaxLength="100" Width="200px"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litSeries" runat="server"></asp:Literal></td>
 			</tr>
 			<tr>
-				<td style="white-space: nowrap" align="right" class="dataHeader">Issue:</td>
-				<td><asp:TextBox ID="issueTextBox" runat="server" MaxLength="100" Width="200px"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litIssue" runat="server"></asp:Literal></td>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Issue:</td>
+				<td><asp:TextBox ID="issueTextBox" ClientIDMode="Static" runat="server" MaxLength="100" Width="200px" onblur="isVolIssValid(this.value, 'Issue', $('#issueErr'));"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litIssue" runat="server"></asp:Literal><span id="issueErr" class="ErrorText"></span></td>
 			</tr>
 			<tr>
-				<td style="white-space: nowrap" align="right" class="dataHeader">Date:</td>
-				<td><asp:TextBox ID="dateTextBox" runat="server" MaxLength="20" Width="200px"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litDate" runat="server"></asp:Literal></td>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Date:</td>
+				<td><asp:TextBox ID="dateTextBox" ClientIDMode="Static" runat="server" MaxLength="20" Width="200px" onblur="isYearValid(this.value);"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litDate" runat="server"></asp:Literal><span id="dateErr" class="ErrorText"></span></td>
 			</tr>
         </table>
     </fieldset>
@@ -940,6 +959,17 @@
     $(window).on('load', function (e) {
         this.showSearchFields();
     })
+
+	$('#masterForm').submit(function () {
+		var isValid = true;
+		var year = $('#dateTextBox').val();
+        var volume = $('#volumeTextBox').val();
+        var issue = $('#issueTextBox').val();
+
+		isValid = isYearValid(year) && isVolIssValid(volume, "Volume", $('#volumeErr')) && isVolIssValid(issue, "Issue", $('#issueErr'));
+
+		return isValid;
+	});
 
 	function showSearchFields() {
 		console.log('showSearchFields');
