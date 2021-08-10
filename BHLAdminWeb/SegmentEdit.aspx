@@ -351,6 +351,18 @@
 			errField.html("<p>" + label + " must be a simple numeric value, with no prefix.</p>");
 		else
 			errField.html("");
+		return isValid;
+	}
+
+	function isSeriesValid(series) {
+		// Anything except strings like the following are accepted:  s. 1, Ser. 2, ser 3, Series 1
+        var regex = RegExp('^(?![sS][a-zA-Z]*.?\\s*\\d+)');
+		var isValid = regex.test(series);
+		if (!isValid)
+			$('#seriesErr').html('<p>Do not include a prefix like \'s.\', \'Ser.\', or \'Series\'.</p>');
+		else
+			$('#seriesErr').html('');
+		return isValid;
     }
 
     function executeServiceCall(url, callback) {
@@ -524,7 +536,7 @@
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Series:</td>
-				<td><asp:TextBox ID="seriesTextBox" ClientIDMode="Static" runat="server" MaxLength="100" Width="200px"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litSeries" runat="server"></asp:Literal></td>
+				<td><asp:TextBox ID="seriesTextBox" ClientIDMode="Static" runat="server" MaxLength="100" Width="200px" onblur="isSeriesValid(this.value);"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litSeries" runat="server"></asp:Literal><span id="seriesErr" class="ErrorText"></span></td>
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Issue:</td>
@@ -963,8 +975,8 @@
 	$('#masterForm').submit(function () {
 		var isValid = true;
 		var year = $('#dateTextBox').val();
-        var volume = $('#volumeTextBox').val();
-        var issue = $('#issueTextBox').val();
+		var volume = $('#volumeTextBox').val();
+		var issue = $('#issueTextBox').val();
 
 		isValid = isYearValid(year) && isVolIssValid(volume, "Volume", $('#volumeErr')) && isVolIssValid(issue, "Issue", $('#issueErr'));
 
