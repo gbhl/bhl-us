@@ -159,14 +159,24 @@ AND		a.AssociatedTitleID IS NOT NULL
 UPDATE	#kbart
 SET		print_identifier = RTRIM(
 			CASE 
-				WHEN CHARINDEX('(', ti.IdentifierValue) > 1 
-				THEN LEFT(ti.IdentifierValue, CHARINDEX('(', ti.IdentifierValue) - 1) 
-				ELSE ti.IdentifierValue 
+				WHEN CHARINDEX('(', x.IdentifierValue) > 1 
+				THEN LEFT(x.IdentifierValue, CHARINDEX('(', x.IdentifierValue) - 1) 
+				ELSE x.IdentifierValue 
 			END
 		)
-FROM	#kbart k
-		INNER JOIN dbo.Title_Identifier ti WITH (NOLOCK) ON k.title_id = ti.TitleID
-WHERE	ti.IdentifierID IN (2, 3) -- ISSN and ISBN
+FROM	#kbart kb
+		INNER JOIN (
+			SELECT	k.title_id,
+					MIN(ti.IdentifierValue) as IdentifierValue
+			FROM	#kbart k
+					INNER JOIN dbo.Title_Identifier ti WITH (NOLOCK) ON k.title_id = ti.TitleID
+			WHERE	(ti.IdentifierID = 2 -- ISSN
+			AND		LEN(RTRIM(REPLACE(REPLACE(ti.IdentifierValue, '-', ''), ':', ''))) = 8)
+			OR
+					(ti.IdentifierID = 3 -- ISBN
+			AND		LEN(RTRIM(REPLACE(REPLACE(ti.IdentifierValue, '-', ''), ':', ''))) in (10, 13))
+			GROUP BY k.title_id
+		) x ON kb.title_id = x.title_id
 
 -- Get first authornames
 UPDATE	#kbart
