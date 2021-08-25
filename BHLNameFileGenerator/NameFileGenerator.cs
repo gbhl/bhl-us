@@ -103,7 +103,7 @@ namespace MOBOT.BHL.BHLNameFileGenerator
                     foreach (BHLWS.ItemNameFileLog item in items)
                     {
                         // Create the file
-                        string xml = wsClient.ItemGetNamesXMLByItemID(item.ItemID);
+                        string xml = wsClient.ItemGetNamesXMLByItemID(item.ItemID, item.BarCode);
                         string fileName = String.Format(configParms.NameFileFormat, item.BarCode);
                         string fileLocation = String.Format(configParms.NameFilePathFormat,
                             item.OcrFolderShare, item.FileRootFolder, fileName);
