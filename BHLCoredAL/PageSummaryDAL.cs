@@ -333,5 +333,29 @@ namespace MOBOT.BHL.DAL
             }
         }
     }
+
+    public PageSummaryView PageSummarySegmentSelectByItemAndSequence(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID, int sequence)
+    {
+      SqlConnection connection = CustomSqlHelper.CreateConnection( CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );
+      SqlTransaction transaction = sqlTransaction;
+
+      using ( SqlCommand command = CustomSqlHelper.CreateCommand("PageSummarySegmentSelectByItemAndSequence", connection, transaction,
+          CustomSqlHelper.CreateInputParameter( "ItemID", SqlDbType.Int, null, false, itemID ),
+          CustomSqlHelper.CreateInputParameter( "Sequence", SqlDbType.Int, null, false, sequence ) ) )
+      {
+        using ( CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>() )
+        {
+          List<PageSummaryView> list = helper.ExecuteReader( command );
+          if ( list.Count > 0 )
+          {
+            return list[ 0 ];
+          }
+          else
+          {
+            return null;
+          }
+        }
+      }
+    }
   }
 }

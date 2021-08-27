@@ -224,7 +224,8 @@ namespace MOBOT.BHL.Server
 			try
 			{
 				PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId( pageID );
-                return this.GetFileAccessProvider(useRemoteProvider).FileExists(ps.OcrTextLocation);
+				if (ps == null) ps = new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
+				return this.GetFileAccessProvider(useRemoteProvider).FileExists(ps.OcrTextLocation);
 			}
 			catch ( Exception ex )
 			{

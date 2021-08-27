@@ -186,6 +186,7 @@ namespace MOBOT.BHL.Server
             string webServiceUrl = string.Empty;
 
             PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId(pageID);
+            if (ps == null) ps = new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
             string filepath = ps.OcrTextLocation;
 
             // Get the OCR text
@@ -371,6 +372,7 @@ namespace MOBOT.BHL.Server
             string webServiceUrl = string.Empty;
 
             PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId(pageID);
+            if (ps == null) ps = new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
             string filepath = ps.OcrTextLocation;
 
             // Get the OCR text
@@ -565,6 +567,7 @@ namespace MOBOT.BHL.Server
             if (this.GetFileAccessProvider(useRemoteFileAccessProvider).FileExists(toolPath))
             {
                 PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId(pageID);
+                if (ps == null) ps = new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
                 string filepath = ps.OcrTextLocation;
 
                 if (this.GetFileAccessProvider(useRemoteFileAccessProvider).FileExists(filepath))

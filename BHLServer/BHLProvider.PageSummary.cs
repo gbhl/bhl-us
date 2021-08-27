@@ -152,5 +152,10 @@ namespace MOBOT.BHL.Server
     {
         return new PageSummaryDAL().PageSummarySegmentSelectByPageID(null, null, pageID);
     }
+
+    public PageSummaryView PageSummarySegmentSelectByItemAndSequence(int itemID, int sequence)
+    {
+        return new PageSummaryDAL().PageSummarySegmentSelectByItemAndSequence(null, null, itemID, sequence);
+    }
   }
 }

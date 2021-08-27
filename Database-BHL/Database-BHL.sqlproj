@@ -1145,6 +1145,7 @@
     <None Include="dbo\Stored Procedures\ItemSelectFilenamesBySegmentID.sql" />
     <None Include="dbo\Stored Procedures\ItemSelectTextPathForSegmentID.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectSiblingSegmentsBySegmentID.sql" />
+    <None Include="dbo\Stored Procedures\PageSummarySegmentSelectByItemAndSequence.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

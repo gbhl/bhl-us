@@ -210,6 +210,7 @@ namespace MOBOT.BHL.Server
 			try
 			{
 				PageSummaryView ps = new BHLProvider().PageSummarySelectByItemAndSequence( itemID, 1 );
+                if (ps == null) ps = new BHLProvider().PageSummarySegmentSelectByItemAndSequence(itemID, 1);
 				if ( ps != null )
 				{
 					string filepath = String.Format( ocrTextPath, ps.OCRFolderShare, ps.FileRootFolder, ps.BarCode );
