@@ -295,5 +295,10 @@ namespace MOBOT.BHL.Server
         {
             return new SegmentDAL().SegmentResolve(null, null, doi, startPageID);
         }
+
+        public List<Segment> SegmentSelectRecentlyChanged(string startDate)
+        {
+            return new SegmentDAL().SegmentSelectRecentlyChanged(null, null, startDate);
+        }
     }
 }

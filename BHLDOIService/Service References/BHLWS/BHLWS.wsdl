@@ -2,6 +2,16 @@
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.mobot.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.mobot.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://www.mobot.org/">
+      <s:element name="PageUpdateLastPageNameLookupDate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="pageID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PageUpdateLastPageNameLookupDateResponse">
+        <s:complexType />
+      </s:element>
       <s:element name="PageCheckForOcrText">
         <s:complexType>
           <s:sequence>
@@ -2510,6 +2520,20 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="SegmentSelectRecentlyChanged">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="startDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SegmentSelectRecentlyChangedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SegmentSelectRecentlyChangedResult" type="tns:ArrayOfSegment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="GenerateRISCitation">
         <s:complexType>
           <s:sequence>
@@ -3153,18 +3177,14 @@
       <s:element name="PageUpdateIssueResponse">
         <s:complexType />
       </s:element>
-      <s:element name="PageUpdateLastPageNameLookupDate">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="pageID" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="PageUpdateLastPageNameLookupDateResponse">
-        <s:complexType />
-      </s:element>
     </s:schema>
   </wsdl:types>
+  <wsdl:message name="PageUpdateLastPageNameLookupDateSoapIn">
+    <wsdl:part name="parameters" element="tns:PageUpdateLastPageNameLookupDate" />
+  </wsdl:message>
+  <wsdl:message name="PageUpdateLastPageNameLookupDateSoapOut">
+    <wsdl:part name="parameters" element="tns:PageUpdateLastPageNameLookupDateResponse" />
+  </wsdl:message>
   <wsdl:message name="PageCheckForOcrTextSoapIn">
     <wsdl:part name="parameters" element="tns:PageCheckForOcrText" />
   </wsdl:message>
@@ -3567,6 +3587,12 @@
   <wsdl:message name="SegmentSelectAllRISCitationsSoapOut">
     <wsdl:part name="parameters" element="tns:SegmentSelectAllRISCitationsResponse" />
   </wsdl:message>
+  <wsdl:message name="SegmentSelectRecentlyChangedSoapIn">
+    <wsdl:part name="parameters" element="tns:SegmentSelectRecentlyChanged" />
+  </wsdl:message>
+  <wsdl:message name="SegmentSelectRecentlyChangedSoapOut">
+    <wsdl:part name="parameters" element="tns:SegmentSelectRecentlyChangedResponse" />
+  </wsdl:message>
   <wsdl:message name="GenerateRISCitationSoapIn">
     <wsdl:part name="parameters" element="tns:GenerateRISCitation" />
   </wsdl:message>
@@ -3807,13 +3833,11 @@
   <wsdl:message name="PageUpdateIssueSoapOut">
     <wsdl:part name="parameters" element="tns:PageUpdateIssueResponse" />
   </wsdl:message>
-  <wsdl:message name="PageUpdateLastPageNameLookupDateSoapIn">
-    <wsdl:part name="parameters" element="tns:PageUpdateLastPageNameLookupDate" />
-  </wsdl:message>
-  <wsdl:message name="PageUpdateLastPageNameLookupDateSoapOut">
-    <wsdl:part name="parameters" element="tns:PageUpdateLastPageNameLookupDateResponse" />
-  </wsdl:message>
   <wsdl:portType name="BHLWSSoap">
+    <wsdl:operation name="PageUpdateLastPageNameLookupDate">
+      <wsdl:input message="tns:PageUpdateLastPageNameLookupDateSoapIn" />
+      <wsdl:output message="tns:PageUpdateLastPageNameLookupDateSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="PageCheckForOcrText">
       <wsdl:input message="tns:PageCheckForOcrTextSoapIn" />
       <wsdl:output message="tns:PageCheckForOcrTextSoapOut" />
@@ -4082,6 +4106,10 @@
       <wsdl:input message="tns:SegmentSelectAllRISCitationsSoapIn" />
       <wsdl:output message="tns:SegmentSelectAllRISCitationsSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="SegmentSelectRecentlyChanged">
+      <wsdl:input message="tns:SegmentSelectRecentlyChangedSoapIn" />
+      <wsdl:output message="tns:SegmentSelectRecentlyChangedSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="GenerateRISCitation">
       <wsdl:input message="tns:GenerateRISCitationSoapIn" />
       <wsdl:output message="tns:GenerateRISCitationSoapOut" />
@@ -4242,13 +4270,18 @@
       <wsdl:input message="tns:PageUpdateIssueSoapIn" />
       <wsdl:output message="tns:PageUpdateIssueSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="PageUpdateLastPageNameLookupDate">
-      <wsdl:input message="tns:PageUpdateLastPageNameLookupDateSoapIn" />
-      <wsdl:output message="tns:PageUpdateLastPageNameLookupDateSoapOut" />
-    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BHLWSSoap" type="tns:BHLWSSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PageUpdateLastPageNameLookupDate">
+      <soap:operation soapAction="http://www.mobot.org/PageUpdateLastPageNameLookupDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="PageCheckForOcrText">
       <soap:operation soapAction="http://www.mobot.org/PageCheckForOcrText" style="document" />
       <wsdl:input>
@@ -4852,6 +4885,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SegmentSelectRecentlyChanged">
+      <soap:operation soapAction="http://www.mobot.org/SegmentSelectRecentlyChanged" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GenerateRISCitation">
       <soap:operation soapAction="http://www.mobot.org/GenerateRISCitation" style="document" />
       <wsdl:input>
@@ -5212,18 +5254,18 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="PageUpdateLastPageNameLookupDate">
-      <soap:operation soapAction="http://www.mobot.org/PageUpdateLastPageNameLookupDate" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BHLWSSoap12" type="tns:BHLWSSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PageUpdateLastPageNameLookupDate">
+      <soap12:operation soapAction="http://www.mobot.org/PageUpdateLastPageNameLookupDate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="PageCheckForOcrText">
       <soap12:operation soapAction="http://www.mobot.org/PageCheckForOcrText" style="document" />
       <wsdl:input>
@@ -5827,6 +5869,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SegmentSelectRecentlyChanged">
+      <soap12:operation soapAction="http://www.mobot.org/SegmentSelectRecentlyChanged" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GenerateRISCitation">
       <soap12:operation soapAction="http://www.mobot.org/GenerateRISCitation" style="document" />
       <wsdl:input>
@@ -6180,15 +6231,6 @@
     </wsdl:operation>
     <wsdl:operation name="PageUpdateIssue">
       <soap12:operation soapAction="http://www.mobot.org/PageUpdateIssue" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageUpdateLastPageNameLookupDate">
-      <soap12:operation soapAction="http://www.mobot.org/PageUpdateLastPageNameLookupDate" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

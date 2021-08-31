@@ -15,6 +15,10 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.mobot.org/", ConfigurationName="BHLWS.BHLWSSoap")]
     public interface BHLWSSoap {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateLastPageNameLookupDate", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void PageUpdateLastPageNameLookupDate(int pageID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageCheckForOcrText", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         bool PageCheckForOcrText(int pageID, string ocrTextLocation);
@@ -349,6 +353,11 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         MOBOT.BHL.BHLDOIService.BHLWS.RISCitation[] SegmentSelectAllRISCitations();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectRecentlyChanged", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Segment[] SegmentSelectRecentlyChanged(string startDate);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GenerateRISCitation", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
@@ -551,11 +560,6 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateLastPageNameLookupDate", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void PageUpdateLastPageNameLookupDate(int pageID);
     }
     
     /// <remarks/>
@@ -13407,6 +13411,10 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
                 base(binding, remoteAddress) {
         }
         
+        public void PageUpdateLastPageNameLookupDate(int pageID) {
+            base.Channel.PageUpdateLastPageNameLookupDate(pageID);
+        }
+        
         public bool PageCheckForOcrText(int pageID, string ocrTextLocation) {
             return base.Channel.PageCheckForOcrText(pageID, ocrTextLocation);
         }
@@ -13683,6 +13691,10 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
             return base.Channel.SegmentSelectAllRISCitations();
         }
         
+        public MOBOT.BHL.BHLDOIService.BHLWS.Segment[] SegmentSelectRecentlyChanged(string startDate) {
+            return base.Channel.SegmentSelectRecentlyChanged(startDate);
+        }
+        
         public string GenerateRISCitation(MOBOT.BHL.BHLDOIService.BHLWS.RISCitation citation) {
             return base.Channel.GenerateRISCitation(citation);
         }
@@ -13875,10 +13887,6 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         
         public void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID) {
             base.Channel.PageUpdateIssue(pageIDs, issuePrefix, issue, userID);
-        }
-        
-        public void PageUpdateLastPageNameLookupDate(int pageID) {
-            base.Channel.PageUpdateLastPageNameLookupDate(pageID);
         }
     }
 }

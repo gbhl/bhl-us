@@ -15,6 +15,13 @@ namespace BHL.Export.BHLWS {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.mobot.org/", ConfigurationName="BHLWS.BHLWSSoap")]
     public interface BHLWSSoap {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateLastPageNameLookupDate", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void PageUpdateLastPageNameLookupDate(int pageID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateLastPageNameLookupDate", ReplyAction="*")]
+        System.Threading.Tasks.Task PageUpdateLastPageNameLookupDateAsync(int pageID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageCheckForOcrText", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         bool PageCheckForOcrText(int pageID, string ocrTextLocation);
@@ -481,10 +488,10 @@ namespace BHL.Export.BHLWS {
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemGetNamesXMLByItemID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        string ItemGetNamesXMLByItemID(int itemID);
+        string ItemGetNamesXMLByItemID(int itemID, string barcode);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemGetNamesXMLByItemID", ReplyAction="*")]
-        System.Threading.Tasks.Task<string> ItemGetNamesXMLByItemIDAsync(int itemID);
+        System.Threading.Tasks.Task<string> ItemGetNamesXMLByItemIDAsync(int itemID, string barcode);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectPublished", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -549,6 +556,14 @@ namespace BHL.Export.BHLWS {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectAllRISCitations", ReplyAction="*")]
         System.Threading.Tasks.Task<BHL.Export.BHLWS.RISCitation[]> SegmentSelectAllRISCitationsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectRecentlyChanged", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        BHL.Export.BHLWS.Segment[] SegmentSelectRecentlyChanged(string startDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectRecentlyChanged", ReplyAction="*")]
+        System.Threading.Tasks.Task<BHL.Export.BHLWS.Segment[]> SegmentSelectRecentlyChangedAsync(string startDate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GenerateRISCitation", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -872,14 +887,6 @@ namespace BHL.Export.BHLWS {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateIssue", ReplyAction="*")]
         System.Threading.Tasks.Task PageUpdateIssueAsync(int[] pageIDs, string issuePrefix, string issue, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateLastPageNameLookupDate", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void PageUpdateLastPageNameLookupDate(int pageID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateLastPageNameLookupDate", ReplyAction="*")]
-        System.Threading.Tasks.Task PageUpdateLastPageNameLookupDateAsync(int pageID);
     }
     
     /// <remarks/>
@@ -6265,6 +6272,10 @@ namespace BHL.Export.BHLWS {
         
         private string itemVolumeField;
         
+        private string itemSeriesField;
+        
+        private string itemIssueField;
+        
         private string itemYearField;
         
         private string contributorNameField;
@@ -6475,6 +6486,30 @@ namespace BHL.Export.BHLWS {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public string ItemSeries {
+            get {
+                return this.itemSeriesField;
+            }
+            set {
+                this.itemSeriesField = value;
+                this.RaisePropertyChanged("ItemSeries");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public string ItemIssue {
+            get {
+                return this.itemIssueField;
+            }
+            set {
+                this.itemIssueField = value;
+                this.RaisePropertyChanged("ItemIssue");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
         public string ItemYear {
             get {
                 return this.itemYearField;
@@ -6486,7 +6521,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
         public string ContributorName {
             get {
                 return this.contributorNameField;
@@ -6498,7 +6533,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
         public string GenreName {
             get {
                 return this.genreNameField;
@@ -6510,7 +6545,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
         public string StatusName {
             get {
                 return this.statusNameField;
@@ -6522,7 +6557,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
         public string LanguageName {
             get {
                 return this.languageNameField;
@@ -6534,7 +6569,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=18)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=20)]
         public System.Nullable<int> EndPageID {
             get {
                 return this.endPageIDField;
@@ -6546,7 +6581,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
         public string DOIName {
             get {
                 return this.dOINameField;
@@ -6558,7 +6593,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
         public string Authors {
             get {
                 return this.authorsField;
@@ -6570,7 +6605,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
         public string AuthorIDs {
             get {
                 return this.authorIDsField;
@@ -6582,7 +6617,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
         public string Keywords {
             get {
                 return this.keywordsField;
@@ -6594,7 +6629,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
         public string AdditionalPages {
             get {
                 return this.additionalPagesField;
@@ -6606,7 +6641,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
         public short IsPrimary {
             get {
                 return this.isPrimaryField;
@@ -6618,7 +6653,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
         public bool HasLocalContent {
             get {
                 return this.hasLocalContentField;
@@ -6630,7 +6665,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=28)]
         public bool HasExternalContent {
             get {
                 return this.hasExternalContentField;
@@ -6642,7 +6677,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=27)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=29)]
         public System.Nullable<int> SequenceOrder {
             get {
                 return this.sequenceOrderField;
@@ -6654,7 +6689,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=28)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=30)]
         public int SegmentStatusID {
             get {
                 return this.segmentStatusIDField;
@@ -6666,7 +6701,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=29)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=31)]
         public string Notes {
             get {
                 return this.notesField;
@@ -6678,7 +6713,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=30)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=32)]
         public Item Item {
             get {
                 return this.itemField;
@@ -6690,7 +6725,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=31)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=33)]
         public ItemAuthor[] AuthorList {
             get {
                 return this.authorListField;
@@ -6702,7 +6737,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=32)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=34)]
         public ItemKeyword[] KeywordList {
             get {
                 return this.keywordListField;
@@ -6714,7 +6749,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=33)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=35)]
         public ItemIdentifier[] IdentifierList {
             get {
                 return this.identifierListField;
@@ -6726,7 +6761,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=34)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=36)]
         public Institution[] ContributorList {
             get {
                 return this.contributorListField;
@@ -6738,7 +6773,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=35)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=37)]
         public ItemPage[] PageList {
             get {
                 return this.pageListField;
@@ -6750,7 +6785,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=36)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=38)]
         public Name[] NameList {
             get {
                 return this.nameListField;
@@ -6762,7 +6797,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=37)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=39)]
         public Segment[] RelatedSegmentList {
             get {
                 return this.relatedSegmentListField;
@@ -6774,7 +6809,7 @@ namespace BHL.Export.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=38)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=40)]
         public ItemRelationship[] RelationshipList {
             get {
                 return this.relationshipListField;
@@ -13703,6 +13738,14 @@ namespace BHL.Export.BHLWS {
                 base(binding, remoteAddress) {
         }
         
+        public void PageUpdateLastPageNameLookupDate(int pageID) {
+            base.Channel.PageUpdateLastPageNameLookupDate(pageID);
+        }
+        
+        public System.Threading.Tasks.Task PageUpdateLastPageNameLookupDateAsync(int pageID) {
+            return base.Channel.PageUpdateLastPageNameLookupDateAsync(pageID);
+        }
+        
         public bool PageCheckForOcrText(int pageID, string ocrTextLocation) {
             return base.Channel.PageCheckForOcrText(pageID, ocrTextLocation);
         }
@@ -14182,12 +14225,12 @@ namespace BHL.Export.BHLWS {
             return base.Channel.ItemCheckForOcrTextAsync(itemID, ocrTextPath);
         }
         
-        public string ItemGetNamesXMLByItemID(int itemID) {
-            return base.Channel.ItemGetNamesXMLByItemID(itemID);
+        public string ItemGetNamesXMLByItemID(int itemID, string barcode) {
+            return base.Channel.ItemGetNamesXMLByItemID(itemID, barcode);
         }
         
-        public System.Threading.Tasks.Task<string> ItemGetNamesXMLByItemIDAsync(int itemID) {
-            return base.Channel.ItemGetNamesXMLByItemIDAsync(itemID);
+        public System.Threading.Tasks.Task<string> ItemGetNamesXMLByItemIDAsync(int itemID, string barcode) {
+            return base.Channel.ItemGetNamesXMLByItemIDAsync(itemID, barcode);
         }
         
         public BHL.Export.BHLWS.Item[] ItemSelectPublished() {
@@ -14252,6 +14295,14 @@ namespace BHL.Export.BHLWS {
         
         public System.Threading.Tasks.Task<BHL.Export.BHLWS.RISCitation[]> SegmentSelectAllRISCitationsAsync() {
             return base.Channel.SegmentSelectAllRISCitationsAsync();
+        }
+        
+        public BHL.Export.BHLWS.Segment[] SegmentSelectRecentlyChanged(string startDate) {
+            return base.Channel.SegmentSelectRecentlyChanged(startDate);
+        }
+        
+        public System.Threading.Tasks.Task<BHL.Export.BHLWS.Segment[]> SegmentSelectRecentlyChangedAsync(string startDate) {
+            return base.Channel.SegmentSelectRecentlyChangedAsync(startDate);
         }
         
         public string GenerateRISCitation(BHL.Export.BHLWS.RISCitation citation) {
@@ -14637,14 +14688,6 @@ namespace BHL.Export.BHLWS {
         
         public System.Threading.Tasks.Task PageUpdateIssueAsync(int[] pageIDs, string issuePrefix, string issue, int userID) {
             return base.Channel.PageUpdateIssueAsync(pageIDs, issuePrefix, issue, userID);
-        }
-        
-        public void PageUpdateLastPageNameLookupDate(int pageID) {
-            base.Channel.PageUpdateLastPageNameLookupDate(pageID);
-        }
-        
-        public System.Threading.Tasks.Task PageUpdateLastPageNameLookupDateAsync(int pageID) {
-            return base.Channel.PageUpdateLastPageNameLookupDateAsync(pageID);
         }
     }
 }

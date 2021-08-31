@@ -1077,5 +1077,22 @@ namespace MOBOT.BHL.DAL
                 }
             }
         }
+
+        public List<Segment> SegmentSelectRecentlyChanged(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string startDate)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectRecentlyChanged", connection, transaction,
+                 CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.DateTime, null, false, startDate)
+                ))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
     }
 }

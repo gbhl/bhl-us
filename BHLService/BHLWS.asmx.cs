@@ -266,6 +266,13 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
+        public List<Segment> SegmentSelectRecentlyChanged(string startDate)
+        {
+            BHLProvider bhlServer = new BHLProvider();
+            return bhlServer.SegmentSelectRecentlyChanged(startDate);
+        }
+
+        [WebMethod]
         public string GenerateRISCitation(RISCitation citation)
         {
             return new BHLProvider().GenerateRISCitation(citation);
