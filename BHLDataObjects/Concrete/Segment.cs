@@ -378,6 +378,11 @@ namespace MOBOT.BHL.DataObjects
                 {
                     _contributorName = Utility.EmptyIfNull(column.Value);
                 }
+                if (column.Name == "ContributorCodes")
+                {
+                    string[] codes = Utility.EmptyIfNull(column.Value).Split('|');
+                    foreach (string code in codes) _contributorList.Add(new Institution { InstitutionCode = code });
+                }
                 if (column.Name == "GenreName")
                 {
                     _genreName = Utility.EmptyIfNull(column.Value);

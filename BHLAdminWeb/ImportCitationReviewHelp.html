@@ -34,29 +34,29 @@
             <li>View and edit the production BHL Author identifiers associated with the segment authors.  Authors matched to existing records will include the ID of
                 the production record (i.e. "John Doe (BHL ID 12345)").  Click the "Edit" link next to the author if the matched production record is incorrect.</li>
             <li>Change the status of individual rows (for more information, see below).</li>
-            <li>Click the "Import File" button to import records with "New" status into production.</li>
-            <li>Click the "Reject File" button to reject all records with a "New' status."</li>
+            <li>Click the "Import File" button to import records with "OK" status into production.</li>
+            <li>Click the "Reject File" button to reject all records with an "OK" status."</li>
         </ul>
     </p>
     <p>The status of each row controls the action that will be taken on the row.</p>
     <p>
         <ul>
-            <li>Rows with a status of "New" are ready to be imported.  <b>Only rows in this status will be imported.</b></li>
+            <li>Rows with a status of "OK" are ready to be imported.  <b>Only rows in this status will be imported.</b></li>
             <li>A row with a "Rejected" status will not be imported.  This status is set by the person performing the import.</li>
             <li>A row with an "Error" status failed to import.  Check the error messages to determine the reason.</li>
-            <li>A row with an "Incomplete" status is missing some required data, and will not be imported.  Can be overridden by setting the status to "New".</li>
-            <li>A row with a "Duplicate" status duplicates a segment already in BHL, and will not be imported.  Can be overridden by setting the status to "New".</li>
+            <li>A row with an "Warning" status is missing some required data or may have some invalid data, and will not be imported.  Can be overridden by setting the status to "OK".</li>
+            <li>A row with a "Duplicate" status duplicates a segment already in BHL, and will not be imported.  Can be overridden by setting the status to "OK".</li>
             <li>A row with an "Invalid" status includes some invalid data, and will not be imported.  Check the error messages, correct the data at the source, and re-import.</li>
             <li>Rows with a status of "Imported" have been imported.  This status cannot be changed.</li>
         </ul>
     </p>
-    <p>Change the status of any row by clicking on the status of the row.  A dropdown of available status values will appear.  Pick the desired new status from the list.</p>
+    <p>Change the status of any row by clicking on the status of the row.  A dropdown of available status values will appear.  Pick the desired status from the list.</p>
     <p>When the statuses of all rows have been set, take one of the following actions:</p>
     <p>
         <ul>
-            <li>Import all "New" rows by clicking the "Import File" button.</li>
-            <li>Reject all "New" rows by clicking the "Reject File" button.</li>
-            <li>Leave the page without taking any action on the "New" rows by clicking "Return to Dashboard" or "View Segment Import History" links in the upper left.</li>
+            <li>Import all "OK" rows by clicking the "Import File" button.</li>
+            <li>Reject all "OK" rows by clicking the "Reject File" button.</li>
+            <li>Leave the page without taking any action on the "OK" rows by clicking "Return to Dashboard" or "View Segment Import History" links in the upper left.</li>
         </ul>
     </p>
 </body>

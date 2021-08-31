@@ -248,7 +248,7 @@ namespace MOBOT.BHL.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("import.PageSelectRangeForPagesAndItem", connection, transaction,
                     CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, false, startPageID),
                     CustomSqlHelper.CreateInputParameter("EndPageID", SqlDbType.Int, null, false, endPageID),
-                    CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
+                    CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID)))
             {
                 using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
                 {
@@ -288,16 +288,41 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        /// <summary>
+        /// Return the page IDs that match the specified Segment and Page Number.
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="segmentID"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
+        public List<Page> PageSelectBySegmentAndPageNumber(SqlConnection sqlConnection,SqlTransaction sqlTransaction, int segmentID, string pageNumber)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.PageSelectBySegmentAndPageNumber", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID),
+                    CustomSqlHelper.CreateInputParameter("PageNumber", SqlDbType.NVarChar, 20, false, pageNumber)))
+            {
+                using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
+                {
+                    List<Page> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
         #endregion
 
-		/// <summary>
-		/// Update the LastPageNameLookupDate for the specified Page.
-		/// </summary>
-		/// <param name="sqlConnection">Sql connection or null</param>
-		/// <param name="sqlTransaction">Sql transaction or null</param>
-		/// <param name="pageID">Identifier of a specific page</param>
-		/// <returns>The updated page</returns>
-		public Page PageUpdateLastPageNameLookupDate( SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID )
+        /// <summary>
+        /// Update the LastPageNameLookupDate for the specified Page.
+        /// </summary>
+        /// <param name="sqlConnection">Sql connection or null</param>
+        /// <param name="sqlTransaction">Sql transaction or null</param>
+        /// <param name="pageID">Identifier of a specific page</param>
+        /// <returns>The updated page</returns>
+        public Page PageUpdateLastPageNameLookupDate( SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID )
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection( 
 				CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );

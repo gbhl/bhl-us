@@ -80,21 +80,37 @@ namespace MOBOT.BHL.AdminWeb.Services
             context.Response.Flush();
 
             // Write file header
-            csvString.AppendLine("\"Status\",\"Type\",\"Title\",\"Translated Title\",\"Authors\",\"Keywords\",\"Journal\",\"Volume\",\"Series\",\"Issue\",\"Edition\",\"Publication Details\",\"Publisher Name\",\"Publisher Place\",\"Year\",\"Journal Start Year\",\"Journal End Year\",\"Language\",\"Rights\",\"DueDiligence\",\"CopyrightStatus\",\"License\",\"LicenseUrl\",\"PageRange\",\"StartPage\",\"EndPage\",\"Url\",\"DownloadUrl\",\"Article DOI\",\"ISSN\",\"ISBN\",\"OCLC\",\"LCCN\",\"Summary\",\"Notes\",\"ItemID\",\"StartPageID\",\"EndPageID\",\"Errors\"");
+            csvString.AppendLine("\"Status\",\"Type\",\"ItemID\",\"SegmentID\",\"Title\",\"Translated Title\",\"Authors\",\"Keywords\",\"Contributors\",\"Journal\",\"Volume\",\"Series\",\"Issue\",\"Edition\",\"Publication Details\",\"Publisher Name\",\"Publisher Place\",\"Year\",\"Journal Start Year\",\"Journal End Year\",\"Language\",\"Rights\",\"DueDiligence\",\"CopyrightStatus\",\"License\",\"LicenseUrl\",\"PageRange\",\"StartPage\",\"EndPage\",\"Url\",\"DownloadUrl\",\"Article DOI\",\"ISSN\",\"ISBN\",\"OCLC\",\"LCCN\",\"ARK\",\"BioStor\",\"JSTOR\",\"TL2\",\"Wikidata\",\"Summary\",\"Notes\",\"Pages\",\"Errors\",\"Warnings\"");
 
             context.Response.Write(csvString.ToString());
             context.Response.Flush();
 
             foreach (ImportRecord record in searchResult)
             {
+                if (!string.IsNullOrWhiteSpace(record.AuthorString))
+                {
+                    string[] authors = record.AuthorString.Split(new string[] { "+++" }, StringSplitOptions.RemoveEmptyEntries);
+                    List<string> newAuthors = new List<string>();
+                    foreach (string author in authors)
+                    {
+                        //string newAuthor =  (author.Split('|')[1].ToUpper() == "NULL") ? "NULL" : string.Join("|", (new string[] { author.Split('|')[2], author.Split('|')[3] }));
+                        //if (!string.IsNullOrWhiteSpace(newAuthor)) newAuthors.Add(newAuthor);
+                        newAuthors.Add(author.Split('|')[1]);
+                    }
+                    record.AuthorString = string.Join("+++", newAuthors.ToArray());
+                }
+
                 // Write record
                 csvString.Remove(0, csvString.Length);
                 csvString.Append("\"" + record.StatusName + "\",");
                 csvString.Append("\"" + record.Genre + "\",");
+                csvString.Append("\"" + record.ItemID.ToString() + "\",");
+                csvString.Append("\"" + record.SegmentID.ToString() + "\",");
                 csvString.Append("\"" + record.Title.Replace("\"", "'") + "\",");
                 csvString.Append("\"" + record.TranslatedTitle.Replace("\"", "'") + "\",");
                 csvString.Append("\"" + record.AuthorString.Replace("\"", "'") + "\",");
                 csvString.Append("\"" + record.KeywordString.Replace("\"", "'") + "\",");
+                csvString.Append("\"" + record.ContributorString.Replace("\"", "'") + "\",");
                 csvString.Append("\"" + record.JournalTitle.Replace("\"", "'") + "\",");
                 csvString.Append("\"" + record.Volume.Replace("\"", "'") + "\",");
                 csvString.Append("\"" + record.Series.Replace("\"", "'") + "\",");
@@ -122,12 +138,16 @@ namespace MOBOT.BHL.AdminWeb.Services
                 csvString.Append("\"" + record.ISBN + "\",");
                 csvString.Append("\"" + record.OCLC + "\",");
                 csvString.Append("\"" + record.LCCN + "\",");
+                csvString.Append("\"" + record.ARK + "\",");
+                csvString.Append("\"" + record.Biostor + "\",");
+                csvString.Append("\"" + record.JSTOR + "\",");
+                csvString.Append("\"" + record.TL2 + "\",");
+                csvString.Append("\"" + record.Wikidata + "\",");
                 csvString.Append("\"" + record.Summary.Replace('\n', ' ').Replace('\r', ' ').Replace("\"", "'") + "\",");
                 csvString.Append("\"" + record.Notes.Replace('\n', ' ').Replace('\r', ' ').Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.ItemID.ToString() + "\",");
-                csvString.Append("\"" + record.StartPageID.ToString() + "\",");
-                csvString.Append("\"" + record.EndPageID.ToString() + "\",");
-                csvString.AppendLine("\"" + record.ErrorString.Replace("\"", "'") + "\",");
+                csvString.Append("\"" + record.PageString + "\",");
+                csvString.Append("\"" + record.ErrorString.Replace("\"", "'") + "\",");
+                csvString.AppendLine("\"" + record.WarningString.Replace("\"", "'") + "\"");
 
                 context.Response.Write(csvString.ToString());
                 context.Response.Flush();

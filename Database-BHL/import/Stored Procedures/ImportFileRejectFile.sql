@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE import.ImportFileRejectFile
+﻿CREATE PROCEDURE [import].[ImportFileRejectFile]
 
 @ImportFileID int,
 @UserID int
@@ -15,8 +15,8 @@ BEGIN TRY
 	IF (@ImportFileRejectedID IS NULL) RAISERROR('ImportFileStatus -Rejected- not found', 0, 1)
 
 	DECLARE @ImportRecordNewID int
-	SELECT @ImportRecordNewID = ImportRecordStatusID FROM import.ImportRecordStatus WHERE StatusName = 'New'
-	IF (@ImportRecordNewID IS NULL) RAISERROR('ImportRecordStatus -New- not found', 0, 1)
+	SELECT @ImportRecordNewID = ImportRecordStatusID FROM import.ImportRecordStatus WHERE StatusName = 'OK'
+	IF (@ImportRecordNewID IS NULL) RAISERROR('ImportRecordStatus -OK- not found', 0, 1)
 
 	DECLARE @ImportRecordRejectedID int
 	SELECT @ImportRecordRejectedID = ImportRecordStatusID FROM import.ImportRecordStatus WHERE StatusName = 'Rejected'
@@ -31,7 +31,7 @@ BEGIN TRY
 			LastModifiedUserID = @UserID
 	WHERE	ImportFileID = @ImportFileID
 
-	-- Set all "New" records in the file to "Rejected"
+	-- Set all "OK" records in the file to "Rejected"
 	UPDATE	import.ImportRecord
 	SET		ImportRecordStatusID = @ImportRecordRejectedID,
 			LastModifiedDate = GETDATE(),
@@ -56,3 +56,5 @@ BEGIN CATCH
 END CATCH
 
 END
+
+GO

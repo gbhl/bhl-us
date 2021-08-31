@@ -15,7 +15,6 @@
 					null,
 					null,
 					null,
-					null,
                     null,
 					{ "bSortable": false },
 					{ "bSortable": false },
@@ -26,7 +25,7 @@
 					{ "bSortable": false },
 					{ "bSortable": false }
 				]
-                ,"aaSorting": [[4,'desc']]
+                ,"aaSorting": [[3,'desc']]
 			} );
 		} );
 	</script>
@@ -49,7 +48,7 @@
 {
     
     <div style="margin-bottom:10px">
-        <div>Contributor: @Html.DropDownListFor(m => m.Institution, new SelectList(ViewBag.InstitutionList, "InstitutionCode", "InstitutionName"), "-- All --")</div>
+        <div>User: @Html.DropDownListFor(m => m.User, new SelectList(ViewBag.UserList, "Key", "Value"), "-- All --")</div>
         <div>Import Status: @Html.DropDownListFor(m => m.ImportFileStatus, new SelectList(ViewBag.ImportFileStatusList, "ImportFileStatusID", "StatusName"), "-- All --")</div>
         <div>Dates: @Html.DropDownListFor(m => m.ReportDateRange, new SelectList(ViewBag.ReportDateRangeList, "key", "value", "1"), "-- All --")</div>
         <div><input type="submit" name="btnShow" id="btnShow" value="Update" /></div>
@@ -63,15 +62,14 @@
             </tr>
 		    <tr>
 			    <th width="20%">Filename</th>
-			    <th width="20%">Contributor</th>
 			    <th width="10%">Status</th>
                 <th width="16%">User</th>
                 <th width="10%">Date</th>
 			    <th width="3%">Total</th>
-			    <th width="3%">New</th>
+			    <th width="3%">OK</th>
 			    <th width="3%">Import</th>
                 <th width="3%">Invalid</th>
-                <th width="3%">Incomplete</th>
+                <th width="3%">Warning</th>
                 <th width="3%">Duplicate</th>
 			    <th width="3%">Reject</th>
 			    <th width="3%">Error</th>
@@ -83,7 +81,6 @@
             {
                 <tr>
                     <td><a href="/citationimport/review/@importFile.ImportFileID">@importFile.ImportFileNameClean</a></td>
-                    <td>@importFile.ContributorName</td>
                     <td>@importFile.StatusName</td>
                     <td>@importFile.CreationUser</td>
                     <td>@importFile.LastModifiedDate.ToString("yyyy/MM/dd HH:mm:ss")</td>
@@ -91,7 +88,7 @@
                     <td class="importHistAlign">@importFile.NewRecords</td>
                     <td class="importHistAlign">@importFile.ImportedRecords</td>
                     <td class="importHistAlign">@importFile.InvalidRecords</td>
-                    <td class="importHistAlign">@importFile.IncompleteRecords</td>
+                    <td class="importHistAlign">@importFile.WarningRecords</td>
                     <td class="importHistAlign">@importFile.DuplicateRecords</td>
                     <td class="importHistAlign">@importFile.RejectedRecords</td>
                     <td class="importHistAlign">@importFile.ErrorRecords</td>
@@ -102,15 +99,14 @@
 	    <tfoot>
 		    <tr>
 			    <th>Filename</th>
-			    <th>Contributor</th>
 			    <th>Status</th>
                 <th>User</th>
 			    <th>Date</th>
 			    <th>Total</th>
-			    <th>New</th>
+			    <th>OK</th>
 			    <th>Import</th>
                 <th>Invalid</th>
-                <th>Incomplete</th>
+                <th>Warning</th>
                 <th>Duplicate</th>
 			    <th>Reject</th>
 			    <th>Error</th>

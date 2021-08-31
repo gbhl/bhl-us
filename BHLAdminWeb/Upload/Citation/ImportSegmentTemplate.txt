@@ -1,1 +1,1 @@
-﻿Title	Translated Title	Item ID	Volume	Issue	Series	Date	Language	Authors	Start Page	End Page	Start Page BHL ID	End Page BHL ID	Additional Page IDs	Article DOI
+﻿Segment ID	Title	Translated Title	Item ID	Volume	Issue	Series	Date	Language	Authors	Start Page	End Page	Start Page BHL ID	End Page BHL ID	Additional Page IDs	Article DOI	Contributors

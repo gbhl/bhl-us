@@ -23,9 +23,9 @@ BEGIN TRY
 
 	-- Get status IDs
 	DECLARE @ImportRecordNewID int
-	SELECT @ImportRecordNewID = ImportRecordStatusID FROM import.ImportRecordStatus WHERE StatusName = 'New'
-	IF (@ImportRecordNewID IS NULL) RAISERROR('ImportRecordStatus -New- not found', 0, 1)
-
+	SELECT @ImportRecordNewID = ImportRecordStatusID FROM import.ImportRecordStatus WHERE StatusName = 'OK'
+	IF (@ImportRecordNewID IS NULL) RAISERROR('ImportRecordStatus -OK- not found', 0, 1)
+ 
 	-- Get the creators to be created
 	INSERT	#tmpRecordCreator
 	SELECT DISTINCT c.FullName, c.FirstName, c.LastName, c.StartYear, c.EndYear, c.AuthorType
@@ -34,6 +34,7 @@ BEGIN TRY
 	WHERE	r.ImportFileID = @ImportFileID
 	AND		r.ImportRecordStatusID = @ImportRecordNewID
 	AND		c.ProductionAuthorID IS NULL
+	AND		c.FullName <> 'NULL'
 
 	-- Add the new creators to production (making note of the new production AuthorIDs)
 	DECLARE @NewAuthorID int

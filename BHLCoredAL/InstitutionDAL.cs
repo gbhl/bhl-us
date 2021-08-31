@@ -25,6 +25,25 @@ namespace MOBOT.BHL.DAL
 			}
 		}
 
+        public Institution InstitutionSelectByName(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string institutionName)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectByName", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("InstitutionName", SqlDbType.NVarChar, 255, false, institutionName)))
+            {
+                using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
+                {
+                    List<Institution> list = helper.ExecuteReader(command);
+                    if (list.Count > 0)
+                        return list[0];
+                    else
+                        return null;
+                }
+            }
+        }
+
         public Institution InstitutionSelectWithGroups(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,

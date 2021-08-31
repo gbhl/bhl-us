@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.SegmentSelectByTitleID
+﻿CREATE PROCEDURE [dbo].[SegmentSelectByTitleID]
 
 @TitleID int
 
@@ -7,6 +7,9 @@ AS
 BEGIN
 
 SET NOCOUNT ON
+
+DECLARE @ContributorRoleID INT
+SELECT @ContributorRoleID = InstitutionRoleID FROM dbo.InstitutionRole WHERE InstitutionRoleName = 'Contributor'
 
 ------------------------------------------------------------------------------------------------------
 -- Accumulate a list of segments for the specified title, with the Start, End, and Additional Page IDs
@@ -115,6 +118,7 @@ SELECT	s.SegmentID,
 		l.LanguageName,
 		dbo.fnAuthorIDStringForSegment(s.SegmentID) AS AuthorIDs,
 		dbo.fnCOinSAuthorStringForSegment(s.SegmentID) AS Authors,
+		dbo.fnInstitutionCodesForItem(s.ItemID, @ContributorRoleID) AS ContributorCodes,
 		s.StartPageNumber,
 		s.EndPageNumber,
 		s.StartPageID,

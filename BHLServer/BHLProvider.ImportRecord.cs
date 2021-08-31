@@ -25,6 +25,18 @@ namespace MOBOT.BHL.Server
                 sortColumn, sortDirection, extended);
         }
 
+        public List<ImportRecordReview> ImportRecordSelectForReviewByImportFileID(int importFileID, int numRows, int startRow,
+            string sortColumn, string sortDirection, int extended = 0)
+        {
+            return new ImportRecordDAL().ImportRecordSelectForReviewByImportFileID(null, null, importFileID, numRows, startRow,
+                sortColumn, sortDirection, extended);
+        }
+
+        public List<ImportRecordReview> ImportRecordSelectForReviewByImportRecordID(int importRecordID)
+        {
+            return new ImportRecordDAL().ImportRecordSelectForReviewByImportRecordID(null, null, importRecordID);
+        }
+
         public void ImportRecordSave(ImportRecord citation, int userID)
         {
             // Perform the following actions if the record is new
@@ -47,28 +59,30 @@ namespace MOBOT.BHL.Server
                 if (citation.ImportRecordStatusID == default(int))
                 {
                     // Check for completeness of the imported record.
-                    if (!IsImportRecordComplete(citation))
+                    if (!IsImportRecordComplete(citation) || citation.Warnings.Count > 0)
                     {
-                        citation.ImportRecordStatusID = (int)DataObjects.Enum.ImportRecordStatus.Incomplete;
+                        citation.ImportRecordStatusID = (int)DataObjects.Enum.ImportRecordStatus.Warning;
                     }
                 }
 
                 if (citation.ImportRecordStatusID == default(int))
                 {
-
-                    // Resolve with production segments.  If duplicates found, set status to Duplicate.
-                    List<Segment> segments = SegmentResolve(citation.DOI, citation.StartPageID ?? 0);
-                    if (segments.Count > 0)
+                    if (citation.SegmentID == null)
                     {
-                        citation.ImportRecordStatusID = (int)DataObjects.Enum.ImportRecordStatus.Duplicate;
+                        // Resolve with production segments.  If duplicates found, set status to Duplicate.
+                        List<Segment> segments = SegmentResolve(citation.DOI, citation.StartPageID ?? 0);
+                        if (segments.Count > 0)
+                        {
+                            citation.ImportRecordStatusID = (int)DataObjects.Enum.ImportRecordStatus.Duplicate;
+                        }
                     }
                 }
             }
 
-            // If no status set, set it to New
+            // If no status set, set it to OK
             if (citation.ImportRecordStatusID == default(int))
             {
-                citation.ImportRecordStatusID = (int)BHL.DataObjects.Enum.ImportRecordStatus.New;
+                citation.ImportRecordStatusID = (int)BHL.DataObjects.Enum.ImportRecordStatus.OK;
             }
 
             new ImportRecordDAL().ImportRecordSave(null, null, citation, userID);
@@ -80,11 +94,12 @@ namespace MOBOT.BHL.Server
 			ImportRecord savedImportRecord = dal.ImportRecordSelectAuto(null, null, importRecordID);
 			if ( savedImportRecord != null )
 			{
-                // If changing 'Incomplete' or 'Rejected' status to 'New', then resolve this record 
+                // If changing 'Warning' or 'Rejected' status to 'OK', then resolve this record 
                 // against production data to determine if it is a duplicate of an existing segment.
-                if (importRecordStatusID == (int)DataObjects.Enum.ImportRecordStatus.New &&
-                    (savedImportRecord.ImportRecordStatusID == (int)DataObjects.Enum.ImportRecordStatus.Incomplete ||
-                    savedImportRecord.ImportRecordStatusID == (int)DataObjects.Enum.ImportRecordStatus.Rejected))
+                if (importRecordStatusID == (int)DataObjects.Enum.ImportRecordStatus.OK &&
+                    (savedImportRecord.ImportRecordStatusID == (int)DataObjects.Enum.ImportRecordStatus.Warning ||
+                    savedImportRecord.ImportRecordStatusID == (int)DataObjects.Enum.ImportRecordStatus.Rejected) &&
+                    savedImportRecord.SegmentID == null)
                 {
                     // Resolve with production segments.  If duplicates found, set status to Duplicate.
                     List<Segment> segments = SegmentResolve(savedImportRecord.DOI,
@@ -126,10 +141,10 @@ namespace MOBOT.BHL.Server
         }
 
         /// <summary>
-        /// Ensure that the imported record has valid Title, Item, and Page IDs (if they were provided).
+        /// Ensure that the imported record has valid Title, Item, Segment, and Page IDs (if they were provided).
         /// Also look for invalid author names (ex. "et al"), invalid author IDs, and mal-formed DOIs.
         /// 
-        /// The "final" fields for all valid identifiers should be populated (ex. ItemID, TitleID, list 
+        /// The "final" fields for all valid identifiers should be populated (ex. ItemID, TitleID, SegmentID, list 
         /// of ImportRecordPage records).
         /// </summary>
         /// <param name="citation"></param>
@@ -157,12 +172,44 @@ namespace MOBOT.BHL.Server
                 }
             }
 
+            // Check data type of segment identifier
+            if (string.IsNullOrWhiteSpace(citation.SegmentIDString))
+            {
+                citation.SegmentID = null;
+                citation.ImportSegmentID = null;
+            }
+            else
+            {
+                if (Int32.TryParse(citation.SegmentIDString, out int segmentID))
+                {
+                    citation.SegmentID = segmentID;
+                    citation.ImportSegmentID = segmentID;
+                }
+                else
+                {
+                    citation.SegmentID = null;
+                    citation.ImportSegmentID = null;
+                    citation.Errors.Add(GetNewImportRecordError(string.Format("Invalid Segment ID {0}", citation.SegmentIDString)));
+                    isValid = false;
+                }
+            }
+
             // Make sure Item ID is valid BHL identifier
             if (citation.ItemID != null)
             {
                 if (BookSelectAuto((int)citation.ItemID) == null)
                 {
                     citation.Errors.Add(GetNewImportRecordError(string.Format("Item {0} not found", citation.ItemIDString)));
+                    isValid = false;
+                }
+            }
+
+            // Make sure Segment ID is valid BHL identifier
+            if (citation.SegmentID != null)
+            {
+                if (SegmentSelectAuto((int)citation.SegmentID) == null)
+                {
+                    citation.Errors.Add(GetNewImportRecordError(string.Format("Segment {0} not found", citation.SegmentIDString)));
                     isValid = false;
                 }
             }
@@ -188,7 +235,11 @@ namespace MOBOT.BHL.Server
                     }
                     else
                     {
-                        if (citation.ItemID == null) citation.ItemID = page.BookID;
+                        if (citation.ItemID == null) 
+                        { 
+                            citation.ItemID = page.BookID; 
+                            citation.ItemIDString = page.BookID.ToString(); 
+                        }
                     }
                 }
             }
@@ -211,13 +262,28 @@ namespace MOBOT.BHL.Server
                     }
                     else
                     {
-                        if (citation.ItemID == null) citation.ItemID = page.BookID;
+                        if (citation.ItemID == null) 
+                        { 
+                            citation.ItemID = page.BookID; 
+                            citation.ItemIDString = page.BookID.ToString(); 
+                        }
                     }
                 }
             }
 
+            // Given a segment ID, find the related Item ID.
+            if (citation.ItemID == null && citation.SegmentID != null)
+            {
+                Segment segment = SegmentSelectForSegmentID((int)citation.SegmentID);
+                if (segment != null)
+                {
+                    citation.ItemID = segment.BookID;
+                    citation.ItemIDString = segment.BookID.ToString();
+                }
+            }
+
             // Given metadata and StartPage/EndPage (no IDs), try to find a single matching Item ID.  
-            // If no item is found, this citation is still valid, but incomplete.
+            // If no item is found, this citation is still valid, but incomplete.  Status will be set to "Warning".
             if (citation.ItemID == null && startPageID == -1 && endPageID == -1)
             {
                 List<Item> items = ItemResolve(citation.JournalTitle, citation.ISSN,
@@ -226,7 +292,7 @@ namespace MOBOT.BHL.Server
             }
 
             // Given an ItemID and StartPage/EndPage, try to find unique IDs for the Start and End page.
-            // If the IDs are not found, this citation is valid, but incomplete.
+            // If the IDs are not found, this citation is valid, but incomplete.  Status will be set to "Warning".
             if (citation.ItemID != null && startPageID == -1 && !string.IsNullOrWhiteSpace(citation.StartPage))
             {
                 List<Page> startPageIDs = PageSelectByItemAndPageNumber(
@@ -249,9 +315,31 @@ namespace MOBOT.BHL.Server
                 }
             }
 
+            // Given a SegmentID and StartPage/EndPage, try to find unique IDs for the Start and End page.
+            // If the IDs are not found, this citation is valid, but incomplete.  Status will be set to "Warning".
+            if (citation.SegmentID != null && startPageID == -1 && !string.IsNullOrWhiteSpace(citation.StartPage))
+            {
+                List<Page> startPageIDs = PageSelectBySegmentAndPageNumber((int)citation.SegmentID, citation.StartPage);
+                if (startPageIDs.Count == 1)
+                {
+                    startPageID = startPageIDs[0].PageID;
+                    citation.StartPageID = startPageID;
+                }
+            }
+
+            if (citation.SegmentID != null && endPageID == -1 && !string.IsNullOrWhiteSpace(citation.EndPage))
+            {
+                List<Page> endPageIDs = PageSelectBySegmentAndPageNumber((int)citation.SegmentID, citation.EndPage);
+                if (endPageIDs.Count == 1)
+                {
+                    endPageID = endPageIDs[0].PageID;
+                    citation.EndPageID = endPageID;
+                }
+            }
+
             if (isValid && startPageID != -1 && endPageID != -1)
             {
-                // Make sure the start page, end page, and item identifiers all belong to the same item.
+                // Make sure the start page, end page, segment, and item identifiers all belong to the same item.
                 List<Page> pageRange = PageSelectRangeForPagesAndItem(startPageID, endPageID, citation.ItemID);
                 if (pageRange.Count == 0)
                 {
@@ -278,10 +366,15 @@ namespace MOBOT.BHL.Server
             // Verify any additional page IDs
             foreach(string pageID in citation.PageIDs)
             {
-                // Check data type of page id
-                if (Int32.TryParse(pageID, out int pid))
+                if (pageID.ToUpper().Trim() == "NULL" && citation.ImportSegmentID != null)
+                {
+                    // Nothing to do, since NULL specified as the "Additional pages" value for an existing segment.  Existing additional page
+                    // records will be removed as part of the update process.
+                }
+                else if (Int32.TryParse(pageID, out int pid))   // Check data type of page id
                 {
                     // Make sure page id is valid BHL identifier
+
                     PageSummaryView page = PageSummarySelectByPageId(pid);
                     if (page == null)
                     {
@@ -290,7 +383,7 @@ namespace MOBOT.BHL.Server
                     }
                     else
                     {
-                        if (page.BookID != citation.ItemID && !string.IsNullOrEmpty(citation.ItemIDString))
+                        if (page.BookID != citation.ItemID && (!string.IsNullOrWhiteSpace(citation.ItemIDString) || !string.IsNullOrWhiteSpace(citation.SegmentIDString)))
                         {
                             citation.Errors.Add(GetNewImportRecordError(string.Format("Page {0} not part of Item {1}", pid.ToString(), citation.ItemID)));
                             isValid = false;
@@ -310,53 +403,120 @@ namespace MOBOT.BHL.Server
                 }
             }
 
-            // Make sure author names and IDs are valid
-            foreach (ImportRecordCreator author in citation.Authors)
+            // If more than two contributors were specified, remove everything after the first two and alert the user.
+            // This does NOT produce an invalid citation.
+            if (citation.Contributors.Count > 2)
             {
-                if (author.FullName.ToLower().Contains("et al") ||
-                    author.LastName.ToLower().Contains("et al") ||
-                    author.FirstName.ToLower().Contains("et al"))
-                {
-                    citation.Errors.Add(GetNewImportRecordError(string.Format("Invalid Author {0}", author.FullName)));
-                    isValid = false;
-                }
+                citation.Warnings.Add(GetNewImportRecordWarning("Only the first two contributors will be imported"));
+                citation.Contributors.RemoveRange(2, citation.Contributors.Count - 2);
+            }
 
-                if (author.ImportedAuthorID != null && 
-                    author.ProductionAuthorID == null)
-                {
-                    citation.Errors.Add(GetNewImportRecordError(string.Format("Author ID {0} is invalid", author.ImportedAuthorID.ToString())));
-                    isValid = false;
-                }
+            // Make sure the contributor names/codes are valid
+            for (int x = 0; x < citation.Contributors.Count; x++)
+            {
+                ImportRecordContributor contributor = citation.Contributors[x];
 
-                if (author.ImportedAuthorID != null &&
-                    author.ProductionAuthorID != null &&
-                    author.ImportedAuthorID != author.ProductionAuthorID)
+                if (contributor.InstitutionCode.ToUpper().Trim() == "NULL" && citation.ImportSegmentID != null)
                 {
-                    citation.Errors.Add(GetNewImportRecordWarning(string.Format(
-                        "Author ID {0} substituted for Author ID {1}", author.ProductionAuthorID.ToString(), author.ImportedAuthorID.ToString())));
+                    // Nothing to do, since NULL specified as the "Contributors" value for an existing segment is a valid indication to delete all contributors from the segment.
+                }
+                else
+                {
+                    string institutionCode = IsContributorValid(contributor.InstitutionCode);
+                    if (institutionCode == null)
+                    {
+                        citation.Errors.Add(GetNewImportRecordError(string.Format("Contributor {0} is invalid", contributor.InstitutionCode)));
+                        isValid = false;
+                    }
+                    else
+                    {
+                        citation.Contributors[x].InstitutionCode = institutionCode;
+                    }
                 }
             }
 
-            // Make sure that DOIs are syntactically correct            
-            if (!string.IsNullOrWhiteSpace(citation.DOI))
+            // Make sure author names and IDs are valid
+            foreach (ImportRecordCreator author in citation.Authors)
+            {
+                if (author.FullName.ToUpper().Trim() == "NULL" && citation.ImportSegmentID != null)
+                {
+                    // Nothing to do, since NULL specified as the "Author Names" value for an existing segment is a valid indication to delete all authors from the segment.
+                }
+                else
+                {
+                    if (author.FullName.ToLower().Contains("et al") ||
+                        author.LastName.ToLower().Contains("et al") ||
+                        author.FirstName.ToLower().Contains("et al"))
+                    {
+                        citation.Errors.Add(GetNewImportRecordError(string.Format("Invalid Author {0}", author.FullName)));
+                        isValid = false;
+                    }
+
+                    if (author.ImportedAuthorID != null &&
+                        author.ProductionAuthorID == null)
+                    {
+                        citation.Errors.Add(GetNewImportRecordError(string.Format("Author ID {0} is invalid", author.ImportedAuthorID.ToString())));
+                        isValid = false;
+                    }
+
+                    if (author.ImportedAuthorID != null &&
+                        author.ProductionAuthorID != null &&
+                        author.ImportedAuthorID != author.ProductionAuthorID)
+                    {
+                        citation.Warnings.Add(GetNewImportRecordWarning(string.Format(
+                            "Author ID {0} substituted for Author ID {1}", author.ProductionAuthorID.ToString(), author.ImportedAuthorID.ToString())));
+                    }
+                }
+            }
+
+            // Make sure that DOIs are syntactically correct.  Ignore the value "NULL" if it is part of a segment update.
+            if (!string.IsNullOrWhiteSpace(citation.DOI) &&
+                !(citation.DOI.ToUpper().Trim() == "NULL" && citation.ImportSegmentID != null))
             {
                 // Strip off doi.org prefixes
                 citation.DOI = citation.DOI.Replace("http://dx.doi.org/", "").Replace("https://dx.doi.org/", "")
-                    .Replace("dx.doi.org/", "").Replace("http://doi.org/", "").Replace("https://doi.org", "")
+                    .Replace("dx.doi.org/", "").Replace("http://doi.org/", "").Replace("https://doi.org/", "")
                     .Replace("doi.org/", "");
 
                 // Make sure the remaining DOI value is properly formatted
                 Regex regex = new Regex("^10.\\d{4,9}/[-._;()/:a-zA-Z0-9]+$");
                 if (!regex.IsMatch(citation.DOI))
                 {
-                    citation.Errors.Add(GetNewImportRecordError(string.Format("Invalid DOI {0}", citation.DOI)));
+                    citation.Errors.Add(GetNewImportRecordError(string.Format("{0} is an invalid DOI format.  The valid format is prefix/suffix, where prefix is 10.NNNN.", citation.DOI)));
                     isValid = false;
+                }
+
+                if (isValid)
+                {
+                    string bhlPrefix = "10.5962";
+                    string existingDOI = string.Empty;
+
+                    if (citation.ImportSegmentID != null)
+                    {
+                        DOI doi = DOISelectByTypeAndID("Segment", (int)citation.ImportSegmentID);
+                        if (doi != null) existingDOI = doi.DOIName;
+                    }
+
+                    // If a BHL-assigned DOI (prefix 10.5962) is being added or replaced, issue a warning indicating that the change will be ignored.
+                    // This does NOT produce an invalid citation.
+                    if (citation.DOI != existingDOI)
+                    {
+                        if (existingDOI.StartsWith(bhlPrefix))
+                        {
+                            citation.Warnings.Add(GetNewImportRecordWarning(string.Format("Existing BHL-assigned DOI {0} can not be modified via a batch update", existingDOI)));
+                        }
+                        else if (citation.DOI.StartsWith(bhlPrefix))
+                        {
+                            citation.Warnings.Add(GetNewImportRecordWarning(string.Format("BHL-assigned DOI {0} cannot be added via a batch update", citation.DOI)));
+                        }
+                    }
                 }
             }
 
-            // Make sure that the date value is formatted correctly.
+            // Make sure that the date value is formatted correctly.  Ignore the value "NULL" if it is part of a segment update.
             // Only YYYY, YYYY-MM, YYYY-MM-DD, and YYYY-YYYY are accepted.
-            if (!string.IsNullOrWhiteSpace(citation.Year))
+            if (!string.IsNullOrWhiteSpace(citation.Year) &&
+                !(citation.Year.ToUpper().Trim() == "NULL" && citation.ImportSegmentID != null))
             {
                 Regex regexYYYY = new Regex("^[0-9]{4}$");
                 Regex regexYYYYMM = new Regex("^[0-9]{4}-[0-9]{2}$");
@@ -407,6 +567,27 @@ namespace MOBOT.BHL.Server
         }
 
         /// <summary>
+        /// Returns the InstitutionCode if the contributor code/name is valid
+        /// </summary>
+        /// <param name="contributorValue"></param>
+        /// <returns></returns>
+        private string IsContributorValid(string contributorValue)
+        {
+            string contributorCode = null;
+            if (contributorValue == string.Empty)
+            {
+                contributorCode = contributorValue;
+            }
+            else
+            {
+                Institution institution = this.InstitutionSelectAuto(contributorValue);    // select by code
+                if (institution == null) institution = this.InstitutionSelectByName(contributorValue);  //select by name
+                if (institution != null) contributorCode = institution.InstitutionCode;
+            }
+            return contributorCode;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="citation"></param>
@@ -417,13 +598,19 @@ namespace MOBOT.BHL.Server
 
             if (string.IsNullOrWhiteSpace(citation.ItemID.ToString()))
             {
-                citation.Errors.Add(GetNewImportRecordError(string.Format("No item can be identified from the supplied metadata.")));
+                citation.Warnings.Add(GetNewImportRecordWarning(string.Format("No item can be identified from the supplied metadata.")));
                 isComplete = false;
             }
 
-            if (citation.Pages.Count == 0)
+            // If pages were supplied or no segment ID was included in the import file, but the Page.Count is still 0, then the segment is incomplete
+            if (citation.Pages.Count == 0 && 
+                (citation.ImportSegmentID == null ||
+                ((citation.PageIDs.Count > 0 && citation.PageIDs[0].ToUpper().Trim() != "NULL") || !string.IsNullOrWhiteSpace(citation.StartPage) || 
+                 !string.IsNullOrWhiteSpace(citation.EndPage) || !string.IsNullOrWhiteSpace(citation.StartPageIDString) || !string.IsNullOrWhiteSpace(citation.EndPageIDString))
+                )
+               )
             {
-                citation.Errors.Add(GetNewImportRecordError(string.Format("No pages supplied, or pages could not be identified.")));
+                citation.Warnings.Add(GetNewImportRecordWarning(string.Format("No pages supplied, or pages could not be identified.")));
                 isComplete = false;
             }
 

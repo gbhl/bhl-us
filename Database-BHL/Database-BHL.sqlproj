@@ -1147,6 +1147,19 @@
     <None Include="dbo\Stored Procedures\SegmentSelectSiblingSegmentsBySegmentID.sql" />
     <None Include="dbo\Stored Procedures\PageSummarySegmentSelectByItemAndSequence.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectRecentlyChanged.sql" />
+    <None Include="import\Stored Procedures\PageSelectBySegmentAndPageNumber.sql" />
+    <None Include="dbo\Functions\fnInstitutionCodesForItem.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionSelectByName.sql" />
+    <None Include="import\Tables\ImportRecordContributor.sql" />
+    <None Include="import\Functions\fnContributorStringForImportRecord.sql" />
+    <None Include="import\Stored Procedures\ImportRecordUpdateProduction.sql" />
+    <None Include="dbo\Stored Procedures\AspNetUserSelectWithImportFiles.sql" />
+    <None Include="import\Functions\fnPageStringForImportRecord.sql" />
+    <None Include="dbo\Functions\fnPageStringForSegment.sql" />
+    <None Include="import\Stored Procedures\ImportRecordSelectForReviewByImportFileID.sql" />
+    <None Include="dbo\Functions\fnContributorCodesForSegment.sql" />
+    <None Include="dbo\Functions\fnAuthorInfoForSegment.sql" />
+    <None Include="import\Stored Procedures\ImportRecordSelectForReviewByImportRecordID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1523,5 +1536,9 @@
     <None Include="Data\dbo.ItemRelationship.Table.sql" />
     <None Include="Data\dbo.ItemTitle.Table.sql" />
     <None Include="Data\dbo.ItemType.Table.sql" />
+    <None Include="import\Stored Procedures\ImportRecordContributorDeleteAuto.sql" />
+    <None Include="import\Stored Procedures\ImportRecordContributorInsertAuto.sql" />
+    <None Include="import\Stored Procedures\ImportRecordContributorSelectAuto.sql" />
+    <None Include="import\Stored Procedures\ImportRecordContributorUpdateAuto.sql" />
   </ItemGroup>
 </Project>

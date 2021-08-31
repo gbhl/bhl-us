@@ -105,10 +105,12 @@
     <Compile Include="Concrete\ImportFile.cs" />
     <Compile Include="Concrete\ImportFileStatus.cs" />
     <Compile Include="Concrete\ImportRecord.cs" />
+    <Compile Include="Concrete\ImportRecordContributor.cs" />
     <Compile Include="Concrete\ImportRecordCreator.cs" />
     <Compile Include="Concrete\ImportRecordErrorLog.cs" />
     <Compile Include="Concrete\ImportRecordKeyword.cs" />
     <Compile Include="Concrete\ImportRecordPage.cs" />
+    <Compile Include="Concrete\ImportRecordReview.cs" />
     <Compile Include="Concrete\ImportRecordStatus.cs" />
     <Compile Include="Concrete\InstitutionGroup.cs" />
     <Compile Include="Concrete\InstitutionGroupInstitution.cs" />
@@ -235,6 +237,7 @@
     <Compile Include="Generated\__ImportFile.cs" />
     <Compile Include="Generated\__ImportFileStatus.cs" />
     <Compile Include="Generated\__ImportRecord.cs" />
+    <Compile Include="Generated\__ImportRecordContributor.cs" />
     <Compile Include="Generated\__ImportRecordCreator.cs" />
     <Compile Include="Generated\__ImportRecordErrorLog.cs" />
     <Compile Include="Generated\__ImportRecordKeyword.cs" />

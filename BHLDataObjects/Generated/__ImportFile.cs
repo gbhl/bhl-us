@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:42:33 PM
+// Generated 6/28/2021 12:51:29 PM
 // Do not modify the contents of this code file.
 // This abstract class __ImportFile is based upon import.ImportFile.
 
@@ -239,13 +239,13 @@ namespace MOBOT.BHL.DataObjects
 		
 		#region ContributorCode
 		
-		private string _ContributorCode = string.Empty;
+		private string _ContributorCode = null;
 		
 		/// <summary>
 		/// Column: ContributorCode;
-		/// DBMS data type: nvarchar(10);
+		/// DBMS data type: nvarchar(10); Nullable;
 		/// </summary>
-		[ColumnDefinition("ContributorCode", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=10)]
+		[ColumnDefinition("ContributorCode", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=10, IsNullable=true)]
 		public string ContributorCode
 		{
 			get

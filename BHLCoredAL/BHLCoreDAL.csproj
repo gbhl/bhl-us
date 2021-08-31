@@ -126,6 +126,7 @@
     <Compile Include="Generated\IdentifierDAL.Auto.cs" />
     <Compile Include="Generated\ImportFileDAL.Auto.cs" />
     <Compile Include="Generated\ImportFileStatusDAL.Auto.cs" />
+    <Compile Include="Generated\ImportRecordContributorDAL.Auto.cs" />
     <Compile Include="Generated\ImportRecordCreatorDAL.Auto.cs" />
     <Compile Include="Generated\ImportRecordDAL.Auto.cs" />
     <Compile Include="Generated\ImportRecordErrorLogDAL.Auto.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="IdentifierDAL.cs" />
     <Compile Include="ImportFileDAL.cs" />
     <Compile Include="ImportFileStatusDAL.cs" />
+    <Compile Include="ImportRecordContributorDAL.cs" />
     <Compile Include="ImportRecordCreatorDAL.cs" />
     <Compile Include="ImportRecordDAL.cs" />
     <Compile Include="ImportRecordErrorLogDAL.cs" />

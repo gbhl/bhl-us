@@ -10,6 +10,7 @@ BEGIN
 SET NOCOUNT ON
 
 BEGIN TRY
+	-- --------------------
 	-- Create author records in production for any new authors
 	exec import.ImportRecordCreatorPublishToProduction @ImportFileID, @UserID
 
@@ -19,20 +20,24 @@ BEGIN TRY
 	IF (@ImportFileImportedID IS NULL) RAISERROR('ImportFileStatus -Imported- not found', 0, 1)
 
 	DECLARE @ImportRecordNewID int
-	SELECT @ImportRecordNewID = ImportRecordStatusID FROM import.ImportRecordStatus WHERE StatusName = 'New'
-	IF (@ImportRecordNewID IS NULL) RAISERROR('ImportRecordStatus -New- not found', 0, 1)
+	SELECT @ImportRecordNewID = ImportRecordStatusID FROM import.ImportRecordStatus WHERE StatusName = 'OK'
+	IF (@ImportRecordNewID IS NULL) RAISERROR('ImportRecordStatus -OK- not found', 0, 1)
 
+	-- --------------------
 	-- Create Title/Item/Segment/Creator/Keyword records for each imported record
 	DECLARE @ImportRecordID int
 
-	-- Get the IDs of the records to be imported
-	DECLARE	curRecord CURSOR 
-	FOR		SELECT ImportRecordID FROM import.ImportRecord 
-			WHERE ImportFileID = @ImportFileID AND ImportRecordStatusID = @ImportRecordNewID
+	-- Get the IDs of the imported records to be added
+	DECLARE	curAddRecord CURSOR 
+	FOR		SELECT	ImportRecordID 
+			FROM	import.ImportRecord 
+			WHERE	ImportFileID = @ImportFileID 
+			AND		ImportRecordStatusID = @ImportRecordNewID
+			AND		ImportSegmentID IS NULL
 			ORDER BY ImportRecordID
 	
-	OPEN curRecord
-	FETCH NEXT FROM curRecord INTO @ImportRecordID
+	OPEN curAddRecord
+	FETCH NEXT FROM curAddRecord INTO @ImportRecordID
 
 	-- Publish each record
 	WHILE (@@fetch_status <> -1)
@@ -41,12 +46,39 @@ BEGIN TRY
 		BEGIN
 			exec import.ImportRecordPublishToProduction @ImportRecordID, @UserID
 		END
-		FETCH NEXT FROM curRecord INTO @ImportRecordID
+		FETCH NEXT FROM curAddRecord INTO @ImportRecordID
 	END
 
-	CLOSE curRecord
-	DEALLOCATE curRecord
+	CLOSE curAddRecord
+	DEALLOCATE curAddRecord
 
+	-- --------------------
+	-- Get the IDs of the imported records to be updated
+	DECLARE	curUpdateRecord CURSOR 
+	FOR		SELECT	ImportRecordID 
+			FROM	import.ImportRecord 
+			WHERE	ImportFileID = @ImportFileID 
+			AND		ImportRecordStatusID = @ImportRecordNewID
+			AND		ImportSegmentID IS NOT NULL
+			ORDER BY ImportRecordID
+	
+	OPEN curUpdateRecord
+	FETCH NEXT FROM curUpdateRecord INTO @ImportRecordID
+
+	-- Publish each record
+	WHILE (@@fetch_status <> -1)
+	BEGIN
+		IF (@@fetch_status <> -2)
+		BEGIN
+			exec import.ImportRecordUpdateProduction @ImportRecordID, @UserID
+		END
+		FETCH NEXT FROM curUpdateRecord INTO @ImportRecordID
+	END
+
+	CLOSE curUpdateRecord
+	DEALLOCATE curUpdateRecord
+
+	-- --------------------
 	-- Set the file to "Imported"
 	UPDATE	import.ImportFile 
 	SET		ImportFileStatusID = @ImportFileImportedID,
