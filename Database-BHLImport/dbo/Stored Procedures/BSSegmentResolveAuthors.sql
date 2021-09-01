@@ -39,7 +39,8 @@ AND		sa.VIAFIdentifier <> ''
 
 -- Compare name strings of authors in import DB and production.  If matches are found,
 -- update import DB with production author ID.
-SELECT	an.AuthorID, sa.SegmentAuthorID
+SELECT DISTINCT
+		an.AuthorID, sa.SegmentAuthorID
 INTO	#tmpNameAuthorID
 FROM	dbo.BSSegment s
 		INNER JOIN dbo.BSSegmentAuthor sa ON s.SegmentID = sa.SegmentID
