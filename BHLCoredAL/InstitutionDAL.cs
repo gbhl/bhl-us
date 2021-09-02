@@ -155,6 +155,20 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public List<Institution> InstitutionSelectForMonthlyStats(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectForMonthlyStats", connection, transaction))
+            {
+                using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
+                {
+                    List<Institution> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
         public List<Institution> InstitutionSelectDOIStats(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,

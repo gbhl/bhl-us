@@ -52,6 +52,11 @@ namespace MOBOT.BHL.Server
             return (GetInstitutionDalInstance().InstitutionSelectWithPublishedSegments(null, null, onlyMemberLibraries, institutionRoleName));
         }
 
+        public List<Institution> InstitutionSelectForMonthlyStats()
+        {
+            return (GetInstitutionDalInstance().InstitutionSelectForMonthlyStats(null, null));
+        }
+
         public List<Institution> InstitutionSelectDOIStats(int sortBy, int bhlOnly)
         {
             return (GetInstitutionDalInstance().InstitutionSelectDOIStats(null, null, sortBy, bhlOnly));
