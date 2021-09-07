@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.SegmentSelectByBarCode
+﻿CREATE PROCEDURE [dbo].[SegmentSelectByBarCode]
 
 @BarCode nvarchar(200)
 
@@ -9,6 +9,7 @@ SET NOCOUNT ON
 SELECT	s.SegmentID,
 		s.BookID,
 		s.ItemID,
+		s.BarCode,
 		s.SegmentStatusID,
 		s.SequenceOrder,
 		s.SegmentGenreID,

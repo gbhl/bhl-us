@@ -24,7 +24,18 @@
             <div id="divAdd">
 
                 <div>
-                    <div><div class="label">Item ID:</div><div class="field">@Html.TextBox("AddItemID") (Must supply this or IA Identifier)</div></div>
+                    <div>
+                        <div class="label">Item Type:</div>
+                        <div class="field">
+                            @Html.DropDownList("AddItemType",
+                                new List<SelectListItem>
+                                {  new SelectListItem { Text = "Book", Value = "Book" },
+                                    new SelectListItem { Text = "Segment", Value = "Segment" }
+                                },
+                                new { @style = "padding:2px" })
+                        </div>
+                    </div>
+                    <div><div class="label">ID:</div><div class="field">@Html.TextBox("AddItemID") (Must supply this or IA Identifier)</div></div>
                     <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("AddIAID") (Must supply this or Item ID)</div></div>
                     <div><div class="label">Insert Before Page ID:</div><div class="field">@Html.TextBox("AddPageID") (Use 0 to insert at end)</div></div>
                     <div><div class="label">Number of Pages to Add:</div><div class="field">@Html.TextBox("AddNum")</div></div>
@@ -42,35 +53,61 @@
             <div id="divDelete">
 
                 <div>
-                    <div><div class="label">Item ID:</div><div class="field">@Html.TextBox("DelItemID") (Must supply this or IA Identifier)</div></div>
-                    <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("DelIAID") (Must supply this or Item ID)</div></div>
-                    <div><div class="label">Delete Starting With Page ID:</div><div class="field">@Html.TextBox("DelPageID")</div></div>
-                    <div><div class="label">Number of Pages to Delete:</div><div class="field">@Html.TextBox("DelNum")</div></div>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <input class="formButton" type="submit" name="submit:Delete" id="btnDelete" value="Remove Pages" />
-                    <input class="formButton" type="reset" id="btnDeleteReset" value="Clear" />
-                </div>
-                <div id="lblDeleteErrMissing" class="ErrorText" style="display:none;">Please specify an Item ID OR Internet Archive Identifier, a Page ID, and a Number of Pages to remove.</div>
-                <div id="lblDeleteErrItemID" class="ErrorText" style="display:none;">Item ID must be a numeric value.</div>
-                <div id="lblDeleteErrPageID" class="ErrorText" style="display:none;">Page ID must be a numeric value.</div>
-                <div id="lblDeleteErrNum" class="ErrorText" style="display:none;">Number to Delete must be a numeric value.</div>
+                    <div>
+                        <div>
+                            <div class="label">Item Type:</div>
+                            <div class="field">
+                                @Html.DropDownList("DelItemType",
+                                    new List<SelectListItem>
+                                    {  new SelectListItem { Text = "Book", Value = "Book" },
+                                        new SelectListItem { Text = "Segment", Value = "Segment" }
+                                    },
+                                    new { @style = "padding:2px" })
+                            </div>
+                        </div>
+                        <div><div class="label">ID:</div><div class="field">@Html.TextBox("DelItemID") (Must supply this or IA Identifier)</div></div>
+                        <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("DelIAID") (Must supply this or Item ID)</div></div>
+                        <div><div class="label">Delete Starting With Page ID:</div><div class="field">@Html.TextBox("DelPageID")</div></div>
+                        <div><div class="label">Number of Pages to Delete:</div><div class="field">@Html.TextBox("DelNum")</div></div>
+                    </div>
+                    <div style="margin-bottom:10px;">
+                        <input class="formButton" type="submit" name="submit:Delete" id="btnDelete" value="Remove Pages" />
+                        <input class="formButton" type="reset" id="btnDeleteReset" value="Clear" />
+                    </div>
+                    <div id="lblDeleteErrMissing" class="ErrorText" style="display:none;">Please specify an Item ID OR Internet Archive Identifier, a Page ID, and a Number of Pages to remove.</div>
+                    <div id="lblDeleteErrItemID" class="ErrorText" style="display:none;">Item ID must be a numeric value.</div>
+                    <div id="lblDeleteErrPageID" class="ErrorText" style="display:none;">Page ID must be a numeric value.</div>
+                    <div id="lblDeleteErrNum" class="ErrorText" style="display:none;">Number to Delete must be a numeric value.</div>
 
+                </div>
             </div>
             <div id="divOcr">
 
                 <div>
-                    <div><div class="label">Item ID:</div><div class="field">@Html.TextBox("OcrItemID") (Must supply this or IA Identifier)</div></div>
-                    <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("OcrIAID") (Must supply this or Item ID)</div></div>
-                    <div><div class="label">Force Overwrite:</div><div class="field">@Html.CheckBox("ForceOverwrite") (Check to overwrite non-OCR text)</div></div>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <input class="formButton" type="submit" name="submit:Ocr" id="btnOcr" value="Update Text" />
-                    <input class="formButton" type="reset" id="btnOcrReset" value="Clear" />
-                </div>
-                <div id="lblOcrErrMissing" class="ErrorText" style="display:none;">Please specify an Item ID OR Internet Archive Identifier.</div>
-                <div id="lblOcrErrItemID" class="ErrorText" style="display:none;">Item ID must be a numeric value.</div>
+                    <div>
+                        <div>
+                            <div class="label">Item Type:</div>
+                            <div class="field">
+                                @Html.DropDownList("OcrItemType",
+                                    new List<SelectListItem>
+                                    {  new SelectListItem { Text = "Book", Value = "Book" },
+                                        new SelectListItem { Text = "Segment", Value = "Segment" }
+                                    },
+                                    new { @style = "padding:2px" })
+                            </div>
+                        </div>
+                        <div><div class="label">ID:</div><div class="field">@Html.TextBox("OcrItemID") (Must supply this or IA Identifier)</div></div>
+                        <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("OcrIAID") (Must supply this or Item ID)</div></div>
+                        <div><div class="label">Force Overwrite:</div><div class="field">@Html.CheckBox("ForceOverwrite") (Check to overwrite non-OCR text)</div></div>
+                    </div>
+                    <div style="margin-bottom:10px;">
+                        <input class="formButton" type="submit" name="submit:Ocr" id="btnOcr" value="Update Text" />
+                        <input class="formButton" type="reset" id="btnOcrReset" value="Clear" />
+                    </div>
+                    <div id="lblOcrErrMissing" class="ErrorText" style="display:none;">Please specify an Item ID OR Internet Archive Identifier.</div>
+                    <div id="lblOcrErrItemID" class="ErrorText" style="display:none;">Item ID must be a numeric value.</div>
 
+                </div>
             </div>
         }
 
@@ -130,16 +167,19 @@
     });
 
     // submit form on Enter keypress
-    $("#txtAddItemID").keypress(function (event) { if (event.keyCode == '13') $("#btnAdd").click(); });
-    $("#txtAddIAID").keypress(function (event) { if (event.keyCode == '13') $("#btnAdd").click(); });
-    $("#txtAddPageID").keypress(function (event) { if (event.keyCode == '13') $("#btnAdd").click(); });
-    $("#txtAddNum").keypress(function (event) { if (event.keyCode == '13') $("#btnAdd").click(); });
-    $("#txtDelItemID").keypress(function (event) { if (event.keyCode == '13') $("#btnDelete").click(); });
-    $("#txtDelIAID").keypress(function (event) { if (event.keyCode == '13') $("#btnDelete").click(); });
-    $("#txtDelPageID").keypress(function (event) { if (event.keyCode == '13') $("#btnDelete").click(); });
-    $("#txtDelNum").keypress(function (event) { if (event.keyCode == '13') $("#btnDelete").click(); });
-    $("#txtOcrItemID").keypress(function (event) { if (event.keyCode == '13') $("#btnOcr").click(); });
-    $("#txtOcrIAID").keypress(function (event) { if (event.keyCode == '13') $("#btnOcr").click(); });
+    $("#AddItemType").keypress(function (event) { if (event.keyCode == '13') $('btnAdd').click(); });
+    $("#AddItemID").keypress(function (event) { if (event.keyCode == '13') $("#btnAdd").click(); });
+    $("#AddItemID").keypress(function (event) { if (event.keyCode == '13') $("#btnAdd").click(); });
+    $("#AddIAID").keypress(function (event) { if (event.keyCode == '13') $("#btnAdd").click(); });
+    $("#AddPageID").keypress(function (event) { if (event.keyCode == '13') $("#btnAdd").click(); });
+    $("#AddNum").keypress(function (event) { if (event.keyCode == '13') $("#btnAdd").click(); });
+    $("#DelItemType").keypress(function (event) { if (event.keyCode == '13') $('btnDelete').click(); });
+    $("#DelItemID").keypress(function (event) { if (event.keyCode == '13') $("#btnDelete").click(); });
+    $("#DelIAID").keypress(function (event) { if (event.keyCode == '13') $("#btnDelete").click(); });
+    $("#DelPageID").keypress(function (event) { if (event.keyCode == '13') $("#btnDelete").click(); });
+    $("#DelNum").keypress(function (event) { if (event.keyCode == '13') $("#btnDelete").click(); });
+    $("#OcrItemID").keypress(function (event) { if (event.keyCode == '13') $("#btnOcr").click(); });
+    $("#OcrIAID").keypress(function (event) { if (event.keyCode == '13') $("#btnOcr").click(); });
 
     function resetMessages() {
         $("#lblAddErrMissing").hide(); $("#lblAddErrItemID").hide(); $("#lblAddErrPageID").hide(); $("#lblAddErrNum").hide();
