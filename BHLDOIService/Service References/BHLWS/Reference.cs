@@ -15,6 +15,14 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.mobot.org/", ConfigurationName="BHLWS.BHLWSSoap")]
     public interface BHLWSSoap {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateVolume", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void PageUpdateVolume(int[] pageIDs, string volume, int userID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateIssue", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateLastPageNameLookupDate", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void PageUpdateLastPageNameLookupDate(int pageID);
@@ -258,10 +266,15 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         MOBOT.BHL.BHLDOIService.BHLWS.Book[] BookSelectByTitleID(int titleID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/BookSelectByItemID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Book BookSelectByItemID(int itemID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectFilenames", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Item ItemSelectFilenames(int itemID);
+        MOBOT.BHL.BHLDOIService.BHLWS.Item ItemSelectFilenames(MOBOT.BHL.BHLDOIService.BHLWS.ItemType itemType, int itemID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemUpdateStatus", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -287,6 +300,11 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         MOBOT.BHL.BHLDOIService.BHLWS.Segment SegmentSelectAuto(int segmentID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectByItemID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Segment SegmentSelectByItemID(int itemID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectWithExpiredPageNames", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -550,16 +568,6 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         void PageUpdateYear(int[] pageIDs, string year, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateVolume", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void PageUpdateVolume(int[] pageIDs, string volume, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateIssue", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID);
     }
     
     /// <remarks/>
@@ -13238,6 +13246,22 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
     }
     
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public enum ItemType {
+        
+        /// <remarks/>
+        Item,
+        
+        /// <remarks/>
+        Book,
+        
+        /// <remarks/>
+        Segment,
+    }
+    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -13409,6 +13433,14 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         
         public BHLWSSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public void PageUpdateVolume(int[] pageIDs, string volume, int userID) {
+            base.Channel.PageUpdateVolume(pageIDs, volume, userID);
+        }
+        
+        public void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID) {
+            base.Channel.PageUpdateIssue(pageIDs, issuePrefix, issue, userID);
         }
         
         public void PageUpdateLastPageNameLookupDate(int pageID) {
@@ -13615,8 +13647,12 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
             return base.Channel.BookSelectByTitleID(titleID);
         }
         
-        public MOBOT.BHL.BHLDOIService.BHLWS.Item ItemSelectFilenames(int itemID) {
-            return base.Channel.ItemSelectFilenames(itemID);
+        public MOBOT.BHL.BHLDOIService.BHLWS.Book BookSelectByItemID(int itemID) {
+            return base.Channel.BookSelectByItemID(itemID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Item ItemSelectFilenames(MOBOT.BHL.BHLDOIService.BHLWS.ItemType itemType, int itemID) {
+            return base.Channel.ItemSelectFilenames(itemType, itemID);
         }
         
         public MOBOT.BHL.BHLDOIService.BHLWS.Item ItemUpdateStatus(int itemID, int itemStatusID) {
@@ -13637,6 +13673,10 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         
         public MOBOT.BHL.BHLDOIService.BHLWS.Segment SegmentSelectAuto(int segmentID) {
             return base.Channel.SegmentSelectAuto(segmentID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Segment SegmentSelectByItemID(int itemID) {
+            return base.Channel.SegmentSelectByItemID(itemID);
         }
         
         public MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectWithExpiredPageNames(int maxAge) {
@@ -13879,14 +13919,6 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         
         public void PageUpdateYear(int[] pageIDs, string year, int userID) {
             base.Channel.PageUpdateYear(pageIDs, year, userID);
-        }
-        
-        public void PageUpdateVolume(int[] pageIDs, string volume, int userID) {
-            base.Channel.PageUpdateVolume(pageIDs, volume, userID);
-        }
-        
-        public void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID) {
-            base.Channel.PageUpdateIssue(pageIDs, issuePrefix, issue, userID);
         }
     }
 }

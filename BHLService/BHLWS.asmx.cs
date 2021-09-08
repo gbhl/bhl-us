@@ -124,10 +124,17 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public Item ItemSelectFilenames(int itemID)
+        public Book BookSelectByItemID(int itemID)
         {
             BHLProvider bhlServer = new BHLProvider();
-            return bhlServer.ItemSelectFilenames(ItemType.Book, itemID);
+            return bhlServer.BookSelectByItemID(itemID);
+        }
+
+        [WebMethod]
+        public Item ItemSelectFilenames(ItemType itemType, int itemID)
+        {
+            BHLProvider bhlServer = new BHLProvider();
+            return bhlServer.ItemSelectFilenames(itemType, itemID);
         }
 
         [WebMethod]
@@ -163,6 +170,13 @@ namespace MOBOT.BHL.WebService
         {
             BHLProvider provider = new BHLProvider();
             return provider.SegmentSelectAuto(segmentID);
+        }
+
+        [WebMethod]
+        public Segment SegmentSelectByItemID(int itemID)
+        {
+            BHLProvider bhlServer = new BHLProvider();
+            return bhlServer.SegmentSelectByItemID(itemID);
         }
 
         [WebMethod]

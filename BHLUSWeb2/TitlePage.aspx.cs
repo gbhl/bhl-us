@@ -687,7 +687,7 @@ Append("</a>").
                 }
 
                 // Get the list of related Segments
-                PublicationDetail.Children = bhlProvider.SegmentSelectByItemID(PublicationDetail.ID);
+                PublicationDetail.Children = bhlProvider.SegmentSelectByBookID(PublicationDetail.ID);
             }
             else if (publicationDetail.Type == ItemType.Segment)
             {

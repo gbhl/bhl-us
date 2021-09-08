@@ -55,14 +55,19 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectForKeywordPaged(null, null, keyword, pageNum, numPages, sort);
         }
 
-        public List<Segment> SegmentSelectByItemID(int itemID)
+        public List<Segment> SegmentSelectByBookID(int bookID)
         {
-            return new SegmentDAL().SegmentSelectByItemID(null, null, itemID, 0);
+            return new SegmentDAL().SegmentSelectByBookID(null, null, bookID, 0);
         }
 
         public List<Segment> SegmentSelectByTitleID(int titleID)
         {
             return new SegmentDAL().SegmentSelectByTitleID(null, null, titleID);
+        }
+
+        public Segment SegmentSelectByItemID(int itemID)
+        {
+            return new SegmentDAL().SegmentSelectByItemID(null, null, itemID);
         }
 
         public Segment SegmentSelectByBarCode(string barcode)

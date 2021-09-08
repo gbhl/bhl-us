@@ -569,5 +569,24 @@ namespace MOBOT.BHL.DAL
                 }
             }
         }
+
+        public Item ItemSelectFilenamesByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectFilenamesByItemID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
+            {
+                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
+                {
+                    List<Item> list = helper.ExecuteReader(command);
+                    if (list == null || list.Count == 0)
+                        return null;
+                    else
+                        return list[0];
+                }
+            }
+        }
     }
 }

@@ -44,7 +44,7 @@ namespace BHL.IIIF
             List< Title> titles = provider.TitleSelectByItem(itemId);
 
             List<Page> pages = provider.PageMetadataSelectByItemID(itemId);
-            List<Segment> segments = provider.SegmentSelectByItemID(itemId);
+            List<Segment> segments = provider.SegmentSelectByBookID(itemId);
             ScanData scanData = new Helper().GetScanData(itemId, book.BarCode);
 
             string manifest = 

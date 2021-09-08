@@ -84,14 +84,22 @@ namespace MOBOT.BHL.Server
 
         public Item ItemSelectFilenames(ItemType itemType, int entityID)
         {
-            if (itemType == ItemType.Book)
+            Item item = null;
+
+            switch (itemType)
             {
-                return (new ItemDAL().ItemSelectFilenames(null, null, entityID));
+                case ItemType.Book:
+                    item = new ItemDAL().ItemSelectFilenames(null, null, entityID);
+                    break;
+                case ItemType.Segment:
+                    item = new ItemDAL().ItemSelectFilenamesBySegmentID(null, null, entityID);
+                    break;
+                default:
+                    item = new ItemDAL().ItemSelectFilenamesByItemID(null, null, entityID);
+                    break;
             }
-            else
-            {
-                return new ItemDAL().ItemSelectFilenamesBySegmentID(null, null, entityID);
-            }
+
+            return item;
         }
 
         public List<Item> ItemResolve(string title, string issn, string isbn, string oclc,

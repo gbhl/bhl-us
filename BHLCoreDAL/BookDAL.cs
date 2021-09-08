@@ -245,7 +245,7 @@ namespace MOBOT.BHL.DAL
 						book.ItemTitles = new ItemTitleDAL().ItemTitleSelectByItem(connection, transaction, book.BookID);
 						book.ItemLanguages = new ItemLanguageDAL().ItemLanguageSelectByItemID(connection, transaction, book.ItemID);
 						book.ItemCollections = new ItemCollectionDAL().SelectByItem(connection, transaction, book.ItemID);
-						book.Segments = new SegmentDAL().SegmentSelectByItemID(connection, transaction, book.BookID, 1);
+						book.Segments = new SegmentDAL().SegmentSelectByBookID(connection, transaction, book.BookID, 1);
 						book.Institutions = new InstitutionDAL().InstitutionSelectByItemID(connection, transaction, book.ItemID);
 						book.ItemRelationships = new ItemRelationshipDAL().ItemRelationshipSelectByItemID(connection, transaction, book.ItemID);
 						return book;

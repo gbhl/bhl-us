@@ -260,7 +260,7 @@
     <None Include="dbo\Stored Procedures\NameResolvedListActiveBetweenDates.sql" />
     <None Include="annotation\Stored Procedures\PageAnnotationUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\ItemSelectPaginationReport.sql" />
-    <None Include="dbo\Stored Procedures\SegmentSelectByItemID.sql" />
+    <None Include="dbo\Stored Procedures\SegmentSelectByBookID.sql" />
     <None Include="annotation\Stored Procedures\AnnotatedPageTypeUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\ItemInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\NameResolvedSearchForPages.sql" />
@@ -1161,6 +1161,8 @@
     <None Include="dbo\Functions\fnAuthorInfoForSegment.sql" />
     <None Include="import\Stored Procedures\ImportRecordSelectForReviewByImportRecordID.sql" />
     <None Include="dbo\Stored Procedures\InstitutionSelectForMonthlyStats.sql" />
+    <None Include="dbo\Stored Procedures\SegmentSelectByItemID.sql" />
+    <None Include="dbo\Stored Procedures\ItemSelectFilenamesByItemID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

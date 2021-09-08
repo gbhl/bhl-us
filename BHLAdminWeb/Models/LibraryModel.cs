@@ -125,7 +125,7 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         public void AddPagesToItem()
         {
-            if (ValidateForm(this.AddItemID, this.AddIAID, this.AddPageID, this.AddNum, out string id, out string barcode))
+            if (ValidateForm(this.AddItemType, this.AddItemID, this.AddIAID, this.AddPageID, this.AddNum, out string id, out string barcode))
             {
                 this.AddItemID = id;
                 this.AddIAID = barcode;
@@ -144,7 +144,7 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         public void DeletePagesFromItem()
         {
-            if (ValidateForm(this.DelItemID, this.DelIAID, this.DelPageID, this.DelNum, out string id, out string barcode))
+            if (ValidateForm(this.DelItemType, this.DelItemID, this.DelIAID, this.DelPageID, this.DelNum, out string id, out string barcode))
             {
                 this.DelItemID = id;
                 this.DelIAID = barcode;
@@ -161,7 +161,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
         }
 
-        public bool ValidateForm(string itemIDIn, string barcodeIn, string pageIDIn, string numPages, out string idOut, out string barcodeOut)
+        public bool ValidateForm(string itemType, string itemIDIn, string barcodeIn, string pageIDIn, string numPages, out string idOut, out string barcodeOut)
         {
             bool isValid = true;
             idOut = string.Empty;
@@ -197,7 +197,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             {
                 BHLProvider provider = new BHLProvider();
 
-                if (this.AddItemType == "Book")
+                if (itemType == "Book")
                 {
                     Book book = null;
                     if (!string.IsNullOrWhiteSpace(barcodeIn))
@@ -251,7 +251,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             BHLProvider provider = new BHLProvider();
-            if (this.AddItemType == "Book")
+            if (this.OcrItemType == "Book")
             {
                 Book book = null;
                 if (!string.IsNullOrWhiteSpace(this.OcrIAID))

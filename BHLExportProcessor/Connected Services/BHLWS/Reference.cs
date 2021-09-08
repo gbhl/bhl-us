@@ -15,6 +15,20 @@ namespace BHL.Export.BHLWS {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.mobot.org/", ConfigurationName="BHLWS.BHLWSSoap")]
     public interface BHLWSSoap {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateVolume", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void PageUpdateVolume(int[] pageIDs, string volume, int userID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateVolume", ReplyAction="*")]
+        System.Threading.Tasks.Task PageUpdateVolumeAsync(int[] pageIDs, string volume, int userID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateIssue", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateIssue", ReplyAction="*")]
+        System.Threading.Tasks.Task PageUpdateIssueAsync(int[] pageIDs, string issuePrefix, string issue, int userID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateLastPageNameLookupDate", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void PageUpdateLastPageNameLookupDate(int pageID);
@@ -405,13 +419,21 @@ namespace BHL.Export.BHLWS {
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/BookSelectByTitleID", ReplyAction="*")]
         System.Threading.Tasks.Task<BHL.Export.BHLWS.Book[]> BookSelectByTitleIDAsync(int titleID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/BookSelectByItemID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        BHL.Export.BHLWS.Book BookSelectByItemID(int itemID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/BookSelectByItemID", ReplyAction="*")]
+        System.Threading.Tasks.Task<BHL.Export.BHLWS.Book> BookSelectByItemIDAsync(int itemID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectFilenames", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        BHL.Export.BHLWS.Item ItemSelectFilenames(int itemID);
+        BHL.Export.BHLWS.Item ItemSelectFilenames(BHL.Export.BHLWS.ItemType itemType, int itemID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectFilenames", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHL.Export.BHLWS.Item> ItemSelectFilenamesAsync(int itemID);
+        System.Threading.Tasks.Task<BHL.Export.BHLWS.Item> ItemSelectFilenamesAsync(BHL.Export.BHLWS.ItemType itemType, int itemID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemUpdateStatus", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -452,6 +474,14 @@ namespace BHL.Export.BHLWS {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectAuto", ReplyAction="*")]
         System.Threading.Tasks.Task<BHL.Export.BHLWS.Segment> SegmentSelectAutoAsync(int segmentID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectByItemID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        BHL.Export.BHLWS.Segment SegmentSelectByItemID(int itemID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectByItemID", ReplyAction="*")]
+        System.Threading.Tasks.Task<BHL.Export.BHLWS.Segment> SegmentSelectByItemIDAsync(int itemID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectWithExpiredPageNames", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -871,22 +901,6 @@ namespace BHL.Export.BHLWS {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateYear", ReplyAction="*")]
         System.Threading.Tasks.Task PageUpdateYearAsync(int[] pageIDs, string year, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateVolume", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void PageUpdateVolume(int[] pageIDs, string volume, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateVolume", ReplyAction="*")]
-        System.Threading.Tasks.Task PageUpdateVolumeAsync(int[] pageIDs, string volume, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateIssue", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateIssue", ReplyAction="*")]
-        System.Threading.Tasks.Task PageUpdateIssueAsync(int[] pageIDs, string issuePrefix, string issue, int userID);
     }
     
     /// <remarks/>
@@ -13565,6 +13579,22 @@ namespace BHL.Export.BHLWS {
         }
     }
     
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public enum ItemType {
+        
+        /// <remarks/>
+        Item,
+        
+        /// <remarks/>
+        Book,
+        
+        /// <remarks/>
+        Segment,
+    }
+    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -13736,6 +13766,22 @@ namespace BHL.Export.BHLWS {
         
         public BHLWSSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public void PageUpdateVolume(int[] pageIDs, string volume, int userID) {
+            base.Channel.PageUpdateVolume(pageIDs, volume, userID);
+        }
+        
+        public System.Threading.Tasks.Task PageUpdateVolumeAsync(int[] pageIDs, string volume, int userID) {
+            return base.Channel.PageUpdateVolumeAsync(pageIDs, volume, userID);
+        }
+        
+        public void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID) {
+            base.Channel.PageUpdateIssue(pageIDs, issuePrefix, issue, userID);
+        }
+        
+        public System.Threading.Tasks.Task PageUpdateIssueAsync(int[] pageIDs, string issuePrefix, string issue, int userID) {
+            return base.Channel.PageUpdateIssueAsync(pageIDs, issuePrefix, issue, userID);
         }
         
         public void PageUpdateLastPageNameLookupDate(int pageID) {
@@ -14145,12 +14191,20 @@ namespace BHL.Export.BHLWS {
             return base.Channel.BookSelectByTitleIDAsync(titleID);
         }
         
-        public BHL.Export.BHLWS.Item ItemSelectFilenames(int itemID) {
-            return base.Channel.ItemSelectFilenames(itemID);
+        public BHL.Export.BHLWS.Book BookSelectByItemID(int itemID) {
+            return base.Channel.BookSelectByItemID(itemID);
         }
         
-        public System.Threading.Tasks.Task<BHL.Export.BHLWS.Item> ItemSelectFilenamesAsync(int itemID) {
-            return base.Channel.ItemSelectFilenamesAsync(itemID);
+        public System.Threading.Tasks.Task<BHL.Export.BHLWS.Book> BookSelectByItemIDAsync(int itemID) {
+            return base.Channel.BookSelectByItemIDAsync(itemID);
+        }
+        
+        public BHL.Export.BHLWS.Item ItemSelectFilenames(BHL.Export.BHLWS.ItemType itemType, int itemID) {
+            return base.Channel.ItemSelectFilenames(itemType, itemID);
+        }
+        
+        public System.Threading.Tasks.Task<BHL.Export.BHLWS.Item> ItemSelectFilenamesAsync(BHL.Export.BHLWS.ItemType itemType, int itemID) {
+            return base.Channel.ItemSelectFilenamesAsync(itemType, itemID);
         }
         
         public BHL.Export.BHLWS.Item ItemUpdateStatus(int itemID, int itemStatusID) {
@@ -14191,6 +14245,14 @@ namespace BHL.Export.BHLWS {
         
         public System.Threading.Tasks.Task<BHL.Export.BHLWS.Segment> SegmentSelectAutoAsync(int segmentID) {
             return base.Channel.SegmentSelectAutoAsync(segmentID);
+        }
+        
+        public BHL.Export.BHLWS.Segment SegmentSelectByItemID(int itemID) {
+            return base.Channel.SegmentSelectByItemID(itemID);
+        }
+        
+        public System.Threading.Tasks.Task<BHL.Export.BHLWS.Segment> SegmentSelectByItemIDAsync(int itemID) {
+            return base.Channel.SegmentSelectByItemIDAsync(itemID);
         }
         
         public BHL.Export.BHLWS.Item[] ItemSelectWithExpiredPageNames(int maxAge) {
@@ -14672,22 +14734,6 @@ namespace BHL.Export.BHLWS {
         
         public System.Threading.Tasks.Task PageUpdateYearAsync(int[] pageIDs, string year, int userID) {
             return base.Channel.PageUpdateYearAsync(pageIDs, year, userID);
-        }
-        
-        public void PageUpdateVolume(int[] pageIDs, string volume, int userID) {
-            base.Channel.PageUpdateVolume(pageIDs, volume, userID);
-        }
-        
-        public System.Threading.Tasks.Task PageUpdateVolumeAsync(int[] pageIDs, string volume, int userID) {
-            return base.Channel.PageUpdateVolumeAsync(pageIDs, volume, userID);
-        }
-        
-        public void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID) {
-            base.Channel.PageUpdateIssue(pageIDs, issuePrefix, issue, userID);
-        }
-        
-        public System.Threading.Tasks.Task PageUpdateIssueAsync(int[] pageIDs, string issuePrefix, string issue, int userID) {
-            return base.Channel.PageUpdateIssueAsync(pageIDs, issuePrefix, issue, userID);
         }
     }
 }

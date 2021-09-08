@@ -31,26 +31,26 @@ namespace MOBOT.BHL.BHLOcrRefresh
             // validate config values
             if (!this.ValidateConfiguration()) return;
 
-            string bookID = string.Empty;
+            string itemID = string.Empty;
             try
             {
                 BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
 
-                bookID = GetNextJobId();
-                while (!string.IsNullOrWhiteSpace(bookID))
+                itemID = this.GetNextJobId();
+                while (!string.IsNullOrWhiteSpace(itemID))
                 {
-                    string status = this.GetOcrForItem(bookID);
-                    client.NamePageDeleteByItemID(Convert.ToInt32(bookID)); // Clear names and reset last name lookup date
-                    client.PageTextLogInsertForItem(Convert.ToInt32(bookID), "OCR", 1); // Log the new source of the page text
-                    LogMessage(status);
-                    MarkJobComplete(bookID, status);
-                    bookID = GetNextJobId();
+                    string status = this.GetOcrForItem(itemID);
+                    client.NamePageDeleteByItemID(Convert.ToInt32(itemID)); // Clear names and reset last name lookup date
+                    client.PageTextLogInsertForItem(Convert.ToInt32(itemID), "OCR", 1); // Log the new source of the page text
+                    this.LogMessage(status);
+                    this.MarkJobComplete(itemID, status);
+                    itemID = this.GetNextJobId();
                 }
             }
             catch(Exception ex)
             {
                 LogMessage("Error processing Ocr job", ex);
-                if (!string.IsNullOrWhiteSpace(bookID)) MarkJobError(bookID, ex.Message + "\n\r" + ex.StackTrace);
+                if (!string.IsNullOrWhiteSpace(itemID)) this.MarkJobError(itemID, ex.Message + "\n\r" + ex.StackTrace);
             }
 
             // Report the results of pdf generation
@@ -113,30 +113,30 @@ namespace MOBOT.BHL.BHLOcrRefresh
 
         #endregion Job File Methods
 
-        private string GetOcrForItem(string bookID)
+        private string GetOcrForItem(string itemID)
         {
             string status = string.Empty;
             string tempFolder = string.Empty;
 
             try
             {
-                string barcode = GetBarcodeForItem(bookID);
+                string barcode = this.GetBarcodeForItem(itemID);
 
                 // Create a temp directory for processing this item
                 tempFolder = string.Format("{0}{1}", configParms.OcrJobTempPath, barcode);
                 if (!Directory.Exists(tempFolder)) Directory.CreateDirectory(tempFolder);
 
                 // Get the DJVU from IA
-                string djvu = GetDJVU(bookID);
+                string djvu = this.GetDJVU(itemID);
 
                 // Convert the DJVU into XML files (one per page)
-                ConvertDjvuToXml(djvu, tempFolder, barcode);
+                this.ConvertDjvuToXml(djvu, tempFolder, barcode);
 
                 // Convert the OCR XML files to plain text
-                TransformXmlToText(tempFolder);
+                this.TransformXmlToText(tempFolder);
 
                 // Move the OCR files to their final destination
-                status = MoveOcrToProduction(bookID, tempFolder);
+                status = this.MoveOcrToProduction(itemID, barcode, tempFolder);
             }
             finally
             {
@@ -150,15 +150,23 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// <summary>
         /// Get the barcode for the specified Item
         /// </summary>
-        /// <param name="bookID"></param>
+        /// <param name="itemID"></param>
         /// <returns></returns>
-        private string GetBarcodeForItem(string bookID)
+        private string GetBarcodeForItem(string itemID)
         {
             string barcode = string.Empty;
 
             BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-            BHLWS.Book book = client.BookSelectAuto(Convert.ToInt32(bookID));
-            if (book != null) barcode = book.BarCode;
+            BHLWS.Book book = client.BookSelectByItemID(Convert.ToInt32(itemID));
+            if (book != null)
+            {
+                barcode = book.BarCode;
+            }
+            else
+            {
+                BHLWS.Segment segment = client.SegmentSelectByItemID(Convert.ToInt32(itemID));
+                if (segment != null) barcode = segment.BarCode;
+            }
 
             return barcode;
         }
@@ -176,7 +184,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
             try
             {
                 BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-                BHLWS.Item item = client.ItemSelectFilenames(Convert.ToInt32(itemID));
+                BHLWS.Item item = client.ItemSelectFilenames(BHLWS.ItemType.Item, Convert.ToInt32(itemID));
 
                 String iaUrl = string.Format("https://www.archive.org/download/{0}/{1}", item.BarCode, item.DjvuFilename);
 
@@ -264,14 +272,14 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// Move the OCR files for the specified item from the specified temp folder
         /// to their production location.
         /// </summary>
-        /// <param name="bookID"></param>
+        /// <param name="itemID"></param>
         /// <param name="tempFolder"></param>
         /// <returns></returns>
-        private string MoveOcrToProduction(string bookID, string tempFolder)
+        private string MoveOcrToProduction(string itemID, string barcode, string tempFolder)
         {
             string status = string.Empty;
 
-            string path = GetFilePath(bookID);
+            string path = this.GetFilePath(itemID, barcode);
             if (!string.IsNullOrWhiteSpace(path))
             {
                 string[] files = Directory.GetFiles(tempFolder);
@@ -284,7 +292,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
             }
             else
             {
-                throw new Exception("File Path for Item " + bookID + " not found.");
+                throw new Exception("File Path for Item " + itemID + " not found.");
             }
 
             return status;
@@ -295,20 +303,14 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// </summary>
         /// <param name="barcode"></param>
         /// <returns></returns>
-        private string GetFilePath(string bookID)
+        private string GetFilePath(string itemID, string barcode)
         {
             string path = string.Empty;
 
             BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-            BHLWS.Book book = client.BookSelectAuto(Convert.ToInt32(bookID));
-
-            if (book != null)
-            {
-                BHLWS.Item item = client.ItemSelectAuto(book.ItemID);
-
-                BHLWS.Vault vault = client.VaultSelect((int)item.VaultID);
-                path = string.Format("{0}\\{1}\\{2}", vault.OCRFolderShare, item.FileRootFolder, book.BarCode);
-            }
+            BHLWS.Item item = client.ItemSelectAuto(Convert.ToInt32(itemID));
+            BHLWS.Vault vault = client.VaultSelect((int)item.VaultID);
+            path = string.Format("{0}\\{1}\\{2}", vault.OCRFolderShare, item.FileRootFolder, barcode);
 
             return path;
         }

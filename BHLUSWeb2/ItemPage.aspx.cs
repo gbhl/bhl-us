@@ -31,7 +31,7 @@ namespace MOBOT.BHL.Web2
             else
             {
                 BhlTitle = bhlProvider.TitleSelect((int)BhlBook.PrimaryTitleID);
-                List<Segment> segments = bhlProvider.SegmentSelectByItemID(ItemID);
+                List<Segment> segments = bhlProvider.SegmentSelectByBookID(BhlBook.BookID);
 
                if (!(segments == null))
                {

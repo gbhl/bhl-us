@@ -2,13 +2,84 @@
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.mobot.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.mobot.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://www.mobot.org/">
-      <s:element name="PageFlickrSelectAll">
-        <s:complexType />
-      </s:element>
-      <s:element name="PageFlickrSelectAllResponse">
+      <s:element name="PageUpdateVolume">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="PageFlickrSelectAllResult" type="tns:ArrayOfPageFlickr" />
+            <s:element minOccurs="0" maxOccurs="1" name="pageIDs" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="volume" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PageUpdateVolumeResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="PageUpdateIssue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pageIDs" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="issuePrefix" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="issue" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PageUpdateIssueResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="PageUpdateLastPageNameLookupDate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="pageID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PageUpdateLastPageNameLookupDateResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="PageCheckForOcrText">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="pageID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="ocrTextLocation" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PageCheckForOcrTextResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PageCheckForOcrTextResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PageTextLogInsertForItem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="textSource" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PageTextLogInsertForItemResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="PageFlickrSelectRandom">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="numberToReturn" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PageFlickrSelectRandomResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PageFlickrSelectRandomResult" type="tns:ArrayOfPageFlickr" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -42,6 +113,16 @@
         </s:complexContent>
       </s:complexType>
       <s:complexType name="CustomObjectBase" abstract="true" />
+      <s:element name="PageFlickrSelectAll">
+        <s:complexType />
+      </s:element>
+      <s:element name="PageFlickrSelectAllResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PageFlickrSelectAllResult" type="tns:ArrayOfPageFlickr" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="PageNameUpdateList">
         <s:complexType>
           <s:sequence>
@@ -78,11 +159,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="ArrayOfInt">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="NamePageDeleteByItemID">
         <s:complexType>
           <s:sequence>
@@ -120,6 +196,11 @@
               <s:element minOccurs="1" maxOccurs="1" name="PageTypeID" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="PageTypeName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="PageTypeDescription" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreationDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreationUserID" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastModifiedUserID" nillable="true" type="s:int" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -210,6 +291,8 @@
         <s:complexContent mixed="false">
           <s:extension base="tns:__PDF">
             <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="BookID" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SegmentID" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="NumberOfPages" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="MinutesToGenerate" type="s:int" />
             </s:sequence>
@@ -222,13 +305,15 @@
             <s:sequence>
               <s:element minOccurs="1" maxOccurs="1" name="PdfID" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="ItemID" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="FileLocation" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ShareWithEmailAddresses" type="s:string" />
-              <s:element minOccurs="1" maxOccurs="1" name="ImagesOnly" type="s:boolean" />
               <s:element minOccurs="0" maxOccurs="1" name="ArticleTitle" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ArticleCreators" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ArticleTags" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="FileLocation" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="ImagesOnly" type="s:boolean" />
               <s:element minOccurs="0" maxOccurs="1" name="FileUrl" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="FileGenerationDate" nillable="true" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="FileDeletionDate" nillable="true" type="s:dateTime" />
@@ -236,8 +321,6 @@
               <s:element minOccurs="1" maxOccurs="1" name="NumberImagesMissing" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="NumberOcrMissing" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="Comment" type="s:string" />
-              <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
-              <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" type="s:dateTime" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -316,6 +399,8 @@
               <s:element minOccurs="0" maxOccurs="1" name="Volume" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="FileRootFolder" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Sponsor" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PageProgression" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsVirtual" type="s:unsignedByte" />
               <s:element minOccurs="1" maxOccurs="1" name="ItemSequence" nillable="true" type="s:short" />
               <s:element minOccurs="1" maxOccurs="1" name="PageID" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="FileNamePrefix" type="s:string" />
@@ -973,13 +1058,13 @@
               <s:element minOccurs="1" maxOccurs="1" name="TitleID" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="AuthorID" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="AuthorRoleID" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SequenceOrder" type="s:short" />
               <s:element minOccurs="0" maxOccurs="1" name="Relationship" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="TitleOfWork" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="CreationUserID" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedUserID" nillable="true" type="s:int" />
-              <s:element minOccurs="1" maxOccurs="1" name="SequenceOrder" type="s:short" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -1181,6 +1266,7 @@
               <s:element minOccurs="1" maxOccurs="1" name="NumberOfPages" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="TotalItems" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="FirstPageID" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="FirstSegmentID" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="HasFlickrImages" type="s:boolean" />
               <s:element minOccurs="1" maxOccurs="1" name="HasLocalContent" type="s:boolean" />
               <s:element minOccurs="1" maxOccurs="1" name="HasExternalContent" type="s:boolean" />
@@ -1243,6 +1329,7 @@
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" nillable="true" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="CreationUserID" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedUserID" nillable="true" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="PageProgression" type="s:string" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -1515,6 +1602,7 @@
               <s:element minOccurs="0" maxOccurs="1" name="_notes" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="TitleId" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="BookID" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="BookIsVirtual" type="s:unsignedByte" />
               <s:element minOccurs="1" maxOccurs="1" name="SegmentClusterId" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="SegmentClusterTypeId" nillable="true" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="SegmentClusterTypeLabel" type="s:string" />
@@ -1524,14 +1612,19 @@
               <s:element minOccurs="0" maxOccurs="1" name="TitlePublicationPlace" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="TitlePublicationDate" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ItemVolume" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ItemSeries" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ItemIssue" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ItemYear" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ContributorName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="GenreName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="StatusName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="LanguageName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="EndPageID" nillable="true" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="DOIName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Authors" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AuthorIDs" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Keywords" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AdditionalPages" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="IsPrimary" type="s:short" />
               <s:element minOccurs="1" maxOccurs="1" name="HasLocalContent" type="s:boolean" />
               <s:element minOccurs="1" maxOccurs="1" name="HasExternalContent" type="s:boolean" />
@@ -1602,6 +1695,7 @@
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="CreationUserID" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedUserID" nillable="true" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="PageProgression" type="s:string" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -2165,13 +2259,35 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="ItemSelectFilenames">
+      <s:element name="BookSelectByItemID">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="BookSelectByItemIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BookSelectByItemIDResult" type="tns:Book" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ItemSelectFilenames">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="itemType" type="tns:ItemType" />
+            <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="ItemType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Item" />
+          <s:enumeration value="Book" />
+          <s:enumeration value="Segment" />
+        </s:restriction>
+      </s:simpleType>
       <s:element name="ItemSelectFilenamesResponse">
         <s:complexType>
           <s:sequence>
@@ -2238,6 +2354,34 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="SegmentSelectAuto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="segmentID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SegmentSelectAutoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SegmentSelectAutoResult" type="tns:Segment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SegmentSelectByItemID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SegmentSelectByItemIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SegmentSelectByItemIDResult" type="tns:Segment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="ItemSelectWithExpiredPageNames">
         <s:complexType>
           <s:sequence>
@@ -2300,6 +2444,7 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="barcode" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -2433,6 +2578,20 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="SegmentSelectAllRISCitationsResult" type="tns:ArrayOfRISCitation" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SegmentSelectRecentlyChanged">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="startDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SegmentSelectRecentlyChangedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SegmentSelectRecentlyChangedResult" type="tns:ArrayOfSegment" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -2597,6 +2756,21 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="InstitutionSelectBySegmentIDAndRole">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="segmentID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="role" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InstitutionSelectBySegmentIDAndRoleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InstitutionSelectBySegmentIDAndRoleResult" type="tns:ArrayOfInstitution" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="SendEmail">
         <s:complexType>
           <s:sequence>
@@ -2749,6 +2923,7 @@
               <s:element minOccurs="0" maxOccurs="1" name="DOIEntityTypeName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="EntityDetail" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="TotalDOIs" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="CreationUserName" type="s:string" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -2768,6 +2943,8 @@
               <s:element minOccurs="1" maxOccurs="1" name="IsValid" type="s:short" />
               <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreationUserID" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastModifiedUserID" type="s:int" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -2810,6 +2987,7 @@
             <s:element minOccurs="0" maxOccurs="1" name="doiName" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
             <s:element minOccurs="1" maxOccurs="1" name="isValid" type="s:short" />
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -2827,6 +3005,7 @@
             <s:element minOccurs="1" maxOccurs="1" name="doiStatusId" type="s:int" />
             <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
             <s:element minOccurs="1" maxOccurs="1" name="setValid" nillable="true" type="s:short" />
+            <s:element minOccurs="1" maxOccurs="1" name="userId" nillable="true" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -2843,6 +3022,7 @@
             <s:element minOccurs="1" maxOccurs="1" name="doiID" type="s:int" />
             <s:element minOccurs="1" maxOccurs="1" name="doiStatusId" type="s:int" />
             <s:element minOccurs="0" maxOccurs="1" name="doiName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="userId" nillable="true" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -2859,6 +3039,7 @@
             <s:element minOccurs="1" maxOccurs="1" name="doiID" type="s:int" />
             <s:element minOccurs="1" maxOccurs="1" name="doiStatusId" type="s:int" />
             <s:element minOccurs="0" maxOccurs="1" name="doiBatchID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="userId" nillable="true" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -2967,6 +3148,20 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="PageMetadataSelectBySegmentID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="segmentID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PageMetadataSelectBySegmentIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PageMetadataSelectBySegmentIDResult" type="tns:ArrayOfPage" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="PageSelectWithExpiredPageNamesByItemID">
         <s:complexType>
           <s:sequence>
@@ -3018,84 +3213,44 @@
       <s:element name="PageUpdateYearResponse">
         <s:complexType />
       </s:element>
-      <s:element name="PageUpdateVolume">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="pageIDs" type="tns:ArrayOfInt" />
-            <s:element minOccurs="0" maxOccurs="1" name="volume" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="PageUpdateVolumeResponse">
-        <s:complexType />
-      </s:element>
-      <s:element name="PageUpdateIssue">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="pageIDs" type="tns:ArrayOfInt" />
-            <s:element minOccurs="0" maxOccurs="1" name="issuePrefix" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="issue" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="PageUpdateIssueResponse">
-        <s:complexType />
-      </s:element>
-      <s:element name="PageUpdateLastPageNameLookupDate">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="pageID" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="PageUpdateLastPageNameLookupDateResponse">
-        <s:complexType />
-      </s:element>
-      <s:element name="PageCheckForOcrText">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="pageID" type="s:int" />
-            <s:element minOccurs="0" maxOccurs="1" name="ocrTextLocation" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="PageCheckForOcrTextResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="PageCheckForOcrTextResult" type="s:boolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="PageTextLogInsertForItem">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
-            <s:element minOccurs="0" maxOccurs="1" name="textSource" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="PageTextLogInsertForItemResponse">
-        <s:complexType />
-      </s:element>
-      <s:element name="PageFlickrSelectRandom">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="numberToReturn" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="PageFlickrSelectRandomResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="PageFlickrSelectRandomResult" type="tns:ArrayOfPageFlickr" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
     </s:schema>
   </wsdl:types>
+  <wsdl:message name="PageUpdateVolumeSoapIn">
+    <wsdl:part name="parameters" element="tns:PageUpdateVolume" />
+  </wsdl:message>
+  <wsdl:message name="PageUpdateVolumeSoapOut">
+    <wsdl:part name="parameters" element="tns:PageUpdateVolumeResponse" />
+  </wsdl:message>
+  <wsdl:message name="PageUpdateIssueSoapIn">
+    <wsdl:part name="parameters" element="tns:PageUpdateIssue" />
+  </wsdl:message>
+  <wsdl:message name="PageUpdateIssueSoapOut">
+    <wsdl:part name="parameters" element="tns:PageUpdateIssueResponse" />
+  </wsdl:message>
+  <wsdl:message name="PageUpdateLastPageNameLookupDateSoapIn">
+    <wsdl:part name="parameters" element="tns:PageUpdateLastPageNameLookupDate" />
+  </wsdl:message>
+  <wsdl:message name="PageUpdateLastPageNameLookupDateSoapOut">
+    <wsdl:part name="parameters" element="tns:PageUpdateLastPageNameLookupDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="PageCheckForOcrTextSoapIn">
+    <wsdl:part name="parameters" element="tns:PageCheckForOcrText" />
+  </wsdl:message>
+  <wsdl:message name="PageCheckForOcrTextSoapOut">
+    <wsdl:part name="parameters" element="tns:PageCheckForOcrTextResponse" />
+  </wsdl:message>
+  <wsdl:message name="PageTextLogInsertForItemSoapIn">
+    <wsdl:part name="parameters" element="tns:PageTextLogInsertForItem" />
+  </wsdl:message>
+  <wsdl:message name="PageTextLogInsertForItemSoapOut">
+    <wsdl:part name="parameters" element="tns:PageTextLogInsertForItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="PageFlickrSelectRandomSoapIn">
+    <wsdl:part name="parameters" element="tns:PageFlickrSelectRandom" />
+  </wsdl:message>
+  <wsdl:message name="PageFlickrSelectRandomSoapOut">
+    <wsdl:part name="parameters" element="tns:PageFlickrSelectRandomResponse" />
+  </wsdl:message>
   <wsdl:message name="PageFlickrSelectAllSoapIn">
     <wsdl:part name="parameters" element="tns:PageFlickrSelectAll" />
   </wsdl:message>
@@ -3366,6 +3521,12 @@
   <wsdl:message name="BookSelectByTitleIDSoapOut">
     <wsdl:part name="parameters" element="tns:BookSelectByTitleIDResponse" />
   </wsdl:message>
+  <wsdl:message name="BookSelectByItemIDSoapIn">
+    <wsdl:part name="parameters" element="tns:BookSelectByItemID" />
+  </wsdl:message>
+  <wsdl:message name="BookSelectByItemIDSoapOut">
+    <wsdl:part name="parameters" element="tns:BookSelectByItemIDResponse" />
+  </wsdl:message>
   <wsdl:message name="ItemSelectFilenamesSoapIn">
     <wsdl:part name="parameters" element="tns:ItemSelectFilenames" />
   </wsdl:message>
@@ -3395,6 +3556,18 @@
   </wsdl:message>
   <wsdl:message name="BookSelectAutoSoapOut">
     <wsdl:part name="parameters" element="tns:BookSelectAutoResponse" />
+  </wsdl:message>
+  <wsdl:message name="SegmentSelectAutoSoapIn">
+    <wsdl:part name="parameters" element="tns:SegmentSelectAuto" />
+  </wsdl:message>
+  <wsdl:message name="SegmentSelectAutoSoapOut">
+    <wsdl:part name="parameters" element="tns:SegmentSelectAutoResponse" />
+  </wsdl:message>
+  <wsdl:message name="SegmentSelectByItemIDSoapIn">
+    <wsdl:part name="parameters" element="tns:SegmentSelectByItemID" />
+  </wsdl:message>
+  <wsdl:message name="SegmentSelectByItemIDSoapOut">
+    <wsdl:part name="parameters" element="tns:SegmentSelectByItemIDResponse" />
   </wsdl:message>
   <wsdl:message name="ItemSelectWithExpiredPageNamesSoapIn">
     <wsdl:part name="parameters" element="tns:ItemSelectWithExpiredPageNames" />
@@ -3474,6 +3647,12 @@
   <wsdl:message name="SegmentSelectAllRISCitationsSoapOut">
     <wsdl:part name="parameters" element="tns:SegmentSelectAllRISCitationsResponse" />
   </wsdl:message>
+  <wsdl:message name="SegmentSelectRecentlyChangedSoapIn">
+    <wsdl:part name="parameters" element="tns:SegmentSelectRecentlyChanged" />
+  </wsdl:message>
+  <wsdl:message name="SegmentSelectRecentlyChangedSoapOut">
+    <wsdl:part name="parameters" element="tns:SegmentSelectRecentlyChangedResponse" />
+  </wsdl:message>
   <wsdl:message name="GenerateRISCitationSoapIn">
     <wsdl:part name="parameters" element="tns:GenerateRISCitation" />
   </wsdl:message>
@@ -3527,6 +3706,12 @@
   </wsdl:message>
   <wsdl:message name="InstitutionSelectByItemIDAndRoleSoapOut">
     <wsdl:part name="parameters" element="tns:InstitutionSelectByItemIDAndRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="InstitutionSelectBySegmentIDAndRoleSoapIn">
+    <wsdl:part name="parameters" element="tns:InstitutionSelectBySegmentIDAndRole" />
+  </wsdl:message>
+  <wsdl:message name="InstitutionSelectBySegmentIDAndRoleSoapOut">
+    <wsdl:part name="parameters" element="tns:InstitutionSelectBySegmentIDAndRoleResponse" />
   </wsdl:message>
   <wsdl:message name="SendEmailSoapIn">
     <wsdl:part name="parameters" element="tns:SendEmail" />
@@ -3666,6 +3851,12 @@
   <wsdl:message name="PageMetadataSelectByItemIDSoapOut">
     <wsdl:part name="parameters" element="tns:PageMetadataSelectByItemIDResponse" />
   </wsdl:message>
+  <wsdl:message name="PageMetadataSelectBySegmentIDSoapIn">
+    <wsdl:part name="parameters" element="tns:PageMetadataSelectBySegmentID" />
+  </wsdl:message>
+  <wsdl:message name="PageMetadataSelectBySegmentIDSoapOut">
+    <wsdl:part name="parameters" element="tns:PageMetadataSelectBySegmentIDResponse" />
+  </wsdl:message>
   <wsdl:message name="PageSelectWithExpiredPageNamesByItemIDSoapIn">
     <wsdl:part name="parameters" element="tns:PageSelectWithExpiredPageNamesByItemID" />
   </wsdl:message>
@@ -3690,43 +3881,31 @@
   <wsdl:message name="PageUpdateYearSoapOut">
     <wsdl:part name="parameters" element="tns:PageUpdateYearResponse" />
   </wsdl:message>
-  <wsdl:message name="PageUpdateVolumeSoapIn">
-    <wsdl:part name="parameters" element="tns:PageUpdateVolume" />
-  </wsdl:message>
-  <wsdl:message name="PageUpdateVolumeSoapOut">
-    <wsdl:part name="parameters" element="tns:PageUpdateVolumeResponse" />
-  </wsdl:message>
-  <wsdl:message name="PageUpdateIssueSoapIn">
-    <wsdl:part name="parameters" element="tns:PageUpdateIssue" />
-  </wsdl:message>
-  <wsdl:message name="PageUpdateIssueSoapOut">
-    <wsdl:part name="parameters" element="tns:PageUpdateIssueResponse" />
-  </wsdl:message>
-  <wsdl:message name="PageUpdateLastPageNameLookupDateSoapIn">
-    <wsdl:part name="parameters" element="tns:PageUpdateLastPageNameLookupDate" />
-  </wsdl:message>
-  <wsdl:message name="PageUpdateLastPageNameLookupDateSoapOut">
-    <wsdl:part name="parameters" element="tns:PageUpdateLastPageNameLookupDateResponse" />
-  </wsdl:message>
-  <wsdl:message name="PageCheckForOcrTextSoapIn">
-    <wsdl:part name="parameters" element="tns:PageCheckForOcrText" />
-  </wsdl:message>
-  <wsdl:message name="PageCheckForOcrTextSoapOut">
-    <wsdl:part name="parameters" element="tns:PageCheckForOcrTextResponse" />
-  </wsdl:message>
-  <wsdl:message name="PageTextLogInsertForItemSoapIn">
-    <wsdl:part name="parameters" element="tns:PageTextLogInsertForItem" />
-  </wsdl:message>
-  <wsdl:message name="PageTextLogInsertForItemSoapOut">
-    <wsdl:part name="parameters" element="tns:PageTextLogInsertForItemResponse" />
-  </wsdl:message>
-  <wsdl:message name="PageFlickrSelectRandomSoapIn">
-    <wsdl:part name="parameters" element="tns:PageFlickrSelectRandom" />
-  </wsdl:message>
-  <wsdl:message name="PageFlickrSelectRandomSoapOut">
-    <wsdl:part name="parameters" element="tns:PageFlickrSelectRandomResponse" />
-  </wsdl:message>
   <wsdl:portType name="BHLWSSoap">
+    <wsdl:operation name="PageUpdateVolume">
+      <wsdl:input message="tns:PageUpdateVolumeSoapIn" />
+      <wsdl:output message="tns:PageUpdateVolumeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PageUpdateIssue">
+      <wsdl:input message="tns:PageUpdateIssueSoapIn" />
+      <wsdl:output message="tns:PageUpdateIssueSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PageUpdateLastPageNameLookupDate">
+      <wsdl:input message="tns:PageUpdateLastPageNameLookupDateSoapIn" />
+      <wsdl:output message="tns:PageUpdateLastPageNameLookupDateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PageCheckForOcrText">
+      <wsdl:input message="tns:PageCheckForOcrTextSoapIn" />
+      <wsdl:output message="tns:PageCheckForOcrTextSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PageTextLogInsertForItem">
+      <wsdl:input message="tns:PageTextLogInsertForItemSoapIn" />
+      <wsdl:output message="tns:PageTextLogInsertForItemSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PageFlickrSelectRandom">
+      <wsdl:input message="tns:PageFlickrSelectRandomSoapIn" />
+      <wsdl:output message="tns:PageFlickrSelectRandomSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="PageFlickrSelectAll">
       <wsdl:input message="tns:PageFlickrSelectAllSoapIn" />
       <wsdl:output message="tns:PageFlickrSelectAllSoapOut" />
@@ -3907,6 +4086,10 @@
       <wsdl:input message="tns:BookSelectByTitleIDSoapIn" />
       <wsdl:output message="tns:BookSelectByTitleIDSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="BookSelectByItemID">
+      <wsdl:input message="tns:BookSelectByItemIDSoapIn" />
+      <wsdl:output message="tns:BookSelectByItemIDSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="ItemSelectFilenames">
       <wsdl:input message="tns:ItemSelectFilenamesSoapIn" />
       <wsdl:output message="tns:ItemSelectFilenamesSoapOut" />
@@ -3926,6 +4109,14 @@
     <wsdl:operation name="BookSelectAuto">
       <wsdl:input message="tns:BookSelectAutoSoapIn" />
       <wsdl:output message="tns:BookSelectAutoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SegmentSelectAuto">
+      <wsdl:input message="tns:SegmentSelectAutoSoapIn" />
+      <wsdl:output message="tns:SegmentSelectAutoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SegmentSelectByItemID">
+      <wsdl:input message="tns:SegmentSelectByItemIDSoapIn" />
+      <wsdl:output message="tns:SegmentSelectByItemIDSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="ItemSelectWithExpiredPageNames">
       <wsdl:input message="tns:ItemSelectWithExpiredPageNamesSoapIn" />
@@ -3979,6 +4170,10 @@
       <wsdl:input message="tns:SegmentSelectAllRISCitationsSoapIn" />
       <wsdl:output message="tns:SegmentSelectAllRISCitationsSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="SegmentSelectRecentlyChanged">
+      <wsdl:input message="tns:SegmentSelectRecentlyChangedSoapIn" />
+      <wsdl:output message="tns:SegmentSelectRecentlyChangedSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="GenerateRISCitation">
       <wsdl:input message="tns:GenerateRISCitationSoapIn" />
       <wsdl:output message="tns:GenerateRISCitationSoapOut" />
@@ -4014,6 +4209,10 @@
     <wsdl:operation name="InstitutionSelectByItemIDAndRole">
       <wsdl:input message="tns:InstitutionSelectByItemIDAndRoleSoapIn" />
       <wsdl:output message="tns:InstitutionSelectByItemIDAndRoleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InstitutionSelectBySegmentIDAndRole">
+      <wsdl:input message="tns:InstitutionSelectBySegmentIDAndRoleSoapIn" />
+      <wsdl:output message="tns:InstitutionSelectBySegmentIDAndRoleSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="SendEmail">
       <wsdl:input message="tns:SendEmailSoapIn" />
@@ -4107,6 +4306,10 @@
       <wsdl:input message="tns:PageMetadataSelectByItemIDSoapIn" />
       <wsdl:output message="tns:PageMetadataSelectByItemIDSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="PageMetadataSelectBySegmentID">
+      <wsdl:input message="tns:PageMetadataSelectBySegmentIDSoapIn" />
+      <wsdl:output message="tns:PageMetadataSelectBySegmentIDSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="PageSelectWithExpiredPageNamesByItemID">
       <wsdl:input message="tns:PageSelectWithExpiredPageNamesByItemIDSoapIn" />
       <wsdl:output message="tns:PageSelectWithExpiredPageNamesByItemIDSoapOut" />
@@ -4123,33 +4326,63 @@
       <wsdl:input message="tns:PageUpdateYearSoapIn" />
       <wsdl:output message="tns:PageUpdateYearSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="PageUpdateVolume">
-      <wsdl:input message="tns:PageUpdateVolumeSoapIn" />
-      <wsdl:output message="tns:PageUpdateVolumeSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="PageUpdateIssue">
-      <wsdl:input message="tns:PageUpdateIssueSoapIn" />
-      <wsdl:output message="tns:PageUpdateIssueSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="PageUpdateLastPageNameLookupDate">
-      <wsdl:input message="tns:PageUpdateLastPageNameLookupDateSoapIn" />
-      <wsdl:output message="tns:PageUpdateLastPageNameLookupDateSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="PageCheckForOcrText">
-      <wsdl:input message="tns:PageCheckForOcrTextSoapIn" />
-      <wsdl:output message="tns:PageCheckForOcrTextSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="PageTextLogInsertForItem">
-      <wsdl:input message="tns:PageTextLogInsertForItemSoapIn" />
-      <wsdl:output message="tns:PageTextLogInsertForItemSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="PageFlickrSelectRandom">
-      <wsdl:input message="tns:PageFlickrSelectRandomSoapIn" />
-      <wsdl:output message="tns:PageFlickrSelectRandomSoapOut" />
-    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BHLWSSoap" type="tns:BHLWSSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PageUpdateVolume">
+      <soap:operation soapAction="http://www.mobot.org/PageUpdateVolume" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageUpdateIssue">
+      <soap:operation soapAction="http://www.mobot.org/PageUpdateIssue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageUpdateLastPageNameLookupDate">
+      <soap:operation soapAction="http://www.mobot.org/PageUpdateLastPageNameLookupDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageCheckForOcrText">
+      <soap:operation soapAction="http://www.mobot.org/PageCheckForOcrText" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageTextLogInsertForItem">
+      <soap:operation soapAction="http://www.mobot.org/PageTextLogInsertForItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageFlickrSelectRandom">
+      <soap:operation soapAction="http://www.mobot.org/PageFlickrSelectRandom" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="PageFlickrSelectAll">
       <soap:operation soapAction="http://www.mobot.org/PageFlickrSelectAll" style="document" />
       <wsdl:input>
@@ -4555,6 +4788,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="BookSelectByItemID">
+      <soap:operation soapAction="http://www.mobot.org/BookSelectByItemID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ItemSelectFilenames">
       <soap:operation soapAction="http://www.mobot.org/ItemSelectFilenames" style="document" />
       <wsdl:input>
@@ -4593,6 +4835,24 @@
     </wsdl:operation>
     <wsdl:operation name="BookSelectAuto">
       <soap:operation soapAction="http://www.mobot.org/BookSelectAuto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SegmentSelectAuto">
+      <soap:operation soapAction="http://www.mobot.org/SegmentSelectAuto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SegmentSelectByItemID">
+      <soap:operation soapAction="http://www.mobot.org/SegmentSelectByItemID" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -4717,6 +4977,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SegmentSelectRecentlyChanged">
+      <soap:operation soapAction="http://www.mobot.org/SegmentSelectRecentlyChanged" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GenerateRISCitation">
       <soap:operation soapAction="http://www.mobot.org/GenerateRISCitation" style="document" />
       <wsdl:input>
@@ -4791,6 +5060,15 @@
     </wsdl:operation>
     <wsdl:operation name="InstitutionSelectByItemIDAndRole">
       <soap:operation soapAction="http://www.mobot.org/InstitutionSelectByItemIDAndRole" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InstitutionSelectBySegmentIDAndRole">
+      <soap:operation soapAction="http://www.mobot.org/InstitutionSelectBySegmentIDAndRole" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -5005,6 +5283,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="PageMetadataSelectBySegmentID">
+      <soap:operation soapAction="http://www.mobot.org/PageMetadataSelectBySegmentID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="PageSelectWithExpiredPageNamesByItemID">
       <soap:operation soapAction="http://www.mobot.org/PageSelectWithExpiredPageNamesByItemID" style="document" />
       <wsdl:input>
@@ -5041,63 +5328,63 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="PageUpdateVolume">
-      <soap:operation soapAction="http://www.mobot.org/PageUpdateVolume" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageUpdateIssue">
-      <soap:operation soapAction="http://www.mobot.org/PageUpdateIssue" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageUpdateLastPageNameLookupDate">
-      <soap:operation soapAction="http://www.mobot.org/PageUpdateLastPageNameLookupDate" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageCheckForOcrText">
-      <soap:operation soapAction="http://www.mobot.org/PageCheckForOcrText" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageTextLogInsertForItem">
-      <soap:operation soapAction="http://www.mobot.org/PageTextLogInsertForItem" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageFlickrSelectRandom">
-      <soap:operation soapAction="http://www.mobot.org/PageFlickrSelectRandom" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BHLWSSoap12" type="tns:BHLWSSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PageUpdateVolume">
+      <soap12:operation soapAction="http://www.mobot.org/PageUpdateVolume" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageUpdateIssue">
+      <soap12:operation soapAction="http://www.mobot.org/PageUpdateIssue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageUpdateLastPageNameLookupDate">
+      <soap12:operation soapAction="http://www.mobot.org/PageUpdateLastPageNameLookupDate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageCheckForOcrText">
+      <soap12:operation soapAction="http://www.mobot.org/PageCheckForOcrText" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageTextLogInsertForItem">
+      <soap12:operation soapAction="http://www.mobot.org/PageTextLogInsertForItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageFlickrSelectRandom">
+      <soap12:operation soapAction="http://www.mobot.org/PageFlickrSelectRandom" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="PageFlickrSelectAll">
       <soap12:operation soapAction="http://www.mobot.org/PageFlickrSelectAll" style="document" />
       <wsdl:input>
@@ -5503,6 +5790,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="BookSelectByItemID">
+      <soap12:operation soapAction="http://www.mobot.org/BookSelectByItemID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ItemSelectFilenames">
       <soap12:operation soapAction="http://www.mobot.org/ItemSelectFilenames" style="document" />
       <wsdl:input>
@@ -5541,6 +5837,24 @@
     </wsdl:operation>
     <wsdl:operation name="BookSelectAuto">
       <soap12:operation soapAction="http://www.mobot.org/BookSelectAuto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SegmentSelectAuto">
+      <soap12:operation soapAction="http://www.mobot.org/SegmentSelectAuto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SegmentSelectByItemID">
+      <soap12:operation soapAction="http://www.mobot.org/SegmentSelectByItemID" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -5665,6 +5979,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SegmentSelectRecentlyChanged">
+      <soap12:operation soapAction="http://www.mobot.org/SegmentSelectRecentlyChanged" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GenerateRISCitation">
       <soap12:operation soapAction="http://www.mobot.org/GenerateRISCitation" style="document" />
       <wsdl:input>
@@ -5739,6 +6062,15 @@
     </wsdl:operation>
     <wsdl:operation name="InstitutionSelectByItemIDAndRole">
       <soap12:operation soapAction="http://www.mobot.org/InstitutionSelectByItemIDAndRole" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InstitutionSelectBySegmentIDAndRole">
+      <soap12:operation soapAction="http://www.mobot.org/InstitutionSelectBySegmentIDAndRole" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -5953,6 +6285,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="PageMetadataSelectBySegmentID">
+      <soap12:operation soapAction="http://www.mobot.org/PageMetadataSelectBySegmentID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="PageSelectWithExpiredPageNamesByItemID">
       <soap12:operation soapAction="http://www.mobot.org/PageSelectWithExpiredPageNamesByItemID" style="document" />
       <wsdl:input>
@@ -5982,60 +6323,6 @@
     </wsdl:operation>
     <wsdl:operation name="PageUpdateYear">
       <soap12:operation soapAction="http://www.mobot.org/PageUpdateYear" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageUpdateVolume">
-      <soap12:operation soapAction="http://www.mobot.org/PageUpdateVolume" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageUpdateIssue">
-      <soap12:operation soapAction="http://www.mobot.org/PageUpdateIssue" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageUpdateLastPageNameLookupDate">
-      <soap12:operation soapAction="http://www.mobot.org/PageUpdateLastPageNameLookupDate" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageCheckForOcrText">
-      <soap12:operation soapAction="http://www.mobot.org/PageCheckForOcrText" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageTextLogInsertForItem">
-      <soap12:operation soapAction="http://www.mobot.org/PageTextLogInsertForItem" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageFlickrSelectRandom">
-      <soap12:operation soapAction="http://www.mobot.org/PageFlickrSelectRandom" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

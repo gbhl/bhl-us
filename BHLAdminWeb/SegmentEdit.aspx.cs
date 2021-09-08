@@ -1386,7 +1386,7 @@ namespace MOBOT.BHL.AdminWeb
                 // Item, make this segment the last one (with the highest sequence number).
                 if (isItemChanged)
                 {
-                    segment.SequenceOrder = (short)((segment.ItemID == 0) ? 1 : (bp.SegmentSelectByItemID((int)segment.ItemID).Count + 1));
+                    segment.SequenceOrder = (short)((segment.BookID == null) ? 1 : (bp.SegmentSelectByBookID((int)segment.BookID).Count + 1));
                 }
 
                 // Don't catch errors... allow global error handler to take over

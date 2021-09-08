@@ -357,17 +357,17 @@ namespace MOBOT.BHL.DAL
         /// </summary>
         /// <param name="sqlConnection"></param>
         /// <param name="sqlTransaction"></param>
-        /// <param name="itemId">Identifier of the item.</param>
+        /// <param name="bookID">Identifier of the item.</param>
         /// <returns>A list of type segment</returns>
-        public List<Segment> SegmentSelectByItemID(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, int itemId, short showAll)
+        public List<Segment> SegmentSelectByBookID(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int bookID, short showAll)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByItemID", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemId),
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByBookID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("BookID", SqlDbType.Int, null, false, bookID),
                 CustomSqlHelper.CreateInputParameter("ShowAll", SqlDbType.SmallInt, null, false, showAll)))
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
@@ -375,6 +375,34 @@ namespace MOBOT.BHL.DAL
                     List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Select the segment associated with the specified item ID
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="itemID">Identifier of the item.</param>
+        /// <returns>A segment object</returns>
+        public Segment SegmentSelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByItemID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+
+                    if (list.Count > 0)
+                        return list[0];
+                    else
+                        return null;
                 }
             }
         }

@@ -2,6 +2,36 @@
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.mobot.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.mobot.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://www.mobot.org/">
+      <s:element name="PageUpdateVolume">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pageIDs" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="volume" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PageUpdateVolumeResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="PageUpdateIssue">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pageIDs" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="issuePrefix" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="issue" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PageUpdateIssueResponse">
+        <s:complexType />
+      </s:element>
       <s:element name="PageUpdateLastPageNameLookupDate">
         <s:complexType>
           <s:sequence>
@@ -129,11 +159,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="ArrayOfInt">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="NamePageDeleteByItemID">
         <s:complexType>
           <s:sequence>
@@ -2234,13 +2259,35 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="ItemSelectFilenames">
+      <s:element name="BookSelectByItemID">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="BookSelectByItemIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BookSelectByItemIDResult" type="tns:Book" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ItemSelectFilenames">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="itemType" type="tns:ItemType" />
+            <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="ItemType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Item" />
+          <s:enumeration value="Book" />
+          <s:enumeration value="Segment" />
+        </s:restriction>
+      </s:simpleType>
       <s:element name="ItemSelectFilenamesResponse">
         <s:complexType>
           <s:sequence>
@@ -2318,6 +2365,20 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="SegmentSelectAutoResult" type="tns:Segment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SegmentSelectByItemID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SegmentSelectByItemIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SegmentSelectByItemIDResult" type="tns:Segment" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -3152,33 +3213,20 @@
       <s:element name="PageUpdateYearResponse">
         <s:complexType />
       </s:element>
-      <s:element name="PageUpdateVolume">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="pageIDs" type="tns:ArrayOfInt" />
-            <s:element minOccurs="0" maxOccurs="1" name="volume" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="PageUpdateVolumeResponse">
-        <s:complexType />
-      </s:element>
-      <s:element name="PageUpdateIssue">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="pageIDs" type="tns:ArrayOfInt" />
-            <s:element minOccurs="0" maxOccurs="1" name="issuePrefix" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="issue" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="PageUpdateIssueResponse">
-        <s:complexType />
-      </s:element>
     </s:schema>
   </wsdl:types>
+  <wsdl:message name="PageUpdateVolumeSoapIn">
+    <wsdl:part name="parameters" element="tns:PageUpdateVolume" />
+  </wsdl:message>
+  <wsdl:message name="PageUpdateVolumeSoapOut">
+    <wsdl:part name="parameters" element="tns:PageUpdateVolumeResponse" />
+  </wsdl:message>
+  <wsdl:message name="PageUpdateIssueSoapIn">
+    <wsdl:part name="parameters" element="tns:PageUpdateIssue" />
+  </wsdl:message>
+  <wsdl:message name="PageUpdateIssueSoapOut">
+    <wsdl:part name="parameters" element="tns:PageUpdateIssueResponse" />
+  </wsdl:message>
   <wsdl:message name="PageUpdateLastPageNameLookupDateSoapIn">
     <wsdl:part name="parameters" element="tns:PageUpdateLastPageNameLookupDate" />
   </wsdl:message>
@@ -3473,6 +3521,12 @@
   <wsdl:message name="BookSelectByTitleIDSoapOut">
     <wsdl:part name="parameters" element="tns:BookSelectByTitleIDResponse" />
   </wsdl:message>
+  <wsdl:message name="BookSelectByItemIDSoapIn">
+    <wsdl:part name="parameters" element="tns:BookSelectByItemID" />
+  </wsdl:message>
+  <wsdl:message name="BookSelectByItemIDSoapOut">
+    <wsdl:part name="parameters" element="tns:BookSelectByItemIDResponse" />
+  </wsdl:message>
   <wsdl:message name="ItemSelectFilenamesSoapIn">
     <wsdl:part name="parameters" element="tns:ItemSelectFilenames" />
   </wsdl:message>
@@ -3508,6 +3562,12 @@
   </wsdl:message>
   <wsdl:message name="SegmentSelectAutoSoapOut">
     <wsdl:part name="parameters" element="tns:SegmentSelectAutoResponse" />
+  </wsdl:message>
+  <wsdl:message name="SegmentSelectByItemIDSoapIn">
+    <wsdl:part name="parameters" element="tns:SegmentSelectByItemID" />
+  </wsdl:message>
+  <wsdl:message name="SegmentSelectByItemIDSoapOut">
+    <wsdl:part name="parameters" element="tns:SegmentSelectByItemIDResponse" />
   </wsdl:message>
   <wsdl:message name="ItemSelectWithExpiredPageNamesSoapIn">
     <wsdl:part name="parameters" element="tns:ItemSelectWithExpiredPageNames" />
@@ -3821,19 +3881,15 @@
   <wsdl:message name="PageUpdateYearSoapOut">
     <wsdl:part name="parameters" element="tns:PageUpdateYearResponse" />
   </wsdl:message>
-  <wsdl:message name="PageUpdateVolumeSoapIn">
-    <wsdl:part name="parameters" element="tns:PageUpdateVolume" />
-  </wsdl:message>
-  <wsdl:message name="PageUpdateVolumeSoapOut">
-    <wsdl:part name="parameters" element="tns:PageUpdateVolumeResponse" />
-  </wsdl:message>
-  <wsdl:message name="PageUpdateIssueSoapIn">
-    <wsdl:part name="parameters" element="tns:PageUpdateIssue" />
-  </wsdl:message>
-  <wsdl:message name="PageUpdateIssueSoapOut">
-    <wsdl:part name="parameters" element="tns:PageUpdateIssueResponse" />
-  </wsdl:message>
   <wsdl:portType name="BHLWSSoap">
+    <wsdl:operation name="PageUpdateVolume">
+      <wsdl:input message="tns:PageUpdateVolumeSoapIn" />
+      <wsdl:output message="tns:PageUpdateVolumeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PageUpdateIssue">
+      <wsdl:input message="tns:PageUpdateIssueSoapIn" />
+      <wsdl:output message="tns:PageUpdateIssueSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="PageUpdateLastPageNameLookupDate">
       <wsdl:input message="tns:PageUpdateLastPageNameLookupDateSoapIn" />
       <wsdl:output message="tns:PageUpdateLastPageNameLookupDateSoapOut" />
@@ -4030,6 +4086,10 @@
       <wsdl:input message="tns:BookSelectByTitleIDSoapIn" />
       <wsdl:output message="tns:BookSelectByTitleIDSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="BookSelectByItemID">
+      <wsdl:input message="tns:BookSelectByItemIDSoapIn" />
+      <wsdl:output message="tns:BookSelectByItemIDSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="ItemSelectFilenames">
       <wsdl:input message="tns:ItemSelectFilenamesSoapIn" />
       <wsdl:output message="tns:ItemSelectFilenamesSoapOut" />
@@ -4053,6 +4113,10 @@
     <wsdl:operation name="SegmentSelectAuto">
       <wsdl:input message="tns:SegmentSelectAutoSoapIn" />
       <wsdl:output message="tns:SegmentSelectAutoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SegmentSelectByItemID">
+      <wsdl:input message="tns:SegmentSelectByItemIDSoapIn" />
+      <wsdl:output message="tns:SegmentSelectByItemIDSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="ItemSelectWithExpiredPageNames">
       <wsdl:input message="tns:ItemSelectWithExpiredPageNamesSoapIn" />
@@ -4262,17 +4326,27 @@
       <wsdl:input message="tns:PageUpdateYearSoapIn" />
       <wsdl:output message="tns:PageUpdateYearSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="PageUpdateVolume">
-      <wsdl:input message="tns:PageUpdateVolumeSoapIn" />
-      <wsdl:output message="tns:PageUpdateVolumeSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="PageUpdateIssue">
-      <wsdl:input message="tns:PageUpdateIssueSoapIn" />
-      <wsdl:output message="tns:PageUpdateIssueSoapOut" />
-    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BHLWSSoap" type="tns:BHLWSSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PageUpdateVolume">
+      <soap:operation soapAction="http://www.mobot.org/PageUpdateVolume" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageUpdateIssue">
+      <soap:operation soapAction="http://www.mobot.org/PageUpdateIssue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="PageUpdateLastPageNameLookupDate">
       <soap:operation soapAction="http://www.mobot.org/PageUpdateLastPageNameLookupDate" style="document" />
       <wsdl:input>
@@ -4714,6 +4788,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="BookSelectByItemID">
+      <soap:operation soapAction="http://www.mobot.org/BookSelectByItemID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ItemSelectFilenames">
       <soap:operation soapAction="http://www.mobot.org/ItemSelectFilenames" style="document" />
       <wsdl:input>
@@ -4761,6 +4844,15 @@
     </wsdl:operation>
     <wsdl:operation name="SegmentSelectAuto">
       <soap:operation soapAction="http://www.mobot.org/SegmentSelectAuto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SegmentSelectByItemID">
+      <soap:operation soapAction="http://www.mobot.org/SegmentSelectByItemID" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -5236,27 +5328,27 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="PageUpdateVolume">
-      <soap:operation soapAction="http://www.mobot.org/PageUpdateVolume" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageUpdateIssue">
-      <soap:operation soapAction="http://www.mobot.org/PageUpdateIssue" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BHLWSSoap12" type="tns:BHLWSSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PageUpdateVolume">
+      <soap12:operation soapAction="http://www.mobot.org/PageUpdateVolume" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageUpdateIssue">
+      <soap12:operation soapAction="http://www.mobot.org/PageUpdateIssue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="PageUpdateLastPageNameLookupDate">
       <soap12:operation soapAction="http://www.mobot.org/PageUpdateLastPageNameLookupDate" style="document" />
       <wsdl:input>
@@ -5698,6 +5790,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="BookSelectByItemID">
+      <soap12:operation soapAction="http://www.mobot.org/BookSelectByItemID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ItemSelectFilenames">
       <soap12:operation soapAction="http://www.mobot.org/ItemSelectFilenames" style="document" />
       <wsdl:input>
@@ -5745,6 +5846,15 @@
     </wsdl:operation>
     <wsdl:operation name="SegmentSelectAuto">
       <soap12:operation soapAction="http://www.mobot.org/SegmentSelectAuto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SegmentSelectByItemID">
+      <soap12:operation soapAction="http://www.mobot.org/SegmentSelectByItemID" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -6213,24 +6323,6 @@
     </wsdl:operation>
     <wsdl:operation name="PageUpdateYear">
       <soap12:operation soapAction="http://www.mobot.org/PageUpdateYear" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageUpdateVolume">
-      <soap12:operation soapAction="http://www.mobot.org/PageUpdateVolume" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageUpdateIssue">
-      <soap12:operation soapAction="http://www.mobot.org/PageUpdateIssue" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
