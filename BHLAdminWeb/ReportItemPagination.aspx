@@ -51,12 +51,12 @@
                 url: 'services/itemservice.ashx?op=ItemPaginationReport&pub=<%=publishedOnly%>&inst=<%=institutionCode%>&psid=<%=statusId%>&sdate=<%=startDate%>&edate=<%=endDate%>', // tells where to get the data
                 datatype: 'xml',    // format of the data (xml,json,jsonp,array,xmlstring,jsonstring,script,function)
                 mtype: 'GET',   // specify if AJAX call is a GET or POST
-                colNames: ['Title ID', 'Title', 'Bib Level', 'Item ID', 'Volume', 'Year', 'Item Status', 'Scanning Date', 'Holding Institution', 'Pagination Status', 'Pagination Status Date', 'Pagination User', '# Pages'],    // column names
+                colNames: ['Title ID', 'Title', 'Bib Level', 'ID', 'Volume', 'Year', 'Item Status', 'Scanning Date', 'Holding Institution', 'Pagination Status', 'Pagination Status Date', 'Pagination User', '# Pages'],    // column names
                 colModel: [
                   { name: 'TitleID', index: 'PrimaryTitleID', width: '40px' },
                   { name: 'Title', index: 'SortTitle', width: '100px' },
                   { name: 'Bibliographic Level', index: 'BibliographicLevel', width: '50px' },
-                  { name: 'ItemID', index: 'ItemID', width: '40px' },
+                  { name: 'ID', index: 'ID', width: '40px' },
                   { name: 'Volume', index: 'Volume', width: '50px' },
                   { name: 'Year', index: 'Year', width: '40px' },
                   { name: 'Item Status', index: 'ItemStatusName', width: '55px' },
@@ -70,7 +70,7 @@
                 pager: '#pager',    // show a pager bar for record navigation
                 rowNum: 200,    // rows in grid
                 rowList: [100, 200, 300],  // options in select box for changing number of rows displayed
-                sortname: 'ItemID',  // sort column
+                sortname: 'ID',  // sort column
                 sortorder: 'desc',  // sort direction
                 viewrecords: true,  // display total number of records
                 caption: '',    // grid caption; blank to hide

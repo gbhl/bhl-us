@@ -98,7 +98,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             csvString.Append(Encoding.UTF8.GetString(new UTF8Encoding(true).GetPreamble()));
 
             // Write file header
-            csvString.AppendLine("\"TitleId\",\"Title\",\"BibliographicLevel\",\"ItemId\",\"InternetArchiveId\",\"Volume\",\"Year\",\"Item Status\",\"ScanningDate\",\"Holding Institution\",\"PaginationStatusName\",\"PaginationStatusDate\",\"PaginationUserName\",\"NumberOfPages\"");
+            csvString.AppendLine("\"TitleId\",\"Title\",\"BibliographicLevel\",\"Id\",\"InternetArchiveId\",\"Volume\",\"Year\",\"Item Status\",\"ScanningDate\",\"Holding Institution\",\"PaginationStatusName\",\"PaginationStatusDate\",\"PaginationUserName\",\"NumberOfPages\"");
             context.Response.Write(csvString.ToString());
             context.Response.Flush();
 

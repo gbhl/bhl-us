@@ -239,6 +239,24 @@ namespace MOBOT.BHL.Server
             return segment;
         }
 
+        public Segment SegmentUpdatePaginationStatus(int segmentID, int paginationStatusID, int userID)
+        {
+            SegmentDAL dal = new SegmentDAL();
+            Segment savedSegment = dal.SegmentSelectAuto(null, null, segmentID);
+            if (savedSegment != null)
+            {
+                savedSegment.PaginationStatusID = paginationStatusID;
+                savedSegment.PaginationStatusUserID = userID;
+                savedSegment.PaginationStatusDate = DateTime.Now;
+                savedSegment = dal.SegmentUpdateAuto(null, null, savedSegment);
+            }
+            else
+            {
+                throw new Exception("Could not find existing Segment record.");
+            }
+            return savedSegment;
+        }
+
         public SegmentCluster SegmentClusterInsertAuto(int userID)
         {
             SegmentClusterDAL dal = new SegmentClusterDAL();
