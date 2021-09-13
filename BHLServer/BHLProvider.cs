@@ -603,7 +603,15 @@ namespace MOBOT.BHL.Server
                                 string canonicalName = string.Empty;
                                 List<string> identifiers = new List<string>();
                                 string matchType = string.Empty;
-                                double odds = (double)name["odds"];
+                                double odds;
+                                try
+                                {
+                                    odds = (double)name["odds"];
+                                }
+                                catch (System.OverflowException)
+                                {
+                                    odds = double.MaxValue;
+                                }
                                 string curation = string.Empty;
 
                                 JToken verification = name["verification"];
