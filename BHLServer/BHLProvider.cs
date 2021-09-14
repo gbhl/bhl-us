@@ -578,7 +578,7 @@ namespace MOBOT.BHL.Server
                         using (System.Diagnostics.Process process = new System.Diagnostics.Process())
                         {
                             process.StartInfo.FileName = toolPath;
-                            process.StartInfo.Arguments = "find -c " + filepath;
+                            process.StartInfo.Arguments = "find -c \"" + filepath + "\"";
                             process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
                             process.StartInfo.UseShellExecute = false;
                             process.StartInfo.RedirectStandardOutput = true;
