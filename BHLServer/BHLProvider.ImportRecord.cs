@@ -194,16 +194,6 @@ namespace MOBOT.BHL.Server
                 }
             }
 
-            // Make sure Item ID is valid BHL identifier
-            if (citation.ItemID != null)
-            {
-                if (BookSelectAuto((int)citation.ItemID) == null)
-                {
-                    citation.Errors.Add(GetNewImportRecordError(string.Format("Item {0} not found", citation.ItemIDString)));
-                    isValid = false;
-                }
-            }
-
             // Make sure Segment ID is valid BHL identifier
             if (citation.SegmentID != null)
             {
@@ -214,10 +204,61 @@ namespace MOBOT.BHL.Server
                 }
             }
 
+            // Given a segment ID, find the related Item ID.
+            if (citation.ItemID == null && citation.SegmentID != null)
+            {
+                Segment segment = SegmentSelectForSegmentID((int)citation.SegmentID);
+                if (segment != null)
+                {
+                    citation.ItemID = segment.BookID;
+                    citation.ItemIDString = segment.BookID.ToString();
+                }
+            }
+
+            // Make sure Item ID is valid BHL identifier.  If the segment is new, the book must be a non-virtual item. 
+            bool isVirtual = false;
+            if (citation.ItemID != null)
+            {
+                Book book = BookSelectAuto((int)citation.ItemID);
+                if (book == null)
+                {
+                    citation.Errors.Add(GetNewImportRecordError(string.Format("Item {0} not found", citation.ItemIDString)));
+                    isValid = false;
+                }
+                else
+                {
+                    if (book.IsVirtual == 1)
+                    {
+                        isVirtual = true;
+
+                        // Specified Item ID is for a virtual item
+                        if (citation.SegmentID == null)
+                        {
+                            // New segments cannot be added to virtual items
+                            citation.Errors.Add(GetNewImportRecordError(string.Format("'Import Segments' cannot be used to add Segments to Virtual Item {0}", citation.ItemIDString)));
+                            isValid = false;
+                        }
+                        else if (citation.SegmentID != null && 
+                            (!string.IsNullOrWhiteSpace(citation.StartPageIDString) || !string.IsNullOrWhiteSpace(citation.EndPageIDString)) || citation.PageIDs.Count > 0)
+                        {
+                            // Metadata for existing segments on virtual items can be updated, but not pages
+                            citation.Warnings.Add(GetNewImportRecordWarning(string.Format("Page information will not be updated, because the segment is associated with a Virtual Item ({0})", citation.ItemIDString)));
+                            citation.StartPageIDString = string.Empty;
+                            citation.StartPageID = null;
+                            citation.StartPage = string.Empty;
+                            citation.EndPageIDString = string.Empty;
+                            citation.EndPageID = null;
+                            citation.EndPage = string.Empty;
+                            citation.PageIDs.Clear();
+                        }
+                    }
+                }
+            }
+
             // Verify the start and end page identifiers
             int startPageID = -1;
             int endPageID = -1;
-            if (!string.IsNullOrWhiteSpace(citation.StartPageIDString))
+            if (!string.IsNullOrWhiteSpace(citation.StartPageIDString) && !isVirtual)
             {
                 if (!Int32.TryParse(citation.StartPageIDString, out startPageID))
                 {
@@ -244,7 +285,7 @@ namespace MOBOT.BHL.Server
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(citation.EndPageIDString))
+            if (!string.IsNullOrWhiteSpace(citation.EndPageIDString) && !isVirtual)
             {
                 if (!Int32.TryParse(citation.EndPageIDString, out endPageID))
                 {
@@ -271,17 +312,6 @@ namespace MOBOT.BHL.Server
                 }
             }
 
-            // Given a segment ID, find the related Item ID.
-            if (citation.ItemID == null && citation.SegmentID != null)
-            {
-                Segment segment = SegmentSelectForSegmentID((int)citation.SegmentID);
-                if (segment != null)
-                {
-                    citation.ItemID = segment.BookID;
-                    citation.ItemIDString = segment.BookID.ToString();
-                }
-            }
-
             // Given metadata and StartPage/EndPage (no IDs), try to find a single matching Item ID.  
             // If no item is found, this citation is still valid, but incomplete.  Status will be set to "Warning".
             if (citation.ItemID == null && startPageID == -1 && endPageID == -1)
@@ -293,7 +323,7 @@ namespace MOBOT.BHL.Server
 
             // Given an ItemID and StartPage/EndPage, try to find unique IDs for the Start and End page.
             // If the IDs are not found, this citation is valid, but incomplete.  Status will be set to "Warning".
-            if (citation.ItemID != null && startPageID == -1 && !string.IsNullOrWhiteSpace(citation.StartPage))
+            if (citation.ItemID != null && startPageID == -1 && !string.IsNullOrWhiteSpace(citation.StartPage) && !isVirtual)
             {
                 List<Page> startPageIDs = PageSelectByItemAndPageNumber(
                     (int)citation.ItemID, citation.Volume, citation.Issue, citation.StartPage);
@@ -304,7 +334,7 @@ namespace MOBOT.BHL.Server
                 }
             }
 
-            if (citation.ItemID != null && endPageID == -1 && !string.IsNullOrWhiteSpace(citation.EndPage))
+            if (citation.ItemID != null && endPageID == -1 && !string.IsNullOrWhiteSpace(citation.EndPage) && !isVirtual)
             {
                 List<Page> endPageIDs = PageSelectByItemAndPageNumber(
                     (int)citation.ItemID, citation.Volume, citation.Issue, citation.EndPage);
