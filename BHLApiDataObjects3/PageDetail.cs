@@ -28,6 +28,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             string callNumber,
             string volumeInfo,
             string itemUrl,
+            int? segmentID,
+            string title,
+            string startPageNumber,
+            string endPageNumber,
+            string segmentUrl,
             int pageID,
             string year,
             string volume,
@@ -54,6 +59,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             _CallNumber = callNumber;
             _VolumeInfo = volumeInfo;
             _ItemUrl = itemUrl;
+            SegmentID = segmentID;
+            Title = title;
+            StartPageNumber = startPageNumber;
+            EndPageNumber = endPageNumber;
+            SegmentUrl = segmentUrl;
             _PageID = pageID;
             _Year = year;
             _Volume = volume;
@@ -163,6 +173,46 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "ItemURL":
                         {
                             _ItemUrl = (string)column.Value;
+                            break;
+                        }
+                    case "SegmentID":
+                        {
+                            _SegmentID = (int?)column.Value;
+                            break;
+                        }
+                    case "Title":
+                        {
+                            _Title = (string)column.Value;
+                            break;
+                        }
+                    case "SegmentSourceName":
+                        {
+                            _SegmentSourceName = (string)column.Value;
+                            break;
+                        }
+                    case "SegmentBarcode":
+                        {
+                            _SegmentSourceIdentifier = (string)column.Value;
+                            break;
+                        }
+                    case "SegmentContributors":
+                        {
+                            _SegmentContributors = (string)column.Value;
+                            break;
+                        }
+                    case "StartPageNumber":
+                        {
+                            _StartPageNumber = (string)column.Value;
+                            break;
+                        }
+                    case "EndPageNumber":
+                        {
+                            _EndPageNumber = (string)column.Value;
+                            break;
+                        }
+                    case "SegmentURL":
+                        {
+                            _SegmentUrl = (string)column.Value;
                             break;
                         }
                     case "PageID":
@@ -457,6 +507,31 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                 _ItemUrl = value;
             }
         }
+
+        private int? _SegmentID = null;
+        public int? SegmentID { get => _SegmentID; set => _SegmentID = value; }
+
+        private string _Title = null;
+        public string Title { get => _Title; set => _Title = value; }
+
+        private string _SegmentSourceName = null;
+        public string SegmentSourceName { get => _SegmentSourceName; set => _SegmentSourceName = value; }
+
+        private string _SegmentSourceIdentifier = null;
+        public string SegmentSourceIdentifier { get => _SegmentSourceIdentifier; set => _SegmentSourceIdentifier = value; }
+
+        private string _SegmentContributors = null;
+        public string SegmentContributors { get => _SegmentContributors; set => _SegmentContributors = value; }
+
+        private string _StartPageNumber = null;
+        public string StartPageNumber { get => _StartPageNumber; set => _StartPageNumber = value; }
+
+        private string _EndPageNumber = null;
+        public string EndPageNumber { get => _EndPageNumber; set => _EndPageNumber = value; }
+
+        private string _SegmentUrl = null;
+        public string SegmentUrl { get => _SegmentUrl; set => _SegmentUrl = value; }
+
 
         private int _PageID = default(int);
         public int PageID

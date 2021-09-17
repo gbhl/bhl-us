@@ -736,6 +736,7 @@ namespace MOBOT.BHL.API.BHLApi
             Name name = null;
             Title currentTitle = null;
             Item currentItem = null;
+            Part currentPart = null;
             Page currentPage = null;
 
             if (pageDetails.Count > 0)
@@ -752,7 +753,7 @@ namespace MOBOT.BHL.API.BHLApi
                 currentItem = new Item();
                 currentPage = new Page();
 
-                // Get the title, item, and page information
+                // Get the title, item, part, and page information
                 foreach (PageDetail pageDetail in pageDetails)
                 {
                     if (pageDetail.TitleID != currentTitle.TitleID)
@@ -781,9 +782,36 @@ namespace MOBOT.BHL.API.BHLApi
                         item.Volume = pageDetail.VolumeInfo;
                         item.HoldingInstitution = pageDetail.HoldingInstitution;
                         item.ItemUrl = pageDetail.ItemUrl;
-                        item.Pages = new List<Page>();
+                        //item.Pages = new List<Page>();
                         currentTitle.Items.Add(item);
                         currentItem = item;
+                    }
+
+                    if (pageDetail.SegmentID != null)
+                    {
+                        if (currentPart == null) currentPart = new Part();
+
+                        if (pageDetail.SegmentID != currentPart.PartID)
+                        {
+                            // Add a new part
+                            Part part = new Part();
+                            part.PartID = (int)pageDetail.SegmentID;
+                            part.Title = pageDetail.Title;
+                            part.Source = pageDetail.SegmentSourceName;
+                            part.SourceIdentifier = pageDetail.SegmentSourceIdentifier;
+                            part.Contributor = pageDetail.SegmentContributors;
+                            part.StartPageNumber = pageDetail.StartPageNumber;
+                            part.EndPageNumber = pageDetail.EndPageNumber;
+                            part.PartUrl = pageDetail.SegmentUrl;
+                            //part.Pages = new List<Page>();
+                            if (currentItem.Parts == null) currentItem.Parts = new List<Part>();
+                            currentItem.Parts.Add(part);
+                            currentPart = part;
+                        }
+                    }
+                    else
+                    {
+                        currentPart = null;
                     }
 
                     if (pageDetail.PageID != currentPage.PageID)
@@ -819,7 +847,18 @@ namespace MOBOT.BHL.API.BHLApi
                             }
                         }
 
-                        currentItem.Pages.Add(page);
+                        if (currentPart != null)
+                        {
+                            // Add page to the current part
+                            if (currentPart.Pages == null) currentPart.Pages = new List<Page>();
+                            currentPart.Pages.Add(page);
+                        }
+                        else
+                        {
+                            // Add page to the current item
+                            if (currentItem.Pages == null) currentItem.Pages = new List<Page>();
+                            currentItem.Pages.Add(page);
+                        }
                         currentPage = page;
                     }
                     else
