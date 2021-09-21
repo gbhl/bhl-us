@@ -1543,5 +1543,6 @@
     <None Include="import\Stored Procedures\ImportRecordContributorInsertAuto.sql" />
     <None Include="import\Stored Procedures\ImportRecordContributorSelectAuto.sql" />
     <None Include="import\Stored Procedures\ImportRecordContributorUpdateAuto.sql" />
+    <Build Include="dbo\Functions\fnInstitutionStringForItem.sql" />
   </ItemGroup>
 </Project>
