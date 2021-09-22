@@ -157,7 +157,7 @@ q q:after { content: '\2019'; }
 }
 #main
 {
-	padding:0 0 36px;
+	padding:0 0 0px;
 }
 .floatclear
 {
@@ -1476,6 +1476,25 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 .onlinestats a
 {
     text-decoration:none;
+}
+
+.harmfulcontent {
+    border-bottom: 1px solid #C9C9C9;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+}
+.harmfulcontent a {
+    text-decoration: none;
+}
+
+.toolsandservices {
+    border-bottom: 1px solid #C9C9C9;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+}
+
+.toolsandservices a {
+    text-decoration: none;
 }
 
 /* partners */

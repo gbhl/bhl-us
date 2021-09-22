@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.Web2 {
-    
-    
-    public partial class SiteMaster {
-        
+namespace MOBOT.BHL.Web2
+{
+
+
+    public partial class SiteMaster
+    {
+
         /// <summary>
         /// Head1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
-        
+
         /// <summary>
         /// PageHeaderIncludesPlaceHolder control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder PageHeaderIncludesPlaceHolder;
-        
+
         /// <summary>
         /// Form1 control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm Form1;
-        
+
         /// <summary>
         /// divAlert control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAlert;
-        
+
         /// <summary>
         /// litAlertMessage control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litAlertMessage;
-        
+
         /// <summary>
         /// mainContentPlaceHolder control.
         /// </summary>
@@ -65,16 +67,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder mainContentPlaceHolder;
-        
-        /// <summary>
-        /// twitterFeedControl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::MOBOT.BHL.Web2.Controls.TwitterFeedControl twitterFeedControl;
-        
+
         /// <summary>
         /// titlesOnlineLiteral control.
         /// </summary>
@@ -83,7 +76,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal titlesOnlineLiteral;
-        
+
         /// <summary>
         /// volumesOnlineLiteral control.
         /// </summary>
@@ -92,7 +85,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal volumesOnlineLiteral;
-        
+
         /// <summary>
         /// pagesOnlineLiteral control.
         /// </summary>
@@ -101,7 +94,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal pagesOnlineLiteral;
-        
+
         /// <summary>
         /// scriptContentPlaceHolder control.
         /// </summary>
