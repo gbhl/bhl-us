@@ -78,6 +78,9 @@
                     </span>
                 </div>
             </header>
+            <div class="harmfulcontentbanner" id="harmfulcontentbanner" runat="server">
+	            Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgement of Harmful Content</a>
+            </div>
             <div id="divAlert" runat="server" visible="false" class="alertbox"><asp:Literal ID="litAlertMessage" runat="server"></asp:Literal></div>
             <div id="main">
                 <asp:ContentPlaceHolder ID="mainContentPlaceHolder" runat="server" />

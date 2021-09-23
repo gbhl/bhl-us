@@ -392,6 +392,16 @@ footer nav a:hover
     margin-top: 2px; 
     background-color: #DDECF6;
 }
+.harmfulcontentbanner {
+    background-color: #f6ede2;
+    color: #000000;
+    font-size: 13px;
+    padding: 4px;
+    text-align: center;
+}
+.harmfulcontentbanner a {
+    text-decoration: none
+}
 
 /* Footer Styles */
 footer 
