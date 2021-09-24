@@ -75,7 +75,7 @@
     <!-- Folder into which to place items downloaded from Internet Archive -->
     <add key="LocalFileFolder" value="DOWNLOAD_FOLDER_FOR_IA_HARVESTS" />
     <!-- Wiki paths -->
-    <add key="WikiPageHelpDocs" value="https://about.biodiversitylibrary.org/help/documentation/" />
+    <add key="WikiPageHelpDocs" value="https://s.si.edu/bhldocumentation" />
     <!-- jQuery libraries -->
     <add key="jQueryPath" value="/Scripts/jquery-1.9.1.min.js" />
     <add key="jQuery142Path" value="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" />
