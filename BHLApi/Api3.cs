@@ -14,6 +14,7 @@ namespace MOBOT.BHL.API.BHLApi
     {
         private int _apiApplicationID = 5;  // application ID 5 corresponds to "BHL API v3";
         private bool _useElasticSearch = true;  // if this is set to false, some API methods will not return data
+        public const int MaxPubSearchPageSize = 200;    // default/maximum page size for PublicationSearch methods
 
         #region Constructor
 
@@ -942,7 +943,7 @@ namespace MOBOT.BHL.API.BHLApi
         #region Search methods
 
         public List<Publication> SearchPublication(string searchTerm, string searchType, 
-            string page, bool sqlFullText)
+            string page, string pageSize, bool sqlFullText)
         {
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(searchTerm))
@@ -957,6 +958,25 @@ namespace MOBOT.BHL.API.BHLApi
                 throw new InvalidApiParamException("searchtype (" + searchType + ") must be one of the following values: F, C");
             }
 
+            int pageSizeInt = MaxPubSearchPageSize;
+            if (!string.IsNullOrWhiteSpace(pageSize))
+            {
+                if (!Int32.TryParse(pageSize, out pageSizeInt))
+                {
+                    throw new InvalidApiParamException("pageSize (" + pageSize + ") must be a valid integer value.");
+                }
+
+                if (pageSizeInt < 1)
+                {
+                    throw new InvalidApiParamException("pageSize (" + pageSize + ") must be greater than zero.");
+                }
+
+                if (pageSizeInt > MaxPubSearchPageSize)
+                {
+                    throw new InvalidApiParamException("pageSize (" + pageSize + ") must be less than or equal to " + MaxPubSearchPageSize + ".");
+                }
+            }
+
             int pageInt = 1;
             if (page != string.Empty)
             {
@@ -967,9 +987,9 @@ namespace MOBOT.BHL.API.BHLApi
 
                 /*
                  * Page must be between 1 and 50.  
-                 * Total results must be less than 10000.  With a page size of 200 results, 50 pages 
-                 * is the maximum.  If page greater than 50 is requested, ElasticSearch returns the 
-                 * following error:  
+                 * Total results must be less than 10000.  For example, with a page size of 200 results, 
+                 * 50 pages is the maximum.  If page greater than 50 is requested, ElasticSearch returns
+                 * the following error:  
                  *  Result window is too large, from + size must be less than or equal to: [10000] 
                  *  but was [XXXXX]. See the scroll api for a more efficient way to request large 
                  *  data sets. This limit can be set by changing the [index.max_result_window] index 
@@ -980,16 +1000,16 @@ namespace MOBOT.BHL.API.BHLApi
                     throw new InvalidApiParamException("page (" + page + ") must be greater than zero.");
                 }
 
-                if (pageInt > 50)
+                if (pageInt * pageSizeInt > 10000)
                 {
-                    throw new InvalidApiParamException("page (" + page + ") must be less than or equal to 50.");
+                    throw new InvalidApiParamException(string.Format("With {0} results per page, page {1} must be less than or equal to {2}", pageSize, page, ((int)10000 / pageSizeInt)).ToString());
                 }
             }
 
             List<Publication> pubs = new List<Publication>();
             if (_useElasticSearch)
             {
-                pubs = SearchPublicationGlobal(searchTerm, searchType, pageInt);
+                pubs = SearchPublicationGlobal(searchTerm, searchType, pageInt, pageSizeInt);
             }
             else
             {
@@ -1001,7 +1021,8 @@ namespace MOBOT.BHL.API.BHLApi
 
         public List<Publication> SearchPublication(string title, string titleOp, 
             string authorName, string year, string subject, string languageCode, string collectionID, 
-            string notes, string notesOp, string text, string textOp, string page, bool sqlFullText)
+            string notes, string notesOp, string text, string textOp, string page, string pageSize, 
+            bool sqlFullText)
         {
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(title) && string.IsNullOrWhiteSpace(authorName) && 
@@ -1067,6 +1088,25 @@ namespace MOBOT.BHL.API.BHLApi
                 }
             }
 
+            int pageSizeInt = MaxPubSearchPageSize;
+            if (!string.IsNullOrWhiteSpace(pageSize))
+            {
+                if (!Int32.TryParse(pageSize, out pageSizeInt))
+                {
+                    throw new InvalidApiParamException("pageSize (" + pageSize + ") must be a valid integer value.");
+                }
+
+                if (pageSizeInt < 1)
+                {
+                    throw new InvalidApiParamException("pageSize (" + pageSize + ") must be greater than zero.");
+                }
+
+                if (pageSizeInt > MaxPubSearchPageSize)
+                {
+                    throw new InvalidApiParamException("pageSize (" + pageSize + ") must be less than or equal to " + MaxPubSearchPageSize + ".");
+                }
+            }
+
             int pageInt = 1;
             if (page != string.Empty)
             {
@@ -1077,9 +1117,9 @@ namespace MOBOT.BHL.API.BHLApi
 
                 /*
                  * Page must be between 1 and 50.  
-                 * Total results must be less than 10000.  With a page size of 200 results, 50 pages 
-                 * is the maximum.  If page greater than 50 is requested, ElasticSearch returns the 
-                 * following error:  
+                 * Total results must be less than 10000.  For example, with a page size of 200 results, 
+                 * 50 pages is the maximum.  If page greater than 50 is requested, ElasticSearch returns
+                 * the following error:  
                  *  Result window is too large, from + size must be less than or equal to: [10000] 
                  *  but was [XXXXX]. See the scroll api for a more efficient way to request large 
                  *  data sets. This limit can be set by changing the [index.max_result_window] index 
@@ -1090,9 +1130,9 @@ namespace MOBOT.BHL.API.BHLApi
                     throw new InvalidApiParamException("page (" + page + ") must be greater than zero.");
                 }
 
-                if (pageInt > 50)
+                if (pageInt * pageSizeInt > 10000)
                 {
-                    throw new InvalidApiParamException("page (" + page + ") must be less than or equal to 50.");
+                    throw new InvalidApiParamException(string.Format("With {0} results per page, page {1} must be less than or equal to {2}", pageSize, page, ((int)10000/pageSizeInt)).ToString());
                 }
             }
 
@@ -1100,7 +1140,7 @@ namespace MOBOT.BHL.API.BHLApi
             if (_useElasticSearch)
             {
                 pubs = SearchPublicationAdvanced(title, titleOp, authorName, year, subject, languageCode,
-                    collectionID, notes, notesOp, text, textOp, pageInt);
+                    collectionID, notes, notesOp, text, textOp, pageInt, pageSizeInt);
             }
             else
             {
@@ -1130,7 +1170,7 @@ namespace MOBOT.BHL.API.BHLApi
         /// <returns></returns>
         private List<Publication> SearchPublicationAdvanced(string title, string titleOp,
             string authorName, string year, string subject, string languageCode, string collectionID, 
-            string notes, string notesOp, string text, string textOp, int page)
+            string notes, string notesOp, string text, string textOp, int page, int pageSize)
         {
             // Build the language and collection parameters
             Tuple<string, string> languageParam = null;
@@ -1150,7 +1190,7 @@ namespace MOBOT.BHL.API.BHLApi
             // Submit the request to ElasticSearch
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
             search.StartPage = page;
-            search.NumResults = 200;
+            search.NumResults = (pageSize < 1 || pageSize > MaxPubSearchPageSize) ? MaxPubSearchPageSize : pageSize;
             if (!string.IsNullOrWhiteSpace(text)) search.Highlight = true;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
 
@@ -1178,12 +1218,12 @@ namespace MOBOT.BHL.API.BHLApi
         /// <param name="searchTerm"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        private List<Publication> SearchPublicationGlobal(string searchTerm, string searchType, int page)
+        private List<Publication> SearchPublicationGlobal(string searchTerm, string searchType, int page, int pageSize)
         {
             // Submit the request to ElasticSearch
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
             search.StartPage = page;
-            search.NumResults = 200;
+            search.NumResults = (pageSize < 1 || pageSize > MaxPubSearchPageSize) ? MaxPubSearchPageSize : pageSize;
             search.Highlight = true;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
 

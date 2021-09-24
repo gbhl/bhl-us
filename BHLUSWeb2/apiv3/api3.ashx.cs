@@ -155,9 +155,10 @@ namespace MOBOT.BHL.Web2.api3
                     string searchTerm = context.Request.QueryString["searchterm"];
                     string searchType = context.Request.QueryString["searchtype"] ?? "f"; // "F" or "C"
                     string page = context.Request.QueryString["page"];
+                    string pageSize = context.Request.QueryString["pageSize"];
 
                     serviceResponse.Result = this.PublicationSearch((searchTerm ?? string.Empty),
-                        searchType, (page ?? "1"),
+                        searchType, (page ?? "1"), (pageSize ?? Api3.MaxPubSearchPageSize.ToString()),
                         Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), 
                         key);
 
@@ -179,12 +180,13 @@ namespace MOBOT.BHL.Web2.api3
                     string text = context.Request.QueryString["text"];
                     string textOp = context.Request.QueryString["textop"];
                     string page = context.Request.QueryString["page"];
+                    string pageSize = context.Request.QueryString["pageSize"];
 
                     serviceResponse.Result = this.PublicationSearchAdvanced((title ?? string.Empty), 
                         (titleOp ?? string.Empty), (authorLastName ?? string.Empty), (year ?? string.Empty), 
                         (subject ?? string.Empty), (language ?? string.Empty), (collection ?? string.Empty),
                         (notes ?? string.Empty), (notesOp ?? string.Empty),
-                        (text ?? string.Empty), (textOp ?? string.Empty), (page ?? "1"),
+                        (text ?? string.Empty), (textOp ?? string.Empty), (page ?? "1"), (pageSize ?? Api3.MaxPubSearchPageSize.ToString()),
                         Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
 
                     response = serviceResponse.Serialize(outputType);
@@ -384,25 +386,27 @@ namespace MOBOT.BHL.Web2.api3
         }
 
         private List<Publication> PublicationSearch(string searchTerm, string searchType,
-            string page, bool fullText, string apiKey)
+            string page, string pageSize, bool fullText, string apiKey)
         {
-            string args = string.Format("{0}|{1}|{2}", searchTerm, searchType, page.ToString());
+            string args = string.Format("{0}|{1}|{2}|{3}", searchTerm, searchType, page.ToString(), pageSize.ToString());
             ValidateUser(Api3.APIRequestType.PublicationSearch, apiKey, args);
             Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
-            return api.SearchPublication(searchTerm, searchType, page, fullText);
+            return api.SearchPublication(searchTerm, searchType, page, pageSize, fullText);
         }
 
         private List<Publication> PublicationSearchAdvanced(string title, string titleOp,
             string authorLastName, string year, string subject, string languageCode, string collectionID, 
-            string notes, string notesOp, string text, string textOp, string page, bool fullText, string apiKey)
+            string notes, string notesOp, string text, string textOp, string page, string pageSize, 
+            bool fullText, string apiKey)
         {
-            string args = string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}", title, titleOp, 
+            string args = string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}|{12}", title, titleOp, 
                 authorLastName, (year == null ? "" : year.ToString()), subject, languageCode, 
-                (collectionID == null ? "" : collectionID.ToString()), notes, notesOp, text, textOp, page.ToString());
+                (collectionID == null ? "" : collectionID.ToString()), notes, notesOp, text, textOp, page.ToString(), 
+                pageSize.ToString());
             ValidateUser(Api3.APIRequestType.PublicationSearchAdvanced, apiKey, args);
             Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
             return api.SearchPublication(title, titleOp, authorLastName, year, subject, languageCode, 
-                collectionID, notes, notesOp, text, textOp, page, fullText);
+                collectionID, notes, notesOp, text, textOp, page, pageSize, fullText);
         }
 
         private List<Institution> GetInstitutions(string apiKey)
