@@ -25,6 +25,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         {
             TextImportService service = new TextImportService();
             ViewBag.PageTitle += "Item Text Import";
+            ViewBag.ItemType = new SelectList(service.ItemTypeList(), "key", "value", "Item");
             return View();
         }
 

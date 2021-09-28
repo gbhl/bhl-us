@@ -1,7 +1,7 @@
 ﻿@model MOBOT.BHL.AdminWeb.Models.TextImportModel
 
 @{
-    ViewBag.Title = "Import Item Text - Select File";
+    ViewBag.Title = "Import Text - Select File";
 }
 
 <p><a href="/">&lt; Return to Dashboard</a></p>
@@ -13,7 +13,7 @@
     {
     <div style="margin-bottom:10px">
         <p>
-            Use this form to upload one or more files containing transcriptions of BHL items.  The files must have been created from one of the following sources:
+            Use this form to upload one or more files containing transcriptions.  The files must have been created from one of the following sources:
             <ul>
                 <li>From The Page</li>
                 <li>DigiVol</li>
@@ -21,16 +21,12 @@
                 <li>Generic BHL Text Import template <a href="~/Upload/ItemText/TextImportTemplate.csv">Download here</a></li>
             </ul>
         </p>
-        <!--
         <p>
-            For more information about using the Generic BHL Text Import template, <a href="">click here</a>.
-        </p>
-        -->
-        <p>
-            No other file formats are supported at this time.  Each file must contain the transcription of one and only one BHL item.  
-            <div style="font-weight:bold">IMPORTANT:  The name of each file must be the identifier of the BHL item to which that file applies.  For example: 123456.txt</div>
+            No other file formats are supported at this time.  Each file must contain the transcription of one and only one BHL item or segment.  (Only segments derived from Internet Archive items are supported.)
+            <div style="font-weight:bold">IMPORTANT:  The name of each file must be the identifier of the BHL item or segment to which that file applies.  For example: 123456.txt</div>
         </p>
         <p>&nbsp;</p>
+        <div><div class="label">Type:</div><div class="field">@Html.DropDownList("ItemType")</div></div>
         <div><div class="label">File name:</div><div class="field"><input type="file" id="FileName" name="FileName" style="width:450px" multiple /></div></div>
     </div>
         <div style="margin:10px 0px">

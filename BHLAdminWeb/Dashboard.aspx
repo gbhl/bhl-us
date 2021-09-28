@@ -552,7 +552,7 @@
 
 					<tr>
 						<td align="center" runat="server" id="tdImportItemText">
-							<a href="/TextImport">Import Item Text</a>
+							<a href="/TextImport">Import Text</a>
 						</td>
 					</tr>
 					<tr>
