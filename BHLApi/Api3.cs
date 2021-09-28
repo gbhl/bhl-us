@@ -14,7 +14,8 @@ namespace MOBOT.BHL.API.BHLApi
     {
         private int _apiApplicationID = 5;  // application ID 5 corresponds to "BHL API v3";
         private bool _useElasticSearch = true;  // if this is set to false, some API methods will not return data
-        public const int MaxPubSearchPageSize = 200;    // default/maximum page size for PublicationSearch methods
+        public const int MaxPubSearchPageSize = 200;    // maximum page size for PublicationSearch methods
+        public const int DefaultPubSearchPageSize = 100;    // default page size for PublicationSearch methods
 
         #region Constructor
 
@@ -958,7 +959,7 @@ namespace MOBOT.BHL.API.BHLApi
                 throw new InvalidApiParamException("searchtype (" + searchType + ") must be one of the following values: F, C");
             }
 
-            int pageSizeInt = MaxPubSearchPageSize;
+            int pageSizeInt = DefaultPubSearchPageSize;
             if (!string.IsNullOrWhiteSpace(pageSize))
             {
                 if (!Int32.TryParse(pageSize, out pageSizeInt))
@@ -1088,7 +1089,7 @@ namespace MOBOT.BHL.API.BHLApi
                 }
             }
 
-            int pageSizeInt = MaxPubSearchPageSize;
+            int pageSizeInt = DefaultPubSearchPageSize;
             if (!string.IsNullOrWhiteSpace(pageSize))
             {
                 if (!Int32.TryParse(pageSize, out pageSizeInt))
@@ -1190,7 +1191,7 @@ namespace MOBOT.BHL.API.BHLApi
             // Submit the request to ElasticSearch
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
             search.StartPage = page;
-            search.NumResults = (pageSize < 1 || pageSize > MaxPubSearchPageSize) ? MaxPubSearchPageSize : pageSize;
+            search.NumResults = (pageSize < 1 || pageSize > MaxPubSearchPageSize) ? DefaultPubSearchPageSize : pageSize;
             if (!string.IsNullOrWhiteSpace(text)) search.Highlight = true;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
 
@@ -1223,7 +1224,7 @@ namespace MOBOT.BHL.API.BHLApi
             // Submit the request to ElasticSearch
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
             search.StartPage = page;
-            search.NumResults = (pageSize < 1 || pageSize > MaxPubSearchPageSize) ? MaxPubSearchPageSize : pageSize;
+            search.NumResults = (pageSize < 1 || pageSize > MaxPubSearchPageSize) ? DefaultPubSearchPageSize : pageSize;
             search.Highlight = true;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
 

@@ -158,7 +158,7 @@ namespace MOBOT.BHL.Web2.api3
                     string pageSize = context.Request.QueryString["pageSize"];
 
                     serviceResponse.Result = this.PublicationSearch((searchTerm ?? string.Empty),
-                        searchType, (page ?? "1"), (pageSize ?? Api3.MaxPubSearchPageSize.ToString()),
+                        searchType, (page ?? "1"), (pageSize ?? Api3.DefaultPubSearchPageSize.ToString()),
                         Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), 
                         key);
 
@@ -186,7 +186,7 @@ namespace MOBOT.BHL.Web2.api3
                         (titleOp ?? string.Empty), (authorLastName ?? string.Empty), (year ?? string.Empty), 
                         (subject ?? string.Empty), (language ?? string.Empty), (collection ?? string.Empty),
                         (notes ?? string.Empty), (notesOp ?? string.Empty),
-                        (text ?? string.Empty), (textOp ?? string.Empty), (page ?? "1"), (pageSize ?? Api3.MaxPubSearchPageSize.ToString()),
+                        (text ?? string.Empty), (textOp ?? string.Empty), (page ?? "1"), (pageSize ?? Api3.DefaultPubSearchPageSize.ToString()),
                         Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
 
                     response = serviceResponse.Serialize(outputType);
