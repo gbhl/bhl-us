@@ -38,7 +38,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             {
                 HttpPostedFileBase hpf = Request.Files[x] as HttpPostedFileBase;
                 if (hpf.ContentLength == 0) continue;
-                string savedFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "." + Path.GetFileName(hpf.FileName);
+                string savedFileName = string.Format("{0}.{1}.{2}", DateTime.Now.ToString("yyyyMMddHHmmss"), model.ItemType.Substring(0, 1), Path.GetFileName(hpf.FileName));
                 string savedFilePath = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], savedFileName);
                 hpf.SaveAs(savedFilePath);
 
@@ -128,7 +128,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             json.sEcho = sEcho;
 
             // For the UI, remove date information added to to the original filename
-            foreach (TextImportBatchFileJson.Datum d in json.aaData) { d.origfilename = d.filename.Substring(15); }
+            foreach (TextImportBatchFileJson.Datum d in json.aaData) { d.origfilename = d.filename.Substring(17); }
 
             return Json(json, JsonRequestBehavior.AllowGet);
         }

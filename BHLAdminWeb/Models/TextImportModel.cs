@@ -266,7 +266,6 @@ namespace MOBOT.BHL.AdminWeb.Models
                     {
                         // Item ID not found in BHL
                         this.ItemID = string.Empty;
-                        batchFileStatus = TextImportService.GetTextImportBatchFileStatusError();
                         errorMessage += "Invalid ID.  Make sure the filename matches a BHL identifier. | ";
                         error = true;
                     }
@@ -282,13 +281,18 @@ namespace MOBOT.BHL.AdminWeb.Models
                     {
                         // Item ID not found in BHL
                         this.ItemID = string.Empty;
-                        batchFileStatus = TextImportService.GetTextImportBatchFileStatusError();
                         errorMessage += "Invalid ID.  Make sure the filename matches a BHL identifier. | ";
                         error = true;
                     }
                     else
                     {
                         itemID = segment.ItemID;
+
+                        if (string.IsNullOrWhiteSpace(segment.BarCode))
+                        {
+                            errorMessage += "Text can only be imported for Segments based on an Internet Archive item. |";
+                            error = true;
+                        }
                     }
                 }
             }
@@ -304,10 +308,12 @@ namespace MOBOT.BHL.AdminWeb.Models
 
             if (string.IsNullOrWhiteSpace(this.FileFormat))
             {
-                // No valid Item ID
-                batchFileStatus = TextImportService.GetTextImportBatchFileStatusError();
+                // Invalid file format
                 errorMessage += "Invalid file format.  Could not determine the format of the file. | ";
+                error = true;
             }
+
+            if (error) batchFileStatus = TextImportService.GetTextImportBatchFileStatusError();
 
             TextImportBatchFile file = provider.TextImportBatchFileInsertAuto(batchId, 
                 batchFileStatus, itemID, this.FileName, this.FileFormat, errorMessage, userId);
@@ -329,9 +335,7 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         public List<Page> GetItemPages(int itemID)
         {
-            List<Page> pages = new List<Page>();
-            Book book = new BHLProvider().BookSelectByItemID(itemID);
-            if (book != null) pages = new BHLProvider().PageSelectByItemID(book.BookID);
+            List<Page> pages = new BHLProvider().PageSelectByItemID(itemID);
             return pages;
         }
     }

@@ -1030,6 +1030,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\PageNameDeleteForInactivePages.s
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\PageNameSelectTop.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\PageSelectAuto.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\PageSelectByBarCodeAndSequence.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\PageSelectByBookID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\PageSelectByItemAndSequence.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\PageSelectByItemID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\PageSelectByNameBankID.sql"

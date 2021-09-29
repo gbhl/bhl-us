@@ -253,8 +253,20 @@ namespace BHL.TextImportUtility
                 var records = csv.GetRecords(dvRecord);
 
                 // Get the pages for the item from the database
-                string itemID = Path.GetFileNameWithoutExtension(fileName).Substring(15);   // ignore the date info added to the filename
-                List<Page> pages = new BHLProvider().PageSelectByItemID(Convert.ToInt32(itemID));
+                string itemType = Path.GetFileNameWithoutExtension(fileName).Substring(15, 1);  // Get the item type indicator from the filename
+                string entityID = Path.GetFileNameWithoutExtension(fileName).Substring(17);   // ignore the info added to the filename
+                int itemID;
+                if (itemType.ToUpper() == "S")
+                {
+                    Segment segment = new BHLProvider().SegmentSelectAuto(Convert.ToInt32(entityID));
+                    itemID = segment.ItemID;
+                }
+                else // itemType == "I")
+                {
+                    Book book = new BHLProvider().BookSelectAuto(Convert.ToInt32(entityID));
+                    itemID = book.ItemID;
+                }
+                List<Page> pages = new BHLProvider().PageSelectByItemID(itemID);
 
                 foreach (var record in records)
                 {
@@ -310,8 +322,20 @@ namespace BHL.TextImportUtility
                     var readRecords = csv.GetRecords(dvRecord);
 
                     // Get the pages for the item from the database
-                    string itemID = Path.GetFileNameWithoutExtension(fileName).Substring(15);   // ignore the date info added to the filename
-                    List<Page> pages = new BHLProvider().PageSelectByItemID(Convert.ToInt32(itemID));
+                    string itemType = Path.GetFileNameWithoutExtension(fileName).Substring(15, 1);  // Get the item type indicator from the filename
+                    string entityID = Path.GetFileNameWithoutExtension(fileName).Substring(17);   // ignore the info added to the filename
+                    int itemID;
+                    if (itemType.ToUpper() == "S")
+                    {
+                        Segment segment = new BHLProvider().SegmentSelectAuto(Convert.ToInt32(entityID));
+                        itemID = segment.ItemID;
+                    }
+                    else // itemType == "I")
+                    {
+                        Book book = new BHLProvider().BookSelectAuto(Convert.ToInt32(entityID));
+                        itemID = book.ItemID;
+                    }
+                    List<Page> pages = new BHLProvider().PageSelectByItemID(itemID);
 
                     foreach (var record in readRecords)
                     {
@@ -326,7 +350,7 @@ namespace BHL.TextImportUtility
                             // Get the sequence number for the page from the database records
                             var bhlPages = (
                                 from page in pages
-                                where page.PageID == Convert.ToInt32(record.PageID) && page.ItemID == Convert.ToInt32(itemID)
+                                where page.PageID == Convert.ToInt32(record.PageID) && page.ItemID == itemID
                                 select new
                                 {
                                     page.SequenceOrder
@@ -334,7 +358,7 @@ namespace BHL.TextImportUtility
                             if (bhlPages.Count() == 0) throw new Exception(string.Format(
                                     "Page {0} not found in Item {1}.  Make sure all Page IDs are valid for the Item.", 
                                     record.PageID, 
-                                    itemID
+                                    entityID
                                 ));
                             sequenceOrder = bhlPages.First().SequenceOrder.ToString();
 

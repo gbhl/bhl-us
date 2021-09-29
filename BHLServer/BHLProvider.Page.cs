@@ -13,16 +13,21 @@ namespace MOBOT.BHL.Server
 		#region Select methods
 
 		/// <summary>
-		/// Select all Page objects for a particular Item ID.
+		/// Select all Page objects for a particular Book ID.
 		/// </summary>
-		/// <param name="itemID"></param>
+		/// <param name="bookID"></param>
 		/// <returns>Object of type Title.</returns>
-		public List<Page> PageSelectByItemID( int itemID )
+		public List<Page> PageSelectByBookID( int bookID )
 		{
-			return ( new PageDAL().PageSelectByItemID( null, null, itemID ) );
+			return ( new PageDAL().PageSelectByBookID( null, null, bookID ) );
 		}
 
-        public List<Page> PageSelectFileNameByItemID(int itemID)
+		public List<Page> PageSelectByItemID(int itemID)
+		{
+			return (new PageDAL().PageSelectByItemID(null, null, itemID));
+		}
+
+		public List<Page> PageSelectFileNameByItemID(int itemID)
         {
             return (new PageDAL().PageSelectFileNameByItemID(null, null, itemID));
         }
