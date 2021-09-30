@@ -143,6 +143,11 @@ namespace MOBOT.BHL.Server
         return (new PageSummaryDAL().PageSummarySelectBarcodeForTitleID(null, null, titleID));
     }
 
+    public List<PageSummaryView> PageSummarySegmentSelectAllByItemID(int itemID)
+    {
+        return (new PageSummaryDAL().PageSummarySegmentSelectAllByItemID(null, null, itemID));
+    }
+
     public List<PageSummaryView> PageSummarySegmentSelectBySegmentID(int segmentID)
     {
         return new PageSummaryDAL().PageSummarySegmentSelectBySegmentID(null, null, segmentID);

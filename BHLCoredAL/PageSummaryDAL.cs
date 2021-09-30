@@ -295,6 +295,22 @@ namespace MOBOT.BHL.DAL
         }
     }
 
+    public List<PageSummaryView> PageSummarySegmentSelectAllByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID)
+    {
+        SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+        SqlTransaction transaction = sqlTransaction;
+
+        using (SqlCommand command = CustomSqlHelper.CreateCommand("PageSummarySegmentSelectAllByItemID", connection, transaction,
+            CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
+        {
+            using (CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>())
+            {
+                List<PageSummaryView> list = helper.ExecuteReader(command);
+                return list;
+            }
+        }
+    }
+
     public List<PageSummaryView> PageSummarySegmentSelectBySegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentID)
     {
         SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
