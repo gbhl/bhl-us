@@ -86,7 +86,7 @@
             alert("Please associate an Item with this Segment.");
             return;
         }
-        executeServiceCall('services/pageservice.ashx?op=PageSelectByItemID&itemID=' + itemId, showPageList);
+        executeServiceCall('services/pageservice.ashx?op=PageSelectByBookID&bookID=' + itemId, showPageList);
     }
 
     function showTitleList(result) {

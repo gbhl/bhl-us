@@ -17,15 +17,15 @@ namespace MOBOT.BHL.AdminWeb.Services
             String response;
 
             // Clean up inputs
-            String qsItemID = context.Request.QueryString["itemID"] as String;
-            int itemID;
-            Int32.TryParse(qsItemID, out itemID);
+            String qsBookID = context.Request.QueryString["bookID"] as String;
+            int bookID;
+            Int32.TryParse(qsBookID, out bookID);
 
             switch (context.Request.QueryString["op"])
             {
-                case "PageSelectByItemID":
+                case "PageSelectByBookID":
                     {
-                        response = this.PageSelectByItemID(itemID);
+                        response = this.PageSelectByBookID(bookID);
                         break;
                     }
                 default:
@@ -40,12 +40,12 @@ namespace MOBOT.BHL.AdminWeb.Services
             context.Response.Write(response);
         }
 
-        private string PageSelectByItemID(int itemId)
+        private string PageSelectByBookID(int bookID)
         {
             try
             {
                 List<Page> pages = null;
-                pages = new BHLProvider().PageSelectByItemID(itemId);
+                pages = new BHLProvider().PageSelectByBookID(bookID);
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 return js.Serialize(pages);
             }

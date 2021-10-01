@@ -120,19 +120,31 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         }
 
         /// <summary>
-        /// Provide the list of data sources to be used during the text import process
+        /// Provide the list of date ranges to be used for text import reporting
         /// </summary>
         /// <returns></returns>
         public Dictionary<string, string> ReportDateRangeList()
         {
-            Dictionary<string, string> dataSourceTypes = new Dictionary<string, string>();
-            dataSourceTypes.Add("1", "Last Day");
-            dataSourceTypes.Add("30", "Last 30 Days");
-            dataSourceTypes.Add("90", "Last 90 Days");
-            dataSourceTypes.Add("180", "Last 180 Days");
-            dataSourceTypes.Add("365", "Last Year");
+            Dictionary<string, string> dateRanges = new Dictionary<string, string>();
+            dateRanges.Add("1", "Last Day");
+            dateRanges.Add("30", "Last 30 Days");
+            dateRanges.Add("90", "Last 90 Days");
+            dateRanges.Add("180", "Last 180 Days");
+            dateRanges.Add("365", "Last Year");
 
-            return dataSourceTypes;
+            return dateRanges;
+        }
+
+        /// <summary>
+        /// Provide the list of item types
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, string> ItemTypeList()
+        {
+            Dictionary<string, string> itemTypes = new Dictionary<string, string>();
+            itemTypes.Add("Item", "Item");
+            itemTypes.Add("Segment", "Segment");
+            return itemTypes;
         }
     }
 }

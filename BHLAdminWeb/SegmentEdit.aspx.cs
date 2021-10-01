@@ -208,7 +208,7 @@ namespace MOBOT.BHL.AdminWeb
                     Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
                     // Get a list of all of the pages for the item
-                    List<DataObjects.Page> pages = provider.PageSelectByItemID(Convert.ToInt32(itemIDLabel.Text));
+                    List<DataObjects.Page> pages = provider.PageSelectByBookID(Convert.ToInt32(itemIDLabel.Text));
 
                     if (selectedPageIds.EndsWith("|")) selectedPageIds = selectedPageIds.Substring(0, selectedPageIds.Length - 1);
                     String[] selectedPageIdList = selectedPageIds.Split('|');

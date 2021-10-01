@@ -14,7 +14,7 @@ namespace MOBOT.BHL.WebService
         public List<Page> PageSelectByItemID(int itemID)
         {
             BHLProvider bhlServer = new BHLProvider();
-            return bhlServer.PageSelectByItemID(itemID);
+            return bhlServer.PageSelectByBookID(itemID);
         }
 
         [WebMethod]

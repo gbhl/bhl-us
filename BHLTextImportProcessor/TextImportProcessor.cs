@@ -90,6 +90,7 @@ namespace BHL.TextImportProcessor
 
                                     // Get the Page information (including file paths) for the BHL Item
                                     List<PageSummaryView> pages = service.PageSummarySelectAllByItemID((int)batchFile.ItemID);
+                                    if (pages.Count == 0) pages = service.PageSummarySegmentSelectAllByItemID((int)batchFile.ItemID);
 
                                     // Get the text import file
                                     string textImportFilePath = string.Format("{0}{1}", configParms.TextImportFilePath, batchFile.Filename);

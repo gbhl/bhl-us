@@ -16,27 +16,43 @@ namespace MOBOT.BHL.DAL
 		#region Select methods
 
 		/// <summary>
-		/// Select all Page objects for a particular Item ID.
+		/// Select all Page objects for a particular Book ID.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="itemID">Item identifier</param>
+		/// <param name="bookID">Book identifier</param>
 		/// <returns>Object of type Title.</returns>
-		public List<Page> PageSelectByItemID(
+		public List<Page> PageSelectByBookID(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction,
-				int itemID )
+				int bookID )
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection( CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );
 			SqlTransaction transaction = sqlTransaction;
 
-			using ( SqlCommand command = CustomSqlHelper.CreateCommand( "PageSelectByItemID", connection, transaction,
-					CustomSqlHelper.CreateInputParameter( "ItemID", SqlDbType.Int, null, false, itemID ) ) )
+			using ( SqlCommand command = CustomSqlHelper.CreateCommand( "PageSelectByBookID", connection, transaction,
+					CustomSqlHelper.CreateInputParameter( "BookID", SqlDbType.Int, null, false, bookID ) ) )
 			{
 				using ( CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>() )
 				{
 					List<Page> list = helper.ExecuteReader( command );
 					return ( list );
+				}
+			}
+		}
+
+		public List<Page> PageSelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			SqlTransaction transaction = sqlTransaction;
+
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageSelectByItemID", connection, transaction,
+					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
+			{
+				using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
+				{
+					List<Page> list = helper.ExecuteReader(command);
+					return (list);
 				}
 			}
 		}

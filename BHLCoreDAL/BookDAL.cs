@@ -241,7 +241,7 @@ namespace MOBOT.BHL.DAL
 					{
 						Book book = (Book)list[0];
 						book.Item = new ItemDAL().ItemSelectAuto(connection, transaction, book.ItemID);
-						book.Pages = new PageDAL().PageSelectByItemID(connection, transaction, book.BookID);
+						book.Pages = new PageDAL().PageSelectByBookID(connection, transaction, book.BookID);
 						book.ItemTitles = new ItemTitleDAL().ItemTitleSelectByItem(connection, transaction, book.BookID);
 						book.ItemLanguages = new ItemLanguageDAL().ItemLanguageSelectByItemID(connection, transaction, book.ItemID);
 						book.ItemCollections = new ItemCollectionDAL().SelectByItem(connection, transaction, book.ItemID);
