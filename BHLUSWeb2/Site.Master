@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="stylesheet" href="/css/style.css?v=22" />
+    <link rel="stylesheet" href="/css/style.css?v=23" />
     <script src="/js/libs/modernizr-1.6.min.js"></script> 
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-540641666fd1b673"></script>
 
@@ -79,7 +79,7 @@
                 </div>
             </header>
             <div class="harmfulcontentbanner" id="harmfulcontentbanner" runat="server">
-	            Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgement of Harmful Content</a>
+	            Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgment of Harmful Content</a>
             </div>
             <div id="divAlert" runat="server" visible="false" class="alertbox"><asp:Literal ID="litAlertMessage" runat="server"></asp:Literal></div>
             <div id="main">
@@ -94,9 +94,15 @@
                     <h3>Stay Connected</h3>
                     <p>Keep up to date with the latest news via these social media platforms</p>
                     <div class="addthis_horizontal_follow_toolbox" style="margin-bottom:10px;padding-bottom:15px;border-bottom:1px solid #c9c9c9;"></div>
-                    <h3>Join Our Mailing List</h3>
-                    <p>Sign up to receive the latest news, content highlights, and promotions</p>
-                    <a class="subscribe" title="Subscribe to BHL Newsletter" target="_blank" rel="noopener noreferrer" href="http://library.si.edu/bhl-newsletter-signup"><img src="/images/envelope_icon.png" alt="subscribe here" /> Subscribe Here</a>
+                    <div class="mailinglist">
+                        <h3>Join Our Mailing List</h3>
+                        <p>Sign up to receive the latest news, content highlights, and promotions</p>
+                        <a class="subscribe" title="Subscribe to BHL Newsletter" target="_blank" rel="noopener noreferrer" href="http://library.si.edu/bhl-newsletter-signup"><img src="/images/envelope_icon.png" alt="subscribe here" /> Subscribe Here</a>
+                    </div>
+                    <div class="getinvolved">
+                        <h3>Get Involved</h3>
+                        <a class="community" target="_blank" rel="noopener noreferrer" href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageContribute"] %>">Ways To Contribute</a>
+                    </div>
                 </div>
                 <div id="socialmiddle" class="socialcolumn">
                     <div class="harmfulcontent">
@@ -124,15 +130,9 @@
                     <br/>
                     <a title="Recent Additions" href="/recent">Recent Additions</a>
                     </div>
-                    <hr />
                     <div class="ourpartners">
                         <h3>BHL Consortium</h3>
                         <p>BHL operates as a <a title="consortium" href="https://about.biodiversitylibrary.org/about/bhl-consortium">worldwide consortium</a> of natural history, botanical, research, and national libraries working together to digitize the natural history literature held in their collections and make it freely available for open access as part of a global &quot;biodiversity community.&quot;</p>
-                    </div>
-                    <hr />
-                    <div class="getinvolved">
-                    <h3>Get Involved</h3>
-                    <a class="community" target="_blank" rel="noopener noreferrer" href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageContribute"] %>">Ways To Contribute</a>
                     </div>
                 </div>
                 </div>
