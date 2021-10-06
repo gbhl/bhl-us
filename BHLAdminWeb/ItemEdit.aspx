@@ -470,6 +470,14 @@
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">
+					Is Virtual:
+				</td>
+				<td>
+					<asp:Label ID="isVirtualLabel" runat="server" ForeColor="Blue"></asp:Label>
+				</td>
+			</tr>
+			<tr>
+				<td style="white-space: nowrap" align="right" class="dataHeader">
 					Scanned By:
 				</td>
 				<td>
