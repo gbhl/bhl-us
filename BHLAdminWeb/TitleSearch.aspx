@@ -21,7 +21,9 @@
 		Search For: <input type="radio" runat="server" clientidmode="Static" id="rdoSearchTypeTitle" class="titleSearchType" name="rdoSearchType" value="Title" checked />
 		<label for="rdoSearchTypeTitle">Title</label>&nbsp;
 		<input type="radio" runat="server" clientidmode="Static" id="rdoSearchTypeItem" class="titleSearchType" name="rdoSearchType" value="Item" />
-		<label for="rdoSearchTypeItem">Item</label>
+		<label for="rdoSearchTypeItem">Item</label>&nbsp;
+		<input type="radio" runat="server" clientidmode="Static" id="rdoSearchTypeSegment" class="titleSearchType" name="rdoSearchType" value="Segment" />
+		<label for="rdoSearchTypeSegment">Segment</label>
 	</div>	
 	<div class="pageSubHeader">Complete at least one field</div>
 	<table cellpadding="0" cellspacing="0">
@@ -38,10 +40,15 @@
 				<div id="divItemFields" style="display:none">
 					Item ID:&nbsp;&nbsp;<asp:TextBox ID="itemidTextBox" runat="server" CssClass="SearchText" />&nbsp;&nbsp;
 				</div>
+				<div id="divSegmentFields" style="display:none">
+					Segment ID:&nbsp;&nbsp;<asp:TextBox ID="segmentidTextBox" runat="server" CssClass="SearchText" />&nbsp;&nbsp;
+				</div>
 				<asp:Button ID="searchButton" runat="server" OnClick="searchButton_Click" Text="Search" CssClass="SearchText" />
 			</div>
 		</div>
 	</asp:Panel>
+	<br />
+	<div class="ErrorText"><%: ErrorMessaage %></div>
 	<br />
 	<table cellpadding="0" cellspacing="0" width="100%">
 		<tr>
@@ -130,12 +137,18 @@
 		})
 
 		function showSearchFields() {
-            if ($('#rdoSearchTypeItem').prop('checked')) {
+			if ($('#rdoSearchTypeSegment').prop('checked')) {
+                $('#divTitleFields').css('display', 'none');
+                $('#divItemFields').css('display', 'none');
+                $('#divSegmentFields').css('display', 'inline');
+			} else if ($('#rdoSearchTypeItem').prop('checked')) {
                 $('#divTitleFields').css('display', 'none');
                 $('#divItemFields').css('display', 'inline');
+                $('#divSegmentFields').css('display', 'none');
             } else {
                 $('#divTitleFields').css('display', 'inline');
                 $('#divItemFields').css('display', 'none');
+                $('#divSegmentFields').css('display', 'none');
             }
         }
     </script>

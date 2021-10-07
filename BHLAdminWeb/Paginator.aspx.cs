@@ -212,25 +212,27 @@ namespace MOBOT.BHL.AdminWeb
 			{
 				loadPageTypes();
 
-                String titleIDString = Request.QueryString["TitleID"] as String;
-                int titleID = 0;
-                if (titleIDString != null) Int32.TryParse(titleIDString, out titleID);
-                if (titleID != 0)
+                string titleIDString = Request.QueryString["TitleID"];
+				string itemIDString = Request.QueryString["ItemID"];
+				string segmentIDString = Request.QueryString["SegmentID"];
+				Int32.TryParse(titleIDString, out int titleID);
+				Int32.TryParse(itemIDString, out int itemID);
+				Int32.TryParse(segmentIDString, out int segmentID);
+
+				if (titleID != 0)
                 {
                     Title title = bp.TitleSelectAuto(titleID);
                     litTitle.Text = title.DisplayedShortTitle;
-                }
 
-                fillItemsDropDown(titleID);
+					fillItemsDropDown(titleID);
 
-                String itemIDString = Request.QueryString["ItemID"] as String;
-                int itemID = 0;
-                if (itemIDString != null) Int32.TryParse(itemIDString, out itemID);
-                if (itemID != 0)
-                {
-                    itemDropDownList.SelectedValue = itemID.ToString();
-                    fillPageList(itemID);
-                }
+					if (itemID != 0)
+					{
+						itemDropDownList.SelectedValue = itemID.ToString();
+						fillPageList(itemID);
+					}
+				}
+
 			}
 
 			FlickrDeleteRow.Visible = Helper.IsUserAuthorized(new HttpRequestWrapper(Request), Helper.SecurityRole.BHLAdminUserAdvanced);

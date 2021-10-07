@@ -146,7 +146,7 @@ namespace MOBOT.BHL.Server
 
         public List<Title> TitleSearchPaging(TitleSearchCriteria criteria)
         {
-            if (criteria.ItemSearch)
+            if (criteria.SearchType == TitleSearchCriteria.SearchTarget.Item)
             {
                 List<Title> titles = new List<Title>();
 
@@ -169,9 +169,13 @@ namespace MOBOT.BHL.Server
 
                 return titles;
             }
-            else
+            else if (criteria.SearchType == TitleSearchCriteria.SearchTarget.Title)
             {
                 return new TitleDAL().TitleSearch(null, null, criteria);
+            }
+            else
+            {
+                return new List<Title>();
             }
 		}
 

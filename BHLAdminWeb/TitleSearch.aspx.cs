@@ -15,6 +15,7 @@ namespace MOBOT.BHL.AdminWeb
 {
     public partial class TitleSearch : System.Web.UI.Page
 	{
+        public string ErrorMessaage = string.Empty;
 		private bool _refreshSearch = false;
 		private SortOrder _sortOrder = SortOrder.Ascending;
 		private TitleSearchOrderBy _orderBy = TitleSearchOrderBy.Title;
@@ -39,7 +40,9 @@ namespace MOBOT.BHL.AdminWeb
 					_searchCriteria = (TitleSearchCriteria)ViewState[ "SearchCriteria" ];
 					_orderBy = (TitleSearchOrderBy)ViewState[ "OrderBy" ];
 					_sortOrder = (SortOrder)ViewState[ "SortOrder" ];
-                    _searchCriteria.ItemSearch = rdoSearchTypeItem.Checked;
+                    _searchCriteria.SearchType = rdoSearchTypeTitle.Checked ? 
+                                                    TitleSearchCriteria.SearchTarget.Title : 
+                                                    (rdoSearchTypeItem.Checked ? TitleSearchCriteria.SearchTarget.Item : TitleSearchCriteria.SearchTarget.Segment);
                 }
                 pagingUserControl.Visible = true;
 			}
@@ -67,7 +70,9 @@ namespace MOBOT.BHL.AdminWeb
                     HyperLinkField linkField = (HyperLinkField)gvwResults.Columns[1];
                     linkField.NavigateUrl = "/Paginator.aspx";
                     linkField.DataNavigateUrlFormatString = "/Paginator.aspx?TitleID={0}";
-                    _redirectUrl = "/Paginator.aspx?TitleID={0}&ItemID={1}";
+                    if (rdoSearchTypeTitle.Checked) _redirectUrl = "/Paginator.aspx?TitleID={0}";
+                    if (rdoSearchTypeItem.Checked) _redirectUrl = "/Paginator.aspx?TitleID={0}&ItemID={1}";
+                    if (rdoSearchTypeSegment.Checked) _redirectUrl = "/Paginator.aspx?ItemID={0}&SegmentID={1}";
                 }
             }
 
@@ -78,29 +83,49 @@ namespace MOBOT.BHL.AdminWeb
 
 		private void search()
 		{
-			if ( rdoSearchTypeTitle.Checked & titleidTextBox.Text.Trim().Length == 0 && titleTextBox.Text.Trim().Length == 0  ) return;
-            if ( rdoSearchTypeItem.Checked & itemidTextBox.Text.Trim().Length == 0 ) return;
+            ErrorMessaage = string.Empty;
+			if ( rdoSearchTypeTitle.Checked && titleidTextBox.Text.Trim().Length == 0 && titleTextBox.Text.Trim().Length == 0  ) return;
+            if ( rdoSearchTypeItem.Checked && itemidTextBox.Text.Trim().Length == 0 ) return;
+            if ( rdoSearchTypeSegment.Checked && segmentidTextBox.Text.Trim().Length == 0 ) return;
 
 			BHLProvider bp = new BHLProvider();
 			buildSearchCriteria();
-			List<Title> results = bp.TitleSearchPaging( _searchCriteria );
-			if ( results.Count == 1 )
-			{
-                string itemID = (results[0].Books.Count > 0) ? results[0].Books[0].BookID.ToString() : string.Empty;
-				Response.Redirect( string.Format(_redirectUrl, results[ 0 ].TitleID.ToString(), itemID));
-			}
-			else
-			{
-				pagingUserControl.TotalRecords = (results.Count <= 1) ? results.Count : bp.TitleSearchCount( _searchCriteria );
-				pagingUserControl.UpdateDisplay();
+            if (_searchCriteria.SearchType == TitleSearchCriteria.SearchTarget.Segment)
+            {
+                Segment segment = bp.SegmentSelectForSegmentID((int)_searchCriteria.SegmentID);
+                if (segment != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(segment.BarCode))
+                    {
+                        Response.Redirect(string.Format(_redirectUrl, segment.BookID.ToString(), segment.SegmentID.ToString()));
+                    }
+                    else
+                    {
+                        ErrorMessaage = "Only Segments based on an Internet Archive item can be paginated";
+                    }
+                }
+            }
+            else
+            {
+                List<Title> results = bp.TitleSearchPaging(_searchCriteria);
+                if (results.Count == 1)
+                {
+                    string itemID = (results[0].Books.Count > 0) ? results[0].Books[0].BookID.ToString() : string.Empty;
+                    Response.Redirect(string.Format(_redirectUrl, results[0].TitleID.ToString(), itemID));
+                }
+                else
+                {
+                    pagingUserControl.TotalRecords = (results.Count <= 1) ? results.Count : bp.TitleSearchCount(_searchCriteria);
+                    pagingUserControl.UpdateDisplay();
 
-				ViewState[ "SearchCriteria" ] = _searchCriteria;
-				ViewState[ "OrderBy" ] = _orderBy;
-				ViewState[ "SortOrder" ] = _sortOrder;
+                    ViewState["SearchCriteria"] = _searchCriteria;
+                    ViewState["OrderBy"] = _orderBy;
+                    ViewState["SortOrder"] = _sortOrder;
 
-				gvwResults.DataSource = results;
-				gvwResults.DataBind();
-			}
+                    gvwResults.DataSource = results;
+                    gvwResults.DataBind();
+                }
+            }
 		}
 
 		private void buildSearchCriteria()
@@ -119,22 +144,29 @@ namespace MOBOT.BHL.AdminWeb
                 int id;
                 if (rdoSearchTypeTitle.Checked)
                 {
-                    _searchCriteria.ItemSearch = false;
+                    _searchCriteria.SearchType = TitleSearchCriteria.SearchTarget.Title;
                     _searchCriteria.Title = getNullableString(titleTextBox.Text.Trim());
                     if (titleidTextBox.Text.Trim().Length > 0)
                     {
                         if (int.TryParse(titleidTextBox.Text.Trim(), out id)) _searchCriteria.TitleID = id;
                     }
                 }
-                else
+                else if (rdoSearchTypeItem.Checked)
                 {
-                    _searchCriteria.ItemSearch = true;
+                    _searchCriteria.SearchType = TitleSearchCriteria.SearchTarget.Item;
                     if (itemidTextBox.Text.Trim().Length > 0)
                     {
                         if (int.TryParse(itemidTextBox.Text.Trim(), out id)) _searchCriteria.ItemID = id;
                     }
                 }
-
+                else
+                {
+                    _searchCriteria.SearchType = TitleSearchCriteria.SearchTarget.Segment;
+                    if (segmentidTextBox.Text.Trim().Length > 0)
+                    {
+                        if (int.TryParse(segmentidTextBox.Text.Trim(), out id)) _searchCriteria.SegmentID = id;
+                    }
+                }
 			}
 
 			_searchCriteria.OrderBy = _orderBy;
