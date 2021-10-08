@@ -1165,6 +1165,7 @@
     <None Include="dbo\Stored Procedures\ItemSelectFilenamesByItemID.sql" />
     <None Include="dbo\Stored Procedures\PageSelectByBookID.sql" />
     <None Include="dbo\Stored Procedures\PageSummarySegmentSelectAllByItemID.sql" />
+    <None Include="dbo\Stored Procedures\SegmentSelectPagination.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

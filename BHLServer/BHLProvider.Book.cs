@@ -88,7 +88,7 @@ namespace MOBOT.BHL.Server
 			return new BookDAL().BookSelectByInstitutionAndRole(null, null, institutionCode, institutionRoleID, barcode, numRows, pageNum, sortColumn, sortOrder);
 		}
 
-		public Book BookSelectPagination(int bookID)
+		public Item BookSelectPagination(int bookID)
 		{
 			return new BookDAL().BookSelectPagination(null, null, bookID);
 		}

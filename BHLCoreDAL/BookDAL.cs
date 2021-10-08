@@ -457,7 +457,7 @@ namespace MOBOT.BHL.DAL
 			}
 		}
 
-		public Book BookSelectPagination(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemId)
+		public Item BookSelectPagination(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemId)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(
 				CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -466,9 +466,9 @@ namespace MOBOT.BHL.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectPagination", connection, transaction,
 				CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemId)))
 			{
-				using (CustomSqlHelper<Book> helper = new CustomSqlHelper<Book>())
+				using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
 				{
-					List<Book> list = helper.ExecuteReader(command);
+					List<Item> list = helper.ExecuteReader(command);
 					if (list == null || list.Count == 0)
 					{
 						return null;

@@ -16,8 +16,10 @@ namespace MOBOT.BHL.DataObjects
         private string _partNumber;
         private string _partName;
         private string _itemStatusName;
-		private string _paginationStatusName;
+        private int? _paginationStatusID;
+        private string _paginationStatusName;
         private DateTime? _paginationStatusDate;
+        private int? _paginationStatusUserID;
 		private string _paginationUserName;
         private DateTime? _scanningDate;
         private string _downloadUrl;
@@ -136,6 +138,13 @@ namespace MOBOT.BHL.DataObjects
             get { return this._itemStatusName; }
             set { this._itemStatusName = value; }
         }
+
+        public int? PaginationStatusID
+        {
+            get { return _paginationStatusID; }
+            set { _paginationStatusID = value; }
+        }
+
         public string PaginationStatusName
 		{
 			get { return this._paginationStatusName; }
@@ -148,6 +157,11 @@ namespace MOBOT.BHL.DataObjects
             set { this._paginationStatusDate = value; }
         }
 
+        public int? PaginationStatusUserID
+        {
+            get { return _paginationStatusUserID; }
+            set { _paginationStatusUserID = value; }
+        }
 		public string PaginationUserName
 		{
 			get { return this._paginationUserName; }
@@ -447,6 +461,11 @@ namespace MOBOT.BHL.DataObjects
                             _itemStatusName = Utility.EmptyIfNull(column.Value);
                             break;
                         }
+                    case "PaginationStatusID":
+                        {
+                            _paginationStatusID = (int?)column.Value;
+                            break;
+                        }
                     case "PaginationStatusName":
                         {
                             _paginationStatusName = Utility.EmptyIfNull(column.Value);
@@ -455,6 +474,11 @@ namespace MOBOT.BHL.DataObjects
                     case "PaginationStatusDate":
                         {
                             _paginationStatusDate = (DateTime?)column.Value;
+                            break;
+                        }
+                    case "PaginationStatusUserID":
+                        {
+                            _paginationStatusUserID = (int?)column.Value;
                             break;
                         }
                     case "PaginationUserName":

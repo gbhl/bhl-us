@@ -323,5 +323,10 @@ namespace MOBOT.BHL.Server
         {
             return new SegmentDAL().SegmentSelectRecentlyChanged(null, null, startDate);
         }
+
+        public Item SegmentSelectPagination(int segmentID)
+        {
+            return new SegmentDAL().SegmentSelectPagination(null, null, segmentID);
+        }
     }
 }
