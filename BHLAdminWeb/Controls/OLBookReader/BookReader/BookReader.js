@@ -2552,7 +2552,7 @@ BookReader.prototype.getPrintURI = function() {
     //var options = 'id=' + this.bookId + '&server=' + this.server + '&zip=' + this.zip
     //    + '&format=' + this.imageFormat + '&file=' + this._getPageFile(indexToPrint)
     //    + '&width=' + this._getPageWidth(indexToPrint) + '&height=' + this._getPageHeight(indexToPrint);
-    var options = 'id=' + this.bhlItemId + '&file=' + indexToPrint + '&width=' +
+    var options = 'type=' + this.bhlObjectType + '&id=' + this.bhlObjectId + '&file=' + indexToPrint + '&width=' +
         this._getPageWidth(indexToPrint) + '&height=' + this._getPageHeight(indexToPrint);
 
 

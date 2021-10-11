@@ -109,8 +109,8 @@ namespace MOBOT.BHL.AdminWeb
 			checkPaginationStatus(id);
 			List<Page> pages = null;
 			
-			if (hidObjectType.Value == _bookObjectType) bp.PageMetadataSelectByItemID( id );
-			if (hidObjectType.Value == _segmentObjectType) bp.PageMetadataSelectBySegmentID(id);
+			if (hidObjectType.Value == _bookObjectType) pages = bp.PageMetadataSelectByItemID( id );
+			if (hidObjectType.Value == _segmentObjectType) pages = bp.PageMetadataSelectBySegmentID(id);
 
 			detailGridView.DataSource = pages;
 			detailGridView.DataBind();
@@ -301,6 +301,8 @@ namespace MOBOT.BHL.AdminWeb
 				if (titleID != 0)
                 {
 					hidObjectType.Value = _bookObjectType;
+					titleLabel.Text = "Title";
+					itemLabel.Text = "Item";
 
                     Title title = bp.TitleSelectAuto(titleID);
                     litTitle.Text = title.DisplayedShortTitle;
@@ -316,6 +318,8 @@ namespace MOBOT.BHL.AdminWeb
 				else if (itemID != 0)
                 {
 					hidObjectType.Value = _segmentObjectType;
+					titleLabel.Text = "Item";
+					itemLabel.Text = "Segment";
 
 					litTitle.Text = displayTitle;
 
@@ -380,11 +384,14 @@ namespace MOBOT.BHL.AdminWeb
 			{
 				int rowNum = int.Parse( e.CommandArgument.ToString() );
 				int pageId = (int)detailGridView.DataKeys[ rowNum ].Value;
-				PageSummaryView ps = bp.PageSummarySelectByPageId( pageId );
+				PageSummaryView ps = null;
+				if (hidObjectType.Value == _bookObjectType) ps = bp.PageSummarySelectByPageId( pageId );
+				if (hidObjectType.Value == _segmentObjectType) ps = bp.PageSummarySegmentSelectByPageID(pageId);
 
-                // Set the Book Reader properties
-                BookReader1.ItemID = ps.BookID;
-                BookReader1.NumPages = new BHLProvider().PageSelectCountByItemID(ps.BookID);
+				// Set the Book Reader properties
+				BookReader1.ObjectType = hidObjectType.Value;
+				BookReader1.ObjectID = ps.BookID;
+				BookReader1.NumPages = detailGridView.Rows.Count;
                 BookReader1.StartPage = ps.SequenceOrder;
                 BookReader1.FixedImageHeight = 2400;
                 BookReader1.FixedImageWidth = 1600;
@@ -703,7 +710,14 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             string qsParams = "&rotate=" + RotateImage.SelectedValue;
-            qsParams += "&titleid=" + Request.QueryString["TitleID"];
+
+			if (!string.IsNullOrWhiteSpace(Request.QueryString["SegmentID"]))
+				qsParams += "&segmentid=" + Request.QueryString["SegmentID"];
+			else if (!string.IsNullOrWhiteSpace(Request.QueryString["TitleID"]))
+				qsParams += "&titleid=" + Request.QueryString["TitleID"];
+			else
+				qsParams += "&itemid=" + Request.QueryString["ItemID"];
+
             string pageIds = "";
             foreach (GridViewRow gvr in detailGridView.Rows)
             {

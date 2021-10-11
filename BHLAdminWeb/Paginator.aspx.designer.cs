@@ -33,6 +33,15 @@ namespace MOBOT.BHL.AdminWeb
         protected global::MOBOT.BHL.AdminWeb.ErrorControl errorControl;
 
         /// <summary>
+        /// titleLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label titleLabel;
+
+        /// <summary>
         /// litTitle control.
         /// </summary>
         /// <remarks>
@@ -40,6 +49,15 @@ namespace MOBOT.BHL.AdminWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litTitle;
+
+        /// <summary>
+        /// itemLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label itemLabel;
 
         /// <summary>
         /// itemDropDownList control.

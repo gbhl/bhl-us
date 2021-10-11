@@ -8,11 +8,18 @@ namespace MOBOT.BHL.AdminWeb.Controls.OLBookReader
 {
     public partial class BookReader : System.Web.UI.UserControl
     {
-        private int? _itemID = null;
-        public int? ItemID
+        private string _objectType = "Book";
+        public string ObjectType
         {
-            get { return _itemID; }
-            set { _itemID = value; }
+            get { return _objectType; }
+            set { _objectType = value; }
+        }
+
+        private int? _objectID = null;
+        public int? ObjectID
+        {
+            get { return _objectID; }
+            set { _objectID = value; }
         }
 
         private int? _numPages = null;

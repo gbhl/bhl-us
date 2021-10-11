@@ -19,7 +19,7 @@
 				<table cellpadding="3px" cellspacing="0">
 					<tr>
 						<td>
-							Title
+							<asp:Label ID="titleLabel" runat="server" />
 						</td>
 						<td style="width:350px;">
 							<asp:Literal ID="litTitle" runat="server"></asp:Literal>
@@ -27,7 +27,7 @@
 					</tr>
 					<tr>
 						<td>
-							Item
+							<asp:Label ID="itemLabel" runat="server" />
 						</td>
 						<td>
 							<asp:DropDownList ID="itemDropDownList" runat="server" Width="100%" CssClass="TextBox" Style="background-color:White; height:20px" AutoPostBack="True" OnSelectedIndexChanged="itemDropDownList_SelectedIndexChanged">
