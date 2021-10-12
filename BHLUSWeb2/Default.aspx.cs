@@ -18,6 +18,8 @@ namespace MOBOT.BHL.Web2
         {
             base.Page_Load(sender, e);
             Master.bodyID = "body-home";
+            Master.harmfulContentBannerVisible = false;
+            
             projectUpdateFeedLocation = ConfigurationManager.AppSettings["projectUpdatesFeedLocation"];
 
             Page.Header.Controls.Add(ControlGenerator.GetRssFeedControl(projectUpdateFeedLocation,

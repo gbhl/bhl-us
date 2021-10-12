@@ -157,7 +157,7 @@ q q:after { content: '\2019'; }
 }
 #main
 {
-	padding:0 0 36px;
+	padding:0 0 0px;
 }
 .floatclear
 {
@@ -391,6 +391,16 @@ footer nav a:hover
     line-height: 14px; 
     margin-top: 2px; 
     background-color: #DDECF6;
+}
+.harmfulcontentbanner {
+    background-color: #f6ede2;
+    color: #000000;
+    font-size: 13px;
+    padding: 4px;
+    text-align: center;
+}
+.harmfulcontentbanner a {
+    text-decoration: none
 }
 
 /* Footer Styles */
@@ -1478,13 +1488,26 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
     text-decoration:none;
 }
 
-/* partners */
-.ourpartners
-{
+.harmfulcontent {
     border-bottom: 1px solid #C9C9C9;
     margin-bottom: 10px;
     padding-bottom: 15px;
 }
+.harmfulcontent a {
+    text-decoration: none;
+}
+
+.mailinglist {
+    border-bottom: 1px solid #C9C9C9;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+}
+
+.toolsandservices a {
+    text-decoration: none;
+}
+
+/* partners */
 .ourpartners a
 {
     text-decoration:none;

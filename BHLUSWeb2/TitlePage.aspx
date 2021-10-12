@@ -6,15 +6,16 @@
         <div id="volumebar"  style="float:right;" classcss="js-invisible no-js-hide">
             <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>" title="FAQ" class="report"><img alt="FAQ" src="/images/rpterror.png" /></a>
             <% if (!string.IsNullOrWhiteSpace(PublicationDetail.DownloadUrl)) { %>
-                <div class="buttondrop download">Download Contents<div class="play"></div></div> 
-                <div class="downloadcontents">
-                    <div><a href="<%: (PublicationDetail.TitleCount > 1) ? "/biblioselect/" + PublicationDetail.ID : "/bibliography/" + PublicationDetail.TitleID %>">View Metadata</a></div>
-                    <div><a href="#" class="selectpages">Select pages to download</a></div>
-                    <div><a href="#" class="selectpart">Download Part</a></div>
-                    <div><a href="#" class="downloadbook">Download Book</a></div>
-                    <div><a href="#" class="downloadcitation">Download Citation</a></div>
-                    <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PublicationDetail.BarCode) %>" rel="noopener noreferrer" target="_blank">View at Internet Archive</a></div>
-                </div>
+                <div class="buttondrop download">Download Contents<div class="play"></div>
+                    <div class="downloadcontents">
+                        <div><a href="<%: (PublicationDetail.TitleCount > 1) ? "/biblioselect/" + PublicationDetail.ID : "/bibliography/" + PublicationDetail.TitleID %>">View Metadata</a></div>
+                        <div><a href="#" class="selectpages">Select pages to download</a></div>
+                        <div><a href="#" class="selectpart">Download Part</a></div>
+                        <div><a href="#" class="downloadbook">Download Book</a></div>
+                        <div><a href="#" class="downloadcitation">Download Citation</a></div>
+                        <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PublicationDetail.BarCode) %>" rel="noopener noreferrer" target="_blank">View at Internet Archive</a></div>
+                    </div>
+                </div> 
                 <div class="jqmWindow" id="download-dialog">
                     <div class="head">
                         <a class="jqmClose" title="Close Dialog">Close Dialog</a>
@@ -443,7 +444,7 @@
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder"
     runat="server">
     <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=4" />
-    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=8" />
+    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=9" />
     <link rel="stylesheet" type="text/css" href="/css/nspop.css?v=1" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">

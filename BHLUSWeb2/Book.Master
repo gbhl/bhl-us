@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="stylesheet" href="/css/bhlaustylereference.css?v=7" />
-    <link rel="stylesheet" href="/css/style.css?v=21" />
+    <link rel="stylesheet" href="/css/style.css?v=23" />
     <link rel="Stylesheet" href="/css/bookviewer.css?v=2" />
     <script src="/js/libs/modernizr-1.6.min.js"></script>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-540641666fd1b673"></script>
@@ -59,7 +59,6 @@
 			     		<a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageAbout"] %>">About</a>
 			            <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageHelp"] %>">Help</a>				            
                         <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>">FAQ</a>
-                        <a class="storelink" target="_blank" rel="noopener noreferrer" href="http://www.cafepress.com/biodiversityheritagelibrary">BHL Store</a>
                         <span id="headersocialbook">
                             <div class="addthis_sharing_toolbox"></div>
                         </span>
@@ -95,6 +94,9 @@
                     </div>
                 </div>
             </header>
+        <div class="harmfulcontentbanner">
+	        Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgment of Harmful Content</a>
+        </div>
         <div id="divAlert" runat="server" visible="false" class="alertbox"><asp:Literal ID="litAlertMessage" runat="server"></asp:Literal></div>
         <asp:ContentPlaceHolder ID="mainContentPlaceHolder" runat="server" />
             

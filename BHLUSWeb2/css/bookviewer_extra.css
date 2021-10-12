@@ -166,7 +166,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#525c6b', end
     margin: 6px; 
     overflow: visible;
     width: 100%; 
-    height: 84%;
+    height: 82%;
 }
 
 #left-panel2 {
@@ -375,7 +375,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#525c6b', end
     background: #424242;
     /*padding: 1em;*/
     overflow: hidden; 
-    height: 95%; 
+    height: 100%; 
 }
 #BookReader 
 {
@@ -698,7 +698,7 @@ a.BRButtonFeatured {
 .downloadcontents {
     display: none;
     position: fixed;
-    top: 120px;
+    top: 148px;
     right: 55px;
     background: #f4f3ec;
     z-index: 99;
