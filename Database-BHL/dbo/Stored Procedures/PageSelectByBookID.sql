@@ -26,6 +26,7 @@ FROM	[dbo].[Page] p
 		JOIN [dbo].[Book] b on ip.ItemID = b.ItemID
 		LEFT JOIN dbo.PageFlickr pf WITH (NOLOCK) ON p.PageID = pf.PageID
 WHERE	b.BookID = @BookID
+AND		p.Active = 1
 ORDER BY ip.[SequenceOrder] ASC
 
 IF @@ERROR <> 0
