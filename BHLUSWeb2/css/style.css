@@ -414,7 +414,6 @@ footer
 }
 footer .social
 { min-height:288px;
-  padding:24px 0 56px 0;
 }
 footer nav 
 {
@@ -1207,8 +1206,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 }
 #featured-home
 {
-    padding:36px 0 0;
-    height:382px;
+    padding:36px 0 36px;
+    height:392px;
 }
 .featurebox
 {
@@ -1442,7 +1441,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 #promobox-home
 {
     position:absolute;
-    top:281px;
+    top:311px;
     background:  #fafaf7 url(../images/support.png) 0 0 no-repeat;
     padding:34px 26px 23px 26px;
     border:1px solid #c9d0d5;   
