@@ -15,6 +15,7 @@ namespace MOBOT.BHL.AdminWeb
     public partial class SegmentEdit : System.Web.UI.Page
     {
         private SortOrder _sortOrder = SortOrder.Ascending;
+        protected string _virtualOnly = "false";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -283,6 +284,8 @@ namespace MOBOT.BHL.AdminWeb
                 }
             }
 
+            _virtualOnly = string.IsNullOrWhiteSpace(sourceIdLabel.Text) ? "false" : "true";
+
             editHistoryControl.EntityName = "segment";
             editHistoryControl.EntityId = idLabel.Text;
 
@@ -364,6 +367,7 @@ namespace MOBOT.BHL.AdminWeb
                     itemIDLabel.Text = segment.BookID.ToString();
                     itemDescLabel.Text = segment.TitleShortTitle + " " + segment.ItemVolume;
                 }
+                sourceIdLabel.Text = segment.BarCode;
                 replacedByTextBox.Text = segment.RedirectSegmentID.ToString();
                 doiTextBox.Text = segment.DOIName;
                 titleTextBox.Text = segment.Title;
@@ -427,6 +431,11 @@ namespace MOBOT.BHL.AdminWeb
                 identifiersList.DataSource = segment.IdentifierList;
                 identifiersList.DataBind();
 
+                pagesList.Columns[0].Visible = string.IsNullOrWhiteSpace(segment.BarCode);  // Delete link
+                pagesList.Columns[5].Visible = string.IsNullOrWhiteSpace(segment.BarCode);  // Edit link
+                pagesList.Columns[6].Visible = !string.IsNullOrWhiteSpace(segment.BarCode); // Edit Names link
+                btnAddPage.Visible = string.IsNullOrWhiteSpace(segment.BarCode);
+                btnPaginator.Visible = !string.IsNullOrWhiteSpace(segment.BarCode);
                 pagesList.DataSource = segment.PageList;
                 pagesList.DataBind();
 
@@ -1216,7 +1225,12 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         #endregion RelatedSegment event handlers
-        
+
+        protected void btnPaginator_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Paginator.aspx?SegmentID=" + idLabel.Text);
+        }
+
         protected void saveButton_Click(object sender, EventArgs e)
         {
             Segment segment = (Segment)Session["Segment" + idLabel.Text];

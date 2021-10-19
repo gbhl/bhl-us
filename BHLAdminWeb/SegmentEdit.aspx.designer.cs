@@ -60,6 +60,15 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.Label itemDescLabel;
 
         /// <summary>
+        /// sourceIdLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label sourceIdLabel;
+
+        /// <summary>
         /// doiTextBox control.
         /// </summary>
         /// <remarks>
@@ -436,6 +445,24 @@ namespace MOBOT.BHL.AdminWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView relatedSegmentsList;
+
+        /// <summary>
+        /// btnAddPage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnAddPage;
+
+        /// <summary>
+        /// btnPaginator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnPaginator;
 
         /// <summary>
         /// pagesList control.
