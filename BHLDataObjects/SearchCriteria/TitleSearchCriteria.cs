@@ -12,6 +12,7 @@ namespace MOBOT.BHL.DataObjects
 		private string _MARCBibId;
 		private string _title;
 		private SearchTarget _searchType = SearchTarget.Title;
+		private int? _virtualOnly = null;
 
 		private int _pageSize = 1000;
 		private long _startRow = 1;
@@ -56,6 +57,12 @@ namespace MOBOT.BHL.DataObjects
 			get { return this._title; }
 			set { this._title = value; }
 		}
+
+		public int? VirtualOnly
+        {
+			get { return this._virtualOnly; }
+			set { this._virtualOnly = value; }
+        }
 
 		public int PageSize
 		{

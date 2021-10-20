@@ -41,7 +41,7 @@
 				return;
 			}
 
-			executeServiceCall('services/titleservice.ashx?op=TitleSearch&virtualOnly=<%: _virtualOnly %>&titleID=' + titleId + '&title=' + title, showTitleList);
+			executeServiceCall('services/titleservice.ashx?op=TitleSearch&virtual=<%: _virtualOnly %>&titleID=' + titleId + '&title=' + title, showTitleList);
         }
         else {
             if (itemId === "") {
@@ -49,7 +49,7 @@
                 return;
             }
 
-            executeServiceCall('services/itemservice.ashx?op=ItemSearch&virtualOnly=<%: _virtualOnly %>&itemID=' + itemId, showItemList);
+            executeServiceCall('services/itemservice.ashx?op=ItemSearch&virtual=<%: _virtualOnly %>&itemID=' + itemId, showItemList);
         }
     }
 
@@ -59,7 +59,7 @@
             return;
         }
 
-        executeServiceCall('services/itemservice.ashx?op=ItemSearchByTitle&virtualOnly=<%: _virtualOnly %>&titleID=' + titleId + '&marcBibId=' + marcBibId, showItemList);
+        executeServiceCall('services/itemservice.ashx?op=ItemSearchByTitle&virtual=<%: _virtualOnly %>&titleID=' + titleId + '&marcBibId=' + marcBibId, showItemList);
     }
 
     function authorSearch(authorId, authorName) {

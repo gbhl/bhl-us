@@ -472,10 +472,15 @@ namespace MOBOT.BHL.AdminWeb
             {
                 if (segment.ItemID == relationship.ChildID && bookID == relationship.BookID.ToString()) relationship.IsDeleted = true;
             }
-            foreach (ItemPage page in segment.PageList) page.IsDeleted = true;
-            bindSegmentPageData();
-            Session["Segment" + segment.SegmentID.ToString()] = segment;
 
+            // If this segment is not based on an IA item, then remove the pages
+            if (string.IsNullOrWhiteSpace(segment.BarCode))
+            {
+                foreach (ItemPage page in segment.PageList) page.IsDeleted = true;
+                bindSegmentPageData();
+            }
+
+            Session["Segment" + segment.SegmentID.ToString()] = segment;
         }
 
         #region SegmentAuthor methods

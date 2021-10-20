@@ -175,7 +175,8 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateInputParameter( "TitleID", SqlDbType.Int, null, true, tsc.TitleID ),
 				CustomSqlHelper.CreateInputParameter( "MARCBibID", SqlDbType.NVarChar, 50, true, tsc.MARCBibID ),
 				CustomSqlHelper.CreateInputParameter( "Title", SqlDbType.NVarChar, 255, true, tsc.Title ),
-				CustomSqlHelper.CreateInputParameter( "StartRow", SqlDbType.BigInt, null, false, tsc.StartRow ),
+                CustomSqlHelper.CreateInputParameter( "Virtual", SqlDbType.Int, null, true, tsc.VirtualOnly),
+                CustomSqlHelper.CreateInputParameter( "StartRow", SqlDbType.BigInt, null, false, tsc.StartRow ),
 				CustomSqlHelper.CreateInputParameter( "PageSize", SqlDbType.Int, null, false, tsc.PageSize ),
 				CustomSqlHelper.CreateInputParameter( "OrderBy", SqlDbType.Int, null, false,
 				(int)tsc.OrderBy * ( tsc.SortOrder == SortOrder.Ascending ? 1 : -1 ) ) ) )
