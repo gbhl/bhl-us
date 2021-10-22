@@ -55,10 +55,27 @@ namespace IAAnalysisHarvest
             {
                 this.LogMessage("Downloading Items");
 
-                // Get the most recent identifiers from IA, starting 30 days prior to today
-                DateTime monthPrior = DateTime.Now.Subtract(new TimeSpan(30, 0, 0, 0));
-                DateTime startDate = new DateTime(monthPrior.Year, monthPrior.Month, 1);
-                DateTime endDate = startDate.AddMonths(1);
+                // Get the identifiers of newly added/updated items from IA
+                DateTime startDate;
+                if (configParms.StartDate != null)
+                {
+                    startDate = (DateTime)configParms.StartDate;
+                }
+                else
+                {
+                    startDate = new IAAnalysisProvider().ItemSelectNextStartDate();
+                }
+
+                DateTime endDate;
+                if (configParms.EndDate != null)
+                    endDate = (DateTime)configParms.EndDate;
+                else
+                    endDate = DateTime.Now;
+
+
+                //DateTime monthPrior = DateTime.Now.Subtract(new TimeSpan(30, 0, 0, 0));
+                //DateTime startDate = new DateTime(monthPrior.Year, monthPrior.Month, 1);
+                //DateTime endDate = startDate.AddMonths(1);
 
                 while(startDate.CompareTo(DateTime.Now) < 0)
                 {

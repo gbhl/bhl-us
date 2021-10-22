@@ -1,3 +1,4 @@
+using CustomDataAccess;
 using MOBOT.IAAnalysis.DAL;
 using MOBOT.IAAnalysis.DataObjects;
 using System;
@@ -121,6 +122,21 @@ namespace MOBOT.IAAnalysis.Server
                 throw new Exception("Could not find existing Item record.");
             }
             return savedItem;
+        }
+
+        public DateTime ItemSelectNextStartDate()
+        {
+            List<CustomDataRow> rows = new ItemDAL().ItemSelectNextStartDate(null, null);
+
+            // Convert custom DAL object to generic values
+            DateTime returnDate = DateTime.Parse("1/1/1980");
+            if (rows.Count > 0)
+            {
+                CustomDataRow row = rows[0];
+                returnDate = (DateTime)row[0].Value;
+            }
+
+            return returnDate;
         }
     }
 }

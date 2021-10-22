@@ -68,5 +68,16 @@ namespace MOBOT.IAAnalysis.DAL
                 }
             }
         }
+
+        public List<CustomDataRow> ItemSelectNextStartDate(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("IAAnalysis"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.ItemSelectNextStartDate", connection, transaction))
+            {
+                return CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+            }
+        }
     }
 }

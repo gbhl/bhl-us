@@ -5,6 +5,22 @@ namespace IAAnalysisHarvest
 {
     public class ConfigParms
     {
+        private DateTime? _startDate = null;
+
+        public DateTime? StartDate
+        {
+            get { return _startDate; }
+            set { _startDate = value; }
+        }
+
+        private DateTime? _endDate = null;
+
+        public DateTime? EndDate
+        {
+            get { return _endDate; }
+            set { _endDate = value; }
+        }
+
         private string _smtpHost = "";
         public string SMTPHost
         {
@@ -106,6 +122,14 @@ namespace IAAnalysisHarvest
             {
                 if (node.Name == "add")
                 {
+                    if (node.Attributes.GetNamedItem("key").Value == "StartDate")
+                    {
+                        if (DateTime.TryParse(node.Attributes.GetNamedItem("value").Value, out DateTime value)) this.StartDate = value;
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "EndDate")
+                    {
+                        if (DateTime.TryParse(node.Attributes.GetNamedItem("value").Value, out DateTime value)) this.EndDate = value;
+                    }
                     if (node.Attributes.GetNamedItem("key").Value == "SMTPHost")
                     {
                         this.SMTPHost = node.Attributes.GetNamedItem("value").Value;
