@@ -124,7 +124,7 @@
                     <p>
                     <% for (int i = 0; i < TitleKeywords.Count; i++)
                        { %>
-                        <a href="/subject/<%: Server.UrlPathEncode(TitleKeywords[i].Keyword) %>">
+                        <a href="/subject/<%: Server.UrlEncode(TitleKeywords[i].Keyword) %>">
                             <%: TitleKeywords[i].Keyword%>
                         </a>
                         <%: (i < TitleKeywords.Count - 1) ? ", " : string.Empty%>

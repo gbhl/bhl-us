@@ -70,7 +70,7 @@
                 <p>
                 <% for (int i = 0; i < BhlSegment.KeywordList.Count; i++)
                     { %>
-                    <a href="/subject/<%: Server.UrlPathEncode(BhlSegment.KeywordList[i].Keyword) %>">
+                    <a href="/subject/<%: Server.UrlEncode(BhlSegment.KeywordList[i].Keyword) %>">
                         <%: BhlSegment.KeywordList[i].Keyword%>
                     </a>
                     <%: (i < BhlSegment.KeywordList.Count - 1) ? ", " : string.Empty%>

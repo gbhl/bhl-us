@@ -170,7 +170,7 @@
  			        <asp:Literal ID="litSubjectRefine" Visible="false" runat="server" Text="<p><br />More than 500 subjects were found.  You might want to refine your search if these were more results than you expected.</p>" />
                    <asp:Repeater ID="subjectRepeater" runat="server">
 						<ItemTemplate>
-							<li><a href="/subject/<%# Eval("MarcDataFieldTag")%>" title="Subject">
+							<li><a href="/subject/<%# Server.UrlEncode((string)Eval("MarcDataFieldTag"))%>" title="Subject">
 								<%# Eval( "Keyword" )%>
 							</a></li>
 						</ItemTemplate>

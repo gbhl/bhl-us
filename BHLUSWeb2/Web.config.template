@@ -212,6 +212,11 @@
       <httpRuntime requestValidationMode="2.0" />
     </system.web>
   </location>
+  <location path="subject">
+    <system.web>
+      <httpRuntime requestPathInvalidCharacters="&lt;,&gt;,*,%,\"/>
+    </system.web>
+  </location>
   <system.web>
     <!-- 
             machineKey is only needed if hosting the site in a web farm.
