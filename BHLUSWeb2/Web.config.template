@@ -25,6 +25,9 @@
     <!-- OAI Settings -->
     <add key="OAIBaseUrl" value="https://beta.biodiversitylibrary.org/oai"/>
 
+    <!-- Google settings -->
+    <add key="GoogleAnalyticsTrackingID" value="google analytics tracking identifier" />
+
     <!-- Gemini settings -->
     <add key="GeminiURL" value="issue tracking service URL"/>
     <add key="GeminiUser" value="issue tracking service username"/>
