@@ -1423,7 +1423,7 @@
     <None Include="import\Functions\fnErrorStringForImportRecord.sql" />
     <None Include="import\Stored Procedures\ImportRecordCreatorPublishToProduction.sql" />
     <None Include="dbo\Tables\SearchIndexQueueLog.sql" />
-    <None Include="audit\Stored Procedures\AuditBasicSelectForSearchIndexQueue.sql" />
+    <None Include="audit\Stored Procedures\AuditBasicSelectForProcessQueues.sql" />
     <None Include="dbo\Stored Procedures\SearchIndexQueueLogInsert.sql" />
     <None Include="dbo\Functions\fnAuthorFacetStringForTitle.sql" />
     <None Include="dbo\Functions\fnAuthorFacetStringForSegment.sql" />

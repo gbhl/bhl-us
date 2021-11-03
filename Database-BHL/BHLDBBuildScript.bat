@@ -561,7 +561,7 @@ sqlcmd -E -S %1 -d %2 -i "annotation\Stored Procedures\PageAnnotationUpdateAuto.
 sqlcmd -E -S %1 -d %2 -i "annotation\Stored Procedures\SearchPageForConcept.sql"
 sqlcmd -E -S %1 -d %2 -i "annotation\Stored Procedures\SearchPageForSubject.sql"
 sqlcmd -E -S %1 -d %2 -i "audit\Stored Procedures\AuditBasicArchiveAndSummarize.sql"
-sqlcmd -E -S %1 -d %2 -i "audit\Stored Procedures\AuditBasicSelectForSearchIndexQueue.sql"
+sqlcmd -E -S %1 -d %2 -i "audit\Stored Procedures\AuditBasicSelectForProcessQueues.sql"
 sqlcmd -E -S %1 -d %2 -i "audit\Stored Procedures\AuditBasicSelectFromDateToNow.sql"
 sqlcmd -E -S %1 -d %2 -i "audit\Stored Procedures\AuditBasicSelectPrimaryKeyNames.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiAuthorSelectBySegmentID.sql"

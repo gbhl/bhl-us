@@ -30,7 +30,7 @@ namespace BHL.SearchIndexQueueLoad
                     sqlCommand.Connection = sqlConnection;
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.CommandTimeout = 300;
-                    sqlCommand.CommandText = "audit.AuditBasicSelectForSearchIndexQueue";
+                    sqlCommand.CommandText = "audit.AuditBasicSelectForProcessQueues";
 
                     // Add StartDate and EndDate parameters, if specified
                     if (!string.IsNullOrWhiteSpace(startDate))
@@ -52,6 +52,7 @@ namespace BHL.SearchIndexQueueLoad
                             change.Operation = reader.GetString(reader.GetOrdinal("Operation"));
                             change.IndexEntity = reader.GetString(reader.GetOrdinal("IndexEntity"));
                             change.Id = reader.GetString(reader.GetOrdinal("EntityID"));
+                            change.Queue = reader.GetString(reader.GetOrdinal("Queue"));
                             changeSet.Changes.Add(change);
 
                             if (changeSet.Changes.Count == 1)

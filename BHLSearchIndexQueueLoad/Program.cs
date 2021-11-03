@@ -81,29 +81,35 @@ namespace BHL.SearchIndexQueueLoad
 
                                 try
                                 {
-                                    switch (change.IndexEntity)
+                                    if (change.Queue.ToLower() == "search")
                                     {
-                                        case "nameresolved":
-                                            // Name messages belong on a queue separate from the other messages
-                                            queueUtil.PutMessage(queueMsg,
-                                                queueName: _mqQueueNames,
-                                                errorQueueName: _mqErrorQueueNames,
-                                                errorExchangeName: _mqErrorExchangeNames);
-                                            break;
-                                        case "item":
-                                        case "segment":
-                                        case "author":
-                                        case "keyword":
-                                        default:
-                                            queueUtil.PutMessage(queueMsg,
-                                                queueName: _mqQueue,
-                                                errorQueueName: _mqErrorQueue,
-                                                errorExchangeName: _mqErrorExchange);
-                                            queueUtil.PutMessage(queueMsg,
-                                                queueName: _mqQueuePdf,
-                                                errorQueueName: _mqErrorQueuePdf,
-                                                errorExchangeName: _mqErrorExchangePdf);
-                                            break;
+                                        switch (change.IndexEntity)
+                                        {
+                                            case "nameresolved":
+                                                // Name messages belong on a queue separate from the other messages
+                                                queueUtil.PutMessage(queueMsg,
+                                                    queueName: _mqQueueNames,
+                                                    errorQueueName: _mqErrorQueueNames,
+                                                    errorExchangeName: _mqErrorExchangeNames);
+                                                break;
+                                            case "item":
+                                            case "segment":
+                                            case "author":
+                                            case "keyword":
+                                            default:
+                                                queueUtil.PutMessage(queueMsg,
+                                                    queueName: _mqQueue,
+                                                    errorQueueName: _mqErrorQueue,
+                                                    errorExchangeName: _mqErrorExchange);
+                                                break;
+                                        }
+                                    }
+                                    if (change.Queue.ToLower() == "pdf")
+                                    {
+                                        queueUtil.PutMessage(queueMsg,
+                                            queueName: _mqQueuePdf,
+                                            errorQueueName: _mqErrorQueuePdf,
+                                            errorExchangeName: _mqErrorExchangePdf);
                                     }
                                 }
                                 catch (Exception ex)
