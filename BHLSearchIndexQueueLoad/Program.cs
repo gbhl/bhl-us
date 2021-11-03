@@ -25,6 +25,9 @@ namespace BHL.SearchIndexQueueLoad
         private static string _mqQueueNames = string.Empty;
         private static string _mqErrorExchangeNames = string.Empty;
         private static string _mqErrorQueueNames = string.Empty;
+        private static string _mqQueuePdf = string.Empty;
+        private static string _mqErrorExchangePdf = string.Empty;
+        private static string _mqErrorQueuePdf = string.Empty;
 
         private static string _smtpHost = string.Empty;
         private static int _smtpPort= 0;
@@ -96,6 +99,10 @@ namespace BHL.SearchIndexQueueLoad
                                                 queueName: _mqQueue,
                                                 errorQueueName: _mqErrorQueue,
                                                 errorExchangeName: _mqErrorExchange);
+                                            queueUtil.PutMessage(queueMsg,
+                                                queueName: _mqQueuePdf,
+                                                errorQueueName: _mqErrorQueuePdf,
+                                                errorExchangeName: _mqErrorExchangePdf);
                                             break;
                                     }
                                 }
@@ -227,6 +234,9 @@ namespace BHL.SearchIndexQueueLoad
             _mqQueueNames = new ConfigurationManager(_configFile).AppSettings("MQQueueNames");
             _mqErrorExchangeNames = new ConfigurationManager(_configFile).AppSettings("MQErrorExchangeNames");
             _mqErrorQueueNames = new ConfigurationManager(_configFile).AppSettings("MQErrorQueueNames");
+            _mqQueuePdf = new ConfigurationManager(_configFile).AppSettings("MQQueuePDF");
+            _mqErrorExchangePdf = new ConfigurationManager(_configFile).AppSettings("MQErrorExchangePDF");
+            _mqErrorQueuePdf = new ConfigurationManager(_configFile).AppSettings("MQErrorQueuePDF");
 
             _smtpHost = new ConfigurationManager(_configFile).AppSettings("SmtpHost");
             _smtpPort = Convert.ToInt32(new ConfigurationManager(_configFile).AppSettings("SmtpPort"));

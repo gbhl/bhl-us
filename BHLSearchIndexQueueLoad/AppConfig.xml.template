@@ -11,6 +11,9 @@
     <MQQueueNames>NAME OF MESSAGE QUEUE FOR NAMES</MQQueueNames>
     <MQErrorExchangeNames>NAME OF MESSAGE QUEUE ERROR EXCHANGE FOR NAMES</MQErrorExchangeNames>
     <MQErrorQueueNames>NAME OF MESSAGE QUEUE ERROR QUEUE FOR NAMES</MQErrorQueueNames>
+    <MQQueuePDF>NAME OF MESSAGE QUEUE FOR ARTICLE PDF CREATION</MQQueuePDF>
+    <MQErrorExchangePDF>NAME OF MESSAGE QUEUE ERROR EXCHANGE FOR ARTICLE PDF CREATION</MQErrorExchangePDF>
+    <MQErrorQueuePDF>NAME OF MESSAGE QUEUE ERROR QUEUE FOR ARTICLE PDF CREATION</MQErrorQueuePDF>
 
     <!-- 
       Set these to MM-DD-YYYY values to queue messages for indexing entities that changed 
