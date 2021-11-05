@@ -290,7 +290,7 @@ namespace MOBOT.BHL.AdminWeb.Models
 
                         if (string.IsNullOrWhiteSpace(segment.BarCode))
                         {
-                            errorMessage += "Text can only be imported for Segments based on an Internet Archive item. |";
+                            errorMessage += "Text can only be imported for standalone Segments. |";
                             error = true;
                         }
                     }

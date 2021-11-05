@@ -101,7 +101,7 @@ namespace MOBOT.BHL.AdminWeb
                     }
                     else
                     {
-                        ErrorMessaage = "Only Segments based on an Internet Archive item can be paginated";
+                        ErrorMessaage = "Only standalone Segments can be paginated";
                     }
                 }
             }

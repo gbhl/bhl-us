@@ -257,6 +257,7 @@ namespace MOBOT.BHL.AdminWeb
 		{
             // Using an old version of jQuery here because the bookviewer code requires it
             ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, ConfigurationManager.AppSettings["jQuery142Path"]);
+			bool isError = false;
 
             if ( !IsPostBack )
 			{
@@ -269,14 +270,25 @@ namespace MOBOT.BHL.AdminWeb
 				Int32.TryParse(itemIDString, out int itemID);
 				Int32.TryParse(segmentIDString, out int segmentID);
 
-				// Make sure the specified segment can be paginated (is based on an IA item)
+				// Make sure the specified segment can be paginated (is a standalone segment)
 				Segment segment = null;
 				if (segmentID != 0) segment = bp.SegmentSelectForSegmentID(segmentID);
 
 				if (segment != null)
                 {
-					if (itemID == 0) itemID = segment.BookID ?? 0;	// Make sure we have an Item ID
-					if (string.IsNullOrWhiteSpace(segment.BarCode)) segmentID = 0; else titleID = 0;
+					if (string.IsNullOrWhiteSpace(segment.BarCode))	// Only standalone segments can be paginated
+					{
+						segmentID = 0;
+						itemID = 0;
+						titleID = 0;
+						isError = true;
+						errorControl.AddErrorText("Only standalone Segments can be paginated");
+					}
+					else
+					{
+						if (itemID == 0) itemID = segment.BookID ?? 0;  // Make sure we have an Item ID
+						titleID = 0;
+					}
                 }
 
 				string displayTitle = string.Empty;
@@ -335,7 +347,7 @@ namespace MOBOT.BHL.AdminWeb
 			}
 
 			FlickrDeleteRow.Visible = Helper.IsUserAuthorized(new HttpRequestWrapper(Request), Helper.SecurityRole.BHLAdminUserAdvanced);
-			errorControl.Visible = false;
+			errorControl.Visible = isError;
 		}
 
 		protected override void OnPreRender( EventArgs e )
