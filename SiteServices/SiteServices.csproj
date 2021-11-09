@@ -87,7 +87,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\BHLSiteService.pubxml" />
-    <None Include="Properties\PublishProfiles\BHLSiteServiceTest.pubxml" />
+    <None Include="Properties\PublishProfiles\BHLSiteServiceBeta.pubxml" />
     <None Include="Web.config.template" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
