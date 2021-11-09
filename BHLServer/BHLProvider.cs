@@ -942,6 +942,35 @@ namespace MOBOT.BHL.Server
             return itemText;
         }
 
+        public byte[] GetItemPdf(ItemType itemType, int entityID)
+        {
+            byte[] pdf = null;
+
+            if (itemType == ItemType.Book)
+            {
+                throw new NotImplementedException();
+            }
+            else if (itemType == ItemType.Segment)
+            {
+                // PDF are stored in the following folder structure
+                // Segment 1
+                //  root\1\bhl-segment-1.pdf
+                // Segment 10
+                //  root\1\0\bhl-segment-10.pdf
+                // Segment 110 and Segment 1123
+                //  root\1\1\bhl-segment-110.pdf
+                //  root\1\1\bhl-segment-1123.pdf
+                string folder1 = entityID.ToString()[0].ToString() + "\\";
+                string folder2 = entityID > 9 ? entityID.ToString()[1].ToString() + "\\" : "";
+
+                IFileAccessProvider fileAccessProvider = GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                string pdfLocation = String.Format(ConfigurationManager.AppSettings["PregeneratedPdfLocation"], folder1, folder2, entityID.ToString());
+                pdf = fileAccessProvider.ReadAllBytes(pdfLocation);
+            }
+
+            return pdf;
+        }
+
         /// <summary>
         /// Determine if a MARC file exists for the specified title or item
         /// </summary>

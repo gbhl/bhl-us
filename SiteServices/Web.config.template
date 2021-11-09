@@ -33,7 +33,8 @@
     <!-- List of available queues, error queues, and exchanges, formatted as follows:
       Queue|ErrorQueue|ErrorExchange~Queue|ErrorQueue|ErrorExchange~Queue|ErrorQueue|ErrorExchange -->
     <add key="MQQueues" value="bhl.dev.index|bhl.dev.index.error|bhl.dev.exchange.index.error~bhl.dev.index.names|bhl.dev.index.names.error|bhl.dev.exchange.index.names.error"/>
-
+    <!-- Pregenerated PDFs -->
+    <add key="PregeneratedPdfLocation" value="[ROOT FOLDER FOR PREGENERATED PDFS]\{0}{1}bhl-segment-{2}.pdf" />
   </appSettings>
   <connectionStrings>
     <remove name="BHL"/>

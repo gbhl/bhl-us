@@ -16,6 +16,7 @@ namespace MOBOT.FileAccess
         long GetFileSizeInKB(string path);
         long GetFileSizeInMB(string path);
         string GetFileText(string path);
+        byte[] ReadAllBytes(string path);
         void DeleteFile(string path);
         string[] GetSubDirectories(string path);
         string[] GetFiles(string path);

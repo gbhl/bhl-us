@@ -73,6 +73,9 @@
     -->
     <add key="SearchProviders" value="BHL.Search.Elastic|BHL.Search.SQL|BHL.Search.Offline" />
 
+    <!-- Feature toggle for PDF delivery -->
+    <add key="UsePregeneratedPDFs" value ="true" />
+
     <!-- ###################################################################### -->
 
     <add key="UseRemoteFileAccessProvider" value="false"/>
@@ -368,7 +371,7 @@
           maxBufferPoolSize="524288" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647"
           textEncoding="utf-8" transferMode="Buffered" useDefaultWebProxy="true"
           messageEncoding="Text">
-          <readerQuotas maxDepth="32" maxStringContentLength="2147483647" maxArrayLength="16384"
+          <readerQuotas maxDepth="32" maxStringContentLength="2147483647" maxArrayLength="2147483647"
             maxBytesPerRead="4096" maxNameTableCharCount="16384" />
           <security mode="None">
             <transport clientCredentialType="None" proxyCredentialType="None"

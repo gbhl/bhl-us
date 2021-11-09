@@ -194,15 +194,13 @@
                 </div>
             </div>
             <div class="download">
-                <!--
-                <div class="downloadlabel">Download:</div>
-                <a class="icon mods" title="download mods" download="bhlpart %: BhlSegment.SegmentID % _mods.xml" href="/handlers/modsdownload.ashx?pid=%: BhlSegment.SegmentID %">MODS</a>
-                -->
-                <% if (IsVirtual == 1) { %>
+                <% if (IsVirtual == 1 || (HasLocalContent == 1 && System.Configuration.ConfigurationManager.AppSettings["UsePregeneratedPDFs"] == "true")) { %>
                     <div class="downloadlabel">Download:</div>
-                    <a class="icon all" title="download all" href="https://www.archive.org/download/<%: BhlSegment.BarCode %>">All</a>
-                    <a class="icon jp2" title="download jp2" href="/partimages/<%: BhlSegment.SegmentID %>">JP2</a>
-                    <a class="icon ocr" title="download ocr" download="<%: BhlSegment.SegmentID %>.txt" href="/parttext/<%: BhlSegment.SegmentID %>">OCR</a>
+                    <% if (IsVirtual == 1) { %>
+                        <a class="icon all" title="download all" href="https://www.archive.org/download/<%: BhlSegment.BarCode %>">All</a>
+                        <a class="icon jp2" title="download jp2" href="/partimages/<%: BhlSegment.SegmentID %>">JP2</a>
+                        <a class="icon ocr" title="download ocr" download="<%: BhlSegment.SegmentID %>.txt" href="/parttext/<%: BhlSegment.SegmentID %>">OCR</a>
+                    <% } %>
                     <a class="icon pdf" title="download pdf" download="<%: BhlSegment.SegmentID %>.pdf" href="/partpdf/<%: BhlSegment.SegmentID %>">PDF</a>
                 <%} %>
                 <div class="downloadlabel">Cite:</div>

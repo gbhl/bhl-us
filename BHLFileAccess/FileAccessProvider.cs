@@ -120,6 +120,24 @@ namespace MOBOT.FileAccess
             return "";
         }
 
+        public byte[] ReadAllBytes(string path)
+        {
+            byte[] _Buffer = null;
+
+            if (FileExists(path))
+            {
+                FileStream _FileStream = new FileStream(path, FileMode.Open, System.IO.FileAccess.Read);
+                BinaryReader _BinaryReader = new BinaryReader(_FileStream);
+                long _TotalBytes = new FileInfo(path).Length;
+                _Buffer = _BinaryReader.ReadBytes((Int32)_TotalBytes);
+                _FileStream.Close();
+                _FileStream.Dispose();
+                _BinaryReader.Close();
+            }
+
+            return _Buffer;
+        }
+
         public void DeleteFile(string path)
         {
             if (FileExists(path))

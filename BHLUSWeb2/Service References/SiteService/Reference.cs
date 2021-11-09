@@ -207,6 +207,10 @@ namespace MOBOT.BHL.Web2.SiteService {
         // CODEGEN: Generating message contract since element name from from namespace https://biodiversitylibrary.org/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/SendEmail", ReplyAction="*")]
         MOBOT.BHL.Web2.SiteService.SendEmailResponse SendEmail(MOBOT.BHL.Web2.SiteService.SendEmailRequest request);
+        
+        // CODEGEN: Generating message contract since element name GetItemPdfResult from namespace https://biodiversitylibrary.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/GetItemPdf", ReplyAction="*")]
+        MOBOT.BHL.Web2.SiteService.GetItemPdfResponse GetItemPdf(MOBOT.BHL.Web2.SiteService.GetItemPdfRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -927,6 +931,78 @@ namespace MOBOT.BHL.Web2.SiteService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetItemPdfRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetItemPdf", Namespace="https://biodiversitylibrary.org/", Order=0)]
+        public MOBOT.BHL.Web2.SiteService.GetItemPdfRequestBody Body;
+        
+        public GetItemPdfRequest() {
+        }
+        
+        public GetItemPdfRequest(MOBOT.BHL.Web2.SiteService.GetItemPdfRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
+    public partial class GetItemPdfRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public int itemType;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public int itemID;
+        
+        public GetItemPdfRequestBody() {
+        }
+        
+        public GetItemPdfRequestBody(int itemType, int itemID) {
+            this.itemType = itemType;
+            this.itemID = itemID;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetItemPdfResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetItemPdfResponse", Namespace="https://biodiversitylibrary.org/", Order=0)]
+        public MOBOT.BHL.Web2.SiteService.GetItemPdfResponseBody Body;
+        
+        public GetItemPdfResponse() {
+        }
+        
+        public GetItemPdfResponse(MOBOT.BHL.Web2.SiteService.GetItemPdfResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
+    public partial class GetItemPdfResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public byte[] GetItemPdfResult;
+        
+        public GetItemPdfResponseBody() {
+        }
+        
+        public GetItemPdfResponseBody(byte[] GetItemPdfResult) {
+            this.GetItemPdfResult = GetItemPdfResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface SiteServiceSoapChannel : MOBOT.BHL.Web2.SiteService.SiteServiceSoap, System.ServiceModel.IClientChannel {
     }
@@ -1101,6 +1177,20 @@ namespace MOBOT.BHL.Web2.SiteService {
             inValue.Body.body = body;
             MOBOT.BHL.Web2.SiteService.SendEmailResponse retVal = ((MOBOT.BHL.Web2.SiteService.SiteServiceSoap)(this)).SendEmail(inValue);
             return retVal.Body.SendEmailResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MOBOT.BHL.Web2.SiteService.GetItemPdfResponse MOBOT.BHL.Web2.SiteService.SiteServiceSoap.GetItemPdf(MOBOT.BHL.Web2.SiteService.GetItemPdfRequest request) {
+            return base.Channel.GetItemPdf(request);
+        }
+        
+        public byte[] GetItemPdf(int itemType, int itemID) {
+            MOBOT.BHL.Web2.SiteService.GetItemPdfRequest inValue = new MOBOT.BHL.Web2.SiteService.GetItemPdfRequest();
+            inValue.Body = new MOBOT.BHL.Web2.SiteService.GetItemPdfRequestBody();
+            inValue.Body.itemType = itemType;
+            inValue.Body.itemID = itemID;
+            MOBOT.BHL.Web2.SiteService.GetItemPdfResponse retVal = ((MOBOT.BHL.Web2.SiteService.SiteServiceSoap)(this)).GetItemPdf(inValue);
+            return retVal.Body.GetItemPdfResult;
         }
     }
 }

@@ -312,5 +312,11 @@ namespace BHL.SiteServices
         }
 
         #endregion Email Methods
+
+        [WebMethod]
+        public byte[] GetItemPdf(int itemType, int itemID)
+        {
+            return new BHLProvider().GetItemPdf((ItemType)itemType, itemID);
+        }
     }
 }

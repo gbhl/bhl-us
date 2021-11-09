@@ -11,6 +11,7 @@ namespace MOBOT.BHL.Web2
 
         protected Segment BhlSegment { get; set; }
         protected int IsVirtual { get; set; } = 0;
+        protected int HasLocalContent { get; set; } = 1;
         protected int SegmentID { get; set; }
         protected string SchemaType { get; set; }
         protected string DOI { get; set; }
@@ -51,7 +52,12 @@ namespace MOBOT.BHL.Web2
                 }
 
                 List<PageSummaryView> psv = bhlProvider.PageSummarySegmentSelectBySegmentID(SegmentID);
-                if (psv.Count > 0) { IsVirtual = psv[0].IsVirtual; BhlSegment.BarCode = psv[0].BarCode; }
+                if (psv.Count > 0) {
+                    IsVirtual = psv[0].IsVirtual; BhlSegment.BarCode = psv[0].BarCode; 
+                }
+                else { 
+                    HasLocalContent = 0; 
+                }
 
                 BhlSegment.IdentifierList = bhlProvider.ItemIdentifierSelectForDisplayBySegmentID(SegmentID);
                 InstitutionNameComparer comp = new InstitutionNameComparer();

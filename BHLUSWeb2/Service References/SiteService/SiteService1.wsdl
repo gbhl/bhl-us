@@ -192,6 +192,21 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetItemPdf">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="itemType" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetItemPdfResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetItemPdfResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="GetOcrTextSoapIn">
@@ -266,6 +281,12 @@
   <wsdl:message name="SendEmailSoapOut">
     <wsdl:part name="parameters" element="tns:SendEmailResponse" />
   </wsdl:message>
+  <wsdl:message name="GetItemPdfSoapIn">
+    <wsdl:part name="parameters" element="tns:GetItemPdf" />
+  </wsdl:message>
+  <wsdl:message name="GetItemPdfSoapOut">
+    <wsdl:part name="parameters" element="tns:GetItemPdfResponse" />
+  </wsdl:message>
   <wsdl:portType name="SiteServiceSoap">
     <wsdl:operation name="GetOcrText">
       <wsdl:input message="tns:GetOcrTextSoapIn" />
@@ -314,6 +335,10 @@
     <wsdl:operation name="SendEmail">
       <wsdl:input message="tns:SendEmailSoapIn" />
       <wsdl:output message="tns:SendEmailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetItemPdf">
+      <wsdl:input message="tns:GetItemPdfSoapIn" />
+      <wsdl:output message="tns:GetItemPdfSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="SiteServiceSoap" type="tns:SiteServiceSoap">
@@ -426,6 +451,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetItemPdf">
+      <soap:operation soapAction="https://biodiversitylibrary.org/GetItemPdf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="SiteServiceSoap12" type="tns:SiteServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -530,6 +564,15 @@
     </wsdl:operation>
     <wsdl:operation name="SendEmail">
       <soap12:operation soapAction="https://biodiversitylibrary.org/SendEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemPdf">
+      <soap12:operation soapAction="https://biodiversitylibrary.org/GetItemPdf" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
