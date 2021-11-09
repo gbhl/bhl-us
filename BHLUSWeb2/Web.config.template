@@ -12,9 +12,11 @@
     <add key="BaseUrl" value="https://beta.biodiversitylibrary.org"/>
     <add key="BibPageUrl" value="https://beta.biodiversitylibrary.org/bibliography/{0}"/>
     <add key="ItemPageUrl" value="https://beta.biodiversitylibrary.org/item/{0}"/>
+    <add key="ItemPdfUrl" value="https://beta.biodiversitylibrary.org/itempdf/{0}"/>
     <add key="SegmentPageUrl" value="https://beta.biodiversitylibrary.org/segment/{0}" />
     <add key="PagePageUrl" value="https://beta.biodiversitylibrary.org/page/{0}"/>
     <add key="PartPageUrl" value="https://beta.biodiversitylibrary.org/part/{0}"/>
+    <add key="PartPdfUrl" value="https://beta.biodiversitylibrary.org/partpdf/{0}"/>
     <add key="AuthorPageUrl" value="https://beta.biodiversitylibrary/creator/{0}"/>
 
     <add key="ImageNotFoundPath" value="https://beta.biodiversitylibrary.org/images/image_not_found.jpg"/>

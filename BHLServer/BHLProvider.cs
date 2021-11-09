@@ -1145,6 +1145,12 @@ namespace MOBOT.BHL.Server
                     {
                         AddGoogleScholarTag(tags, "citation_" + identifier.IdentifierName.ToLower(), identifier.IdentifierValue);
                     }
+
+                    if (book.Pages.Count > 0)
+                    {
+                        AddGoogleScholarTag(tags, "citation_pdf_url", string.Format(ConfigurationManager.AppSettings["ItemPdfUrl"], book.BookID.ToString()));
+                    }
+
                 }
             }
 
@@ -1211,6 +1217,11 @@ namespace MOBOT.BHL.Server
                     foreach (DOI doi in dois)
                     {
                         AddGoogleScholarTag(tags, "citation_doi", doi.DOIName);
+                    }
+
+                    if (segment.PageList.Count > 0 && ConfigurationManager.AppSettings["UsePregeneratedPDFs"].ToLower() == "true")
+                    {
+                        AddGoogleScholarTag(tags, "citation_pdf_url", string.Format(ConfigurationManager.AppSettings["PartPdfUrl"], segment.SegmentID.ToString()));
                     }
                 }
             }
