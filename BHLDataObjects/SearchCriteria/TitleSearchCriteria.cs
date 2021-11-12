@@ -8,9 +8,11 @@ namespace MOBOT.BHL.DataObjects
 	{
 		private int? _titleID;
 		private int? _itemID;
+		private int? _segmentID;
 		private string _MARCBibId;
 		private string _title;
-		private bool _itemSearch = false;
+		private SearchTarget _searchType = SearchTarget.Title;
+		private int? _virtualOnly = null;
 
 		private int _pageSize = 1000;
 		private long _startRow = 1;
@@ -32,10 +34,16 @@ namespace MOBOT.BHL.DataObjects
 			set { this._itemID = value; }
         }
 
-		public bool ItemSearch
+		public int? SegmentID
         {
-			get { return _itemSearch; }
-			set { _itemSearch = value; }
+			get { return this._segmentID; }
+			set { this._segmentID = value; }
+        }
+
+		public SearchTarget SearchType
+        {
+			get { return _searchType; }
+			set { _searchType = value; }
         }
 
 		public string MARCBibID
@@ -49,6 +57,12 @@ namespace MOBOT.BHL.DataObjects
 			get { return this._title; }
 			set { this._title = value; }
 		}
+
+		public int? VirtualOnly
+        {
+			get { return this._virtualOnly; }
+			set { this._virtualOnly = value; }
+        }
 
 		public int PageSize
 		{
@@ -73,5 +87,12 @@ namespace MOBOT.BHL.DataObjects
 			get { return this._sortOrder; }
 			set { this._sortOrder = value; }
 		}
+
+		public enum SearchTarget
+        {
+			Title,
+			Item,
+			Segment
+        }
 	}
 }

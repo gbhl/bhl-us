@@ -232,6 +232,8 @@ namespace MOBOT.BHL.AdminWeb
                 segmentsList.DataSource = book.Segments;
                 segmentsList.DataBind();
 
+                isVirtualLabel.Text = (book.IsVirtual == 1) ? "True" : "False";
+
                 scannedByLabel.Text = book.ScanningUser;
                 scannedDateLabel.Text = (book.ScanningDate.HasValue ? book.ScanningDate.Value.ToShortDateString() : "");
                 creationDateLabel.Text = (book.CreationDate.HasValue ? book.CreationDate.Value.ToShortDateString() : "");

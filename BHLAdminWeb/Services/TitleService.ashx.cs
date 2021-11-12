@@ -24,6 +24,19 @@ namespace MOBOT.BHL.AdminWeb.Services
             // Clean up inputs
             String qsTitleID = context.Request.QueryString["titleID"] as String;
             String title = context.Request.QueryString["title"] as String;
+
+            int? virtualOnly = null;
+            string qsVirtual = context.Request.QueryString["virtual"] as string;
+            if (qsVirtual != null)
+            {
+                switch (qsVirtual.ToLower())
+                {
+                    case "true": virtualOnly = 1; break;
+                    case "false": virtualOnly = 0; break;
+                    default: virtualOnly = null; break;
+                }
+            }
+
             int titleID;
             Int32.TryParse(qsTitleID, out titleID);
             title = (title == null) ? "" : title;
@@ -32,7 +45,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             {
                 case "TitleSearch":
                     {
-                        response = this.TitleSearch(titleID, title);
+                        response = this.TitleSearch(titleID, title, virtualOnly);
                         break;
                     }
                 default:
@@ -47,7 +60,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             context.Response.Write(response);
         }
 
-        private string TitleSearch(int titleId, String title)
+        private string TitleSearch(int titleId, string title, int? virtualOnly)
         {
             try
             {
@@ -56,6 +69,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                 criteria.Title = title + '%';
                 criteria.StartRow = 1;
                 criteria.PageSize = 10000;
+                criteria.VirtualOnly = virtualOnly;
                 criteria.OrderBy = TitleSearchOrderBy.Title;
                 criteria.SortOrder = SortOrder.Ascending;
                 List<Title> titles = new BHLProvider().TitleSearchPaging(criteria);

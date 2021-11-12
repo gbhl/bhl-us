@@ -1122,5 +1122,29 @@ namespace MOBOT.BHL.DAL
                 }
             }
         }
+
+        public Item SegmentSelectPagination(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectPagination", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
+            {
+                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
+                {
+                    List<Item> list = helper.ExecuteReader(command);
+                    if (list == null || list.Count == 0)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return list[0];
+                    }
+                }
+            }
+        }
     }
 }

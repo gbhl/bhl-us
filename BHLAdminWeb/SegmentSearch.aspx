@@ -13,8 +13,9 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 	<td>
-	<asp:Panel ID="searchPanel" Height="30px" Width="99%" CssClass="box" DefaultButton="searchButton" runat="server">
-		<div id="simpleSearchPanelDiv">
+	<asp:Panel ID="searchPanel" Height="60px" Width="99%" CssClass="box" DefaultButton="searchButton" runat="server">
+		<div id="simpleSearchPanelDiv" style="padding:10px;">
+			<div>Supply one of the following to search for a Segment.</div>
 			<table cellpadding="3" class="SearchText">
 				<tr>
 					<td style="white-space: nowrap">
@@ -22,6 +23,12 @@
 					</td>
 					<td>
 						<asp:TextBox ID="txtSegmentID" runat="server" CssClass="SearchText" />
+					</td>
+					<td style="white-space: nowrap">
+						Source ID (IA ID):
+					</td>
+					<td>
+						<asp:TextBox ID="txtSourceID" runat="server" CssClass="SearchText" />
 					</td>
 					<td style="white-space: nowrap">
 						Segment Title:

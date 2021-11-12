@@ -1,8 +1,8 @@
-﻿
-CREATE Procedure [dbo].[TitleSearchPaging]
+﻿CREATE PROCEDURE [dbo].[TitleSearchPaging]
 	@MARCBibID nvarchar(50),
 	@TitleID int,
 	@Title nvarchar(60),
+	@Virtual int,
 	@StartRow int,
 	@PageSize int,
 	@OrderBy int
@@ -22,13 +22,12 @@ BEGIN
 END
 
 BEGIN
-	--Print 'Building Stored Procedure ' + @spName
---	BEGIN TRAN
-
 	DECLARE @SQL varchar(4000)
 	DECLARE @OrderByClause varchar(1000)
 	DECLARE @WhereClause varchar(2500)
 	DECLARE @WhereItem int
+
+-- Build Order By clause
 
 	IF (@OrderBy = 1)
 	BEGIN
@@ -49,59 +48,54 @@ BEGIN
 
 	SELECT @OrderByClause = @OrderByClause + ' '
 
-	SET @WhereItem = 0
-	SET @WhereClause = 'WHERE '		
-
 -- Build Where clause
 
+	SET @WhereItem = 0
+	SET @WhereClause = 'WHERE (B.IsVirtual = ' + 
+						CASE WHEN @Virtual IS NULL THEN 'NULL' ELSE CONVERT(char(1), @Virtual) END + 
+						' OR ' +
+						CASE WHEN @Virtual IS NULL THEN 'NULL' ELSE CONVERT(char(1), @Virtual) END + 
+						' IS NULL)'
 
 	IF @MarcBibID IS NOT NULL 
 	BEGIN
-		SET @WhereClause = @WhereClause + 'T.MarcBibID COLLATE latin1_general_ci_ai LIKE ''' + @MarcBibID + ''' AND '
+		SET @WhereClause = @WhereClause + ' AND T.MarcBibID COLLATE latin1_general_ci_ai LIKE ''' + @MarcBibID + ''''
 	END
 
 	IF @TitleID IS NOT NULL
 	BEGIN
-		SET @WhereClause = @WhereClause + 'T.TitleID = ' + CONVERT(varchar(10), @TitleID) + ' AND '
+		SET @WhereClause = @WhereClause + ' AND T.TitleID = ' + CONVERT(varchar(10), @TitleID)
 	END
 	IF @Title IS NOT NULL
 	BEGIN
-		SET @WhereClause = @WhereClause + 'T.SortTitle COLLATE latin1_general_ci_ai LIKE ''' + @Title + ''' AND '
+		SET @WhereClause = @WhereClause + ' AND T.SortTitle COLLATE latin1_general_ci_ai LIKE ''' + @Title + ''''
 	END
 
 SET @SQL = 
 	' SELECT * FROM
 		(
-SELECT
-	ROW_NUMBER() OVER(' + @OrderByClause + ') AS RowNum,
-	T.MARCBibID,
-	T.TitleID,
-	T.SortTitle
-FROM dbo.Title T
+		SELECT
+			ROW_NUMBER() OVER(' + @OrderByClause + ') AS RowNum,
+			T.MARCBibID,
+			T.TitleID,
+			T.SortTitle
+			FROM (SELECT DISTINCT T.MARCBibID, T.TitleID, T.SortTitle
+				FROM dbo.Title T
+					INNER JOIN dbo.ItemTitle IT ON T.TitleID = IT.TitleID
+					INNER JOIN dbo.Item I ON IT.ItemID = I.ItemID
+					INNER JOIN dbo.Book B ON I.ItemID = B.ItemID
 '
 
 	SET @Sql = @Sql + @WhereClause
-	IF LEN(@WhereClause) > 6 
-	BEGIN
-		SET @Sql = LEFT(@Sql, LEN(@SQL) - 4 )
-	END
-	ELSE
-	BEGIN
-		SET @Sql = LEFT( @Sql, LEN(@Sql) - 6 )
-	END
 
-	SET @Sql = @Sql + ') AS TT 
+	SET @Sql = @Sql + ') T
+			) AS TT 
 		WHERE TT.RowNum BETWEEN ' + convert(varchar(10), @StartRow) + ' AND ' + convert(varchar(10), @StartRow + @PageSize - 1)
 
---	Print 'SQL for Stored Procedure: ' + @SQL
+	--Print 'SQL for Stored Procedure: ' + @SQL
 
 	EXEC(@Sql)
---	COMMIT
 
 END
 
-executeProcedure:
---	EXEC @spName @MarcBibID, @TitleID, @Title, @StartRow,	@PageSize
-
-
-
+GO

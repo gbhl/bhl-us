@@ -1174,6 +1174,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectForAuthorIDPaged.sq
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectForKeyword.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectForKeywordPaged.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectForSegmentID.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectPagination.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectPublished.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectRecentlyChanged.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentSelectRecentlyClustered.sql"

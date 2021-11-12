@@ -470,6 +470,14 @@
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">
+					Is Virtual:
+				</td>
+				<td>
+					<asp:Label ID="isVirtualLabel" runat="server" ForeColor="Blue"></asp:Label>
+				</td>
+			</tr>
+			<tr>
+				<td style="white-space: nowrap" align="right" class="dataHeader">
 					Scanned By:
 				</td>
 				<td>
@@ -607,7 +615,7 @@
 			<input type="button" onclick="overlaySegmentSearch();document.getElementById('srchSegmentID').focus();" id="btnAddSegment" value="Add Segment" />
 			<asp:GridView ID="segmentsList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 			    AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
-				Width="800px" CssClass="boxTable" OnRowCancelingEdit="segmentsList_RowCancelingEdit" OnRowEditing="segmentsList_RowEditing"
+				Width="900px" CssClass="boxTable" OnRowCancelingEdit="segmentsList_RowCancelingEdit" OnRowEditing="segmentsList_RowEditing"
 				OnRowUpdating="segmentsList_RowUpdating" OnRowCommand="segmentsList_RowCommand" DataKeyNames="SegmentID">
 				<Columns>
 					<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" ItemStyle-VerticalAlign="Top "/>
@@ -616,6 +624,16 @@
 					<asp:TemplateField HeaderText="Title" ItemStyle-Width="350px" HeaderStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top">
 						<ItemTemplate>
 							<%# Eval( "Title" ) %>
+						</ItemTemplate>
+					</asp:TemplateField>
+					<asp:TemplateField HeaderText="Series" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top">
+						<ItemTemplate>
+							<%# Eval( "Series" ) %>
+						</ItemTemplate>
+					</asp:TemplateField>
+					<asp:TemplateField HeaderText="Issue" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top">
+						<ItemTemplate>
+							<%# Eval( "Issue" ) %>
 						</ItemTemplate>
 					</asp:TemplateField>
 					<asp:TemplateField HeaderText="Volume" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top">

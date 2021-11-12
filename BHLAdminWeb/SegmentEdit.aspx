@@ -41,7 +41,7 @@
 				return;
 			}
 
-			executeServiceCall('services/titleservice.ashx?op=TitleSearch&titleID=' + titleId + '&title=' + title, showTitleList);
+			executeServiceCall('services/titleservice.ashx?op=TitleSearch&virtual=<%: _virtualOnly %>&titleID=' + titleId + '&title=' + title, showTitleList);
         }
         else {
             if (itemId === "") {
@@ -49,7 +49,7 @@
                 return;
             }
 
-            executeServiceCall('services/itemservice.ashx?op=ItemSearch&itemID=' + itemId, showItemList);
+            executeServiceCall('services/itemservice.ashx?op=ItemSearch&virtual=<%: _virtualOnly %>&itemID=' + itemId, showItemList);
         }
     }
 
@@ -59,7 +59,7 @@
             return;
         }
 
-        executeServiceCall('services/itemservice.ashx?op=ItemSearchByTitle&titleID=' + titleId + '&marcBibId=' + marcBibId, showItemList);
+        executeServiceCall('services/itemservice.ashx?op=ItemSearchByTitle&virtual=<%: _virtualOnly %>&titleID=' + titleId + '&marcBibId=' + marcBibId, showItemList);
     }
 
     function authorSearch(authorId, authorName) {
@@ -424,6 +424,10 @@
                 <input type="button" onclick="clearItem();"; id="btnClearItem" value="Remove Item" />
             </td>
         </tr>
+		<tr>
+			<td style="white-space: nowrap" align="right" class="dataHeader">Source ID (IA ID):</td>
+			<td style="white-space: nowrap" colspan="2" valign="middle" width="100%"><asp:Label ID="sourceIdLabel" runat="server" ForeColor="blue" /></td>
+		</tr>
         <tr>
             <td style="white-space: nowrap" align="right" class="dataHeader">DOI:</td>
 			<td><asp:TextBox ID="doiTextBox" runat="server" Width="300px"></asp:TextBox></td>
@@ -731,7 +735,8 @@
 	<fieldset>
 		<legend class="dataHeader">Pages</legend>
         <br />
-		<input type="button" onclick="pageSearch();overlayPageSelect();" id="btnAddPage" value="Add Page" />
+		<input type="button" runat="server" onclick="pageSearch();overlayPageSelect();" id="btnAddPage" value="Add Page" visible="true" />
+		<asp:Button ID="btnPaginator" runat="server" Text="Paginate This Segment" onclick="btnPaginator_Click" Visible="false" />
 		<asp:GridView ID="pagesList" ClientIDMode="Static" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 			AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
 			Width="800px" CssClass="boxTable" OnRowCancelingEdit="pagesList_RowCancelingEdit" OnRowEditing="pagesList_RowEditing"
@@ -770,6 +775,8 @@
 						<asp:LinkButton ID="cancelPageButton" runat="server" CommandName="Cancel" Text="Cancel"></asp:LinkButton>
 					</EditItemTemplate>
 				</asp:TemplateField>
+				<asp:HyperLinkField DataNavigateUrlFields="PageID" DataNavigateUrlFormatString="/NamePageEdit.aspx?id={0}"
+					ItemStyle-Width="130px" Text="Edit Names" NavigateUrl="/NamePageEdit.aspx" />
 			</Columns>
 			<HeaderStyle HorizontalAlign="Left" CssClass="SearchResultsHeader" />
 		</asp:GridView>

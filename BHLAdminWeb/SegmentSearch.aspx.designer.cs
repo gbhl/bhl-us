@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.AdminWeb {
-    
-    
-    public partial class SegmentSearch {
-        
+namespace MOBOT.BHL.AdminWeb
+{
+
+
+    public partial class SegmentSearch
+    {
+
         /// <summary>
         /// litHeader control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litHeader;
-        
+
         /// <summary>
         /// errorControl control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.AdminWeb.ErrorControl errorControl;
-        
+
         /// <summary>
         /// searchPanel control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel searchPanel;
-        
+
         /// <summary>
         /// txtSegmentID control.
         /// </summary>
@@ -47,7 +49,16 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSegmentID;
-        
+
+        /// <summary>
+        /// txtSourceID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSourceID;
+
         /// <summary>
         /// txtTitle control.
         /// </summary>
@@ -56,7 +67,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTitle;
-        
+
         /// <summary>
         /// searchButton control.
         /// </summary>
@@ -65,7 +76,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button searchButton;
-        
+
         /// <summary>
         /// gvwResults control.
         /// </summary>

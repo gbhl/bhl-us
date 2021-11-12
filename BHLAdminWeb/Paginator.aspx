@@ -9,6 +9,7 @@
 	<a href="/TitleSearch.aspx?redir=p">&lt; Paginate a Different Title</a><br />
 	<br />
 	<span class="pageHeader">Pagination</span><hr />
+	<asp:HiddenField runat="server" ID="hidObjectType" />
 	<mobot:ErrorControl runat="server" id="errorControl">
 	</mobot:ErrorControl>
 	<br />
@@ -18,7 +19,7 @@
 				<table cellpadding="3px" cellspacing="0">
 					<tr>
 						<td>
-							Title
+							<asp:Label ID="titleLabel" runat="server" />
 						</td>
 						<td style="width:350px;">
 							<asp:Literal ID="litTitle" runat="server"></asp:Literal>
@@ -26,23 +27,13 @@
 					</tr>
 					<tr>
 						<td>
-							Item
+							<asp:Label ID="itemLabel" runat="server" />
 						</td>
 						<td>
 							<asp:DropDownList ID="itemDropDownList" runat="server" Width="100%" CssClass="TextBox" Style="background-color:White; height:20px" AutoPostBack="True" OnSelectedIndexChanged="itemDropDownList_SelectedIndexChanged">
 							</asp:DropDownList>
 						</td>
 					</tr>
-					<!--
-					<tr>
-						<td colspan="2" style="height:16px">
-							<asp:RadioButton AutoPostBack="true" Checked="true" GroupName="pageViewTypeGroup" ID="detailViewRadio" runat="server" OnCheckedChanged="detailViewRadio_CheckedChanged" />
-							<img src="/images/application_view_detail.png" align="texttop" />&nbsp;Details
-							<asp:RadioButton AutoPostBack="true" Checked="false" GroupName="pageViewTypeGroup" ID="thumbnailViewRadio" runat="server" OnCheckedChanged="detailViewRadio_CheckedChanged" />
-							<img src="/images/application_view_icons.png" align="texttop" id="thumbnailImg" runat="server" />&nbsp;<asp:Label ID="thumbnailLabel" runat="server" Text="Thumbnails"/>
-						</td>
-					</tr>
-					-->
 					<tr>
 						<td colspan="2">
 							<asp:Panel runat="server" Height="280px" ScrollBars="vertical" ID="gridPanel" CssClass="boxTable">

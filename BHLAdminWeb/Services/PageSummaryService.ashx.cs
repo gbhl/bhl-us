@@ -36,7 +36,12 @@ namespace MOBOT.BHL.AdminWeb.Services
             {
                 case "PageSummarySelectForViewerByItemID":
                     {
-                        response = this.PageSummarySelectForViewerByItemID(itemID);
+                        response = this.PageSummarySelectForViewer("Book", itemID);
+                        break;
+                    }
+                case "PageSummarySelectForViewerBySegmentID":
+                    {
+                        response = this.PageSummarySelectForViewer("Segment", itemID);
                         break;
                     }
                 default:
@@ -50,14 +55,16 @@ namespace MOBOT.BHL.AdminWeb.Services
             context.Response.Write(response);
         }
 
-        private string PageSummarySelectForViewerByItemID(string itemIDString)
+        private string PageSummarySelectForViewer(string idType, string idString)
         {
             try
             {
-                int itemID;
-                if (Int32.TryParse(itemIDString, out itemID))
+                int id;
+                if (Int32.TryParse(idString, out id))
                 {
-                    List<PageSummaryView> pages = new BHLProvider().PageSummarySelectForViewerByItemID(itemID);
+                    List<PageSummaryView> pages = null;
+                    if (idType == "Book") pages = new BHLProvider().PageSummarySelectForViewerByItemID(id);
+                    if (idType == "Segment") pages = new BHLProvider().PageSummarySelectForViewerBySegmentID(id);
 
                     // Serialize only the information we need
                     List<SiteService.ViewerPage> viewerPages = new List<SiteService.ViewerPage>();
@@ -72,7 +79,8 @@ namespace MOBOT.BHL.AdminWeb.Services
                     }
 
                     // Add the height and width of each page to the list
-                    viewerPages = (new SiteService.SiteServiceSoapClient().PageGetImageDimensions(viewerPages.ToArray(), (int)ItemType.Book, itemID)).ToList();
+                    int itemType = (idType == "Segment" ? (int)ItemType.Segment : (int)ItemType.Book);
+                    viewerPages = (new SiteService.SiteServiceSoapClient().PageGetImageDimensions(viewerPages.ToArray(), itemType, id)).ToList();
 
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     return js.Serialize(viewerPages);
