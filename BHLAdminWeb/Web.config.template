@@ -162,7 +162,7 @@
     <globalization requestEncoding="utf-8" responseEncoding="utf-8" />
     <customErrors mode="Off" />
     <authentication mode="None" />
-    <sessionState mode="StateServer" stateConnectionString="state server address"></sessionState>
+    <sessionState mode="StateServer" timeout="1080" stateConnectionString="state server address"></sessionState>
     <machineKey
       validationKey="validation key"
       decryptionKey="decryption key"

@@ -34,10 +34,12 @@ SELECT @IdentifierLCCN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierNam
 -- then a new title record will be inserted into the production database.
 
 -- Match on DOI
-SELECT	@ProductionTitleID = t.TitleID
+DECLARE @DOIIdentifierID int
+SELECT @DOIIdentifierID = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'DOI'
+
+SELECT	@ProductionTitleID = ti.TitleID
 FROM	dbo.OAIRecord o 
-		INNER JOIN dbo.BHLDOI d ON o.Doi = d.DoiName AND d.DOIEntityTypeID = 10 -- title
-		INNER JOIN dbo.BHLTitle t ON d.EntityID = t.TitleID
+		INNER JOIN dbo.BHLTitle_Identifier ti ON o.Doi = ti.IdentifierValue AND ti.IdentifierID = @DOIIdentifierID
 WHERE	o.OAIRecordID = @OAIRecordID
 
 -- Match on ISSN

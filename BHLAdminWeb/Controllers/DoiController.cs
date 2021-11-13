@@ -52,6 +52,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             ViewBag.SortBy = sortBy;
             ViewBag.ETypeSort = "entitytype";
             ViewBag.EIDSort = "entityid";
+            ViewBag.ActionSort = "action";
             ViewBag.AddedBySort = "addedby";
             ViewBag.DateQueuedSort = "datequeued";
 
@@ -77,6 +78,13 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 case "entityid":
                     model = model.OrderBy(d => d.EntityID).ToList();
                     ViewBag.EIDSort = sortBy + "_desc";
+                    break;
+                case "action_desc":
+                    model = model.OrderByDescending(d => d.Action).ToList();
+                    break;
+                case "action":
+                    model = model.OrderBy(d => d.Action).ToList();
+                    ViewBag.ActionSort = sortBy + "_desc";
                     break;
                 case "addedby_desc":
                     model = model.OrderByDescending(d => d.AddedBy).ToList();
@@ -146,8 +154,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                             if (!string.IsNullOrWhiteSpace(titleId))
                             {
                                 ValidationOutput validation = ValidateTitle(titleId);
-                                if (validation.IsValid) titleIDs.Add(titleId + "|" + validation.Title);
-                                copyrightWarning = copyrightWarning ? copyrightWarning : validation.CopyrightWarning;
+                                if (validation.IsValid) titleIDs.Add(titleId + "|" + validation.Action + "|" + validation.Title);
+                                copyrightWarning = copyrightWarning ? copyrightWarning : (validation.CopyrightWarning && validation.Action != "UPDATE");
                             }
                         }
                     }
@@ -162,11 +170,11 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                                     List<Segment> segments = new BHLProvider().SegmentSelectWithoutDOIByTitleID(Convert.ToInt32(model.TitleID));
                                     if (segments.Count > 0)
                                     {
-                                        copyrightWarning = titleValidation.CopyrightWarning;
+                                        copyrightWarning = titleValidation.CopyrightWarning && titleValidation.Action != "UPDATE";
 
                                         foreach (Segment segment in segments)
                                         {
-                                            segmentIDs.Add(segment.SegmentID.ToString() + "|" + segment.Title);
+                                            segmentIDs.Add(segment.SegmentID.ToString() + "|" + titleValidation.Action + "|" + segment.Title);
                                         }
                                     }
                                     else
@@ -182,11 +190,11 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                                     List<Segment> segments = new BHLProvider().SegmentSelectWithoutDOIByItemID(Convert.ToInt32(model.ItemID));
                                     if (segments.Count > 0)
                                     {
-                                         copyrightWarning = itemValidation.CopyrightWarning;
+                                         copyrightWarning = itemValidation.CopyrightWarning && itemValidation.Action != "UPDATE";
 
                                         foreach (Segment segment in segments)
                                         {
-                                            segmentIDs.Add(segment.SegmentID.ToString() + "|" + segment.Title);
+                                            segmentIDs.Add(segment.SegmentID.ToString() + "|" + itemValidation.Action + "|" + segment.Title);
                                         }
                                     }
                                     else
@@ -206,8 +214,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                                         ValidationOutput segmentValidation = ValidateSegment(segmentId);
                                         if (segmentValidation.IsValid)
                                         {
-                                            copyrightWarning = copyrightWarning ? copyrightWarning : segmentValidation.CopyrightWarning;
-                                            segmentIDs.Add(segmentId + "|" + segmentValidation.Title);
+                                            copyrightWarning = copyrightWarning ? copyrightWarning : (segmentValidation.CopyrightWarning && segmentValidation.Action != "UPDATE");
+                                            segmentIDs.Add(segmentId + "|" + segmentValidation.Action + "|" + segmentValidation.Title);
                                         }
                                     }
                                 }
@@ -261,14 +269,14 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             {
                 List<int> ids = new List<int>();
                 foreach(string title in model.Titles) ids.Add(Convert.ToInt32(title.Split('|')[0]));
-                new BHLProvider().DOIInsert(_doiTypeTitleID, ids, _doiStatusQueuedID, string.Empty, string.Empty, string.Empty, 0, userId, 0);
+                new BHLProvider().DOIInsertQueue(_doiTypeTitleID, ids, userId);
             }
 
             if (model.Segments != null)
             {
                 List<int> ids = new List<int>();
                 foreach (string segment in model.Segments) ids.Add(Convert.ToInt32(segment.Split('|')[0]));
-                new BHLProvider().DOIInsert(_doiTypeSegmentID, ids, _doiStatusQueuedID, string.Empty, string.Empty, string.Empty, 0, userId, 0);
+                new BHLProvider().DOIInsertQueue(_doiTypeSegmentID, ids, userId);
             }
 
             return RedirectToAction("Queue", "Doi");
@@ -279,7 +287,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         {
             //string type = "0";
 
-            DOI doi = new BHLProvider().DOISelectByTypeAndID(type, Convert.ToInt32(id));
+            DOI doi = new BHLProvider().DOISelectQueuedByTypeAndID(type, Convert.ToInt32(id));
             var model = new EditDoiQueueViewModel(doi);
             if (doi == null)
             {
@@ -293,7 +301,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [Authorize(Roles = "BHL.Admin.PortalEditor, BHL.Admin.Admin, BHL.Admin.SysAdmin")]
         public ActionResult QueueDelete(EditDoiQueueViewModel model)
         {
-            new BHLProvider().DOIDeleteByTypeAndID(model.EntityTypeID, model.EntityID);
+            new BHLProvider().DOIDeleteQueuedByTypeAndID(model.EntityTypeID, model.EntityID);
             return RedirectToAction("Queue");
         }
 
@@ -349,9 +357,12 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
                 if (output.IsValid && validateDOI)
                 {
-                    // Make sure an entry in the DOI table does not already exist for this title.
-                    // NOTE: At some point will be allowed, but for now we do not handle resubmission of metadata for existing DOIs.
-                    DOI doi = provider.DOISelectByTypeAndID(_doiTypeTitleName, titleInt);
+                    // Determine if we are adding a new DOI or updating an existing one
+                    List<Title_Identifier> existingDoi = provider.DOISelectValidForTitle(titleInt);
+                    output.Action = (existingDoi.Count == 0) ? "ADD" : "UPDATE";
+
+                    // Make sure a "queued" entry in the DOI table does not already exist for this title.
+                    DOI doi = provider.DOISelectQueuedByTypeAndID(_doiTypeTitleName, titleInt);
                     if (doi != null)
                     {
                         AddErrors(GetDOIError("Title", doi));
@@ -468,9 +479,11 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
                 if (output.IsValid)
                 {
-                    // Make sure an entry in the DOI table does not already exist for this segmemt.
-                    // NOTE: At some point will be allowed, but for now we do not handle resubmission of metadata for existing DOIs.
-                    DOI doi = provider.DOISelectByTypeAndID(_doiTypeSegmentName, segmentInt);
+                    // Indicate whether we are adding a new DOI or updating an existing one
+                    output.Action = (string.IsNullOrWhiteSpace(segment.DOIName)) ? "ADD" : "UPDATE";
+
+                    // Make sure a "queued" entry in the DOI table does not already exist for this segmemt.
+                    DOI doi = provider.DOISelectQueuedByTypeAndID(_doiTypeSegmentName, segmentInt);
                     if (doi != null)
                     {
                         AddErrors(GetDOIError("Segment", doi));
@@ -486,8 +499,10 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
         private string GetDOIError(string type, DOI doi)
         {
-            string errorMessage;
+            string errorMessage = string.Format("{0} {1} - Already queued for DOI assignment", type, doi.EntityID);
 
+            // Now that Crossref metadata updates are supported, the only possible error is another "Queued" entry.  Other statuses can be duplicated.
+            /*
             switch (doi.DOIStatusID)
             {
                 case _doiStatusQueuedID:
@@ -503,6 +518,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     errorMessage = string.Format("{0} {1} - DOI {2} already assigned", type, doi.EntityID, doi.DOIName);
                     break;
             }
+            */
 
             return errorMessage;
         }
@@ -519,6 +535,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public bool CopyrightWarning { get; set; }
 
         public string Title { get; set; } = string.Empty;
+
+        public string Action { get; set; } = "ADD";
 
         public ValidationOutput(bool isValid, bool copyrightWarning)
         {

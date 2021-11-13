@@ -111,11 +111,19 @@ namespace BHL.SearchIndexQueueLoad
                                             errorQueueName: _mqErrorQueuePdf,
                                             errorExchangeName: _mqErrorExchangePdf);
                                     }
+                                    if (change.Queue.ToLower() == "doi")
+                                    {
+                                        dataAccess.InsertDOIQueue(
+                                            dOIEntityTypeID: DBLookups.DOIEntityTypeID[change.IndexEntity.ToLower()], 
+                                            entityID: Convert.ToInt32(change.Id), 
+                                            creationUserID: 1, 
+                                            lastModifiedUserID: 1);
+                                    }
                                 }
                                 catch (Exception ex)
                                 {
                                     string errMsg = string.Format(
-                                        "Error adding a message to the search index queue: {0}", queueMsg);
+                                        "Error adding a message to the {0} queue: {1}", change.Queue, queueMsg);
                                     Log.Error(ex, errMsg);
                                     isError = true;
                                     break;

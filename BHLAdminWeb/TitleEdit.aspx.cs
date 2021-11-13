@@ -252,7 +252,6 @@ namespace MOBOT.BHL.AdminWeb
 
             Session[ "Title" + title.TitleID.ToString()] = title;
 
-            doiTextBox.Text = title.DOIName;
             replacedByTextBox.Text = title.RedirectTitleID.ToString();
             replacedByOrig.Value = title.RedirectTitleID.ToString();
             String displayTitle = ((title.ShortTitle.Length > 30) ? title.ShortTitle.Substring(0, 30) + "..." : title.ShortTitle);
@@ -668,15 +667,11 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     continue;
                 }
-                if (titleIdentifierId == 0 && tti.TitleIdentifierID == 0 && 
-                    identifierID == 0 && tti.TitleIdentifierID == 0 &&
-                    identifierValue == "" && tti.IdentifierValue == "")
+                if (titleIdentifierId == tti.TitleIdentifierID &&
+                    identifierID == tti.IdentifierID &&
+                    identifierValue == tti.IdentifierValue)
                 {
-                    return tti;
-                }
-                else if (titleIdentifierId > 0 && tti.TitleIdentifierID == titleIdentifierId)
-                {
-                    return tti;
+                        return tti;
                 }
             }
 
@@ -1806,7 +1801,6 @@ namespace MOBOT.BHL.AdminWeb
 
                 //----------------------------------------
                 // Gather up data on form
-                title.DOIName = doiTextBox.Text.Trim();
                 title.RedirectTitleID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
                 title.PublishReady = publishReadyCheckBox.Checked;
                 title.BibliographicLevelID = bibLevelID;
@@ -2007,6 +2001,19 @@ namespace MOBOT.BHL.AdminWeb
                     }
                 }
                 ix++;
+            }
+
+            // Validate identifiers
+            IdentifierValidationResult identifierValidationResult = new BHLProvider().ValidateIdentifiers(title.TitleIdentifiers);
+            if (!identifierValidationResult.IsValid)
+            {
+                flag = true;
+                foreach (string message in identifierValidationResult.Messages) errorControl.AddErrorText(message);
+            }
+            if (identifierValidationResult.IncludesNewBHLDOI)
+            {
+                flag = true;
+                errorControl.AddErrorText("A BHL-created DOI can only be added by submitting the Title metadata to a DOI registrar (such as Crossref)");
             }
 
             /*

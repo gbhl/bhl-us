@@ -45,6 +45,14 @@ namespace MOBOT.BHL.DataObjects
             set { _minutesToGenerate = value; }
         }
 
+        private string _itemTypeName = string.Empty;
+
+        public string ItemTypeName
+        {
+            get { return _itemTypeName;}
+            set { _itemTypeName = value; }
+        }
+
         #endregion Properties
 
         #region ISet override
@@ -73,6 +81,11 @@ namespace MOBOT.BHL.DataObjects
                     case "MinutesToGenerate":
                         {
                             _minutesToGenerate = Utility.ZeroIfNull(column.Value);
+                            break;
+                        }
+                    case "ItemTypeName":
+                        {
+                            _itemTypeName = Utility.EmptyIfNull(column.Value);
                             break;
                         }
                 }

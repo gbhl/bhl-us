@@ -1211,16 +1211,16 @@ namespace MOBOT.BHL.API.BHLApiDAL
             }
         }
 
-        public List<Contributor> InstitutionSelectByItemIDAndRole(
+        public List<Contributor> InstitutionSelectByBookIDAndRole(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
-            int itemID,
+            int bookID,
             string institutionRoleName)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectByItemIDAndRole", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiInstitutionSelectByBookIDAndRole", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("BookID", SqlDbType.Int, null, false, bookID),
                 CustomSqlHelper.CreateInputParameter("InstitutionRoleName", SqlDbType.NVarChar, 100, false, institutionRoleName)))
             {
                 using (CustomSqlHelper<Contributor> helper = new CustomSqlHelper<Contributor>())

@@ -22,8 +22,10 @@ namespace MOBOT.BHL.BHLDOIService
         // needing to edit the code.
 
         private ConfigParms configParms = new ConfigParms();
-        private List<string> submittedDOIs = new List<string>();
-        private List<string> approvedDOIs = new List<string>();
+        private List<string> submittedDOIAdds = new List<string>();
+        private List<string> submittedDOIUpdates = new List<string>();
+        private List<string> approvedDOIAdds = new List<string>();
+        private List<string> approvedDOIUpdates = new List<string>();
         private List<string> warningDOIs = new List<string>();
         private List<string> rejectedDOIs = new List<string>();
         private List<string> unverifiedDOIs = new List<string>();
@@ -77,22 +79,13 @@ namespace MOBOT.BHL.BHLDOIService
                 this.LogMessage(string.Format("Found {0} {1}s to process", doisToSubmit.Count().ToString(), GetEntityTypeName(entityTypeId)));
                 foreach (DOI doi in doisToSubmit)
                 {
-                    DOIDepositData depositData = this.GetDepositData(entityTypeId, doi.EntityID);
+                    DOIDepositData depositData = this.GetDepositData(entityTypeId, doi.EntityID, doi.DOIName);
                     ExistingDOICheckResult result = ExistingDOICheck(depositData, doi.DOIStatusID);
 
                     switch (result.ResultValue)
                     {
                         case DOICheckResult.NotFound:
-
-                            // If no DOI record exists, create one (set status to "Queued")
-                            if (doi.DOIID == 0)
-                            {
-                                DOI newDoi = wsClient.DOIInsertAuto(entityTypeId, doi.EntityID, configParms.DoiStatusQueued,
-                                    string.Empty, doi.DOIName, string.Empty, 0, 1);
-                                doi.DOIID = newDoi.DOIID;
-                                doi.DOIStatusID = newDoi.DOIStatusID;
-                                doi.DOIEntityTypeID = newDoi.DOIEntityTypeID;
-                            }
+                        case DOICheckResult.Update:
 
                             // Add the DOI name, if one has not already been assigned
                             if (string.IsNullOrWhiteSpace(doi.DOIName))
@@ -102,7 +95,7 @@ namespace MOBOT.BHL.BHLDOIService
                                 doi.DOIName = doiName;
                             }
 
-                            // Generate a batch identifier for this DOI (and set status to "Queued")
+                            // Generate a batch identifier for this DOI
                             string doiBatchID = this.GenerateDOIBatchID(doi.DOIID);
                             wsClient.DOIUpdateBatchID(doi.DOIID, doi.DOIStatusID, doiBatchID, null);
                             doi.DOIBatchID = doiBatchID;
@@ -119,7 +112,10 @@ namespace MOBOT.BHL.BHLDOIService
                                 // Submit the new DOI to CrossRef and update the DOI status to "Submitted"
                                 this.SubmitDOI(doiDeposit, string.Format(configParms.DepositFileFormat, doiBatchID));
                                 wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusSubmitted, string.Empty, null, null);
-                                submittedDOIs.Add(doi.DOIName);
+                                if (depositData.IsUpdate)
+                                    submittedDOIUpdates.Add(doi.DOIName);
+                                else
+                                    submittedDOIAdds.Add(doi.DOIName);
                             }
                             catch (Exception ex)
                             {
@@ -133,9 +129,9 @@ namespace MOBOT.BHL.BHLDOIService
 
                             break;
                         case DOICheckResult.Found:
-                            // Add the DOI to the database
-                            wsClient.DOIInsertAuto(entityTypeId, doi.EntityID, configParms.DoiStatusExternal,
-                                string.Empty, result.DoiList.First(), string.Empty, 1, 1);
+                            // Add the external DOI to the database
+                            wsClient.DOIInsert(entityTypeId, doi.EntityID, configParms.DoiStatusExternal, result.DoiList.First(), 
+                                1, string.Empty, string.Empty, 1, 1);
                             foundDOIs.Add(result.DoiList.First());
 
                             this.LogMessage("DOI " + result.DoiList.First() + " added");
@@ -215,14 +211,14 @@ namespace MOBOT.BHL.BHLDOIService
         {
             ExistingDOICheckResult result = new ExistingDOICheckResult();
 
-            // If doiStatusID <> 0, then return NotFound, as this entity already has a DOI being processed.
-            // Otherwise, submit queries to CrossRef to see if a DOI exists.
-            if (doiStatusId != configParms.DoiStatusNull)
+            if (depositData.IsUpdate)
             {
-                result.ResultValue = DOICheckResult.NotFound;
+                // Existing DOI is being updated, so no need to submit a query to Crossref
+                result.ResultValue = DOICheckResult.Update;
             }
             else
             {
+                // Submit queries to CrossRef to see if a DOI exists.
                 try
                 {
                     // Generate a batch identifier
@@ -283,6 +279,7 @@ namespace MOBOT.BHL.BHLDOIService
         {
             Found,
             NotFound,
+            Update,
             Unknown,
             Error
         }
@@ -351,9 +348,10 @@ namespace MOBOT.BHL.BHLDOIService
         /// <param name="doiEntityType"></param>
         /// <param name="entityID"></param>
         /// <returns></returns>
-        private DOIDepositData GetDepositData(int doiEntityType, int entityID)
+        private DOIDepositData GetDepositData(int doiEntityType, int entityID, string doiName)
         {
             DOIDepositData data = new DOIDepositData();
+            data.IsUpdate = !string.IsNullOrWhiteSpace(doiName);
             data.EntityID = entityID;
             data.EntityTypeID = doiEntityType;
 
@@ -514,10 +512,10 @@ namespace MOBOT.BHL.BHLDOIService
                 // If still no ISSN, use the DOI of the associated title
                 if (string.IsNullOrWhiteSpace(data.Issn))
                 {
-                    DOI[] titleDOIs = wsClient.DOISelectValidForTitle(segment.TitleId ?? 0);
-                    foreach(DOI doi in titleDOIs)
+                    Title_Identifier[] titleDOIs = wsClient.DOISelectValidForTitle(segment.TitleId ?? 0);
+                    foreach(Title_Identifier doi in titleDOIs)
                     {
-                        data.TitleDOIName = doi.DOIName;
+                        data.TitleDOIName = doi.IdentifierValue;
                         data.TitleDOIResource = string.Format(configParms.BhlTitleUrlFormat, segment.TitleId);
                         break;
                     }
@@ -954,9 +952,13 @@ namespace MOBOT.BHL.BHLDOIService
                                     case  "Success":
                                         {
                                             // DOI accepted by CrossRef
+                                            XElement diagnosticMessage = recordDiagnostic.Element("msg");
                                             wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusApproved, string.Empty, 1, null);
                                             this.LogMessage("DOI " + doi.DOIName + " Verified");
-                                            approvedDOIs.Add(doi.DOIName);
+                                            if (string.Compare(diagnosticMessage.Value, "Successfully added", true) == 0)
+                                                approvedDOIAdds.Add(doi.DOIName);
+                                            else
+                                                approvedDOIUpdates.Add(doi.DOIName);
                                             break;
                                         }
                                     case "Warning":
@@ -1184,10 +1186,10 @@ namespace MOBOT.BHL.BHLDOIService
             try
             {
                 // Send email if any actions were taken
-                if (approvedDOIs.Count > 0 || submittedDOIs.Count > 0 || 
-                    unverifiedDOIs.Count > 0 || warningDOIs.Count > 0 ||
-                    rejectedDOIs.Count > 0 || foundDOIs.Count > 0 ||
-                    unresolvedEntities.Count > 0 || errorMessages.Count > 0)
+                if (approvedDOIAdds.Count > 0 || approvedDOIUpdates.Count > 0 || 
+                    submittedDOIAdds.Count > 0 || submittedDOIUpdates.Count > 0 ||
+                    unverifiedDOIs.Count > 0 || warningDOIs.Count > 0 || rejectedDOIs.Count > 0 || 
+                    foundDOIs.Count > 0 || unresolvedEntities.Count > 0 || errorMessages.Count > 0)
                 {
                     String subject = String.Empty;
                     String thisComputer = Environment.MachineName;
@@ -1229,13 +1231,21 @@ namespace MOBOT.BHL.BHLDOIService
             string thisComputer = Environment.MachineName;
 
             sb.Append("BHLDOIService: DOI processing on " + thisComputer + " complete." + endOfLine);
-            if (this.submittedDOIs.Count > 0)
+            if (this.submittedDOIAdds.Count > 0)
             {
-                sb.Append(endOfLine + this.submittedDOIs.Count.ToString() + " new DOIs were Submitted" + endOfLine);
+                sb.Append(endOfLine + this.submittedDOIAdds.Count.ToString() + " new DOIs were Submitted for additions" + endOfLine);
             }
-            if (this.approvedDOIs.Count > 0)
+            if (this.submittedDOIUpdates.Count > 0)
             {
-                sb.Append(endOfLine + this.approvedDOIs.Count.ToString() + " DOIs were Approved by CrossRef" + endOfLine);
+                sb.Append(endOfLine + this.submittedDOIUpdates.Count.ToString() + " existing DOIs were Submitted for updates" + endOfLine);
+            }
+            if (this.approvedDOIAdds.Count > 0)
+            {
+                sb.Append(endOfLine + this.approvedDOIAdds.Count.ToString() + " DOI additions were Approved by CrossRef" + endOfLine);
+            }
+            if (this.approvedDOIUpdates.Count > 0)
+            {
+                sb.Append(endOfLine + this.approvedDOIUpdates.Count.ToString() + " DOI updates were Approved by CrossRef" + endOfLine);
             }
             if (this.unverifiedDOIs.Count > 0)
             {

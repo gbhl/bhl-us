@@ -136,8 +136,12 @@ INSERT dbo.BHLTitle_Identifier (TitleID, IdentifierID, IdentifierValue)
 SELECT @ProductionTitleID, @IdentifierLCCN, Lccn FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID AND Lccn <> ''
 			
 -- Insert DOI record
-INSERT dbo.BHLDOI (DOIEntityTypeID, EntityID, DOIStatusID, DOIName, StatusDate, IsValid)
-SELECT 10, @ProductionTitleID, 200, Doi, GETDATE(), 1 FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID AND Doi <> ''
+DECLARE @DOI nvarchar(50)
+SELECT	@DOI = Doi
+FROM	dbo.OAIRecord
+WHERE	OAIRecordID = @OAIRecordID AND Doi <> '' 
+
+exec dbo.BHLDOIInsert @DOIEntityTypeID = 10, @EntityID = @ProductionTitleID, @DOIStatusID = 200, @DOIName = @DOI, @IsValid = 1, @ExcludeBHLDOI = 1
 
 -- Insert TitleKeyword records
 INSERT dbo.BHLTitleKeyword (TitleID, KeywordID)
@@ -183,3 +187,5 @@ AND		rt.OAIRecordID = @OAIRecordID
 COMMIT TRAN
 
 END
+
+GO

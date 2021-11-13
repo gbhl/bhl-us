@@ -34,6 +34,13 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
+        public void DOIInsert(int doiEntityTypeId, int entityID, int doiStatusId, string doiName, short isValid,
+            string doiBatchId, string message, int userId, int excludeBHLDOI)
+        {
+            new BHLProvider().DOIInsert(doiEntityTypeId, entityID, doiStatusId, doiName, isValid, doiBatchId, message, userId, excludeBHLDOI);
+        }
+
+        [WebMethod]
         public DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, short? setValid, int? userId)
         {
             return new BHLProvider().DOIUpdateStatus(doiID, doiStatusId, message, setValid, userId);
@@ -58,7 +65,7 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public List<DOI> DOISelectValidForTitle(int titleID)
+        public List<Title_Identifier> DOISelectValidForTitle(int titleID)
         {
             return new BHLProvider().DOISelectValidForTitle(titleID);
         }

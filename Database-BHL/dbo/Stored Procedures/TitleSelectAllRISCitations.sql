@@ -6,13 +6,10 @@ BEGIN
 
 SET NOCOUNT ON
 
-DECLARE @ISSNID int
-DECLARE @ISBNID int
-DECLARE @DOITITLEID int
-
+DECLARE @ISSNID int, @ISBNID int, @DOIID int
 SELECT @ISSNID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'ISSN'
 SELECT @ISBNID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'ISBN'
-SELECT @DOITITLEID = DOIEntityTypeID FROM dbo.DOIEntityType WHERE DOIEntityTypeName = 'Title'
+SELECT @DOIID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'DOI'
 
 SELECT	DISTINCT
 		c.TitleID,
@@ -25,7 +22,7 @@ SELECT	DISTINCT
 		CASE WHEN ISNULL(CONVERT(NVARCHAR(20), t.StartYear), '') = '' THEN ISNULL(t.Datafield_260_c, '') ELSE ISNULL(CONVERT(NVARCHAR(20), t.StartYear), '') END [Year],
 		c.Authors,
 		c.Subjects AS Keywords,
-		ISNULL(d.DOIName, '') AS DOI,
+		ISNULL(doi.IdentifierValue, '') AS DOI,
 		ISNULL(t.EditionStatement, '') AS Edition,
 		ISNULL(isbn.IdentifierValue, ISNULL(issn.IdentifierValue, '')) AS ISSNISBN,
 		ISNULL(l.LanguageName, '') AS [Language],
@@ -38,7 +35,7 @@ FROM	dbo.Title t WITH (NOLOCK)
 		LEFT JOIN dbo.Title_Identifier isbn WITH (NOLOCK) ON t.TitleID = isbn.TitleID AND isbn.IdentifierID = @ISBNID
 		LEFT JOIN dbo.Title_Identifier issn WITH (NOLOCK) ON t.TitleID = issn.TitleID AND issn.IdentifierID = @ISSNID
 		LEFT JOIN dbo.Language l WITH (NOLOCK) ON t.LanguageCode = l.LanguageCode
-		LEFT JOIN dbo.DOI d WITH (NOLOCK) ON t.TitleID = d.EntityID AND d.DOIEntityTypeID = @DOITITLEID AND d.IsValid = 1
+		LEFT JOIN dbo.Title_Identifier doi WITH (NOLOCK) ON t.TitleID = doi.TitleID AND doi.IdentifierID = @DOIID
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID
 		INNER JOIN dbo.Book bk ON c.ItemID = bk.BookID
 WHERE	t.PublishReady = 1;

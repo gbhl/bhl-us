@@ -42,10 +42,10 @@ namespace MOBOT.BHL.Web2
             if (titleId != 0)
             {
                 coins = provider.ItemCOinSSelectByTitleId(titleId);
-                List<Data.DOI> doi = provider.DOISelectValidForTitle(titleId);
+                List<Data.Title_Identifier> doi = provider.DOISelectValidForTitle(titleId);
                 if (doi != null && coins != null)
                 {
-                    if (doi.Count > 0) coins.Doi = doi[0].DOIName;
+                    if (doi.Count > 0) coins.Doi = doi[0].IdentifierValue;
                 }
             }
             else
@@ -178,10 +178,10 @@ namespace MOBOT.BHL.Web2
 
             // Get the data
             coins = provider.SegmentCOinSSelectBySegmentId(segmentId);
-            List<Data.DOI> doi = provider.DOISelectValidForSegment(segmentId);
+            List<Data.ItemIdentifier> doi = provider.DOISelectValidForSegment(segmentId);
             if (doi != null && coins != null) 
             {
-                if (doi.Count > 0) coins.Doi = doi[0].DOIName;
+                if (doi.Count > 0) coins.Doi = doi[0].IdentifierValue;
             }
 
             if (coins != null)

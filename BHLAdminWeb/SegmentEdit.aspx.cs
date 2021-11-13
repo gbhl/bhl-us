@@ -369,7 +369,6 @@ namespace MOBOT.BHL.AdminWeb
                 }
                 sourceIdLabel.Text = segment.BarCode;
                 replacedByTextBox.Text = segment.RedirectSegmentID.ToString();
-                doiTextBox.Text = segment.DOIName;
                 titleTextBox.Text = segment.Title;
                 sortTitleTextBox.Text = segment.SortTitle;
                 translatedTitleTextBox.Text = segment.TranslatedTitle;
@@ -630,12 +629,18 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     continue;
                 }
+                if (itemIdentifierId == ii.ItemIdentifierID &&
+                    identifierID == ii.IdentifierID &&
+                    identifierValue == ii.IdentifierValue)
+                /*
                 if (itemIdentifierId == 0 && ii.ItemIdentifierID == 0 &&
                     identifierID == 0 && ii.IdentifierID == 0 &&
                     identifierValue == "" && ii.IdentifierValue == "")
+                */
                 {
                     return ii;
                 }
+                /*
                 if (itemIdentifierId == 0 && ii.ItemIdentifierID == 0 &&
                     identifierID > 0 && identifierID == ii.IdentifierID &&
                     identifierValue == ii.IdentifierValue)
@@ -646,6 +651,7 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     return ii;
                 }
+                */
             }
 
             return null;
@@ -1269,7 +1275,6 @@ namespace MOBOT.BHL.AdminWeb
                 // Gather up data on form
                 bool isItemChanged = (segment.BookID ?? 0) != (itemIDLabel.Text == "" ? 0 : Convert.ToInt32(itemIDLabel.Text));
                 segment.BookID = (itemIDLabel.Text == "" ? (int?)null : Convert.ToInt32(itemIDLabel.Text));
-                segment.DOIName = doiTextBox.Text.Trim();
                 segment.RedirectSegmentID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
                 segment.SegmentStatusID = Convert.ToInt32(ddlSegmentStatus.SelectedValue);
                 segment.SegmentGenreID = Convert.ToInt32(ddlSegmentGenre.SelectedValue);
@@ -1561,6 +1566,19 @@ namespace MOBOT.BHL.AdminWeb
                     }
                 }
                 ix++;
+            }
+
+            // Validate identifiers
+            IdentifierValidationResult identifierValidationResult = new BHLProvider().ValidateIdentifiers(segment.IdentifierList);
+            if (!identifierValidationResult.IsValid)
+            {
+                flag = true;
+                foreach (string message in identifierValidationResult.Messages) errorControl.AddErrorText(message);
+            }
+            if (identifierValidationResult.IncludesNewBHLDOI)
+            {
+                flag = true;
+                errorControl.AddErrorText("A BHL-created DOI can only be added by submitting the Segment metadata to a DOI registrar (such as Crossref)");
             }
 
             errorControl.Visible = flag;

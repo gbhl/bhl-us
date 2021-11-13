@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[DOISelectByTypeAndID]
+﻿CREATE PROCEDURE [dbo].[DOISelectQueuedByTypeAndID]
 
 @DOIEntityTypeName nvarchar(50),
 @EntityID int
@@ -8,6 +8,9 @@ AS
 BEGIN
 
 SET NOCOUNT ON
+
+DECLARE @DOIStatusQueuedID int
+SELECT @DOIStatusQueuedID = DOIStatusID FROM dbo.DOIStatus WHERE DOIStatusName = 'Queued'
 
 SELECT	d.DOIID,
 		d.DOIEntityTypeID,
@@ -24,8 +27,8 @@ FROM	dbo.DOI d
 		INNER JOIN dbo.AspNetUsers u ON d.CreationUserID = u.Id
 WHERE	t.DOIEntityTypeName = @DOIEntityTypeName
 AND		d.EntityID = @EntityID
+AND		d.DOIStatusID = @DOIStatusQueuedID
 
 END
 
 GO
-

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.PageMetadataSelectBySegmentID
+﻿CREATE PROCEDURE [dbo].[PageMetadataSelectBySegmentID]
 
 @SegmentID INT
 
@@ -24,12 +24,14 @@ SELECT	p.PageID,
 		p.ExternalURL,
 		p.AltExternalURL,
 		p.IssuePrefix,
-		pf.FlickrURL
+		pf.FlickrURL,
+		g.GenreName
 INTO	#tmpPage
 FROM	dbo.Page p
 		INNER JOIN dbo.ItemPage ip ON p.PageID = ip.PageID
 		INNER JOIN dbo.Item i ON ip.ItemID = i.ItemID
 		INNER JOIN dbo.vwSegment s ON i.ItemID = s.ItemID
+		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Vault v ON i.VaultID = v.VaultID
 		LEFT JOIN dbo.PageFlickr pf WITH (NOLOCK) ON p.PageID = pf.PageID
 WHERE	s.SegmentID = @SegmentID
@@ -76,7 +78,7 @@ SELECT	p.PageID,
 		p.IssuePrefix,
 		p.FlickrURL,
 		MIN(COALESCE(s.SegmentID, p.SegmentID)) AS SegmentID,
-		MIN(s.GenreName) AS GenreName
+		MIN(COALESCE(s.GenreName, p.GenreName)) AS GenreName
 FROM	#tmpPage p LEFT JOIN #tmpChild s ON p.PageID = s.PageID
 GROUP BY
 		p.PageID,

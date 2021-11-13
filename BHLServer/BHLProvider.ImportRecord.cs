@@ -2,6 +2,7 @@
 using MOBOT.BHL.DataObjects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace MOBOT.BHL.Server
@@ -508,24 +509,25 @@ namespace MOBOT.BHL.Server
                     .Replace("dx.doi.org/", "").Replace("http://doi.org/", "").Replace("https://doi.org/", "")
                     .Replace("doi.org/", "");
 
-                // Make sure the remaining DOI value is properly formatted
-                Regex regex = new Regex("^10.\\d{4,9}/[-._;()/:a-zA-Z0-9]+$");
-                if (!regex.IsMatch(citation.DOI))
+                // Check for an existing DOI value
+                string existingDOI = string.Empty;
+                if (citation.ImportSegmentID != null)
+                {
+                    List<ItemIdentifier> dois = ItemIdentifierSelectByNameAndID("DOI", (int)citation.ImportSegmentID);
+                    if (dois.Count > 0) existingDOI = dois[0].IdentifierValue;
+                }
+
+                // Make sure the cleaned DOI value is valid
+                Identifier identifierDefinition = IdentifierSelectAll().Where(i => i.IdentifierName == "DOI").Single();
+                IdentifierValidationResult idValidateResult = ValidateIdentifier(citation.DOI, citation.DOI != existingDOI, identifierDefinition);
+                if (!idValidateResult.IsValid)
                 {
                     citation.Errors.Add(GetNewImportRecordError(string.Format("{0} is an invalid DOI format.  The valid format is prefix/suffix, where prefix is 10.NNNN.", citation.DOI)));
                     isValid = false;
                 }
-
-                if (isValid)
+                else
                 {
                     string bhlPrefix = "10.5962";
-                    string existingDOI = string.Empty;
-
-                    if (citation.ImportSegmentID != null)
-                    {
-                        DOI doi = DOISelectByTypeAndID("Segment", (int)citation.ImportSegmentID);
-                        if (doi != null) existingDOI = doi.DOIName;
-                    }
 
                     // If a BHL-assigned DOI (prefix 10.5962) is being added or replaced, issue a warning indicating that the change will be ignored.
                     // This does NOT produce an invalid citation.

@@ -106,6 +106,9 @@ DROP TABLE #Pages
 
 ------------------------------------------------------------------------------------------------------
 
+DECLARE @DOIIdentifierID int
+SELECT @DOIIdentifierID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'DOI'
+
 -- Produce the final result set
 SELECT	s.SegmentID,
 		s.Title, 
@@ -134,7 +137,7 @@ SELECT	s.SegmentID,
 		) AS EndPageID,
 		*/
 		sp.AdditionalPages,
-		d.DOIName
+		ii.IdentifierValue AS DOIName
 FROM	dbo.Title t
 		INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID
 		INNER JOIN dbo.Item bi ON it.ItemID = bi.ItemID
@@ -143,7 +146,7 @@ FROM	dbo.Title t
 		INNER JOIN dbo.Item si ON ir.ChildID = si.ItemID
 		INNER JOIN dbo.Segment s ON si.ItemID = s.ItemID
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
-		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = 40
+		LEFT JOIN dbo.ItemIdentifier ii WITH (NOLOCK) ON s.ItemID = ii.ItemID AND ii.IdentifierID = @DOIIdentifierID
 		LEFT JOIN #SegmentPages sp ON s.SegmentID = sp.SegmentID
 WHERE	bi.ItemStatusID = 40
 AND		si.ItemStatusID IN (30, 40)

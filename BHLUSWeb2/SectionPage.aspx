@@ -91,12 +91,6 @@
                     </p>
                 </div>
             <% } %>
-            <% if (DOI != string.Empty) { %>
-            <h3>DOI</h3>
-            <p>
-                <a href="<%= DOI%>" title="DOI"><span><%= DOI%></span></a>
-            </p>
-            <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.Notes)) { %>
             <div class="segmentdetails"><h3>Notes</h3> <p><%: BhlSegment.Notes%></p></div>
             <% } %>
@@ -122,12 +116,13 @@
                 <h3>Identifiers</h3><p>
                     <%foreach (ItemIdentifier itemIdentifier in BhlSegment.IdentifierList) {%>
                         <%: itemIdentifier.IdentifierLabel %>: 
-                        <%if (string.Compare(itemIdentifier.IdentifierLabel, "BioStor", true) == 0) {%>
-                            <a target="blank" class="ExtLinkBrowse" style="line-height:19px" href="https://biostor.org/reference/<%: itemIdentifier.IdentifierValue%>"><span itemprop="<%: itemIdentifier.IdentifierLabel%>"><%: itemIdentifier.IdentifierValue %></span></a><br />
+                        <%if (itemIdentifier.IdentifierValueDisplay.StartsWith("http", true, System.Globalization.CultureInfo.CurrentCulture)) 
+                        {%>
+                            <a target="blank" class="ExtLinkBrowse" style="line-height:19px" href="<%: itemIdentifier.IdentifierValueDisplay%>"><span itemprop="<%: itemIdentifier.IdentifierLabel%>"><%: itemIdentifier.IdentifierValueDisplay %></span></a><br />
                         <%}
                         else
                         {%>
-                            <span itemprop="<%: itemIdentifier.IdentifierLabel%>"><%: itemIdentifier.IdentifierValue %></span><br />
+                            <span itemprop="<%: itemIdentifier.IdentifierLabel%>"><%: itemIdentifier.IdentifierValueDisplay %></span><br />
                         <%}
                     }%>
                 </p>

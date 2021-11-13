@@ -1,11 +1,15 @@
-﻿CREATE PROCEDURE dbo.IdentifierSelectAll
+﻿CREATE PROCEDURE [dbo].[IdentifierSelectAll]
 
 AS 
 
 SET NOCOUNT ON
 
 SELECT	IdentifierID,
-		IdentifierName
+		IdentifierName,
+		Prefix,
+		PatternExpression,
+		PatternDescription,
+		MaximumPerEntity
 FROM	dbo.Identifier
 ORDER BY
 		IdentifierName
@@ -20,4 +24,4 @@ ELSE BEGIN
 	RETURN -- select successful
 END
 
-
+GO

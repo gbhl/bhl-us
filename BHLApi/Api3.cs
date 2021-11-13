@@ -175,9 +175,9 @@ namespace MOBOT.BHL.API.BHLApi
                     item.ItemImagesUrl = "https://www.biodiversitylibrary.org/itemimages/" + item.ItemID.ToString();
                 }
 
-                List<Contributor> scanningInstitutions = dal.InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                List<Contributor> scanningInstitutions = dal.InstitutionSelectByBookIDAndRole(null, null, item.ItemID, "Scanning Institution");
                 if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                List<Contributor> rightsHolders = dal.InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                List<Contributor> rightsHolders = dal.InstitutionSelectByBookIDAndRole(null, null, item.ItemID, "Rights Holder");
                 if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
                 if (pages) item.Pages = this.GetItemPages(item.ItemID.ToString(), includeOcr);

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.mobot.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.mobot.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.mobot.org/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://www.mobot.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://www.mobot.org/">
-      <s:element name="PageUpdateVolume">
+      <s:element name="PageUpdateYear">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="pageIDs" type="tns:ArrayOfInt" />
-            <s:element minOccurs="0" maxOccurs="1" name="volume" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="year" type="s:string" />
             <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
           </s:sequence>
         </s:complexType>
@@ -16,6 +16,18 @@
           <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
         </s:sequence>
       </s:complexType>
+      <s:element name="PageUpdateYearResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="PageUpdateVolume">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pageIDs" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="volume" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="PageUpdateVolumeResponse">
         <s:complexType />
       </s:element>
@@ -981,7 +993,6 @@
               <s:element minOccurs="0" maxOccurs="1" name="TitleNotes" type="tns:ArrayOfTitleNote" />
               <s:element minOccurs="0" maxOccurs="1" name="TitleInstitutions" type="tns:ArrayOfInstitution" />
               <s:element minOccurs="0" maxOccurs="1" name="InstitutionName" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="DOIName" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="HasLocalContent" type="s:boolean" />
               <s:element minOccurs="1" maxOccurs="1" name="HasExternalContent" type="s:boolean" />
             </s:sequence>
@@ -1352,8 +1363,10 @@
               <s:element minOccurs="0" maxOccurs="1" name="PartNumber" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="PartName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ItemStatusName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="PaginationStatusID" nillable="true" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="PaginationStatusName" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="PaginationStatusDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="PaginationStatusUserID" nillable="true" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="PaginationUserName" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="ScanningDate" nillable="true" type="s:dateTime" />
               <s:element minOccurs="0" maxOccurs="1" name="DownloadUrl" type="s:string" />
@@ -2998,6 +3011,24 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="DOIInsert">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="doiEntityTypeId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="entityID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="doiStatusId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="doiName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="isValid" type="s:short" />
+            <s:element minOccurs="0" maxOccurs="1" name="doiBatchId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="excludeBHLDOI" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DOIInsertResponse">
+        <s:complexType />
+      </s:element>
       <s:element name="DOIUpdateStatus">
         <s:complexType>
           <s:sequence>
@@ -3075,7 +3106,7 @@
       <s:element name="DOISelectValidForTitleResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="DOISelectValidForTitleResult" type="tns:ArrayOfDOI" />
+            <s:element minOccurs="0" maxOccurs="1" name="DOISelectValidForTitleResult" type="tns:ArrayOfTitle_Identifier" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -3201,20 +3232,14 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="PageUpdateYear">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="pageIDs" type="tns:ArrayOfInt" />
-            <s:element minOccurs="0" maxOccurs="1" name="year" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="PageUpdateYearResponse">
-        <s:complexType />
-      </s:element>
     </s:schema>
   </wsdl:types>
+  <wsdl:message name="PageUpdateYearSoapIn">
+    <wsdl:part name="parameters" element="tns:PageUpdateYear" />
+  </wsdl:message>
+  <wsdl:message name="PageUpdateYearSoapOut">
+    <wsdl:part name="parameters" element="tns:PageUpdateYearResponse" />
+  </wsdl:message>
   <wsdl:message name="PageUpdateVolumeSoapIn">
     <wsdl:part name="parameters" element="tns:PageUpdateVolume" />
   </wsdl:message>
@@ -3791,6 +3816,12 @@
   <wsdl:message name="DOIInsertAutoSoapOut">
     <wsdl:part name="parameters" element="tns:DOIInsertAutoResponse" />
   </wsdl:message>
+  <wsdl:message name="DOIInsertSoapIn">
+    <wsdl:part name="parameters" element="tns:DOIInsert" />
+  </wsdl:message>
+  <wsdl:message name="DOIInsertSoapOut">
+    <wsdl:part name="parameters" element="tns:DOIInsertResponse" />
+  </wsdl:message>
   <wsdl:message name="DOIUpdateStatusSoapIn">
     <wsdl:part name="parameters" element="tns:DOIUpdateStatus" />
   </wsdl:message>
@@ -3875,13 +3906,11 @@
   <wsdl:message name="PageSelectWithoutPageNamesSoapOut">
     <wsdl:part name="parameters" element="tns:PageSelectWithoutPageNamesResponse" />
   </wsdl:message>
-  <wsdl:message name="PageUpdateYearSoapIn">
-    <wsdl:part name="parameters" element="tns:PageUpdateYear" />
-  </wsdl:message>
-  <wsdl:message name="PageUpdateYearSoapOut">
-    <wsdl:part name="parameters" element="tns:PageUpdateYearResponse" />
-  </wsdl:message>
   <wsdl:portType name="BHLWSSoap">
+    <wsdl:operation name="PageUpdateYear">
+      <wsdl:input message="tns:PageUpdateYearSoapIn" />
+      <wsdl:output message="tns:PageUpdateYearSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="PageUpdateVolume">
       <wsdl:input message="tns:PageUpdateVolumeSoapIn" />
       <wsdl:output message="tns:PageUpdateVolumeSoapOut" />
@@ -4266,6 +4295,10 @@
       <wsdl:input message="tns:DOIInsertAutoSoapIn" />
       <wsdl:output message="tns:DOIInsertAutoSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="DOIInsert">
+      <wsdl:input message="tns:DOIInsertSoapIn" />
+      <wsdl:output message="tns:DOIInsertSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="DOIUpdateStatus">
       <wsdl:input message="tns:DOIUpdateStatusSoapIn" />
       <wsdl:output message="tns:DOIUpdateStatusSoapOut" />
@@ -4322,13 +4355,18 @@
       <wsdl:input message="tns:PageSelectWithoutPageNamesSoapIn" />
       <wsdl:output message="tns:PageSelectWithoutPageNamesSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="PageUpdateYear">
-      <wsdl:input message="tns:PageUpdateYearSoapIn" />
-      <wsdl:output message="tns:PageUpdateYearSoapOut" />
-    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BHLWSSoap" type="tns:BHLWSSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PageUpdateYear">
+      <soap:operation soapAction="http://www.mobot.org/PageUpdateYear" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="PageUpdateVolume">
       <soap:operation soapAction="http://www.mobot.org/PageUpdateVolume" style="document" />
       <wsdl:input>
@@ -5193,6 +5231,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="DOIInsert">
+      <soap:operation soapAction="http://www.mobot.org/DOIInsert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="DOIUpdateStatus">
       <soap:operation soapAction="http://www.mobot.org/DOIUpdateStatus" style="document" />
       <wsdl:input>
@@ -5319,18 +5366,18 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="PageUpdateYear">
-      <soap:operation soapAction="http://www.mobot.org/PageUpdateYear" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BHLWSSoap12" type="tns:BHLWSSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PageUpdateYear">
+      <soap12:operation soapAction="http://www.mobot.org/PageUpdateYear" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="PageUpdateVolume">
       <soap12:operation soapAction="http://www.mobot.org/PageUpdateVolume" style="document" />
       <wsdl:input>
@@ -6195,6 +6242,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="DOIInsert">
+      <soap12:operation soapAction="http://www.mobot.org/DOIInsert" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="DOIUpdateStatus">
       <soap12:operation soapAction="http://www.mobot.org/DOIUpdateStatus" style="document" />
       <wsdl:input>
@@ -6314,15 +6370,6 @@
     </wsdl:operation>
     <wsdl:operation name="PageSelectWithoutPageNames">
       <soap12:operation soapAction="http://www.mobot.org/PageSelectWithoutPageNames" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="PageUpdateYear">
-      <soap12:operation soapAction="http://www.mobot.org/PageUpdateYear" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

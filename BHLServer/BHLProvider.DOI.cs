@@ -18,12 +18,12 @@ namespace MOBOT.BHL.Server
             return new DOIDAL().DOISelectQueued(null, null);
         }
 
-        public List<DOI> DOISelectValidForTitle(int titleID)
+        public List<Title_Identifier> DOISelectValidForTitle(int titleID)
         {
             return new DOIDAL().DOISelectValidForTitle(null, null, titleID);
         }
 
-        public List<DOI> DOISelectValidForSegment(int segmentID)
+        public List<ItemIdentifier> DOISelectValidForSegment(int segmentID)
         {
             return new DOIDAL().DOISelectValidForSegment(null, null, segmentID);
         }
@@ -38,8 +38,7 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectWithoutSubmittedDOI(null, null, numberToReturn);
         }
 
-        public void DOIInsert(int doiEntityTypeId, List<int> entityIds, int doiStatusId,
-            string doiBatchId, string doiName, string message, short isValid, int userId, short allowDuplicate)
+        public void DOIInsertQueue(int doiEntityTypeId, List<int> entityIds, int userId)
         {
             TransactionController transactionController = new TransactionController();
             try
@@ -49,8 +48,8 @@ namespace MOBOT.BHL.Server
                 DOIDAL dal = new DOIDAL();
                 foreach (int entityID in entityIds)
                 {
-                    dal.DOIInsert(transactionController.Connection, transactionController.Transaction, 
-                        doiEntityTypeId, entityID, doiStatusId, doiBatchId, doiName, message, isValid, userId, userId, allowDuplicate);
+                    dal.DOIInsertQueue(transactionController.Connection, transactionController.Transaction, 
+                        doiEntityTypeId, entityID, userId, userId);
                 }
 
                 transactionController.CommitTransaction();
@@ -65,6 +64,13 @@ namespace MOBOT.BHL.Server
             }
         }
 
+        public void DOIInsert(int doiEntityTypeId, int entityID, int doiStatusId, string doiName, short isValid,
+            string doiBatchId, string message, int userId, int excludeBHLDOI)
+        {
+            new DOIDAL().DOIInsert(null, null, doiEntityTypeId, entityID, doiStatusId, doiName, isValid, doiBatchId, 
+                message, userId, excludeBHLDOI);
+        }
+
         public DOI DOInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, 
             string doiBatchId, string doiName, string message, short isValid, int userId)
         {
@@ -77,14 +83,14 @@ namespace MOBOT.BHL.Server
             return new DOIDAL().DOISelectByStatus(null, null, doiStatusId, numRows, pageNum, sortColumn, sortOrder);
         }
 
-        public DOI DOISelectByTypeAndID(string doiEntityTypeName, int entityID)
+        public DOI DOISelectQueuedByTypeAndID(string doiEntityTypeName, int entityID)
         {
-            return new DOIDAL().DOISelectByTypeAndID(null, null, doiEntityTypeName, entityID);
+            return new DOIDAL().DOISelectQueuedByTypeAndID(null, null, doiEntityTypeName, entityID);
         }
 
-        public void DOIDeleteByTypeAndID(int doiEntityTypeID, int entityID)
+        public void DOIDeleteQueuedByTypeAndID(int doiEntityTypeID, int entityID)
         {
-            new DOIDAL().DOIDeleteByTypeAndID(null, null, doiEntityTypeID, entityID);
+            new DOIDAL().DOIDeleteQueuedByTypeAndID(null, null, doiEntityTypeID, entityID);
         }
 
         public DOI DOIUpdateStatus(int doiID, int doiStatusId, int? userId)

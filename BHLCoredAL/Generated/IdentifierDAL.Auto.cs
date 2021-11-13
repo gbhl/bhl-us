@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:25:16 PM
+// Generated 12/9/2021 2:41:49 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class IdentifierDAL is based upon dbo.Identifier.
@@ -139,6 +139,10 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="identifierName"></param>
 		/// <param name="identifierLabel"></param>
+		/// <param name="prefix"></param>
+		/// <param name="patternExpression"></param>
+		/// <param name="patternDescription"></param>
+		/// <param name="maximumPerEntity"></param>
 		/// <param name="display"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
@@ -148,11 +152,15 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			string identifierName,
 			string identifierLabel,
+			string prefix,
+			string patternExpression,
+			string patternDescription,
+			int maximumPerEntity,
 			short display,
 			int? creationUserID,
 			int? lastModifiedUserID)
 		{
-			return IdentifierInsertAuto( sqlConnection, sqlTransaction, "BHL", identifierName, identifierLabel, display, creationUserID, lastModifiedUserID );
+			return IdentifierInsertAuto( sqlConnection, sqlTransaction, "BHL", identifierName, identifierLabel, prefix, patternExpression, patternDescription, maximumPerEntity, display, creationUserID, lastModifiedUserID );
 		}
 		
 		/// <summary>
@@ -163,6 +171,10 @@ namespace MOBOT.BHL.DAL
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="identifierName"></param>
 		/// <param name="identifierLabel"></param>
+		/// <param name="prefix"></param>
+		/// <param name="patternExpression"></param>
+		/// <param name="patternDescription"></param>
+		/// <param name="maximumPerEntity"></param>
 		/// <param name="display"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
@@ -173,6 +185,10 @@ namespace MOBOT.BHL.DAL
 			string connectionKeyName,
 			string identifierName,
 			string identifierLabel,
+			string prefix,
+			string patternExpression,
+			string patternDescription,
+			int maximumPerEntity,
 			short display,
 			int? creationUserID,
 			int? lastModifiedUserID)
@@ -184,6 +200,10 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateOutputParameter("IdentifierID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("IdentifierName", SqlDbType.NVarChar, 40, false, identifierName),
 					CustomSqlHelper.CreateInputParameter("IdentifierLabel", SqlDbType.NVarChar, 50, false, identifierLabel),
+					CustomSqlHelper.CreateInputParameter("Prefix", SqlDbType.NVarChar, 100, false, prefix),
+					CustomSqlHelper.CreateInputParameter("PatternExpression", SqlDbType.NVarChar, 200, false, patternExpression),
+					CustomSqlHelper.CreateInputParameter("PatternDescription", SqlDbType.NVarChar, 500, false, patternDescription),
+					CustomSqlHelper.CreateInputParameter("MaximumPerEntity", SqlDbType.Int, null, false, maximumPerEntity),
 					CustomSqlHelper.CreateInputParameter("Display", SqlDbType.SmallInt, null, false, display),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
@@ -238,6 +258,10 @@ namespace MOBOT.BHL.DAL
 			return IdentifierInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.IdentifierName,
 				value.IdentifierLabel,
+				value.Prefix,
+				value.PatternExpression,
+				value.PatternDescription,
+				value.MaximumPerEntity,
 				value.Display,
 				value.CreationUserID,
 				value.LastModifiedUserID);
@@ -313,6 +337,10 @@ namespace MOBOT.BHL.DAL
 		/// <param name="identifierID"></param>
 		/// <param name="identifierName"></param>
 		/// <param name="identifierLabel"></param>
+		/// <param name="prefix"></param>
+		/// <param name="patternExpression"></param>
+		/// <param name="patternDescription"></param>
+		/// <param name="maximumPerEntity"></param>
 		/// <param name="display"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type Identifier.</returns>
@@ -322,10 +350,14 @@ namespace MOBOT.BHL.DAL
 			int identifierID,
 			string identifierName,
 			string identifierLabel,
+			string prefix,
+			string patternExpression,
+			string patternDescription,
+			int maximumPerEntity,
 			short display,
 			int? lastModifiedUserID)
 		{
-			return IdentifierUpdateAuto( sqlConnection, sqlTransaction, "BHL", identifierID, identifierName, identifierLabel, display, lastModifiedUserID);
+			return IdentifierUpdateAuto( sqlConnection, sqlTransaction, "BHL", identifierID, identifierName, identifierLabel, prefix, patternExpression, patternDescription, maximumPerEntity, display, lastModifiedUserID);
 		}
 		
 		/// <summary>
@@ -337,6 +369,10 @@ namespace MOBOT.BHL.DAL
 		/// <param name="identifierID"></param>
 		/// <param name="identifierName"></param>
 		/// <param name="identifierLabel"></param>
+		/// <param name="prefix"></param>
+		/// <param name="patternExpression"></param>
+		/// <param name="patternDescription"></param>
+		/// <param name="maximumPerEntity"></param>
 		/// <param name="display"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type Identifier.</returns>
@@ -347,6 +383,10 @@ namespace MOBOT.BHL.DAL
 			int identifierID,
 			string identifierName,
 			string identifierLabel,
+			string prefix,
+			string patternExpression,
+			string patternDescription,
+			int maximumPerEntity,
 			short display,
 			int? lastModifiedUserID)
 		{
@@ -357,6 +397,10 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateInputParameter("IdentifierID", SqlDbType.Int, null, false, identifierID),
 					CustomSqlHelper.CreateInputParameter("IdentifierName", SqlDbType.NVarChar, 40, false, identifierName),
 					CustomSqlHelper.CreateInputParameter("IdentifierLabel", SqlDbType.NVarChar, 50, false, identifierLabel),
+					CustomSqlHelper.CreateInputParameter("Prefix", SqlDbType.NVarChar, 100, false, prefix),
+					CustomSqlHelper.CreateInputParameter("PatternExpression", SqlDbType.NVarChar, 200, false, patternExpression),
+					CustomSqlHelper.CreateInputParameter("PatternDescription", SqlDbType.NVarChar, 500, false, patternDescription),
+					CustomSqlHelper.CreateInputParameter("MaximumPerEntity", SqlDbType.Int, null, false, maximumPerEntity),
 					CustomSqlHelper.CreateInputParameter("Display", SqlDbType.SmallInt, null, false, display),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
@@ -411,6 +455,10 @@ namespace MOBOT.BHL.DAL
 				value.IdentifierID,
 				value.IdentifierName,
 				value.IdentifierLabel,
+				value.Prefix,
+				value.PatternExpression,
+				value.PatternDescription,
+				value.MaximumPerEntity,
 				value.Display,
 				value.LastModifiedUserID);
 		}
@@ -459,6 +507,10 @@ namespace MOBOT.BHL.DAL
 				Identifier returnValue = IdentifierInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.IdentifierName,
 						value.IdentifierLabel,
+						value.Prefix,
+						value.PatternExpression,
+						value.PatternDescription,
+						value.MaximumPerEntity,
 						value.Display,
 						value.CreationUserID,
 						value.LastModifiedUserID);
@@ -490,6 +542,10 @@ namespace MOBOT.BHL.DAL
 					value.IdentifierID,
 						value.IdentifierName,
 						value.IdentifierLabel,
+						value.Prefix,
+						value.PatternExpression,
+						value.PatternDescription,
+						value.MaximumPerEntity,
 						value.Display,
 						value.LastModifiedUserID);
 					

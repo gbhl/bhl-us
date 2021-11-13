@@ -47,8 +47,11 @@ namespace MOBOT.BHL.AdminWeb
                 ddlStatusView.Items.Add(new ListItem("", "0"));
                 foreach (DOIStatus status in statuses)
                 {
-                    ListItem li = new ListItem(status.DOIStatusName, status.DOIStatusID.ToString());
-                    ddlStatusView.Items.Add(li);
+                    if (status.DOIStatusID.ToString() != DOISTATUS_EXTERNAL)
+                    {
+                        ListItem li = new ListItem(status.DOIStatusName, status.DOIStatusID.ToString());
+                        ddlStatusView.Items.Add(li);
+                    }
                 }
             }
 

@@ -1128,11 +1128,11 @@
     <None Include="dbo\Stored Procedures\AuthorSelectByNameLikePaged.sql" />
     <None Include="dbo\Stored Procedures\DOISelectQueued.sql" />
     <None Include="dbo\Stored Procedures\DOIEntityTypeSelectAll.sql" />
-    <None Include="dbo\Stored Procedures\DOISelectByTypeAndID.sql" />
-    <None Include="dbo\Stored Procedures\DOIDeleteByTypeAndID.sql" />
+    <None Include="dbo\Stored Procedures\DOISelectQueuedByTypeAndID.sql" />
+    <None Include="dbo\Stored Procedures\DOIDeleteQueuedByTypeAndID.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectWithoutDOIByTitleID.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectWithoutDOIByItemID.sql" />
-    <None Include="dbo\Stored Procedures\DOIInsert.sql" />
+    <None Include="dbo\Stored Procedures\DOIInsertQueue.sql" />
     <None Include="dbo\Functions\fnAuthorIDStringForSegment.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectByTitleID.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectByBarCode.sql" />
@@ -1166,6 +1166,10 @@
     <None Include="dbo\Stored Procedures\PageSelectByBookID.sql" />
     <None Include="dbo\Stored Procedures\PageSummarySegmentSelectAllByItemID.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectPagination.sql" />
+    <None Include="dbo\Stored Procedures\ApiInstitutionSelectByBookIDAndRole.sql" />
+    <None Include="dbo\Stored Procedures\Title_IdentifierSelectByNameAndID.sql" />
+    <None Include="dbo\Stored Procedures\ItemIdentifierSelectByNameAndID.sql" />
+    <None Include="audit\Stored Procedures\AuditBasicSelectForDOIQueue.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1547,5 +1551,9 @@
     <None Include="import\Stored Procedures\ImportRecordContributorSelectAuto.sql" />
     <None Include="import\Stored Procedures\ImportRecordContributorUpdateAuto.sql" />
     <Build Include="dbo\Functions\fnInstitutionStringForItem.sql" />
+    <Build Include="dbo\Stored Procedures\DOIDelete.sql" />
+    <Build Include="dbo\Stored Procedures\DOIInsert.sql" />
+    <Build Include="dbo\Stored Procedures\DOIUpdate.sql" />
+    <Build Include="dbo\Synonyms\BHLImportDOIHarvestLog.sql" />
   </ItemGroup>
 </Project>

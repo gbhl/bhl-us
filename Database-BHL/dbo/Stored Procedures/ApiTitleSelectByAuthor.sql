@@ -6,6 +6,9 @@ AS
 
 SET NOCOUNT ON
 
+DECLARE @IdentifierIDDOI int
+SELECT @IdentifierIDDOI = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'DOI'
+
 DECLARE @DOIEntityTypeTitleID int
 SELECT @DOIEntityTypeTitleID = DOIEntityTypeID FROM dbo.DOIEntityType WITH (NOLOCK) WHERE DOIEntityTypeName = 'Title'
 
@@ -30,14 +33,13 @@ SELECT DISTINCT
 		t.[OriginalCatalogingSource],
 		t.[EditionStatement],
 		t.[CurrentPublicationFrequency],
-		d.[DOIName]
+		ti.IdentifierValue AS [DOIName]
 FROM	dbo.TitleAuthor ta 
 		INNER JOIN dbo.Title t ON ta.TitleID = t.TitleID
 		LEFT JOIN dbo.BibliographicLevel b ON t.BibliographicLevelID = b.BibliographicLevelID
 		LEFT JOIN dbo.MaterialType m ON t.MaterialTypeID = m.MaterialTypeID
-		LEFT JOIN [dbo].[DOI] d
-			ON t.TitleID = d.EntityID
-			AND d.IsValid = 1
-			AND d.DOIEntityTypeID = @DOIEntityTypeTitleID
+		LEFT JOIN dbo.Title_Identifier ti ON t.TitleID = ti.TitleID AND ti.IdentifierID = @IdentifierIDDOI
 WHERE	ta.AuthorID = @AuthorID
 AND		t.PublishReady = 1
+
+GO

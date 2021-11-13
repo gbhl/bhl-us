@@ -11,7 +11,12 @@
     <Columns>
         <asp:BoundField DataField="CreationDate" HeaderText="Request Date" HeaderStyle-Wrap="false" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="true" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Left" HeaderStyle-VerticalAlign="Bottom" />
         <asp:HyperLinkField DataTextField="PdfID" HeaderText="PDF" HeaderStyle-Wrap="false" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="Left" HeaderStyle-VerticalAlign="Bottom" DataNavigateUrlFormatString="PdfEdit.aspx?id={0}" DataNavigateUrlFields="PdfID" />
-        <asp:HyperLinkField DataTextField="ItemID" HeaderText="Item" HeaderStyle-Wrap="false" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="Left" HeaderStyle-VerticalAlign="Bottom" DataNavigateUrlFormatString="ItemEdit.aspx?id={0}" DataNavigateUrlFields="ItemID" />
+        <asp:TemplateField HeaderText="Item" HeaderStyle-Wrap="false" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="Left" HeaderStyle-VerticalAlign="Bottom">
+            <ItemTemplate>
+                <asp:hyperlink runat="server" navigateurl='<%# Eval("ItemID", "ItemEdit.aspx?id={0}") %>' text='<%# Eval("ItemID") %>' visible='<%# (Eval("ItemTypeName").ToString().ToLower() == "book") ? true : false %>' />
+                <asp:hyperlink runat="server" navigateurl='<%# Eval("ItemID", "SegmentEdit.aspx?id={0}") %>' text='<%# Eval("ItemID") %>' visible='<%# (Eval("ItemTypeName").ToString().ToLower() == "segment") ? true : false %>' />
+            </ItemTemplate>
+        </asp:TemplateField>
         <asp:BoundField DataField="EmailAddress" HeaderText="Email" HeaderStyle-Wrap="false" ItemStyle-VerticalAlign="top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" HeaderStyle-VerticalAlign="Bottom" />
         <asp:BoundField DataField="NumberOfPages" HeaderText="Total<br>Pages" HtmlEncode="false" HeaderStyle-Wrap="false" ItemStyle-VerticalAlign="top" ItemStyle-HorizontalAlign="Right" HeaderStyle-VerticalAlign="Bottom" HeaderStyle-HorizontalAlign="Right" />
         <asp:TemplateField>

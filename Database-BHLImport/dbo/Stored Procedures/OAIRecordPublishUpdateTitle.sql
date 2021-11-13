@@ -167,26 +167,12 @@ BEGIN
 	END
 				
 	-- Replace the DOI record
-	DECLARE @OriginalDOIName nvarchar(200)
-	SELECT @OriginalDOIName = DOIName FROM dbo.BHLDOI WHERE DOIEntityTypeID = 10 AND EntityID = @ProductionTitleID
-	IF @OriginalDOIName IS NOT NULL
-	BEGIN
-		DELETE FROM dbo.BHLDOI WHERE DOIEntityTypeID = 10 AND EntityID = @ProductionTitleID
-	END
+	DECLARE @DOI nvarchar(50)
+	SELECT	@DOI = Doi 
+	FROM	dbo.OAIRecord
+	WHERE	OAIRecordID = @OAIRecordID AND Doi <> ''
 
-	INSERT dbo.BHLDOI (DOIEntityTypeID, EntityID, DOIStatusID, DOIName, StatusDate, IsValid)
-	SELECT 10, @ProductionTitleID, 200, Doi, GETDATE(), 1 FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID AND Doi <> ''
-
-	IF @OriginalDOIName IS NOT NULL
-	BEGIN
-		-- If an existing DOI has been changed, log the before/after DOI values
-		INSERT dbo.DOIHarvestLog (HarvesterName, DOIEntityTypeID, EntityID, OriginalDOIName, NewDOIName)
-		SELECT	'BHLOAIHarvester', 10, @ProductionTitleID, @OriginalDOIName, DOI 
-		FROM	dbo.OAIRecord 
-		WHERE	OAIRecordID = @OAIRecordID 
-		AND		DOI <> ''
-		AND		DOI <> @OriginalDOIName
-	END
+	exec dbo.BHLDOIUpdate @DOIEntityTypeID = 10, @EntityID = @ProductionTitleID, @DOIStatusID = 200, @DOIName = @DOI, @IsValid = 1, @ExcludeBHLDOI = 1
 				
 	-- Replace the TitleAssociation records if none have been added/updated by a user
 	IF NOT EXISTS(	SELECT	TitleAssociationID
@@ -240,3 +226,5 @@ BEGIN
 END
 
 END 
+
+GO

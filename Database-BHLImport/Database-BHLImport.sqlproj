@@ -444,6 +444,9 @@
     <None Include="dbo\Tables\BSSegmentStatus.sql" />
     <None Include="Data\dbo.BSSegmentStatus.Table.sql" />
     <None Include="dbo\Tables\DOIHarvestLog.sql" />
+    <None Include="dbo\Synonyms\BHLDOIDelete.sql" />
+    <None Include="dbo\Synonyms\BHLDOIInsert.sql" />
+    <None Include="dbo\Synonyms\BHLDOIUpdate.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />

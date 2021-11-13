@@ -10,7 +10,6 @@ namespace MOBOT.BHL.Web2
         public string Barcode { get; set; }
         public string Genre { get; set; }
         public string Material { get; set; }
-        public string DOI { get; set; }
         public string DDC { get; set; }
         public string LanguageName { get; set; }
         public string LocalLibraryUrl { get; set; }
@@ -46,9 +45,6 @@ namespace MOBOT.BHL.Web2
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            PageSummaryView pageSummary;
-            DOI = string.Empty;
-
             // Parse TitleID
             int titleId;
             if (!int.TryParse((string)RouteData.Values["titleid"], out titleId))
@@ -133,9 +129,6 @@ namespace MOBOT.BHL.Web2
 
             MaterialType materialType = bhlProvider.MaterialTypeSelect(BhlTitle.MaterialTypeID ?? 0);
             Material = (materialType == null) ? string.Empty : materialType.MaterialTypeLabel;
-
-            List<DOI> dois = bhlProvider.DOISelectValidForTitle(titleId);
-            if (dois.Count > 0) DOI = ConfigurationManager.AppSettings["DOIResolverURL"] + dois[0].DOIName;
 
             main.Page.Title = string.Format("Details - {0} - Biodiversity Heritage Library", BhlTitle.FullTitle);
 

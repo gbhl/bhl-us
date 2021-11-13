@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE import.ImportRecordUpdateProduction
+﻿CREATE PROCEDURE [import].[ImportRecordUpdateProduction]
 
 @ImportRecordID int,
 @UserID int
@@ -237,7 +237,7 @@ BEGIN TRY
 
 	UPDATE	ir
 	SET		ParentID = @BookItemID,
-			SequenceOrder = (SELECT ISNULL(MAX(SequenceOrder), 0) + 1 FROM dbo.ItemRelationship WHERE ParentID = @BookItemID),
+			SequenceOrder = (SELECT MAX(SequenceOrder) + 1 FROM dbo.ItemRelationship WHERE ParentID = @BookItemID),
 			LastModifiedUserID = @UserID,
 			LastModifiedDate = GETDATE()
 	FROM	dbo.ItemRelationship ir
@@ -343,19 +343,19 @@ BEGIN TRY
 	FROM	import.ImportRecord WHERE ImportRecordID = @ImportRecordID AND Wikidata <> '' AND Wikidata <> 'NULL'
 
 	-- Delete existing DOI record and insert new one, unless the new value is blank (unchanged)
-	DELETE	d
-	FROM	import.ImportRecord r INNER JOIN dbo.DOI d ON r.SegmentID = d.EntityID
-	WHERE	r.ImportRecordID = @ImportRecordID
-	AND		d.DOIEntityTypeID = @DOIEntityTypeSegmentID
-	AND		d.DOIStatusID = @DOIStatusExternalID
-	AND		r.DOI <> ''
-
-	INSERT	dbo.DOI (DOIEntityTypeID, EntityID, DOIStatusID, DOIName, StatusDate, IsValid, CreationUserID, LastModifiedUserID)
-	SELECT	@DOIEntityTypeSegmentID, @SegmentID, @DOIStatusExternalID, DOI, GETDATE(), 1, @UserID, @UserID
+	DECLARE @DOIName nvarchar(50)
+	SELECT	@DOIName = DOI 
 	FROM	import.ImportRecord 
-	WHERE	ImportRecordID = @ImportRecordID 
-	AND		DOI <> '' AND DOI <> 'NULL'
-	AND		DOI NOT LIKE '%10.5962%' -- Do not add BHL DOIs via batch upload
+	WHERE	ImportRecordID = @ImportRecordID AND DOI <> ''
+
+	IF (@DOIName IS NOT NULL)
+	BEGIN
+		exec dbo.DOIDelete @DOIEntityTypeSegmentID, @SegmentID, @ExcludeBHLDOI = 1 -- only delete non-BHL DOIs
+	END
+	IF (@DOIName IS NOT NULL AND @DOIName <> 'NULL')
+	BEGIN
+		exec dbo.DOIInsert @DOIEntityTypeSegmentID, @SegmentID, @DOIStatusExternalID, @DOIName, @IsValid = 1, @ExcludeBHLDOI = 1
+	END
 
 	-- Add updated ItemAuthor records to production					
 	IF EXISTS(SELECT ImportRecordCreatorID FROM import.ImportRecordCreator WHERE ImportRecordID = @ImportRecordID)
@@ -427,8 +427,8 @@ BEGIN CATCH
 	WHERE	ImportRecordID = @ImportRecordID
 
 	-- Log the error
-	INSERT	import.ImportRecordErrorLog (ImportRecordID, ErrorDate, ErrorMessage, Severity, CreationUserID, LastModifiedUserID)
-	VALUES	(@ImportRecordID, GETDATE(), @ErrProc + ' (' + CONVERT(NVARCHAR(5), @ErrLine) + '): ' + @ErrMsg, 'Error', @UserID, @UserID)
+	INSERT	import.ImportRecordErrorLog (ImportRecordID, ErrorDate, ErrorMessage, CreationUserID, LastModifiedUserID)
+	VALUES	(@ImportRecordID, GETDATE(), @ErrProc + ' (' + CONVERT(NVARCHAR(5), @ErrLine) + '): ' + @ErrMsg, @UserID, @UserID)
 END CATCH
 
 END

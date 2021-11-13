@@ -142,7 +142,6 @@
     <add key="TweetMessage" value="{0} @BioDivLibrary" />
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
     <add key="ItemTextLocation" value="{0}\{1}\{2}" />
-    <add key="DOIResolverURL" value="https://doi.org/"/>
 
     <add key="TwitterConsumerKey" value="your twitter consumer key goes here"/>
     <add key="TwitterConsumerSecret" value="your twitter consumer secret goes here"/>
