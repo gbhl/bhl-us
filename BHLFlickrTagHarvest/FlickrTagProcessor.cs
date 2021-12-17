@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
-using BHLFlickrTagHarvest.BHLWS;
-using BHLFlickrTagHarvest.BHLImportWS;
 using System.Threading;
+using MOBOT.BHLImport.Server;
+using MOBOT.BHLImport.DataObjects;
+using MOBOT.BHL.Server;
+using MOBOT.BHL.DataObjects;
 
 namespace BHLFlickrTagHarvest
 {
@@ -51,8 +53,8 @@ namespace BHLFlickrTagHarvest
         {
             try
             {
-                PageFlickr[] pages = new BHLWSSoapClient().PageFlickrSelectAll();
-                LogMessage(string.Format("Found {0} pages to process", pages.Length));
+                List<PageFlickr> pages = new BHLProvider().PageFlickrSelectAll();
+                LogMessage(string.Format("Found {0} pages to process", pages.Count));
                 int numRequests = 0;
                 DateTime dtStart = DateTime.Now;
                 foreach (PageFlickr page in pages)
@@ -79,7 +81,7 @@ namespace BHLFlickrTagHarvest
 
         private void HarvestPage(PageFlickr page)
         {
-            BHLImportWSSoapClient bhlImportWSClient = new BHLImportWSSoapClient();
+            BHLImportProvider bhlImportService = new BHLImportProvider();
             string photoID = string.Empty;
 
             try
@@ -92,16 +94,16 @@ namespace BHLFlickrTagHarvest
                 List<PageFlickrNote> flickrNotes = this.GetFlickrNotes(page.PageID, photoID, photoInfo);
 
                 // Get the tags and notes from the database for the current page
-                PageFlickrTag[] bhlTags = bhlImportWSClient.PageFlickrTagSelectForPageID(page.PageID);
-                PageFlickrNote[] bhlNotes = bhlImportWSClient.PageFlickrNoteSelectForPageID(page.PageID);
+                List<PageFlickrTag> bhlTags = bhlImportService.PageFlickrTagSelectForPageID(page.PageID);
+                List<PageFlickrNote> bhlNotes = bhlImportService.PageFlickrNoteSelectForPageID(page.PageID);
 
                 // Merge the tags and notes in the database with the new lists from Flickr
-                List<PageFlickrTag> updateTags = this.CompareTags(new List<PageFlickrTag>(bhlTags), flickrTags);
-                List<PageFlickrNote> updateNotes = this.CompareNotes(new List<PageFlickrNote>(bhlNotes), flickrNotes);
+                List<PageFlickrTag> updateTags = this.CompareTags(bhlTags, flickrTags);
+                List<PageFlickrNote> updateNotes = this.CompareNotes(bhlNotes, flickrNotes);
 
                 // Update the database with the new sets of tags and notes for the page
-                bhlImportWSClient.PageFlickrTagUpdateForPageID(page.PageID, updateTags.ToArray());
-                bhlImportWSClient.PageFlickrNoteUpdateForPageID(page.PageID, updateNotes.ToArray());
+                bhlImportService.PageFlickrTagUpdateForPageID(page.PageID, updateTags.ToArray());
+                bhlImportService.PageFlickrNoteUpdateForPageID(page.PageID, updateNotes.ToArray());
             }
             catch (FlickrApiException fex)
             {
