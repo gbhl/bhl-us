@@ -184,8 +184,9 @@ namespace MOBOT.BHL.AdminWeb
 
                 itemIdLabel.Text = book.BookID.ToString();
                 FlickrImage.Visible = book.HasFlickrImages;
-                barcodeLabel.Text = book.BarCode;
-                marcItemIDTextBox.Text = book.MARCItemID;
+                sourceLabel.Text = book.SourceName;
+                sourceIDLabel.Text = book.BarCode;
+                hidMarcItemID.Value = book.MARCItemID;
                 callNumberTextBox.Text = book.CallNumber;
                 volumeTextBox.Text = book.Volume;
                 itemDescriptionTextBox.Text = book.ItemDescription;
@@ -1231,9 +1232,9 @@ namespace MOBOT.BHL.AdminWeb
             {
                 search(itemId, null);
             }
-            else if (barCodeTextBox.Text.Trim().Length > 0)
+            else if (sourceIDTextBox.Text.Trim().Length > 0)
             {
-                search(null, barCodeTextBox.Text.Trim());
+                search(null, sourceIDTextBox.Text.Trim());
             }
         }
 
@@ -1248,7 +1249,7 @@ namespace MOBOT.BHL.AdminWeb
 
                 // Gather up data on form
                 book.RedirectBookID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
-				book.MARCItemID = marcItemIDTextBox.Text.Trim();
+				book.MARCItemID = hidMarcItemID.Value;
 				book.CallNumber = callNumberTextBox.Text.Trim();
 				book.Volume = volumeTextBox.Text.Trim();
 				book.LanguageCode = ( ddlLang.SelectedValue.Length == 0 ? null : ddlLang.SelectedValue );

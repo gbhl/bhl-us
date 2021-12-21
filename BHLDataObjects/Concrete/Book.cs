@@ -58,6 +58,7 @@ namespace MOBOT.BHL.DataObjects
         private string _fileRootFolder;
         private string _itemDescription;
         private int _itemSourceID;
+        private string _sourceName;
         private int? _vaultID;
         private string _note;
 
@@ -219,6 +220,12 @@ namespace MOBOT.BHL.DataObjects
         {
             get { return this._itemSourceID; }
             set { this._itemSourceID = value; }
+        }
+
+        public string SourceName
+        {
+            get { return this._sourceName; }
+            set { this._sourceName = value; }
         }
 
         public int? VaultID
@@ -606,6 +613,11 @@ namespace MOBOT.BHL.DataObjects
                     case "ItemSourceID":
                         {
                             _itemSourceID = Utility.ZeroIfNull(column.Value);
+                            break;
+                        }
+                    case "SourceName":
+                        {
+                            _sourceName = Utility.EmptyIfNull(column.Value);
                             break;
                         }
                     case "VaultID":

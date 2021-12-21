@@ -203,8 +203,8 @@
 				<asp:TextBox ID="itemIdTextBox" runat="server"></asp:TextBox>
 			</td>
 			<td style="padding-left: 10px">
-				Barcode:
-				<asp:TextBox ID="barCodeTextBox" runat="server"></asp:TextBox>
+				Source ID (ex. Internet Archive ID):
+				<asp:TextBox ID="sourceIDTextBox" runat="server"></asp:TextBox>
 			</td>
 			<td style="padding-left: 10px">
 				<asp:Button ID="searchButton" runat="server" Text="Search" OnClick="searchButton_Click" />
@@ -228,10 +228,18 @@
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">
-					Barcode:
+					Source:
 				</td>
 				<td>
-					<asp:Label ID="barcodeLabel" runat="server" ForeColor="Blue"></asp:Label>
+					<asp:Label ID="sourceLabel" runat="server" ForeColor="Blue"></asp:Label>
+				</td>
+			</tr>
+			<tr>
+				<td style="white-space: nowrap" align="right" class="dataHeader">
+					Source ID:
+				</td>
+				<td>
+					<asp:Label ID="sourceIDLabel" runat="server" ForeColor="Blue"></asp:Label>
 				</td>
 			</tr>
             <tr>
@@ -240,14 +248,6 @@
                     <asp:HyperLink ID="hypMarc" runat="server" NavigateUrl="#" Text="View Original MARC Record" Visible="false"></asp:HyperLink>
                 </td>
             </tr>
-			<tr>
-				<td style="white-space: nowrap" align="right" class="dataHeader">
-					Marc Item ID:
-				</td>
-				<td>
-					<asp:TextBox ID="marcItemIDTextBox" runat="server" MaxLength="200" Width="400px"></asp:TextBox>
-				</td>
-			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">
 					Call Number:
@@ -706,6 +706,7 @@
 		<br />
 		<asp:Button ID="saveButton" runat="server" ClientIDMode="Static" OnClick="saveButton_Click" Text="Save" />
 		<div style="float:right;"><mobot:EditHistoryControl runat="server" id="editHistoryControl" /></div>
+		<asp:HiddenField ID="hidMarcItemID" runat="server" />
 	</div>
 	<div id="overlay" class="overlay">
 	    <div style="top:900px">
