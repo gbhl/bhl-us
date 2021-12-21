@@ -560,7 +560,14 @@ BEGIN TRY
 
 	-- Get publication details
 	UPDATE	#tmpTitle
-	SET		PublicationDetails = SUBSTRING(ISNULL(Datafield_260_a, '') + ISNULL(Datafield_260_b, '') + ISNULL(Datafield_260_c, ''), 1, 255)
+	SET		PublicationDetails = RTRIM(
+				SUBSTRING(
+					ISNULL(Datafield_260_a, '') + CASE WHEN LEN(Datafield_260_a) > 0 THEN ' ' ELSE '' END + 
+					ISNULL(Datafield_260_b, '') + CASE WHEN LEN(Datafield_260_b) > 0 THEN ' ' ELSE '' END + 
+					ISNULL(Datafield_260_c, ''),
+					1, 255
+				)
+			)
 
 	-- Get the call number (first check the 050 record, then the 090... use the 050 value if both exist)
 	UPDATE	#tmpTitle

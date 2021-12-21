@@ -1820,7 +1820,9 @@ namespace MOBOT.BHL.AdminWeb
 				title.CallNumber = callNumberTextBox.Text.Trim();
 				title.LanguageCode = ( ddlLang.SelectedValue.Length == 0 ? null : ddlLang.SelectedValue );
 				title.TitleDescription = descTextBox.Text.Trim();
-				title.PublicationDetails = publicationPlaceTextBox.Text.Trim() + publisherNameTextBox.Text.Trim() + publicationDateTextBox.Text.Trim();
+				title.PublicationDetails = publicationPlaceTextBox.Text.Trim() + (publicationPlaceTextBox.Text.Trim().Length > 0 ? " " : "") + 
+                    publisherNameTextBox.Text.Trim() + (publisherNameTextBox.Text.Trim().Length > 0 ? " " : "") +
+                    publicationDateTextBox.Text.Trim();
                 title.Datafield_260_a = publicationPlaceTextBox.Text.Trim();
                 title.Datafield_260_b = publisherNameTextBox.Text.Trim();
                 title.Datafield_260_c = publicationDateTextBox.Text.Trim();
