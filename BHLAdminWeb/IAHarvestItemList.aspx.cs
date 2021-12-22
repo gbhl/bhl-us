@@ -4,6 +4,7 @@ using MOBOT.BHLImport.Server;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -136,6 +137,8 @@ namespace MOBOT.BHL.AdminWeb
         private const string ITEMSTATUS_MARCMISSINGAPPROVED = "81";
         private const string ITEMSTATUS_MARCMISSINGONHOLD = "82";
         private const string ITEMSTATUS_XMLERROR = "90";
+        private const string ITEMSTATUS_IAERRORRESTRICTED = "95";
+        private const string ITEMSTATUS_IAERRORCANNOTOCR = "96";
         private const string ITEMSTATUS_INAPPROPRIATE = "97";
         private const string ITEMSTATUS_IAERROR = "98";
         private const string ITEMSTATUS_ERROR = "99";
@@ -157,11 +160,32 @@ namespace MOBOT.BHL.AdminWeb
                     break;
                 case ITEMSTATUS_NEW:
                     ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(ITEMSTATUS_INAPPROPRIATE).Text, ITEMSTATUS_INAPPROPRIATE));
+
+                    // Sys Admins can set New items to one of the Error statuses.  If something is wrong with the metadata files, the item can get "stuck" here.
+                    if (Helper.IsUserAuthorized(new HttpRequestWrapper(Request), Helper.SecurityRole.BHLAdminSysAdmin))
+                    {
+                        ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(ITEMSTATUS_IAERROR).Text, ITEMSTATUS_IAERROR));
+                        ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(ITEMSTATUS_IAERRORRESTRICTED).Text, ITEMSTATUS_IAERRORRESTRICTED));
+                        ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(ITEMSTATUS_IAERRORCANNOTOCR).Text, ITEMSTATUS_IAERRORCANNOTOCR));
+                    }
                     break;
                 case ITEMSTATUS_PENDINGAPPROVAL:
+                    ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(ITEMSTATUS_NEW).Text, ITEMSTATUS_NEW));
+                    ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(ITEMSTATUS_INAPPROPRIATE).Text, ITEMSTATUS_INAPPROPRIATE));
+
+                    // Sys Admins can set Pending Approval items to one of the Error statuses.  If something is wrong with the metadata files, the item can get "stuck" here.
+                    if (Helper.IsUserAuthorized(new HttpRequestWrapper(Request), Helper.SecurityRole.BHLAdminSysAdmin))
+                    {
+                        ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(ITEMSTATUS_IAERROR).Text, ITEMSTATUS_IAERROR));
+                        ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(ITEMSTATUS_IAERRORRESTRICTED).Text, ITEMSTATUS_IAERRORRESTRICTED));
+                        ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(ITEMSTATUS_IAERRORCANNOTOCR).Text, ITEMSTATUS_IAERRORCANNOTOCR));
+                    }
+                    break;
                 case ITEMSTATUS_APPROVED:
                 case ITEMSTATUS_XMLERROR:
                 case ITEMSTATUS_IAERROR:
+                case ITEMSTATUS_IAERRORCANNOTOCR:
+                case ITEMSTATUS_IAERRORRESTRICTED:
                 case ITEMSTATUS_ERROR:
                 default:
                     ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(ITEMSTATUS_NEW).Text, ITEMSTATUS_NEW));

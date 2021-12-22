@@ -48,6 +48,7 @@ BEGIN TRY
 					ON ic.CollectionID = c.CollectionID
 		WHERE	c.CollectionName LIKE '%lendinglibrary%'
 		OR		c.CollectionName LIKE '%printdisabled%'
+		OR		c.CollectionName LIKE '%inlibrary%'
 		OR		c.CollectionName LIKE '%browserlending%'
 		OR		c.CollectionName LIKE '%stream_only%'
 	)
