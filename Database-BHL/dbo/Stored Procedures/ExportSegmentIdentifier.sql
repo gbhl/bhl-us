@@ -17,6 +17,7 @@ FROM	dbo.Segment s WITH (NOLOCK)
 		INNER JOIN dbo.ItemIdentifier ii WITH (NOLOCK) ON i.ItemID = ii.ItemID
 		INNER JOIN dbo.Identifier id WITH (NOLOCK) ON ii.IdentifierID = id.IdentifierID
 		INNER JOIN dbo.SearchCatalogSegment scs WITH (NOLOCK) ON s.SegmentID = scs.SegmentID
+WHERE	id.IdentifierName <> 'DOI'
 ORDER BY
 		s.SegmentID, 
 		id.IdentifierName

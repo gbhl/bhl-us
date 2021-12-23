@@ -17,7 +17,7 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
     <div class="col-md-12">
-        <p><h5>The following items will be added to the DOI assignment queue.  Please click the "Confirm" button to confirm.</h5></p>
+        <p><h5>The following items will be added to the DOI queue.  Please click the "Confirm" button to confirm.</h5></p>
     </div>
 
     if (Model.Titles.Count > 0)
@@ -32,7 +32,7 @@
             <select size="5" style="width:100%;overflow:auto">
                 @foreach (var title in Model.Titles)
                 {
-                    <option disabled>@title.Split('|')[0] - @title.Split('|')[1]</option>
+                    <option disabled>@title.Split('|')[0] - @title.Split('|')[1] - @title.Split('|')[2]</option>
                 }
             </select>
         </p>
@@ -49,7 +49,7 @@
             <select size="5" style="width:100%;overflow:auto">
                 @foreach (var segment in Model.Segments)
                 {
-                    <option disabled>@segment.Split('|')[0] - @segment.Split('|')[1]</option>
+                    <option disabled>@segment.Split('|')[0] - @segment.Split('|')[1] - @segment.Split('|')[2]</option>
                 }
             </select>
         </p>

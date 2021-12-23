@@ -1213,10 +1213,10 @@ namespace MOBOT.BHL.Server
                         AddGoogleScholarTag(tags, "citation_" + identifier.IdentifierName.ToLower(), identifier.IdentifierValue);
                     }
 
-                    List<DOI> dois = service.DOISelectValidForSegment(segmentID);
-                    foreach (DOI doi in dois)
+                    List<ItemIdentifier> dois = service.DOISelectValidForSegment(segmentID);
+                    foreach (ItemIdentifier doi in dois)
                     {
-                        AddGoogleScholarTag(tags, "citation_doi", doi.DOIName);
+                        AddGoogleScholarTag(tags, "citation_doi", doi.IdentifierValue);
                     }
 
                     if (segment.PageList.Count > 0 && ConfigurationManager.AppSettings["UsePregeneratedPDFs"].ToLower() == "true")

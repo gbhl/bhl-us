@@ -7,7 +7,11 @@ AS
 SET NOCOUNT ON
 
 SELECT	id.IdentifierID,
-		id.IdentifierName
+		id.IdentifierName,
+		Prefix,
+		PatternExpression,
+		PatternDescription,
+		MaximumPerEntity
 FROM	dbo.Identifier id
 		INNER JOIN dbo.IdentifierIDType iit ON id.IdentifierID = iit.IdentifierID
 		INNER JOIN dbo.IDType idt ON iit.IDTypeID = idt.IDTypeID
@@ -24,3 +28,5 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
+
+GO

@@ -8,23 +8,19 @@ BEGIN
 
 SET NOCOUNT ON
 
-SELECT	d.DOIID,
-		d.DOIEntityTypeID,
-		d.EntityID,
-		d.DOIStatusID,
-		d.DOIBatchID,
-		d.DOIName,
-		d.StatusDate,
-		d.StatusMessage,
-		d.IsValid,
-		d.CreationDate,
-		d.LastModifiedDate,
-		d.CreationUserID,
-		d.LastModifiedUserID
-FROM	dbo.DOI d INNER JOIN dbo.DOIEntityType t
-			ON d.DOIEntityTypeID = t.DOIEntityTypeID
-			AND t.DOIEntityTypeName = 'Title'
-WHERE	d.EntityID = @TitleID
-AND		d.IsValid = 1
+DECLARE @DOIIdentifierID int
+SELECT @DOIIdentifierID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'DOI'
+
+SELECT	ti.TitleIdentifierID,
+		ti.IdentifierValue,
+		ti.CreationDate,
+		ti.LastModifiedDate,
+		ti.CreationUserID,
+		ti.LastModifiedUserID
+FROM	dbo.Title_Identifier ti		
+WHERE	ti.TitleID = @TitleID
+AND		ti.IdentifierID = @DOIIdentifierID
 
 END
+
+GO

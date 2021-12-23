@@ -6,13 +6,16 @@ AS
 
 SET NOCOUNT ON
 
+DECLARE @IdentifierIDDOI int
+SELECT @IdentifierIDDOI = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'DOI'
+
 SELECT	s.SegmentID,
 		s.BookID AS ItemID,
 		scs.IsPrimary,
 		scs.SegmentClusterID,
 		s.SegmentStatusID,
 		st.ItemStatusName AS StatusName,
-		d.DOIName,
+		ii.IdentifierValue AS DOIName,
 		dbo.fnContributorStringForSegment(s.SegmentID) AS ContributorName,
 		s.SequenceOrder,
 		s.SegmentGenreID,
@@ -61,7 +64,7 @@ FROM	dbo.vwSegment s
 		INNER JOIN dbo.ItemStatus st ON s.SegmentStatusID = st.ItemStatusID
 		LEFT JOIN dbo.[Language] l ON s.LanguageCode = l.LanguageCode
 		LEFT JOIN dbo.SegmentClusterSegment scs ON s.SegmentID = scs.SegmentID
-		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = 40 AND d.IsValid = 1 -- segment
+		LEFT JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID AND ii.IdentifierID = @IdentifierIDDOI
 WHERE	s.SegmentID = @SegmentID
 
 GO

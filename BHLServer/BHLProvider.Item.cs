@@ -280,5 +280,16 @@ namespace MOBOT.BHL.Server
         {
             return new ItemDAL().ItemInFlickrByItemID(null, null, itemId);
         }
+
+        /// <summary>
+        /// Select identifiers that match the specified identifier name and segment identifier
+        /// </summary>
+        /// <param name="identifierName"></param>
+        /// <param name="segmentID"></param>
+        /// <returns>List of ItemIdentifier objects</returns>
+        public List<ItemIdentifier> ItemIdentifierSelectByNameAndID(string identifierName, int segmentID)
+        {
+            return (new ItemIdentifierDAL().ItemIdentifierSelectByNameAndID(null, null, identifierName, segmentID));
+        }
     }
 }

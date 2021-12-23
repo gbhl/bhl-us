@@ -668,10 +668,10 @@ namespace MOBOT.BHL.OAI2
                     List<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID((int)book.PrimaryTitleID);
                     this.LoadIdentifiers(titleIdentifiers, this);
 
-                    List<DOI> dois = provider.DOISelectValidForTitle(title.TitleID);
-                    foreach (DOI doi in dois)
+                    List<Title_Identifier> dois = provider.DOISelectValidForTitle(title.TitleID);
+                    foreach (Title_Identifier doi in dois)
                     {
-                        this.SetIdentifier("doi", doi.DOIName, this);
+                        this.SetIdentifier("doi", doi.IdentifierValue, this);
                     }
 
                     List<TitleAssociation> titleAssociations = provider.TitleAssociationSelectExtendedForTitle(title.TitleID);
@@ -814,10 +814,10 @@ namespace MOBOT.BHL.OAI2
                 List<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID(title.TitleID);
                 this.LoadIdentifiers(titleIdentifiers, this);
 
-                List<DOI> dois = provider.DOISelectValidForTitle(title.TitleID);
-                foreach(DOI doi in dois)
+                List<Title_Identifier> dois = provider.DOISelectValidForTitle(title.TitleID);
+                foreach(Title_Identifier doi in dois)
                 {
-                    this.SetIdentifier("doi", doi.DOIName, this);
+                    this.SetIdentifier("doi", doi.IdentifierValue, this);
                 }
 
                 List<TitleAssociation> titleAssociations = provider.TitleAssociationSelectExtendedForTitle(title.TitleID);
@@ -923,7 +923,14 @@ namespace MOBOT.BHL.OAI2
                 }
 
                 this.LoadIdentifiers(segment.IdentifierList, this);
-                if (!string.IsNullOrWhiteSpace(segment.DOIName)) this.SetIdentifier("doi", segment.DOIName, this);
+                foreach(ItemIdentifier itemIdentifier in segment.IdentifierList)
+                {
+                    if (string.Compare("doi", itemIdentifier.IdentifierName, true) == 0)
+                    {
+                        this.SetIdentifier("doi", itemIdentifier.IdentifierValue, this);
+                        break;
+                    }
+                }
             }
         }
 

@@ -33,14 +33,6 @@ namespace MOBOT.BHL.DAL
                     }
                 }
 
-                List<DOI> dois = new DOIDAL().DOISelectValidForTitle(connection, transaction, titleId);
-                foreach (DOI doi in dois)
-                {
-                    // Grab the first DOI for the segment (by the very nature of DOIs, there should only be one)
-                    title.DOIName = doi.DOIName;
-                    break;
-                }
-
                 title.TitleIdentifiers = new Title_IdentifierDAL().Title_IdentifierSelectByTitleID(connection, transaction, titleId, null);
 
 				title.TitleCollections = new TitleCollectionDAL().SelectByTitle( connection, transaction, titleId );
@@ -364,6 +356,7 @@ namespace MOBOT.BHL.DAL
 
                 updatedTitle = new TitleDAL().TitleManageAuto( connection, transaction, title, userId );
 
+                /*
                 DOIDAL doiDAL = new DOIDAL();
                 List<DOI> doiList = doiDAL.DOISelectValidForTitle(connection, transaction, title.TitleID);
 
@@ -413,6 +406,7 @@ namespace MOBOT.BHL.DAL
                     }
                 }
                 if (doi != null) doiDAL.DOIManageAuto(connection, transaction, doi, userId);
+                */
 
                 if ( title.TitleAuthors.Count > 0 )
 				{
@@ -461,7 +455,24 @@ namespace MOBOT.BHL.DAL
                     foreach (Title_Identifier titleIdentifier in title.TitleIdentifiers)
                     {
                         if (titleIdentifier.TitleID == 0) titleIdentifier.TitleID = updatedTitle.ReturnObject.TitleID;
-                        titleIdentifierDAL.Title_IdentifierManageAuto(connection, transaction, titleIdentifier, userId);
+
+                        if (string.Compare(titleIdentifier.IdentifierName, "DOI", true) == 0)
+                        {
+                            if (titleIdentifier.IsDeleted)
+                            {
+                                new DOIDAL().DOIDelete(connection, transaction, doiEntityTypeID: 10, titleIdentifier.TitleID, userId, excludeBHLDOI: 0);
+                            }
+                            else if (titleIdentifier.IsNew || titleIdentifier.IsDirty)
+                            {
+                                new DOIDAL().DOIUpdate(connection, transaction, doiEntityTypeID: 10, titleIdentifier.TitleID, doiStatusID: 200,
+                                    doiName: titleIdentifier.IdentifierValue, isValid: 1, processName: "Title Edit", doiBatchID: string.Empty,
+                                    statusMessage: "User-edited", userId, excludeBHLDOI: 0);
+                            }
+                        }
+                        else
+                        {
+                            titleIdentifierDAL.Title_IdentifierManageAuto(connection, transaction, titleIdentifier, userId);
+                        }
                     }
                 }
 

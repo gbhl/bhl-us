@@ -12,6 +12,14 @@ namespace MOBOT.BHL.DOIDeposit
             _timestamp = DateTime.Now.ToString("yyyyMMddhhmmssffff");
         }
 
+        private bool _isUpdate = false;
+
+        public bool IsUpdate
+        {
+            get { return _isUpdate; }
+            set { _isUpdate = value; }
+        }
+
         #region Deposit Head properties
 
         private int _entityID;

@@ -428,10 +428,6 @@
 			<td style="white-space: nowrap" align="right" class="dataHeader">Source ID (IA ID):</td>
 			<td style="white-space: nowrap" colspan="2" valign="middle" width="100%"><asp:Label ID="sourceIdLabel" runat="server" ForeColor="blue" /></td>
 		</tr>
-        <tr>
-            <td style="white-space: nowrap" align="right" class="dataHeader">DOI:</td>
-			<td><asp:TextBox ID="doiTextBox" runat="server" Width="300px"></asp:TextBox></td>
-        </tr>
 		<tr>
 			<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Status:</td>
 			<td><asp:DropDownList ID="ddlSegmentStatus" DataTextField="ItemStatusName" DataValueField="ItemStatusID" runat="server"></asp:DropDownList></td>

@@ -113,14 +113,6 @@ namespace MOBOT.BHL.DAL
                     }
                 }
 
-                List<DOI> dois = new DOIDAL().DOISelectValidForSegment(connection, transaction, segment.SegmentID);
-                foreach (DOI doi in dois)
-                {
-                    // Grab the first DOI for the segment (by the very nature of DOIs, there should only be one)
-                    segment.DOIName = doi.DOIName;
-                    break;
-                }
-
                 segment.ContributorList = new InstitutionDAL().InstitutionSelectBySegmentIDAndRole(connection, transaction, segment.SegmentID, InstitutionRole.Contributor);
                 segment.IdentifierList = new ItemIdentifierDAL().ItemIdentifierSelectBySegmentID(connection, transaction, segment.SegmentID, null);
                 segment.KeywordList = new ItemKeywordDAL().ItemKeywordSelectBySegmentID(connection, transaction, segment.SegmentID);
@@ -880,6 +872,7 @@ namespace MOBOT.BHL.DAL
 
                 segmentID = updatedSegment.ReturnObject.SegmentID;
 
+                /*
                 DOIDAL doiDAL = new DOIDAL();
                 List<DOI> doiList = doiDAL.DOISelectValidForSegment(connection, transaction, segmentID);
 
@@ -929,6 +922,7 @@ namespace MOBOT.BHL.DAL
                     }
                 }
                 if (doi != null) doiDAL.DOIManageAuto(connection, transaction, doi, userId);
+                */
 
                 if (segment.ContributorList.Count > 0)
                 {
@@ -1004,7 +998,24 @@ namespace MOBOT.BHL.DAL
                     foreach (ItemIdentifier itemIdentifier in segment.IdentifierList)
                     {
                         if (itemIdentifier.ItemID == 0) itemIdentifier.ItemID = (int)updatedSegment.ReturnObject.ItemID;
-                        itemIdentifierDAL.ItemIdentifierManageAuto(connection, transaction, itemIdentifier, userId);
+
+                        if (string.Compare(itemIdentifier.IdentifierName, "DOI", true) == 0)
+                        {
+                            if (itemIdentifier.IsDeleted)
+                            {
+                                new DOIDAL().DOIDelete(connection, transaction, doiEntityTypeID: 40, segmentID, userId, excludeBHLDOI: 0);
+                            }
+                            else if (itemIdentifier.IsNew || itemIdentifier.IsDirty)
+                            {
+                                new DOIDAL().DOIUpdate(connection, transaction, doiEntityTypeID: 40, segmentID, doiStatusID: 200,
+                                    doiName: itemIdentifier.IdentifierValue, isValid: 1, processName: "Segment Edit", doiBatchID: string.Empty,
+                                    statusMessage: "User-edited", userId, excludeBHLDOI: 0);
+                            }
+                        }
+                        else
+                        {
+                            itemIdentifierDAL.ItemIdentifierManageAuto(connection, transaction, itemIdentifier, userId);
+                        }
                     }
                 }
 

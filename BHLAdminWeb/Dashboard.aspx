@@ -435,7 +435,7 @@
                     <tr><td>&nbsp;</td></tr>
                     <tr>
                         <td align="center" colspan="2" runat="server" id="tdManageDoiQueue">
-                            <a href="/doi/queue">Manage DOI Assignment Queue</a>
+                            <a href="/doi/queue">Manage DOI Queue</a>
                         </td>
                     </tr>
                     <tr>

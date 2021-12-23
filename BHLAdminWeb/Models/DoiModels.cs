@@ -15,6 +15,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             this.EntityTypeID = doi.DOIEntityTypeID;
             this.EntityType = doi.DOIEntityTypeName;
             this.EntityID = doi.EntityID;
+            this.Action = string.IsNullOrWhiteSpace(doi.DOIName) ? "Create New DOI" : "Update DOI Metadata";
             this.DateQueued = doi.StatusDate;
             this.AddedBy = doi.CreationUserName;
         }
@@ -28,6 +29,9 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         [Display(Name = "Entity ID")]
         public int EntityID { get; set; }
+
+        [Display(Name = "Action")]
+        public string Action { get; set; }
 
         [Display(Name = "Added By")]
         public string AddedBy { get; set; }

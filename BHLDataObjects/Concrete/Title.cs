@@ -27,7 +27,6 @@ namespace MOBOT.BHL.DataObjects
         private List<Institution> _titleInstitutions = new List<Institution>();
 		private long _rowNum;
 		private string _institutionName;
-        private string _doiName;
         private bool _hasLocalContent = true;
         private bool _hasExternalContent = false;
 
@@ -104,12 +103,6 @@ namespace MOBOT.BHL.DataObjects
 			set { this._institutionName = value; }
 		}
 
-        public string DOIName
-        {
-            get { return _doiName; }
-            set { _doiName = value; }
-        }
-
         public long RowNum
 		{
 			get { return this._rowNum; }
@@ -161,11 +154,6 @@ namespace MOBOT.BHL.DataObjects
 							_institutionName = Utility.EmptyIfNull( column.Value );
 							break;
 						}
-                    case "DOIName":
-                        {
-                            _doiName = Utility.EmptyIfNull(column.Value);
-                            break;
-                        }
 					case "RowNum":
 						{
 							_rowNum = (long)column.Value;

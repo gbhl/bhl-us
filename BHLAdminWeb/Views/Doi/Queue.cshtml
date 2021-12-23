@@ -6,13 +6,13 @@
     <a href="/">&lt; Return to Dashboard</a><br />
     <br />
     <div>
-        <div class="pageHeader" style="float:left">Manage DOI Assignment Queue</div>
+        <div class="pageHeader" style="float:left">Manage DOI Queue</div>
     </div>
     <hr style="clear:left" /><br />
 
     @using (@Html.BeginForm())
     {
-        <p><h5>Titles and Segments in the DOI assignment queue will be assigned a DOI within 24 hours.</h5></p>
+                  <h5><p>Titles and Segments in the DOI queue will be processed within 24 hours.</p><p>If a DOI exists for a Title or Segment, it will be updated.  Otherwise, a new DOI will be assigned.</p></h5>
 
         @Html.Hidden("SortBy", (string)ViewBag.SortBy)
         <div style="padding-top:10px; padding-bottom:5px;">
@@ -28,6 +28,9 @@
             </th>
             <th>
                 @Html.ActionLink("ID", "Queue", new { sort = ViewBag.EIDSort })
+            </th>
+            <th>
+                @Html.ActionLink("Action", "Queue", new {sort = ViewBag.ActionSort})
             </th>
             <th>
                 @Html.ActionLink("Queued By", "Queue", new { sort = ViewBag.AddedBySort })
@@ -48,6 +51,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EntityID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Action)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AddedBy)

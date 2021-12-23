@@ -28,7 +28,7 @@ SegmentGenre
 TitleAssociationType
 */
 
--- Get the data parameters, if none were supplied
+-- Get the date parameters, if none were supplied
 IF (@StartDate IS NULL)
 BEGIN
 	SELECT @StartDate = MAX(LastAuditDate) FROM dbo.SearchIndexQueueLog
@@ -350,6 +350,8 @@ WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
 AND		EntityName = 'dbo.Title_Identifier'
 AND		i.ItemStatusID = 40
 AND		t.PublishReady = 1
+/*
+-- Removed because DOIs have been moved to the Identifier tables
 UNION
 SELECT	AuditBasicID, ab.Operation, EntityName, 'item', t.TitleID, b.BookID, AuditDate
 FROM	audit.AuditBasic ab WITH (NOLOCK)
@@ -363,6 +365,7 @@ AND		ab.EntityName = 'dbo.DOI'
 AND		d.DOIEntityTypeID = 10
 AND		i.ItemStatusID = 40
 AND		t.PublishReady = 1
+*/
 UNION
 SELECT	AuditBasicID, ab.Operation, EntityName, 'item', t.TitleID, b.BookID, AuditDate
 FROM	audit.AuditBasic ab WITH (NOLOCK)
@@ -480,6 +483,8 @@ FROM	audit.AuditBasic ab WITH (NOLOCK)
 WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
 AND		EntityName = 'dbo.ItemIdentifier'
 AND		s.SegmentStatusID IN (30, 40)
+/*
+-- Removed because DOIs have been moved to the Identifier tables
 UNION
 SELECT	AuditBasicID, ab.Operation, EntityName, 'segment', s.SegmentID, NULL, AuditDate
 FROM	audit.AuditBasic ab WITH (NOLOCK)
@@ -489,6 +494,7 @@ WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
 AND		ab.EntityName = 'dbo.DOI'
 AND		d.DOIEntityTypeID = 40
 AND		s.SegmentStatusID IN (30, 40)
+*/
 UNION
 SELECT	AuditBasicID, ab.Operation, EntityName, 'segment', s.SegmentID, NULL, AuditDate
 FROM	audit.AuditBasic ab WITH (NOLOCK)
@@ -752,6 +758,11 @@ FROM	#Reduced r
 WHERE	r.IndexEntity = 'keyword'
 AND		ISNULL(s.BarCode, '') = ''
 AND		(c.HasLocalContent = 1 OR r.Operation = 'delete')
+
+-- ##  Add entries for the DOI queue
+
+INSERT #Reduced (AuditID, Operation, IndexEntity, EntityID1, EntityID2, [Queue], AuditDate)
+EXEC [audit].[AuditBasicSelectForDOIQueue] @StartDate, @EndDate
 
 -- ### Final result set ###
 

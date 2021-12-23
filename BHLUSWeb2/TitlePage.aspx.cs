@@ -766,14 +766,17 @@ Append("</a>").
         private string GetPublicationDOI(Publication publicationDetail)
         {
             string doiName = string.Empty;
-            DOI doi = null;
 
             if (publicationDetail.Type == ItemType.Book)
-                doi = bhlProvider.DOISelectByTypeAndID("Title", publicationDetail.TitleID);
+            {
+                List<Title_Identifier> dois = bhlProvider.Title_IdentifierSelectByNameAndID("DOI", publicationDetail.TitleID);
+                if (dois.Count > 0) doiName = dois[0].IdentifierValueDisplay;
+            }
             else if (publicationDetail.Type == ItemType.Segment)
-                doi = bhlProvider.DOISelectByTypeAndID("Segment", publicationDetail.ID);
-
-            if (doi != null) doiName = ConfigurationManager.AppSettings["DOIResolverURL"] + doi.DOIName;
+            {
+                List<ItemIdentifier> dois = bhlProvider.ItemIdentifierSelectByNameAndID("DOI", publicationDetail.ID);
+                if (dois.Count > 0) doiName = dois[0].IdentifierValueDisplay;
+            }
 
             return doiName;
         }

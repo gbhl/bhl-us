@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace BHL.SearchIndexQueueLoad
@@ -97,5 +98,36 @@ namespace BHL.SearchIndexQueueLoad
                 sqlConnection.Dispose();
             }
         }
+
+        public void InsertDOIQueue(int dOIEntityTypeID, int entityID, int creationUserID, int lastModifiedUserID)
+        {
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "dbo.DOIInsertQueue";
+                    sqlCommand.Parameters.AddWithValue("@DOIEntityTypeID", dOIEntityTypeID);
+                    sqlCommand.Parameters.AddWithValue("@EntityID", entityID);
+                    sqlCommand.Parameters.AddWithValue("@CreationUserID", creationUserID);
+                    sqlCommand.Parameters.AddWithValue("@LastModifiedUserID", lastModifiedUserID);
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+        }
+    }
+
+    public static class DBLookups
+    {
+        public static readonly Dictionary<string, int> DOIEntityTypeID = new Dictionary<string, int> { { "title", 10 }, { "segment", 40 } };
     }
 }

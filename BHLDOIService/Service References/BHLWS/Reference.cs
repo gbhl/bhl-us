@@ -15,6 +15,10 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.mobot.org/", ConfigurationName="BHLWS.BHLWSSoap")]
     public interface BHLWSSoap {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateYear", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void PageUpdateYear(int[] pageIDs, string year, int userID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateVolume", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         void PageUpdateVolume(int[] pageIDs, string volume, int userID);
@@ -491,6 +495,11 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         MOBOT.BHL.BHLDOIService.BHLWS.DOI DOIInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId, string doiName, string message, short isValid, int userId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIInsert", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        void DOIInsert(int doiEntityTypeId, int entityID, int doiStatusId, string doiName, short isValid, string doiBatchId, string message, int userId, int excludeBHLDOI);
+        
         // CODEGEN: Parameter 'setValid' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIUpdateStatus", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -517,7 +526,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOISelectValidForTitle", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.DOI[] DOISelectValidForTitle(int titleID);
+        MOBOT.BHL.BHLDOIService.BHLWS.Title_Identifier[] DOISelectValidForTitle(int titleID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IndicatedPageSave", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
@@ -563,11 +572,6 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageSelectWithoutPageNames();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateYear", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void PageUpdateYear(int[] pageIDs, string year, int userID);
     }
     
     /// <remarks/>
@@ -6538,9 +6542,13 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         
         private string itemStatusNameField;
         
+        private System.Nullable<int> paginationStatusIDField;
+        
         private string paginationStatusNameField;
         
         private System.Nullable<System.DateTime> paginationStatusDateField;
+        
+        private System.Nullable<int> paginationStatusUserIDField;
         
         private string paginationUserNameField;
         
@@ -6755,7 +6763,19 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=14)]
+        public System.Nullable<int> PaginationStatusID {
+            get {
+                return this.paginationStatusIDField;
+            }
+            set {
+                this.paginationStatusIDField = value;
+                this.RaisePropertyChanged("PaginationStatusID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
         public string PaginationStatusName {
             get {
                 return this.paginationStatusNameField;
@@ -6767,7 +6787,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=15)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=16)]
         public System.Nullable<System.DateTime> PaginationStatusDate {
             get {
                 return this.paginationStatusDateField;
@@ -6779,7 +6799,19 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=17)]
+        public System.Nullable<int> PaginationStatusUserID {
+            get {
+                return this.paginationStatusUserIDField;
+            }
+            set {
+                this.paginationStatusUserIDField = value;
+                this.RaisePropertyChanged("PaginationStatusUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
         public string PaginationUserName {
             get {
                 return this.paginationUserNameField;
@@ -6791,7 +6823,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=17)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=19)]
         public System.Nullable<System.DateTime> ScanningDate {
             get {
                 return this.scanningDateField;
@@ -6803,7 +6835,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
         public string DownloadUrl {
             get {
                 return this.downloadUrlField;
@@ -6815,7 +6847,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=19)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=21)]
         public System.Nullable<int> PrimaryTitleID {
             get {
                 return this.primaryTitleIDField;
@@ -6827,7 +6859,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
         public string BarCode {
             get {
                 return this.barCodeField;
@@ -6839,7 +6871,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=21)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=23)]
         public System.Nullable<short> ItemSequence {
             get {
                 return this.itemSequenceField;
@@ -6851,7 +6883,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
         public string PublicationDetails {
             get {
                 return this.publicationDetailsField;
@@ -6863,7 +6895,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
         public int NumberOfSegments {
             get {
                 return this.numberOfSegmentsField;
@@ -6875,7 +6907,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
         public int NumberOfPages {
             get {
                 return this.numberOfPagesField;
@@ -6887,7 +6919,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
         public int TotalItems {
             get {
                 return this.totalItemsField;
@@ -6899,7 +6931,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=26)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=28)]
         public System.Nullable<int> FirstPageID {
             get {
                 return this.firstPageIDField;
@@ -6911,7 +6943,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=29)]
         public bool HasFlickrImages {
             get {
                 return this.hasFlickrImagesField;
@@ -6923,7 +6955,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=28)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=30)]
         public bool HasLocalContent {
             get {
                 return this.hasLocalContentField;
@@ -6935,7 +6967,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=29)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=31)]
         public bool HasExternalContent {
             get {
                 return this.hasExternalContentField;
@@ -6947,7 +6979,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=30)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=32)]
         public string TextFilename {
             get {
                 return this.textFilenameField;
@@ -6959,7 +6991,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=31)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=33)]
         public string PdfFilename {
             get {
                 return this.pdfFilenameField;
@@ -6971,7 +7003,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=32)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=34)]
         public string ImagesFilename {
             get {
                 return this.imagesFilenameField;
@@ -6983,7 +7015,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=33)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=35)]
         public string DjvuFilename {
             get {
                 return this.djvuFilenameField;
@@ -6995,7 +7027,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=34)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=36)]
         public string ScandataFilename {
             get {
                 return this.scandataFilenameField;
@@ -7007,7 +7039,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=35)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=37)]
         public string OcrFolderShare {
             get {
                 return this.ocrFolderShareField;
@@ -7019,7 +7051,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=36)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=38)]
         public string Volume {
             get {
                 return this.volumeField;
@@ -7031,7 +7063,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=37)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=39)]
         public string StartYear {
             get {
                 return this.startYearField;
@@ -7897,8 +7929,6 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         
         private string institutionNameField;
         
-        private string dOINameField;
-        
         private bool hasLocalContentField;
         
         private bool hasExternalContentField;
@@ -8049,18 +8079,6 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public string DOIName {
-            get {
-                return this.dOINameField;
-            }
-            set {
-                this.dOINameField = value;
-                this.RaisePropertyChanged("DOIName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
         public bool HasLocalContent {
             get {
                 return this.hasLocalContentField;
@@ -8072,7 +8090,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
         public bool HasExternalContent {
             get {
                 return this.hasExternalContentField;
@@ -13435,6 +13453,10 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
                 base(binding, remoteAddress) {
         }
         
+        public void PageUpdateYear(int[] pageIDs, string year, int userID) {
+            base.Channel.PageUpdateYear(pageIDs, year, userID);
+        }
+        
         public void PageUpdateVolume(int[] pageIDs, string volume, int userID) {
             base.Channel.PageUpdateVolume(pageIDs, volume, userID);
         }
@@ -13827,6 +13849,10 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
             return base.Channel.DOIInsertAuto(doiEntityTypeId, entityId, doiStatusId, doiBatchId, doiName, message, isValid, userId);
         }
         
+        public void DOIInsert(int doiEntityTypeId, int entityID, int doiStatusId, string doiName, short isValid, string doiBatchId, string message, int userId, int excludeBHLDOI) {
+            base.Channel.DOIInsert(doiEntityTypeId, entityID, doiStatusId, doiName, isValid, doiBatchId, message, userId, excludeBHLDOI);
+        }
+        
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusResponse MOBOT.BHL.BHLDOIService.BHLWS.BHLWSSoap.DOIUpdateStatus(MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusRequest request) {
             return base.Channel.DOIUpdateStatus(request);
@@ -13877,7 +13903,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
             return base.Channel.DOIGetFileContents(batchId, type);
         }
         
-        public MOBOT.BHL.BHLDOIService.BHLWS.DOI[] DOISelectValidForTitle(int titleID) {
+        public MOBOT.BHL.BHLDOIService.BHLWS.Title_Identifier[] DOISelectValidForTitle(int titleID) {
             return base.Channel.DOISelectValidForTitle(titleID);
         }
         
@@ -13915,10 +13941,6 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         
         public MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageSelectWithoutPageNames() {
             return base.Channel.PageSelectWithoutPageNames();
-        }
-        
-        public void PageUpdateYear(int[] pageIDs, string year, int userID) {
-            base.Channel.PageUpdateYear(pageIDs, year, userID);
         }
     }
 }

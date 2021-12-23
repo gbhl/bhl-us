@@ -160,16 +160,18 @@
                 <% if (TitleIdentifiers.Count > 0) { %>
                     <h3>Identifiers</h3>
                     <p>
-                    <% foreach (Title_Identifier titleIdentifier in TitleIdentifiers) { %>
-                        <%: titleIdentifier.IdentifierLabel %>: <span itemprop="<%: titleIdentifier.IdentifierLabel%>"><%: titleIdentifier.IdentifierValue %></span><br />
-                    <% } %>
+                    <% foreach (Title_Identifier titleIdentifier in TitleIdentifiers) {%>
+                            <%: titleIdentifier.IdentifierLabel %>: 
+                            <%if (titleIdentifier.IdentifierValueDisplay.StartsWith("http", true, System.Globalization.CultureInfo.CurrentCulture))
+                            {%>
+                                <a href="<%= titleIdentifier.IdentifierValueDisplay%>" title="DOI"><span itemprop="<%: titleIdentifier.IdentifierLabel%>"><%: titleIdentifier.IdentifierValueDisplay %></span></a><br />
+                            <%}
+                            else
+                            {%>
+                                <span itemprop="<%: titleIdentifier.IdentifierLabel%>"><%: titleIdentifier.IdentifierValueDisplay %></span><br />
+                            <%}
+                        } %>
                     </p>
-                <% } %>
-                <% if (DOI != string.Empty) { %>
-                <h3>DOI</h3>
-                <p>
-                    <a href="<%= DOI%>" title="DOI"><%= DOI%></a>
-                </p>
                 <% } %>
                 <p>&nbsp;</p>
                 <p>

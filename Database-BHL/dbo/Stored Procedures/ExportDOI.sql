@@ -6,38 +6,38 @@ BEGIN
 
 SET NOCOUNT ON
 
-DECLARE @TitleTypeID int
-DECLARE @SegmentTypeID int
-SELECT @TitleTypeID = DOIEntityTypeID FROM dbo.DOIEntityType WHERE DOIEntityTypeName = 'Title'
-SELECT @SegmentTypeID = DOIEntityTypeID FROM dbo.DOIEntityType WHERE DOIEntityTypeName = 'Segment'
+DECLARE @DOIIdentifierID int
+SELECT @DOIIdentifierID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'DOI'
 
-SELECT CASE 
-		WHEN et.DOIEntityTypeName = 'Segment' THEN 'Part' ELSE et.DOIEntityTypeName END AS EntityType, 
-		d.EntityID, 
-		d.DOIName AS DOI, 
-		COALESCE(t.HasLocalContent, s.HasLocalContent) AS HasLocalContent,
-		COALESCE(t.HasExternalContent, s.HasExternalContent) AS HasExternalContent,
-		d.CreationDate
-INTO	#DOI
-FROM	dbo.DOI d WITH (NOLOCK)
-		INNER JOIN dbo.DOIEntityType et WITH (NOLOCK) ON d.DOIEntityTypeID = et.DOIEntityTypeID 
-		LEFT JOIN dbo.SearchCatalog t WITH (NOLOCK) ON d.EntityID = t.TitleID AND d.DOIEntityTypeID = @TitleTypeID
-		LEFT JOIN dbo.SearchCatalogSegment s WITH (NOLOCK) ON d.EntityID = s.SegmentID AND d.DOIEntityTypeID = @SegmentTypeID
-WHERE	d.IsValid = 1
-
-SELECT	EntityType,
-		EntityID,
-		DOI,
-		MAX(HasLocalContent) AS HasLocalContent,
-		MAX(HasExternalContent) AS HasExternalContent,
-		CreationDate
-FROM	#DOI
-WHERE	HasLocalContent IS NOT NULL
-AND		HasExternalContent IS NOT NULL
+SELECT	'Title' AS EntityType,
+		ti.TitleID AS EntityID,
+		ti.IdentifierValue AS DOI,
+		MAX(c.HasLocalContent) AS HasLocalContent,
+		MAX(c.HasExternalContent) AS HasExternalContent,
+		ti.CreationDate
+FROM	dbo.Title_Identifier ti WITH (NOLOCK)
+		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON ti.TitleID = c.TitleID
+WHERE	ti.IdentifierID = @DOIIdentifierID
 GROUP BY
-		EntityType,
-		EntityID,
-		DOI,
-		CreationDate	
+		ti.TitleID,
+		ti.IdentifierValue,
+		ti.CreationDate
+UNION	
+SELECT	'Part',
+		s.SegmentID,
+		ii.IdentifierValue AS DOI,
+		MAX(c.HasLocalContent) AS HasLocalContent,
+		MAX(c.HasExternalContent) AS HasExternalContent,
+		ii.CreationDate
+FROM	dbo.ItemIdentifier ii WITH (NOLOCK)
+		INNER JOIN dbo.Segment s WITH (NOLOCK) ON ii.ItemID = s.ItemID
+		INNER JOIN dbo.SearchCatalogSegment c  WITH (NOLOCK) ON s.SegmentID = c.SegmentID
+WHERE	ii.IdentifierID = @DOIIdentifierID
+GROUP BY
+		s.SegmentID,
+		ii.IdentifierValue,
+		ii.CreationDate
 
 END
+
+GO

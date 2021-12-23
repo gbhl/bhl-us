@@ -14,13 +14,11 @@ namespace MOBOT.BHL.Web2
         protected int HasLocalContent { get; set; } = 1;
         protected int SegmentID { get; set; }
         protected string SchemaType { get; set; }
-        protected string DOI { get; set; }
 
         protected override void Page_Load(object sender, EventArgs e)
         {
             base.Page_Load(sender, e);
             int segmentID;
-            DOI = string.Empty;
 
             if (!int.TryParse((string)RouteData.Values["segmentid"], out segmentID))
             {
@@ -90,9 +88,6 @@ namespace MOBOT.BHL.Web2
                         SchemaType = "https://schema.org/CreativeWork";
                         break;
                 }
-
-                List<DOI> dois = bhlProvider.DOISelectValidForSegment(SegmentID);
-                if (dois.Count > 0) DOI = ConfigurationManager.AppSettings["DOIResolverURL"] + dois[0].DOIName;
 
                 main.Page.Title = string.Format("Details - {0} - Biodiversity Heritage Library", BhlSegment.Title);
             }

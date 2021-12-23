@@ -1,0 +1,2 @@
+﻿CREATE SYNONYM dbo.BHLDOIDelete FOR BHL.dbo.DOIDelete
+GO
