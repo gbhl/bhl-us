@@ -32,6 +32,16 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             return RedirectToAction("SelectFile");
         }
 
+        // GET: /CitationImport/ImportFileStatus
+        [HttpGet]
+        public ActionResult ImportFileStatus()
+        {
+            CitationService service = new CitationService();
+            CitationImportFileStatusModel model = new CitationImportFileStatusModel();
+            model.ImportFileStatuses = service.ImportFileStatusList();
+            return View(model);
+        }
+
         //
         // GET: /CitationImport/SelectFile
         [HttpGet]

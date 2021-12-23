@@ -287,6 +287,7 @@ namespace MOBOT.BHL.AdminWeb
                     break;
                 }
 
+				/*
                 if (!string.IsNullOrEmpty(namePage.ResolvedNameString) && string.IsNullOrEmpty(namePage.NameBankID) &&
                     string.IsNullOrEmpty(namePage.EOLID))
                 {
@@ -294,6 +295,7 @@ namespace MOBOT.BHL.AdminWeb
                     errorControl.AddErrorText("If a Resolved Name is specified, then a NameBank ID or EOL ID must also be specified.");
                     break;
                 }
+				*/
 			}
 
 			errorControl.Visible = flag;

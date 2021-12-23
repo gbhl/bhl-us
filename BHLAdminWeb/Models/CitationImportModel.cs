@@ -1493,6 +1493,17 @@ namespace MOBOT.BHL.AdminWeb.Models
         }
     }
 
+    [Serializable]
+    public class CitationImportFileStatusModel
+    {
+        private List<ImportFileStatus> _importFileStatuses = new List<ImportFileStatus>();
+        public List<ImportFileStatus> ImportFileStatuses
+        {
+            get { return _importFileStatuses; }
+            set { _importFileStatuses = value; }
+        }
+    }
+
     /// <summary>
     /// Class used to produce the JSON representation of citations records that is needed by jQuery DataTables
     /// </summary>

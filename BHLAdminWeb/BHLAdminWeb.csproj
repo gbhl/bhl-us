@@ -1140,6 +1140,7 @@
     <Content Include="Views\Doi\QueueDelete.cshtml" />
     <Content Include="Views\Doi\QueueAddInfo.cshtml" />
     <None Include="Service References\SiteService\SiteService1.wsdl" />
+    <Content Include="Views\CitationImport\ImportFileStatus.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>

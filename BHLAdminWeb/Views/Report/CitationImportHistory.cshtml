@@ -49,7 +49,7 @@
     
     <div style="margin-bottom:10px">
         <div>User: @Html.DropDownListFor(m => m.User, new SelectList(ViewBag.UserList, "Key", "Value"), "-- All --")</div>
-        <div>Import Status: @Html.DropDownListFor(m => m.ImportFileStatus, new SelectList(ViewBag.ImportFileStatusList, "ImportFileStatusID", "StatusName"), "-- All --")</div>
+        <div>Import Status: @Html.DropDownListFor(m => m.ImportFileStatus, new SelectList(ViewBag.ImportFileStatusList, "ImportFileStatusID", "StatusName"), "-- All --")&nbsp;&nbsp;<a class="small" href="#" title="About" onclick="window.open('/CitationImport/ImportFileStatus', 'About', 'resizeable=0,scrollbars=1,height=300,width=500,status=0,toolbar=0,menubar=0,location=0');">Status descriptions</a></div>
         <div>Dates: @Html.DropDownListFor(m => m.ReportDateRange, new SelectList(ViewBag.ReportDateRangeList, "key", "value", "1"), "-- All --")</div>
         <div><input type="submit" name="btnShow" id="btnShow" value="Update" /></div>
     </div>
