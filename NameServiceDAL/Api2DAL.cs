@@ -316,13 +316,13 @@ namespace MOBOT.BHL.API.BHLApiDAL
         }
 
         public List<Title> TitleSelectByIdentifier(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
-            string identifierName, string identifierValue)
+            string identifierType, string identifierValue)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiTitleSelectByIdentifier", connection, transaction,
-                    CustomSqlHelper.CreateInputParameter("IdentifierName", SqlDbType.NVarChar, 40, false, identifierName),
+                    CustomSqlHelper.CreateInputParameter("IdentifierType", SqlDbType.NVarChar, 40, false, identifierType),
                     CustomSqlHelper.CreateInputParameter("IdentifierValue", SqlDbType.NVarChar, 145, false, identifierValue)))
             {
                 using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
@@ -550,13 +550,13 @@ namespace MOBOT.BHL.API.BHLApiDAL
         }
 
         public List<Part> SegmentSelectByIdentifier(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
-            string identifierName, string identifierValue)
+            string identifierType, string identifierValue)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiSegmentSelectByIdentifier", connection, transaction,
-                    CustomSqlHelper.CreateInputParameter("IdentifierName", SqlDbType.NVarChar, 40, false, identifierName),
+                    CustomSqlHelper.CreateInputParameter("IdentifierType", SqlDbType.NVarChar, 40, false, identifierType),
                     CustomSqlHelper.CreateInputParameter("IdentifierValue", SqlDbType.NVarChar, 125, false, identifierValue)))
             {
                 using (CustomSqlHelper<Part> helper = new CustomSqlHelper<Part>())

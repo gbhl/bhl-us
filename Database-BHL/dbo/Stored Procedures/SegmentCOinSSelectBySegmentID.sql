@@ -20,6 +20,7 @@ SELECT DISTINCT
 		,rft_pages
 		,rft_language
 		,rft_issn
+		,rft_eissn
 		,rft_aulast
 		,rft_aufirst
 		,rft_au
@@ -33,3 +34,4 @@ WHERE	SegmentID = @SegmentID
 
 END
 
+GO

@@ -102,6 +102,12 @@
     <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.DOI.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.DOIUpdateBatchIDResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.DOIUpdateDOINameResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.DOIUpdateStatusResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

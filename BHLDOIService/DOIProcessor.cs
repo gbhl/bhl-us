@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -143,11 +144,20 @@ namespace MOBOT.BHL.BHLDOIService
                             // Once we determine how commonly these occur, a more robust logging mechanism
                             // may be needed.
                             unresolvedEntities.Add(string.Format("{0}\t{1}", entityTypeId.ToString(), doi.EntityID.ToString()));
-                            this.LogMessage(string.Format("Entity {0}, Type {1} cound not be resolved", doi.EntityID.ToString(), doi.DOIEntityTypeID.ToString()));
+
+                            string unresolvableMessage = string.Format("Entity {0}, Type {1} cound not be resolved", doi.EntityID.ToString(), doi.DOIEntityTypeID.ToString());
+                            this.LogMessage(unresolvableMessage);
+
                             foreach(string doiName in result.DoiList)
                             {
-                                this.LogMessage(string.Format("Entity {0}, Type {1} - possible DOI: {2}", doi.EntityID.ToString(), doi.DOIEntityTypeID.ToString(), doiName));
+                                string possibleDOIMessage = string.Format("\r\nEntity {0}, Type {1} - possible DOI: {2}", doi.EntityID.ToString(), doi.DOIEntityTypeID.ToString(), doiName);
+                                unresolvableMessage += possibleDOIMessage;
+                                this.LogMessage(possibleDOIMessage);
                             }
+
+                            // Set queue item status to Error, since it cannot be resolved
+                            wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusError, "UNRESOLVABLE: " + unresolvableMessage, null, null);
+
                             break;
                         case DOICheckResult.Error:
                             // Report any error messages returned from CrossRef.  Otherwise, do nothing.
@@ -236,8 +246,7 @@ namespace MOBOT.BHL.BHLDOIService
 
                     // Only submit an Article query if no error has occurred and the
                     // data required for an article query is available
-                    if (result.ResultValue != DOICheckResult.Error &&
-                        !string.IsNullOrWhiteSpace(depositData.Issn))
+                    if (result.ResultValue != DOICheckResult.Error && depositData.Issn.Count > 0)
                     {
                         // Prepare, send, and process the second query
                         queryTemplate = this.GetQueryTemplate(depositData);
@@ -351,9 +360,6 @@ namespace MOBOT.BHL.BHLDOIService
         private DOIDepositData GetDepositData(int doiEntityType, int entityID, string doiName)
         {
             DOIDepositData data = new DOIDepositData();
-            data.IsUpdate = !string.IsNullOrWhiteSpace(doiName);
-            data.EntityID = entityID;
-            data.EntityTypeID = doiEntityType;
 
             if (doiEntityType == configParms.DoiEntityTypeTitle)
             {
@@ -369,6 +375,9 @@ namespace MOBOT.BHL.BHLDOIService
                 throw new NotImplementedException();
             }
 
+            data.IsUpdate = !string.IsNullOrWhiteSpace(doiName);
+            data.EntityID = entityID;
+            data.EntityTypeID = doiEntityType;
             data.DepositorEmail = configParms.CrossrefDepositorEmail;
             data.DepositorName = configParms.CrossrefDepositorName;
             data.Registrant = configParms.CrossrefRegistrantName;
@@ -417,10 +426,11 @@ namespace MOBOT.BHL.BHLDOIService
 
                 foreach (Title_Identifier titleIdentifier in title.TitleIdentifiers)
                 {
-                    if (titleIdentifier.TitleIdentifierID == configParms.TitleIdentifierISBN) data.Isbn = titleIdentifier.IdentifierValue;
-                    if (titleIdentifier.TitleIdentifierID == configParms.TitleIdentifierISSN) data.Issn = titleIdentifier.IdentifierValue;
-                    if (titleIdentifier.TitleIdentifierID == configParms.TitleIdentifierCODEN) data.Coden = titleIdentifier.IdentifierValue;
-                    if (titleIdentifier.TitleIdentifierID == configParms.TitleIdentifierAbbreviation &&
+                    if (string.Compare(titleIdentifier.IdentifierName, "ISBN", true, CultureInfo.CurrentCulture) == 0) data.Isbn = titleIdentifier.IdentifierValue;
+                    if (string.Compare(titleIdentifier.IdentifierName, "ISSN", true, CultureInfo.CurrentCulture) == 0) data.Issn.Add(("print", titleIdentifier.IdentifierValue));
+                    if (string.Compare(titleIdentifier.IdentifierName, "eISSN", true, CultureInfo.CurrentCulture) == 0) data.Issn.Add(("electronic", titleIdentifier.IdentifierValue));
+                    if (string.Compare(titleIdentifier.IdentifierName, "CODEN", true, CultureInfo.CurrentCulture) == 0) data.Coden = titleIdentifier.IdentifierValue;
+                    if (string.Compare(titleIdentifier.IdentifierName, "Abbreviation", true, CultureInfo.CurrentCulture) == 0 && 
                         data.AbbreviatedTitle == string.Empty) data.AbbreviatedTitle = titleIdentifier.IdentifierValue;
                 }
 
@@ -497,20 +507,15 @@ namespace MOBOT.BHL.BHLDOIService
                 data.Volume = string.IsNullOrWhiteSpace(segment.Volume) ? segment.ItemVolume : segment.Volume;
                 data.Issue = segment.Issue;
 
-                if (string.IsNullOrWhiteSpace(data.Issn))
+                Title_Identifier[] titleIdentifierList = wsClient.Title_IdentifierSelectByTitleID(segment.TitleId ?? 0);
+                foreach (Title_Identifier titleIdentifier in titleIdentifierList)
                 {
-                    Title_Identifier[] titleIdentifierList = wsClient.Title_IdentifierSelectByTitleID(segment.TitleId ?? 0);
-                    foreach (Title_Identifier titleIdentifier in titleIdentifierList)
-                    {
-                        if (titleIdentifier.IdentifierID == configParms.TitleIdentifierISSN)
-                        {
-                            data.Issn = titleIdentifier.IdentifierValue;
-                        }
-                    }
+                    if (string.Compare(titleIdentifier.IdentifierName, "ISSN", true, CultureInfo.CurrentCulture) == 0) data.Issn.Add(("print", titleIdentifier.IdentifierValue));
+                    if (string.Compare(titleIdentifier.IdentifierName, "eISSN", true, CultureInfo.CurrentCulture) == 0) data.Issn.Add(("electronic", titleIdentifier.IdentifierValue));
                 }
 
-                // If still no ISSN, use the DOI of the associated title
-                if (string.IsNullOrWhiteSpace(data.Issn))
+                // If no ISSNs, use the DOI of the associated title
+                if (data.Issn.Count == 0)
                 {
                     Title_Identifier[] titleDOIs = wsClient.DOISelectValidForTitle(segment.TitleId ?? 0);
                     foreach(Title_Identifier doi in titleDOIs)

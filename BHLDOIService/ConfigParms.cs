@@ -344,34 +344,6 @@ namespace MOBOT.BHL.BHLDOIService
             set { _bibLevelSerial = value; }
         }
 
-        private int _titleIdentifierISSN = 2;
-        public int TitleIdentifierISSN
-        {
-            get { return _titleIdentifierISSN; }
-            set { _titleIdentifierISSN = value; }
-        }
-
-        private int _titleIdentifierISBN = 3;
-        public int TitleIdentifierISBN
-        {
-            get { return _titleIdentifierISBN; }
-            set { _titleIdentifierISBN = value; }
-        }
-
-        private int _titleIdentifierAbbreviation = 6;
-        public int TitleIdentifierAbbreviation
-        {
-            get { return _titleIdentifierAbbreviation; }
-            set { _titleIdentifierAbbreviation = value; }
-        }
-
-        private int _titleIdentifierCODEN = 10;
-        public int TitleIdentifierCODEN
-        {
-            get { return _titleIdentifierCODEN; }
-            set { _titleIdentifierCODEN = value; }
-        }
-
         private int _titleVariantAbbreviated = 3;
         public int TitleVariantAbbreviated
         {
@@ -642,22 +614,6 @@ namespace MOBOT.BHL.BHLDOIService
                     if (node.Attributes.GetNamedItem("key").Value == "BibLevel_Serial")
                     {
                         this.BibLevelSerial = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "TitleIdentifier_ISSN")
-                    {
-                        this.TitleIdentifierISSN = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "TitleIdentifier_ISBN")
-                    {
-                        this.TitleIdentifierISBN = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "TitleIdentifier_Abbreviation")
-                    {
-                        this.TitleIdentifierAbbreviation = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "TitleIdentifier_CODEN")
-                    {
-                        this.TitleIdentifierCODEN = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
                     }
                     if (node.Attributes.GetNamedItem("key").Value == "TitleVariant_Abbreviated")
                     {

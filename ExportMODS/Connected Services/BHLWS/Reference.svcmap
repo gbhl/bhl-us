@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="67fafd3d-7ad7-43ea-afaa-f8abd4a1e4d4" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="67fafd3d-7ad7-43ea-afaa-f8abd4a1e4d4" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,8 +22,8 @@
     <MetadataSource Address="http://localhost:26504/BHLWS.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="BHLWS.disco" MetadataType="Disco" ID="dd5e8abd-02bc-4e3e-8a84-37a98ccde51d" SourceId="1" SourceUrl="http://localhost:26504/BHLWS.asmx?disco" />
     <MetadataFile FileName="BHLWS.wsdl" MetadataType="Wsdl" ID="c9b9e2ef-2846-42ab-aa84-9f4e42273417" SourceId="1" SourceUrl="http://localhost:26504/BHLWS.asmx?wsdl" />
+    <MetadataFile FileName="BHLWS.disco" MetadataType="Disco" ID="dd5e8abd-02bc-4e3e-8a84-37a98ccde51d" SourceId="1" SourceUrl="http://localhost:26504/BHLWS.asmx?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

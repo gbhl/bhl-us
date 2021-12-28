@@ -1108,23 +1108,27 @@ namespace MOBOT.BHL.OAIMODS
         {
             StringBuilder sb = new StringBuilder();
 
-            if (!String.IsNullOrEmpty(title.Isbn))
+            if (!String.IsNullOrWhiteSpace(title.Isbn))
             {
                 sb.Append("<identifier type=\"isbn\">" + HttpUtility.HtmlEncode(title.Isbn) + "</identifier>\n");
             }
-            if (!String.IsNullOrEmpty(title.Issn))
+            if (!String.IsNullOrWhiteSpace(title.Issn))
             {
                 sb.Append("<identifier type=\"issn\">" + HttpUtility.HtmlEncode(title.Issn) + "</identifier>\n");
+            }
+            if (!String.IsNullOrWhiteSpace(title.EIssn))
+            {
+                sb.Append("<identifier type=\"issn\">" + HttpUtility.HtmlEncode(title.EIssn) + "</identifier>\n");
             }
             foreach (String oclcNumber in title.oclcNumbers)
             {
                 sb.Append("<identifier type=\"oclc\">" + HttpUtility.HtmlEncode(oclcNumber) + "</identifier>\n");
             }
-            if (!String.IsNullOrEmpty(title.Nlm))
+            if (!String.IsNullOrWhiteSpace(title.Nlm))
             {
                 sb.Append("<identifier type=\"nlm\">" + HttpUtility.HtmlEncode(title.Nlm) + "</identifier>\n");
             }
-            if (!String.IsNullOrEmpty(title.Llc))
+            if (!String.IsNullOrWhiteSpace(title.Llc))
             {
                 sb.Append("<identifier type=\"lccn\">" + HttpUtility.HtmlEncode(title.Llc) + "</identifier>\n");
             }

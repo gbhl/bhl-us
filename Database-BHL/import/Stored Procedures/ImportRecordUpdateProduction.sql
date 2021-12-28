@@ -18,10 +18,6 @@ DECLARE @ImportRecordErrorID int
 SELECT @ImportRecordErrorID = ImportRecordStatusID FROM import.ImportRecordStatus WHERE StatusName = 'Error'
 IF (@ImportRecordErrorID IS NULL) RAISERROR('ImportRecordStatus -Error- not found', 0, 1)
 
-DECLARE @IdentifierISSNID int
-SELECT @IdentifierISSNID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'ISSN'
-IF (@IdentifierISSNID IS NULL) RAISERROR('Identifier -ISSN- not found', 0, 1)
-
 DECLARE @IdentifierISBNID int
 SELECT @IdentifierISBNID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'ISBN'
 IF (@IdentifierISBNID IS NULL) RAISERROR('Identifier -ISBN- not found', 0, 1)
@@ -237,7 +233,7 @@ BEGIN TRY
 
 	UPDATE	ir
 	SET		ParentID = @BookItemID,
-			SequenceOrder = (SELECT MAX(SequenceOrder) + 1 FROM dbo.ItemRelationship WHERE ParentID = @BookItemID),
+			SequenceOrder = (SELECT ISNULL(MAX(SequenceOrder), 0) + 1 FROM dbo.ItemRelationship WHERE ParentID = @BookItemID),
 			LastModifiedUserID = @UserID,
 			LastModifiedDate = GETDATE()
 	FROM	dbo.ItemRelationship ir
@@ -262,18 +258,20 @@ BEGIN TRY
 
 	-- Delete existing ItemIdentifier records and insert new ones, unless the new values are blank (unchanged)
 	DELETE	ii
-	FROM	import.ImportRecord r INNER JOIN dbo.vwSegment s ON r.SegmentID = s.SegmentID
-			INNER JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID AND ii.IdentifierID = @IdentifierISSNID
-	WHERE	r.ImportRecordID = @ImportRecordErrorID AND ISSN <> ''
+	FROM	dbo.ItemIdentifier ii
+			INNER JOIN dbo.vwSegment s ON ii.ItemID = s.ItemID
+			INNER JOIN import.ImportRecord r ON s.SegmentID = r.SegmentID
+			INNER JOIN dbo.Identifier i ON ii.IdentifierID = i.IdentifierID AND i.IdentifierType = 'ISSN'
+	WHERE	r.ImportRecordID = @ImportRecordID AND r.ISSN <> ''
 
 	INSERT	dbo.ItemIdentifier (ItemID, IdentifierID, IdentifierValue, CreationUserID, LastModifiedUserID)
-	SELECT	@ItemID, @IdentifierISSNID, ISSN, @UserID, @UserID
+	SELECT	@ItemID, dbo.fnGetISSNID(ISSN), dbo.fnGetISSNValue(ISSN), @UserID, @UserID
 	FROM	import.ImportRecord WHERE ImportRecordID = @ImportRecordID AND ISSN <> '' AND ISSN <> 'NULL'
 
 	DELETE	ii
 	FROM	import.ImportRecord r INNER JOIN dbo.vwSegment s ON r.SegmentID = s.SegmentID
 			INNER JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID AND ii.IdentifierID = @IdentifierISBNID
-	WHERE	r.ImportRecordID = @ImportRecordErrorID AND ISBN <> ''
+	WHERE	r.ImportRecordID = @ImportRecordID AND ISBN <> ''
 
 	INSERT	dbo.ItemIdentifier (ItemID, IdentifierID, IdentifierValue, CreationUserID, LastModifiedUserID)
 	SELECT	@ItemID, @IdentifierISBNID, ISBN, @UserID, @UserID
@@ -282,7 +280,7 @@ BEGIN TRY
 	DELETE	ii
 	FROM	import.ImportRecord r INNER JOIN dbo.vwSegment s ON r.SegmentID = s.SegmentID
 			INNER JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID AND ii.IdentifierID = @IdentifierOCLCID
-	WHERE	r.ImportRecordID = @ImportRecordErrorID AND OCLC <> ''
+	WHERE	r.ImportRecordID = @ImportRecordID AND OCLC <> ''
 
 	INSERT	dbo.ItemIdentifier (ItemID, IdentifierID, IdentifierValue, CreationUserID, LastModifiedUserID)
 	SELECT	@ItemID, @IdentifierOCLCID, OCLC, @UserID, @UserID
@@ -291,7 +289,7 @@ BEGIN TRY
 	DELETE	ii
 	FROM	import.ImportRecord r INNER JOIN dbo.vwSegment s ON r.SegmentID = s.SegmentID
 			INNER JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID AND ii.IdentifierID = @IdentifierLCCNID
-	WHERE	r.ImportRecordID = @ImportRecordErrorID AND LCCN <> ''
+	WHERE	r.ImportRecordID = @ImportRecordID AND LCCN <> ''
 
 	INSERT	dbo.ItemIdentifier (ItemID, IdentifierID, IdentifierValue, CreationUserID, LastModifiedUserID)
 	SELECT	@ItemID, @IdentifierLCCNID, LCCN, @UserID, @UserID
@@ -300,7 +298,7 @@ BEGIN TRY
 	DELETE	ii
 	FROM	import.ImportRecord r INNER JOIN dbo.vwSegment s ON r.SegmentID = s.SegmentID
 			INNER JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID AND ii.IdentifierID = @IdentifierARKID
-	WHERE	r.ImportRecordID = @ImportRecordErrorID AND ARK <> ''
+	WHERE	r.ImportRecordID = @ImportRecordID AND ARK <> ''
 
 	INSERT	dbo.ItemIdentifier (ItemID, IdentifierID, IdentifierValue, CreationUserID, LastModifiedUserID)
 	SELECT	@ItemID, @IdentifierARKID, ARK, @UserID, @UserID
@@ -309,7 +307,7 @@ BEGIN TRY
 	DELETE	ii
 	FROM	import.ImportRecord r INNER JOIN dbo.vwSegment s ON r.SegmentID = s.SegmentID
 			INNER JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID AND ii.IdentifierID = @IdentifierBiostorID
-	WHERE	r.ImportRecordID = @ImportRecordErrorID AND Biostor <> ''
+	WHERE	r.ImportRecordID = @ImportRecordID AND Biostor <> ''
 
 	INSERT	dbo.ItemIdentifier (ItemID, IdentifierID, IdentifierValue, CreationUserID, LastModifiedUserID)
 	SELECT	@ItemID, @IdentifierBiostorID, Biostor, @UserID, @UserID
@@ -318,7 +316,7 @@ BEGIN TRY
 	DELETE	ii
 	FROM	import.ImportRecord r INNER JOIN dbo.vwSegment s ON r.SegmentID = s.SegmentID
 			INNER JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID AND ii.IdentifierID = @IdentifierJSTORID
-	WHERE	r.ImportRecordID = @ImportRecordErrorID AND JSTOR <> ''
+	WHERE	r.ImportRecordID = @ImportRecordID AND JSTOR <> ''
 
 	INSERT	dbo.ItemIdentifier (ItemID, IdentifierID, IdentifierValue, CreationUserID, LastModifiedUserID)
 	SELECT	@ItemID, @IdentifierJSTORID, JSTOR, @UserID, @UserID
@@ -327,7 +325,7 @@ BEGIN TRY
 	DELETE	ii
 	FROM	import.ImportRecord r INNER JOIN dbo.vwSegment s ON r.SegmentID = s.SegmentID
 			INNER JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID AND ii.IdentifierID = @IdentifierTL2ID
-	WHERE	r.ImportRecordID = @ImportRecordErrorID AND TL2 <> ''
+	WHERE	r.ImportRecordID = @ImportRecordID AND TL2 <> ''
 
 	INSERT	dbo.ItemIdentifier (ItemID, IdentifierID, IdentifierValue, CreationUserID, LastModifiedUserID)
 	SELECT	@ItemID, @IdentifierTL2ID, TL2, @UserID, @UserID
@@ -336,7 +334,7 @@ BEGIN TRY
 	DELETE	ii
 	FROM	import.ImportRecord r INNER JOIN dbo.vwSegment s ON r.SegmentID = s.SegmentID
 			INNER JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID AND ii.IdentifierID = @IdentifierWikidataID
-	WHERE	r.ImportRecordID = @ImportRecordErrorID AND Wikidata <> ''
+	WHERE	r.ImportRecordID = @ImportRecordID AND Wikidata <> ''
 
 	INSERT	dbo.ItemIdentifier (ItemID, IdentifierID, IdentifierValue, CreationUserID, LastModifiedUserID)
 	SELECT	@ItemID, @IdentifierWikidataID, Wikidata, @UserID, @UserID
@@ -427,8 +425,8 @@ BEGIN CATCH
 	WHERE	ImportRecordID = @ImportRecordID
 
 	-- Log the error
-	INSERT	import.ImportRecordErrorLog (ImportRecordID, ErrorDate, ErrorMessage, CreationUserID, LastModifiedUserID)
-	VALUES	(@ImportRecordID, GETDATE(), @ErrProc + ' (' + CONVERT(NVARCHAR(5), @ErrLine) + '): ' + @ErrMsg, @UserID, @UserID)
+	INSERT	import.ImportRecordErrorLog (ImportRecordID, ErrorDate, ErrorMessage, Severity, CreationUserID, LastModifiedUserID)
+	VALUES	(@ImportRecordID, GETDATE(), @ErrProc + ' (' + CONVERT(NVARCHAR(5), @ErrLine) + '): ' + @ErrMsg, 'Error', @UserID, @UserID)
 END CATCH
 
 END

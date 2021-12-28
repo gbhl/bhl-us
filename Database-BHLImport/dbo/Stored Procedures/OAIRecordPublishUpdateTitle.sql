@@ -10,13 +10,11 @@ BEGIN
 SET NOCOUNT ON
 
 DECLARE @IdentifierOAI int
-DECLARE @IdentifierISSN int
 DECLARE @IdentifierISBN int
 DECLARE @IdentifierLCCN int
 DECLARE @UniformTitle nvarchar(255)
 
 SELECT @IdentifierOAI = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'OAI'
-SELECT @IdentifierISSN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'ISSN'
 SELECT @IdentifierISBN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'ISBN'
 SELECT @IdentifierLCCN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'DLC'
 
@@ -157,7 +155,7 @@ BEGIN
 		DELETE FROM dbo.BHLTitle_Identifier WHERE TitleID = @ProductionTitleID AND IdentifierID <> @IdentifierOAI
 
 		INSERT dbo.BHLTitle_Identifier (TitleID, IdentifierID, IdentifierValue)
-		SELECT @ProductionTitleID, @IdentifierISSN, Issn FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID AND Issn <> ''
+		SELECT @ProductionTitleID, dbo.BHLfnGetISSNID(Issn), dbo.BHLfnGetISSNValue(Issn) FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID AND Issn <> ''
 
 		INSERT dbo.BHLTitle_Identifier (TitleID, IdentifierID, IdentifierValue)
 		SELECT @ProductionTitleID, @IdentifierISBN, Isbn FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID AND Isbn <> ''

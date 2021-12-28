@@ -103,11 +103,11 @@ namespace MOBOT.BHL.DOIDeposit
             {
                 content.AppendLine("<full_title>" + HttpUtility.HtmlEncode(Data.Title) + "</full_title>");
             }
-            if (!string.IsNullOrEmpty(Data.Issn))
+            foreach((string MediaType, string Value) issn in Data.Issn)
             {
-                content.AppendLine("<issn media_type=\"print\">" + HttpUtility.HtmlEncode(Data.Issn) + "</issn>");
+                content.AppendLine("<issn media_type=\"" + HttpUtility.HtmlEncode(issn.MediaType) + "\">" + HttpUtility.HtmlEncode(issn.Value) + "</issn>");
             }
-            else if (!string.IsNullOrEmpty(Data.TitleDOIName))
+            if (Data.Issn.Count == 0 && !string.IsNullOrWhiteSpace(Data.TitleDOIName))
             {
                 content.AppendLine("<doi_data>");
                 content.AppendLine("<doi>" + HttpUtility.HtmlEncode(Data.TitleDOIName) + "</doi>");

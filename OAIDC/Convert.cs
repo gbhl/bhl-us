@@ -247,6 +247,7 @@ namespace MOBOT.BHL.OAIDC
             if (!string.IsNullOrWhiteSpace(_oaiRecord.Url)) sb.Append("<dc:identifier>" + HttpUtility.HtmlEncode(_oaiRecord.Url) + "</dc:identifier>\n");
             if (!string.IsNullOrWhiteSpace(_oaiRecord.Doi)) sb.Append("<dc:identifier>info:doi/" + HttpUtility.HtmlEncode(_oaiRecord.Doi) + "</dc:identifier>\n");
             if (!string.IsNullOrWhiteSpace(_oaiRecord.Issn)) sb.Append("<dc:identifier>urn:ISSN:" + HttpUtility.HtmlEncode(_oaiRecord.Issn) + "</dc:identifier>\n");
+            if (!string.IsNullOrWhiteSpace(_oaiRecord.EIssn)) sb.Append("<dc:identifier>urn:ISSN:" + HttpUtility.HtmlEncode(_oaiRecord.EIssn) + "</dc:identifier>\n");
             if (!string.IsNullOrWhiteSpace(_oaiRecord.Isbn)) sb.Append("<dc:identifier>urn:ISBN:" + HttpUtility.HtmlEncode(_oaiRecord.Isbn) + "</dc:identifier>\n");
 
             // Source

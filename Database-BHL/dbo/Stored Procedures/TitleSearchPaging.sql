@@ -81,9 +81,9 @@ SET @SQL =
 			T.SortTitle
 			FROM (SELECT DISTINCT T.MARCBibID, T.TitleID, T.SortTitle
 				FROM dbo.Title T
-					INNER JOIN dbo.ItemTitle IT ON T.TitleID = IT.TitleID
-					INNER JOIN dbo.Item I ON IT.ItemID = I.ItemID
-					INNER JOIN dbo.Book B ON I.ItemID = B.ItemID
+					LEFT JOIN dbo.ItemTitle IT ON T.TitleID = IT.TitleID
+					LEFT JOIN dbo.Item I ON IT.ItemID = I.ItemID
+					LEFT JOIN dbo.Book B ON I.ItemID = B.ItemID
 '
 
 	SET @Sql = @Sql + @WhereClause

@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE dbo.IdentifierUpdateAuto
 
 @IdentifierID INT,
+@IdentifierType NVARCHAR(40),
 @IdentifierName NVARCHAR(40),
 @IdentifierLabel NVARCHAR(50),
 @Prefix NVARCHAR(100),
@@ -16,6 +17,7 @@ SET NOCOUNT ON
 
 UPDATE [dbo].[Identifier]
 SET
+	[IdentifierType] = @IdentifierType,
 	[IdentifierName] = @IdentifierName,
 	[IdentifierLabel] = @IdentifierLabel,
 	[Prefix] = @Prefix,
@@ -37,6 +39,7 @@ END
 ELSE BEGIN
 	SELECT
 		[IdentifierID],
+		[IdentifierType],
 		[IdentifierName],
 		[IdentifierLabel],
 		[Prefix],
@@ -54,4 +57,5 @@ ELSE BEGIN
 	
 	RETURN -- update successful
 END
+
 GO

@@ -8,6 +8,7 @@ SET NOCOUNT ON
 
 SELECT	
 	[IdentifierID],
+	[IdentifierType],
 	[IdentifierName],
 	[IdentifierLabel],
 	[Prefix],

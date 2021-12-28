@@ -78,7 +78,7 @@ UNION
 SELECT	AuditBasicID, ab.Operation, EntityName, 'title', t.TitleID, NULL, AuditDate
 FROM	audit.AuditBasic ab WITH (NOLOCK)
 		INNER JOIN dbo.Title_Identifier tid WITH (NOLOCK) ON ab.EntityKey1 = tid.TitleIdentifierID
-		INNER JOIN dbo.Identifier id WITH (NOLOCK) ON tid.IdentifierID = id.IdentifierID AND id.IdentifierName IN ('ISBN', 'ISSN')
+		INNER JOIN dbo.Identifier id WITH (NOLOCK) ON tid.IdentifierID = id.IdentifierID AND id.IdentifierType IN ('ISBN', 'ISSN')
 		INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON tid.TitleID = it.TitleID
 		INNER JOIN dbo.Item i WITH (NOLOCK) ON it.ItemID = i.ItemiD
 		INNER JOIN dbo.Title t WITH (NOLOCK) ON it.TitleID = t.TitleID

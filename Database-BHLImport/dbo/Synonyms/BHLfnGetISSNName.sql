@@ -1,0 +1,2 @@
+﻿CREATE SYNONYM dbo.BHLfnGetISSNName FOR BHL.dbo.fnGetISSNName
+GO

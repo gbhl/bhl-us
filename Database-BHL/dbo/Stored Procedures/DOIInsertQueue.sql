@@ -12,6 +12,9 @@ SET NOCOUNT ON
 DECLARE @DOIStatusQueuedID int
 SELECT @DOIStatusQueuedID = DOIStatusID FROM dbo.DOIStatus WHERE DOIStatusName = 'Queued'
 
+DECLARE @DOIStatusErrorID int
+SELECT @DOIStatusErrorID = DOIStatusID FROM dbo.DOIStatus WHERE DOIStatusName = 'Error'
+
 DECLARE @EntityTypeTitleID int, @EntityTypeSegmentID int
 SELECT @EntityTypeTitleID = DOIEntityTypeID FROM dbo.DOIEntityType WHERE DOIEntityTypeName = 'Title'
 SELECT @EntityTypeSegmentID = DOIEntityTypeID FROM dbo.DOIEntityType WHERE DOIEntityTypeName = 'Segment'
@@ -39,7 +42,7 @@ BEGIN
 				ON s.ItemID = ii.ItemID AND ii.IdentifierID = @DOIIdentifierID AND ii.IdentifierValue LIKE '%10.59265'
 	WHERE	d.EntityID = @EntityID
 	AND		d.DOIEntityTypeID = @DOIEntityTypeID
-	AND		d.DOIStatusID <> @DOIStatusQueuedID
+	AND		d.DOIStatusID NOT IN (@DOIStatusQueuedID, @DOIStatusErrorID)
 
 	INSERT INTO [dbo].[DOI]
 	( 	[DOIEntityTypeID],
@@ -59,7 +62,7 @@ BEGIN
 		@EntityID,
 		@DOIStatusQueuedID,
 		'', --DOIBatchID,
-		@DOIName,
+		ISNULL(@DOIName, ''),
 		getdate(),
 		'', --StatusMessage,
 		0,  --IsValid,

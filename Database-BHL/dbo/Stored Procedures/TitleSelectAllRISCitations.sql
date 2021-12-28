@@ -6,8 +6,9 @@ BEGIN
 
 SET NOCOUNT ON
 
-DECLARE @ISSNID int, @ISBNID int, @DOIID int
+DECLARE @ISSNID int, @EISSNID int, @ISBNID int, @DOIID int
 SELECT @ISSNID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'ISSN'
+SELECT @EISSNID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'eISSN'
 SELECT @ISBNID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'ISBN'
 SELECT @DOIID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'DOI'
 
@@ -24,7 +25,9 @@ SELECT	DISTINCT
 		c.Subjects AS Keywords,
 		ISNULL(doi.IdentifierValue, '') AS DOI,
 		ISNULL(t.EditionStatement, '') AS Edition,
-		ISNULL(isbn.IdentifierValue, ISNULL(issn.IdentifierValue, '')) AS ISSNISBN,
+		ISNULL(isbn.IdentifierValue, '') AS ISBN,
+		ISNULL(issn.IdentifierValue, '') AS ISSN,
+		ISNULL(eissn.IdentifierValue, '') AS EISSN,
 		ISNULL(l.LanguageName, '') AS [Language],
 		dbo.fnNoteStringForTitle(t.TitleID, '') AS Notes,
 		c.HasLocalContent,
@@ -34,6 +37,7 @@ FROM	dbo.Title t WITH (NOLOCK)
 		LEFT JOIN dbo.BibliographicLevel b WITH (NOLOCK) ON t.BibliographicLevelID = b.BibliographicLevelID
 		LEFT JOIN dbo.Title_Identifier isbn WITH (NOLOCK) ON t.TitleID = isbn.TitleID AND isbn.IdentifierID = @ISBNID
 		LEFT JOIN dbo.Title_Identifier issn WITH (NOLOCK) ON t.TitleID = issn.TitleID AND issn.IdentifierID = @ISSNID
+		LEFT JOIN dbo.Title_Identifier eissn WITH (NOLOCK) ON t.TitleID = eissn.TitleID AND eissn.IdentifierID = @EISSNID
 		LEFT JOIN dbo.Language l WITH (NOLOCK) ON t.LanguageCode = l.LanguageCode
 		LEFT JOIN dbo.Title_Identifier doi WITH (NOLOCK) ON t.TitleID = doi.TitleID AND doi.IdentifierID = @DOIID
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID
@@ -66,7 +70,9 @@ SELECT 	Genre,
 		Keywords,
 		DOI,
 		Edition,
-		MIN(ISSNISBN) AS ISSNISBN,
+		MIN(ISBN) AS ISBN,
+		MIN(ISSN) AS ISSN,
+		MIN(EISSN) AS EISSN,
 		[Language],
 		Notes,
 		MAX(HasLocalContent) AS HasLocalContent,

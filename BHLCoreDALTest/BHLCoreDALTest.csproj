@@ -44,6 +44,15 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BHLCoreDAL">
+      <HintPath>..\BHLCoreDAL\bin\Debug\BHLCoreDAL.dll</HintPath>
+    </Reference>
+    <Reference Include="BHLDataObjects">
+      <HintPath>..\BHLCoreDAL\bin\Debug\BHLDataObjects.dll</HintPath>
+    </Reference>
+    <Reference Include="CustomDataAccess">
+      <HintPath>..\BHLCoreDAL\bin\Debug\CustomDataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -92,20 +101,6 @@
     <Compile Include="TitleAssociationDALTest.cs" />
     <Compile Include="TitleCollectionDALTest.cs" />
     <Compile Include="TitleDALTest.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BHLCoreDAL\BHLCoreDAL.csproj">
-      <Project>{96BF5B64-D65D-43F2-A2F3-500F9E28FE53}</Project>
-      <Name>BHLCoreDAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj">
-      <Project>{65499E9E-4829-469E-8B5E-3F96012649AF}</Project>
-      <Name>BHLDataObjects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
-      <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
-      <Name>CustomDataAccess</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Shadow Include="Test References\BHLCoreDAL.accessor" />

@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE dbo.IdentifierInsertAuto
 
 @IdentifierID INT OUTPUT,
+@IdentifierType NVARCHAR(40),
 @IdentifierName NVARCHAR(40),
 @IdentifierLabel NVARCHAR(50),
 @Prefix NVARCHAR(100),
@@ -16,7 +17,8 @@ AS
 SET NOCOUNT ON
 
 INSERT INTO [dbo].[Identifier]
-( 	[IdentifierName],
+( 	[IdentifierType],
+	[IdentifierName],
 	[IdentifierLabel],
 	[Prefix],
 	[PatternExpression],
@@ -28,7 +30,8 @@ INSERT INTO [dbo].[Identifier]
 	[CreationUserID],
 	[LastModifiedUserID] )
 VALUES
-( 	@IdentifierName,
+( 	@IdentifierType,
+	@IdentifierName,
 	@IdentifierLabel,
 	@Prefix,
 	@PatternExpression,
@@ -51,6 +54,7 @@ END
 ELSE BEGIN
 	SELECT
 		[IdentifierID],
+		[IdentifierType],
 		[IdentifierName],
 		[IdentifierLabel],
 		[Prefix],
