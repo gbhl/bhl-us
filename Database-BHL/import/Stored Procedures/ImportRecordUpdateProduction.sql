@@ -237,7 +237,7 @@ BEGIN TRY
 
 	UPDATE	ir
 	SET		ParentID = @BookItemID,
-			SequenceOrder = (SELECT MAX(SequenceOrder) + 1 FROM dbo.ItemRelationship WHERE ParentID = @BookItemID),
+			SequenceOrder = (SELECT ISNULL(MAX(SequenceOrder), 0) + 1 FROM dbo.ItemRelationship WHERE ParentID = @BookItemID),
 			LastModifiedUserID = @UserID,
 			LastModifiedDate = GETDATE()
 	FROM	dbo.ItemRelationship ir
@@ -427,8 +427,8 @@ BEGIN CATCH
 	WHERE	ImportRecordID = @ImportRecordID
 
 	-- Log the error
-	INSERT	import.ImportRecordErrorLog (ImportRecordID, ErrorDate, ErrorMessage, CreationUserID, LastModifiedUserID)
-	VALUES	(@ImportRecordID, GETDATE(), @ErrProc + ' (' + CONVERT(NVARCHAR(5), @ErrLine) + '): ' + @ErrMsg, @UserID, @UserID)
+	INSERT	import.ImportRecordErrorLog (ImportRecordID, ErrorDate, ErrorMessage, Severity, CreationUserID, LastModifiedUserID)
+	VALUES	(@ImportRecordID, GETDATE(), @ErrProc + ' (' + CONVERT(NVARCHAR(5), @ErrLine) + '): ' + @ErrMsg, 'Error', @UserID, @UserID)
 END CATCH
 
 END
