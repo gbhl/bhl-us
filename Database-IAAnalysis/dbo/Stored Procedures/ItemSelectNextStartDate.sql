@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.ItemSelectNextStartDate
+﻿CREATE PROCEDURE [dbo].[ItemSelectNextStartDate]
 
 AS
 
@@ -10,11 +10,11 @@ BEGIN
 SET NOCOUNT ON
 
 SELECT TOP 1
-		DATEFROMPARTS(
+		DATEADD(day, -1, DATEFROMPARTS(
 	        DATEPART(YEAR, CreationDate), 
 			DATEPART(MONTH, CreationDate), 
-			DATEPART(DAY, CreationDate) - 1
-			) AS StartDate
+			DATEPART(DAY, CreationDate)
+			)) AS StartDate
 FROM    dbo.Item
 ORDER BY
         ItemID DESC
