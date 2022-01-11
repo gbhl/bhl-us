@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.DOIInsert
+﻿CREATE PROCEDURE [dbo].[DOIInsert]
 
 @DOIEntityTypeID int,
 @EntityID int,
@@ -34,6 +34,12 @@ BEGIN
 			VALUES	(@DOIEntityTypeID, @EntityID, @DOIStatusID, @DOIBatchID, @DOIName, GETDATE(), @StatusMessage, @IsValid, @UserID, @UserID)
 		END
 
+		-- If the DOI is a valid external DOI, then remove any DOI Queue entries for this entity
+		IF (@DOIStatusID = @DOIExternalStatusID AND @IsValid = 1)
+		BEGIN
+			DELETE FROM dbo.DOI WHERE DOIEntityTypeID = @DOIEntityTypeID AND EntityID = @EntityID
+		END
+
 		-- If DOI is approved or external, and is valid, then insert a record in the appropriate Identifier table
 		IF (@DOIStatusID = @DOIApprovedStatusID OR @DOIStatusID = @DOIExternalStatusID) AND @IsValid = 1
 		BEGIN
@@ -49,4 +55,5 @@ BEGIN
 		END
 	END
 END
+
 GO

@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[ApiTitleSelectByIdentifier]
 
-@IdentifierName nvarchar(40),
+@IdentifierType nvarchar(40),
 @IdentifierValue nvarchar(125)
 
 AS 
@@ -10,10 +10,8 @@ BEGIN
 SET NOCOUNT ON
 
 DECLARE @IdentifierIDDOI int
-SELECT @IdentifierIDDOI = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'DOI'
+SELECT @IdentifierIDDOI = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'DOI';
 
--- If the selected title has been redirected to a different title, then 
--- use that title instead.  Follow the "redirect" chain up to ten levels.
 SELECT	COALESCE(t10.TitleID, t9.TitleID, t8.TitleiD, t7.TitleID, t6.TitleID, 
 			t5.TitleID, t4.TitleID, t3.TitleID, t2.TitleID, t1.TitleID) AS TitleID
 INTO	#Title
@@ -29,7 +27,7 @@ FROM	dbo.Title t1
 		LEFT JOIN dbo.Title t8 ON t7.RedirectTitleID = t8.TitleID
 		LEFT JOIN dbo.Title t9 ON t8.RedirectTitleID = t9.TitleID
 		LEFT JOIN dbo.Title t10 ON t9.RedirectTitleID = t10.TitleID
-WHERE	i.IdentifierName = @IdentifierName
+WHERE	i.IdentifierType = @IdentifierType
 AND		ti.IdentifierValue = @IdentifierValue
 
 SELECT	t.TitleID,

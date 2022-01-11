@@ -447,6 +447,9 @@
     <None Include="dbo\Synonyms\BHLDOIDelete.sql" />
     <None Include="dbo\Synonyms\BHLDOIInsert.sql" />
     <None Include="dbo\Synonyms\BHLDOIUpdate.sql" />
+    <None Include="dbo\Synonyms\BHLfnGetISSNName.sql" />
+    <None Include="dbo\Synonyms\BHLfnGetISSNID.sql" />
+    <None Include="dbo\Synonyms\BHLfnGetISSNValue.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />

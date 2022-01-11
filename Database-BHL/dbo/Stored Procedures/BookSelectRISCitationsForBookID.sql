@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.BookSelectRISCitationsForBookID
+﻿CREATE PROCEDURE [dbo].[BookSelectRISCitationsForBookID]
 
 @BookID INT
 
@@ -10,9 +10,11 @@ SET NOCOUNT ON
 
 DECLARE @ISSNID int
 DECLARE @ISBNID int
+DECLARE @EISSNID int
 
 SELECT @ISSNID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'ISSN'
 SELECT @ISBNID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'ISBN'
+SELECT @EISSNID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'eISSN'
 
 SELECT	DISTINCT
 		ISNULL(bl.BibliographicLevelName, '') AS Genre,
@@ -29,7 +31,9 @@ SELECT	DISTINCT
 		c.Authors,
 		c.Subjects AS Keywords,
 		ISNULL(t.EditionStatement, '') AS Edition,
-		ISNULL(isbn.IdentifierValue, ISNULL(issn.IdentifierValue, '')) AS ISSNISBN,
+		ISNULL(isbn.IdentifierValue, '') AS ISBN,
+		ISNULL(issn.IdentifierValue, '') AS ISSN,
+		ISNULL(eissn.IdentifierValue, '') AS EISSN,
 		ISNULL(l.LanguageName, '') AS [Language],
 		dbo.fnNoteStringForTitle(t.TitleID, '') AS Notes
 INTO	#RIS
@@ -40,6 +44,7 @@ FROM	dbo.Title t WITH (NOLOCK)
 		LEFT JOIN dbo.BibliographicLevel bl WITH (NOLOCK) ON t.BibliographicLevelID = bl.BibliographicLevelID
 		LEFT JOIN dbo.Title_Identifier isbn WITH (NOLOCK) ON t.TitleID = isbn.TitleID AND isbn.IdentifierID = @ISBNID
 		LEFT JOIN dbo.Title_Identifier issn WITH (NOLOCK) ON t.TitleID = issn.TitleID AND issn.IdentifierID = @ISSNID
+		LEFT JOIN dbo.Title_Identifier eissn WITH (NOLOCK) ON t.TitleID = eissn.TitleID AND eissn.IdentifierID = @EISSNID
 		LEFT JOIN dbo.Language l WITH (NOLOCK) ON b.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND b.BookID = c.ItemID
 WHERE	b.BookID = @BookID
@@ -54,7 +59,9 @@ SELECT 	Genre,
 		Authors,
 		Keywords,
 		Edition,
-		MIN(ISSNISBN) AS ISSNISBN,
+		MIN(ISBN) AS ISBN,
+		MIN(ISSN) AS ISSN,
+		MIN(EISSN) AS EISSN,
 		[Language],
 		Notes
 FROM	#RIS

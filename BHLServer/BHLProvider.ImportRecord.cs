@@ -500,6 +500,19 @@ namespace MOBOT.BHL.Server
                 }
             }
 
+            // Make sure the ISSN is syntactically correct.  Ignore the values "NULL" if it is part of a segment update.
+            if (!string.IsNullOrWhiteSpace(citation.ISSN) &&
+                !(citation.ISSN.ToUpper().Trim() == "NULL" && citation.ImportSegmentID != null))
+            {
+                Identifier identifierDefinition = IdentifierSelectAll().Where(i => i.IdentifierName == "ISSN").Single();
+                IdentifierValidationResult idValidateResult = ValidateIdentifier(citation.ISSN, citation.ImportSegmentID == null, identifierDefinition);
+                if (!idValidateResult.IsValid)
+                {
+                    citation.Errors.Add(GetNewImportRecordError(string.Format("{0} is an invalid format.  {1}", citation.ISSN, identifierDefinition.PatternDescription)));
+                    isValid = false;
+                }
+            }
+
             // Make sure that DOIs are syntactically correct.  Ignore the value "NULL" if it is part of a segment update.
             if (!string.IsNullOrWhiteSpace(citation.DOI) &&
                 !(citation.DOI.ToUpper().Trim() == "NULL" && citation.ImportSegmentID != null))

@@ -313,6 +313,14 @@ namespace MOBOT.BHL.OAI2
             set { _issn = value; }
         }
 
+        String _eissn = String.Empty;
+
+        public String EIssn
+        {
+            get { return _eissn; }
+            set { _eissn = value; }
+        }
+
         String _isbn = String.Empty;
 
         public String Isbn
@@ -989,6 +997,9 @@ namespace MOBOT.BHL.OAI2
                     break;
                 case "issn":
                     record.Issn = identifierValue;
+                    break;
+                case "eissn":
+                    record.EIssn = identifierValue;
                     break;
                 case "isbn":
                     record.Isbn = identifierValue;

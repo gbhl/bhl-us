@@ -98,6 +98,12 @@
     <None Include="Connected Services\BHLWS\BHL.Export.MODS.BHLWS.DOI.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\BHLWS\BHL.Export.MODS.BHLWS.DOIUpdateBatchIDResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BHLWS\BHL.Export.MODS.BHLWS.DOIUpdateDOINameResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\BHLWS\BHL.Export.MODS.BHLWS.DOIUpdateStatusResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

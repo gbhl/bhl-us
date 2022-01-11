@@ -69,10 +69,9 @@ namespace MOBOT.BHL.DOIDeposit
             template = template.Replace("{depositor_email_address}", XmlEncode(Data.DepositorEmail));
 
             // Build the query_metadata content
-            if (!string.IsNullOrEmpty(Data.Issn))
-            {
-                content.Append("<issn match=\"optional\">" + XmlEncode(Data.Issn) + "</issn>");
-            }
+
+            // Only one ISSN is allowed per query, so if there are mulitple just use the first one
+            if (Data.Issn.Count > 0) content.Append("<issn match=\"optional\">" + XmlEncode(Data.Issn[0].Value) + "</issn>");
 
             string title = Data.Title;
             string pubDate = Data.ArticlePublicationDate;

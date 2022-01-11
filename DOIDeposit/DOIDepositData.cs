@@ -126,9 +126,9 @@ namespace MOBOT.BHL.DOIDeposit
             set { _isbn = value; }
         }
 
-        // Required for journals only
-        private string _issn = string.Empty;
-        public string Issn
+        // Required for journals only.  Tuple 
+        private List<(string MediaType, string Value)> _issn = new List<(string MediaType, string Value)>();
+        public List<(string MediaType, string Value)> Issn
         {
             get { return _issn; }
             set { _issn = value; }

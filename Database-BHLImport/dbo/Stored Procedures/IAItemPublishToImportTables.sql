@@ -923,8 +923,8 @@ BEGIN TRY
 	INSERT INTO #tmpTitleIdentifier
 	SELECT DISTINCT
 			t.ItemID,
-			'ISSN',
-			m.SubFieldValue
+			dbo.BHLfnGetISSNName(m.SubFieldValue),
+			dbo.BHLfnGetISSNValue(m.SubFieldValue)
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField m
 				ON t.ItemID = m.ItemID
 	WHERE	m.DataFieldTag = '022'
@@ -2113,8 +2113,9 @@ BEGIN TRY
 			ImportKey)
 		SELECT	10, @ImportSourceID, t.MARCTag, 
 				t.MARCIndicator2, t.Title, t.Section, t.Volume, 
-				t.Heading, t.Publication, t.Relationship, 'ISSN' as IdentifierName, 
-				LTRIM(RTRIM(REPLACE(m.SubFieldValue, ';', ''))) AS IdentifierValue,
+				t.Heading, t.Publication, t.Relationship, 
+				dbo.BHLfnGetISSNName(REPLACE(m.SubFieldValue, ';', '')) AS IdentifierName, 
+				dbo.BHLfnGetISSNValue(REPLACE(m.SubFieldValue, ';', '')) AS IdentifierValue,
 				CONVERT(nvarchar(50), t.ItemID)
 		FROM	#tmpTitleAssociation t INNER JOIN vwIAMarcDataField m
 					ON t.MarcDataFieldID = m.MarcDataFieldID

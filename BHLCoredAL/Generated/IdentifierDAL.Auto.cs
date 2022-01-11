@@ -1,5 +1,5 @@
 
-// Generated 12/9/2021 2:41:49 PM
+// Generated 12/29/2021 11:15:07 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class IdentifierDAL is based upon dbo.Identifier.
@@ -137,6 +137,7 @@ namespace MOBOT.BHL.DAL
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="identifierType"></param>
 		/// <param name="identifierName"></param>
 		/// <param name="identifierLabel"></param>
 		/// <param name="prefix"></param>
@@ -150,6 +151,7 @@ namespace MOBOT.BHL.DAL
 		public Identifier IdentifierInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
+			string identifierType,
 			string identifierName,
 			string identifierLabel,
 			string prefix,
@@ -160,7 +162,7 @@ namespace MOBOT.BHL.DAL
 			int? creationUserID,
 			int? lastModifiedUserID)
 		{
-			return IdentifierInsertAuto( sqlConnection, sqlTransaction, "BHL", identifierName, identifierLabel, prefix, patternExpression, patternDescription, maximumPerEntity, display, creationUserID, lastModifiedUserID );
+			return IdentifierInsertAuto( sqlConnection, sqlTransaction, "BHL", identifierType, identifierName, identifierLabel, prefix, patternExpression, patternDescription, maximumPerEntity, display, creationUserID, lastModifiedUserID );
 		}
 		
 		/// <summary>
@@ -169,6 +171,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="identifierType"></param>
 		/// <param name="identifierName"></param>
 		/// <param name="identifierLabel"></param>
 		/// <param name="prefix"></param>
@@ -183,6 +186,7 @@ namespace MOBOT.BHL.DAL
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
+			string identifierType,
 			string identifierName,
 			string identifierLabel,
 			string prefix,
@@ -198,6 +202,7 @@ namespace MOBOT.BHL.DAL
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IdentifierInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("IdentifierID", SqlDbType.Int, null, false),
+					CustomSqlHelper.CreateInputParameter("IdentifierType", SqlDbType.NVarChar, 40, false, identifierType),
 					CustomSqlHelper.CreateInputParameter("IdentifierName", SqlDbType.NVarChar, 40, false, identifierName),
 					CustomSqlHelper.CreateInputParameter("IdentifierLabel", SqlDbType.NVarChar, 50, false, identifierLabel),
 					CustomSqlHelper.CreateInputParameter("Prefix", SqlDbType.NVarChar, 100, false, prefix),
@@ -256,6 +261,7 @@ namespace MOBOT.BHL.DAL
 			Identifier value)
 		{
 			return IdentifierInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
+				value.IdentifierType,
 				value.IdentifierName,
 				value.IdentifierLabel,
 				value.Prefix,
@@ -335,6 +341,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="identifierID"></param>
+		/// <param name="identifierType"></param>
 		/// <param name="identifierName"></param>
 		/// <param name="identifierLabel"></param>
 		/// <param name="prefix"></param>
@@ -348,6 +355,7 @@ namespace MOBOT.BHL.DAL
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int identifierID,
+			string identifierType,
 			string identifierName,
 			string identifierLabel,
 			string prefix,
@@ -357,7 +365,7 @@ namespace MOBOT.BHL.DAL
 			short display,
 			int? lastModifiedUserID)
 		{
-			return IdentifierUpdateAuto( sqlConnection, sqlTransaction, "BHL", identifierID, identifierName, identifierLabel, prefix, patternExpression, patternDescription, maximumPerEntity, display, lastModifiedUserID);
+			return IdentifierUpdateAuto( sqlConnection, sqlTransaction, "BHL", identifierID, identifierType, identifierName, identifierLabel, prefix, patternExpression, patternDescription, maximumPerEntity, display, lastModifiedUserID);
 		}
 		
 		/// <summary>
@@ -367,6 +375,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="identifierID"></param>
+		/// <param name="identifierType"></param>
 		/// <param name="identifierName"></param>
 		/// <param name="identifierLabel"></param>
 		/// <param name="prefix"></param>
@@ -381,6 +390,7 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
 			int identifierID,
+			string identifierType,
 			string identifierName,
 			string identifierLabel,
 			string prefix,
@@ -395,6 +405,7 @@ namespace MOBOT.BHL.DAL
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IdentifierUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("IdentifierID", SqlDbType.Int, null, false, identifierID),
+					CustomSqlHelper.CreateInputParameter("IdentifierType", SqlDbType.NVarChar, 40, false, identifierType),
 					CustomSqlHelper.CreateInputParameter("IdentifierName", SqlDbType.NVarChar, 40, false, identifierName),
 					CustomSqlHelper.CreateInputParameter("IdentifierLabel", SqlDbType.NVarChar, 50, false, identifierLabel),
 					CustomSqlHelper.CreateInputParameter("Prefix", SqlDbType.NVarChar, 100, false, prefix),
@@ -453,6 +464,7 @@ namespace MOBOT.BHL.DAL
 		{
 			return IdentifierUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.IdentifierID,
+				value.IdentifierType,
 				value.IdentifierName,
 				value.IdentifierLabel,
 				value.Prefix,
@@ -505,7 +517,8 @@ namespace MOBOT.BHL.DAL
 				value.CreationUserID = userId;
 				value.LastModifiedUserID = userId;
 				Identifier returnValue = IdentifierInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
-					value.IdentifierName,
+					value.IdentifierType,
+						value.IdentifierName,
 						value.IdentifierLabel,
 						value.Prefix,
 						value.PatternExpression,
@@ -540,6 +553,7 @@ namespace MOBOT.BHL.DAL
 				value.LastModifiedUserID = userId;
 				Identifier returnValue = IdentifierUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.IdentifierID,
+						value.IdentifierType,
 						value.IdentifierName,
 						value.IdentifierLabel,
 						value.Prefix,

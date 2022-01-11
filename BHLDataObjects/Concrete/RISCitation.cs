@@ -113,10 +113,24 @@ namespace MOBOT.BHL.DataObjects
             set { _edition = value; }
         }
 
-        private string _issnIsbn = string.Empty;
-        public string IssnIsbn {
-            get { return _issnIsbn; }
-            set { _issnIsbn = value; }
+        private string _issn = string.Empty;
+        public string Issn {
+            get { return _issn; }
+            set { _issn = value; }
+        }
+
+        private string _eissn = string.Empty;
+        public string Eissn
+        {
+            get { return _eissn; }
+            set { _eissn = value; }
+        }
+
+        private string _isbn = string.Empty;
+        public string Isbn
+        {
+            get { return _isbn; }
+            set { _isbn = value; }
         }
 
         private string _language = string.Empty;
@@ -244,9 +258,19 @@ namespace MOBOT.BHL.DataObjects
                             Edition = Utility.EmptyIfNull((string)column.Value);
                             break;
                         }
-                    case "ISSNISBN":
+                    case "ISSN":
                         {
-                            IssnIsbn = Utility.EmptyIfNull((string)column.Value);
+                            Issn = Utility.EmptyIfNull((string)column.Value);
+                            break;
+                        }
+                    case "EISSN":
+                        {
+                            Eissn = Utility.EmptyIfNull((string)column.Value);
+                            break;
+                        }
+                    case "ISBN":
+                        {
+                            Isbn = Utility.EmptyIfNull((string)column.Value);
                             break;
                         }
                     case "Language":

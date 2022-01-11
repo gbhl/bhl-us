@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [dbo].[Identifier] (
     [IdentifierID]       INT           IDENTITY (1, 1) NOT NULL,
+    [IdentifierType]     NVARCHAR (40) CONSTRAINT [DF_Identifier_IdentifierType] DEFAULT ('') NOT NULL,
     [IdentifierName]     NVARCHAR (40) CONSTRAINT [DF_Identifier_IdentifierName] DEFAULT ('') NOT NULL,
     [IdentifierLabel]    NVARCHAR (50) CONSTRAINT [DF_Identifier_IdentifierLabel] DEFAULT ('') NOT NULL,
 	[Prefix]             NVARCHAR(100) CONSTRAINT [DF_Identifier_Prefix] DEFAULT ('') NOT NULL,

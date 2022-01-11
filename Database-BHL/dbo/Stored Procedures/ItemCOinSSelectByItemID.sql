@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ItemCOinSSelectByItemID]
+﻿CREATE PROCEDURE [dbo].[ItemCOinSSelectByItemID]
 
 @ItemID int
 
@@ -32,6 +31,7 @@ SELECT DISTINCT
 		,rft_edition
 		,rft_tpages
 		,rft_issn
+		,rft_eissn
 		,rft_coden
 		,rft_subject
 		,rft_contributor_ITEM
@@ -41,3 +41,5 @@ FROM	dbo.ItemCOinSView
 WHERE	ItemID = @ItemID
 
 END
+
+GO

@@ -1,9 +1,4 @@
-﻿SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE PROCEDURE [dbo].[ExportKBART]
+﻿CREATE PROCEDURE [dbo].[ExportKBART]
 
 @UrlRoot nvarchar(200) = 'http://www.biodiversitylibrary.org/bibliography/'
 
@@ -17,7 +12,7 @@ CREATE TABLE #kbart
 	(
 		publication_title nvarchar(2000) NULL DEFAULT(''),
 		print_identifier nvarchar(70) NULL DEFAULT(''),
-		online_identifier char(1) NULL DEFAULT(''),
+		online_identifier nvarchar(70) NULL DEFAULT(''),
 		date_first_issue_online nvarchar(5) NULL DEFAULT(''),
 		num_first_vol_online nvarchar(10) NULL DEFAULT(''),
 		num_first_issue_online nvarchar(10) NULL DEFAULT(''),
@@ -156,6 +151,11 @@ WHERE	tat.MARCTag = '780'
 AND		a.AssociatedTitleID IS NOT NULL
 
 -- Get print identifiers
+DECLARE @ISSNID int, @ISBNID int, @EISSNID int
+SELECT @ISSNID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'ISSN'
+SELECT @ISBNID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'ISBN'
+SELECT @EISSNID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'eISSN'
+
 UPDATE	#kbart
 SET		print_identifier = RTRIM(
 			CASE 
@@ -170,11 +170,30 @@ FROM	#kbart kb
 					MIN(ti.IdentifierValue) as IdentifierValue
 			FROM	#kbart k
 					INNER JOIN dbo.Title_Identifier ti WITH (NOLOCK) ON k.title_id = ti.TitleID
-			WHERE	(ti.IdentifierID = 2 -- ISSN
+			WHERE	(ti.IdentifierID = @ISSNID
 			AND		LEN(RTRIM(REPLACE(REPLACE(ti.IdentifierValue, '-', ''), ':', ''))) = 8)
 			OR
-					(ti.IdentifierID = 3 -- ISBN
+					(ti.IdentifierID = @ISBNID
 			AND		LEN(RTRIM(REPLACE(REPLACE(ti.IdentifierValue, '-', ''), ':', ''))) in (10, 13))
+			GROUP BY k.title_id
+		) x ON kb.title_id = x.title_id
+
+UPDATE	#kbart
+SET		online_identifier = RTRIM(
+			CASE 
+				WHEN CHARINDEX('(', x.IdentifierValue) > 1 
+				THEN LEFT(x.IdentifierValue, CHARINDEX('(', x.IdentifierValue) - 1) 
+				ELSE x.IdentifierValue 
+			END
+		)
+FROM	#kbart kb
+		INNER JOIN (
+			SELECT	k.title_id,
+					MIN(ti.IdentifierValue) as IdentifierValue
+			FROM	#kbart k
+					INNER JOIN dbo.Title_Identifier ti WITH (NOLOCK) ON k.title_id = ti.TitleID
+			WHERE	(ti.IdentifierID = @EISSNID
+			AND		LEN(RTRIM(REPLACE(REPLACE(ti.IdentifierValue, '-', ''), ':', ''))) = 8)
 			GROUP BY k.title_id
 		) x ON kb.title_id = x.title_id
 

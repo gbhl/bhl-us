@@ -127,12 +127,12 @@ namespace BHL.Export.RIS
                     // Move the newly created files to "production"
                     File.Delete(risFile);
                     File.Delete(risInternalFile);
-                    File.Move(risTempFile, risFile);
-                    File.Move(risInternalTempFile, risInternalFile);
+                    if (File.Exists(risTempFile)) File.Move(risTempFile, risFile);
+                    if (File.Exists(risInternalTempFile)) File.Move(risInternalTempFile, risInternalFile);
 
                     // Create a compressed version of the files
-                    new ExportFile(_log).Compress(risFile, risZipFile);
-                    new ExportFile(_log).Compress(risInternalFile, risInternalZipFile);
+                    if (File.Exists(risFile)) new ExportFile(_log).Compress(risFile, risZipFile);
+                    if (File.Exists(risInternalFile)) new ExportFile(_log).Compress(risInternalFile, risInternalZipFile);
                 }
             }
 
