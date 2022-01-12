@@ -260,7 +260,7 @@ namespace MOBOT.BHL.BHLMETSUpload
                     }
                     else
                     {
-                        this.LogMessage(string.Format("Error uploading file for {0} {1}", entityType, entityID), true);
+                        this.LogMessage(string.Format("Error uploading file for {0} {1} - {2}", entityType, entityID, putResult), true);
                     }
 
                     // Clear consecutive error count on "Success" or "403" message.  "403" is
