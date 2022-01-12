@@ -130,6 +130,21 @@ namespace MOBOT.BHL.Utility
             return isValid;
         }
 
+        public static bool ValidateSegmentVolumeIssue(string value)
+        {
+            bool isValid = true;
+
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                // XX or XX-YY or XX/YY
+                Regex regex = new Regex("^[0-9]+([/-][0-9]+)?$");
+                Match match = regex.Match(value);
+                isValid = match.Success;
+            }
+
+            return isValid;
+        }
+
         public static YearData ParseYearString(string year)
         {
             bool found = false;

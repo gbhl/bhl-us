@@ -1,5 +1,6 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Utility;
 using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
@@ -1498,6 +1499,32 @@ namespace MOBOT.BHL.AdminWeb
                     // Specified ID is not a valid integer value
                     flag = true;
                     errorControl.AddErrorText("Make sure the 'Start Page BHL ID' is a valid Page ID.");
+                }
+            }
+
+            if (volumeTextBox.Text.Trim().Length > 0)
+            {
+                if (DataCleaner.ValidateSegmentVolumeIssue(volumeTextBox.Text.Trim()))
+                {
+                    volumeTextBox.Text = volumeTextBox.Text.Trim();   // Remove spaces
+                }
+                else
+                {
+                    flag = true;
+                    errorControl.AddErrorText("Volume must be formatted as 'NN' or 'NN-NN' or 'NN/NN'.");
+                }
+            }
+
+            if (issueTextBox.Text.Trim().Length > 0)
+            {
+                if (DataCleaner.ValidateSegmentVolumeIssue(issueTextBox.Text.Trim()))
+                {
+                    issueTextBox.Text = issueTextBox.Text.Trim();   // Remove spaces
+                }
+                else
+                {
+                    flag = true;
+                    errorControl.AddErrorText("Issue must be formatted as 'NN' or 'NN-NN' or 'NN/NN'.");
                 }
             }
 

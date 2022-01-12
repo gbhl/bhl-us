@@ -1,5 +1,6 @@
 ﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -555,6 +556,30 @@ namespace MOBOT.BHL.Server
                             citation.Warnings.Add(GetNewImportRecordWarning(string.Format("BHL-assigned DOI {0} cannot be added via a batch update", citation.DOI)));
                         }
                     }
+                }
+            }
+
+            // Make sure that the Volume value is formatted correctly. Ignore the value "NULL" if it is part of a segment update.
+            if (!string.IsNullOrWhiteSpace(citation.Volume) &&
+                !(citation.Volume.ToUpper().Trim() == "NULL" && citation.ImportSegmentID != null))
+            {
+                if (!DataCleaner.ValidateSegmentVolumeIssue(citation.Volume))
+                {
+                    citation.Errors.Add(GetNewImportRecordError(
+                        String.Format("Volume {0} must be NN, NN-NN, or NN/NN.", citation.Volume)));
+                    isValid = false;
+                }
+            }
+
+            // Make sure that the Issue value is formatted correctly. Ignore the value "NULL" if it is part of a segment update.
+            if (!string.IsNullOrWhiteSpace(citation.Issue) &&
+                !(citation.Issue.ToUpper().Trim() == "NULL" && citation.ImportSegmentID != null))
+            {
+                if (!DataCleaner.ValidateSegmentVolumeIssue(citation.Issue))
+                {
+                    citation.Errors.Add(GetNewImportRecordError(
+                        String.Format("Issue {0} must be NN, NN-NN, or NN/NN.", citation.Issue)));
+                    isValid = false;
                 }
             }
 

@@ -345,12 +345,19 @@
 	}
 
 	function isVolIssValid(value, label, errField) {
-		var regex = RegExp('(^$|^\\d*$)');
-		var isValid = regex.test(value);
-		if (!isValid)
-			errField.html("<p>" + label + " must be a simple numeric value, with no prefix.</p>");
-		else
-			errField.html("");
+		isValid = true;
+		if (fetch) {
+			var opts = { method: 'GET', headers: {} };
+			fetch('/services/utilityservice.ashx?op=ValidateSegmentVolume&volume=' + encodeURIComponent(value), opts).then(function (response) {
+				return response.json();
+			})
+				.then(function (isValid) {
+					if (!isValid)
+                        errField.html("<p>" + label + " must be formatted as 'NN' or 'NN-NN' or 'NN/NN'.</p>");
+					else
+						errField.html("");
+				});
+		}
 		return isValid;
 	}
 
