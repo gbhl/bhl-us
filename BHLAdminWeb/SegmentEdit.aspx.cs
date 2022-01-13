@@ -403,9 +403,11 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     case 0:
                         ddlContributor.SelectedIndex = 0;
+                        ddlContributor2.SelectedIndex = 0;
                         break;
                     case 1:
                         ddlContributor.SelectedValue = segment.ContributorList[0].InstitutionCode;
+                        ddlContributor2.SelectedIndex = 0;
                         break;
                     default:    // 2 or more contributors (should only be two at most)
                         ddlContributor.SelectedValue = segment.ContributorList[0].InstitutionCode;
@@ -1526,6 +1528,13 @@ namespace MOBOT.BHL.AdminWeb
                     flag = true;
                     errorControl.AddErrorText("Issue must be formatted as 'NN' or 'NN-NN' or 'NN/NN'.");
                 }
+            }
+
+            // Make sure that at least one contributor has been specified
+            if (ddlContributor.SelectedValue == "" && ddlContributor2.SelectedValue == "")
+            {
+                flag = true;
+                errorControl.AddErrorText("At least one contributor must be selected");
             }
 
             // Validate other inputs

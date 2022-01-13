@@ -435,6 +435,16 @@ namespace MOBOT.BHL.Server
                 }
             }
 
+            // Make sure that at least one non-"NULL" contributor has been specified
+            //var nonNullContribs = citation.Contributors
+            //    .Where(c => c.InstitutionCode.ToUpper().Trim() != "NULL")
+            //    .ToList();
+            if (citation.Contributors.Count == 0 && citation.ImportSegmentID == null)
+            {
+                citation.Errors.Add(GetNewImportRecordError("At least one contributor must be specified"));
+                isValid = false;
+            }
+
             // If more than two contributors were specified, remove everything after the first two and alert the user.
             // This does NOT produce an invalid citation.
             if (citation.Contributors.Count > 2)
@@ -448,22 +458,15 @@ namespace MOBOT.BHL.Server
             {
                 ImportRecordContributor contributor = citation.Contributors[x];
 
-                if (contributor.InstitutionCode.ToUpper().Trim() == "NULL" && citation.ImportSegmentID != null)
+                string institutionCode = IsContributorValid(contributor.InstitutionCode);
+                if (institutionCode == null)
                 {
-                    // Nothing to do, since NULL specified as the "Contributors" value for an existing segment is a valid indication to delete all contributors from the segment.
+                    citation.Errors.Add(GetNewImportRecordError(string.Format("Contributor {0} is invalid", contributor.InstitutionCode)));
+                    isValid = false;
                 }
                 else
                 {
-                    string institutionCode = IsContributorValid(contributor.InstitutionCode);
-                    if (institutionCode == null)
-                    {
-                        citation.Errors.Add(GetNewImportRecordError(string.Format("Contributor {0} is invalid", contributor.InstitutionCode)));
-                        isValid = false;
-                    }
-                    else
-                    {
-                        citation.Contributors[x].InstitutionCode = institutionCode;
-                    }
+                    citation.Contributors[x].InstitutionCode = institutionCode;
                 }
             }
 
@@ -559,6 +562,14 @@ namespace MOBOT.BHL.Server
                 }
             }
 
+            // Make sure a Title is supplied during a segment addition, and is not being removed during a segment update
+            if ((string.IsNullOrWhiteSpace(citation.Title) && citation.ImportSegmentID == null) ||
+                (citation.Title.ToUpper().Trim() == "NULL" && citation.ImportSegmentID != null))
+            {
+                citation.Errors.Add(GetNewImportRecordError(string.Format("Title cannot be blank")));
+                isValid = false;
+            }
+
             // Make sure that the Volume value is formatted correctly. Ignore the value "NULL" if it is part of a segment update.
             if (!string.IsNullOrWhiteSpace(citation.Volume) &&
                 !(citation.Volume.ToUpper().Trim() == "NULL" && citation.ImportSegmentID != null))
@@ -566,7 +577,7 @@ namespace MOBOT.BHL.Server
                 if (!DataCleaner.ValidateSegmentVolumeIssue(citation.Volume))
                 {
                     citation.Errors.Add(GetNewImportRecordError(
-                        String.Format("Volume {0} must be NN, NN-NN, or NN/NN.", citation.Volume)));
+                        string.Format("Volume {0} must be NN, NN-NN, or NN/NN", citation.Volume)));
                     isValid = false;
                 }
             }
@@ -578,7 +589,7 @@ namespace MOBOT.BHL.Server
                 if (!DataCleaner.ValidateSegmentVolumeIssue(citation.Issue))
                 {
                     citation.Errors.Add(GetNewImportRecordError(
-                        String.Format("Issue {0} must be NN, NN-NN, or NN/NN.", citation.Issue)));
+                        string.Format("Issue {0} must be NN, NN-NN, or NN/NN", citation.Issue)));
                     isValid = false;
                 }
             }
