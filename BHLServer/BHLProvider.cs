@@ -16,8 +16,6 @@ using CustomDataAccess;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using MOBOT.FileAccess;
-using System.Web.ModelBinding;
-using System.Web.Hosting;
 using Newtonsoft.Json.Schema;
 using MOBOT.BHL.DataObjects.Enum;
 
@@ -27,14 +25,7 @@ namespace MOBOT.BHL.Server
     {
         public MOBOT.FileAccess.IFileAccessProvider GetFileAccessProvider(bool useRemoteProvider)
         {
-            if (useRemoteProvider)
-            {
-                return MOBOT.FileAccess.RemotingUtilities.RemotingHelper.GetRemotedFileAccessProvider();
-            }
-            else
-            {
-                return new MOBOT.FileAccess.FileAccessProvider();
-            }
+            return new MOBOT.FileAccess.FileAccessProvider();
         }
 
         public string GetTextUrl(bool useRemoteProvider, string textLocation)

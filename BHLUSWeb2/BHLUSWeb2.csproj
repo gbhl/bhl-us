@@ -37,6 +37,7 @@
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
     <Use64BitIISExpress />
+	<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -437,6 +438,7 @@
     <Content Include="Handlers\GetPartPdf.ashx" />
     <Content Include="Handlers\GetPartImages.ashx" />
     <Content Include="Handlers\GetPartText.ashx" />
+    <Content Include="libman.json" />
     <None Include="Service References\SiteService\SiteService1.disco" />
     <Content Include="tify\tify.html" />
     <Content Include="tify\tifysrc\supporters\sub-logo.svg" />
@@ -933,7 +935,6 @@
     <Compile Include="PageNotFound.aspx.designer.cs">
       <DependentUpon>PageNotFound.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recent.aspx.cs">
       <DependentUpon>Recent.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1060,6 +1061,10 @@
     <ProjectReference Include="..\BHLServer\BHLServer.csproj">
       <Project>{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}</Project>
       <Name>BHLServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLUtility\BHLUtility.csproj">
+      <Project>{270e7816-13ec-4d51-a27f-c959981b1275}</Project>
+      <Name>BHLUtility</Name>
     </ProjectReference>
     <ProjectReference Include="..\BHLWebUtilities\BHLWebUtilities.csproj">
       <Project>{7E1631E8-F28A-4F9E-97E4-F8A69522D9DD}</Project>

@@ -20,11 +20,7 @@ namespace MOBOT.BHL.Web2
             Master.bodyID = "body-home";
             Master.harmfulContentBannerVisible = false;
             
-            projectUpdateFeedLocation = ConfigurationManager.AppSettings["projectUpdatesFeedLocation"];
-
-            Page.Header.Controls.Add(ControlGenerator.GetRssFeedControl(projectUpdateFeedLocation,
-                ConfigurationManager.AppSettings["projectUpdatesRssTitle"]));
-            rssFeed.FeedLocation = projectUpdateFeedLocation;
+            rssFeed.FeedLocation = ConfigurationManager.AppSettings["projectUpdatesFeedLocation"];
 
             // Generate a random number betwee 1 - 9 to be used for home hero image
             Random rand = new Random();

@@ -1,150 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+<Project ToolsVersion="Current" Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MOBOT.BHL.Server</RootNamespace>
     <AssemblyName>MOBOT.BHL.Server</AssemblyName>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>mobot.snk</AssemblyOriginatorKeyFile>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <PublishUrl>http://localhost/MOBOT.BHL.Server/</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Web</InstallFrom>
-    <UpdateEnabled>true</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Design" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BHLProvider.AnnotatedPageType.cs" />
-    <Compile Include="BHLProvider.Annotation.cs" />
-    <Compile Include="BHLProvider.ApplicationCache.cs" />
-    <Compile Include="BHLProvider.AspNetUser.cs" />
-    <Compile Include="BHLProvider.Author.cs" />
-    <Compile Include="BHLProvider.AuthorRole.cs" />
-    <Compile Include="BHLProvider.AuthorType.cs" />
-    <Compile Include="BHLProvider.Book.cs" />
-    <Compile Include="BHLProvider.DOI.cs" />
-    <Compile Include="BHLProvider.EditHistory.cs" />
-    <Compile Include="BHLProvider.Identifier.cs" />
-    <Compile Include="BHLProvider.ImportRecord.cs" />
-    <Compile Include="BHLProvider.IndicatedPage.cs">
-    </Compile>
-    <Compile Include="BHLProvider.Institution.cs">
-    </Compile>
-    <Compile Include="BHLProvider.InstitutionGroup.cs" />
-    <Compile Include="BHLProvider.Item.cs">
-    </Compile>
-    <Compile Include="BHLProvider.ItemRelationsihp.cs" />
-    <Compile Include="BHLProvider.ItemSummaryView.cs">
-    </Compile>
-    <Compile Include="BHLProvider.Keyword.cs" />
-    <Compile Include="BHLProvider.MaterialType.cs" />
-    <Compile Include="BHLProvider.Name.cs" />
-    <Compile Include="BHLProvider.NameIdentifier.cs" />
-    <Compile Include="BHLProvider.NamePage.cs" />
-    <Compile Include="BHLProvider.NameResolved.cs" />
-    <Compile Include="BHLProvider.NoteType.cs" />
-    <Compile Include="BHLProvider.Page.cs">
-    </Compile>
-    <Compile Include="BHLProvider.PageSummary.cs">
-    </Compile>
-    <Compile Include="BHLProvider.PageType.cs">
-    </Compile>
-    <Compile Include="BHLProvider.Page_PageType.cs">
-    </Compile>
-    <Compile Include="BHLProvider.Report.cs" />
-    <Compile Include="BHLProvider.RISCitation.cs" />
-    <Compile Include="BHLProvider.Search.cs" />
-    <Compile Include="BHLProvider.Segment.cs" />
-    <Compile Include="BHLProvider.SegmentCOinS.cs" />
-    <Compile Include="BHLProvider.SegmentGenre.cs" />
-    <Compile Include="BHLProvider.SegmentPage.cs" />
-    <Compile Include="BHLProvider.SegmentResolutionLog.cs" />
-    <Compile Include="BHLProvider.SegmentStatus.cs" />
-    <Compile Include="BHLProvider.Stats.cs">
-    </Compile>
-    <Compile Include="BHLProvider.TextImportBatch.cs" />
-    <Compile Include="BHLProvider.TextImportBatchFile.cs" />
-    <Compile Include="BHLProvider.Title.cs">
-    </Compile>
-    <Compile Include="BHLProvider.TitleAuthor.cs" />
-    <Compile Include="BHLProvider.TitleInstitution.cs" />
-    <Compile Include="BHLProvider.TitleKeyword.cs" />
-    <Compile Include="BHLProvider.TitleNote.cs" />
-    <Compile Include="BHLProvider.TitleVariant.cs" />
-    <Compile Include="BHLProvider.Title_Identifier.cs" />
-    <Compile Include="BHLProvider.Vault.cs">
-    </Compile>
-    <Compile Include="BHLProvider.PageFlickr.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RomanNumerals.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BHLCoreDAL\BHLCoreDAL.csproj">
@@ -155,10 +19,6 @@
       <Project>{65499E9E-4829-469E-8B5E-3F96012649AF}</Project>
       <Name>BHLDataObjects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BHLFileAccessRemotingUtilities\BHLFileAccessRemotingUtilities.csproj">
-      <Project>{c4c907e6-860c-4684-aff3-26269bf193f3}</Project>
-      <Name>BHLFileAccessRemotingUtilities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BHLFileAccess\BHLFileAccess.csproj">
       <Project>{90020027-ad6a-4052-820e-057bebaa8e2e}</Project>
       <Name>BHLFileAccess</Name>
@@ -167,114 +27,9 @@
       <Project>{270e7816-13ec-4d51-a27f-c959981b1275}</Project>
       <Name>BHLUtility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BHLWebUtilities\BHLWebUtilities.csproj">
-      <Project>{7E1631E8-F28A-4F9E-97E4-F8A69522D9DD}</Project>
-      <Name>BHLWebUtilities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
       <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
       <Name>CustomDataAccess</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BHLProvider.AnnotatedItem.cs">
-    </Compile>
-    <Compile Include="BHLProvider.AnnotatedPage.cs">
-    </Compile>
-    <Compile Include="BHLProvider.AnnotatedTitle.cs">
-    </Compile>
-    <Compile Include="BHLProvider.ApiKey.cs">
-    </Compile>
-    <Compile Include="BHLProvider.BibliographicLevel.cs">
-    </Compile>
-    <Compile Include="BHLProvider.Collection.cs">
-    </Compile>
-    <Compile Include="BHLProvider.Configuration.cs">
-    </Compile>
-    <Compile Include="BHLProvider.cs">
-    </Compile>
-    <Compile Include="BHLProvider.ItemCOinS.cs">
-    </Compile>
-    <Compile Include="BHLProvider.ItemCollection.cs" />
-    <Compile Include="BHLProvider.ItemLanguage.cs">
-    </Compile>
-    <Compile Include="BHLProvider.ItemSource.cs">
-    </Compile>
-    <Compile Include="BHLProvider.Language.cs">
-    </Compile>
-    <Compile Include="BHLProvider.Marc.cs">
-    </Compile>
-    <Compile Include="BHLProvider.MarcControl.cs">
-    </Compile>
-    <Compile Include="BHLProvider.MarcDataField.cs">
-    </Compile>
-    <Compile Include="BHLProvider.MarcImportBatch.cs">
-    </Compile>
-    <Compile Include="BHLProvider.MarcSubField.cs">
-    </Compile>
-    <Compile Include="BHLProvider.MonthlyStats.cs">
-    </Compile>
-    <Compile Include="BHLProvider.OAIIdentifier.cs">
-    </Compile>
-    <Compile Include="BHLProvider.PageAnnotation.cs">
-    </Compile>
-    <Compile Include="BHLProvider.PDF.cs">
-    </Compile>
-    <Compile Include="BHLProvider.PDFPage.cs">
-    </Compile>
-    <Compile Include="BHLProvider.PDFStats.cs">
-    </Compile>
-    <Compile Include="BHLProvider.PDFStatus.cs">
-    </Compile>
-    <Compile Include="BHLProvider.ScanningRequest.cs">
-    </Compile>
-    <Compile Include="BHLProvider.TitleAssociation.cs">
-    </Compile>
-    <Compile Include="BHLProvider.TitleAssociationType.cs">
-    </Compile>
-    <Compile Include="BHLProvider.TitleCollection.cs" />
-    <Compile Include="BHLProvider.TitleItem.cs">
-    </Compile>
-    <Compile Include="BHLProvider.TitleLanguage.cs">
-    </Compile>
-    <Compile Include="BHLProvider.Title_TitleType.cs">
-    </Compile>
-    <Compile Include="BHLProvider.ItemStatus.cs">
-    </Compile>
-    <Compile Include="BHLProvider.ItemNameFileLog.cs">
-    </Compile>
-    <Compile Include="Year.cs" />
-    <Compile Include="BHLProvider.ImportFile.cs" />
-    <None Include="mobot.snk" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
 </Project>

@@ -77,17 +77,5 @@ namespace MOBOT.BHL.Web.Utilities
             control.Attributes.Remove(key);
             control.Attributes.Add(key, existingValue + value);
         }
-
-        public static HtmlGenericControl GetRssFeedControl(string location, string title)
-        {
-            HtmlGenericControl control = new HtmlGenericControl();
-            //<link title="Project Updates [RSS]" href="http://del.icio.us/rss/blog" type="application/rss+xml" rel="alternate" />
-            control.TagName = "link";
-            control.Attributes.Add("title", title);
-            control.Attributes.Add("href", location);
-            control.Attributes.Add("type", "application/rss+xml");
-            control.Attributes.Add("rel", "alternate");
-            return control;
-        }
     }
 }
