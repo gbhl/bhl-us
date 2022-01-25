@@ -157,8 +157,11 @@ namespace MOBOT.BHL.Server
 			// Parse the volume into its component parts.
 			// NOTE: Once a UI for the component parts of the volume string is available, the parsing should probably be removed from here.
 			VolumeData volumeData = DataCleaner.ParseVolumeString(book.Volume);
-			book.StartYear = string.IsNullOrWhiteSpace(book.StartYear) && string.IsNullOrWhiteSpace(book.EndYear) ? volumeData.StartYear : book.StartYear;
-			book.EndYear = string.IsNullOrWhiteSpace(book.StartYear) && string.IsNullOrWhiteSpace(book.EndYear) ? volumeData.EndYear : book.EndYear;
+			if (string.IsNullOrWhiteSpace(book.StartYear) && string.IsNullOrWhiteSpace(book.EndYear))
+			{
+				book.StartYear = volumeData.StartYear;
+				book.EndYear = volumeData.EndYear;
+			}
 			book.StartVolume = volumeData.StartVolume;
 			book.EndVolume = volumeData.EndVolume;
 			book.StartIssue = volumeData.StartIssue;
