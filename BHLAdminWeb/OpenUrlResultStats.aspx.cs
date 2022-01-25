@@ -5,7 +5,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHL.Utility;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -63,7 +63,7 @@ namespace MOBOT.BHL.AdminWeb
             DateTime startDate = DateTime.Parse(startDateTextBox.Text.Trim());
             DateTime endDate = DateTime.Parse(endDateTextBox.Text.Trim());
 
-            BHL.Web.Utilities.RequestLog requestLog = new BHL.Web.Utilities.RequestLog();
+            MOBOT.BHL.Utility.RequestLog requestLog = new MOBOT.BHL.Utility.RequestLog();
 
             _total = requestLog.SelectDateRangeTotal(applicationID, startDate, endDate);
 

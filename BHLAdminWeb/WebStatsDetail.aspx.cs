@@ -1,6 +1,6 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,7 +73,7 @@ namespace MOBOT.BHL.AdminWeb
             ViewState["OrderBy"] = _orderBy;
             ViewState["SortOrder"] = _sortOrder;
 
-            List<RequestLogRecord> rlList = new BHL.Web.Utilities.RequestLog().SelectStatDetails(applicationID, startDate, endDate, requestTypeId, 
+            List<RequestLogRecord> rlList = new MOBOT.BHL.Utility.RequestLog().SelectStatDetails(applicationID, startDate, endDate, requestTypeId, 
                 ipAddress, userId, (int)_orderBy * (_sortOrder == RequestLogSortOrder.Descending ? -1 : 1));
 
             List<APIKey> apiKeys = new BHLProvider().ApiKeySelectAll();

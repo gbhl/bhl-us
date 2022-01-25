@@ -84,7 +84,6 @@
     <Compile Include="ImportSource.cs">
       <DependentUpon>BHLImportModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="BHLImportModel.edmx">

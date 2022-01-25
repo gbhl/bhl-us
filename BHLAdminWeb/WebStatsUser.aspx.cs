@@ -1,6 +1,6 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +64,7 @@ namespace MOBOT.BHL.AdminWeb
             DateTime startDate = DateTime.Parse(startDateTextBox.Text.Trim());
             DateTime endDate = DateTime.Parse(endDateTextBox.Text.Trim());
 
-            BHL.Web.Utilities.RequestLog requestLog = new BHL.Web.Utilities.RequestLog();
+            MOBOT.BHL.Utility.RequestLog requestLog = new MOBOT.BHL.Utility.RequestLog();
 
             _total = requestLog.SelectDateRangeTotal(applicationID, startDate, endDate);
 

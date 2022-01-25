@@ -5,7 +5,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHL.Utility;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -61,7 +61,7 @@ namespace MOBOT.BHL.AdminWeb
             ViewState["OrderBy"] = _orderBy;
             ViewState["SortOrder"] = _sortOrder;
 
-            List<RequestLogRecord> rlList = new BHL.Web.Utilities.RequestLog().SelectStatDetails(applicationID, startDate, endDate, null,
+            List<RequestLogRecord> rlList = new MOBOT.BHL.Utility.RequestLog().SelectStatDetails(applicationID, startDate, endDate, null,
                 null, null, (int)_orderBy * (_sortOrder == RequestLogSortOrder.Descending ? -1 : 1));
 
             // Use LINQ to Entities to combine the detailed stats with the API Keys.  This will ensure that we
