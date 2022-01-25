@@ -574,39 +574,6 @@
             setInterval('fixIEDisplayIssue()', 1000);
         }
 
-        function selectPartToDownload() {
-            selectPagesToDownload();
-
-            // Pre-select part pages here
-            var index = $('#lstPages').attr('selectedIndex');
-            var selectedSegmentID = pages[index].SegmentID;
-            if (selectedSegmentID != null) {
-                var pdfPageCount = 0;
-                $.each(pages, function (index, value) {
-                    if (value.SegmentID === selectedSegmentID) {
-                        // Select the page
-                        var pdfPageIndex = $.inArray(index, pdfPages);
-                        if(pdfPageIndex < 0) {
-                            pdfPageCount = pdfPages.push(index);
-                            $('#ptb' + index).addClass('selected').attr('bt-xtitle', 'Remove from My PDF');
-                            if(!pdfBar.hasClass('active')) {
-                                pdfBar.removeClass('disabled').addClass('active').fadeTo(200, 1);
-                            }
-                            lastPdfIndex = index;
-                        }
-                    }
-                });
-                // Re-sort pdf pages
-                pdfPages.sort(function (a, b) { return (a - b); });
-
-                if (pdfPageCount > 0) updatePdfPageCounter(pdfPageCount);
-            }
-
-            // Default the PDF title field to the selected segment title
-            var segTitleLink = $("#articleTitleLink");
-            $("#tbTitle").val(segTitleLink.html());
-        }
-
         function cancelSelectPages() {
             if (actionMode == actionModeType.Read) return;
 
@@ -852,9 +819,6 @@
         });
         $(".selectpages").click(function(){
             selectPagesToDownload();
-        });
-        $(".selectpart").click(function () {
-            selectPartToDownload();
         });
         $(".cancelpdf", pdfBar).click(function(){
             cancelSelectPages();
@@ -1233,6 +1197,8 @@
             <% if (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) { %>
             if (pages[index].SegmentID != null) {
                 $(".selectpart").html("Download " + pages[index].GenreName);
+                $(".selectpart").attr("href", "/partpdf/" + pages[index].SegmentID);
+                $(".selectpart").attr("download", "part" + pages[index].SegmentID + ".pdf");
                 $(".selectpart").show();
                 $(".partcitelinklabel").html("CURRENT " + pages[index].GenreName.toUpperCase());
                 $(".partcitationlinks a.large-icon.ris").attr("href", "/handlers/risdownload.ashx?pid=" + pages[index].SegmentID);
