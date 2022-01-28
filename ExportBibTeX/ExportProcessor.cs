@@ -1,5 +1,5 @@
 ﻿using BHL.Export.BibTeX.BHLWS;
-using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -200,7 +200,7 @@ namespace BHL.Export.BibTeX
             if (pages != String.Empty && pages != "0") elements.Add(BibTeXRefElementName.PAGES, pages);
             if (keywords != String.Empty) elements.Add(BibTeXRefElementName.KEYWORDS, keywords);
 
-            MOBOT.BHL.Web.Utilities.BibTeX bibtex = new MOBOT.BHL.Web.Utilities.BibTeX(citationType, citationKey, elements);
+            MOBOT.BHL.Utility.BibTeX bibtex = new MOBOT.BHL.Utility.BibTeX(citationType, citationKey, elements);
             citationText = bibtex.GenerateReference();
 
             return citationText;

@@ -106,7 +106,6 @@
     <Compile Include="BHLWS.PDF.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj">
@@ -142,9 +141,6 @@
     <Content Include="gnfinder.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Remoting.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">
@@ -152,7 +148,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Remoting.config.template" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>

@@ -1,19 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29709.97
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLDataObjects", "BHLDataObjects\BHLDataObjects.csproj", "{65499E9E-4829-469E-8B5E-3F96012649AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLDataObjects", "BHLDataObjects\BHLDataObjects.csproj", "{65499E9E-4829-469E-8B5E-3F96012649AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLCoreDAL", "BHLCoreDAL\BHLCoreDAL.csproj", "{96BF5B64-D65D-43F2-A2F3-500F9E28FE53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLCoreDAL", "BHLCoreDAL\BHLCoreDAL.csproj", "{96BF5B64-D65D-43F2-A2F3-500F9E28FE53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLServer", "BHLServer\BHLServer.csproj", "{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLServer", "BHLServer\BHLServer.csproj", "{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLWebService", "BHLService\BHLWebService.csproj", "{B33B346A-953D-45FB-B76F-68E12346C9B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOIDeposit", "DOIDeposit\DOIDeposit.csproj", "{58AB270D-FF83-4CA0-A55A-49B176B08236}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLWebUtilities", "BHLWebUtilities\BHLWebUtilities.csproj", "{7E1631E8-F28A-4F9E-97E4-F8A69522D9DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLWebUtilities", "BHLWebUtilities\BHLWebUtilities.csproj", "{7E1631E8-F28A-4F9E-97E4-F8A69522D9DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLDOIService", "BHLDOIService\BHLDOIService.csproj", "{166D6CEE-D383-4FAA-B4F7-EB1587C13C7F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -27,20 +27,19 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLNameFileGenerator", "BHLNameFileGenerator\BHLNameFileGenerator.csproj", "{43C3EB45-3DD6-430F-8205-40A7BF2FDA6A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLPageNameRefresh", "BHLPageNameRefresh\BHLPageNameRefresh.csproj", "{9A4A5D63-EAF8-4B13-B030-4C387879A046}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B33B346A-953D-45FB-B76F-68E12346C9B3} = {B33B346A-953D-45FB-B76F-68E12346C9B3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLPDFGenerator", "BHLPDFGenerator\BHLPDFGenerator.csproj", "{55652FF0-F2B9-467C-AD14-C78D264D2DFF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IAUtilities", "IAUtilities\IAUtilities.csproj", "{DE3A52C7-11EF-4E87-ABBE-2792152C99BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomDataAccess", "CustomDataAccess\CustomDataAccess.csproj", "{28227DF3-62E5-46B2-BABB-C21684EA7425}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomDataAccess", "CustomDataAccess\CustomDataAccess.csproj", "{28227DF3-62E5-46B2-BABB-C21684EA7425}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFileAccess", "BHLFileAccess\BHLFileAccess.csproj", "{90020027-AD6A-4052-820E-057BEBAA8E2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLFileAccess", "BHLFileAccess\BHLFileAccess.csproj", "{90020027-AD6A-4052-820E-057BEBAA8E2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFileAccessService", "BHLFileAccessService\BHLFileAccessService.csproj", "{42F597BE-AADB-4712-9EE8-AA79C5686D0F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLUtility", "BHLUtility\BHLUtility.csproj", "{270E7816-13EC-4D51-A27F-C959981B1275}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFileAccessRemotingUtilities", "BHLFileAccessRemotingUtilities\BHLFileAccessRemotingUtilities.csproj", "{C4C907E6-860C-4684-AFF3-26269BF193F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLUtility", "BHLUtility\BHLUtility.csproj", "{270E7816-13EC-4D51-A27F-C959981B1275}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{90CB2D5B-206D-4DBC-BA36-8D8C2824D61B}"
 	ProjectSection(SolutionItems) = preProject
@@ -60,7 +59,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueUtility", "QueueUtilit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLSearchIndexer", "BHLSearchIndexer\BHLSearchIndexer.csproj", "{568DAE01-E793-4C78-96E6-A2B0236831A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextImportUtility", "TextImportUtility\TextImportUtility.csproj", "{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextImportUtility", "TextImportUtility\TextImportUtility.csproj", "{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLTextImportProcessor", "BHLTextImportProcessor\BHLTextImportProcessor.csproj", "{736A2991-6F3F-4431-9EA9-315E70D5CB13}"
 EndProject
@@ -99,6 +98,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportKBART", "ExportKBART\
 	ProjectSection(ProjectDependencies) = postProject
 		{B33B346A-953D-45FB-B76F-68E12346C9B3} = {B33B346A-953D-45FB-B76F-68E12346C9B3}
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAI2", "OAI2\OAI2.csproj", "{0CCCA0FE-D82C-406E-9113-191393E039F7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAIMODS", "OAIMODS\OAIMODS.csproj", "{1C13023A-C5FA-4C41-BD70-3F94CCD23167}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -260,16 +263,6 @@ Global
 		{90020027-AD6A-4052-820E-057BEBAA8E2E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{90020027-AD6A-4052-820E-057BEBAA8E2E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{90020027-AD6A-4052-820E-057BEBAA8E2E}.Release|x86.ActiveCfg = Release|Any CPU
-		{42F597BE-AADB-4712-9EE8-AA79C5686D0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42F597BE-AADB-4712-9EE8-AA79C5686D0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42F597BE-AADB-4712-9EE8-AA79C5686D0F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{42F597BE-AADB-4712-9EE8-AA79C5686D0F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{42F597BE-AADB-4712-9EE8-AA79C5686D0F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{42F597BE-AADB-4712-9EE8-AA79C5686D0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42F597BE-AADB-4712-9EE8-AA79C5686D0F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42F597BE-AADB-4712-9EE8-AA79C5686D0F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{42F597BE-AADB-4712-9EE8-AA79C5686D0F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{42F597BE-AADB-4712-9EE8-AA79C5686D0F}.Release|x86.ActiveCfg = Release|Any CPU
 		{270E7816-13EC-4D51-A27F-C959981B1275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{270E7816-13EC-4D51-A27F-C959981B1275}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{270E7816-13EC-4D51-A27F-C959981B1275}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -280,16 +273,6 @@ Global
 		{270E7816-13EC-4D51-A27F-C959981B1275}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{270E7816-13EC-4D51-A27F-C959981B1275}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{270E7816-13EC-4D51-A27F-C959981B1275}.Release|x86.ActiveCfg = Release|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|x86.ActiveCfg = Release|Any CPU
 		{5E39CA6D-AC40-4E77-8422-A072102F5A7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5E39CA6D-AC40-4E77-8422-A072102F5A7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E39CA6D-AC40-4E77-8422-A072102F5A7B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -474,6 +457,30 @@ Global
 		{3904AFCF-5EFD-4889-BB44-367ACA50A88C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{3904AFCF-5EFD-4889-BB44-367ACA50A88C}.Release|x86.ActiveCfg = Release|Any CPU
 		{3904AFCF-5EFD-4889-BB44-367ACA50A88C}.Release|x86.Build.0 = Release|Any CPU
+		{0CCCA0FE-D82C-406E-9113-191393E039F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CCCA0FE-D82C-406E-9113-191393E039F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CCCA0FE-D82C-406E-9113-191393E039F7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0CCCA0FE-D82C-406E-9113-191393E039F7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0CCCA0FE-D82C-406E-9113-191393E039F7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0CCCA0FE-D82C-406E-9113-191393E039F7}.Debug|x86.Build.0 = Debug|Any CPU
+		{0CCCA0FE-D82C-406E-9113-191393E039F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CCCA0FE-D82C-406E-9113-191393E039F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CCCA0FE-D82C-406E-9113-191393E039F7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0CCCA0FE-D82C-406E-9113-191393E039F7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0CCCA0FE-D82C-406E-9113-191393E039F7}.Release|x86.ActiveCfg = Release|Any CPU
+		{0CCCA0FE-D82C-406E-9113-191393E039F7}.Release|x86.Build.0 = Release|Any CPU
+		{1C13023A-C5FA-4C41-BD70-3F94CCD23167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C13023A-C5FA-4C41-BD70-3F94CCD23167}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C13023A-C5FA-4C41-BD70-3F94CCD23167}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1C13023A-C5FA-4C41-BD70-3F94CCD23167}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1C13023A-C5FA-4C41-BD70-3F94CCD23167}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1C13023A-C5FA-4C41-BD70-3F94CCD23167}.Debug|x86.Build.0 = Debug|Any CPU
+		{1C13023A-C5FA-4C41-BD70-3F94CCD23167}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C13023A-C5FA-4C41-BD70-3F94CCD23167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C13023A-C5FA-4C41-BD70-3F94CCD23167}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1C13023A-C5FA-4C41-BD70-3F94CCD23167}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1C13023A-C5FA-4C41-BD70-3F94CCD23167}.Release|x86.ActiveCfg = Release|Any CPU
+		{1C13023A-C5FA-4C41-BD70-3F94CCD23167}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

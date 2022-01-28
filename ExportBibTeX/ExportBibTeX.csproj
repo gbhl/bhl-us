@@ -52,12 +52,11 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="ExportProcessor.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BHLWebUtilities\BHLWebUtilities.csproj">
-      <Project>{7e1631e8-f28a-4f9e-97e4-f8a69522d9dd}</Project>
-      <Name>BHLWebUtilities</Name>
+    <ProjectReference Include="..\BHLUtility\BHLUtility.csproj">
+      <Project>{270e7816-13ec-4d51-a27f-c959981b1275}</Project>
+      <Name>BHLUtility</Name>
     </ProjectReference>
     <ProjectReference Include="..\ExportBase\ExportBase.csproj">
       <Project>{d8346831-da53-48c6-9a88-59ed4edc1a84}</Project>
