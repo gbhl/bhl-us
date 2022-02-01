@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2043
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLAdminWeb", "BHLAdminWeb\BHLAdminWeb.csproj", "{53463F60-2878-46CC-A088-0B09C8F55CC7}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -17,21 +17,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E49350
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLCoreDAL", "BHLCoreDAL\BHLCoreDAL.csproj", "{96BF5B64-D65D-43F2-A2F3-500F9E28FE53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLCoreDAL", "BHLCoreDAL\BHLCoreDAL.csproj", "{96BF5B64-D65D-43F2-A2F3-500F9E28FE53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLDataObjects", "BHLDataObjects\BHLDataObjects.csproj", "{65499E9E-4829-469E-8B5E-3F96012649AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLDataObjects", "BHLDataObjects\BHLDataObjects.csproj", "{65499E9E-4829-469E-8B5E-3F96012649AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomDataAccess", "CustomDataAccess\CustomDataAccess.csproj", "{28227DF3-62E5-46B2-BABB-C21684EA7425}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomDataAccess", "CustomDataAccess\CustomDataAccess.csproj", "{28227DF3-62E5-46B2-BABB-C21684EA7425}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLServer", "BHLServer\BHLServer.csproj", "{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLServer", "BHLServer\BHLServer.csproj", "{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLUtility", "BHLUtility\BHLUtility.csproj", "{270E7816-13EC-4D51-A27F-C959981B1275}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLUtility", "BHLUtility\BHLUtility.csproj", "{270E7816-13EC-4D51-A27F-C959981B1275}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLWebUtilities", "BHLWebUtilities\BHLWebUtilities.csproj", "{7E1631E8-F28A-4F9E-97E4-F8A69522D9DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLWebUtilities", "BHLWebUtilities\BHLWebUtilities.csproj", "{7E1631E8-F28A-4F9E-97E4-F8A69522D9DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFileAccess", "BHLFileAccess\BHLFileAccess.csproj", "{90020027-AD6A-4052-820E-057BEBAA8E2E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFileAccessRemotingUtilities", "BHLFileAccessRemotingUtilities\BHLFileAccessRemotingUtilities.csproj", "{C4C907E6-860C-4684-AFF3-26269BF193F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLFileAccess", "BHLFileAccess\BHLFileAccess.csproj", "{90020027-AD6A-4052-820E-057BEBAA8E2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLImportServer", "BHLImportServer\BHLImportServer.csproj", "{5D08C39C-54E8-42CE-BDA5-99B56DE972BB}"
 EndProject
@@ -89,10 +87,6 @@ Global
 		{90020027-AD6A-4052-820E-057BEBAA8E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90020027-AD6A-4052-820E-057BEBAA8E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90020027-AD6A-4052-820E-057BEBAA8E2E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5D08C39C-54E8-42CE-BDA5-99B56DE972BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5D08C39C-54E8-42CE-BDA5-99B56DE972BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D08C39C-54E8-42CE-BDA5-99B56DE972BB}.Release|Any CPU.ActiveCfg = Release|Any CPU

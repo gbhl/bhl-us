@@ -9,8 +9,6 @@ namespace MOBOT.FileAccess
     public interface IFileAccessProvider
     {
         string Echo(string toEcho);
-        byte[] GetSerializedImage(string path);
-        void SaveImage(byte[] buffer, string path);
         void SaveFile(byte[] buffer, string path);
         bool FileExists(string path);
         long GetFileSizeInKB(string path);

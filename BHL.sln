@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29418.71
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BEC97CEE-C95E-4C8E-9AEC-526D27C06EC6}"
 	ProjectSection(SolutionItems) = preProject
@@ -43,7 +43,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLUSWeb2", "BHLUSWeb2\BHLU
 		{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F} = {F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLUtility", "BHLUtility\BHLUtility.csproj", "{270E7816-13EC-4D51-A27F-C959981B1275}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLUtility", "BHLUtility\BHLUtility.csproj", "{270E7816-13EC-4D51-A27F-C959981B1275}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentResolver", "DocumentResolver\DocumentResolver.csproj", "{7AE91F63-3D78-4D12-821D-90050A816F66}"
 EndProject
@@ -54,8 +54,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomDataAccess", "CustomDataAccess\CustomDataAccess.csproj", "{28227DF3-62E5-46B2-BABB-C21684EA7425}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFileAccess", "BHLFileAccess\BHLFileAccess.csproj", "{90020027-AD6A-4052-820E-057BEBAA8E2E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFileAccessRemotingUtilities", "BHLFileAccessRemotingUtilities\BHLFileAccessRemotingUtilities.csproj", "{C4C907E6-860C-4684-AFF3-26269BF193F3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAIOLEF", "OAIOLEF\OAIOLEF.csproj", "{4EDB0375-9817-474B-9C3D-01A0867FCCD2}"
 EndProject
@@ -81,6 +79,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLApiDataObjects3", "BHLApiDataObjects3\BHLApiDataObjects3.csproj", "{C5A231C5-6079-4204-B023-AC180388C10A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IIIFUtility", "IIIFUtility\IIIFUtility.csproj", "{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueUtility", "QueueUtility\QueueUtility.csproj", "{79343FE4-0C40-40F5-AD7D-27234279959A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -304,16 +304,6 @@ Global
 		{90020027-AD6A-4052-820E-057BEBAA8E2E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{90020027-AD6A-4052-820E-057BEBAA8E2E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{90020027-AD6A-4052-820E-057BEBAA8E2E}.Release|x86.ActiveCfg = Release|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|x86.ActiveCfg = Release|Any CPU
 		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -418,6 +408,18 @@ Global
 		{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}.Release|x86.ActiveCfg = Release|Any CPU
 		{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}.Release|x86.Build.0 = Release|Any CPU
+		{79343FE4-0C40-40F5-AD7D-27234279959A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79343FE4-0C40-40F5-AD7D-27234279959A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79343FE4-0C40-40F5-AD7D-27234279959A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{79343FE4-0C40-40F5-AD7D-27234279959A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{79343FE4-0C40-40F5-AD7D-27234279959A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{79343FE4-0C40-40F5-AD7D-27234279959A}.Debug|x86.Build.0 = Debug|Any CPU
+		{79343FE4-0C40-40F5-AD7D-27234279959A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79343FE4-0C40-40F5-AD7D-27234279959A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79343FE4-0C40-40F5-AD7D-27234279959A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{79343FE4-0C40-40F5-AD7D-27234279959A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{79343FE4-0C40-40F5-AD7D-27234279959A}.Release|x86.ActiveCfg = Release|Any CPU
+		{79343FE4-0C40-40F5-AD7D-27234279959A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

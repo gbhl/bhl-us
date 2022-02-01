@@ -1227,7 +1227,7 @@ namespace MOBOT.BHL.API.BHLApi
             if (!isValid) detail = "[INVALID USER] " + detail;
 
             // Log the request.
-            new RequestLog().SaveRequestLog(_apiApplicationID, ipAddress, userID, (int)requestTypeID, detail);
+            new MOBOT.BHL.Utility.RequestLog().SaveRequestLog(_apiApplicationID, ipAddress, userID, (int)requestTypeID, detail);
 
             return isValid;
         }

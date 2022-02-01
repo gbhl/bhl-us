@@ -67,7 +67,6 @@
     <Compile Include="ConfigParms.cs" />
     <Compile Include="DOIProcessor.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\BHLWS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -36,7 +36,7 @@ namespace MOBOT.BHL.AdminWeb
             apiv2StatsLink.HRef = string.Format(apiv2StatsLink.HRef, ConfigurationManager.AppSettings["APIStatsAppID"]);
             apiv3StatsLink.HRef = string.Format(apiv3StatsLink.HRef, ConfigurationManager.AppSettings["APIV3StatsAppID"]);
             openurlStatsLink.HRef = string.Format(openurlStatsLink.HRef, ConfigurationManager.AppSettings["OpenUrlStatsAppID"]);
-            trafficStatsMenu.Visible = new BHL.Web.Utilities.RequestLog().Loaded; // Show the web stats menu if stats are available
+            trafficStatsMenu.Visible = new MOBOT.BHL.Utility.RequestLog().Loaded; // Show the web stats menu if stats are available
 
             // Get the PDF generation stats
             gvPDFGeneration.DataSource = bp.PDFStatsSelectOverview();

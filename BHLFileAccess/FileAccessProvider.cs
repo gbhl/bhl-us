@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.Drawing;
-using System.Drawing.Imaging;
+using System.Text;
 
 
 namespace MOBOT.FileAccess
@@ -13,49 +10,6 @@ namespace MOBOT.FileAccess
         public string Echo(string toEcho)
         {
             return toEcho;
-        }
-        public byte[] GetSerializedImage(string path)
-        {
-            Bitmap bitmap = null;
-            MemoryStream ms = null;
-            try
-            {
-                bitmap = new Bitmap(path);
-                ms = new MemoryStream();
-                bitmap.Save(ms, ImageFormat.Jpeg);
-                return ms.ToArray();
-            }
-            finally
-            {
-                if (bitmap != null)
-                    bitmap.Dispose();
-
-                if (ms != null)
-                    ms.Dispose();
-            }
-        }
-        public void SaveImage(byte[] buffer, string path)
-        {
-            MemoryStream ms = null;
-            Bitmap bitmap = null;
-            try
-            {
-                string filePathOnly = path.Substring(0, path.LastIndexOf("\\"));
-                if (!Directory.Exists(filePathOnly))
-                    Directory.CreateDirectory(filePathOnly);
-
-                ms = new MemoryStream(buffer);
-                bitmap = new Bitmap(ms);
-                bitmap.Save(path, ImageFormat.Jpeg);
-            }
-            finally
-            {
-                if (bitmap != null)
-                    bitmap.Dispose();
-
-                if (ms != null)
-                    ms.Dispose();
-            }
         }
 
         public void SaveFile(byte[] buffer, string path)

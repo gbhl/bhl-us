@@ -29,6 +29,7 @@
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -167,6 +168,9 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="netstandard">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
@@ -1221,10 +1225,6 @@
       <Project>{65499e9e-4829-469e-8b5e-3f96012649af}</Project>
       <Name>BHLDataObjects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BHLFileAccessRemotingUtilities\BHLFileAccessRemotingUtilities.csproj">
-      <Project>{c4c907e6-860c-4684-aff3-26269bf193f3}</Project>
-      <Name>BHLFileAccessRemotingUtilities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BHLFileAccess\BHLFileAccess.csproj">
       <Project>{90020027-ad6a-4052-820e-057bebaa8e2e}</Project>
       <Name>BHLFileAccess</Name>
@@ -1273,6 +1273,11 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\SiteService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NETStandard.Library">
+      <Version>2.0.3</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHL.Utility;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -59,7 +59,7 @@ namespace MOBOT.BHL.AdminWeb
                 requestTypeID = (int.Parse(RequestTypeList.SelectedValue));
             }
 
-            List<RequestLogHistoryStat> stats = new BHL.Web.Utilities.RequestLog().RequestHistorySelectByDateRangeAndRequestType(applicationID,
+            List<RequestLogHistoryStat> stats = new MOBOT.BHL.Utility.RequestLog().RequestHistorySelectByDateRangeAndRequestType(applicationID,
                 startDate, endDate, requestTypeID);
 
             Page.ClientScript.RegisterStartupScript(typeof(WebHistory), "WebHistoryJS", createInitJS(stats));
@@ -67,7 +67,7 @@ namespace MOBOT.BHL.AdminWeb
 
         private void fillRequestTypeCombo(int applicationID)
         {
-            BHL.Web.Utilities.RequestLog requestLog = new BHL.Web.Utilities.RequestLog();
+            MOBOT.BHL.Utility.RequestLog requestLog = new MOBOT.BHL.Utility.RequestLog();
 
             List<RequestType> requestTypes = requestLog.RequestTypeSelectByApplication(applicationID);
 
