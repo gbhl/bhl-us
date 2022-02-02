@@ -26,5 +26,13 @@
       <Project>{01e14d33-194f-4583-bae4-0af91a7be756}</Project>
       <Name>OAI2</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OAIDC\OAIDC.csproj" />
+    <ProjectReference Include="..\OAIMODS\OAIMODS.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 </Project>

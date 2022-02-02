@@ -6,12 +6,22 @@
       <section name="BHLFlickrTagHarvest.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false"/>
     </sectionGroup>
   </configSections>
+  <connectionStrings>
+    <add name="BHL" connectionString="DATABASE CONNECTION STRING" providerName="System.Data.SqlClient"/>
+    <add name="BHLImport" connectionString="DATABASE CONNECTION STRING" providerName="System.Data.SqlClient"/>
+  </connectionStrings>
   <appSettings>
     <add key="SMTPHost" value="SMTP SERVER NAME"/>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
     <add key="FlickrApiKey" value="FLICKR API KEY"/>
     <add key="BHLFlickrUserID" value="FLICKR USER ID"/>
+    <!-- HarvestTarget - Identifies which metadata to harvest
+      TAGS - Harvest Tags (including machine tags)
+      NOTES - Harvest Notes
+      ALL - Harvest Tags and Notes
+    -->
+    <add key="HarvestTarget" value="TAGS"/>
   </appSettings>
   <log4net>
     <!-- Define some output appenders -->
@@ -39,22 +49,6 @@
   <startup> 
         <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8" />
   </startup>
-  <system.serviceModel>
-    <bindings>
-      <basicHttpBinding>
-        <binding name="BHLWSSoap" maxReceivedMessageSize="655360000" />
-        <binding name="BHLImportWSSoap" />
-      </basicHttpBinding>
-    </bindings>
-    <client>
-      <endpoint address="http://localhost:26504/BHLWS.asmx" binding="basicHttpBinding"
-        bindingConfiguration="BHLWSSoap" contract="BHLWS.BHLWSSoap"
-        name="BHLWSSoap" />
-      <endpoint address="http://localhost:22542/BHLImportWS.asmx" binding="basicHttpBinding"
-        bindingConfiguration="BHLImportWSSoap" contract="BHLImportWS.BHLImportWSSoap"
-        name="BHLImportWSSoap" />
-    </client>
-  </system.serviceModel>
     <system.net>
       <mailSettings>
         <smtp deliveryMethod="Network">

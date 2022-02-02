@@ -156,17 +156,25 @@ namespace MOBOT.BHL.BHLOcrRefresh
         {
             string barcode = string.Empty;
 
-            BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-            BHLWS.Book book = client.BookSelectByItemID(Convert.ToInt32(itemID));
-            if (book != null)
+            try
             {
-                barcode = book.BarCode;
+                BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
+                BHLWS.Book book = client.BookSelectByItemID(Convert.ToInt32(itemID));
+                if (book != null)
+                {
+                    barcode = book.BarCode;
+                }
+                else
+                {
+                    BHLWS.Segment segment = client.SegmentSelectByItemID(Convert.ToInt32(itemID));
+                    if (segment != null) barcode = segment.BarCode;
+                }
             }
-            else
+            catch (Exception e)
             {
-                BHLWS.Segment segment = client.SegmentSelectByItemID(Convert.ToInt32(itemID));
-                if (segment != null) barcode = segment.BarCode;
+                this.LogMessage("Error getting barcode for item " + itemID, e);
             }
+
 
             return barcode;
         }
@@ -196,6 +204,10 @@ namespace MOBOT.BHL.BHLOcrRefresh
 
                 djvu = reader.ReadToEnd();
             }
+            catch (Exception e)
+            {
+                this.LogMessage("Error getting DJVU for item " + itemID, e);
+            }
             finally
             {
                 if (reader != null)
@@ -216,25 +228,32 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// <param name="barcode"></param>
         private void ConvertDjvuToXml(string djvu, string tempFolder, string barcode)
         {
-            StringBuilder sb = new StringBuilder(djvu);
-
-            // Shred the response into multiple "pages" (files) within the new directory
-            int startPosition = sb.ToString().IndexOf("<OBJECT");
-            int endPosition = sb.Length - 1;
-            int counter = 1;
-            while (startPosition != -1)
+            try
             {
-                sb.Remove(0, startPosition);
-                endPosition = sb.ToString().IndexOf("<MAP");
-                String pageText = sb.ToString().Substring(0, endPosition);
-                sb.Remove(0, endPosition);
+                StringBuilder sb = new StringBuilder(djvu);
 
-                String pageFile = string.Format("{0}\\{1}_{2}.xml", tempFolder, barcode, Convert.ToString(counter).PadLeft(4, '0'));
-                if (File.Exists(pageFile)) File.Delete(pageFile);
-                File.WriteAllText(pageFile, pageText);
+                // Shred the response into multiple "pages" (files) within the new directory
+                int startPosition = sb.ToString().IndexOf("<OBJECT");
+                int endPosition = sb.Length - 1;
+                int counter = 1;
+                while (startPosition != -1)
+                {
+                    sb.Remove(0, startPosition);
+                    endPosition = sb.ToString().IndexOf("<MAP");
+                    String pageText = sb.ToString().Substring(0, endPosition);
+                    sb.Remove(0, endPosition);
 
-                startPosition = sb.ToString().IndexOf("<OBJECT");
-                counter++;
+                    String pageFile = string.Format("{0}\\{1}_{2}.xml", tempFolder, barcode, Convert.ToString(counter).PadLeft(4, '0'));
+                    if (File.Exists(pageFile)) File.Delete(pageFile);
+                    File.WriteAllText(pageFile, pageText);
+
+                    startPosition = sb.ToString().IndexOf("<OBJECT");
+                    counter++;
+                }
+            }
+            catch (Exception e)
+            {
+                this.LogMessage("Error converting DJVU to XML for " + barcode, e);
             }
         }
 
@@ -245,27 +264,35 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// <param name="tempFolder"></param>
         private void TransformXmlToText(string tempFolder)
         {
-            String[] xmlFiles = Directory.GetFiles(tempFolder, "*.xml");
-            foreach (string xmlFile in xmlFiles)
+            try
             {
-                if (File.Exists(xmlFile + ".txt")) File.Delete(xmlFile + ".txt");
-
-                StringBuilder pageText = new StringBuilder();
-
-                string ocr = File.ReadAllText(xmlFile);
-                System.Xml.Linq.XDocument ocrXml = System.Xml.Linq.XDocument.Parse(ocr);
-
-                IEnumerable<System.Xml.Linq.XElement> lines = ocrXml.Root.Descendants("LINE");
-                foreach (System.Xml.Linq.XElement line in lines)
+                String[] xmlFiles = Directory.GetFiles(tempFolder, "*.xml");
+                foreach (string xmlFile in xmlFiles)
                 {
-                    IEnumerable<System.Xml.Linq.XElement> words = line.Descendants("WORD");
-                    foreach (System.Xml.Linq.XElement word in words) pageText.Append(word.Value + " ");
-                    pageText.AppendLine();
-                }
+                    if (File.Exists(xmlFile + ".txt")) File.Delete(xmlFile + ".txt");
 
-                File.WriteAllText(xmlFile.Replace(".xml", ".txt"), pageText.ToString());
-                File.Delete(xmlFile);
+                    StringBuilder pageText = new StringBuilder();
+
+                    string ocr = File.ReadAllText(xmlFile);
+                    System.Xml.Linq.XDocument ocrXml = System.Xml.Linq.XDocument.Parse(ocr);
+
+                    IEnumerable<System.Xml.Linq.XElement> lines = ocrXml.Root.Descendants("LINE");
+                    foreach (System.Xml.Linq.XElement line in lines)
+                    {
+                        IEnumerable<System.Xml.Linq.XElement> words = line.Descendants("WORD");
+                        foreach (System.Xml.Linq.XElement word in words) pageText.Append(word.Value + " ");
+                        pageText.AppendLine();
+                    }
+
+                    File.WriteAllText(xmlFile.Replace(".xml", ".txt"), pageText.ToString());
+                    File.Delete(xmlFile);
+                }
             }
+            catch (Exception e)
+            {
+                this.LogMessage("Error transforming XML to text", e);
+            }
+
         }
 
         /// <summary>
