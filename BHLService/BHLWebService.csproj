@@ -34,6 +34,7 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
+	<RestoreProjectStyle>PackageReference</RestoreProjectStyle>	
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -148,6 +149,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\BHLWebService %28Local%29.pubxml" />
+    <None Include="Properties\PublishProfiles\BHLWebServiceBeta %28Local%29.pubxml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
