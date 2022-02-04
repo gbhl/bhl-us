@@ -1,9 +1,11 @@
 ﻿using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Configuration;
 using System.IO;
 using System.Net;
+using System.Threading;
 using System.Web;
 
 namespace MOBOT.BHL.Web2
@@ -62,7 +64,7 @@ namespace MOBOT.BHL.Web2
             context.Response.Clear();
             context.Response.ClearContent();
             context.Response.ClearHeaders();
-            context.Response.Buffer = true;
+            //context.Response.Buffer = true;
             context.Response.ContentType = "application/pdf";
             context.Response.AddHeader("content-disposition", "filename=part" + id.ToString() + ".pdf");
 
@@ -73,7 +75,7 @@ namespace MOBOT.BHL.Web2
             }
             catch (WebException wex)
             {
-                if (stream != null) stream.Close();
+                if (stream != null) stream.Dispose();
 
                 string redirect = "~/error";
                 var response = wex.Response as HttpWebResponse;
@@ -89,15 +91,15 @@ namespace MOBOT.BHL.Web2
                 try
                 {
                     stream.CopyTo(context.Response.OutputStream);
-                    context.Response.Flush();
+                    //context.Response.BeginFlush(res => context.Response.EndFlush(res), Thread.CurrentThread.ManagedThreadId);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    context.Response.Redirect("~/error", true);
+                    ExceptionUtility.LogException(ex, "GetPartPDF.GetPregeneratedPdf");
                 }
                 finally
                 {
-                    stream.Close();
+                    stream.Dispose();
                 }
             }
             else
@@ -112,13 +114,7 @@ namespace MOBOT.BHL.Web2
         {
             SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
             byte[] pdf = service.GetItemPdf((int)ItemType.Segment, id);
-            return new MemoryStream(pdf);
-            /*
-            Stream pdf = null;
-            HttpWebResponse resp = this.HttpGet(url);
-            if (resp != null) pdf = resp.GetResponseStream();
-            return pdf;
-            */
+            return (pdf == null) ? null : new MemoryStream(pdf);
         }
 
         public bool IsReusable
