@@ -334,6 +334,10 @@ namespace MOBOT.BHL.Server
                     startPageID = startPageIDs[0].PageID;
                     citation.StartPageID = startPageID;
                 }
+                else
+                {
+                    citation.Warnings.Add(GetNewImportRecordWarning(string.Format("Start Page '{0}' could not be identified.", citation.StartPage)));
+                }
             }
 
             if (citation.ItemID != null && endPageID == -1 && !string.IsNullOrWhiteSpace(citation.EndPage) && !isVirtual)
@@ -344,6 +348,10 @@ namespace MOBOT.BHL.Server
                 {
                     endPageID = endPageIDs[0].PageID;
                     citation.EndPageID = endPageID;
+                }
+                else
+                {
+                    citation.Warnings.Add(GetNewImportRecordWarning(string.Format("End Page '{0}' could not be identified.", citation.EndPage)));
                 }
             }
 
@@ -357,6 +365,10 @@ namespace MOBOT.BHL.Server
                     startPageID = startPageIDs[0].PageID;
                     citation.StartPageID = startPageID;
                 }
+                else
+                {
+                    citation.Warnings.Add(GetNewImportRecordWarning(string.Format("Start Page '{0}' could not be identified.", citation.StartPage)));
+                }
             }
 
             if (citation.SegmentID != null && endPageID == -1 && !string.IsNullOrWhiteSpace(citation.EndPage))
@@ -366,6 +378,10 @@ namespace MOBOT.BHL.Server
                 {
                     endPageID = endPageIDs[0].PageID;
                     citation.EndPageID = endPageID;
+                }
+                else
+                {
+                    citation.Warnings.Add(GetNewImportRecordWarning(string.Format("End Page '{0}' could not be identified.", citation.EndPage)));
                 }
             }
 
