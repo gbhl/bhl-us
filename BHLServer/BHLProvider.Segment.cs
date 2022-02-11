@@ -19,11 +19,6 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSimpleSelectByAuthor(null, null, authorID);
         }
 
-        public List<Segment> SegmentSelectForAuthorID(int authorID)
-        {
-            return new SegmentDAL().SegmentSelectForAuthorID(null, null, authorID);
-        }
-
         public Tuple<int, List<Segment>> SegmentSelectForAuthorIDPaged(int authorID, int pageNum, int numPages, string sort)
         {
             return new SegmentDAL().SegmentSelectForAuthorIDPaged(null, null, authorID, pageNum, numPages, sort);
@@ -37,16 +32,6 @@ namespace MOBOT.BHL.Server
         public Tuple<int, List<Segment>> SegmentSelectByTitleLike(string title, int pageNum, int numPages, string sort)
         {
             return new SegmentDAL().SegmentSelectByTitleLike(null, null, title, pageNum, numPages, sort);
-        }
-
-        public List<Segment> SegmentSelectByTitleNotLike(string title)
-        {
-            return new SegmentDAL().SegmentSelectByTitleNotLike(null, null, title);
-        }
-
-        public List<Segment> SegmentSelectForKeyword(string keyword)
-        {
-            return new SegmentDAL().SegmentSelectForKeyword(null, null, keyword);
         }
 
         public Tuple<int, List<Segment>> SegmentSelectForKeywordPaged(string keyword, int pageNum, int numPages, string sort)
@@ -306,11 +291,6 @@ namespace MOBOT.BHL.Server
         public Tuple<int, List<Segment>> SegmentSelectByInstitutionAndStartsWith(string institutionCode, string startsWith, int pageNum, int numPages, string sort)
         {
             return new SegmentDAL().SegmentSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith, pageNum, numPages, sort);
-        }
-
-        public Tuple<int, List<Segment>> SegmentSelectByInstitutionAndStartsWithout(string institutionCode, string startsWith, int pageNum, int numPages, string sort)
-        {
-            return new SegmentDAL().SegmentSelectByInstitutionAndStartsWithout(null, null, institutionCode, startsWith, pageNum, numPages, sort);
         }
 
         public List<Segment> SegmentResolve(string doi, int startPageID)

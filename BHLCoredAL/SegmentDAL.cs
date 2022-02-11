@@ -150,32 +150,6 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        /// <summary>
-        /// Select detailed information about the segments associated with the specified author
-        /// </summary>
-        /// <param name="sqlConnection"></param>
-        /// <param name="sqlTransaction"></param>
-        /// <param name="authorId">Identifier of the author</param>
-        /// <returns>A list of type Segment</returns>
-        public List<Segment> SegmentSelectForAuthorID(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, int authorId)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(
-                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectForAuthorID", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("AuthorId", SqlDbType.Int, null, false, authorId)))
-            {
-                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
-                {
-                    List<Segment> list = helper.ExecuteReader(command);
-
-                    return list;
-                }
-            }
-        }
-
         public Tuple<int, List<Segment>> SegmentSelectForAuthorIDPaged(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
                 int authorId, int pageNum, int numPages, string sort)
         {
@@ -263,59 +237,6 @@ namespace MOBOT.BHL.DAL
                     // Get the total number of segments
                     int totalSegments = (int)command.Parameters[4].Value;
                     return new Tuple<int, List<Segment>>(totalSegments, list);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Select segments that do not start with the specified title string.  Can use regular expressions as argument
-        /// (as long as the expression is recognized by the SQL Server "LIKE" operator.
-        /// </summary>
-        /// <param name="sqlConnection"></param>
-        /// <param name="sqlTransaction"></param>
-        /// <param name="title"></param>
-        /// <returns></returns>
-        public List<Segment> SegmentSelectByTitleNotLike(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, string title)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(
-                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByTitleNotLike", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title)))
-            {
-                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
-                {
-                    List<Segment> list = helper.ExecuteReader(command);
-
-                    return list;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Select detailed information about the segments associated with the specified keyword
-        /// </summary>
-        /// <param name="sqlConnection"></param>
-        /// <param name="sqlTransaction"></param>
-        /// <param name="keyword">The keyword with which segments are associated</param>
-        /// <returns>A list of type Segment</returns>
-        public List<Segment> SegmentSelectForKeyword(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, string keyword)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(
-                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectForKeyword", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("Keyword", SqlDbType.NVarChar, 50, false, keyword)))
-            {
-                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
-                {
-                    List<Segment> list = helper.ExecuteReader(command);
-
-                    return list;
                 }
             }
         }
@@ -766,30 +687,6 @@ namespace MOBOT.BHL.DAL
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByInstitutionAndStartsWith", connection, transaction,
-                    CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
-                    CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith),
-                    CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
-                    CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
-                    CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
-                    CustomSqlHelper.CreateOutputParameter("TotalSegments", SqlDbType.Int, null, false)))
-            {
-                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
-                {
-                    // Get the page of segments
-                    List<Segment> list = helper.ExecuteReader(command);
-                    // Get the total number of segments for the author from the output parameter
-                    int totalSegments = (int)command.Parameters[5].Value;
-                    return new Tuple<int, List<Segment>>(totalSegments, list);
-                }
-            }
-        }
-
-        public Tuple<int, List<Segment>> SegmentSelectByInstitutionAndStartsWithout(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
-                        String institutionCode, String startsWith, int pageNum, int numPages, string sort)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByInstitutionAndStartsWithout", connection, transaction,
                     CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
                     CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith),
                     CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),

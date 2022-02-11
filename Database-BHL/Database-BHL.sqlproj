@@ -271,7 +271,6 @@
     <None Include="dbo\Stored Procedures\TropicosNamesResolvePage.sql" />
     <None Include="dbo\Stored Procedures\ApiPageSelectByItemID.sql" />
     <None Include="dbo\Stored Procedures\MarcSelectAuto.sql" />
-    <None Include="dbo\Stored Procedures\SegmentSelectByTitleNotLike.sql" />
     <None Include="annotation\Stored Procedures\AnnotatedTitleSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\ItemSelectByBarcode.sql" />
     <None Include="audit\Stored Procedures\AuditBasicSelectFromDateToNow.sql" />
@@ -473,7 +472,6 @@
     <None Include="dbo\Stored Procedures\Page_PageTypeUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\AuthorRoleInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\ItemSelectPagination.sql" />
-    <None Include="dbo\Stored Procedures\SegmentSelectForAuthorID.sql" />
     <None Include="dbo\Stored Procedures\CollectionSelectByItemID.sql" />
     <None Include="dbo\Stored Procedures\Page_PageTypeDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\AuthorRoleSelectAll.sql" />
@@ -818,7 +816,6 @@
     <None Include="annotation\Stored Procedures\AnnotationRelationDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\NamePageSelectByPageID.sql" />
     <None Include="dbo\Stored Procedures\TitleVariantSelectAuto.sql" />
-    <None Include="dbo\Stored Procedures\SegmentSelectForKeyword.sql" />
     <None Include="annotation\Stored Procedures\AnnotationInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\PDFSelectDuplicateForPdfID.sql" />
     <None Include="dbo\Stored Procedures\TitleVariantInsertAuto.sql" />
@@ -1197,7 +1194,6 @@
     <None Include="dbo\Stored Procedures\InstitutionSelectWithPublishedSegments.sql" />
     <None Include="dbo\Stored Procedures\TitleSelectByInstitutionAndStartsWithout.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectByInstitutionAndStartsWith.sql" />
-    <None Include="dbo\Stored Procedures\SegmentSelectByInstitutionAndStartsWithout.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\NoteType.sql" />

@@ -143,20 +143,6 @@ namespace BHLCoreDALTest
         }
 
         /// <summary>
-        ///A test for SegmentSelectForAuthorID
-        ///</summary>
-        [TestMethod()]
-        public void SegmentSelectForAuthorIDTest()
-        {
-            SegmentDAL target = new SegmentDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            int authorId = 45632;
-            CustomGenericList<Segment> actual = target.SegmentSelectForAuthorID(sqlConnection, sqlTransaction, authorId);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        /// <summary>
         ///A test for SegmentSelectPublished
         ///</summary>
         [TestMethod()]
@@ -213,20 +199,6 @@ namespace BHLCoreDALTest
             Assert.IsTrue(actual.Count > 0);
         }
 
-        /// <summary>
-        ///A test for SegmentSelectByTitleNotLike
-        ///</summary>
-        [TestMethod()]
-        public void SegmentSelectByTitleNotLikeTest()
-        {
-            SegmentDAL target = new SegmentDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            string title = "[a-z]";
-            CustomGenericList<Segment> actual = target.SegmentSelectByTitleNotLike(sqlConnection, sqlTransaction, title);
-            Assert.IsNotNull(actual);
-        }
-
         [TestMethod()]
         public void SegmentSelectByInstitutionAndStartsWithTest()
         {
@@ -237,29 +209,6 @@ namespace BHLCoreDALTest
             string startsWith = "N";
             CustomGenericList<Segment> actual = target.SegmentSelectByInstitutionAndStartsWith(sqlConnection, sqlTransaction, institutionCode, startsWith);
             Assert.IsTrue(actual.Count > 0);
-        }
-
-        [TestMethod()]
-        public void SegmentSelectByInstitutionAndStartsWithoutTest()
-        {
-            SegmentDAL target = new SegmentDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            string institutionCode = "BSTOR";
-            string startsWith = "N";
-            CustomGenericList<Segment> actual = target.SegmentSelectByInstitutionAndStartsWithout(sqlConnection, sqlTransaction, institutionCode, startsWith);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        [TestMethod()]
-        public void SegmentSelectForKeywordTest()
-        {
-            SegmentDAL target = new SegmentDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            string keyword = "test";
-            CustomGenericList<Segment> actual = target.SegmentSelectForKeyword(sqlConnection, sqlTransaction, keyword);
-            Assert.IsNotNull(actual);
         }
 
         [TestMethod()]
