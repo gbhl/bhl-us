@@ -15,8 +15,8 @@ namespace MOBOT.BHL.AdminWeb
 {
     public partial class SegmentEdit : System.Web.UI.Page
     {
-        private SortOrder _sortOrder = SortOrder.Ascending;
         protected string _virtualOnly = "false";
+        protected List<string> _warnings = new List<string>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -32,6 +32,7 @@ namespace MOBOT.BHL.AdminWeb
             ClientScript.RegisterClientScriptBlock(this.GetType(), "scptSelectRelatedSegment", "<script language='javascript'>function selectRelatedSegment(segmentId, clusterType, typeLabel) { document.getElementById('" + selectedRelatedSegments.ClientID + "').value+=segmentId+'|'; document.getElementById('" + selectedClusterType.ClientID + "').value=clusterType+'|'+typeLabel;}</script>");
 
             litMessage.Text = "";
+            litWarning.Text = "";
             errorControl.Visible = false;
             Page.MaintainScrollPositionOnPostBack = true;
 
@@ -62,16 +63,6 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         // Item has been removed
                         removeItem(idLabel.Text, itemIDLabel.Text);
-                        /*
-                        Segment segment = (Segment)Session["Segment" + idLabel.Text];
-                        foreach (ItemRelationship relationship in segment.RelationshipList)
-                        {
-                            if (segment.ItemID == relationship.ChildID && itemIDLabel.Text == relationship.BookID.ToString()) relationship.IsDeleted = true;
-                        }
-                        foreach (ItemPage page in segment.PageList) page.IsDeleted = true;
-                        bindSegmentPageData();
-                        Session["Segment" + segment.SegmentID.ToString()] = segment;
-                        */
                         itemIDLabel.Text = "";
                         itemDescLabel.Text = "Not Selected";
                         fillItemDetails("", "", "", "");
@@ -100,8 +91,6 @@ namespace MOBOT.BHL.AdminWeb
                         string.Join("-", (new string[] { book.StartIssue ?? string.Empty, book.EndIssue ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s))),
                         string.Join("-", (new string[] { book.StartSeries ?? string.Empty, book.EndSeries ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s))),
                         string.Join("-", (new string[] { book.StartYear ?? string.Empty, book.EndYear ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s))));
-                    //volumeTextBox.Text = book.Volume ?? string.Empty;
-                    //dateTextBox.Text = string.IsNullOrWhiteSpace(book.StartYear) ? (title.StartYear == null ? string.Empty : title.StartYear.ToString()) : book.StartYear;
 
                     // Update the list of segments associated with this item
                     Segment segment = (Segment)Session["Segment" + idLabel.Text];
@@ -635,26 +624,9 @@ namespace MOBOT.BHL.AdminWeb
                 if (itemIdentifierId == ii.ItemIdentifierID &&
                     identifierID == ii.IdentifierID &&
                     identifierValue == ii.IdentifierValue)
-                /*
-                if (itemIdentifierId == 0 && ii.ItemIdentifierID == 0 &&
-                    identifierID == 0 && ii.IdentifierID == 0 &&
-                    identifierValue == "" && ii.IdentifierValue == "")
-                */
                 {
                     return ii;
                 }
-                /*
-                if (itemIdentifierId == 0 && ii.ItemIdentifierID == 0 &&
-                    identifierID > 0 && identifierID == ii.IdentifierID &&
-                    identifierValue == ii.IdentifierValue)
-                {
-                    return ii;
-                }
-                else if (itemIdentifierId > 0 && ii.ItemIdentifierID == itemIdentifierId)
-                {
-                    return ii;
-                }
-                */
             }
 
             return null;
@@ -1428,6 +1400,12 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             litMessage.Text = "<span class='liveData'>Segment Saved.</span>";
+            if (_warnings.Count > 0)
+            {
+                string warningMessage = string.Empty;
+                foreach(string warning in _warnings) warningMessage += "<br/>" + warning;
+                litWarning.Text = string.Format("<span class='liveData'>{0}</span>", warningMessage);
+            }
             Page.MaintainScrollPositionOnPostBack = false;
         }
 
@@ -1436,6 +1414,7 @@ namespace MOBOT.BHL.AdminWeb
         private bool validate(Segment segment)
         {
             bool flag = false;
+            _warnings.Clear();
 
             // Check that all edits were completed
             if (authorsList.EditIndex != -1)
@@ -1494,6 +1473,24 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         flag = true;
                         errorControl.AddErrorText("Make sure the 'Start Page BHL ID' is a valid Page ID.");
+                    }
+                    else
+                    {
+                        // Make sure the StartpPageID is actually in the list of pages.  If it is not, replace the StartPageID with the Page ID of the first page.
+                        if (pagesList.Rows.Count > 0)
+                        {
+                            bool pageFound = false;
+                            foreach(DataKey page in pagesList.DataKeys)
+                            {
+                                if ((int)page.Values[1] == pageID) { pageFound = true; break; }
+                            }
+                            if (!pageFound)
+                            {
+                                _warnings.Add(String.Format("NOTE: The specified Start Page ID {0} is not part of this segment.  It has been replaced with {1}.", 
+                                    pageID.ToString(), pagesList.DataKeys[0].Values[1].ToString()));
+                                bhlStartPageIDTextBox.Text = pagesList.DataKeys[0].Values[1].ToString();
+                            }
+                        }
                     }
                 }
                 else

@@ -415,6 +415,7 @@
 <br />
 <mobot:ErrorControl runat="server" id="errorControl"></mobot:ErrorControl>
 <asp:Literal id="litMessage" runat="server"></asp:Literal>
+<asp:Literal ID="litWarning" runat="server"></asp:Literal>
 <br />
 <div class="box" style="padding: 5px;margin-right:15px">
 	<table cellpadding="4" width="100%">
