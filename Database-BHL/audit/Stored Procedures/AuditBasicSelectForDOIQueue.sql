@@ -169,7 +169,7 @@ SELECT	d.AuditID,
 		'DOI' AS [Queue],
 		d.AuditDate
 FROM	#DOI d
-		INNER JOIN dbo.Title_Identifier ti ON d.EntityID1 = ti.TitleID
+		INNER JOIN dbo.Title_Identifier ti ON d.EntityID1 = ti.TitleID AND ti.IdentifierValue LIKE '%10.5962%'
 		INNER JOIN dbo.Identifier id ON ti.IdentifierID = id.IdentifierID AND id.IdentifierName = 'DOI'
 WHERE	d.IndexEntity = 'title'
 UNION
@@ -182,7 +182,7 @@ SELECT	d.AuditID,
 		d.AuditDate
 FROM	#DOI d
 		INNER JOIN dbo.Segment s ON d.EntityID1 = s.SegmentID
-		INNER JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID
+		INNER JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID AND ii.IdentifierValue LIKE '%10.5962%'
 		INNER JOIN dbo.Identifier id ON ii.IdentifierID = id.IdentifierID AND id.IdentifierName = 'DOI'
 WHERE	d.IndexEntity = 'segment'
 ORDER BY AuditDate,
