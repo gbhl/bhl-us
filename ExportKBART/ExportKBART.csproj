@@ -91,6 +91,9 @@
     <None Include="Connected Services\BHLWS\BHL.Export.KBART.BHLWS.DOI.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\BHLWS\BHL.Export.KBART.BHLWS.DOIInsertIdentifierResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\BHLWS\BHL.Export.KBART.BHLWS.DOIUpdateBatchIDResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

@@ -78,6 +78,11 @@ namespace MOBOT.BHL.Server
                 doiEntityTypeId, entityId, doiStatusId, doiBatchId, doiName, DateTime.Now, message, isValid, userId, userId);
         }
 
+        public void DOIInsertIdentifier(int doiEntityTypeId, int entityID, string doiName, int? userId)
+        {
+            new DOIDAL().DOIInsertIdentifier(null, null, doiEntityTypeId, entityID, doiName, userId);
+        }
+
         public List<DOI> DOISelectByStatus(int doiStatusId, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
             return new DOIDAL().DOISelectByStatus(null, null, doiStatusId, numRows, pageNum, sortColumn, sortOrder);

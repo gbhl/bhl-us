@@ -232,5 +232,21 @@ namespace MOBOT.BHL.DAL
                 command.ExecuteNonQuery();
             }
         }
+
+        public void DOIInsertIdentifier(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int doiEntityTypeID, int entityID, string doiName, int? userID = 1)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.DOIInsertIdentifier", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("DOIEntityTypeID", SqlDbType.Int, null, false, doiEntityTypeID),
+                    CustomSqlHelper.CreateInputParameter("EntityID", SqlDbType.Int, null, false, entityID),
+                    CustomSqlHelper.CreateInputParameter("DOIName", SqlDbType.NVarChar, 50, false, doiName),
+                    CustomSqlHelper.CreateInputParameter("UserID", SqlDbType.Int, null, false, userID)))
+            {
+                command.ExecuteNonQuery();
+            }
+        }
     }
 }

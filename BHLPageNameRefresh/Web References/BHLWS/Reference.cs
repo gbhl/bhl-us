@@ -14,115 +14,21 @@
 #pragma warning disable 1591
 
 namespace MOBOT.BHL.PageNameRefresh.BHLWS {
-    using System;
-    using System.Web.Services;
     using System.Diagnostics;
-    using System.Web.Services.Protocols;
+    using System;
     using System.Xml.Serialization;
     using System.ComponentModel;
+    using System.Web.Services.Protocols;
+    using System.Web.Services;
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="BHLWSSoap", Namespace="http://www.mobot.org/")]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(CustomObjectBase))]
     public partial class BHLWS : System.Web.Services.Protocols.SoapHttpClientProtocol {
-        
-        private System.Threading.SendOrPostCallback MARCGetFileContentsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback MarcCreateFileOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback DOISelectSubmittedOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback TitleSelectWithoutSubmittedDOIOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback SegmentSelectWithoutSubmittedDOIOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback DOIInsertAutoOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback DOIUpdateStatusOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback DOIUpdateDOINameOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback DOIUpdateBatchIDOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback DOIGetFileContentsOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback DOISelectValidForTitleOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback IndicatedPageSaveOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback IndicatedPageDeleteAllForPageOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageSelectByItemIDOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageSelectFileNameByItemIDOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageMetadataSelectByItemIDOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageMetadataSelectBySegmentIDOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageSelectWithExpiredPageNamesByItemIDOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageSelectWithoutPageNamesByItemIDOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageSelectWithoutPageNamesOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageUpdateYearOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageUpdateVolumeOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageUpdateIssueOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageUpdateLastPageNameLookupDateOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageCheckForOcrTextOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageTextLogInsertForItemOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageFlickrSelectRandomOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageFlickrSelectAllOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageNameUpdateListOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback NamePageDeleteByItemIDOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PageTypeSelectAllOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback Page_PageTypeSaveOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback Page_PageTypeDeleteAllForPageOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback GetPaginationStatusPendingOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback GetPaginationStatusInProgressOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback GetPaginationStatusCompleteOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback GetPaginationStatusStringOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PDFSelectForFileCreationOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PDFSelectForDeletionOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PDFSelectDuplicateForPdfIDOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PDFPageSummaryViewSelectByPdfIDOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PDFUpdateGenerationInfoOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PDFUpdateFileDeletionOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PDFUpdatePdfStatusProcessingOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PDFUpdatePdfStatusGeneratedOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PDFUpdatePdfStatusErrorOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback PDFUpdatePdfStatusRejectedOperationCompleted;
         
         private System.Threading.SendOrPostCallback AnnotatedTitleSaveOperationCompleted;
         
@@ -252,6 +158,104 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
         
         private System.Threading.SendOrPostCallback MARCFileExistsOperationCompleted;
         
+        private System.Threading.SendOrPostCallback MARCGetFileContentsOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback MarcCreateFileOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback DOISelectSubmittedOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback TitleSelectWithoutSubmittedDOIOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback SegmentSelectWithoutSubmittedDOIOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback DOIInsertAutoOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback DOIInsertOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback DOIInsertIdentifierOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback DOIUpdateStatusOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback DOIUpdateDOINameOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback DOIUpdateBatchIDOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback DOIGetFileContentsOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback DOISelectValidForTitleOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback IndicatedPageSaveOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback IndicatedPageDeleteAllForPageOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageSelectByItemIDOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageSelectFileNameByItemIDOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageMetadataSelectByItemIDOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageMetadataSelectBySegmentIDOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageSelectWithExpiredPageNamesByItemIDOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageSelectWithoutPageNamesByItemIDOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageSelectWithoutPageNamesOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageUpdateYearOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageUpdateVolumeOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageUpdateIssueOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageUpdateLastPageNameLookupDateOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageCheckForOcrTextOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageTextLogInsertForItemOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageFlickrSelectRandomOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageFlickrSelectAllOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageNameUpdateListOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback NamePageDeleteByItemIDOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageTypeSelectAllOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback Page_PageTypeSaveOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback Page_PageTypeDeleteAllForPageOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetPaginationStatusPendingOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetPaginationStatusInProgressOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetPaginationStatusCompleteOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetPaginationStatusStringOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PDFSelectForFileCreationOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PDFSelectForDeletionOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PDFSelectDuplicateForPdfIDOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PDFPageSummaryViewSelectByPdfIDOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PDFUpdateGenerationInfoOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PDFUpdateFileDeletionOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PDFUpdatePdfStatusProcessingOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PDFUpdatePdfStatusGeneratedOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PDFUpdatePdfStatusErrorOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PDFUpdatePdfStatusRejectedOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -289,147 +293,6 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
                 this.useDefaultCredentialsSetExplicitly = true;
             }
         }
-        
-        /// <remarks/>
-        public event MARCGetFileContentsCompletedEventHandler MARCGetFileContentsCompleted;
-        
-        /// <remarks/>
-        public event MarcCreateFileCompletedEventHandler MarcCreateFileCompleted;
-        
-        /// <remarks/>
-        public event DOISelectSubmittedCompletedEventHandler DOISelectSubmittedCompleted;
-        
-        /// <remarks/>
-        public event TitleSelectWithoutSubmittedDOICompletedEventHandler TitleSelectWithoutSubmittedDOICompleted;
-        
-        /// <remarks/>
-        public event SegmentSelectWithoutSubmittedDOICompletedEventHandler SegmentSelectWithoutSubmittedDOICompleted;
-        
-        /// <remarks/>
-        public event DOIInsertAutoCompletedEventHandler DOIInsertAutoCompleted;
-        
-        /// <remarks/>
-        public event DOIUpdateStatusCompletedEventHandler DOIUpdateStatusCompleted;
-        
-        /// <remarks/>
-        public event DOIUpdateDOINameCompletedEventHandler DOIUpdateDOINameCompleted;
-        
-        /// <remarks/>
-        public event DOIUpdateBatchIDCompletedEventHandler DOIUpdateBatchIDCompleted;
-        
-        /// <remarks/>
-        public event DOIGetFileContentsCompletedEventHandler DOIGetFileContentsCompleted;
-        
-        /// <remarks/>
-        public event DOISelectValidForTitleCompletedEventHandler DOISelectValidForTitleCompleted;
-        
-        /// <remarks/>
-        public event IndicatedPageSaveCompletedEventHandler IndicatedPageSaveCompleted;
-        
-        /// <remarks/>
-        public event IndicatedPageDeleteAllForPageCompletedEventHandler IndicatedPageDeleteAllForPageCompleted;
-        
-        /// <remarks/>
-        public event PageSelectByItemIDCompletedEventHandler PageSelectByItemIDCompleted;
-        
-        /// <remarks/>
-        public event PageSelectFileNameByItemIDCompletedEventHandler PageSelectFileNameByItemIDCompleted;
-        
-        /// <remarks/>
-        public event PageMetadataSelectByItemIDCompletedEventHandler PageMetadataSelectByItemIDCompleted;
-        
-        /// <remarks/>
-        public event PageMetadataSelectBySegmentIDCompletedEventHandler PageMetadataSelectBySegmentIDCompleted;
-        
-        /// <remarks/>
-        public event PageSelectWithExpiredPageNamesByItemIDCompletedEventHandler PageSelectWithExpiredPageNamesByItemIDCompleted;
-        
-        /// <remarks/>
-        public event PageSelectWithoutPageNamesByItemIDCompletedEventHandler PageSelectWithoutPageNamesByItemIDCompleted;
-        
-        /// <remarks/>
-        public event PageSelectWithoutPageNamesCompletedEventHandler PageSelectWithoutPageNamesCompleted;
-        
-        /// <remarks/>
-        public event PageUpdateYearCompletedEventHandler PageUpdateYearCompleted;
-        
-        /// <remarks/>
-        public event PageUpdateVolumeCompletedEventHandler PageUpdateVolumeCompleted;
-        
-        /// <remarks/>
-        public event PageUpdateIssueCompletedEventHandler PageUpdateIssueCompleted;
-        
-        /// <remarks/>
-        public event PageUpdateLastPageNameLookupDateCompletedEventHandler PageUpdateLastPageNameLookupDateCompleted;
-        
-        /// <remarks/>
-        public event PageCheckForOcrTextCompletedEventHandler PageCheckForOcrTextCompleted;
-        
-        /// <remarks/>
-        public event PageTextLogInsertForItemCompletedEventHandler PageTextLogInsertForItemCompleted;
-        
-        /// <remarks/>
-        public event PageFlickrSelectRandomCompletedEventHandler PageFlickrSelectRandomCompleted;
-        
-        /// <remarks/>
-        public event PageFlickrSelectAllCompletedEventHandler PageFlickrSelectAllCompleted;
-        
-        /// <remarks/>
-        public event PageNameUpdateListCompletedEventHandler PageNameUpdateListCompleted;
-        
-        /// <remarks/>
-        public event NamePageDeleteByItemIDCompletedEventHandler NamePageDeleteByItemIDCompleted;
-        
-        /// <remarks/>
-        public event PageTypeSelectAllCompletedEventHandler PageTypeSelectAllCompleted;
-        
-        /// <remarks/>
-        public event Page_PageTypeSaveCompletedEventHandler Page_PageTypeSaveCompleted;
-        
-        /// <remarks/>
-        public event Page_PageTypeDeleteAllForPageCompletedEventHandler Page_PageTypeDeleteAllForPageCompleted;
-        
-        /// <remarks/>
-        public event GetPaginationStatusPendingCompletedEventHandler GetPaginationStatusPendingCompleted;
-        
-        /// <remarks/>
-        public event GetPaginationStatusInProgressCompletedEventHandler GetPaginationStatusInProgressCompleted;
-        
-        /// <remarks/>
-        public event GetPaginationStatusCompleteCompletedEventHandler GetPaginationStatusCompleteCompleted;
-        
-        /// <remarks/>
-        public event GetPaginationStatusStringCompletedEventHandler GetPaginationStatusStringCompleted;
-        
-        /// <remarks/>
-        public event PDFSelectForFileCreationCompletedEventHandler PDFSelectForFileCreationCompleted;
-        
-        /// <remarks/>
-        public event PDFSelectForDeletionCompletedEventHandler PDFSelectForDeletionCompleted;
-        
-        /// <remarks/>
-        public event PDFSelectDuplicateForPdfIDCompletedEventHandler PDFSelectDuplicateForPdfIDCompleted;
-        
-        /// <remarks/>
-        public event PDFPageSummaryViewSelectByPdfIDCompletedEventHandler PDFPageSummaryViewSelectByPdfIDCompleted;
-        
-        /// <remarks/>
-        public event PDFUpdateGenerationInfoCompletedEventHandler PDFUpdateGenerationInfoCompleted;
-        
-        /// <remarks/>
-        public event PDFUpdateFileDeletionCompletedEventHandler PDFUpdateFileDeletionCompleted;
-        
-        /// <remarks/>
-        public event PDFUpdatePdfStatusProcessingCompletedEventHandler PDFUpdatePdfStatusProcessingCompleted;
-        
-        /// <remarks/>
-        public event PDFUpdatePdfStatusGeneratedCompletedEventHandler PDFUpdatePdfStatusGeneratedCompleted;
-        
-        /// <remarks/>
-        public event PDFUpdatePdfStatusErrorCompletedEventHandler PDFUpdatePdfStatusErrorCompleted;
-        
-        /// <remarks/>
-        public event PDFUpdatePdfStatusRejectedCompletedEventHandler PDFUpdatePdfStatusRejectedCompleted;
         
         /// <remarks/>
         public event AnnotatedTitleSaveCompletedEventHandler AnnotatedTitleSaveCompleted;
@@ -624,1434 +487,151 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
         public event MARCFileExistsCompletedEventHandler MARCFileExistsCompleted;
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/MARCGetFileContents", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string MARCGetFileContents(int id, string type) {
-            object[] results = this.Invoke("MARCGetFileContents", new object[] {
-                        id,
-                        type});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void MARCGetFileContentsAsync(int id, string type) {
-            this.MARCGetFileContentsAsync(id, type, null);
-        }
-        
-        /// <remarks/>
-        public void MARCGetFileContentsAsync(int id, string type, object userState) {
-            if ((this.MARCGetFileContentsOperationCompleted == null)) {
-                this.MARCGetFileContentsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnMARCGetFileContentsOperationCompleted);
-            }
-            this.InvokeAsync("MARCGetFileContents", new object[] {
-                        id,
-                        type}, this.MARCGetFileContentsOperationCompleted, userState);
-        }
-        
-        private void OnMARCGetFileContentsOperationCompleted(object arg) {
-            if ((this.MARCGetFileContentsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.MARCGetFileContentsCompleted(this, new MARCGetFileContentsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/MarcCreateFile", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void MarcCreateFile(string marcBibID, string content) {
-            this.Invoke("MarcCreateFile", new object[] {
-                        marcBibID,
-                        content});
-        }
-        
-        /// <remarks/>
-        public void MarcCreateFileAsync(string marcBibID, string content) {
-            this.MarcCreateFileAsync(marcBibID, content, null);
-        }
-        
-        /// <remarks/>
-        public void MarcCreateFileAsync(string marcBibID, string content, object userState) {
-            if ((this.MarcCreateFileOperationCompleted == null)) {
-                this.MarcCreateFileOperationCompleted = new System.Threading.SendOrPostCallback(this.OnMarcCreateFileOperationCompleted);
-            }
-            this.InvokeAsync("MarcCreateFile", new object[] {
-                        marcBibID,
-                        content}, this.MarcCreateFileOperationCompleted, userState);
-        }
-        
-        private void OnMarcCreateFileOperationCompleted(object arg) {
-            if ((this.MarcCreateFileCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.MarcCreateFileCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOISelectSubmitted", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public DOI[] DOISelectSubmitted(int minutesSinceSubmit) {
-            object[] results = this.Invoke("DOISelectSubmitted", new object[] {
-                        minutesSinceSubmit});
-            return ((DOI[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void DOISelectSubmittedAsync(int minutesSinceSubmit) {
-            this.DOISelectSubmittedAsync(minutesSinceSubmit, null);
-        }
-        
-        /// <remarks/>
-        public void DOISelectSubmittedAsync(int minutesSinceSubmit, object userState) {
-            if ((this.DOISelectSubmittedOperationCompleted == null)) {
-                this.DOISelectSubmittedOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOISelectSubmittedOperationCompleted);
-            }
-            this.InvokeAsync("DOISelectSubmitted", new object[] {
-                        minutesSinceSubmit}, this.DOISelectSubmittedOperationCompleted, userState);
-        }
-        
-        private void OnDOISelectSubmittedOperationCompleted(object arg) {
-            if ((this.DOISelectSubmittedCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DOISelectSubmittedCompleted(this, new DOISelectSubmittedCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/TitleSelectWithoutSubmittedDOI", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public DOI[] TitleSelectWithoutSubmittedDOI(int numberToReturn) {
-            object[] results = this.Invoke("TitleSelectWithoutSubmittedDOI", new object[] {
-                        numberToReturn});
-            return ((DOI[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void TitleSelectWithoutSubmittedDOIAsync(int numberToReturn) {
-            this.TitleSelectWithoutSubmittedDOIAsync(numberToReturn, null);
-        }
-        
-        /// <remarks/>
-        public void TitleSelectWithoutSubmittedDOIAsync(int numberToReturn, object userState) {
-            if ((this.TitleSelectWithoutSubmittedDOIOperationCompleted == null)) {
-                this.TitleSelectWithoutSubmittedDOIOperationCompleted = new System.Threading.SendOrPostCallback(this.OnTitleSelectWithoutSubmittedDOIOperationCompleted);
-            }
-            this.InvokeAsync("TitleSelectWithoutSubmittedDOI", new object[] {
-                        numberToReturn}, this.TitleSelectWithoutSubmittedDOIOperationCompleted, userState);
-        }
-        
-        private void OnTitleSelectWithoutSubmittedDOIOperationCompleted(object arg) {
-            if ((this.TitleSelectWithoutSubmittedDOICompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.TitleSelectWithoutSubmittedDOICompleted(this, new TitleSelectWithoutSubmittedDOICompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/SegmentSelectWithoutSubmittedDOI", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public DOI[] SegmentSelectWithoutSubmittedDOI(int numberToReturn) {
-            object[] results = this.Invoke("SegmentSelectWithoutSubmittedDOI", new object[] {
-                        numberToReturn});
-            return ((DOI[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void SegmentSelectWithoutSubmittedDOIAsync(int numberToReturn) {
-            this.SegmentSelectWithoutSubmittedDOIAsync(numberToReturn, null);
-        }
-        
-        /// <remarks/>
-        public void SegmentSelectWithoutSubmittedDOIAsync(int numberToReturn, object userState) {
-            if ((this.SegmentSelectWithoutSubmittedDOIOperationCompleted == null)) {
-                this.SegmentSelectWithoutSubmittedDOIOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSegmentSelectWithoutSubmittedDOIOperationCompleted);
-            }
-            this.InvokeAsync("SegmentSelectWithoutSubmittedDOI", new object[] {
-                        numberToReturn}, this.SegmentSelectWithoutSubmittedDOIOperationCompleted, userState);
-        }
-        
-        private void OnSegmentSelectWithoutSubmittedDOIOperationCompleted(object arg) {
-            if ((this.SegmentSelectWithoutSubmittedDOICompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.SegmentSelectWithoutSubmittedDOICompleted(this, new SegmentSelectWithoutSubmittedDOICompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOIInsertAuto", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public DOI DOIInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId, string doiName, string message, short isValid, int userId) {
-            object[] results = this.Invoke("DOIInsertAuto", new object[] {
-                        doiEntityTypeId,
-                        entityId,
-                        doiStatusId,
-                        doiBatchId,
-                        doiName,
-                        message,
-                        isValid,
-                        userId});
-            return ((DOI)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void DOIInsertAutoAsync(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId, string doiName, string message, short isValid, int userId) {
-            this.DOIInsertAutoAsync(doiEntityTypeId, entityId, doiStatusId, doiBatchId, doiName, message, isValid, userId, null);
-        }
-        
-        /// <remarks/>
-        public void DOIInsertAutoAsync(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId, string doiName, string message, short isValid, int userId, object userState) {
-            if ((this.DOIInsertAutoOperationCompleted == null)) {
-                this.DOIInsertAutoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOIInsertAutoOperationCompleted);
-            }
-            this.InvokeAsync("DOIInsertAuto", new object[] {
-                        doiEntityTypeId,
-                        entityId,
-                        doiStatusId,
-                        doiBatchId,
-                        doiName,
-                        message,
-                        isValid,
-                        userId}, this.DOIInsertAutoOperationCompleted, userState);
-        }
-        
-        private void OnDOIInsertAutoOperationCompleted(object arg) {
-            if ((this.DOIInsertAutoCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DOIInsertAutoCompleted(this, new DOIInsertAutoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOIUpdateStatus", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<short> setValid, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<int> userId) {
-            object[] results = this.Invoke("DOIUpdateStatus", new object[] {
-                        doiID,
-                        doiStatusId,
-                        message,
-                        setValid,
-                        userId});
-            return ((DOI)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void DOIUpdateStatusAsync(int doiID, int doiStatusId, string message, System.Nullable<short> setValid, System.Nullable<int> userId) {
-            this.DOIUpdateStatusAsync(doiID, doiStatusId, message, setValid, userId, null);
-        }
-        
-        /// <remarks/>
-        public void DOIUpdateStatusAsync(int doiID, int doiStatusId, string message, System.Nullable<short> setValid, System.Nullable<int> userId, object userState) {
-            if ((this.DOIUpdateStatusOperationCompleted == null)) {
-                this.DOIUpdateStatusOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOIUpdateStatusOperationCompleted);
-            }
-            this.InvokeAsync("DOIUpdateStatus", new object[] {
-                        doiID,
-                        doiStatusId,
-                        message,
-                        setValid,
-                        userId}, this.DOIUpdateStatusOperationCompleted, userState);
-        }
-        
-        private void OnDOIUpdateStatusOperationCompleted(object arg) {
-            if ((this.DOIUpdateStatusCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DOIUpdateStatusCompleted(this, new DOIUpdateStatusCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOIUpdateDOIName", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<int> userId) {
-            object[] results = this.Invoke("DOIUpdateDOIName", new object[] {
-                        doiID,
-                        doiStatusId,
-                        doiName,
-                        userId});
-            return ((DOI)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void DOIUpdateDOINameAsync(int doiID, int doiStatusId, string doiName, System.Nullable<int> userId) {
-            this.DOIUpdateDOINameAsync(doiID, doiStatusId, doiName, userId, null);
-        }
-        
-        /// <remarks/>
-        public void DOIUpdateDOINameAsync(int doiID, int doiStatusId, string doiName, System.Nullable<int> userId, object userState) {
-            if ((this.DOIUpdateDOINameOperationCompleted == null)) {
-                this.DOIUpdateDOINameOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOIUpdateDOINameOperationCompleted);
-            }
-            this.InvokeAsync("DOIUpdateDOIName", new object[] {
-                        doiID,
-                        doiStatusId,
-                        doiName,
-                        userId}, this.DOIUpdateDOINameOperationCompleted, userState);
-        }
-        
-        private void OnDOIUpdateDOINameOperationCompleted(object arg) {
-            if ((this.DOIUpdateDOINameCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DOIUpdateDOINameCompleted(this, new DOIUpdateDOINameCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOIUpdateBatchID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public DOI DOIUpdateBatchID(int doiID, int doiStatusId, string doiBatchID, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<int> userId) {
-            object[] results = this.Invoke("DOIUpdateBatchID", new object[] {
-                        doiID,
-                        doiStatusId,
-                        doiBatchID,
-                        userId});
-            return ((DOI)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void DOIUpdateBatchIDAsync(int doiID, int doiStatusId, string doiBatchID, System.Nullable<int> userId) {
-            this.DOIUpdateBatchIDAsync(doiID, doiStatusId, doiBatchID, userId, null);
-        }
-        
-        /// <remarks/>
-        public void DOIUpdateBatchIDAsync(int doiID, int doiStatusId, string doiBatchID, System.Nullable<int> userId, object userState) {
-            if ((this.DOIUpdateBatchIDOperationCompleted == null)) {
-                this.DOIUpdateBatchIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOIUpdateBatchIDOperationCompleted);
-            }
-            this.InvokeAsync("DOIUpdateBatchID", new object[] {
-                        doiID,
-                        doiStatusId,
-                        doiBatchID,
-                        userId}, this.DOIUpdateBatchIDOperationCompleted, userState);
-        }
-        
-        private void OnDOIUpdateBatchIDOperationCompleted(object arg) {
-            if ((this.DOIUpdateBatchIDCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DOIUpdateBatchIDCompleted(this, new DOIUpdateBatchIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOIGetFileContents", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string DOIGetFileContents(string batchId, string type) {
-            object[] results = this.Invoke("DOIGetFileContents", new object[] {
-                        batchId,
-                        type});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void DOIGetFileContentsAsync(string batchId, string type) {
-            this.DOIGetFileContentsAsync(batchId, type, null);
-        }
-        
-        /// <remarks/>
-        public void DOIGetFileContentsAsync(string batchId, string type, object userState) {
-            if ((this.DOIGetFileContentsOperationCompleted == null)) {
-                this.DOIGetFileContentsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOIGetFileContentsOperationCompleted);
-            }
-            this.InvokeAsync("DOIGetFileContents", new object[] {
-                        batchId,
-                        type}, this.DOIGetFileContentsOperationCompleted, userState);
-        }
-        
-        private void OnDOIGetFileContentsOperationCompleted(object arg) {
-            if ((this.DOIGetFileContentsCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DOIGetFileContentsCompleted(this, new DOIGetFileContentsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOISelectValidForTitle", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public DOI[] DOISelectValidForTitle(int titleID) {
-            object[] results = this.Invoke("DOISelectValidForTitle", new object[] {
-                        titleID});
-            return ((DOI[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void DOISelectValidForTitleAsync(int titleID) {
-            this.DOISelectValidForTitleAsync(titleID, null);
-        }
-        
-        /// <remarks/>
-        public void DOISelectValidForTitleAsync(int titleID, object userState) {
-            if ((this.DOISelectValidForTitleOperationCompleted == null)) {
-                this.DOISelectValidForTitleOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOISelectValidForTitleOperationCompleted);
-            }
-            this.InvokeAsync("DOISelectValidForTitle", new object[] {
-                        titleID}, this.DOISelectValidForTitleOperationCompleted, userState);
-        }
-        
-        private void OnDOISelectValidForTitleOperationCompleted(object arg) {
-            if ((this.DOISelectValidForTitleCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DOISelectValidForTitleCompleted(this, new DOISelectValidForTitleCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/IndicatedPageSave", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void IndicatedPageSave(int[] pageIDs, string pagePrefix, int style, string start, int increment, bool implied, int userID) {
-            this.Invoke("IndicatedPageSave", new object[] {
-                        pageIDs,
-                        pagePrefix,
-                        style,
-                        start,
-                        increment,
-                        implied,
-                        userID});
-        }
-        
-        /// <remarks/>
-        public void IndicatedPageSaveAsync(int[] pageIDs, string pagePrefix, int style, string start, int increment, bool implied, int userID) {
-            this.IndicatedPageSaveAsync(pageIDs, pagePrefix, style, start, increment, implied, userID, null);
-        }
-        
-        /// <remarks/>
-        public void IndicatedPageSaveAsync(int[] pageIDs, string pagePrefix, int style, string start, int increment, bool implied, int userID, object userState) {
-            if ((this.IndicatedPageSaveOperationCompleted == null)) {
-                this.IndicatedPageSaveOperationCompleted = new System.Threading.SendOrPostCallback(this.OnIndicatedPageSaveOperationCompleted);
-            }
-            this.InvokeAsync("IndicatedPageSave", new object[] {
-                        pageIDs,
-                        pagePrefix,
-                        style,
-                        start,
-                        increment,
-                        implied,
-                        userID}, this.IndicatedPageSaveOperationCompleted, userState);
-        }
-        
-        private void OnIndicatedPageSaveOperationCompleted(object arg) {
-            if ((this.IndicatedPageSaveCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.IndicatedPageSaveCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/IndicatedPageDeleteAllForPage", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void IndicatedPageDeleteAllForPage(int[] pageIDs, int userID) {
-            this.Invoke("IndicatedPageDeleteAllForPage", new object[] {
-                        pageIDs,
-                        userID});
-        }
-        
-        /// <remarks/>
-        public void IndicatedPageDeleteAllForPageAsync(int[] pageIDs, int userID) {
-            this.IndicatedPageDeleteAllForPageAsync(pageIDs, userID, null);
-        }
-        
-        /// <remarks/>
-        public void IndicatedPageDeleteAllForPageAsync(int[] pageIDs, int userID, object userState) {
-            if ((this.IndicatedPageDeleteAllForPageOperationCompleted == null)) {
-                this.IndicatedPageDeleteAllForPageOperationCompleted = new System.Threading.SendOrPostCallback(this.OnIndicatedPageDeleteAllForPageOperationCompleted);
-            }
-            this.InvokeAsync("IndicatedPageDeleteAllForPage", new object[] {
-                        pageIDs,
-                        userID}, this.IndicatedPageDeleteAllForPageOperationCompleted, userState);
-        }
-        
-        private void OnIndicatedPageDeleteAllForPageOperationCompleted(object arg) {
-            if ((this.IndicatedPageDeleteAllForPageCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.IndicatedPageDeleteAllForPageCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageSelectByItemID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public Page[] PageSelectByItemID(int itemID) {
-            object[] results = this.Invoke("PageSelectByItemID", new object[] {
-                        itemID});
-            return ((Page[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PageSelectByItemIDAsync(int itemID) {
-            this.PageSelectByItemIDAsync(itemID, null);
-        }
-        
-        /// <remarks/>
-        public void PageSelectByItemIDAsync(int itemID, object userState) {
-            if ((this.PageSelectByItemIDOperationCompleted == null)) {
-                this.PageSelectByItemIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageSelectByItemIDOperationCompleted);
-            }
-            this.InvokeAsync("PageSelectByItemID", new object[] {
-                        itemID}, this.PageSelectByItemIDOperationCompleted, userState);
-        }
-        
-        private void OnPageSelectByItemIDOperationCompleted(object arg) {
-            if ((this.PageSelectByItemIDCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageSelectByItemIDCompleted(this, new PageSelectByItemIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageSelectFileNameByItemID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public Page[] PageSelectFileNameByItemID(int itemID) {
-            object[] results = this.Invoke("PageSelectFileNameByItemID", new object[] {
-                        itemID});
-            return ((Page[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PageSelectFileNameByItemIDAsync(int itemID) {
-            this.PageSelectFileNameByItemIDAsync(itemID, null);
-        }
-        
-        /// <remarks/>
-        public void PageSelectFileNameByItemIDAsync(int itemID, object userState) {
-            if ((this.PageSelectFileNameByItemIDOperationCompleted == null)) {
-                this.PageSelectFileNameByItemIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageSelectFileNameByItemIDOperationCompleted);
-            }
-            this.InvokeAsync("PageSelectFileNameByItemID", new object[] {
-                        itemID}, this.PageSelectFileNameByItemIDOperationCompleted, userState);
-        }
-        
-        private void OnPageSelectFileNameByItemIDOperationCompleted(object arg) {
-            if ((this.PageSelectFileNameByItemIDCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageSelectFileNameByItemIDCompleted(this, new PageSelectFileNameByItemIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageMetadataSelectByItemID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public Page[] PageMetadataSelectByItemID(int itemID) {
-            object[] results = this.Invoke("PageMetadataSelectByItemID", new object[] {
-                        itemID});
-            return ((Page[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PageMetadataSelectByItemIDAsync(int itemID) {
-            this.PageMetadataSelectByItemIDAsync(itemID, null);
-        }
-        
-        /// <remarks/>
-        public void PageMetadataSelectByItemIDAsync(int itemID, object userState) {
-            if ((this.PageMetadataSelectByItemIDOperationCompleted == null)) {
-                this.PageMetadataSelectByItemIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageMetadataSelectByItemIDOperationCompleted);
-            }
-            this.InvokeAsync("PageMetadataSelectByItemID", new object[] {
-                        itemID}, this.PageMetadataSelectByItemIDOperationCompleted, userState);
-        }
-        
-        private void OnPageMetadataSelectByItemIDOperationCompleted(object arg) {
-            if ((this.PageMetadataSelectByItemIDCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageMetadataSelectByItemIDCompleted(this, new PageMetadataSelectByItemIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageMetadataSelectBySegmentID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public Page[] PageMetadataSelectBySegmentID(int segmentID) {
-            object[] results = this.Invoke("PageMetadataSelectBySegmentID", new object[] {
-                        segmentID});
-            return ((Page[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PageMetadataSelectBySegmentIDAsync(int segmentID) {
-            this.PageMetadataSelectBySegmentIDAsync(segmentID, null);
-        }
-        
-        /// <remarks/>
-        public void PageMetadataSelectBySegmentIDAsync(int segmentID, object userState) {
-            if ((this.PageMetadataSelectBySegmentIDOperationCompleted == null)) {
-                this.PageMetadataSelectBySegmentIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageMetadataSelectBySegmentIDOperationCompleted);
-            }
-            this.InvokeAsync("PageMetadataSelectBySegmentID", new object[] {
-                        segmentID}, this.PageMetadataSelectBySegmentIDOperationCompleted, userState);
-        }
-        
-        private void OnPageMetadataSelectBySegmentIDOperationCompleted(object arg) {
-            if ((this.PageMetadataSelectBySegmentIDCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageMetadataSelectBySegmentIDCompleted(this, new PageMetadataSelectBySegmentIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageSelectWithExpiredPageNamesByItemID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public Page[] PageSelectWithExpiredPageNamesByItemID(int itemID, int maxAge) {
-            object[] results = this.Invoke("PageSelectWithExpiredPageNamesByItemID", new object[] {
-                        itemID,
-                        maxAge});
-            return ((Page[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PageSelectWithExpiredPageNamesByItemIDAsync(int itemID, int maxAge) {
-            this.PageSelectWithExpiredPageNamesByItemIDAsync(itemID, maxAge, null);
-        }
-        
-        /// <remarks/>
-        public void PageSelectWithExpiredPageNamesByItemIDAsync(int itemID, int maxAge, object userState) {
-            if ((this.PageSelectWithExpiredPageNamesByItemIDOperationCompleted == null)) {
-                this.PageSelectWithExpiredPageNamesByItemIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageSelectWithExpiredPageNamesByItemIDOperationCompleted);
-            }
-            this.InvokeAsync("PageSelectWithExpiredPageNamesByItemID", new object[] {
-                        itemID,
-                        maxAge}, this.PageSelectWithExpiredPageNamesByItemIDOperationCompleted, userState);
-        }
-        
-        private void OnPageSelectWithExpiredPageNamesByItemIDOperationCompleted(object arg) {
-            if ((this.PageSelectWithExpiredPageNamesByItemIDCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageSelectWithExpiredPageNamesByItemIDCompleted(this, new PageSelectWithExpiredPageNamesByItemIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageSelectWithoutPageNamesByItemID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public Page[] PageSelectWithoutPageNamesByItemID(int itemID) {
-            object[] results = this.Invoke("PageSelectWithoutPageNamesByItemID", new object[] {
-                        itemID});
-            return ((Page[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PageSelectWithoutPageNamesByItemIDAsync(int itemID) {
-            this.PageSelectWithoutPageNamesByItemIDAsync(itemID, null);
-        }
-        
-        /// <remarks/>
-        public void PageSelectWithoutPageNamesByItemIDAsync(int itemID, object userState) {
-            if ((this.PageSelectWithoutPageNamesByItemIDOperationCompleted == null)) {
-                this.PageSelectWithoutPageNamesByItemIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageSelectWithoutPageNamesByItemIDOperationCompleted);
-            }
-            this.InvokeAsync("PageSelectWithoutPageNamesByItemID", new object[] {
-                        itemID}, this.PageSelectWithoutPageNamesByItemIDOperationCompleted, userState);
-        }
-        
-        private void OnPageSelectWithoutPageNamesByItemIDOperationCompleted(object arg) {
-            if ((this.PageSelectWithoutPageNamesByItemIDCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageSelectWithoutPageNamesByItemIDCompleted(this, new PageSelectWithoutPageNamesByItemIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageSelectWithoutPageNames", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public Page[] PageSelectWithoutPageNames() {
-            object[] results = this.Invoke("PageSelectWithoutPageNames", new object[0]);
-            return ((Page[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PageSelectWithoutPageNamesAsync() {
-            this.PageSelectWithoutPageNamesAsync(null);
-        }
-        
-        /// <remarks/>
-        public void PageSelectWithoutPageNamesAsync(object userState) {
-            if ((this.PageSelectWithoutPageNamesOperationCompleted == null)) {
-                this.PageSelectWithoutPageNamesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageSelectWithoutPageNamesOperationCompleted);
-            }
-            this.InvokeAsync("PageSelectWithoutPageNames", new object[0], this.PageSelectWithoutPageNamesOperationCompleted, userState);
-        }
-        
-        private void OnPageSelectWithoutPageNamesOperationCompleted(object arg) {
-            if ((this.PageSelectWithoutPageNamesCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageSelectWithoutPageNamesCompleted(this, new PageSelectWithoutPageNamesCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageUpdateYear", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void PageUpdateYear(int[] pageIDs, string year, int userID) {
-            this.Invoke("PageUpdateYear", new object[] {
-                        pageIDs,
-                        year,
-                        userID});
-        }
-        
-        /// <remarks/>
-        public void PageUpdateYearAsync(int[] pageIDs, string year, int userID) {
-            this.PageUpdateYearAsync(pageIDs, year, userID, null);
-        }
-        
-        /// <remarks/>
-        public void PageUpdateYearAsync(int[] pageIDs, string year, int userID, object userState) {
-            if ((this.PageUpdateYearOperationCompleted == null)) {
-                this.PageUpdateYearOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageUpdateYearOperationCompleted);
-            }
-            this.InvokeAsync("PageUpdateYear", new object[] {
-                        pageIDs,
-                        year,
-                        userID}, this.PageUpdateYearOperationCompleted, userState);
-        }
-        
-        private void OnPageUpdateYearOperationCompleted(object arg) {
-            if ((this.PageUpdateYearCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageUpdateYearCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageUpdateVolume", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void PageUpdateVolume(int[] pageIDs, string volume, int userID) {
-            this.Invoke("PageUpdateVolume", new object[] {
-                        pageIDs,
-                        volume,
-                        userID});
-        }
-        
-        /// <remarks/>
-        public void PageUpdateVolumeAsync(int[] pageIDs, string volume, int userID) {
-            this.PageUpdateVolumeAsync(pageIDs, volume, userID, null);
-        }
-        
-        /// <remarks/>
-        public void PageUpdateVolumeAsync(int[] pageIDs, string volume, int userID, object userState) {
-            if ((this.PageUpdateVolumeOperationCompleted == null)) {
-                this.PageUpdateVolumeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageUpdateVolumeOperationCompleted);
-            }
-            this.InvokeAsync("PageUpdateVolume", new object[] {
-                        pageIDs,
-                        volume,
-                        userID}, this.PageUpdateVolumeOperationCompleted, userState);
-        }
-        
-        private void OnPageUpdateVolumeOperationCompleted(object arg) {
-            if ((this.PageUpdateVolumeCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageUpdateVolumeCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageUpdateIssue", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID) {
-            this.Invoke("PageUpdateIssue", new object[] {
-                        pageIDs,
-                        issuePrefix,
-                        issue,
-                        userID});
-        }
-        
-        /// <remarks/>
-        public void PageUpdateIssueAsync(int[] pageIDs, string issuePrefix, string issue, int userID) {
-            this.PageUpdateIssueAsync(pageIDs, issuePrefix, issue, userID, null);
-        }
-        
-        /// <remarks/>
-        public void PageUpdateIssueAsync(int[] pageIDs, string issuePrefix, string issue, int userID, object userState) {
-            if ((this.PageUpdateIssueOperationCompleted == null)) {
-                this.PageUpdateIssueOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageUpdateIssueOperationCompleted);
-            }
-            this.InvokeAsync("PageUpdateIssue", new object[] {
-                        pageIDs,
-                        issuePrefix,
-                        issue,
-                        userID}, this.PageUpdateIssueOperationCompleted, userState);
-        }
-        
-        private void OnPageUpdateIssueOperationCompleted(object arg) {
-            if ((this.PageUpdateIssueCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageUpdateIssueCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageUpdateLastPageNameLookupDate", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void PageUpdateLastPageNameLookupDate(int pageID) {
-            this.Invoke("PageUpdateLastPageNameLookupDate", new object[] {
-                        pageID});
-        }
-        
-        /// <remarks/>
-        public void PageUpdateLastPageNameLookupDateAsync(int pageID) {
-            this.PageUpdateLastPageNameLookupDateAsync(pageID, null);
-        }
-        
-        /// <remarks/>
-        public void PageUpdateLastPageNameLookupDateAsync(int pageID, object userState) {
-            if ((this.PageUpdateLastPageNameLookupDateOperationCompleted == null)) {
-                this.PageUpdateLastPageNameLookupDateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageUpdateLastPageNameLookupDateOperationCompleted);
-            }
-            this.InvokeAsync("PageUpdateLastPageNameLookupDate", new object[] {
-                        pageID}, this.PageUpdateLastPageNameLookupDateOperationCompleted, userState);
-        }
-        
-        private void OnPageUpdateLastPageNameLookupDateOperationCompleted(object arg) {
-            if ((this.PageUpdateLastPageNameLookupDateCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageUpdateLastPageNameLookupDateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageCheckForOcrText", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool PageCheckForOcrText(int pageID, string ocrTextLocation) {
-            object[] results = this.Invoke("PageCheckForOcrText", new object[] {
-                        pageID,
-                        ocrTextLocation});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PageCheckForOcrTextAsync(int pageID, string ocrTextLocation) {
-            this.PageCheckForOcrTextAsync(pageID, ocrTextLocation, null);
-        }
-        
-        /// <remarks/>
-        public void PageCheckForOcrTextAsync(int pageID, string ocrTextLocation, object userState) {
-            if ((this.PageCheckForOcrTextOperationCompleted == null)) {
-                this.PageCheckForOcrTextOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageCheckForOcrTextOperationCompleted);
-            }
-            this.InvokeAsync("PageCheckForOcrText", new object[] {
-                        pageID,
-                        ocrTextLocation}, this.PageCheckForOcrTextOperationCompleted, userState);
-        }
-        
-        private void OnPageCheckForOcrTextOperationCompleted(object arg) {
-            if ((this.PageCheckForOcrTextCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageCheckForOcrTextCompleted(this, new PageCheckForOcrTextCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageTextLogInsertForItem", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void PageTextLogInsertForItem(int itemID, string textSource, int userID) {
-            this.Invoke("PageTextLogInsertForItem", new object[] {
-                        itemID,
-                        textSource,
-                        userID});
-        }
-        
-        /// <remarks/>
-        public void PageTextLogInsertForItemAsync(int itemID, string textSource, int userID) {
-            this.PageTextLogInsertForItemAsync(itemID, textSource, userID, null);
-        }
-        
-        /// <remarks/>
-        public void PageTextLogInsertForItemAsync(int itemID, string textSource, int userID, object userState) {
-            if ((this.PageTextLogInsertForItemOperationCompleted == null)) {
-                this.PageTextLogInsertForItemOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageTextLogInsertForItemOperationCompleted);
-            }
-            this.InvokeAsync("PageTextLogInsertForItem", new object[] {
-                        itemID,
-                        textSource,
-                        userID}, this.PageTextLogInsertForItemOperationCompleted, userState);
-        }
-        
-        private void OnPageTextLogInsertForItemOperationCompleted(object arg) {
-            if ((this.PageTextLogInsertForItemCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageTextLogInsertForItemCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageFlickrSelectRandom", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public PageFlickr[] PageFlickrSelectRandom(int numberToReturn) {
-            object[] results = this.Invoke("PageFlickrSelectRandom", new object[] {
-                        numberToReturn});
-            return ((PageFlickr[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PageFlickrSelectRandomAsync(int numberToReturn) {
-            this.PageFlickrSelectRandomAsync(numberToReturn, null);
-        }
-        
-        /// <remarks/>
-        public void PageFlickrSelectRandomAsync(int numberToReturn, object userState) {
-            if ((this.PageFlickrSelectRandomOperationCompleted == null)) {
-                this.PageFlickrSelectRandomOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageFlickrSelectRandomOperationCompleted);
-            }
-            this.InvokeAsync("PageFlickrSelectRandom", new object[] {
-                        numberToReturn}, this.PageFlickrSelectRandomOperationCompleted, userState);
-        }
-        
-        private void OnPageFlickrSelectRandomOperationCompleted(object arg) {
-            if ((this.PageFlickrSelectRandomCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageFlickrSelectRandomCompleted(this, new PageFlickrSelectRandomCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageFlickrSelectAll", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public PageFlickr[] PageFlickrSelectAll() {
-            object[] results = this.Invoke("PageFlickrSelectAll", new object[0]);
-            return ((PageFlickr[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PageFlickrSelectAllAsync() {
-            this.PageFlickrSelectAllAsync(null);
-        }
-        
-        /// <remarks/>
-        public void PageFlickrSelectAllAsync(object userState) {
-            if ((this.PageFlickrSelectAllOperationCompleted == null)) {
-                this.PageFlickrSelectAllOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageFlickrSelectAllOperationCompleted);
-            }
-            this.InvokeAsync("PageFlickrSelectAll", new object[0], this.PageFlickrSelectAllOperationCompleted, userState);
-        }
-        
-        private void OnPageFlickrSelectAllOperationCompleted(object arg) {
-            if ((this.PageFlickrSelectAllCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageFlickrSelectAllCompleted(this, new PageFlickrSelectAllCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageNameUpdateList", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public int[] PageNameUpdateList(int pageID, NameFinderResponse[] items, string sourceName) {
-            object[] results = this.Invoke("PageNameUpdateList", new object[] {
-                        pageID,
-                        items,
-                        sourceName});
-            return ((int[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PageNameUpdateListAsync(int pageID, NameFinderResponse[] items, string sourceName) {
-            this.PageNameUpdateListAsync(pageID, items, sourceName, null);
-        }
-        
-        /// <remarks/>
-        public void PageNameUpdateListAsync(int pageID, NameFinderResponse[] items, string sourceName, object userState) {
-            if ((this.PageNameUpdateListOperationCompleted == null)) {
-                this.PageNameUpdateListOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageNameUpdateListOperationCompleted);
-            }
-            this.InvokeAsync("PageNameUpdateList", new object[] {
-                        pageID,
-                        items,
-                        sourceName}, this.PageNameUpdateListOperationCompleted, userState);
-        }
-        
-        private void OnPageNameUpdateListOperationCompleted(object arg) {
-            if ((this.PageNameUpdateListCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageNameUpdateListCompleted(this, new PageNameUpdateListCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/NamePageDeleteByItemID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void NamePageDeleteByItemID(int itemID) {
-            this.Invoke("NamePageDeleteByItemID", new object[] {
-                        itemID});
-        }
-        
-        /// <remarks/>
-        public void NamePageDeleteByItemIDAsync(int itemID) {
-            this.NamePageDeleteByItemIDAsync(itemID, null);
-        }
-        
-        /// <remarks/>
-        public void NamePageDeleteByItemIDAsync(int itemID, object userState) {
-            if ((this.NamePageDeleteByItemIDOperationCompleted == null)) {
-                this.NamePageDeleteByItemIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnNamePageDeleteByItemIDOperationCompleted);
-            }
-            this.InvokeAsync("NamePageDeleteByItemID", new object[] {
-                        itemID}, this.NamePageDeleteByItemIDOperationCompleted, userState);
-        }
-        
-        private void OnNamePageDeleteByItemIDOperationCompleted(object arg) {
-            if ((this.NamePageDeleteByItemIDCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.NamePageDeleteByItemIDCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageTypeSelectAll", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public PageType[] PageTypeSelectAll() {
-            object[] results = this.Invoke("PageTypeSelectAll", new object[0]);
-            return ((PageType[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PageTypeSelectAllAsync() {
-            this.PageTypeSelectAllAsync(null);
-        }
-        
-        /// <remarks/>
-        public void PageTypeSelectAllAsync(object userState) {
-            if ((this.PageTypeSelectAllOperationCompleted == null)) {
-                this.PageTypeSelectAllOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageTypeSelectAllOperationCompleted);
-            }
-            this.InvokeAsync("PageTypeSelectAll", new object[0], this.PageTypeSelectAllOperationCompleted, userState);
-        }
-        
-        private void OnPageTypeSelectAllOperationCompleted(object arg) {
-            if ((this.PageTypeSelectAllCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PageTypeSelectAllCompleted(this, new PageTypeSelectAllCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/Page_PageTypeSave", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void Page_PageTypeSave(int[] pageIDs, int pageTypeID, int userID) {
-            this.Invoke("Page_PageTypeSave", new object[] {
-                        pageIDs,
-                        pageTypeID,
-                        userID});
-        }
-        
-        /// <remarks/>
-        public void Page_PageTypeSaveAsync(int[] pageIDs, int pageTypeID, int userID) {
-            this.Page_PageTypeSaveAsync(pageIDs, pageTypeID, userID, null);
-        }
-        
-        /// <remarks/>
-        public void Page_PageTypeSaveAsync(int[] pageIDs, int pageTypeID, int userID, object userState) {
-            if ((this.Page_PageTypeSaveOperationCompleted == null)) {
-                this.Page_PageTypeSaveOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPage_PageTypeSaveOperationCompleted);
-            }
-            this.InvokeAsync("Page_PageTypeSave", new object[] {
-                        pageIDs,
-                        pageTypeID,
-                        userID}, this.Page_PageTypeSaveOperationCompleted, userState);
-        }
-        
-        private void OnPage_PageTypeSaveOperationCompleted(object arg) {
-            if ((this.Page_PageTypeSaveCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.Page_PageTypeSaveCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/Page_PageTypeDeleteAllForPage", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void Page_PageTypeDeleteAllForPage(int[] pageIDs, int userID) {
-            this.Invoke("Page_PageTypeDeleteAllForPage", new object[] {
-                        pageIDs,
-                        userID});
-        }
-        
-        /// <remarks/>
-        public void Page_PageTypeDeleteAllForPageAsync(int[] pageIDs, int userID) {
-            this.Page_PageTypeDeleteAllForPageAsync(pageIDs, userID, null);
-        }
-        
-        /// <remarks/>
-        public void Page_PageTypeDeleteAllForPageAsync(int[] pageIDs, int userID, object userState) {
-            if ((this.Page_PageTypeDeleteAllForPageOperationCompleted == null)) {
-                this.Page_PageTypeDeleteAllForPageOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPage_PageTypeDeleteAllForPageOperationCompleted);
-            }
-            this.InvokeAsync("Page_PageTypeDeleteAllForPage", new object[] {
-                        pageIDs,
-                        userID}, this.Page_PageTypeDeleteAllForPageOperationCompleted, userState);
-        }
-        
-        private void OnPage_PageTypeDeleteAllForPageOperationCompleted(object arg) {
-            if ((this.Page_PageTypeDeleteAllForPageCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.Page_PageTypeDeleteAllForPageCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/GetPaginationStatusPending", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public int GetPaginationStatusPending() {
-            object[] results = this.Invoke("GetPaginationStatusPending", new object[0]);
-            return ((int)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetPaginationStatusPendingAsync() {
-            this.GetPaginationStatusPendingAsync(null);
-        }
-        
-        /// <remarks/>
-        public void GetPaginationStatusPendingAsync(object userState) {
-            if ((this.GetPaginationStatusPendingOperationCompleted == null)) {
-                this.GetPaginationStatusPendingOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetPaginationStatusPendingOperationCompleted);
-            }
-            this.InvokeAsync("GetPaginationStatusPending", new object[0], this.GetPaginationStatusPendingOperationCompleted, userState);
-        }
-        
-        private void OnGetPaginationStatusPendingOperationCompleted(object arg) {
-            if ((this.GetPaginationStatusPendingCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetPaginationStatusPendingCompleted(this, new GetPaginationStatusPendingCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/GetPaginationStatusInProgress", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public int GetPaginationStatusInProgress() {
-            object[] results = this.Invoke("GetPaginationStatusInProgress", new object[0]);
-            return ((int)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetPaginationStatusInProgressAsync() {
-            this.GetPaginationStatusInProgressAsync(null);
-        }
-        
-        /// <remarks/>
-        public void GetPaginationStatusInProgressAsync(object userState) {
-            if ((this.GetPaginationStatusInProgressOperationCompleted == null)) {
-                this.GetPaginationStatusInProgressOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetPaginationStatusInProgressOperationCompleted);
-            }
-            this.InvokeAsync("GetPaginationStatusInProgress", new object[0], this.GetPaginationStatusInProgressOperationCompleted, userState);
-        }
-        
-        private void OnGetPaginationStatusInProgressOperationCompleted(object arg) {
-            if ((this.GetPaginationStatusInProgressCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetPaginationStatusInProgressCompleted(this, new GetPaginationStatusInProgressCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/GetPaginationStatusComplete", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public int GetPaginationStatusComplete() {
-            object[] results = this.Invoke("GetPaginationStatusComplete", new object[0]);
-            return ((int)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetPaginationStatusCompleteAsync() {
-            this.GetPaginationStatusCompleteAsync(null);
-        }
-        
-        /// <remarks/>
-        public void GetPaginationStatusCompleteAsync(object userState) {
-            if ((this.GetPaginationStatusCompleteOperationCompleted == null)) {
-                this.GetPaginationStatusCompleteOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetPaginationStatusCompleteOperationCompleted);
-            }
-            this.InvokeAsync("GetPaginationStatusComplete", new object[0], this.GetPaginationStatusCompleteOperationCompleted, userState);
-        }
-        
-        private void OnGetPaginationStatusCompleteOperationCompleted(object arg) {
-            if ((this.GetPaginationStatusCompleteCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetPaginationStatusCompleteCompleted(this, new GetPaginationStatusCompleteCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/GetPaginationStatusString", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string GetPaginationStatusString([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<int> paginationStatusID) {
-            object[] results = this.Invoke("GetPaginationStatusString", new object[] {
-                        paginationStatusID});
-            return ((string)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void GetPaginationStatusStringAsync(System.Nullable<int> paginationStatusID) {
-            this.GetPaginationStatusStringAsync(paginationStatusID, null);
-        }
-        
-        /// <remarks/>
-        public void GetPaginationStatusStringAsync(System.Nullable<int> paginationStatusID, object userState) {
-            if ((this.GetPaginationStatusStringOperationCompleted == null)) {
-                this.GetPaginationStatusStringOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetPaginationStatusStringOperationCompleted);
-            }
-            this.InvokeAsync("GetPaginationStatusString", new object[] {
-                        paginationStatusID}, this.GetPaginationStatusStringOperationCompleted, userState);
-        }
-        
-        private void OnGetPaginationStatusStringOperationCompleted(object arg) {
-            if ((this.GetPaginationStatusStringCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.GetPaginationStatusStringCompleted(this, new GetPaginationStatusStringCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFSelectForFileCreation", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public PDF[] PDFSelectForFileCreation() {
-            object[] results = this.Invoke("PDFSelectForFileCreation", new object[0]);
-            return ((PDF[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PDFSelectForFileCreationAsync() {
-            this.PDFSelectForFileCreationAsync(null);
-        }
-        
-        /// <remarks/>
-        public void PDFSelectForFileCreationAsync(object userState) {
-            if ((this.PDFSelectForFileCreationOperationCompleted == null)) {
-                this.PDFSelectForFileCreationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFSelectForFileCreationOperationCompleted);
-            }
-            this.InvokeAsync("PDFSelectForFileCreation", new object[0], this.PDFSelectForFileCreationOperationCompleted, userState);
-        }
-        
-        private void OnPDFSelectForFileCreationOperationCompleted(object arg) {
-            if ((this.PDFSelectForFileCreationCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PDFSelectForFileCreationCompleted(this, new PDFSelectForFileCreationCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFSelectForDeletion", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public PDF[] PDFSelectForDeletion() {
-            object[] results = this.Invoke("PDFSelectForDeletion", new object[0]);
-            return ((PDF[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PDFSelectForDeletionAsync() {
-            this.PDFSelectForDeletionAsync(null);
-        }
-        
-        /// <remarks/>
-        public void PDFSelectForDeletionAsync(object userState) {
-            if ((this.PDFSelectForDeletionOperationCompleted == null)) {
-                this.PDFSelectForDeletionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFSelectForDeletionOperationCompleted);
-            }
-            this.InvokeAsync("PDFSelectForDeletion", new object[0], this.PDFSelectForDeletionOperationCompleted, userState);
-        }
-        
-        private void OnPDFSelectForDeletionOperationCompleted(object arg) {
-            if ((this.PDFSelectForDeletionCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PDFSelectForDeletionCompleted(this, new PDFSelectForDeletionCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFSelectDuplicateForPdfID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public PDF[] PDFSelectDuplicateForPdfID(int pdfId) {
-            object[] results = this.Invoke("PDFSelectDuplicateForPdfID", new object[] {
-                        pdfId});
-            return ((PDF[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PDFSelectDuplicateForPdfIDAsync(int pdfId) {
-            this.PDFSelectDuplicateForPdfIDAsync(pdfId, null);
-        }
-        
-        /// <remarks/>
-        public void PDFSelectDuplicateForPdfIDAsync(int pdfId, object userState) {
-            if ((this.PDFSelectDuplicateForPdfIDOperationCompleted == null)) {
-                this.PDFSelectDuplicateForPdfIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFSelectDuplicateForPdfIDOperationCompleted);
-            }
-            this.InvokeAsync("PDFSelectDuplicateForPdfID", new object[] {
-                        pdfId}, this.PDFSelectDuplicateForPdfIDOperationCompleted, userState);
-        }
-        
-        private void OnPDFSelectDuplicateForPdfIDOperationCompleted(object arg) {
-            if ((this.PDFSelectDuplicateForPdfIDCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PDFSelectDuplicateForPdfIDCompleted(this, new PDFSelectDuplicateForPdfIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFPageSummaryViewSelectByPdfID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public PageSummaryView[] PDFPageSummaryViewSelectByPdfID(int pdfId) {
-            object[] results = this.Invoke("PDFPageSummaryViewSelectByPdfID", new object[] {
-                        pdfId});
-            return ((PageSummaryView[])(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PDFPageSummaryViewSelectByPdfIDAsync(int pdfId) {
-            this.PDFPageSummaryViewSelectByPdfIDAsync(pdfId, null);
-        }
-        
-        /// <remarks/>
-        public void PDFPageSummaryViewSelectByPdfIDAsync(int pdfId, object userState) {
-            if ((this.PDFPageSummaryViewSelectByPdfIDOperationCompleted == null)) {
-                this.PDFPageSummaryViewSelectByPdfIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFPageSummaryViewSelectByPdfIDOperationCompleted);
-            }
-            this.InvokeAsync("PDFPageSummaryViewSelectByPdfID", new object[] {
-                        pdfId}, this.PDFPageSummaryViewSelectByPdfIDOperationCompleted, userState);
-        }
-        
-        private void OnPDFPageSummaryViewSelectByPdfIDOperationCompleted(object arg) {
-            if ((this.PDFPageSummaryViewSelectByPdfIDCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PDFPageSummaryViewSelectByPdfIDCompleted(this, new PDFPageSummaryViewSelectByPdfIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFUpdateGenerationInfo", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public PDF PDFUpdateGenerationInfo(int pdfId, string fileLocation, string fileUrl, int numberImagesMissing, int numberOcrMissing) {
-            object[] results = this.Invoke("PDFUpdateGenerationInfo", new object[] {
-                        pdfId,
-                        fileLocation,
-                        fileUrl,
-                        numberImagesMissing,
-                        numberOcrMissing});
-            return ((PDF)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PDFUpdateGenerationInfoAsync(int pdfId, string fileLocation, string fileUrl, int numberImagesMissing, int numberOcrMissing) {
-            this.PDFUpdateGenerationInfoAsync(pdfId, fileLocation, fileUrl, numberImagesMissing, numberOcrMissing, null);
-        }
-        
-        /// <remarks/>
-        public void PDFUpdateGenerationInfoAsync(int pdfId, string fileLocation, string fileUrl, int numberImagesMissing, int numberOcrMissing, object userState) {
-            if ((this.PDFUpdateGenerationInfoOperationCompleted == null)) {
-                this.PDFUpdateGenerationInfoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFUpdateGenerationInfoOperationCompleted);
-            }
-            this.InvokeAsync("PDFUpdateGenerationInfo", new object[] {
-                        pdfId,
-                        fileLocation,
-                        fileUrl,
-                        numberImagesMissing,
-                        numberOcrMissing}, this.PDFUpdateGenerationInfoOperationCompleted, userState);
-        }
-        
-        private void OnPDFUpdateGenerationInfoOperationCompleted(object arg) {
-            if ((this.PDFUpdateGenerationInfoCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PDFUpdateGenerationInfoCompleted(this, new PDFUpdateGenerationInfoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFUpdateFileDeletion", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public PDF PDFUpdateFileDeletion(int pdfId) {
-            object[] results = this.Invoke("PDFUpdateFileDeletion", new object[] {
-                        pdfId});
-            return ((PDF)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PDFUpdateFileDeletionAsync(int pdfId) {
-            this.PDFUpdateFileDeletionAsync(pdfId, null);
-        }
-        
-        /// <remarks/>
-        public void PDFUpdateFileDeletionAsync(int pdfId, object userState) {
-            if ((this.PDFUpdateFileDeletionOperationCompleted == null)) {
-                this.PDFUpdateFileDeletionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFUpdateFileDeletionOperationCompleted);
-            }
-            this.InvokeAsync("PDFUpdateFileDeletion", new object[] {
-                        pdfId}, this.PDFUpdateFileDeletionOperationCompleted, userState);
-        }
-        
-        private void OnPDFUpdateFileDeletionOperationCompleted(object arg) {
-            if ((this.PDFUpdateFileDeletionCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PDFUpdateFileDeletionCompleted(this, new PDFUpdateFileDeletionCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFUpdatePdfStatusProcessing", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool PDFUpdatePdfStatusProcessing(int pdfid) {
-            object[] results = this.Invoke("PDFUpdatePdfStatusProcessing", new object[] {
-                        pdfid});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PDFUpdatePdfStatusProcessingAsync(int pdfid) {
-            this.PDFUpdatePdfStatusProcessingAsync(pdfid, null);
-        }
-        
-        /// <remarks/>
-        public void PDFUpdatePdfStatusProcessingAsync(int pdfid, object userState) {
-            if ((this.PDFUpdatePdfStatusProcessingOperationCompleted == null)) {
-                this.PDFUpdatePdfStatusProcessingOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFUpdatePdfStatusProcessingOperationCompleted);
-            }
-            this.InvokeAsync("PDFUpdatePdfStatusProcessing", new object[] {
-                        pdfid}, this.PDFUpdatePdfStatusProcessingOperationCompleted, userState);
-        }
-        
-        private void OnPDFUpdatePdfStatusProcessingOperationCompleted(object arg) {
-            if ((this.PDFUpdatePdfStatusProcessingCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PDFUpdatePdfStatusProcessingCompleted(this, new PDFUpdatePdfStatusProcessingCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFUpdatePdfStatusGenerated", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool PDFUpdatePdfStatusGenerated(int pdfid) {
-            object[] results = this.Invoke("PDFUpdatePdfStatusGenerated", new object[] {
-                        pdfid});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PDFUpdatePdfStatusGeneratedAsync(int pdfid) {
-            this.PDFUpdatePdfStatusGeneratedAsync(pdfid, null);
-        }
-        
-        /// <remarks/>
-        public void PDFUpdatePdfStatusGeneratedAsync(int pdfid, object userState) {
-            if ((this.PDFUpdatePdfStatusGeneratedOperationCompleted == null)) {
-                this.PDFUpdatePdfStatusGeneratedOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFUpdatePdfStatusGeneratedOperationCompleted);
-            }
-            this.InvokeAsync("PDFUpdatePdfStatusGenerated", new object[] {
-                        pdfid}, this.PDFUpdatePdfStatusGeneratedOperationCompleted, userState);
-        }
-        
-        private void OnPDFUpdatePdfStatusGeneratedOperationCompleted(object arg) {
-            if ((this.PDFUpdatePdfStatusGeneratedCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PDFUpdatePdfStatusGeneratedCompleted(this, new PDFUpdatePdfStatusGeneratedCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFUpdatePdfStatusError", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool PDFUpdatePdfStatusError(int pdfid) {
-            object[] results = this.Invoke("PDFUpdatePdfStatusError", new object[] {
-                        pdfid});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PDFUpdatePdfStatusErrorAsync(int pdfid) {
-            this.PDFUpdatePdfStatusErrorAsync(pdfid, null);
-        }
-        
-        /// <remarks/>
-        public void PDFUpdatePdfStatusErrorAsync(int pdfid, object userState) {
-            if ((this.PDFUpdatePdfStatusErrorOperationCompleted == null)) {
-                this.PDFUpdatePdfStatusErrorOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFUpdatePdfStatusErrorOperationCompleted);
-            }
-            this.InvokeAsync("PDFUpdatePdfStatusError", new object[] {
-                        pdfid}, this.PDFUpdatePdfStatusErrorOperationCompleted, userState);
-        }
-        
-        private void OnPDFUpdatePdfStatusErrorOperationCompleted(object arg) {
-            if ((this.PDFUpdatePdfStatusErrorCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PDFUpdatePdfStatusErrorCompleted(this, new PDFUpdatePdfStatusErrorCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFUpdatePdfStatusRejected", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool PDFUpdatePdfStatusRejected(int pdfid) {
-            object[] results = this.Invoke("PDFUpdatePdfStatusRejected", new object[] {
-                        pdfid});
-            return ((bool)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void PDFUpdatePdfStatusRejectedAsync(int pdfid) {
-            this.PDFUpdatePdfStatusRejectedAsync(pdfid, null);
-        }
-        
-        /// <remarks/>
-        public void PDFUpdatePdfStatusRejectedAsync(int pdfid, object userState) {
-            if ((this.PDFUpdatePdfStatusRejectedOperationCompleted == null)) {
-                this.PDFUpdatePdfStatusRejectedOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFUpdatePdfStatusRejectedOperationCompleted);
-            }
-            this.InvokeAsync("PDFUpdatePdfStatusRejected", new object[] {
-                        pdfid}, this.PDFUpdatePdfStatusRejectedOperationCompleted, userState);
-        }
-        
-        private void OnPDFUpdatePdfStatusRejectedOperationCompleted(object arg) {
-            if ((this.PDFUpdatePdfStatusRejectedCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.PDFUpdatePdfStatusRejectedCompleted(this, new PDFUpdatePdfStatusRejectedCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
+        public event MARCGetFileContentsCompletedEventHandler MARCGetFileContentsCompleted;
+        
+        /// <remarks/>
+        public event MarcCreateFileCompletedEventHandler MarcCreateFileCompleted;
+        
+        /// <remarks/>
+        public event DOISelectSubmittedCompletedEventHandler DOISelectSubmittedCompleted;
+        
+        /// <remarks/>
+        public event TitleSelectWithoutSubmittedDOICompletedEventHandler TitleSelectWithoutSubmittedDOICompleted;
+        
+        /// <remarks/>
+        public event SegmentSelectWithoutSubmittedDOICompletedEventHandler SegmentSelectWithoutSubmittedDOICompleted;
+        
+        /// <remarks/>
+        public event DOIInsertAutoCompletedEventHandler DOIInsertAutoCompleted;
+        
+        /// <remarks/>
+        public event DOIInsertCompletedEventHandler DOIInsertCompleted;
+        
+        /// <remarks/>
+        public event DOIInsertIdentifierCompletedEventHandler DOIInsertIdentifierCompleted;
+        
+        /// <remarks/>
+        public event DOIUpdateStatusCompletedEventHandler DOIUpdateStatusCompleted;
+        
+        /// <remarks/>
+        public event DOIUpdateDOINameCompletedEventHandler DOIUpdateDOINameCompleted;
+        
+        /// <remarks/>
+        public event DOIUpdateBatchIDCompletedEventHandler DOIUpdateBatchIDCompleted;
+        
+        /// <remarks/>
+        public event DOIGetFileContentsCompletedEventHandler DOIGetFileContentsCompleted;
+        
+        /// <remarks/>
+        public event DOISelectValidForTitleCompletedEventHandler DOISelectValidForTitleCompleted;
+        
+        /// <remarks/>
+        public event IndicatedPageSaveCompletedEventHandler IndicatedPageSaveCompleted;
+        
+        /// <remarks/>
+        public event IndicatedPageDeleteAllForPageCompletedEventHandler IndicatedPageDeleteAllForPageCompleted;
+        
+        /// <remarks/>
+        public event PageSelectByItemIDCompletedEventHandler PageSelectByItemIDCompleted;
+        
+        /// <remarks/>
+        public event PageSelectFileNameByItemIDCompletedEventHandler PageSelectFileNameByItemIDCompleted;
+        
+        /// <remarks/>
+        public event PageMetadataSelectByItemIDCompletedEventHandler PageMetadataSelectByItemIDCompleted;
+        
+        /// <remarks/>
+        public event PageMetadataSelectBySegmentIDCompletedEventHandler PageMetadataSelectBySegmentIDCompleted;
+        
+        /// <remarks/>
+        public event PageSelectWithExpiredPageNamesByItemIDCompletedEventHandler PageSelectWithExpiredPageNamesByItemIDCompleted;
+        
+        /// <remarks/>
+        public event PageSelectWithoutPageNamesByItemIDCompletedEventHandler PageSelectWithoutPageNamesByItemIDCompleted;
+        
+        /// <remarks/>
+        public event PageSelectWithoutPageNamesCompletedEventHandler PageSelectWithoutPageNamesCompleted;
+        
+        /// <remarks/>
+        public event PageUpdateYearCompletedEventHandler PageUpdateYearCompleted;
+        
+        /// <remarks/>
+        public event PageUpdateVolumeCompletedEventHandler PageUpdateVolumeCompleted;
+        
+        /// <remarks/>
+        public event PageUpdateIssueCompletedEventHandler PageUpdateIssueCompleted;
+        
+        /// <remarks/>
+        public event PageUpdateLastPageNameLookupDateCompletedEventHandler PageUpdateLastPageNameLookupDateCompleted;
+        
+        /// <remarks/>
+        public event PageCheckForOcrTextCompletedEventHandler PageCheckForOcrTextCompleted;
+        
+        /// <remarks/>
+        public event PageTextLogInsertForItemCompletedEventHandler PageTextLogInsertForItemCompleted;
+        
+        /// <remarks/>
+        public event PageFlickrSelectRandomCompletedEventHandler PageFlickrSelectRandomCompleted;
+        
+        /// <remarks/>
+        public event PageFlickrSelectAllCompletedEventHandler PageFlickrSelectAllCompleted;
+        
+        /// <remarks/>
+        public event PageNameUpdateListCompletedEventHandler PageNameUpdateListCompleted;
+        
+        /// <remarks/>
+        public event NamePageDeleteByItemIDCompletedEventHandler NamePageDeleteByItemIDCompleted;
+        
+        /// <remarks/>
+        public event PageTypeSelectAllCompletedEventHandler PageTypeSelectAllCompleted;
+        
+        /// <remarks/>
+        public event Page_PageTypeSaveCompletedEventHandler Page_PageTypeSaveCompleted;
+        
+        /// <remarks/>
+        public event Page_PageTypeDeleteAllForPageCompletedEventHandler Page_PageTypeDeleteAllForPageCompleted;
+        
+        /// <remarks/>
+        public event GetPaginationStatusPendingCompletedEventHandler GetPaginationStatusPendingCompleted;
+        
+        /// <remarks/>
+        public event GetPaginationStatusInProgressCompletedEventHandler GetPaginationStatusInProgressCompleted;
+        
+        /// <remarks/>
+        public event GetPaginationStatusCompleteCompletedEventHandler GetPaginationStatusCompleteCompleted;
+        
+        /// <remarks/>
+        public event GetPaginationStatusStringCompletedEventHandler GetPaginationStatusStringCompleted;
+        
+        /// <remarks/>
+        public event PDFSelectForFileCreationCompletedEventHandler PDFSelectForFileCreationCompleted;
+        
+        /// <remarks/>
+        public event PDFSelectForDeletionCompletedEventHandler PDFSelectForDeletionCompleted;
+        
+        /// <remarks/>
+        public event PDFSelectDuplicateForPdfIDCompletedEventHandler PDFSelectDuplicateForPdfIDCompleted;
+        
+        /// <remarks/>
+        public event PDFPageSummaryViewSelectByPdfIDCompletedEventHandler PDFPageSummaryViewSelectByPdfIDCompleted;
+        
+        /// <remarks/>
+        public event PDFUpdateGenerationInfoCompletedEventHandler PDFUpdateGenerationInfoCompleted;
+        
+        /// <remarks/>
+        public event PDFUpdateFileDeletionCompletedEventHandler PDFUpdateFileDeletionCompleted;
+        
+        /// <remarks/>
+        public event PDFUpdatePdfStatusProcessingCompletedEventHandler PDFUpdatePdfStatusProcessingCompleted;
+        
+        /// <remarks/>
+        public event PDFUpdatePdfStatusGeneratedCompletedEventHandler PDFUpdatePdfStatusGeneratedCompleted;
+        
+        /// <remarks/>
+        public event PDFUpdatePdfStatusErrorCompletedEventHandler PDFUpdatePdfStatusErrorCompleted;
+        
+        /// <remarks/>
+        public event PDFUpdatePdfStatusRejectedCompletedEventHandler PDFUpdatePdfStatusRejectedCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/AnnotatedTitleSave", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -3981,6 +2561,1514 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/MARCGetFileContents", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string MARCGetFileContents(int id, string type) {
+            object[] results = this.Invoke("MARCGetFileContents", new object[] {
+                        id,
+                        type});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void MARCGetFileContentsAsync(int id, string type) {
+            this.MARCGetFileContentsAsync(id, type, null);
+        }
+        
+        /// <remarks/>
+        public void MARCGetFileContentsAsync(int id, string type, object userState) {
+            if ((this.MARCGetFileContentsOperationCompleted == null)) {
+                this.MARCGetFileContentsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnMARCGetFileContentsOperationCompleted);
+            }
+            this.InvokeAsync("MARCGetFileContents", new object[] {
+                        id,
+                        type}, this.MARCGetFileContentsOperationCompleted, userState);
+        }
+        
+        private void OnMARCGetFileContentsOperationCompleted(object arg) {
+            if ((this.MARCGetFileContentsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.MARCGetFileContentsCompleted(this, new MARCGetFileContentsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/MarcCreateFile", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void MarcCreateFile(string marcBibID, string content) {
+            this.Invoke("MarcCreateFile", new object[] {
+                        marcBibID,
+                        content});
+        }
+        
+        /// <remarks/>
+        public void MarcCreateFileAsync(string marcBibID, string content) {
+            this.MarcCreateFileAsync(marcBibID, content, null);
+        }
+        
+        /// <remarks/>
+        public void MarcCreateFileAsync(string marcBibID, string content, object userState) {
+            if ((this.MarcCreateFileOperationCompleted == null)) {
+                this.MarcCreateFileOperationCompleted = new System.Threading.SendOrPostCallback(this.OnMarcCreateFileOperationCompleted);
+            }
+            this.InvokeAsync("MarcCreateFile", new object[] {
+                        marcBibID,
+                        content}, this.MarcCreateFileOperationCompleted, userState);
+        }
+        
+        private void OnMarcCreateFileOperationCompleted(object arg) {
+            if ((this.MarcCreateFileCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.MarcCreateFileCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOISelectSubmitted", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public DOI[] DOISelectSubmitted(int minutesSinceSubmit) {
+            object[] results = this.Invoke("DOISelectSubmitted", new object[] {
+                        minutesSinceSubmit});
+            return ((DOI[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void DOISelectSubmittedAsync(int minutesSinceSubmit) {
+            this.DOISelectSubmittedAsync(minutesSinceSubmit, null);
+        }
+        
+        /// <remarks/>
+        public void DOISelectSubmittedAsync(int minutesSinceSubmit, object userState) {
+            if ((this.DOISelectSubmittedOperationCompleted == null)) {
+                this.DOISelectSubmittedOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOISelectSubmittedOperationCompleted);
+            }
+            this.InvokeAsync("DOISelectSubmitted", new object[] {
+                        minutesSinceSubmit}, this.DOISelectSubmittedOperationCompleted, userState);
+        }
+        
+        private void OnDOISelectSubmittedOperationCompleted(object arg) {
+            if ((this.DOISelectSubmittedCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DOISelectSubmittedCompleted(this, new DOISelectSubmittedCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/TitleSelectWithoutSubmittedDOI", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public DOI[] TitleSelectWithoutSubmittedDOI(int numberToReturn) {
+            object[] results = this.Invoke("TitleSelectWithoutSubmittedDOI", new object[] {
+                        numberToReturn});
+            return ((DOI[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void TitleSelectWithoutSubmittedDOIAsync(int numberToReturn) {
+            this.TitleSelectWithoutSubmittedDOIAsync(numberToReturn, null);
+        }
+        
+        /// <remarks/>
+        public void TitleSelectWithoutSubmittedDOIAsync(int numberToReturn, object userState) {
+            if ((this.TitleSelectWithoutSubmittedDOIOperationCompleted == null)) {
+                this.TitleSelectWithoutSubmittedDOIOperationCompleted = new System.Threading.SendOrPostCallback(this.OnTitleSelectWithoutSubmittedDOIOperationCompleted);
+            }
+            this.InvokeAsync("TitleSelectWithoutSubmittedDOI", new object[] {
+                        numberToReturn}, this.TitleSelectWithoutSubmittedDOIOperationCompleted, userState);
+        }
+        
+        private void OnTitleSelectWithoutSubmittedDOIOperationCompleted(object arg) {
+            if ((this.TitleSelectWithoutSubmittedDOICompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.TitleSelectWithoutSubmittedDOICompleted(this, new TitleSelectWithoutSubmittedDOICompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/SegmentSelectWithoutSubmittedDOI", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public DOI[] SegmentSelectWithoutSubmittedDOI(int numberToReturn) {
+            object[] results = this.Invoke("SegmentSelectWithoutSubmittedDOI", new object[] {
+                        numberToReturn});
+            return ((DOI[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void SegmentSelectWithoutSubmittedDOIAsync(int numberToReturn) {
+            this.SegmentSelectWithoutSubmittedDOIAsync(numberToReturn, null);
+        }
+        
+        /// <remarks/>
+        public void SegmentSelectWithoutSubmittedDOIAsync(int numberToReturn, object userState) {
+            if ((this.SegmentSelectWithoutSubmittedDOIOperationCompleted == null)) {
+                this.SegmentSelectWithoutSubmittedDOIOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSegmentSelectWithoutSubmittedDOIOperationCompleted);
+            }
+            this.InvokeAsync("SegmentSelectWithoutSubmittedDOI", new object[] {
+                        numberToReturn}, this.SegmentSelectWithoutSubmittedDOIOperationCompleted, userState);
+        }
+        
+        private void OnSegmentSelectWithoutSubmittedDOIOperationCompleted(object arg) {
+            if ((this.SegmentSelectWithoutSubmittedDOICompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SegmentSelectWithoutSubmittedDOICompleted(this, new SegmentSelectWithoutSubmittedDOICompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOIInsertAuto", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public DOI DOIInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId, string doiName, string message, short isValid, int userId) {
+            object[] results = this.Invoke("DOIInsertAuto", new object[] {
+                        doiEntityTypeId,
+                        entityId,
+                        doiStatusId,
+                        doiBatchId,
+                        doiName,
+                        message,
+                        isValid,
+                        userId});
+            return ((DOI)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void DOIInsertAutoAsync(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId, string doiName, string message, short isValid, int userId) {
+            this.DOIInsertAutoAsync(doiEntityTypeId, entityId, doiStatusId, doiBatchId, doiName, message, isValid, userId, null);
+        }
+        
+        /// <remarks/>
+        public void DOIInsertAutoAsync(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId, string doiName, string message, short isValid, int userId, object userState) {
+            if ((this.DOIInsertAutoOperationCompleted == null)) {
+                this.DOIInsertAutoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOIInsertAutoOperationCompleted);
+            }
+            this.InvokeAsync("DOIInsertAuto", new object[] {
+                        doiEntityTypeId,
+                        entityId,
+                        doiStatusId,
+                        doiBatchId,
+                        doiName,
+                        message,
+                        isValid,
+                        userId}, this.DOIInsertAutoOperationCompleted, userState);
+        }
+        
+        private void OnDOIInsertAutoOperationCompleted(object arg) {
+            if ((this.DOIInsertAutoCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DOIInsertAutoCompleted(this, new DOIInsertAutoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOIInsert", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void DOIInsert(int doiEntityTypeId, int entityID, int doiStatusId, string doiName, short isValid, string doiBatchId, string message, int userId, int excludeBHLDOI) {
+            this.Invoke("DOIInsert", new object[] {
+                        doiEntityTypeId,
+                        entityID,
+                        doiStatusId,
+                        doiName,
+                        isValid,
+                        doiBatchId,
+                        message,
+                        userId,
+                        excludeBHLDOI});
+        }
+        
+        /// <remarks/>
+        public void DOIInsertAsync(int doiEntityTypeId, int entityID, int doiStatusId, string doiName, short isValid, string doiBatchId, string message, int userId, int excludeBHLDOI) {
+            this.DOIInsertAsync(doiEntityTypeId, entityID, doiStatusId, doiName, isValid, doiBatchId, message, userId, excludeBHLDOI, null);
+        }
+        
+        /// <remarks/>
+        public void DOIInsertAsync(int doiEntityTypeId, int entityID, int doiStatusId, string doiName, short isValid, string doiBatchId, string message, int userId, int excludeBHLDOI, object userState) {
+            if ((this.DOIInsertOperationCompleted == null)) {
+                this.DOIInsertOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOIInsertOperationCompleted);
+            }
+            this.InvokeAsync("DOIInsert", new object[] {
+                        doiEntityTypeId,
+                        entityID,
+                        doiStatusId,
+                        doiName,
+                        isValid,
+                        doiBatchId,
+                        message,
+                        userId,
+                        excludeBHLDOI}, this.DOIInsertOperationCompleted, userState);
+        }
+        
+        private void OnDOIInsertOperationCompleted(object arg) {
+            if ((this.DOIInsertCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DOIInsertCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOIInsertIdentifier", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void DOIInsertIdentifier(int doiEntityTypeId, int entityID, string doiName, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<int> userId) {
+            this.Invoke("DOIInsertIdentifier", new object[] {
+                        doiEntityTypeId,
+                        entityID,
+                        doiName,
+                        userId});
+        }
+        
+        /// <remarks/>
+        public void DOIInsertIdentifierAsync(int doiEntityTypeId, int entityID, string doiName, System.Nullable<int> userId) {
+            this.DOIInsertIdentifierAsync(doiEntityTypeId, entityID, doiName, userId, null);
+        }
+        
+        /// <remarks/>
+        public void DOIInsertIdentifierAsync(int doiEntityTypeId, int entityID, string doiName, System.Nullable<int> userId, object userState) {
+            if ((this.DOIInsertIdentifierOperationCompleted == null)) {
+                this.DOIInsertIdentifierOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOIInsertIdentifierOperationCompleted);
+            }
+            this.InvokeAsync("DOIInsertIdentifier", new object[] {
+                        doiEntityTypeId,
+                        entityID,
+                        doiName,
+                        userId}, this.DOIInsertIdentifierOperationCompleted, userState);
+        }
+        
+        private void OnDOIInsertIdentifierOperationCompleted(object arg) {
+            if ((this.DOIInsertIdentifierCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DOIInsertIdentifierCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOIUpdateStatus", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<short> setValid, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<int> userId) {
+            object[] results = this.Invoke("DOIUpdateStatus", new object[] {
+                        doiID,
+                        doiStatusId,
+                        message,
+                        setValid,
+                        userId});
+            return ((DOI)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void DOIUpdateStatusAsync(int doiID, int doiStatusId, string message, System.Nullable<short> setValid, System.Nullable<int> userId) {
+            this.DOIUpdateStatusAsync(doiID, doiStatusId, message, setValid, userId, null);
+        }
+        
+        /// <remarks/>
+        public void DOIUpdateStatusAsync(int doiID, int doiStatusId, string message, System.Nullable<short> setValid, System.Nullable<int> userId, object userState) {
+            if ((this.DOIUpdateStatusOperationCompleted == null)) {
+                this.DOIUpdateStatusOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOIUpdateStatusOperationCompleted);
+            }
+            this.InvokeAsync("DOIUpdateStatus", new object[] {
+                        doiID,
+                        doiStatusId,
+                        message,
+                        setValid,
+                        userId}, this.DOIUpdateStatusOperationCompleted, userState);
+        }
+        
+        private void OnDOIUpdateStatusOperationCompleted(object arg) {
+            if ((this.DOIUpdateStatusCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DOIUpdateStatusCompleted(this, new DOIUpdateStatusCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOIUpdateDOIName", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<int> userId) {
+            object[] results = this.Invoke("DOIUpdateDOIName", new object[] {
+                        doiID,
+                        doiStatusId,
+                        doiName,
+                        userId});
+            return ((DOI)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void DOIUpdateDOINameAsync(int doiID, int doiStatusId, string doiName, System.Nullable<int> userId) {
+            this.DOIUpdateDOINameAsync(doiID, doiStatusId, doiName, userId, null);
+        }
+        
+        /// <remarks/>
+        public void DOIUpdateDOINameAsync(int doiID, int doiStatusId, string doiName, System.Nullable<int> userId, object userState) {
+            if ((this.DOIUpdateDOINameOperationCompleted == null)) {
+                this.DOIUpdateDOINameOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOIUpdateDOINameOperationCompleted);
+            }
+            this.InvokeAsync("DOIUpdateDOIName", new object[] {
+                        doiID,
+                        doiStatusId,
+                        doiName,
+                        userId}, this.DOIUpdateDOINameOperationCompleted, userState);
+        }
+        
+        private void OnDOIUpdateDOINameOperationCompleted(object arg) {
+            if ((this.DOIUpdateDOINameCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DOIUpdateDOINameCompleted(this, new DOIUpdateDOINameCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOIUpdateBatchID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public DOI DOIUpdateBatchID(int doiID, int doiStatusId, string doiBatchID, [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<int> userId) {
+            object[] results = this.Invoke("DOIUpdateBatchID", new object[] {
+                        doiID,
+                        doiStatusId,
+                        doiBatchID,
+                        userId});
+            return ((DOI)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void DOIUpdateBatchIDAsync(int doiID, int doiStatusId, string doiBatchID, System.Nullable<int> userId) {
+            this.DOIUpdateBatchIDAsync(doiID, doiStatusId, doiBatchID, userId, null);
+        }
+        
+        /// <remarks/>
+        public void DOIUpdateBatchIDAsync(int doiID, int doiStatusId, string doiBatchID, System.Nullable<int> userId, object userState) {
+            if ((this.DOIUpdateBatchIDOperationCompleted == null)) {
+                this.DOIUpdateBatchIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOIUpdateBatchIDOperationCompleted);
+            }
+            this.InvokeAsync("DOIUpdateBatchID", new object[] {
+                        doiID,
+                        doiStatusId,
+                        doiBatchID,
+                        userId}, this.DOIUpdateBatchIDOperationCompleted, userState);
+        }
+        
+        private void OnDOIUpdateBatchIDOperationCompleted(object arg) {
+            if ((this.DOIUpdateBatchIDCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DOIUpdateBatchIDCompleted(this, new DOIUpdateBatchIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOIGetFileContents", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string DOIGetFileContents(string batchId, string type) {
+            object[] results = this.Invoke("DOIGetFileContents", new object[] {
+                        batchId,
+                        type});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void DOIGetFileContentsAsync(string batchId, string type) {
+            this.DOIGetFileContentsAsync(batchId, type, null);
+        }
+        
+        /// <remarks/>
+        public void DOIGetFileContentsAsync(string batchId, string type, object userState) {
+            if ((this.DOIGetFileContentsOperationCompleted == null)) {
+                this.DOIGetFileContentsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOIGetFileContentsOperationCompleted);
+            }
+            this.InvokeAsync("DOIGetFileContents", new object[] {
+                        batchId,
+                        type}, this.DOIGetFileContentsOperationCompleted, userState);
+        }
+        
+        private void OnDOIGetFileContentsOperationCompleted(object arg) {
+            if ((this.DOIGetFileContentsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DOIGetFileContentsCompleted(this, new DOIGetFileContentsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOISelectValidForTitle", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Title_Identifier[] DOISelectValidForTitle(int titleID) {
+            object[] results = this.Invoke("DOISelectValidForTitle", new object[] {
+                        titleID});
+            return ((Title_Identifier[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void DOISelectValidForTitleAsync(int titleID) {
+            this.DOISelectValidForTitleAsync(titleID, null);
+        }
+        
+        /// <remarks/>
+        public void DOISelectValidForTitleAsync(int titleID, object userState) {
+            if ((this.DOISelectValidForTitleOperationCompleted == null)) {
+                this.DOISelectValidForTitleOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOISelectValidForTitleOperationCompleted);
+            }
+            this.InvokeAsync("DOISelectValidForTitle", new object[] {
+                        titleID}, this.DOISelectValidForTitleOperationCompleted, userState);
+        }
+        
+        private void OnDOISelectValidForTitleOperationCompleted(object arg) {
+            if ((this.DOISelectValidForTitleCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DOISelectValidForTitleCompleted(this, new DOISelectValidForTitleCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/IndicatedPageSave", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void IndicatedPageSave(int[] pageIDs, string pagePrefix, int style, string start, int increment, bool implied, int userID) {
+            this.Invoke("IndicatedPageSave", new object[] {
+                        pageIDs,
+                        pagePrefix,
+                        style,
+                        start,
+                        increment,
+                        implied,
+                        userID});
+        }
+        
+        /// <remarks/>
+        public void IndicatedPageSaveAsync(int[] pageIDs, string pagePrefix, int style, string start, int increment, bool implied, int userID) {
+            this.IndicatedPageSaveAsync(pageIDs, pagePrefix, style, start, increment, implied, userID, null);
+        }
+        
+        /// <remarks/>
+        public void IndicatedPageSaveAsync(int[] pageIDs, string pagePrefix, int style, string start, int increment, bool implied, int userID, object userState) {
+            if ((this.IndicatedPageSaveOperationCompleted == null)) {
+                this.IndicatedPageSaveOperationCompleted = new System.Threading.SendOrPostCallback(this.OnIndicatedPageSaveOperationCompleted);
+            }
+            this.InvokeAsync("IndicatedPageSave", new object[] {
+                        pageIDs,
+                        pagePrefix,
+                        style,
+                        start,
+                        increment,
+                        implied,
+                        userID}, this.IndicatedPageSaveOperationCompleted, userState);
+        }
+        
+        private void OnIndicatedPageSaveOperationCompleted(object arg) {
+            if ((this.IndicatedPageSaveCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.IndicatedPageSaveCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/IndicatedPageDeleteAllForPage", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void IndicatedPageDeleteAllForPage(int[] pageIDs, int userID) {
+            this.Invoke("IndicatedPageDeleteAllForPage", new object[] {
+                        pageIDs,
+                        userID});
+        }
+        
+        /// <remarks/>
+        public void IndicatedPageDeleteAllForPageAsync(int[] pageIDs, int userID) {
+            this.IndicatedPageDeleteAllForPageAsync(pageIDs, userID, null);
+        }
+        
+        /// <remarks/>
+        public void IndicatedPageDeleteAllForPageAsync(int[] pageIDs, int userID, object userState) {
+            if ((this.IndicatedPageDeleteAllForPageOperationCompleted == null)) {
+                this.IndicatedPageDeleteAllForPageOperationCompleted = new System.Threading.SendOrPostCallback(this.OnIndicatedPageDeleteAllForPageOperationCompleted);
+            }
+            this.InvokeAsync("IndicatedPageDeleteAllForPage", new object[] {
+                        pageIDs,
+                        userID}, this.IndicatedPageDeleteAllForPageOperationCompleted, userState);
+        }
+        
+        private void OnIndicatedPageDeleteAllForPageOperationCompleted(object arg) {
+            if ((this.IndicatedPageDeleteAllForPageCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.IndicatedPageDeleteAllForPageCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageSelectByItemID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Page[] PageSelectByItemID(int itemID) {
+            object[] results = this.Invoke("PageSelectByItemID", new object[] {
+                        itemID});
+            return ((Page[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PageSelectByItemIDAsync(int itemID) {
+            this.PageSelectByItemIDAsync(itemID, null);
+        }
+        
+        /// <remarks/>
+        public void PageSelectByItemIDAsync(int itemID, object userState) {
+            if ((this.PageSelectByItemIDOperationCompleted == null)) {
+                this.PageSelectByItemIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageSelectByItemIDOperationCompleted);
+            }
+            this.InvokeAsync("PageSelectByItemID", new object[] {
+                        itemID}, this.PageSelectByItemIDOperationCompleted, userState);
+        }
+        
+        private void OnPageSelectByItemIDOperationCompleted(object arg) {
+            if ((this.PageSelectByItemIDCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageSelectByItemIDCompleted(this, new PageSelectByItemIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageSelectFileNameByItemID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Page[] PageSelectFileNameByItemID(int itemID) {
+            object[] results = this.Invoke("PageSelectFileNameByItemID", new object[] {
+                        itemID});
+            return ((Page[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PageSelectFileNameByItemIDAsync(int itemID) {
+            this.PageSelectFileNameByItemIDAsync(itemID, null);
+        }
+        
+        /// <remarks/>
+        public void PageSelectFileNameByItemIDAsync(int itemID, object userState) {
+            if ((this.PageSelectFileNameByItemIDOperationCompleted == null)) {
+                this.PageSelectFileNameByItemIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageSelectFileNameByItemIDOperationCompleted);
+            }
+            this.InvokeAsync("PageSelectFileNameByItemID", new object[] {
+                        itemID}, this.PageSelectFileNameByItemIDOperationCompleted, userState);
+        }
+        
+        private void OnPageSelectFileNameByItemIDOperationCompleted(object arg) {
+            if ((this.PageSelectFileNameByItemIDCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageSelectFileNameByItemIDCompleted(this, new PageSelectFileNameByItemIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageMetadataSelectByItemID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Page[] PageMetadataSelectByItemID(int itemID) {
+            object[] results = this.Invoke("PageMetadataSelectByItemID", new object[] {
+                        itemID});
+            return ((Page[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PageMetadataSelectByItemIDAsync(int itemID) {
+            this.PageMetadataSelectByItemIDAsync(itemID, null);
+        }
+        
+        /// <remarks/>
+        public void PageMetadataSelectByItemIDAsync(int itemID, object userState) {
+            if ((this.PageMetadataSelectByItemIDOperationCompleted == null)) {
+                this.PageMetadataSelectByItemIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageMetadataSelectByItemIDOperationCompleted);
+            }
+            this.InvokeAsync("PageMetadataSelectByItemID", new object[] {
+                        itemID}, this.PageMetadataSelectByItemIDOperationCompleted, userState);
+        }
+        
+        private void OnPageMetadataSelectByItemIDOperationCompleted(object arg) {
+            if ((this.PageMetadataSelectByItemIDCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageMetadataSelectByItemIDCompleted(this, new PageMetadataSelectByItemIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageMetadataSelectBySegmentID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Page[] PageMetadataSelectBySegmentID(int segmentID) {
+            object[] results = this.Invoke("PageMetadataSelectBySegmentID", new object[] {
+                        segmentID});
+            return ((Page[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PageMetadataSelectBySegmentIDAsync(int segmentID) {
+            this.PageMetadataSelectBySegmentIDAsync(segmentID, null);
+        }
+        
+        /// <remarks/>
+        public void PageMetadataSelectBySegmentIDAsync(int segmentID, object userState) {
+            if ((this.PageMetadataSelectBySegmentIDOperationCompleted == null)) {
+                this.PageMetadataSelectBySegmentIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageMetadataSelectBySegmentIDOperationCompleted);
+            }
+            this.InvokeAsync("PageMetadataSelectBySegmentID", new object[] {
+                        segmentID}, this.PageMetadataSelectBySegmentIDOperationCompleted, userState);
+        }
+        
+        private void OnPageMetadataSelectBySegmentIDOperationCompleted(object arg) {
+            if ((this.PageMetadataSelectBySegmentIDCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageMetadataSelectBySegmentIDCompleted(this, new PageMetadataSelectBySegmentIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageSelectWithExpiredPageNamesByItemID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Page[] PageSelectWithExpiredPageNamesByItemID(int itemID, int maxAge) {
+            object[] results = this.Invoke("PageSelectWithExpiredPageNamesByItemID", new object[] {
+                        itemID,
+                        maxAge});
+            return ((Page[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PageSelectWithExpiredPageNamesByItemIDAsync(int itemID, int maxAge) {
+            this.PageSelectWithExpiredPageNamesByItemIDAsync(itemID, maxAge, null);
+        }
+        
+        /// <remarks/>
+        public void PageSelectWithExpiredPageNamesByItemIDAsync(int itemID, int maxAge, object userState) {
+            if ((this.PageSelectWithExpiredPageNamesByItemIDOperationCompleted == null)) {
+                this.PageSelectWithExpiredPageNamesByItemIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageSelectWithExpiredPageNamesByItemIDOperationCompleted);
+            }
+            this.InvokeAsync("PageSelectWithExpiredPageNamesByItemID", new object[] {
+                        itemID,
+                        maxAge}, this.PageSelectWithExpiredPageNamesByItemIDOperationCompleted, userState);
+        }
+        
+        private void OnPageSelectWithExpiredPageNamesByItemIDOperationCompleted(object arg) {
+            if ((this.PageSelectWithExpiredPageNamesByItemIDCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageSelectWithExpiredPageNamesByItemIDCompleted(this, new PageSelectWithExpiredPageNamesByItemIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageSelectWithoutPageNamesByItemID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Page[] PageSelectWithoutPageNamesByItemID(int itemID) {
+            object[] results = this.Invoke("PageSelectWithoutPageNamesByItemID", new object[] {
+                        itemID});
+            return ((Page[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PageSelectWithoutPageNamesByItemIDAsync(int itemID) {
+            this.PageSelectWithoutPageNamesByItemIDAsync(itemID, null);
+        }
+        
+        /// <remarks/>
+        public void PageSelectWithoutPageNamesByItemIDAsync(int itemID, object userState) {
+            if ((this.PageSelectWithoutPageNamesByItemIDOperationCompleted == null)) {
+                this.PageSelectWithoutPageNamesByItemIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageSelectWithoutPageNamesByItemIDOperationCompleted);
+            }
+            this.InvokeAsync("PageSelectWithoutPageNamesByItemID", new object[] {
+                        itemID}, this.PageSelectWithoutPageNamesByItemIDOperationCompleted, userState);
+        }
+        
+        private void OnPageSelectWithoutPageNamesByItemIDOperationCompleted(object arg) {
+            if ((this.PageSelectWithoutPageNamesByItemIDCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageSelectWithoutPageNamesByItemIDCompleted(this, new PageSelectWithoutPageNamesByItemIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageSelectWithoutPageNames", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Page[] PageSelectWithoutPageNames() {
+            object[] results = this.Invoke("PageSelectWithoutPageNames", new object[0]);
+            return ((Page[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PageSelectWithoutPageNamesAsync() {
+            this.PageSelectWithoutPageNamesAsync(null);
+        }
+        
+        /// <remarks/>
+        public void PageSelectWithoutPageNamesAsync(object userState) {
+            if ((this.PageSelectWithoutPageNamesOperationCompleted == null)) {
+                this.PageSelectWithoutPageNamesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageSelectWithoutPageNamesOperationCompleted);
+            }
+            this.InvokeAsync("PageSelectWithoutPageNames", new object[0], this.PageSelectWithoutPageNamesOperationCompleted, userState);
+        }
+        
+        private void OnPageSelectWithoutPageNamesOperationCompleted(object arg) {
+            if ((this.PageSelectWithoutPageNamesCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageSelectWithoutPageNamesCompleted(this, new PageSelectWithoutPageNamesCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageUpdateYear", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void PageUpdateYear(int[] pageIDs, string year, int userID) {
+            this.Invoke("PageUpdateYear", new object[] {
+                        pageIDs,
+                        year,
+                        userID});
+        }
+        
+        /// <remarks/>
+        public void PageUpdateYearAsync(int[] pageIDs, string year, int userID) {
+            this.PageUpdateYearAsync(pageIDs, year, userID, null);
+        }
+        
+        /// <remarks/>
+        public void PageUpdateYearAsync(int[] pageIDs, string year, int userID, object userState) {
+            if ((this.PageUpdateYearOperationCompleted == null)) {
+                this.PageUpdateYearOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageUpdateYearOperationCompleted);
+            }
+            this.InvokeAsync("PageUpdateYear", new object[] {
+                        pageIDs,
+                        year,
+                        userID}, this.PageUpdateYearOperationCompleted, userState);
+        }
+        
+        private void OnPageUpdateYearOperationCompleted(object arg) {
+            if ((this.PageUpdateYearCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageUpdateYearCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageUpdateVolume", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void PageUpdateVolume(int[] pageIDs, string volume, int userID) {
+            this.Invoke("PageUpdateVolume", new object[] {
+                        pageIDs,
+                        volume,
+                        userID});
+        }
+        
+        /// <remarks/>
+        public void PageUpdateVolumeAsync(int[] pageIDs, string volume, int userID) {
+            this.PageUpdateVolumeAsync(pageIDs, volume, userID, null);
+        }
+        
+        /// <remarks/>
+        public void PageUpdateVolumeAsync(int[] pageIDs, string volume, int userID, object userState) {
+            if ((this.PageUpdateVolumeOperationCompleted == null)) {
+                this.PageUpdateVolumeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageUpdateVolumeOperationCompleted);
+            }
+            this.InvokeAsync("PageUpdateVolume", new object[] {
+                        pageIDs,
+                        volume,
+                        userID}, this.PageUpdateVolumeOperationCompleted, userState);
+        }
+        
+        private void OnPageUpdateVolumeOperationCompleted(object arg) {
+            if ((this.PageUpdateVolumeCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageUpdateVolumeCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageUpdateIssue", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID) {
+            this.Invoke("PageUpdateIssue", new object[] {
+                        pageIDs,
+                        issuePrefix,
+                        issue,
+                        userID});
+        }
+        
+        /// <remarks/>
+        public void PageUpdateIssueAsync(int[] pageIDs, string issuePrefix, string issue, int userID) {
+            this.PageUpdateIssueAsync(pageIDs, issuePrefix, issue, userID, null);
+        }
+        
+        /// <remarks/>
+        public void PageUpdateIssueAsync(int[] pageIDs, string issuePrefix, string issue, int userID, object userState) {
+            if ((this.PageUpdateIssueOperationCompleted == null)) {
+                this.PageUpdateIssueOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageUpdateIssueOperationCompleted);
+            }
+            this.InvokeAsync("PageUpdateIssue", new object[] {
+                        pageIDs,
+                        issuePrefix,
+                        issue,
+                        userID}, this.PageUpdateIssueOperationCompleted, userState);
+        }
+        
+        private void OnPageUpdateIssueOperationCompleted(object arg) {
+            if ((this.PageUpdateIssueCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageUpdateIssueCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageUpdateLastPageNameLookupDate", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void PageUpdateLastPageNameLookupDate(int pageID) {
+            this.Invoke("PageUpdateLastPageNameLookupDate", new object[] {
+                        pageID});
+        }
+        
+        /// <remarks/>
+        public void PageUpdateLastPageNameLookupDateAsync(int pageID) {
+            this.PageUpdateLastPageNameLookupDateAsync(pageID, null);
+        }
+        
+        /// <remarks/>
+        public void PageUpdateLastPageNameLookupDateAsync(int pageID, object userState) {
+            if ((this.PageUpdateLastPageNameLookupDateOperationCompleted == null)) {
+                this.PageUpdateLastPageNameLookupDateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageUpdateLastPageNameLookupDateOperationCompleted);
+            }
+            this.InvokeAsync("PageUpdateLastPageNameLookupDate", new object[] {
+                        pageID}, this.PageUpdateLastPageNameLookupDateOperationCompleted, userState);
+        }
+        
+        private void OnPageUpdateLastPageNameLookupDateOperationCompleted(object arg) {
+            if ((this.PageUpdateLastPageNameLookupDateCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageUpdateLastPageNameLookupDateCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageCheckForOcrText", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool PageCheckForOcrText(int pageID, string ocrTextLocation) {
+            object[] results = this.Invoke("PageCheckForOcrText", new object[] {
+                        pageID,
+                        ocrTextLocation});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PageCheckForOcrTextAsync(int pageID, string ocrTextLocation) {
+            this.PageCheckForOcrTextAsync(pageID, ocrTextLocation, null);
+        }
+        
+        /// <remarks/>
+        public void PageCheckForOcrTextAsync(int pageID, string ocrTextLocation, object userState) {
+            if ((this.PageCheckForOcrTextOperationCompleted == null)) {
+                this.PageCheckForOcrTextOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageCheckForOcrTextOperationCompleted);
+            }
+            this.InvokeAsync("PageCheckForOcrText", new object[] {
+                        pageID,
+                        ocrTextLocation}, this.PageCheckForOcrTextOperationCompleted, userState);
+        }
+        
+        private void OnPageCheckForOcrTextOperationCompleted(object arg) {
+            if ((this.PageCheckForOcrTextCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageCheckForOcrTextCompleted(this, new PageCheckForOcrTextCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageTextLogInsertForItem", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void PageTextLogInsertForItem(int itemID, string textSource, int userID) {
+            this.Invoke("PageTextLogInsertForItem", new object[] {
+                        itemID,
+                        textSource,
+                        userID});
+        }
+        
+        /// <remarks/>
+        public void PageTextLogInsertForItemAsync(int itemID, string textSource, int userID) {
+            this.PageTextLogInsertForItemAsync(itemID, textSource, userID, null);
+        }
+        
+        /// <remarks/>
+        public void PageTextLogInsertForItemAsync(int itemID, string textSource, int userID, object userState) {
+            if ((this.PageTextLogInsertForItemOperationCompleted == null)) {
+                this.PageTextLogInsertForItemOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageTextLogInsertForItemOperationCompleted);
+            }
+            this.InvokeAsync("PageTextLogInsertForItem", new object[] {
+                        itemID,
+                        textSource,
+                        userID}, this.PageTextLogInsertForItemOperationCompleted, userState);
+        }
+        
+        private void OnPageTextLogInsertForItemOperationCompleted(object arg) {
+            if ((this.PageTextLogInsertForItemCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageTextLogInsertForItemCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageFlickrSelectRandom", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public PageFlickr[] PageFlickrSelectRandom(int numberToReturn) {
+            object[] results = this.Invoke("PageFlickrSelectRandom", new object[] {
+                        numberToReturn});
+            return ((PageFlickr[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PageFlickrSelectRandomAsync(int numberToReturn) {
+            this.PageFlickrSelectRandomAsync(numberToReturn, null);
+        }
+        
+        /// <remarks/>
+        public void PageFlickrSelectRandomAsync(int numberToReturn, object userState) {
+            if ((this.PageFlickrSelectRandomOperationCompleted == null)) {
+                this.PageFlickrSelectRandomOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageFlickrSelectRandomOperationCompleted);
+            }
+            this.InvokeAsync("PageFlickrSelectRandom", new object[] {
+                        numberToReturn}, this.PageFlickrSelectRandomOperationCompleted, userState);
+        }
+        
+        private void OnPageFlickrSelectRandomOperationCompleted(object arg) {
+            if ((this.PageFlickrSelectRandomCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageFlickrSelectRandomCompleted(this, new PageFlickrSelectRandomCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageFlickrSelectAll", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public PageFlickr[] PageFlickrSelectAll() {
+            object[] results = this.Invoke("PageFlickrSelectAll", new object[0]);
+            return ((PageFlickr[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PageFlickrSelectAllAsync() {
+            this.PageFlickrSelectAllAsync(null);
+        }
+        
+        /// <remarks/>
+        public void PageFlickrSelectAllAsync(object userState) {
+            if ((this.PageFlickrSelectAllOperationCompleted == null)) {
+                this.PageFlickrSelectAllOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageFlickrSelectAllOperationCompleted);
+            }
+            this.InvokeAsync("PageFlickrSelectAll", new object[0], this.PageFlickrSelectAllOperationCompleted, userState);
+        }
+        
+        private void OnPageFlickrSelectAllOperationCompleted(object arg) {
+            if ((this.PageFlickrSelectAllCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageFlickrSelectAllCompleted(this, new PageFlickrSelectAllCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageNameUpdateList", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public int[] PageNameUpdateList(int pageID, NameFinderResponse[] items, string sourceName) {
+            object[] results = this.Invoke("PageNameUpdateList", new object[] {
+                        pageID,
+                        items,
+                        sourceName});
+            return ((int[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PageNameUpdateListAsync(int pageID, NameFinderResponse[] items, string sourceName) {
+            this.PageNameUpdateListAsync(pageID, items, sourceName, null);
+        }
+        
+        /// <remarks/>
+        public void PageNameUpdateListAsync(int pageID, NameFinderResponse[] items, string sourceName, object userState) {
+            if ((this.PageNameUpdateListOperationCompleted == null)) {
+                this.PageNameUpdateListOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageNameUpdateListOperationCompleted);
+            }
+            this.InvokeAsync("PageNameUpdateList", new object[] {
+                        pageID,
+                        items,
+                        sourceName}, this.PageNameUpdateListOperationCompleted, userState);
+        }
+        
+        private void OnPageNameUpdateListOperationCompleted(object arg) {
+            if ((this.PageNameUpdateListCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageNameUpdateListCompleted(this, new PageNameUpdateListCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/NamePageDeleteByItemID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void NamePageDeleteByItemID(int itemID) {
+            this.Invoke("NamePageDeleteByItemID", new object[] {
+                        itemID});
+        }
+        
+        /// <remarks/>
+        public void NamePageDeleteByItemIDAsync(int itemID) {
+            this.NamePageDeleteByItemIDAsync(itemID, null);
+        }
+        
+        /// <remarks/>
+        public void NamePageDeleteByItemIDAsync(int itemID, object userState) {
+            if ((this.NamePageDeleteByItemIDOperationCompleted == null)) {
+                this.NamePageDeleteByItemIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnNamePageDeleteByItemIDOperationCompleted);
+            }
+            this.InvokeAsync("NamePageDeleteByItemID", new object[] {
+                        itemID}, this.NamePageDeleteByItemIDOperationCompleted, userState);
+        }
+        
+        private void OnNamePageDeleteByItemIDOperationCompleted(object arg) {
+            if ((this.NamePageDeleteByItemIDCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.NamePageDeleteByItemIDCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageTypeSelectAll", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public PageType[] PageTypeSelectAll() {
+            object[] results = this.Invoke("PageTypeSelectAll", new object[0]);
+            return ((PageType[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PageTypeSelectAllAsync() {
+            this.PageTypeSelectAllAsync(null);
+        }
+        
+        /// <remarks/>
+        public void PageTypeSelectAllAsync(object userState) {
+            if ((this.PageTypeSelectAllOperationCompleted == null)) {
+                this.PageTypeSelectAllOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageTypeSelectAllOperationCompleted);
+            }
+            this.InvokeAsync("PageTypeSelectAll", new object[0], this.PageTypeSelectAllOperationCompleted, userState);
+        }
+        
+        private void OnPageTypeSelectAllOperationCompleted(object arg) {
+            if ((this.PageTypeSelectAllCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageTypeSelectAllCompleted(this, new PageTypeSelectAllCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/Page_PageTypeSave", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void Page_PageTypeSave(int[] pageIDs, int pageTypeID, int userID) {
+            this.Invoke("Page_PageTypeSave", new object[] {
+                        pageIDs,
+                        pageTypeID,
+                        userID});
+        }
+        
+        /// <remarks/>
+        public void Page_PageTypeSaveAsync(int[] pageIDs, int pageTypeID, int userID) {
+            this.Page_PageTypeSaveAsync(pageIDs, pageTypeID, userID, null);
+        }
+        
+        /// <remarks/>
+        public void Page_PageTypeSaveAsync(int[] pageIDs, int pageTypeID, int userID, object userState) {
+            if ((this.Page_PageTypeSaveOperationCompleted == null)) {
+                this.Page_PageTypeSaveOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPage_PageTypeSaveOperationCompleted);
+            }
+            this.InvokeAsync("Page_PageTypeSave", new object[] {
+                        pageIDs,
+                        pageTypeID,
+                        userID}, this.Page_PageTypeSaveOperationCompleted, userState);
+        }
+        
+        private void OnPage_PageTypeSaveOperationCompleted(object arg) {
+            if ((this.Page_PageTypeSaveCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.Page_PageTypeSaveCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/Page_PageTypeDeleteAllForPage", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void Page_PageTypeDeleteAllForPage(int[] pageIDs, int userID) {
+            this.Invoke("Page_PageTypeDeleteAllForPage", new object[] {
+                        pageIDs,
+                        userID});
+        }
+        
+        /// <remarks/>
+        public void Page_PageTypeDeleteAllForPageAsync(int[] pageIDs, int userID) {
+            this.Page_PageTypeDeleteAllForPageAsync(pageIDs, userID, null);
+        }
+        
+        /// <remarks/>
+        public void Page_PageTypeDeleteAllForPageAsync(int[] pageIDs, int userID, object userState) {
+            if ((this.Page_PageTypeDeleteAllForPageOperationCompleted == null)) {
+                this.Page_PageTypeDeleteAllForPageOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPage_PageTypeDeleteAllForPageOperationCompleted);
+            }
+            this.InvokeAsync("Page_PageTypeDeleteAllForPage", new object[] {
+                        pageIDs,
+                        userID}, this.Page_PageTypeDeleteAllForPageOperationCompleted, userState);
+        }
+        
+        private void OnPage_PageTypeDeleteAllForPageOperationCompleted(object arg) {
+            if ((this.Page_PageTypeDeleteAllForPageCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.Page_PageTypeDeleteAllForPageCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/GetPaginationStatusPending", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public int GetPaginationStatusPending() {
+            object[] results = this.Invoke("GetPaginationStatusPending", new object[0]);
+            return ((int)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetPaginationStatusPendingAsync() {
+            this.GetPaginationStatusPendingAsync(null);
+        }
+        
+        /// <remarks/>
+        public void GetPaginationStatusPendingAsync(object userState) {
+            if ((this.GetPaginationStatusPendingOperationCompleted == null)) {
+                this.GetPaginationStatusPendingOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetPaginationStatusPendingOperationCompleted);
+            }
+            this.InvokeAsync("GetPaginationStatusPending", new object[0], this.GetPaginationStatusPendingOperationCompleted, userState);
+        }
+        
+        private void OnGetPaginationStatusPendingOperationCompleted(object arg) {
+            if ((this.GetPaginationStatusPendingCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetPaginationStatusPendingCompleted(this, new GetPaginationStatusPendingCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/GetPaginationStatusInProgress", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public int GetPaginationStatusInProgress() {
+            object[] results = this.Invoke("GetPaginationStatusInProgress", new object[0]);
+            return ((int)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetPaginationStatusInProgressAsync() {
+            this.GetPaginationStatusInProgressAsync(null);
+        }
+        
+        /// <remarks/>
+        public void GetPaginationStatusInProgressAsync(object userState) {
+            if ((this.GetPaginationStatusInProgressOperationCompleted == null)) {
+                this.GetPaginationStatusInProgressOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetPaginationStatusInProgressOperationCompleted);
+            }
+            this.InvokeAsync("GetPaginationStatusInProgress", new object[0], this.GetPaginationStatusInProgressOperationCompleted, userState);
+        }
+        
+        private void OnGetPaginationStatusInProgressOperationCompleted(object arg) {
+            if ((this.GetPaginationStatusInProgressCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetPaginationStatusInProgressCompleted(this, new GetPaginationStatusInProgressCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/GetPaginationStatusComplete", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public int GetPaginationStatusComplete() {
+            object[] results = this.Invoke("GetPaginationStatusComplete", new object[0]);
+            return ((int)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetPaginationStatusCompleteAsync() {
+            this.GetPaginationStatusCompleteAsync(null);
+        }
+        
+        /// <remarks/>
+        public void GetPaginationStatusCompleteAsync(object userState) {
+            if ((this.GetPaginationStatusCompleteOperationCompleted == null)) {
+                this.GetPaginationStatusCompleteOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetPaginationStatusCompleteOperationCompleted);
+            }
+            this.InvokeAsync("GetPaginationStatusComplete", new object[0], this.GetPaginationStatusCompleteOperationCompleted, userState);
+        }
+        
+        private void OnGetPaginationStatusCompleteOperationCompleted(object arg) {
+            if ((this.GetPaginationStatusCompleteCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetPaginationStatusCompleteCompleted(this, new GetPaginationStatusCompleteCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/GetPaginationStatusString", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string GetPaginationStatusString([System.Xml.Serialization.XmlElementAttribute(IsNullable=true)] System.Nullable<int> paginationStatusID) {
+            object[] results = this.Invoke("GetPaginationStatusString", new object[] {
+                        paginationStatusID});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetPaginationStatusStringAsync(System.Nullable<int> paginationStatusID) {
+            this.GetPaginationStatusStringAsync(paginationStatusID, null);
+        }
+        
+        /// <remarks/>
+        public void GetPaginationStatusStringAsync(System.Nullable<int> paginationStatusID, object userState) {
+            if ((this.GetPaginationStatusStringOperationCompleted == null)) {
+                this.GetPaginationStatusStringOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetPaginationStatusStringOperationCompleted);
+            }
+            this.InvokeAsync("GetPaginationStatusString", new object[] {
+                        paginationStatusID}, this.GetPaginationStatusStringOperationCompleted, userState);
+        }
+        
+        private void OnGetPaginationStatusStringOperationCompleted(object arg) {
+            if ((this.GetPaginationStatusStringCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetPaginationStatusStringCompleted(this, new GetPaginationStatusStringCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFSelectForFileCreation", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public PDF[] PDFSelectForFileCreation() {
+            object[] results = this.Invoke("PDFSelectForFileCreation", new object[0]);
+            return ((PDF[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PDFSelectForFileCreationAsync() {
+            this.PDFSelectForFileCreationAsync(null);
+        }
+        
+        /// <remarks/>
+        public void PDFSelectForFileCreationAsync(object userState) {
+            if ((this.PDFSelectForFileCreationOperationCompleted == null)) {
+                this.PDFSelectForFileCreationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFSelectForFileCreationOperationCompleted);
+            }
+            this.InvokeAsync("PDFSelectForFileCreation", new object[0], this.PDFSelectForFileCreationOperationCompleted, userState);
+        }
+        
+        private void OnPDFSelectForFileCreationOperationCompleted(object arg) {
+            if ((this.PDFSelectForFileCreationCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PDFSelectForFileCreationCompleted(this, new PDFSelectForFileCreationCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFSelectForDeletion", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public PDF[] PDFSelectForDeletion() {
+            object[] results = this.Invoke("PDFSelectForDeletion", new object[0]);
+            return ((PDF[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PDFSelectForDeletionAsync() {
+            this.PDFSelectForDeletionAsync(null);
+        }
+        
+        /// <remarks/>
+        public void PDFSelectForDeletionAsync(object userState) {
+            if ((this.PDFSelectForDeletionOperationCompleted == null)) {
+                this.PDFSelectForDeletionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFSelectForDeletionOperationCompleted);
+            }
+            this.InvokeAsync("PDFSelectForDeletion", new object[0], this.PDFSelectForDeletionOperationCompleted, userState);
+        }
+        
+        private void OnPDFSelectForDeletionOperationCompleted(object arg) {
+            if ((this.PDFSelectForDeletionCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PDFSelectForDeletionCompleted(this, new PDFSelectForDeletionCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFSelectDuplicateForPdfID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public PDF[] PDFSelectDuplicateForPdfID(int pdfId) {
+            object[] results = this.Invoke("PDFSelectDuplicateForPdfID", new object[] {
+                        pdfId});
+            return ((PDF[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PDFSelectDuplicateForPdfIDAsync(int pdfId) {
+            this.PDFSelectDuplicateForPdfIDAsync(pdfId, null);
+        }
+        
+        /// <remarks/>
+        public void PDFSelectDuplicateForPdfIDAsync(int pdfId, object userState) {
+            if ((this.PDFSelectDuplicateForPdfIDOperationCompleted == null)) {
+                this.PDFSelectDuplicateForPdfIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFSelectDuplicateForPdfIDOperationCompleted);
+            }
+            this.InvokeAsync("PDFSelectDuplicateForPdfID", new object[] {
+                        pdfId}, this.PDFSelectDuplicateForPdfIDOperationCompleted, userState);
+        }
+        
+        private void OnPDFSelectDuplicateForPdfIDOperationCompleted(object arg) {
+            if ((this.PDFSelectDuplicateForPdfIDCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PDFSelectDuplicateForPdfIDCompleted(this, new PDFSelectDuplicateForPdfIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFPageSummaryViewSelectByPdfID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public PageSummaryView[] PDFPageSummaryViewSelectByPdfID(int pdfId) {
+            object[] results = this.Invoke("PDFPageSummaryViewSelectByPdfID", new object[] {
+                        pdfId});
+            return ((PageSummaryView[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PDFPageSummaryViewSelectByPdfIDAsync(int pdfId) {
+            this.PDFPageSummaryViewSelectByPdfIDAsync(pdfId, null);
+        }
+        
+        /// <remarks/>
+        public void PDFPageSummaryViewSelectByPdfIDAsync(int pdfId, object userState) {
+            if ((this.PDFPageSummaryViewSelectByPdfIDOperationCompleted == null)) {
+                this.PDFPageSummaryViewSelectByPdfIDOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFPageSummaryViewSelectByPdfIDOperationCompleted);
+            }
+            this.InvokeAsync("PDFPageSummaryViewSelectByPdfID", new object[] {
+                        pdfId}, this.PDFPageSummaryViewSelectByPdfIDOperationCompleted, userState);
+        }
+        
+        private void OnPDFPageSummaryViewSelectByPdfIDOperationCompleted(object arg) {
+            if ((this.PDFPageSummaryViewSelectByPdfIDCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PDFPageSummaryViewSelectByPdfIDCompleted(this, new PDFPageSummaryViewSelectByPdfIDCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFUpdateGenerationInfo", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public PDF PDFUpdateGenerationInfo(int pdfId, string fileLocation, string fileUrl, int numberImagesMissing, int numberOcrMissing) {
+            object[] results = this.Invoke("PDFUpdateGenerationInfo", new object[] {
+                        pdfId,
+                        fileLocation,
+                        fileUrl,
+                        numberImagesMissing,
+                        numberOcrMissing});
+            return ((PDF)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PDFUpdateGenerationInfoAsync(int pdfId, string fileLocation, string fileUrl, int numberImagesMissing, int numberOcrMissing) {
+            this.PDFUpdateGenerationInfoAsync(pdfId, fileLocation, fileUrl, numberImagesMissing, numberOcrMissing, null);
+        }
+        
+        /// <remarks/>
+        public void PDFUpdateGenerationInfoAsync(int pdfId, string fileLocation, string fileUrl, int numberImagesMissing, int numberOcrMissing, object userState) {
+            if ((this.PDFUpdateGenerationInfoOperationCompleted == null)) {
+                this.PDFUpdateGenerationInfoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFUpdateGenerationInfoOperationCompleted);
+            }
+            this.InvokeAsync("PDFUpdateGenerationInfo", new object[] {
+                        pdfId,
+                        fileLocation,
+                        fileUrl,
+                        numberImagesMissing,
+                        numberOcrMissing}, this.PDFUpdateGenerationInfoOperationCompleted, userState);
+        }
+        
+        private void OnPDFUpdateGenerationInfoOperationCompleted(object arg) {
+            if ((this.PDFUpdateGenerationInfoCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PDFUpdateGenerationInfoCompleted(this, new PDFUpdateGenerationInfoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFUpdateFileDeletion", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public PDF PDFUpdateFileDeletion(int pdfId) {
+            object[] results = this.Invoke("PDFUpdateFileDeletion", new object[] {
+                        pdfId});
+            return ((PDF)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PDFUpdateFileDeletionAsync(int pdfId) {
+            this.PDFUpdateFileDeletionAsync(pdfId, null);
+        }
+        
+        /// <remarks/>
+        public void PDFUpdateFileDeletionAsync(int pdfId, object userState) {
+            if ((this.PDFUpdateFileDeletionOperationCompleted == null)) {
+                this.PDFUpdateFileDeletionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFUpdateFileDeletionOperationCompleted);
+            }
+            this.InvokeAsync("PDFUpdateFileDeletion", new object[] {
+                        pdfId}, this.PDFUpdateFileDeletionOperationCompleted, userState);
+        }
+        
+        private void OnPDFUpdateFileDeletionOperationCompleted(object arg) {
+            if ((this.PDFUpdateFileDeletionCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PDFUpdateFileDeletionCompleted(this, new PDFUpdateFileDeletionCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFUpdatePdfStatusProcessing", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool PDFUpdatePdfStatusProcessing(int pdfid) {
+            object[] results = this.Invoke("PDFUpdatePdfStatusProcessing", new object[] {
+                        pdfid});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PDFUpdatePdfStatusProcessingAsync(int pdfid) {
+            this.PDFUpdatePdfStatusProcessingAsync(pdfid, null);
+        }
+        
+        /// <remarks/>
+        public void PDFUpdatePdfStatusProcessingAsync(int pdfid, object userState) {
+            if ((this.PDFUpdatePdfStatusProcessingOperationCompleted == null)) {
+                this.PDFUpdatePdfStatusProcessingOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFUpdatePdfStatusProcessingOperationCompleted);
+            }
+            this.InvokeAsync("PDFUpdatePdfStatusProcessing", new object[] {
+                        pdfid}, this.PDFUpdatePdfStatusProcessingOperationCompleted, userState);
+        }
+        
+        private void OnPDFUpdatePdfStatusProcessingOperationCompleted(object arg) {
+            if ((this.PDFUpdatePdfStatusProcessingCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PDFUpdatePdfStatusProcessingCompleted(this, new PDFUpdatePdfStatusProcessingCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFUpdatePdfStatusGenerated", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool PDFUpdatePdfStatusGenerated(int pdfid) {
+            object[] results = this.Invoke("PDFUpdatePdfStatusGenerated", new object[] {
+                        pdfid});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PDFUpdatePdfStatusGeneratedAsync(int pdfid) {
+            this.PDFUpdatePdfStatusGeneratedAsync(pdfid, null);
+        }
+        
+        /// <remarks/>
+        public void PDFUpdatePdfStatusGeneratedAsync(int pdfid, object userState) {
+            if ((this.PDFUpdatePdfStatusGeneratedOperationCompleted == null)) {
+                this.PDFUpdatePdfStatusGeneratedOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFUpdatePdfStatusGeneratedOperationCompleted);
+            }
+            this.InvokeAsync("PDFUpdatePdfStatusGenerated", new object[] {
+                        pdfid}, this.PDFUpdatePdfStatusGeneratedOperationCompleted, userState);
+        }
+        
+        private void OnPDFUpdatePdfStatusGeneratedOperationCompleted(object arg) {
+            if ((this.PDFUpdatePdfStatusGeneratedCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PDFUpdatePdfStatusGeneratedCompleted(this, new PDFUpdatePdfStatusGeneratedCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFUpdatePdfStatusError", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool PDFUpdatePdfStatusError(int pdfid) {
+            object[] results = this.Invoke("PDFUpdatePdfStatusError", new object[] {
+                        pdfid});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PDFUpdatePdfStatusErrorAsync(int pdfid) {
+            this.PDFUpdatePdfStatusErrorAsync(pdfid, null);
+        }
+        
+        /// <remarks/>
+        public void PDFUpdatePdfStatusErrorAsync(int pdfid, object userState) {
+            if ((this.PDFUpdatePdfStatusErrorOperationCompleted == null)) {
+                this.PDFUpdatePdfStatusErrorOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFUpdatePdfStatusErrorOperationCompleted);
+            }
+            this.InvokeAsync("PDFUpdatePdfStatusError", new object[] {
+                        pdfid}, this.PDFUpdatePdfStatusErrorOperationCompleted, userState);
+        }
+        
+        private void OnPDFUpdatePdfStatusErrorOperationCompleted(object arg) {
+            if ((this.PDFUpdatePdfStatusErrorCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PDFUpdatePdfStatusErrorCompleted(this, new PDFUpdatePdfStatusErrorCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PDFUpdatePdfStatusRejected", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool PDFUpdatePdfStatusRejected(int pdfid) {
+            object[] results = this.Invoke("PDFUpdatePdfStatusRejected", new object[] {
+                        pdfid});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void PDFUpdatePdfStatusRejectedAsync(int pdfid) {
+            this.PDFUpdatePdfStatusRejectedAsync(pdfid, null);
+        }
+        
+        /// <remarks/>
+        public void PDFUpdatePdfStatusRejectedAsync(int pdfid, object userState) {
+            if ((this.PDFUpdatePdfStatusRejectedOperationCompleted == null)) {
+                this.PDFUpdatePdfStatusRejectedOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPDFUpdatePdfStatusRejectedOperationCompleted);
+            }
+            this.InvokeAsync("PDFUpdatePdfStatusRejected", new object[] {
+                        pdfid}, this.PDFUpdatePdfStatusRejectedOperationCompleted, userState);
+        }
+        
+        private void OnPDFUpdatePdfStatusRejectedOperationCompleted(object arg) {
+            if ((this.PDFUpdatePdfStatusRejectedCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PDFUpdatePdfStatusRejectedCompleted(this, new PDFUpdatePdfStatusRejectedCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -4000,184 +4088,181 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class DOI : @__DOI {
-        
-        private string dOIEntityTypeNameField;
-        
-        private string entityDetailField;
-        
-        private int totalDOIsField;
-        
-        private string creationUserNameField;
-        
-        /// <remarks/>
-        public string DOIEntityTypeName {
-            get {
-                return this.dOIEntityTypeNameField;
-            }
-            set {
-                this.dOIEntityTypeNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string EntityDetail {
-            get {
-                return this.entityDetailField;
-            }
-            set {
-                this.entityDetailField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int TotalDOIs {
-            get {
-                return this.totalDOIsField;
-            }
-            set {
-                this.totalDOIsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CreationUserName {
-            get {
-                return this.creationUserNameField;
-            }
-            set {
-                this.creationUserNameField = value;
-            }
-        }
+    public partial class AnnotatedTitle : @__AnnotatedTitle {
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DOI))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedTitle))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__DOI : CustomObjectBase {
+    public abstract partial class @__AnnotatedTitle : CustomObjectBase {
         
-        private int dOIIDField;
+        private int annotatedTitleIDField;
         
-        private int dOIEntityTypeIDField;
+        private int annotationSourceIDField;
         
-        private int entityIDField;
+        private System.Nullable<int> titleIDField;
         
-        private int dOIStatusIDField;
+        private string externalIdentifierField;
         
-        private string dOIBatchIDField;
+        private string authorField;
         
-        private string dOINameField;
+        private string titleField;
         
-        private System.DateTime statusDateField;
+        private string editionField;
         
-        private string statusMessageField;
+        private string volumeField;
         
-        private short isValidField;
+        private string publicationDetailsField;
+        
+        private string dateField;
+        
+        private string locationField;
+        
+        private string isBeagleEraField;
+        
+        private string inscriptionField;
         
         private System.DateTime creationDateField;
         
         private System.DateTime lastModifiedDateField;
         
-        private int creationUserIDField;
-        
-        private int lastModifiedUserIDField;
-        
         /// <remarks/>
-        public int DOIID {
+        public int AnnotatedTitleID {
             get {
-                return this.dOIIDField;
+                return this.annotatedTitleIDField;
             }
             set {
-                this.dOIIDField = value;
+                this.annotatedTitleIDField = value;
             }
         }
         
         /// <remarks/>
-        public int DOIEntityTypeID {
+        public int AnnotationSourceID {
             get {
-                return this.dOIEntityTypeIDField;
+                return this.annotationSourceIDField;
             }
             set {
-                this.dOIEntityTypeIDField = value;
+                this.annotationSourceIDField = value;
             }
         }
         
         /// <remarks/>
-        public int EntityID {
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> TitleID {
             get {
-                return this.entityIDField;
+                return this.titleIDField;
             }
             set {
-                this.entityIDField = value;
+                this.titleIDField = value;
             }
         }
         
         /// <remarks/>
-        public int DOIStatusID {
+        public string ExternalIdentifier {
             get {
-                return this.dOIStatusIDField;
+                return this.externalIdentifierField;
             }
             set {
-                this.dOIStatusIDField = value;
+                this.externalIdentifierField = value;
             }
         }
         
         /// <remarks/>
-        public string DOIBatchID {
+        public string Author {
             get {
-                return this.dOIBatchIDField;
+                return this.authorField;
             }
             set {
-                this.dOIBatchIDField = value;
+                this.authorField = value;
             }
         }
         
         /// <remarks/>
-        public string DOIName {
+        public string Title {
             get {
-                return this.dOINameField;
+                return this.titleField;
             }
             set {
-                this.dOINameField = value;
+                this.titleField = value;
             }
         }
         
         /// <remarks/>
-        public System.DateTime StatusDate {
+        public string Edition {
             get {
-                return this.statusDateField;
+                return this.editionField;
             }
             set {
-                this.statusDateField = value;
+                this.editionField = value;
             }
         }
         
         /// <remarks/>
-        public string StatusMessage {
+        public string Volume {
             get {
-                return this.statusMessageField;
+                return this.volumeField;
             }
             set {
-                this.statusMessageField = value;
+                this.volumeField = value;
             }
         }
         
         /// <remarks/>
-        public short IsValid {
+        public string PublicationDetails {
             get {
-                return this.isValidField;
+                return this.publicationDetailsField;
             }
             set {
-                this.isValidField = value;
+                this.publicationDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Date {
+            get {
+                return this.dateField;
+            }
+            set {
+                this.dateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Location {
+            get {
+                return this.locationField;
+            }
+            set {
+                this.locationField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string IsBeagleEra {
+            get {
+                return this.isBeagleEraField;
+            }
+            set {
+                this.isBeagleEraField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Inscription {
+            get {
+                return this.inscriptionField;
+            }
+            set {
+                this.inscriptionField = value;
             }
         }
         
@@ -4200,29 +4285,19 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
                 this.lastModifiedDateField = value;
             }
         }
-        
-        /// <remarks/>
-        public int CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-            }
-        }
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageSummaryView))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageSummaryView))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PDF))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PDF))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageFlickr))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageFlickr))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__DOI))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DOI))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Vault))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vault))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__ItemNameFileLog))]
@@ -4259,6 +4334,8 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemLanguage))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__ItemTitle))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemTitle))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Page))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Page))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Institution))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Institution))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Item))]
@@ -4297,19 +4374,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedItem))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotatedTitle))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedTitle))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageSummaryView))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageSummaryView))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PDF))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PDF))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageFlickr))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageFlickr))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Page))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Page))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__DOI))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DOI))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4318,7 +4383,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4627,7 +4692,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4662,7 +4727,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
         
         private string editionField;
         
-        private string issnIsbnField;
+        private string issnField;
+        
+        private string eissnField;
+        
+        private string isbnField;
         
         private string languageField;
         
@@ -4819,12 +4888,32 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
         }
         
         /// <remarks/>
-        public string IssnIsbn {
+        public string Issn {
             get {
-                return this.issnIsbnField;
+                return this.issnField;
             }
             set {
-                this.issnIsbnField = value;
+                this.issnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Eissn {
+            get {
+                return this.eissnField;
+            }
+            set {
+                this.eissnField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Isbn {
+            get {
+                return this.isbnField;
+            }
+            set {
+                this.isbnField = value;
             }
         }
         
@@ -4900,7 +4989,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5125,7 +5214,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5206,8 +5295,1196 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageSummaryView))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__PageSummaryView : CustomObjectBase {
+        
+        private string mARCBibIDField;
+        
+        private int titleIDField;
+        
+        private System.Nullable<int> redirectTitleIDField;
+        
+        private string fullTitleField;
+        
+        private bool rareBooksField;
+        
+        private string shortTitleField;
+        
+        private string sortTitleField;
+        
+        private string partNumberField;
+        
+        private string partNameField;
+        
+        private int bookIDField;
+        
+        private int itemStatusIDField;
+        
+        private int itemIDField;
+        
+        private System.Nullable<int> redirectBookIDField;
+        
+        private int primaryTitleIDField;
+        
+        private string barCodeField;
+        
+        private string volumeField;
+        
+        private string fileRootFolderField;
+        
+        private string sponsorField;
+        
+        private string pageProgressionField;
+        
+        private byte isVirtualField;
+        
+        private System.Nullable<short> itemSequenceField;
+        
+        private int pageIDField;
+        
+        private string fileNamePrefixField;
+        
+        private string pageDescriptionField;
+        
+        private int sequenceOrderField;
+        
+        private bool illustrationField;
+        
+        private bool activeField;
+        
+        private string externalBaseURLField;
+        
+        private string externalURLField;
+        
+        private string webVirtualDirectoryField;
+        
+        private string oCRFolderShareField;
+        
+        private string downloadUrlField;
+        
+        private string imageServerUrlFormatField;
+        
+        /// <remarks/>
+        public string MARCBibID {
+            get {
+                return this.mARCBibIDField;
+            }
+            set {
+                this.mARCBibIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int TitleID {
+            get {
+                return this.titleIDField;
+            }
+            set {
+                this.titleIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> RedirectTitleID {
+            get {
+                return this.redirectTitleIDField;
+            }
+            set {
+                this.redirectTitleIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string FullTitle {
+            get {
+                return this.fullTitleField;
+            }
+            set {
+                this.fullTitleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool RareBooks {
+            get {
+                return this.rareBooksField;
+            }
+            set {
+                this.rareBooksField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ShortTitle {
+            get {
+                return this.shortTitleField;
+            }
+            set {
+                this.shortTitleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SortTitle {
+            get {
+                return this.sortTitleField;
+            }
+            set {
+                this.sortTitleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PartNumber {
+            get {
+                return this.partNumberField;
+            }
+            set {
+                this.partNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PartName {
+            get {
+                return this.partNameField;
+            }
+            set {
+                this.partNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int BookID {
+            get {
+                return this.bookIDField;
+            }
+            set {
+                this.bookIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int ItemStatusID {
+            get {
+                return this.itemStatusIDField;
+            }
+            set {
+                this.itemStatusIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int ItemID {
+            get {
+                return this.itemIDField;
+            }
+            set {
+                this.itemIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> RedirectBookID {
+            get {
+                return this.redirectBookIDField;
+            }
+            set {
+                this.redirectBookIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int PrimaryTitleID {
+            get {
+                return this.primaryTitleIDField;
+            }
+            set {
+                this.primaryTitleIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string BarCode {
+            get {
+                return this.barCodeField;
+            }
+            set {
+                this.barCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Volume {
+            get {
+                return this.volumeField;
+            }
+            set {
+                this.volumeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string FileRootFolder {
+            get {
+                return this.fileRootFolderField;
+            }
+            set {
+                this.fileRootFolderField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Sponsor {
+            get {
+                return this.sponsorField;
+            }
+            set {
+                this.sponsorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PageProgression {
+            get {
+                return this.pageProgressionField;
+            }
+            set {
+                this.pageProgressionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public byte IsVirtual {
+            get {
+                return this.isVirtualField;
+            }
+            set {
+                this.isVirtualField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<short> ItemSequence {
+            get {
+                return this.itemSequenceField;
+            }
+            set {
+                this.itemSequenceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int PageID {
+            get {
+                return this.pageIDField;
+            }
+            set {
+                this.pageIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string FileNamePrefix {
+            get {
+                return this.fileNamePrefixField;
+            }
+            set {
+                this.fileNamePrefixField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PageDescription {
+            get {
+                return this.pageDescriptionField;
+            }
+            set {
+                this.pageDescriptionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int SequenceOrder {
+            get {
+                return this.sequenceOrderField;
+            }
+            set {
+                this.sequenceOrderField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Illustration {
+            get {
+                return this.illustrationField;
+            }
+            set {
+                this.illustrationField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Active {
+            get {
+                return this.activeField;
+            }
+            set {
+                this.activeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ExternalBaseURL {
+            get {
+                return this.externalBaseURLField;
+            }
+            set {
+                this.externalBaseURLField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ExternalURL {
+            get {
+                return this.externalURLField;
+            }
+            set {
+                this.externalURLField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string WebVirtualDirectory {
+            get {
+                return this.webVirtualDirectoryField;
+            }
+            set {
+                this.webVirtualDirectoryField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OCRFolderShare {
+            get {
+                return this.oCRFolderShareField;
+            }
+            set {
+                this.oCRFolderShareField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string DownloadUrl {
+            get {
+                return this.downloadUrlField;
+            }
+            set {
+                this.downloadUrlField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ImageServerUrlFormat {
+            get {
+                return this.imageServerUrlFormatField;
+            }
+            set {
+                this.imageServerUrlFormatField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class PageSummaryView : @__PageSummaryView {
+        
+        private string flickrUrlField;
+        
+        /// <remarks/>
+        public string FlickrUrl {
+            get {
+                return this.flickrUrlField;
+            }
+            set {
+                this.flickrUrlField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PDF))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__PDF : CustomObjectBase {
+        
+        private int pdfIDField;
+        
+        private int itemIDField;
+        
+        private string fileLocationField;
+        
+        private string emailAddressField;
+        
+        private string shareWithEmailAddressesField;
+        
+        private string articleTitleField;
+        
+        private string articleCreatorsField;
+        
+        private string articleTagsField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.DateTime lastModifiedDateField;
+        
+        private bool imagesOnlyField;
+        
+        private string fileUrlField;
+        
+        private System.Nullable<System.DateTime> fileGenerationDateField;
+        
+        private System.Nullable<System.DateTime> fileDeletionDateField;
+        
+        private int pdfStatusIDField;
+        
+        private int numberImagesMissingField;
+        
+        private int numberOcrMissingField;
+        
+        private string commentField;
+        
+        /// <remarks/>
+        public int PdfID {
+            get {
+                return this.pdfIDField;
+            }
+            set {
+                this.pdfIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int ItemID {
+            get {
+                return this.itemIDField;
+            }
+            set {
+                this.itemIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string FileLocation {
+            get {
+                return this.fileLocationField;
+            }
+            set {
+                this.fileLocationField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string EmailAddress {
+            get {
+                return this.emailAddressField;
+            }
+            set {
+                this.emailAddressField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ShareWithEmailAddresses {
+            get {
+                return this.shareWithEmailAddressesField;
+            }
+            set {
+                this.shareWithEmailAddressesField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ArticleTitle {
+            get {
+                return this.articleTitleField;
+            }
+            set {
+                this.articleTitleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ArticleCreators {
+            get {
+                return this.articleCreatorsField;
+            }
+            set {
+                this.articleCreatorsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ArticleTags {
+            get {
+                return this.articleTagsField;
+            }
+            set {
+                this.articleTagsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.DateTime LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool ImagesOnly {
+            get {
+                return this.imagesOnlyField;
+            }
+            set {
+                this.imagesOnlyField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string FileUrl {
+            get {
+                return this.fileUrlField;
+            }
+            set {
+                this.fileUrlField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> FileGenerationDate {
+            get {
+                return this.fileGenerationDateField;
+            }
+            set {
+                this.fileGenerationDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> FileDeletionDate {
+            get {
+                return this.fileDeletionDateField;
+            }
+            set {
+                this.fileDeletionDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int PdfStatusID {
+            get {
+                return this.pdfStatusIDField;
+            }
+            set {
+                this.pdfStatusIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int NumberImagesMissing {
+            get {
+                return this.numberImagesMissingField;
+            }
+            set {
+                this.numberImagesMissingField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int NumberOcrMissing {
+            get {
+                return this.numberOcrMissingField;
+            }
+            set {
+                this.numberOcrMissingField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Comment {
+            get {
+                return this.commentField;
+            }
+            set {
+                this.commentField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class PDF : @__PDF {
+        
+        private System.Nullable<int> bookIDField;
+        
+        private System.Nullable<int> segmentIDField;
+        
+        private int numberOfPagesField;
+        
+        private int minutesToGenerateField;
+        
+        private string itemTypeNameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> BookID {
+            get {
+                return this.bookIDField;
+            }
+            set {
+                this.bookIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> SegmentID {
+            get {
+                return this.segmentIDField;
+            }
+            set {
+                this.segmentIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int NumberOfPages {
+            get {
+                return this.numberOfPagesField;
+            }
+            set {
+                this.numberOfPagesField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int MinutesToGenerate {
+            get {
+                return this.minutesToGenerateField;
+            }
+            set {
+                this.minutesToGenerateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ItemTypeName {
+            get {
+                return this.itemTypeNameField;
+            }
+            set {
+                this.itemTypeNameField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageType))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__PageType : CustomObjectBase {
+        
+        private int pageTypeIDField;
+        
+        private string pageTypeNameField;
+        
+        private string pageTypeDescriptionField;
+        
+        private byte activeField;
+        
+        private System.Nullable<System.DateTime> creationDateField;
+        
+        private System.Nullable<System.DateTime> lastModifiedDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        /// <remarks/>
+        public int PageTypeID {
+            get {
+                return this.pageTypeIDField;
+            }
+            set {
+                this.pageTypeIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PageTypeName {
+            get {
+                return this.pageTypeNameField;
+            }
+            set {
+                this.pageTypeNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PageTypeDescription {
+            get {
+                return this.pageTypeDescriptionField;
+            }
+            set {
+                this.pageTypeDescriptionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public byte Active {
+            get {
+                return this.activeField;
+            }
+            set {
+                this.activeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class PageType : @__PageType {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageFlickr))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__PageFlickr : CustomObjectBase {
+        
+        private int pageFlickrIDField;
+        
+        private int pageIDField;
+        
+        private string flickrURLField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<System.DateTime> creationDateField;
+        
+        /// <remarks/>
+        public int PageFlickrID {
+            get {
+                return this.pageFlickrIDField;
+            }
+            set {
+                this.pageFlickrIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int PageID {
+            get {
+                return this.pageIDField;
+            }
+            set {
+                this.pageIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string FlickrURL {
+            get {
+                return this.flickrURLField;
+            }
+            set {
+                this.flickrURLField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class PageFlickr : @__PageFlickr {
+        
+        private string shortTitleField;
+        
+        private string indicatedPageField;
+        
+        private string pageTypeField;
+        
+        /// <remarks/>
+        public string ShortTitle {
+            get {
+                return this.shortTitleField;
+            }
+            set {
+                this.shortTitleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string IndicatedPage {
+            get {
+                return this.indicatedPageField;
+            }
+            set {
+                this.indicatedPageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PageType {
+            get {
+                return this.pageTypeField;
+            }
+            set {
+                this.pageTypeField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DOI))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__DOI : CustomObjectBase {
+        
+        private int dOIIDField;
+        
+        private int dOIEntityTypeIDField;
+        
+        private int entityIDField;
+        
+        private int dOIStatusIDField;
+        
+        private string dOIBatchIDField;
+        
+        private string dOINameField;
+        
+        private System.DateTime statusDateField;
+        
+        private string statusMessageField;
+        
+        private short isValidField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.DateTime lastModifiedDateField;
+        
+        private int creationUserIDField;
+        
+        private int lastModifiedUserIDField;
+        
+        /// <remarks/>
+        public int DOIID {
+            get {
+                return this.dOIIDField;
+            }
+            set {
+                this.dOIIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int DOIEntityTypeID {
+            get {
+                return this.dOIEntityTypeIDField;
+            }
+            set {
+                this.dOIEntityTypeIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int EntityID {
+            get {
+                return this.entityIDField;
+            }
+            set {
+                this.entityIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int DOIStatusID {
+            get {
+                return this.dOIStatusIDField;
+            }
+            set {
+                this.dOIStatusIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string DOIBatchID {
+            get {
+                return this.dOIBatchIDField;
+            }
+            set {
+                this.dOIBatchIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string DOIName {
+            get {
+                return this.dOINameField;
+            }
+            set {
+                this.dOINameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.DateTime StatusDate {
+            get {
+                return this.statusDateField;
+            }
+            set {
+                this.statusDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string StatusMessage {
+            get {
+                return this.statusMessageField;
+            }
+            set {
+                this.statusMessageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public short IsValid {
+            get {
+                return this.isValidField;
+            }
+            set {
+                this.isValidField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.DateTime LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class DOI : @__DOI {
+        
+        private string dOIEntityTypeNameField;
+        
+        private string entityDetailField;
+        
+        private int totalDOIsField;
+        
+        private string creationUserNameField;
+        
+        /// <remarks/>
+        public string DOIEntityTypeName {
+            get {
+                return this.dOIEntityTypeNameField;
+            }
+            set {
+                this.dOIEntityTypeNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string EntityDetail {
+            get {
+                return this.entityDetailField;
+            }
+            set {
+                this.entityDetailField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int TotalDOIs {
+            get {
+                return this.totalDOIsField;
+            }
+            set {
+                this.totalDOIsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string CreationUserName {
+            get {
+                return this.creationUserNameField;
+            }
+            set {
+                this.creationUserNameField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vault))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5276,7 +6553,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5298,7 +6575,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemNameFileLog))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5405,7 +6682,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5451,7 +6728,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleNote))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5547,7 +6824,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5605,7 +6882,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleLanguage))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5675,7 +6952,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5697,7 +6974,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleVariant))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5840,7 +7117,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5874,7 +7151,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAssociation_TitleIdentifier))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5983,7 +7260,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6005,7 +7282,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAssociation))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6199,7 +7476,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6257,7 +7534,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleKeyword))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6378,7 +7655,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6400,7 +7677,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemRelationship))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6509,7 +7786,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6569,7 +7846,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Name))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6689,7 +7966,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6747,7 +8024,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemPage))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6854,7 +8131,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6900,7 +8177,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemIdentifier))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7007,7 +8284,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7017,6 +8294,8 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
         private string identifierNameField;
         
         private string identifierLabelField;
+        
+        private string prefixField;
         
         /// <remarks/>
         public string IdentifierName {
@@ -7037,11 +8316,21 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
                 this.identifierLabelField = value;
             }
         }
+        
+        /// <remarks/>
+        public string Prefix {
+            get {
+                return this.prefixField;
+            }
+            set {
+                this.prefixField = value;
+            }
+        }
     }
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemKeyword))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7136,7 +8425,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7158,7 +8447,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemAuthor))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7265,7 +8554,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7382,7 +8671,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7487,7 +8776,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7497,7 +8786,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AuthorName))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7642,7 +8931,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7664,7 +8953,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AuthorIdentifier))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7772,7 +9061,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Author))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7968,7 +9257,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Segment))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -8565,7 +9854,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9072,7 +10361,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9107,9 +10396,13 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
         
         private string itemStatusNameField;
         
+        private System.Nullable<int> paginationStatusIDField;
+        
         private string paginationStatusNameField;
         
         private System.Nullable<System.DateTime> paginationStatusDateField;
+        
+        private System.Nullable<int> paginationStatusUserIDField;
         
         private string paginationUserNameField;
         
@@ -9296,6 +10589,17 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
         }
         
         /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> PaginationStatusID {
+            get {
+                return this.paginationStatusIDField;
+            }
+            set {
+                this.paginationStatusIDField = value;
+            }
+        }
+        
+        /// <remarks/>
         public string PaginationStatusName {
             get {
                 return this.paginationStatusNameField;
@@ -9313,6 +10617,17 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
             }
             set {
                 this.paginationStatusDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> PaginationStatusUserID {
+            get {
+                return this.paginationStatusUserIDField;
+            }
+            set {
+                this.paginationStatusUserIDField = value;
             }
         }
         
@@ -9542,7 +10857,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9661,7 +10976,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Institution))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9782,7 +11097,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9961,7 +11276,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Page))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10268,7 +11583,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10298,8 +11613,6 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
         private Institution[] titleInstitutionsField;
         
         private string institutionNameField;
-        
-        private string dOINameField;
         
         private bool hasLocalContentField;
         
@@ -10426,16 +11739,6 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
         }
         
         /// <remarks/>
-        public string DOIName {
-            get {
-                return this.dOINameField;
-            }
-            set {
-                this.dOINameField = value;
-            }
-        }
-        
-        /// <remarks/>
         public bool HasLocalContent {
             get {
                 return this.hasLocalContentField;
@@ -10457,7 +11760,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10563,7 +11866,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAuthor))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10707,7 +12010,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10717,6 +12020,8 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
         private string identifierNameField;
         
         private string identifierLabelField;
+        
+        private string prefixField;
         
         /// <remarks/>
         public string IdentifierName {
@@ -10737,11 +12042,21 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
                 this.identifierLabelField = value;
             }
         }
+        
+        /// <remarks/>
+        public string Prefix {
+            get {
+                return this.prefixField;
+            }
+            set {
+                this.prefixField = value;
+            }
+        }
     }
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Title_Identifier))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10850,7 +12165,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10884,7 +12199,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleCollection))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10941,7 +12256,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10997,6 +12312,8 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
         private string itemDescriptionField;
         
         private int itemSourceIDField;
+        
+        private string sourceNameField;
         
         private System.Nullable<int> vaultIDField;
         
@@ -11285,6 +12602,16 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
         }
         
         /// <remarks/>
+        public string SourceName {
+            get {
+                return this.sourceNameField;
+            }
+            set {
+                this.sourceNameField = value;
+            }
+        }
+        
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public System.Nullable<int> VaultID {
             get {
@@ -11459,7 +12786,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11565,7 +12892,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemTitle))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11687,7 +13014,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11709,7 +13036,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemLanguage))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11779,7 +13106,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11813,7 +13140,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemCollection))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11871,7 +13198,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Book))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -12446,7 +13773,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Title))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -12862,7 +14189,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Item))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13023,7 +14350,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotationSubject))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13117,7 +14444,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13152,7 +14479,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Annotation_AnnotationConcept))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13221,7 +14548,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13231,7 +14558,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotationNote))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13336,7 +14663,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13346,7 +14673,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotationRelation))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13415,7 +14742,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13425,7 +14752,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Annotation))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13578,7 +14905,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13612,7 +14939,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedPageCharacteristic))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13706,7 +15033,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13716,7 +15043,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedPage))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13822,7 +15149,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13832,7 +15159,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedItem))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13926,7 +15253,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -13935,1160 +15262,7 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedTitle))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__AnnotatedTitle : CustomObjectBase {
-        
-        private int annotatedTitleIDField;
-        
-        private int annotationSourceIDField;
-        
-        private System.Nullable<int> titleIDField;
-        
-        private string externalIdentifierField;
-        
-        private string authorField;
-        
-        private string titleField;
-        
-        private string editionField;
-        
-        private string volumeField;
-        
-        private string publicationDetailsField;
-        
-        private string dateField;
-        
-        private string locationField;
-        
-        private string isBeagleEraField;
-        
-        private string inscriptionField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.DateTime lastModifiedDateField;
-        
-        /// <remarks/>
-        public int AnnotatedTitleID {
-            get {
-                return this.annotatedTitleIDField;
-            }
-            set {
-                this.annotatedTitleIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int AnnotationSourceID {
-            get {
-                return this.annotationSourceIDField;
-            }
-            set {
-                this.annotationSourceIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> TitleID {
-            get {
-                return this.titleIDField;
-            }
-            set {
-                this.titleIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ExternalIdentifier {
-            get {
-                return this.externalIdentifierField;
-            }
-            set {
-                this.externalIdentifierField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Author {
-            get {
-                return this.authorField;
-            }
-            set {
-                this.authorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Title {
-            get {
-                return this.titleField;
-            }
-            set {
-                this.titleField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Edition {
-            get {
-                return this.editionField;
-            }
-            set {
-                this.editionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Volume {
-            get {
-                return this.volumeField;
-            }
-            set {
-                this.volumeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PublicationDetails {
-            get {
-                return this.publicationDetailsField;
-            }
-            set {
-                this.publicationDetailsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Date {
-            get {
-                return this.dateField;
-            }
-            set {
-                this.dateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Location {
-            get {
-                return this.locationField;
-            }
-            set {
-                this.locationField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string IsBeagleEra {
-            get {
-                return this.isBeagleEraField;
-            }
-            set {
-                this.isBeagleEraField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Inscription {
-            get {
-                return this.inscriptionField;
-            }
-            set {
-                this.inscriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public System.DateTime LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class AnnotatedTitle : @__AnnotatedTitle {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageSummaryView))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__PageSummaryView : CustomObjectBase {
-        
-        private string mARCBibIDField;
-        
-        private int titleIDField;
-        
-        private System.Nullable<int> redirectTitleIDField;
-        
-        private string fullTitleField;
-        
-        private bool rareBooksField;
-        
-        private string shortTitleField;
-        
-        private string sortTitleField;
-        
-        private string partNumberField;
-        
-        private string partNameField;
-        
-        private int bookIDField;
-        
-        private int itemStatusIDField;
-        
-        private int itemIDField;
-        
-        private System.Nullable<int> redirectBookIDField;
-        
-        private int primaryTitleIDField;
-        
-        private string barCodeField;
-        
-        private string volumeField;
-        
-        private string fileRootFolderField;
-        
-        private string sponsorField;
-        
-        private string pageProgressionField;
-        
-        private byte isVirtualField;
-        
-        private System.Nullable<short> itemSequenceField;
-        
-        private int pageIDField;
-        
-        private string fileNamePrefixField;
-        
-        private string pageDescriptionField;
-        
-        private int sequenceOrderField;
-        
-        private bool illustrationField;
-        
-        private bool activeField;
-        
-        private string externalBaseURLField;
-        
-        private string externalURLField;
-        
-        private string webVirtualDirectoryField;
-        
-        private string oCRFolderShareField;
-        
-        private string downloadUrlField;
-        
-        private string imageServerUrlFormatField;
-        
-        /// <remarks/>
-        public string MARCBibID {
-            get {
-                return this.mARCBibIDField;
-            }
-            set {
-                this.mARCBibIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int TitleID {
-            get {
-                return this.titleIDField;
-            }
-            set {
-                this.titleIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> RedirectTitleID {
-            get {
-                return this.redirectTitleIDField;
-            }
-            set {
-                this.redirectTitleIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FullTitle {
-            get {
-                return this.fullTitleField;
-            }
-            set {
-                this.fullTitleField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public bool RareBooks {
-            get {
-                return this.rareBooksField;
-            }
-            set {
-                this.rareBooksField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ShortTitle {
-            get {
-                return this.shortTitleField;
-            }
-            set {
-                this.shortTitleField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string SortTitle {
-            get {
-                return this.sortTitleField;
-            }
-            set {
-                this.sortTitleField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PartNumber {
-            get {
-                return this.partNumberField;
-            }
-            set {
-                this.partNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PartName {
-            get {
-                return this.partNameField;
-            }
-            set {
-                this.partNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int BookID {
-            get {
-                return this.bookIDField;
-            }
-            set {
-                this.bookIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int ItemStatusID {
-            get {
-                return this.itemStatusIDField;
-            }
-            set {
-                this.itemStatusIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int ItemID {
-            get {
-                return this.itemIDField;
-            }
-            set {
-                this.itemIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> RedirectBookID {
-            get {
-                return this.redirectBookIDField;
-            }
-            set {
-                this.redirectBookIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int PrimaryTitleID {
-            get {
-                return this.primaryTitleIDField;
-            }
-            set {
-                this.primaryTitleIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string BarCode {
-            get {
-                return this.barCodeField;
-            }
-            set {
-                this.barCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Volume {
-            get {
-                return this.volumeField;
-            }
-            set {
-                this.volumeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FileRootFolder {
-            get {
-                return this.fileRootFolderField;
-            }
-            set {
-                this.fileRootFolderField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Sponsor {
-            get {
-                return this.sponsorField;
-            }
-            set {
-                this.sponsorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PageProgression {
-            get {
-                return this.pageProgressionField;
-            }
-            set {
-                this.pageProgressionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public byte IsVirtual {
-            get {
-                return this.isVirtualField;
-            }
-            set {
-                this.isVirtualField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<short> ItemSequence {
-            get {
-                return this.itemSequenceField;
-            }
-            set {
-                this.itemSequenceField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int PageID {
-            get {
-                return this.pageIDField;
-            }
-            set {
-                this.pageIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FileNamePrefix {
-            get {
-                return this.fileNamePrefixField;
-            }
-            set {
-                this.fileNamePrefixField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PageDescription {
-            get {
-                return this.pageDescriptionField;
-            }
-            set {
-                this.pageDescriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int SequenceOrder {
-            get {
-                return this.sequenceOrderField;
-            }
-            set {
-                this.sequenceOrderField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public bool Illustration {
-            get {
-                return this.illustrationField;
-            }
-            set {
-                this.illustrationField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public bool Active {
-            get {
-                return this.activeField;
-            }
-            set {
-                this.activeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ExternalBaseURL {
-            get {
-                return this.externalBaseURLField;
-            }
-            set {
-                this.externalBaseURLField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ExternalURL {
-            get {
-                return this.externalURLField;
-            }
-            set {
-                this.externalURLField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string WebVirtualDirectory {
-            get {
-                return this.webVirtualDirectoryField;
-            }
-            set {
-                this.webVirtualDirectoryField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string OCRFolderShare {
-            get {
-                return this.oCRFolderShareField;
-            }
-            set {
-                this.oCRFolderShareField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string DownloadUrl {
-            get {
-                return this.downloadUrlField;
-            }
-            set {
-                this.downloadUrlField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ImageServerUrlFormat {
-            get {
-                return this.imageServerUrlFormatField;
-            }
-            set {
-                this.imageServerUrlFormatField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class PageSummaryView : @__PageSummaryView {
-        
-        private string flickrUrlField;
-        
-        /// <remarks/>
-        public string FlickrUrl {
-            get {
-                return this.flickrUrlField;
-            }
-            set {
-                this.flickrUrlField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PDF))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__PDF : CustomObjectBase {
-        
-        private int pdfIDField;
-        
-        private int itemIDField;
-        
-        private string fileLocationField;
-        
-        private string emailAddressField;
-        
-        private string shareWithEmailAddressesField;
-        
-        private string articleTitleField;
-        
-        private string articleCreatorsField;
-        
-        private string articleTagsField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.DateTime lastModifiedDateField;
-        
-        private bool imagesOnlyField;
-        
-        private string fileUrlField;
-        
-        private System.Nullable<System.DateTime> fileGenerationDateField;
-        
-        private System.Nullable<System.DateTime> fileDeletionDateField;
-        
-        private int pdfStatusIDField;
-        
-        private int numberImagesMissingField;
-        
-        private int numberOcrMissingField;
-        
-        private string commentField;
-        
-        /// <remarks/>
-        public int PdfID {
-            get {
-                return this.pdfIDField;
-            }
-            set {
-                this.pdfIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int ItemID {
-            get {
-                return this.itemIDField;
-            }
-            set {
-                this.itemIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FileLocation {
-            get {
-                return this.fileLocationField;
-            }
-            set {
-                this.fileLocationField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string EmailAddress {
-            get {
-                return this.emailAddressField;
-            }
-            set {
-                this.emailAddressField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ShareWithEmailAddresses {
-            get {
-                return this.shareWithEmailAddressesField;
-            }
-            set {
-                this.shareWithEmailAddressesField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ArticleTitle {
-            get {
-                return this.articleTitleField;
-            }
-            set {
-                this.articleTitleField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ArticleCreators {
-            get {
-                return this.articleCreatorsField;
-            }
-            set {
-                this.articleCreatorsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ArticleTags {
-            get {
-                return this.articleTagsField;
-            }
-            set {
-                this.articleTagsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public System.DateTime LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public bool ImagesOnly {
-            get {
-                return this.imagesOnlyField;
-            }
-            set {
-                this.imagesOnlyField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FileUrl {
-            get {
-                return this.fileUrlField;
-            }
-            set {
-                this.fileUrlField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<System.DateTime> FileGenerationDate {
-            get {
-                return this.fileGenerationDateField;
-            }
-            set {
-                this.fileGenerationDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<System.DateTime> FileDeletionDate {
-            get {
-                return this.fileDeletionDateField;
-            }
-            set {
-                this.fileDeletionDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int PdfStatusID {
-            get {
-                return this.pdfStatusIDField;
-            }
-            set {
-                this.pdfStatusIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int NumberImagesMissing {
-            get {
-                return this.numberImagesMissingField;
-            }
-            set {
-                this.numberImagesMissingField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int NumberOcrMissing {
-            get {
-                return this.numberOcrMissingField;
-            }
-            set {
-                this.numberOcrMissingField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Comment {
-            get {
-                return this.commentField;
-            }
-            set {
-                this.commentField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class PDF : @__PDF {
-        
-        private System.Nullable<int> bookIDField;
-        
-        private System.Nullable<int> segmentIDField;
-        
-        private int numberOfPagesField;
-        
-        private int minutesToGenerateField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> BookID {
-            get {
-                return this.bookIDField;
-            }
-            set {
-                this.bookIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> SegmentID {
-            get {
-                return this.segmentIDField;
-            }
-            set {
-                this.segmentIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int NumberOfPages {
-            get {
-                return this.numberOfPagesField;
-            }
-            set {
-                this.numberOfPagesField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int MinutesToGenerate {
-            get {
-                return this.minutesToGenerateField;
-            }
-            set {
-                this.minutesToGenerateField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageType))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__PageType : CustomObjectBase {
-        
-        private int pageTypeIDField;
-        
-        private string pageTypeNameField;
-        
-        private string pageTypeDescriptionField;
-        
-        private byte activeField;
-        
-        private System.Nullable<System.DateTime> creationDateField;
-        
-        private System.Nullable<System.DateTime> lastModifiedDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        /// <remarks/>
-        public int PageTypeID {
-            get {
-                return this.pageTypeIDField;
-            }
-            set {
-                this.pageTypeIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PageTypeName {
-            get {
-                return this.pageTypeNameField;
-            }
-            set {
-                this.pageTypeNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PageTypeDescription {
-            get {
-                return this.pageTypeDescriptionField;
-            }
-            set {
-                this.pageTypeDescriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public byte Active {
-            get {
-                return this.activeField;
-            }
-            set {
-                this.activeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<System.DateTime> CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<System.DateTime> LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class PageType : @__PageType {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageFlickr))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__PageFlickr : CustomObjectBase {
-        
-        private int pageFlickrIDField;
-        
-        private int pageIDField;
-        
-        private string flickrURLField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<System.DateTime> creationDateField;
-        
-        /// <remarks/>
-        public int PageFlickrID {
-            get {
-                return this.pageFlickrIDField;
-            }
-            set {
-                this.pageFlickrIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public int PageID {
-            get {
-                return this.pageIDField;
-            }
-            set {
-                this.pageIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FlickrURL {
-            get {
-                return this.flickrURLField;
-            }
-            set {
-                this.flickrURLField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<System.DateTime> CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class PageFlickr : @__PageFlickr {
-        
-        private string shortTitleField;
-        
-        private string indicatedPageField;
-        
-        private string pageTypeField;
-        
-        /// <remarks/>
-        public string ShortTitle {
-            get {
-                return this.shortTitleField;
-            }
-            set {
-                this.shortTitleField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string IndicatedPage {
-            get {
-                return this.indicatedPageField;
-            }
-            set {
-                this.indicatedPageField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PageType {
-            get {
-                return this.pageTypeField;
-            }
-            set {
-                this.pageTypeField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
     public enum ItemType {
@@ -15104,991 +15278,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void MARCGetFileContentsCompletedEventHandler(object sender, MARCGetFileContentsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class MARCGetFileContentsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal MARCGetFileContentsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void MarcCreateFileCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void DOISelectSubmittedCompletedEventHandler(object sender, DOISelectSubmittedCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class DOISelectSubmittedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal DOISelectSubmittedCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public DOI[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((DOI[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void TitleSelectWithoutSubmittedDOICompletedEventHandler(object sender, TitleSelectWithoutSubmittedDOICompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class TitleSelectWithoutSubmittedDOICompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal TitleSelectWithoutSubmittedDOICompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public DOI[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((DOI[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void SegmentSelectWithoutSubmittedDOICompletedEventHandler(object sender, SegmentSelectWithoutSubmittedDOICompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class SegmentSelectWithoutSubmittedDOICompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal SegmentSelectWithoutSubmittedDOICompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public DOI[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((DOI[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void DOIInsertAutoCompletedEventHandler(object sender, DOIInsertAutoCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class DOIInsertAutoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal DOIInsertAutoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public DOI Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((DOI)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void DOIUpdateStatusCompletedEventHandler(object sender, DOIUpdateStatusCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class DOIUpdateStatusCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal DOIUpdateStatusCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public DOI Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((DOI)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void DOIUpdateDOINameCompletedEventHandler(object sender, DOIUpdateDOINameCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class DOIUpdateDOINameCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal DOIUpdateDOINameCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public DOI Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((DOI)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void DOIUpdateBatchIDCompletedEventHandler(object sender, DOIUpdateBatchIDCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class DOIUpdateBatchIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal DOIUpdateBatchIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public DOI Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((DOI)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void DOIGetFileContentsCompletedEventHandler(object sender, DOIGetFileContentsCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class DOIGetFileContentsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal DOIGetFileContentsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void DOISelectValidForTitleCompletedEventHandler(object sender, DOISelectValidForTitleCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class DOISelectValidForTitleCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal DOISelectValidForTitleCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public DOI[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((DOI[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void IndicatedPageSaveCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void IndicatedPageDeleteAllForPageCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageSelectByItemIDCompletedEventHandler(object sender, PageSelectByItemIDCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PageSelectByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PageSelectByItemIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public Page[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((Page[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageSelectFileNameByItemIDCompletedEventHandler(object sender, PageSelectFileNameByItemIDCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PageSelectFileNameByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PageSelectFileNameByItemIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public Page[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((Page[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageMetadataSelectByItemIDCompletedEventHandler(object sender, PageMetadataSelectByItemIDCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PageMetadataSelectByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PageMetadataSelectByItemIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public Page[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((Page[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageMetadataSelectBySegmentIDCompletedEventHandler(object sender, PageMetadataSelectBySegmentIDCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PageMetadataSelectBySegmentIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PageMetadataSelectBySegmentIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public Page[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((Page[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageSelectWithExpiredPageNamesByItemIDCompletedEventHandler(object sender, PageSelectWithExpiredPageNamesByItemIDCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PageSelectWithExpiredPageNamesByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PageSelectWithExpiredPageNamesByItemIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public Page[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((Page[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageSelectWithoutPageNamesByItemIDCompletedEventHandler(object sender, PageSelectWithoutPageNamesByItemIDCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PageSelectWithoutPageNamesByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PageSelectWithoutPageNamesByItemIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public Page[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((Page[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageSelectWithoutPageNamesCompletedEventHandler(object sender, PageSelectWithoutPageNamesCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PageSelectWithoutPageNamesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PageSelectWithoutPageNamesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public Page[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((Page[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageUpdateYearCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageUpdateVolumeCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageUpdateIssueCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageUpdateLastPageNameLookupDateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageCheckForOcrTextCompletedEventHandler(object sender, PageCheckForOcrTextCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PageCheckForOcrTextCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PageCheckForOcrTextCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageTextLogInsertForItemCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageFlickrSelectRandomCompletedEventHandler(object sender, PageFlickrSelectRandomCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PageFlickrSelectRandomCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PageFlickrSelectRandomCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public PageFlickr[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((PageFlickr[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageFlickrSelectAllCompletedEventHandler(object sender, PageFlickrSelectAllCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PageFlickrSelectAllCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PageFlickrSelectAllCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public PageFlickr[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((PageFlickr[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageNameUpdateListCompletedEventHandler(object sender, PageNameUpdateListCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PageNameUpdateListCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PageNameUpdateListCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public int[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((int[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void NamePageDeleteByItemIDCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PageTypeSelectAllCompletedEventHandler(object sender, PageTypeSelectAllCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PageTypeSelectAllCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PageTypeSelectAllCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public PageType[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((PageType[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void Page_PageTypeSaveCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void Page_PageTypeDeleteAllForPageCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void GetPaginationStatusPendingCompletedEventHandler(object sender, GetPaginationStatusPendingCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetPaginationStatusPendingCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetPaginationStatusPendingCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public int Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((int)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void GetPaginationStatusInProgressCompletedEventHandler(object sender, GetPaginationStatusInProgressCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetPaginationStatusInProgressCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetPaginationStatusInProgressCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public int Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((int)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void GetPaginationStatusCompleteCompletedEventHandler(object sender, GetPaginationStatusCompleteCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetPaginationStatusCompleteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetPaginationStatusCompleteCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public int Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((int)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void GetPaginationStatusStringCompletedEventHandler(object sender, GetPaginationStatusStringCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class GetPaginationStatusStringCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal GetPaginationStatusStringCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public string Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PDFSelectForFileCreationCompletedEventHandler(object sender, PDFSelectForFileCreationCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PDFSelectForFileCreationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PDFSelectForFileCreationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public PDF[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((PDF[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PDFSelectForDeletionCompletedEventHandler(object sender, PDFSelectForDeletionCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PDFSelectForDeletionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PDFSelectForDeletionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public PDF[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((PDF[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PDFSelectDuplicateForPdfIDCompletedEventHandler(object sender, PDFSelectDuplicateForPdfIDCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PDFSelectDuplicateForPdfIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PDFSelectDuplicateForPdfIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public PDF[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((PDF[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PDFPageSummaryViewSelectByPdfIDCompletedEventHandler(object sender, PDFPageSummaryViewSelectByPdfIDCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PDFPageSummaryViewSelectByPdfIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PDFPageSummaryViewSelectByPdfIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public PageSummaryView[] Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((PageSummaryView[])(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PDFUpdateGenerationInfoCompletedEventHandler(object sender, PDFUpdateGenerationInfoCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PDFUpdateGenerationInfoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PDFUpdateGenerationInfoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public PDF Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((PDF)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PDFUpdateFileDeletionCompletedEventHandler(object sender, PDFUpdateFileDeletionCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PDFUpdateFileDeletionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PDFUpdateFileDeletionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public PDF Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((PDF)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PDFUpdatePdfStatusProcessingCompletedEventHandler(object sender, PDFUpdatePdfStatusProcessingCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PDFUpdatePdfStatusProcessingCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PDFUpdatePdfStatusProcessingCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PDFUpdatePdfStatusGeneratedCompletedEventHandler(object sender, PDFUpdatePdfStatusGeneratedCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PDFUpdatePdfStatusGeneratedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PDFUpdatePdfStatusGeneratedCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PDFUpdatePdfStatusErrorCompletedEventHandler(object sender, PDFUpdatePdfStatusErrorCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PDFUpdatePdfStatusErrorCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PDFUpdatePdfStatusErrorCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    public delegate void PDFUpdatePdfStatusRejectedCompletedEventHandler(object sender, PDFUpdatePdfStatusRejectedCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class PDFUpdatePdfStatusRejectedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal PDFUpdatePdfStatusRejectedCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void AnnotatedTitleSaveCompletedEventHandler(object sender, AnnotatedTitleSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotatedTitleSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16110,11 +15304,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void AnnotatedItemSaveCompletedEventHandler(object sender, AnnotatedItemSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotatedItemSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16136,11 +15330,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void AnnotatedPageSaveCompletedEventHandler(object sender, AnnotatedPageSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotatedPageSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16162,11 +15356,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void AnnotatedPageCharacteristicDeleteByPageIDCompletedEventHandler(object sender, AnnotatedPageCharacteristicDeleteByPageIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotatedPageCharacteristicDeleteByPageIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16188,11 +15382,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void AnnotatedPageCharacteristicSaveCompletedEventHandler(object sender, AnnotatedPageCharacteristicSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotatedPageCharacteristicSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16214,11 +15408,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void AnnotationSelectAutoCompletedEventHandler(object sender, AnnotationSelectAutoCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotationSelectAutoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16240,11 +15434,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void AnnotationSaveCompletedEventHandler(object sender, AnnotationSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotationSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16266,11 +15460,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void AnnotationSaveTextCompletedEventHandler(object sender, AnnotationSaveTextCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotationSaveTextCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16292,15 +15486,15 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void AnnotationClearCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void AnnotationRelationSaveCompletedEventHandler(object sender, AnnotationRelationSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotationRelationSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16322,11 +15516,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void AnnotationNoteSaveCompletedEventHandler(object sender, AnnotationNoteSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotationNoteSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16348,11 +15542,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void Annotation_AnnotationConceptSaveCompletedEventHandler(object sender, Annotation_AnnotationConceptSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class Annotation_AnnotationConceptSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16374,11 +15568,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void AnnotationSubjectSaveCompletedEventHandler(object sender, AnnotationSubjectSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotationSubjectSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16400,11 +15594,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void GetNamesFromOcrCompletedEventHandler(object sender, GetNamesFromOcrCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetNamesFromOcrCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16426,11 +15620,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void GetOcrTextCompletedEventHandler(object sender, GetOcrTextCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetOcrTextCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16452,11 +15646,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void TitleSelectAllPublishedCompletedEventHandler(object sender, TitleSelectAllPublishedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class TitleSelectAllPublishedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16478,11 +15672,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void TitleSelectByTitleIDCompletedEventHandler(object sender, TitleSelectByTitleIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class TitleSelectByTitleIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16504,11 +15698,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void TitleSelectDetailByTitleIDCompletedEventHandler(object sender, TitleSelectDetailByTitleIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class TitleSelectDetailByTitleIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16530,11 +15724,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void TitleBibTeXSelectAllTitleCitationsCompletedEventHandler(object sender, TitleBibTeXSelectAllTitleCitationsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class TitleBibTeXSelectAllTitleCitationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16556,11 +15750,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void TitleBibTeXSelectAllItemCitationsCompletedEventHandler(object sender, TitleBibTeXSelectAllItemCitationsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class TitleBibTeXSelectAllItemCitationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16582,11 +15776,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void SegmentSelectAllBibTeXCitationsCompletedEventHandler(object sender, SegmentSelectAllBibTeXCitationsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class SegmentSelectAllBibTeXCitationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16608,11 +15802,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void TitleSelectAllRISCitationsCompletedEventHandler(object sender, TitleSelectAllRISCitationsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class TitleSelectAllRISCitationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16634,11 +15828,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void Title_IdentifierSelectByTitleIDCompletedEventHandler(object sender, Title_IdentifierSelectByTitleIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class Title_IdentifierSelectByTitleIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16660,11 +15854,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemSelectByBarCodeCompletedEventHandler(object sender, ItemSelectByBarCodeCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemSelectByBarCodeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16686,11 +15880,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void BookSelectByTitleIDCompletedEventHandler(object sender, BookSelectByTitleIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class BookSelectByTitleIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16712,11 +15906,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void BookSelectByItemIDCompletedEventHandler(object sender, BookSelectByItemIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class BookSelectByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16738,11 +15932,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemSelectFilenamesCompletedEventHandler(object sender, ItemSelectFilenamesCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemSelectFilenamesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16764,11 +15958,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemUpdateStatusCompletedEventHandler(object sender, ItemUpdateStatusCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemUpdateStatusCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16790,11 +15984,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void BookUpdatePaginationStatusCompletedEventHandler(object sender, BookUpdatePaginationStatusCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class BookUpdatePaginationStatusCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16816,11 +16010,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemSelectAutoCompletedEventHandler(object sender, ItemSelectAutoCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemSelectAutoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16842,11 +16036,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void BookSelectAutoCompletedEventHandler(object sender, BookSelectAutoCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class BookSelectAutoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16868,11 +16062,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void SegmentSelectAutoCompletedEventHandler(object sender, SegmentSelectAutoCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class SegmentSelectAutoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16894,11 +16088,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void SegmentSelectByItemIDCompletedEventHandler(object sender, SegmentSelectByItemIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class SegmentSelectByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16920,11 +16114,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemSelectWithExpiredPageNamesCompletedEventHandler(object sender, ItemSelectWithExpiredPageNamesCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemSelectWithExpiredPageNamesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16946,11 +16140,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemSelectWithoutPageNamesCompletedEventHandler(object sender, ItemSelectWithoutPageNamesCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemSelectWithoutPageNamesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16972,11 +16166,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemUpdateLastPageNameLookupDateCompletedEventHandler(object sender, ItemUpdateLastPageNameLookupDateCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemUpdateLastPageNameLookupDateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -16998,11 +16192,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemCheckForOcrTextCompletedEventHandler(object sender, ItemCheckForOcrTextCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemCheckForOcrTextCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17024,11 +16218,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemGetNamesXMLByItemIDCompletedEventHandler(object sender, ItemGetNamesXMLByItemIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemGetNamesXMLByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17050,11 +16244,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemSelectPublishedCompletedEventHandler(object sender, ItemSelectPublishedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemSelectPublishedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17076,11 +16270,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void BookSelectRecentlyChangedCompletedEventHandler(object sender, BookSelectRecentlyChangedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class BookSelectRecentlyChangedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17102,11 +16296,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ExportIAIdentifiersCompletedEventHandler(object sender, ExportIAIdentifiersCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ExportIAIdentifiersCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17128,11 +16322,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ExportKBARTCompletedEventHandler(object sender, ExportKBARTCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ExportKBARTCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17154,11 +16348,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemSelectAllRISCitationsCompletedEventHandler(object sender, ItemSelectAllRISCitationsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemSelectAllRISCitationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17180,11 +16374,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void SegmentSelectPublishedCompletedEventHandler(object sender, SegmentSelectPublishedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class SegmentSelectPublishedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17206,11 +16400,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void SegmentSelectExtendedCompletedEventHandler(object sender, SegmentSelectExtendedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class SegmentSelectExtendedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17232,11 +16426,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void SegmentSelectAllRISCitationsCompletedEventHandler(object sender, SegmentSelectAllRISCitationsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class SegmentSelectAllRISCitationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17258,11 +16452,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void SegmentSelectRecentlyChangedCompletedEventHandler(object sender, SegmentSelectRecentlyChangedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class SegmentSelectRecentlyChangedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17284,11 +16478,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void GenerateRISCitationCompletedEventHandler(object sender, GenerateRISCitationCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GenerateRISCitationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17310,15 +16504,15 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemNameFileLogRefreshSinceDateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemNameFileLogSelectForCreateCompletedEventHandler(object sender, ItemNameFileLogSelectForCreateCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemNameFileLogSelectForCreateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17340,11 +16534,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemNameFileLogSelectForUploadCompletedEventHandler(object sender, ItemNameFileLogSelectForUploadCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemNameFileLogSelectForUploadCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17366,19 +16560,19 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemNameFileLogUpdateCreateDateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void ItemNameFileLogUpdateUploadDateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void VaultSelectCompletedEventHandler(object sender, VaultSelectCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class VaultSelectCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17400,11 +16594,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void InstitutionSelectAutoCompletedEventHandler(object sender, InstitutionSelectAutoCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class InstitutionSelectAutoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17426,11 +16620,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void InstitutionSelectByItemIDAndRoleCompletedEventHandler(object sender, InstitutionSelectByItemIDAndRoleCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class InstitutionSelectByItemIDAndRoleCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17452,11 +16646,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void InstitutionSelectBySegmentIDAndRoleCompletedEventHandler(object sender, InstitutionSelectBySegmentIDAndRoleCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class InstitutionSelectBySegmentIDAndRoleCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17478,11 +16672,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void SendEmailCompletedEventHandler(object sender, SendEmailCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class SendEmailCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17504,11 +16698,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void GetMODSRecordForTitleCompletedEventHandler(object sender, GetMODSRecordForTitleCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetMODSRecordForTitleCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17530,11 +16724,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void GetMODSRecordForItemCompletedEventHandler(object sender, GetMODSRecordForItemCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetMODSRecordForItemCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17556,11 +16750,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void GetMODSRecordForSegmentCompletedEventHandler(object sender, GetMODSRecordForSegmentCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetMODSRecordForSegmentCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17582,11 +16776,11 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void OcrJobExistsCompletedEventHandler(object sender, OcrJobExistsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class OcrJobExistsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17608,15 +16802,15 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void OcrCreateJobCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     public delegate void MARCFileExistsCompletedEventHandler(object sender, MARCFileExistsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class MARCFileExistsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -17624,6 +16818,994 @@ namespace MOBOT.BHL.PageNameRefresh.BHLWS {
         private object[] results;
         
         internal MARCFileExistsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void MARCGetFileContentsCompletedEventHandler(object sender, MARCGetFileContentsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class MARCGetFileContentsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal MARCGetFileContentsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void MarcCreateFileCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void DOISelectSubmittedCompletedEventHandler(object sender, DOISelectSubmittedCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class DOISelectSubmittedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal DOISelectSubmittedCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public DOI[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((DOI[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void TitleSelectWithoutSubmittedDOICompletedEventHandler(object sender, TitleSelectWithoutSubmittedDOICompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class TitleSelectWithoutSubmittedDOICompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal TitleSelectWithoutSubmittedDOICompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public DOI[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((DOI[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void SegmentSelectWithoutSubmittedDOICompletedEventHandler(object sender, SegmentSelectWithoutSubmittedDOICompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class SegmentSelectWithoutSubmittedDOICompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal SegmentSelectWithoutSubmittedDOICompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public DOI[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((DOI[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void DOIInsertAutoCompletedEventHandler(object sender, DOIInsertAutoCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class DOIInsertAutoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal DOIInsertAutoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public DOI Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((DOI)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void DOIInsertCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void DOIInsertIdentifierCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void DOIUpdateStatusCompletedEventHandler(object sender, DOIUpdateStatusCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class DOIUpdateStatusCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal DOIUpdateStatusCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public DOI Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((DOI)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void DOIUpdateDOINameCompletedEventHandler(object sender, DOIUpdateDOINameCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class DOIUpdateDOINameCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal DOIUpdateDOINameCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public DOI Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((DOI)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void DOIUpdateBatchIDCompletedEventHandler(object sender, DOIUpdateBatchIDCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class DOIUpdateBatchIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal DOIUpdateBatchIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public DOI Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((DOI)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void DOIGetFileContentsCompletedEventHandler(object sender, DOIGetFileContentsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class DOIGetFileContentsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal DOIGetFileContentsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void DOISelectValidForTitleCompletedEventHandler(object sender, DOISelectValidForTitleCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class DOISelectValidForTitleCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal DOISelectValidForTitleCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Title_Identifier[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Title_Identifier[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void IndicatedPageSaveCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void IndicatedPageDeleteAllForPageCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageSelectByItemIDCompletedEventHandler(object sender, PageSelectByItemIDCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PageSelectByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PageSelectByItemIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Page[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Page[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageSelectFileNameByItemIDCompletedEventHandler(object sender, PageSelectFileNameByItemIDCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PageSelectFileNameByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PageSelectFileNameByItemIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Page[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Page[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageMetadataSelectByItemIDCompletedEventHandler(object sender, PageMetadataSelectByItemIDCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PageMetadataSelectByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PageMetadataSelectByItemIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Page[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Page[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageMetadataSelectBySegmentIDCompletedEventHandler(object sender, PageMetadataSelectBySegmentIDCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PageMetadataSelectBySegmentIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PageMetadataSelectBySegmentIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Page[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Page[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageSelectWithExpiredPageNamesByItemIDCompletedEventHandler(object sender, PageSelectWithExpiredPageNamesByItemIDCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PageSelectWithExpiredPageNamesByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PageSelectWithExpiredPageNamesByItemIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Page[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Page[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageSelectWithoutPageNamesByItemIDCompletedEventHandler(object sender, PageSelectWithoutPageNamesByItemIDCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PageSelectWithoutPageNamesByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PageSelectWithoutPageNamesByItemIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Page[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Page[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageSelectWithoutPageNamesCompletedEventHandler(object sender, PageSelectWithoutPageNamesCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PageSelectWithoutPageNamesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PageSelectWithoutPageNamesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Page[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Page[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageUpdateYearCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageUpdateVolumeCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageUpdateIssueCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageUpdateLastPageNameLookupDateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageCheckForOcrTextCompletedEventHandler(object sender, PageCheckForOcrTextCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PageCheckForOcrTextCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PageCheckForOcrTextCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageTextLogInsertForItemCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageFlickrSelectRandomCompletedEventHandler(object sender, PageFlickrSelectRandomCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PageFlickrSelectRandomCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PageFlickrSelectRandomCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public PageFlickr[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((PageFlickr[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageFlickrSelectAllCompletedEventHandler(object sender, PageFlickrSelectAllCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PageFlickrSelectAllCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PageFlickrSelectAllCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public PageFlickr[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((PageFlickr[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageNameUpdateListCompletedEventHandler(object sender, PageNameUpdateListCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PageNameUpdateListCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PageNameUpdateListCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public int[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((int[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void NamePageDeleteByItemIDCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PageTypeSelectAllCompletedEventHandler(object sender, PageTypeSelectAllCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PageTypeSelectAllCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PageTypeSelectAllCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public PageType[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((PageType[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void Page_PageTypeSaveCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void Page_PageTypeDeleteAllForPageCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void GetPaginationStatusPendingCompletedEventHandler(object sender, GetPaginationStatusPendingCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetPaginationStatusPendingCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetPaginationStatusPendingCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public int Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void GetPaginationStatusInProgressCompletedEventHandler(object sender, GetPaginationStatusInProgressCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetPaginationStatusInProgressCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetPaginationStatusInProgressCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public int Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void GetPaginationStatusCompleteCompletedEventHandler(object sender, GetPaginationStatusCompleteCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetPaginationStatusCompleteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetPaginationStatusCompleteCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public int Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void GetPaginationStatusStringCompletedEventHandler(object sender, GetPaginationStatusStringCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetPaginationStatusStringCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetPaginationStatusStringCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PDFSelectForFileCreationCompletedEventHandler(object sender, PDFSelectForFileCreationCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PDFSelectForFileCreationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PDFSelectForFileCreationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public PDF[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((PDF[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PDFSelectForDeletionCompletedEventHandler(object sender, PDFSelectForDeletionCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PDFSelectForDeletionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PDFSelectForDeletionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public PDF[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((PDF[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PDFSelectDuplicateForPdfIDCompletedEventHandler(object sender, PDFSelectDuplicateForPdfIDCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PDFSelectDuplicateForPdfIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PDFSelectDuplicateForPdfIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public PDF[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((PDF[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PDFPageSummaryViewSelectByPdfIDCompletedEventHandler(object sender, PDFPageSummaryViewSelectByPdfIDCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PDFPageSummaryViewSelectByPdfIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PDFPageSummaryViewSelectByPdfIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public PageSummaryView[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((PageSummaryView[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PDFUpdateGenerationInfoCompletedEventHandler(object sender, PDFUpdateGenerationInfoCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PDFUpdateGenerationInfoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PDFUpdateGenerationInfoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public PDF Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((PDF)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PDFUpdateFileDeletionCompletedEventHandler(object sender, PDFUpdateFileDeletionCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PDFUpdateFileDeletionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PDFUpdateFileDeletionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public PDF Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((PDF)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PDFUpdatePdfStatusProcessingCompletedEventHandler(object sender, PDFUpdatePdfStatusProcessingCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PDFUpdatePdfStatusProcessingCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PDFUpdatePdfStatusProcessingCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PDFUpdatePdfStatusGeneratedCompletedEventHandler(object sender, PDFUpdatePdfStatusGeneratedCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PDFUpdatePdfStatusGeneratedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PDFUpdatePdfStatusGeneratedCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PDFUpdatePdfStatusErrorCompletedEventHandler(object sender, PDFUpdatePdfStatusErrorCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PDFUpdatePdfStatusErrorCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PDFUpdatePdfStatusErrorCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    public delegate void PDFUpdatePdfStatusRejectedCompletedEventHandler(object sender, PDFUpdatePdfStatusRejectedCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.4084.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class PDFUpdatePdfStatusRejectedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal PDFUpdatePdfStatusRejectedCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

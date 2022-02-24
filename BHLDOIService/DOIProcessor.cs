@@ -961,9 +961,14 @@ namespace MOBOT.BHL.BHLDOIService
                                             wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusApproved, string.Empty, 1, null);
                                             this.LogMessage("DOI " + doi.DOIName + " Verified");
                                             if (string.Compare(diagnosticMessage.Value, "Successfully added", true) == 0)
+                                            {
+                                                wsClient.DOIInsertIdentifier(doi.DOIEntityTypeID, doi.EntityID, doi.DOIName, null);
                                                 approvedDOIAdds.Add(doi.DOIName);
+                                            }
                                             else
+                                            {
                                                 approvedDOIUpdates.Add(doi.DOIName);
+                                            }
                                             break;
                                         }
                                     case "Warning":

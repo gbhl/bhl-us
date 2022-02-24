@@ -1170,6 +1170,7 @@
     <None Include="dbo\Functions\fnGetISSNName.sql" />
     <None Include="dbo\Functions\fnGetISSNID.sql" />
     <None Include="dbo\Functions\fnGetISSNValue.sql" />
+    <None Include="dbo\Stored Procedures\DOIInsertIdentifier.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

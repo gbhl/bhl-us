@@ -41,6 +41,12 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
+        public void DOIInsertIdentifier(int doiEntityTypeId, int entityID, string doiName, int? userId)
+        {
+            new BHLProvider().DOIInsertIdentifier(doiEntityTypeId, entityID, doiName, userId);
+        }
+
+        [WebMethod]
         public DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, short? setValid, int? userId)
         {
             return new BHLProvider().DOIUpdateStatus(doiID, doiStatusId, message, setValid, userId);
