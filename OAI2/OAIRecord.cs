@@ -882,9 +882,9 @@ namespace MOBOT.BHL.OAI2
                 this.Url = "https://www.biodiversitylibrary.org/part/" + segment.SegmentID.ToString();
                 this.Sequence = "1";
 
-                if (segment.ItemID != null)
+                if (segment.BookID != null)
                 {
-                    this.ParentUrl = "https://www.biodiversitylibrary.org/item/" + segment.ItemID.ToString();
+                    this.ParentUrl = "https://www.biodiversitylibrary.org/item/" + segment.BookID.ToString();
                     this.Sequence = segment.SequenceOrder.ToString();
                 }
 

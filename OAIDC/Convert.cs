@@ -260,11 +260,9 @@ namespace MOBOT.BHL.OAIDC
             }
 
             // Relation
-            if (!String.IsNullOrEmpty(_oaiRecord.Title) && !String.IsNullOrEmpty(_oaiRecord.JournalTitle))
+            if (!string.IsNullOrWhiteSpace(_oaiRecord.ParentUrl))
             {
-                string relation = _oaiRecord.JournalTitle;
-                if (!string.IsNullOrEmpty(_oaiRecord.JournalVolume)) relation += ", " + _oaiRecord.JournalVolume;
-                sb.Append("<dc:relation type='IsChildOf'>" + HttpUtility.HtmlEncode(relation) + "</dc:relation>\n");
+                sb.Append("<dc:relation type='IsChildOf'>" + HttpUtility.HtmlEncode(_oaiRecord.ParentUrl) + "</dc:relation>\n");
             }
 
             // Coverage

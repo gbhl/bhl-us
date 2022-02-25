@@ -1028,6 +1028,7 @@ namespace MOBOT.BHL.OAIMODS
             sb.Append(this.GetOriginInfoElement());
             sb.Append(this.GetClassificationElement(_oaiRecord));
             sb.Append(this.GetPartElement());
+            if (!string.IsNullOrWhiteSpace(_oaiRecord.ParentUrl)) sb.Append(this.GetIdentifierUriElement(_oaiRecord.ParentUrl));
 
             sb.Append("</relatedItem>\n");
 
@@ -1088,13 +1089,14 @@ namespace MOBOT.BHL.OAIMODS
         /// Build the identifier element with type = 'uri'
         /// </summary>
         /// <returns></returns>
-        private String GetIdentifierUriElement()
+        private String GetIdentifierUriElement(string url = "")
         {
             StringBuilder sb = new StringBuilder();
 
-            if (!String.IsNullOrEmpty(_oaiRecord.Url))
+            if (string.IsNullOrWhiteSpace(url)) url = _oaiRecord.Url;
+            if (!string.IsNullOrWhiteSpace(url))
             {
-                sb.Append("<identifier type=\"uri\">" + HttpUtility.HtmlEncode(_oaiRecord.Url) + "</identifier>\n");
+                sb.Append("<identifier type=\"uri\">" + HttpUtility.HtmlEncode(url) + "</identifier>\n");
             }
 
             return sb.ToString();
