@@ -234,12 +234,16 @@ namespace MOBOT.BHL.AdminWeb
                             title.TitleAuthors.Add(titleAuthor);
                         }
 
-                        // Replace all identifiers associated with this title
+                        // Delete all identifiers that will be replaced by MARC values
+                        List<string> identifiersToDelete = new List<string>{
+                                "OCLC", "DLC", "ISBN", "ISSN", "eISSN", "CODEN", "NLM", "NAL", 
+                                "GPO", "DDC", "MARC001", "WonderFetch", "Abbreviation"};
                         foreach (Title_Identifier title_identifier in title.TitleIdentifiers)
                         {
-                            title_identifier.IsDeleted = true;
+                            if (identifiersToDelete.Contains(title_identifier.IdentifierName)) title_identifier.IsDeleted = true;
                         }
 
+                        // Add new identifier values from MARC
                         List<Title_Identifier> titleIdentifiers = provider.MarcSelectTitleIdentifiersByMarcID(marc.MarcID);
                         foreach (Title_Identifier titleIdentifier in titleIdentifiers)
                         {
