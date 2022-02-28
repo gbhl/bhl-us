@@ -262,7 +262,7 @@ namespace MOBOT.BHL.OAIDC
             // Relation
             if (!string.IsNullOrWhiteSpace(_oaiRecord.ParentUrl))
             {
-                sb.Append("<dc:relation type='IsChildOf'>" + HttpUtility.HtmlEncode(_oaiRecord.ParentUrl) + "</dc:relation>\n");
+                sb.Append("<dc:relation type='IsPartOf'>" + HttpUtility.HtmlEncode(_oaiRecord.ParentUrl) + "</dc:relation>\n");
             }
 
             // Coverage
