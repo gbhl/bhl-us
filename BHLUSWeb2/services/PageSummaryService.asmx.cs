@@ -36,7 +36,7 @@ namespace MOBOT.BHL.Web2.Services
 
 		private string GetTextUrl( PageSummaryView psv )
 		{
-            return new BHLProvider().GetTextUrl(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true", psv.OcrTextLocation);
+            return new BHLProvider().GetTextUrl(psv.OcrTextLocation);
 		}
 
 		private string GetOcrText( int pageID)
@@ -58,7 +58,6 @@ namespace MOBOT.BHL.Web2.Services
             return new BHLProvider().GetNamesFromOcr(
                 ConfigurationManager.AppSettings["NameFinderService"],
                 pageID,
-                ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true",
                 ConfigurationManager.AppSettings["UsePreferredNameResults"] == "true",
                 Convert.ToInt32(ConfigurationManager.AppSettings["MaxReadAttempts"]));
 		}

@@ -68,8 +68,6 @@
     <add key="BHLUserAdminEmailAddress" value="ADMINISTRATOR_EMAIL_ADDRESS"/>
     <!-- Indicates if full-text search is enabled on the BHL web site -->
     <add key="EnableFullTextSearch" value="true" />
-    <!-- Indicates whether to use the remote file access services -->
-    <add key="UseRemoteFileAccessProvider" value="false" />
     <!-- Path to OCR files -->
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt" />
     <!-- Folder into which to place items downloaded from Internet Archive -->

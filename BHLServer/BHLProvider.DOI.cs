@@ -167,9 +167,9 @@ namespace MOBOT.BHL.Server
             }
 
             BHLProvider service = new BHLProvider();
-            if (service.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").FileExists(filepath))
+            if (service.GetFileAccessProvider().FileExists(filepath))
             {
-                fileContents = new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").GetFileText(filepath);
+                fileContents = new BHLProvider().GetFileAccessProvider().GetFileText(filepath);
             }
 
             return fileContents;

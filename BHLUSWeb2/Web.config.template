@@ -80,7 +80,6 @@
 
     <!-- ###################################################################### -->
 
-    <add key="UseRemoteFileAccessProvider" value="false"/>
     <add key="DoRemoteNameLookup" value="false"/>
     <add key="ShowAnnotations" value="true"/>
     <add key="EnableFullTextSearch" value="true"/>

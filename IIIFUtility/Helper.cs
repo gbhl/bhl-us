@@ -6,6 +6,7 @@ using System.Net;
 using System.Xml;
 using System.Configuration;
 using MOBOT.BHL.DataObjects.Enum;
+using System.IO;
 
 namespace BHL.IIIF
 {
@@ -40,9 +41,7 @@ namespace BHL.IIIF
             try
             {
                 // Local for a local copy first
-                System.IO.StringReader reader = new System.IO.StringReader(
-                    new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").GetFileText(filePath)
-                    );
+                StringReader reader = new StringReader(new BHLProvider().GetFileAccessProvider().GetFileText(filePath));
                 xml.Load(reader);
             }
             catch

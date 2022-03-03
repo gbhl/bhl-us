@@ -26,7 +26,7 @@ namespace MOBOT.BHL.AdminWeb
                 string fileName = ConfigurationManager.AppSettings["AlertMsgPath"];
                 if (System.IO.File.Exists(fileName))
                 {
-                    IFileAccessProvider fileAccessProvider = new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                    IFileAccessProvider fileAccessProvider = new BHLProvider().GetFileAccessProvider();
                     string alertMessage = fileAccessProvider.GetFileText(fileName);
                     txtAlertMessage.Value = alertMessage;
                 }
@@ -50,7 +50,7 @@ namespace MOBOT.BHL.AdminWeb
                 }
 
                 string fileName = ConfigurationManager.AppSettings["AlertMsgPath"];
-                IFileAccessProvider fileAccessProvider = new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                IFileAccessProvider fileAccessProvider = new BHLProvider().GetFileAccessProvider();
                 fileAccessProvider.SaveFile(new UTF8Encoding().GetBytes(alertMessage), fileName);
             }
             else

@@ -229,13 +229,13 @@ namespace MOBOT.BHL.Server
 		/// <param name="pageID"></param>
 		/// <param name="ocrTextLocation"></param>
 		/// <returns></returns>
-		public bool PageCheckForOcrText( int pageID, bool useRemoteProvider )
+		public bool PageCheckForOcrText(int pageID)
 		{
 			try
 			{
 				PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId( pageID );
 				if (ps == null) ps = new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
-				return this.GetFileAccessProvider(useRemoteProvider).FileExists(ps.OcrTextLocation);
+				return this.GetFileAccessProvider().FileExists(ps.OcrTextLocation);
 			}
 			catch ( Exception ex )
 			{

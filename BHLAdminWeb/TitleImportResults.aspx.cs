@@ -298,8 +298,7 @@ namespace MOBOT.BHL.AdminWeb
                             foreach (PageSummaryView folder in folders)
                             {
                                 // Get the files in the folder
-                                MOBOT.FileAccess.IFileAccessProvider fileAccess =
-                                    provider.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                                MOBOT.FileAccess.IFileAccessProvider fileAccess = provider.GetFileAccessProvider();
                                 String destinationFolder = folder.OCRFolderShare + "\\" + folder.FileRootFolder;
                                 String[] marcXmlFiles = fileAccess.GetFiles(destinationFolder);
 

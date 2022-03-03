@@ -1,38 +1,33 @@
-﻿using System;
-using System.Configuration;
+﻿using MOBOT.BHL.DAL;
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.DataObjects.Enum;
+using MOBOT.FileAccess;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
-using System.Web;
-using System.Xml;
 using System.Xml.Linq;
-using MOBOT.BHL.DAL;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using MOBOT.FileAccess;
-using Newtonsoft.Json.Schema;
-using MOBOT.BHL.DataObjects.Enum;
 
 namespace MOBOT.BHL.Server
 {
     public partial class BHLProvider
     {
-        public MOBOT.FileAccess.IFileAccessProvider GetFileAccessProvider(bool useRemoteProvider)
+        public MOBOT.FileAccess.IFileAccessProvider GetFileAccessProvider()
         {
             return new MOBOT.FileAccess.FileAccessProvider();
         }
 
-        public string GetTextUrl(bool useRemoteProvider, string textLocation)
+        public string GetTextUrl(string textLocation)
         {
             try
             {
-                if (GetFileAccessProvider(useRemoteProvider).FileExists(textLocation))
+                if (GetFileAccessProvider().FileExists(textLocation))
                     return (textLocation);
                 else
                     return ("");
@@ -143,21 +138,21 @@ namespace MOBOT.BHL.Server
         /// <param name="usePreferredResults">True to use the "preferred" results.  Only applies to GNRD service.</param>
         /// <param name="maxReadAttempts">Maximum number of times to attempt to read service results.  Only applies to GNRD service.</param>
         /// <returns>Array of NameFinderResponse objects.</returns>
-        public List<NameFinderResponse> GetNamesFromOcr(string resolverName, int pageID, bool useRemoteFileAccessProvider, bool usePreferredResults, int maxReadAttempts)
+        public List<NameFinderResponse> GetNamesFromOcr(string resolverName, int pageID, bool usePreferredResults, int maxReadAttempts)
         {
             List<NameFinderResponse> nameFinderResponses = new List<NameFinderResponse>();
 
             switch (resolverName)
             {
                 case "TaxonFinder":
-                    nameFinderResponses = this.GetNamesFromOcrTaxonFinder(pageID, useRemoteFileAccessProvider, usePreferredResults, maxReadAttempts);
+                    nameFinderResponses = this.GetNamesFromOcrTaxonFinder(pageID, usePreferredResults, maxReadAttempts);
                     break;
                 case "GNFinder":
-                    nameFinderResponses = this.GetNamesFromOcrGNFinderService(pageID, useRemoteFileAccessProvider, usePreferredResults, maxReadAttempts);
+                    nameFinderResponses = this.GetNamesFromOcrGNFinderService(pageID, usePreferredResults, maxReadAttempts);
                     break;
                 case "GNFinderLocal":
                 default:
-                    nameFinderResponses = this.GetNamesFromOcrGNFinder(pageID, useRemoteFileAccessProvider);
+                    nameFinderResponses = this.GetNamesFromOcrGNFinder(pageID);
                     break;
             }
 
@@ -172,7 +167,7 @@ namespace MOBOT.BHL.Server
         /// <param name="usePreferredResults"></param>
         /// <param name="maxReadAttempts"></param>
         /// <returns></returns>
-        private List<NameFinderResponse> GetNamesFromOcrTaxonFinder(int pageID, bool useRemoteFileAccessProvider, bool usePreferredResults, int maxReadAttempts)
+        private List<NameFinderResponse> GetNamesFromOcrTaxonFinder(int pageID, bool usePreferredResults, int maxReadAttempts)
         {
             string webServiceUrl = string.Empty;
 
@@ -181,7 +176,7 @@ namespace MOBOT.BHL.Server
             string filepath = ps.OcrTextLocation;
 
             // Get the OCR text
-            string ocrText = this.GetFileAccessProvider(useRemoteFileAccessProvider).GetFileText(filepath);
+            string ocrText = this.GetFileAccessProvider().GetFileText(filepath);
 
             // Replace non-printing control characters (tabs, line feeds, etc) with spaces.
             // The GNRD service doesn't like 'empty' strings that contain no printable characters
@@ -358,7 +353,7 @@ namespace MOBOT.BHL.Server
         /// <param name="usePreferredResults"></param>
         /// <param name="maxReadAttempts"></param>
         /// <returns></returns>
-        private List<NameFinderResponse> GetNamesFromOcrGNFinderService(int pageID, bool useRemoteFileAccessProvider, bool usePreferredResults, int maxReadAttempts)
+        private List<NameFinderResponse> GetNamesFromOcrGNFinderService(int pageID, bool usePreferredResults, int maxReadAttempts)
         {
             string webServiceUrl = string.Empty;
 
@@ -367,7 +362,7 @@ namespace MOBOT.BHL.Server
             string filepath = ps.OcrTextLocation;
 
             // Get the OCR text
-            string ocrText = this.GetFileAccessProvider(useRemoteFileAccessProvider).GetFileText(filepath);
+            string ocrText = this.GetFileAccessProvider().GetFileText(filepath);
 
             // Replace non-printing control characters (tabs, line feeds, etc) with spaces.
             // The GNRD service doesn't like 'empty' strings that contain no printable characters
@@ -549,19 +544,19 @@ namespace MOBOT.BHL.Server
         /// <param name="useRemoteFileAccessProvider"></param>
         /// <param name="maxReadAttempts"></param>
         /// <returns></returns>
-        private List<NameFinderResponse> GetNamesFromOcrGNFinder(int pageID, bool useRemoteFileAccessProvider)
+        private List<NameFinderResponse> GetNamesFromOcrGNFinder(int pageID)
         {
             List<NameFinderResponse> nameResponseList = new List<NameFinderResponse>();
 
             // Only continue if the gnfinder tool exists
             string toolPath = AppDomain.CurrentDomain.BaseDirectory + "bin\\gnfinder.exe";
-            if (this.GetFileAccessProvider(useRemoteFileAccessProvider).FileExists(toolPath))
+            if (this.GetFileAccessProvider().FileExists(toolPath))
             {
                 PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId(pageID);
                 if (ps == null) ps = new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
                 string filepath = ps.OcrTextLocation;
 
-                if (this.GetFileAccessProvider(useRemoteFileAccessProvider).FileExists(filepath))
+                if (this.GetFileAccessProvider().FileExists(filepath))
                 {
                     try
                     {
@@ -865,7 +860,7 @@ namespace MOBOT.BHL.Server
         /// <returns></returns>
         public bool OcrJobExists(int itemID)
         {
-            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider();
             string fileName = string.Format("{0}{1}", ConfigurationManager.AppSettings["OCRJobNewPath"], itemID.ToString());
             return fileAccessProvider.FileExists(fileName);
         }
@@ -876,7 +871,7 @@ namespace MOBOT.BHL.Server
         /// <param name="itemID"></param>
         public void OcrCreateJob(int itemID)
         {
-            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider();
             string fileName = string.Format("{0}{1}", ConfigurationManager.AppSettings["OCRJobNewPath"], itemID.ToString());
             byte[] fileContent = new byte[] { 0x20 };
             fileAccessProvider.SaveFile(fileContent, fileName);
@@ -890,7 +885,7 @@ namespace MOBOT.BHL.Server
             // Make sure we found an active page
             if (page != null)
             {
-                IFileAccessProvider fileAccessProvider = GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                IFileAccessProvider fileAccessProvider = GetFileAccessProvider();
                 String ocrTextLocation = String.Format(ConfigurationManager.AppSettings["OCRTextLocation"],
                     page.OcrFolderShare, page.FileRootFolder, page.BarCode, page.FileNamePrefix);
                 if (fileAccessProvider.FileExists(ocrTextLocation)) ocrText = fileAccessProvider.GetFileText(ocrTextLocation);
@@ -915,7 +910,7 @@ namespace MOBOT.BHL.Server
             // Make sure we found an active item
             if (book != null)
             {
-                IFileAccessProvider fileAccessProvider = GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                IFileAccessProvider fileAccessProvider = GetFileAccessProvider();
                 String ocrTextLocation = String.Format(ConfigurationManager.AppSettings["ItemTextLocation"], book.OcrFolderShare, book.FileRootFolder, book.BarCode);
 
                 string[] files = fileAccessProvider.GetFiles(ocrTextLocation);
@@ -954,7 +949,7 @@ namespace MOBOT.BHL.Server
                 string folder1 = entityID.ToString()[0].ToString() + "\\";
                 string folder2 = entityID > 9 ? entityID.ToString()[1].ToString() + "\\" : "";
 
-                IFileAccessProvider fileAccessProvider = GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                IFileAccessProvider fileAccessProvider = GetFileAccessProvider();
                 string pdfLocation = String.Format(ConfigurationManager.AppSettings["PregeneratedPdfLocation"], folder1, folder2, entityID.ToString());
                 pdf = fileAccessProvider.ReadAllBytes(pdfLocation);
             }
@@ -971,7 +966,7 @@ namespace MOBOT.BHL.Server
         public string MarcFileExists(int id, string type)
         {
             string filepath = string.Empty;
-            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider();
 
             if (type == "t")
             {
@@ -1011,7 +1006,7 @@ namespace MOBOT.BHL.Server
             string fileContents = "MARC not found.";
             string filepath = string.Empty;
 
-            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider();
             filepath = this.MarcFileExists(id, type);
             if (!string.IsNullOrWhiteSpace(filepath))
             {
@@ -1036,7 +1031,7 @@ namespace MOBOT.BHL.Server
                 {
                     String destinationFile = string.Format("{0}\\{1}\\{2}_marc.xml", vault.OCRFolderShare, marcBibID, marcBibID);
                     MOBOT.FileAccess.IFileAccessProvider fileAccess =
-                        this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                        this.GetFileAccessProvider();
                     fileAccess.SaveFile(Encoding.ASCII.GetBytes(content), destinationFile);
                 }
             }
@@ -1050,7 +1045,7 @@ namespace MOBOT.BHL.Server
         public string ScandataFileExists(ItemType itemType, int id)
         {
             string filepath = string.Empty;
-            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider();
 
             PageSummaryView ps = null;
             if (itemType == ItemType.Book)
@@ -1080,7 +1075,7 @@ namespace MOBOT.BHL.Server
             string fileContents = string.Empty;
             string filepath = string.Empty;
 
-            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider();
             filepath = this.ScandataFileExists(itemType, id);
             if (!string.IsNullOrWhiteSpace(filepath))
             {

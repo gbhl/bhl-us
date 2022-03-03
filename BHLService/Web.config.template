@@ -4,7 +4,6 @@
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
     <add key="MARCXmlLocation" value="{0}\{1}\{2}_marc.xml"/>
     <add key="SMTPHost" value="smtp host name"/>
-    <add key="UseRemoteFileAccessProvider" value="false"/>
     <add key="DBCommandTimeout" value="1800"/>
     <add key="DebugValue" value="debug"/>
     <add key="ConfigNameCurrentIAVault" value="CurrentIAVaultID" />

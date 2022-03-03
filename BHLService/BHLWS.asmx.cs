@@ -28,7 +28,6 @@ namespace MOBOT.BHL.WebService
             return new BHLProvider().GetNamesFromOcr(
                 ConfigurationManager.AppSettings["NameFinderService"],
                 pageID,
-                ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true",
                 ConfigurationManager.AppSettings["UsePreferredNameResults"] == "true",
                 Convert.ToInt32(ConfigurationManager.AppSettings["MaxReadAttempts"]));
         }
@@ -204,7 +203,7 @@ namespace MOBOT.BHL.WebService
         public bool ItemCheckForOcrText(int itemID, string ocrTextPath)
         {
             BHLProvider bhlServer = new BHLProvider();
-            return bhlServer.ItemCheckForOcrText(itemID, ocrTextPath, ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            return bhlServer.ItemCheckForOcrText(itemID, ocrTextPath);
         }
 
         [WebMethod]

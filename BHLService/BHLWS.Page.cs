@@ -91,7 +91,7 @@ namespace MOBOT.BHL.WebService
         public bool PageCheckForOcrText(int pageID, string ocrTextLocation)
         {
             BHLProvider bhlServer = new BHLProvider();
-            return bhlServer.PageCheckForOcrText(pageID, ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            return bhlServer.PageCheckForOcrText(pageID);
         }
 
         #endregion Page Methods
