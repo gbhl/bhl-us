@@ -27,10 +27,15 @@
                 <p><%: BhlTitle.FullTitle %> <%: BhlTitle.PartNumber %> <%: BhlTitle.PartName %></p>
                 <% if (TitleVariants.Count > 0 || !string.IsNullOrWhiteSpace(BhlTitle.UniformTitle)) { %>
                     <h3>Title Variants</h3>
-                    <% foreach (TitleVariant titleVariant in TitleVariants) { %>
+                    <% foreach (TitleVariant tv in TitleVariants) { %>
                     <p>
-                        <i><%: titleVariant.TitleVariantLabel %>:</i>
-                        <%: titleVariant.Title %> <%: titleVariant.TitleRemainder %> <%: titleVariant.PartNumber %> <%: titleVariant.PartName %>
+                        <i><%: tv.TitleVariantLabel %>:</i>
+                        <%
+                        List<string> tvTitle = new List<string>();
+                        if (!string.IsNullOrWhiteSpace(tv.Title)) tvTitle.Add(tv.Title);
+                        if (!string.IsNullOrWhiteSpace(tv.TitleRemainder)) tvTitle.Add(tv.TitleRemainder);
+                        %>
+                        <%: string.Join(", ", tvTitle.ToArray()) %>
                     </p>
                     <% } 
                     if (!string.IsNullOrWhiteSpace(BhlTitle.UniformTitle))
@@ -42,15 +47,24 @@
                 } %>
                 <% if(TitleAssociations.Count > 0) { %>                    
                     <h3>Related Titles</h3>
-                    <% foreach (TitleAssociation titleAssociation in TitleAssociations) { %>
+                    <% foreach (TitleAssociation ta in TitleAssociations) { %>
                     <p>
-                        <i><%: titleAssociation.TitleAssociationLabel %>:</i>
-					    <% if (titleAssociation.AssociatedTitleID != null) { %>
-                            <a href="/bibliography/<%: titleAssociation.AssociatedTitleID %>">
-                                <%: titleAssociation.Title %> <%: titleAssociation.Section %> <%: titleAssociation.Volume %> <%: titleAssociation.Heading %> <%: titleAssociation.Publication %> <%: titleAssociation.Relationship %>
+                        <i><%: ta.TitleAssociationLabel %>:</i>
+                        <%
+                        List<string> taTitle = new List<string>();
+                        if (!string.IsNullOrEmpty(ta.Title)) taTitle.Add(ta.Title);
+                        if (!string.IsNullOrEmpty(ta.Section)) taTitle.Add(ta.Section);
+                        if (!string.IsNullOrEmpty(ta.Volume)) taTitle.Add(ta.Volume);
+                        if (!string.IsNullOrEmpty(ta.Heading)) taTitle.Add(ta.Heading);
+                        if (!string.IsNullOrEmpty(ta.Publication)) taTitle.Add(ta.Publication);
+                        if (!string.IsNullOrEmpty(ta.Relationship)) taTitle.Add(ta.Relationship);
+                        %>
+					    <% if (ta.AssociatedTitleID != null) { %>
+                            <a href="/bibliography/<%: ta.AssociatedTitleID %>">
+                                <%: string.Join(", ", taTitle.ToArray()) %>
                             </a>
                         <% } else { %>
-                            <%: titleAssociation.Title %> <%: titleAssociation.Section %> <%: titleAssociation.Volume %> <%: titleAssociation.Heading %> <%: titleAssociation.Publication %> <%: titleAssociation.Relationship %>
+                            <%: string.Join(", ", taTitle.ToArray()) %>
                         <% } %>							
                     </p>
                     <% } %>

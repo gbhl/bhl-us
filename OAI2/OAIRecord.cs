@@ -669,7 +669,11 @@ namespace MOBOT.BHL.OAI2
                     List<DataObjects.TitleVariant> variants = provider.TitleVariantSelectByTitleID((int)book.PrimaryTitleID);
                     foreach (DataObjects.TitleVariant variant in variants)
                     {
-                        OAIRecord.TitleVariant newVariant = new TitleVariant((variant.Title + " " + variant.TitleRemainder).Trim(), variant.PartNumber, variant.PartName);
+                        List<string> variantTitle = new List<string>();
+                        if (!string.IsNullOrWhiteSpace(variant.Title)) variantTitle.Add(variant.Title.Trim());
+                        if (!string.IsNullOrWhiteSpace(variant.TitleRemainder)) variantTitle.Add(variant.TitleRemainder.Trim());
+
+                        OAIRecord.TitleVariant newVariant = new TitleVariant((string.Join(", ", variantTitle.ToArray())).Trim(), variant.PartNumber, variant.PartName);
                         this.TitleVariants.Add(new KeyValuePair<string,OAIRecord.TitleVariant>(variant.TitleVariantLabel.ToLower(), newVariant));
                     }
 
@@ -686,9 +690,15 @@ namespace MOBOT.BHL.OAI2
                     foreach (TitleAssociation titleAssociation in titleAssociations)
                     {
                         OAIRecord association = new OAIRecord();
-                        association.Title = (titleAssociation.Title + " " + titleAssociation.Section + " " + 
-                            titleAssociation.Volume + " " + titleAssociation.Heading + " " + titleAssociation.Publication + " " + 
-                            titleAssociation.Relationship).Trim();
+                        List<string> associationTitle = new List<string>();
+                        if (!string.IsNullOrWhiteSpace(titleAssociation.Title)) associationTitle.Add(titleAssociation.Title.Trim());
+                        if (!string.IsNullOrWhiteSpace(titleAssociation.Section)) associationTitle.Add(titleAssociation.Section.Trim());
+                        if (!string.IsNullOrWhiteSpace(titleAssociation.Volume)) associationTitle.Add(titleAssociation.Volume.Trim());
+                        if (!string.IsNullOrWhiteSpace(titleAssociation.Heading)) associationTitle.Add(titleAssociation.Heading.Trim());
+                        if (!string.IsNullOrWhiteSpace(titleAssociation.Publication)) associationTitle.Add(titleAssociation.Publication.Trim());
+                        if (!string.IsNullOrWhiteSpace(titleAssociation.Relationship)) associationTitle.Add(titleAssociation.Relationship.Trim());
+                        association.Title = string.Join(", ", associationTitle.ToArray());
+
                         if (titleAssociation.AssociatedTitleID != null)
                         {
                             association.Url = "https://www.biodiversitylibrary.org/bibliography/" + titleAssociation.AssociatedTitleID.ToString();
@@ -815,7 +825,11 @@ namespace MOBOT.BHL.OAI2
                 List<DataObjects.TitleVariant> variants = provider.TitleVariantSelectByTitleID(title.TitleID);
                 foreach (DataObjects.TitleVariant variant in variants)
                 {
-                    OAIRecord.TitleVariant newVariant = new TitleVariant((variant.Title + " " + variant.TitleRemainder).Trim(), variant.PartNumber, variant.PartName);
+                    List<string> variantTitle = new List<string>();
+                    if (!string.IsNullOrWhiteSpace(variant.Title)) variantTitle.Add(variant.Title.Trim());
+                    if (!string.IsNullOrWhiteSpace(variant.TitleRemainder)) variantTitle.Add(variant.TitleRemainder.Trim());
+
+                    OAIRecord.TitleVariant newVariant = new TitleVariant((string.Join(", ", variantTitle.ToArray())).Trim(), variant.PartNumber, variant.PartName);
                     this.TitleVariants.Add(new KeyValuePair<string, OAIRecord.TitleVariant>(variant.TitleVariantLabel.ToLower(), newVariant));
                 }
 
@@ -832,9 +846,15 @@ namespace MOBOT.BHL.OAI2
                 foreach (TitleAssociation titleAssociation in titleAssociations)
                 {
                     OAIRecord association = new OAIRecord();
-                    association.Title = (titleAssociation.Title + " " + titleAssociation.Section + " " +
-                        titleAssociation.Volume + " " + titleAssociation.Heading + " " + titleAssociation.Publication + " " +
-                        titleAssociation.Relationship).Trim();
+                    List<string> associationTitle = new List<string>();
+                    if (!string.IsNullOrWhiteSpace(titleAssociation.Title)) associationTitle.Add(titleAssociation.Title.Trim());
+                    if (!string.IsNullOrWhiteSpace(titleAssociation.Section)) associationTitle.Add(titleAssociation.Section.Trim());
+                    if (!string.IsNullOrWhiteSpace(titleAssociation.Volume)) associationTitle.Add(titleAssociation.Volume.Trim());
+                    if (!string.IsNullOrWhiteSpace(titleAssociation.Heading)) associationTitle.Add(titleAssociation.Heading.Trim());
+                    if (!string.IsNullOrWhiteSpace(titleAssociation.Publication)) associationTitle.Add(titleAssociation.Publication.Trim());
+                    if (!string.IsNullOrWhiteSpace(titleAssociation.Relationship)) associationTitle.Add(titleAssociation.Relationship.Trim());
+                    association.Title = string.Join(", ", associationTitle.ToArray());
+
                     if (titleAssociation.AssociatedTitleID != null)
                     {
                         association.Url = "https://www.biodiversitylibrary.org/bibliography/" + titleAssociation.AssociatedTitleID.ToString();
