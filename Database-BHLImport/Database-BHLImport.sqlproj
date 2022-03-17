@@ -450,6 +450,7 @@
     <None Include="dbo\Synonyms\BHLfnGetISSNName.sql" />
     <None Include="dbo\Synonyms\BHLfnGetISSNID.sql" />
     <None Include="dbo\Synonyms\BHLfnGetISSNValue.sql" />
+    <None Include="dbo\Synonyms\BHLfnRemoveTrailingPunctuation.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />

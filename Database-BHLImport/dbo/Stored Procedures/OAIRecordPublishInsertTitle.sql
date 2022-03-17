@@ -48,8 +48,8 @@ INSERT	dbo.BHLTitle
 		BibliographicLevelID
 		)
 SELECT	r.BHLInstitutionCode + REPLACE(REPLACE(o.OAIIdentifier, ':', ''), '/', '') AS MarcBibID,
-		Title AS FullTitle,
-		LEFT(Title, 255) AS ShortTitle,
+		dbo.BHLfnRemoveTrailingPunctuation(Title, DEFAULT) AS FullTitle,
+		dbo.BHLfnRemoveTrailingPunctuation(LEFT(Title, 255), DEFAULT) AS ShortTitle,
 		dbo.fnGetSortString (
 			LEFT(CASE
 				WHEN LEFT(o.Title, 1) = '"' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 1))
@@ -74,9 +74,13 @@ SELECT	r.BHLInstitutionCode + REPLACE(REPLACE(o.OAIIdentifier, ':', ''), '/', ''
 				ELSE o.Title
 				END, 60) 
 		) AS SortTitle,
-		@UniformTitle,
+		dbo.BHLfnRemoveTrailingPunctuation(@UniformTitle, DEFAULT),
 		CallNumber,
-		LEFT(o.PublicationPlace + ' ' + o.Publisher + ' ' + o.PublicationDate, 255) AS PublicationDetails,
+		dbo.BHLfnRemoveTrailingPunctuation(LEFT(
+			ISNULL(o.PublicationPlace, '') + CASE WHEN LEN(o.PublicationPlace) > 0 THEN ', ' ELSE '' END + 
+			ISNULL(o.Publisher, '') + CASE WHEN LEN(o.Publisher) > 0 THEN ', ' ELSE '' END + 
+			ISNULL(o.PublicationDate, '')
+			, 255), DEFAULT) AS PublicationDetails,
 		CONVERT(int, 
 			CASE WHEN ISNUMERIC(LEFT([Date], 4)) = 1 THEN 
 				CASE WHEN CONVERT(int, LEFT([Date], 4)) BETWEEN 1400 AND 2025 THEN
@@ -101,9 +105,10 @@ SELECT	r.BHLInstitutionCode + REPLACE(REPLACE(o.OAIIdentifier, ':', ''), '/', ''
 			ELSE
 				NULL
 			END) AS EndYear,
-		o.PublicationPlace AS Datafield_260_a,
-		o.Publisher AS Datafield_260_b,
-		[Date] AS Datafield_260_c,
+		dbo.BHLfnRemoveTrailingPunctuation(o.PublicationPlace, DEFAULT) AS Datafield_260_a,
+		dbo.BHLfnRemoveTrailingPunctuation(o.Publisher, DEFAULT) AS Datafield_260_b,
+		-- As this field may contain date range values (ex. "1990-"), don't remove trailing hyphens when cleaning punctuation
+		dbo.BHLfnRemoveTrailingPunctuation([Date], '[a-zA-Z0-9)\]?!>*%"''-]%') AS Datafield_260_c,
 		l.BHLLanguageCode AS LanguageCode,
 		1 AS PublishReady,
 		0 AS RareBooks,
@@ -152,7 +157,7 @@ FROM	dbo.OAIRecordCreator WHERE OAIRecordID = @OAIRecordID
 
 -- Insert TitleAssociation records
 INSERT	dbo.BHLTitleAssociation (TitleID, TitleAssociationTypeID, Title)
-SELECT	@ProductionTitleID, a.BHLTitleAssociationTypeID, r.Title
+SELECT	@ProductionTitleID, a.BHLTitleAssociationTypeID, dbo.BHLfnRemoveTrailingPunctuation(r.Title, DEFAULT)
 FROM	dbo.OAIRecordRelatedTitle r INNER JOIN dbo.OAIRecordRelatedTitleTypeAssociation a ON r.TitleType = a.TitleType
 WHERE	r.OAIRecordID = @OAIRecordID
 
@@ -168,7 +173,7 @@ AND		rt.OAIRecordID = @OAIRecordID
 
 -- Insert TitleVariant records
 INSERT	dbo.BHLTitleVariant (TitleID, TitleVariantTypeID, Title, CreationUserID, LastModifiedUserID)
-SELECT	@ProductionTitleID, a.BHLTitleVariantTypeID, r.Title, 1, 1
+SELECT	@ProductionTitleID, a.BHLTitleVariantTypeID, dbo.BHLfnRemoveTrailingPunctuation(r.Title, DEFAULT), 1, 1
 FROM	dbo.OAIRecordRelatedTitle r INNER JOIN dbo.OAIRecordRelatedTitleTypeVariant a ON r.TitleType = a.TitleType
 WHERE	r.OAIRecordID = @OAIRecordID
 

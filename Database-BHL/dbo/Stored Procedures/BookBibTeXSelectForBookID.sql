@@ -17,7 +17,7 @@ ELSE
 			'https://www.biodiversitylibrary.org/item/' + CONVERT(NVARCHAR(10), b.BookID) AS Url,
 			'https://www.biodiversitylibrary.org/bibliography/' + CONVERT(NVARCHAR(10), t.TitleID) AS Note,
 			t.FullTitle + ' ' + ISNULL(t.PartNumber, '') + ' ' + ISNULL(t.PartName, '') AS Title, 
-			ISNULL(t.Datafield_260_a, '') + ISNULL(t.Datafield_260_b, '') AS Publisher,
+			ISNULL(t.PublicationDetails, '') AS Publisher,
 			CASE WHEN b.StartYear IS NULL THEN ISNULL(t.Datafield_260_c, '') ELSE b.StartYear END AS [Year],
 			ISNULL(b.Volume, '') AS Volume , ISNULL(b.CopyrightStatus, '') AS CopyrightStatus,
 			c.Authors,

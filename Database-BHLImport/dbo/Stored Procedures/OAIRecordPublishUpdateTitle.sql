@@ -59,8 +59,8 @@ BEGIN
 	BEGIN TRAN
 
 	UPDATE	dbo.BHLTitle
-	SET		FullTitle = @Title,
-			ShortTitle = LEFT(@Title, 255),
+	SET		FullTitle = dbo.BHLfnRemoveTrailingPunctuation(@Title, DEFAULT),
+			ShortTitle = dbo.BHLfnRemoveTrailingPunctuation(LEFT(@Title, 255), DEFAULT),
 			SortTitle = 
 				dbo.fnGetSortString(
 				LEFT(
@@ -87,9 +87,13 @@ BEGIN
 						ELSE @Title
 					END, 60)
 				),
-			UniformTitle = @UniformTitle,
+			UniformTitle = dbo.BHLfnRemoveTrailingPunctuation(@UniformTitle, DEFAULT),
 			CallNumber = @CallNumber,
-			PublicationDetails = LEFT(@PublicationPlace + ' ' + @Publisher + ' ' + @PublicationDate, 255),
+			PublicationDetails = dbo.BHLfnRemoveTrailingPunctuation(LEFT(
+				ISNULL(@PublicationPlace, '') + CASE WHEN LEN(@PublicationPlace) > 0 THEN ', ' ELSE '' END + 
+				ISNULL(@Publisher, '') + CASE WHEN LEN(@Publisher) > 0 THEN ', ' ELSE '' END + 
+				ISNULL(@PublicationDate, '')
+				, 255), DEFAULT),
 			StartYear =	CONVERT(int, CASE WHEN ISNUMERIC(LEFT(@Date, 4)) = 1 THEN 
 										CASE WHEN CONVERT(int, LEFT(@Date, 4)) BETWEEN 1400 AND 2025 THEN
 											LEFT(@Date, 4) 
@@ -112,9 +116,10 @@ BEGIN
 									ELSE
 										NULL
 									END),
-			Datafield_260_a = @PublicationPlace,
-			Datafield_260_b = @Publisher,
-			Datafield_260_c = @PublicationDate,
+			Datafield_260_a = dbo.BHLfnRemoveTrailingPunctuation(@PublicationPlace, DEFAULT),
+			Datafield_260_b = dbo.BHLfnRemoveTrailingPunctuation(@Publisher, DEFAULT),
+			-- As this field may contain date range values (ex. "1990-"), don't remove trailing hyphens when cleaning punctuation
+			Datafield_260_c = dbo.BHLfnRemoveTrailingPunctuation(@PublicationDate, '[a-zA-Z0-9)\]?!>*%"''-]%'),
 			LanguageCode = @LanguageCode,
 			EditionStatement = @EditionStatement
 	WHERE	TitleID = @ProductionTitleID
@@ -181,7 +186,7 @@ BEGIN
 		DELETE FROM dbo.BHLTitleAssociation WHERE TitleID = @ProductionTitleID
 
 		INSERT	dbo.BHLTitleAssociation (TitleID, TitleAssociationTypeID, Title)
-		SELECT	@ProductionTitleID, a.BHLTitleAssociationTypeID, r.Title
+		SELECT	@ProductionTitleID, a.BHLTitleAssociationTypeID, dbo.BHLfnRemoveTrailingPunctuation(r.Title, DEFAULT)
 		FROM	dbo.OAIRecordRelatedTitle r INNER JOIN dbo.OAIRecordRelatedTitleTypeAssociation a ON r.TitleType = a.TitleType
 		WHERE	r.OAIRecordID = @OAIRecordID
 
@@ -205,7 +210,7 @@ BEGIN
 		DELETE FROM dbo.BHLTitleVariant WHERE TitleID = @ProductionTitleID
 
 		INSERT	dbo.BHLTitleVariant (TitleID, TitleVariantTypeID, Title, CreationUserID, LastModifiedUserID)
-		SELECT	@ProductionTitleID, a.BHLTitleVariantTypeID, r.Title, 1, 1
+		SELECT	@ProductionTitleID, a.BHLTitleVariantTypeID, dbo.BHLfnRemoveTrailingPunctuation(r.Title, DEFAULT), 1, 1
 		FROM	dbo.OAIRecordRelatedTitle r INNER JOIN dbo.OAIRecordRelatedTitleTypeVariant a ON r.TitleType = a.TitleType
 		WHERE	r.OAIRecordID = @OAIRecordID
 

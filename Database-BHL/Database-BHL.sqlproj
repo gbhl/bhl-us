@@ -1171,6 +1171,7 @@
     <None Include="dbo\Functions\fnGetISSNID.sql" />
     <None Include="dbo\Functions\fnGetISSNValue.sql" />
     <None Include="dbo\Stored Procedures\DOIInsertIdentifier.sql" />
+    <None Include="dbo\Functions\fnRemoveTrailingPunctuation.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

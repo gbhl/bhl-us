@@ -36,7 +36,7 @@ SELECT	ROW_NUMBER() OVER (PARTITION BY m.MarcDataFieldID
 		m.DataFieldTag, 
 		m.Indicator1 AS MARCIndicator1,
 		'' AS MARCIndicator2, 
-		m.SubFieldValue AS Title, 
+		dbo.fnRemoveTrailingPunctuation(SUBSTRING(m.SubFieldValue, 1, 500), DEFAULT) AS Title, 
 		'' AS Section, 
 		'' AS Volume,
 		'' AS Heading,
@@ -54,7 +54,7 @@ AND		m.MarcID = @MarcID
 -- with titles (there's no guaranteed relational way of making the
 -- matches, so this is the best guess approach).
 UPDATE	#tmpTitleAssociation
-SET		Section = x.SubFieldValue
+SET		Section = dbo.fnRemoveTrailingPunctuation(SUBSTRING(x.SubFieldValue, 1, 500), DEFAULT)
 FROM	#tmpTitleAssociation t INNER JOIN (
 				SELECT	ROW_NUMBER() OVER (PARTITION BY m.MarcDataFieldID
 											ORDER BY m.MarcSubFieldID) AS NewSequence,
@@ -69,7 +69,7 @@ FROM	#tmpTitleAssociation t INNER JOIN (
 			AND t.Sequence = x.NewSequence
 
 UPDATE	#tmpTitleAssociation
-SET		Volume = x.SubFieldValue
+SET		Volume = dbo.fnRemoveTrailingPunctuation(SUBSTRING(x.SubFieldValue, 1, 500), DEFAULT)
 FROM	#tmpTitleAssociation t INNER JOIN (
 				SELECT	ROW_NUMBER() OVER (PARTITION BY m.MarcDataFieldID
 											ORDER BY m.MarcSubFieldID) AS NewSequence,
@@ -119,9 +119,9 @@ SELECT DISTINCT
 		t8.DataFieldTag,
 		'',
 		'',
-		ISNULL(t8.Title, ''),
-		ISNULL(t8.Section, ''),
-		ISNULL(t8.Volume, ''),
+		dbo.fnRemoveTrailingPunctuation(SUBSTRING(ISNULL(t8.Title, ''), 1, 500), DEFAULT),
+		dbo.fnRemoveTrailingPunctuation(SUBSTRING(ISNULL(t8.Section, ''), 1, 500), DEFAULT),
+		dbo.fnRemoveTrailingPunctuation(SUBSTRING(ISNULL(t8.Volume, ''), 1, 500), DEFAULT),
 		'',
 		'',
 		'',
@@ -153,14 +153,14 @@ AND		m.SubFieldValue <> ''
 AND		m.MarcID = @MarcID
 
 UPDATE	#tmpTitleAssociation
-SET		Title = m.SubFieldValue
+SET		Title = dbo.fnRemoveTrailingPunctuation(SUBSTRING(m.SubFieldValue, 1, 500), DEFAULT)
 FROM	#tmpTitleAssociation t INNER JOIN vwMarcDataField m
 			ON t.MarcDataFieldID = m.MarcDataFieldID
 WHERE	m.Code = 't'
 AND		m.DataFieldTag IN ('780', '785')
 
 UPDATE	#tmpTitleAssociation
-SET		Title = CONVERT(NVARCHAR(200), m.SubFieldValue + ' ' + Title)
+SET		Title = dbo.fnRemoveTrailingPunctuation(CONVERT(NVARCHAR(200), m.SubFieldValue + ' ' + Title), DEFAULT)
 FROM	#tmpTitleAssociation t INNER JOIN vwMarcDataField m
 			ON t.MarcDataFieldID = m.MarcDataFieldID
 WHERE	m.Code = 'a'
@@ -179,12 +179,13 @@ SELECT	0 AS Sequence,
 		x.DataFieldTag,
 		'',
 		'',
-		ISNULL(MIN([t]), '') AS Title,
+		dbo.fnRemoveTrailingPunctuation(SUBSTRING(ISNULL(MIN([t]), ''), 1, 500), DEFAULT) AS Title,
 		'' AS Section,
 		'' AS Volume,
-		ISNULL(MIN([a]), '') AS Heading, 
-		ISNULL(MIN([d]), '') AS Publication, 
-		ISNULL(MIN([g]), '') AS Relationship,
+		-- As these fields may contain date range values (ex. "1990-"), don't remove trailing hyphens when cleaning punctuation
+		dbo.fnRemoveTrailingPunctuation(SUBSTRING(ISNULL(MIN([a]), ''), 1, 500), '[a-zA-Z0-9)\]?!>*%"''-]%') AS Heading,
+		dbo.fnRemoveTrailingPunctuation(SUBSTRING(ISNULL(MIN([d]), ''), 1, 500), '[a-zA-Z0-9)\]?!>*%"''-]%') AS Publication,
+		dbo.fnRemoveTrailingPunctuation(SUBSTRING(ISNULL(MIN([g]), ''), 1, 500), '[a-zA-Z0-9)\]?!>*%"''-]%') AS Relationship,
 		1 AS Active
 FROM	(
 		SELECT	MarcDataFieldID, DataFieldTag, [a], [d], [g], [t]
@@ -202,9 +203,9 @@ SELECT	0 AS Sequence,
 		x.DataFieldTag, 
 		'',
 		'',
-		ISNULL(MIN([a]), '') AS Title, 
-		ISNULL(MIN([n]), '') AS Section, 
-		ISNULL(MIN([p]), '') AS Volume,
+		dbo.fnRemoveTrailingPunctuation(SUBSTRING(ISNULL(MIN([a]), ''), 1, 500), DEFAULT) AS Title, 
+		dbo.fnRemoveTrailingPunctuation(SUBSTRING(ISNULL(MIN([n]), ''), 1, 500), DEFAULT) AS Section, 
+		dbo.fnRemoveTrailingPunctuation(SUBSTRING(ISNULL(MIN([p]), ''), 1, 500), DEFAULT) AS Volume,
 		'',
 		'',
 		'',
@@ -242,3 +243,5 @@ DROP TABLE #tmpTitleAssociation
 SET NOCOUNT OFF
 
 END
+
+GO
