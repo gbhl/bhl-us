@@ -239,7 +239,7 @@
                                                                             Publication info:
                                                                             @if (!string.IsNullOrWhiteSpace(item.PublicationPlace))
                                                                             {
-                                                                                @Html.Raw(Server.HtmlEncode(item.PublicationPlace)) <text>,</text>
+                                                                                @Html.Raw(Server.HtmlEncode(item.PublicationPlace))<text>,</text>
                                                                             }
                                                                             @Html.Raw(Server.HtmlEncode(item.Publisher))
                                                                             @if (item.Dates.Count > 0)
