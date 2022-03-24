@@ -198,6 +198,7 @@ REM --------------------------------------
 REM  Build Functions
 REM --------------------------------------
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAPIIndicatedPageStringForPage.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAddAuthorNameSpaces.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAssociationStringForTitle.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAuthorFacetStringForSegment.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAuthorFacetStringForTitle.sql"
@@ -220,6 +221,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnContributorStringForItem.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnContributorCodesForSegment.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnContributorStringForSegment.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnContributorStringForTitle.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnConvertToTitleCase.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnFilterString.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnGeographicKeywordStringForTitle.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnGetDatesFromString.sql"

@@ -1172,6 +1172,8 @@
     <None Include="dbo\Functions\fnGetISSNValue.sql" />
     <None Include="dbo\Stored Procedures\DOIInsertIdentifier.sql" />
     <None Include="dbo\Functions\fnRemoveTrailingPunctuation.sql" />
+    <None Include="dbo\Functions\fnConvertToTitleCase.sql" />
+    <None Include="dbo\Functions\fnAddAuthorNameSpaces.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

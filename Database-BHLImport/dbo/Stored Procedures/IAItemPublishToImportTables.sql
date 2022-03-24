@@ -2143,9 +2143,9 @@ BEGIN TRY
 		INSERT INTO dbo.Creator (ImportStatusID, ImportSourceID, CreatorName, DOB, DOD, 
 			MARCDataFieldTag, MARCCreator_a, MARCCreator_b, MARCCreator_c, MARCCreator_d, 
 			MARCCreator_q, MARCCreator_Full)
-		SELECT	10, @ImportSourceID, t.CreatorName, t.DOB, t.DOD, t.MARCDataFieldTag, 
-				t.MARCCreator_a, t.MARCCreator_b, t.MARCCreator_c, t.MARCCreator_d, 
-				t.MARCCreator_q, t.MARCCreator_Full
+		SELECT	10, @ImportSourceID, dbo.BHLfnConvertToTitleCase(dbo.BHLfnAddAuthorNameSpaces(t.CreatorName)), 
+				t.DOB, t.DOD, t.MARCDataFieldTag, t.MARCCreator_a, t.MARCCreator_b, t.MARCCreator_c, 
+				t.MARCCreator_d, t.MARCCreator_q, t.MARCCreator_Full
 		FROM	#tmpCreator t LEFT JOIN dbo.Creator c
 					ON ISNULL(t.MARCCreator_a, '') = ISNULL(c.MARCCreator_a, '')
 					AND ISNULL(t.MARCCreator_b, '') = ISNULL(c.MARCCreator_b, '')
@@ -2160,9 +2160,9 @@ BEGIN TRY
 			MARCCreator_b, MARCCreator_c, MARCCreator_d, MARCCreator_e,
 			MARCCreator_q, MARCCreator_t, CreatorRoleTypeID, SequenceOrder,
 			ImportStatusID, ImportSourceID, ImportKey)
-		SELECT	c.CreatorName, c.MARCCreator_a, c.MARCCreator_b, 
-				c.MARCCreator_c, c.MARCCreator_d, c.MARCCreator_e,
-				c.MARCCreator_q, c.MARCCreator_t, c.CreatorRoleTypeID, 
+		SELECT	dbo.BHLfnConvertToTitleCase(dbo.BHLfnAddAuthorNameSpaces(c.CreatorName)),
+				c.MARCCreator_a, c.MARCCreator_b, c.MARCCreator_c, c.MARCCreator_d, 
+				c.MARCCreator_e, c.MARCCreator_q, c.MARCCreator_t, c.CreatorRoleTypeID, 
 				c.SequenceOrder, 10, @ImportSourceID, CONVERT(nvarchar(50), c.ItemID)
 		FROM	#tmpCreator c
 		WHERE	c.MARCCreator_5 IS NULL
