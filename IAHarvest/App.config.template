@@ -25,7 +25,9 @@
 		<add key="Download" value="true"/>
 		<!-- Upload indicates whether or not to publish data to the production database -->
 		<add key="Upload" value="true"/>
-		<!-- Allow items added to IA more than 7 days ago to be published without "formal" approval from IA -->
+    <!-- Quiet indicates whether only error messages produce emails (quiet=true) or all status updates are sent via email (quiet=false)-->
+    <add key="Quiet" value="false"/>
+    <!-- Allow items added to IA more than 7 days ago to be published without "formal" approval from IA -->
 		<add key="AllowUnapprovedPublish" value="true"/>
 		<add key="MinimumDaysBeforeAllowUnapprovedPublish" value="7"/>
 

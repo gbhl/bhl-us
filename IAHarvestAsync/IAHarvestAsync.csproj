@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>IAHarvestAsync</RootNamespace>
+    <AssemblyName>IAHarvestAsync</AssemblyName>
+    <TargetFramework>net48</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.10" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BHLImportCoreDAL\BHLImportCoreDAL.csproj" />
+    <ProjectReference Include="..\BHLImportDataObjects\BHLImportDataObjects.csproj" />
+    <ProjectReference Include="..\BHLImportServer\BHLImportServer.csproj" />
+    <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj" />
+  </ItemGroup>
+</Project>

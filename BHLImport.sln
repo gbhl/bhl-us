@@ -15,21 +15,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLImportServer", "BHLImpor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLBioStorHarvest", "BHLBioStorHarvest\BHLBioStorHarvest.csproj", "{3BE3F744-8EEB-4C22-B13B-05C3689E229E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IAHarvest", "IAHarvest\IAHarvest.csproj", "{5A5FF188-3538-4A3F-BC68-0984B6888479}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IAHarvest", "IAHarvest\IAHarvest.csproj", "{5A5FF188-3538-4A3F-BC68-0984B6888479}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IAAnalysisDataObjects", "IAAnalysisDataObjects\IAAnalysisDataObjects.csproj", "{5932981B-A336-4A70-B7C6-597663022EA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IAAnalysisDataObjects", "IAAnalysisDataObjects\IAAnalysisDataObjects.csproj", "{5932981B-A336-4A70-B7C6-597663022EA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IAAnalysisCoreDAL", "IAAnalysisCoreDAL\IAAnalysisCoreDAL.csproj", "{BE7B3297-354F-4CBD-A679-B9F444EB0FC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IAAnalysisCoreDAL", "IAAnalysisCoreDAL\IAAnalysisCoreDAL.csproj", "{BE7B3297-354F-4CBD-A679-B9F444EB0FC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IAAnalysisServer", "IAAnalysisServer\IAAnalysisServer.csproj", "{42A64414-DE9E-4CE5-AED6-02F1D0811542}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IAAnalysisServer", "IAAnalysisServer\IAAnalysisServer.csproj", "{42A64414-DE9E-4CE5-AED6-02F1D0811542}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IAAnalysisHarvest", "IAAnalysisHarvest\IAAnalysisHarvest.csproj", "{C674646A-6012-499C-BDFC-D6E7B2448061}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IAAnalysisHarvest", "IAAnalysisHarvest\IAAnalysisHarvest.csproj", "{C674646A-6012-499C-BDFC-D6E7B2448061}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database-BHLImport", "Database-BHLImport\Database-BHLImport.sqlproj", "{A5E8067C-B53E-4C0D-A9F6-3480DE693727}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database-IAAnalysis", "Database-IAAnalysis\Database-IAAnalysis.sqlproj", "{2543A23F-B305-4881-84BD-1994A5B654F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLSegmentClusterer", "BHLSegmentClusterer\BHLSegmentClusterer.csproj", "{229A9CF3-AB1D-4307-883E-66D7B6E7EBAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLSegmentClusterer", "BHLSegmentClusterer\BHLSegmentClusterer.csproj", "{229A9CF3-AB1D-4307-883E-66D7B6E7EBAF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentResolver", "DocumentResolver\DocumentResolver.csproj", "{7AE91F63-3D78-4D12-821D-90050A816F66}"
 EndProject
@@ -49,7 +49,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLUtility", "BHLUtility\BH
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLWebUtilities", "BHLWebUtilities\BHLWebUtilities.csproj", "{7E1631E8-F28A-4F9E-97E4-F8A69522D9DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLOAIHarvester", "BHLOAIHarvester\BHLOAIHarvester.csproj", "{CE332919-7FEF-4033-B546-EAB6B0F5654D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLOAIHarvester", "BHLOAIHarvester\BHLOAIHarvester.csproj", "{CE332919-7FEF-4033-B546-EAB6B0F5654D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAI2", "OAI2\OAI2.csproj", "{01E14D33-194F-4583-BAE4-0AF91A7BE756}"
 EndProject
@@ -66,14 +66,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{90CB2D
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFlickrTagHarvest", "BHLFlickrTagHarvest\BHLFlickrTagHarvest.csproj", "{D95AB988-8F69-484A-AF21-79A142A240A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLFlickrTagHarvest", "BHLFlickrTagHarvest\BHLFlickrTagHarvest.csproj", "{D95AB988-8F69-484A-AF21-79A142A240A9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B33B346A-953D-45FB-B76F-68E12346C9B3} = {B33B346A-953D-45FB-B76F-68E12346C9B3}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLWebService", "BHLService\BHLWebService.csproj", "{B33B346A-953D-45FB-B76F-68E12346C9B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLUtilityTest", "BHLUtilityTest\BHLUtilityTest.csproj", "{4FD4183A-F10F-45BD-9B81-AEF237705873}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLUtilityTest", "BHLUtilityTest\BHLUtilityTest.csproj", "{4FD4183A-F10F-45BD-9B81-AEF237705873}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IAHarvestAsync", "IAHarvestAsync\IAHarvestAsync.csproj", "{65C8721A-89FF-42BD-A16B-C7B839ED7475}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -407,6 +409,18 @@ Global
 		{4FD4183A-F10F-45BD-9B81-AEF237705873}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4FD4183A-F10F-45BD-9B81-AEF237705873}.Release|x86.ActiveCfg = Release|Any CPU
 		{4FD4183A-F10F-45BD-9B81-AEF237705873}.Release|x86.Build.0 = Release|Any CPU
+		{65C8721A-89FF-42BD-A16B-C7B839ED7475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65C8721A-89FF-42BD-A16B-C7B839ED7475}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65C8721A-89FF-42BD-A16B-C7B839ED7475}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{65C8721A-89FF-42BD-A16B-C7B839ED7475}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{65C8721A-89FF-42BD-A16B-C7B839ED7475}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{65C8721A-89FF-42BD-A16B-C7B839ED7475}.Debug|x86.Build.0 = Debug|Any CPU
+		{65C8721A-89FF-42BD-A16B-C7B839ED7475}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65C8721A-89FF-42BD-A16B-C7B839ED7475}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65C8721A-89FF-42BD-A16B-C7B839ED7475}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{65C8721A-89FF-42BD-A16B-C7B839ED7475}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{65C8721A-89FF-42BD-A16B-C7B839ED7475}.Release|x86.ActiveCfg = Release|Any CPU
+		{65C8721A-89FF-42BD-A16B-C7B839ED7475}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

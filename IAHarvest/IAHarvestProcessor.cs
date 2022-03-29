@@ -1425,14 +1425,15 @@ namespace IAHarvest
         {
             try
             {
-                // send email with process results to Exchange group
-                if (retrievedIds.Count > 0 || harvestedXml.Count > 0 || 
-                    publishedItems.Count > 0 || errorMessages.Count > 0)
+                // Report the process results
+                if (retrievedIds.Count > 0 || harvestedXml.Count > 0 || publishedItems.Count > 0 || errorMessages.Count > 0)
                 {
                     this.LogMessage("Sending Email....");
                     string message = this.GetEmailBody();
                     this.LogMessage(message);
-                    this.SendEmail(message);
+
+                    // Send email if not in Quiet mode or if errors occurred
+                    if (!configParms.Quiet || errorMessages.Count > 0) this.SendEmail(message);
                 }
                 else
                 {

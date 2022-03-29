@@ -83,6 +83,20 @@ namespace IAHarvest
             }
         }
 
+        private bool _quiet = false;
+
+        public bool Quiet
+        {
+            get
+            {
+                return _quiet;
+            }
+            set
+            {
+                _quiet = value;
+            }
+        }
+
         private bool _allowUnapprovedPublish = true;
         public bool AllowUnapprovedPublish
         {
@@ -422,6 +436,10 @@ namespace IAHarvest
                     if (node.Attributes.GetNamedItem("key").Value == "Upload")
                     {
                         this.Upload = Convert.ToBoolean(node.Attributes.GetNamedItem("value").Value.ToLower());
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "Quiet")
+                    {
+                        this.Quiet = Convert.ToBoolean(node.Attributes.GetNamedItem("value").Value.ToLower());
                     }
                     if (node.Attributes.GetNamedItem("key").Value == "AllowUnapprovedPublish")
                     {
