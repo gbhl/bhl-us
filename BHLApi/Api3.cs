@@ -1,6 +1,7 @@
 ﻿using BHL.Search;
 using MOBOT.BHL.API.BHLApiDAL;
 using MOBOT.BHL.API.BHLApiDataObjects3;
+using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
@@ -1736,18 +1737,22 @@ namespace MOBOT.BHL.API.BHLApi
             return names;
         }
 
-        public List<Page> PageSearch(string itemID, string text)
+        public List<Page> PageSearch(string bookID, string text)
         {
             // Validate the parameters
-            int itemIDint;
-            if (!Int32.TryParse(itemID, out itemIDint))
+            int bookIDint;
+            if (!Int32.TryParse(bookID, out bookIDint))
             {
-                throw new InvalidApiParamException("itemID (" + itemID + ") must be a valid integer value.");
+                throw new InvalidApiParamException("itemID (" + bookID + ") must be a valid integer value.");
             }
             if (text == String.Empty)
             {
                 throw new InvalidApiParamException("Please supply text for which to search.");
             }
+
+            int itemID = 0;
+            MOBOT.BHL.DataObjects.Book book = new BHLProvider().BookSelectAuto(bookIDint);
+            if (book != null) itemID = book.ItemID;
 
             List<Page> pages = new List<Page>();
             DataTable pageIDs = new DataTable();
@@ -1772,7 +1777,7 @@ namespace MOBOT.BHL.API.BHLApi
                     Page page = new Page
                     {
                         PageID = Convert.ToInt32(hit.Id),
-                        ItemID = itemIDint,
+                        ItemID = bookIDint,
                         PageUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.Id,
                         ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + hit.Id,
                         FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + hit.Id,

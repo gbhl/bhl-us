@@ -26,6 +26,7 @@ namespace BHL.SearchIndexer
 
         public List<string> associations { get; set; }
         public List<string> authors { get; set; }
+        public bool bookIsVirtual { get; set; }
         public List<string> collections { get; set; }
         public string container { get; set; }
         public List<string> contributors { get; set; }

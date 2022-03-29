@@ -187,6 +187,7 @@ namespace BHL.SearchIndexer
                             {
                                 item.firstPageId = reader.GetInt32(reader.GetOrdinal("FirstPageID"));
                             }
+                            item.bookIsVirtual = reader.GetInt32(reader.GetOrdinal("BookIsVirtual")) == 1;
                             item.hasSegments = reader.GetInt32(reader.GetOrdinal("HasSegments")) == 1;
                             item.hasLocalContent = reader.GetInt32(reader.GetOrdinal("HasLocalContent")) == 1;
                             item.hasExternalContent = reader.GetInt32(reader.GetOrdinal("HasExternalContent")) == 1;
@@ -211,6 +212,7 @@ namespace BHL.SearchIndexer
 
             catalogItem.associations = item.associations;
             catalogItem.authors = item.authors;
+            catalogItem.bookIsVirtual = item.bookIsVirtual;
             catalogItem.collections = item.collections;
             catalogItem.container = item.container;
             catalogItem.contributors = item.titleContributors.Count > 0 ? item.titleContributors : item.contributors;
@@ -579,6 +581,7 @@ namespace BHL.SearchIndexer
                             {
                                 segment.startPageId = reader.GetInt32(reader.GetOrdinal("StartPageID"));
                             }
+                            segment.bookIsVirtual = reader.GetInt32(reader.GetOrdinal("BookIsVirtual")) == 1;
                             segment.hasLocalContent = reader.GetInt32(reader.GetOrdinal("HasLocalContent")) == 1;
                             segment.hasExternalContent = reader.GetInt32(reader.GetOrdinal("HasExternalContent")) == 1;
                             segment.hasIllustrations = reader.GetInt32(reader.GetOrdinal("HasIllustrations")) == 1;
