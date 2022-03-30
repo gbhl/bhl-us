@@ -62,7 +62,8 @@
 		<!-- Define some output appenders -->
 		<appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
 			<file value="\\SERVER\${COMPUTERNAME}-IAHarvest-log.txt"/>
-			<appendToFile value="true"/>
+      <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+      <appendToFile value="true"/>
 			<maxSizeRollBackups value="10"/>
 			<maximumFileSize value="5000000"/>
 			<rollingStyle value="Size"/>

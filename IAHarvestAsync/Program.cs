@@ -27,7 +27,11 @@ namespace IAHarvestAsync
         static void Main(string[] args)
         {
             configParms.LoadAppConfig();
-            if (configParms.DownloadAll) GetSetItems();
+            if (configParms.DownloadAll)
+            {
+                GetSetItems();
+                GetExtraSetItems();
+            }
             HarvestData();
             ProcessResults();
             LogMessage("IAHarvestAsync Processing Complete");
@@ -56,6 +60,23 @@ namespace IAHarvestAsync
                 errorMessages.Add("Exception getting new and updated items:  " + ex.Message);
             }
 
+        }
+
+        /// <summary>
+        /// Get the items from other sets that have been identified as BHL-worthy
+        /// </summary>
+        private static void GetExtraSetItems()
+        {
+            try
+            {
+                LogMessage("Getting IAAnalysis items");
+                provider.IAItemInsertFromIAAnalysis(configParms.LocalFileFolder);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Exception getting IAAnalysis items.", ex);
+                errorMessages.Add("Exception getting IAAnalysis items:  " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -111,11 +132,12 @@ namespace IAHarvestAsync
                         IAItem item = items[0];
                         LogMessage(string.Format("Harvesting data for {0}", item.IAIdentifier));
 
-                        string arguments = string.Format("/ITEM:{1} /DOWNLOAD:{2} /UPLOAD:{3} /QUIET:{4}", 
+                        string arguments = string.Format("/ITEM:{0} /DOWNLOAD:{1} /UPLOAD:{2} /QUIET:{3}", 
                             item.IAIdentifier, configParms.Download, configParms.Upload, configParms.Quiet);
                         ProcessStartInfo startInfo = new ProcessStartInfo { FileName = configParms.IAHarvestExecutable, Arguments = arguments };
                         Process.Start(startInfo);
 
+                        processedItems.Add(item.IAIdentifier);
                         items.RemoveAt(0);
                     }
                 }

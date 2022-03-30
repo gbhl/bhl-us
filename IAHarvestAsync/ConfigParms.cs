@@ -137,6 +137,18 @@ namespace IAHarvestAsync
                     {
                         this.LocalFileFolder = node.Attributes.GetNamedItem("value").Value;
                     }
+                    if (node.Attributes.GetNamedItem("key").Value == "IAHarvestExecutable")
+                    {
+                        this.IAHarvestExecutable = node.Attributes.GetNamedItem("value").Value;
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "IAHarvestProcessName")
+                    {
+                        this.IAHarvestProcessName = node.Attributes.GetNamedItem("value").Value;
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "IAHarvestMaxInstances")
+                    {
+                        this.IAHarvestMaxInstances = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
+                    }
                 }
             }
         }
