@@ -1480,6 +1480,7 @@ namespace IAHarvest
                 if (String.Compare(split[0], "/ENDDATE", true) == 0) configParms.SearchEndDate = Convert.ToDateTime(split[1]);
                 if (String.Compare(split[0], "/DOWNLOAD", true) == 0) configParms.Download = Convert.ToBoolean(split[1]);
                 if (String.Compare(split[0], "/UPLOAD", true) == 0) configParms.Upload = Convert.ToBoolean(split[1]);
+                if (String.Compare(split[0], "/QUIET", true) == 0) configParms.Quiet = Convert.ToBoolean(split[1]);
             }
 
             return true;
