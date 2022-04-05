@@ -209,7 +209,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 Page page = new Page();
                 page.PageID = pageDetail.PageID;
-                page.ItemID = pageDetail.ItemID;
+                page.ItemID = pageDetail.ItemID.ToString();
                 page.Issue = pageDetail.Issue;
                 page.Year = pageDetail.Year;
                 page.Volume = pageDetail.Volume;
@@ -489,7 +489,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 Page page = new Page();
                 page.PageID = pageDetail.PageID;
-                page.ItemID = pageDetail.ItemID;
+                page.ItemID = pageDetail.ItemID.ToString();
                 page.Issue = pageDetail.Issue;
                 page.Year = pageDetail.Year;
                 page.Volume = pageDetail.Volume;
@@ -822,7 +822,7 @@ namespace MOBOT.BHL.API.BHLApi
                         // Add a new page
                         Page page = new Page();
                         page.PageID = pageDetail.PageID;
-                        page.ItemID = pageDetail.ItemID;
+                        page.ItemID = pageDetail.ItemID.ToString();
                         page.Year = pageDetail.Year;
                         page.Volume = pageDetail.Volume;
                         page.Issue = pageDetail.Issue;
@@ -1737,13 +1737,17 @@ namespace MOBOT.BHL.API.BHLApi
             return names;
         }
 
-        public List<Page> PageSearch(string bookID, string text)
+        public List<Page> PageSearch(string entityType, string entityID, string text)
         {
             // Validate the parameters
-            int bookIDint;
-            if (!Int32.TryParse(bookID, out bookIDint))
+            int entityIDint;
+            if (entityType.ToUpper() != "ITEM" && entityType.ToUpper() != "PART")
             {
-                throw new InvalidApiParamException("itemID (" + bookID + ") must be a valid integer value.");
+                throw new InvalidApiParamException("idType (" + entityType + ") must be 'Item' or 'Part'.");
+            }
+            if (!Int32.TryParse(entityID, out entityIDint))
+            {
+                throw new InvalidApiParamException("itemID (" + entityID + ") must be a valid integer value.");
             }
             if (text == String.Empty)
             {
@@ -1751,8 +1755,16 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             int itemID = 0;
-            MOBOT.BHL.DataObjects.Book book = new BHLProvider().BookSelectAuto(bookIDint);
-            if (book != null) itemID = book.ItemID;
+            if (entityType.ToUpper() == "ITEM")
+            {
+                MOBOT.BHL.DataObjects.Book book = new BHLProvider().BookSelectAuto(entityIDint);
+                if (book != null) itemID = book.ItemID;
+            }
+            else
+            {
+                MOBOT.BHL.DataObjects.Segment segment = new BHLProvider().SegmentSelectAuto(entityIDint);
+                if (segment != null) itemID = segment.ItemID;
+            }
 
             List<Page> pages = new List<Page>();
             DataTable pageIDs = new DataTable();
@@ -1777,13 +1789,15 @@ namespace MOBOT.BHL.API.BHLApi
                     Page page = new Page
                     {
                         PageID = Convert.ToInt32(hit.Id),
-                        ItemID = bookIDint,
                         PageUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.Id,
                         ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + hit.Id,
                         FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + hit.Id,
                         OcrUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.Id,
                         OcrText = hit.Text
                     };
+
+                    if (entityType.ToUpper() == "ITEM") { page.BHLType = BHLType.Item; page.ItemID = entityID; }
+                    if (entityType.ToUpper() == "PART") { page.BHLType = BHLType.Part; page.PartID = entityID; }
 
                     pageIDs.Rows.Add(page.PageID);
 

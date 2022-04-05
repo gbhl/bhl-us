@@ -170,6 +170,7 @@ namespace BHL.SearchIndexer
                     List<CatalogItem> catalogItemDocs = new List<CatalogItem>();
                     List<Page> pageDocs = new List<Page>();
                     List<Item> segmentDocs = new List<Item>();
+                    List<Page> segmentPageDocs = new List<Page>();
                     if (itemDocs.Count > 0)
                     {
                         // Get the catalog entries for this item
@@ -198,29 +199,21 @@ namespace BHL.SearchIndexer
                             {
                                 segmentDocs = dataAccess.GetSegmentDocuments(itemId.ToString(), null);
 
-                                // Add the segmentId to each page in the segment.
-                                // Get the full text for the segment.
+                                // Get the catalog item and full text for the segment.
                                 foreach (Item segmentDoc in segmentDocs)
                                 {
                                     // Get the catalog entry for this segment
                                     catalogItemDocs.Add(dataAccess.GetCatalogItemDocument(segmentDoc));
 
                                     // Get the pages for this segment
-                                    Dictionary<int, Page> segmentPages = dataAccess.GetPages(ElasticSearch.PageSource.Segment, segmentDoc.segmentId);
+                                    List<Page> segmentPages = dataAccess.GetPageDocuments(ElasticSearch.PageSource.Segment, segmentDoc.segmentId, _ocrLocation == "remote");
 
                                     fullText.Clear();
-                                    foreach (Page page in pageDocs)
-                                    {
-                                        if (segmentPages.ContainsKey(page.id))
-                                        {
-                                            /* THIS FIELD IS NOT NEEDED */
-                                            //page.segments.Add(segmentDoc.segmentId);    // Add segment id to page
-
-                                            fullText.Append(page.text);                 // Get text of page
-                                        }
-                                    }
-
+                                    foreach(Page sPage in segmentPages) fullText.Append(sPage.text);
                                     segmentDoc.text = fullText.ToString();
+
+                                    // Accumulate the pages for all of the segments
+                                    segmentPageDocs.AddRange(segmentPages);
                                 }
                             }
                         }
@@ -232,7 +225,11 @@ namespace BHL.SearchIndexer
                         ExportDocuments(ESIndex.CATALOG, catalogItemDocs, "catalog", itemId);
                         ExportDocuments(ESIndex.ITEMS, itemDocs, "item", itemId);
                         ExportDocuments(ESIndex.PAGES, pageDocs, "itempages", itemId);
-                        if (_indexSegments) ExportDocuments(ESIndex.ITEMS, segmentDocs, "segments", itemId);
+                        if (_indexSegments)
+                        {
+                            ExportDocuments(ESIndex.ITEMS, segmentDocs, "segments", itemId);
+                            ExportDocuments(ESIndex.PAGES, segmentPageDocs, "segmentpages", itemId);
+                        }
                     }
 
                     if (_doIndex)
@@ -255,6 +252,7 @@ namespace BHL.SearchIndexer
                             if (_indexSegments)
                             {
                                 esItems.IndexMany(segmentDocs);
+                                esPages.IndexMany(segmentPageDocs);
                                 foreach (Item segment in segmentDocs) _indexedSegments.Add(segment.segmentId);
                             }
                         }

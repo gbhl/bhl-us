@@ -27,13 +27,26 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _PageID = value; }
         }
 
-        private int _ItemID = default(int);
-        public int ItemID
+        private string _bhlType = null;
+        public string BHLType
+        {
+            get { return _bhlType; }
+            set { _bhlType = value; }
+        }
+
+        private string _ItemID = null;
+        public string ItemID
         {
             get { return _ItemID; }
             set { _ItemID = value; }
         }
 
+        private string _PartID = null;
+        public string PartID
+        {
+            get { return _PartID; }
+            set { _PartID = value; }
+        }
 
         private string _Volume = null;
         public string Volume
@@ -162,9 +175,19 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             _PageID = (int)column.Value;
                             break;
                         }
+                    case "BHLType":
+                        {
+                            _bhlType = (string)column.Value;
+                            break;
+                        }
                     case "ItemID":
                         {
-                            _ItemID = (int)column.Value;
+                            _ItemID = column.Value == null ? null : Utility.NullIfEmpty(column.Value.ToString());
+                            break;
+                        }
+                    case "PartID":
+                        {
+                            _PartID = column.Value == null ? null : Utility.NullIfEmpty(column.Value.ToString());
                             break;
                         }
                     case "Volume":

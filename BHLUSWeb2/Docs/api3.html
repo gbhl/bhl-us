@@ -33,7 +33,7 @@
         </div>
         <div id="right">
             Created: August 27, 2018<br />
-            Revised: September 28, 2021
+            Revised: April 4, 2022
         </div>
     </div>
     <div>
@@ -116,8 +116,10 @@
     <div>	title - a title for which to search<br /> titleop - &#39;all&#39; to search for all specified words in the title fields; &#39;phrase&#39; to search for the exact phrase specified<br /> authorname - an author name for which to search <br /> year - a four-digit publication year for which to search <br /> subject - a subject for which to search <br /> language - a language code; search will only return publications in the specified language<br /> collection - a collection id; search will only return publications from the specfied collection <br /> notes - one or more words for which to search in the publication notes <br /> notesop - &#39;all&#39; to search for all specified words in the notes field; &#39;phrase&#39; to search for the exact phrase specified<br /> text - one or more words for which to search in the text of the publications <br /> textop - &#39;all&#39; to search for all specified words in the text field; &#39;phrase&#39; to search for the exact phrase specified<br /> page - 1 for the first page of results, 2 for the second, and so on<br /> pageSize - the maximum number of results to return per page (default = 100)</div>
     <div class="subhead1">PageSearch</div>
     <div>	Search an item for pages containing the specified text.</div>
-    <div>	Example - <a href="/docs/api3/PageSearch.xml" title="PageSearch">https://www.biodiversitylibrary.org/api3?op=PageSearch&amp;itemid=22004&amp;text=dog&amp;apikey=&lt;key+value&gt;</a></div>
+    <div>	Example 1 - <a href="/docs/api3/PageSearch.xml" title="PageSearch">https://www.biodiversitylibrary.org/api3?op=PageSearch&amp;itemid=22004&amp;text=dog&amp;apikey=&lt;key+value&gt;</a></div>
     <div> itemid - BHL identifier of the item to be searched<br /> text - the text for which to search</div>
+    <div>	Example 2 - <a href="/docs/api3/PageSearch.xml" title="PageSearch">https://www.biodiversitylibrary.org/api3?op=PageSearch&amp;idType=item&amp;id=22004&amp;text=dog&amp;apikey=&lt;key+value&gt;</a></div>
+    <div> idType - type of publication to be searched; valid values are "item" and "part"<br /> id - BHL identifier of the item or part to be searched<br /> text - the text for which to search</div>
     <div class="subhead1">SubjectSearch</div>
     <div>	Return a list of subjects that match (fully or partially) the specified search string.</div>
     <div>	Example - <a href="/docs/api3/SubjectSearch.xml" title="SubjectSearch">https://www.biodiversitylibrary.org/api3?op=SubjectSearch&amp;subject=diptera&amp;apikey=&lt;key+value&gt;</a></div>
@@ -826,6 +828,10 @@
     <a name="notes"></a>
     <div class="header">*** RELEASE NOTES *** <a href="#top" class="toplink">Contents</a></div>
 
+    <div class="subhead1">April 4, 2022 - version 3.5.0</div>
+    <ul type="disc">
+        <li>Added &quot;idType&quot; and &quot;id&quot; parameters to &quot;PageSearch&quot;.</li>
+    </ul>
     <div class="subhead1">September 28, 2021 - version 3.4.0</div>
     <ul type="disc">
         <li>Added &quot;pageSize&quot; parameters to &quot;SearchPublication&quot; and &quot;SearchPublicationAdvanced&quot;.</li>

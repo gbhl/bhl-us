@@ -27,7 +27,8 @@
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
     <Use64BitIISExpress />
-	<RestoreProjectStyle>PackageReference</RestoreProjectStyle>	
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <UseIISExpress>true</UseIISExpress>
   </PropertyGroup>
   <!--
   <ItemGroup>
@@ -161,7 +162,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55786</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:60786/</IISUrl>
+          <IISUrl>http://localhost:49271/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
