@@ -1788,11 +1788,11 @@ namespace MOBOT.BHL.API.BHLApi
                 {
                     Page page = new Page
                     {
-                        PageID = Convert.ToInt32(hit.Id),
-                        PageUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.Id,
-                        ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + hit.Id,
-                        FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + hit.Id,
-                        OcrUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.Id,
+                        PageID = Convert.ToInt32(hit.PageId),
+                        PageUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.PageId,
+                        ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + hit.PageId,
+                        FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + hit.PageId,
+                        OcrUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.PageId,
                         OcrText = hit.Text
                     };
 

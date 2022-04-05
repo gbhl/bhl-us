@@ -600,9 +600,9 @@ namespace BHL.SearchIndexer
             return segments;
         }
 
-        public Dictionary<int, Page> GetPages(ElasticSearch.PageSource pageSource, int sourceId)
+        public Dictionary<string, Page> GetPages(ElasticSearch.PageSource pageSource, int sourceId)
         {
-            Dictionary<int, Page> pages = new Dictionary<int, Page>();
+            Dictionary<string, Page> pages = new Dictionary<string, Page>();
 
             SqlConnection sqlConnection = new SqlConnection(_connectionString);
             sqlConnection.Open();
@@ -630,9 +630,10 @@ namespace BHL.SearchIndexer
                         while (reader.Read())
                         {
                             Page page = new Page();
-                            page.id = reader.GetInt32(reader.GetOrdinal("PageID"));
                             page.sequence = reader.GetInt32(reader.GetOrdinal("SequenceOrder"));
                             page.itemId = reader.GetInt32(reader.GetOrdinal("ItemID"));
+                            page.pageId = reader.GetInt32(reader.GetOrdinal("PageID"));
+                            page.id = string.Format("{0}-{1}", page.itemId.ToString(), page.pageId.ToString());
                             page.pageIndicators = GetFieldList(reader, "PageIndicators", "|");
                             page.pageTypes = GetFieldList(reader, "PageTypes", ",");
 
@@ -662,22 +663,22 @@ namespace BHL.SearchIndexer
             List<Page> pages = new List<Page>();
 
             // Get the pages for the item/segment
-            Dictionary<int, Page> itemPages = GetPages(pageSource, sourceId);
+            Dictionary<string, Page> itemPages = GetPages(pageSource, sourceId);
 
             // Get names for each page
-            Dictionary<int, List<string>> itemNames = GetNameStrings(pageSource, sourceId);
+            Dictionary<string, List<string>> itemNames = GetNameStrings(pageSource, sourceId);
 
             // Merge the names with the pages
             MergeNames(itemPages, itemNames);
 
             // Transfer pages to final list
-            foreach (KeyValuePair<int, Page> kvp in itemPages) pages.Add(kvp.Value);
+            foreach (KeyValuePair<string, Page> kvp in itemPages) pages.Add(kvp.Value);
 
             // Get text for each page
             foreach (Page page in pages)
             {
                 if (remoteOcr)  // OCRLocation = "remote"
-                    page.text = GetText(page.id);     // Use URLs
+                    page.text = GetText(page.pageId);     // Use URLs
                 else // OCRLocation = "local"
                     page.text = GetText(page.textPath);     // Use direct paths
             }
@@ -933,9 +934,9 @@ namespace BHL.SearchIndexer
             return names;
         }
 
-        private Dictionary<int, List<string>> GetNameStrings(ElasticSearch.PageSource pageSource, int sourceID)
+        private Dictionary<string, List<string>> GetNameStrings(ElasticSearch.PageSource pageSource, int sourceID)
         {
-            Dictionary<int, List<string>> names = new Dictionary<int, List<string>>();
+            Dictionary<string, List<string>> names = new Dictionary<string, List<string>>();
 
             /*
              * Pages will not be faceted on Names for now, so do not include them in the index.
@@ -1454,6 +1455,80 @@ namespace BHL.SearchIndexer
         }
 
         /// <summary>
+        /// Get the value of Book.ItemID for the specified BookID
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <returns></returns>
+        public int GetItemIDForBook(int bookId)
+        {
+            int itemId = 0;
+
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 300;
+                    sqlCommand.CommandText = "dbo.BookSelectAuto";
+                    sqlCommand.Parameters.AddWithValue("@BookID", bookId);
+
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                    {
+                        if (reader.Read()) itemId = reader.GetInt32(reader.GetOrdinal("ItemID"));
+                    }
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+            return itemId;
+        }
+
+        /// <summary>
+        /// Get the value of Segment.ItemID for the specified SegmentID
+        /// </summary>
+        /// <param name="segmentId"></param>
+        /// <returns></returns>
+        public int GetItemIDForSegment(int segmentId)
+        {
+            int itemId = 0;
+
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 300;
+                    sqlCommand.CommandText = "dbo.SegmentSelectAuto";
+                    sqlCommand.Parameters.AddWithValue("@SegmentID", segmentId);
+
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                    {
+                        if (reader.Read()) itemId = reader.GetInt32(reader.GetOrdinal("ItemID"));
+                    }
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+            return itemId;
+        }
+
+        /// <summary>
         /// Get the specified field from the data reader and split it at the specified delimiter
         /// </summary>
         /// <param name="reader"></param>
@@ -1488,9 +1563,9 @@ namespace BHL.SearchIndexer
         /// </summary>
         /// <param name="listPages"></param>
         /// <param name="listNames"></param>
-        private void MergeNames(Dictionary<int, Page> listPages, Dictionary<int, List<string>> listNames)
+        private void MergeNames(Dictionary<string, Page> listPages, Dictionary<string, List<string>> listNames)
         {
-            foreach (KeyValuePair<int, List<string>> kvp in listNames)
+            foreach (KeyValuePair<string, List<string>> kvp in listNames)
             {
                 if (listPages.ContainsKey(kvp.Key)) listPages[kvp.Key].names = kvp.Value;
             }

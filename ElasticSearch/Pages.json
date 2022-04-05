@@ -19,10 +19,14 @@
 		"page" : {
 			"properties" : {
 				"id" : {
-					"type" : "long",
+					"type" : "keyword",
 					"include_in_all" : false
 				},
 				"itemId" : {
+					"type" : "long",
+					"include_in_all" : false
+				},
+				"pageId" : {
 					"type" : "long",
 					"include_in_all" : false
 				},

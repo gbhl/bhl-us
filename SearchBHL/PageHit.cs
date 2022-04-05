@@ -5,6 +5,7 @@ namespace BHL.Search
     public class PageHit : Hit
     {
         private int _itemId = 0;
+        private int _pageId = 0;
         private int _sequence = 0;
         private string _pageDescription = string.Empty;
         private List<string> _pageIndicators = new List<string>();
@@ -18,6 +19,12 @@ namespace BHL.Search
         {
             get { return _itemId; }
             set { _itemId = value; }
+        }
+
+        public int PageId
+        {
+            get { return _pageId; }
+            set { _pageId = value; }
         }
 
         public int Sequence
