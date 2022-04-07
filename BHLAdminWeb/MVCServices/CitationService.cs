@@ -23,7 +23,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         public Dictionary<string, string> DataSourceTypeList()
         {
             Dictionary<string, string> dataSourceTypes = new Dictionary<string, string>();
-            dataSourceTypes.Add("text/plain", "Delimited Text File");
+            dataSourceTypes.Add("text/plain", "Tab-Delimited Text File");
             dataSourceTypes.Add("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Excel (.xlsx)");
             dataSourceTypes.Add("application/vnd.ms-excel", "Excel 97-2003 (.xls)");
 
