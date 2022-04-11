@@ -7,7 +7,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="7.1.1" />
+    <PackageReference Include="CsvHelper" Version="27.2.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj">

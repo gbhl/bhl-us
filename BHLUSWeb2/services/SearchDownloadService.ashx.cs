@@ -1,8 +1,10 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Dynamic;
 using System.Text;
 using System.Web;
 
@@ -225,34 +227,29 @@ namespace MOBOT.BHL.Web2.Services
         /// <returns></returns>
         private void GetBookCSVString(HttpContext context, List<SearchBookResult> searchResult)
         {
-            StringBuilder csvString = new StringBuilder();
-
-            // Write file header
-            csvString.AppendLine("\"TitleId\",\"TitleUrl\",\"ItemId\",\"ItemUrl\",\"Title\",\"PartNumber\",\"PartName\",\"Edition\",\"Publication Details\",\"Volume\",\"Authors\",\"Collections\",\"Holding Institution\"");
-            context.Response.Write(csvString.ToString());
-            context.Response.Flush();
-
+            var data = new List<dynamic>();
             foreach (SearchBookResult book in searchResult)
             {
-                // Write record
-                csvString.Remove(0, csvString.Length);
-                csvString.Append("\"" + book.TitleID.ToString() + "\",");
-                csvString.Append("\"" + String.Format(ConfigurationManager.AppSettings["BibPageUrl"].ToString(), book.TitleID.ToString()) + "\",");
-                csvString.Append("\"" + book.ItemID.ToString() + "\",");
-                csvString.Append("\"" + String.Format(ConfigurationManager.AppSettings["ItemPageUrl"].ToString(), book.ItemID.ToString()) + "\",");
-                csvString.Append("\"" + book.FullTitle.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + book.PartNumber.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + book.PartName.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + book.EditionStatement.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + book.PublicationDetails.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + book.Volume.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + book.Authors.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + book.Collections.Replace('"', '\'') + "\",");
-                csvString.AppendLine("\"" + book.InstitutionName.Replace('"', '\'') + "\"");
-
-                context.Response.Write(csvString.ToString());
-                context.Response.Flush();
+                var record = new ExpandoObject() as IDictionary<string, Object>;
+                record.Add("TitleId", book.TitleID.ToString());
+                record.Add("TitleUrl", string.Format(ConfigurationManager.AppSettings["BibPageUrl"].ToString(), book.TitleID.ToString()));
+                record.Add("ItemId", book.ItemID.ToString() );
+                record.Add("ItemUrl", string.Format(ConfigurationManager.AppSettings["ItemPageUrl"].ToString(), book.ItemID.ToString()));
+                record.Add("Title", book.FullTitle);
+                record.Add("PartNumber", book.PartNumber);
+                record.Add("PartName", book.PartName);
+                record.Add("Edition", book.EditionStatement);
+                record.Add("Publication Details", book.PublicationDetails);
+                record.Add("Volume", book.Volume);
+                record.Add("Authors", book.Authors);
+                record.Add("Collections", book.Collections);
+                record.Add("Holding Institution", book.InstitutionName);
+                data.Add(record);
             }
+
+            byte[] csvBytes = new CSV().FormatCSVData(data);
+            context.Response.Write(Encoding.UTF8.GetString(csvBytes, 0, csvBytes.Length));
+            context.Response.Flush();
         }
 
         /// <summary>
@@ -262,31 +259,26 @@ namespace MOBOT.BHL.Web2.Services
         /// <returns></returns>
         private void GetSegmentCSVString(HttpContext context, List<Segment> searchResult)
         {
-            StringBuilder csvString = new StringBuilder();
-
-            // Write file header
-            csvString.AppendLine("\"PartId\",\"PartUrl\",\"Type\",\"Title\",\"Container\",\"Volume\",\"Date\",\"Start Page\",\"End Page\",\"Authors\"");
-            context.Response.Write(csvString.ToString());
-            context.Response.Flush();
-
+            var data = new List<dynamic>();
             foreach (Segment segment in searchResult)
             {
-                // Write record
-                csvString.Remove(0, csvString.Length);
-                csvString.Append("\"" + segment.SegmentID.ToString() + "\",");
-                csvString.Append("\"" + String.Format(ConfigurationManager.AppSettings["PartPageUrl"].ToString(), segment.SegmentID.ToString()) + "\",");
-                csvString.Append("\"" + segment.GenreName.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + segment.Title.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + segment.ContainerTitle.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + segment.Volume.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + segment.Date.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + segment.StartPageNumber.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + segment.EndPageNumber.Replace('"', '\'') + "\",");
-                csvString.AppendLine("\"" + segment.Authors.Replace('"', '\'') + "\",");
-
-                context.Response.Write(csvString.ToString());
-                context.Response.Flush();
+                var record = new ExpandoObject() as IDictionary<string, Object>;
+                record.Add("PartId", segment.SegmentID.ToString());
+                record.Add("PartUrl", string.Format(ConfigurationManager.AppSettings["PartPageUrl"].ToString(), segment.SegmentID.ToString()));
+                record.Add("Type", segment.GenreName);
+                record.Add("Title", segment.Title);
+                record.Add("Container", segment.ContainerTitle);
+                record.Add("Volume", segment.Volume);
+                record.Add("Date", segment.Date);
+                record.Add("Start Page", segment.StartPageNumber);
+                record.Add("End Page", segment.EndPageNumber);
+                record.Add("Authors", segment.Authors);
+                data.Add(record);
             }
+
+            byte[] csvBytes = new CSV().FormatCSVData(data);
+            context.Response.Write(Encoding.UTF8.GetString(csvBytes, 0, csvBytes.Length));
+            context.Response.Flush();
         }
 
         public bool IsReusable

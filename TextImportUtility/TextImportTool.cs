@@ -164,10 +164,13 @@ namespace BHL.TextImportUtility
 
             using (StreamReader reader = File.OpenText(fileName))
             {
-                CsvReader csv = new CsvReader(reader);
-                csv.Configuration.HasHeaderRecord = true;
-                csv.Configuration.HeaderValidated = null;
-                csv.Configuration.MissingFieldFound = null;
+                var config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
+                {
+                    HasHeaderRecord = true,
+                    HeaderValidated = null,
+                    MissingFieldFound = null
+                };
+                CsvReader csv = new CsvReader(reader, config);
 
                 var dvRecord = new
                 {
@@ -209,8 +212,11 @@ namespace BHL.TextImportUtility
 
             using (StreamReader reader = File.OpenText(fileName))
             {
-                CsvReader csv = new CsvReader(reader);
-                csv.Configuration.HasHeaderRecord = true;
+                var config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
+                {
+                    HasHeaderRecord = true
+                };
+                CsvReader csv = new CsvReader(reader, config);
 
                 var dvRecord = new
                 {
@@ -241,8 +247,11 @@ namespace BHL.TextImportUtility
 
             using (StreamReader reader = File.OpenText(fileName))
             {
-                CsvReader csv = new CsvReader(reader);
-                csv.Configuration.HasHeaderRecord = true;
+                var config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
+                {
+                    HasHeaderRecord = true
+                };
+                CsvReader csv = new CsvReader(reader, config);
 
                 var dvRecord = new
                 {
@@ -308,10 +317,14 @@ namespace BHL.TextImportUtility
             {
                 // Parse the records in the file, and add Sequence Numbers
                 var writeRecords = new List<object>();
+
                 using (StreamReader reader = File.OpenText(fileName))
                 {
-                    CsvReader csv = new CsvReader(reader);
-                    csv.Configuration.HasHeaderRecord = true;
+                    var config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
+                    {
+                        HasHeaderRecord = true
+                    };
+                    CsvReader csv = new CsvReader(reader, config);
 
                     var dvRecord = new
                     {
@@ -370,10 +383,11 @@ namespace BHL.TextImportUtility
 
                 // Write the updated records to the file
                 using (var writer = new StreamWriter(fileName))
-                using (var csv = new CsvWriter(writer))
+                using (var csv = new CsvWriter(writer, System.Globalization.CultureInfo.InvariantCulture))
                 {
                     csv.WriteRecords(writeRecords);
                 }
+
             }
         }
     }

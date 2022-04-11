@@ -1,6 +1,9 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Utility;
+using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Text;
 
 namespace MOBOT.BHL.AdminWeb.Models
@@ -35,27 +38,22 @@ namespace MOBOT.BHL.AdminWeb.Models
             // Get the data to be formatted as CSV
             GetOrphans();
 
-            StringBuilder sb = new StringBuilder();
-
-            // Add CSV header
-            sb.AppendLine("\"Type\",\"ID\",\"Status\",\"Replaced By\",\"Content Provider\",\"Active Titles\",\"Active Items\",\"Active Segments\"");
-
-            // Add CSV data
+            var data = new List<dynamic>();
             foreach (Orphan orphan in OrphanList)
             {
-                sb.Append("\"" + orphan.Type + "\"");
-                sb.Append(",\"" + orphan.ID.ToString() + "\"");
-                sb.Append(",\"" + orphan.Status + "\"");
-                sb.Append(",\"" + orphan.ReplacedBy.ToString() + "\"");
-                sb.Append(",\"" + orphan.HoldingInstitution.Replace("\"", "'") + "\"");
-                sb.Append(",\"" + ((orphan.HasActiveTitles == null) ? "" : ((orphan.HasActiveTitles == true) ? "Yes" : "No")) + "\"");
-                sb.Append(",\"" + ((orphan.HasActiveItems == null) ? "" : ((orphan.HasActiveItems == true) ? "Yes" : "No")) + "\"");
-                sb.Append(",\"" + ((orphan.HasActiveSegments == null) ? "" : ((orphan.HasActiveSegments == true) ? "Yes" : "No")) + "\"");
-                sb.AppendLine();
+                var record = new ExpandoObject() as IDictionary<string, Object>;
+                record.Add("Type", orphan.Type);
+                record.Add("ID", orphan.ID.ToString());
+                record.Add("Status", orphan.Status);
+                record.Add("Replaced By", orphan.ReplacedBy.ToString());
+                record.Add("Content Provider", orphan.HoldingInstitution);
+                record.Add("Active Titles", ((orphan.HasActiveTitles == null) ? "" : ((orphan.HasActiveTitles == true) ? "Yes" : "No")));
+                record.Add("Active Items", ((orphan.HasActiveItems == null) ? "" : ((orphan.HasActiveItems == true) ? "Yes" : "No")));
+                record.Add("Active Segments", ((orphan.HasActiveSegments == null) ? "" : ((orphan.HasActiveSegments == true) ? "Yes" : "No")));
+                data.Add(record);
             }
 
-            // Convert CSV to byte array
-            DownloadOrphans = System.Text.Encoding.UTF8.GetBytes(sb.ToString());
+            DownloadOrphans = new CSV().FormatCSVData(data);
         }
 
         public class Orphan

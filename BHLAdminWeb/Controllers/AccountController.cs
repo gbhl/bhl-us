@@ -6,6 +6,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
 using MOBOT.BHL.AdminWeb.Models;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -631,18 +632,9 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             }
 
             // Convert the output to a byte array of a CSV string
-            byte[] downloadString = null;
-            using (var writer = new StringWriter())
-            {
-                using (var csv = new CsvWriter(writer))
-                {
-                    csv.WriteRecords(records);
-                }
+            byte[] downloadString = new CSV().FormatCSVData(records);
 
-                downloadString = Encoding.UTF8.GetBytes(writer.ToString());
-            }
-
-               // Write the byte array to the output stream
+            // Write the byte array to the output stream
             var cd = new System.Net.Mime.ContentDisposition
             {
                 FileName = string.Format("UserAccounts{0}.csv", System.DateTime.Now.ToString("yyyyMMddHHmmss")),

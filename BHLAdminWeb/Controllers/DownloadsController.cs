@@ -1,6 +1,8 @@
 ﻿using MOBOT.BHL.Server;
+using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Text;
 using System.Web.Mvc;
 
@@ -14,18 +16,18 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             BHLProvider provider = new BHLProvider();
             List<Tuple<string, string, string>> links = provider.LinkSelectToExternalContent();
 
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("\"Entity\",\"ID\",\"Title/Name\",\"External URL\"");
+            var data = new List<dynamic>();
             foreach (Tuple<string, string, string> link in links)
             {
-                sb.AppendLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\"",
-                    link.Item1.Replace("\"", "\"\""),
-                    link.Item2.Split('|')[0].Replace("\"", "\"\""),
-                    link.Item2.Split('|')[1].Replace("\"", "\"\""),
-                    link.Item3.Replace("\"", "\"\"")));
+                var record = new ExpandoObject() as IDictionary<string, Object>;
+                record.Add("Entity", link.Item1);
+                record.Add("ID", link.Item2.Split('|')[0]);
+                record.Add("Title/Name", link.Item2.Split('|')[1]);
+                record.Add("External URL", link.Item3);
+                data.Add(record);
             }
 
-            byte[] csvData = System.Text.Encoding.UTF8.GetBytes(sb.ToString());
+            byte[] csvData = new CSV().FormatCSVData(data);
             string date = DateTime.Now.ToString("yyyyMMddHHmmss");
             Response.Charset = "utf-8";
             return File(csvData, "text/csv", string.Format("LinksToExternalContent{0}.csv", date));

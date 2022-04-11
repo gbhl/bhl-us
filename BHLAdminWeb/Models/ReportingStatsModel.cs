@@ -1,6 +1,9 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Utility;
+using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Text;
 
 namespace MOBOT.BHL.AdminWeb.Models
@@ -58,55 +61,42 @@ namespace MOBOT.BHL.AdminWeb.Models
             // Get the data to be formatted as CSV
             GetStats();
 
-            StringBuilder sb = new StringBuilder();
-
-            // Add CSV header
-            if (this.ContentProviderTarget == 2 || this.ContentProviderTarget == 5)
-            {
-                sb.AppendLine("\"Content Provider\",\"Year\",\"Month\",\"New Items\",\"New Pages\",\"New Names\",\"New Segments\",\"New PDFs\",\"New DOIs\",\"Total Items\",\"Total Pages\",\"Total Names\",\"Total Segments\",\"Total PDFs\",\"Total DOIs\"");
-            }
-            else
-            {
-                if (this.ContentProviderTarget == 3) 
-                    sb.Append("\"Content Provider Group\",");
-                else
-                    sb.Append("\"Content Provider\",");
-
-                if (this.ContentProviderTarget == 1 || this.ContentProviderTarget == 4 || this.ContentProviderTarget == 6) sb.Append("\"Content Provider Groups\",");
-
-                sb.AppendLine("\"Year\",\"Month\",\"New Items\",\"New Pages\",\"New Names\",\"New Segments\",\"Total Items\",\"Total Pages\",\"Total Names\",\"Total Segments\"");
-            }
-
-            // Add CSV data
+            var data = new List<dynamic>();
             foreach (ReportStat reportStat in ReportStats)
             {
-                sb.Append("\"" + reportStat.InstitutionName.Replace("\"", "'") + "\"");
-                if (this.ContentProviderTarget == 1 || this.ContentProviderTarget == 4 || this.ContentProviderTarget == 6) sb.Append(",\"" + reportStat.GroupNames + "\"");
-                sb.Append(",\"" + reportStat.Year + "\"");
-                sb.Append(",\"" + reportStat.Month + "\"");
-                sb.Append(",\"" + reportStat.Items + "\"");
-                sb.Append(",\"" + reportStat.Pages + "\"");
-                sb.Append(",\"" + reportStat.Names + "\"");
-                sb.Append(",\"" + reportStat.Segments + "\"");
+                var record = new ExpandoObject() as IDictionary<string, Object>;
+
+                if (this.ContentProviderTarget == 3)
+                    record.Add("Content Provider Group", reportStat.InstitutionName);
+                else
+                    record.Add("Content Provider", reportStat.InstitutionName);
+
+                if (this.ContentProviderTarget == 1 || this.ContentProviderTarget == 4 || this.ContentProviderTarget == 6) record.Add("Content Provider Groups", reportStat.GroupNames);
+                record.Add("Year", reportStat.Year);
+                record.Add("Month", reportStat.Month);
+                record.Add("New Items", reportStat.Items);
+                record.Add("New Pages", reportStat.Pages);
+                record.Add("New Names", reportStat.Names);
+                record.Add("New Segments", reportStat.Segments);
                 if (this.ContentProviderTarget == 2 || this.ContentProviderTarget == 5)
                 {
-                    sb.Append(",\"" + reportStat.PDFs + "\"");
-                    sb.Append(",\"" + reportStat.DOIs + "\"");
+                    record.Add("New PDFs", reportStat.PDFs);
+                    record.Add("New DOIs", reportStat.DOIs);
                 }
-                sb.Append(",\"" + reportStat.TotalItems + "\"");
-                sb.Append(",\"" + reportStat.TotalPages + "\"");
-                sb.Append(",\"" + reportStat.TotalNames + "\"");
-                sb.Append(",\"" + reportStat.TotalSegments + "\"");
+                record.Add("Total Items", reportStat.TotalItems);
+                record.Add("Total Pages", reportStat.TotalPages);
+                record.Add("Total Names", reportStat.TotalNames);
+                record.Add("Total Segments", reportStat.TotalSegments);
                 if (this.ContentProviderTarget == 2 || this.ContentProviderTarget == 5)
                 {
-                    sb.Append(",\"" + reportStat.TotalPDFs + "\"");
-                    sb.Append(",\"" + reportStat.TotalDOIs + "\"");
+                    record.Add("Total PDFs", reportStat.TotalPDFs);
+                    record.Add("Total DOIs", reportStat.TotalDOIs);
                 }
-                sb.AppendLine();
+
+                data.Add(record);
             }
 
-            // Convert CSV to byte array
-            DownloadStats = Encoding.UTF8.GetBytes(sb.ToString());
+            DownloadStats = new CSV().FormatCSVData(data);
         }
 
         private List<MonthlyStats> GetStatsForInstitution(string institutionCode)

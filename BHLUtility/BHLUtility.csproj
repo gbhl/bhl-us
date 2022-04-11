@@ -5,4 +5,7 @@
     <AssemblyName>MOBOT.BHL.Utility</AssemblyName>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="27.2.1" />
+  </ItemGroup>
 </Project>

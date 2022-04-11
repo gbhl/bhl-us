@@ -2,7 +2,9 @@
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Utility;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Dynamic;
 using System.Text;
 using System.Web;
 
@@ -82,31 +84,26 @@ namespace MOBOT.BHL.Web2.Services
         /// <returns></returns>
         private void GetCSVString(HttpContext context, NameSearchResult searchResult)
         {
-            StringBuilder csvString = new StringBuilder();
-
-            // Write file header
-            csvString.AppendLine("\"Url\",\"Type\",\"Title\",\"Publisher Place\",\"Publisher\",\"Date\",\"Authors\",\"Volume\",\"Language\",\"Pages\"");
-            context.Response.Write(csvString.ToString());
-            context.Response.Flush();
-
+            var data = new List<dynamic>();
             foreach (NameSearchPage page in searchResult.Pages)
             {
-                // Write record
-                csvString.Remove(0, csvString.Length);
-                csvString.Append("\"" + String.Format(ConfigurationManager.AppSettings["PagePageUrl"].ToString(), page.PageID.ToString()) + "\",");
-                csvString.Append("\"" + page.BibliographicLevelLabel + "\",");
-                csvString.Append("\"" + page.FullTitle.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + page.PublisherPlace.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + page.Publisher.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + page.Date.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + page.Authors.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + page.Volume.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + page.LanguageName.Replace('"', '\'') + "\",");
-                csvString.AppendLine("\"" + page.IndicatedPages.Replace('"', '\'') + "\"");
-
-                context.Response.Write(csvString.ToString());
-                context.Response.Flush();
+                var record = new ExpandoObject() as IDictionary<string, Object>;
+                record.Add("Url", string.Format(ConfigurationManager.AppSettings["PagePageUrl"].ToString(), page.PageID.ToString()));
+                record.Add("Type", page.BibliographicLevelLabel);
+                record.Add("Title", page.FullTitle);
+                record.Add("Publisher Place", page.PublisherPlace);
+                record.Add("Publisher", page.Publisher);
+                record.Add("Date", page.Date);
+                record.Add("Authors", page.Authors);
+                record.Add("Volume", page.Volume);
+                record.Add("Language", page.LanguageName);
+                record.Add("Pages", page.IndicatedPages);
+                data.Add(record);
             }
+
+            byte[] csvBytes = new CSV().FormatCSVData(data);
+            context.Response.Write(Encoding.UTF8.GetString(csvBytes, 0, csvBytes.Length));
+            context.Response.Flush();
         }
 
         /// <summary>
