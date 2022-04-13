@@ -33,6 +33,7 @@
         public const string MATERIALTYPE = "materialType";
         public const string NOTES = "notes";
         public const string OCLC = "oclc";
+        public const string PAGEID = "pageId";
         public const string PAGERANGE = "pageRange";
         public const string PUBLICATIONPLACE = "publicationPlace";
         public const string PUBLICATIONPLACE_RAW = "publicationPlace.raw";
