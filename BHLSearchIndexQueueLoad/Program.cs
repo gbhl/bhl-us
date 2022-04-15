@@ -20,6 +20,7 @@ namespace BHL.SearchIndexQueueLoad
         private static string _mqUser = string.Empty;
         private static string _mqPw = string.Empty;
         private static string _mqQueue = string.Empty;
+        private static string _mqExchange = string.Empty;
         private static string _mqErrorExchange = string.Empty;
         private static string _mqErrorQueue = string.Empty;
         private static string _mqQueueNames = string.Empty;
@@ -99,6 +100,7 @@ namespace BHL.SearchIndexQueueLoad
                                             default:
                                                 queueUtil.PutMessage(queueMsg,
                                                     queueName: _mqQueue,
+                                                    exchangeName: _mqExchange,
                                                     errorQueueName: _mqErrorQueue,
                                                     errorExchangeName: _mqErrorExchange);
                                                 break;
@@ -243,6 +245,7 @@ namespace BHL.SearchIndexQueueLoad
             _mqUser = new ConfigurationManager(_configFile).AppSettings("MQUser");
             _mqPw = new ConfigurationManager(_configFile).AppSettings("MQPassword");
             _mqQueue = new ConfigurationManager(_configFile).AppSettings("MQQueue");
+            _mqExchange = new ConfigurationManager(_configFile).AppSettings("MQExchange");
             _mqErrorExchange = new ConfigurationManager(_configFile).AppSettings("MQErrorExchange");
             _mqErrorQueue = new ConfigurationManager(_configFile).AppSettings("MQErrorQueue");
             _mqQueueNames = new ConfigurationManager(_configFile).AppSettings("MQQueueNames");
