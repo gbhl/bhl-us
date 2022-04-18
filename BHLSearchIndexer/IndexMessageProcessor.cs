@@ -381,15 +381,23 @@ namespace BHL.SearchIndexer
             Item item = new Item { id = string.Format("s-{0}", id) };
             new ElasticSearch(_searchConnectionString, _catalogIndex).Delete(catalogItem);
             new ElasticSearch(_searchConnectionString, _itemsIndex).Delete(item);
+
+            // Delete pages related to the segment from search indexes
+            DeletePagesForSegment(id);
         }
 
         private void DeleteSegmentsFromIndexForItem(string id)
         {
+            List<int> segmentIds = new DataAccess(_dbConnectionstring).GetSegmentsForItem(Convert.ToInt32(id));
+
             // Delete from SeachCatalog table
             new DataAccess(_dbConnectionstring).DeleteSegmentsFromIndexForItem(Convert.ToInt32(id));
 
             // Delete from search indexes
             new ElasticSearch(_searchConnectionString, _catalogIndex).DeleteAllSegments(id);
+
+            // Delete segment pages from search indexes
+            foreach (int segmentId in segmentIds) DeletePagesForSegment(segmentId.ToString());
         }
 
         /// <summary>
@@ -480,24 +488,29 @@ namespace BHL.SearchIndexer
         }
 
         /// <summary>
-        /// Delete the specified name from the search indexes
-        /// </summary>
-        /// <param name="id"></param>
-        private void DeletePage(int id)
-        {
-            // Delete from searchindex
-            Page page = new Page { id = id };
-            new ElasticSearch(_searchConnectionString, _pagesIndex).Delete(page);
-        }
-
-        /// <summary>
         /// Delete all pages associated with the specified item from the search indexes
         /// </summary>
         /// <param name="id"></param>
         private void DeletePagesForItem(string id)
         {
+            // Get the Book.ItemID related to this id (Book.BookID)
+            int itemId = new DataAccess(_dbConnectionstring).GetItemIDForBook(Convert.ToInt32(id));
+
             // Delete from search index
-            new ElasticSearch(_searchConnectionString, _pagesIndex).DeleteAllPages(id);
+            new ElasticSearch(_searchConnectionString, _pagesIndex).DeleteAllPages(itemId.ToString());
+        }
+
+        /// <summary>
+        /// Delete all pages associated with the specified segment from the search indexes
+        /// </summary>
+        /// <param name="id"></param>
+        private void DeletePagesForSegment(string id)
+        {
+            // Get the Segment.ItemID related to this id (Segment.SegmentID)
+            int itemId = new DataAccess(_dbConnectionstring).GetItemIDForSegment(Convert.ToInt32(id));
+
+            // Delete from search index
+            new ElasticSearch(_searchConnectionString, _pagesIndex).DeleteAllPages(itemId.ToString());
         }
     }
 }

@@ -195,9 +195,12 @@ namespace MOBOT.BHL.Web2.api3
                 if (string.Compare(operation, "PageSearch", true) == 0)
                 {
                     ServiceResponse<List<Page>> serviceResponse = new ServiceResponse<List<Page>>();
-                    String text = context.Request.QueryString["text"];
-                    String itemID = context.Request.QueryString["itemID"];
-                    serviceResponse.Result = this.PageSearch(itemID, text, key);
+                    string text = context.Request.QueryString["text"];
+                    string idType = context.Request.QueryString["idType"];
+                    idType = string.IsNullOrWhiteSpace(idType) ? "Item" : idType;
+                    string id = context.Request.QueryString["id"];
+                    id = string.IsNullOrWhiteSpace(id) ? context.Request.QueryString["itemID"] : id;
+                    serviceResponse.Result = this.PageSearch(idType, id, text, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -343,11 +346,11 @@ namespace MOBOT.BHL.Web2.api3
             return api.AuthorSearch(name, fullText);
         }
 
-        private List<Page> PageSearch(string itemID, string text, string apiKey)
+        private List<Page> PageSearch(string idType, string id, string text, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.PageSearch, apiKey, string.Format("{0}|{1}", itemID, text));
+            ValidateUser(Api3.APIRequestType.PageSearch, apiKey, string.Format("{0}|{1}|{2}", idType, id, text));
             Api3 api = new Api3();
-            return api.PageSearch(itemID, text);
+            return api.PageSearch(idType, id, text);
         }
 
         private List<Author> GetAuthorMetadata(string id, string idType, string includePubs, string apiKey)

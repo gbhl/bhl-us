@@ -43,6 +43,10 @@
 					"type" : "keyword",
 					"index" : false
 				},
+				"bookIsVirtual" : {
+					"type" : "boolean",
+					"index" : false
+				},
 				"collections" : {
 					"type" : "keyword",
 					"include_in_all" : false

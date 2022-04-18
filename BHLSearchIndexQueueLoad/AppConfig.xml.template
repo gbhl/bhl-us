@@ -6,6 +6,14 @@
     <MQUser>MESSAGE QUEUE USERNAME</MQUser>
     <MQPassword>MESSAGE QUEUE PASSWORD</MQPassword>
     <MQQueue>NAME OF MESSAGE QUEUE FOR ITEMS/AUTHORS/KEYWORDS</MQQueue>
+
+    <!-- 
+    To write backups of the queued messages to a secondary queue, specify the name of the exchange.
+    For example, "bhl.prod.exchange.index".  This would typically done while rebuilding indexes.
+    To queues messages normally (no secondary copies), leave the exchange name blank.
+    -->
+    <MQExchange>NAME OF MESSAGE QUEUE EXCHANGE FOR ITEMS/AUTHORS/KEYWORDS</MQExchange>
+    
     <MQErrorExchange>NAME OF MESSAGE QUEUE ERROR EXCHANGE FOR ITEMS/AUTHORS/KEYWORDS</MQErrorExchange>
     <MQErrorQueue>NAME OF MESSAGE QUEUE ERROR QUEUE FOR ITEMS/AUTHORS/KEYWORDS</MQErrorQueue>
     <MQQueueNames>NAME OF MESSAGE QUEUE FOR NAMES</MQQueueNames>

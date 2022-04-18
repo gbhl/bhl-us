@@ -316,7 +316,7 @@ namespace BHL.Search.Elastic
         {
             List<Tuple<string, string>> searchLimits = GetSearchLimitsList(limits);
             List<string> returnFields = new List<string> {
-                    ESField.ID, ESField.ITEMID, ESField.SEQUENCE, ESField.PAGEINDICATORS,
+                    ESField.ID, ESField.ITEMID, ESField.PAGEID, ESField.SEQUENCE, ESField.PAGEINDICATORS,
                     ESField.PAGETYPES, ESField.SEGMENTS
                     };
             if (includeText) returnFields.Add(ESField.TEXT);

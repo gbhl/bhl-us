@@ -731,7 +731,7 @@
             $.ajax({
                 type: 'get',
                 url: '/search/pages',
-                data: 'q=' + encodeURIComponent($("#sibSearchText").val()) + '&itemId=' + <%: PublicationDetail.ID %>,
+                data: 'q=' + encodeURIComponent($("#sibSearchText").val()) + '&itemId=' + <%: PublicationDetail.ItemID %>,
                 success: function (data, textStatus, jqXHR) {
                     if (data.length > 0) {
                         $("#sibNumResults").html("(" + data.length + ")");
