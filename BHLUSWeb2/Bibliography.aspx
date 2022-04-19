@@ -8,7 +8,7 @@
     <div class="column-wrap">
         <div class="ellipsis bibtitle"><%: BhlTitle.ShortTitle %></div>
         <div class="bibtitleicons">
-            <a href="/contact/" title="Report an error" class="report"><img alt="Report an error" src="/images/rpterror.png" /></a>
+            <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>" title="FAQ" class="report"><img alt="FAQ" src="/images/rpterror.png" /></a>
         </div>
     </div>
 </div>
