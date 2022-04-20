@@ -76,10 +76,6 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="RestSharp, Version=102.7.0.0, Culture=neutral, PublicKeyToken=3aeec8c590ff36f5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibraries\CounterSoft7.0.0\RestSharp.dll</HintPath>
@@ -444,6 +440,8 @@
     <Content Include="Handlers\GetPartText.ashx" />
     <Content Include="libman.json" />
     <None Include="Service References\SiteService\SiteService1.disco" />
+    <Content Include="libs\countersoft\10.0.3\Newtonsoft.Json.dll" />
+    <Content Include="libs\countersoft\10.0.3\Newtonsoft.Json.xml" />
     <Content Include="tify\tify.html" />
     <Content Include="tify\tifysrc\supporters\sub-logo.svg" />
     <Content Include="tify\tifysrc\tify-logo-white.svg" />
@@ -1175,6 +1173,9 @@
   <ItemGroup>
     <PackageReference Include="NETStandard.Library">
       <Version>2.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.1</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup>

@@ -403,8 +403,7 @@
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed"/>
-        <codeBase version="4.5.0.0" href="libs\countersoft\Newtonsoft.Json.dll"/>
-        <bindingRedirect oldVersion="0.0.0.0-12.0.0.0" newVersion="10.0.0.0"/>
+        <codeBase version="10.0.0.0" href="libs\countersoft\10.0.3\Newtonsoft.Json.dll"/>
       </dependentAssembly>
     </assemblyBinding>
   </runtime>
