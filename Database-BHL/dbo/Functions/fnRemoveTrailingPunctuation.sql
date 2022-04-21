@@ -7,6 +7,8 @@ AS
 BEGIN
 	WHILE (	-- Remove invalid characters from the end of the input
 			REVERSE(RTRIM(@input)) NOT LIKE @validPattern ESCAPE '\'
+			-- Don't remove ellipses
+			AND REVERSE(RTRIM(@input)) NOT LIKE '...%'
 			-- Don't remove characters outside of the basic ascii table, so
 			-- that valid non-english letters are not removed
 			AND UNICODE(LEFT(REVERSE(RTRIM(@input)), 1)) <= 127)
@@ -16,4 +18,5 @@ BEGIN
 
 	RETURN @input
 END
+
 GO
