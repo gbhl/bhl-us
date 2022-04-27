@@ -7,6 +7,8 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Web;
+using BHL.SiteServiceREST.v1.Client;
+using System.Text;
 
 namespace MOBOT.BHL.Web2
 {
@@ -112,8 +114,8 @@ namespace MOBOT.BHL.Web2
 
         private Stream GetPdfStream(int id)
         {
-            SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-            byte[] pdf = service.GetItemPdf((int)ItemType.Segment, id);
+            Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);            
+            byte[] pdf = client.GetSegmentPdf(id);
             return (pdf == null) ? null : new MemoryStream(pdf);
         }
 

@@ -1,3 +1,5 @@
+using BHL.SiteServiceREST.v1.Client;
+using BHL.SiteServicesREST.v1;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
@@ -179,10 +181,10 @@ namespace MOBOT.BHL.Web2.Services
                     List<PageSummaryView> pages = new BHLProvider().PageSummarySelectForViewerByItemID(itemID);
 
                     // Serialize only the information we need
-                    List<SiteService.ViewerPage> viewerPages = new List<SiteService.ViewerPage>();
+                    List<ViewerPageModel> viewerPages = new List<ViewerPageModel>();
                     foreach (PageSummaryView page in pages)
                     {
-                        SiteService.ViewerPage viewerPage = new SiteService.ViewerPage();
+                        ViewerPageModel viewerPage = new ViewerPageModel();
                         viewerPage.ExternalBaseUrl = page.ExternalBaseURL;
                         viewerPage.AltExternalUrl = page.ExternalURL;
                         viewerPage.BarCode = page.BarCode;
@@ -191,7 +193,8 @@ namespace MOBOT.BHL.Web2.Services
                     }
 
                     // Add the height and width of each page to the list
-                    viewerPages = (new SiteService.SiteServiceSoapClient().PageGetImageDimensions(viewerPages.ToArray(), (int)ItemType.Book, itemID)).ToList();
+                    Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                    viewerPages = client.GetItemPageImageDimensions(itemID, viewerPages).ToList<ViewerPageModel>();
 
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     return js.Serialize(viewerPages);

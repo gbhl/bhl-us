@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Configuration;
+using BHL.SiteServiceREST.v1.Client;
+using BHL.SiteServicesREST.v1;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 
@@ -58,14 +60,16 @@ namespace MOBOT.BHL.Web2
         {
             // Don't catch errors here... if the email doesn't go, we want the user to know 
             // that something went wrong
-            MOBOT.BHL.Web2.SiteService.ArrayOfString recipients = new MOBOT.BHL.Web2.SiteService.ArrayOfString();
-            recipients.Add(recipient);
             string message = this.GetEmailMessage(apiKey, contactName);
             if (message != String.Empty)
             {
-                SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-                service.SendEmail("noreply@biodiversitylibrary.org", recipients, null, null,
-                    "BHL API Key", message);
+                Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.From = "noreply@biodiversitylibrary.org";
+                mailRequest.To.Add(recipient);
+                mailRequest.Subject = "BHL API Key";
+                mailRequest.Body = message;
+                client.SendEmail(mailRequest);
             }
         }
 

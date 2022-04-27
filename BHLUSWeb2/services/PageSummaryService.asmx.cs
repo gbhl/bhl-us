@@ -1,3 +1,4 @@
+using BHL.SiteServiceREST.v1.Client;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
@@ -43,8 +44,8 @@ namespace MOBOT.BHL.Web2.Services
 		{
 			try
 			{
-                SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-                return service.GetOcrText(pageID);
+				Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+				return client.GetPageText(pageID);
 			}
 			catch ( Exception ex )
 			{

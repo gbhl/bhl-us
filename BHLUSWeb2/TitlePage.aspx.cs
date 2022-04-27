@@ -1,4 +1,6 @@
-﻿using CustomDataAccess;
+﻿using BHL.SiteServiceREST.v1.Client;
+using BHL.SiteServicesREST.v1;
+using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
@@ -153,7 +155,7 @@ namespace MOBOT.BHL.Web2
 
                 ((Book)this.Master).bookID = (PublicationDetail.Type == ItemType.Book ? PublicationDetail.ID.ToString() : "s" + PublicationDetail.ID.ToString());
                 ((Book)this.Master).sponsor =
-                    PublicationDetail.Sponsor == null ? 
+                    PublicationDetail.Sponsor == null ?
                     string.Empty :
                     PublicationDetail.Sponsor.Replace("\"", "");
 
@@ -170,7 +172,7 @@ namespace MOBOT.BHL.Web2
                 SetGoogleScholarTags(PublicationDetail.Type, PublicationDetail.ID);
 
                 // Serialize only the information we need
-                List<SiteService.ViewerPage> viewerPages = new List<SiteService.ViewerPage>();
+                List<ViewerPageModel> viewerPages = new List<ViewerPageModel>();
 
                 List<PageSummaryView> pageviews = new List<PageSummaryView>();
                 if (PublicationDetail.Type == ItemType.Book)
@@ -187,7 +189,7 @@ namespace MOBOT.BHL.Web2
                     PublicationDetail.PageProgression = pageviews[0].PageProgression;
                     foreach (PageSummaryView pageview in pageviews)
                     {
-                        SiteService.ViewerPage viewerPage = new SiteService.ViewerPage
+                        ViewerPageModel viewerPage = new ViewerPageModel
                         {
                             ExternalBaseUrl = pageview.ExternalBaseURL,
                             BarCode = pageview.BarCode,
@@ -198,7 +200,15 @@ namespace MOBOT.BHL.Web2
                     }
                 }
 
-                viewerPages = (new SiteService.SiteServiceSoapClient().PageGetImageDimensions(viewerPages.ToArray(), (int)PublicationDetail.Type, PublicationDetail.ID)).ToList();
+                Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                if (PublicationDetail.Type == ItemType.Book)
+                {
+                    viewerPages = client.GetItemPageImageDimensions(PublicationDetail.ID, viewerPages).ToList<ViewerPageModel>();
+                }
+                else
+                {
+                    viewerPages = client.GetSegmentPageImageDimensions(PublicationDetail.ID, viewerPages).ToList<ViewerPageModel>();
+                }
 
                 PublicationDetail.Pages = JsonConvert.SerializeObject(pages.ToList().Join(viewerPages,
                                                 p => p.SequenceOrder,

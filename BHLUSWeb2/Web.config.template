@@ -78,6 +78,9 @@
     <!-- Feature toggle for PDF delivery -->
     <add key="UsePregeneratedPDFs" value ="true" />
 
+    <!-- SiteServices address -->
+    <add key="SiteServicesURL" value="SITESERVICES_URL"/>
+
     <!-- ###################################################################### -->
 
     <add key="DoRemoteNameLookup" value="false"/>
@@ -362,32 +365,7 @@
           </outboundRules>
         </rewrite>
     </system.webServer>
-  <system.serviceModel>
-    <bindings>
-      <basicHttpBinding>
-        <binding name="SiteServiceSoap" closeTimeout="00:01:00" openTimeout="00:01:00"
-          receiveTimeout="00:10:00" sendTimeout="00:01:00" allowCookies="false"
-          bypassProxyOnLocal="false" hostNameComparisonMode="StrongWildcard"
-          maxBufferPoolSize="524288" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647"
-          textEncoding="utf-8" transferMode="Buffered" useDefaultWebProxy="true"
-          messageEncoding="Text">
-          <readerQuotas maxDepth="32" maxStringContentLength="2147483647" maxArrayLength="2147483647"
-            maxBytesPerRead="4096" maxNameTableCharCount="16384" />
-          <security mode="None">
-            <transport clientCredentialType="None" proxyCredentialType="None"
-              realm="" />
-            <message clientCredentialType="UserName" algorithmSuite="Default" />
-          </security>
-        </binding>
-      </basicHttpBinding>
-    </bindings>
-    <client>
-      <endpoint address="http://localhost:60786/SiteService.asmx" binding="basicHttpBinding"
-        bindingConfiguration="SiteServiceSoap" contract="SiteService.SiteServiceSoap"
-        name="SiteServiceSoap" />
-    </client>
-  </system.serviceModel>
- <runtime>
+  <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
       <dependentAssembly>
         <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35"/>

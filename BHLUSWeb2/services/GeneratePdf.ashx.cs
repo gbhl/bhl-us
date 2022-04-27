@@ -67,18 +67,6 @@ namespace MOBOT.BHL.Web2.services
         {
             /*
              * REMOVED April 5, 2013.  We decided the email was not needed. 
-            try
-            {
-                String[] recipients = new String[1];
-                recipients[0] = toEmail;
-                BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
-                service.SendEmail("noreply@biodiversitylibrary.org", recipients, null, null,
-                    "BHL PDF Generation request #" + pdfId.ToString(), GetEmailBody(pdfId));
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
              */
 
             return true;
