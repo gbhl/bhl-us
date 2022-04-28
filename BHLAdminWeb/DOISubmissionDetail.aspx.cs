@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Xml;
-using MOBOT.BHL.Server;
+﻿using BHL.SiteServiceREST.v1.Client;
 using MOBOT.BHL.Web.Utilities;
+using System;
+using System.Configuration;
+using System.Xml;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -27,8 +22,8 @@ namespace MOBOT.BHL.AdminWeb
 
                     if (!string.IsNullOrEmpty(batchId) && (type == "d" || type == "s"))
                     {
-                        SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-                        output = service.DOIGetFileContents(batchId, type);
+                        Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                        output = client.GetDOIFile(batchId, type);
                     }
 
                     if (!output.Contains("<")) output = "<doi_submission_detail>" + output + "</doi_submission_detail>";

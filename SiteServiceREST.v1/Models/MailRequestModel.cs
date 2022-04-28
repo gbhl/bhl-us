@@ -2,11 +2,11 @@
 {
     public class MailRequestModel
     {
-        public string from { get; set; }
-        public string[] to { get; set; }
-        public string[] cc { get; set; }
-        public string[] bcc { get; set; }
-        public string subject { get; set; }
-        public string body { get; set; }
+        public string from { get; set; } = string.Empty;
+        public List<string> to { get; set; } = new List<string>();
+        public List<string> cc { get; set; } = new List<string>();
+        public List<string> bcc { get; set; } = new List<string>();
+        public string subject { get; set; } = string.Empty;
+        public string body { get; set; } = string.Empty;
     }
 }

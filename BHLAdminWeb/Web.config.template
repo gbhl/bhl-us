@@ -54,6 +54,8 @@
     <add key="MessageQueues" value="bhl.dev.index|bhl.dev.index.error|bhl.dev.index.names|bhl.dev.index.names.error" />
     <!-- List of search indexes, delimited by | -->
     <add key="SearchServerIndexes" value="catalog|items|authors|keywords|names|pages" />
+    <!-- SiteServices address -->
+    <add key="SiteServicesURL" value="SITE SERVICES HTTP ADDRESS"/>
 
     <!-- ###################################################################### -->
 
@@ -167,18 +169,6 @@
       validation="SHA1"
   	/>
   </system.web>
-  <system.serviceModel>
-    <bindings>
-      <basicHttpBinding>
-        <binding name="SiteServiceSoap" maxBufferSize="9437184" maxBufferPoolSize="524288" maxReceivedMessageSize="9437184" />
-      </basicHttpBinding>
-    </bindings>
-    <client>
-      <endpoint address="http://localhost:60786/SiteService.asmx" binding="basicHttpBinding"
-        bindingConfiguration="SiteServiceSoap" contract="SiteService.SiteServiceSoap"
-        name="SiteServiceSoap" />
-    </client>
-  </system.serviceModel>
   <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
       <dependentAssembly>

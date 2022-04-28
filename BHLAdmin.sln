@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLAdminWeb", "BHLAdminWeb\BHLAdminWeb.csproj", "{53463F60-2878-46CC-A088-0B09C8F55CC7}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F} = {F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrUtility", "FlickrUtility\FlickrUtility.csproj", "{F9D69FA5-9EE0-43FB-ABA3-DC443ACE3F18}"
 EndProject
@@ -31,19 +28,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLWebUtilities", "BHLWebUt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLFileAccess", "BHLFileAccess\BHLFileAccess.csproj", "{90020027-AD6A-4052-820E-057BEBAA8E2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLImportServer", "BHLImportServer\BHLImportServer.csproj", "{5D08C39C-54E8-42CE-BDA5-99B56DE972BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLImportServer", "BHLImportServer\BHLImportServer.csproj", "{5D08C39C-54E8-42CE-BDA5-99B56DE972BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLImportCoreDAL", "BHLImportCoreDAL\BHLImportCoreDAL.csproj", "{BBD99822-F1A3-43C1-A242-686F807DBE33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLImportCoreDAL", "BHLImportCoreDAL\BHLImportCoreDAL.csproj", "{BBD99822-F1A3-43C1-A242-686F807DBE33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLImportDataObjects", "BHLImportDataObjects\BHLImportDataObjects.csproj", "{D936AD4D-99F3-4095-B538-A097B23ACCD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLImportDataObjects", "BHLImportDataObjects\BHLImportDataObjects.csproj", "{D936AD4D-99F3-4095-B538-A097B23ACCD8}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database-BHL", "Database-BHL\Database-BHL.sqlproj", "{1EBA8419-B379-473B-B641-7AA6FDDB30A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteServices", "SiteServices\SiteServices.csproj", "{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueUtility", "QueueUtility\QueueUtility.csproj", "{0DE1BE81-B922-411F-A4EC-01FD9822936B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextImportUtility", "TextImportUtility\TextImportUtility.csproj", "{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextImportUtility", "TextImportUtility\TextImportUtility.csproj", "{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteServicesREST.v1", "SiteServiceREST.v1\SiteServicesREST.v1.csproj", "{E9C958FA-3A33-424D-AD7E-7BCB34550976}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteServicesREST.v1.Client", "SiteServiceREST.v1.Client\SiteServicesREST.v1.Client.csproj", "{EC62A99C-EFEB-4EFA-962F-D2CE0BACA6C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,10 +104,6 @@ Global
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0DE1BE81-B922-411F-A4EC-01FD9822936B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0DE1BE81-B922-411F-A4EC-01FD9822936B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DE1BE81-B922-411F-A4EC-01FD9822936B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -117,6 +112,14 @@ Global
 		{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9C958FA-3A33-424D-AD7E-7BCB34550976}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9C958FA-3A33-424D-AD7E-7BCB34550976}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9C958FA-3A33-424D-AD7E-7BCB34550976}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9C958FA-3A33-424D-AD7E-7BCB34550976}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC62A99C-EFEB-4EFA-962F-D2CE0BACA6C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC62A99C-EFEB-4EFA-962F-D2CE0BACA6C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC62A99C-EFEB-4EFA-962F-D2CE0BACA6C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC62A99C-EFEB-4EFA-962F-D2CE0BACA6C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

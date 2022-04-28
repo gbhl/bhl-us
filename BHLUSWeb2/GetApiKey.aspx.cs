@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using BHL.SiteServiceREST.v1.Client;
 using BHL.SiteServicesREST.v1;
@@ -66,6 +67,7 @@ namespace MOBOT.BHL.Web2
                 Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
                 MailRequestModel mailRequest = new MailRequestModel();
                 mailRequest.From = "noreply@biodiversitylibrary.org";
+                mailRequest.To = new List<string>();
                 mailRequest.To.Add(recipient);
                 mailRequest.Subject = "BHL API Key";
                 mailRequest.Body = message;

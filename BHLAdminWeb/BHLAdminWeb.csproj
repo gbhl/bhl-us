@@ -620,11 +620,6 @@
     <Compile Include="SegmentTypeEdit.aspx.designer.cs">
       <DependentUpon>SegmentTypeEdit.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Service References\SiteService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Services\AuthorService.ashx.cs">
       <DependentUpon>AuthorService.ashx</DependentUpon>
     </Compile>
@@ -992,46 +987,6 @@
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.4\jquery-ui.min.js" />
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.DOIGetFileContentsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.GetOcrTextResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.MarcCreateFileResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.MARCFileExistsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.MARCGetFileContentsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.SendEmailResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.QueueMessagesResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.GetQueueMessageCountResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.GetItemTextResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.PageGetImageDimensionsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.ViewerPage.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Service References\SiteService\configuration91.svcinfo" />
-    <None Include="Service References\SiteService\configuration.svcinfo" />
-    <None Include="Service References\SiteService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\SiteService\SiteService1.disco" />
     <Content Include="styles\adminstyle.css" />
     <Content Include="styles\jqgridtheme\jquery-ui-1.8.10.custom.css" />
     <Content Include="styles\jqgridtheme\ui.jqgrid.css" />
@@ -1133,7 +1088,6 @@
     <Content Include="Views\Doi\QueueAddConfirm.cshtml" />
     <Content Include="Views\Doi\QueueDelete.cshtml" />
     <Content Include="Views\Doi\QueueAddInfo.cshtml" />
-    <None Include="Service References\SiteService\SiteService1.wsdl" />
     <Content Include="Views\CitationImport\ImportFileStatus.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
@@ -1247,6 +1201,10 @@
       <Project>{f9d69fa5-9ee0-43fb-aba3-dc443ace3f18}</Project>
       <Name>FlickrUtility</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SiteServiceREST.v1.Client\SiteServicesREST.v1.Client.csproj">
+      <Project>{ec62a99c-efeb-4efa-962f-d2ce0baca6c7}</Project>
+      <Name>SiteServicesREST.v1.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TextImportUtility\TextImportUtility.csproj">
       <Project>{534cfd16-b8ec-4527-8e3e-f1e64ebd2a21}</Project>
       <Name>TextImportUtility</Name>
@@ -1260,9 +1218,6 @@
     <Folder Include="styles\jqgridtheme\images\" />
     <Folder Include="Upload\ItemText\Files\" />
     <Folder Include="Views\Downloads\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\SiteService\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NETStandard.Library">

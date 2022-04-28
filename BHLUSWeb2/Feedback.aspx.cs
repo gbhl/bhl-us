@@ -391,6 +391,7 @@ namespace MOBOT.BHL.Web2
                     Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
                     MailRequestModel mailRequest = new MailRequestModel();
                     mailRequest.From = "noreply@biodiversitylibrary.org";
+                    mailRequest.To = new List<string>();
                     mailRequest.To.Add(recipient);
                     mailRequest.Subject = subject;
                     mailRequest.Body = message;

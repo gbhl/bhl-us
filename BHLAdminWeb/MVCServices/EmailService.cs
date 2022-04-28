@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNet.Identity;
-using System;
+﻿using BHL.SiteServiceREST.v1.Client;
+using BHL.SiteServicesREST.v1;
+using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace MOBOT.BHL.AdminWeb.MVCServices
 {
@@ -29,17 +28,23 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         /// <returns></returns>
         public Task SendAsync(IdentityMessage message, List<string> ccList, List<string> bccList)
         {
-            SiteService.ArrayOfString recipients = new SiteService.ArrayOfString();
-            SiteService.ArrayOfString cc = new SiteService.ArrayOfString();
-            SiteService.ArrayOfString bcc = new SiteService.ArrayOfString();
+            List<string> recipients = new List<string>();
+            List<string> cc = new List<string>();
+            List<string> bcc = new List<string>();
 
             recipients.Add(message.Destination);
             if (ccList != null) foreach (string ccRecipient in ccList) cc.Add(ccRecipient);
             if (bccList != null) foreach (string bccRecipient in bccList) bcc.Add(bccRecipient);
 
-            SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-            return service.SendEmailAsync(ConfigurationManager.AppSettings["EmailFromAddress"], 
-                recipients, cc, bcc, message.Subject, message.Body);
+            Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+            MailRequestModel mailRequest = new MailRequestModel();
+            mailRequest.From = ConfigurationManager.AppSettings["EmailFromAddress"];
+            mailRequest.To = recipients;
+            mailRequest.Cc = cc;
+            mailRequest.Bcc = bcc;
+            mailRequest.Subject = message.Subject;
+            mailRequest.Body = message.Body;
+            return client.SendEmailAsync(mailRequest);
         }
     }
 }

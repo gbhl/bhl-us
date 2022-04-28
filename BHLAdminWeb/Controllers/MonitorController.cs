@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Web.Mvc;
 using System.Linq;
 using MOBOT.BHL.Web.Utilities;
+using BHL.SiteServiceREST.v1.Client;
 
 namespace MOBOT.BHL.AdminWeb.Controllers
 {
@@ -37,13 +38,13 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
             try
             {
-                SiteService.ArrayOfString messages = new SiteService.ArrayOfString();
+                List<string> messages = new List<string>();
                 messages.AddRange(model.queueMessages
                     .Replace(System.Environment.NewLine, "~")
                     .Split('~'));
 
-                SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-                service.QueueMessages(selectedQueue, messages);
+                Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                client.PutQueueMessages(selectedQueue, messages);
             }
             catch (System.Exception ex)
             {

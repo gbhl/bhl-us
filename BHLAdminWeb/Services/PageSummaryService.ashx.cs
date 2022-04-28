@@ -1,12 +1,14 @@
+using BHL.SiteServiceREST.v1.Client;
+using BHL.SiteServicesREST.v1;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
-using System.Linq;
-using MOBOT.BHL.DataObjects.Enum;
 
 namespace MOBOT.BHL.AdminWeb.Services
 {
@@ -67,10 +69,13 @@ namespace MOBOT.BHL.AdminWeb.Services
                     if (idType == "Segment") pages = new BHLProvider().PageSummarySelectForViewerBySegmentID(id);
 
                     // Serialize only the information we need
-                    List<SiteService.ViewerPage> viewerPages = new List<SiteService.ViewerPage>();
+                    List<ViewerPageModel> viewerPages = new List<ViewerPageModel>();
+
+                    //List<SiteService.ViewerPage> viewerPages = new List<SiteService.ViewerPage>();
                     foreach (PageSummaryView page in pages)
                     {
-                        SiteService.ViewerPage viewerPage = new SiteService.ViewerPage();
+                        //SiteService.ViewerPage viewerPage = new SiteService.ViewerPage();
+                        ViewerPageModel viewerPage = new ViewerPageModel();
                         viewerPage.ExternalBaseUrl = page.ExternalBaseURL;
                         viewerPage.AltExternalUrl = page.ExternalURL;
                         viewerPage.BarCode = page.BarCode;
@@ -79,8 +84,15 @@ namespace MOBOT.BHL.AdminWeb.Services
                     }
 
                     // Add the height and width of each page to the list
-                    int itemType = (idType == "Segment" ? (int)ItemType.Segment : (int)ItemType.Book);
-                    viewerPages = (new SiteService.SiteServiceSoapClient().PageGetImageDimensions(viewerPages.ToArray(), itemType, id)).ToList();
+                    Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                    if (idType == "Segment")
+                    {
+                        viewerPages = client.GetSegmentPageImageDimensions(id, viewerPages).ToList<ViewerPageModel>();
+                    }
+                    else
+                    {
+                        viewerPages = client.GetItemPageImageDimensions(id, viewerPages).ToList<ViewerPageModel>();
+                    }
 
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     return js.Serialize(viewerPages);

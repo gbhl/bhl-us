@@ -1,4 +1,5 @@
-﻿using MOBOT.BHL.DataObjects;
+﻿using BHL.SiteServiceREST.v1.Client;
+using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
@@ -140,8 +141,8 @@ namespace MOBOT.BHL.AdminWeb
                         // - Copy MARC.XML file to new folder (using MarcBibID as name)
                         try
                         {
-                            SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-                            service.MarcCreateFile(title.MARCBibID, System.IO.File.ReadAllText(marc.MarcFileLocation));
+                            Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                            client.CreateMarcFile(title.MARCBibID, System.IO.File.ReadAllText(marc.MarcFileLocation));
                         }
                         catch
                         {

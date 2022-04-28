@@ -1,6 +1,8 @@
-﻿using MOBOT.BHL.DataObjects;
+﻿using BHL.SiteServiceREST.v1.Client;
+using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
+using System.Configuration;
 using System.Data.SqlClient;
 
 namespace MOBOT.BHL.AdminWeb.Models
@@ -294,14 +296,15 @@ namespace MOBOT.BHL.AdminWeb.Models
                 return;
             }
 
-            SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-            if (service.OcrJobExists(itemID))
+            Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+
+            if (client.OcrJobExists(itemID))
             {
                 this.Message = string.Format("Ocr regeneration job pending for {0} {1} ({2}).", this.OcrItemType, this.OcrItemID, this.OcrIAID);
                 return;
             }
 
-            service.OcrCreateJob(itemID);
+            client.CreateOcrJob(itemID);
             this.Message = string.Format("Ocr regeneration job created for {0} {1} ({2}).", this.OcrItemType, this.OcrItemID, this.OcrIAID);
         }
 

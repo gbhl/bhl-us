@@ -1,8 +1,10 @@
+using BHL.SiteServiceREST.v1.Client;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -345,8 +347,8 @@ namespace MOBOT.BHL.AdminWeb
 
 
                 // See if we can display a link to the MARC file
-                SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-                if (service.MARCFileExists(book.BookID, "i"))
+                Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                if (!string.IsNullOrWhiteSpace(client.GetMarcFile(book.BookID, "i")))
                 {
                     hypMarc.Attributes["onclick"] = string.Format("javascript:window.open('TitleItemMarc.aspx?type=i&id={0}', '', 'width=600,height=600,location=0,status=0,scrollbars=1');", book.BookID.ToString());
                     hypMarc.Visible = true;                        
