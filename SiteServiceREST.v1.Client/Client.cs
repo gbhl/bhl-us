@@ -58,7 +58,7 @@ namespace BHL.SiteServiceREST.v1.Client
 
                 return byteArray;
                 */
-                return string.IsNullOrWhiteSpace(restResponse) ? null : Encoding.UTF8.GetBytes(restResponse);
+                return restResponse;
             }
         }
 
@@ -85,7 +85,7 @@ namespace BHL.SiteServiceREST.v1.Client
 
                 return byteArray;
                 */
-                return string.IsNullOrWhiteSpace(restResponse) ? null : Encoding.UTF8.GetBytes(restResponse);
+                return restResponse;
             }
         }
 
@@ -301,7 +301,7 @@ namespace BHL.SiteServiceREST.v1.Client
             {
                 SiteService restClient = new SiteService(_baseUrl, httpClient);
                 var restResponse = await restClient.GetSegmentPdfAsync(segmentID).ConfigureAwait(false);
-                return string.IsNullOrWhiteSpace(restResponse) ? null : Encoding.UTF8.GetBytes(restResponse);
+                return restResponse;
             }
         }
 
@@ -311,7 +311,7 @@ namespace BHL.SiteServiceREST.v1.Client
             {
                 SiteService restClient = new SiteService(_baseUrl, httpClient);
                 var restResponse = restClient.GetSegmentPdf(segmentID);
-                return string.IsNullOrWhiteSpace(restResponse) ? null : Encoding.UTF8.GetBytes(restResponse);
+                return restResponse;
             }
         }
 

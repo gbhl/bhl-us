@@ -27,11 +27,11 @@ namespace BHL.SiteServicesREST.v1.Controllers
         }
 
         [HttpGet("{segmentID}/Pdf", Name = "GetSegmentPdf")]
-        [ProducesResponseType(200, Type = typeof(string))]
+        [ProducesResponseType(200, Type = typeof(byte[]))]
         public IActionResult Pdf(int segmentID)
         {
             ItemType itemType = ItemType.Segment;
-            return Ok(Encoding.UTF8.GetString(new BHLProvider().GetItemPdf(itemType, segmentID)));
+            return Ok(new BHLProvider().GetItemPdf(itemType, segmentID));
         }
 
         [HttpPut("{segmentID}/ImageDimensions", Name = "GetSegmentPageImageDimensions")]

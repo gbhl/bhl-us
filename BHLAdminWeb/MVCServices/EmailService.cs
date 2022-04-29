@@ -26,7 +26,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         /// <param name="ccList"></param>
         /// <param name="bccList"></param>
         /// <returns></returns>
-        public Task SendAsync(IdentityMessage message, List<string> ccList, List<string> bccList)
+        public async Task SendAsync(IdentityMessage message, List<string> ccList, List<string> bccList)
         {
             List<string> recipients = new List<string>();
             List<string> cc = new List<string>();
@@ -44,7 +44,8 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             mailRequest.Bcc = bcc;
             mailRequest.Subject = message.Subject;
             mailRequest.Body = message.Body;
-            return client.SendEmailAsync(mailRequest);
+            await client.SendEmailAsync(mailRequest);
+            return;
         }
     }
 }
