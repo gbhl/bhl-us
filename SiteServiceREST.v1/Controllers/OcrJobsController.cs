@@ -9,17 +9,19 @@ namespace BHL.SiteServicesREST.v1.Controllers
     public class OcrJobsController : Controller
     {
         private readonly ILogger<OcrJobsController> _logger;
+        private readonly IBHLProvider _bhlProvider;
 
-        public OcrJobsController(ILogger<OcrJobsController> logger)
+        public OcrJobsController(ILogger<OcrJobsController> logger, IBHLProvider bhlProvider)
         {
             _logger = logger;
+            _bhlProvider = bhlProvider;
         }
 
         [HttpGet("itemID", Name = "OcrJobExists")]
         [ProducesResponseType(200, Type = typeof(bool))]
         public IActionResult Get(int itemID)
         {
-            return Ok(new BHLProvider().OcrJobExists(itemID));
+            return Ok(_bhlProvider.OcrJobExists(itemID));
         }
 
         // Put example
@@ -28,7 +30,7 @@ namespace BHL.SiteServicesREST.v1.Controllers
         [ProducesResponseType(200)]
         public IActionResult OcrCreateJob(int itemID)
         {
-            new BHLProvider().OcrCreateJob(itemID);
+            _bhlProvider.OcrCreateJob(itemID);
             return Ok();
         }
     }

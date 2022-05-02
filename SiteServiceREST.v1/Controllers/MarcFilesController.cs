@@ -9,24 +9,26 @@ namespace BHL.SiteServicesREST.v1.Controllers
     public class MarcFilesController : Controller
     {
         private readonly ILogger<MarcFilesController> _logger;
+        private readonly IBHLProvider _bhlProvider;
 
-        public MarcFilesController(ILogger<MarcFilesController> logger)
+        public MarcFilesController(ILogger<MarcFilesController> logger, IBHLProvider bhlProvider)
         {
             _logger = logger;
+            _bhlProvider = bhlProvider;
         }
 
         [HttpGet("{id}/{type}", Name = "GetMarcFile")]
         [ProducesResponseType(200, Type = typeof(string))]
         public IActionResult Get(int id, string type)
         {
-            return Ok(new BHLProvider().MarcGetFileContents(id, type));
+            return Ok(_bhlProvider.MarcGetFileContents(id, type));
         }
 
         [HttpPut("marcBibID", Name = "CreateMarcFile")]
         [ProducesResponseType(200)]
         public IActionResult MarcCreateFile(string marcBibID, string content)
         {
-            new BHLProvider().MarcCreateFile(marcBibID, content);
+            _bhlProvider.MarcCreateFile(marcBibID, content);
             return Ok();
         }
     }

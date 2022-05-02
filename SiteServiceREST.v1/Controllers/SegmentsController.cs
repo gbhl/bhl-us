@@ -12,10 +12,12 @@ namespace BHL.SiteServicesREST.v1.Controllers
     public class SegmentsController : Controller
     {
         private readonly ILogger<SegmentsController> _logger;
+        private readonly IBHLProvider _bhlProvider;
 
-        public SegmentsController(ILogger<SegmentsController> logger)
+        public SegmentsController(ILogger<SegmentsController> logger, IBHLProvider bhlProvider)
         {
             _logger = logger;
+            _bhlProvider = bhlProvider;
         }
 
         [HttpGet("{segmentID}/Text", Name = "GetSegmentText")]
@@ -23,7 +25,7 @@ namespace BHL.SiteServicesREST.v1.Controllers
         public IActionResult Text(int segmentID)
         {
             ItemType itemType = ItemType.Segment;
-            return Ok(new BHLProvider().GetItemText(itemType, segmentID));
+            return Ok(_bhlProvider.GetItemText(itemType, segmentID));
         }
 
         [HttpGet("{segmentID}/Pdf", Name = "GetSegmentPdf")]
@@ -31,7 +33,7 @@ namespace BHL.SiteServicesREST.v1.Controllers
         public IActionResult Pdf(int segmentID)
         {
             ItemType itemType = ItemType.Segment;
-            return Ok(new BHLProvider().GetItemPdf(itemType, segmentID));
+            return Ok(_bhlProvider.GetItemPdf(itemType, segmentID));
         }
 
         [HttpPut("{segmentID}/ImageDimensions", Name = "GetSegmentPageImageDimensions")]
@@ -50,10 +52,10 @@ namespace BHL.SiteServicesREST.v1.Controllers
                 Width = model.Width
             });
 
-            pages = new BHLProvider().PageGetImageDimensions(pages, ItemType.Segment, segmentID);
+            pages = _bhlProvider.PageGetImageDimensions(pages, ItemType.Segment, segmentID);
 
             List<ViewerPageModel> returnPages = new List<ViewerPageModel>();
-            foreach (BHLProvider.ViewerPage page in pages) returnPages.Add(new ViewerPageModel
+            foreach (var page in pages) returnPages.Add(new ViewerPageModel
             {
                 AltExternalUrl = page.AltExternalUrl,
                 ExternalBaseUrl = page.ExternalBaseUrl,

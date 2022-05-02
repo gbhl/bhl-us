@@ -11,17 +11,19 @@ namespace BHL.SiteServicesREST.v1.Controllers
     public class PagesController : Controller
     {
         private readonly ILogger<PagesController> _logger;
+        private readonly IBHLProvider _bhlProvider;
 
-        public PagesController(ILogger<PagesController> logger)
+        public PagesController(ILogger<PagesController> logger, IBHLProvider bhlProvider)
         {
             _logger = logger;
+            _bhlProvider = bhlProvider;
         }
 
         [HttpGet("{pageID}/Text", Name = "GetPageText")]
         [ProducesResponseType(200, Type = typeof(string))]
         public IActionResult Text(int pageID)
         {
-            return Ok(new BHLProvider().GetOcrText(pageID));
+            return Ok(_bhlProvider.GetOcrText(pageID));
         }
     }
 }

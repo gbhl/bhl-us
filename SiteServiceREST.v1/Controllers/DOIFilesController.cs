@@ -9,17 +9,19 @@ namespace BHL.SiteServicesREST.v1.Controllers
     public class DOIFilesController : Controller
     {
         private readonly ILogger<DOIFilesController> _logger;
+        private readonly IBHLProvider _bhlProvider;
 
-        public DOIFilesController(ILogger<DOIFilesController> logger)
+        public DOIFilesController(ILogger<DOIFilesController> logger, IBHLProvider bhlProvider)
         {
             _logger = logger;
+            _bhlProvider = bhlProvider;
         }
 
         [HttpGet("{batchId}/{type}", Name = "GetDOIFile")]
         [ProducesResponseType(200, Type = typeof(string))]
         public IActionResult Get(string batchId, string type)
         {
-            return Ok(new BHLProvider().DOIGetFileContents(batchId, type));
+            return Ok(_bhlProvider.DOIGetFileContents(batchId, type));
         }
     }
 }

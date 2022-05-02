@@ -23,6 +23,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddTransient<BHL.SiteServicesREST.v1.Services.IMailService, BHL.SiteServicesREST.v1.Services.MailService>();
 builder.Services.AddTransient<BHL.SiteServicesREST.v1.Services.IQueueService, BHL.SiteServicesREST.v1.Services.QueueService>();
+builder.Services.AddTransient<MOBOT.BHL.Server.IBHLProvider, MOBOT.BHL.Server.BHLProvider>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -16,7 +16,7 @@ using System.Xml.Linq;
 
 namespace MOBOT.BHL.Server
 {
-    public partial class BHLProvider
+    public partial class BHLProvider : IBHLProvider
     {
         public MOBOT.FileAccess.IFileAccessProvider GetFileAccessProvider()
         {

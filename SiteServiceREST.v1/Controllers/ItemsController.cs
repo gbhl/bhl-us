@@ -12,10 +12,12 @@ namespace BHL.SiteServicesREST.v1.Controllers
     public class ItemsController : Controller
     {
         private readonly ILogger<ItemsController> _logger;
+        private readonly IBHLProvider _bhlProvider;
 
-        public ItemsController(ILogger<ItemsController> logger)
+        public ItemsController(ILogger<ItemsController> logger, IBHLProvider bhlProvider)
         {
             _logger = logger;
+            _bhlProvider = bhlProvider;
         }
 
         [HttpGet("{itemID}/Text", Name = "GetItemText")]
@@ -23,7 +25,7 @@ namespace BHL.SiteServicesREST.v1.Controllers
         public IActionResult Text(int itemID)
         {
             ItemType itemType = ItemType.Book;
-            return Ok(new BHLProvider().GetItemText(itemType, itemID));
+            return Ok(_bhlProvider.GetItemText(itemType, itemID));
         }
 
         [HttpGet("{itemID}/Pdf", Name = "GetItemPdf")]
@@ -31,7 +33,7 @@ namespace BHL.SiteServicesREST.v1.Controllers
         public IActionResult Pdf(int itemID)
         {
             ItemType itemType = ItemType.Book;
-            return Ok(new BHLProvider().GetItemPdf(itemType, itemID));
+            return Ok(_bhlProvider.GetItemPdf(itemType, itemID));
         }
 
         [HttpPut("{itemID}/ImageDimensions", Name = "GetItemPageImageDimensions")]
@@ -50,7 +52,7 @@ namespace BHL.SiteServicesREST.v1.Controllers
                 Width = model.Width
             });
 
-            pages = new BHLProvider().PageGetImageDimensions(pages, ItemType.Book, itemID);
+            pages = _bhlProvider.PageGetImageDimensions(pages, ItemType.Book, itemID);
 
             List<ViewerPageModel> returnPages = new List<ViewerPageModel>();
             foreach (var page in pages) returnPages.Add(new ViewerPageModel
