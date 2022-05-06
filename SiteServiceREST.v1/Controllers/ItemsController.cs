@@ -29,11 +29,12 @@ namespace BHL.SiteServicesREST.v1.Controllers
         }
 
         [HttpGet("{itemID}/Pdf", Name = "GetItemPdf")]
-        [ProducesResponseType(200, Type = typeof(byte[]))]
+        [ProducesResponseType(200, Type = typeof(FileStream))]
         public IActionResult Pdf(int itemID)
         {
-            ItemType itemType = ItemType.Book;
-            return Ok(_bhlProvider.GetItemPdf(itemType, itemID));
+            string pdfLocation = _bhlProvider.GetItemPdfPath(ItemType.Book, itemID);
+            var stream = new FileStream(pdfLocation, FileMode.Open);
+            return new FileStreamResult(stream, "application/pdf");
         }
 
         [HttpPut("{itemID}/ImageDimensions", Name = "GetItemPageImageDimensions")]

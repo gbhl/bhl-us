@@ -1,14 +1,13 @@
-﻿using MOBOT.BHL.DataObjects.Enum;
+﻿using BHL.SiteServiceREST.v1.Client;
+using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Configuration;
 using System.IO;
 using System.Net;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
-using BHL.SiteServiceREST.v1.Client;
-using System.Text;
 
 namespace MOBOT.BHL.Web2
 {
@@ -115,8 +114,8 @@ namespace MOBOT.BHL.Web2
         private Stream GetPdfStream(int id)
         {
             Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);            
-            byte[] pdf = client.GetSegmentPdf(id);
-            return (pdf == null) ? null : new MemoryStream(pdf);
+            var pdf = client.GetSegmentPdf(id);
+            return pdf;
         }
 
         public bool IsReusable

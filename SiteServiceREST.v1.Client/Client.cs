@@ -1,9 +1,11 @@
 ﻿using BHL.SiteServicesREST.v1;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-//using System.IO;
 //using System.Runtime.Serialization.Formatters.Binary;
 
 namespace BHL.SiteServiceREST.v1.Client
@@ -11,6 +13,8 @@ namespace BHL.SiteServiceREST.v1.Client
     public class Client
     {
         private string _baseUrl = string.Empty;
+        private string _segmentPdfUriFormat = "v1/Segments/{0}/Pdf";
+        private string _itemPdfUriFormat = "v1/Items/{0}/Pdf";
 
         public Client(string baseUrl)
         { 
@@ -35,57 +39,31 @@ namespace BHL.SiteServiceREST.v1.Client
             }
         }
 
-        public async Task<byte[]> GetItemPdfAsync(int itemID)
+        public async Task<Stream> GetItemPdfAsync(int itemID)
         {
             using (var httpClient = new HttpClient())
             {
-                SiteService restClient = new SiteService(_baseUrl, httpClient);
-                var restResponse = await restClient.GetItemPdfAsync(itemID).ConfigureAwait(false);
+                httpClient.BaseAddress = new Uri(_baseUrl);
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //return await restClient.GetItemPdfAsync(itemID).ConfigureAwait(false);
-
-                /*
-                byte[] byteArray;
-                using (var stream = new MemoryStream())
-                {
-                    var formatter = new BinaryFormatter();
-                    formatter.Serialize(stream, restResponse);
-                    byteArray = stream.ToArray();
-                    //byteArray = new byte[stream.Length];
-                    //stream.Seek(0, SeekOrigin.Begin);
-                    //stream.Read(byteArray, 0, (int)stream.Length);
-                }
-
-                return byteArray;
-                */
-                return restResponse;
+                Stream pdf = null;
+                string requestUri = string.Format(_itemPdfUriFormat, itemID.ToString());
+                HttpResponseMessage response = await httpClient.GetAsync(requestUri);
+                if (response.IsSuccessStatusCode) pdf = await response.Content.ReadAsStreamAsync();
+                return pdf;
             }
         }
 
-        public byte[] GetItemPdf(int itemID)
+        public Stream GetItemPdf(int itemID)
         {
             using (var httpClient = new HttpClient())
             {
-                SiteService restClient = new SiteService(_baseUrl, httpClient);
-                var restResponse = restClient.GetItemPdf(itemID);
-
-                //return restClient.GetItemPdf(itemID);
-
-                /*
-                byte[] byteArray;
-                using (var stream = new MemoryStream())
-                {
-                    var formatter = new BinaryFormatter();
-                    formatter.Serialize(stream, restResponse);
-                    byteArray = stream.ToArray();
-                    //byteArray = new byte[stream.Length];
-                    //stream.Seek(0, SeekOrigin.Begin);
-                    //stream.Read(byteArray, 0, (int)stream.Length);
-                }
-
-                return byteArray;
-                */
-                return restResponse;
+                httpClient.BaseAddress = new Uri(_baseUrl);
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                string requestUri = string.Format(_itemPdfUriFormat, itemID.ToString());
+                return Task.Run(async () => await httpClient.GetStreamAsync(requestUri)).GetAwaiter().GetResult();
             }
         }
 
@@ -295,23 +273,31 @@ namespace BHL.SiteServiceREST.v1.Client
             }
         }
 
-        public async Task<byte[]> GetSegmentPdfAsync(int segmentID)
+        public async Task<Stream> GetSegmentPdfAsync(int segmentID)
         {
             using (var httpClient = new HttpClient())
             {
-                SiteService restClient = new SiteService(_baseUrl, httpClient);
-                var restResponse = await restClient.GetSegmentPdfAsync(segmentID).ConfigureAwait(false);
-                return restResponse;
+                httpClient.BaseAddress = new Uri(_baseUrl);
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                Stream pdf = null;
+                string requestUri = string.Format(_segmentPdfUriFormat, segmentID.ToString());
+                HttpResponseMessage response = await httpClient.GetAsync(requestUri);
+                if (response.IsSuccessStatusCode) pdf = await response.Content.ReadAsStreamAsync();
+                return pdf;
             }
         }
 
-        public byte[] GetSegmentPdf(int segmentID)
+        public Stream GetSegmentPdf(int segmentID)
         {
             using (var httpClient = new HttpClient())
             {
-                SiteService restClient = new SiteService(_baseUrl, httpClient);
-                var restResponse = restClient.GetSegmentPdf(segmentID);
-                return restResponse;
+                httpClient.BaseAddress = new Uri(_baseUrl);
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                string requestUri = string.Format(_segmentPdfUriFormat, segmentID.ToString());
+                return Task.Run(async () => await httpClient.GetStreamAsync(requestUri)).GetAwaiter().GetResult();
             }
         }
 

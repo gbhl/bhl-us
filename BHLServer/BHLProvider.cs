@@ -938,6 +938,24 @@ namespace MOBOT.BHL.Server
             }
             else if (itemType == ItemType.Segment)
             {
+                IFileAccessProvider fileAccessProvider = GetFileAccessProvider();
+                string pdfLocation = GetItemPdfPath(itemType, entityID);
+                pdf = fileAccessProvider.ReadAllBytes(pdfLocation);
+            }
+
+            return pdf;
+        }
+
+        public string GetItemPdfPath(ItemType itemType, int entityID)
+        {
+            string pdfPath = string.Empty;
+
+            if (itemType == ItemType.Book)
+            {
+                throw new NotImplementedException();
+            }
+            else if (itemType == ItemType.Segment)
+            {
                 // PDF are stored in the following folder structure
                 // Segment 1
                 //  root\1\bhl-segment-1.pdf
@@ -948,13 +966,10 @@ namespace MOBOT.BHL.Server
                 //  root\1\1\bhl-segment-1123.pdf
                 string folder1 = entityID.ToString()[0].ToString() + "\\";
                 string folder2 = entityID > 9 ? entityID.ToString()[1].ToString() + "\\" : "";
-
-                IFileAccessProvider fileAccessProvider = GetFileAccessProvider();
-                string pdfLocation = String.Format(ConfigurationManager.AppSettings["PregeneratedPdfLocation"], folder1, folder2, entityID.ToString());
-                pdf = fileAccessProvider.ReadAllBytes(pdfLocation);
+                pdfPath = String.Format(ConfigurationManager.AppSettings["PregeneratedPdfLocation"], folder1, folder2, entityID.ToString());
             }
 
-            return pdf;
+            return pdfPath;
         }
 
         /// <summary>
