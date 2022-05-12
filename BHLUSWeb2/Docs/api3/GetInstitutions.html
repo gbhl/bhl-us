@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Biodiversity Heritage Library - API Version 3 Documentation</title>
+    <style type="text/css">
+        body { font-family:Verdana; font-size:12px; }
+        hr { margin:15px 0 15px 0; }
+        div { padding:5px; }
+        table, th, td { border:1px solid lightgray; border-spacing:0px; }
+        th { text-align:left; }
+        .pagehead { height:40px; padding:0px; }
+        .pagehead #left { float:left; }
+        .pagehead #right { float:right; }
+        .header { font-weight:bold; font-size:16px; }
+        .subhead1 { font-weight:bold; font-style:italic; margin-top:10px; font-size:14px; }
+        .subhead2 { font-style:italic; }
+        .toplink { font-weight:normal; font-size:10px; }
+        .syntaxbox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding:10px; background-color:#eee; }
+        .synindent { padding-left:30px }
+        .responsebox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding-left:10px; padding-right:10px; height:600px; overflow:auto; background-color:#eee; }
+        pre { margin:0px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <div class="pagehead">
+        <div id="left">
+            Biodiversity Heritage Library<br />
+            <a href="../api3.html">API v3 Documentation</a><br />
+        </div>
+        <div id="right">
+            Created: August 27, 2018<br />
+            Revised: April 4, 2022
+        </div>
+    </div>
+    <div>
+        <a href="../api3.html#overview">Overview</a><br />
+        <a href="../api3.html#methods">Methods</a><br />
+        <a href="../api3.html#elements">Data Elements</a><br />
+        <a href="../api3.html#notes">Release Notes</a>
+    </div>
+    <hr />
+    <div class="subhead1"></a>GetInstitutions</div>
+    <div>Get a list of institutions which have contributed to BHL in some way.  These institutions may fill roles such as contributors, rights holders, and scanning institutions.</div>
+    <div>SYNTAX</div>
+    <div class="syntaxbox">
+    <div>https://www.biodiversitylibrary.org/api3?op=GetInstitutions</div>
+    <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
+    </div>
+    <div>EXAMPLE REQUEST</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetInstitutions&apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Response
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;Status&gt;ok&lt;/Status&gt;
+  &lt;ErrorMessage /&gt;
+  &lt;Result&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;ANSP&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;Academy of Natural Sciences of Drexel University, Library and Archives&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl /&gt;
+      &lt;BHLMember&gt;true&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;ACC&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;African Conservation Centre&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl&gt;https://www.accafrica.org/&lt;/InstitutionUrl&gt;
+      &lt;BHLMember&gt;true&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;AMNH&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;American Museum of Natural History Library&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl&gt;http://library.amnh.org&lt;/InstitutionUrl&gt;
+      &lt;BHLMember&gt;true&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;SCIELO&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;BHL SciELO&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl&gt;http://www.bhlscielo.org/en/&lt;/InstitutionUrl&gt;
+      &lt;BHLMember&gt;true&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;BDRJBM&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;Biblioteca Digital del Real Jardin Botanico de Madrid&lt;/InstitutionName&gt;
+      &lt;BHLMember&gt;false&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;BOSTONUL&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;Boston University Libraries (archive.org)&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl /&gt;
+      &lt;BHLMember&gt;false&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;CAMNH&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;Carnegie Museum of Natural History&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl&gt;http://www.carnegiemnh.org/&lt;/InstitutionUrl&gt;
+      &lt;BHLMember&gt;false&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;EAZA&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;European Association of Zoos and Aquaria&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl&gt;http://www.eaza.net/&lt;/InstitutionUrl&gt;
+      &lt;BHLMember&gt;false&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;FIELD&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;Field Museum of Natural History Library&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl&gt;http://fieldmuseum.org/explore/department/library&lt;/InstitutionUrl&gt;
+      &lt;BHLMember&gt;true&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;HUH&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;Harvard University Botany Libraries&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl&gt;http://www.huh.harvard.edu/libraries/&lt;/InstitutionUrl&gt;
+      &lt;BHLMember&gt;true&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;LC&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;Library of Congress&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl /&gt;
+      &lt;BHLMember&gt;true&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;MITL&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;MIT Libraries (archive.org)&lt;/InstitutionName&gt;
+      &lt;BHLMember&gt;false&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;NBC&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;Naturalis Biodiversity Center&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl&gt;http://www.naturalis.nl/en/science/collection/library/&lt;/InstitutionUrl&gt;
+      &lt;BHLMember&gt;true&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;PENNST&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;Penn State University (archive.org)&lt;/InstitutionName&gt;
+      &lt;BHLMember&gt;false&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;ROM&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;Royal Ontario Museum (archive.org)&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl /&gt;
+      &lt;BHLMember&gt;false&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;SBG&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;Singapore Botanic Gardens, National Parks Board Singapore&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl&gt;https://www.sbg.org.sg/&lt;/InstitutionUrl&gt;
+      &lt;BHLMember&gt;true&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;SIA&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;Smithsonian Institution Archives&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl /&gt;
+      &lt;BHLMember&gt;true&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;TXAS&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;Texas Academy of Science&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl&gt;http://www.texasacademyofscience.org/&lt;/InstitutionUrl&gt;
+      &lt;BHLMember&gt;false&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;USGS&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;United States Geological Survey Libraries Program&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl /&gt;
+      &lt;BHLMember&gt;true&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;WAS&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;Washington Academy of Sciences&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl&gt;http://www.washacadsci.org/&lt;/InstitutionUrl&gt;
+      &lt;BHLMember&gt;false&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+    &lt;Institution&gt;
+      &lt;InstitutionCode&gt;PEABODY&lt;/InstitutionCode&gt;
+      &lt;InstitutionName&gt;Yale Peabody Museum of Natural History&lt;/InstitutionName&gt;
+      &lt;InstitutionUrl&gt;http://peabody.yale.edu/&lt;/InstitutionUrl&gt;
+      &lt;BHLMember&gt;true&lt;/BHLMember&gt;
+    &lt;/Institution&gt;
+  &lt;/Result&gt;
+&lt;/Response&gt;
+
+            </code>
+        </pre>
+    </div>
+    <div></div>
+</body>
+</html>

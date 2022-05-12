@@ -1,0 +1,435 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Biodiversity Heritage Library - API Version 3 Documentation</title>
+    <style type="text/css">
+        body { font-family:Verdana; font-size:12px; }
+        hr { margin:15px 0 15px 0; }
+        div { padding:5px; }
+        table, th, td { border:1px solid lightgray; border-spacing:0px; }
+        th { text-align:left; }
+        .pagehead { height:40px; padding:0px; }
+        .pagehead #left { float:left; }
+        .pagehead #right { float:right; }
+        .header { font-weight:bold; font-size:16px; }
+        .subhead1 { font-weight:bold; font-style:italic; margin-top:10px; font-size:14px; }
+        .subhead2 { font-style:italic; }
+        .toplink { font-weight:normal; font-size:10px; }
+        .syntaxbox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding:10px; background-color:#eee; }
+        .synindent { padding-left:30px }
+        .responsebox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding-left:10px; padding-right:10px; height:600px; overflow:auto; background-color:#eee; }
+        pre { margin:0px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <div class="pagehead">
+        <div id="left">
+            Biodiversity Heritage Library<br />
+            <a href="../api3.html">API v3 Documentation</a><br />
+        </div>
+        <div id="right">
+            Created: August 27, 2018<br />
+            Revised: April 4, 2022
+        </div>
+    </div>
+    <div>
+        <a href="../api3.html#overview">Overview</a><br />
+        <a href="../api3.html#methods">Methods</a><br />
+        <a href="../api3.html#elements">Data Elements</a><br />
+        <a href="../api3.html#notes">Release Notes</a>
+    </div>
+    <hr />
+    <div class="subhead1">GetItemMetadata</div>
+    <div>Return metadata about an item.  You may choose to include a list of the item's pages, the page text, and a list of the item's parts.</div>
+    <div>SYNTAX</div>
+    <div class="syntaxbox">
+    <div>https://www.biodiversitylibrary.org/api3?op=GetItemMetadata</div>
+    <div class="synindent">&amp;id=&lt;identifier of an item&gt;</div>
+    <div class="synindent">&amp;idtype=&lt;"bhl" if id is a BHL identifier, "ia" if id is an Internet Archive identifier (OPTIONAL; "bhl" is the default)&gt;</div>
+    <div class="synindent">&amp;pages=&lt;"t" or "true" to include page details in the response&gt;</div>
+    <div class="synindent">&amp;ocr=&lt;"t" or "true" to include the page text in the response&gt;</div>
+    <div class="synindent">&amp;parts=&lt;"t" or "true" to include parts in the item in the response&gt;</div>
+    <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
+    </div>
+    <div>EXAMPLE REQUEST</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetItemMetadata&amp;id=125582&amp;idtype=bhl&amp;pages=t&amp;ocr=t&amp;parts=t&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Response
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+	&lt;Status&gt;ok&lt;/Status&gt;
+	&lt;ErrorMessage/&gt;
+	&lt;Result&gt;
+		&lt;Item&gt;
+			&lt;ItemID&gt;125582&lt;/ItemID&gt;
+			&lt;TitleID&gt;61654&lt;/TitleID&gt;
+			&lt;ThumbnailPageID&gt;40571124&lt;/ThumbnailPageID&gt;
+			&lt;Source&gt;Internet Archive&lt;/Source&gt;
+			&lt;SourceIdentifier&gt;mobot2011-5&lt;/SourceIdentifier&gt;
+			&lt;IsVirtual&gt;0&lt;/IsVirtual&gt;
+			&lt;Volume&gt;2011-5&lt;/Volume&gt;
+			&lt;Year&gt;2011&lt;/Year&gt;
+			&lt;EndYear&gt;2015&lt;/EndYear&gt;
+			&lt;HoldingInstitution&gt;Missouri Botanical Garden, Peter H. Raven Library&lt;/HoldingInstitution&gt;
+			&lt;Sponsor&gt;Missouri Botanical Garden&lt;/Sponsor&gt;
+			&lt;Language&gt;English&lt;/Language&gt;
+			&lt;Rights&gt;https://www.biodiversitylibrary.org/permissions&lt;/Rights&gt;
+			&lt;CopyrightStatus&gt;Permission to digitize granted by rights holder&lt;/CopyrightStatus&gt;
+			&lt;ItemUrl&gt;https://www.biodiversitylibrary.org/item/125582&lt;/ItemUrl&gt;
+			&lt;TitleUrl&gt;https://www.biodiversitylibrary.org/bibliography/61654&lt;/TitleUrl&gt;
+			&lt;ItemThumbUrl&gt;https://www.biodiversitylibrary.org/pagethumb/40571124&lt;/ItemThumbUrl&gt;
+			&lt;ItemTextUrl&gt;https://www.biodiversitylibrary.org/itemtext/125582&lt;/ItemTextUrl&gt;
+			&lt;ItemPDFUrl&gt;https://www.biodiversitylibrary.org/itempdf/125582&lt;/ItemPDFUrl&gt;
+			&lt;ItemImagesUrl&gt;https://www.biodiversitylibrary.org/itemimages/125582&lt;/ItemImagesUrl&gt;
+			&lt;CreationDate&gt;2012/10/01 00:02:30&lt;/CreationDate&gt;
+			&lt;Pages&gt;
+				&lt;Page&gt;
+					&lt;PageID&gt;40571124&lt;/PageID&gt;
+					&lt;ItemID&gt;125582&lt;/ItemID&gt;
+					&lt;Volume&gt;2011-5&lt;/Volume&gt;
+					&lt;Issue&gt;5&lt;/Issue&gt;
+					&lt;Year&gt;2011&lt;/Year&gt;
+					&lt;TextSource&gt;OCR&lt;/TextSource&gt;
+					&lt;PageUrl&gt;https://www.biodiversitylibrary.org/page/40571124&lt;/PageUrl&gt;
+					&lt;ThumbnailUrl&gt;https://www.biodiversitylibrary.org/pagethumb/40571124&lt;/ThumbnailUrl&gt;
+					&lt;FullSizeImageUrl&gt;https://www.biodiversitylibrary.org/pageimage/40571124&lt;/FullSizeImageUrl&gt;
+					&lt;OcrUrl&gt;https://www.biodiversitylibrary.org/pagetext/40571124&lt;/OcrUrl&gt;
+					&lt;OcrText&gt;
+				
+s muscah and Ophiopogon japonicus (Ruscaceae) 
+				
+LIRIOPE MUSCARI AND OPHIOPOGON JAPONICUS (RUSCACEAE) 
+
+ NATURALIZED IN TEXAS 
+
+
+
+Paul V. Roling 
+
+
+
+4323 Chestergate 
+
+ Spring TX 77373 
+
+ proling@att.net 
+
+
+
+Anita Howlett 
+
+
+
+Jesse H. Jones Park &amp; Nature Center 
+
+
+
+20634 Kenswick Drive 
+
+
+
+Humble TX 77338 
+
+
+
+Ahowlett@hcp4.net 
+
+
+
+Larry E. Brown 
+
+
+
+Spring Branch Science Center Herbarium 
+
+
+
+8856 Westview Drive 
+
+
+
+Houston, TX 77055 
+
+
+
+larry-thepla utin.in'a ait.net 
+
+
+
+ABSTRACT 
+
+
+
+Liriope muscari and Ophiopogon japonicus are reported here as naturalized in Texas. Both 
+
+ species are growing in bottomland woods in Jesse H. Jones Park on the northwest side of Humble, 
+
+ Harris County. 
+
+ KEY WORDS: Liriope muscari, Ophiopogon japonicus, Texas, naturalized 
+
+
+
+Two species of liriopogons have become naturalized in Jesse H. Jones Park on the northwest 
+
+ side of Humble, Harris County, Texas. The park is at the end of Kenswick Drive. Documentation is 
+
+ provided here for the first time for the occurrence of Ophiopogon japonicus (Thunb.) Ker Gawl. and 
+
+ Liriope muscari (Dene.) I^.H. Bailey outside of cultivation in Texas. 
+
+
+
+Jesse H. Jones Park is over 300 acres in size and includes upland woods, bottomland woods 
+
+ and swamps, and riparian vegetation in the bottomland of Spring Creek Both species are growing in 
+
+ bottomland woods, where heavy rains periodically flood the area. Presumably, they have become 
+
+ established in the park through dispersal of seeds from nearby residential neighborhoods. The 
+
+ naturalized plants are not close to horticultural plantings. 
+
+
+
+Ophiopogon japonicus (Figs. 1-3). The scapes are shorter than the leaves and the flowers are about 
+
+ 10 and nodding. The plants are colonial and expanding. Currently, the colony measures 
+
+ approximately four feet by four feet. The possible presence of the species in the Houston area (as 
+
+ shown by a photo of fruits on the Bayou Preservation Association website) was noted by Nesom 
+
+ (2010), but it previously has been documented in the USA only from Alabama (Spaulding et al. 
+
+ 2010). 
+
+
+
+Texas. Harris Co.: Jesse H. Jones Park, along Jones Bender Trail west of bridge (lat. 30.024222, long. 
+
+ -95.288800), N off of Hwy 1960 and W of the village of Humble, 11 June 2010, Paul Roling s.n. 
+
+ (SBSC). 
+				
+					&lt;/OcrText&gt;
+					&lt;PageTypes&gt;
+						&lt;PageType&gt;
+							&lt;PageTypeName&gt;Text&lt;/PageTypeName&gt;
+						&lt;/PageType&gt;
+					&lt;/PageTypes&gt;
+					&lt;PageNumbers&gt;
+						&lt;PageNumber&gt;
+							&lt;Prefix&gt;Page&lt;/Prefix&gt;
+							&lt;Number&gt;1&lt;/Number&gt;
+						&lt;/PageNumber&gt;
+					&lt;/PageNumbers&gt;
+				&lt;/Page&gt;
+				&lt;Page&gt;
+					&lt;PageID&gt;40571125&lt;/PageID&gt;
+					&lt;ItemID&gt;125582&lt;/ItemID&gt;
+					&lt;Volume&gt;2011-5&lt;/Volume&gt;
+					&lt;Issue&gt;5&lt;/Issue&gt;
+					&lt;Year&gt;2011&lt;/Year&gt;
+					&lt;TextSource&gt;OCR&lt;/TextSource&gt;
+					&lt;PageUrl&gt;https://www.biodiversitylibrary.org/page/40571125&lt;/PageUrl&gt;
+					&lt;ThumbnailUrl&gt;https://www.biodiversitylibrary.org/pagethumb/40571125&lt;/ThumbnailUrl&gt;
+					&lt;FullSizeImageUrl&gt;https://www.biodiversitylibrary.org/pageimage/40571125&lt;/FullSizeImageUrl&gt;
+					&lt;OcrUrl&gt;https://www.biodiversitylibrary.org/pagetext/40571125&lt;/OcrUrl&gt;
+					&lt;OcrText&gt;
+				
+: Liriopeand Cphiopogon naturalized ir Liriope muscori (Figs. 4-5). Tbs
+
+Liriope muscori (Figs. 4-5). TbsLiriope muscari from the park lias leaves 10+ mm wide, the scapes 
+
+ were definitely well beyond the leaves, and the couple of plants were in om tight clump of about one 
+
+ square foot. There were no flowers on the scapes, all having bloomed when found. The species has 
+
+ previously been reported outside of cultivation in the USA in Alabama, Georgia, Kansas, Louisiana, 
+
+ Maryland, Mississippi, and South Carolina (Nesom 2010). 
+
+
+
+Texas. Harris Co.: Jesse H. Jones Park, forest north of the North Branch of Jones Bender Trail, 0.5 of 
+
+ way between parking lot and bridge (lat. 30.024414, long. -95.289936), 27 Sep 2010, Paul Rolings.n 
+
+ (SBSC). 
+
+
+
+LITERATURE CITED 
+
+
+
+Nesom, G.L. 2010. Overview of Liriope and Ophiopogon (Ruscaceae) commonly cultivated and 
+
+ naturalized in the USA. Phytoneuron 2010-56: 1-31. 
+
+
+
+ing, D., W. Barger, and G.L. Nesom. 2010. Liriope and Ophiopogon (Ruscaceae) naturalized 
+
+ ti Alabama. Phytoneuron 2010-55: 1-10. 
+
+
+
+Figure 1. Ophiopogon japonicus colony. 
+
+				
+					&lt;/OcrText&gt;
+					&lt;PageTypes&gt;
+						&lt;PageType&gt;
+							&lt;PageTypeName&gt;Illustration&lt;/PageTypeName&gt;
+						&lt;/PageType&gt;
+						&lt;PageType&gt;
+							&lt;PageTypeName&gt; Text&lt;/PageTypeName&gt;
+						&lt;/PageType&gt;
+					&lt;/PageTypes&gt;
+					&lt;PageNumbers&gt;
+						&lt;PageNumber&gt;
+							&lt;Prefix&gt;Page&lt;/Prefix&gt;
+							&lt;Number&gt;2&lt;/Number&gt;
+						&lt;/PageNumber&gt;
+					&lt;/PageNumbers&gt;
+				&lt;/Page&gt;
+				&lt;Page&gt;
+					&lt;PageID&gt;40571126&lt;/PageID&gt;
+					&lt;ItemID&gt;125582&lt;/ItemID&gt;
+					&lt;Volume&gt;2011-5&lt;/Volume&gt;
+					&lt;Issue&gt;5&lt;/Issue&gt;
+					&lt;Year&gt;2011&lt;/Year&gt;
+					&lt;TextSource&gt;OCR&lt;/TextSource&gt;
+					&lt;PageUrl&gt;https://www.biodiversitylibrary.org/page/40571126&lt;/PageUrl&gt;
+					&lt;ThumbnailUrl&gt;https://www.biodiversitylibrary.org/pagethumb/40571126&lt;/ThumbnailUrl&gt;
+					&lt;FullSizeImageUrl&gt;https://www.biodiversitylibrary.org/pageimage/40571126&lt;/FullSizeImageUrl&gt;
+					&lt;OcrUrl&gt;https://www.biodiversitylibrary.org/pagetext/40571126&lt;/OcrUrl&gt;
+					&lt;OcrText&gt;
+				
+Roling eta!.: LiriopeanA Ophiopogon naturalized in Texas 3 
+				
+Figure 2. Ophiopogon japonicus scape in flower. 
+				
+					&lt;/OcrText&gt;
+					&lt;PageTypes&gt;
+						&lt;PageType&gt;
+							&lt;PageTypeName&gt;Text&lt;/PageTypeName&gt;
+						&lt;/PageType&gt;
+					&lt;/PageTypes&gt;
+					&lt;PageNumbers&gt;
+						&lt;PageNumber&gt;
+							&lt;Prefix&gt;Page&lt;/Prefix&gt;
+							&lt;Number&gt;3&lt;/Number&gt;
+						&lt;/PageNumber&gt;
+					&lt;/PageNumbers&gt;
+				&lt;/Page&gt;
+				&lt;Page&gt;
+					&lt;PageID&gt;40571127&lt;/PageID&gt;
+					&lt;ItemID&gt;125582&lt;/ItemID&gt;
+					&lt;Volume&gt;2011-5&lt;/Volume&gt;
+					&lt;Issue&gt;5&lt;/Issue&gt;
+					&lt;Year&gt;2011&lt;/Year&gt;
+					&lt;TextSource&gt;OCR&lt;/TextSource&gt;
+					&lt;PageUrl&gt;https://www.biodiversitylibrary.org/page/40571127&lt;/PageUrl&gt;
+					&lt;ThumbnailUrl&gt;https://www.biodiversitylibrary.org/pagethumb/40571127&lt;/ThumbnailUrl&gt;
+					&lt;FullSizeImageUrl&gt;https://www.biodiversitylibrary.org/pageimage/40571127&lt;/FullSizeImageUrl&gt;
+					&lt;OcrUrl&gt;https://www.biodiversitylibrary.org/pagetext/40571127&lt;/OcrUrl&gt;
+					&lt;OcrText&gt;
+				
+.: Liriope and Ophiopogon naturalized in Texas 4 
+				
+Figure 3. Close-up of Ophiopogon japonicus flower. 
+				
+					&lt;/OcrText&gt;
+					&lt;PageTypes&gt;
+						&lt;PageType&gt;
+							&lt;PageTypeName&gt;Illustration&lt;/PageTypeName&gt;
+						&lt;/PageType&gt;
+						&lt;PageType&gt;
+							&lt;PageTypeName&gt; Text&lt;/PageTypeName&gt;
+						&lt;/PageType&gt;
+					&lt;/PageTypes&gt;
+					&lt;PageNumbers&gt;
+						&lt;PageNumber&gt;
+							&lt;Prefix&gt;Page&lt;/Prefix&gt;
+							&lt;Number&gt;4&lt;/Number&gt;
+						&lt;/PageNumber&gt;
+					&lt;/PageNumbers&gt;
+				&lt;/Page&gt;
+				&lt;Page&gt;
+					&lt;PageID&gt;40571128&lt;/PageID&gt;
+					&lt;ItemID&gt;125582&lt;/ItemID&gt;
+					&lt;Volume&gt;2011-5&lt;/Volume&gt;
+					&lt;Issue&gt;5&lt;/Issue&gt;
+					&lt;Year&gt;2011&lt;/Year&gt;
+					&lt;TextSource&gt;OCR&lt;/TextSource&gt;
+					&lt;PageUrl&gt;https://www.biodiversitylibrary.org/page/40571128&lt;/PageUrl&gt;
+					&lt;ThumbnailUrl&gt;https://www.biodiversitylibrary.org/pagethumb/40571128&lt;/ThumbnailUrl&gt;
+					&lt;FullSizeImageUrl&gt;https://www.biodiversitylibrary.org/pageimage/40571128&lt;/FullSizeImageUrl&gt;
+					&lt;OcrUrl&gt;https://www.biodiversitylibrary.org/pagetext/40571128&lt;/OcrUrl&gt;
+					&lt;OcrText&gt;
+
+Rolingetal.: Uriope and Ophiopogon naturalized in Texas 5 
+				
+Figure 5 . Leaf detail of Liriope muscari showing size and -5 
+
+					&lt;/OcrText&gt;
+					&lt;PageTypes&gt;
+						&lt;PageType&gt;
+							&lt;PageTypeName&gt;Text&lt;/PageTypeName&gt;
+						&lt;/PageType&gt;
+					&lt;/PageTypes&gt;
+					&lt;PageNumbers&gt;
+						&lt;PageNumber&gt;
+							&lt;Prefix&gt;Page&lt;/Prefix&gt;
+							&lt;Number&gt;5&lt;/Number&gt;
+						&lt;/PageNumber&gt;
+					&lt;/PageNumbers&gt;
+				&lt;/Page&gt;
+			&lt;/Pages&gt;
+			&lt;Parts&gt;
+				&lt;Part&gt;
+					&lt;PartUrl&gt;https://www.biodiversitylibrary.org/part/174827&lt;/PartUrl&gt;
+					&lt;PartID&gt;174827&lt;/PartID&gt;
+					&lt;Genre&gt;Article&lt;/Genre&gt;
+					&lt;Title&gt;Liriope muscari and Ophiopogon japonicus (Ruscaceae) naturalized in Texas&lt;/Title&gt;
+					&lt;ContainerTitle&gt;Phytoneuron&lt;/ContainerTitle&gt;
+					&lt;Volume&gt;2011-5&lt;/Volume&gt;
+					&lt;Date&gt;2011&lt;/Date&gt;
+					&lt;PageRange&gt;1--5&lt;/PageRange&gt;
+					&lt;Authors&gt;
+						&lt;Author&gt;
+							&lt;Name&gt;Roling, P V&lt;/Name&gt;
+						&lt;/Author&gt;
+						&lt;Author&gt;
+							&lt;Name&gt;Howlett, A&lt;/Name&gt;
+						&lt;/Author&gt;
+						&lt;Author&gt;
+							&lt;Name&gt;Brown, Larry E.&lt;/Name&gt;
+						&lt;/Author&gt;
+					&lt;/Authors&gt;
+				&lt;/Part&gt;
+			&lt;/Parts&gt;
+		&lt;/Item&gt;
+	&lt;/Result&gt;
+&lt;/Response&gt;
+
+            </code>
+        </pre>
+    </div>
+    <div></div>
+</body>
+</html>
