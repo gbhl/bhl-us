@@ -1,4 +1,5 @@
-﻿using MOBOT.BHL.DataObjects.Enum;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.DataObjects.Enum;
 using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
@@ -15,5 +16,22 @@ namespace MOBOT.BHL.Server
         bool OcrJobExists(int itemID);
         void OcrCreateJob(int itemID);
         string GetOcrText(int pageID);
+        Book BookSelectAuto(int bookID);
+        Book BookSelectByItemID(int itemID);
+        List<Book> BookSelectRecentlyChanged(string startDate);
+        Item ItemSelectFilenames(ItemType itemType, int entityID);
+        List<Page> PageMetadataSelectByItemID(int bookID);
+        List<NameFinderResponse> GetNamesFromOcr(string nameFinderService, int pageID, bool usePreferredNameResults, int maxReadAttempts);
+        bool ItemCheckForOcrText(int itemID, string ocrTextPath);
+        bool PageCheckForOcrText(int pageID);
+        List<PageFlickr> PageFlickrSelectRandom(int numberToReturn);
+        List<PageSummaryView> PDFPageSummaryViewSelectByPdfID(int pdfId);
+        Vault VaultSelect(int vaultID);
+        Title TitleSelectAuto(int titleID);
+        Title TitleSelectExtended(int titleID);
+        List<Title_Identifier> Title_IdentifierSelectByTitleID(int titleID);
+        List<Title_Identifier> DOISelectValidForTitle(int titleID);
+        List<DOI> TitleSelectWithoutSubmittedDOI(int numberToReturn);
+        List<Title> TitleSelectAllPublished();
     }
 }
