@@ -27,6 +27,8 @@
   <ItemGroup>
     <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj" />
     <ProjectReference Include="..\BHLServer\BHLServer.csproj" />
+    <ProjectReference Include="..\OAI2\OAI2.csproj" />
+    <ProjectReference Include="..\OAIMODS\OAIMODS.csproj" />
   </ItemGroup>
 
 </Project>

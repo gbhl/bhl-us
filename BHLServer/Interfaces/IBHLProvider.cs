@@ -1,5 +1,6 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.DataObjects.Enum;
+using System;
 using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
@@ -33,5 +34,30 @@ namespace MOBOT.BHL.Server
         List<Title_Identifier> DOISelectValidForTitle(int titleID);
         List<DOI> TitleSelectWithoutSubmittedDOI(int numberToReturn);
         List<Title> TitleSelectAllPublished();
+        DOI DOISelectAuto(int doiID);
+        void DOIInsertIdentifier(int doiEntityTypeId, int entityID, string doiName, int? userId);
+        void DOIInsert(int doiEntityTypeId, int entityID, int doiStatusId, string doiName, short isValid, string doiBatchId, string message, int userId, int excludeBHLDOI);
+        DOI DOIUpdateBatchID(int doiID, int doiStatusId, string doiBatchID, int? userId);
+        DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName, int? userId);
+        DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, short? setValid, int? userId);
+        List<DOI> DOISelectSubmitted(int minutesSinceSubmit);
+        List<TitleBibTeX> TitleBibTeXSelectAllTitleCitations();
+        List<TitleBibTeX> TitleBibTeXSelectAllItemCitations();
+        List<TitleBibTeX> SegmentSelectAllBibTeXCitations();
+        List<RISCitation> TitleSelectAllRISCitations();
+        List<RISCitation> ItemSelectAllRISCitations();
+        List<RISCitation> SegmentSelectAllRISCitations();
+        List<Item> ItemSelectBarcodes();
+        List<KBART> ExportKBART(string urlRoot);
+        string GenerateRISCitation(RISCitation citation);
+        void ItemNameFileLogRefreshSinceDate(DateTime startDate);
+        List<ItemNameFileLog> ItemNameFileLogSelectForCreate();
+        List<ItemNameFileLog> ItemNameFileLogSelectForUpload();
+        void ItemNameFileLogUpdateCreateDate(int logID);
+        void ItemNameFileLogUpdateUploadDate(int logID);
+        List<Item> ItemSelectWithoutPageNames();
+        List<Item> ItemSelectPublished();
+        List<Item> ItemSelectWithExpiredPageNames(int maxAge);
+        Item ItemSelectAuto(int itemID);
     }
 }
