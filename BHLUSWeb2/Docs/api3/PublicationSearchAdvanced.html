@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Biodiversity Heritage Library - API Version 3 Documentation</title>
+    <style type="text/css">
+        body { font-family:Verdana; font-size:12px; }
+        hr { margin:15px 0 15px 0; }
+        div { padding:5px; }
+        table, th, td { border:1px solid lightgray; border-spacing:0px; }
+        th { text-align:left; }
+        .pagehead { height:40px; padding:0px; }
+        .pagehead #left { float:left; }
+        .pagehead #right { float:right; }
+        .header { font-weight:bold; font-size:16px; }
+        .subhead1 { font-weight:bold; font-style:italic; margin-top:10px; font-size:14px; }
+        .subhead2 { font-style:italic; }
+        .toplink { font-weight:normal; font-size:10px; }
+        .syntaxbox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding:10px; background-color:#eee; }
+        .synindent { padding-left:30px }
+        .responsebox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding-left:10px; padding-right:10px; height:600px; overflow:auto; background-color:#eee; }
+        pre { margin:0px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <div class="pagehead">
+        <div id="left">
+            Biodiversity Heritage Library<br />
+            <a href="../api3.html">API v3 Documentation</a><br />
+        </div>
+        <div id="right">
+            Created: August 27, 2018<br />
+            Revised: April 4, 2022
+        </div>
+    </div>
+    <div>
+        <a href="../api3.html#overview">Overview</a><br />
+        <a href="../api3.html#methods">Methods</a><br />
+        <a href="../api3.html#elements">Data Elements</a><br />
+        <a href="../api3.html#notes">Release Notes</a>
+    </div>
+    <hr />
+    <div class="subhead1">PublicationSearchAdvanced</div>
+    <div>Search for publications (titles, items, and parts) that match the specified search criteria.  Rather than searching across all of the metadata for specified search terms, this method searches specific fields for the terms.&nbsp; For example, title fields are searched for the &quot;title&quot; parameter value, and the author names are searched for the &quot;authorname&quot; parameter value.&nbsp; This method searches the catalog metadata only, unless the &quot;text&quot; parameter is specified.  Inclusion of a value for the &quot;text&quot; parameter triggers a full-text search over the text of the publications.&nbsp; The BHLType element identifies the type of each publication returned (Item or Part).&nbsp;&nbsp;&nbsp; Use the &quot;pageSize&quot; parameter to specify how many results are returned at once, up to a maximum of 200.&nbsp; Use the &quot;page&quot; parameter to return the next page of results.</div>
+    <div>Use the GetLanguages and GetCollections methods to obtain valid language codes and collection identifiers for use as parameters to this method.</div>
+    <div>SYNTAX</div>
+    <div class="syntaxbox">
+    <div>https://www.biodiversitylibrary.org/api3?op=PublicationSearchAdvanced</div>
+    <div class="synindent">&amp;title=&lt;a title for which to search&gt;</div>
+    <div class="synindent">&amp;titleop=&lt;'all' to search for all specified words in the title fields; 'phrase' to search for the exact phrase specified&gt;</div>
+    <div class="synindent">&amp;authorname=&lt;an author name for which to search&gt;</div>
+    <div class="synindent">&amp;year=&lt;a four-digit publication year for which to search&gt;</div>
+    <div class="synindent">&amp;subject=&lt;a subject for which to search&gt;</div>
+    <div class="synindent">&amp;language=&lt;a language code; search will only return publications in the specified language&gt;</div>
+    <div class="synindent">&amp;collection=&lt;a collection id; search will only return publications from the specfied collection&gt;</div>
+    <div class="synindent">&amp;notes=&lt;one or more words for which to search in the publication notes&gt;</div>
+    <div class="synindent">&amp;notesop=&lt;'all' to search for all specified words in the notes field; 'phrase' to search for the exact phrase specified&gt;</div>
+    <div class="synindent">&amp;text=&lt;one or more words for which to search in the text of the publications&gt;</div>
+    <div class="synindent">&amp;textop=&lt;'all' to search for all specified words in the text field; 'phrase' to search for the exact phrase specified&gt;</div>
+    <div class="synindent">&amp;page=&lt;1 for the first page of results, 2 for the second, and so on&gt;</div>
+    <div class="synindent">&amp;pageSize=&lt;the maximum number of results to return per page (default = 100)&gt;</div>
+    <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
+    </div>
+    <div>EXAMPLE REQUEST</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=PublicationSearchAdvanced&amp;title=white+shark&amp;titleop=All&amp;authorname=Mccosker&amp;year=&amp;subject=&amp;language=&amp;collection=&amp;notes=&amp;notesop=&amp;text=&amp;textop=&amp;page=1&amp;pageSize=10&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Response
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;Status&gt;ok&lt;/Status&gt;
+  &lt;ErrorMessage /&gt;
+  &lt;Result&gt;
+    &lt;Publication&gt;
+      &lt;BHLType&gt;Part&lt;/BHLType&gt;
+      &lt;FoundIn&gt;Metadata&lt;/FoundIn&gt;
+      &lt;Volume&gt;57&lt;/Volume&gt;
+      &lt;Authors&gt;
+        &lt;Author&gt;
+          &lt;Name&gt;Mccosker, John Edward&lt;/Name&gt;
+        &lt;/Author&gt;
+        &lt;Author&gt;
+          &lt;Name&gt;Lea, Robert N.&lt;/Name&gt;
+        &lt;/Author&gt;
+      &lt;/Authors&gt;
+      &lt;PartUrl&gt;https://www.biodiversitylibrary.org/part/280202&lt;/PartUrl&gt;
+      &lt;PartID&gt;280202&lt;/PartID&gt;
+      &lt;Genre&gt;Article&lt;/Genre&gt;
+      &lt;Title&gt;White Shark Attacks Upon Humans in California and Oregon, 1993–2003&lt;/Title&gt;
+      &lt;ContainerTitle&gt;Proceedings of The California Academy of Sciences&lt;/ContainerTitle&gt;
+      &lt;Issue&gt;17&lt;/Issue&gt;
+      &lt;PageRange&gt;479--501&lt;/PageRange&gt;
+    &lt;/Publication&gt;
+    &lt;Publication&gt;
+      &lt;BHLType&gt;Part&lt;/BHLType&gt;
+      &lt;FoundIn&gt;Metadata&lt;/FoundIn&gt;
+      &lt;Volume&gt;43&lt;/Volume&gt;
+      &lt;Authors&gt;
+        &lt;Author&gt;
+          &lt;Name&gt;Tricas, Timothy C&lt;/Name&gt;
+        &lt;/Author&gt;
+        &lt;Author&gt;
+          &lt;Name&gt;Mccosker, John Edward&lt;/Name&gt;
+        &lt;/Author&gt;
+      &lt;/Authors&gt;
+      &lt;PartUrl&gt;https://www.biodiversitylibrary.org/part/52916&lt;/PartUrl&gt;
+      &lt;PartID&gt;52916&lt;/PartID&gt;
+      &lt;Genre&gt;Article&lt;/Genre&gt;
+      &lt;Title&gt;Predatory behavior of the white shark (Carcharodon carcharias), with notes on its biology&lt;/Title&gt;
+      &lt;ContainerTitle&gt;Proceedings of the California Academy of Sciences&lt;/ContainerTitle&gt;
+      &lt;Series&gt;4&lt;/Series&gt;
+      &lt;Date&gt;1984&lt;/Date&gt;
+      &lt;PageRange&gt;221--238&lt;/PageRange&gt;
+    &lt;/Publication&gt;
+  &lt;/Result&gt;
+&lt;/Response&gt;
+            </code>
+        </pre>
+    </div>
+    <div></div>
+</body>
+</html>

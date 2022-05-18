@@ -1,0 +1,324 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Biodiversity Heritage Library - API Version 3 Documentation</title>
+    <style type="text/css">
+        body { font-family:Verdana; font-size:12px; }
+        hr { margin:15px 0 15px 0; }
+        div { padding:5px; }
+        table, th, td { border:1px solid lightgray; border-spacing:0px; }
+        th { text-align:left; }
+        .pagehead { height:40px; padding:0px; }
+        .pagehead #left { float:left; }
+        .pagehead #right { float:right; }
+        .header { font-weight:bold; font-size:16px; }
+        .subhead1 { font-weight:bold; font-style:italic; margin-top:10px; font-size:14px; }
+        .subhead2 { font-style:italic; }
+        .toplink { font-weight:normal; font-size:10px; }
+        .syntaxbox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding:10px; background-color:#eee; }
+        .synindent { padding-left:30px }
+        .responsebox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding-left:10px; padding-right:10px; height:600px; overflow:auto; background-color:#eee; }
+        pre { margin:0px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <div class="pagehead">
+        <div id="left">
+            Biodiversity Heritage Library<br />
+            <a href="../api3.html">API v3 Documentation</a><br />
+        </div>
+        <div id="right">
+            Created: August 27, 2018<br />
+            Revised: April 4, 2022
+        </div>
+    </div>
+    <div>
+        <a href="../api3.html#overview">Overview</a><br />
+        <a href="../api3.html#methods">Methods</a><br />
+        <a href="../api3.html#elements">Data Elements</a><br />
+        <a href="../api3.html#notes">Release Notes</a>
+    </div>
+    <hr />
+    <div class="subhead1">PageSearch</div>
+    <div>Search an item for pages containing the specified text.</div>
+    <div>SYNTAX</div>
+    <div class="syntaxbox">
+    <div>https://www.biodiversitylibrary.org/api3?op=PageSearch</div>
+    <div class="synindent">&amp;itemid=&lt;BHL identifier of the item to be searched (not used if id/idtype are specified)&gt;</div>
+    <div class="synindent">&amp;idtype=&lt;"item" or "part", designating the type of publication to be searched (not used if itemid is specified)&gt;</div>
+    <div class="synindent">&amp;id=&lt;BHL identifier of the item or part to be searched (not used if itemid is specified)&gt;</div>
+    <div class="synindent">&amp;text=&lt;the text for which to search&gt;</div>
+    <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
+    </div>
+    <div>EXAMPLE REQUESTS</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=PageSearch&amp;itemid=22004&amp;text=domestic+cat&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+
+https://www.biodiversitylibrary.org/api3?op=PageSearch&amp;idType=item&amp;id=22004&amp;text=domestic+cat&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Response
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;Status&gt;ok&lt;/Status&gt;
+  &lt;ErrorMessage /&gt;
+  &lt;Result&gt;
+    &lt;Page&gt;
+      &lt;PageID&gt;3001877&lt;/PageID&gt;
+      &lt;BHLType&gt;Item&lt;/BHLType&gt;
+      &lt;ItemID&gt;22004&lt;/ItemID&gt;
+      &lt;TextSource&gt;OCR&lt;/TextSource&gt;
+      &lt;PageUrl&gt;https://www.biodiversitylibrary.org/pagetext/3001877&lt;/PageUrl&gt;
+      &lt;ThumbnailUrl&gt;https://www.biodiversitylibrary.org/pagethumb/3001877&lt;/ThumbnailUrl&gt;
+      &lt;FullSizeImageUrl&gt;https://www.biodiversitylibrary.org/pageimage/3001877&lt;/FullSizeImageUrl&gt;
+      &lt;OcrUrl&gt;https://www.biodiversitylibrary.org/pagetext/3001877&lt;/OcrUrl&gt;
+      &lt;OcrText&gt;CORRESPONDENCE. 183 
+
+
+
+[We much regret that we are unable to complete Mr. Tuffen West's 
+
+ valuable Notes in the present issue. The remainder, with the 
+
+ "Selected Notes from Note-Books " having reference thereto, with 
+
+ the explanation of Plates XVI., XVII., and XVIIL, will be 
+
+ given in our next. — Editor?^ 
+
+
+
+Corrceponbcnce. 
+
+
+
+\The Editor does ?iot hold himself responsible for the opitiions or 
+
+ statements of his co-respondents^ 
+
+
+
+Sir,— 
+
+
+
+In the Journal of Microscopy, etc., for April, Mr. Wheatcroft 
+
+ draws special attention to the fact that in studying the plant- 
+
+ remains found in Egyptians tombs, Dr. Schweinforth has not 
+
+ been " able to detect any peculiarities in the living plants which 
+
+ are absent in those obtained from the tombs." Mr. Wheatcroft 
+
+ says these specimens were gathered at least four thousand years 
+
+ ago, and he thinks it " would be difficult to produce better 
+
+ evidence of permanency of type." Precisely this argument was 
+
+ used with reference to the theory of permanency of type in 
+
+ animals. We v/ere told that the domestic cat, whether in the 
+
+ mummical state or in its pictured representations, was just the 
+
+ same in that remote Egyptian age as it is at the present day. 
+
+ But we know now that instead of finding permanency of type as 
+
+ the prevailing law amongst animals, we find species and orders 
+
+ fading into one another like dissolving views as we penetrate 
+
+ further back into the abyss of time. The changes are very 
+
+ gradual ; to lose a tooth would be far too sudden a transition. 
+
+ One cusp disappears, and then another ; then the tooth appears 
+
+ later, grows smaller, decays early, and finally disappears altogether. 
+
+ The same gradual changes occur in the modifications of the whole 
+
+ skeleton, but most noticeably in the limbs. The cat, so " exactly 
+
+ like " our cat of the present day, changes by almost imperceptible 
+
+ degrees into an animal which is neither cat nor weasel, but the 
+
+ progenitor of both ; the dog into an animal which is neither bear 
+
+ nor dog, but which has some characteristics of the two modern 
+
+ species. 
+
+
+
+It is difficult to imagine how any paleontologist of the present 
+
+ day could expect that an animal would be likely to change 
+
+ perceptibly in such a brief second of geological time as four 
+
+ thousand years. The whole of the Tertiary period can only be 
+
+
+
+&lt;/OcrText&gt;
+      &lt;PageTypes&gt;
+        &lt;PageType&gt;
+          &lt;PageTypeName&gt;Text&lt;/PageTypeName&gt;
+        &lt;/PageType&gt;
+      &lt;/PageTypes&gt;
+      &lt;PageNumbers&gt;
+        &lt;PageNumber&gt;
+          &lt;Number&gt;Page 183&lt;/Number&gt;
+        &lt;/PageNumber&gt;
+      &lt;/PageNumbers&gt;
+    &lt;/Page&gt;
+    &lt;Page&gt;
+      &lt;PageID&gt;3001878&lt;/PageID&gt;
+      &lt;BHLType&gt;Item&lt;/BHLType&gt;
+      &lt;ItemID&gt;22004&lt;/ItemID&gt;
+      &lt;TextSource&gt;OCR&lt;/TextSource&gt;
+      &lt;PageUrl&gt;https://www.biodiversitylibrary.org/pagetext/3001878&lt;/PageUrl&gt;
+      &lt;ThumbnailUrl&gt;https://www.biodiversitylibrary.org/pagethumb/3001878&lt;/ThumbnailUrl&gt;
+      &lt;FullSizeImageUrl&gt;https://www.biodiversitylibrary.org/pageimage/3001878&lt;/FullSizeImageUrl&gt;
+      &lt;OcrUrl&gt;https://www.biodiversitylibrary.org/pagetext/3001878&lt;/OcrUrl&gt;
+      &lt;OcrText&gt;184 CORRESPONDENCE. 
+
+
+
+expressed as a fraction when compared with the vast ages which 
+
+ must have elapsed wliilst the paleozoic and the mesozoic rocks 
+
+ were laid down ; and the post-tertiary, when man (as we know 
+
+ him) and the modern species of animals took their rise, is a mere 
+
+ insignificant sediment compared even to the tertiary period. 
+
+ How, then, shall we express the geological_insignificance of the 
+
+ human historical period ? 
+
+
+
+Under domestication, it is true that the progress of evolution 
+
+ is more rapid than under normal circumstances. Yet man, so far 
+
+ as I am aware, has only succeeded in accelerating the evolution of 
+
+ one new family, that of the domestic dog, which can be traced 
+
+ through distinct lines of descent from the wolf and jackal. But 
+
+ the domestic dog becomes a true dog long before the oldest 
+
+ Egyptian mummy received its wrappings ; ^the cat, a far more 
+
+ modern and highly specialized carnivore, has not had time to 
+
+ change since it was first domesticated. 
+
+
+
+What has all this to do with plants ? may fairly be asked. I 
+
+ do not pretend to any acquaintance with paleobotany, but I 
+
+ cannot help thinking that the laws which govern one great branch 
+
+ of living beings govern also the other, and that as animals vary by 
+
+ slow degrees during the vast ages of geological time, so plants 
+
+ must also change. We see cultivated plants alter just as rapidly 
+
+ under the hand of man, as domesticated animals; we see the 
+
+ forest tree of warm regions become the creeping shrub of Arctic 
+
+ climes ; therefore, we know that vegetable forms vary with the 
+
+ action of their environment as do animals. There is also the 
+
+ same tendency to the late evolution of higher forms which we see 
+
+ in animals, and a tendency in some of the lower forms to dwindle 
+
+ away ; as witness the giant calamites of the coal forests^ as com- 
+
+ pared with the pigmy horsetails of the present day. The Equiseta 
+
+ are to the calamites much what the modern newt is as compared 
+
+ with the ancient labyrinthodont. My contention is not as to any 
+
+ point of paleobotany, of which I am certainly not qualified to 
+
+ judge, but only as to the utter insufificiency of the^time which has 
+
+ elapsed since Egypt was a civilised kingdom, to^ produce' new 
+
+ species of either animals or plants. 
+
+
+
+Should anyone wish to see how almost imperceptibly, but how 
+
+ surely, Nature works in altering " types," I would refer him to 
+
+ some of the later lectures of Professor Cope, in his " Origin of 
+
+ the Fittest." A more popular account is given by Oscar Schmidt 
+
+ in "The Mammalia" International Scientific Series. 
+
+
+
+Yours faithfully, 
+
+
+
+Alice Bodington. 
+
+
+
+Vancouver. 
+
+
+
+&lt;/OcrText&gt;
+      &lt;PageTypes&gt;
+        &lt;PageType&gt;
+          &lt;PageTypeName&gt;Text&lt;/PageTypeName&gt;
+        &lt;/PageType&gt;
+      &lt;/PageTypes&gt;
+      &lt;PageNumbers&gt;
+        &lt;PageNumber&gt;
+          &lt;Number&gt;Page 184&lt;/Number&gt;
+        &lt;/PageNumber&gt;
+      &lt;/PageNumbers&gt;
+    &lt;/Page&gt;
+  &lt;/Result&gt;
+&lt;/Response&gt;
+
+          </code>
+        </pre>
+    </div>
+    <div></div>
+</body>
+</html>

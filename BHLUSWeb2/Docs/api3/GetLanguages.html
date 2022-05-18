@@ -1,0 +1,413 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Biodiversity Heritage Library - API Version 3 Documentation</title>
+    <style type="text/css">
+        body { font-family:Verdana; font-size:12px; }
+        hr { margin:15px 0 15px 0; }
+        div { padding:5px; }
+        table, th, td { border:1px solid lightgray; border-spacing:0px; }
+        th { text-align:left; }
+        .pagehead { height:40px; padding:0px; }
+        .pagehead #left { float:left; }
+        .pagehead #right { float:right; }
+        .header { font-weight:bold; font-size:16px; }
+        .subhead1 { font-weight:bold; font-style:italic; margin-top:10px; font-size:14px; }
+        .subhead2 { font-style:italic; }
+        .toplink { font-weight:normal; font-size:10px; }
+        .syntaxbox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding:10px; background-color:#eee; }
+        .synindent { padding-left:30px }
+        .responsebox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding-left:10px; padding-right:10px; height:600px; overflow:auto; background-color:#eee; }
+        pre { margin:0px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <div class="pagehead">
+        <div id="left">
+            Biodiversity Heritage Library<br />
+            <a href="../api3.html">API v3 Documentation</a><br />
+        </div>
+        <div id="right">
+            Created: August 27, 2018<br />
+            Revised: April 4, 2022
+        </div>
+    </div>
+    <div>
+        <a href="../api3.html#overview">Overview</a><br />
+        <a href="../api3.html#methods">Methods</a><br />
+        <a href="../api3.html#elements">Data Elements</a><br />
+        <a href="../api3.html#notes">Release Notes</a>
+    </div>
+    <hr />
+    <div class="subhead1">GetLanguages</div>
+    <div>Get a list of languages in which materials in BHL have been written.</div>
+    <div>SYNTAX</div>
+    <div class="syntaxbox">
+    <div>https://www.biodiversitylibrary.org/api3?op=GetLanguages</div>
+    <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
+    </div>
+    <div>EXAMPLE REQUEST</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetLanguages&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Response
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;Status&gt;ok&lt;/Status&gt;
+  &lt;ErrorMessage /&gt;
+  &lt;Result&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;AFR&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Afrikaans&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;ARA&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Arabic&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;ARC&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Aramaic&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;MAP&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Austronesian (Other)&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;BUL&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Bulgarian&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;BUR&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Burmese&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;CAD&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Caddo&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;CAR&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Carib&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;CAT&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Catalan&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;CEL&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Celtic (Other)&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;CHI&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Chinese&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;HRV&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Croatian&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;SCR&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Croation&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;CZE&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Czech&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;DAK&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Dakota&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;DAN&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Danish&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;DUT&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Dutch&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;ENG&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;English&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;ENM&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;English, Middle&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;ANG&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;English, Old&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;EST&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Estonian&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;GEZ&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Ethiopic&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;FAO&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Faroese&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;FIN&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Finnish&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;FRE&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;French&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;FRM&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;French, Middle&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;FRO&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;French, Old&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;GEO&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Georgian&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;GER&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;German&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;GMH&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;German, Middle High&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;GRE&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Greek&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;GRC&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Greek, Ancient&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;GRN&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Guarani&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;GUJ&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Gujarati&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;HAW&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Hawaiian&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;HEB&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Hebrew&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;HIN&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Hindi&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;HUN&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Hungarian&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;ICE&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Icelandic&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;IND&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Indonesian&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;GLE&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Irish&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;IRO&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Iroquoian (Other)&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;ITA&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Italian&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;JPN&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Japanese&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;KAL&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Kalâtdlisut&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;LAT&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Latin&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;MLG&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Malagasy&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;MAY&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Malay&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;MAO&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Maori&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;MUL&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Multiple&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;NAH&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Nahuatl&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;NOR&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Norwegian&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;OJI&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Ojibwa&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;PER&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Persian&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;POL&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Polish&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;POR&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Portugese&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;PUS&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Pushto&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;ROH&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Raeto-Romance&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;RUM&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Romanian&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;RUS&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Russian&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;SAI&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;S. American Indian&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;GLA&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Scottish Gaelic&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;SCC&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Serbian&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;SIO&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Siouan (Other)&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;DEN&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Slave&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;SLA&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Slavic (Other)&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;SPA&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Spanish&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;SWE&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Swedish&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;GSW&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Swiss German&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;TAM&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Tamil&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;TAT&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Tatar&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;THA&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Thai&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;TON&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Tongan&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;TUP&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Tupi languages&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;TUR&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Turkish&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;OTA&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Turkish, Ottoman&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;UKR&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Ukrainian&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;UND&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Undetermined&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;URD&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Urdu&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;VIE&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Vietnamese&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;VOL&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Volapük&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;WAS&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Washo&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;WEL&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Welsh&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+    &lt;Language&gt;
+      &lt;LanguageCode&gt;YID&lt;/LanguageCode&gt;
+      &lt;LanguageName&gt;Yiddish&lt;/LanguageName&gt;
+    &lt;/Language&gt;
+  &lt;/Result&gt;
+&lt;/Response&gt;
+
+            </code>
+        </pre>
+    </div>
+    <div></div>
+</body>
+</html>

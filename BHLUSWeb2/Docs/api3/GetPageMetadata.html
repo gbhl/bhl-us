@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Biodiversity Heritage Library - API Version 3 Documentation</title>
+    <style type="text/css">
+        body { font-family:Verdana; font-size:12px; }
+        hr { margin:15px 0 15px 0; }
+        div { padding:5px; }
+        table, th, td { border:1px solid lightgray; border-spacing:0px; }
+        th { text-align:left; }
+        .pagehead { height:40px; padding:0px; }
+        .pagehead #left { float:left; }
+        .pagehead #right { float:right; }
+        .header { font-weight:bold; font-size:16px; }
+        .subhead1 { font-weight:bold; font-style:italic; margin-top:10px; font-size:14px; }
+        .subhead2 { font-style:italic; }
+        .toplink { font-weight:normal; font-size:10px; }
+        .syntaxbox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding:10px; background-color:#eee; }
+        .synindent { padding-left:30px }
+        .responsebox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding-left:10px; padding-right:10px; height:600px; overflow:auto; background-color:#eee; }
+        pre { margin:0px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <div class="pagehead">
+        <div id="left">
+            Biodiversity Heritage Library<br />
+            <a href="../api3.html">API v3 Documentation</a><br />
+        </div>
+        <div id="right">
+            Created: August 27, 2018<br />
+            Revised: April 4, 2022
+        </div>
+    </div>
+    <div>
+        <a href="../api3.html#overview">Overview</a><br />
+        <a href="../api3.html#methods">Methods</a><br />
+        <a href="../api3.html#elements">Data Elements</a><br />
+        <a href="../api3.html#notes">Release Notes</a>
+    </div>
+    <hr />
+    <div class="header">GetPageMetadata</div>
+    <div>Return metadata about a page.  You may choose to include the text and a list of names found on the page.</div>
+    <div>SYNTAX</div>
+    <div class="syntaxbox">
+    <div>https://www.biodiversitylibrary.org/api3?op=GetPageMetadata</div>
+    <div class="synindent">&amp;pageid=&lt;BHL identifier of a page&gt;</div>
+    <div class="synindent">&amp;ocr=&lt;"t" or "true" to include the page text in the response&gt;</div>
+    <div class="synindent">&amp;names=&lt;"t" or "true" to include scientific names on the page in the response&gt;</div>
+    <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
+    </div>
+    <div>EXAMPLE REQUEST</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetPageMetadata&amp;pageid=3137380&amp;ocr=t&amp;names=t&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Response
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;Status&gt;ok&lt;/Status&gt;
+  &lt;Result&gt;
+    &lt;Page&gt;
+      &lt;PageID&gt;3137380&lt;/PageID&gt;
+      &lt;ItemID&gt;22314&lt;/ItemID&gt;
+      &lt;TextSource&gt;OCR&lt;/TextSource&gt;
+      &lt;PageUrl&gt;https://www.biodiversitylibrary.org/page/3137380&lt;/PageUrl&gt;
+      &lt;ThumbnailUrl&gt;https://www.biodiversitylibrary.org/pagethumb/3137380&lt;/ThumbnailUrl&gt;
+      &lt;FullSizeImageUrl&gt;https://www.biodiversitylibrary.org/pageimage/3137380&lt;/FullSizeImageUrl&gt;
+      &lt;OcrUrl&gt;https://www.biodiversitylibrary.org/pagetext/3137380&lt;/OcrUrl&gt;
+      &lt;OcrText&gt;
+        CONTENTS OF VOLUME X
+        Plates 1-9
+
+        PAGE
+
+        Title-page i
+
+        Contents Hi
+
+        A Further Study of Variation in the Gopher-Snakes of Western North
+
+        America, by John Van Denburgh 1
+
+        (Published August 6, 1920)
+
+        Description of a New Species of Rattlesnake (Crotalus lucasensis) from
+
+        Lower California, by John Van Denburgh 29
+
+        (Published August 6, 1920)
+
+        Description of a New Subspecies of Boa (Charina bottce utaliensis) from
+
+        Utah, by John Van Denburgh 31
+
+        (Published August 6, 1920)
+
+        Description of a New Lizard (Dipsosaurus dorsalis lucasensis) from
+
+        Lower California, by John Van Denburgh : 33
+
+        (Published August 6, 1920)
+
+        Undescribed Tipulidae (Diptera) from Western North America, by
+
+        Charles P. Alexander 35
+
+        (Published August 6, 1920)
+
+        Three New Species of Dolichopodidae (Diptera) from California and
+
+        Nevada, by M. C. Van Duzee _ 47
+
+        (Published August 6, 1920)
+
+        Two New Species of Syrphidse (Diptera), by A. L. Lovett 51
+
+        (Published August 6, 19^)
+
+        Notes on Some Undescribed Calif ornian Helices, by S. Stillman Berry.... 53
+
+        (Published August 11, 1920)
+
+        A New Genus and Species of Grasshopper from California, by Morgan
+
+        Hebard _ 71
+
+        (Published December 29, 1920)
+
+        Color Changes and Structure of the Skin of Anolis carolinensis, by
+
+        Charles E. von Geldern 77
+
+        (Published February 12, 1921)
+
+        Report of the President of the Academy for the Year 1920, by C. E.
+
+        Grunsky 119
+
+        (Published July 2, 1921)
+
+        Report of the Director of the Museum for the Year 1920, by Barton
+
+        Warren Evermann 128
+
+        (Published July 2, 1921)
+
+        Index 165
+
+        JUNE 11, 1923
+
+      &lt;/OcrText&gt;
+      &lt;CreationDate&gt;2008/04/16 12:27:04&lt;/CreationDate&gt;
+      &lt;PageTypes&gt;
+        &lt;PageType&gt;
+          &lt;PageTypeName&gt;Table of Contents&lt;/PageTypeName&gt;
+        &lt;/PageType&gt;
+      &lt;/PageTypes&gt;
+      &lt;PageNumbers /&gt;
+      &lt;Names&gt;
+        &lt;Name&gt;
+          &lt;NameFound&gt;Anolis carolinensis&lt;/NameFound&gt;
+          &lt;NameConfirmed&gt;Anolis carolinensis&lt;/NameConfirmed&gt;
+          &lt;NameCanonical&gt;Anolis carolinensis&lt;/NameCanonical&gt;
+        &lt;/Name&gt;
+        &lt;Name&gt;
+          &lt;NameFound&gt;Charina&lt;/NameFound&gt;
+          &lt;NameConfirmed&gt;Charina&lt;/NameConfirmed&gt;
+          &lt;NameCanonical&gt;Charina&lt;/NameCanonical&gt;
+        &lt;/Name&gt;
+        &lt;Name&gt;
+          &lt;NameFound&gt;Crotalus lucasensis&lt;/NameFound&gt;
+          &lt;NameConfirmed&gt;Crotalus lucasensis VAN 1920&lt;/NameConfirmed&gt;
+          &lt;NameCanonical&gt;Crotalus lucasensis&lt;/NameCanonical&gt;
+        &lt;/Name&gt;
+        &lt;Name&gt;
+          &lt;NameFound&gt;Dipsosaurus dorsalis lucasensis&lt;/NameFound&gt;
+          &lt;NameConfirmed&gt;Dipsosaurus dorsalis lucasensis&lt;/NameConfirmed&gt;
+          &lt;NameCanonical&gt;Dipsosaurus dorsalis lucasensis&lt;/NameCanonical&gt;
+        &lt;/Name&gt;
+        &lt;Name&gt;
+          &lt;NameFound&gt;Diptera&lt;/NameFound&gt;
+          &lt;NameConfirmed&gt;Diptera&lt;/NameConfirmed&gt;
+          &lt;NameCanonical&gt;Diptera&lt;/NameCanonical&gt;
+        &lt;/Name&gt;
+        &lt;Name&gt;
+          &lt;NameFound&gt;Dolichopodidae&lt;/NameFound&gt;
+          &lt;NameConfirmed&gt;Dolichopodidae&lt;/NameConfirmed&gt;
+          &lt;NameCanonical&gt;Dolichopodidae&lt;/NameCanonical&gt;
+        &lt;/Name&gt;
+        &lt;Name&gt;
+          &lt;NameFound&gt;Tipulidae&lt;/NameFound&gt;
+          &lt;NameConfirmed&gt;Tipulidae&lt;/NameConfirmed&gt;
+          &lt;NameCanonical&gt;Tipulidae&lt;/NameCanonical&gt;
+        &lt;/Name&gt;
+      &lt;/Names&gt;
+    &lt;/Page&gt;
+  &lt;/Result&gt;
+&lt;/Response&gt;
+            </code>
+        </pre>
+    </div>    
+    <div></div>
+</body>
+</html>

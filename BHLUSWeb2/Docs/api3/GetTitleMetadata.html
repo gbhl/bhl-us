@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Biodiversity Heritage Library - API Version 3 Documentation</title>
+    <style type="text/css">
+        body { font-family:Verdana; font-size:12px; }
+        hr { margin:15px 0 15px 0; }
+        div { padding:5px; }
+        table, th, td { border:1px solid lightgray; border-spacing:0px; }
+        th { text-align:left; }
+        .pagehead { height:40px; padding:0px; }
+        .pagehead #left { float:left; }
+        .pagehead #right { float:right; }
+        .header { font-weight:bold; font-size:16px; }
+        .subhead1 { font-weight:bold; font-style:italic; margin-top:10px; font-size:14px; }
+        .subhead2 { font-style:italic; }
+        .toplink { font-weight:normal; font-size:10px; }
+        .syntaxbox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding:10px; background-color:#eee; }
+        .synindent { padding-left:30px }
+        .responsebox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding-left:10px; padding-right:10px; height:600px; overflow:auto; background-color:#eee; }
+        pre { margin:0px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <div class="pagehead">
+        <div id="left">
+            Biodiversity Heritage Library<br />
+            <a href="../api3.html">API v3 Documentation</a><br />
+        </div>
+        <div id="right">
+            Created: August 27, 2018<br />
+            Revised: April 4, 2022
+        </div>
+    </div>
+    <div>
+        <a href="../api3.html#overview">Overview</a><br />
+        <a href="../api3.html#methods">Methods</a><br />
+        <a href="../api3.html#elements">Data Elements</a><br />
+        <a href="../api3.html#notes">Release Notes</a>
+    </div>
+    <hr />
+    <div class="subhead1">GetTitleMetadata</div>
+    <div>Return metadata about a title.  You may choose to include a list of the items (books) associated with the title.</div>
+    <div>SYNTAX</div>
+    <div class="syntaxbox">
+    <div>https://www.biodiversitylibrary.org/api3?op=GetTitleMetadata</div>
+    <div class="synindent">&amp;id=&lt;identifier of a title&gt;</div>
+    <div class="synindent">&amp;idtype=&lt;bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, or soulsby (OPTIONAL; "bhl" is the default)&gt;</div>
+    <div class="synindent">&amp;item=&lt;"t" or "true" to include the title's items in the response&gt;</div>
+    <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
+    </div>
+    <div>EXAMPLE REQUEST</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetTitleMetadata&amp;id=61122&amp;idtype=bhl&amp;items=t&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Response
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;Status&gt;ok&lt;/Status&gt;
+  &lt;ErrorMessage /&gt;
+  &lt;Result&gt;
+    &lt;Title&gt;
+      &lt;TitleID&gt;61122&lt;/TitleID&gt;
+      &lt;Genre&gt;Collection&lt;/Genre&gt;
+      &lt;MaterialType&gt;Archival material&lt;/MaterialType&gt;
+      &lt;FullTitle&gt;Plant lists, notes, and correspondence : Frémont expeditions, 1843-1853&lt;/FullTitle&gt;
+      &lt;ShortTitle&gt;Plant lists, notes, and correspondence : Frémont expeditions, 1843-1853&lt;/ShortTitle&gt;
+      &lt;SortTitle&gt;Plant lists notes and correspondence Frémont expeditions&lt;/SortTitle&gt;
+      &lt;TitleUrl&gt;https://www.biodiversitylibrary.org/bibliography/61122&lt;/TitleUrl&gt;
+      &lt;CreationDate&gt;2012/08/06 13:58:28&lt;/CreationDate&gt;
+      &lt;Authors&gt;
+        &lt;Author&gt;
+          &lt;AuthorID&gt;280&lt;/AuthorID&gt;
+          &lt;Name&gt;Torrey, John,&lt;/Name&gt;
+          &lt;Role&gt;Main Entry -- Personal Name (MARC 100)&lt;/Role&gt;
+          &lt;Dates&gt;1796-1873&lt;/Dates&gt;
+        &lt;/Author&gt;
+        &lt;Author&gt;
+          &lt;AuthorID&gt;30811&lt;/AuthorID&gt;
+          &lt;Name&gt;Bigelow, John M.&lt;/Name&gt;
+          &lt;Role&gt;Added Entry -- Personal Name (MARC 700)&lt;/Role&gt;
+          &lt;Dates&gt;1804-1878&lt;/Dates&gt;
+        &lt;/Author&gt;
+        &lt;Author&gt;
+          &lt;AuthorID&gt;172&lt;/AuthorID&gt;
+          &lt;Name&gt;Gray, Asa,&lt;/Name&gt;
+          &lt;Role&gt;Added Entry -- Personal Name (MARC 700)&lt;/Role&gt;
+          &lt;Dates&gt;1810-1888&lt;/Dates&gt;
+        &lt;/Author&gt;
+      &lt;/Authors&gt;
+      &lt;Subjects&gt;
+        &lt;Subject&gt;
+          &lt;SubjectText&gt;Correspondence&lt;/SubjectText&gt;
+          &lt;CreationDate&gt;2012/08/07 00:04:26&lt;/CreationDate&gt;
+        &lt;/Subject&gt;
+        &lt;Subject&gt;
+          &lt;SubjectText&gt;Discovery and exploration&lt;/SubjectText&gt;
+          &lt;CreationDate&gt;2012/08/07 00:04:26&lt;/CreationDate&gt;
+        &lt;/Subject&gt;
+        &lt;Subject&gt;
+          &lt;SubjectText&gt;Explorers&lt;/SubjectText&gt;
+          &lt;CreationDate&gt;2012/08/07 00:04:26&lt;/CreationDate&gt;
+        &lt;/Subject&gt;
+        &lt;Subject&gt;
+          &lt;SubjectText&gt;Frémont Expedition&lt;/SubjectText&gt;
+          &lt;CreationDate&gt;2012/08/07 00:04:26&lt;/CreationDate&gt;
+        &lt;/Subject&gt;
+        &lt;Subject&gt;
+          &lt;SubjectText&gt;Plants&lt;/SubjectText&gt;
+          &lt;CreationDate&gt;2012/08/07 00:04:26&lt;/CreationDate&gt;
+        &lt;/Subject&gt;
+        &lt;Subject&gt;
+          &lt;SubjectText&gt;Scientific Expeditions&lt;/SubjectText&gt;
+          &lt;CreationDate&gt;2012/08/07 00:04:26&lt;/CreationDate&gt;
+        &lt;/Subject&gt;
+        &lt;Subject&gt;
+          &lt;SubjectText&gt;West (U.S.)&lt;/SubjectText&gt;
+          &lt;CreationDate&gt;2012/08/07 00:04:26&lt;/CreationDate&gt;
+        &lt;/Subject&gt;
+      &lt;/Subjects&gt;
+      &lt;Identifiers&gt;
+        &lt;Identifier&gt;
+          &lt;IdentifierName&gt;OCLC&lt;/IdentifierName&gt;
+          &lt;IdentifierValue&gt;782055926&lt;/IdentifierValue&gt;
+        &lt;/Identifier&gt;
+      &lt;/Identifiers&gt;
+      &lt;Variants&gt;
+        &lt;TitleVariant&gt;
+          &lt;TitleVariantTypeName&gt;Alternative&lt;/TitleVariantTypeName&gt;
+          &lt;Title&gt;Frémont expeditions   &lt;/Title&gt;
+        &lt;/TitleVariant&gt;
+      &lt;/Variants&gt;
+      &lt;Items&gt;
+        &lt;Item&gt;
+          &lt;ItemID&gt;124320&lt;/ItemID&gt;
+          &lt;Volume&gt;Explorers &amp; travellers who have collected plants in California, Oregon, Washington Territory &amp; Nev.&lt;/Volume&gt;
+          &lt;ItemUrl&gt;https://www.biodiversitylibrary.org/item/124320&lt;/ItemUrl&gt;
+        &lt;/Item&gt;
+        &lt;Item&gt;
+          &lt;ItemID&gt;124321&lt;/ItemID&gt;
+          &lt;Volume&gt;List of plants of Frémont collections 1845-1846, sent by Torrey to Engelmann Fall 1848&lt;/Volume&gt;
+          &lt;Year&gt;1845&lt;/Year&gt;
+          &lt;EndYear&gt;1846&lt;/EndYear&gt;
+          &lt;ItemUrl&gt;https://www.biodiversitylibrary.org/item/124321&lt;/ItemUrl&gt;
+        &lt;/Item&gt;
+        &lt;Item&gt;
+          &lt;ItemID&gt;124322&lt;/ItemID&gt;
+          &lt;Volume&gt;List of camps of an exploration from Fort Smith Ark. to San Pedro Cal. by Dr. Bigelow commenced July&lt;/Volume&gt;
+          &lt;ItemUrl&gt;https://www.biodiversitylibrary.org/item/124322&lt;/ItemUrl&gt;
+        &lt;/Item&gt;
+        &lt;Item&gt;
+          &lt;ItemID&gt;124324&lt;/ItemID&gt;
+          &lt;Volume&gt;Numbers corresponding to labels on the plants commencing with the first plant gathered in California&lt;/Volume&gt;
+          &lt;ItemUrl&gt;https://www.biodiversitylibrary.org/item/124324&lt;/ItemUrl&gt;
+        &lt;/Item&gt;
+        &lt;Item&gt;
+          &lt;ItemID&gt;124325&lt;/ItemID&gt;
+          &lt;Volume&gt;Asa Gray lists and letters regarding Frémont's expeditions, n.d.&lt;/Volume&gt;
+          &lt;ItemUrl&gt;https://www.biodiversitylibrary.org/item/124325&lt;/ItemUrl&gt;
+        &lt;/Item&gt;
+      &lt;/Items&gt;
+      &lt;Notes&gt;
+        &lt;TitleNote&gt;
+          &lt;NoteText&gt;Folder 9.65. List of plants for 1843 -- Folder 9.66. Localities of plants for 1844 -- Folder 9.67. Plant lists and notes, 2nd expedition, 1843-1844 -- Folder 9.68. List of plants of Frémont collections 1845-1846, sent by Torrey to Engelmann Fall 1848 -- Folder 9.69. Numbers corresponding to labels on the plants commencing with the first plant gathered in California, 1845-1846 -- Folder 9.70. Explorers &amp; travellers who have collected plants in California, Oregon, Washington Territory &amp; Nevada, n.d. -- Folder 9.71. List of camps of an exploration from Fort Smith Ark. to San Pedro Cal. by Dr. Bigelow commenced July 15, 1853 -- Folder 9.72. Asa Gray lists and letters regarding Frémont's expeditions, n.d.&lt;/NoteText&gt;
+          &lt;NoteSequence&gt;1&lt;/NoteSequence&gt;
+          &lt;NoteTypeName&gt;Contents&lt;/NoteTypeName&gt;
+        &lt;/TitleNote&gt;
+        &lt;TitleNote&gt;
+          &lt;NoteText&gt;Plant lists, notes, and correspondence, chiefly by John Torrey, for 1843-1853. The lists and notes relate to plants collected on Frémont's 2nd and 3rd expeditions to the American West and Torrey's work identifying and describing the plants. Also included are Asa Gray's notes and correspondence from Asa Gray to John Torrey regarding Frémont's expeditions, a list of explorers who collected plants in the American West, and a list of camps during an exploration for a railroad route from Arkansas to California in 1853 by John Milton Bigelow.&lt;/NoteText&gt;
+          &lt;NoteSequence&gt;2&lt;/NoteSequence&gt;
+          &lt;NoteTypeName&gt;Scope and Content&lt;/NoteTypeName&gt;
+        &lt;/TitleNote&gt;
+        &lt;TitleNote&gt;
+          &lt;NoteText&gt;In English.&lt;/NoteText&gt;
+          &lt;NoteSequence&gt;3&lt;/NoteSequence&gt;
+          &lt;NoteTypeName&gt;Language&lt;/NoteTypeName&gt;
+        &lt;/TitleNote&gt;
+      &lt;/Notes&gt;
+    &lt;/Title&gt;
+  &lt;/Result&gt;
+&lt;/Response&gt;
+
+            </code>
+        </pre>
+    </div>
+    <div></div>
+</body>
+</html>
