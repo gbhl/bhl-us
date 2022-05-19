@@ -59,5 +59,29 @@ namespace MOBOT.BHL.Server
         List<Item> ItemSelectPublished();
         List<Item> ItemSelectWithExpiredPageNames(int maxAge);
         Item ItemSelectAuto(int itemID);
+        List<Page> PageSelectFileNameByItemID(int itemID);
+        List<Institution> InstitutionSelectByItemIDAndRole(int itemID, string role);
+        string ItemGetNamesXMLByItemID(int itemID);
+        void NamePageDeleteByItemID(int itemID);
+        Item ItemUpdateLastPageNameLookupDate(int itemID);
+        void PageTextLogInsertForItem(int itemID, string textSource, int userID);
+        Segment SegmentSelectAuto(int segmentID);
+        Segment SegmentSelectExtended(int segmentID);
+        List<Institution> InstitutionSelectBySegmentIDAndRole(int segmentID, string role);
+        List<Page> PageMetadataSelectBySegmentID(int segmentID);
+        List<DOI> SegmentSelectWithoutSubmittedDOI(int numberToReturn);
+        List<Segment> SegmentSelectPublished();
+        List<Segment> SegmentSelectRecentlyChanged(string startDate);
+        Segment SegmentSelectByItemID(int itemID);
+        List<PDF> PDFSelectForFileCreation();
+        List<PDF> PDFSelectForDeletion();
+        PDF PDFUpdateFileDeletion(int pdfId);
+        PDF PDFUpdateGenerationInfo(int pdfId, string fileLocation, string fileUrl, int numberImagesMissing, int numberOcrMissing);
+        bool PDFUpdatePdfStatus(int pdfId, int pdfStatusId);
+        Page PageUpdateLastPageNameLookupDate(int pageID);
+        int[] PageNameUpdateList(int pageID, List<NameFinderResponse>items, string sourceName);
+        List<Page> PageSelectWithExpiredPageNamesByItemID(int itemID, int maxAge);
+        List<Page> PageSelectWithoutPageNames();
+        List<Page> PageSelectWithoutPageNamesByItemID(int itemID);
     }
 }

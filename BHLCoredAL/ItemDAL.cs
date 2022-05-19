@@ -391,13 +391,12 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public string ItemGetNamesXMLByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID, string barcode)
+        public string ItemGetNamesXMLByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemGetNamesXMLByItemID", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
-                CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 200, false, barcode)))
+                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
             {
                 return CustomSqlHelper.ExecuteScalar(command).ToString();
             }

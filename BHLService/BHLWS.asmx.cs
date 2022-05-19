@@ -207,10 +207,10 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public string ItemGetNamesXMLByItemID(int itemID, string barcode)
+        public string ItemGetNamesXMLByItemID(int itemID)
         {
             BHLProvider bhlServer = new BHLProvider();
-            return bhlServer.ItemGetNamesXMLByItemID(itemID, barcode);
+            return bhlServer.ItemGetNamesXMLByItemID(itemID);
         }
 
         [WebMethod]

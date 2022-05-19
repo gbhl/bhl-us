@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
 
 namespace BHL.WebServiceREST.v1.Controllers
@@ -45,6 +46,49 @@ namespace BHL.WebServiceREST.v1.Controllers
         public IActionResult ItemSelectPublished()
         {
             return Ok(_bhlProvider.ItemSelectPublished());
+        }
+
+        [HttpGet("{itemID}/Filenames", Name = "GetItemFilenames")]
+        [ProducesResponseType(200, Type = typeof(Item))]
+        public IActionResult Filenames(int itemID)
+        {
+            return Ok(_bhlProvider.ItemSelectFilenames(ItemType.Item, itemID));
+        }
+
+        [HttpGet("{itemID}/Pages", Name = "GetItemPages")]
+        [ProducesResponseType(200, Type = typeof(List<Page>))]
+        public IActionResult Pages(int itemID)
+        {
+            return Ok(_bhlProvider.PageSelectFileNameByItemID(itemID));
+        }
+
+        [HttpGet("{itemID}/Institutions", Name = "GetItemInstitutionsByRole")]
+        [ProducesResponseType(200, Type = typeof(List<Institution>))]
+        public IActionResult GetInstitutionByRole(int itemID, string roleName)
+        {
+            return Ok(_bhlProvider.InstitutionSelectByItemIDAndRole(itemID, roleName));
+        }
+
+        [HttpGet("{itemID}/NamesXml", Name = "GetItemNamesXml")]
+        [ProducesResponseType(200, Type = typeof(List<Institution>))]
+        public IActionResult GetNamesXML(int itemID)
+        {
+            return Ok(_bhlProvider.ItemGetNamesXMLByItemID(itemID));
+        }
+
+        [HttpDelete("{itemID}/Names", Name = "DeleteItemNames")]
+        [ProducesResponseType(200)]
+        public IActionResult NamePageDeleteByItemID(int itemID)
+        {
+            _bhlProvider.NamePageDeleteByItemID(itemID);
+            return Ok();
+        }
+
+        [HttpPut("{itemID}", Name = "UpdateItemLastPageNameLookupDate")]
+        [ProducesResponseType(200)]
+        public IActionResult ItemUpdateLastPageNameLookupDate(int itemID)
+        {
+            return Ok(_bhlProvider.ItemUpdateLastPageNameLookupDate(itemID));
         }
     }
 }

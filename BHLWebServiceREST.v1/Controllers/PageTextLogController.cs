@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MOBOT.BHL.DataObjects;
+﻿using BHL.WebServiceREST.v1.Models;
+using Microsoft.AspNetCore.Mvc;
 using MOBOT.BHL.Server;
 
 namespace BHL.WebServiceREST.v1.Controllers
@@ -18,6 +18,13 @@ namespace BHL.WebServiceREST.v1.Controllers
             _bhlProvider = bhlProvider;
         }
 
+        [HttpPost("", Name = "InsertPageTextLog")]
+        [ProducesResponseType(200)]
+        public IActionResult PageTextLogInsertForItem(PageTextLogModel request)
+        {
+            _bhlProvider.PageTextLogInsertForItem(request.itemid, request.textsource, request.userid);
+            return Ok();
+        }
 
     }
 }

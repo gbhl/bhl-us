@@ -30,21 +30,21 @@ namespace BHL.WebServiceREST.v1.Controllers
 
         [HttpPut("{doiID}", Name="UpdateDoi")]
         [ProducesResponseType(200)]
-        public IActionResult UpdateDoi(int doiID, DoiModel request)
+        public IActionResult UpdateDoi(int doiID, DoiUpdateTarget target, DoiModel request)
         {
             DOI doi = _bhlProvider.DOISelectAuto(doiID);
 
-            if (string.Compare(doi.DOIBatchID, request.doibatchid, true) != 0)
+            if (target == DoiUpdateTarget.BatchID)
             {
                 // Update batch ID
                 _bhlProvider.DOIUpdateBatchID(doiID, (int)request.doistatusid, request.doibatchid, request.userid);
             }
-            else if (string.Compare(doi.DOIName, request.doiname, true) != 0)
+            if (target == DoiUpdateTarget.DOIName)
             {
                 // Update DOI Name
                 _bhlProvider.DOIUpdateDOIName(doiID, (int)request.doistatusid, request.doiname, request.userid);
             }
-            else if (doi.DOIStatusID != request.doistatusid)
+            if (target == DoiUpdateTarget.DOIStatus)
             {
                 // Update status
                 _bhlProvider.DOIUpdateStatus(doiID, (int)request.doistatusid, request.message ?? string.Empty, request.isvalid ?? doi.IsValid, request.userid);
@@ -67,5 +67,12 @@ namespace BHL.WebServiceREST.v1.Controllers
         {
             return Ok(_bhlProvider.DOISelectSubmitted(minutesSinceSubmit));
         }
+    }
+
+    public enum DoiUpdateTarget
+    {
+        BatchID = 10,
+        DOIName = 20,
+        DOIStatus = 30
     }
 }
