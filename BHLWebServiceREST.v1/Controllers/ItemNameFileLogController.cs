@@ -40,7 +40,7 @@ namespace BHL.WebServiceREST.v1.Controllers
             return Ok(_bhlProvider.ItemNameFileLogSelectForUpload());
         }
 
-        [HttpPut("{logID}", Name = "")]
+        [HttpPut("{logID}", Name = "UpdateItemNameFileLog")]
         [ProducesResponseType(200)]
         public IActionResult ItemNameFileLogUpdateCreateDate(int logID, ItemNameFileLogUpdateTarget updateTarget)
         {

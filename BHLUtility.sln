@@ -103,7 +103,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAI2", "OAI2\OAI2.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAIMODS", "OAIMODS\OAIMODS.csproj", "{1C13023A-C5FA-4C41-BD70-3F94CCD23167}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHL.WebServiceREST.v1", "BHLWebServiceREST.v1\BHL.WebServiceREST.v1.csproj", "{1BDEB834-C66D-45AA-9434-106B3142E654}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHL.WebServiceREST.v1", "BHLWebServiceREST.v1\BHL.WebServiceREST.v1.csproj", "{1BDEB834-C66D-45AA-9434-106B3142E654}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHL.WebServiceREST.v1.Client", "BHLWebServiceREST.v1.Client\BHL.WebServiceREST.v1.Client.csproj", "{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -495,6 +497,18 @@ Global
 		{1BDEB834-C66D-45AA-9434-106B3142E654}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1BDEB834-C66D-45AA-9434-106B3142E654}.Release|x86.ActiveCfg = Release|Any CPU
 		{1BDEB834-C66D-45AA-9434-106B3142E654}.Release|x86.Build.0 = Release|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Debug|x86.Build.0 = Debug|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Release|x86.ActiveCfg = Release|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

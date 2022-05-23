@@ -4,8 +4,14 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<OpenApiDocumentName>v1</OpenApiDocumentName>
+	<Configurations>Debug;Release</Configurations>
     <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
+
+  <Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
+	<Exec Command="dotnet swagger tofile --serializeasv2 --output $(OutputPath)$(AssemblyName).json $(OutputPath)$(AssemblyName).dll $(OpenApiDocumentName)" ContinueOnError="true" />
+  </Target>
 
   <ItemGroup>
     <None Remove="gnfinder.exe" />

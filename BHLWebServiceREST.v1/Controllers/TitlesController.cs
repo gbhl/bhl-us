@@ -20,7 +20,6 @@ namespace BHL.WebServiceREST.v1.Controllers
 
         [HttpGet("{titleID}", Name = "GetTitle")]
         [ProducesResponseType(200, Type = typeof(Title))]
-
         public IActionResult GetTitle(int titleID)
         {
             return Ok(_bhlProvider.TitleSelectAuto(titleID));

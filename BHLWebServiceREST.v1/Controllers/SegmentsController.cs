@@ -21,7 +21,6 @@ namespace BHL.WebServiceREST.v1.Controllers
 
         [HttpGet("{segmentID}", Name = "GetSegment")]
         [ProducesResponseType(200, Type = typeof(Segment))]
-
         public IActionResult GetSegment(int segmentID)
         {
             return Ok(_bhlProvider.SegmentSelectAuto(segmentID));

@@ -21,7 +21,6 @@ namespace BHL.WebServiceREST.v1.Controllers
 
         [HttpGet("{itemID}", Name = "GetItem")]
         [ProducesResponseType(200, Type = typeof(Item))]
-
         public IActionResult GetItem(int itemID)
         {
             return Ok(_bhlProvider.ItemSelectAuto(itemID));
