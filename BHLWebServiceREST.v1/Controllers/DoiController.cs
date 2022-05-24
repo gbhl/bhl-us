@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using System.Runtime.Serialization;
 
 namespace BHL.WebServiceREST.v1.Controllers
 {
@@ -28,28 +29,28 @@ namespace BHL.WebServiceREST.v1.Controllers
             return Ok();
         }
 
-        [HttpPut("{doiID}", Name="UpdateDoi")]
+        [HttpPut("{doiID}/BatchID", Name="UpdateDoiBatchID")]
         [ProducesResponseType(200)]
-        public IActionResult UpdateDoi(int doiID, DoiUpdateTarget target, DoiModel request)
+        public IActionResult UpdateDoiBatchID(int doiID, DoiModel request)
+        {
+            _bhlProvider.DOIUpdateBatchID(doiID, (int)request.doistatusid, request.doibatchid, request.userid);
+            return Ok();
+        }
+
+        [HttpPut("{doiID}/DOIName", Name = "UpdateDoiName")]
+        [ProducesResponseType(200)]
+        public IActionResult UpdateDoiName(int doiID, DoiModel request)
+        {
+            _bhlProvider.DOIUpdateDOIName(doiID, (int)request.doistatusid, request.doiname, request.userid);
+            return Ok();
+        }
+
+        [HttpPut("{doiID}/Status", Name = "UpdateDoiStatus")]
+        [ProducesResponseType(200)]
+        public IActionResult UpdateDoiStatus(int doiID, DoiModel request)
         {
             DOI doi = _bhlProvider.DOISelectAuto(doiID);
-
-            if (target == DoiUpdateTarget.BatchID)
-            {
-                // Update batch ID
-                _bhlProvider.DOIUpdateBatchID(doiID, (int)request.doistatusid, request.doibatchid, request.userid);
-            }
-            if (target == DoiUpdateTarget.DOIName)
-            {
-                // Update DOI Name
-                _bhlProvider.DOIUpdateDOIName(doiID, (int)request.doistatusid, request.doiname, request.userid);
-            }
-            if (target == DoiUpdateTarget.DOIStatus)
-            {
-                // Update status
-                _bhlProvider.DOIUpdateStatus(doiID, (int)request.doistatusid, request.message ?? string.Empty, request.isvalid ?? doi.IsValid, request.userid);
-            }
-
+            _bhlProvider.DOIUpdateStatus(doiID, (int)request.doistatusid, request.message ?? string.Empty, request.isvalid ?? doi.IsValid, request.userid);
             return Ok();
         }
 
@@ -67,12 +68,5 @@ namespace BHL.WebServiceREST.v1.Controllers
         {
             return Ok(_bhlProvider.DOISelectSubmitted(minutesSinceSubmit));
         }
-    }
-
-    public enum DoiUpdateTarget
-    {
-        BatchID = 10,
-        DOIName = 20,
-        DOIStatus = 30
     }
 }

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
 {
-    public class OcrClient : ClientBase
+    public class OcrClient : RestClient
     {
         public OcrClient(string baseUrl) : base(baseUrl)
         {

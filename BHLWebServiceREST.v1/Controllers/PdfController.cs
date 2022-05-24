@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using System.Runtime.Serialization;
 
 namespace BHL.WebServiceREST.v1.Controllers
 {
@@ -33,37 +34,29 @@ namespace BHL.WebServiceREST.v1.Controllers
             return Ok(_bhlProvider.PDFSelectForDeletion());
         }
 
-        [HttpPut("{pdfID}", Name = "UpdatePdf")]
+        [HttpPut("{pdfID}/DeletionDate", Name = "UpdatePdfDeletionDate")]
         [ProducesResponseType(200, Type = typeof(PDF))]
-        public IActionResult UpdatePdf(int pdfID, PdfUpdateTarget target, PdfModel request)
+        public IActionResult UpdatePdfDeletionDate(int pdfID, PdfModel request)
         {
-            PDF pdf = null;
-
-            if (target == PdfUpdateTarget.DeletionDate)
-            {
-                // Update pdf deletion date
-                pdf = _bhlProvider.PDFUpdateFileDeletion(pdfID);
-            }
-            if (target == PdfUpdateTarget.PdfStatus)
-            {
-                // Update pdf status
-                _bhlProvider.PDFUpdatePdfStatus(pdfID, (int)request.pdfstatusid);
-            }
-            if (target == PdfUpdateTarget.GenerationInfo)
-            {
-                // Update pdf generation info
-                pdf = _bhlProvider.PDFUpdateGenerationInfo(pdfID, request.fileLocation, request.fileUrl, 
-                    (int)request.numberImagesMissing, (int)request.numberOcrMissing);            
-            }
-
+            PDF pdf = _bhlProvider.PDFUpdateFileDeletion(pdfID);
             return Ok(pdf);
         }
-    }
 
-    public enum PdfUpdateTarget
-    {
-        DeletionDate = 10,
-        GenerationInfo = 20,
-        PdfStatus = 30
+        [HttpPut("{pdfID}/Status", Name = "UpdatePdfStatus")]
+        [ProducesResponseType(200)]
+        public IActionResult UpdatePdfStatus(int pdfID, PdfModel request)
+        {
+            _bhlProvider.PDFUpdatePdfStatus(pdfID, (int)request.pdfstatusid);
+            return Ok();
+        }
+
+        [HttpPut("{pdfID}/GenerationInfo", Name = "UpdatePdfGenerationInfo")]
+        [ProducesResponseType(200, Type = typeof(PDF))]
+        public IActionResult UpdatePdfGenerationInfo(int pdfID, PdfModel request)
+        {
+            PDF pdf = _bhlProvider.PDFUpdateGenerationInfo(pdfID, request.fileLocation, request.fileUrl,
+                    (int)request.numberImagesMissing, (int)request.numberOcrMissing);
+            return Ok(pdf);
+        }
     }
 }

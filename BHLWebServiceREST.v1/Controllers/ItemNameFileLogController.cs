@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using System.Runtime.Serialization;
 
 namespace BHL.WebServiceREST.v1.Controllers
 {
@@ -40,20 +41,20 @@ namespace BHL.WebServiceREST.v1.Controllers
             return Ok(_bhlProvider.ItemNameFileLogSelectForUpload());
         }
 
-        [HttpPut("{logID}", Name = "UpdateItemNameFileLog")]
+        [HttpPut("{logID}/CreateDate", Name = "UpdateItemNameFileLogCreateDate")]
         [ProducesResponseType(200)]
-        public IActionResult ItemNameFileLogUpdateCreateDate(int logID, ItemNameFileLogUpdateTarget updateTarget)
+        public IActionResult ItemNameFileLogUpdateCreateDate(int logID)
         {
-            if (updateTarget == ItemNameFileLogUpdateTarget.Create) _bhlProvider.ItemNameFileLogUpdateCreateDate(logID);
-            if (updateTarget == ItemNameFileLogUpdateTarget.Upload) _bhlProvider.ItemNameFileLogUpdateUploadDate(logID);
-
+            _bhlProvider.ItemNameFileLogUpdateCreateDate(logID);
             return Ok();
         }
-    }
 
-    public enum ItemNameFileLogUpdateTarget
-    {
-        Create = 10,
-        Upload = 20
+        [HttpPut("{logID}/UploadDate", Name = "UpdateItemNameFileLogUploadDate")]
+        [ProducesResponseType(200)]
+        public IActionResult ItemNameFileLogUpdateUploadDate(int logID)
+        {
+            _bhlProvider.ItemNameFileLogUpdateUploadDate(logID);
+            return Ok();
+        }
     }
 }

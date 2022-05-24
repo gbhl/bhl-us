@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
 {
-    public class ItemNameFileLogClient : ClientBase
+    public class ItemNameFileLogClient : RestClient
     {
         public ItemNameFileLogClient(string baseUrl) : base(baseUrl)
         {
@@ -67,22 +67,42 @@ namespace BHL.WebServiceREST.v1.Client
             }
         }
 
-        public async Task UpdateItemNameFileLogAsync(int logID, ItemNameFileLogUpdateTarget updateTarget)
+        public async Task UpdateItemNameFileLogCreateDateAsync(int logID)
         {
             using (var httpClient = new HttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
-                await restClient.UpdateItemNameFileLogAsync(logID, updateTarget).ConfigureAwait(false);
+                await restClient.UpdateItemNameFileLogCreateDateAsync(logID).ConfigureAwait(false);
                 return;
             }
         }
 
-        public void UpdateItemNameFileLog(int logID, ItemNameFileLogUpdateTarget updateTarget)
+        public void UpdateItemNameFileLogCreateDate(int logID)
         {
             using (var httpClient = new HttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
-                restClient.UpdateItemNameFileLog(logID, updateTarget);
+                restClient.UpdateItemNameFileLogCreateDate(logID);
+                return;
+            }
+        }
+
+        public async Task UpdateItemNameFileLogUploadDateAsync(int logID)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                await restClient.UpdateItemNameFileLogUploadDateAsync(logID).ConfigureAwait(false);
+                return;
+            }
+        }
+
+        public void UpdateItemNameFileLogUploadDate(int logID)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                restClient.UpdateItemNameFileLogUploadDate(logID);
                 return;
             }
         }

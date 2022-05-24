@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
 {
-    public class TitlesClient : ClientBase
+    public class TitlesClient : RestClient
     {
         public TitlesClient(string baseUrl) : base(baseUrl)
         {

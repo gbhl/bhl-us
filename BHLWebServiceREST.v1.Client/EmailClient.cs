@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
 {
-    public class EmailClient : ClientBase
+    public class EmailClient : RestClient
     {
         public EmailClient(string baseUrl) : base(baseUrl)
         {

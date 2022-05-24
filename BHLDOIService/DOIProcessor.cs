@@ -1,4 +1,8 @@
-﻿using System;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
+using MOBOT.BHL.DOIDeposit;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -7,9 +11,6 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Xml.Linq;
-using MOBOT.BHL.BHLDOIService.BHLWS;
-using MOBOT.BHL.DOIDeposit;
-using RestSharp;
 
 namespace MOBOT.BHL.BHLDOIService
 {
@@ -49,10 +50,12 @@ namespace MOBOT.BHL.BHLDOIService
             if (!this.ValidateConfiguration()) return;
 
             // Generate and submit DOIs for any titles without DOIs
-            if (configParms.SubmitTitles) this.ProcessEntitiesWithoutDOIs(configParms.DoiEntityTypeTitle, TitleSelectWithoutSubmittedDOI);
+            if (configParms.SubmitTitles) this.ProcessEntitiesWithoutDOIs(configParms.DoiEntityTypeTitle, 
+                new TitlesClient(configParms.BHLWSRestEndpoint), TitleSelectWithoutSubmittedDOI);
 
             // Generate and submit DOIs for any segments without DOIs
-            if (configParms.SubmitSegments) this.ProcessEntitiesWithoutDOIs(configParms.DoiEntityTypeSegment, SegmentSelectWithoutSubmittedDOI);
+            if (configParms.SubmitSegments) this.ProcessEntitiesWithoutDOIs(configParms.DoiEntityTypeSegment, 
+                new SegmentsClient(configParms.BHLWSRestEndpoint), SegmentSelectWithoutSubmittedDOI);
 
             // Verify all previously submitted DOIs
             if (configParms.ValidateSubmissions) this.VerifySubmittedDOIs();
@@ -65,23 +68,25 @@ namespace MOBOT.BHL.BHLDOIService
 
         #region Process Entities Without DOIs
 
-        private void ProcessEntitiesWithoutDOIs(int entityTypeId, EntitySelectWithoutSubmittedDOI entitySelect)
+        private void ProcessEntitiesWithoutDOIs(int entityTypeId, 
+            global::BHL.WebServiceREST.v1.Client.IRestClient entitySelectClient, 
+            EntitySelectWithoutSubmittedDOI entitySelect)
         {
             this.LogMessage(string.Format("Processing {0}s", GetEntityTypeName(entityTypeId)));
 
-            BHLWSSoapClient wsClient = null;
+            DoiClient restClient = null;
 
             try
             {
-                wsClient = new BHLWSSoapClient();
+                restClient = new DoiClient(configParms.BHLWSRestEndpoint);
 
                 // Get IDs of entities without a DOI
-                DOI[] doisToSubmit = entitySelect(wsClient, configParms.NumberToSubmit);
+                DOI[] doisToSubmit = entitySelect(entitySelectClient, configParms.NumberToSubmit);
                 this.LogMessage(string.Format("Found {0} {1}s to process", doisToSubmit.Count().ToString(), GetEntityTypeName(entityTypeId)));
                 foreach (DOI doi in doisToSubmit)
                 {
-                    DOIDepositData depositData = this.GetDepositData(entityTypeId, doi.EntityID, doi.DOIName);
-                    ExistingDOICheckResult result = ExistingDOICheck(depositData, doi.DOIStatusID);
+                    DOIDepositData depositData = this.GetDepositData(entityTypeId, (int)doi.EntityID, doi.DoiName);
+                    ExistingDOICheckResult result = ExistingDOICheck(depositData, (int)doi.DoiStatusID);
 
                     switch (result.ResultValue)
                     {
@@ -89,21 +94,32 @@ namespace MOBOT.BHL.BHLDOIService
                         case DOICheckResult.Update:
 
                             // Add the DOI name, if one has not already been assigned
-                            if (string.IsNullOrWhiteSpace(doi.DOIName))
+                            if (string.IsNullOrWhiteSpace(doi.DoiName))
                             {
-                                string doiName = this.GenerateDOIName(configParms.DoiPrefix, entityTypeId, doi.EntityID);
-                                wsClient.DOIUpdateDOIName(doi.DOIID, doi.DOIStatusID, doiName, null);
-                                doi.DOIName = doiName;
+                                string doiName = this.GenerateDOIName(configParms.DoiPrefix, entityTypeId, (int)doi.EntityID);
+                                restClient.UpdateDoiName((int)doi.Doiid,
+                                    new DoiModel { 
+                                        Doistatusid = doi.DoiStatusID, 
+                                        Doiname = doiName,
+                                        Userid = null
+                                    });
+                                doi.DoiName = doiName;
                             }
 
                             // Generate a batch identifier for this DOI
-                            string doiBatchID = this.GenerateDOIBatchID(doi.DOIID);
-                            wsClient.DOIUpdateBatchID(doi.DOIID, doi.DOIStatusID, doiBatchID, null);
-                            doi.DOIBatchID = doiBatchID;
+                            string doiBatchID = this.GenerateDOIBatchID((int)doi.Doiid);
+                            restClient.UpdateDoiBatchID((int)doi.Doiid,
+                                new DoiModel
+                                {
+                                    Doistatusid = doi.DoiStatusID,
+                                    Doibatchid = doiBatchID,
+                                    Userid = null
+                                });
+                            doi.DoiBatchID = doiBatchID;
 
                             // Create a CrossRef deposit record for this DOI
-                            depositData.BatchID = doi.DOIBatchID;
-                            depositData.DoiName = doi.DOIName;
+                            depositData.BatchID = doi.DoiBatchID;
+                            depositData.DoiName = doi.DoiName;
                             string depositTemplate = this.GetDepositTemplate(depositData);
                             string doiDeposit = this.GenerateDOIDepositRecord(depositData, depositTemplate);
                             File.WriteAllText(configParms.DepositFolder + string.Format(configParms.DepositFileFormat, doiBatchID), doiDeposit);
@@ -112,27 +128,51 @@ namespace MOBOT.BHL.BHLDOIService
                             {
                                 // Submit the new DOI to CrossRef and update the DOI status to "Submitted"
                                 this.SubmitDOI(doiDeposit, string.Format(configParms.DepositFileFormat, doiBatchID));
-                                wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusSubmitted, string.Empty, null, null);
+                                restClient.UpdateDoiStatus((int)doi.Doiid,
+                                    new DoiModel
+                                    {
+                                        Doistatusid = configParms.DoiStatusSubmitted,
+                                        Message = String.Empty,
+                                        Isvalid = null,
+                                        Userid = null
+                                    });
                                 if (depositData.IsUpdate)
-                                    submittedDOIUpdates.Add(doi.DOIName);
+                                    submittedDOIUpdates.Add(doi.DoiName);
                                 else
-                                    submittedDOIAdds.Add(doi.DOIName);
+                                    submittedDOIAdds.Add(doi.DoiName);
                             }
                             catch (Exception ex)
                             {
                                 // Set DOI error status and record the error
-                                log.Error("Exception submitting DOI " + doi.DOIName, ex);
-                                errorMessages.Add("Exception submitting DOI " + doi.DOIName + ": " + ex.Message);
-                                wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusError, "ERROR (SUBMIT): " + ex.Message, null, null);
+                                log.Error("Exception submitting DOI " + doi.DoiName, ex);
+                                errorMessages.Add("Exception submitting DOI " + doi.DoiName + ": " + ex.Message);
+                                restClient.UpdateDoiStatus((int)doi.Doiid,
+                                    new DoiModel
+                                    {
+                                        Doistatusid = configParms.DoiStatusError,
+                                        Message = "ERROR (SUBMIT): " + ex.Message,
+                                        Isvalid = null,
+                                        Userid = null
+                                    });
                             }
 
-                            this.LogMessage("DOI " + doi.DOIName + " processed");
+                            this.LogMessage("DOI " + doi.DoiName + " processed");
 
                             break;
                         case DOICheckResult.Found:
                             // Add the external DOI to the database
-                            wsClient.DOIInsert(entityTypeId, doi.EntityID, configParms.DoiStatusExternal, result.DoiList.First(), 
-                                1, string.Empty, string.Empty, 1, 1);
+                            restClient.AddDoi(new DoiModel
+                            {
+                                Entitytypeid = entityTypeId,
+                                Entityid = doi.EntityID,
+                                Doistatusid = configParms.DoiStatusExternal,
+                                Doiname = result.DoiList.First(),
+                                Isvalid = 1,
+                                Doibatchid = string.Empty,
+                                Message = string.Empty,
+                                Userid = 1,
+                                Excludebhldoi = 1
+                            });
                             foundDOIs.Add(result.DoiList.First());
 
                             this.LogMessage("DOI " + result.DoiList.First() + " added");
@@ -145,18 +185,25 @@ namespace MOBOT.BHL.BHLDOIService
                             // may be needed.
                             unresolvedEntities.Add(string.Format("{0}\t{1}", entityTypeId.ToString(), doi.EntityID.ToString()));
 
-                            string unresolvableMessage = string.Format("Entity {0}, Type {1} cound not be resolved", doi.EntityID.ToString(), doi.DOIEntityTypeID.ToString());
+                            string unresolvableMessage = string.Format("Entity {0}, Type {1} cound not be resolved", doi.EntityID.ToString(), doi.DoiEntityTypeID.ToString());
                             this.LogMessage(unresolvableMessage);
 
                             foreach(string doiName in result.DoiList)
                             {
-                                string possibleDOIMessage = string.Format("\r\nEntity {0}, Type {1} - possible DOI: {2}", doi.EntityID.ToString(), doi.DOIEntityTypeID.ToString(), doiName);
+                                string possibleDOIMessage = string.Format("\r\nEntity {0}, Type {1} - possible DOI: {2}", doi.EntityID.ToString(), doi.DoiEntityTypeID.ToString(), doiName);
                                 unresolvableMessage += possibleDOIMessage;
                                 this.LogMessage(possibleDOIMessage);
                             }
 
                             // Set queue item status to Error, since it cannot be resolved
-                            wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusError, "UNRESOLVABLE: " + unresolvableMessage, null, null);
+                            restClient.UpdateDoiStatus((int)doi.Doiid,
+                                new DoiModel
+                                {
+                                    Doistatusid = configParms.DoiStatusError,
+                                    Message = "UNRESOLVABLE: " + unresolvableMessage,
+                                    Isvalid = null,
+                                    Userid = null
+                                });
 
                             break;
                         case DOICheckResult.Error:
@@ -178,14 +225,6 @@ namespace MOBOT.BHL.BHLDOIService
                 log.Error(string.Format("Exception processing {0}s", GetEntityTypeName(entityTypeId)), ex);
                 errorMessages.Add(string.Format("Exception processing {0}s: {1}", GetEntityTypeName(entityTypeId), ex.Message));
             }
-            finally
-            {
-                // Clean up the web service connection
-                if (wsClient != null)
-                {
-                    if (wsClient.State != System.ServiceModel.CommunicationState.Closed) wsClient.Close();
-                }
-            }
 
             this.LogMessage(string.Format("Done processing {0}s", GetEntityTypeName(entityTypeId)));
         }
@@ -196,16 +235,16 @@ namespace MOBOT.BHL.BHLDOIService
         /// <param name="client"></param>
         /// <param name="numToSubmit"></param>
         /// <returns></returns>
-        public delegate DOI[] EntitySelectWithoutSubmittedDOI(BHLWSSoapClient client, int numToSubmit);
+        public delegate DOI[] EntitySelectWithoutSubmittedDOI(global::BHL.WebServiceREST.v1.Client.IRestClient client, int numToSubmit);
 
-        public DOI[] TitleSelectWithoutSubmittedDOI(BHLWSSoapClient client, int numToSubmit)
+        public DOI[] TitleSelectWithoutSubmittedDOI(global::BHL.WebServiceREST.v1.Client.IRestClient client, int numToSubmit)
         {
-            return client.TitleSelectWithoutSubmittedDOI(numToSubmit);
+            return ((TitlesClient)client).GetTitleWithoutDois(numToSubmit).ToArray<DOI>();
         }
 
-        public DOI[] SegmentSelectWithoutSubmittedDOI(BHLWSSoapClient client, int numToSubmit)
+        public DOI[] SegmentSelectWithoutSubmittedDOI(global::BHL.WebServiceREST.v1.Client.IRestClient client, int numToSubmit)
         {
-            return client.SegmentSelectWithoutSubmittedDOI(numToSubmit);
+            return ((SegmentsClient)client).GetSegmentWithoutDois(numToSubmit).ToArray<DOI>();
         }
 
         /// <summary>
@@ -393,88 +432,78 @@ namespace MOBOT.BHL.BHLDOIService
         private DOIDepositData GetBookDepositData(int entityID)
         {
             DOIDepositData data = new DOIDepositData();
-            BHLWSSoapClient wsClient = null;
+            TitlesClient restClient = null;
 
-            try
+            restClient = new TitlesClient(configParms.BHLWSRestEndpoint);
+
+            Title title = restClient.GetTitleDetails(entityID);
+
+            if (title.BibliographicLevelID == configParms.BibLevelMonographComponent ||
+                title.BibliographicLevelID == configParms.BibLevelMonograph)
             {
-                wsClient = new BHLWSSoapClient();
+                data.PublicationType = DOIDepositData.PublicationTypeValue.Monograph;
+            }
+            else
+            {
+                data.PublicationType = DOIDepositData.PublicationTypeValue.EditedBook;
+            }
 
-                Title title = wsClient.TitleSelectDetailByTitleID(entityID);
+            data.Title = title.FullTitle;
+            data.PublisherName = title.Datafield_260_b;
+            data.PublisherPlace = title.Datafield_260_a;
+            data.PublicationDate = (title.StartYear == null ? "" : title.StartYear.ToString());
+            // data.Language = title.LanguageCode;      // Need to translate to ISO 639 language codes
+            // data.Edition = title.EditionStatement;   // Should only contain a number; our edition data is too messy
+            data.DoiResource = string.Format(configParms.BhlTitleUrlFormat, entityID.ToString());
 
-                if (title.BibliographicLevelID == configParms.BibLevelMonographComponent ||
-                    title.BibliographicLevelID == configParms.BibLevelMonograph)
+            foreach (TitleVariant titleVariant in title.TitleVariants)
+            {
+                if (titleVariant.TitleVariantTypeID == configParms.TitleVariantAbbreviated) data.AbbreviatedTitle = titleVariant.Title;
+            }
+
+            foreach (Title_Identifier titleIdentifier in title.TitleIdentifiers)
+            {
+                if (string.Compare(titleIdentifier.IdentifierName, "ISBN", true, CultureInfo.CurrentCulture) == 0) data.Isbn = titleIdentifier.IdentifierValue;
+                if (string.Compare(titleIdentifier.IdentifierName, "ISSN", true, CultureInfo.CurrentCulture) == 0) data.Issn.Add(("print", titleIdentifier.IdentifierValue));
+                if (string.Compare(titleIdentifier.IdentifierName, "eISSN", true, CultureInfo.CurrentCulture) == 0) data.Issn.Add(("electronic", titleIdentifier.IdentifierValue));
+                if (string.Compare(titleIdentifier.IdentifierName, "CODEN", true, CultureInfo.CurrentCulture) == 0) data.Coden = titleIdentifier.IdentifierValue;
+                if (string.Compare(titleIdentifier.IdentifierName, "Abbreviation", true, CultureInfo.CurrentCulture) == 0 && 
+                    data.AbbreviatedTitle == string.Empty) data.AbbreviatedTitle = titleIdentifier.IdentifierValue;
+            }
+
+            foreach (TitleAuthor titleAuthor in title.TitleAuthors)
+            {
+                DOIDepositData.Contributor contributor = new DOIDepositData.Contributor();
+
+                if (titleAuthor.AuthorRoleID == configParms.AuthorRole100 ||
+                    titleAuthor.AuthorRoleID == configParms.AuthorRole700)
                 {
-                    data.PublicationType = DOIDepositData.PublicationTypeValue.Monograph;
+                    contributor.PersonName = titleAuthor.FullName.TrimEnd(',');
+                    contributor.Suffix = titleAuthor.Numeration;
+                    contributor.Sequence = (titleAuthor.AuthorRoleID == configParms.AuthorRole100 ?
+                                            DOIDepositData.PersonNameSequence.First :
+                                            DOIDepositData.PersonNameSequence.Additional);
                 }
                 else
                 {
-                    data.PublicationType = DOIDepositData.PublicationTypeValue.EditedBook;
+                    contributor.OrganizationName = titleAuthor.FullName.TrimEnd(',');
+                    contributor.Sequence = (titleAuthor.AuthorRoleID == configParms.AuthorRole110 ||
+                                            titleAuthor.AuthorRoleID == configParms.AuthorRole111 ?
+                                            DOIDepositData.PersonNameSequence.First :
+                                            DOIDepositData.PersonNameSequence.Additional);
                 }
 
-                data.Title = title.FullTitle;
-                data.PublisherName = title.Datafield_260_b;
-                data.PublisherPlace = title.Datafield_260_a;
-                data.PublicationDate = (title.StartYear == null ? "" : title.StartYear.ToString());
-                // data.Language = title.LanguageCode;      // Need to translate to ISO 639 language codes
-                // data.Edition = title.EditionStatement;   // Should only contain a number; our edition data is too messy
-                data.DoiResource = string.Format(configParms.BhlTitleUrlFormat, entityID.ToString());
-
-                foreach (TitleVariant titleVariant in title.TitleVariants)
+                foreach (AuthorIdentifier authorIdentifier in titleAuthor.Author.AuthorIdentifiers)
                 {
-                    if (titleVariant.TitleVariantTypeID == configParms.TitleVariantAbbreviated) data.AbbreviatedTitle = titleVariant.Title;
+                    if (authorIdentifier.IdentifierName == "ORCID") { contributor.ORCID = authorIdentifier.IdentifierValue; break; }
                 }
 
-                foreach (Title_Identifier titleIdentifier in title.TitleIdentifiers)
-                {
-                    if (string.Compare(titleIdentifier.IdentifierName, "ISBN", true, CultureInfo.CurrentCulture) == 0) data.Isbn = titleIdentifier.IdentifierValue;
-                    if (string.Compare(titleIdentifier.IdentifierName, "ISSN", true, CultureInfo.CurrentCulture) == 0) data.Issn.Add(("print", titleIdentifier.IdentifierValue));
-                    if (string.Compare(titleIdentifier.IdentifierName, "eISSN", true, CultureInfo.CurrentCulture) == 0) data.Issn.Add(("electronic", titleIdentifier.IdentifierValue));
-                    if (string.Compare(titleIdentifier.IdentifierName, "CODEN", true, CultureInfo.CurrentCulture) == 0) data.Coden = titleIdentifier.IdentifierValue;
-                    if (string.Compare(titleIdentifier.IdentifierName, "Abbreviation", true, CultureInfo.CurrentCulture) == 0 && 
-                        data.AbbreviatedTitle == string.Empty) data.AbbreviatedTitle = titleIdentifier.IdentifierValue;
-                }
+                contributor.Role = DOIDepositData.ContributorRole.Author;
 
-                foreach (TitleAuthor titleAuthor in title.TitleAuthors)
-                {
-                    DOIDepositData.Contributor contributor = new DOIDepositData.Contributor();
-
-                    if (titleAuthor.AuthorRoleID == configParms.AuthorRole100 ||
-                        titleAuthor.AuthorRoleID == configParms.AuthorRole700)
-                    {
-                        contributor.PersonName = titleAuthor.FullName.TrimEnd(',');
-                        contributor.Suffix = titleAuthor.Numeration;
-                        contributor.Sequence = (titleAuthor.AuthorRoleID == configParms.AuthorRole100 ?
-                                                DOIDepositData.PersonNameSequence.First :
-                                                DOIDepositData.PersonNameSequence.Additional);
-                    }
-                    else
-                    {
-                        contributor.OrganizationName = titleAuthor.FullName.TrimEnd(',');
-                        contributor.Sequence = (titleAuthor.AuthorRoleID == configParms.AuthorRole110 ||
-                                                titleAuthor.AuthorRoleID == configParms.AuthorRole111 ?
-                                                DOIDepositData.PersonNameSequence.First :
-                                                DOIDepositData.PersonNameSequence.Additional);
-                    }
-
-                    foreach (AuthorIdentifier authorIdentifier in titleAuthor.Author.AuthorIdentifiers)
-                    {
-                        if (authorIdentifier.IdentifierName == "ORCID") { contributor.ORCID = authorIdentifier.IdentifierValue; break; }
-                    }
-
-                    contributor.Role = DOIDepositData.ContributorRole.Author;
-
-                    data.Contributors.Add(contributor);
-                }
-
-                return data;
+                data.Contributors.Add(contributor);
             }
-            finally
-            {
-                if (wsClient != null)
-                {
-                    if (wsClient.State != System.ServiceModel.CommunicationState.Closed) wsClient.Close();
-                }
-            }
+
+            return data;
         }
 
         /// <summary>
@@ -485,86 +514,78 @@ namespace MOBOT.BHL.BHLDOIService
         private DOIDepositData GetSegmentDepositData(int entityID)
         {
             DOIDepositData data = new DOIDepositData();
-            BHLWSSoapClient wsClient = null;
+            SegmentsClient segmentRestClient = null;
+            TitlesClient titlesRestClient = null;
 
-            try
+            segmentRestClient = new SegmentsClient(configParms.BHLWSRestEndpoint);
+            titlesRestClient = new TitlesClient(configParms.BHLWSRestEndpoint);
+
+            Segment segment = segmentRestClient.GetSegmentDetails(entityID);
+
+            data.DoiResource = string.Format(configParms.BhlPartUrlFormat, entityID.ToString());
+            data.PublicationType = DOIDepositData.PublicationTypeValue.Article;
+            data.ArticleTitle = segment.Title;
+            data.ArticlePublicationDate = segment.Date;
+            data.PublisherName = segment.PublisherName;
+            data.PublisherPlace = segment.PublisherPlace;
+            data.PublicationDate = segment.Date;  // this.GetPublicationDate(segment);
+            data.FirstPage = segment.StartPageNumber;
+            data.LastPage = segment.EndPageNumber;
+
+            data.Title = segment.TitleFullTitle;
+            data.Volume = string.IsNullOrWhiteSpace(segment.Volume) ? segment.ItemVolume : segment.Volume;
+            data.Issue = segment.Issue;
+
+            Title_Identifier[] titleIdentifierList = titlesRestClient.GetTitleIdentifiers(segment.TitleId ?? 0).ToArray<Title_Identifier>();
+            foreach (Title_Identifier titleIdentifier in titleIdentifierList)
             {
-                wsClient = new BHLWSSoapClient();
-
-                Segment segment = wsClient.SegmentSelectExtended(entityID);
-
-                data.DoiResource = string.Format(configParms.BhlPartUrlFormat, entityID.ToString());
-                data.PublicationType = DOIDepositData.PublicationTypeValue.Article;
-                data.ArticleTitle = segment.Title;
-                data.ArticlePublicationDate = segment.Date;
-                data.PublisherName = segment.PublisherName;
-                data.PublisherPlace = segment.PublisherPlace;
-                data.PublicationDate = segment.Date;  // this.GetPublicationDate(segment);
-                data.FirstPage = segment.StartPageNumber;
-                data.LastPage = segment.EndPageNumber;
-
-                data.Title = segment.TitleFullTitle;
-                data.Volume = string.IsNullOrWhiteSpace(segment.Volume) ? segment.ItemVolume : segment.Volume;
-                data.Issue = segment.Issue;
-
-                Title_Identifier[] titleIdentifierList = wsClient.Title_IdentifierSelectByTitleID(segment.TitleId ?? 0);
-                foreach (Title_Identifier titleIdentifier in titleIdentifierList)
-                {
-                    if (string.Compare(titleIdentifier.IdentifierName, "ISSN", true, CultureInfo.CurrentCulture) == 0) data.Issn.Add(("print", titleIdentifier.IdentifierValue));
-                    if (string.Compare(titleIdentifier.IdentifierName, "eISSN", true, CultureInfo.CurrentCulture) == 0) data.Issn.Add(("electronic", titleIdentifier.IdentifierValue));
-                }
-
-                // If no ISSNs, use the DOI of the associated title
-                if (data.Issn.Count == 0)
-                {
-                    Title_Identifier[] titleDOIs = wsClient.DOISelectValidForTitle(segment.TitleId ?? 0);
-                    foreach(Title_Identifier doi in titleDOIs)
-                    {
-                        data.TitleDOIName = doi.IdentifierValue;
-                        data.TitleDOIResource = string.Format(configParms.BhlTitleUrlFormat, segment.TitleId);
-                        break;
-                    }
-                }
-
-                bool first = true;
-                foreach (ItemAuthor itemAuthor in segment.AuthorList)
-                {
-                    DOIDepositData.Contributor contributor = new DOIDepositData.Contributor();
-
-                    if (itemAuthor.Author.AuthorTypeID == configParms.AuthorTypePerson)
-                    {
-                        contributor.PersonName = itemAuthor.FullName.TrimEnd(',');
-                        contributor.Suffix = itemAuthor.Numeration;
-                    }
-                    else
-                    {
-                        contributor.OrganizationName = itemAuthor.FullName.TrimEnd(',');
-                    }
-
-                    foreach(AuthorIdentifier authorIdentifier in itemAuthor.Author.AuthorIdentifiers)
-                    {
-                        if (authorIdentifier.IdentifierName == "ORCID") { contributor.ORCID = authorIdentifier.IdentifierValue; break; }
-                    }
-
-                    contributor.Role = DOIDepositData.ContributorRole.Author;
-                    contributor.Sequence = (first ?
-                                            DOIDepositData.PersonNameSequence.First :
-                                            DOIDepositData.PersonNameSequence.Additional);
-
-                    first = false;
-
-                    data.Contributors.Add(contributor);
-                }                
-
-                return data;
+                if (string.Compare(titleIdentifier.IdentifierName, "ISSN", true, CultureInfo.CurrentCulture) == 0) data.Issn.Add(("print", titleIdentifier.IdentifierValue));
+                if (string.Compare(titleIdentifier.IdentifierName, "eISSN", true, CultureInfo.CurrentCulture) == 0) data.Issn.Add(("electronic", titleIdentifier.IdentifierValue));
             }
-            finally
+
+            // If no ISSNs, use the DOI of the associated title
+            if (data.Issn.Count == 0)
             {
-                if (wsClient != null)
+                Title_Identifier[] titleDOIs = titlesRestClient.GetTitleDois(segment.TitleId ?? 0).ToArray<Title_Identifier>();
+                foreach(Title_Identifier doi in titleDOIs)
                 {
-                    if (wsClient.State != System.ServiceModel.CommunicationState.Closed) wsClient.Close();
+                    data.TitleDOIName = doi.IdentifierValue;
+                    data.TitleDOIResource = string.Format(configParms.BhlTitleUrlFormat, segment.TitleId);
+                    break;
                 }
             }
+
+            bool first = true;
+            foreach (ItemAuthor itemAuthor in segment.AuthorList)
+            {
+                DOIDepositData.Contributor contributor = new DOIDepositData.Contributor();
+
+                if (itemAuthor.Author.AuthorTypeID == configParms.AuthorTypePerson)
+                {
+                    contributor.PersonName = itemAuthor.FullName.TrimEnd(',');
+                    contributor.Suffix = itemAuthor.Numeration;
+                }
+                else
+                {
+                    contributor.OrganizationName = itemAuthor.FullName.TrimEnd(',');
+                }
+
+                foreach(AuthorIdentifier authorIdentifier in itemAuthor.Author.AuthorIdentifiers)
+                {
+                    if (authorIdentifier.IdentifierName == "ORCID") { contributor.ORCID = authorIdentifier.IdentifierValue; break; }
+                }
+
+                contributor.Role = DOIDepositData.ContributorRole.Author;
+                contributor.Sequence = (first ?
+                                        DOIDepositData.PersonNameSequence.First :
+                                        DOIDepositData.PersonNameSequence.Additional);
+
+                first = false;
+
+                data.Contributors.Add(contributor);
+            }                
+
+            return data;
         }
 
         /// <summary>
@@ -686,7 +707,7 @@ namespace MOBOT.BHL.BHLDOIService
             // would be placed at the end of the querystring.  By splitting the Base and Query, 
             // we "trick" RestSharp into putting the slash between the Base and Query (which is
             // where a slash should appear).
-            RestClient restClient = new RestClient(configParms.CrossrefDepositUrlBase);
+            RestSharp.RestClient restClient = new RestSharp.RestClient(configParms.CrossrefDepositUrlBase);
             RestRequest request = new RestRequest(
                 String.Format(configParms.CrossrefDepositUrlQueryFormat,
                 configParms.CrossrefLogin, configParms.CrossrefPassword, configParms.CrossrefDepositArea), 
@@ -724,7 +745,7 @@ namespace MOBOT.BHL.BHLDOIService
             string response = string.Empty;
 
             // Set up the REST client
-            RestClient restClient = new RestClient(configParms.CrossrefXmlQueryUrlBase);
+            RestSharp.RestClient restClient = new RestSharp.RestClient(configParms.CrossrefXmlQueryUrlBase);
             RestRequest request = new RestRequest(
                 String.Format(configParms.CrossrefXmlQueryFormat,
                 configParms.CrossrefLogin, configParms.CrossrefPassword, query),
@@ -900,12 +921,12 @@ namespace MOBOT.BHL.BHLDOIService
         {
             this.LogMessage("Verifying Submitted DOIs");
 
-            BHLWSSoapClient wsClient = new BHLWSSoapClient();
+            DoiClient doiClient = new DoiClient(configParms.BHLWSRestEndpoint);
 
             try
             {
                 // Check the CrossRef status of submitted DOIs that have not yet been verified
-                DOI[] submittedDOIs = wsClient.DOISelectSubmitted(configParms.MinMinutesSinceSubmit);
+                DOI[] submittedDOIs = doiClient.GetSubmittedDois(configParms.MinMinutesSinceSubmit).ToArray<DOI>();
                 this.LogMessage("Found " + submittedDOIs.Count().ToString() + " Submitted DOIs To Verify");
                 foreach (DOI doi in submittedDOIs)
                 {
@@ -915,11 +936,11 @@ namespace MOBOT.BHL.BHLDOIService
                     bool gotSubmissionLog = false;
                     try
                     {
-                        submitLog = this.GetSubmissionLog(doi.DOIBatchID, string.Format(configParms.DepositFileFormat, doi.DOIBatchID));
+                        submitLog = this.GetSubmissionLog(doi.DoiBatchID, string.Format(configParms.DepositFileFormat, doi.DoiBatchID));
 
                         // Write the submission log to the file system
                         File.WriteAllText(
-                            configParms.SubmitLogFolder + string.Format(configParms.SubmitLogFileFormat, doi.DOIBatchID),
+                            configParms.SubmitLogFolder + string.Format(configParms.SubmitLogFileFormat, doi.DoiBatchID),
                             submitLog.ToString());
 
                         gotSubmissionLog = true;
@@ -927,9 +948,16 @@ namespace MOBOT.BHL.BHLDOIService
                     catch (Exception ex)
                     {
                         // Set DOI error status and record the error
-                        log.Error("Exception getting submission log for batch " + doi.DOIBatchID, ex);
-                        errorMessages.Add("Exception getting submission log for batch " + doi.DOIBatchID + ":" + ex.Message);
-                        wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusError, "ERROR (SUBMIT LOG): " + ex.Message, null, null);
+                        log.Error("Exception getting submission log for batch " + doi.DoiBatchID, ex);
+                        errorMessages.Add("Exception getting submission log for batch " + doi.DoiBatchID + ":" + ex.Message);
+                        doiClient.UpdateDoiStatus((int)doi.Doiid,
+                            new DoiModel
+                            {
+                                Doistatusid = configParms.DoiStatusError,
+                                Message = "ERROR (SUBMIT LOG): " + ex.Message,
+                                Isvalid = null,
+                                Userid = null
+                            });
                     }
 
                     // Parse the submission log to determine current status of DOI
@@ -948,7 +976,7 @@ namespace MOBOT.BHL.BHLDOIService
                                     recordDiagnostic = rd;
                                     if (rd.Element("doi") != null)
                                     {
-                                        if (rd.Element("doi").Value == doi.DOIName) break;
+                                        if (rd.Element("doi").Value == doi.DoiName) break;
                                     }
                                 }
 
@@ -958,16 +986,30 @@ namespace MOBOT.BHL.BHLDOIService
                                         {
                                             // DOI accepted by CrossRef
                                             XElement diagnosticMessage = recordDiagnostic.Element("msg");
-                                            wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusApproved, string.Empty, 1, null);
-                                            this.LogMessage("DOI " + doi.DOIName + " Verified");
+                                            doiClient.UpdateDoiStatus((int)doi.Doiid,
+                                                new DoiModel
+                                                {
+                                                    Doistatusid = configParms.DoiStatusApproved,
+                                                    Message = String.Empty,
+                                                    Isvalid = 1,
+                                                    Userid = null
+                                                });
+                                            this.LogMessage("DOI " + doi.DoiName + " Verified");
                                             if (string.Compare(diagnosticMessage.Value, "Successfully added", true) == 0)
                                             {
-                                                wsClient.DOIInsertIdentifier(doi.DOIEntityTypeID, doi.EntityID, doi.DOIName, null);
-                                                approvedDOIAdds.Add(doi.DOIName);
+                                                doiClient.AddDoiIdentifier(
+                                                    new DoiModel
+                                                    {
+                                                        Entitytypeid = doi.DoiEntityTypeID,
+                                                        Entityid = doi.EntityID,
+                                                        Doiname = doi.DoiName,
+                                                        Userid = null
+                                                    });
+                                                approvedDOIAdds.Add(doi.DoiName);
                                             }
                                             else
                                             {
-                                                approvedDOIUpdates.Add(doi.DOIName);
+                                                approvedDOIUpdates.Add(doi.DoiName);
                                             }
                                             break;
                                         }
@@ -975,20 +1017,32 @@ namespace MOBOT.BHL.BHLDOIService
                                         {
                                             // Warning; DOI deposited, but has a metadata conflict with another DOI
                                             XElement diagnosticMessage = recordDiagnostic.Element("msg");
-                                            wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusError,
-                                                "WARNING (CROSSREF): " + diagnosticMessage.Value, null, null);
-                                            this.LogMessage("DOI " + doi.DOIName + " Verification WARNING: " + diagnosticMessage.Value);
-                                            warningDOIs.Add(doi.DOIName);
+                                            doiClient.UpdateDoiStatus((int)doi.Doiid,
+                                                new DoiModel
+                                                {
+                                                    Doistatusid = configParms.DoiStatusError,
+                                                    Message = "WARNING (CROSSREF): " + diagnosticMessage.Value,
+                                                    Isvalid = null,
+                                                    Userid = null
+                                                });
+                                            this.LogMessage("DOI " + doi.DoiName+ " Verification WARNING: " + diagnosticMessage.Value);
+                                            warningDOIs.Add(doi.DoiName);
                                             break;
                                         }
                                     case "Failure":
                                         {
                                             // Error reported by CrossRef; set status and record the error message
                                             XElement diagnosticMessage = recordDiagnostic.Element("msg");
-                                            wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusError,
-                                                "ERROR (CROSSREF): " + diagnosticMessage.Value, null, null);
-                                            this.LogMessage("DOI " + doi.DOIName + " Verification FAILURE: " + diagnosticMessage.Value);
-                                            rejectedDOIs.Add(doi.DOIName);
+                                            doiClient.UpdateDoiStatus((int)doi.Doiid,
+                                                new DoiModel
+                                                {
+                                                    Doistatusid = configParms.DoiStatusError,
+                                                    Message = "ERROR (CROSSREF): " + diagnosticMessage.Value,
+                                                    Isvalid = null,
+                                                    Userid = null
+                                                });
+                                            this.LogMessage("DOI " + doi.DoiName+ " Verification FAILURE: " + diagnosticMessage.Value);
+                                            rejectedDOIs.Add(doi.DoiName);
                                             break;
                                         }
                                 }
@@ -996,24 +1050,45 @@ namespace MOBOT.BHL.BHLDOIService
                             else if (batchStatusAttrib.Value == "unknown_submission")
                             {
                                 // Something went wrong; set the DOI status and log the message from CrossRef
-                                wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusError, "ERROR (CROSSREF): " + batchStatusAttrib.Value, null, null);
-                                this.LogMessage("DOI " + doi.DOIName + " NOT Verified: " + batchStatusAttrib.Value);
-                                unverifiedDOIs.Add(doi.DOIName);
+                                doiClient.UpdateDoiStatus((int)doi.Doiid,
+                                    new DoiModel
+                                    {
+                                        Doistatusid = configParms.DoiStatusError,
+                                        Message = "ERROR (CROSSREF): " + batchStatusAttrib.Value,
+                                        Isvalid = null,
+                                        Userid = null
+                                    });
+                                this.LogMessage("DOI " + doi.DoiName + " NOT Verified: " + batchStatusAttrib.Value);
+                                unverifiedDOIs.Add(doi.DoiName);
                             }
                             else
                             {
                                 // Keep the current local DOI Status, and record the current CrossRef status
-                                wsClient.DOIUpdateStatus(doi.DOIID, doi.DOIStatusID, batchStatusAttrib.Value, null, null);
-                                this.LogMessage("DOI " + doi.DOIName + " NOT Verified: " + batchStatusAttrib.Value);
-                                unverifiedDOIs.Add(doi.DOIName);
+                                doiClient.UpdateDoiStatus((int)doi.Doiid,
+                                    new DoiModel
+                                    {
+                                        Doistatusid = doi.DoiStatusID,
+                                        Message = batchStatusAttrib.Value,
+                                        Isvalid = null,
+                                        Userid = null
+                                    });
+                                this.LogMessage("DOI " + doi.DoiName + " NOT Verified: " + batchStatusAttrib.Value);
+                                unverifiedDOIs.Add(doi.DoiName);
                             }
                         }
                         catch (Exception ex)
                         {
                             // Set DOI error status and record the error
-                            log.Error("Exception parsing submission log for batch " + doi.DOIBatchID, ex);
-                            errorMessages.Add("Exception parsing submission log for batch " + doi.DOIBatchID + ":" + ex.Message);
-                            wsClient.DOIUpdateStatus(doi.DOIID, configParms.DoiStatusError, "ERROR (CROSSREF): " + ex.Message, null, null);
+                            log.Error("Exception parsing submission log for batch " + doi.DoiBatchID, ex);
+                            errorMessages.Add("Exception parsing submission log for batch " + doi.DoiBatchID+ ":" + ex.Message);
+                            doiClient.UpdateDoiStatus((int)doi.Doiid,
+                                new DoiModel
+                                {
+                                    Doistatusid = configParms.DoiStatusError,
+                                    Message = "ERROR (CROSSREF): " + ex.Message,
+                                    Isvalid = null,
+                                    Userid = null
+                                });
                         }
                     }
                 }
@@ -1022,14 +1097,6 @@ namespace MOBOT.BHL.BHLDOIService
             {
                 log.Error("Exception verifying submitted DOIs", ex);
                 errorMessages.Add("Exception verifying submitted DOIs: " + ex.Message);
-            }
-            finally
-            {
-                // Clean up the web service connection
-                if (wsClient != null)
-                {
-                    if (wsClient.State != System.ServiceModel.CommunicationState.Closed) wsClient.Close();
-                }
             }
 
             this.LogMessage("Done Verifying Submitted DOIs");
@@ -1306,8 +1373,30 @@ namespace MOBOT.BHL.BHLDOIService
         private void SendEmail(String subject, String message, String fromAddress,
             String toAddress, String ccAddresses)
         {
+            EmailClient restClient = null;
+
             try
             {
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = subject;
+                mailRequest.Body = message;
+                mailRequest.From = fromAddress;
+
+                List<string> recipients = new List<string>();
+                foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
+
+                if (ccAddresses != String.Empty)
+                {
+                    List<string> ccs = new List<string>();
+                    foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
+                    mailRequest.Cc = ccs;
+                }
+
+                restClient = new EmailClient(configParms.BHLWSRestEndpoint);
+                restClient.SendEmail(mailRequest);
+
+                /*
                 MailMessage mailMessage = new MailMessage();
                 MailAddress mailAddress = new MailAddress(fromAddress);
                 mailMessage.From = mailAddress;
@@ -1318,6 +1407,7 @@ namespace MOBOT.BHL.BHLDOIService
 
                 SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
                 smtpClient.Send(mailMessage);
+                */
             }
             catch (Exception ex)
             {

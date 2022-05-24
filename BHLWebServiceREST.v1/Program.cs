@@ -1,3 +1,4 @@
+using BHL.WebServiceREST.v1;
 using Microsoft.AspNetCore.Mvc;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]

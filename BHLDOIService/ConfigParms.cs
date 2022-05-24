@@ -414,6 +414,9 @@ namespace MOBOT.BHL.BHLDOIService
             set { _authorTypeMeeting = value; }
         }
 
+        private string _bhlwsRestEndpoint = string.Empty;
+        public string BHLWSRestEndpoint { get => _bhlwsRestEndpoint; set => _bhlwsRestEndpoint = value; }
+
         public void LoadAppConfig()
         {
             XmlDocument doc = new XmlDocument();
@@ -654,6 +657,10 @@ namespace MOBOT.BHL.BHLDOIService
                     if (node.Attributes.GetNamedItem("key").Value == "AuthorTypeMeeting")
                     {
                         this.AuthorTypeMeeting = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "BHLWSUrl")
+                    {
+                        this.BHLWSRestEndpoint = node.Attributes.GetNamedItem("value").Value;
                     }
                 }
             }

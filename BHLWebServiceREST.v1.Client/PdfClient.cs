@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
 {
-    public class PdfClient : ClientBase
+    public class PdfClient : RestClient
     {
         public PdfClient(string baseUrl) : base(baseUrl)
         {
@@ -46,21 +46,59 @@ namespace BHL.WebServiceREST.v1.Client
             }
         }
 
-        public async Task<PDF> UpdatePdfAsync(int pdfID, PdfUpdateTarget target, PdfModel request)
+        public async Task<PDF> UpdatePdfDeletionDateAsync(int pdfID, PdfModel request)
         {
             using (var httpClient = new HttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
-                return (await restClient.UpdatePdfAsync(pdfID, target, request).ConfigureAwait(false));
+                return (await restClient.UpdatePdfDeletionDateAsync(pdfID, request).ConfigureAwait(false));
             }
         }
 
-        public PDF UpdatePdf(int pdfID, PdfUpdateTarget target, PdfModel request)
+        public PDF UpdatePdfDeletionDate(int pdfID, PdfModel request)
         {
             using (var httpClient = new HttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
-                return restClient.UpdatePdf(pdfID, target, request);
+                return restClient.UpdatePdfDeletionDate(pdfID, request);
+            }
+        }
+
+        public async Task<PDF> UpdatePdfGenerationInfoAsync(int pdfID, PdfModel request)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                return (await restClient.UpdatePdfGenerationInfoAsync(pdfID, request).ConfigureAwait(false));
+            }
+        }
+
+        public PDF UpdatePdfGenerationInfo(int pdfID, PdfModel request)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                return restClient.UpdatePdfGenerationInfo(pdfID, request);
+            }
+        }
+
+        public async Task UpdatePdfStatusAsync(int pdfID, PdfModel request)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                await restClient.UpdatePdfStatusAsync(pdfID, request).ConfigureAwait(false);
+                return;
+            }
+        }
+
+        public void UpdatePdfStatus(int pdfID, PdfModel request)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                restClient.UpdatePdfStatus(pdfID, request);
+                return;
             }
         }
     }

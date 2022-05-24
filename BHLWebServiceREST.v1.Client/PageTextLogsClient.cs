@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
 {
-    public class PageTextLogsClient : ClientBase
+    public class PageTextLogsClient : RestClient
     {
         public PageTextLogsClient(string baseUrl) : base(baseUrl)
         {

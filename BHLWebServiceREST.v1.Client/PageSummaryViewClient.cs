@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
 {
-    public class PageSummaryViewClient : ClientBase
+    public class PageSummaryViewClient : RestClient
     {
         public PageSummaryViewClient(string baseUrl) : base(baseUrl)
         {

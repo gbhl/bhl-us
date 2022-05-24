@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
 {
-    internal class BooksClient : ClientBase
+    public class BooksClient : RestClient
     {
         public BooksClient(string baseUrl) : base(baseUrl)
         {

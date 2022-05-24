@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
 {
-    public class DoiClient : ClientBase
+    public class DoiClient : RestClient
     {
         public DoiClient(string baseUrl) : base(baseUrl)
         {
@@ -30,22 +30,62 @@ namespace BHL.WebServiceREST.v1.Client
             }
         }
 
-        public async Task UpdateDoiAsync(int doiID, DoiUpdateTarget target, DoiModel request)
+        public async Task UpdateDoiBatchIDAsync(int doiID, DoiModel request)
         {
             using (var httpClient = new HttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
-                await restClient.UpdateDoiAsync(doiID, target, request).ConfigureAwait(false);
+                await restClient.UpdateDoiBatchIDAsync(doiID, request).ConfigureAwait(false);
                 return;
             }
         }
 
-        public void UpdateDoi(int doiID, DoiUpdateTarget target, DoiModel request)
+        public void UpdateDoiBatchID(int doiID, DoiModel request)
         {
             using (var httpClient = new HttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
-                restClient.UpdateDoi(doiID, target, request);
+                restClient.UpdateDoiBatchID(doiID, request);
+                return;
+            }
+        }
+
+        public async Task UpdateDoiNameAsync(int doiID, DoiModel request)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                await restClient.UpdateDoiNameAsync(doiID, request).ConfigureAwait(false);
+                return;
+            }
+        }
+
+        public void UpdateDoiName(int doiID, DoiModel request)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                restClient.UpdateDoiName(doiID, request);
+                return;
+            }
+        }
+
+        public async Task UpdateDoiStatusAsync(int doiID, DoiModel request)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                await restClient.UpdateDoiStatusAsync(doiID, request).ConfigureAwait(false);
+                return;
+            }
+        }
+
+        public void UpdateDoiStatus(int doiID, DoiModel request)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                restClient.UpdateDoiStatus(doiID, request);
                 return;
             }
         }

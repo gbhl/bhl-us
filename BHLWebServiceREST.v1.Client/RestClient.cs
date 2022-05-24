@@ -1,10 +1,10 @@
 ﻿namespace BHL.WebServiceREST.v1.Client
 {
-    public class ClientBase
+    public class RestClient : IRestClient
     {
         protected string _baseUrl = string.Empty;
 
-        public ClientBase(string baseUrl)
+        public RestClient(string baseUrl)
         {
             _baseUrl = baseUrl;
         }

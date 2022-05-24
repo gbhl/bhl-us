@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
 {
-    public class VaultsClient : ClientBase
+    public class VaultsClient : RestClient
     {
         public VaultsClient(string baseUrl) : base(baseUrl)
         {

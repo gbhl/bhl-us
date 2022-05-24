@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
 {
-    public class PageFlickrClient : ClientBase
+    public class PageFlickrClient : RestClient
     {
         public PageFlickrClient(string baseUrl) : base(baseUrl)
         {
