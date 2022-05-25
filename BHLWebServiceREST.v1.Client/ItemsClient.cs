@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
@@ -12,7 +11,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<Item> GetItemAsync(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetItemAsync(itemID).ConfigureAwait(false));
@@ -21,7 +20,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public Item GetItem(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetItem(itemID);
@@ -30,7 +29,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<Item>> GetItemWithExpiredNamesAsync(int maxAge)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetItemWithExpiredNamesAsync(maxAge).ConfigureAwait(false));
@@ -39,7 +38,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<Item> GetItemWithExpiredNames(int maxAge)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetItemWithExpiredNames(maxAge);
@@ -48,7 +47,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<Item>> GetItemWithoutNamesAsync()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetItemWithoutNamesAsync().ConfigureAwait(false));
@@ -57,25 +56,25 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<Item> GetItemWithoutNames()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetItemWithoutNames();
             }
         }
 
-        public async Task<ICollection<Title>> GetItemsPublishedAsync()
+        public async Task<ICollection<Item>> GetItemsPublishedAsync()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetItemsPublishedAsync().ConfigureAwait(false));
             }
         }
 
-        public ICollection<Title> GetItemsPublished()
+        public ICollection<Item> GetItemsPublished()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetItemsPublished();
@@ -84,7 +83,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<Item> GetItemFilenamesAsync(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetItemFilenamesAsync(itemID).ConfigureAwait(false));
@@ -93,7 +92,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public Item GetItemFilenames(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetItemFilenames(itemID);
@@ -102,7 +101,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<Page>> GetItemPagesAsync(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetItemPagesAsync(itemID).ConfigureAwait(false));
@@ -111,7 +110,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<Page> GetItemPages(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetItemPages(itemID);
@@ -120,7 +119,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<Institution>> GetItemInstitutionsByRoleAsync(int itemID, string roleName)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetItemInstitutionsByRoleAsync(itemID, roleName).ConfigureAwait(false));
@@ -129,25 +128,25 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<Institution> GetItemInstitutionsByRole(int itemID, string roleName)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetItemInstitutionsByRole(itemID, roleName);
             }
         }
 
-        public async Task<ICollection<Institution>> GetItemNamesXmlAsync(int itemID)
+        public async Task<string> GetItemNamesXmlAsync(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetItemNamesXmlAsync(itemID).ConfigureAwait(false));
             }
         }
 
-        public ICollection<Institution> GetItemNamesXml(int itemID)
+        public string GetItemNamesXml(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetItemNamesXml(itemID);
@@ -156,7 +155,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task DeleteItemNamesAsync(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 await restClient.DeleteItemNamesAsync(itemID).ConfigureAwait(false);
@@ -166,7 +165,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public void DeleteItemNames(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 restClient.DeleteItemNames(itemID);
@@ -176,7 +175,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task UpdateItemLastPageNameLookupDateAsync(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 await restClient.UpdateItemLastPageNameLookupDateAsync(itemID).ConfigureAwait(false);
@@ -186,7 +185,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public void UpdateItemLastPageNameLookupDate(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 restClient.UpdateItemLastPageNameLookupDate(itemID);

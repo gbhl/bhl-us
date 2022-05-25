@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BHL.WebServiceREST.v1.Client;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -50,8 +51,8 @@ namespace BHL.Export.KBART
                 _log.Info("Exporting KBART...");
 
                 // Get the list of identifiers
-                BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-                BHLWS.KBART[] kbartList = client.ExportKBART(configParms.KBARTUrlRoot);
+                ExportsClient restClient = new ExportsClient(configParms.BHLWSEndpoint);
+                ICollection<BHL.WebServiceREST.v1.KBART> kbartList = restClient.GetKBART(configParms.KBARTUrlRoot);
 
                 // Build the content of the file
                 StringBuilder sb = new StringBuilder();
@@ -87,7 +88,7 @@ namespace BHL.Export.KBART
                 sb.AppendLine(string.Join("\t", headerFields));
 
                 int linesToWrite = 0;
-                foreach (BHLWS.KBART kbart in kbartList)
+                foreach (BHL.WebServiceREST.v1.KBART kbart in kbartList)
                 {
                     linesToWrite++;
 

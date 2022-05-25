@@ -1,4 +1,5 @@
-﻿using BHL.Export.MODS.BHLWS;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -42,7 +43,7 @@ namespace BHL.Export.MODS
 
         private void GenerateTitleMODS(string statsKey)
         {
-            BHLWS.BHLWSSoapClient service = null;
+            ExportsClient restClient = new ExportsClient(configParms.BHLWSEndpoint);
 
             try
             {
@@ -53,8 +54,7 @@ namespace BHL.Export.MODS
                 if (File.Exists(configParms.MODSInternalTitleTempFile)) File.Delete(configParms.MODSInternalTitleTempFile);
 
                 _log.Info(string.Format("Getting data for all {0}.", statsKey));
-                service = new BHLWSSoapClient();
-                Title[] titles = service.TitleSelectAllPublished();
+                ICollection<Title> titles = new TitlesClient(configParms.BHLWSEndpoint).GetTitlesPublished();
 
                 // Build the MODS files
                 File.AppendAllText(configParms.MODSTitleTempFile, "<modsCollection>\n", Encoding.UTF8);
@@ -63,12 +63,12 @@ namespace BHL.Export.MODS
                 {
                     try
                     {
-                        string mods = service.GetMODSRecordForTitle(title.TitleID);
+                        string mods = restClient.GetTitleMODS((int)title.TitleID);
                         File.AppendAllText(configParms.MODSTitleTempFile, mods, Encoding.UTF8);
                         UpdateStats(statsKey);
 
                         // If this is content held internally within BHL, write it to the "internal" file
-                        if (title.HasLocalContent)
+                        if (title.HasLocalContent ?? false)
                         {
                             File.AppendAllText(configParms.MODSInternalTitleTempFile, mods, Encoding.UTF8);
                             UpdateStats(string.Format("{0} (Internal)", statsKey));
@@ -84,10 +84,10 @@ namespace BHL.Export.MODS
                 File.AppendAllText(configParms.MODSTitleTempFile, "</modsCollection>\n", Encoding.UTF8);
                 File.AppendAllText(configParms.MODSInternalTitleTempFile, "</modsCollection>\n", Encoding.UTF8);
 
-                if ((_errors.Count / Convert.ToDouble(titles.Length) * 100) > 1.0)
+                if ((_errors.Count / Convert.ToDouble(titles.Count) * 100) > 1.0)
                 {
-                    _log.Error(string.Format("MODS processing failed. {0} out of {1} {2} produced errors.", _errors.Count.ToString(), titles.Length, statsKey));
-                    _errors.Add(string.Format("MODS processing failed. {0} out of {1} {2} produced errors.", _errors.Count.ToString(), titles.Length, statsKey));
+                    _log.Error(string.Format("MODS processing failed. {0} out of {1} {2} produced errors.", _errors.Count.ToString(), titles.Count, statsKey));
+                    _errors.Add(string.Format("MODS processing failed. {0} out of {1} {2} produced errors.", _errors.Count.ToString(), titles.Count, statsKey));
                 }
                 else
                 {
@@ -109,28 +109,22 @@ namespace BHL.Export.MODS
                 _log.Error(string.Format("Exception processing {0}.", statsKey), ex);
                 _errors.Add(string.Format("Exception processing {0}: {1}", statsKey, ex.Message));
             }
-            finally
-            {
-                if (service != null) service.Close();
-            }
         }
 
         private void GenerateItemMODS(string statsKey)
         {
-            BHLWS.BHLWSSoapClient service = null;
+            ExportsClient restClient = new ExportsClient(configParms.BHLWSEndpoint);
 
             try
             {
                 _log.Info(string.Format("Processing {0}...", statsKey));
-                service = new BHLWS.BHLWSSoapClient();
 
                 // Clean up any existing temp files
                 if (File.Exists(configParms.MODSItemTempFile)) File.Delete(configParms.MODSItemTempFile);
                 if (File.Exists(configParms.MODSInternalItemTempFile)) File.Delete(configParms.MODSInternalItemTempFile);
 
                 _log.Info(string.Format("Getting data for all {0}.", statsKey));
-                service = new BHLWSSoapClient();
-                Item[] items = service.ItemSelectPublished();
+                ICollection<Item> items = new ItemsClient(configParms.BHLWSEndpoint).GetItemsPublished();
 
                 // Build the MODS files
                 File.AppendAllText(configParms.MODSItemTempFile, "<modsCollection>\n", Encoding.UTF8);
@@ -139,12 +133,12 @@ namespace BHL.Export.MODS
                 {
                     try
                     {
-                        string mods = service.GetMODSRecordForItem(item.ItemID);
+                        string mods = restClient.GetItemMODS((int)item.ItemID);
                         File.AppendAllText(configParms.MODSItemTempFile, mods, Encoding.UTF8);
                         UpdateStats(statsKey);
 
                         // If this is content held internally within BHL, write it to the "internal" file
-                        if (item.HasLocalContent)
+                        if (item.HasLocalContent ?? false)
                         {
                             File.AppendAllText(configParms.MODSInternalItemTempFile, mods, Encoding.UTF8);
                             UpdateStats(string.Format("{0} (Internal)", statsKey));
@@ -160,10 +154,10 @@ namespace BHL.Export.MODS
                 File.AppendAllText(configParms.MODSItemTempFile, "</modsCollection>\n", Encoding.UTF8);
                 File.AppendAllText(configParms.MODSInternalItemTempFile, "</modsCollection>\n", Encoding.UTF8);
 
-                if ((_errors.Count / Convert.ToDouble(items.Length) * 100) > 1.0)
+                if ((_errors.Count / Convert.ToDouble(items.Count) * 100) > 1.0)
                 {
-                    _log.Error(string.Format("MODS processing failed. {0} out of {1} {2} produced errors.", _errors.Count.ToString(), items.Length, statsKey));
-                    _errors.Add(string.Format("MODS processing failed. {0} out of {1} {2} produced errors.", _errors.Count.ToString(), items.Length, statsKey));
+                    _log.Error(string.Format("MODS processing failed. {0} out of {1} {2} produced errors.", _errors.Count.ToString(), items.Count, statsKey));
+                    _errors.Add(string.Format("MODS processing failed. {0} out of {1} {2} produced errors.", _errors.Count.ToString(), items.Count, statsKey));
                 }
                 else
                 {
@@ -185,15 +179,11 @@ namespace BHL.Export.MODS
                 _log.Error(string.Format("Exception processing {0}.", statsKey), ex);
                 _errors.Add(string.Format("Exception processing {0}: {1}", statsKey, ex.Message));
             }
-            finally
-            {
-                if (service != null) service.Close();
-            }
         }
 
         private void GenerateSegmentMODS(string statsKey)
         {
-            BHLWS.BHLWSSoapClient service = null;
+            ExportsClient restClient = new ExportsClient(configParms.BHLWSEndpoint);
 
             try
             {
@@ -204,8 +194,7 @@ namespace BHL.Export.MODS
                 if (File.Exists(configParms.MODSInternalSegmentTempFile)) File.Delete(configParms.MODSInternalSegmentTempFile);
 
                 _log.Info(string.Format("Getting data for all {0}.", statsKey));
-                service = new BHLWSSoapClient();
-                Segment[] segments = service.SegmentSelectPublished();
+                ICollection<Segment> segments = new SegmentsClient(configParms.BHLWSEndpoint).GetSegmentsPublished();
 
                 // Build the MODS files
                 File.AppendAllText(configParms.MODSSegmentTempFile, "<modsCollection>\n", Encoding.UTF8);
@@ -214,12 +203,12 @@ namespace BHL.Export.MODS
                 {
                     try
                     {
-                        string mods = service.GetMODSRecordForSegment(segment.SegmentID);
+                        string mods = restClient.GetSegmentMODS((int)segment.SegmentID);
                         File.AppendAllText(configParms.MODSSegmentTempFile, mods, Encoding.UTF8);
                         UpdateStats(statsKey);
 
                         // If this is content held internally within BHL, write it to the "internal" file
-                        if (segment.HasLocalContent)
+                        if (segment.HasLocalContent ?? false)
                         {
                             File.AppendAllText(configParms.MODSInternalSegmentTempFile, mods, Encoding.UTF8);
                             UpdateStats(string.Format("{0} (Internal)", statsKey));
@@ -235,10 +224,10 @@ namespace BHL.Export.MODS
                 File.AppendAllText(configParms.MODSSegmentTempFile, "</modsCollection>\n", Encoding.UTF8);
                 File.AppendAllText(configParms.MODSInternalSegmentTempFile, "</modsCollection>\n", Encoding.UTF8);
 
-                if ((_errors.Count / Convert.ToDouble(segments.Length) * 100) > 1.0)
+                if ((_errors.Count / Convert.ToDouble(segments.Count) * 100) > 1.0)
                 {
-                    _log.Error(string.Format("MODS processing failed. {0} out of {1} {2} produced errors.", _errors.Count.ToString(), segments.Length, statsKey));
-                    _errors.Add(string.Format("MODS processing failed. {0} out of {1} {2} produced errors.", _errors.Count.ToString(), segments.Length, statsKey));
+                    _log.Error(string.Format("MODS processing failed. {0} out of {1} {2} produced errors.", _errors.Count.ToString(), segments.Count, statsKey));
+                    _errors.Add(string.Format("MODS processing failed. {0} out of {1} {2} produced errors.", _errors.Count.ToString(), segments.Count, statsKey));
                 }
                 else
                 {
@@ -259,10 +248,6 @@ namespace BHL.Export.MODS
             {
                 _log.Error(string.Format("Exception processing {0}.", statsKey), ex);
                 _errors.Add(string.Format("Exception processing {0}: {1}", statsKey, ex.Message));
-            }
-            finally
-            {
-                if (service != null) service.Close();
             }
         }
 

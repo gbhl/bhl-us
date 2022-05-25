@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
@@ -12,7 +11,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<Segment> GetSegmentAsync(int segmentID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetSegmentAsync(segmentID).ConfigureAwait(false));
@@ -21,7 +20,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public Segment GetSegment(int segmentID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetSegment(segmentID);
@@ -30,7 +29,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<Segment> GetSegmentDetailsAsync(int segmentID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetSegmentDetailsAsync(segmentID).ConfigureAwait(false));
@@ -39,7 +38,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public Segment GetSegmentDetails(int segmentID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetSegmentDetails(segmentID);
@@ -48,7 +47,7 @@ namespace BHL.WebServiceREST.v1.Client
         
         public async Task<Item> GetSegmentFilenamesAsync(int segmentID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetSegmentFilenamesAsync(segmentID).ConfigureAwait(false));
@@ -57,7 +56,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public Item GetSegmentFilenames(int segmentID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetSegmentFilenames(segmentID);
@@ -66,7 +65,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<Institution>> GetSegmentInstitutionsByRoleAsync(int segmentID, string roleName)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetSegmentInstitutionsByRoleAsync(segmentID, roleName).ConfigureAwait(false));
@@ -75,7 +74,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<Institution> GetSegmentInstitutionsByRole(int segmentID, string roleName)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetSegmentInstitutionsByRole(segmentID, roleName);
@@ -84,7 +83,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<Page>> GetSegmentPagesAsync(int segmentID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetSegmentPagesAsync(segmentID).ConfigureAwait(false));
@@ -93,7 +92,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<Page> GetSegmentPages(int segmentID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetSegmentPages(segmentID);
@@ -102,7 +101,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<DOI>> GetSegmentWithoutDoisAsync(int numberToReturn)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetSegmentWithoutDoisAsync(numberToReturn).ConfigureAwait(false));
@@ -111,7 +110,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<DOI> GetSegmentWithoutDois(int numberToReturn)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetSegmentWithoutDois(numberToReturn);
@@ -120,7 +119,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<Segment>> GetSegmentsPublishedAsync()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetSegmentsPublishedAsync().ConfigureAwait(false));
@@ -129,7 +128,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<Segment> GetSegmentsPublished()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetSegmentsPublished();
@@ -138,7 +137,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<Segment>> GetSegmentsRecentlyChangedAsync(string sinceDate)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetSegmentsRecentlyChangedAsync(sinceDate).ConfigureAwait(false));
@@ -147,7 +146,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<Segment> GetSegmentsRecentlyChanged(string sinceDate)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetSegmentsRecentlyChanged(sinceDate);
@@ -156,7 +155,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<Segment> GetSegmentByItemIDAsync(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetSegmentByItemIDAsync(itemID).ConfigureAwait(false));
@@ -165,7 +164,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public Segment GetSegmentByItemID(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetSegmentByItemID(itemID);

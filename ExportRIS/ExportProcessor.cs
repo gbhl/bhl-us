@@ -1,4 +1,5 @@
-﻿using BHL.Export.RIS.BHLWS;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,17 +41,15 @@ namespace BHL.Export.RIS
 
         private void ProcessRIS()
         {
-            BHLWS.BHLWSSoapClient service = null;
-
             try
             {
-                service = new BHLWS.BHLWSSoapClient();
-                service.InnerChannel.OperationTimeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
-                RISCitation[] citations = null;
+                ExportsClient restClient = new ExportsClient(configParms.BHLWSEndpoint);
+                restClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
+                ICollection<RISCitation> citations = null;
 
                 _log.Info("Processing items...");
                 _log.Info("Getting RIS data for all items.");
-                citations = service.ItemSelectAllRISCitations();
+                citations = restClient.GetItemRISCitations();
                 GenerateCitations(citations, configParms.RISItemTempFile,
                     configParms.RISItemFile, configParms.RISItemZipFile,
                     configParms.RISInternalItemTempFile, configParms.RISInternalItemFile, 
@@ -59,7 +58,7 @@ namespace BHL.Export.RIS
 
                 _log.Info("Processing titles...");
                 _log.Info("Getting RIS data for all titles.");
-                citations = service.TitleSelectAllRISCitations();
+                citations = restClient.GetTitleRISCitations();
                 GenerateCitations(citations, configParms.RISTitleTempFile,
                     configParms.RISTitleFile, configParms.RISTitleZipFile,
                     configParms.RISInternalTitleTempFile, configParms.RISInternalTitleFile, 
@@ -68,7 +67,7 @@ namespace BHL.Export.RIS
 
                 _log.Info("Processing segments...");
                 _log.Info("Getting RIS data for all segments.");
-                citations = service.SegmentSelectAllRISCitations();
+                citations = restClient.GetSegmentRISCitations();
                 GenerateCitations(citations, configParms.RISSegmentTempFile,
                     configParms.RISSegmentFile, configParms.RISSegmentZipFile,
                     configParms.RISInternalSegmentTempFile, configParms.RISInternalSegmentFile, 
@@ -82,7 +81,7 @@ namespace BHL.Export.RIS
             }
         }
 
-        private void GenerateCitations(RISCitation[] citations, string risTempFile,
+        private void GenerateCitations(ICollection<RISCitation> citations, string risTempFile,
             string risFile, string risZipFile, string risInternalTempFile,
             string risInternalFile, string risInternalZipFile, string statsKey)
         {
@@ -90,20 +89,20 @@ namespace BHL.Export.RIS
             if (File.Exists(risTempFile)) File.Delete(risTempFile);
             if (File.Exists(risInternalTempFile)) File.Delete(risInternalTempFile);
 
-            if (citations.Length > 0)
+            if (citations.Count > 0)
             {
-                BHLWS.BHLWSSoapClient service = new BHLWSSoapClient();
+                ExportsClient restClient = new ExportsClient(configParms.BHLWSEndpoint);
 
                 foreach (RISCitation citation in citations)
                 {
                     try
                     {
-                        string citationText = service.GenerateRISCitation(citation);
+                        string citationText = restClient.GetRISCitationString(citation);
                         File.AppendAllText(risTempFile, citationText, Encoding.UTF8);
                         UpdateStats(statsKey);
 
                         // If this is content held internally within BHL, write it to the "internal" file
-                        if (citation.HasLocalContent)
+                        if (citation.HasLocalContent ?? false)
                         {
                             File.AppendAllText(risInternalTempFile, citationText, Encoding.UTF8);
                             UpdateStats(string.Format("{0} (Internal)", statsKey));
@@ -117,10 +116,10 @@ namespace BHL.Export.RIS
                     }
                 }
 
-                if ((_errors.Count / Convert.ToDouble(citations.Length) * 100) > 1.0)
+                if ((_errors.Count / Convert.ToDouble(citations.Count) * 100) > 1.0)
                 {
-                    _log.Error(string.Format("RIS processing failed. {0} out of {1} item citations produced errors.", _errors.Count.ToString(), citations.Length));
-                    _errors.Add(string.Format("RIS processing failed. {0} out of {1} item citations produced errors.", _errors.Count.ToString(), citations.Length));
+                    _log.Error(string.Format("RIS processing failed. {0} out of {1} item citations produced errors.", _errors.Count.ToString(), citations.Count));
+                    _errors.Add(string.Format("RIS processing failed. {0} out of {1} item citations produced errors.", _errors.Count.ToString(), citations.Count));
                 }
                 else
                 {

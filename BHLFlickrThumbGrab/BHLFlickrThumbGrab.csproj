@@ -45,9 +45,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibraries\FreeImage3.13.1.1\FreeImageNET.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibraries\Log4Net1.2.10.0\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=2.0.9.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.10\lib\net45\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -55,6 +57,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -65,106 +68,13 @@
     <Compile Include="ConfigParms.cs" />
     <Compile Include="FlickrThumbGrab.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Service References\BHLWS\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="FreeImage.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="app.config.template" />
-    <None Include="Service References\BHLWS\BHLWS.disco" />
-    <None Include="Service References\BHLWS\BHLWS.wsdl" />
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.AnnotatedItem.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.AnnotatedPage.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.AnnotatedPageCharacteristic.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.AnnotatedTitle.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Annotation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.AnnotationNote.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.AnnotationRelation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.AnnotationSubject.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Annotation_AnnotationConcept.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Book.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.DOI.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Institution.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Item.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.ItemNameFileLog.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.KBART.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.NameFinderResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Page.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.PageFlickr.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.PageSummaryView.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.PageType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.PDF.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.RISCitation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Segment.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Title.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.TitleBibTeX.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Title_Identifier.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Vault.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\BHLWS\configuration.svcinfo" />
-    <None Include="Service References\BHLWS\configuration91.svcinfo" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -173,7 +83,11 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\BHLWS\" />
+    <ProjectReference Include="..\BHLWebServiceREST.v1.Client\BHL.WebServiceREST.v1.Client.csproj">
+      <Project>{f687bc49-ff84-47f5-b67f-2101a8aefdf3}</Project>
+      <Name>BHL.WebServiceREST.v1.Client</Name>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

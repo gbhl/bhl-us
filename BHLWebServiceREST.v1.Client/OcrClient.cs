@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
@@ -12,7 +11,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<NameFinderResponse>> GetNamesFromPageOcrAsync(int pageID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetNamesFromPageOcrAsync(pageID).ConfigureAwait(false));
@@ -21,7 +20,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<NameFinderResponse> GetNamesFromPageOcr(int pageID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetNamesFromPageOcr(pageID);
@@ -30,7 +29,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<bool> ItemOcrExistsAsync(int itemID, string ocrTextPath)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.ItemOcrExistsAsync(itemID, ocrTextPath).ConfigureAwait(false));
@@ -39,7 +38,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public bool ItemOcrExists(int itemID, string ocrTextPath)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.ItemOcrExists(itemID, ocrTextPath);
@@ -48,7 +47,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<bool> PageOcrExistsAsync(int pageID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.PageOcrExistsAsync(pageID).ConfigureAwait(false));
@@ -57,7 +56,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public bool PageOcrExists(int pageID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.PageOcrExists(pageID);

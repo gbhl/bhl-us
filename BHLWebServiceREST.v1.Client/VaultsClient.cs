@@ -1,5 +1,4 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
 {
@@ -11,7 +10,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<Vault> GetVaultAysnc(int vaultID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetVaultAsync(vaultID).ConfigureAwait(false));
@@ -20,7 +19,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public Vault GetVault(int vaultID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetVault(vaultID);

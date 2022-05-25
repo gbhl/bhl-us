@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
@@ -13,7 +12,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task ItemNameFileLogRefreshAsync(DateTime sinceDate)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 await restClient.ItemNameFileLogRefreshAsync(sinceDate).ConfigureAwait(false);
@@ -23,7 +22,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public void ItemNameFileLogRefresh(DateTime sinceDate)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 restClient.ItemNameFileLogRefresh(sinceDate);
@@ -33,7 +32,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<ItemNameFileLog>> GetItemNameFileLogForCreateAsync()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetItemNameFileLogForCreateAsync().ConfigureAwait(false));
@@ -42,7 +41,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<ItemNameFileLog> GetItemNameFileLogForCreate()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetItemNameFileLogForCreate();
@@ -51,7 +50,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<ItemNameFileLog>> GetItemNameFileLogForUploadAsync()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetItemNameFileLogForUploadAsync().ConfigureAwait(false));
@@ -60,7 +59,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<ItemNameFileLog> GetItemNameFileLogForUpload()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetItemNameFileLogForUpload();
@@ -69,7 +68,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task UpdateItemNameFileLogCreateDateAsync(int logID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 await restClient.UpdateItemNameFileLogCreateDateAsync(logID).ConfigureAwait(false);
@@ -79,7 +78,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public void UpdateItemNameFileLogCreateDate(int logID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 restClient.UpdateItemNameFileLogCreateDate(logID);
@@ -89,7 +88,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task UpdateItemNameFileLogUploadDateAsync(int logID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 await restClient.UpdateItemNameFileLogUploadDateAsync(logID).ConfigureAwait(false);
@@ -99,7 +98,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public void UpdateItemNameFileLogUploadDate(int logID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 restClient.UpdateItemNameFileLogUploadDate(logID);

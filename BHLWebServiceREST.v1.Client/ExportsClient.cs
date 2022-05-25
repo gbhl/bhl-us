@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
@@ -12,8 +12,9 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<TitleBibTeX>> GetTitleBibTexCitationsAsync()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
+                httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetTitleBibTexCitationsAsync().ConfigureAwait(false));
             }
@@ -21,8 +22,9 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<TitleBibTeX> GetTitleBibTexCitations()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
+                httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetTitleBibTexCitations();
             }
@@ -30,8 +32,9 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<TitleBibTeX>> GetItemBibTexCitationsAsync()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
+                httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetItemBibTexCitationsAsync().ConfigureAwait(false));
             }
@@ -39,8 +42,9 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<TitleBibTeX> GetItemBibTexCitations()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
+                httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetItemBibTexCitations();
             }
@@ -48,8 +52,9 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<TitleBibTeX>> GetSegmentBibTexCitationsAsync()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
+                httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetSegmentBibTexCitationsAsync().ConfigureAwait(false));
             }
@@ -57,8 +62,9 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<TitleBibTeX> GetSegmentBibTexCitations()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
+                httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetSegmentBibTexCitations();
             }
@@ -66,7 +72,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<string> GetTitleMODSAsync(int titleID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetTitleMODSAsync(titleID).ConfigureAwait(false));
@@ -75,7 +81,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public string GetTitleMODS(int titleID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetTitleMODS(titleID);
@@ -84,7 +90,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<string> GetItemMODSAsync(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetItemMODSAsync(itemID).ConfigureAwait(false));
@@ -93,7 +99,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public string GetItemMODS(int itemID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetItemMODS(itemID);
@@ -102,7 +108,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<string> GetSegmentMODSAsync(int segmentID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetSegmentMODSAsync(segmentID).ConfigureAwait(false));
@@ -111,7 +117,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public string GetSegmentMODS(int segmentID)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetSegmentMODS(segmentID);
@@ -120,7 +126,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<RISCitation>> GetTitleRISCitationsAsync()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetTitleRISCitationsAsync().ConfigureAwait(false));
@@ -129,7 +135,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<RISCitation> GetTitleRISCitations()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetTitleRISCitations();
@@ -138,7 +144,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<RISCitation>> GetItemRISCitationsAsync()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetItemRISCitationsAsync().ConfigureAwait(false));
@@ -147,7 +153,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<RISCitation> GetItemRISCitations()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetItemRISCitations();
@@ -156,7 +162,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<RISCitation>> GetSegmentRISCitationsAsync()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetSegmentRISCitationsAsync().ConfigureAwait(false));
@@ -165,7 +171,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<RISCitation> GetSegmentRISCitations()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetSegmentRISCitations();
@@ -174,7 +180,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<string> GetRISCitationStringAsync(RISCitation citation)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetRISCitationStringAsync(citation).ConfigureAwait(false));
@@ -183,7 +189,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public string GetRISCitationString(RISCitation citation)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetRISCitationString(citation);
@@ -192,7 +198,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<string>> GetIAIdentifiersAsync()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetIAIdentifiersAsync().ConfigureAwait(false));
@@ -201,7 +207,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<string> GetIAIdentifiers()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetIAIdentifiers();
@@ -210,7 +216,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<KBART>>GetKBARTAsync(string urlRoot)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return (await restClient.GetKBARTAsync(urlRoot).ConfigureAwait(false));
@@ -219,7 +225,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<KBART> GetKBART(string urlRoot)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetKBART(urlRoot);

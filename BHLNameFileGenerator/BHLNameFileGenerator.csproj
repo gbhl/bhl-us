@@ -46,6 +46,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibraries\Log4Net1.2.10.0\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -70,121 +73,25 @@
     <Compile Include="ConfigParms.cs" />
     <Compile Include="NameFileGenerator.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Service References\BHLWS\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\BHLWS\" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config.template" />
-    <None Include="Service References\BHLWS\BHLWS.wsdl" />
-    <None Include="Service References\BHLWS\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\BHLWS\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\BHLWS\BHLWS.disco" />
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.AnnotatedItem.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.AnnotatedPage.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.AnnotatedPageCharacteristic.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.AnnotatedTitle.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Annotation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.AnnotationNote.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.AnnotationRelation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.AnnotationSubject.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Annotation_AnnotationConcept.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Book.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.DOI.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Institution.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Item.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.ItemNameFileLog.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.KBART.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.NameFinderResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Page.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.PageFlickr.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.PageSummaryView.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.PageType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.PDF.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.RISCitation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Segment.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Title.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.TitleBibTeX.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Title_Identifier.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Vault.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BHLFileAccess\BHLFileAccess.csproj">
       <Project>{90020027-ad6a-4052-820e-057bebaa8e2e}</Project>
       <Name>BHLFileAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLWebServiceREST.v1.Client\BHL.WebServiceREST.v1.Client.csproj">
+      <Project>{f687bc49-ff84-47f5-b67f-2101a8aefdf3}</Project>
+      <Name>BHL.WebServiceREST.v1.Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\IAUtilities\IAUtilities.csproj">
       <Project>{DE3A52C7-11EF-4E87-ABBE-2792152C99BC}</Project>

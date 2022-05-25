@@ -7,7 +7,6 @@
     </sectionGroup>
   </configSections>
   <appSettings>
-    <add key="SMTPHost" value="SMTP SERVER NAME"/>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
     <add key="FlickrAPIKey" value="FLICKR API KEY"/>
@@ -18,6 +17,8 @@
     <add key="ImageListFilePath" value="\\SERVER\FOLDER\flickrthumbs.txt"/>
     <add key="DefaultFilesFolder" value="\\SERVER\FOLDER\flickrthumbs\default\" />
     <add key="NumberToGrab" value="10"/>
+    <!-- BHLWS service endpoint -->
+    <add key = "BHLWSUrl" value="BHLWS SERVICE ENDPOINT" />
   </appSettings>
   <!-- This section contains the log4net configuration settings -->
   <log4net>
@@ -68,17 +69,4 @@
                     name="BHLWSSoap" />
         </client>
     </system.serviceModel>
-    <system.net>
-      <mailSettings>
-        <smtp deliveryMethod="Network">
-          <network defaultCredentials="false"
-                   enableSsl="false"
-                   host="MAIL_SERVER_ADDRESS"
-                   port="MAIL_SERVER_PORT"
-                   userName="MAIL_SERVER_USERNAME"
-                   password="MAIL_SERVER_PASSWORD"
-                   />
-        </smtp>
-      </mailSettings>
-    </system.net>
 <startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/></startup></configuration>

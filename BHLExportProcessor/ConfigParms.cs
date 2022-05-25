@@ -12,6 +12,7 @@ namespace BHL.Export
         public bool LogToConsole { get; set; }
         public Dictionary<string, ExportProcessor> Processors { get; set; }
         public string ProcessorToRun { get; set; }
+        public string BHLWSEndpoint { get; set; } = string.Empty;
 
         public ConfigParms()
         {
@@ -22,6 +23,7 @@ namespace BHL.Export
             LogToConsole = true;
             Processors = new Dictionary<string, ExportProcessor>();
             ProcessorToRun = string.Empty;
+            BHLWSEndpoint = string.Empty;
         }
 
         public void LoadAppConfig()
@@ -33,6 +35,7 @@ namespace BHL.Export
             LogToConsole = !((ConfigurationManager.AppSettings["LogToConsole"] ?? string.Empty).ToLower() == "false");
             InitializeProcessorList(ConfigurationManager.AppSettings["Processors"]);
             ProcessorToRun = (ConfigurationManager.AppSettings["ProcessorToRun"] ?? string.Empty).ToUpper();
+            BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"] ?? string.Empty;
         }
 
         private void InitializeProcessorList(string processors)

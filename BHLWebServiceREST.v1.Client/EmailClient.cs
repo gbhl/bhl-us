@@ -1,5 +1,4 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
 {
@@ -11,7 +10,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task SendEmailAsync(MailRequestModel email)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 await restClient.EmailSendAsync(email).ConfigureAwait(false);
@@ -21,14 +20,12 @@ namespace BHL.WebServiceREST.v1.Client
 
         public void SendEmail(MailRequestModel email)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = GetHttpClient())
             {
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 restClient.EmailSend(email);
                 return;
             }
         }
-
-
     }
 }

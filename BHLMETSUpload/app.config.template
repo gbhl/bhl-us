@@ -7,13 +7,14 @@
     </sectionGroup>
   </configSections>
   <appSettings>
-    <add key="SMTPHost" value="SMTP SERVER NAME"/>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
     <add key="IAFileName" value="_bhlmets.xml"/>
     <add key="METSEmail" value="ORGANIZATION EMAIL ADDRESS TO EMBED IN METS FILES"/>
     <add key="IAS3AccessKey" value="INTERNET ARCHVIE ACCESS KEY"/>
     <add key="IAS3SecretKey" value="INTERNET ARCHIVE SECRET KEY"/>
+    <!-- BHLWS service endpoint -->
+    <add key="BHLWSUrl" value="BHLWS SERVICE URL" />
   </appSettings>
   <!-- This section contains the log4net configuration settings -->
   <log4net>
@@ -39,44 +40,6 @@
       <appender-ref ref="RollingLogFileAppender"/>
     </root>
   </log4net>
-  <system.serviceModel>
-    <bindings>
-      <basicHttpBinding>
-        <binding name="BHLWSSoap" closeTimeout="00:01:00" openTimeout="00:01:00"
-          receiveTimeout="00:10:00" sendTimeout="00:05:00" allowCookies="false"
-          bypassProxyOnLocal="false" hostNameComparisonMode="StrongWildcard"
-          maxBufferSize="2147483647" maxBufferPoolSize="2147483647" maxReceivedMessageSize="2147483647"
-          messageEncoding="Text" textEncoding="utf-8" transferMode="Buffered"
-          useDefaultWebProxy="true">
-          <readerQuotas maxDepth="32" maxStringContentLength="2147483647"
-            maxArrayLength="16384" maxBytesPerRead="4096" maxNameTableCharCount="16384" />
-          <security mode="None">
-            <transport clientCredentialType="None" proxyCredentialType="None"
-              realm="" />
-            <message clientCredentialType="UserName" algorithmSuite="Default" />
-          </security>
-        </binding>
-      </basicHttpBinding>
-    </bindings>
-    <client>
-      <endpoint address="http://localhost:26504/BHLWS.asmx" binding="basicHttpBinding"
-        bindingConfiguration="BHLWSSoap" contract="BHLWS.BHLWSSoap"
-        name="BHLWSSoap" />
-    </client>
-  </system.serviceModel>
-    <system.net>
-      <mailSettings>
-        <smtp deliveryMethod="Network">
-          <network defaultCredentials="false"
-                   enableSsl="false"
-                   host="MAIL_SERVER_ADDRESS"
-                   port="MAIL_SERVER_PORT"
-                   userName="MAIL_SERVER_USERNAME"
-                   password="MAIL_SERVER_PASSWORD"
-                   />
-        </smtp>
-      </mailSettings>
-    </system.net>
   <startup>
     <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/>
   </startup>

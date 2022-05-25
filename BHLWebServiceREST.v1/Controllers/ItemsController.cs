@@ -41,7 +41,7 @@ namespace BHL.WebServiceREST.v1.Controllers
         }
 
         [HttpGet("Published", Name = "GetItemsPublished")]
-        [ProducesResponseType(200, Type = typeof(List<Title>))]
+        [ProducesResponseType(200, Type = typeof(List<Item>))]
         public IActionResult ItemSelectPublished()
         {
             return Ok(_bhlProvider.ItemSelectPublished());
@@ -69,7 +69,7 @@ namespace BHL.WebServiceREST.v1.Controllers
         }
 
         [HttpGet("{itemID}/NamesXml", Name = "GetItemNamesXml")]
-        [ProducesResponseType(200, Type = typeof(List<Institution>))]
+        [ProducesResponseType(200, Type = typeof(string))]
         public IActionResult GetNamesXML(int itemID)
         {
             return Ok(_bhlProvider.ItemGetNamesXMLByItemID(itemID));
