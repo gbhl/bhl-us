@@ -1,4 +1,6 @@
 ﻿using BHL.TextImportUtility;
+using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.FileAccess;
@@ -89,7 +91,7 @@ namespace BHL.TextImportProcessor
                                     this.LogMessage("Generating text files for Text Import File " + batchFile.TextImportBatchFileID);
 
                                     // Get the Page information (including file paths) for the BHL Item
-                                    List<PageSummaryView> pages = service.PageSummarySelectAllByItemID((int)batchFile.ItemID);
+                                    List<MOBOT.BHL.DataObjects.PageSummaryView> pages = service.PageSummarySelectAllByItemID((int)batchFile.ItemID);
                                     if (pages.Count == 0) pages = service.PageSummarySegmentSelectAllByItemID((int)batchFile.ItemID);
 
                                     // Get the text import file
@@ -143,7 +145,7 @@ namespace BHL.TextImportProcessor
                                     }
 
                                     // Parse the transcriptions from the file
-                                    foreach (PageSummaryView page in pages)
+                                    foreach (MOBOT.BHL.DataObjects.PageSummaryView page in pages)
                                     {
                                         if (importTool.TextAvailable(textImportFileLocalPath, page.SequenceOrder.ToString()))
                                         {
@@ -325,25 +327,20 @@ namespace BHL.TextImportProcessor
         {
             try
             {
-                string thisComputer = Environment.MachineName;
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = String.Format(
+                    "BHLTextImportProcessor: Processing on {0} completed {1}.",
+                    Environment.MachineName,
+                    (errorMessages.Count == 0) ? "successfully" : "with errors");
+                mailRequest.Body = message;
+                mailRequest.From = configParms.EmailFromAddress;
 
-                MailMessage mailMessage = new MailMessage();
-                MailAddress mailAddress = new MailAddress(configParms.EmailFromAddress);
-                mailMessage.From = mailAddress;
-                mailMessage.To.Add(configParms.EmailToAddress);
-                mailMessage.Body = message;
+                List<string> recipients = new List<string>();
+                foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
 
-                if (this.errorMessages.Count == 0)
-                {
-                    mailMessage.Subject = "BHLTextImportProcessor: Processing on " + thisComputer + " completed successfully.";
-                }
-                else
-                {
-                    mailMessage.Subject = "BHLTextImportProcessor: Processing on " + thisComputer + " completed with errors.";
-                }
-
-                SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
-                smtpClient.Send(mailMessage);
+                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {

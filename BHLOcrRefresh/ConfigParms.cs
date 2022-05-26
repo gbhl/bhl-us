@@ -62,7 +62,8 @@ namespace MOBOT.BHL.BHLOcrRefresh
             get { return _ocrJobTempPath; }
             set { _ocrJobTempPath = value; }
         }
-                
+        public string BHLWSEndpoint { get; set; } = string.Empty;
+
         public void LoadAppConfig()
         {
             XmlDocument doc = new XmlDocument();
@@ -103,6 +104,10 @@ namespace MOBOT.BHL.BHLOcrRefresh
                     if (node.Attributes.GetNamedItem("key").Value == "OcrJobTempPath")
                     {
                         this.OcrJobTempPath = node.Attributes.GetNamedItem("value").Value;
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "BHLWSUrl")
+                    {
+                        this.BHLWSEndpoint = node.Attributes.GetNamedItem("value").Value;
                     }
                 }
             }

@@ -31,14 +31,11 @@
     <EndDate></EndDate>
 
     <!-- Email settings -->
-    <SmtpHost>MAIL SERVER ADDRESS</SmtpHost>
-    <SmtpPort>MAIL SERVER PORT</SmtpPort>
-    <SmtpEnableSsl>false</SmtpEnableSsl>
-    <SmtpDefaultCredentials>false</SmtpDefaultCredentials>
-    <SmtpUsername></SmtpUsername>
-    <SmtpPassword></SmtpPassword>
     <EmailFromAddress>noreply@biodiversitylibrary.org</EmailFromAddress>
     <EmailToAddresses>EMAIL RECIPIENT EMAIL ADDRESSES</EmailToAddresses>  <!-- comma-separated -->
+
+    <!-- BHLWS service endpoint -->
+    <BHLWSUrl>BHLWS SERVICE URL</BHLWSUrl>
 
     <!-- Connection key-->
     <ConnectionKey>QA</ConnectionKey>

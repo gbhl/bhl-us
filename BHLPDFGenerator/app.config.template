@@ -2,13 +2,8 @@
 <configuration>
     <configSections>
 		<section name="log4net" type="System.Configuration.IgnoreSectionHandler"/>
-		<sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-            <section name="MOBOT.BHL.BHLPDFGenerator.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false"/>
-            <section name="BHLPDFGenerator.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false"/>
-        </sectionGroup>
     </configSections>
 	<appSettings>
-    <add key="SMTPHost" value="SMTP SERVER NAME"/>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
     <add key="PdfFilePath" value="\\SERVER\FOLDER\pdf\{0}"/>
@@ -17,7 +12,10 @@
     
     <!-- Number of milliseconds to wait before retrying a failed image download -->
     <add key="RetryImageWait" value="30000"/>
-	</appSettings>
+
+    <!-- BHLWS service endpoint -->
+    <add key = "BHLWSUrl" value="BHLWS SERVICE URL" />
+  </appSettings>
 	<!-- This section contains the log4net configuration settings -->
 	<log4net>
 		<!-- Define some output appenders -->
@@ -40,24 +38,4 @@
 			<appender-ref ref="RollingLogFileAppender"/>
 		</root>
 	</log4net>
-	<applicationSettings>
-        <MOBOT.BHL.BHLPDFGenerator.Properties.Settings>
-               <setting name="BHLPDFGenerator_BHLWS_BHLWS" serializeAs="String">
-                      <value>http://localhost:26504/BHLWS.asmx</value>
-               </setting>
-        </MOBOT.BHL.BHLPDFGenerator.Properties.Settings>
-    </applicationSettings>
-    <system.net>
-      <mailSettings>
-        <smtp deliveryMethod="Network">
-          <network defaultCredentials="false"
-                   enableSsl="false"
-                   host="MAIL_SERVER_ADDRESS"
-                   port="MAIL_SERVER_PORT"
-                   userName="MAIL_SERVER_USERNAME"
-                   password="MAIL_SERVER_PASSWORD"
-                   />
-        </smtp>
-      </mailSettings>
-    </system.net>
 <startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/></startup></configuration>

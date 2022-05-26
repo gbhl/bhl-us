@@ -1,8 +1,9 @@
 ﻿using BHL.QueueUtility;
-using MailKit.Net.Smtp;
-using MimeKit;
+using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -30,14 +31,10 @@ namespace BHL.SearchIndexQueueLoad
         private static string _mqErrorExchangePdf = string.Empty;
         private static string _mqErrorQueuePdf = string.Empty;
 
-        private static string _smtpHost = string.Empty;
-        private static int _smtpPort= 0;
-        private static bool _smtpEnableSsl = false;
-        private static bool _smtpDefaultCredentials = false;
-        private static string _smtpUser = string.Empty;
-        private static string _smtpPw = string.Empty;
         private static string _emailFromAddress = string.Empty;
         private static string _emailToAddresses = string.Empty;
+
+        private static string _bhlwsurl = string.Empty;
 
         private static string _connectionKey = string.Empty;
 
@@ -175,28 +172,17 @@ namespace BHL.SearchIndexQueueLoad
         {
             try
             {
-                string thisComputer = Environment.MachineName;
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = "BHLSearchIndexQueueLoad: Index Message Queueing on " + Environment.MachineName + " completed with errors"; ;
+                mailRequest.Body = "An error occurred while adding messages to the index queue.See the BHLSearchIndexQueueLoad logs for detailed information.";
+                mailRequest.From = _emailFromAddress;
 
-                var mimeMessage = new MimeMessage();
-                mimeMessage.From.Add(new MailboxAddress("", _emailFromAddress));
-                string[] toAddresses = _emailToAddresses.Split(',');
-                foreach (string toAddress in toAddresses)
-                {
-                    mimeMessage.To.Add(new MailboxAddress("", toAddress));
-                }
-                mimeMessage.Subject = "BHLSearchIndexQueueLoad: Index Message Queueing on " + thisComputer + " completed with errors";
-                mimeMessage.Body = new TextPart("plain")
-                {
-                    Text = "An error occurred while adding messages to the index queue.  See the BHLSearchIndexQueueLoad logs for detailed information."
-                };
+                List<string> recipients = new List<string>();
+                foreach (string recipient in _emailToAddresses.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
 
-                using (var client = new SmtpClient())
-                {
-                    client.Connect(_smtpHost, _smtpPort, _smtpEnableSsl);
-                    if (!string.IsNullOrWhiteSpace(_smtpUser)) client.Authenticate(_smtpUser, _smtpPw);
-                    client.Send(mimeMessage);
-                    client.Disconnect(true);
-                }
+                EmailClient restClient = new EmailClient(_bhlwsurl);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {
@@ -255,14 +241,10 @@ namespace BHL.SearchIndexQueueLoad
             _mqErrorExchangePdf = new ConfigurationManager(_configFile).AppSettings("MQErrorExchangePDF");
             _mqErrorQueuePdf = new ConfigurationManager(_configFile).AppSettings("MQErrorQueuePDF");
 
-            _smtpHost = new ConfigurationManager(_configFile).AppSettings("SmtpHost");
-            _smtpPort = Convert.ToInt32(new ConfigurationManager(_configFile).AppSettings("SmtpPort"));
-            _smtpEnableSsl = new ConfigurationManager(_configFile).AppSettings("SmtpEnableSsl") == "true";
-            _smtpDefaultCredentials = new ConfigurationManager(_configFile).AppSettings("SmtpDefaultCredentials") == "true";
-            _smtpUser = new ConfigurationManager(_configFile).AppSettings("SmtpUsername");
-            _smtpPw = new ConfigurationManager(_configFile).AppSettings("SmtpPassword");
             _emailFromAddress = new ConfigurationManager(_configFile).AppSettings("EmailFromAddress");
             _emailToAddresses = new ConfigurationManager(_configFile).AppSettings("EmailToAddresses");
+
+            _bhlwsurl = new ConfigurationManager(_configFile).AppSettings("BHLWSUrl");
 
             _connectionKey = new ConfigurationManager(_configFile).AppSettings("ConnectionKey");
         }

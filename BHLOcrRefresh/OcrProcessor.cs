@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -19,6 +21,8 @@ namespace MOBOT.BHL.BHLOcrRefresh
         private ConfigParms configParms = new ConfigParms();
         private List<string> errorMessages = new List<string>();
 
+        public object ItemsClientclient { get; private set; }
+
         public void Process()
         {
             // Load app settings from the configuration file
@@ -34,14 +38,16 @@ namespace MOBOT.BHL.BHLOcrRefresh
             string itemID = string.Empty;
             try
             {
-                BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-
                 itemID = this.GetNextJobId();
                 while (!string.IsNullOrWhiteSpace(itemID))
                 {
                     string status = this.GetOcrForItem(itemID);
-                    client.NamePageDeleteByItemID(Convert.ToInt32(itemID)); // Clear names and reset last name lookup date
-                    client.PageTextLogInsertForItem(Convert.ToInt32(itemID), "OCR", 1); // Log the new source of the page text
+                    new ItemsClient(configParms.BHLWSEndpoint).DeleteItemNames(Convert.ToInt32(itemID)); // Clear names and reset last name lookup date
+                    new PageTextLogsClient(configParms.BHLWSEndpoint).InsertPageTextLog(new PageTextLogModel {
+                        Itemid = Convert.ToInt32(itemID),
+                        Textsource = "OCR", 
+                        Userid = 1
+                    }); // Log the new source of the page text
                     this.LogMessage(status);
                     this.MarkJobComplete(itemID, status);
                     itemID = this.GetNextJobId();
@@ -158,15 +164,14 @@ namespace MOBOT.BHL.BHLOcrRefresh
 
             try
             {
-                BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-                BHLWS.Book book = client.BookSelectByItemID(Convert.ToInt32(itemID));
+                Book book = new BooksClient(configParms.BHLWSEndpoint).GetBookByItemID(Convert.ToInt32(itemID));
                 if (book != null)
                 {
                     barcode = book.BarCode;
                 }
                 else
                 {
-                    BHLWS.Segment segment = client.SegmentSelectByItemID(Convert.ToInt32(itemID));
+                    Segment segment = new SegmentsClient(configParms.BHLWSEndpoint).GetSegmentByItemID(Convert.ToInt32(itemID));
                     if (segment != null) barcode = segment.BarCode;
                 }
             }
@@ -191,8 +196,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
 
             try
             {
-                BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-                BHLWS.Item item = client.ItemSelectFilenames(BHLWS.ItemType.Item, Convert.ToInt32(itemID));
+                Item item = new ItemsClient(configParms.BHLWSEndpoint).GetItemFilenames(Convert.ToInt32(itemID));
 
                 String iaUrl = string.Format("https://www.archive.org/download/{0}/{1}", item.BarCode, item.DjvuFilename);
 
@@ -334,10 +338,9 @@ namespace MOBOT.BHL.BHLOcrRefresh
         {
             string path = string.Empty;
 
-            BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-            BHLWS.Item item = client.ItemSelectAuto(Convert.ToInt32(itemID));
-            BHLWS.Vault vault = client.VaultSelect((int)item.VaultID);
-            path = string.Format("{0}\\{1}\\{2}", vault.OCRFolderShare, item.FileRootFolder, barcode);
+            Item item = new ItemsClient(configParms.BHLWSEndpoint).GetItem(Convert.ToInt32(itemID));
+            Vault vault = new VaultsClient(configParms.BHLWSEndpoint).GetVault((int)item.VaultID);
+            path = string.Format("{0}\\{1}\\{2}", vault.OcrFolderShare, item.FileRootFolder, barcode);
 
             return path;
         }
@@ -437,16 +440,24 @@ namespace MOBOT.BHL.BHLOcrRefresh
         private void SendEmail(String subject, String message, String fromAddress,
             String toAddress, String ccAddresses)
         {
-            MailMessage mailMessage = new MailMessage();
-            MailAddress mailAddress = new MailAddress(fromAddress);
-            mailMessage.From = mailAddress;
-            mailMessage.To.Add(toAddress);
-            if (ccAddresses != String.Empty) mailMessage.CC.Add(ccAddresses);
-            mailMessage.Subject = subject;
-            mailMessage.Body = message;
+            MailRequestModel mailRequest = new MailRequestModel();
+            mailRequest.Subject = subject;
+            mailRequest.Body = message;
+            mailRequest.From = fromAddress;
 
-            SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
-            smtpClient.Send(mailMessage);
+            List<string> recipients = new List<string>();
+            foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
+            mailRequest.To = recipients;
+
+            if (ccAddresses != String.Empty)
+            {
+                List<string> ccs = new List<string>();
+                foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
+                mailRequest.Cc = ccs;
+            }
+
+            EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+            restClient.SendEmail(mailRequest);
         }
 
         private void LogMessage(string message)

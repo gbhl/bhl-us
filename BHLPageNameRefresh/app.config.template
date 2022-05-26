@@ -2,14 +2,10 @@
 <configuration>
     <configSections>
 		<section name="log4net" type="System.Configuration.IgnoreSectionHandler"/>
-		<sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-            <section name="MOBOT.BHL.PageNameRefresh.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false"/>
-        </sectionGroup>
     </configSections>
 	<appSettings>
 		<add key="OCRTextPath" value="{0}\{1}\{2}\"/>
 		<add key="OCRTextLocation" value="NO LONGER USED"/>
-    <add key="SMTPHost" value="SMTP SERVER NAME"/>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
     <!-- Maximum age in days of Page Names before they are refreshed -->
@@ -29,6 +25,8 @@
 		<add key="Mode" value="NEW"/>
 		<!-- The "Item" key should be added if the Mode value is "ITEM"-->
 		<add key="Item" value="10622"/>
+    <!-- BHLWS service endpoint -->
+    <add key = "BHLWSUrl" value="BHLWS SERVICE URL" />
   </appSettings>
 	<!-- This section contains the log4net configuration settings -->
 	<log4net>
@@ -52,24 +50,4 @@
 			<appender-ref ref="RollingLogFileAppender"/>
 		</root>
 	</log4net>
-	<applicationSettings>
-        <MOBOT.BHL.PageNameRefresh.Properties.Settings>
-               <setting name="BHLPageNameRefresh_BHLWS_BHLWS" serializeAs="String">
-                      <value>http://localhost:26504/BHLWS.asmx</value>
-               </setting>
-        </MOBOT.BHL.PageNameRefresh.Properties.Settings>
-    </applicationSettings>
-    <system.net>
-      <mailSettings>
-        <smtp deliveryMethod="Network">
-          <network defaultCredentials="false"
-                   enableSsl="false"
-                   host="MAIL_SERVER_ADDRESS"
-                   port="MAIL_SERVER_PORT"
-                   userName="MAIL_SERVER_USERNAME"
-                   password="MAIL_SERVER_PASSWORD"
-                   />
-        </smtp>
-      </mailSettings>
-    </system.net>
 <startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/></startup></configuration>
