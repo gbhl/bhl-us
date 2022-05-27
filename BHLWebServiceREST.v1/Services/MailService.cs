@@ -25,7 +25,7 @@ namespace BHL.WebServiceREST.v1.Services
             email.Subject = mailRequest.subject;
 
             var builder = new BodyBuilder();
-            builder.HtmlBody = mailRequest.body;
+            builder.TextBody = mailRequest.body;
             email.Body = builder.ToMessageBody();
 
             using var smtp = new SmtpClient();

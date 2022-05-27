@@ -26,6 +26,7 @@
       <Project>{270E7816-13EC-4D51-A27F-C959981B1275}</Project>
       <Name>BHLUtility</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BHLWebServiceREST.v1.Client\BHL.WebServiceREST.v1.Client.csproj" />
     <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
       <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
       <Name>CustomDataAccess</Name>

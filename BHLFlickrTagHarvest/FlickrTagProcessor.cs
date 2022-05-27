@@ -8,6 +8,8 @@ using MOBOT.BHLImport.Server;
 using MOBOT.BHLImport.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.DataObjects;
+using BHL.WebServiceREST.v1.Client;
+using BHL.WebServiceREST.v1;
 
 namespace BHLFlickrTagHarvest
 {
@@ -53,11 +55,11 @@ namespace BHLFlickrTagHarvest
         {
             try
             {
-                List<PageFlickr> pages = new BHLProvider().PageFlickrSelectAll();
+                List<MOBOT.BHL.DataObjects.PageFlickr> pages = new BHLProvider().PageFlickrSelectAll();
                 LogMessage(string.Format("Found {0} pages to process", pages.Count));
                 int numRequests = 0;
                 DateTime dtStart = DateTime.Now;
-                foreach (PageFlickr page in pages)
+                foreach (MOBOT.BHL.DataObjects.PageFlickr page in pages)
                 {
                     HarvestPage(page);
 
@@ -79,7 +81,7 @@ namespace BHLFlickrTagHarvest
 
         }
 
-        private void HarvestPage(PageFlickr page)
+        private void HarvestPage(MOBOT.BHL.DataObjects.PageFlickr page)
         {
             BHLImportProvider bhlImportService = new BHLImportProvider();
             string photoID = string.Empty;
@@ -538,20 +540,20 @@ namespace BHLFlickrTagHarvest
         {
             try
             {
-                string thisComputer = Environment.MachineName;
-                MailMessage mailMessage = new MailMessage(configParms.EmailFromAddress, configParms.EmailToAddress);
-                if (this.errorMessages.Count == 0)
-                {
-                    mailMessage.Subject = "BHLFlickrTagHarvest: Flickr Harvesting on " + thisComputer + " completed successfully.";
-                }
-                else
-                {
-                    mailMessage.Subject = "BHLFlickrTagHarvest: Flickr Harvesting on " + thisComputer + " completed with errors.";
-                }
-                mailMessage.Body = message;
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = string.Format(
+                    "BHLFlickrTagHarvest: Flickr Harvesting on {0} completed {1}.",
+                    Environment.MachineName,
+                    (errorMessages.Count == 0 ? "successfully" : "with errors"));
+                mailRequest.Body = message;
+                mailRequest.From = configParms.EmailFromAddress;
 
-                SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
-                smtpClient.Send(mailMessage);
+                List<string> recipients = new List<string>();
+                foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
+
+                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {

@@ -1,25 +1,22 @@
-﻿using System;
-using System.Configuration;
-using System.IO;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace BHLOAIHarvester
 {
     public class ConfigParms
     {
-        public string SMTPHost { get; set; }
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
 
         public string HarvestSetID { get; set; }
         public string FromDate { get; set; }
         public string UntilDate { get; set; }
+        public string BHLWSEndpoint { get; set; } = string.Empty;
 
         public void LoadAppConfig()
         {
-            SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
 
         public void UpdateAppSetting(string key, object value)

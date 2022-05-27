@@ -1,4 +1,6 @@
-﻿using MOBOT.IAAnalysis.DataObjects;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
+using MOBOT.IAAnalysis.DataObjects;
 using MOBOT.IAAnalysis.Server;
 using System;
 using System.Collections.Generic;
@@ -87,7 +89,7 @@ namespace IAAnalysisHarvest
                     foreach (XmlNode identifier in identifiers)
                     {
                         XmlNode id = identifier.SelectSingleNode("str[@name = 'identifier']");
-                        Item item = provider.SaveItemIdentifier(id.InnerText);
+                        MOBOT.IAAnalysis.DataObjects.Item item = provider.SaveItemIdentifier(id.InnerText);
                         retrievedIds.Add(id.InnerText);
                     }
 
@@ -119,9 +121,9 @@ namespace IAAnalysisHarvest
                 this.LogMessage("Harvesting Items");
 
                 // Download the XML files for each item and parse the data into the database
-                List<Item> items = provider.ItemSelectForXMLDownload();
+                List<MOBOT.IAAnalysis.DataObjects.Item> items = provider.ItemSelectForXMLDownload();
 
-                foreach (Item item in items)
+                foreach (MOBOT.IAAnalysis.DataObjects.Item item in items)
                 {
                     bool gotMeta = false;
                     bool gotMarc = false;
@@ -460,23 +462,20 @@ namespace IAAnalysisHarvest
         {
             try
             {
-                string thisComputer = Environment.MachineName;
-                MailMessage mailMessage = new MailMessage();
-                MailAddress mailAddress = new MailAddress(configParms.EmailFromAddress);
-                mailMessage.From = mailAddress;
-                mailMessage.To.Add(configParms.EmailToAddress);
-                if (this.errorMessages.Count == 0)
-                {
-                    mailMessage.Subject = "IAAnalysisHarvest: IA Analysis Harvesting on " + thisComputer + " completed successfully.";
-                }
-                else
-                {
-                    mailMessage.Subject = "IAAnalysisHarvest: IA Analysis Harvesting on " + thisComputer + " completed with errors.";
-                }
-                mailMessage.Body = message;
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = string.Format(
+                    "IAAnalysisHarvest: IA Analysis Harvesting on {0} completed {1}.",
+                    Environment.MachineName,
+                    (errorMessages.Count == 0 ? "successfully" : "with errors"));
+                mailRequest.Body = message;
+                mailRequest.From = configParms.EmailFromAddress;
 
-                SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
-                smtpClient.Send(mailMessage);
+                List<string> recipients = new List<string>();
+                foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
+
+                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {
