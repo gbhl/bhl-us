@@ -46,17 +46,18 @@
     <div>https://www.biodiversitylibrary.org/api3?op=GetSubjectMetadata</div>
     <div class="synindent">&amp;subject=&lt;the subject for which to return metadata&gt;</div>
     <div class="synindent">&amp;pubs=&lt;"t" or "true" to include the subject's publications in the response&gt;</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
     <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
     </div>
-    <div>EXAMPLE REQUEST</div>
+    <div>EXAMPLE REQUEST (XML)</div>
     <div class="syntaxbox">
         <pre>
             <code>
-https://www.biodiversitylibrary.org/api3?op=GetSubjectMetadata&amp;subject=coral&amp;pubs=t&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+https://www.biodiversitylibrary.org/api3?op=GetSubjectMetadata&amp;subject=coral&amp;pubs=t&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
             </code>
         </pre>
     </div>
-    <div>EXAMPLE RESPONSE</div>
+    <div>EXAMPLE RESPONSE (XML)</div>
     <div class="responsebox">
         <pre>
             <code>
@@ -138,6 +139,96 @@ https://www.biodiversitylibrary.org/api3?op=GetSubjectMetadata&amp;subject=coral
     &lt;/Subject&gt;
   &lt;/Result&gt;
 &lt;/Response&gt;
+
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE REQUEST (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetSubjectMetadata&amp;subject=coral&amp;pubs=t&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;SubjectText&quot;: &quot;coral&quot;,
+      &quot;CreationDate&quot;: &quot;2014/11/13 00:01:43&quot;,
+      &quot;Publications&quot;: [
+        {
+          &quot;BHLType&quot;: &quot;Title&quot;,
+          &quot;FoundIn&quot;: &quot;Metadata&quot;,
+          &quot;TitleID&quot;: &quot;131838&quot;,
+          &quot;TitleUrl&quot;: &quot;https://www.biodiversitylibrary.org/bibliography/131838&quot;,
+          &quot;MaterialType&quot;: &quot;Published material&quot;,
+          &quot;PublicationDate&quot;: &quot;1958&quot;,
+          &quot;Authors&quot;: [
+            {
+              &quot;Name&quot;: &quot;Schmitt, Waldo L.&quot;
+            }
+          ],
+          &quot;Genre&quot;: &quot;Monograph/Item&quot;,
+          &quot;Title&quot;: &quot;Smithsonian-Bredin Caribbean Expedition, 1958  : station data&quot;
+        },
+        {
+          &quot;BHLType&quot;: &quot;Part&quot;,
+          &quot;FoundIn&quot;: &quot;Metadata&quot;,
+          &quot;ExternalUrl&quot;: &quot;http://www.scielo.cl/scielo.php?script=sci_arttext&amp;pid=S0718-560X2014000400010&quot;,
+          &quot;Authors&quot;: [
+            {
+              &quot;Name&quot;: &quot;Wieters, Evie A.&quot;
+            },
+            {
+              &quot;Name&quot;: &quot;Medrano, Alba&quot;
+            },
+            {
+              &quot;Name&quot;: &quot;P&#233;rez-Matus Alejandro&quot;
+            }
+          ],
+          &quot;PartUrl&quot;: &quot;https://www.biodiversitylibrary.org/part/144599&quot;,
+          &quot;PartID&quot;: &quot;144599&quot;,
+          &quot;Genre&quot;: &quot;Article&quot;,
+          &quot;Title&quot;: &quot;Functional community structure of shallow hard bottom communities at Easter Island (Rapa Nui): Estructura funcional de comunidades que habitan sobre los fondos duros de Isla de Pascua (Rapa Nui)&quot;,
+          &quot;ContainerTitle&quot;: &quot;Latin american journal of aquatic research&quot;,
+          &quot;Date&quot;: &quot;2014-10-01&quot;
+        },
+        {
+          &quot;BHLType&quot;: &quot;Part&quot;,
+          &quot;FoundIn&quot;: &quot;Metadata&quot;,
+          &quot;ExternalUrl&quot;: &quot;http://www.scielo.cl/scielo.php?script=sci_arttext&amp;pid=S0718-19572014000300004&quot;,
+          &quot;Authors&quot;: [
+            {
+              &quot;Name&quot;: &quot;Delgadillo-Nu&#241;o, Manuel A&quot;
+            },
+            {
+              &quot;Name&quot;: &quot;Li&#241;&#225;n-Cabello, Marco A&quot;
+            },
+            {
+              &quot;Name&quot;: &quot;Reyes-G&#243;mez, Juan&quot;
+            },
+            {
+              &quot;Name&quot;: &quot;Soriano-Santiago, Olinda&quot;
+            }
+          ],
+          &quot;PartUrl&quot;: &quot;https://www.biodiversitylibrary.org/part/145754&quot;,
+          &quot;PartID&quot;: &quot;145754&quot;,
+          &quot;Genre&quot;: &quot;Article&quot;,
+          &quot;Title&quot;: &quot;Response to pH stress in the reef-building coral Pocillopora capitata (Anthozoa: Scleractinia)&quot;,
+          &quot;ContainerTitle&quot;: &quot;Revista de biolog&#237;a marina y oceanograf&#237;a&quot;,
+          &quot;Date&quot;: &quot;2014-12-01&quot;
+        }
+      ]
+    }
+  ]
+}
 
             </code>
         </pre>

@@ -48,17 +48,18 @@
     <div class="synindent">&amp;searchtype=&lt;'C' for a catalog-only search; 'F' for a catalog+full-text search&gt;</div>
     <div class="synindent">&amp;page=&lt;1 for the first page of results, 2 for the second, and so on&gt;</div>
     <div class="synindent">&amp;pageSize=&lt;the maximum number of results to return per page (default = 100)&gt;</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
     <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
     </div>
-    <div>EXAMPLE REQUEST</div>
+    <div>EXAMPLE REQUEST (XML)</div>
     <div class="syntaxbox">
         <pre>
             <code>
-https://www.biodiversitylibrary.org/api3?op=PublicationSearch&amp;searchterm=cocos+island+costa+rica+birds&amp;searchtype=C&amp;page=1&amp;pageSize=10&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+https://www.biodiversitylibrary.org/api3?op=PublicationSearch&amp;searchterm=cocos+island+costa+rica+birds&amp;searchtype=C&amp;page=1&amp;pageSize=10&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
             </code>
         </pre>
     </div>
-    <div>EXAMPLE RESPONSE</div>
+    <div>EXAMPLE RESPONSE (XML)</div>
     <div class="responsebox">
         <pre>
             <code>
@@ -122,6 +123,78 @@ https://www.biodiversitylibrary.org/api3?op=PublicationSearch&amp;searchterm=coc
     &lt;/Publication&gt;
   &lt;/Result&gt;
 &lt;/Response&gt;
+
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE REQUEST (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=PublicationSearch&amp;searchterm=cocos+island+costa+rica+birds&amp;searchtype=C&amp;page=1&amp;pageSize=10&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;BHLType&quot;: &quot;Part&quot;,
+      &quot;FoundIn&quot;: &quot;Metadata&quot;,
+      &quot;Volume&quot;: &quot;2&quot;,
+      &quot;Authors&quot;: [
+        {
+          &quot;Name&quot;: &quot;Gifford, Edward Winslow,&quot;
+        }
+      ],
+      &quot;PartUrl&quot;: &quot;https://www.biodiversitylibrary.org/part/69838&quot;,
+      &quot;PartID&quot;: &quot;69838&quot;,
+      &quot;Genre&quot;: &quot;Article&quot;,
+      &quot;Title&quot;: &quot;Field notes on the land birds of the Galapagos Islands, and of Cocos Island,Costa Rica&quot;,
+      &quot;ContainerTitle&quot;: &quot;Proceedings of the California Academy of Sciences&quot;,
+      &quot;Series&quot;: &quot;4&quot;,
+      &quot;Date&quot;: &quot;1919&quot;,
+      &quot;PageRange&quot;: &quot;189--258&quot;
+    },
+    {
+      &quot;BHLType&quot;: &quot;Item&quot;,
+      &quot;FoundIn&quot;: &quot;Metadata&quot;,
+      &quot;ItemID&quot;: &quot;167380&quot;,
+      &quot;TitleID&quot;: &quot;89765&quot;,
+      &quot;ExternalUrl&quot;: &quot;http://hdl.handle.net/2246/1677&quot;,
+      &quot;ItemUrl&quot;: &quot;https://www.biodiversitylibrary.org/item/167380&quot;,
+      &quot;TitleUrl&quot;: &quot;https://www.biodiversitylibrary.org/bibliography/89765&quot;,
+      &quot;Authors&quot;: [
+        {
+          &quot;Name&quot;: &quot;Slud, Paul&quot;
+        }
+      ],
+      &quot;Genre&quot;: &quot;Book&quot;,
+      &quot;Title&quot;: &quot;The birds of Cocos Island (Costa Rica). Bulletin of the AMNH ; v. 134, article 4&quot;
+    },
+    {
+      &quot;BHLType&quot;: &quot;Part&quot;,
+      &quot;FoundIn&quot;: &quot;Metadata&quot;,
+      &quot;Volume&quot;: &quot;6&quot;,
+      &quot;Authors&quot;: [
+        {
+          &quot;Name&quot;: &quot;Carriker, Melbourne Armstrong,&quot;
+        }
+      ],
+      &quot;PartUrl&quot;: &quot;https://www.biodiversitylibrary.org/part/331038&quot;,
+      &quot;PartID&quot;: &quot;331038&quot;,
+      &quot;Genre&quot;: &quot;Article&quot;,
+      &quot;Title&quot;: &quot;An annotated list of the birds of Costa Rica including Cocos Island&quot;,
+      &quot;Issue&quot;: &quot;2-3&quot;,
+      &quot;PageRange&quot;: &quot;314--915&quot;
+    }
+  ]
+}
 
             </code>
         </pre>

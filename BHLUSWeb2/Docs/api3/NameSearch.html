@@ -45,17 +45,18 @@
     <div class="syntaxbox">
     <div>https://www.biodiversitylibrary.org/api3?op=NameSearch</div>
     <div class="synindent">&amp;name=&lt;a partial or complete name string&gt;</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
     <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
     </div>
-    <div>EXAMPLE REQUEST</div>
+    <div>EXAMPLE REQUEST (XML)</div>
     <div class="syntaxbox">
         <pre>
             <code>
-https://www.biodiversitylibrary.org/api3?op=NameSearch&amp;name=poa+annua&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+https://www.biodiversitylibrary.org/api3?op=NameSearch&amp;name=poa+annua&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
             </code>
         </pre>
     </div>
-    <div>EXAMPLE RESPONSE</div>
+    <div>EXAMPLE RESPONSE (XML)</div>
     <div class="responsebox">
         <pre>
             <code>
@@ -200,6 +201,160 @@ https://www.biodiversitylibrary.org/api3?op=NameSearch&amp;name=poa+annua&amp;ap
     &lt;/Name&gt;
   &lt;/Result&gt;
 &lt;/Response&gt;
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE REQUEST (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=NameSearch&amp;name=poa+annua&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua Cham. &amp; Schltdl., nom. nud.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua L.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua L. (1753)&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua Linnaeus&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua f. maxima Honda&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua f. purpurea Mike L.Grant&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua f. reptans (Hausskn.) T.Koyama&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua fo. purpurea Mike L.Grant&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua fo. remotiflora Hack.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua hypsophila&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua raniglumis&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua reptans&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua rigidiuscula&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua rigidula&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua ssp. exilis (Tomm. ex Freyn) Asch. &amp; Graebn.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua ssp. varia (Gaudin) Gaudin&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua subsp. exilis (Tomm. ex Freyn.) Asch. &amp; Graebn.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua subsp. supina (Schrad.) Husn.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua subsp. supina (Schrad.) Husn., 1896&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua subsp. varia (Gaudin) Gaudin&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua typica&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. annua&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. annua L.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. aquatica Asch.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. aquatica Aschers.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. campana Seguin, 1895&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. eriolepis E. Desv.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. eriolepis &#195;‰.Desv.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. exigua (Husn.) Hack.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. nepalensis G.C. Wall. ex Griseb.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. nepalensis Wall. ex Griseb.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. remotiflora Trab.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. reptans Hausskn.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. rigidiuscula Dewey&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. rigidiuscula L.H. Dewey&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. sikkimensis Stapf&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. stricta Vasey&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. stricta Vasey ex Scribn.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. supina (Schrad.) Link&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. tommasinii Asch. &amp; Graebn.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. tommasinii Asch. &amp; Graebn., nom. superfl.&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua var. typica Beck&quot;
+    },
+    {
+      &quot;NameConfirmed&quot;: &quot;Poa annua varia Gaudin, 1811&quot;
+    }
+  ]
+}
+
             </code>
         </pre>
     </div>

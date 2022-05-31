@@ -47,17 +47,18 @@
     <div class="synindent">&amp;pageid=&lt;BHL identifier of a page&gt;</div>
     <div class="synindent">&amp;ocr=&lt;"t" or "true" to include the page text in the response&gt;</div>
     <div class="synindent">&amp;names=&lt;"t" or "true" to include scientific names on the page in the response&gt;</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
     <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
     </div>
-    <div>EXAMPLE REQUEST</div>
+    <div>EXAMPLE REQUEST (XML)</div>
     <div class="syntaxbox">
         <pre>
             <code>
-https://www.biodiversitylibrary.org/api3?op=GetPageMetadata&amp;pageid=3137380&amp;ocr=t&amp;names=t&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+https://www.biodiversitylibrary.org/api3?op=GetPageMetadata&amp;pageid=3137380&amp;ocr=t&amp;names=t&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
             </code>
         </pre>
     </div>
-    <div>EXAMPLE RESPONSE</div>
+    <div>EXAMPLE RESPONSE (XML)</div>
     <div class="responsebox">
         <pre>
             <code>
@@ -205,6 +206,82 @@ https://www.biodiversitylibrary.org/api3?op=GetPageMetadata&amp;pageid=3137380&a
     &lt;/Page&gt;
   &lt;/Result&gt;
 &lt;/Response&gt;
+            </code>
+        </pre>
+    </div>    
+    <div>EXAMPLE REQUEST (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetPageMetadata&amp;pageid=3137380&amp;ocr=t&amp;names=t&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;PageID&quot;: 3137380,
+      &quot;ItemID&quot;: &quot;22314&quot;,
+      &quot;TextSource&quot;: &quot;OCR&quot;,
+      &quot;PageUrl&quot;: &quot;https://www.biodiversitylibrary.org/page/3137380&quot;,
+      &quot;ThumbnailUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagethumb/3137380&quot;,
+      &quot;FullSizeImageUrl&quot;: &quot;https://www.biodiversitylibrary.org/pageimage/3137380&quot;,
+      &quot;OcrUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagetext/3137380&quot;,
+      &quot;OcrText&quot;: &quot;CONTENTS OF VOLUME X \n\n Plates 1-9 \n\n\n\nPAGE \n\n\n\nTitle-page i \n\n\n\nContents Hi \n\n\n\nA Further Study of Variation in the Gopher-Snakes of Western North \n\n\n\nAmerica, by John Van Denburgh 1 \n\n\n\n(Published August 6, 1920) \n\n\n\nDescription of a New Species of Rattlesnake (Crotalus lucasensis) from \n\n\n\nLower California, by John Van Denburgh 29 \n\n\n\n(Published August 6, 1920) \n\n\n\nDescription of a New Subspecies of Boa (Charina bottce utaliensis) from \n\n\n\nUtah, by John Van Denburgh 31 \n\n\n\n(Published August 6, 1920) \n\n\n\nDescription of a New Lizard (Dipsosaurus dorsalis lucasensis) from \n\n\n\nLower California, by John Van Denburgh : 33 \n\n\n\n(Published August 6, 1920) \n\n\n\nUndescribed Tipulidae (Diptera) from Western North America, by \n\n\n\nCharles P. Alexander 35 \n\n\n\n(Published August 6, 1920) \n\n\n\nThree New Species of Dolichopodidae (Diptera) from California and \n\n\n\nNevada, by M. C. Van Duzee _ 47 \n\n\n\n(Published August 6, 1920) \n\n\n\nTwo New Species of Syrphidse (Diptera), by A. L. Lovett 51 \n\n\n\n(Published August 6, 19^) \n\n\n\nNotes on Some Undescribed Calif ornian Helices, by S. Stillman Berry.... 53 \n\n\n\n(Published August 11, 1920) \n\n\n\nA New Genus and Species of Grasshopper from California, by Morgan \n\n\n\nHebard _ 71 \n\n\n\n(Published December 29, 1920) \n\n\n\nColor Changes and Structure of the Skin of Anolis carolinensis, by \n\n\n\nCharles E. von Geldern 77 \n\n\n\n(Published February 12, 1921) \n\n\n\nReport of the President of the Academy for the Year 1920, by C. E. \n\n\n\nGrunsky 119 \n\n\n\n(Published July 2, 1921) \n\n\n\nReport of the Director of the Museum for the Year 1920, by Barton \n\n\n\nWarren Evermann 128 \n\n\n\n(Published July 2, 1921) \n\n\n\nIndex 165 \n\n\n\nJUNE 11, 1923 \n\n\n\n&quot;,
+      &quot;CreationDate&quot;: &quot;2008/04/16 12:27:04&quot;,
+      &quot;PageTypes&quot;: [
+        {
+          &quot;PageTypeName&quot;: &quot;Table of Contents&quot;
+        }
+      ],
+      &quot;PageNumbers&quot;: [],
+      &quot;Names&quot;: [
+        {
+          &quot;NameFound&quot;: &quot;Anolis carolinensis&quot;,
+          &quot;NameConfirmed&quot;: &quot;Anolis carolinensis Dum&#233;ril &amp; Bibron, 1837&quot;,
+          &quot;NameCanonical&quot;: &quot;Anolis carolinensis&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;Charina&quot;,
+          &quot;NameConfirmed&quot;: &quot;Charina&quot;,
+          &quot;NameCanonical&quot;: &quot;Charina&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;Crotalus lucasensis&quot;,
+          &quot;NameConfirmed&quot;: &quot;Crotalus lucasensis VAN 1920&quot;,
+          &quot;NameCanonical&quot;: &quot;Crotalus lucasensis&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;Dipsosaurus dorsalis lucasensis&quot;,
+          &quot;NameConfirmed&quot;: &quot;Dipsosaurus dorsalis lucasensis VAN DENBURGH 1920&quot;,
+          &quot;NameCanonical&quot;: &quot;Dipsosaurus dorsalis lucasensis&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;Diptera&quot;,
+          &quot;NameConfirmed&quot;: &quot;Diptera&quot;,
+          &quot;NameCanonical&quot;: &quot;Diptera&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;Dolichopodidae&quot;,
+          &quot;NameConfirmed&quot;: &quot;Dolichopodidae&quot;,
+          &quot;NameCanonical&quot;: &quot;Dolichopodidae&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;Tipulidae&quot;,
+          &quot;NameConfirmed&quot;: &quot;Tipulidae&quot;,
+          &quot;NameCanonical&quot;: &quot;Tipulidae&quot;
+        }
+      ]
+    }
+  ]
+}
+
             </code>
         </pre>
     </div>    

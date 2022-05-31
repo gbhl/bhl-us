@@ -47,19 +47,20 @@
     <div class="synindent">&amp;name=&lt;a complete scientific name (not used if id/idtype are specified)&gt;</div>
     <div class="synindent">&amp;id=&lt;identifier of a scientific name (not used if name is specified)&gt;</div>
     <div class="synindent">&amp;idtype=&lt;namebank, eol, gni, ion, col, gbif, itis, ipni, or worms (not used if name is specified)&gt;</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
     <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
     </div>
-    <div>EXAMPLE REQUESTS</div>
+    <div>EXAMPLE REQUESTS (XML)</div>
     <div class="syntaxbox">
         <pre>
             <code>
-https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&amp;name=bulbophyllum+stella&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&amp;name=bulbophyllum+stella&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
 
-https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&id=5775264&idtype=namebank&apikey=12345678-BBBB-DDDD-FFFF-123456789012
+https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&amp;id=5775264&amp;idtype=namebank&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
             </code>
         </pre>
     </div>
-    <div>EXAMPLE RESPONSE</div>
+    <div>EXAMPLE RESPONSE (XML)</div>
     <div class="responsebox">
         <pre>
             <code>
@@ -188,6 +189,145 @@ https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&id=5775264&idtype=na
     &lt;/Name&gt;
   &lt;/Result&gt;
 &lt;/Response&gt;
+
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE REQUESTS (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&amp;name=bulbophyllum+stella&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+
+https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&amp;id=5775264&amp;idtype=namebank&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;Identifiers&quot;: [
+        {
+          &quot;IdentifierName&quot;: &quot;GNI&quot;,
+          &quot;IdentifierValue&quot;: &quot;dedb8e15-3929-581e-9b98-bde6b02d2814&quot;
+        },
+        {
+          &quot;IdentifierName&quot;: &quot;NameBank&quot;,
+          &quot;IdentifierValue&quot;: &quot;5775264&quot;
+        }
+      ],
+      &quot;NameConfirmed&quot;: &quot;Bulbophyllum stella&quot;,
+      &quot;NameCanonical&quot;: &quot;Bulbophyllum stella&quot;,
+      &quot;CreationDate&quot;: &quot;2008/06/20 04:56:27&quot;,
+      &quot;Titles&quot;: [
+        {
+          &quot;TitleID&quot;: 51678,
+          &quot;ShortTitle&quot;: &quot;Journal of the Asiatic Society of Bengal&quot;,
+          &quot;CallNumber&quot;: &quot;Q73.C35 J68&quot;,
+          &quot;PublisherPlace&quot;: &quot;Calcutta&quot;,
+          &quot;PublisherName&quot;: &quot;Bishop&#39;s College Press&quot;,
+          &quot;PublicationDate&quot;: &quot;1832-1936&quot;,
+          &quot;TitleUrl&quot;: &quot;https://www.biodiversitylibrary.org/title/51678&quot;,
+          &quot;Items&quot;: [
+            {
+              &quot;ItemID&quot;: 110228,
+              &quot;Source&quot;: &quot;Internet Archive&quot;,
+              &quot;SourceIdentifier&quot;: &quot;journalofasiatic66unse&quot;,
+              &quot;Volume&quot;: &quot;v.66:pt.2 (1897)&quot;,
+              &quot;HoldingInstitution&quot;: &quot;California Academy of Sciences&quot;,
+              &quot;ItemUrl&quot;: &quot;https://www.biodiversitylibrary.org/item/110228&quot;,
+              &quot;Pages&quot;: [
+                {
+                  &quot;PageID&quot;: 35622324,
+                  &quot;ItemID&quot;: &quot;110228&quot;,
+                  &quot;TextSource&quot;: &quot;OCR&quot;,
+                  &quot;PageUrl&quot;: &quot;https://www.biodiversitylibrary.org/page/35622324&quot;,
+                  &quot;ThumbnailUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagethumb/35622324&quot;,
+                  &quot;FullSizeImageUrl&quot;: &quot;https://www.biodiversitylibrary.org/pageimage/35622324&quot;,
+                  &quot;OcrUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagetext/35622324&quot;,
+                  &quot;PageTypes&quot;: [
+                    {
+                      &quot;PageTypeName&quot;: &quot;Text&quot;
+                    }
+                  ],
+                  &quot;PageNumbers&quot;: [
+                    {}
+                  ]
+                },
+                {
+                  &quot;PageID&quot;: 35622177,
+                  &quot;ItemID&quot;: &quot;110228&quot;,
+                  &quot;Volume&quot;: &quot;66&quot;,
+                  &quot;Year&quot;: &quot;1897&quot;,
+                  &quot;TextSource&quot;: &quot;OCR&quot;,
+                  &quot;PageUrl&quot;: &quot;https://www.biodiversitylibrary.org/page/35622177&quot;,
+                  &quot;ThumbnailUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagethumb/35622177&quot;,
+                  &quot;FullSizeImageUrl&quot;: &quot;https://www.biodiversitylibrary.org/pageimage/35622177&quot;,
+                  &quot;OcrUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagetext/35622177&quot;,
+                  &quot;PageTypes&quot;: [
+                    {
+                      &quot;PageTypeName&quot;: &quot;Text&quot;
+                    }
+                  ],
+                  &quot;PageNumbers&quot;: [
+                    {}
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          &quot;TitleID&quot;: 84482,
+          &quot;ShortTitle&quot;: &quot;Repertorium specierum novarum regni vegetabilis&quot;,
+          &quot;CallNumber&quot;: &quot;QK1 .R425Z&quot;,
+          &quot;PublisherPlace&quot;: &quot;Dahlem bei Berlin&quot;,
+          &quot;PublisherName&quot;: &quot;Verlag des Repertoriums&quot;,
+          &quot;PublicationDate&quot;: &quot;1911-1941&quot;,
+          &quot;TitleUrl&quot;: &quot;https://www.biodiversitylibrary.org/title/84482&quot;,
+          &quot;Items&quot;: [
+            {
+              &quot;ItemID&quot;: 28953,
+              &quot;Source&quot;: &quot;Internet Archive&quot;,
+              &quot;SourceIdentifier&quot;: &quot;repertoriumspeci01fedd&quot;,
+              &quot;Volume&quot;: &quot;v.1 (1914)&quot;,
+              &quot;HoldingInstitution&quot;: &quot;New York Botanical Garden, LuEsther T. Mertz Library&quot;,
+              &quot;ItemUrl&quot;: &quot;https://www.biodiversitylibrary.org/item/28953&quot;,
+              &quot;Pages&quot;: [
+                {
+                  &quot;PageID&quot;: 5904859,
+                  &quot;ItemID&quot;: &quot;28953&quot;,
+                  &quot;TextSource&quot;: &quot;OCR&quot;,
+                  &quot;PageUrl&quot;: &quot;https://www.biodiversitylibrary.org/page/5904859&quot;,
+                  &quot;ThumbnailUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagethumb/5904859&quot;,
+                  &quot;FullSizeImageUrl&quot;: &quot;https://www.biodiversitylibrary.org/pageimage/5904859&quot;,
+                  &quot;OcrUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagetext/5904859&quot;,
+                  &quot;PageTypes&quot;: [
+                    {
+                      &quot;PageTypeName&quot;: &quot;Text&quot;
+                    }
+                  ],
+                  &quot;PageNumbers&quot;: [
+                    {
+                      &quot;Prefix&quot;: &quot;Page&quot;,
+                      &quot;Number&quot;: &quot;754&quot;
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
 
             </code>
         </pre>

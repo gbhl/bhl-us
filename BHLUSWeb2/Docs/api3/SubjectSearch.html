@@ -45,17 +45,18 @@
     <div class="syntaxbox">
     <div>https://www.biodiversitylibrary.org/api3?op=SubjectSearch</div>
     <div class="synindent">&amp;subject=&lt;the full or partial subject for which to search&gt;</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
     <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
     </div>
-    <div>EXAMPLE REQUEST</div>
+    <div>EXAMPLE REQUEST (XML)</div>
     <div class="syntaxbox">
         <pre>
             <code>
-https://www.biodiversitylibrary.org/api3?op=SubjectSearch&amp;subject=diptera&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+https://www.biodiversitylibrary.org/api3?op=SubjectSearch&amp;subject=diptera&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
             </code>
         </pre>
     </div>
-    <div>EXAMPLE RESPONSE</div>
+    <div>EXAMPLE RESPONSE (XML)</div>
     <div class="responsebox">
         <pre>
             <code>
@@ -67,16 +68,7 @@ https://www.biodiversitylibrary.org/api3?op=SubjectSearch&amp;subject=diptera&am
   &lt;ErrorMessage /&gt;
   &lt;Result&gt;
     &lt;Subject&gt;
-      &lt;SubjectText&gt;1974 (Diptera&lt;/SubjectText&gt;
-    &lt;/Subject&gt;
-    &lt;Subject&gt;
-      &lt;SubjectText&gt;DIPTERA (CLASSIFICAÇÃO)&lt;/SubjectText&gt;
-    &lt;/Subject&gt;
-    &lt;Subject&gt;
       &lt;SubjectText&gt;Diptera&lt;/SubjectText&gt;
-    &lt;/Subject&gt;
-    &lt;Subject&gt;
-      &lt;SubjectText&gt;Diptera Scathophagidae&lt;/SubjectText&gt;
     &lt;/Subject&gt;
     &lt;Subject&gt;
       &lt;SubjectText&gt;Diptera Scathophagidae&lt;/SubjectText&gt;
@@ -88,19 +80,7 @@ https://www.biodiversitylibrary.org/api3?op=SubjectSearch&amp;subject=diptera&am
       &lt;SubjectText&gt;Diptera parasitoids&lt;/SubjectText&gt;
     &lt;/Subject&gt;
     &lt;Subject&gt;
-      &lt;SubjectText&gt;Diptera, Chironomidae, fossil, proboscis, feeding,&lt;/SubjectText&gt;
-    &lt;/Subject&gt;
-    &lt;Subject&gt;
       &lt;SubjectText&gt;Diptera, Fossil&lt;/SubjectText&gt;
-    &lt;/Subject&gt;
-    &lt;Subject&gt;
-      &lt;SubjectText&gt;Diptera, Periscelididae (Stenomicrinae), new speci&lt;/SubjectText&gt;
-    &lt;/Subject&gt;
-    &lt;Subject&gt;
-      &lt;SubjectText&gt;Diptera, Ptychopteridae, Ptychoptera, revision, Te&lt;/SubjectText&gt;
-    &lt;/Subject&gt;
-    &lt;Subject&gt;
-      &lt;SubjectText&gt;Diptera, Tachinidae&lt;/SubjectText&gt;
     &lt;/Subject&gt;
     &lt;Subject&gt;
       &lt;SubjectText&gt;Diptera/ecology&lt;/SubjectText&gt;
@@ -118,12 +98,6 @@ https://www.biodiversitylibrary.org/api3?op=SubjectSearch&amp;subject=diptera&am
       &lt;SubjectText&gt;Mansonia (Diptera)&lt;/SubjectText&gt;
     &lt;/Subject&gt;
     &lt;Subject&gt;
-      &lt;SubjectText&gt;Tabanidae, Diptera, Serbia, Europe&lt;/SubjectText&gt;
-    &lt;/Subject&gt;
-    &lt;Subject&gt;
-      &lt;SubjectText&gt;alien, Europe, Diptera&lt;/SubjectText&gt;
-    &lt;/Subject&gt;
-    &lt;Subject&gt;
       &lt;SubjectText&gt;endoparasitoid of Diptera&lt;/SubjectText&gt;
     &lt;/Subject&gt;
     &lt;Subject&gt;
@@ -134,6 +108,66 @@ https://www.biodiversitylibrary.org/api3?op=SubjectSearch&amp;subject=diptera&am
     &lt;/Subject&gt;
   &lt;/Result&gt;
 &lt;/Response&gt;
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE REQUEST (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=SubjectSearch&amp;subject=diptera&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;SubjectText&quot;: &quot;Diptera&quot;
+    },
+    {
+      &quot;SubjectText&quot;: &quot;Diptera Scathophagidae&quot;
+    },
+    {
+      &quot;SubjectText&quot;: &quot;Diptera larvae&quot;
+    },
+    {
+      &quot;SubjectText&quot;: &quot;Diptera parasitoids&quot;
+    },
+    {
+      &quot;SubjectText&quot;: &quot;Diptera, Fossil&quot;
+    },
+    {
+      &quot;SubjectText&quot;: &quot;Diptera/ecology&quot;
+    },
+    {
+      &quot;SubjectText&quot;: &quot;Diptera/key&quot;
+    },
+    {
+      &quot;SubjectText&quot;: &quot;Diptera: Streblidae&quot;
+    },
+    {
+      &quot;SubjectText&quot;: &quot;Larvae of Diptera&quot;
+    },
+    {
+      &quot;SubjectText&quot;: &quot;Mansonia (Diptera)&quot;
+    },
+    {
+      &quot;SubjectText&quot;: &quot;endoparasitoid of Diptera&quot;
+    },
+    {
+      &quot;SubjectText&quot;: &quot;larvas de Diptera&quot;
+    },
+    {
+      &quot;SubjectText&quot;: &quot;nematocerous Diptera&quot;
+    }
+  ]
+}
             </code>
         </pre>
     </div>

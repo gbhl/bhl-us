@@ -44,17 +44,18 @@
     <div>SYNTAX</div>
     <div class="syntaxbox">
     <div>https://www.biodiversitylibrary.org/api3?op=GetInstitutions</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
     <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
     </div>
-    <div>EXAMPLE REQUEST</div>
+    <div>EXAMPLE REQUEST (XML)</div>
     <div class="syntaxbox">
         <pre>
             <code>
-https://www.biodiversitylibrary.org/api3?op=GetInstitutions&apikey=12345678-BBBB-DDDD-FFFF-123456789012
+https://www.biodiversitylibrary.org/api3?op=GetInstitutions&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
             </code>
         </pre>
     </div>
-    <div>EXAMPLE RESPONSE</div>
+    <div>EXAMPLE RESPONSE (XML)</div>
     <div class="responsebox">
         <pre>
             <code>
@@ -191,6 +192,157 @@ https://www.biodiversitylibrary.org/api3?op=GetInstitutions&apikey=12345678-BBBB
     &lt;/Institution&gt;
   &lt;/Result&gt;
 &lt;/Response&gt;
+
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE REQUEST (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetInstitutions&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;InstitutionCode&quot;: &quot;ANSP&quot;,
+      &quot;InstitutionName&quot;: &quot;Academy of Natural Sciences of Drexel University, Library and Archives&quot;,
+      &quot;InstitutionUrl&quot;: &quot;&quot;,
+      &quot;BHLMember&quot;: true
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;ACC&quot;,
+      &quot;InstitutionName&quot;: &quot;African Conservation Centre&quot;,
+      &quot;InstitutionUrl&quot;: &quot;https://www.accafrica.org/&quot;,
+      &quot;BHLMember&quot;: true
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;AMNH&quot;,
+      &quot;InstitutionName&quot;: &quot;American Museum of Natural History Library&quot;,
+      &quot;InstitutionUrl&quot;: &quot;http://library.amnh.org&quot;,
+      &quot;BHLMember&quot;: true
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;AOS&quot;,
+      &quot;InstitutionName&quot;: &quot;American Ornithological Society&quot;,
+      &quot;InstitutionUrl&quot;: &quot;http://www.americanornithology.org/&quot;,
+      &quot;BHLMember&quot;: false
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;SCIELO&quot;,
+      &quot;InstitutionName&quot;: &quot;BHL SciELO&quot;,
+      &quot;InstitutionUrl&quot;: &quot;http://www.bhlscielo.org/en/&quot;,
+      &quot;BHLMember&quot;: true
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;BDRJBM&quot;,
+      &quot;InstitutionName&quot;: &quot;Biblioteca Digital del Real Jardin Botanico de Madrid&quot;,
+      &quot;BHLMember&quot;: false
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;BOSTONUL&quot;,
+      &quot;InstitutionName&quot;: &quot;Boston University Libraries (archive.org)&quot;,
+      &quot;InstitutionUrl&quot;: &quot;&quot;,
+      &quot;BHLMember&quot;: false
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;CAMNH&quot;,
+      &quot;InstitutionName&quot;: &quot;Carnegie Museum of Natural History&quot;,
+      &quot;InstitutionUrl&quot;: &quot;http://www.carnegiemnh.org/&quot;,
+      &quot;BHLMember&quot;: false
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;EAZA&quot;,
+      &quot;InstitutionName&quot;: &quot;European Association of Zoos and Aquaria&quot;,
+      &quot;InstitutionUrl&quot;: &quot;http://www.eaza.net/&quot;,
+      &quot;BHLMember&quot;: false
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;FIELD&quot;,
+      &quot;InstitutionName&quot;: &quot;Field Museum of Natural History Library&quot;,
+      &quot;InstitutionUrl&quot;: &quot;http://fieldmuseum.org/explore/department/library&quot;,
+      &quot;BHLMember&quot;: true
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;HUH&quot;,
+      &quot;InstitutionName&quot;: &quot;Harvard University Botany Libraries&quot;,
+      &quot;InstitutionUrl&quot;: &quot;http://www.huh.harvard.edu/libraries/&quot;,
+      &quot;BHLMember&quot;: true
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;LC&quot;,
+      &quot;InstitutionName&quot;: &quot;Library of Congress&quot;,
+      &quot;InstitutionUrl&quot;: &quot;&quot;,
+      &quot;BHLMember&quot;: true
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;MITL&quot;,
+      &quot;InstitutionName&quot;: &quot;MIT Libraries (archive.org)&quot;,
+      &quot;BHLMember&quot;: false
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;NBC&quot;,
+      &quot;InstitutionName&quot;: &quot;Naturalis Biodiversity Center&quot;,
+      &quot;InstitutionUrl&quot;: &quot;http://www.naturalis.nl/en/science/collection/library/&quot;,
+      &quot;BHLMember&quot;: true
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;PENNST&quot;,
+      &quot;InstitutionName&quot;: &quot;Penn State University (archive.org)&quot;,
+      &quot;BHLMember&quot;: false
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;ROM&quot;,
+      &quot;InstitutionName&quot;: &quot;Royal Ontario Museum (archive.org)&quot;,
+      &quot;InstitutionUrl&quot;: &quot;&quot;,
+      &quot;BHLMember&quot;: false
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;SBG&quot;,
+      &quot;InstitutionName&quot;: &quot;Singapore Botanic Gardens, National Parks Board Singapore&quot;,
+      &quot;InstitutionUrl&quot;: &quot;https://www.sbg.org.sg/&quot;,
+      &quot;BHLMember&quot;: true
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;SIA&quot;,
+      &quot;InstitutionName&quot;: &quot;Smithsonian Institution Archives&quot;,
+      &quot;InstitutionUrl&quot;: &quot;&quot;,
+      &quot;BHLMember&quot;: true
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;TXAS&quot;,
+      &quot;InstitutionName&quot;: &quot;Texas Academy of Science&quot;,
+      &quot;InstitutionUrl&quot;: &quot;http://www.texasacademyofscience.org/&quot;,
+      &quot;BHLMember&quot;: false
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;USGS&quot;,
+      &quot;InstitutionName&quot;: &quot;United States Geological Survey Libraries Program&quot;,
+      &quot;InstitutionUrl&quot;: &quot;&quot;,
+      &quot;BHLMember&quot;: true
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;WAS&quot;,
+      &quot;InstitutionName&quot;: &quot;Washington Academy of Sciences&quot;,
+      &quot;InstitutionUrl&quot;: &quot;http://www.washacadsci.org/&quot;,
+      &quot;BHLMember&quot;: false
+    },
+    {
+      &quot;InstitutionCode&quot;: &quot;PEABODY&quot;,
+      &quot;InstitutionName&quot;: &quot;Yale Peabody Museum of Natural History&quot;,
+      &quot;InstitutionUrl&quot;: &quot;http://peabody.yale.edu/&quot;,
+      &quot;BHLMember&quot;: true
+    }
+  ]
+}
 
             </code>
         </pre>

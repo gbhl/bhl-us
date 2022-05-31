@@ -47,17 +47,18 @@
     <div class="synindent">&amp;id=&lt;identifier of an author&gt;</div>
     <div class="synindent">&amp;idtype=&lt;abbreviation, ark, bhl, biostor, dlc, oclc, orcid, tropicos, or viaf (OPTIONAL; "bhl" is the default)&gt;</div>
     <div class="synindent">&amp;pubs=&lt;"t" or "true" to include the author's publications in the response&gt;</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
     <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
     </div>
-    <div>EXAMPLE REQUEST</div>
+    <div>EXAMPLE REQUEST (XML)</div>
     <div class="syntaxbox">
         <pre>
             <code>
-https://www.biodiversitylibrary.org/api3?op=GetAuthorMetadata&amp;id=13188&amp;idtype=bhl&amp;pubs=t&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+https://www.biodiversitylibrary.org/api3?op=GetAuthorMetadata&amp;id=13188&amp;idtype=bhl&amp;pubs=t&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
             </code>
         </pre>
     </div>
-    <div>EXAMPLE RESPONSE</div>
+    <div>EXAMPLE RESPONSE (XML)</div>
     <div class="responsebox">
         <pre>
             <code>
@@ -168,6 +169,125 @@ https://www.biodiversitylibrary.org/api3?op=GetAuthorMetadata&amp;id=13188&amp;i
     &lt;/Author&gt;
   &lt;/Result&gt;
 &lt;/Response&gt;
+
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE REQUEST (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetAuthorMetadata&amp;id=13188&amp;idtype=bhl&amp;pubs=t&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;AuthorID&quot;: &quot;13188&quot;,
+      &quot;Name&quot;: &quot;Allis, Edward Phelps,&quot;,
+      &quot;Dates&quot;: &quot;1851-1947&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/13188&quot;,
+      &quot;CreationDate&quot;: &quot;2009/09/13 00:02:26&quot;,
+      &quot;Identifiers&quot;: [
+        {
+          &quot;IdentifierName&quot;: &quot;BioStor&quot;,
+          &quot;IdentifierValue&quot;: &quot;55160&quot;
+        },
+        {
+          &quot;IdentifierName&quot;: &quot;BioStor&quot;,
+          &quot;IdentifierValue&quot;: &quot;91602&quot;
+        },
+        {
+          &quot;IdentifierName&quot;: &quot;VIAF&quot;,
+          &quot;IdentifierValue&quot;: &quot;50009431&quot;
+        },
+        {
+          &quot;IdentifierName&quot;: &quot;Wikidata&quot;,
+          &quot;IdentifierValue&quot;: &quot;Q94832546&quot;
+        }
+      ],
+      &quot;Publications&quot;: [
+        {
+          &quot;BHLType&quot;: &quot;Title&quot;,
+          &quot;FoundIn&quot;: &quot;Metadata&quot;,
+          &quot;TitleID&quot;: &quot;15946&quot;,
+          &quot;TitleUrl&quot;: &quot;https://www.biodiversitylibrary.org/bibliography/15946&quot;,
+          &quot;MaterialType&quot;: &quot;Published material&quot;,
+          &quot;PublisherPlace&quot;: &quot;Stuttgart&quot;,
+          &quot;PublisherName&quot;: &quot;E. Schweizerbart&quot;,
+          &quot;PublicationDate&quot;: &quot;1909&quot;,
+          &quot;Authors&quot;: [
+            {
+              &quot;Name&quot;: &quot;Allis, Edward Phelps,&quot;
+            }
+          ],
+          &quot;Genre&quot;: &quot;Monograph/Item&quot;,
+          &quot;Title&quot;: &quot;The cranial anatomy of the mail-cheeked fishes&quot;
+        },
+        {
+          &quot;BHLType&quot;: &quot;Part&quot;,
+          &quot;FoundIn&quot;: &quot;Metadata&quot;,
+          &quot;Volume&quot;: &quot;1923&quot;,
+          &quot;Authors&quot;: [
+            {
+              &quot;Name&quot;: &quot;Allis, Edward Phelps,&quot;
+            }
+          ],
+          &quot;PartUrl&quot;: &quot;https://www.biodiversitylibrary.org/part/71982&quot;,
+          &quot;PartID&quot;: &quot;71982&quot;,
+          &quot;Genre&quot;: &quot;Article&quot;,
+          &quot;Title&quot;: &quot;The Postorbital Articulation of the Palatoquadrate with the Neurocranium in the Cœlacanthid Fishes&quot;,
+          &quot;ContainerTitle&quot;: &quot;Proceedings of the Zoological Society of London&quot;,
+          &quot;Date&quot;: &quot;1923&quot;,
+          &quot;PageRange&quot;: &quot;41--58&quot;
+        },
+        {
+          &quot;BHLType&quot;: &quot;Part&quot;,
+          &quot;FoundIn&quot;: &quot;Metadata&quot;,
+          &quot;Volume&quot;: &quot;62&quot;,
+          &quot;Authors&quot;: [
+            {
+              &quot;Name&quot;: &quot;Allis, Edward Phelps,&quot;
+            }
+          ],
+          &quot;PartUrl&quot;: &quot;https://www.biodiversitylibrary.org/part/201213&quot;,
+          &quot;PartID&quot;: &quot;201213&quot;,
+          &quot;Genre&quot;: &quot;Article&quot;,
+          &quot;Title&quot;: &quot;Memoirs: The So-called Labial Cartilage of Raia Clavata&quot;,
+          &quot;ContainerTitle&quot;: &quot;Quarterly journal of microscopical science&quot;,
+          &quot;Series&quot;: &quot;2&quot;,
+          &quot;Date&quot;: &quot;1916-11-01&quot;,
+          &quot;PageRange&quot;: &quot;95--114&quot;
+        },
+        {
+          &quot;BHLType&quot;: &quot;Part&quot;,
+          &quot;FoundIn&quot;: &quot;Metadata&quot;,
+          &quot;Volume&quot;: &quot;62&quot;,
+          &quot;Authors&quot;: [
+            {
+              &quot;Name&quot;: &quot;Allis, Edward Phelps,&quot;
+            }
+          ],
+          &quot;PartUrl&quot;: &quot;https://www.biodiversitylibrary.org/part/201224&quot;,
+          &quot;PartID&quot;: &quot;201224&quot;,
+          &quot;Genre&quot;: &quot;Article&quot;,
+          &quot;Title&quot;: &quot;Memoirs: The Homologies of the Muscles related to the Visceral Arches of the Gnathostome Fishes&quot;,
+          &quot;ContainerTitle&quot;: &quot;Quarterly journal of microscopical science&quot;,
+          &quot;Series&quot;: &quot;2&quot;,
+          &quot;Date&quot;: &quot;1917-08-01&quot;,
+          &quot;PageRange&quot;: &quot;303--406&quot;
+        }
+      ]
+    }
+  ]
+}
 
             </code>
         </pre>

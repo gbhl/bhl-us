@@ -45,17 +45,18 @@
     <div class="syntaxbox">
     <div>https://www.biodiversitylibrary.org/api3?op=AuthorSearch</div>
     <div class="synindent">&amp;authorname=&lt;full or partial name of the author for which to search&gt;</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
     <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
     </div>
-    <div>EXAMPLE REQUEST</div>
+    <div>EXAMPLE REQUEST (XML)</div>
     <div class="syntaxbox">
         <pre>
             <code>
-https://www.biodiversitylibrary.org/api3?op=AuthorSearch&amp;authorname=darwin&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+https://www.biodiversitylibrary.org/api3?op=AuthorSearch&amp;authorname=darwin&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
             </code>
         </pre>
     </div>
-    <div>EXAMPLE RESPONSE</div>
+    <div>EXAMPLE RESPONSE (XML)</div>
     <div class="responsebox">
         <pre>
             <code>
@@ -219,6 +220,178 @@ https://www.biodiversitylibrary.org/api3?op=AuthorSearch&amp;authorname=darwin&a
     &lt;/Author&gt;
   &lt;/Result&gt;
 &lt;/Response&gt;
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE REQUEST (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=AuthorSearch&amp;authorname=darwin&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;AuthorID&quot;: &quot;250731&quot;,
+      &quot;Name&quot;: &quot;Andrews, Darwin M.&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/250731&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;20793&quot;,
+      &quot;Name&quot;: &quot;Ball, E. D.&quot;,
+      &quot;FullerForm&quot;: &quot;(Elmer Darwin),&quot;,
+      &quot;Dates&quot;: &quot;1870-1943&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/20793&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;57772&quot;,
+      &quot;Name&quot;: &quot;Burroughs, R. D.&quot;,
+      &quot;FullerForm&quot;: &quot;(Raymond Darwin),&quot;,
+      &quot;Dates&quot;: &quot;1899-1976&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/57772&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;93&quot;,
+      &quot;Name&quot;: &quot;Darwin, Charles,&quot;,
+      &quot;Dates&quot;: &quot;1809-1882&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/93&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;259463&quot;,
+      &quot;Name&quot;: &quot;Darwin, Charles,&quot;,
+      &quot;Dates&quot;: &quot;1758-1778&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/259463&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;236634&quot;,
+      &quot;Name&quot;: &quot;Darwin, Emma Wedgwood,&quot;,
+      &quot;Dates&quot;: &quot;1808-1896&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/236634&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;2277&quot;,
+      &quot;Name&quot;: &quot;Darwin, Erasmus,&quot;,
+      &quot;Dates&quot;: &quot;1731-1802&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/2277&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;275170&quot;,
+      &quot;Name&quot;: &quot;Darwin, F.&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/275170&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;94&quot;,
+      &quot;Name&quot;: &quot;Darwin, Francis,&quot;,
+      &quot;Title&quot;: &quot;Sir,&quot;,
+      &quot;Dates&quot;: &quot;1848-1925&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/94&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;1196&quot;,
+      &quot;Name&quot;: &quot;Darwin, George Howard,&quot;,
+      &quot;Title&quot;: &quot;Sir,&quot;,
+      &quot;Dates&quot;: &quot;1845-1912&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/1196&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;13575&quot;,
+      &quot;Name&quot;: &quot;Darwin, Leonard,&quot;,
+      &quot;Dates&quot;: &quot;1850-1943&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/13575&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;21598&quot;,
+      &quot;Name&quot;: &quot;Darwin, Robert Waring,&quot;,
+      &quot;Dates&quot;: &quot;1766-1848&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/21598&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;241589&quot;,
+      &quot;Name&quot;: &quot;Darwin, Robert Waring,&quot;,
+      &quot;Dates&quot;: &quot;1724-1816&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/241589&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;214023&quot;,
+      &quot;Name&quot;: &quot;Darwin, Sara,&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/214023&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;167105&quot;,
+      &quot;Name&quot;: &quot;Darwin, Steven P.&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/167105&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;274913&quot;,
+      &quot;Name&quot;: &quot;D&#237;az Quir&#243;s, Darwin&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/274913&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;273031&quot;,
+      &quot;Name&quot;: &quot;International Marine Biological Workshop (6th : 1993 : Darwin, N.T.)&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/273031&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;60835&quot;,
+      &quot;Name&quot;: &quot;Jorgensen, Darwin&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/60835&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;1747&quot;,
+      &quot;Name&quot;: &quot;Litchfield, Henrietta Emma Darwin,&quot;,
+      &quot;Dates&quot;: &quot;1843-1929&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/1747&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;43979&quot;,
+      &quot;Name&quot;: &quot;McReynolds, Darwin James.&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/43979&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;272196&quot;,
+      &quot;Name&quot;: &quot;Morales-Mart&#237;nez, Darwin M.&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/272196&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;64060&quot;,
+      &quot;Name&quot;: &quot;Thomas, James Darwin&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/64060&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;66618&quot;,
+      &quot;Name&quot;: &quot;Tiemann, Darwin L&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/66618&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;28280&quot;,
+      &quot;Name&quot;: &quot;Ware, Richard Darwin,&quot;,
+      &quot;Dates&quot;: &quot;1869-1931&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/28280&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;220059&quot;,
+      &quot;Name&quot;: &quot;Wells, Jerry D.&quot;,
+      &quot;FullerForm&quot;: &quot;(Jerry Darwin),&quot;,
+      &quot;Dates&quot;: &quot;1946-&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/220059&quot;
+    },
+    {
+      &quot;AuthorID&quot;: &quot;229631&quot;,
+      &quot;Name&quot;: &quot;Wood, D. Scott&quot;,
+      &quot;FullerForm&quot;: &quot;(Darwin Scott),&quot;,
+      &quot;Dates&quot;: &quot;1948-&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/229631&quot;
+    }
+  ]
+}
             </code>
         </pre>
     </div>

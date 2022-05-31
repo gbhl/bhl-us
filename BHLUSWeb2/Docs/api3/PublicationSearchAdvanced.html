@@ -58,17 +58,18 @@
     <div class="synindent">&amp;textop=&lt;'all' to search for all specified words in the text field; 'phrase' to search for the exact phrase specified&gt;</div>
     <div class="synindent">&amp;page=&lt;1 for the first page of results, 2 for the second, and so on&gt;</div>
     <div class="synindent">&amp;pageSize=&lt;the maximum number of results to return per page (default = 100)&gt;</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
     <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
     </div>
-    <div>EXAMPLE REQUEST</div>
+    <div>EXAMPLE REQUEST (XML)</div>
     <div class="syntaxbox">
         <pre>
             <code>
-https://www.biodiversitylibrary.org/api3?op=PublicationSearchAdvanced&amp;title=white+shark&amp;titleop=All&amp;authorname=Mccosker&amp;year=&amp;subject=&amp;language=&amp;collection=&amp;notes=&amp;notesop=&amp;text=&amp;textop=&amp;page=1&amp;pageSize=10&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+https://www.biodiversitylibrary.org/api3?op=PublicationSearchAdvanced&amp;title=white+shark&amp;titleop=All&amp;authorname=Mccosker&amp;year=&amp;subject=&amp;language=&amp;collection=&amp;notes=&amp;notesop=&amp;text=&amp;textop=&amp;page=1&amp;pageSize=10&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
             </code>
         </pre>
     </div>
-    <div>EXAMPLE RESPONSE</div>
+    <div>EXAMPLE RESPONSE (XML)</div>
     <div class="responsebox">
         <pre>
             <code>
@@ -122,6 +123,69 @@ https://www.biodiversitylibrary.org/api3?op=PublicationSearchAdvanced&amp;title=
     &lt;/Publication&gt;
   &lt;/Result&gt;
 &lt;/Response&gt;
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE REQUEST (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=PublicationSearchAdvanced&amp;title=white+shark&amp;titleop=All&amp;authorname=Mccosker&amp;year=&amp;subject=&amp;language=&amp;collection=&amp;notes=&amp;notesop=&amp;text=&amp;textop=&amp;page=1&amp;pageSize=10&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;BHLType&quot;: &quot;Part&quot;,
+      &quot;FoundIn&quot;: &quot;Metadata&quot;,
+      &quot;Volume&quot;: &quot;57&quot;,
+      &quot;Authors&quot;: [
+        {
+          &quot;Name&quot;: &quot;Mccosker, John Edward&quot;
+        },
+        {
+          &quot;Name&quot;: &quot;Lea, Robert N.&quot;
+        }
+      ],
+      &quot;PartUrl&quot;: &quot;https://www.biodiversitylibrary.org/part/280202&quot;,
+      &quot;PartID&quot;: &quot;280202&quot;,
+      &quot;Genre&quot;: &quot;Article&quot;,
+      &quot;Title&quot;: &quot;White Shark Attacks Upon Humans in California and Oregon, 1993–2003&quot;,
+      &quot;ContainerTitle&quot;: &quot;Proceedings of The California Academy of Sciences&quot;,
+      &quot;Issue&quot;: &quot;17&quot;,
+      &quot;PageRange&quot;: &quot;479--501&quot;
+    },
+    {
+      &quot;BHLType&quot;: &quot;Part&quot;,
+      &quot;FoundIn&quot;: &quot;Metadata&quot;,
+      &quot;Volume&quot;: &quot;43&quot;,
+      &quot;Authors&quot;: [
+        {
+          &quot;Name&quot;: &quot;Tricas, Timothy C&quot;
+        },
+        {
+          &quot;Name&quot;: &quot;Mccosker, John Edward&quot;
+        }
+      ],
+      &quot;PartUrl&quot;: &quot;https://www.biodiversitylibrary.org/part/52916&quot;,
+      &quot;PartID&quot;: &quot;52916&quot;,
+      &quot;Genre&quot;: &quot;Article&quot;,
+      &quot;Title&quot;: &quot;Predatory behavior of the white shark (Carcharodon carcharias), with notes on its biology&quot;,
+      &quot;ContainerTitle&quot;: &quot;Proceedings of the California Academy of Sciences&quot;,
+      &quot;Series&quot;: &quot;4&quot;,
+      &quot;Date&quot;: &quot;1984&quot;,
+      &quot;PageRange&quot;: &quot;221--238&quot;
+    }
+  ]
+}
+
             </code>
         </pre>
     </div>

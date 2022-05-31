@@ -47,17 +47,18 @@
     <div class="synindent">&amp;id=&lt;identifier of a title&gt;</div>
     <div class="synindent">&amp;idtype=&lt;bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, or soulsby (OPTIONAL; "bhl" is the default)&gt;</div>
     <div class="synindent">&amp;item=&lt;"t" or "true" to include the title's items in the response&gt;</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
     <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
     </div>
-    <div>EXAMPLE REQUEST</div>
+    <div>EXAMPLE REQUEST (XML)</div>
     <div class="syntaxbox">
         <pre>
             <code>
-https://www.biodiversitylibrary.org/api3?op=GetTitleMetadata&amp;id=61122&amp;idtype=bhl&amp;items=t&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+https://www.biodiversitylibrary.org/api3?op=GetTitleMetadata&amp;id=61122&amp;idtype=bhl&amp;items=t&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
             </code>
         </pre>
     </div>
-    <div>EXAMPLE RESPONSE</div>
+    <div>EXAMPLE RESPONSE (XML)</div>
     <div class="responsebox">
         <pre>
             <code>
@@ -189,6 +190,146 @@ https://www.biodiversitylibrary.org/api3?op=GetTitleMetadata&amp;id=61122&amp;id
     &lt;/Title&gt;
   &lt;/Result&gt;
 &lt;/Response&gt;
+
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE REQUEST (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetTitleMetadata&amp;id=61122&amp;idtype=bhl&amp;items=t&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;TitleID&quot;: 61122,
+      &quot;Genre&quot;: &quot;Collection&quot;,
+      &quot;MaterialType&quot;: &quot;Archival material&quot;,
+      &quot;FullTitle&quot;: &quot;Plant lists, notes, and correspondence : Fr&#233;mont expeditions, 1843-1853&quot;,
+      &quot;ShortTitle&quot;: &quot;Plant lists, notes, and correspondence : Fr&#233;mont expeditions, 1843-1853&quot;,
+      &quot;SortTitle&quot;: &quot;Plant lists notes and correspondence Fr&#233;mont expeditions&quot;,
+      &quot;TitleUrl&quot;: &quot;https://www.biodiversitylibrary.org/bibliography/61122&quot;,
+      &quot;CreationDate&quot;: &quot;2012/08/06 13:58:28&quot;,
+      &quot;Authors&quot;: [
+        {
+          &quot;AuthorID&quot;: &quot;280&quot;,
+          &quot;Name&quot;: &quot;Torrey, John,&quot;,
+          &quot;Role&quot;: &quot;Main Entry -- Personal Name (MARC 100)&quot;,
+          &quot;Dates&quot;: &quot;1796-1873&quot;
+        },
+        {
+          &quot;AuthorID&quot;: &quot;30811&quot;,
+          &quot;Name&quot;: &quot;Bigelow, John M.&quot;,
+          &quot;Role&quot;: &quot;Added Entry -- Personal Name (MARC 700)&quot;,
+          &quot;Dates&quot;: &quot;1804-1878&quot;
+        },
+        {
+          &quot;AuthorID&quot;: &quot;172&quot;,
+          &quot;Name&quot;: &quot;Gray, Asa,&quot;,
+          &quot;Role&quot;: &quot;Added Entry -- Personal Name (MARC 700)&quot;,
+          &quot;Dates&quot;: &quot;1810-1888&quot;
+        }
+      ],
+      &quot;Subjects&quot;: [
+        {
+          &quot;SubjectText&quot;: &quot;Correspondence&quot;,
+          &quot;CreationDate&quot;: &quot;2012/08/07 00:04:26&quot;
+        },
+        {
+          &quot;SubjectText&quot;: &quot;Discovery and exploration&quot;,
+          &quot;CreationDate&quot;: &quot;2012/08/07 00:04:26&quot;
+        },
+        {
+          &quot;SubjectText&quot;: &quot;Explorers&quot;,
+          &quot;CreationDate&quot;: &quot;2012/08/07 00:04:26&quot;
+        },
+        {
+          &quot;SubjectText&quot;: &quot;Fr&#233;mont Expedition&quot;,
+          &quot;CreationDate&quot;: &quot;2012/08/07 00:04:26&quot;
+        },
+        {
+          &quot;SubjectText&quot;: &quot;Plants&quot;,
+          &quot;CreationDate&quot;: &quot;2012/08/07 00:04:26&quot;
+        },
+        {
+          &quot;SubjectText&quot;: &quot;Scientific Expeditions&quot;,
+          &quot;CreationDate&quot;: &quot;2012/08/07 00:04:26&quot;
+        },
+        {
+          &quot;SubjectText&quot;: &quot;West (U.S.)&quot;,
+          &quot;CreationDate&quot;: &quot;2012/08/07 00:04:26&quot;
+        }
+      ],
+      &quot;Identifiers&quot;: [
+        {
+          &quot;IdentifierName&quot;: &quot;OCLC&quot;,
+          &quot;IdentifierValue&quot;: &quot;782055926&quot;
+        }
+      ],
+      &quot;Variants&quot;: [
+        {
+          &quot;TitleVariantTypeName&quot;: &quot;Alternative&quot;,
+          &quot;Title&quot;: &quot;Fr&#233;mont expeditions   &quot;
+        }
+      ],
+      &quot;Items&quot;: [
+        {
+          &quot;ItemID&quot;: 124320,
+          &quot;Volume&quot;: &quot;Explorers &amp; travellers who have collected plants in California, Oregon, Washington Territory &amp; Nev.&quot;,
+          &quot;ItemUrl&quot;: &quot;https://www.biodiversitylibrary.org/item/124320&quot;
+        },
+        {
+          &quot;ItemID&quot;: 124321,
+          &quot;Volume&quot;: &quot;List of plants of Fr&#233;mont collections 1845-1846, sent by Torrey to Engelmann Fall 1848&quot;,
+          &quot;Year&quot;: &quot;1845&quot;,
+          &quot;EndYear&quot;: &quot;1846&quot;,
+          &quot;ItemUrl&quot;: &quot;https://www.biodiversitylibrary.org/item/124321&quot;
+        },
+        {
+          &quot;ItemID&quot;: 124322,
+          &quot;Volume&quot;: &quot;List of camps of an exploration from Fort Smith Ark. to San Pedro Cal. by Dr. Bigelow commenced July&quot;,
+          &quot;ItemUrl&quot;: &quot;https://www.biodiversitylibrary.org/item/124322&quot;
+        },
+        {
+          &quot;ItemID&quot;: 124324,
+          &quot;Volume&quot;: &quot;Numbers corresponding to labels on the plants commencing with the first plant gathered in California&quot;,
+          &quot;ItemUrl&quot;: &quot;https://www.biodiversitylibrary.org/item/124324&quot;
+        },
+        {
+          &quot;ItemID&quot;: 124325,
+          &quot;Volume&quot;: &quot;Asa Gray lists and letters regarding Fr&#233;mont&#39;s expeditions, n.d.&quot;,
+          &quot;ItemUrl&quot;: &quot;https://www.biodiversitylibrary.org/item/124325&quot;
+        }
+      ],
+      &quot;Notes&quot;: [
+        {
+          &quot;NoteText&quot;: &quot;Folder 9.65. List of plants for 1843 -- Folder 9.66. Localities of plants for 1844 -- Folder 9.67. Plant lists and notes, 2nd expedition, 1843-1844 -- Folder 9.68. List of plants of Fr&#233;mont collections 1845-1846, sent by Torrey to Engelmann Fall 1848 -- Folder 9.69. Numbers corresponding to labels on the plants commencing with the first plant gathered in California, 1845-1846 -- Folder 9.70. Explorers &amp; travellers who have collected plants in California, Oregon, Washington Territory &amp; Nevada, n.d. -- Folder 9.71. List of camps of an exploration from Fort Smith Ark. to San Pedro Cal. by Dr. Bigelow commenced July 15, 1853 -- Folder 9.72. Asa Gray lists and letters regarding Fr&#233;mont&#39;s expeditions, n.d.&quot;,
+          &quot;NoteSequence&quot;: &quot;1&quot;,
+          &quot;NoteTypeName&quot;: &quot;Contents&quot;
+        },
+        {
+          &quot;NoteText&quot;: &quot;Plant lists, notes, and correspondence, chiefly by John Torrey, for 1843-1853. The lists and notes relate to plants collected on Fr&#233;mont&#39;s 2nd and 3rd expeditions to the American West and Torrey&#39;s work identifying and describing the plants. Also included are Asa Gray&#39;s notes and correspondence from Asa Gray to John Torrey regarding Fr&#233;mont&#39;s expeditions, a list of explorers who collected plants in the American West, and a list of camps during an exploration for a railroad route from Arkansas to California in 1853 by John Milton Bigelow.&quot;,
+          &quot;NoteSequence&quot;: &quot;2&quot;,
+          &quot;NoteTypeName&quot;: &quot;Scope and Content&quot;
+        },
+        {
+          &quot;NoteText&quot;: &quot;In English.&quot;,
+          &quot;NoteSequence&quot;: &quot;3&quot;,
+          &quot;NoteTypeName&quot;: &quot;Language&quot;
+        }
+      ]
+    }
+  ]
+}
 
             </code>
         </pre>

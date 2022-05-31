@@ -44,17 +44,18 @@
     <div>SYNTAX</div>
     <div class="syntaxbox">
     <div>https://www.biodiversitylibrary.org/api3?op=GetCollections</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
     <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
     </div>
-    <div>EXAMPLE REQUEST</div>
+    <div>EXAMPLE REQUEST (XML)</div>
     <div class="syntaxbox">
         <pre>
             <code>
- https://www.biodiversitylibrary.org/api3?op=GetCollections&apikey=12345678-BBBB-DDDD-FFFF-123456789012
+ https://www.biodiversitylibrary.org/api3?op=GetCollections&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
             </code>
         </pre>
     </div>
-    <div>EXAMPLE RESPONSE</div>
+    <div>EXAMPLE RESPONSE (XML)</div>
     <div class="responsebox">
         <pre>
             <code>
@@ -374,6 +375,333 @@
     &lt;/Collection&gt;
   &lt;/Result&gt;
 &lt;/Response&gt;
+
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE REQUEST (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+ https://www.biodiversitylibrary.org/api3?op=GetCollections&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;CollectionID&quot;: &quot;97&quot;,
+      &quot;CollectionName&quot;: &quot;A History of Cats: 1858-1922&quot;,
+      &quot;CollectionDescription&quot;: &quot;Cats were not always the beloved household pets as we know them today. This collection of books from the Library of Congress illustrates the variety of ways that people thought about domestic cats from 1858 to 1922.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;85&quot;,
+      &quot;CollectionName&quot;: &quot;Antarctic Exploration &amp; Discovery&quot;,
+      &quot;CollectionDescription&quot;: &quot;This collection contains rare books, journals and field diaries relating to the exploration and biodiversity of Antarctica.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;99&quot;,
+      &quot;CollectionName&quot;: &quot;Antarctic Geological Field Notebooks&quot;,
+      &quot;CollectionDescription&quot;: &quot;This collection contains Antarctic field notebooks from Geoscience Australia’s N.H. (Doc) Fisher Geoscience Library Collection. Geoscience Australia has a long and rich history of contributing to the mapping and geological understanding of Antarctica. These notebooks contain original observations made by geologists and geophysicists on the Antarctic continent and adjacent sub-Antarctic islands.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;59&quot;,
+      &quot;CollectionName&quot;: &quot;Archives from the Boston Metropolitan Park Flora&quot;,
+      &quot;CollectionDescription&quot;: &quot;In 1894 the Metropolitan Park Commission in Boston, Mass. commissioned Olmsted, Olmsted &amp; Eliot to survey the plants of newly acquired woodland reservations. This collection includes 8,000 pages of correspondence, published books, articles, and maps documenting the progress of the survey. To learn more about the collection please visit us &lt;a href=\&quot;http://hwpi.harvard.edu/botlib_projects/book/archives-and-specimens-boston-metropolitan-park-flora\&quot;&gt;&lt;b&gt;online.&lt;b&gt;&lt;/a&gt;&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;62&quot;,
+      &quot;CollectionName&quot;: &quot;Art of Science&quot;,
+      &quot;CollectionDescription&quot;: &quot;This collection contains the rare books featured in the Australian exhibition \&quot;The Art of Science: Remarkable Natural History illustrations from Museum Victoria\&quot;.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;112&quot;,
+      &quot;CollectionName&quot;: &quot;Australian Botanical&quot;,
+      &quot;CollectionDescription&quot;: &quot;Australian Botanical is a collection of Australia&#39;s botanical taxonomic literature published in state, territory and national herbarium journals, made openly accessible and searchable online on the Biodiversity Heritage Library website.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;82&quot;,
+      &quot;CollectionName&quot;: &quot;BHL at 10&quot;,
+      &quot;CollectionDescription&quot;: &quot;Celebrate BHL&#39;s 10th anniversary by browsing notable contributions from its consortium members. From 2006 and its first 10 institutions to 2016 and its &lt;a href=\&quot;https://about.biodiversitylibrary.org/about/bhl-consortium/\&quot;&gt;40+ organizations&lt;/a&gt;, BHL partners have digitized and made freely available some of the most remarkable works from their collections. Sit back, relax, and browse some of BHL&#39;s best!&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;63&quot;,
+      &quot;CollectionName&quot;: &quot;BHL Australia&quot;,
+      &quot;CollectionDescription&quot;: &quot;This collection contains the titles contributed by museum and herbaria libraries in Australia, as well as by Australia&#39;s royal societies, field naturalist clubs and government institutes and agencies.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;87&quot;,
+      &quot;CollectionName&quot;: &quot;BHL Field Notes Project&quot;,
+      &quot;CollectionDescription&quot;: &quot;Items digitized for the BHL Field Notes Project, a collaborative project funded by the Council on Library and Information Resources (CLIR). The project provides open access to field notes from institutions across the United States, and reunites fragmented collections through institutional collaboration. More information about the project and a full list of participating institutions can be found &lt;a href=\&quot;https://about.biodiversitylibrary.org/projects/past-projects/field-notes-project/\&quot;&gt;here&lt;/a&gt;.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;67&quot;,
+      &quot;CollectionName&quot;: &quot;BHL Singapore&quot;,
+      &quot;CollectionDescription&quot;: &quot;This collection contains items contributed by National Library Board Singapore and its partner institutions in Singapore.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;40&quot;,
+      &quot;CollectionName&quot;: &quot;Blog Features&quot;,
+      &quot;CollectionDescription&quot;: &quot;Titles featured in Book of the Month posts on the &lt;a href=\&quot;https://blog.biodiversitylibrary.org/tag/book-of-the-month\&quot;&gt;BHL Blog&lt;/a&gt;.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;41&quot;,
+      &quot;CollectionName&quot;: &quot;Bone Wars Collection&quot;,
+      &quot;CollectionDescription&quot;: &quot;Collection of items authored or edited by Edward Drinker Cope and Othniel Charles Marsh.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;92&quot;,
+      &quot;CollectionName&quot;: &quot;Botanic Gardens Melbourne (1852-1899)&quot;,
+      &quot;CollectionDescription&quot;: &quot;This collection contains reports, catalogues, essays, notes and correspondence authored by the Directors of the Botanic Gardens Melbourne (now Royal Botanic Gardens Victoria) between 1852 and 1899.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;37&quot;,
+      &quot;CollectionName&quot;: &quot;Carl Linnaeus Collection&quot;,
+      &quot;CollectionDescription&quot;: &quot;Select items authored by or about the Swedish botanist, physician, and zoologist.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;118&quot;,
+      &quot;CollectionName&quot;: &quot;Carnivorous Plants&quot;,
+      &quot;CollectionDescription&quot;: &quot;Carnivorous plants attract, trap, and digest animal prey to survive in their nutrient-poor environments. Explore works featuring some of the creepiest and hungriest plants on the planet! Created in collaboration with the Plant Humanities Initiative at Dumbarton Oaks.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;53&quot;,
+      &quot;CollectionName&quot;: &quot;Celebrating Alfred Russel Wallace&quot;,
+      &quot;CollectionDescription&quot;: &quot;Selected items featuring the work of Alfred Russel Wallace (1823-1913), British biologist, anthropologist, geographer, environmentalist, and human rights advocate. The man who, independently of Darwin, arrived to the same conclusion on natural selection. In 1858 he corresponded with Darwin about his theory, prompting Darwin to finally publish the famous work, On the Origin of Species, in 1859.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;4&quot;,
+      &quot;CollectionName&quot;: &quot;Charles Darwin&#39;s Library&quot;,
+      &quot;CollectionDescription&quot;: &quot;Books that were a part of Charles Darwin&#39;s personal collection.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;80&quot;,
+      &quot;CollectionName&quot;: &quot;Color Our Collections&quot;,
+      &quot;CollectionDescription&quot;: &quot;A collection of books with plates suitable for coloring. Created as part of the #ColorOurCollections event.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;49&quot;,
+      &quot;CollectionName&quot;: &quot;Curious and Bizarre Creatures&quot;,
+      &quot;CollectionDescription&quot;: &quot;What do deep sea monsters, mermaids, hydra, dinosaurs, and Shakespeare have in common? They&#39;re all in this collection featuring some of the strangest books BHL has to offer.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;98&quot;,
+      &quot;CollectionName&quot;: &quot;Dazzling Diversity: The Insect World&quot;,
+      &quot;CollectionDescription&quot;: &quot;Explore the books featured in the Smithsonian Libraries&#39; Dazzling Diversity exhibit at the National Museum of Natural History and celebrate the insect world through the pages of historic natural history books.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;69&quot;,
+      &quot;CollectionName&quot;: &quot;Early Women in Science&quot;,
+      &quot;CollectionDescription&quot;: &quot;This collection features works by important women scientists working prior to the middle of the twentieth century.  Some of these women are well-known, and others have been only minimally recognized, but all are important for their unique contributions to their respective scientific fields. &lt;br/&gt;Part of the &lt;a href=\&quot;http://earlywomeninscience.biodiversityexhibition.com/\&quot;&gt;Early Women in Science exhibition&lt;/a&gt;&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;114&quot;,
+      &quot;CollectionName&quot;: &quot;Earth Optimism&quot;,
+      &quot;CollectionDescription&quot;: &quot;The Earth Optimism book collection features books authored by important contributors to the conservation movement. We’ll be sharing more about the individuals represented in the collection via the &lt;a href=\&quot;https://blog.biodiversitylibrary.org\&quot;&gt;BHL Blog&lt;/a&gt; throughout 2020. Follow our &lt;a href=\&quot;https://blog.biodiversitylibrary.org/category/campaigns/earth-optimism-2020\&quot;&gt;Earth Optimism series&lt;/a&gt; to learn more.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;6&quot;,
+      &quot;CollectionName&quot;: &quot;Engelmann Herbarium&quot;,
+      &quot;CollectionDescription&quot;: &quot;Botanical literature generated during expansion into the American West.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;38&quot;,
+      &quot;CollectionName&quot;: &quot;Engelmann Papers, Missouri Botanical Garden&quot;,
+      &quot;CollectionDescription&quot;: &quot;The personal papers of the botanist George Engelmann include almost 5,000 letters from about 550 leading and amateur scientists in the United States and Europe in the middle decades of the 19th century.  The collection also includes the various scientific notes and written works composed by Engelmann during his life as a medical doctor living in St. Louis, Missouri.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;84&quot;,
+      &quot;CollectionName&quot;: &quot;Expanding Access to Biodiversity Literature&quot;,
+      &quot;CollectionDescription&quot;: &quot;Expanding Access to Biodiversity Literature, which is funded generously by the Institute of Museum and Library Services (IMLS), will significantly increase online access to biodiversity material by positioning BHL as an on-ramp for biodiversity content providers that would like to contribute to the national digital library infrastructure through the Digital Public Library of America (DPLA).&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;21&quot;,
+      &quot;CollectionName&quot;: &quot;Extinct Species&quot;,
+      &quot;CollectionDescription&quot;: &quot;Dinosaurs, dodos, and more. Selected books highlighting extinct species of plants and animals.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;91&quot;,
+      &quot;CollectionName&quot;: &quot;Ferdinand von Mueller Collection&quot;,
+      &quot;CollectionDescription&quot;: &quot;This collection contains reports, essays, papers, books, catalogues and correspondence produced by Ferdinand von Mueller, Government Botanist for the Colony of Victoria from 1853, Director of the Melbourne Botanic Gardens (now Royal Botanic Gardens Victoria) from 1857 to 1873, and founder of the National Herbarium of Victoria.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;18&quot;,
+      &quot;CollectionName&quot;: &quot;Fieldiana: The Flora of Peru&quot;,
+      &quot;CollectionDescription&quot;: &quot;This collection contains those Fieldiana:Botany volumes which comprise the series Flora of Peru.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;31&quot;,
+      &quot;CollectionName&quot;: &quot;Floral Mania&quot;,
+      &quot;CollectionDescription&quot;: &quot;These books contain some of the most beautiful and unusual illustrations of flowering plants in BHL.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;76&quot;,
+      &quot;CollectionName&quot;: &quot;Fossil Stories&quot;,
+      &quot;CollectionDescription&quot;: &quot;Rocks hold the key to the history of life on Earth. \&quot;Fossil Stories\&quot; explores the world of fossils, the history of paleontology, and the men, women, and publications that shaped our knowledge of life preserved in these rocks. This collection includes seminal works in the history of paleontology.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;96&quot;,
+      &quot;CollectionName&quot;: &quot;John Torrey Papers&quot;,
+      &quot;CollectionDescription&quot;: &quot;The collection consists of incoming and outgoing correspondence, pertaining mostly to Torrey’s work as a botanist and professor. Much of the scientific correspondence concerns identification of plants from the vast interior of the continent from government-sponsored expeditions. Unrelated letters to and from other correspondents (some of which predate Torrey’s birth) are also in the collection.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;93&quot;,
+      &quot;CollectionName&quot;: &quot;Joseph Dalton Hooker Collection&quot;,
+      &quot;CollectionDescription&quot;: &quot;Sir Joseph Dalton Hooker was one of the most important botanists of the 19th century and Kew Gardens&#39; most illustrious Director (1865-1885). This collection features many of Hooker&#39;s publications and personal correspondence.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;109&quot;,
+      &quot;CollectionName&quot;: &quot;Language of Flowers&quot;,
+      &quot;CollectionDescription&quot;: &quot;The Language of Flowers genre is at the intersection of botany, horticulture, natural history, art, poetry, and women’s studies. This popular literary trend in the 19th century presented the world of botany through dictionaries of flowers and associated meanings, floral poetry, and prose, offering a sentimental view of natural history. A properly arranged bouquet was said to convey a “secret message” for the recipient. The “social media” of its day, this Victorian fad led to many editions of works published, with multiple titles by successful authors.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;71&quot;,
+      &quot;CollectionName&quot;: &quot;Latino Natural History&quot;,
+      &quot;CollectionDescription&quot;: &quot;&lt;table role=\&quot;presentation\&quot;&gt;&lt;tr&gt;&lt;td&gt;This collection features items related to naturalists from — or who are descendants of people from — Mexico, Cuba, Puerto Rico, and Central and South America, often referred to collectively as Latin America. These Latino/a naturalists have influenced the study of the world&#39;s flora and fauna, and in many cases provided the foundation for the study of science in their home countries. &lt;br/ &gt;Part of the &lt;a href=\&quot;http://latinonaturalhistory.biodiversityexhibition.com\&quot;&gt;Latino Natural History exhibition&lt;/a&gt;&lt;/td&gt;\r\n&lt;td&gt;Esta colecci&#243;n presenta t&#237;tulos relacionados a naturalistas que son de — o son descendientes de personas de — M&#233;xico, Cuba, Puerto Rico, Centroam&#233;rica, y Sudam&#233;rica, paises a los que frecuentemente  se refiere como Latinoam&#233;rica. Estos naturalistas latinos/as han influido el estudio de la fauna y flora del mundo, y en muchos casos crearon las bases del estudio de ciencias naturales en sus pa&#237;ses. &lt;br/ &gt;Parte de la exhibici&#243;n &lt;a href=\&quot;http://latinonaturalhistory.biodiversityexhibition.com\&quot;&gt;Latino Natural History&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;5&quot;,
+      &quot;CollectionName&quot;: &quot;Missouri Botanical Garden&#39;s Materia Medica&quot;,
+      &quot;CollectionDescription&quot;: &quot;A title scanned for Trio Foundation.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;7&quot;,
+      &quot;CollectionName&quot;: &quot;Missouri Botanical Garden&#39;s Orchid Folios&quot;,
+      &quot;CollectionDescription&quot;: &quot;Titles scanned for the Trio Foundation, 2011&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;1&quot;,
+      &quot;CollectionName&quot;: &quot;Missouri Botanical Garden&#39;s Rare Books Collection&quot;,
+      &quot;CollectionDescription&quot;: &quot;A volume scanned as part of MBG&#39;s Rare Books Website.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;64&quot;,
+      &quot;CollectionName&quot;: &quot;Monsters Are Real&quot;,
+      &quot;CollectionDescription&quot;: &quot;Many of history&#39;s most fearsome legendary monsters are based on real animals. The BHL Monsters Are Real campaign explores the stories, people, books, and animals that inspired such infamous beasts as Sea Serpents, the Kraken, Hydra, Mermaids, and Leviathans. This collection includes the books that fueled such monster myths, as well as those that highlight the real identity of these beasts.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;60&quot;,
+      &quot;CollectionName&quot;: &quot;Museums Victoria&quot;,
+      &quot;CollectionDescription&quot;: &quot;This collection contains rare and old books, journals and pamphlets from the Museums Victoria Library in Melbourne, Australia.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;116&quot;,
+      &quot;CollectionName&quot;: &quot;Natural History Museum (London) Publications&quot;,
+      &quot;CollectionDescription&quot;: &quot;This collection contains volumes published by the British Museum (Natural History), which changed its name to the Natural History Museum in 1992.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;120&quot;,
+      &quot;CollectionName&quot;: &quot;Nature Prints&quot;,
+      &quot;CollectionDescription&quot;: &quot;Items with illustrations that were nature-printed, a technique where the surface of a natural object is used to produce a print.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;45&quot;,
+      &quot;CollectionName&quot;: &quot;New York Botanical Garden&quot;,
+      &quot;CollectionDescription&quot;: &quot;Items contributed from the &lt;a href=\&quot;http://www.nybg.org\&quot;&gt;New York Botanical Garden&lt;/a&gt;.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;94&quot;,
+      &quot;CollectionName&quot;: &quot;Objects of Wonder&quot;,
+      &quot;CollectionDescription&quot;: &quot;The natural world is filled with many objects of wonder, and BHL&#39;s collections document many of these wonders. From early cabinets of curiosity to notable books from BHL&#39;s partners, explore some of BHL&#39;s objects of wonder in this collection.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;58&quot;,
+      &quot;CollectionName&quot;: &quot;Once There Were Billions&quot;,
+      &quot;CollectionDescription&quot;: &quot;Once an amazing diversity of birds—some in breathtaking abundance—inhabited the vast forests and plains of North America. But starting around 1600, species began to disappear, as humans altered habitats, over-hunted, and introduced predators. This collection includes books related to the exhibition &lt;a href=\&quot;http://library.si.edu/exhibition/once-there-were-billions\&quot;&gt;\&quot;Once There Were Billions\&quot;&lt;/a&gt; which focuses on the extinction of four bird species: the Passenger Pigeon (Ectopistes migratorius), Great Auk (Pinguinus impennis), Carolina Parakeet (Conuropsis carolinensis), and Heath Hen (Tympanuchus cupido cupido.)&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;72&quot;,
+      &quot;CollectionName&quot;: &quot;Perkins Agricultural Library&quot;,
+      &quot;CollectionDescription&quot;: &quot;The &lt;a href=\&quot;http://library.soton.ac.uk/perkins\&quot;&gt;Perkins Agricultural Library&lt;/a&gt; was presented to Southampton University Library in 1946 by Walter Frank Perkins, compiler of the bibliography, British and Irish Writers on Agriculture (1929). The Library contains over 2000 books and 40 periodicals published from the 17th century to the late 19th century. The books include practical farming texts on crops, animals, buildings and farm machinery as well as encyclopaedias and textbooks. The &lt;a href=\&quot;http://viewer.soton.ac.uk/library/image/52136644/1/\&quot;&gt;published catalogue is available online&lt;/a&gt; and the collection can be &lt;a href=\&quot;https://www-lib.soton.ac.uk/\&quot;&gt;searched from WebCat&lt;/a&gt; by selecting &#39;Perkins collection&#39; in the &#39;location&#39; field. This is a digitisation project in progress with texts being added weekly to the collection. Should you have particular interest in any texts in the catalogue that are currently not available, please &lt;a href=\&quot;mailto:digitise@soton.ac.uk\&quot;&gt;let us know&lt;/a&gt; and we will attempt to prioritise their digitisation and availability.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;103&quot;,
+      &quot;CollectionName&quot;: &quot;Pomology: Apples and Cider&quot;,
+      &quot;CollectionDescription&quot;: &quot;Pomology is the study of and cultivation of fruit. Cider (sometimes called hard cider) is a fermented beverage made from apple juice. This comprehensive collection highlights the historical importance of apple (Malus xdomestica and other Malus species) and cider production around the world. Many texts contain color illustrations of rare, historic, and heirloom apple cultivars.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;22&quot;,
+      &quot;CollectionName&quot;: &quot;Publicaciones en Espa&#241;ol&quot;,
+      &quot;CollectionDescription&quot;: &quot;&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;27&quot;,
+      &quot;CollectionName&quot;: &quot;Rarest of the Rare&quot;,
+      &quot;CollectionDescription&quot;: &quot;These unique gems of the Biodiversity Heritage Library collection represent some of the rarest natural history works to ever hit the digital world.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;50&quot;,
+      &quot;CollectionName&quot;: &quot;Savants of Napoleon’s Egyptian Campaign&quot;,
+      &quot;CollectionDescription&quot;: &quot;Contributions of the French scientists who took part in Napoleon&#39;s Egyptian Expedition. These materials represent works by the scientists associated with the campaign or are later works by said scientists not necessarily related to Egypt.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;56&quot;,
+      &quot;CollectionName&quot;: &quot;Seed &amp; Nursery Catalogs&quot;,
+      &quot;CollectionDescription&quot;: &quot;This collection includes works issued as seed and nursery catalogs, originally published for the purposes of documenting trends, products, and expert advice related to botany, horticulture, and commercial agriculture.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;39&quot;,
+      &quot;CollectionName&quot;: &quot;Shark Week Collection&quot;,
+      &quot;CollectionDescription&quot;: &quot;A collection of works about sharks to celebrate &lt;a href=\&quot;http://en.wikipedia.org/wiki/Shark_Week\&quot;&gt;Shark Week&lt;/a&gt;.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;77&quot;,
+      &quot;CollectionName&quot;: &quot;Smithsonian Field Books collection&quot;,
+      &quot;CollectionDescription&quot;: &quot;This collection contains titles and items from the Smithsonian Field Book Project, an initiative to increase accessibility to field book content through cataloging, conservation, digitization, and online publication.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;110&quot;,
+      &quot;CollectionName&quot;: &quot;The Royal Society of Western Australia Journals&quot;,
+      &quot;CollectionDescription&quot;: &quot;This significant collection contains the scientific Journals of The Royal Society of Western Australia from 1914 to date, in addition to those of precursor societies from 1899 to 1914.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;32&quot;,
+      &quot;CollectionName&quot;: &quot;Theodore Roosevelt Collection&quot;,
+      &quot;CollectionDescription&quot;: &quot;Selected works authored, co-authored or introduced by Theodore Roosevelt dealing with Natural History. Also available in iTunes U.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;83&quot;,
+      &quot;CollectionName&quot;: &quot;Top BHL Partner Content&quot;,
+      &quot;CollectionDescription&quot;: &quot;This collection represents the top downloaded books from each of BHL&#39;s Members, Affiliates, and Partners as of BHL&#39;s 10th anniversary celebration in 2016.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;74&quot;,
+      &quot;CollectionName&quot;: &quot;Under the Sea: World Oceans Day&quot;,
+      &quot;CollectionDescription&quot;: &quot;In honor of World Oceans Day on June 8, we’ve compiled a collection of publications that represent important milestones in the progress of marine bioscience research and ocean exploration.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;111&quot;,
+      &quot;CollectionName&quot;: &quot;Unearthed! Smithsonian Libraries&#39; Paleo Collection&quot;,
+      &quot;CollectionDescription&quot;: &quot;In celebration of the opening of the David H. Koch Hall of Fossils opening at the National Museum of Natural History, Smithsonian Libraries has curated an online collection of important and beautiful selections from the Libraries’ Paleobiology literature.  The digitized books are hosted on Biodiversity Heritage Library (BHL), the world’s largest open access digital library for biodiversity literature and archives. As part of this celebration, we have invited renowned scientists and librarians to discuss the collection and identify their favorite books in a series of blog posts.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;46&quot;,
+      &quot;CollectionName&quot;: &quot;Whales: From Bone to Book Collection&quot;,
+      &quot;CollectionDescription&quot;: &quot;Select items about the anatomy, ecology and evolution of whales authored by notable authors and Smithsonian scientists, part of the Smithsonian Libraries &lt;a href=\&quot;http://library.si.edu/exhibition/bone-to-book\&quot;&gt;\&quot;Whales: From Bone to Book\&quot; exhibit&lt;a/&gt;.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;78&quot;,
+      &quot;CollectionName&quot;: &quot;White Whale&quot;,
+      &quot;CollectionDescription&quot;: &quot;A collection of works that include information about the sperm whale (Physeter macrocephalus).&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;113&quot;,
+      &quot;CollectionName&quot;: &quot;William Brewster Papers&quot;,
+      &quot;CollectionDescription&quot;: &quot;William Brewster (1851-1919) was a renowned American amateur ornithologist, first president of the Massachusetts Audubon Society, and a president of the American Ornithologists&#39; Union. His ornithological collection, bequeathed to the Museum of Comparative Zoology at Harvard University, is considered one of the finest private collections of North American birds ever assembled. Brewster’s diaries, journals, notebooks, correspondence, and photographs contain a wealth of ecological and climatological data, and document the development of the field of ornithology in the late nineteenth and early twentieth centuries.&quot;
+    },
+    {
+      &quot;CollectionID&quot;: &quot;43&quot;,
+      &quot;CollectionName&quot;: &quot;Women in Natural History&quot;,
+      &quot;CollectionDescription&quot;: &quot;A collection of selected works created by women who made direct contributions to the study of Botany and Zoology either by way of authoring or editing works on the subject or by providing critical illustrations to support the works authored by someone else. This collection is by no means comprehensive.&quot;
+    }
+  ]
+}
 
             </code>
         </pre>

@@ -48,17 +48,18 @@
     <div class="synindent">&amp;idtype=&lt;bhl, doi, jstor, biostor, or soulsby (OPTIONAL; "bhl" is the default)&gt;</div>
     <div class="synindent">&amp;pages=&lt;"t" or "true" to include the part's pages in the response&gt;</div>
     <div class="synindent">&amp;names=&lt;"t" or "true" to include scientific names in the part in the response&gt;</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
     <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
     </div>
-    <div>EXAMPLE REQUEST</div>
+    <div>EXAMPLE REQUEST (XML)</div>
     <div class="syntaxbox">
         <pre>
             <code>
-https://www.biodiversitylibrary.org/api3?op=GetPartMetadata&amp;id=124906&amp;idtype=bhl&amp;pages=t&amp;names=t&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+https://www.biodiversitylibrary.org/api3?op=GetPartMetadata&amp;id=124906&amp;idtype=bhl&amp;pages=t&amp;names=t&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
             </code>
         </pre>
     </div>
-    <div>EXAMPLE RESPONSE</div>
+    <div>EXAMPLE RESPONSE (XML)</div>
     <div class="responsebox">
         <pre>
             <code>
@@ -274,6 +275,230 @@ https://www.biodiversitylibrary.org/api3?op=GetPartMetadata&amp;id=124906&amp;id
     &lt;/Part&gt;
   &lt;/Result&gt;
 &lt;/Response&gt;
+
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE REQUEST (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetPartMetadata&amp;id=124906&amp;idtype=bhl&amp;pages=t&amp;names=t&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;PartUrl&quot;: &quot;https://www.biodiversitylibrary.org/part/124906&quot;,
+      &quot;PartID&quot;: 124906,
+      &quot;ItemID&quot;: &quot;155392&quot;,
+      &quot;StartPageID&quot;: &quot;44500472&quot;,
+      &quot;SequenceOrder&quot;: &quot;7&quot;,
+      &quot;Genre&quot;: &quot;Article&quot;,
+      &quot;Title&quot;: &quot;Australian grass-trees&quot;,
+      &quot;ContainerTitle&quot;: &quot;Garden&quot;,
+      &quot;PublicationDetails&quot;: &quot;[New York, Garden Society], 1977-&quot;,
+      &quot;PublisherName&quot;: &quot;Garden Society]&quot;,
+      &quot;PublisherPlace&quot;: &quot;[New York&quot;,
+      &quot;Volume&quot;: &quot;4&quot;,
+      &quot;Issue&quot;: &quot;5&quot;,
+      &quot;Date&quot;: &quot;1980&quot;,
+      &quot;PageRange&quot;: &quot;5-7&quot;,
+      &quot;StartPageNumber&quot;: &quot;5&quot;,
+      &quot;EndPageNumber&quot;: &quot;7&quot;,
+      &quot;Language&quot;: &quot;English&quot;,
+      &quot;RightsStatus&quot;: &quot;In copyright. Digitized with the permission of the rights holder.&quot;,
+      &quot;RightsStatement&quot;: &quot;https://www.biodiversitylibrary.org/permissions&quot;,
+      &quot;LicenseName&quot;: &quot;Attribution-NonCommercial-ShareAlike 3.0 Unported&quot;,
+      &quot;LicenseUrl&quot;: &quot;http://creativecommons.org/licenses/by-nc-sa/3.0/&quot;,
+      &quot;CreationDate&quot;: &quot;2014/06/24 14:10:58&quot;,
+      &quot;Authors&quot;: [
+        {
+          &quot;AuthorID&quot;: &quot;131963&quot;,
+          &quot;Name&quot;: &quot;Cromwell, Gary&quot;
+        }
+      ],
+      &quot;Contributors&quot;: [
+        {
+          &quot;ContributorName&quot;: &quot;The Arboretum Library at the Los Angeles County Arboretum and Botanic Garden&quot;
+        }
+      ],
+      &quot;Subjects&quot;: [
+        {
+          &quot;SubjectText&quot;: &quot;Xanthorrhoea&quot;,
+          &quot;CreationDate&quot;: &quot;2014/06/24 14:10:58&quot;
+        }
+      ],
+      &quot;Identifiers&quot;: [
+        {
+          &quot;IdentifierName&quot;: &quot;DLC&quot;,
+          &quot;IdentifierValue&quot;: &quot;&quot;
+        }
+      ],
+      &quot;Pages&quot;: [
+        {
+          &quot;PageID&quot;: 44500472,
+          &quot;ItemID&quot;: &quot;0&quot;,
+          &quot;Volume&quot;: &quot;4&quot;,
+          &quot;Issue&quot;: &quot;5&quot;,
+          &quot;Year&quot;: &quot;1980&quot;,
+          &quot;TextSource&quot;: &quot;OCR&quot;,
+          &quot;PageUrl&quot;: &quot;https://www.biodiversitylibrary.org/page/44500472&quot;,
+          &quot;ThumbnailUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagethumb/44500472&quot;,
+          &quot;FullSizeImageUrl&quot;: &quot;https://www.biodiversitylibrary.org/pageimage/44500472&quot;,
+          &quot;OcrUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagetext//44500472&quot;,
+          &quot;PageTypes&quot;: [
+            {
+              &quot;PageTypeName&quot;: &quot;Illustration&quot;
+            }
+          ],
+          &quot;PageNumbers&quot;: [
+            {
+              &quot;Prefix&quot;: &quot;Page&quot;,
+              &quot;Number&quot;: &quot;5&quot;
+            }
+          ]
+        },
+        {
+          &quot;PageID&quot;: 44500473,
+          &quot;ItemID&quot;: &quot;0&quot;,
+          &quot;Volume&quot;: &quot;4&quot;,
+          &quot;Issue&quot;: &quot;5&quot;,
+          &quot;Year&quot;: &quot;1980&quot;,
+          &quot;TextSource&quot;: &quot;OCR&quot;,
+          &quot;PageUrl&quot;: &quot;https://www.biodiversitylibrary.org/page/44500473&quot;,
+          &quot;ThumbnailUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagethumb/44500473&quot;,
+          &quot;FullSizeImageUrl&quot;: &quot;https://www.biodiversitylibrary.org/pageimage/44500473&quot;,
+          &quot;OcrUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagetext//44500473&quot;,
+          &quot;PageTypes&quot;: [
+            {
+              &quot;PageTypeName&quot;: &quot;Illustration&quot;
+            }
+          ],
+          &quot;PageNumbers&quot;: [
+            {
+              &quot;Prefix&quot;: &quot;Page&quot;,
+              &quot;Number&quot;: &quot;6&quot;
+            }
+          ]
+        },
+        {
+          &quot;PageID&quot;: 44500474,
+          &quot;ItemID&quot;: &quot;0&quot;,
+          &quot;Volume&quot;: &quot;4&quot;,
+          &quot;Issue&quot;: &quot;5&quot;,
+          &quot;Year&quot;: &quot;1980&quot;,
+          &quot;TextSource&quot;: &quot;OCR&quot;,
+          &quot;PageUrl&quot;: &quot;https://www.biodiversitylibrary.org/page/44500474&quot;,
+          &quot;ThumbnailUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagethumb/44500474&quot;,
+          &quot;FullSizeImageUrl&quot;: &quot;https://www.biodiversitylibrary.org/pageimage/44500474&quot;,
+          &quot;OcrUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagetext//44500474&quot;,
+          &quot;PageTypes&quot;: [
+            {
+              &quot;PageTypeName&quot;: &quot;Illustration&quot;
+            }
+          ],
+          &quot;PageNumbers&quot;: [
+            {
+              &quot;Prefix&quot;: &quot;Page&quot;,
+              &quot;Number&quot;: &quot;7&quot;
+            }
+          ]
+        }
+      ],
+      &quot;RelatedParts&quot;: [],
+      &quot;Names&quot;: [
+        {
+          &quot;NameFound&quot;: &quot;Dracaena&quot;,
+          &quot;NameConfirmed&quot;: &quot;Dracaena&quot;,
+          &quot;NameCanonical&quot;: &quot;Dracaena&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;X. arborea&quot;,
+          &quot;NameConfirmed&quot;: &quot;&quot;,
+          &quot;NameCanonical&quot;: &quot;&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;X. australis&quot;,
+          &quot;NameConfirmed&quot;: &quot;&quot;,
+          &quot;NameCanonical&quot;: &quot;&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;X. gracilis&quot;,
+          &quot;NameConfirmed&quot;: &quot;&quot;,
+          &quot;NameCanonical&quot;: &quot;&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;X. hastilis&quot;,
+          &quot;NameConfirmed&quot;: &quot;&quot;,
+          &quot;NameCanonical&quot;: &quot;&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;X. preissii&quot;,
+          &quot;NameConfirmed&quot;: &quot;&quot;,
+          &quot;NameCanonical&quot;: &quot;&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;X. quadrangulata&quot;,
+          &quot;NameConfirmed&quot;: &quot;&quot;,
+          &quot;NameCanonical&quot;: &quot;&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;Xanthorrhoea&quot;,
+          &quot;NameConfirmed&quot;: &quot;Xanthorrhoea&quot;,
+          &quot;NameCanonical&quot;: &quot;Xanthorrhoea&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;Xanthorrhoea arborea&quot;,
+          &quot;NameConfirmed&quot;: &quot;Xanthorrhoea arborea R.Br.&quot;,
+          &quot;NameCanonical&quot;: &quot;Xanthorrhoea arborea&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;Xanthorrhoea australis&quot;,
+          &quot;NameConfirmed&quot;: &quot;Xanthorrhoea australis R.Br.&quot;,
+          &quot;NameCanonical&quot;: &quot;Xanthorrhoea australis&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;Xanthorrhoea gracilis&quot;,
+          &quot;NameConfirmed&quot;: &quot;Xanthorrhoea gracilis Endl.&quot;,
+          &quot;NameCanonical&quot;: &quot;Xanthorrhoea gracilis&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;Xanthorrhoea minor&quot;,
+          &quot;NameConfirmed&quot;: &quot;Xanthorrhoea minor R.Br.&quot;,
+          &quot;NameCanonical&quot;: &quot;Xanthorrhoea minor&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;Xanthorrhoea preissii&quot;,
+          &quot;NameConfirmed&quot;: &quot;Xanthorrhoea preissii Endl.&quot;,
+          &quot;NameCanonical&quot;: &quot;Xanthorrhoea preissii&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;Xanthorrhoea pumilio&quot;,
+          &quot;NameConfirmed&quot;: &quot;Xanthorrhoea pumilio&quot;,
+          &quot;NameCanonical&quot;: &quot;Xanthorrhoea pumilio&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;Xanthorrhoea quadrangulata&quot;,
+          &quot;NameConfirmed&quot;: &quot;Xanthorrhoea quadrangulata&quot;,
+          &quot;NameCanonical&quot;: &quot;Xanthorrhoea quadrangulata&quot;
+        },
+        {
+          &quot;NameFound&quot;: &quot;Yucca&quot;,
+          &quot;NameConfirmed&quot;: &quot;Yucca&quot;,
+          &quot;NameCanonical&quot;: &quot;Yucca&quot;
+        }
+      ]
+    }
+  ]
+}
 
             </code>
         </pre>
