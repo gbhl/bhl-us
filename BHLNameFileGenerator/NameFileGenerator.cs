@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Net.Mail;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
 using MOBOT.FileAccess;
 using MOBOT.IA.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Net.Mail;
+using System.Text;
 
 namespace MOBOT.BHL.BHLNameFileGenerator
 {
@@ -74,8 +75,7 @@ namespace MOBOT.BHL.BHLNameFileGenerator
             try
             {
                 this.LogMessage("Getting items that need name files");
-                BHLWS.BHLWSSoapClient wsClient = new MOBOT.BHL.BHLNameFileGenerator.BHLWS.BHLWSSoapClient();
-                wsClient.ItemNameFileLogRefreshSinceDate(configParms.LastGetItemsDate);
+                new ItemNameFileLogClient(configParms.BHLWSEndpoint).ItemNameFileLogRefresh(configParms.LastGetItemsDate);
                 configParms.UpdateAppSetting(ConfigParms.LastGetItemsDateKey, DateTime.Now);
                 getItemsPerformed = true;
                 this.LogMessage("Done getting items");
@@ -95,15 +95,14 @@ namespace MOBOT.BHL.BHLNameFileGenerator
             try
             {
                 this.LogMessage("Creating files");
-                BHLWS.BHLWSSoapClient wsClient = new MOBOT.BHL.BHLNameFileGenerator.BHLWS.BHLWSSoapClient();
-                BHLWS.ItemNameFileLog[] items = wsClient.ItemNameFileLogSelectForCreate();
+                ICollection<ItemNameFileLog> items = new ItemNameFileLogClient(configParms.BHLWSEndpoint).GetItemNameFileLogForCreate();
 
                 if (items != null)
                 {
-                    foreach (BHLWS.ItemNameFileLog item in items)
+                    foreach (ItemNameFileLog item in items)
                     {
                         // Create the file
-                        string xml = wsClient.ItemGetNamesXMLByItemID(item.ItemID, item.BarCode);
+                        string xml = new ItemsClient(configParms.BHLWSEndpoint).GetItemNamesXml((int)item.ItemID);
                         string fileName = String.Format(configParms.NameFileFormat, item.BarCode);
                         string fileLocation = String.Format(configParms.NameFilePathFormat,
                             item.OcrFolderShare, item.FileRootFolder, fileName);
@@ -111,7 +110,7 @@ namespace MOBOT.BHL.BHLNameFileGenerator
                         fileAccessProvider.SaveFile(new ASCIIEncoding().GetBytes(xml), fileLocation);
 
                         // Update log information
-                        wsClient.ItemNameFileLogUpdateCreateDate(item.LogID);
+                        new ItemNameFileLogClient(configParms.BHLWSEndpoint).UpdateItemNameFileLogCreateDate((int)item.LogID);
                         this.filesCreated.Add(item.ItemID.ToString());
                         this.LogMessage("Name file written for item " + item.ItemID.ToString());
                     }
@@ -135,15 +134,14 @@ namespace MOBOT.BHL.BHLNameFileGenerator
             try
             {
                 this.LogMessage("Uploading files");
-                BHLWS.BHLWSSoapClient wsClient = new MOBOT.BHL.BHLNameFileGenerator.BHLWS.BHLWSSoapClient();
-                BHLWS.ItemNameFileLog[] items = wsClient.ItemNameFileLogSelectForUpload();
+                ICollection<ItemNameFileLog> items = new ItemNameFileLogClient(configParms.BHLWSEndpoint).GetItemNameFileLogForUpload();
 
                 int consecutiveErrors = 0;
                 s3 = new S3(ConfigurationManager.AppSettings["IAS3AccessKey"], ConfigurationManager.AppSettings["IAS3SecretKey"]);
 
                 if (items != null)
                 {
-                    foreach (BHLWS.ItemNameFileLog item in items)
+                    foreach (ItemNameFileLog item in items)
                     {
                         try
                         {
@@ -158,13 +156,13 @@ namespace MOBOT.BHL.BHLNameFileGenerator
                             // Update log information
                             if (putResult == "Success")
                             {
-                                wsClient.ItemNameFileLogUpdateUploadDate(item.LogID);
+                                new ItemNameFileLogClient(configParms.BHLWSEndpoint).UpdateItemNameFileLogUploadDate((int)item.LogID);
                                 this.filesUploaded.Add(item.ItemID.ToString());
                                 this.LogMessage("Name file uploaded for item " + item.ItemID.ToString());
                             }
                             else if (putResult.ToLower().Contains("403"))   // "Forbidden" error; see details below
                             {
-                                wsClient.ItemNameFileLogUpdateUploadDate(item.LogID);
+                                new ItemNameFileLogClient(configParms.BHLWSEndpoint).UpdateItemNameFileLogUploadDate((int)item.LogID);
                                 this.LogMessage("Name file skipped (forbidden) for item " + item.ItemID.ToString());
                             }
                             else
@@ -298,23 +296,21 @@ namespace MOBOT.BHL.BHLNameFileGenerator
         {
             try
             {
-                string thisComputer = Environment.MachineName;
-                MailMessage mailMessage = new MailMessage();
-                MailAddress mailAddress = new MailAddress(configParms.EmailFromAddress);
-                mailMessage.From = mailAddress;
-                mailMessage.To.Add(configParms.EmailToAddress);
-                if (this.errorMessages.Count == 0)
-                {
-                    mailMessage.Subject = "BHLNameFileGenerator: Name File Processing on " + thisComputer + " completed successfully.";
-                }
-                else
-                {
-                    mailMessage.Subject = "BHLNameFileGenerator: Name File Processing on " + thisComputer + " completed with errors.";
-                }
-                mailMessage.Body = message;
+                EmailClient restClient = null;
 
-                SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
-                smtpClient.Send(mailMessage);
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = string.Format("BHLNameFileGenerator: Name File Processing on {0} completed {1}.", 
+                    Environment.MachineName, 
+                    (errorMessages.Count == 0) ? "successfully" : "with errors"); ;
+                mailRequest.Body = message;
+                mailRequest.From = configParms.EmailFromAddress;
+
+                List<string> recipients = new List<string>();
+                foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
+
+                restClient = new EmailClient(configParms.BHLWSEndpoint);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {

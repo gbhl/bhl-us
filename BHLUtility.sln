@@ -9,16 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLCoreDAL", "BHLCoreDAL\BH
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLServer", "BHLServer\BHLServer.csproj", "{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLWebService", "BHLService\BHLWebService.csproj", "{B33B346A-953D-45FB-B76F-68E12346C9B3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOIDeposit", "DOIDeposit\DOIDeposit.csproj", "{58AB270D-FF83-4CA0-A55A-49B176B08236}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DOIDeposit", "DOIDeposit\DOIDeposit.csproj", "{58AB270D-FF83-4CA0-A55A-49B176B08236}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLWebUtilities", "BHLWebUtilities\BHLWebUtilities.csproj", "{7E1631E8-F28A-4F9E-97E4-F8A69522D9DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLDOIService", "BHLDOIService\BHLDOIService.csproj", "{166D6CEE-D383-4FAA-B4F7-EB1587C13C7F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B33B346A-953D-45FB-B76F-68E12346C9B3} = {B33B346A-953D-45FB-B76F-68E12346C9B3}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFlickrThumbGrab", "BHLFlickrThumbGrab\BHLFlickrThumbGrab.csproj", "{3097F2DC-8A23-447E-BAAF-7A3AF859CC08}"
 EndProject
@@ -27,13 +22,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLNameFileGenerator", "BHLNameFileGenerator\BHLNameFileGenerator.csproj", "{43C3EB45-3DD6-430F-8205-40A7BF2FDA6A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLPageNameRefresh", "BHLPageNameRefresh\BHLPageNameRefresh.csproj", "{9A4A5D63-EAF8-4B13-B030-4C387879A046}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B33B346A-953D-45FB-B76F-68E12346C9B3} = {B33B346A-953D-45FB-B76F-68E12346C9B3}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLPDFGenerator", "BHLPDFGenerator\BHLPDFGenerator.csproj", "{55652FF0-F2B9-467C-AD14-C78D264D2DFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IAUtilities", "IAUtilities\IAUtilities.csproj", "{DE3A52C7-11EF-4E87-ABBE-2792152C99BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IAUtilities", "IAUtilities\IAUtilities.csproj", "{DE3A52C7-11EF-4E87-ABBE-2792152C99BC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomDataAccess", "CustomDataAccess\CustomDataAccess.csproj", "{28227DF3-62E5-46B2-BABB-C21684EA7425}"
 EndProject
@@ -49,9 +41,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{90CB2D
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLOcrRefresh", "BHLOcrRefresh\BHLOcrRefresh.csproj", "{5E39CA6D-AC40-4E77-8422-A072102F5A7B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B33B346A-953D-45FB-B76F-68E12346C9B3} = {B33B346A-953D-45FB-B76F-68E12346C9B3}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLSearchIndexQueueLoad", "BHLSearchIndexQueueLoad\BHLSearchIndexQueueLoad.csproj", "{A7B69AB9-E32B-48BA-B498-40798A064689}"
 EndProject
@@ -61,47 +50,33 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLSearchIndexer", "BHLSear
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextImportUtility", "TextImportUtility\TextImportUtility.csproj", "{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLTextImportProcessor", "BHLTextImportProcessor\BHLTextImportProcessor.csproj", "{736A2991-6F3F-4431-9EA9-315E70D5CB13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLTextImportProcessor", "BHLTextImportProcessor\BHLTextImportProcessor.csproj", "{736A2991-6F3F-4431-9EA9-315E70D5CB13}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database-BHL", "Database-BHL\Database-BHL.sqlproj", "{1EBA8419-B379-473B-B641-7AA6FDDB30A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportBase", "ExportBase\ExportBase.csproj", "{D8346831-DA53-48C6-9A88-59ED4EDC1A84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExportBase", "ExportBase\ExportBase.csproj", "{D8346831-DA53-48C6-9A88-59ED4EDC1A84}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportRIS", "ExportRIS\ExportRIS.csproj", "{4919C9D5-EE52-42C9-8176-526E6ECFB3B4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B33B346A-953D-45FB-B76F-68E12346C9B3} = {B33B346A-953D-45FB-B76F-68E12346C9B3}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLExportProcessor", "BHLExportProcessor\BHLExportProcessor.csproj", "{F08158A8-E657-4D11-A64B-D5F033E88D49}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B33B346A-953D-45FB-B76F-68E12346C9B3} = {B33B346A-953D-45FB-B76F-68E12346C9B3}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportMODS", "ExportMODS\ExportMODS.csproj", "{A157AFA5-3DB7-48A7-A723-AB366C894CC2}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B33B346A-953D-45FB-B76F-68E12346C9B3} = {B33B346A-953D-45FB-B76F-68E12346C9B3}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportBibTeX", "ExportBibTeX\ExportBibTeX.csproj", "{72398C08-6921-4AB7-85E9-8DA7A3E43026}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B33B346A-953D-45FB-B76F-68E12346C9B3} = {B33B346A-953D-45FB-B76F-68E12346C9B3}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportIAID", "ExportIAID\ExportIAID.csproj", "{6F9D630F-9C20-4BC7-8615-25D89CEC66E3}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B33B346A-953D-45FB-B76F-68E12346C9B3} = {B33B346A-953D-45FB-B76F-68E12346C9B3}
-	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportTSV", "ExportTSV\ExportTSV.csproj", "{C0114D29-F764-4185-B71F-E2FB620AAD0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExportTSV", "ExportTSV\ExportTSV.csproj", "{C0114D29-F764-4185-B71F-E2FB620AAD0B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportKBART", "ExportKBART\ExportKBART.csproj", "{3904AFCF-5EFD-4889-BB44-367ACA50A88C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B33B346A-953D-45FB-B76F-68E12346C9B3} = {B33B346A-953D-45FB-B76F-68E12346C9B3}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAI2", "OAI2\OAI2.csproj", "{0CCCA0FE-D82C-406E-9113-191393E039F7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAIMODS", "OAIMODS\OAIMODS.csproj", "{1C13023A-C5FA-4C41-BD70-3F94CCD23167}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHL.WebServiceREST.v1", "BHLWebServiceREST.v1\BHL.WebServiceREST.v1.csproj", "{1BDEB834-C66D-45AA-9434-106B3142E654}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHL.WebServiceREST.v1.Client", "BHLWebServiceREST.v1.Client\BHL.WebServiceREST.v1.Client.csproj", "{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -143,16 +118,6 @@ Global
 		{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}.Release|x86.ActiveCfg = Release|Any CPU
-		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|x86.ActiveCfg = Release|Any CPU
 		{58AB270D-FF83-4CA0-A55A-49B176B08236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{58AB270D-FF83-4CA0-A55A-49B176B08236}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58AB270D-FF83-4CA0-A55A-49B176B08236}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -481,6 +446,30 @@ Global
 		{1C13023A-C5FA-4C41-BD70-3F94CCD23167}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1C13023A-C5FA-4C41-BD70-3F94CCD23167}.Release|x86.ActiveCfg = Release|Any CPU
 		{1C13023A-C5FA-4C41-BD70-3F94CCD23167}.Release|x86.Build.0 = Release|Any CPU
+		{1BDEB834-C66D-45AA-9434-106B3142E654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BDEB834-C66D-45AA-9434-106B3142E654}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BDEB834-C66D-45AA-9434-106B3142E654}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1BDEB834-C66D-45AA-9434-106B3142E654}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1BDEB834-C66D-45AA-9434-106B3142E654}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1BDEB834-C66D-45AA-9434-106B3142E654}.Debug|x86.Build.0 = Debug|Any CPU
+		{1BDEB834-C66D-45AA-9434-106B3142E654}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BDEB834-C66D-45AA-9434-106B3142E654}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BDEB834-C66D-45AA-9434-106B3142E654}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1BDEB834-C66D-45AA-9434-106B3142E654}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1BDEB834-C66D-45AA-9434-106B3142E654}.Release|x86.ActiveCfg = Release|Any CPU
+		{1BDEB834-C66D-45AA-9434-106B3142E654}.Release|x86.Build.0 = Release|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Debug|x86.Build.0 = Debug|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Release|x86.ActiveCfg = Release|Any CPU
+		{F687BC49-FF84-47F5-B67F-2101A8AEFDF3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -21,19 +21,6 @@ namespace IAAnalysisHarvest
             set { _endDate = value; }
         }
 
-        private string _smtpHost = "";
-        public string SMTPHost
-        {
-            get
-            {
-                return _smtpHost;
-            }
-            set
-            {
-                _smtpHost = value;
-            }
-        }
-
         private string _emailFromAddress = "";
         public string EmailFromAddress
         {
@@ -113,6 +100,8 @@ namespace IAAnalysisHarvest
             }
         }
 
+        public string BHLWSEndpoint { get; set; } = string.Empty;
+
         public void LoadAppConfig()
         {
             XmlDocument doc = new XmlDocument();
@@ -129,10 +118,6 @@ namespace IAAnalysisHarvest
                     if (node.Attributes.GetNamedItem("key").Value == "EndDate")
                     {
                         if (DateTime.TryParse(node.Attributes.GetNamedItem("value").Value, out DateTime value)) this.EndDate = value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "SMTPHost")
-                    {
-                        this.SMTPHost = node.Attributes.GetNamedItem("value").Value;
                     }
                     if (node.Attributes.GetNamedItem("key").Value == "EmailFromAddress")
                     {
@@ -161,6 +146,10 @@ namespace IAAnalysisHarvest
                     if (node.Attributes.GetNamedItem("key").Value == "MarcExtension")
                     {
                         this.MarcExtension = node.Attributes.GetNamedItem("value").Value;
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "BHLWSUrl")
+                    {
+                        this.BHLWSEndpoint = node.Attributes.GetNamedItem("value").Value;
                     }
                 }
             }

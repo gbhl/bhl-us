@@ -245,9 +245,9 @@ namespace MOBOT.BHL.Server
             return new ItemDAL().ItemSelectWithSuspectCharacters(null, null, institutionCode, maxAge);
         }
 
-        public string ItemGetNamesXMLByItemID(int itemID, string barcode)
+        public string ItemGetNamesXMLByItemID(int itemID)
         {
-            return new ItemDAL().ItemGetNamesXMLByItemID(null, null, itemID, barcode);
+            return new ItemDAL().ItemGetNamesXMLByItemID(null, null, itemID);
         }
 
         public List<Item> ItemSelectPublished()

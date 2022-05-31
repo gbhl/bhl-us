@@ -1,4 +1,6 @@
-﻿using MOBOT.BHLImport.DataObjects;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
+using MOBOT.BHLImport.DataObjects;
 using MOBOT.BHLImport.Server;
 using System;
 using System.Collections.Generic;
@@ -205,13 +207,17 @@ namespace IAHarvestAsync
         {
             try
             {
-                MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress(configParms.EmailFromAddress);
-                mailMessage.To.Add(configParms.EmailToAddress);
-                mailMessage.Subject = string.Format("IAHarvestAsync: IA Harvesting on {0} completed with {1} errors.", Environment.MachineName, errorMessages.Count.ToString());
-                mailMessage.Body = message;
-                SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
-                smtpClient.Send(mailMessage);
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = string.Format("IAHarvestAsync: IA Harvesting on {0} completed with {1} errors.", Environment.MachineName, errorMessages.Count.ToString());
+                mailRequest.Body = message;
+                mailRequest.From = configParms.EmailFromAddress;
+
+                List<string> recipients = new List<string>();
+                foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
+
+                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {

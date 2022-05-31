@@ -5,19 +5,6 @@ namespace IAHarvest
 {
     public class ConfigParms
     {
-        private string _smtpHost = "";
-        public string SMTPHost
-        {
-            get
-            {
-                return _smtpHost;
-            }
-            set
-            {
-                _smtpHost = value;
-            }
-        }
-
         private string _emailFromAddress = "";
         public string EmailFromAddress
         {
@@ -404,6 +391,8 @@ namespace IAHarvest
             }
         }
 
+        public string BHLWSEndpoint { get; set; } = string.Empty;
+
         public void LoadAppConfig()
         {
             XmlDocument doc = new XmlDocument();
@@ -413,10 +402,6 @@ namespace IAHarvest
             {
                 if (node.Name == "add")
                 {
-                    if (node.Attributes.GetNamedItem("key").Value == "SMTPHost")
-                    {
-                        this.SMTPHost = node.Attributes.GetNamedItem("value").Value;
-                    }
                     if (node.Attributes.GetNamedItem("key").Value == "EmailFromAddress")
                     {
                         this.EmailFromAddress = node.Attributes.GetNamedItem("value").Value;
@@ -524,6 +509,10 @@ namespace IAHarvest
                     if (node.Attributes.GetNamedItem("key").Value == "LocalFileFolder")
                     {
                         this.LocalFileFolder = node.Attributes.GetNamedItem("value").Value;
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "BHLWSUrl")
+                    {
+                        this.BHLWSEndpoint = node.Attributes.GetNamedItem("value").Value;
                     }
                 }
             }

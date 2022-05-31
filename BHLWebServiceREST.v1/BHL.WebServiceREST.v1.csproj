@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+	<OpenApiDocumentName>v1</OpenApiDocumentName>
+	<Configurations>Debug;Release</Configurations>
+    <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+  </PropertyGroup>
+
+  <Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
+	<Exec Command="dotnet swagger tofile --serializeasv2 --output $(OutputPath)$(AssemblyName).json $(OutputPath)$(AssemblyName).dll $(OpenApiDocumentName)" ContinueOnError="true" />
+  </Target>
+
+  <ItemGroup>
+    <None Remove="gnfinder.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="gnfinder.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="3.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj" />
+    <ProjectReference Include="..\BHLServer\BHLServer.csproj" />
+    <ProjectReference Include="..\OAI2\OAI2.csproj" />
+    <ProjectReference Include="..\OAIMODS\OAIMODS.csproj" />
+  </ItemGroup>
+
+</Project>

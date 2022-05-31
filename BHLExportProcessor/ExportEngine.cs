@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
+using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
@@ -148,25 +150,20 @@ namespace BHL.Export
         {
             try
             {
-                string thisComputer = Environment.MachineName;
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = string.Format("{0} export: Processing on {1} completed {2}.", 
+                    _configParms.ProcessorToRun, 
+                    Environment.MachineName, 
+                    withErrors ? "with errors" : "successfully"); ;
+                mailRequest.Body = message;
+                mailRequest.From = _configParms.EmailFromAddress;
 
-                MailMessage mailMessage = new MailMessage();
-                MailAddress mailAddress = new MailAddress(_configParms.EmailFromAddress);
-                mailMessage.From = mailAddress;
-                mailMessage.To.Add(_configParms.EmailToAddress);
-                mailMessage.Body = message;
+                List<string> recipients = new List<string>();
+                foreach (string recipient in _configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
 
-                if (!withErrors)
-                {
-                    mailMessage.Subject = string.Format("{0} export: Processing on {1} completed successfully.", _configParms.ProcessorToRun, thisComputer);
-                }
-                else
-                {
-                    mailMessage.Subject = string.Format("{0} export: Processing on {1} completed with errors.", _configParms.ProcessorToRun, thisComputer);
-                }
-
-                SmtpClient smtpClient = new SmtpClient(_configParms.SMTPHost);
-                smtpClient.Send(mailMessage);
+                EmailClient restClient = new EmailClient(_configParms.BHLWSEndpoint);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {

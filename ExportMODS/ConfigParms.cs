@@ -25,6 +25,8 @@ namespace BHL.Export.MODS
         public string MODSInternalTitleFile { get; set; } = string.Empty;
         public string MODSInternalTitleZipFile { get; set; } = String.Empty;
 
+        public string BHLWSEndpoint { get; set; } = string.Empty;
+
         public void LoadAppConfig()
         {
             this.MODSItemTempFile = ConfigurationManager.AppSettings["MODSItemTempFile"];
@@ -46,6 +48,8 @@ namespace BHL.Export.MODS
             this.MODSInternalSegmentTempFile = ConfigurationManager.AppSettings["MODSInternalSegmentTempFile"];
             this.MODSInternalSegmentFile = ConfigurationManager.AppSettings["MODSInternalSegmentFile"];
             this.MODSInternalSegmentZipFile = ConfigurationManager.AppSettings["MODSInternalSegmentZipFile"];
+
+            this.BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
     }
 }

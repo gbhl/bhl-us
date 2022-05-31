@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MOBOT.BHL.BHLPDFGenerator.BHLWS;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
 using iTextSharp.text;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.BHLPDFGenerator
 {
@@ -10,14 +10,14 @@ namespace MOBOT.BHL.BHLPDFGenerator
     {
         #region Attributes
 
-        private Page[] _pageMetadata = null;
+        private ICollection<Page> _pageMetadata = null;
         private PDF _pdfRecord = null;
         public PDF PdfRecord
         {
             get { return _pdfRecord; }
             set { 
                 _pdfRecord = value; 
-                _pageMetadata = (_pdfRecord.BookID == null ? new BHLWS.BHLWS().PageMetadataSelectBySegmentID((int)_pdfRecord.SegmentID) : new BHLWS.BHLWS().PageMetadataSelectByItemID((int)_pdfRecord.BookID));
+                _pageMetadata = (_pdfRecord.BookID == null ? new SegmentsClient(_bhlWSUrl).GetSegmentPages((int)_pdfRecord.SegmentID) : new BooksClient(_bhlWSUrl).GetBookPages((int)_pdfRecord.BookID));
             }
         }
 
@@ -40,6 +40,13 @@ namespace MOBOT.BHL.BHLPDFGenerator
         {
             get { return _urlFormat; }
             set { _urlFormat = value; }
+        }
+
+        private String _bhlWSUrl = String.Empty;
+        public String BHLWSUrl
+        {
+            get { return _bhlWSUrl; }
+            set { _bhlWSUrl = value; }
         }
 
         private String _fileName = String.Empty;
@@ -91,8 +98,9 @@ namespace MOBOT.BHL.BHLPDFGenerator
         {
         }
 
-        public PDFDocument(PDF pdfRecord, List<String> pageUrls, String filePathFormat, String urlFormat)
+        public PDFDocument(PDF pdfRecord, List<String> pageUrls, String filePathFormat, String urlFormat, string bhlWSUrl)
         {
+            this.BHLWSUrl = bhlWSUrl;
             this.PdfRecord = pdfRecord;
             this.PageUrls = pageUrls;
             this.FilePathFormat = filePathFormat;
@@ -124,7 +132,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                     new System.IO.FileStream(String.Format(this.FilePathFormat, fileName), System.IO.FileMode.Create));
 
                 // Add metadata if this is to be the final document
-                if (this.PdfRecord.ImagesOnly)
+                if (this.PdfRecord.ImagesOnly ?? true)
                 {
                     AddMetadata(doc);
                     writer.XmpMetadata = this.GetXmpMetadata();
@@ -158,7 +166,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 doc.Close();
 
                 // If requested, add the OCR to the PDF
-                if (!this.PdfRecord.ImagesOnly)
+                if (!this.PdfRecord.ImagesOnly ?? true)
                 {
                     _pageLabels.Add("OCR");
                     this.AddOCRToPDF(String.Format(this.FilePathFormat, fileName));
@@ -209,7 +217,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
             if (this.PdfRecord.ArticleTitle == string.Empty && this.PdfRecord.ArticleCreators == string.Empty && this.PdfRecord.SegmentID != null)
             {
-                Segment segment = new BHLWS.BHLWS().SegmentSelectExtended((int)this.PdfRecord.SegmentID);
+                Segment segment = new SegmentsClient(_bhlWSUrl).GetSegmentDetails((int)this.PdfRecord.SegmentID);
                 if (segment != null)
                 {
                     doc.AddTitle(segment.Title);
@@ -236,7 +244,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 iTextSharp.text.xml.xmp.XmpSchema dc = new iTextSharp.text.xml.xmp.DublinCoreSchema();
 
                 Segment segment = null;
-                if (PdfRecord.SegmentID != null) segment = new BHLWS.BHLWS().SegmentSelectExtended((int)PdfRecord.SegmentID);
+                if (PdfRecord.SegmentID != null) segment = new SegmentsClient(_bhlWSUrl).GetSegmentDetails((int)this.PdfRecord.SegmentID);
 
                 // Add Dublin Core attributes
                 iTextSharp.text.xml.xmp.LangAlt dcTitle = new iTextSharp.text.xml.xmp.LangAlt();
@@ -514,16 +522,18 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
         private void AddHeaderPages(Document doc, String fileName)
         {
-            BHLWS.BHLWS service = new MOBOT.BHL.BHLPDFGenerator.BHLWS.BHLWS();
-            PageSummaryView[] pages = service.PDFPageSummaryViewSelectByPdfID(this.PdfRecord.PdfID);
+            //BHLWS.BHLWS service = new MOBOT.BHL.BHLPDFGenerator.BHLWS.BHLWS();
+            ICollection<PageSummaryView> pages = new PageSummaryViewClient(_bhlWSUrl).GetPageSummaryViewByPdf((int)this.PdfRecord.PdfID);
 
-            if (pages.Length > 0)
+            if (pages.Count > 0)
             {
+                PageSummaryView firstPage = ((List<PageSummaryView>)pages)[0];
+
                 _pageLabels.Add("Title Page");
                 _pageLabels.Add(" ");
 
                 Title title = new Title();
-                title = service.TitleSelectByTitleID(pages[0].TitleID);
+                title = new TitlesClient(_bhlWSUrl).GetTitle((int)firstPage.TitleID);
 
                 // Set up the fonts to be used
                 iTextSharp.text.Font largeFont = new iTextSharp.text.Font(iTextSharp.text.Font.HELVETICA, 14, iTextSharp.text.Font.BOLD, iTextSharp.text.Color.BLACK);
@@ -534,7 +544,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 String bhlUrl = "https://www.biodiversitylibrary.org/";
                 Anchor bhlAnchor = new Anchor(bhlUrl, standardFont);
                 bhlAnchor.Reference = bhlUrl;
-                String titleUrl = "https://www.biodiversitylibrary.org/bibliography/" + pages[0].TitleID.ToString();
+                String titleUrl = "https://www.biodiversitylibrary.org/bibliography/" + firstPage.TitleID.ToString();
                 Anchor titleAnchor = new Anchor(titleUrl, standardFont);
                 titleAnchor.Reference = titleUrl;
                 String itemUrl;
@@ -560,7 +570,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 // Add text
                 this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, standardFont, bhlAnchor);
                 this.AddSpace(doc, standardFont);
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, largeFont, pages[0].FullTitle, 60, 60);
+                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, largeFont, firstPage.FullTitle, 60, 60);
                 this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, title.PublicationDetails, 60, 60);
                 this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, titleAnchor, 60, 60);
                 this.AddSpace(doc, standardFont);
@@ -571,7 +581,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                     Segment segment = null;
                     if (this._pdfRecord.SegmentID != null)
                     {
-                        segment = service.SegmentSelectAuto((int)this._pdfRecord.SegmentID);
+                        segment = new SegmentsClient(_bhlWSUrl).GetSegment((int)this._pdfRecord.SegmentID);
                         if (segment != null)
                         {
                             this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, largeFont, segment.Title, 60, 60);
@@ -583,13 +593,13 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 if (PdfRecord.BookID != null)
                 {
                     // Include the volume
-                    if ((pages[0].Volume ?? "") == "")
+                    if ((firstPage.Volume ?? "") == "")
                     {
                         volumeInfo.Add(new Chunk((_pdfRecord.BookID != null ? "Item: " : "Part: "), largeFont));
                     }
                     else
                     {
-                        volumeInfo.Add(new Chunk(pages[0].Volume + ": ", largeFont));
+                        volumeInfo.Add(new Chunk(firstPage.Volume + ": ", largeFont));
                     }
                 }
                 volumeInfo.Add(itemAnchor);
@@ -608,7 +618,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 String pageList = String.Empty;
                 foreach (PageSummaryView page in pages)
                 {
-                    String pageDesc = this.GetPageDescription(page.PageID);
+                    String pageDesc = this.GetPageDescription((int)page.PageID);
                     _pageLabels.Add(pageDesc);
                     if (pageDesc != String.Empty)
                     {
@@ -623,26 +633,26 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 string sponsor = string.Empty;
                 if (this.PdfRecord.BookID != null)
                 {
-                    Book book = service.BookSelectAuto((int)this.PdfRecord.BookID);
+                    Book book = new BooksClient(_bhlWSUrl).GetBook((int)this.PdfRecord.BookID);
                     if (book != null) sponsor = book.Sponsor;
                 }
 
                 string role;
-                Institution[] institutions;
+                ICollection<Institution> institutions;
                 if (this.PdfRecord.BookID != null)
                 {
                     role = "Holding Institution";
-                    institutions = service.InstitutionSelectByItemIDAndRole(pages[0].ItemID, role);
+                    institutions = new ItemsClient(_bhlWSUrl).GetItemInstitutionsByRole((int)firstPage.ItemID, role);
                 }
                 else
                 {
                     role = "Contributor";
-                    institutions = service.InstitutionSelectBySegmentIDAndRole((int)this.PdfRecord.SegmentID, role);
+                    institutions = new SegmentsClient(_bhlWSUrl).GetSegmentInstitutionsByRole((int)this.PdfRecord.SegmentID, role);
                 }
 
                 if (institutions != null || sponsor != string.Empty)
                 {
-                    Institution institution = institutions[0];
+                    Institution institution = ((List<Institution>)institutions)[0];
                     if (institution != null) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, role + ": " + institution.InstitutionName, 60, 60);
                     if (sponsor != String.Empty) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, "Sponsored by: " + sponsor, 60, 60);
                     this.AddSpace(doc, standardFont);

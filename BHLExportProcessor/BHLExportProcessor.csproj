@@ -35,9 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=2.0.9.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.10\lib\net45\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -53,11 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigParms.cs" />
-    <Compile Include="Connected Services\BHLWS\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="ExportEngine.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
@@ -68,127 +60,16 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.AnnotatedItem.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.AnnotatedPage.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.AnnotatedPageCharacteristic.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.AnnotatedTitle.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Annotation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.AnnotationNote.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.AnnotationRelation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.AnnotationSubject.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Annotation_AnnotationConcept.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Book.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.DOI.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.DOIInsertIdentifierResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.DOIUpdateBatchIDResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.DOIUpdateDOINameResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.DOIUpdateStatusResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.GetPaginationStatusStringResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Institution.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Item.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.ItemNameFileLog.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.KBART.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.NameFinderResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Page.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.PageFlickr.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.PageSummaryView.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.PageType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.PDF.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.RISCitation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Segment.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Title.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.TitleBibTeX.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Title_Identifier.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Vault.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\BHLWS\BHLWS.wsdl" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\BHLWS\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\BHLWS\BHLWS.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\BHLWS\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\BHLWS\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\BHLWS\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\BHLWebServiceREST.v1.Client\BHL.WebServiceREST.v1.Client.csproj">
+      <Project>{f687bc49-ff84-47f5-b67f-2101a8aefdf3}</Project>
+      <Name>BHL.WebServiceREST.v1.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExportBase\ExportBase.csproj">
       <Project>{d8346831-da53-48c6-9a88-59ed4edc1a84}</Project>
       <Name>ExportBase</Name>
@@ -217,6 +98,14 @@
       <Project>{c0114d29-f764-4185-b71f-e2fb620aad0b}</Project>
       <Name>ExportTSV</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="log4net">
+      <Version>2.0.10</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

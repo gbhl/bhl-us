@@ -8,6 +8,11 @@ namespace MOBOT.BHL.Server
 {
     public partial class BHLProvider
     {
+        public DOI DOISelectAuto(int doiID)
+        {
+            return new DOIDAL().DOISelectAuto(null, null, doiID);
+        }
+
         public List<DOI> DOISelectSubmitted(int minutesSinceSubmit)
         {
             return new DOIDAL().DOISelectSubmitted(null, null, minutesSinceSubmit);

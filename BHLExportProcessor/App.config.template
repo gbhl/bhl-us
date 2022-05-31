@@ -30,6 +30,9 @@
     -->
     <add key="Processors" value="RIS | BHL.Export.RIS&#xA;MODS | BHL.Export.MODS&#xA;BibTeX | BHL.Export.BibTeX&#xA;IAID | BHL.Export.IAID&#xA;TSV | BHL.Export.TSV&#xA;KBART | BHL.Export.KBART" />
 
+    <!-- REST endpoint -->
+    <add key = "BHLWSUrl" value="BHLWS SERVICE URL" />
+
     <!-- ********************************** -->
     <!--    Settings for each processor     -->
     <!--  Each processor included in the    -->

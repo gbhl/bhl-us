@@ -6,7 +6,6 @@ namespace MOBOT.BHL.BHLBioStorHarvest
 {
     public class ConfigParms
     {
-        public string SMTPHost { get; set; }
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
 
@@ -31,10 +30,11 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         public string BioStorItemArticlesUrl { get; set; }
         public string BioStorItemsChangedSinceUrl { get; set; }
         public string CrossRefOpenUrlDOIGet { get; set; }
+        
+        public string BHLWSEndpoint { get; set; } = string.Empty;
 
         public void LoadAppConfig()
         {
-            SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
 
@@ -58,6 +58,8 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             BioStorItemArticlesUrl = ConfigurationManager.AppSettings["BioStorItemArticlesUrl"];
             BioStorItemsChangedSinceUrl = ConfigurationManager.AppSettings["BioStorItemsChangedSinceUrl"];
             CrossRefOpenUrlDOIGet = ConfigurationManager.AppSettings["CrossRefOpenUrlDOIGet"];
+
+            BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
 
         public void UpdateAppSetting(string key, object value)

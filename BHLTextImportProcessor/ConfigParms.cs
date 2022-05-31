@@ -16,6 +16,7 @@ namespace BHL.TextImportProcessor
         public int TextImportBatchFileStatusError { get; set; }
         public string TextImportFilePath { get; set; }
         public string TextImportLocalFilePath { get; set; }
+        public string BHLWSEndpoint { get; set; } = string.Empty;
 
         public ConfigParms()
         {
@@ -30,6 +31,7 @@ namespace BHL.TextImportProcessor
             TextImportBatchFileStatusError = 0;
             TextImportFilePath = string.Empty;
             TextImportLocalFilePath = string.Empty;
+            BHLWSEndpoint = String.Empty;
         }
 
         public void LoadAppConfig()
@@ -45,6 +47,7 @@ namespace BHL.TextImportProcessor
             this.TextImportBatchFileStatusError = Convert.ToInt32(ConfigurationManager.AppSettings["TextImportBatchFileStatusError"]);
             this.TextImportFilePath = ConfigurationManager.AppSettings["TextImportFilePath"];
             this.TextImportLocalFilePath = ConfigurationManager.AppSettings["TextImportLocalFilePath"];
+            this.BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
     }
 }

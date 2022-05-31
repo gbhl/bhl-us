@@ -1,12 +1,14 @@
-﻿using System;
+﻿using WS = BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
+using FreeImageAPI;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using System.Xml.Linq;
-using FreeImageAPI;
-using MOBOT.BHL.BHLFlickrThumbGrab.BHLWS;
+using BHL.WebServiceREST.v1;
 
 namespace MOBOT.BHL.BHLFlickrThumbGrab
 {
@@ -68,10 +70,10 @@ namespace MOBOT.BHL.BHLFlickrThumbGrab
         {
             List<FlickrImageDetail> imageList = new List<FlickrImageDetail>();
 
-            BHLWSSoapClient ws = new BHLWSSoapClient();
-            PageFlickr[] randomImages = ws.PageFlickrSelectRandom(10);
+            PageFlickrClient restClient = new PageFlickrClient(configParms.BHLWSEndpoint);
+            ICollection<WS.PageFlickr> randomImages = restClient.GetPageFlickrRandom(10);
 
-            foreach (PageFlickr image in randomImages)
+            foreach (WS.PageFlickr image in randomImages)
             {
                 FlickrImageDetail imageDetail = new FlickrImageDetail();
 
@@ -356,16 +358,26 @@ namespace MOBOT.BHL.BHLFlickrThumbGrab
         {
             try
             {
-                MailMessage mailMessage = new MailMessage();
-                MailAddress mailAddress = new MailAddress(fromAddress);
-                mailMessage.From = mailAddress;
-                mailMessage.To.Add(toAddress);
-                if (ccAddresses != String.Empty) mailMessage.CC.Add(ccAddresses);
-                mailMessage.Subject = subject;
-                mailMessage.Body = message;
+                EmailClient restClient = null;
 
-                SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
-                smtpClient.Send(mailMessage);
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = subject;
+                mailRequest.Body = message;
+                mailRequest.From = fromAddress;
+
+                List<string> recipients = new List<string>();
+                foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
+
+                if (ccAddresses != String.Empty)
+                {
+                    List<string> ccs = new List<string>();
+                    foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
+                    mailRequest.Cc = ccs;
+                }
+
+                restClient = new EmailClient(configParms.BHLWSEndpoint);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {

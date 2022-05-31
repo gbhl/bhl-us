@@ -38,6 +38,9 @@
     <Reference Include="log4net, Version=2.0.9.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.10\lib\net45\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -54,11 +57,6 @@
     <Compile Include="ConfigParms.cs" />
     <Compile Include="OcrProcessor.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Service References\BHLWS\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config.template" />
@@ -69,101 +67,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
-    <None Include="Service References\BHLWS\BHLWS.disco" />
-    <None Include="Service References\BHLWS\BHLWS.wsdl" />
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.AnnotatedItem.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.AnnotatedPage.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.AnnotatedPageCharacteristic.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.AnnotatedTitle.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.Annotation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.AnnotationNote.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.AnnotationRelation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.AnnotationSubject.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.Annotation_AnnotationConcept.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.Book.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.DOI.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.Institution.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.Item.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.ItemNameFileLog.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.KBART.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.NameFinderResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.Page.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.PageFlickr.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.PageSummaryView.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.PageType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.PDF.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.RISCitation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.Segment.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.Title.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.TitleBibTeX.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.Title_Identifier.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.Vault.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\BHLWS\configuration.svcinfo" />
-    <None Include="Service References\BHLWS\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\BHLWS\" />
+    <ProjectReference Include="..\BHLWebServiceREST.v1.Client\BHL.WebServiceREST.v1.Client.csproj">
+      <Project>{f687bc49-ff84-47f5-b67f-2101a8aefdf3}</Project>
+      <Name>BHL.WebServiceREST.v1.Client</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -25,6 +25,8 @@ namespace BHL.Export.BibTeX
         public string BibTexInternalSegmentFile { get; set; } = string.Empty;
         public string BibTexInternalSegmentZipFile { get; set; } = string.Empty;
 
+        public string BHLWSEndpoint { get; set; } = string.Empty;
+
         public void LoadAppConfig()
         {
             this.BibTexItemTempFile = ConfigurationManager.AppSettings["BibTexItemTempFile"];
@@ -46,6 +48,8 @@ namespace BHL.Export.BibTeX
             this.BibTexInternalSegmentTempFile = ConfigurationManager.AppSettings["BibTexInternalSegmentTempFile"];
             this.BibTexInternalSegmentFile = ConfigurationManager.AppSettings["BibTexInternalSegmentFile"];
             this.BibTexInternalSegmentZipFile = ConfigurationManager.AppSettings["BibTexInternalSegmentZipFile"];
+
+            this.BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
     }
 }

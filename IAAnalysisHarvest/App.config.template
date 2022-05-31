@@ -10,7 +10,6 @@
 		<add name ="IAAnalysis" connectionString ="DATABASE CONNECTION STRING" providerName ="System.Data.SqlClient"/>
 	</connectionStrings>
 	<appSettings>
-		<add key="SMTPHost" value="SMTP HOST ADDRESS"/>
 		<add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
 		<add key="EmailToAddress" value="EMAIL RECIPIENTS"/>
 		<!-- DownloadIDs indicates whether or not to get a list of identifiers from Internet Archive -->
@@ -27,7 +26,9 @@
 		<add key="MarcExtension" value="_marc.xml"/>
 		<!-- ####################################################### -->
 
-	</appSettings>
+    <!-- BHLWS service endpoint -->
+    <add key = "BHLWSUrl" value="BHLWS SERVICE URL" />
+  </appSettings>
 	<log4net>
 		<!-- Define some output appenders -->
 		<appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
@@ -49,17 +50,4 @@
 			<appender-ref ref="RollingLogFileAppender" />
 		</root>
 	</log4net>
-    <system.net>
-      <mailSettings>
-        <smtp deliveryMethod="Network">
-          <network defaultCredentials="false"
-                   enableSsl="true"
-                   host="MAIL_SERVER_ADDRESS"
-                   port="MAIL_SERVER_PORT"
-                   userName="MAIL_SERVER_USERNAME"
-                   password="MAIL_SERVER_PASSWORD"
-                   />
-        </smtp>
-      </mailSettings>
-    </system.net>
 </configuration>

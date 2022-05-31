@@ -28,6 +28,9 @@
     <add key="IAHarvestExecutable" value="IAHarvest.exe"/>
     <add key="IAHarvestProcessName" value="IAHarvest"/>
     <add key="IAHarvestMaxInstances" value="2"/>
+
+    <!-- BHLWS service endpoint -->
+    <add key = "BHLWSUrl" value="BHLWS SERVICE URL" />
   </appSettings>
   <log4net>
     <!-- Define some output appenders -->
@@ -52,19 +55,6 @@
       <appender-ref ref="RollingLogFileAppender"/>
     </root>
   </log4net>
-  <system.net>
-    <mailSettings>
-      <smtp deliveryMethod="Network">
-        <network defaultCredentials="false"
-                 enableSsl="true"
-                 host="MAIL_SERVER_ADDRESS"
-                 port="MAIL_SERVER_PORT"
-                 userName="MAIL_SERVER_USERNAME"
-                 password="MAIL_SERVER_PASSWORD"
-                   />
-      </smtp>
-    </mailSettings>
-  </system.net>
   <startup> 
     <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8" />
   </startup>

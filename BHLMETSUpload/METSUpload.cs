@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Net.Mail;
-using System.Web;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
 using MOBOT.IA.Utilities;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Web;
 
 namespace MOBOT.BHL.BHLMETSUpload
 {
@@ -38,7 +39,7 @@ namespace MOBOT.BHL.BHLMETSUpload
             }
 
             string startDate = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy 0:00");
-            ProcessBooks(startDate);
+            //ProcessBooks(startDate);
             ProcessSegments(startDate);
 
             // Report the results of mets generation
@@ -49,33 +50,31 @@ namespace MOBOT.BHL.BHLMETSUpload
 
         private void ProcessBooks(string startDate)
         {
-            BHLWS.BHLWSSoapClient service = new BHLWS.BHLWSSoapClient();
-
-            BHLWS.Book[] items = null;
+            ICollection<Book> items = null;
             try
             {
                 //1 - check for updated items (including title, pages, authors, etc)
-                items = service.BookSelectRecentlyChanged(startDate);
+                items = new BooksClient(configParms.BHLWSEndpoint).GetBooksRecentlyChanged(startDate);
             }
             catch (Exception e)
             {
                 this.LogMessage("Error getting recently changed items: " + e.Message, true);
             }
 
-            if (items != null && items.Length > 0)
+            if (items != null && items.Count > 0)
             {
-                foreach (BHLWS.Book item in items)
+                foreach (Book item in items)
                 {
                     string filename = string.Format("{0}{1}{2}.xml", configParms.UploadFilePath, "book", item.BookID.ToString());
 
                     try
                     {
                         //2 - generate mets file for all new & updated items
-                        BHLWS.Title title = service.TitleSelectByTitleID((int)item.PrimaryTitleID);
-                        string mods = service.GetMODSRecordForItem(item.BookID);
-                        BHLWS.Page[] pages = service.PageMetadataSelectByItemID(item.BookID);
+                        Title title = new TitlesClient(configParms.BHLWSEndpoint).GetTitle((int)item.PrimaryTitleID);
+                        string mods = new ExportsClient(configParms.BHLWSEndpoint).GetItemMODS((int)item.BookID);
+                        ICollection<Page> pages = new BooksClient(configParms.BHLWSEndpoint).GetBookPages((int)item.BookID);
 
-                        string mets = GetMETS(item.BookID, title.FullTitle, item.CopyrightStatus, mods, pages);
+                        string mets = GetMETS((int)item.BookID, title.FullTitle, item.CopyrightStatus, mods, pages);
                         File.WriteAllText(filename, mets);
 
                         filesCreated.Add(item.BookID.ToString());
@@ -94,32 +93,30 @@ namespace MOBOT.BHL.BHLMETSUpload
 
         private void ProcessSegments(string startDate)
         {
-            BHLWS.BHLWSSoapClient service = new BHLWS.BHLWSSoapClient();
-
-            BHLWS.Segment[] segments = null;
+            ICollection<Segment> segments = null;
             try
             {
                 //1 - check for updated segments (including pages, authors, etc)
-                segments = service.SegmentSelectRecentlyChanged(startDate);
+                segments = new SegmentsClient(configParms.BHLWSEndpoint).GetSegmentsRecentlyChanged(startDate);
             }
             catch (Exception e)
             {
                 this.LogMessage("Error getting recently changed items: " + e.Message, true);
             }
 
-            if (segments != null && segments.Length > 0)
+            if (segments != null && segments.Count > 0)
             {
-                foreach (BHLWS.Segment segment in segments)
+                foreach (Segment segment in segments)
                 {
                     string filename = string.Format("{0}{1}{2}.xml", configParms.UploadFilePath, "segment", segment.SegmentID.ToString());
 
                     try
                     {
                         //2 - generate mets file for all new & updated segments
-                        string mods = service.GetMODSRecordForSegment(segment.SegmentID);
-                        BHLWS.Page[] pages = service.PageMetadataSelectBySegmentID(segment.SegmentID);
+                        string mods = new ExportsClient(configParms.BHLWSEndpoint).GetSegmentMODS((int)segment.SegmentID);
+                        ICollection<Page> pages = new SegmentsClient(configParms.BHLWSEndpoint).GetSegmentPages((int)segment.SegmentID);
 
-                        string mets = GetMETS(segment.SegmentID, segment.Title, segment.CopyrightStatus, mods, pages);
+                        string mets = GetMETS((int)segment.SegmentID, segment.Title, segment.CopyrightStatus, mods, pages);
                         File.WriteAllText(filename, mets);
 
                         filesCreated.Add(segment.SegmentID.ToString());
@@ -136,7 +133,7 @@ namespace MOBOT.BHL.BHLMETSUpload
             }
         }
 
-        private string GetMETS(int entityID, string title, string copyrightStatus, string mods, BHLWS.Page[] pages)
+        private string GetMETS(int entityID, string title, string copyrightStatus, string mods, ICollection<Page> pages)
         {
             StringBuilder sb = new StringBuilder("");
             sb.AppendLine(string.Format("<mets:mets xmlns:mods=\"http://www.loc.gov/mods/v3\" xmlns:rights=\"http://www.loc.gov/rights/\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:lc=\"http://www.loc.gov/mets/profiles\" xmlns:mets=\"http://www.loc.gov/METS/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.loc.gov/METS_Profile/ http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-2.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd\" OBJID=\"part/{0}\" LABEL=\"{1}\" PROFILE=\"lc:printMaterial\">", entityID.ToString(), HttpUtility.HtmlEncode(title)));
@@ -168,14 +165,14 @@ namespace MOBOT.BHL.BHLMETSUpload
                 sb.AppendLine("</mets:amdSec>");
             }
 
-            if (pages != null && pages.Length > 0)
+            if (pages != null && pages.Count > 0)
             {
                 StringBuilder refImages = new StringBuilder("");
                 StringBuilder containerPages = new StringBuilder("");
                 StringBuilder pageTypes = new StringBuilder("");
 
                 int count = 1;
-                foreach (BHLWS.Page p in pages)
+                foreach (Page p in pages)
                 {
                     refImages.AppendLine(string.Format("<mets:file ID=\"pageImg{0}\" GROUPID=\"G{1}\" USE=\"reference image\" MIMETYPE=\"image/jpeg\">", p.PageID, count));
                     refImages.AppendLine(string.Format("<mets:FLocat LOCTYPE=\"URL\" xlink:href=\"https://www.biodiversitylibrary.org/pageimage/{0}\" />", p.PageID));
@@ -236,7 +233,6 @@ namespace MOBOT.BHL.BHLMETSUpload
             try
             {
                 this.LogMessage("Uploading file");
-                BHLWS.BHLWSSoapClient wsClient = new BHLWS.BHLWSSoapClient();
                 
                 int consecutiveErrors = 0;
                 s3 = new S3(configParms.IA3AccessKey, configParms.IA3SecretKey);
@@ -404,16 +400,26 @@ namespace MOBOT.BHL.BHLMETSUpload
         {
             try
             {
-                MailMessage mailMessage = new MailMessage();
-                MailAddress mailAddress = new MailAddress(fromAddress);
-                mailMessage.From = mailAddress;
-                mailMessage.To.Add(toAddress);
-                if (ccAddresses != String.Empty) mailMessage.CC.Add(ccAddresses);
-                mailMessage.Subject = subject;
-                mailMessage.Body = message;
+                EmailClient restClient = null;
 
-                SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
-                smtpClient.Send(mailMessage);
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = subject;
+                mailRequest.Body = message;
+                mailRequest.From = fromAddress;
+
+                List<string> recipients = new List<string>();
+                foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
+
+                if (ccAddresses != String.Empty)
+                {
+                    List<string> ccs = new List<string>();
+                    foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
+                    mailRequest.Cc = ccs;
+                }
+
+                restClient = new EmailClient(configParms.BHLWSEndpoint);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {

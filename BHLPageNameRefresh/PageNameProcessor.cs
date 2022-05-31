@@ -1,9 +1,9 @@
+using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
 using System;
 using System.Collections.Generic;
-using System.Net.Mail;
 using System.Text;
 using System.Threading;
-using MOBOT.BHL.PageNameRefresh.BHLWS;
 
 namespace MOBOT.BHL.PageNameRefresh
 {
@@ -19,7 +19,7 @@ namespace MOBOT.BHL.PageNameRefresh
         private static ConfigParms configParms = new ConfigParms();
         private static List<string> processedItems= new List<string>();
         private static List<string> processedPages = new List<string>();
-        private static List<int[]> processedPageNames = new List<int[]>();
+        private static List<ICollection<int>> processedPageNames = new List<ICollection<int>>();
         private static List<string> errorMessages = new List<string>();
 
         private const string MODE_NEW = "NEW";
@@ -69,17 +69,18 @@ namespace MOBOT.BHL.PageNameRefresh
         /// </summary>
         private void ProcessNew()
         {
-            BHLWS.BHLWS service = null;
+            ItemsClient itemRestClient = new ItemsClient(configParms.BHLWSEndpoint);
+            PagesClient pageRestClient = new PagesClient(configParms.BHLWSEndpoint);
+            OcrClient ocrRestClient = new OcrClient(configParms.BHLWSEndpoint);
 
             try
             {
                 LogMessage("Processing new items...", null);
-                service = new BHLWS.BHLWS();
 
                 // Get all items for which no Page Names have been retrieved
                 LogMessage("Getting items for which Page Names have not been retrieved.", null);
-                Item[] items = service.ItemSelectWithoutPageNames();
-                Page[] pages = null;
+                ICollection<Item> items = itemRestClient.GetItemWithoutNames();
+                ICollection<Page> pages = null;
 
                 foreach (Item item in items)
                 {
@@ -87,13 +88,13 @@ namespace MOBOT.BHL.PageNameRefresh
                     {
                         // Make sure we have an OCR file for this item
                         LogMessage("Make sure an OCR file exists for item: " + item.BarCode, null);
-                        if (service.ItemCheckForOcrText(item.ItemID, configParms.OcrTextPath))
+                        if (ocrRestClient.ItemOcrExists((int)item.ItemID, configParms.OcrTextPath))
                         {
                             // Get the pages for this item and process them
                             LogMessage("Getting pages for which Page Names have not been retrieved for item: " + item.BarCode, null);
-                            pages = service.PageSelectWithoutPageNamesByItemID(item.ItemID);
+                            pages = pageRestClient.GetPageWithoutNames(item.ItemID);
                             this.ProcessPages(pages);
-                            service.ItemUpdateLastPageNameLookupDate(item.ItemID);
+                            itemRestClient.UpdateItemLastPageNameLookupDate((int)item.ItemID);
                             processedItems.Add(item.BarCode);
                             LogMessage("Processing complete for item: " + item.BarCode, null);
                         }
@@ -112,8 +113,8 @@ namespace MOBOT.BHL.PageNameRefresh
                 // Get any left-over individual pages for which no Page Names have been 
                 // retrieved, and process them.
                 LogMessage("Getting pages for which Page Names have not been retrieved.", null);
-                service.Timeout = 300000; // wait five minutes for this call to return
-                pages = service.PageSelectWithoutPageNames();
+                pageRestClient.Timeout = new TimeSpan(0, 5, 0);  // wait five minutes for this call to return
+                pages = pageRestClient.GetPageWithoutNames();
                 this.ProcessPages(pages);
 
                 LogMessage("New item processing complete.", null);
@@ -121,10 +122,6 @@ namespace MOBOT.BHL.PageNameRefresh
             catch (Exception ex)
             {
                 LogMessage("Exception processing new items", ex);
-            }
-            finally
-            {
-                if (service != null) service.Dispose();
             }
         }
 
@@ -134,16 +131,17 @@ namespace MOBOT.BHL.PageNameRefresh
         /// </summary>
         private void ProcessExpired()
         {
-            BHLWS.BHLWS service = null;
+            ItemsClient itemRestClient = new ItemsClient(configParms.BHLWSEndpoint);
+            PagesClient pageRestClient = new PagesClient(configParms.BHLWSEndpoint);
+            OcrClient ocrRestClient = new OcrClient(configParms.BHLWSEndpoint);
 
             try
             {
                 LogMessage("Processing expired page names...", null);
-                service = new BHLWS.BHLWS();
 
                 // Get all items for which the Page Names are older than the specified maximum age
                 LogMessage("Getting items with Page Names retrieved more than " + configParms.MaximumPageNameAge.ToString() + " days ago.", null);
-                Item[] items = service.ItemSelectWithExpiredPageNames(configParms.MaximumPageNameAge);
+                ICollection<Item> items = itemRestClient.GetItemWithExpiredNames(configParms.MaximumPageNameAge);
 
                 foreach (Item item in items)
                 {
@@ -151,13 +149,13 @@ namespace MOBOT.BHL.PageNameRefresh
                     {
                         // Make sure we have an OCR file for this item
                         LogMessage("Make sure an OCR file exists for item: " + item.BarCode, null);
-                        if (service.ItemCheckForOcrText(item.ItemID, configParms.OcrTextPath))
+                        if (ocrRestClient.ItemOcrExists((int)item.ItemID, configParms.OcrTextPath))
                         {
                             // Get the pages for this item and process them
                             LogMessage("Getting pages for item " + item.BarCode + " with Page Names retrieved more than " + configParms.MaximumPageNameAge.ToString() + " days ago.", null);
-                            Page[] pages = service.PageSelectWithExpiredPageNamesByItemID(item.ItemID, configParms.MaximumPageNameAge);
+                            ICollection<Page> pages = pageRestClient.GetPagesWithExpiredNames((int)item.ItemID, configParms.MaximumPageNameAge);
                             this.ProcessPages(pages);
-                            service.ItemUpdateLastPageNameLookupDate(item.ItemID);
+                            itemRestClient.UpdateItemLastPageNameLookupDate((int)item.ItemID);
                             processedItems.Add(item.BarCode);
                             LogMessage("Processing complete for item: " + item.BarCode, null);
                         }
@@ -179,10 +177,6 @@ namespace MOBOT.BHL.PageNameRefresh
             {
                 LogMessage("Exception processing expired items", ex);
             }
-            finally
-            {
-                if (service != null) service.Dispose();
-            }
         }
 
         /// <summary>
@@ -190,22 +184,22 @@ namespace MOBOT.BHL.PageNameRefresh
         /// </summary>
         private void ProcessItem()
         {
-            BHLWS.BHLWS service = null;
+            ItemsClient itemRestClient = new ItemsClient(configParms.BHLWSEndpoint);
+            OcrClient ocrRestClient = new OcrClient(configParms.BHLWSEndpoint);
 
             try
             {
                 LogMessage("Processing a single item ID: " + configParms.Item + " ...", null);
-                service = new BHLWS.BHLWS();
 
                 // Make sure we have an OCR file for the specified item
                 LogMessage("Make sure an OCR file exists for item ID: " + configParms.Item, null);
-                if (service.ItemCheckForOcrText(Convert.ToInt32(configParms.Item), configParms.OcrTextPath))
+                if (ocrRestClient.ItemOcrExists(Convert.ToInt32(configParms.Item), configParms.OcrTextPath))
                 {
                     // Get the pages for this item and process them
                     LogMessage("Getting pages for item ID: " + configParms.Item, null);
-                    Page[] pages = service.PageSelectFileNameByItemID(Convert.ToInt32(configParms.Item));
+                    ICollection<Page> pages = itemRestClient.GetItemPages(Convert.ToInt32(configParms.Item));
                     this.ProcessPages(pages);
-                    service.ItemUpdateLastPageNameLookupDate(Convert.ToInt32(configParms.Item));
+                    itemRestClient.UpdateItemLastPageNameLookupDate(Convert.ToInt32(configParms.Item));
                     processedItems.Add(configParms.Item + " (ItemID)");
                     LogMessage("Processing complete for item ID: " + configParms.Item, null);
                 }
@@ -218,10 +212,6 @@ namespace MOBOT.BHL.PageNameRefresh
             {
                 LogMessage("Exception processing item ID " + configParms.Item, ex);
             }
-            finally
-            {
-                if (service != null) service.Dispose();
-            }
         }
 
         /// <summary>
@@ -232,11 +222,12 @@ namespace MOBOT.BHL.PageNameRefresh
         ///     3) Update the LastPageNameLookupDate for the page
         /// </summary>
         /// <param name="pages">The list pages to be processed</param>
-        private void ProcessPages(Page[] pages)
+        private void ProcessPages(ICollection<Page> pages)
         {
             if (configParms.DoAsync)
             {
-                ProcessPagesAsynch(pages);
+                //ProcessPagesAsynch(pages);
+                throw new NotImplementedException("Asynchronous processing of pages is not available");
             }
             else
             {
@@ -248,14 +239,14 @@ namespace MOBOT.BHL.PageNameRefresh
         /// Process pages synchronously.  Best approach for uBio services.
         /// </summary>
         /// <param name="pages"></param>
-        private void ProcessPagesSynch(Page[] pages)
+        private void ProcessPagesSynch(ICollection<Page> pages)
         {
-            BHLWS.BHLWS service = null;
+            PagesClient pageRestClient = new PagesClient(configParms.BHLWSEndpoint);
+            OcrClient ocrRestClient = new OcrClient(configParms.BHLWSEndpoint);
 
             try
             {
                 LogMessage("Processing pages...", null);
-                service = new BHLWS.BHLWS();
                 
                 foreach (Page page in pages)
                 {
@@ -263,14 +254,18 @@ namespace MOBOT.BHL.PageNameRefresh
 
                     try
                     {
-                        if (service.PageCheckForOcrText(page.PageID, configParms.OcrTextLocation))
+                        if (ocrRestClient.PageOcrExists((int)page.PageID))
                         {
                             LogMessage("Getting Page Names from UBIO for page: " + page.FileNamePrefix, null);
-                            BHLWS.NameFinderResponse[] pageNames = service.GetNamesFromOcr(page.PageID);
+                            ICollection<NameFinderResponse> pageNames = ocrRestClient.GetNamesFromPageOcr((int)page.PageID);
                             //BHLWS.FindItItem[] pageNames = this.ClonePageNameList(ubioPageNames);
-                            LogMessage("Updating Page Names for page " + page.FileNamePrefix + " with " + pageNames.Length + " Page Names from '" + configParms.NameServiceSourceName + "'.", null);
-                            int[] updateStats = service.PageNameUpdateList(page.PageID, pageNames, configParms.NameServiceSourceName);
-                            service.PageUpdateLastPageNameLookupDate(page.PageID);
+                            LogMessage("Updating Page Names for page " + page.FileNamePrefix + " with " + pageNames.Count + " Page Names from '" + configParms.NameServiceSourceName + "'.", null);
+                            ICollection<int> updateStats = pageRestClient.UpdatePageNames((int)page.PageID, new PageNameModel
+                            {
+                                Nameinfo = pageNames,
+                                Sourcename = configParms.NameServiceSourceName
+                            });
+                            pageRestClient.UpdatePageLastPageNameLookupDate((int)page.PageID);
                             processedPages.Add(page.FileNamePrefix);
                             processedPageNames.Add(updateStats);
                             LogMessage("Processing complete for page: " + page.FileNamePrefix, null);
@@ -288,14 +283,13 @@ namespace MOBOT.BHL.PageNameRefresh
                     finally
                     {
                         // Wait until the specified interval has completed before continuing.
-                        // This delay is included here so that we don't overwhelm the MoBot 
-                        // network or UBIO server with requests.
+                        // This delay is included here so that we don't overwhelm the GN server.
                         try
                         {
                             // Determine how long it took to process the page
                             TimeSpan ts = DateTime.Now.Subtract(startTime);
                             // Calculate the number of milliseconds we still need to wait
-                            int sleepTime = (configParms.ExternalWebServiceInterval * 1000) - Convert.ToInt32(ts.TotalMilliseconds);
+                            int sleepTime = (configParms.ExternalWebServiceInterval * 500) - Convert.ToInt32(ts.TotalMilliseconds);
                             // Sleep if we haven't already used up the entire interval
                             if (sleepTime > 0) System.Threading.Thread.Sleep(sleepTime);
                         }
@@ -309,24 +303,20 @@ namespace MOBOT.BHL.PageNameRefresh
             {
                 LogMessage("Exception processing pages", ex);
             }
-            finally
-            {
-                if (service != null) service.Dispose();
-            }
         }
 
+        /*
         /// <summary>
         /// Process pages synchronously.  Best approach for GNRD services.
         /// </summary>
         /// <param name="pages"></param>
-        private void ProcessPagesAsynch(Page[] pages)
+        private void ProcessPagesAsynch(ICollection<Page> pages)
         {
-            BHLWS.BHLWS service = null;
+            OcrClient ocrRestClient = new OcrClient(configParms.BHLWSEndpoint);
 
             try
             {
                 LogMessage("Processing pages...", null);
-                service = new BHLWS.BHLWS();
                 service.GetNamesFromOcrCompleted += GetNamesCompletedEventHandler;
 
                 object thisLock = new object();
@@ -336,7 +326,7 @@ namespace MOBOT.BHL.PageNameRefresh
                 {
                     try
                     {
-                        if (service.PageCheckForOcrText(page.PageID, configParms.OcrTextLocation))
+                        if (ocrRestClient.PageOcrExists((int)page.PageID))
                         {
                             doGet = false;
                             while (!doGet)
@@ -355,7 +345,7 @@ namespace MOBOT.BHL.PageNameRefresh
                             }
 
                             LogMessage("Getting Page Names from UBIO for page: " + page.FileNamePrefix, null);
-                            service.GetNamesFromOcrAsync(page.PageID, page.PageID.ToString() + "|" + page.FileNamePrefix);
+                            ocrRestClient.GetNamesFromPageOcr((int)page.PageID);
                         }
                         else
                         {
@@ -375,10 +365,6 @@ namespace MOBOT.BHL.PageNameRefresh
             {
                 LogMessage("Exception processing pages", ex);
             }
-            finally
-            {
-                if (service != null) service.Dispose();
-            }
         }
 
 
@@ -387,9 +373,9 @@ namespace MOBOT.BHL.PageNameRefresh
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        static void GetNamesCompletedEventHandler(object sender, BHLWS.GetNamesFromOcrCompletedEventArgs e)
+        static void GetNamesCompletedEventHandler(object sender, GetNamesFromOcrCompletedEventArgs e)
         {
-            BHLWS.BHLWS service = null;
+            PagesClient pageRestClient = new PagesClient(configParms.BHLWSEndpoint);
             StringBuilder sb = new StringBuilder();
 
             int pageID;
@@ -397,19 +383,20 @@ namespace MOBOT.BHL.PageNameRefresh
 
             try
             {
-                service = new BHLWS.BHLWS();
-
                 // Get the PageID and FileNamePrefix
                 string[] userState = e.UserState.ToString().Split('|');
                 pageID = Convert.ToInt32(userState[0]);
                 fileNamePrefix = userState[1];
 
                 // Get the service results
-                BHLWS.NameFinderResponse[] preferredResults = (BHLWS.NameFinderResponse[])e.Result;
+                ICollection<NameFinderResponse> preferredResults = (NameFinderResponse[])e.Result;
 
-                LogMessage("Updating Names for page " + fileNamePrefix + " with " + preferredResults.Length + " Names from '" + configParms.NameServiceSourceName + "'", null);
-                int[] updateStats = service.PageNameUpdateList(pageID, preferredResults, configParms.NameServiceSourceName);
-                service.PageUpdateLastPageNameLookupDate(pageID);
+                LogMessage("Updating Names for page " + fileNamePrefix + " with " + preferredResults.Count + " Names from '" + configParms.NameServiceSourceName + "'", null);
+                ICollection<int> updateStats = pageRestClient.UpdatePageNames(pageID, new PageNameModel {
+                    Nameinfo = preferredResults,
+                    Sourcename = configParms.NameServiceSourceName
+                });
+                pageRestClient.UpdatePageLastPageNameLookupDate(pageID);
                 processedPages.Add(fileNamePrefix);
                 processedPageNames.Add(updateStats);
                 LogMessage("Processing complete for page: " + fileNamePrefix, null);
@@ -417,10 +404,6 @@ namespace MOBOT.BHL.PageNameRefresh
             catch (Exception ex)
             {
                 LogMessage("Exception processing page " + fileNamePrefix, ex);
-            }
-            finally
-            {
-                if (service != null) service.Dispose();
             }
 
             // Output the results and decrement the semaphore count so that another page can be sent to the name finder
@@ -430,7 +413,7 @@ namespace MOBOT.BHL.PageNameRefresh
                 if (_semaphore.Count > 0) _semaphore.Count--;
             }
         }
-
+        */
 
         /// <summary>
         /// Examine the results of the item/page processing and take the appropriate 
@@ -619,23 +602,20 @@ namespace MOBOT.BHL.PageNameRefresh
         {
             try
             {
-                string thisComputer = Environment.MachineName;
-                MailMessage mailMessage = new MailMessage();
-                MailAddress mailAddress = new MailAddress(configParms.EmailFromAddress);
-                mailMessage.From = mailAddress;
-                mailMessage.To.Add(configParms.EmailToAddress);
-                if (errorMessages.Count == 0)
-                {
-                    mailMessage.Subject = "BHLPageNameRefresh: Page Name Processing on " + thisComputer + " completed successfully.";
-                }
-                else
-                {
-                    mailMessage.Subject = "BHLPageNameRefresh: Page Name Processing on " + thisComputer + " completed with errors.";
-                }
-                mailMessage.Body = message;
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = string.Format(
+                    "BHLPageNameRefresh: Page Name Processing on {0} completed {1}.",
+                    Environment.MachineName,
+                    (errorMessages.Count == 0) ? "successfully" : "with errors");
+                mailRequest.Body = message;
+                mailRequest.From = configParms.EmailFromAddress;
 
-                SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
-                smtpClient.Send(mailMessage);
+                List<string> recipients = new List<string>();
+                foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
+
+                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {

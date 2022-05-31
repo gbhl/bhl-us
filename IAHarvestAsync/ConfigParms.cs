@@ -92,6 +92,8 @@ namespace IAHarvestAsync
             set { _iaHarvestMaxInstances = value; }
         }
 
+        public string BHLWSEndpoint { get; set; } = string.Empty;
+
         public void LoadAppConfig()
         {
             XmlDocument doc = new XmlDocument();
@@ -148,6 +150,10 @@ namespace IAHarvestAsync
                     if (node.Attributes.GetNamedItem("key").Value == "IAHarvestMaxInstances")
                     {
                         this.IAHarvestMaxInstances = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "BHLWSUrl")
+                    {
+                        this.BHLWSEndpoint = node.Attributes.GetNamedItem("value").Value;
                     }
                 }
             }

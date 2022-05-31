@@ -11,7 +11,6 @@
     <add name="BHLImport" connectionString="DATABASE CONNECTION STRING" providerName="System.Data.SqlClient"/>
   </connectionStrings>
   <appSettings>
-    <add key="SMTPHost" value="SMTP SERVER NAME"/>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
     <add key="FlickrApiKey" value="FLICKR API KEY"/>
@@ -22,6 +21,8 @@
       ALL - Harvest Tags and Notes
     -->
     <add key="HarvestTarget" value="TAGS"/>
+    <!-- BHLWS service endpoint -->
+    <add key = "BHLWSUrl" value="BHLWS SERVICE URL" />
   </appSettings>
   <log4net>
     <!-- Define some output appenders -->
@@ -49,17 +50,4 @@
   <startup> 
         <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8" />
   </startup>
-    <system.net>
-      <mailSettings>
-        <smtp deliveryMethod="Network">
-          <network defaultCredentials="false"
-                   enableSsl="true"
-                   host="MAIL_SERVER_ADDRESS"
-                   port="MAIL_SERVER_PORT"
-                   userName="MAIL_SERVER_USERNAME"
-                   password="MAIL_SERVER_PASSWORD"
-                   />
-        </smtp>
-      </mailSettings>
-    </system.net>
 </configuration>

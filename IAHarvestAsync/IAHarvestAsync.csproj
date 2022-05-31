@@ -19,11 +19,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.10" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BHLImportCoreDAL\BHLImportCoreDAL.csproj" />
     <ProjectReference Include="..\BHLImportDataObjects\BHLImportDataObjects.csproj" />
     <ProjectReference Include="..\BHLImportServer\BHLImportServer.csproj" />
+    <ProjectReference Include="..\BHLWebServiceREST.v1.Client\BHL.WebServiceREST.v1.Client.csproj" />
     <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj" />
   </ItemGroup>
 </Project>
