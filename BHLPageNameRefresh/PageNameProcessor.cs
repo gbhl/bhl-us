@@ -569,12 +569,12 @@ namespace MOBOT.BHL.PageNameRefresh
                 int deleted = 0;
                 int unchanged = 0;
 
-                foreach (int[] stats in processedPageNames)
+                foreach (ICollection<int> stats in processedPageNames)
                 {
-                    inserted += stats[0];
-                    updated += stats[1];
-                    deleted += stats[2];
-                    unchanged += stats[3];
+                    inserted += ((List<int>)stats)[0];
+                    updated += ((List<int>)stats)[1];
+                    deleted += ((List<int>)stats)[2];
+                    unchanged += ((List<int>)stats)[3];
                 }
 
                 sb.Append(endOfLine + "Page Names Inserted: " + inserted.ToString() + endOfLine);
