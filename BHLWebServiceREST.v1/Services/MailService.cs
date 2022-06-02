@@ -10,6 +10,7 @@ namespace BHL.WebServiceREST.v1.Services
         {
             var email = new MimeMessage();
             email.Sender = MailboxAddress.Parse(mailRequest.from);
+            email.From.Add(MailboxAddress.Parse(mailRequest.from));
             foreach (string to in mailRequest.to)
             {
                 email.To.Add(MailboxAddress.Parse(to));

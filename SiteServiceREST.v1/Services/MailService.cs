@@ -10,6 +10,7 @@ namespace BHL.SiteServicesREST.v1.Services
         {
             var email = new MimeMessage();
             email.Sender = MailboxAddress.Parse(mailRequest.from);
+            email.From.Add(MailboxAddress.Parse(mailRequest.from));
             foreach (string to in mailRequest.to)
             {
                 email.To.Add(MailboxAddress.Parse(to));
@@ -25,7 +26,7 @@ namespace BHL.SiteServicesREST.v1.Services
             email.Subject = mailRequest.subject;
             
             var builder = new BodyBuilder();
-            builder.HtmlBody = mailRequest.body;
+            builder.TextBody = mailRequest.body;
             email.Body = builder.ToMessageBody();
             
             using var smtp = new SmtpClient();
