@@ -7,22 +7,13 @@ namespace BHL.WebServiceREST.v1.Client
 {
     public class ExportsClient : RestClient
     {
-        private HttpClient _httpClient = null;
-
         public ExportsClient(string baseUrl) : base(baseUrl)
         {
-            _httpClient = GetHttpClient();
-        }
-
-        ~ExportsClient()
-        {
-            _httpClient.Dispose();
-            _httpClient = null;
         }
 
         public async Task<ICollection<TitleBibTeX>> GetTitleBibTexCitationsAsync()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
@@ -32,7 +23,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<TitleBibTeX> GetTitleBibTexCitations()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
@@ -42,7 +33,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<TitleBibTeX>> GetItemBibTexCitationsAsync()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
@@ -52,7 +43,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<TitleBibTeX> GetItemBibTexCitations()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
@@ -62,7 +53,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<TitleBibTeX>> GetSegmentBibTexCitationsAsync()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
@@ -72,7 +63,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<TitleBibTeX> GetSegmentBibTexCitations()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
@@ -118,7 +109,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<RISCitation>> GetTitleRISCitationsAsync()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
@@ -128,7 +119,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<RISCitation> GetTitleRISCitations()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
@@ -138,7 +129,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<RISCitation>> GetItemRISCitationsAsync()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
@@ -148,7 +139,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<RISCitation> GetItemRISCitations()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
@@ -158,7 +149,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<RISCitation>> GetSegmentRISCitationsAsync()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
@@ -168,7 +159,7 @@ namespace BHL.WebServiceREST.v1.Client
 
         public ICollection<RISCitation> GetSegmentRISCitations()
         {
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);

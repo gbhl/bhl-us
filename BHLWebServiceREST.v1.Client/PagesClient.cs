@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BHL.WebServiceREST.v1.Client
@@ -40,6 +41,7 @@ namespace BHL.WebServiceREST.v1.Client
         {
             using (var httpClient = GetHttpClient())
             {
+                httpClient.Timeout = new TimeSpan(0, 5, 0);  // wait five minutes for this call to return
                 BHLWS restClient = new BHLWS(_baseUrl, httpClient);
                 return restClient.GetPageWithoutNames(itemID);
             }

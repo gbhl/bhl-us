@@ -6,17 +6,26 @@ namespace BHL.WebServiceREST.v1.Client
     public class RestClient : IRestClient
     {
         protected string _baseUrl = string.Empty;
-        public TimeSpan? Timeout { get; set; } = null;
-
+        protected HttpClient _httpClient = null;
+        
         public RestClient(string baseUrl)
         {
             _baseUrl = baseUrl;
+            _httpClient = GetHttpClient();
+        }
+
+        ~RestClient()
+        {
+            _httpClient.Dispose();
+            _httpClient = null;
         }
 
         protected HttpClient GetHttpClient()
         {
             HttpClient httpClient = new HttpClient();
-            httpClient.Timeout = (TimeSpan)(Timeout ?? httpClient.Timeout);
+            
+            // Add any default HttpClient settings here
+
             return httpClient;
         }
     }

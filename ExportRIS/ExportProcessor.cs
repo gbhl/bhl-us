@@ -44,7 +44,6 @@ namespace BHL.Export.RIS
             try
             {
                 ExportsClient restClient = new ExportsClient(configParms.BHLWSEndpoint);
-                restClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 ICollection<RISCitation> citations = null;
 
                 _log.Info("Processing items...");

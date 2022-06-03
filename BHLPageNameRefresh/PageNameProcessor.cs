@@ -113,7 +113,6 @@ namespace MOBOT.BHL.PageNameRefresh
                 // Get any left-over individual pages for which no Page Names have been 
                 // retrieved, and process them.
                 LogMessage("Getting pages for which Page Names have not been retrieved.", null);
-                pageRestClient.Timeout = new TimeSpan(0, 5, 0);  // wait five minutes for this call to return
                 pages = pageRestClient.GetPageWithoutNames();
                 this.ProcessPages(pages);
 

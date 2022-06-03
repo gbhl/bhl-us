@@ -47,7 +47,6 @@ namespace BHL.Export.BibTeX
             try
             {
                 restClient = new ExportsClient(configParms.BHLWSEndpoint);
-                restClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
                 ICollection<TitleBibTeX> citations = null;
 
                 _log.Info("Processing items...");
