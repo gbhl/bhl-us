@@ -39,7 +39,7 @@ namespace MOBOT.BHL.BHLMETSUpload
             }
 
             string startDate = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy 0:00");
-            //ProcessBooks(startDate);
+            ProcessBooks(startDate);
             ProcessSegments(startDate);
 
             // Report the results of mets generation
