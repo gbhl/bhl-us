@@ -118,38 +118,62 @@ namespace BHL.WebServiceREST.v1.Client
 
         public async Task<ICollection<RISCitation>> GetTitleRISCitationsAsync()
         {
-            BHLWS restClient = new BHLWS(_baseUrl, _httpClient);
-            return (await restClient.GetTitleRISCitationsAsync().ConfigureAwait(false));
+            using (var httpClient = GetHttpClient())
+            {
+                httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                return (await restClient.GetTitleRISCitationsAsync().ConfigureAwait(false));
+            }
         }
 
         public ICollection<RISCitation> GetTitleRISCitations()
         {
-            BHLWS restClient = new BHLWS(_baseUrl, _httpClient);
-            return restClient.GetTitleRISCitations();
+            using (var httpClient = GetHttpClient())
+            {
+                httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                return restClient.GetTitleRISCitations();
+            }
         }
 
         public async Task<ICollection<RISCitation>> GetItemRISCitationsAsync()
         {
-            BHLWS restClient = new BHLWS(_baseUrl, _httpClient);
-            return (await restClient.GetItemRISCitationsAsync().ConfigureAwait(false));
+            using (var httpClient = GetHttpClient())
+            {
+                httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                return (await restClient.GetItemRISCitationsAsync().ConfigureAwait(false));
+            }
         }
 
         public ICollection<RISCitation> GetItemRISCitations()
         {
-            BHLWS restClient = new BHLWS(_baseUrl, _httpClient);
-            return restClient.GetItemRISCitations();
+            using (var httpClient = GetHttpClient())
+            {
+                httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                return restClient.GetItemRISCitations();
+            }
         }
 
         public async Task<ICollection<RISCitation>> GetSegmentRISCitationsAsync()
         {
-            BHLWS restClient = new BHLWS(_baseUrl, _httpClient);
-            return (await restClient.GetSegmentRISCitationsAsync().ConfigureAwait(false));
+            using (var httpClient = GetHttpClient())
+            {
+                httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                return (await restClient.GetSegmentRISCitationsAsync().ConfigureAwait(false));
+            }
         }
 
         public ICollection<RISCitation> GetSegmentRISCitations()
         {
-            BHLWS restClient = new BHLWS(_baseUrl, _httpClient);
-            return restClient.GetSegmentRISCitations();
+            using (var httpClient = GetHttpClient())
+            {
+                httpClient.Timeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                return restClient.GetSegmentRISCitations();
+            }
         }
 
         public async Task<string> GetRISCitationStringAsync(RISCitation citation)
