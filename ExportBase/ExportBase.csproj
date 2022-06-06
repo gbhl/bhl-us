@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>BHL.Export</RootNamespace>
     <AssemblyName>BHL.Export.Base</AssemblyName>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.10" />

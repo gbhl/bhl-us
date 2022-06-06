@@ -711,14 +711,15 @@ namespace MOBOT.BHL.BHLDOIService
             RestRequest request = new RestRequest(
                 String.Format(configParms.CrossrefDepositUrlQueryFormat,
                 configParms.CrossrefLogin, configParms.CrossrefPassword, configParms.CrossrefDepositArea), 
-                Method.POST);
+                Method.Post);
 
             // Convert the deposit into a byte array and add it to the request
             byte[] bytes = new UTF8Encoding().GetBytes(deposit);
             request.AddFile("fname", bytes, filename, "text/xml");
 
             // Perform the POST operation
-            RestResponse response = restClient.Execute(request);
+            //RestResponse response = restClient.ExecuteAsync(request);
+            RestResponse response = System.Threading.Tasks.Task.Run(async () => await restClient.ExecuteAsync(request)).GetAwaiter().GetResult();
 
             // Check the result of the POST operation.
             if (response.ResponseStatus != ResponseStatus.Completed)
@@ -749,10 +750,11 @@ namespace MOBOT.BHL.BHLDOIService
             RestRequest request = new RestRequest(
                 String.Format(configParms.CrossrefXmlQueryFormat,
                 configParms.CrossrefLogin, configParms.CrossrefPassword, query),
-                Method.GET);
+                Method.Get);
 
             // Submit the query
-            RestResponse restResponse = restClient.Execute(request);
+            //RestResponse restResponse = restClient.Execute(request);
+            RestResponse restResponse = System.Threading.Tasks.Task.Run(async () => await restClient.ExecuteAsync(request)).GetAwaiter().GetResult();
 
             // Check the query result
             if (restResponse.ResponseStatus != ResponseStatus.Completed)

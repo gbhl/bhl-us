@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 using System.Xml;
 
@@ -419,251 +420,65 @@ namespace MOBOT.BHL.BHLDOIService
 
         public void LoadAppConfig()
         {
-            XmlDocument doc = new XmlDocument();
-            string configPath = AppDomain.CurrentDomain.FriendlyName + ".config";
-            doc.Load(configPath);
-            foreach (XmlNode node in doc["configuration"]["appSettings"])
-            {
-                if (node.Name == "add")
-                {
-                    if (node.Attributes.GetNamedItem("key").Value == "Service_SubmitTitles")
-                    {
-                        this.SubmitTitles = (node.Attributes.GetNamedItem("value").Value.ToLower() == "true");
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "Service_SubmitSegments")
-                    {
-                        this.SubmitSegments = (node.Attributes.GetNamedItem("value").Value.ToLower() == "true");
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "Service_ValidateSubmissions")
-                    {
-                        this.ValidateSubmissions = (node.Attributes.GetNamedItem("value").Value.ToLower() == "true");
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "SMTPHost")
-                    {
-                        this.SMTPHost = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "EmailFromAddress")
-                    {
-                        this.EmailFromAddress = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "EmailToAddress")
-                    {
-                        this.EmailToAddress = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIPrefix")
-                    {
-                        this.DoiPrefix = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIFormat")
-                    {
-                        this.DoiFormat = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "CrossRefDepositorName")
-                    {
-                        this.CrossrefDepositorName = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "CrossRefDepositorEmail")
-                    {
-                        this.CrossrefDepositorEmail = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "CrossRefRegistrantName")
-                    {
-                        this.CrossrefRegistrantName = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "CrossRefLogin")
-                    {
-                        this.CrossrefLogin = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "CrossRefPassword")
-                    {
-                        this.CrossrefPassword = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "CrossRefDepositArea")
-                    {
-                        this.CrossrefDepositArea = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "CrossRefDepositUrlBase")
-                    {
-                        this.CrossrefDepositUrlBase = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "CrossRefDepositUrlQueryFormat")
-                    {
-                        this.CrossrefDepositUrlQueryFormat = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "CrossRefCheckSubmissionUrlFormat")
-                    {
-                        this.CrossrefCheckSubmissionUrlFormat = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "CrossRefXmlQueryUrlBase")
-                    {
-                        this.CrossrefXmlQueryUrlBase = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "CrossRefXmlQueryFormat")
-                    {
-                        this.CrossrefXmlQueryFormat = node.Attributes.GetNamedItem("value").Value;
-                    }                    
-                    if (node.Attributes.GetNamedItem("key").Value == "NumberToSubmit")
-                    {
-                        this.NumberToSubmit = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "MinimumMinutesSinceSubmit")
-                    {
-                        this.MinMinutesSinceSubmit = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "MonographDepositTemplateFile")
-                    {
-                        this.MonographDepositTemplateFile = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "JournalDepositTemplateFile")
-                    {
-                        this.JournalDepositTemplateFile = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "ArticleDepositTemplateFile")
-                    {
-                        this.ArticleDepositTemplateFile = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "QueryTemplateFile")
-                    {
-                        this.QueryTemplateFile = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DepositFileFormat")
-                    {
-                        this.DepositFileFormat = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DepositFolder")
-                    {
-                        this.DepositFolder = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "SubmitLogFileFormat")
-                    {
-                        this.SubmitLogFileFormat = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "SubmitLogFolder")
-                    {
-                        this.SubmitLogFolder = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "BHLTitleUrlFormat")
-                    {
-                        this.BhlTitleUrlFormat = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "BHLItemUrlFormat")
-                    {
-                        this.BhlItemUrlFormat = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "BHLPageUrlFormat")
-                    {
-                        this.BhlPageUrlFormat = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "BHLPartUrlFormat")
-                    {
-                        this.BhlPartUrlFormat = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_Null")
-                    {
-                        this.DoiStatusNull = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_Queued")
-                    {
-                        this.DoiStatusQueued = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_Submitted")
-                    {
-                        this.DoiStatusSubmitted = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_Error")
-                    {
-                        this.DoiStatusError = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_Approved")
-                    {
-                        this.DoiStatusApproved = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_External")
-                    {
-                        this.DoiStatusExternal = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIEntityType_Title")
-                    {
-                        this.DoiEntityTypeTitle = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIEntityType_Item")
-                    {
-                        this.DoiEntityTypeItem = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIEntityType_Page")
-                    {
-                        this.DoiEntityTypePage = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DOIEntityType_Segment")
-                    {
-                        this.DoiEntityTypeSegment = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "BibLevel_MonographComponent")
-                    {
-                        this.BibLevelMonographComponent = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "BibLevel_SerialComponent")
-                    {
-                        this.BibLevelSerialComponent = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "BibLevel_Collection")
-                    {
-                        this.BibLevelCollection = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "BibLevel_Monograph")
-                    {
-                        this.BibLevelMonograph = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "BibLevel_Serial")
-                    {
-                        this.BibLevelSerial = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "TitleVariant_Abbreviated")
-                    {
-                        this.TitleVariantAbbreviated = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "AuthorRole_100")
-                    {
-                        this.AuthorRole100 = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "AuthorRole_110")
-                    {
-                        this.AuthorRole110 = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "AuthorRole_111")
-                    {
-                        this.AuthorRole111 = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "AuthorRole_700")
-                    {
-                        this.AuthorRole700 = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "AuthorRole_710")
-                    {
-                        this.AuthorRole710 = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "AuthorRole_711")
-                    {
-                        this.AuthorRole711 = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "AuthorTypePerson")
-                    {
-                        this.AuthorTypePerson = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "AuthorTypeCorporation")
-                    {
-                        this.AuthorTypeCorporation = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "AuthorTypeMeeting")
-                    {
-                        this.AuthorTypeMeeting = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "BHLWSUrl")
-                    {
-                        this.BHLWSRestEndpoint = node.Attributes.GetNamedItem("value").Value;
-                    }
-                }
-            }
+            SubmitTitles = ConfigurationManager.AppSettings["Service_SubmitTitles"] == "true";
+            SubmitSegments = ConfigurationManager.AppSettings["Service_SubmitSegments"] == "true";
+            ValidateSubmissions = ConfigurationManager.AppSettings["Service_ValidateSubmissions"] == "true";
+            SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];
+            EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
+            EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            DoiPrefix = ConfigurationManager.AppSettings["DOIPrefix"];
+            DoiFormat = ConfigurationManager.AppSettings["DOIFormat"];
+            CrossrefDepositorName = ConfigurationManager.AppSettings["CrossRefDepositorName"];
+            CrossrefDepositorEmail = ConfigurationManager.AppSettings["CrossRefDepositorEmail"];
+            CrossrefRegistrantName = ConfigurationManager.AppSettings["CrossRefRegistrantName"];
+            CrossrefLogin = ConfigurationManager.AppSettings["CrossRefLogin"];
+            CrossrefPassword = ConfigurationManager.AppSettings["CrossRefPassword"];
+            CrossrefDepositArea = ConfigurationManager.AppSettings["CrossRefDepositArea"];
+            CrossrefDepositUrlBase = ConfigurationManager.AppSettings["CrossRefDepositUrlBase"];
+            CrossrefDepositUrlQueryFormat = ConfigurationManager.AppSettings["CrossRefDepositUrlQueryFormat"];
+            CrossrefCheckSubmissionUrlFormat = ConfigurationManager.AppSettings["CrossRefCheckSubmissionUrlFormat"];
+            CrossrefXmlQueryUrlBase = ConfigurationManager.AppSettings["CrossRefXmlQueryUrlBase"];
+            CrossrefXmlQueryFormat = ConfigurationManager.AppSettings["CrossRefXmlQueryFormat"];
+            NumberToSubmit = Convert.ToInt32(ConfigurationManager.AppSettings["NumberToSubmit"]);
+            MinMinutesSinceSubmit = Convert.ToInt32(ConfigurationManager.AppSettings["MinimumMinutesSinceSubmit"]);
+            MonographDepositTemplateFile = ConfigurationManager.AppSettings["MonographDepositTemplateFile"];
+            JournalDepositTemplateFile = ConfigurationManager.AppSettings["JournalDepositTemplateFile"];
+            ArticleDepositTemplateFile = ConfigurationManager.AppSettings["ArticleDepositTemplateFile"];
+            QueryTemplateFile = ConfigurationManager.AppSettings["QueryTemplateFile"];
+            DepositFileFormat = ConfigurationManager.AppSettings["DepositFileFormat"];
+            DepositFolder = ConfigurationManager.AppSettings["DepositFolder"];
+            SubmitLogFileFormat = ConfigurationManager.AppSettings["SubmitLogFileFormat"];
+            SubmitLogFolder = ConfigurationManager.AppSettings["SubmitLogFolder"];
+            BhlTitleUrlFormat = ConfigurationManager.AppSettings["BHLTitleUrlFormat"];
+            BhlItemUrlFormat = ConfigurationManager.AppSettings["BHLItemUrlFormat"];
+            BhlPageUrlFormat = ConfigurationManager.AppSettings["BHLPageUrlFormat"];
+            BhlPartUrlFormat = ConfigurationManager.AppSettings["BHLPartUrlFormat"];
+            DoiStatusNull= Convert.ToInt32(ConfigurationManager.AppSettings["DOIStatus_Null"]);
+            DoiStatusQueued = Convert.ToInt32(ConfigurationManager.AppSettings["DOIStatus_Queued"]);
+            DoiStatusSubmitted = Convert.ToInt32(ConfigurationManager.AppSettings["DOIStatus_Submitted"]);
+            DoiStatusError = Convert.ToInt32(ConfigurationManager.AppSettings["DOIStatus_Error"]);
+            DoiStatusApproved = Convert.ToInt32(ConfigurationManager.AppSettings["DOIStatus_Approved"]);
+            DoiStatusExternal = Convert.ToInt32(ConfigurationManager.AppSettings["DOIStatus_External"]);
+            DoiEntityTypeTitle = Convert.ToInt32(ConfigurationManager.AppSettings["DOIEntityType_Title"]);
+            DoiEntityTypeItem = Convert.ToInt32(ConfigurationManager.AppSettings["DOIEntityType_Item"]);
+            DoiEntityTypePage = Convert.ToInt32(ConfigurationManager.AppSettings["DOIEntityType_Page"]);
+            DoiEntityTypeSegment = Convert.ToInt32(ConfigurationManager.AppSettings["DOIEntityType_Segment"]);
+            BibLevelMonographComponent = Convert.ToInt32(ConfigurationManager.AppSettings["BibLevel_MonographComponent"]);
+            BibLevelSerialComponent= Convert.ToInt32(ConfigurationManager.AppSettings["BibLevel_SerialComponent"]);
+            BibLevelCollection = Convert.ToInt32(ConfigurationManager.AppSettings["BibLevel_Collection"]);
+            BibLevelMonograph = Convert.ToInt32(ConfigurationManager.AppSettings["BibLevel_Monograph"]);
+            BibLevelSerial = Convert.ToInt32(ConfigurationManager.AppSettings["BibLevel_Serial"]);
+            TitleVariantAbbreviated = Convert.ToInt32(ConfigurationManager.AppSettings["TitleVariant_Abbreviated"]);
+            AuthorRole100 = Convert.ToInt32(ConfigurationManager.AppSettings["AuthorRole_100"]);
+            AuthorRole110 = Convert.ToInt32(ConfigurationManager.AppSettings["AuthorRole_110"]);
+            AuthorRole111 = Convert.ToInt32(ConfigurationManager.AppSettings["AuthorRole_111"]);
+            AuthorRole700 = Convert.ToInt32(ConfigurationManager.AppSettings["AuthorRole_700"]);
+            AuthorRole710 = Convert.ToInt32(ConfigurationManager.AppSettings["AuthorRole_710"]);
+            AuthorRole711 = Convert.ToInt32(ConfigurationManager.AppSettings["AuthorRole_711"]);
+            AuthorTypePerson = Convert.ToInt32(ConfigurationManager.AppSettings["AuthorTypePerson"]);
+            AuthorTypeCorporation = Convert.ToInt32(ConfigurationManager.AppSettings["AuthorTypeCorporation"]);
+            AuthorTypeMeeting = Convert.ToInt32(ConfigurationManager.AppSettings["AuthorTypeMeeting"]);
+            BHLWSRestEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
     }
 }

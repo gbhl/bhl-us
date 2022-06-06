@@ -4,6 +4,6 @@
     <OutputType>Library</OutputType>
     <RootNamespace>MOBOT.BHL.DOIDeposit</RootNamespace>
     <AssemblyName>MOBOT.BHL.DOIDeposit</AssemblyName>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 </Project>

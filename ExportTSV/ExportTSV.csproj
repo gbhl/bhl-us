@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>BHL.Export.TSV</RootNamespace>
     <AssemblyName>BHL.Export.TSV</AssemblyName>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExportBase\ExportBase.csproj">
