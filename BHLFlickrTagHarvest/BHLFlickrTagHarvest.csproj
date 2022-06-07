@@ -4,10 +4,10 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>BHLFlickrTagHarvest</RootNamespace>
     <AssemblyName>BHLFlickrTagHarvest</AssemblyName>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FlickrNet" Version="3.24.0" />
+    <PackageReference Include="FlickrNet" Version="3.26.0" />
     <PackageReference Include="log4net" Version="2.0.10" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
