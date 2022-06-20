@@ -16,7 +16,7 @@ SET NOCOUNT ON
 SELECT @TotalTitles = COUNT(DISTINCT t.TitleID)
 FROM	dbo.Title t WITH (NOLOCK)
 		INNER JOIN dbo.TitleAuthor ta WITH (NOLOCK) ON t.TitleID = ta.TitleID
-		INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON t.TitleID = it.TitleID AND it.IsPrimary = 1
+		INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON t.TitleID = it.TitleID
 		INNER JOIN dbo.Book b WITH (NOLOCK) ON it.ItemID = b.ItemID
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND b.BookID = c.ItemID
 WHERE	t.PublishReady = 1
@@ -32,7 +32,7 @@ BEGIN
 				SELECT DISTINCT t.TitleID, t.SortTitle
 				FROM		dbo.Title t WITH (NOLOCK)
 							INNER JOIN dbo.TitleAuthor ta WITH (NOLOCK) ON t.TitleID = ta.TitleID
-							INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON t.TitleID = it.TitleID AND it.IsPrimary = 1
+							INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON t.TitleID = it.TitleID
 							INNER JOIN dbo.Book b WITH (NOLOCK) ON it.ItemID = b.ItemID
 							INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND b.BookID = c.ItemID
 				WHERE		t.PublishReady = 1
@@ -50,7 +50,7 @@ BEGIN
 				SELECT DISTINCT t.TitleID, t.SortTitle, c.Authors
 				FROM		dbo.Title t WITH (NOLOCK)
 							INNER JOIN dbo.TitleAuthor ta WITH (NOLOCK) ON t.TitleID = ta.TitleID
-							INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON t.TitleID = it.TitleID AND it.IsPrimary = 1
+							INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON t.TitleID = it.TitleID
 							INNER JOIN dbo.Book b WITH (NOLOCK) ON it.ItemID = b.ItemID
 							INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND b.BookID = c.ItemID
 				WHERE		t.PublishReady = 1
@@ -68,7 +68,7 @@ BEGIN
 				SELECT DISTINCT t.TitleID, t.SortTitle, t.StartYear
 				FROM		dbo.Title t WITH (NOLOCK)
 							INNER JOIN dbo.TitleAuthor ta WITH (NOLOCK) ON t.TitleID = ta.TitleID
-							INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON t.TitleID = it.TitleID AND it.IsPrimary = 1
+							INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON t.TitleID = it.TitleID
 							INNER JOIN dbo.Book b WITH (NOLOCK) ON it.ItemID = b.ItemID
 							INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND b.BookID = c.ItemID
 				WHERE		t.PublishReady = 1
@@ -118,3 +118,5 @@ IF (@SortColumn = 'author') SELECT * FROM #Final ORDER BY Authors, SortTitle OPT
 IF (@SortColumn = 'year') SELECT * FROM #Final ORDER BY [Year], SortTitle OPTION (RECOMPILE)
 
 END
+
+GO
