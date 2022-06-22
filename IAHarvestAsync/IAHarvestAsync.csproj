@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>IAHarvestAsync</RootNamespace>
     <AssemblyName>IAHarvestAsync</AssemblyName>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
