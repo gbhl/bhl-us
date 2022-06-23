@@ -80,6 +80,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibraries\CounterSoft7.0.0\RestSharp.dll</HintPath>
     </Reference>
+    <Reference Include="RssToolkit, Version=1.0.0.1, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibraries\RssToolkit1.0.0.1\RssToolkit.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -861,6 +865,9 @@
     <Compile Include="Models\SubjectModel.cs" />
     <Compile Include="Models\TitleBrowseModel.cs" />
     <Compile Include="Models\YearBrowseModel.cs" />
+    <Compile Include="RssFeedControlVersion2.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="TitleUnavailable.aspx.cs">
       <DependentUpon>TitleUnavailable.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

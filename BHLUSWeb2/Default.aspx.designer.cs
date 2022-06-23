@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.Web2 {
-    
-    
-    public partial class _Default {
-        
+namespace MOBOT.BHL.Web2
+{
+
+
+    public partial class _Default
+    {
+
         /// <summary>
         /// tbSearchTerm control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbSearchTerm;
-        
+
         /// <summary>
         /// btnSearchSubmit control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearchSubmit;
-        
+
         /// <summary>
         /// rdoSearchTypeF control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rdoSearchTypeF;
-        
+
         /// <summary>
         /// rdoSearchTypeC control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rdoSearchTypeC;
-        
+
         /// <summary>
         /// rssFeed control.
         /// </summary>
@@ -55,8 +57,8 @@ namespace MOBOT.BHL.Web2 {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MOBOT.BHL.Web.Utilities.RssFeedControlVersion2 rssFeed;
-        
+        protected global::MOBOT.BHL.Web2.RssFeedControlVersion2 rssFeed;
+
         /// <summary>
         /// featurebox3 control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.Web2.ucFeatureBox featurebox3;
-        
+
         /// <summary>
         /// FeatureBox4 control.
         /// </summary>
@@ -74,15 +76,17 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.Web2.ucFeatureBox FeatureBox4;
-        
+
         /// <summary>
         /// Master property.
         /// </summary>
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new MOBOT.BHL.Web2.SiteMaster Master {
-            get {
+        public new MOBOT.BHL.Web2.SiteMaster Master
+        {
+            get
+            {
                 return ((MOBOT.BHL.Web2.SiteMaster)(base.Master));
             }
         }

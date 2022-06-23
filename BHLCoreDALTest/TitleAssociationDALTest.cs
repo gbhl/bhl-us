@@ -1,9 +1,9 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+
 namespace BHLCoreDALTest
 {
     [TestClass]
@@ -65,7 +65,7 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             string institutionCode = string.Empty;
             int maxAge = 5000;
-            CustomGenericList<TitleAssociationSuspectCharacter> actual = target.TitleAssociationSelectWithSuspectCharacters(sqlConnection, sqlTransaction, institutionCode, maxAge);
+            List<TitleAssociationSuspectCharacter> actual = target.TitleAssociationSelectWithSuspectCharacters(sqlConnection, sqlTransaction, institutionCode, maxAge);
             Assert.IsNotNull(actual);
         }
     }

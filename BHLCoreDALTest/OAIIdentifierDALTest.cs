@@ -1,9 +1,9 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
@@ -78,7 +78,7 @@ namespace BHLCoreDALTest
             string set = string.Empty;
             Nullable<DateTime> fromDate = new Nullable<DateTime>();
             Nullable<DateTime> untilDate = new Nullable<DateTime>();
-            CustomGenericList<OAIIdentifier> actual;
+            List<OAIIdentifier> actual;
             actual = target.OAIIdentifierSelectAll(sqlConnection, sqlTransaction, maxIdentifiers, startId, set, fromDate, untilDate);
             Assert.IsTrue(actual.Count == 10);
         }
@@ -98,7 +98,7 @@ namespace BHLCoreDALTest
             Nullable<DateTime> untilDate = new Nullable<DateTime>();
             Int16 includeLocalContent = 1;
             Int16 includeExternalContent = 0;
-            CustomGenericList<OAIIdentifier> actual;
+            List<OAIIdentifier> actual;
             actual = target.OAIIdentifierSelectItems(sqlConnection, sqlTransaction, maxIdentifiers, startId, fromDate, untilDate, includeLocalContent, includeExternalContent);
             Assert.IsTrue(actual.Count == 10);
         }
@@ -116,7 +116,7 @@ namespace BHLCoreDALTest
             int startId = 1;
             Nullable<DateTime> fromDate = new Nullable<DateTime>();
             Nullable<DateTime> untilDate = new Nullable<DateTime>();
-            CustomGenericList<OAIIdentifier> actual;
+            List<OAIIdentifier> actual;
             actual = target.OAIIdentifierSelectTitles(sqlConnection, sqlTransaction, maxIdentifiers, startId, fromDate, untilDate);
             Assert.IsTrue(actual.Count == 10);
         }
@@ -136,7 +136,7 @@ namespace BHLCoreDALTest
             Nullable<DateTime> untilDate = new Nullable<DateTime>();
             Int16 includeLocalContent = 1;
             Int16 includeExternalContent = 0;
-            CustomGenericList<OAIIdentifier> actual = target.OAIIdentifierSelectSegments(sqlConnection, sqlTransaction, maxIdentifiers, startId, fromDate, untilDate, includeLocalContent, includeExternalContent);
+            List<OAIIdentifier> actual = target.OAIIdentifierSelectSegments(sqlConnection, sqlTransaction, maxIdentifiers, startId, fromDate, untilDate, includeLocalContent, includeExternalContent);
             Assert.IsTrue(actual.Count == 10);
         }
     }

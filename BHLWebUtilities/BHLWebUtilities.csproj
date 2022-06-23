@@ -11,14 +11,11 @@
     <Compile Remove="RequestLog.cs" />
     <Compile Remove="RIS.cs" />
     <Compile Remove="RssFeedControl.cs" />
+    <Compile Remove="RssFeedControlVersion2.cs" />
     <Compile Remove="UrlRewriterFormWriter.cs" />
     <Compile Remove="WebServiceRouteHandler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="RssToolkit, Version=1.0.0.1, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibraries\RssToolkit1.0.0.1\RssToolkit.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
   </ItemGroup>
 </Project>

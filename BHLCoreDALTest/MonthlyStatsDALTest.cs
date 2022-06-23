@@ -1,14 +1,13 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for MonthlyStatsDALTest and is intended
     ///to contain all MonthlyStatsDALTest Unit Tests
@@ -81,7 +80,7 @@ namespace BHLCoreDALTest
             int endYear = 2008;
             int endMonth = 5;
             string institutionName = string.Empty;
-            CustomGenericList<MonthlyStats> actual = target.MonthlyStatsSelectByDateAndInstitution(sqlConnection, sqlTransaction, startYear, startMonth, endYear, endMonth, institutionName);
+            List<MonthlyStats> actual = target.MonthlyStatsSelectByDateAndInstitution(sqlConnection, sqlTransaction, startYear, startMonth, endYear, endMonth, institutionName);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -96,7 +95,7 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             int year = 2008;
             int month = 0;
-            CustomGenericList<MonthlyStats> actual = target.MonthlyStatsSelectSummary(sqlConnection, sqlTransaction, year, month);
+            List<MonthlyStats> actual = target.MonthlyStatsSelectSummary(sqlConnection, sqlTransaction, year, month);
             Assert.IsNotNull(actual);
         }
     }

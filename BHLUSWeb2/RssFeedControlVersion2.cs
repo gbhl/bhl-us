@@ -1,13 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Text.RegularExpressions;
 using RssToolkit;
+using System;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
-namespace MOBOT.BHL.Web.Utilities
+namespace MOBOT.BHL.Web2
 {
     public class RssFeedControlVersion2 : UserControl
     {
@@ -22,65 +20,32 @@ namespace MOBOT.BHL.Web.Utilities
 
         public string FeedLocation
         {
-            get
-            {
-                return feedLocation;
-            }
-            set
-            {
-                feedLocation = value;
-            }
+            get { return feedLocation; }
+            set { feedLocation = value; }
         }
 
         public int MaxRecords
         {
-            get
-            {
-                return maxRecords;
-            }
-            set
-            {
-                maxRecords = value;
-            }
+            get { return maxRecords; }
+            set { maxRecords = value; }
         }
 
         public string NoItemsFoundText
         {
-            get
-            {
-                return noItemsFoundText;
-            }
-            set
-            {
-                noItemsFoundText = value;
-            }
+            get { return noItemsFoundText; }
+            set { noItemsFoundText = value; }
         }
 
         public string Target
         {
-            get
-            {
-                return target;
-            }
-            set
-            {
-                target = value;
-            }
+            get { return target; }
+            set { target = value; }
         }
 
-        /// <summary>
-        /// Defaults to true.
-        /// </summary>
         public bool ShowDescription
         {
-            get
-            {
-                return showDescription;
-            }
-            set
-            {
-                showDescription = value;
-            }
+            get { return showDescription; }
+            set { showDescription = value; }
         }
 
         public int DescriptionLimit
@@ -91,26 +56,14 @@ namespace MOBOT.BHL.Web.Utilities
 
         public bool SeparateItems
         {
-            get
-            {
-                return separateItems;
-            }
-            set
-            {
-                separateItems = value;
-            }
+            get { return separateItems; }
+            set { separateItems = value; }
         }
 
         public bool ShowDate
         {
-            get
-            {
-                return showDate;
-            }
-            set
-            {
-                showDate = value;
-            }
+            get { return showDate; }
+            set { showDate = value; }
         }
 
         protected string TruncateAtWord(string input, int length)
@@ -124,11 +77,8 @@ namespace MOBOT.BHL.Web.Utilities
 
         string RemoveHtmlTags(string html)
         {
-            return Regex.Replace(html, "<.+?>", string.Empty);
-            
+            return Regex.Replace(html, "<.+?>", string.Empty);            
         }
-
-
 
         protected override void OnLoad(EventArgs e)
         {
@@ -150,38 +100,19 @@ namespace MOBOT.BHL.Web.Utilities
                 if (MaxRecords > 0 && MaxRecords < recordCount)
                     recordCount = MaxRecords;
 
-               // HtmlTable table = new HtmlTable();
-               // table.CellPadding = 2;
-               // table.CellSpacing = 2;
-              //  table.Border = 0;
                 Literal results = new Literal();
                 //Probably a more programatic way to build HTML, but risk of added styling
                 StringBuilder HTMLResults = new StringBuilder();
                 HTMLResults.Append("<div class=\"rss-items\">");
                 for (int i = 0; i < recordCount; i++)
                 {
-                  //  HtmlTableRow row = new HtmlTableRow();
-                  //  HtmlTableCell cell = new HtmlTableCell();
                     HTMLResults.Append("<div class=\"rss-item\">");
-                /*    HyperLink link = new HyperLink();
-                    link.NavigateUrl = c.Items[i]["link"];
-                    link.Text = c.Items[i]["title"];
-                    if (separateItems)
-                        link.Font.Bold = true;
-
-                    if (Target.Trim().Length > 0)
-                        link.Target = Target;*/
                     HTMLResults.Append(String.Format("<a class=\"rss-title\" href=\"{0}\" target=\"{1}\">{2}</a>", c.Items[i]["link"],Target,c.Items[i]["title"]));
-//                    results.Controls.Add(link);
-                 
-               
 
                     if (showDate)
                     {
                         try
                         {
-                         //   Literal dateLiteral = new Literal();
-                         //   dateLiteral.Text = "Posted: " + DateTime.Parse(c.Items[i]["pubDate"]).ToShortDateString();
                             HTMLResults.Append(String.Format("<span class=\"rss-posted\">{0}</span>", DateTime.Parse(c.Items[i]["pubDate"]).ToShortDateString()));
                         }
                         catch
@@ -190,10 +121,6 @@ namespace MOBOT.BHL.Web.Utilities
                     }
                     if (ShowDescription)
                     {
-                       // HtmlGenericControl div = new HtmlGenericControl("div");
-                        //div.InnerHtml = Server.HtmlEncode(c.Items[i]["description"]);
-                        //div.InnerHtml = c.Items[i]["description"];
-                        //cell.Controls.Add(div);
                         if (this.DescriptionLimit > 0)
                         {
                             HTMLResults.Append(String.Format("<div class=\"rss-description\">{0}</div>", TruncateAtWord(RemoveHtmlTags(c.Items[i]["description"]), this.DescriptionLimit)));
@@ -203,18 +130,6 @@ namespace MOBOT.BHL.Web.Utilities
                             HTMLResults.Append(String.Format("<div class=\"rss-description\">{0}</div>", RemoveHtmlTags(c.Items[i]["description"])));
                         }
                     }
-             /*       row.Cells.Add(cell);
-                    table.Rows.Add(row);
-                    if (separateItems && recordCount > 1 && i < recordCount - 1)
-                    {
-                        HtmlTableRow ruleRow = new HtmlTableRow();
-                        HtmlTableCell ruleCell = new HtmlTableCell();
-                        HtmlGenericControl rule = new HtmlGenericControl("hr");
-                        rule.Style.Add("width", "99%");
-                        ruleCell.Controls.Add(rule);
-                        ruleRow.Cells.Add(ruleCell);
-                        table.Rows.Add(ruleRow);
-                    }*/
                     HTMLResults.Append("</div>");
                 }
                 HTMLResults.Append("</div>");

@@ -4,7 +4,8 @@
     <OutputType>Library</OutputType>
     <RootNamespace>BHLCoreDALTest</RootNamespace>
     <AssemblyName>BHLCoreDALTest</AssemblyName>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	<IsTestProject>true</IsTestProject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,30 +27,18 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BHLCoreDAL">
-      <HintPath>..\BHLCoreDAL\bin\Debug\BHLCoreDAL.dll</HintPath>
-    </Reference>
-    <Reference Include="BHLDataObjects">
-      <HintPath>..\BHLCoreDAL\bin\Debug\BHLDataObjects.dll</HintPath>
-    </Reference>
-    <Reference Include="CustomDataAccess">
-      <HintPath>..\BHLCoreDAL\bin\Debug\CustomDataAccess.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.2.7" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.2.7" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
       <Visible>False</Visible>
     </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BHLCoreDAL\BHLCoreDAL.csproj" />
+    <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj" />
+    <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj" />
   </ItemGroup>
 </Project>

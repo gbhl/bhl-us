@@ -11,7 +11,6 @@ namespace MOBOT.BHL.Web2
 {
     public partial class _Default : BrowsePage
     {
-        private string projectUpdateFeedLocation = "";
         public int homeHeroImage = 1;
         public string homeHeroText = "";
         protected override void Page_Load(object sender, EventArgs e)

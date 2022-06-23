@@ -6,12 +6,8 @@ using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
-    /// <summary>
-    ///This is a test class for TitleDALTest and is intended
-    ///to contain all TitleDALTest Unit Tests
-    ///</summary>
     [TestClass()]
-    public class TitleDALTest
+    public class BookDALTest
     {
         private TestContext testContextInstance;
 
@@ -61,55 +57,73 @@ namespace BHLCoreDALTest
         //
         #endregion
 
-
-        /// <summary>
-        ///A test for TitleBibTeXSelectForTitleID
-        ///</summary>
         [TestMethod()]
-        public void TitleBibTeXSelectForTitleIDTest()
+        public void BookSelectByInstitutionTest()
         {
-            TitleDAL target = new TitleDAL();
+            BookDAL target = new BookDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int titleId = 3926;
-            List<TitleBibTeX> actual;
-            actual = target.TitleBibTeXSelectForTitleID(sqlConnection, sqlTransaction, titleId);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        [TestMethod()]
-        public void TitleSelectByCollectionTest()
-        {
-            TitleDAL target = new TitleDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            int collectionID = 12;
-            List<Title> actual = target.TitleSelectByCollection(sqlConnection, sqlTransaction, collectionID);
-            Assert.IsNotNull(actual);
-        }
-
-        [TestMethod()]
-        public void TitleSelectSearchNameTest()
-        {
-            TitleDAL target = new TitleDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            string name = "mollusca";
-            string languageCode = "ENG";
-            int returnCount = 10;
-            List<Title> actual = target.TitleSelectSearchName(sqlConnection, sqlTransaction, name, languageCode, returnCount);
+            string institutionCode = "MBLWHOI";
+            int returnCount = 1;
+            string sortBy = "Date";
+            List<Book> actual = target.BookSelectByInstitution(sqlConnection, sqlTransaction, institutionCode, returnCount, sortBy);
             Assert.IsTrue(actual.Count > 0);
         }
 
         [TestMethod]
-        public void TitleSelectWithSuspectCharactersTest()
+        public void BookSelectByBarcodeOrItemIDTest()
         {
-            TitleDAL target = new TitleDAL();
+            BookDAL target = new BookDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
+            string barcode = "journalofmicrosc07post";
+            Book actual = target.BookSelectByBarCodeOrItemID(sqlConnection, sqlTransaction, null, barcode);
+            Assert.IsTrue(actual.BarCode == barcode);
+        }
+
+        [TestMethod]
+        public void BookSelectByCollectionTest()
+        {
+            BookDAL target = new BookDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            int collectionID = 12;
+            List<Book> actual = target.BookSelectByCollection(sqlConnection, sqlTransaction, collectionID);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod]
+        public void BookSelectByTitleIDTest()
+        {
+            BookDAL target = new BookDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            int titleID = 4000;
+            List<Book> actual = target.BookSelectByTitleID(sqlConnection, sqlTransaction, titleID);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod]
+        public void BookSelectRecentTest()
+        {
+            BookDAL target = new BookDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            int top = 100;
+            string languageCode = string.Empty;
             string institutionCode = string.Empty;
-            int maxAge = 5000;
-            List<TitleSuspectCharacter> actual = target.TitleSelectWithSuspectCharacters(sqlConnection, sqlTransaction, institutionCode, maxAge);
+            List<Book> actual = target.BookSelectRecent(sqlConnection, sqlTransaction, top, languageCode, institutionCode);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod]
+        public void BookSelectRecentlyChangedTest()
+        {
+            BookDAL target = new BookDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            string startDate = "1/1/2008";
+            List<Book> actual = target.BookSelectRecentlyChanged(sqlConnection, sqlTransaction, startDate);
             Assert.IsNotNull(actual);
         }
     }

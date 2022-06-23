@@ -1,14 +1,13 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for SegmentGenreDALTest and is intended
     ///to contain all SegmentGenreDALTest Unit Tests
@@ -76,7 +75,7 @@ namespace BHLCoreDALTest
             SegmentGenreDAL target = new SegmentGenreDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            CustomGenericList<SegmentGenre> actual = target.SegmentGenreSelectAll(sqlConnection, sqlTransaction);
+            List<SegmentGenre> actual = target.SegmentGenreSelectAll(sqlConnection, sqlTransaction);
             Assert.IsTrue(actual.Count > 0);
         }
     }

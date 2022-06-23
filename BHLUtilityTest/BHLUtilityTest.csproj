@@ -4,7 +4,8 @@
     <OutputType>Library</OutputType>
     <RootNamespace>BHLUtilityTest</RootNamespace>
     <AssemblyName>BHLUtilityTest</AssemblyName>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	<IsTestProject>true</IsTestProject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

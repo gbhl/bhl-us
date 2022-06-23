@@ -1,20 +1,19 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
-    
-    
+
+
     /// <summary>
-    ///This is a test class for SegmentAuthorDALTest and is intended
-    ///to contain all SegmentAuthorDALTest Unit Tests
+    ///This is a test class for SegmentKeywordDALTest and is intended
+    ///to contain all SegmentKeywordDALTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class SegmentAuthorDALTest
+    public class ItemKeywordDALTest
     {
 
 
@@ -68,17 +67,17 @@ namespace BHLCoreDALTest
 
 
         /// <summary>
-        ///A test for SegmentAuthorSelectBySegmentID
+        ///A test for SegmentKeywordSelectBySegmentID
         ///</summary>
         [TestMethod()]
-        public void SegmentAuthorSelectBySegmentIDTest()
+        public void ItemKeywordSelectBySegmentIDTest()
         {
-            SegmentAuthorDAL target = new SegmentAuthorDAL();
+            ItemKeywordDAL target = new ItemKeywordDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int segmentID = 2341;
-            CustomGenericList<SegmentAuthor> actual = target.SegmentAuthorSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
-            Assert.IsTrue(actual.Count > 0);
+            int segmentID = 970;
+            List<ItemKeyword> actual = target.ItemKeywordSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
+            Assert.IsTrue(actual.Count == 0);
         }
     }
 }

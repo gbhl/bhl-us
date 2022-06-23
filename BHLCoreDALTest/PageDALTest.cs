@@ -1,9 +1,8 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
@@ -72,7 +71,7 @@ namespace BHLCoreDALTest
             PageDAL target = new PageDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            CustomGenericList<Page> actual;
+            List<Page> actual;
             actual = target.PageSelectWithoutPageNames(sqlConnection, sqlTransaction);
             Assert.IsNotNull(actual);
         }
@@ -87,7 +86,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int itemID = 1000;
-            CustomGenericList<Page> actual;
+            List<Page> actual;
             actual = target.PageSelectWithoutPageNamesForItem(sqlConnection, sqlTransaction, itemID);
             Assert.IsNotNull(actual);
         }
@@ -103,7 +102,7 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             int itemID = 22004;
             int maxAge = 0;
-            CustomGenericList<Page> actual;
+            List<Page> actual;
             actual = target.PageSelectWithExpiredPageNamesByItemID(sqlConnection, sqlTransaction, itemID, maxAge);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -143,7 +142,7 @@ namespace BHLCoreDALTest
             string volume = "12";
             string issue = "";
             string pageNumber = "382";
-            CustomGenericList<Page> actual = new CustomGenericList<Page>();
+            List<Page> actual = new List<Page>();
             actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, issue, pageNumber);
             Assert.IsTrue(actual.Count == 1);
         }
@@ -159,7 +158,7 @@ namespace BHLCoreDALTest
             string volume = "";
             string issue = "";
             string pageNumber = "382";
-            CustomGenericList<Page> actual = new CustomGenericList<Page>();
+            List<Page> actual = new List<Page>();
             actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, issue, pageNumber);
             Assert.IsTrue(actual.Count == 1);
         }
@@ -175,7 +174,7 @@ namespace BHLCoreDALTest
             string volume = "13";
             string issue = "";
             string pageNumber = "382";
-            CustomGenericList<Page> actual = new CustomGenericList<Page>();
+            List<Page> actual = new List<Page>();
             actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, issue, pageNumber);
             Assert.IsTrue(actual.Count == 0);
         }
@@ -191,7 +190,7 @@ namespace BHLCoreDALTest
             string volume = "12";
             string issue = "";
             string pageNumber = "450";
-            CustomGenericList<Page> actual = new CustomGenericList<Page>();
+            List<Page> actual = new List<Page>();
             actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, issue, pageNumber);
             Assert.IsTrue(actual.Count == 0);
         }

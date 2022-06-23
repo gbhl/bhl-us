@@ -1,9 +1,8 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
@@ -73,7 +72,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int maxAge = 0;
-            CustomGenericList<Item> actual;
+            List<Item> actual;
             actual = target.ItemSelectWithExpiredPageNames(sqlConnection, sqlTransaction, maxAge);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -87,25 +86,9 @@ namespace BHLCoreDALTest
             ItemDAL target = new ItemDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            CustomGenericList<Item> actual;
+            List<Item> actual;
             actual = target.ItemSelectWithoutPageNames(sqlConnection, sqlTransaction);
             Assert.IsNotNull(actual);
-        }
-
-        /// <summary>
-        ///A test for ItemSelectByInstitution
-        ///</summary>
-        [TestMethod()]
-        public void ItemSelectByInstitutionTest()
-        {
-            ItemDAL target = new ItemDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            string institutionCode = "MBLWHOI";
-            int returnCount = 1;
-            string sortBy = "Date";
-            CustomGenericList<Item> actual = target.ItemSelectByInstitution(sqlConnection, sqlTransaction, institutionCode, returnCount, sortBy);
-            Assert.IsTrue(actual.Count > 0);
         }
 
         [TestMethod]
@@ -131,39 +114,6 @@ namespace BHLCoreDALTest
         }
 
         [TestMethod]
-        public void ItemSelectByBarcodeOrItemIDTest()
-        {
-            ItemDAL target = new ItemDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            string barcode = "journalofmicrosc07post";
-            Item actual = target.ItemSelectByBarCodeOrItemID(sqlConnection, sqlTransaction, null, barcode);
-            Assert.IsTrue(actual.BarCode == barcode);
-        }
-
-        [TestMethod]
-        public void ItemSelectByCollectionTest()
-        {
-            ItemDAL target = new ItemDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            int collectionID = 12;
-            CustomGenericList<Item> actual = target.ItemSelectByCollection(sqlConnection, sqlTransaction, collectionID);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        [TestMethod]
-        public void ItemSelectByTitleIDTest()
-        {
-            ItemDAL target = new ItemDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            int titleID = 4000;
-            CustomGenericList<Item> actual = target.ItemSelectByTitleID(sqlConnection, sqlTransaction, titleID);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        [TestMethod]
         public void ItemSelectNonMemberMonographTest()
         {
             ItemDAL target = new ItemDAL();
@@ -172,31 +122,7 @@ namespace BHLCoreDALTest
             string dateSince = "1/1/2008";
             int isMember = 1;
             string institutionCode = "MO";
-            CustomGenericList<NonMemberMonograph> actual = target.ItemSelectNonMemberMonograph(sqlConnection, sqlTransaction, dateSince, isMember, institutionCode);
-            Assert.IsNotNull(actual);
-        }
-
-        [TestMethod]
-        public void ItemSelectRecentTest()
-        {
-            ItemDAL target = new ItemDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            int top = 100;
-            string languageCode = string.Empty;
-            string institutionCode = string.Empty;
-            CustomGenericList<Item> actual = target.ItemSelectRecent(sqlConnection, sqlTransaction, top, languageCode, institutionCode);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        [TestMethod]
-        public void ItemSelectRecentlyChangedTest()
-        {
-            ItemDAL target = new ItemDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            string startDate = "1/1/2008";
-            CustomGenericList<Item> actual = target.ItemSelectRecentlyChanged(sqlConnection, sqlTransaction, startDate);
+            List<NonMemberMonograph> actual = target.ItemSelectNonMemberMonograph(sqlConnection, sqlTransaction, dateSince, isMember, institutionCode);
             Assert.IsNotNull(actual);
         }
 
@@ -208,7 +134,7 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             string institutionCode = string.Empty;
             int maxAge = 5000;
-            CustomGenericList<ItemSuspectCharacter> actual = target.ItemSelectWithSuspectCharacters(sqlConnection, sqlTransaction, institutionCode, maxAge);
+            List<ItemSuspectCharacter> actual = target.ItemSelectWithSuspectCharacters(sqlConnection, sqlTransaction, institutionCode, maxAge);
             Assert.IsNotNull(actual);
         }
     }
