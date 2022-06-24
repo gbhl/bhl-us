@@ -1156,6 +1156,24 @@ namespace MOBOT.BHL.OAI2
                 set { _fullName = value; }
             }
 
+            private List<OAIRecord.Identifier> _identifiers = new List<OAIRecord.Identifier>();
+
+            public List<OAIRecord.Identifier> Identifiers
+            {
+                get { return _identifiers; }
+                set { _identifiers = value; }
+            }
+        }
+
+        public class Identifier
+        {
+            public Identifier() { }
+
+            private string _identifierType;
+            private string _identifierValue;
+
+            public string IdentifierType { get => _identifierType; set => _identifierType = value; }
+            public string IdentifierValue { get => _identifierValue; set => _identifierValue = value; }
         }
 
         /// <summary>

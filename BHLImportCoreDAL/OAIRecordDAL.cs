@@ -122,7 +122,17 @@ namespace MOBOT.BHLImport.DAL
                         foreach (OAIRecordCreator creator in oaiRecord.Creators)
                         {
                             creator.OAIRecordID = newOaiRecord.OAIRecordID;
-                            creatorDAL.OAIRecordCreatorInsertAuto(connection, transaction, creator);
+                            OAIRecordCreator newOaiCreator = creatorDAL.OAIRecordCreatorInsertAuto(connection, transaction, creator);
+
+                            if (creator.Identifiers.Count > 0)
+                            {
+                                OAIRecordCreatorIdentifierDAL creatorIdentifierDAL = new OAIRecordCreatorIdentifierDAL();
+                                foreach(OAIRecordCreatorIdentifier identifier in creator.Identifiers)
+                                {
+                                    identifier.OAIRecordCreatorID = newOaiCreator.OAIRecordCreatorID;
+                                    creatorIdentifierDAL.OAIRecordCreatorIdentifierInsertAuto(connection, transaction, identifier);
+                                }
+                            }
                         }
                     }
 

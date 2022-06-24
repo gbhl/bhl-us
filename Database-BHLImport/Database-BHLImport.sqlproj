@@ -453,6 +453,11 @@
     <None Include="dbo\Synonyms\BHLfnRemoveTrailingPunctuation.sql" />
     <None Include="dbo\Synonyms\BHLfnAddAuthorNameSpaces.sql" />
     <None Include="dbo\Synonyms\BHLfnConvertToTitleCase.sql" />
+    <None Include="dbo\Tables\OAIRecordCreatorIdentifier.sql" />
+    <None Include="dbo\Stored Procedures\OAIRecordCreatorIdentifierSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\OAIRecordCreatorIdentifierInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\OAIRecordCreatorIdentifierUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\OAIRecordCreatorIdentifierDeleteAuto.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />

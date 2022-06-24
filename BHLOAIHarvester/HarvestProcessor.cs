@@ -251,6 +251,14 @@ namespace BHLOAIHarvester
                     if (matches.Count == 2) oaiRecordCreator.EndDate = matches[1].Value;
                 }
 
+                foreach (MOBOT.BHL.OAI2.OAIRecord.Identifier identifier in creator.Value.Identifiers)
+                {
+                    OAIRecordCreatorIdentifier oaiRecordCreatorIdentifier = new OAIRecordCreatorIdentifier();
+                    oaiRecordCreatorIdentifier.IdentifierType = identifier.IdentifierType;
+                    oaiRecordCreatorIdentifier.IdentifierValue = identifier.IdentifierValue;
+                    oaiRecordCreator.Identifiers.Add(oaiRecordCreatorIdentifier);
+                }
+
                 oaiDataRecord.Creators.Add(oaiRecordCreator);
             }
 

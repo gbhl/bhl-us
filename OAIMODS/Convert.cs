@@ -190,6 +190,19 @@ namespace MOBOT.BHL.OAIMODS
                     creator.FullName = string.Format("{0}, {1}", familyName, givenName);
                 }
 
+                var authorIdentifiers = from id in author.Elements(ns + "nameIdentifier") select id;
+                foreach (XElement authorIdentifier in authorIdentifiers)
+                {
+                    XAttribute idTypeAttribute = authorIdentifier.Attribute("type");
+                    if (idTypeAttribute != null)
+                    {
+                        OAIRecord.Identifier identifier = new OAIRecord.Identifier();
+                        identifier.IdentifierType = idTypeAttribute.Value;
+                        identifier.IdentifierValue = authorIdentifier.Value;
+                        creator.Identifiers.Add(identifier);
+                    }
+                }
+
                 _oaiRecord.Creators.Add(new KeyValuePair<string, OAIRecord.Creator>(authorType, creator));
             }
 
