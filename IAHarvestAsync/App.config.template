@@ -7,7 +7,6 @@
     <add name="BHLImport" connectionString="DATABASE CONNECTION STRING" providerName="System.Data.SqlClient"/>
   </connectionStrings>
   <appSettings>
-    <add key="SMTPHost" value="SMTP SERVER NAME"/>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
 

@@ -1,17 +1,11 @@
 using System;
+using System.Configuration;
 using System.Xml;
 
 namespace IAHarvestAsync
 {
     public class ConfigParms
     {
-        private string _smtpHost = "";
-        public string SMTPHost
-        {
-            get { return _smtpHost; }
-            set { _smtpHost = value; }
-        }
-
         private string _emailFromAddress = "";
         public string EmailFromAddress
         {
@@ -96,67 +90,18 @@ namespace IAHarvestAsync
 
         public void LoadAppConfig()
         {
-            XmlDocument doc = new XmlDocument();
-            string configPath = AppDomain.CurrentDomain.FriendlyName + ".config";
-            doc.Load(configPath);
-            foreach (XmlNode node in doc["configuration"]["appSettings"])
-            {
-                if (node.Name == "add")
-                {
-                    if (node.Attributes.GetNamedItem("key").Value == "SMTPHost")
-                    {
-                        this.SMTPHost = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "EmailFromAddress")
-                    {
-                        this.EmailFromAddress = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "EmailToAddress")
-                    {
-                        this.EmailToAddress = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DownloadAll")
-                    {
-                        this.DownloadAll = Convert.ToBoolean(node.Attributes.GetNamedItem("value").Value.ToLower());
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DownloadItem")
-                    {
-                        this.Download = Convert.ToBoolean(node.Attributes.GetNamedItem("value").Value.ToLower());
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "UploadItem")
-                    {
-                        this.Upload = Convert.ToBoolean(node.Attributes.GetNamedItem("value").Value.ToLower());
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "Quiet")
-                    {
-                        this.Quiet = Convert.ToBoolean(node.Attributes.GetNamedItem("value").Value.ToLower());
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "SearchListIdentifiersUrl")
-                    {
-                        this.SearchListIdentifiersUrl = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "LocalFileFolder")
-                    {
-                        this.LocalFileFolder = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "IAHarvestExecutable")
-                    {
-                        this.IAHarvestExecutable = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "IAHarvestProcessName")
-                    {
-                        this.IAHarvestProcessName = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "IAHarvestMaxInstances")
-                    {
-                        this.IAHarvestMaxInstances = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "BHLWSUrl")
-                    {
-                        this.BHLWSEndpoint = node.Attributes.GetNamedItem("value").Value;
-                    }
-                }
-            }
+            EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
+            EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            DownloadAll = Convert.ToBoolean(ConfigurationManager.AppSettings["DownloadAll"]);
+            Download = Convert.ToBoolean(ConfigurationManager.AppSettings["DownloadItem"]);
+            Upload = Convert.ToBoolean(ConfigurationManager.AppSettings["UploadItem"]);
+            Quiet = Convert.ToBoolean(ConfigurationManager.AppSettings["Quiet"]);
+            SearchListIdentifiersUrl = ConfigurationManager.AppSettings["SearchListIdentifiersUrl"];
+            LocalFileFolder = ConfigurationManager.AppSettings["LocalFileFolder"];
+            IAHarvestExecutable = ConfigurationManager.AppSettings["IAHarvestExecutable"];
+            IAHarvestProcessName = ConfigurationManager.AppSettings["IAHarvestProcessName"];
+            IAHarvestMaxInstances = Convert.ToInt32(ConfigurationManager.AppSettings["IAHarvestMaxInstances"]);
+            BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
     }
 }
