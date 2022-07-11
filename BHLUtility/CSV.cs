@@ -116,7 +116,7 @@ namespace MOBOT.BHL.Utility
                     HasHeaderRecord = _hasHeaderRecord,
                 };
                 if (!_validateHeader) config.HeaderValidated = null;
-                if (!_checkForMissingFields) config.MissingFieldFound = null;
+                if (!_checkForMissingFields) config.MissingFieldFound = (_1) => { };
 
                 CsvReader csv = new CsvReader(reader, config);
                 data = csv.GetRecords(recordFormat);

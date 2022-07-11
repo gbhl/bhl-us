@@ -168,7 +168,7 @@ namespace BHL.TextImportUtility
                 {
                     HasHeaderRecord = true,
                     HeaderValidated = null,
-                    MissingFieldFound = null
+                    MissingFieldFound = (_1) => { }
                 };
                 CsvReader csv = new CsvReader(reader, config);
 
@@ -184,7 +184,7 @@ namespace BHL.TextImportUtility
                     dateTranscribed = string.Empty,
                     dateValidated = string.Empty,
                     individualCount = string.Empty,
-                    institutionCode = string.Empty,
+                    //institutionCode = string.Empty,
                     occurrenceRemarks = string.Empty,
                     sequenceNumber = default(int),  // 1-based index
                     transcriberNotes = string.Empty,
