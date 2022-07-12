@@ -7,11 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.AdminWeb {
-    
-    
-    public partial class DOIList {
-        
+namespace MOBOT.BHL.AdminWeb
+{
+
+
+    public partial class DOIList
+    {
+
+        /// <summary>
+        /// ddlQueuedBy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlQueuedBy;
+
         /// <summary>
         /// ddlStatusView control.
         /// </summary>
@@ -20,7 +31,34 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlStatusView;
-        
+
+        /// <summary>
+        /// ddlEntityType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlEntityType;
+
+        /// <summary>
+        /// txtStartDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtStartDate;
+
+        /// <summary>
+        /// txtEndDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEndDate;
+
         /// <summary>
         /// btnView control.
         /// </summary>
@@ -29,7 +67,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnView;
-        
+
         /// <summary>
         /// litDisplayed control.
         /// </summary>
@@ -38,7 +76,16 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litDisplayed;
-        
+
+        /// <summary>
+        /// lnkDownloadResults control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkDownloadResults;
+
         /// <summary>
         /// ddlStatusChange control.
         /// </summary>
@@ -47,7 +94,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlStatusChange;
-        
+
         /// <summary>
         /// btnChange control.
         /// </summary>
@@ -56,7 +103,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnChange;
-        
+
         /// <summary>
         /// hidSelected control.
         /// </summary>
@@ -65,7 +112,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hidSelected;
-        
+
         /// <summary>
         /// litUpdateResult control.
         /// </summary>

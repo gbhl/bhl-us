@@ -13,7 +13,11 @@ namespace MOBOT.BHL.AdminWeb
 {
     public partial class DOIList : System.Web.UI.Page
     {
+        protected string userId = "0";
         protected string statusId = "0";
+        protected string typeId = "0";
+        protected string startDate = "";
+        protected string endDate = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -42,9 +46,17 @@ namespace MOBOT.BHL.AdminWeb
 
             if (!IsPostBack)
             {
-                List<DOIStatus> statuses = new BHLProvider().DOIStatusSelectAll();
+                txtStartDate.Text = "1/1/1980";
+                txtEndDate.Text = DateTime.Now.AddDays(1).ToShortDateString();
 
-                ddlStatusView.Items.Add(new ListItem("", "0"));
+                Dictionary<int, string> users = new BHLProvider().AspNetUserSelectWithDoi();
+                ddlQueuedBy.Items.Add(new ListItem("(Anyone)", "0"));
+                foreach(KeyValuePair<int, string> user in users)
+                {
+                    ddlQueuedBy.Items.Add(new ListItem(user.Value, user.Key.ToString()));
+                }
+
+                List<DOIStatus> statuses = new BHLProvider().DOIStatusSelectAll();
                 foreach (DOIStatus status in statuses)
                 {
                     if (status.DOIStatusID.ToString() != DOISTATUS_EXTERNAL)
@@ -52,6 +64,13 @@ namespace MOBOT.BHL.AdminWeb
                         ListItem li = new ListItem(status.DOIStatusName, status.DOIStatusID.ToString());
                         ddlStatusView.Items.Add(li);
                     }
+                }
+
+                List<DOIEntityType> types = new BHLProvider().DOIEntityTypeSelectWithDoi();
+                ddlEntityType.Items.Add(new ListItem("(All Types)", "0"));
+                foreach(DOIEntityType type in types)
+                {
+                    ddlEntityType.Items.Add(new ListItem(type.DOIEntityTypeName, type.DOIEntityTypeID.ToString()));
                 }
             }
 
@@ -68,8 +87,18 @@ namespace MOBOT.BHL.AdminWeb
             // Modify ddlStatusChange list to contain items that are valid for the displayed status
             SetStatusChangeItems(ddlStatusView.SelectedValue, ddlStatusView.Items);
 
-            litDisplayed.Text = (ddlStatusView.SelectedValue == DOISTATUS_NONESELECTED) ? string.Empty : "DOIs in <b>" + ddlStatusView.SelectedItem.Text + "</b> status.";
+            userId = ddlQueuedBy.SelectedValue;
             statusId = ddlStatusView.SelectedValue;
+            typeId = ddlEntityType.SelectedValue;
+            startDate = txtStartDate.Text;
+            endDate = txtEndDate.Text;
+
+            litDisplayed.Text = (ddlStatusView.SelectedValue == DOISTATUS_NONESELECTED) ? string.Empty : "DOIs in <b>" + ddlStatusView.SelectedItem.Text + "</b> status.";
+            lnkDownloadResults.Visible = true;
+            lnkDownloadResults.HRef = String.Format(
+                "/services/doiservice.ashx?uid={0}&sid={1}&tid={2}&sdate={3}&edate={4}&dl=1",
+                userId, statusId, typeId, startDate, endDate);
+
             litUpdateResult.Text = string.Empty;
         }
 

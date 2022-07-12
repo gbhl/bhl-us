@@ -1,8 +1,10 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Dynamic;
 using System.Text;
 using System.Web;
 
@@ -16,14 +18,21 @@ namespace MOBOT.BHL.AdminWeb.Services
 
         public void ProcessRequest(HttpContext context)
         {
-            String response = String.Empty;
+            string response = string.Empty;
 
             // Clean up inputs
-            String doiStatusId = context.Request.QueryString["id"] as String;
-            String numRows = context.Request.QueryString["rows"] as String;
-            String pageNum = context.Request.QueryString["page"] as String;
-            String sortColumn = context.Request.QueryString["sidx"] as String;
-            String sortOrder = context.Request.QueryString["sord"] as String;
+            string userId = context.Request.QueryString["uid"] as string;
+            string doiStatusId = context.Request.QueryString["sid"] as string;
+            string typeId = context.Request.QueryString["tid"] as string;
+            DateTime startDate;
+            DateTime endDate;
+            if (!DateTime.TryParse(context.Request.QueryString["sdate"] as string, out startDate)) startDate = new DateTime(1980, 1, 1);
+            if (!DateTime.TryParse(context.Request.QueryString["edate"] as string, out endDate)) endDate = Convert.ToDateTime(DateTime.Now.AddDays(1).ToShortDateString());
+            bool download = (context.Request.QueryString["dl"] as string) == "1";
+            string numRows = context.Request.QueryString["rows"] as string;
+            string pageNum = context.Request.QueryString["page"] as string;
+            string sortColumn = context.Request.QueryString["sidx"] as string;
+            string sortOrder = context.Request.QueryString["sord"] as string;
 
             int verifyInt;
             // Make sure itemStatusId, numRows, and pageNum are valid integer values
@@ -38,11 +47,31 @@ namespace MOBOT.BHL.AdminWeb.Services
             sortOrder = String.IsNullOrEmpty(sortOrder) ? "desc" : sortOrder;
             sortOrder = (!(sortOrder.ToLower() == "asc") && !(sortOrder.ToLower() == "desc")) ? "desc" : sortOrder;
 
-            List<DOI> searchResult = this.DOISelectByStatus(
-                Convert.ToInt32(doiStatusId), Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, sortOrder);
+            List<DOI> searchResult = this.DOISelectStatusReport(Convert.ToInt32(userId),
+                Convert.ToInt32(doiStatusId), Convert.ToInt32(typeId), startDate, endDate,
+                Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, sortOrder);
 
-            context.Response.ContentType = "text/xml";
-            context.Response.Write(GetXmlResponse(searchResult, Convert.ToInt32(pageNum), Convert.ToInt32(numRows)));
+            context.Response.Clear();
+            context.Response.ClearContent();
+            context.Response.ClearHeaders();
+
+            if (download)
+            {
+                context.Response.Buffer = true;
+                context.Response.ContentType = "text/csv";
+                context.Response.AddHeader("Content-Disposition", "attachment; filename=DOIStatus.csv");
+
+                byte[] csvBytes = GetDownloadString(searchResult);
+                context.Response.Write(Encoding.UTF8.GetString(csvBytes, 0, csvBytes.Length));
+                context.Response.Flush();
+
+                context.Response.End();
+            }
+            else
+            {
+                context.Response.ContentType = "text/xml";
+                context.Response.Write(GetXmlResponse(searchResult, Convert.ToInt32(pageNum), Convert.ToInt32(numRows)));
+            }
         }
 
         /// <summary>
@@ -54,15 +83,17 @@ namespace MOBOT.BHL.AdminWeb.Services
         /// <param name="sortColumn"></param>
         /// <param name="sortOrder"></param>
         /// <returns></returns>
-        private List<DOI> DOISelectByStatus(
-            int doiStatusId, int numRows, int pageNum, string sortColumn, string sortOrder)
+        private List<DOI> DOISelectStatusReport(
+            int userId, int doiStatusId, int doiEntityTypeId, DateTime startDate, DateTime endDate,
+            int numRows, int pageNum, string sortColumn, string sortOrder)
         {
             List<DOI> items = new List<DOI>();
 
             try
             {
                 BHLProvider service = new BHLProvider();
-                items = service.DOISelectByStatus(doiStatusId, numRows, pageNum, sortColumn, sortOrder);
+                items = service.DOISelectStatusReport(userId, doiStatusId, doiEntityTypeId, startDate,
+                    endDate, numRows, pageNum, sortColumn, sortOrder);
             }
             catch
             {
@@ -123,9 +154,18 @@ namespace MOBOT.BHL.AdminWeb.Services
                             }
                     }
 
+                    string containerUrl = string.Empty;
+                    if (searchResult[x].ContainerTitleID != null)
+                    {
+                        containerUrl = string.Format("<![CDATA[<a title=\"Container Info\" rel=\"noopener noreferrer\" href=\"/TitleEdit.aspx?id={0}\">{0}</a>]]>", searchResult[x].ContainerTitleID.ToString());
+                    }
+
                     response.Append("<row id='" + searchResult[x].DOIID.ToString() + "'>");
+                    response.Append("<cell> " + HttpUtility.HtmlEncode(searchResult[x].CreationUserName) + " </cell>");
+                    response.Append("<cell> " + searchResult[x].Action + " </cell>");
                     response.Append("<cell> <![CDATA[<a title=\"Entity Info\" rel=\"noopener noreferrer\" href=\"" + entityUrl + "\">" + entityID + "</a>]]> </cell>");
                     response.Append("<cell> " + HttpUtility.HtmlEncode(searchResult[x].EntityDetail) + " </cell>");
+                    response.Append("<cell> " + containerUrl + " </cell>");
                     response.Append("<cell> <![CDATA[<a title=\"DOI Info\" target=\"_blank\" href=\"DOISubmissionDetail.aspx?id=" + searchResult[x].DOIBatchID + "&type=d\">" + searchResult[x].DOIBatchID + "</a>]]> </cell>");
                     response.Append("<cell> " + searchResult[x].DOIName + " </cell>");
                     if (string.IsNullOrEmpty(searchResult[x].StatusMessage))
@@ -144,6 +184,34 @@ namespace MOBOT.BHL.AdminWeb.Services
             }
 
             return response.ToString();
+        }
+
+        /// <summary>
+        /// Write the search results into CSV
+        /// </summary>
+        /// <param name="searchResult"></param>
+        /// <returns></returns>
+        private byte[] GetDownloadString(List<DOI> searchResult)
+        {
+            var data = new List<dynamic>();
+            foreach (DOI doi in searchResult)
+            {
+                var record = new ExpandoObject() as IDictionary<string, Object>;
+                record.Add("Queued By", doi.CreationUserName);
+                record.Add("Status", doi.DOIStatusName);
+                record.Add("Action", doi.Action);
+                record.Add("Entity", doi.DOIEntityTypeName + " " + doi.EntityID.ToString());
+                record.Add("Entity Detail", doi.EntityDetail);
+                record.Add("Container Title ID", doi.ContainerTitleID);
+                //record.Add("DOI Batch ID", doi.DOIBatchID);
+                record.Add("DOI", doi.DOIName);
+                record.Add("Message", doi.StatusMessage);
+                record.Add("Queued", doi.CreationDate.ToString());
+                record.Add("Last Update", doi.LastModifiedDate.ToString());
+                data.Add(record);
+            }
+
+            return new CSV().FormatCSVData(data);
         }
 
         public bool IsReusable
