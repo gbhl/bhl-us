@@ -96,7 +96,7 @@ namespace MOBOT.BHL.AdminWeb
             litDisplayed.Text = (ddlStatusView.SelectedValue == DOISTATUS_NONESELECTED) ? string.Empty : "DOIs in <b>" + ddlStatusView.SelectedItem.Text + "</b> status.";
             lnkDownloadResults.Visible = true;
             lnkDownloadResults.HRef = String.Format(
-                "/services/doiservice.ashx?uid={0}&sid={1}&tid={2}&sdate={3}&edate={4}&dl=1",
+                "/services/doiservice.ashx?uid={0}&sid={1}&tid={2}&sdate={3}&edate={4}&dl=1&rows=100000000",
                 userId, statusId, typeId, startDate, endDate);
 
             litUpdateResult.Text = string.Empty;
