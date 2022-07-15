@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <Content Include="gnfinder.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

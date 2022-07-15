@@ -564,7 +564,7 @@ namespace MOBOT.BHL.Server
                         using (System.Diagnostics.Process process = new System.Diagnostics.Process())
                         {
                             process.StartInfo.FileName = toolPath;
-                            process.StartInfo.Arguments = "find -c \"" + filepath + "\"";
+                            process.StartInfo.Arguments = "-v -f pretty \"" + filepath + "\"";
                             process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
                             process.StartInfo.UseShellExecute = false;
                             process.StartInfo.RedirectStandardOutput = true;
@@ -592,7 +592,7 @@ namespace MOBOT.BHL.Server
                                 double odds;
                                 try
                                 {
-                                    odds = (double)name["odds"];
+                                    odds = (double)name["oddsLog10"];
                                 }
                                 catch (System.OverflowException)
                                 {
@@ -603,28 +603,37 @@ namespace MOBOT.BHL.Server
                                 JToken verification = name["verification"];
                                 if (verification != null)   // If the name was resolved, get the details
                                 {
-                                    curation = (string)(verification["dataSourceQuality"] ?? string.Empty);
+                                    // *** Possible curation values ***
+                                    // NotCurated - no DataSources were curated sufficiently
+                                    // AutoCurated - at least one of the DataSources invested significantly in curating their data by scripts
+                                    // Curated - at least one DataSource is sufficiently curated
+                                    curation = (string)(verification["curation"] ?? string.Empty);
+
                                     JToken bestResult = verification["bestResult"];
                                     if (bestResult != null)
                                     {
                                         matchType = (bestResult["matchType"] != null) ? bestResult["matchType"].ToString() : "";
 
-                                        // Possible match_type values
-                                        // (blank) - unknown; probable error processing name
-                                        // NoMatch - no match
-                                        // ExactMatch - exact string match
-                                        // ExactCanonicalMatch - exact string match
-                                        // ExactPartialMatch - partial match on trinomial, or exact match on genus but no match on species (binomial) part (mostly good results here)
-                                        // FuzzyCanonicalMatch - fuzzy match of canonical form
-                                        // FuzzyPartialMatch - fuzzy partial match on trinomial
-                                        if (matchType != "" && matchType != "NoMatch")
+                                        // *** Possible match_type values *** 
+                                        //  (blank) - unknown; likely due to no matching name
+                                        //  NoMatch - no match
+                                        //  Exact - exact string match
+                                        //  PartialExact - partial match on trinomial, or exact match on genus but no match on species(binomial) part(mostly good results here)
+                                        //  Fuzzy - fuzzy match of canonical form
+                                        //  PartialFuzzy - fuzzy partial match on trinomial
+                                        // *** These are also possible, but not supported by BHL ***
+                                        //  Virus - matches of viruses names
+                                        //  ExactSpeciesGroup - optional match for autonyms for botany or coordinated names in zoology
+                                        //  FacetedSearch - only happens when advanced search Language option is used (https://github.com/gnames/gnverifier#advanced-search-query-language)
+                                        if (matchType != "" && matchType != "NoMatch" && matchType != "Virus" &&
+                                            matchType != "ExactSpeciesGroup" && matchType != "FacetedSearch")
                                         {
                                             nameResolvedString = (string)(bestResult["matchedName"] ?? string.Empty);
                                             canonicalName = (string)(bestResult["matchedCanonicalFull"] ?? string.Empty);
 
                                             // Get the identifiers
                                             string identifier = string.Empty;
-                                            identifier = this.GetIdentifierFromGNFinder(bestResult, "taxonId", "dataSourceId");
+                                            identifier = this.GetIdentifierFromGNFinder(bestResult, "recordId", "dataSourceId");
                                             if (!string.IsNullOrWhiteSpace(identifier)) identifiers.Add(identifier);
                                         }
                                     }
@@ -632,9 +641,9 @@ namespace MOBOT.BHL.Server
 
                                 // Add the data from the JSON response to our list of names to return 
                                 bool keepName = false;
-                                if ((matchType == "ExactMatch" || matchType == "ExactCanonicalMatch") && curation != "Unknown") keepName = true;
-                                if ((matchType == "FuzzyCanonical" || matchType == "FuzzyPartial" || matchType == "NoMatch" || matchType == "") && odds > 1000000) keepName = true;
-                                if (matchType == "ExactPartialMatch") keepName = true;
+                                if (matchType == "Exact" && curation != "NotCurated") keepName = true;
+                                if ((matchType == "Fuzzy" || matchType == "PartialFuzzy" || matchType == "NoMatch" || matchType == "") && odds > 6) keepName = true;
+                                if (matchType == "PartialExact") keepName = true;
 
                                 if (keepName)
                                 {
@@ -673,10 +682,10 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="nameDetail"></param>
         /// <returns></returns>
-        public string GetIdentifierFromGNFinder(JToken nameDetail, string taxonIdField, string dataSourceIdField)
+        public string GetIdentifierFromGNFinder(JToken nameDetail, string recordIdField, string dataSourceIdField)
         {
             string identifier = string.Empty;
-            string identifierValue = (string)(nameDetail[taxonIdField] ?? string.Empty);
+            string identifierValue = (string)(nameDetail[recordIdField] ?? string.Empty);
             if (nameDetail[dataSourceIdField] != null && !string.IsNullOrWhiteSpace(identifierValue))
             {
                 int dataSourceID = (int)nameDetail[dataSourceIdField];

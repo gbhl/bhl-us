@@ -16,4 +16,9 @@
       <Name>BHL.WebServiceREST.v1.Client</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Update="gnfinder.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
