@@ -3,6 +3,7 @@
 @CreationUserID int,
 @DOIStatusID int,
 @DOIEntityTypeID int,
+@EntityID int = NULL,
 @StartDate datetime,
 @EndDate datetime,
 @NumRows int = 100,
@@ -23,6 +24,7 @@ CREATE TABLE #Step1
 	(
 	DOIID int NOT NULL,
 	DOIStatusID int NOT NULL,
+	DOIStatusName nvarchar(30) NOT NULL,
 	DOIEntityTypeName nvarchar(50) NULL,
 	[Action] nvarchar(10) NOT NULL,
 	EntityID int NULL,
@@ -43,6 +45,7 @@ CREATE TABLE #Step1
 INSERT #Step1
 SELECT	d.DOIID,
 		d.DOIStatusID,
+		st.DOIStatusName,
 		et.DOIEntityTypeName,
 		CASE 
 		-- No Title or Item Identifier records, so definitely "New"
@@ -65,13 +68,15 @@ SELECT	d.DOIID,
 		d.LastModifiedUserID
 FROM	dbo.DOI d 
 		INNER JOIN dbo.DOIEntityType et	ON d.DOIEntityTypeID = et.DOIEntityTypeID
+		INNER JOIN dbo.DOIStatus st ON d.DOIStatusID = st.DOIStatusID
 		LEFT JOIN dbo.AspNetUsers u ON d.CreationUserID = u.id
 		LEFT JOIN dbo.Title_Identifier ti ON d.EntityID = ti.TitleID AND d.DOIEntityTypeID = 10 AND ti.IdentifierID = @IdentifierID
 		LEFT JOIN dbo.Segment s ON d.EntityID = s.segmentid AND d.DOIEntityTypeID = 40
 		LEFT JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID AND ii.IdentifierID = @IdentifierID
-WHERE	DOIStatusID = @DOIStatusID
+WHERE	(d.DOIStatusID = @DOIStatusID OR @DOIStatusID = 0)
 AND		(d.CreationUserID = @CreationUserID OR @CreationUserID = 0)
 AND		(d.DOIEntityTypeID = @DOIEntityTypeID OR @DOIEntityTypeID = 0)
+AND		(d.EntityID = @EntityID OR @EntityID IS NULL)
 AND		d.CreationDate BETWEEN @StartDate AND @EndDate
 
 UPDATE	s1
@@ -124,6 +129,7 @@ CREATE TABLE #Step2
 	(
 	DOIID int NOT NULL,
 	DOIStatusID int NOT NULL,
+	DOIStatusName nvarchar(30) NOT NULL,
 	DOIEntityTypeName nvarchar(50) NULL,
 	[Action] nvarchar(10) NOT NULL,
 	EntityID int NULL,
@@ -142,6 +148,18 @@ CREATE TABLE #Step2
 	)
 
 -- Add a row number to the data set, first sorting by the specified field
+IF (@SortColumn = 'StatusName' AND LOWER(@SortDirection) = 'asc')
+BEGIN
+	INSERT	#Step2
+	SELECT	*, ROW_NUMBER() OVER (ORDER BY DOIStatusName)
+	FROM	#Step1
+END
+IF (@SortColumn = 'StatusName' AND LOWER(@SortDirection) = 'desc')
+BEGIN
+	INSERT	#Step2
+	SELECT	*, ROW_NUMBER() OVER (ORDER BY DOIStatusName DESC)
+	FROM	#Step1
+END
 IF (@SortColumn = 'Action' AND LOWER(@SortDirection) = 'asc')
 BEGIN
 	INSERT	#Step2
@@ -272,7 +290,7 @@ SELECT @TotalDOIs = COUNT(*) FROM #Step2
 -- Return the final result set
 SELECT TOP (@NumRows) 
 		DOIID,
-		s.DOIStatusName,
+		DOIStatusName,
 		DOIEntityTypeName,
 		[Action],
 		EntityID,
@@ -288,7 +306,6 @@ SELECT TOP (@NumRows)
 		LastModifiedUserID,
 		@TotalDOIs AS TotalDOIs
 FROM	#Step2 t
-		INNER JOIN dbo.DOIStatus s ON t.DOIStatusID = s.DOIStatusID
 WHERE	RowNumber > (@PageNum - 1) * @NumRows
 ORDER BY 
 		RowNumber

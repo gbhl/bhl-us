@@ -93,11 +93,11 @@ namespace MOBOT.BHL.Server
             return new DOIDAL().DOISelectByStatus(null, null, doiStatusId, numRows, pageNum, sortColumn, sortOrder);
         }
 
-        public List<DOI> DOISelectStatusReport(int userId, int doiStatusId, int doiEntityTypeId, 
+        public List<DOI> DOISelectStatusReport(int userId, int doiStatusId, int doiEntityTypeId, int? entityID,
             DateTime startDate, DateTime endDate, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
-            return new DOIDAL().DOISelectStatusReport(null, null, userId, doiStatusId, doiEntityTypeId, startDate, endDate, 
-                numRows, pageNum, sortColumn, sortOrder);
+            return new DOIDAL().DOISelectStatusReport(null, null, userId, doiStatusId, doiEntityTypeId, entityID, 
+                startDate, endDate, numRows, pageNum, sortColumn, sortOrder);
         }
 
         public DOI DOISelectQueuedByTypeAndID(string doiEntityTypeName, int entityID)

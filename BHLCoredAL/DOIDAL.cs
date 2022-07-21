@@ -97,7 +97,7 @@ namespace MOBOT.BHL.DAL
         }
 
         public List<DOI> DOISelectStatusReport(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
-            int userID, int doiStatusID, int doiEntityTypeID, DateTime startDate, DateTime endDate, 
+            int userID, int doiStatusID, int doiEntityTypeID, int? entityID, DateTime startDate, DateTime endDate,
             int numRows, int pageNum, string sortColumn, string sortOrder)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -107,6 +107,7 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, false, userID),
                 CustomSqlHelper.CreateInputParameter("DOIStatusID", SqlDbType.Int, null, false, doiStatusID),
                 CustomSqlHelper.CreateInputParameter("DOIEntityTypeID", SqlDbType.Int, null, false, doiEntityTypeID),
+                CustomSqlHelper.CreateInputParameter("EntityID", SqlDbType.Int, null, true, entityID),
                 CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.DateTime, null, false, startDate),
                 CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.DateTime, null, false, endDate),
                 CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numRows),

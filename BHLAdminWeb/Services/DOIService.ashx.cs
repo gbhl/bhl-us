@@ -24,6 +24,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             string userId = context.Request.QueryString["uid"] as string;
             string doiStatusId = context.Request.QueryString["sid"] as string;
             string typeId = context.Request.QueryString["tid"] as string;
+            string entityIdStr = context.Request.QueryString["eid"] as string;
             DateTime startDate;
             DateTime endDate;
             if (!DateTime.TryParse(context.Request.QueryString["sdate"] as string, out startDate)) startDate = new DateTime(1980, 1, 1);
@@ -35,10 +36,12 @@ namespace MOBOT.BHL.AdminWeb.Services
             string sortOrder = context.Request.QueryString["sord"] as string;
 
             int verifyInt;
-            // Make sure itemStatusId, numRows, and pageNum are valid integer values
+            int? entityId = null;
+            // Make sure itemStatusId, entityIdStr, numRows, and pageNum are valid integer values
             doiStatusId = String.IsNullOrEmpty(doiStatusId) ? "0" : (!Int32.TryParse(doiStatusId, out verifyInt) ? "0" : doiStatusId);
             numRows = String.IsNullOrEmpty(numRows) ? "100" : (!Int32.TryParse(numRows, out verifyInt) ? "100" : numRows);
             pageNum = String.IsNullOrEmpty(pageNum) ? "1" : (!Int32.TryParse(pageNum, out verifyInt) ? "1" : pageNum);
+            if (Int32.TryParse(entityIdStr, out verifyInt)) entityId = verifyInt;
 
             // Make sure sortColumn is a value column name
             sortColumn = String.IsNullOrEmpty(sortColumn) ? "LastModifiedDate" : sortColumn;
@@ -48,8 +51,9 @@ namespace MOBOT.BHL.AdminWeb.Services
             sortOrder = (!(sortOrder.ToLower() == "asc") && !(sortOrder.ToLower() == "desc")) ? "desc" : sortOrder;
 
             List<DOI> searchResult = this.DOISelectStatusReport(Convert.ToInt32(userId),
-                Convert.ToInt32(doiStatusId), Convert.ToInt32(typeId), startDate, endDate,
-                Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, sortOrder);
+                Convert.ToInt32(doiStatusId), Convert.ToInt32(typeId), entityId,
+                startDate, endDate, Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, 
+                sortOrder);
 
             context.Response.Clear();
             context.Response.ClearContent();
@@ -84,16 +88,16 @@ namespace MOBOT.BHL.AdminWeb.Services
         /// <param name="sortOrder"></param>
         /// <returns></returns>
         private List<DOI> DOISelectStatusReport(
-            int userId, int doiStatusId, int doiEntityTypeId, DateTime startDate, DateTime endDate,
-            int numRows, int pageNum, string sortColumn, string sortOrder)
+            int userId, int doiStatusId, int doiEntityTypeId, int? entityID, DateTime startDate, 
+            DateTime endDate, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
             List<DOI> items = new List<DOI>();
 
             try
             {
                 BHLProvider service = new BHLProvider();
-                items = service.DOISelectStatusReport(userId, doiStatusId, doiEntityTypeId, startDate,
-                    endDate, numRows, pageNum, sortColumn, sortOrder);
+                items = service.DOISelectStatusReport(userId, doiStatusId, doiEntityTypeId, entityID,
+                    startDate, endDate, numRows, pageNum, sortColumn, sortOrder);
             }
             catch
             {
@@ -162,6 +166,7 @@ namespace MOBOT.BHL.AdminWeb.Services
 
                     response.Append("<row id='" + searchResult[x].DOIID.ToString() + "'>");
                     response.Append("<cell> " + HttpUtility.HtmlEncode(searchResult[x].CreationUserName) + " </cell>");
+                    response.Append("<cell> " + HttpUtility.HtmlEncode(searchResult[x].DOIStatusName) + " </cell>");
                     response.Append("<cell> " + searchResult[x].Action + " </cell>");
                     response.Append("<cell> <![CDATA[<a title=\"Entity Info\" rel=\"noopener noreferrer\" href=\"" + entityUrl + "\">" + entityID + "</a>]]> </cell>");
                     response.Append("<cell> " + HttpUtility.HtmlEncode(searchResult[x].EntityDetail) + " </cell>");
@@ -200,7 +205,8 @@ namespace MOBOT.BHL.AdminWeb.Services
                 record.Add("Queued By", doi.CreationUserName);
                 record.Add("Status", doi.DOIStatusName);
                 record.Add("Action", doi.Action);
-                record.Add("Entity", doi.DOIEntityTypeName + " " + doi.EntityID.ToString());
+                record.Add("Entity Type", doi.DOIEntityTypeName);
+                record.Add("Entity ID", doi.EntityID.ToString());
                 record.Add("Entity Detail", doi.EntityDetail);
                 record.Add("Container Title ID", doi.ContainerTitleID);
                 //record.Add("DOI Batch ID", doi.DOIBatchID);

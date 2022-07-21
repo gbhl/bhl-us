@@ -42,6 +42,15 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.DropDownList ddlEntityType;
 
         /// <summary>
+        /// txtEntityID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEntityID;
+
+        /// <summary>
         /// txtStartDate control.
         /// </summary>
         /// <remarks>
@@ -69,15 +78,6 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.Button btnView;
 
         /// <summary>
-        /// litDisplayed control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litDisplayed;
-
-        /// <summary>
         /// lnkDownloadResults control.
         /// </summary>
         /// <remarks>
@@ -87,39 +87,12 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkDownloadResults;
 
         /// <summary>
-        /// ddlStatusChange control.
+        /// litDisplayed control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlStatusChange;
-
-        /// <summary>
-        /// btnChange control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnChange;
-
-        /// <summary>
-        /// hidSelected control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hidSelected;
-
-        /// <summary>
-        /// litUpdateResult control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litUpdateResult;
+        protected global::System.Web.UI.WebControls.Literal litDisplayed;
     }
 }
