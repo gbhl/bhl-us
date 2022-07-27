@@ -11,31 +11,38 @@ SELECT	ta.AuthorID,
 		c.HasLocalContent,
 		c.HasExternalContent
 INTO	#Author
-FROM	dbo.TitleAuthor ta WITH (NOLOCK)
-		INNER JOIN dbo.Author a WITH (NOLOCK) ON ta.AuthorID = a.AuthorID
-		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON ta.TitleID = c.TitleID
+FROM	dbo.TitleAuthor ta
+		INNER JOIN dbo.Title t ON ta.TitleID = t.TitleID
+		INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID
+		INNER JOIN dbo.Book b ON it.ItemID = b.ItemID
+		INNER JOIN dbo.Author a ON ta.AuthorID = a.AuthorID
+		INNER JOIN dbo.SearchCatalog c ON ta.TitleID = c.TitleID AND b.BookID = c.ItemID
+WHERE	a.IsActive = 1
 UNION
 SELECT	ia.AuthorID,
 		scs.HasLocalContent,
 		scs.HasExternalContent
-FROM	dbo.ItemAuthor ia WITH (NOLOCK) 
-		INNER JOIN dbo.Segment s WITH (NOLOCK) ON ia.ItemID = s.ItemID
-		INNER JOIN dbo.SearchCatalogSegment scs WITH (NOLOCK) ON s.SegmentID = scs.SegmentID
+FROM	dbo.ItemAuthor ia 
+		INNER JOIN dbo.Item i ON ia.ItemID = i.ItemID
+		INNER JOIN dbo.Segment s ON ia.ItemID = s.ItemID
+		INNER JOIN dbo.Author a ON ia.AuthorID = a.AuthorID
+		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
+WHERE	i.ItemStatusID in (30, 40)
+AND		a.IsActive = 1
 
 SELECT 	a.AuthorID, 
 		id.IdentifierName, 
 		ai.IdentifierValue, 
-		CONVERT(nvarchar(16), ai.CreationDate, 120) AS CreationDate,
+		CONVERT(nvarchar(16), MIN(ai.CreationDate), 120) AS CreationDate,
 		MAX(a.HasLocalContent) AS HasLocalContent,
 		MAX(a.HasExternalContent) AS HasExternalContent
-FROM	#Author a WITH (NOLOCK)
-		INNER JOIN dbo.AuthorIdentifier ai WITH (NOLOCK) ON a.AuthorID = ai.AuthorID
-		INNER JOIN dbo.Identifier id WITH (NOLOCK) ON ai.IdentifierID = id.IdentifierID
+FROM	#Author a
+		INNER JOIN dbo.AuthorIdentifier ai ON a.AuthorID = ai.AuthorID
+		INNER JOIN dbo.Identifier id ON ai.IdentifierID = id.IdentifierID
 GROUP BY
 		a.AuthorID, 
 		id.IdentifierName, 
-		ai.IdentifierValue, 
-		CONVERT(nvarchar(16), ai.CreationDate, 120)
+		ai.IdentifierValue
 
 END
 
