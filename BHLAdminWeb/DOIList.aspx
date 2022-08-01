@@ -10,14 +10,14 @@
     <div style="margin:3px;">With a Queued Date Between:&nbsp;<asp:TextBox ID="txtStartDate" Width="75px" runat="server"></asp:TextBox> and <asp:TextBox ID="txtEndDate" Width="75px" runat="server"></asp:TextBox>&nbsp;
         <asp:Button ID="btnView" runat="server" Text="Go" OnClick="btnView_Click" /></div>
     </div>
-    <div style="margin-top:8px;height:15px">
+    <div style="margin-top:8px;height:18px">
         <b><a id="lnkDownloadResults" runat="server" title="Download Results" style="float:right" visible="false" href="#">Download Results</a></b>
     </div>
     <div id="listDiv" style="height:100%; overflow:auto;">
         <table id="list"></table>
         <div id="pager"></div>
     </div>
-    <p style="margin:0px"><asp:Literal ID="litDisplayed" runat="server"></asp:Literal></p>
+    <p style="margin:5px 5px 0px 0px;"><asp:Literal ID="litDisplayed" runat="server"></asp:Literal></p>
     <script type="text/javascript">
         jQuery(document).ready(function () {
             jQuery("#list").jqGrid({
@@ -56,7 +56,7 @@
 
         function resizeGrid() {
             jQuery("#list").setGridWidth(jQuery(window).width() - 40);
-            jQuery("#list").setGridHeight(jQuery(window).height() - 315);
+            jQuery("#list").setGridHeight(jQuery(window).height() - 345);
         }
     </script>
 </asp:Content>
