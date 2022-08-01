@@ -13,11 +13,32 @@ namespace MOBOT.BHL.DataObjects
             set { _doiEntityTypeName = value; }
         }
 
+        private string _doiStatusName = string.Empty;
+        public string DOIStatusName
+        {
+            get { return _doiStatusName; }
+            set { _doiStatusName = value; }
+        }
+
+        private string _action = string.Empty;
+        public string Action
+        {
+            get { return _action; }
+            set { _action = value; }
+        }
+
         private string _entityDetail = string.Empty;
         public string EntityDetail
         {
             get { return _entityDetail; }
             set { _entityDetail = value; }
+        }
+
+        private int? _containerTitleID = null;
+        public int? ContainerTitleID
+        {
+            get { return _containerTitleID; }
+            set { _containerTitleID = value; }
         }
 
         private int _totalDOIs = 0;
@@ -45,9 +66,24 @@ namespace MOBOT.BHL.DataObjects
                             _doiEntityTypeName = Utility.EmptyIfNull(column.Value);
                             break;
                         }
+                    case "DOIStatusName":
+                        {
+                            _doiStatusName = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "Action":
+                        {
+                            _action = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
                     case "EntityDetail":
                         {
                             _entityDetail = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "ContainerTitleID":
+                        {
+                            _containerTitleID = (int?)column.Value;
                             break;
                         }
                     case "TotalDOIs":

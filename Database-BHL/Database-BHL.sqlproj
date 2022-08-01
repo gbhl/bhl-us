@@ -1174,6 +1174,9 @@
     <None Include="dbo\Functions\fnRemoveTrailingPunctuation.sql" />
     <None Include="dbo\Functions\fnConvertToTitleCase.sql" />
     <None Include="dbo\Functions\fnAddAuthorNameSpaces.sql" />
+    <None Include="dbo\Stored Procedures\AspNetUserSelectWithDoi.sql" />
+    <None Include="dbo\Stored Procedures\DOIEntityTypeSelectWithDoi.sql" />
+    <None Include="dbo\Stored Procedures\DOISelectStatusReport.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

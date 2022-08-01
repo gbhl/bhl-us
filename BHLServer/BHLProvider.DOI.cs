@@ -93,6 +93,13 @@ namespace MOBOT.BHL.Server
             return new DOIDAL().DOISelectByStatus(null, null, doiStatusId, numRows, pageNum, sortColumn, sortOrder);
         }
 
+        public List<DOI> DOISelectStatusReport(int userId, int doiStatusId, int doiEntityTypeId, int? entityID,
+            DateTime startDate, DateTime endDate, int numRows, int pageNum, string sortColumn, string sortOrder)
+        {
+            return new DOIDAL().DOISelectStatusReport(null, null, userId, doiStatusId, doiEntityTypeId, entityID, 
+                startDate, endDate, numRows, pageNum, sortColumn, sortOrder);
+        }
+
         public DOI DOISelectQueuedByTypeAndID(string doiEntityTypeName, int entityID)
         {
             return new DOIDAL().DOISelectQueuedByTypeAndID(null, null, doiEntityTypeName, entityID);
@@ -154,6 +161,11 @@ namespace MOBOT.BHL.Server
         public List<DOIEntityType> DOIEntityTypeSelectAll()
         {
             return new DOIDAL().DOIEntityTypeSelectAll(null, null);
+        }
+
+        public List<DOIEntityType> DOIEntityTypeSelectWithDoi()
+        {
+            return new DOIDAL().DOIEntityTypeSelectWithDoi(null, null);
         }
 
         public string DOIGetFileContents(string batchId, string type)

@@ -1,5 +1,6 @@
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -95,6 +96,33 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public List<DOI> DOISelectStatusReport(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
+            int userID, int doiStatusID, int doiEntityTypeID, int? entityID, DateTime startDate, DateTime endDate,
+            int numRows, int pageNum, string sortColumn, string sortOrder)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("DOISelectStatusReport",
+                connection, transaction,
+                CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, false, userID),
+                CustomSqlHelper.CreateInputParameter("DOIStatusID", SqlDbType.Int, null, false, doiStatusID),
+                CustomSqlHelper.CreateInputParameter("DOIEntityTypeID", SqlDbType.Int, null, false, doiEntityTypeID),
+                CustomSqlHelper.CreateInputParameter("EntityID", SqlDbType.Int, null, true, entityID),
+                CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.DateTime, null, false, startDate),
+                CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.DateTime, null, false, endDate),
+                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numRows),
+                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sortColumn),
+                CustomSqlHelper.CreateInputParameter("SortDirection", SqlDbType.NVarChar, 4, false, sortOrder)))
+            {
+                using (CustomSqlHelper<DOI> helper = new CustomSqlHelper<DOI>())
+                {
+                    List<DOI> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
         public DOI DOISelectQueuedByTypeAndID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string doiEntityTypeName, int entityID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -146,6 +174,21 @@ namespace MOBOT.BHL.DAL
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("DOIEntityTypeSelectAll",
+                connection, transaction))
+            {
+                using (CustomSqlHelper<DOIEntityType> helper = new CustomSqlHelper<DOIEntityType>())
+                {
+                    List<DOIEntityType> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        public List<DOIEntityType> DOIEntityTypeSelectWithDoi(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("DOIEntityTypeSelectWithDoi",
                 connection, transaction))
             {
                 using (CustomSqlHelper<DOIEntityType> helper = new CustomSqlHelper<DOIEntityType>())

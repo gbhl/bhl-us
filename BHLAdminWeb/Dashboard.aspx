@@ -440,7 +440,7 @@
                     </tr>
                     <tr>
                         <td align="center" colspan="2" runat="server" id="tdViewUpdateDoi">
-                            <a href="/doilist.aspx">View/Update DOI Details</a>
+                            <a href="/doilist.aspx">View/Update DOI Status</a>
                         </td>
                     </tr>
                 </table>
