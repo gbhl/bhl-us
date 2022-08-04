@@ -904,7 +904,7 @@ BEGIN TRY
 	SELECT DISTINCT
 			t.ItemID,
 			'DLC',
-			LTRIM(RTRIM(m.SubFieldValue))
+			dbo.BHLfnGetLCCNValue(m.SubFieldValue)
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField m
 				ON t.ItemID = m.ItemID
 	WHERE	DataFieldTag = '010'
@@ -2104,7 +2104,7 @@ BEGIN TRY
 		SELECT	10, @ImportSourceID, t.MARCTag, 
 				t.MARCIndicator2, t.Title, t.Section, t.Volume, 
 				t.Heading, t.Publication, t.Relationship, 'DLC' as IdentifierName, 
-				LTRIM(RTRIM(REPLACE(m.SubFieldValue, '(DLC)', ''))) AS IdentifierValue,
+				dbo.BHLfnGetLCCNValue(REPLACE(m.SubFieldValue, '(DLC)', '')) AS IdentifierValue,
 				CONVERT(nvarchar(50), t.ItemID)
 		FROM	#tmpTitleAssociation t INNER JOIN vwIAMarcDataField m
 					ON t.MarcDataFieldID = m.MarcDataFieldID

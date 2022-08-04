@@ -1177,6 +1177,7 @@
     <None Include="dbo\Stored Procedures\AspNetUserSelectWithDoi.sql" />
     <None Include="dbo\Stored Procedures\DOIEntityTypeSelectWithDoi.sql" />
     <None Include="dbo\Stored Procedures\DOISelectStatusReport.sql" />
+    <None Include="dbo\Functions\fnGetLCCNValue.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

@@ -54,7 +54,7 @@ AND		t.MarcID = @MarcID
 INSERT INTO #tmpTitleIdentifier
 SELECT DISTINCT
 		'DLC',
-		LTRIM(RTRIM(m.SubFieldValue))
+		dbo.fnGetLCCNValue(m.SubFieldValue)
 FROM	dbo.vwMarcDataField m
 WHERE	DataFieldTag = '010'
 AND		Code = 'a'

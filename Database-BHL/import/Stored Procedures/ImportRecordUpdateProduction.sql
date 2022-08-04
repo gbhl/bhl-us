@@ -292,7 +292,7 @@ BEGIN TRY
 	WHERE	r.ImportRecordID = @ImportRecordID AND LCCN <> ''
 
 	INSERT	dbo.ItemIdentifier (ItemID, IdentifierID, IdentifierValue, CreationUserID, LastModifiedUserID)
-	SELECT	@ItemID, @IdentifierLCCNID, LCCN, @UserID, @UserID
+	SELECT	@ItemID, @IdentifierLCCNID, dbo.fnGetLCCNValue(LCCN), @UserID, @UserID
 	FROM	import.ImportRecord WHERE ImportRecordID = @ImportRecordID AND LCCN <> '' AND LCCN <> 'NULL'
 
 	DELETE	ii

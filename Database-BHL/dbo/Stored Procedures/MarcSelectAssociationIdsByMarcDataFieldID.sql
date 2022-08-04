@@ -36,7 +36,7 @@ AND		m.MarcDataFieldID = @MarcDataFieldID
 -- DLC (Library of Congress)
 INSERT INTO #tmpIdentifier (TitleIdentifierID, IdentifierValue)
 SELECT	@DLC, 
-		LTRIM(RTRIM(REPLACE(m.SubFieldValue, '(DLC)', '')))
+		dbo.fnGetLCCNValue(REPLACE(m.SubFieldValue, '(DLC)', ''))
 FROM	vwMarcDataField m
 WHERE	m.Code = 'w' 
 AND		m.SubFieldValue LIKE '(DLC)%'
