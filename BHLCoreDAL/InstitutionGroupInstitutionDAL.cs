@@ -31,7 +31,7 @@ namespace MOBOT.BHL.DAL
                 parameter2.SqlDbType = SqlDbType.Structured;
                 parameter2.TypeName = "dbo.InstitutionCodeTable";
 
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
     }

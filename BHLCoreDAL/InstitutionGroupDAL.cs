@@ -53,7 +53,7 @@ namespace MOBOT.BHL.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionGroupDelete", connection, transaction,
 					CustomSqlHelper.CreateInputParameter("InstitutionGroupID", SqlDbType.Int, null, false, institutionGroupId)))
 			{
-				command.ExecuteNonQuery();
+				CustomSqlHelper.ExecuteNonQuery(command);
 			}
 		}
 	}

@@ -43,7 +43,7 @@ namespace MOBOT.BHL.DAL
                     CustomSqlHelper.CreateInputParameter("TextSource", SqlDbType.NVarChar, 50, false, textSource),
                     CustomSqlHelper.CreateInputParameter("UserID", SqlDbType.Int, null, false, userID)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
 

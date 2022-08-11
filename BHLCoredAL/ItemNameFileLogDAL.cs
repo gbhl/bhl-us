@@ -20,7 +20,7 @@ namespace MOBOT.BHL.DAL
                 connection, transaction,
                 CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.DateTime, null, true, startDate)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
 

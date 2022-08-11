@@ -150,7 +150,7 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.CreateInputParameter("DOIEntityTypeID", SqlDbType.Int, null, false, doiEntityTypeID),
                 CustomSqlHelper.CreateInputParameter("EntityID", SqlDbType.Int, null, false, entityID)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
 
@@ -211,7 +211,7 @@ namespace MOBOT.BHL.DAL
                     CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, false, creationUserID),
                     CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
 
@@ -227,7 +227,7 @@ namespace MOBOT.BHL.DAL
                     CustomSqlHelper.CreateInputParameter("UserID", SqlDbType.Int, null, false, userID),
                     CustomSqlHelper.CreateInputParameter("ExcludeBHLDOI", SqlDbType.Int, null, false, excludeBHLDOI)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
 
@@ -249,7 +249,7 @@ namespace MOBOT.BHL.DAL
                     CustomSqlHelper.CreateInputParameter("UserID", SqlDbType.Int, null, false, userID),
                     CustomSqlHelper.CreateInputParameter("ExcludeBHLDOI", SqlDbType.Int, null, false, excludeBHLDOI)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
 
@@ -272,7 +272,7 @@ namespace MOBOT.BHL.DAL
                     CustomSqlHelper.CreateInputParameter("UserID", SqlDbType.Int, null, false, userID),
                     CustomSqlHelper.CreateInputParameter("ExcludeBHLDOI", SqlDbType.Int, null, false, excludeBHLDOI)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
 
@@ -288,7 +288,7 @@ namespace MOBOT.BHL.DAL
                     CustomSqlHelper.CreateInputParameter("DOIName", SqlDbType.NVarChar, 50, false, doiName),
                     CustomSqlHelper.CreateInputParameter("UserID", SqlDbType.Int, null, false, userID)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
     }

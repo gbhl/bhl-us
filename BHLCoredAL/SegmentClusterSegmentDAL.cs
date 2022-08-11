@@ -67,7 +67,7 @@ namespace MOBOT.BHL.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentClusterSegmentDeleteForSegment", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
     }

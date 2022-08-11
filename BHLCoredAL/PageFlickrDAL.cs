@@ -105,7 +105,7 @@ namespace MOBOT.BHL.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("PageFlickrDeleteByPageID", connection, transaction,
                     CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
     }

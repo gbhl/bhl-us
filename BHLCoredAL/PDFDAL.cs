@@ -150,7 +150,7 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.CreateInputParameter("PdfStatusID", SqlDbType.Int, null, false, PdfStatusId),
                 CustomSqlHelper.CreateOutputParameter("RowsUpdated", SqlDbType.Int, null, false)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
                 // If RowsUpdated > 0, then a row was updated (return true)
                 return ((int)command.Parameters[2].Value > 0);
             }
