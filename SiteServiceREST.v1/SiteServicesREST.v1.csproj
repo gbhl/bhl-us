@@ -29,11 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\MOBOT\BHL\BHLDataObjects\BHLDataObjects.csproj" />
-    <ProjectReference Include="..\..\..\..\MOBOT\BHL\BHLServer\BHLServer.csproj" />
-    <ProjectReference Include="..\..\..\..\MOBOT\BHL\BHLUtility\BHLUtility.csproj" />
-    <ProjectReference Include="..\..\..\..\MOBOT\BHL\BHLWebUtilities\BHLWebUtilities.csproj" />
-    <ProjectReference Include="..\..\..\..\MOBOT\BHL\QueueUtility\QueueUtility.csproj" />
+    <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj" />
+    <ProjectReference Include="..\BHLServer\BHLServer.csproj" />
+    <ProjectReference Include="..\BHLUtility\BHLUtility.csproj" />
+    <ProjectReference Include="..\BHLWebUtilities\BHLWebUtilities.csproj" />
+    <ProjectReference Include="..\QueueUtility\QueueUtility.csproj" />
   </ItemGroup>
 
 </Project>
