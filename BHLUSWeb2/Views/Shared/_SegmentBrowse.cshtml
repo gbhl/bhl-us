@@ -1,0 +1,83 @@
+﻿@{
+var result = ViewData["searchResult"] as List<MOBOT.BHL.DataObjects.Segment>;
+}
+
+<ol class="data titles">
+    @foreach (MOBOT.BHL.DataObjects.Segment segment in result)
+    {
+        bool useOriginal = false;
+        if (Request.Cookies.AllKeys.Contains("originalsearch"))
+        {
+            if (Request.Cookies["originalsearch"].Value == "1") { useOriginal = true; }
+        }
+
+    <li class="titlelisting">
+        @if (System.Configuration.ConfigurationManager.AppSettings["UseElasticSearch"].ToLower() == "true" && !useOriginal)
+        {
+            <div style="display:inline-block; width:620px">
+                <div style="float:left">
+                    @if (segment.StartPageID == null && segment.Url == string.Empty && segment.BookIsVirtual == 0)
+                    {
+                        @segment.Title
+                    }
+                    @if (segment.StartPageID != null && segment.Url == string.Empty && segment.BookIsVirtual == 0)
+                    {
+                        <a class="title" href="/page/@segment.StartPageID.ToString()">@segment.Title</a>
+                    }
+                    @if (segment.StartPageID == null && segment.Url != string.Empty && segment.BookIsVirtual == 0)
+                    {
+                        <a target="_blank" rel="noopener noreferrer" class="title ExtLinkBrowse" href="@segment.Url">@segment.Title</a>
+                    }
+                    @if (segment.BookIsVirtual == 1)
+                    {
+                        <a class="title" href="/segment/@segment.SegmentID.ToString()">@segment.Title</a>
+                    }
+                </div>
+                <div style="float:right">
+                    <a class="titleviewbook" href="/part/@segment.SegmentID">View Metadata</a>
+                </div>
+            </div>
+            <div class="titledetails" @(segment.Authors == string.Empty ? "hidden" : "")>By: @segment.Authors.ToString().Replace("|", " - ")</div>
+            <div class="titledetails" @(segment.GenreName == string.Empty ? "hidden" : "")>Type: @segment.GenreName</div>
+            <div class="titledetails" @(segment.ContainerTitle == string.Empty ? "hidden" : "")>In: @segment.ContainerTitle</div>
+            <div class="titledetails" @(segment.Volume == string.Empty ? "hidden" : "")>Volume: @segment.Volume</div>
+            <div class="titledetails" @(segment.Series == string.Empty ? "hidden" : "")>Series: @segment.Series</div>
+            <div class="titledetails" @(segment.Issue == string.Empty ? "hidden" : "")>Issue: @segment.Issue</div>
+            <div class="titledetails" @(segment.Date == string.Empty ? "hidden" : "")>Date: @segment.Date</div>
+            <div class="titledetails" @(segment.PageRange == string.Empty ? "hidden" : "")>Page Range: @segment.PageRange</div>
+            <div class="titledetails" @(segment.PublicationDetails == string.Empty ? "hidden" : "")>Publication Info: @segment.PublicationDetails</div>
+            <div class="titledetails" @(segment.Keywords == string.Empty ? "hidden" : "")>Subjects: @Html.Raw(segment.Keywords.ToString().Replace("|", "&nbsp;&nbsp;"))</div>
+        }
+        else
+        {
+            <a href="/part/<%# Eval(" SegmentID")%>" title="Segment"><%# Eval("Title") %></a>
+            <div class="titledetails" @(segment.Authors == string.Empty ? "hidden" : "")>By: @segment.Authors.ToString().Replace("|", " - ")</div>
+            <div class="titledetails" @(segment.GenreName == string.Empty ? "hidden" : "")>Type: @segment.GenreName</div>
+            <div class="titledetails" @(segment.ContainerTitle == string.Empty ? "hidden" : "")>In: @segment.ContainerTitle</div>
+            <div class="titledetails" @(segment.Volume == string.Empty ? "hidden" : "")>Volume: @segment.Volume</div>
+            <div class="titledetails" @(segment.Series == string.Empty ? "hidden" : "")>Series: @segment.Series</div>
+            <div class="titledetails" @(segment.Issue == string.Empty ? "hidden" : "")>Issue: @segment.Issue</div>
+            <div class="titledetails" @(segment.Date == string.Empty ? "hidden" : "")>Date: @segment.Date</div>
+            <div class="titledetails" @(segment.PageRange == string.Empty ? "hidden" : "")>Page Range: @segment.PageRange</div>
+            <div class="titledetails" @(segment.PublicationDetails == string.Empty ? "hidden" : "")>Publication Info: @segment.PublicationDetails</div>
+            <div class="titledetails" @(segment.Keywords == string.Empty ? "hidden" : "")>Subjects: @Html.Raw(segment.Keywords.ToString().Replace("|", "&nbsp;&nbsp;"))</div>
+            if (segment.StartPageID != null && segment.BookIsVirtual == 0)
+            {
+                <a class="titleviewbook" style="position:relative;top:-25px;" href="/page/@segment.StartPageID">View @segment.GenreName</a>
+            }
+            if (segment.BookIsVirtual == 1)
+            {
+                <a class="titleviewbook" style="position:relative;top:-25px;" href="/segment/@segment.SegmentID">View @segment.GenreName</a>
+            }
+            if (segment.Url != string.Empty)
+            {
+                <a target="_blank" rel="noopener noreferrer" class="titleviewbook" style="position:relative;top:-25px;" href="@segment.Url">View @segment.GenreName (External)</a>
+            }
+            if (segment.DownloadUrl != string.Empty)
+            {
+                <a class="titleviewbook" style="position:relative;top:-25px;" href="@segment.DownloadUrl">Download @segment.GenreName</a>
+            }
+        }
+    </li>
+    }
+</ol>

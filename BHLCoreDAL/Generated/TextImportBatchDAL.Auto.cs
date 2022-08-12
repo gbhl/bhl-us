@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TextImportBatch> helper = new CustomSqlHelper<TextImportBatch>())
 				{
-					CustomGenericList<TextImportBatch> list = helper.ExecuteReader(command);
+					List<TextImportBatch> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TextImportBatch o = list[0];
@@ -87,22 +88,22 @@ namespace MOBOT.BHL.DAL
 				}
 			}
 		}
-		
+
 		/// <summary>
 		/// Select values from txtimport.TextImportBatch by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="textImportBatchID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TextImportBatchSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TextImportBatchSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int textImportBatchID)
 		{
 			return TextImportBatchSelectAutoRaw( sqlConnection, sqlTransaction, "BHL", textImportBatchID );
 		}
-		
+
 		/// <summary>
 		/// Select values from txtimport.TextImportBatch by primary key(s).
 		/// </summary>
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="textImportBatchID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TextImportBatchSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TextImportBatchSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -180,7 +181,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TextImportBatch> helper = new CustomSqlHelper<TextImportBatch>())
 				{
-					CustomGenericList<TextImportBatch> list = helper.ExecuteReader(command);
+					List<TextImportBatch> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TextImportBatch o = list[0];
@@ -340,7 +341,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TextImportBatch> helper = new CustomSqlHelper<TextImportBatch>())
 				{
-					CustomGenericList<TextImportBatch> list = helper.ExecuteReader(command);
+					List<TextImportBatch> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TextImportBatch o = list[0];

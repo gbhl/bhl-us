@@ -1,21 +1,20 @@
-﻿using System;
-using CustomDataAccess;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Web.Utilities;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
     public partial class BHLProvider
     {
-        public CustomGenericList<SearchBookResult> SearchBook(string title, string authorLastName, string volume, string edition,
+        public List<SearchBookResult> SearchBook(string title, string authorLastName, string volume, string edition,
             int? year, string subject, string languageCode, int? collectionID, int returnCount, string searchSort)
         {
             return new SearchDAL().SearchBook(null, null, title, authorLastName, volume, edition, year, subject,
                 languageCode, collectionID, returnCount, searchSort);
         }
 
-        public CustomGenericList<SearchAnnotationResult> SearchAnnotation(string annotationText, string title, string authorLastName,
+        public List<SearchAnnotationResult> SearchAnnotation(string annotationText, string title, string authorLastName,
             string volume, string edition, int? year, int? collectionID, int? annotationSourceID, int returnCount)
         {
             return new SearchDAL().SearchAnnotation(null, null, annotationText, title, authorLastName, volume, edition,
@@ -26,16 +25,16 @@ namespace MOBOT.BHL.Server
         /// Select all values from Title like a particular string.
         /// </summary>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByNameLike(string name)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByNameLike(string name, int pageNum, int numPages, string sort)
         {
-            return (new SearchDAL().TitleSelectByNameLike(null, null, name));
+            return (new SearchDAL().TitleSelectByNameLike(null, null, name, pageNum, numPages, sort));
         }
 
         /// <summary>
         /// Select all values from Title NOT like a particular string.
         /// </summary>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByNameNotLike(string name)
+        public List<SearchBookResult> TitleSelectByNameNotLike(string name)
         {
             return (new SearchDAL().TitleSelectByNameNotLike(null, null, name));
         }
@@ -45,24 +44,34 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="authorId"></param>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByAuthor(int authorId)
+        public List<SearchBookResult> TitleSelectByAuthor(int authorId)
         {
             return (new SearchDAL().TitleSelectByAuthor(null, null, authorId));
         }
 
-        public CustomGenericList<SearchBookResult> TitleSelectByInstitutionAndStartsWith(string institutionCode, string startsWith)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByAuthorPaged(int authorId, int pageNum, int numPages, string sort)
         {
-            return new SearchDAL().TitleSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith);
+            return (new SearchDAL().TitleSelectByAuthorPaged(null, null, authorId, pageNum, numPages, sort));
         }
 
-        public CustomGenericList<SearchBookResult> TitleSelectByInstitutionAndStartsWithout(string institutionCode, string startsWith)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByInstitutionAndStartsWith(string institutionCode, string startsWith, int pageNum, int numPages, string sort)
         {
-            return new SearchDAL().TitleSelectByInstitutionAndStartsWithout(null, null, institutionCode, startsWith);
+            return new SearchDAL().TitleSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith, pageNum, numPages, sort);
         }
 
-        public CustomGenericList<SearchBookResult> TitleSelectByKeyword(string keyword)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByInstitutionAndStartsWithout(string institutionCode, string startsWith, int pageNum, int numPages, string sort)
+        {
+            return new SearchDAL().TitleSelectByInstitutionAndStartsWithout(null, null, institutionCode, startsWith, pageNum, numPages, sort);
+        }
+
+        public List<SearchBookResult> TitleSelectByKeyword(string keyword)
         {
             return new SearchDAL().TitleSelectByKeyword(null, null, keyword);
+        }
+
+        public Tuple<int, List<SearchBookResult>> TitleSelectByKeywordPaged(string keyword, int pageNum, int numPages, string sort)
+        {
+            return new SearchDAL().TitleSelectByKeywordPaged(null, null, keyword, pageNum, numPages, sort);
         }
 
         /// <summary>
@@ -70,7 +79,7 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="languageCode"></param>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByLanguage(string languageCode)
+        public List<SearchBookResult> TitleSelectByLanguage(string languageCode)
         {
             return (new SearchDAL().TitleSelectByLanguage(null, null, languageCode));
         }
@@ -79,9 +88,9 @@ namespace MOBOT.BHL.Server
         /// Select Titles for a particular date range
         /// </summary>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByDateRange(int startDate, int endDate)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByDateRange(int startDate, int endDate, int pageNum, int numPages, string sort)
         {
-            return (new SearchDAL().TitleSelectByDateRange(null, null, startDate, endDate));
+            return (new SearchDAL().TitleSelectByDateRange(null, null, startDate, endDate, pageNum, numPages, sort));
         }
 
         /// <summary>
@@ -90,9 +99,9 @@ namespace MOBOT.BHL.Server
         /// <param name="collectionID"></param>
         /// <param name="startString"></param>
         /// <returns>List of SearchBookResults</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByCollectionAndStartsWith(int collectionID, string startString)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByCollectionAndStartsWith(int collectionID, string startString, int pageNum, int numPages, string sort)
         {
-            return new SearchDAL().TitleSelectByCollectionAndStartsWith(null, null, collectionID, startString);
+            return new SearchDAL().TitleSelectByCollectionAndStartsWith(null, null, collectionID, startString, pageNum, numPages, sort);
         }
 
         /// <summary>
@@ -101,7 +110,7 @@ namespace MOBOT.BHL.Server
         /// <param name="collectionID"></param>
         /// <param name="startString"></param>
         /// <returns>List of SearchBookResult</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByCollectionAndStartsWithout(int collectionID, string startString)
+        public List<SearchBookResult> TitleSelectByCollectionAndStartsWithout(int collectionID, string startString)
         {
             return new SearchDAL().TitleSelectByCollectionAndStartsWithout(null, null, collectionID, startString);
         }
@@ -112,9 +121,9 @@ namespace MOBOT.BHL.Server
         /// <param name="collectionID"></param>
         /// <param name="startsWith"></param>
         /// <returns>List of SearchBookResult</returns>
-        public CustomGenericList<SearchBookResult> ItemSelectByCollectionAndStartsWith(int collectionID, string startsWith)
+        public Tuple<int, List<SearchBookResult>> ItemSelectByCollectionAndStartsWith(int collectionID, string startsWith, int pageNum, int numPages, string sort)
         {
-            return new SearchDAL().ItemSelectByCollectionAndStartsWith(null, null, collectionID, startsWith);
+            return new SearchDAL().ItemSelectByCollectionAndStartsWith(null, null, collectionID, startsWith, pageNum, numPages, sort);
         }
 
         /// <summary>
@@ -123,12 +132,12 @@ namespace MOBOT.BHL.Server
         /// <param name="collectionID"></param>
         /// <param name="startsWith"></param>
         /// <returns></returns>
-        public CustomGenericList<SearchBookResult> ItemSelectByCollectionAndStartsWithout(int collectionID, string startsWith)
+        public List<SearchBookResult> ItemSelectByCollectionAndStartsWithout(int collectionID, string startsWith)
         {
             return new SearchDAL().ItemSelectByCollectionAndStartsWithout(null, null, collectionID, startsWith);
         }
 
-        public CustomGenericList<TitleKeyword> SearchTitleKeyword(string keyword, string languageCode, int returnCount)
+        public List<TitleKeyword> SearchTitleKeyword(string keyword, string languageCode, int returnCount)
 		{
             return new SearchDAL().SearchTitleKeyword(null, null, keyword, languageCode, returnCount);
 		}
@@ -140,7 +149,7 @@ namespace MOBOT.BHL.Server
         /// <param name="languageCode"></param>
         /// <param name="returnCount"></param>
         /// <returns></returns>
-        public CustomGenericList<Author> SearchAuthor(string authorName, int returnCount)
+        public List<Author> SearchAuthor(string authorName, int returnCount)
         {
             return new SearchDAL().SearchAuthor(null, null, authorName, returnCount);
         }
@@ -150,7 +159,7 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="authorName"></param>
         /// <returns></returns>
-        public CustomGenericList<Author> SearchAuthorComplete(string authorName)
+        public List<Author> SearchAuthorComplete(string authorName)
         {
             return new SearchDAL().SearchAuthorComplete(null, null, authorName);
         }
@@ -160,38 +169,38 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="title"></param>
         /// <returns></returns>
-        public CustomGenericList<Segment> SearchSegmentComplete(string title)
+        public List<Segment> SearchSegmentComplete(string title)
         {
             return new SearchDAL().SearchSegmentComplete(null, null, title);
         }
 
-        public CustomGenericList<Segment> SearchSegment(string title, string containerTitle,
+        public List<Segment> SearchSegment(string title, string containerTitle,
             string authorLastName, string date, string volume, string series, string issue, int returnCount, string searchSort)
         {
             return new SearchDAL().SearchSegment(null, null, title, containerTitle, authorLastName, date,
                 volume, series, issue, returnCount, searchSort);
         }
 
-        public CustomGenericList<Segment> SearchSegmentFullText(string searchText, int returnCount, string searchSort)
+        public List<Segment> SearchSegmentFullText(string searchText, int returnCount, string searchSort)
         {
             return new SearchDAL().SearchSegmentFullText(null, null, searchText, returnCount, searchSort);
         }
 
-        public CustomGenericList<Segment> SearchSegmentAdvancedFullText(string title, string containerTitle, 
+        public List<Segment> SearchSegmentAdvancedFullText(string title, string containerTitle, 
             string authorLastName, string date, string volume, string series, string issue, int returnCount, string searchSort)
         {
             return new SearchDAL().SearchSegmentAdvancedFullText(null, null, title, containerTitle, authorLastName, date, 
                 volume, series, issue, returnCount, searchSort);
         }
 
-        public CustomGenericList<SearchBookResult> SearchBookFullText(string title, string authorLastName, string volume, string edition,
+        public List<SearchBookResult> SearchBookFullText(string title, string authorLastName, string volume, string edition,
             int? year, string subject, string languageCode, int? collectionID, int returnCount, string searchSort)
         {
             return new SearchDAL().SearchBookFullText(null, null, title, authorLastName, volume, edition, year, subject,
                 languageCode, collectionID, returnCount, searchSort);
         }
 
-        public CustomGenericList<SearchBookResult> SearchBookFullText(string searchText, int returnCount, string searchSort)
+        public List<SearchBookResult> SearchBookFullText(string searchText, int returnCount, string searchSort)
         {
             return new SearchDAL().SearchBookGlobalFullText(null, null, searchText, returnCount, searchSort);
         }
@@ -205,7 +214,7 @@ namespace MOBOT.BHL.Server
             // Log the request.  
             // First argument "3" corresponds to "BHL OpenUrl".  
             // Fourth argument "231" corresponds to "Citation Finder"
-            BHL.Web.Utilities.RequestLog requestLog = new BHL.Web.Utilities.RequestLog();
+            MOBOT.BHL.Utility.RequestLog requestLog = new MOBOT.BHL.Utility.RequestLog();
             requestLog.SaveRequestLog(3, ipAddress, null, 231, detail);
         }
     }

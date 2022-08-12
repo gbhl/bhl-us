@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Biodiversity Heritage Library - API Version 3 Documentation</title>
+    <style type="text/css">
+        body { font-family:Verdana; font-size:12px; }
+        hr { margin:15px 0 15px 0; }
+        div { padding:5px; }
+        table, th, td { border:1px solid lightgray; border-spacing:0px; }
+        th { text-align:left; }
+        .pagehead { height:40px; padding:0px; }
+        .pagehead #left { float:left; }
+        .pagehead #right { float:right; }
+        .header { font-weight:bold; font-size:16px; }
+        .subhead1 { font-weight:bold; font-style:italic; margin-top:10px; font-size:14px; }
+        .subhead2 { font-style:italic; }
+        .toplink { font-weight:normal; font-size:10px; }
+        .syntaxbox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding:10px; background-color:#eee; }
+        .synindent { padding-left:30px }
+        .responsebox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding-left:10px; padding-right:10px; height:600px; overflow:auto; background-color:#eee; }
+        pre { margin:0px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <div class="pagehead">
+        <div id="left">
+            Biodiversity Heritage Library<br />
+            <a href="../api3.html">API v3 Documentation</a><br />
+        </div>
+        <div id="right">
+            Created: August 27, 2018<br />
+            Revised: April 4, 2022
+        </div>
+    </div>
+    <div>
+        <a href="../api3.html#overview">Overview</a><br />
+        <a href="../api3.html#methods">Methods</a><br />
+        <a href="../api3.html#elements">Data Elements</a><br />
+        <a href="../api3.html#notes">Release Notes</a>
+    </div>
+    <hr />
+    <div class="subhead1">GetSubjectMetadata</div>
+    <div>Return metadata about a subject.  You may choose to include a list of the subject's publications.  The BHLType element identifies the type of each publication (Title or Part).</div>
+    <div>SYNTAX</div>
+    <div class="syntaxbox">
+    <div>https://www.biodiversitylibrary.org/api3?op=GetSubjectMetadata</div>
+    <div class="synindent">&amp;subject=&lt;the subject for which to return metadata&gt;</div>
+    <div class="synindent">&amp;pubs=&lt;"t" or "true" to include the subject's publications in the response&gt;</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
+    <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
+    </div>
+    <div>EXAMPLE REQUEST (XML)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetSubjectMetadata&amp;subject=coral&amp;pubs=t&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (XML)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Response
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;Status&gt;ok&lt;/Status&gt;
+  &lt;ErrorMessage /&gt;
+  &lt;Result&gt;
+    &lt;Subject&gt;
+      &lt;SubjectText&gt;coral&lt;/SubjectText&gt;
+      &lt;CreationDate&gt;2014/11/13 00:01:43&lt;/CreationDate&gt;
+      &lt;Publications&gt;
+        &lt;Publication&gt;
+          &lt;BHLType&gt;Title&lt;/BHLType&gt;
+          &lt;FoundIn&gt;Metadata&lt;/FoundIn&gt;
+          &lt;TitleID&gt;131838&lt;/TitleID&gt;
+          &lt;TitleUrl&gt;https://www.biodiversitylibrary.org/bibliography/131838&lt;/TitleUrl&gt;
+          &lt;MaterialType&gt;Published material&lt;/MaterialType&gt;
+          &lt;PublicationDate&gt;1958&lt;/PublicationDate&gt;
+          &lt;Authors&gt;
+            &lt;Author&gt;
+              &lt;Name&gt;Schmitt, Waldo L.&lt;/Name&gt;
+            &lt;/Author&gt;
+          &lt;/Authors&gt;
+          &lt;Genre&gt;Monograph/Item&lt;/Genre&gt;
+          &lt;Title&gt;Smithsonian-Bredin Caribbean Expedition, 1958  : station data&lt;/Title&gt;
+        &lt;/Publication&gt;
+        &lt;Publication&gt;
+          &lt;BHLType&gt;Part&lt;/BHLType&gt;
+          &lt;FoundIn&gt;Metadata&lt;/FoundIn&gt;
+          &lt;ExternalUrl&gt;http://www.scielo.cl/scielo.php?script=sci_arttext&amp;pid=S0718-560X2014000400010&lt;/ExternalUrl&gt;
+          &lt;Authors&gt;
+            &lt;Author&gt;
+              &lt;Name&gt;Wieters, Evie A.&lt;/Name&gt;
+            &lt;/Author&gt;
+            &lt;Author&gt;
+              &lt;Name&gt;Medrano, Alba&lt;/Name&gt;
+            &lt;/Author&gt;
+            &lt;Author&gt;
+              &lt;Name&gt;Pérez-Matus Alejandro&lt;/Name&gt;
+            &lt;/Author&gt;
+          &lt;/Authors&gt;
+          &lt;PartUrl&gt;https://www.biodiversitylibrary.org/part/144599&lt;/PartUrl&gt;
+          &lt;PartID&gt;144599&lt;/PartID&gt;
+          &lt;Genre&gt;Article&lt;/Genre&gt;
+          &lt;Title&gt;Functional community structure of shallow hard bottom communities at Easter Island (Rapa Nui): Estructura funcional de comunidades que habitan sobre los fondos duros de Isla de Pascua (Rapa Nui)&lt;/Title&gt;
+          &lt;ContainerTitle&gt;Latin american journal of aquatic research&lt;/ContainerTitle&gt;
+          &lt;Date&gt;2014-10-01&lt;/Date&gt;
+        &lt;/Publication&gt;
+        &lt;Publication&gt;
+          &lt;BHLType&gt;Part&lt;/BHLType&gt;
+          &lt;FoundIn&gt;Metadata&lt;/FoundIn&gt;
+          &lt;ExternalUrl&gt;http://www.scielo.cl/scielo.php?script=sci_arttext&amp;pid=S0718-19572014000300004&lt;/ExternalUrl&gt;
+          &lt;Authors&gt;
+            &lt;Author&gt;
+              &lt;Name&gt;Delgadillo-Nuño, Manuel A&lt;/Name&gt;
+            &lt;/Author&gt;
+            &lt;Author&gt;
+              &lt;Name&gt;Liñán-Cabello, Marco A&lt;/Name&gt;
+            &lt;/Author&gt;
+            &lt;Author&gt;
+              &lt;Name&gt;Reyes-Gómez, Juan&lt;/Name&gt;
+            &lt;/Author&gt;
+            &lt;Author&gt;
+              &lt;Name&gt;Soriano-Santiago, Olinda&lt;/Name&gt;
+            &lt;/Author&gt;
+          &lt;/Authors&gt;
+          &lt;PartUrl&gt;https://www.biodiversitylibrary.org/part/145754&lt;/PartUrl&gt;
+          &lt;PartID&gt;145754&lt;/PartID&gt;
+          &lt;Genre&gt;Article&lt;/Genre&gt;
+          &lt;Title&gt;Response to pH stress in the reef-building coral Pocillopora capitata (Anthozoa: Scleractinia)&lt;/Title&gt;
+          &lt;ContainerTitle&gt;Revista de biología marina y oceanografía&lt;/ContainerTitle&gt;
+          &lt;Date&gt;2014-12-01&lt;/Date&gt;
+        &lt;/Publication&gt;
+      &lt;/Publications&gt;
+    &lt;/Subject&gt;
+  &lt;/Result&gt;
+&lt;/Response&gt;
+
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE REQUEST (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetSubjectMetadata&amp;subject=coral&amp;pubs=t&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;SubjectText&quot;: &quot;coral&quot;,
+      &quot;CreationDate&quot;: &quot;2014/11/13 00:01:43&quot;,
+      &quot;Publications&quot;: [
+        {
+          &quot;BHLType&quot;: &quot;Title&quot;,
+          &quot;FoundIn&quot;: &quot;Metadata&quot;,
+          &quot;TitleID&quot;: &quot;131838&quot;,
+          &quot;TitleUrl&quot;: &quot;https://www.biodiversitylibrary.org/bibliography/131838&quot;,
+          &quot;MaterialType&quot;: &quot;Published material&quot;,
+          &quot;PublicationDate&quot;: &quot;1958&quot;,
+          &quot;Authors&quot;: [
+            {
+              &quot;Name&quot;: &quot;Schmitt, Waldo L.&quot;
+            }
+          ],
+          &quot;Genre&quot;: &quot;Monograph/Item&quot;,
+          &quot;Title&quot;: &quot;Smithsonian-Bredin Caribbean Expedition, 1958  : station data&quot;
+        },
+        {
+          &quot;BHLType&quot;: &quot;Part&quot;,
+          &quot;FoundIn&quot;: &quot;Metadata&quot;,
+          &quot;ExternalUrl&quot;: &quot;http://www.scielo.cl/scielo.php?script=sci_arttext&amp;pid=S0718-560X2014000400010&quot;,
+          &quot;Authors&quot;: [
+            {
+              &quot;Name&quot;: &quot;Wieters, Evie A.&quot;
+            },
+            {
+              &quot;Name&quot;: &quot;Medrano, Alba&quot;
+            },
+            {
+              &quot;Name&quot;: &quot;P&#233;rez-Matus Alejandro&quot;
+            }
+          ],
+          &quot;PartUrl&quot;: &quot;https://www.biodiversitylibrary.org/part/144599&quot;,
+          &quot;PartID&quot;: &quot;144599&quot;,
+          &quot;Genre&quot;: &quot;Article&quot;,
+          &quot;Title&quot;: &quot;Functional community structure of shallow hard bottom communities at Easter Island (Rapa Nui): Estructura funcional de comunidades que habitan sobre los fondos duros de Isla de Pascua (Rapa Nui)&quot;,
+          &quot;ContainerTitle&quot;: &quot;Latin american journal of aquatic research&quot;,
+          &quot;Date&quot;: &quot;2014-10-01&quot;
+        },
+        {
+          &quot;BHLType&quot;: &quot;Part&quot;,
+          &quot;FoundIn&quot;: &quot;Metadata&quot;,
+          &quot;ExternalUrl&quot;: &quot;http://www.scielo.cl/scielo.php?script=sci_arttext&amp;pid=S0718-19572014000300004&quot;,
+          &quot;Authors&quot;: [
+            {
+              &quot;Name&quot;: &quot;Delgadillo-Nu&#241;o, Manuel A&quot;
+            },
+            {
+              &quot;Name&quot;: &quot;Li&#241;&#225;n-Cabello, Marco A&quot;
+            },
+            {
+              &quot;Name&quot;: &quot;Reyes-G&#243;mez, Juan&quot;
+            },
+            {
+              &quot;Name&quot;: &quot;Soriano-Santiago, Olinda&quot;
+            }
+          ],
+          &quot;PartUrl&quot;: &quot;https://www.biodiversitylibrary.org/part/145754&quot;,
+          &quot;PartID&quot;: &quot;145754&quot;,
+          &quot;Genre&quot;: &quot;Article&quot;,
+          &quot;Title&quot;: &quot;Response to pH stress in the reef-building coral Pocillopora capitata (Anthozoa: Scleractinia)&quot;,
+          &quot;ContainerTitle&quot;: &quot;Revista de biolog&#237;a marina y oceanograf&#237;a&quot;,
+          &quot;Date&quot;: &quot;2014-12-01&quot;
+        }
+      ]
+    }
+  ]
+}
+
+            </code>
+        </pre>
+    </div>
+    <div></div>
+</body>
+</html>

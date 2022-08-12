@@ -1,5 +1,5 @@
 
-// Generated 5/23/2017 3:34:43 PM
+// Generated 4/27/2021 1:08:33 PM
 // Do not modify the contents of this code file.
 // This abstract class __Item is based upon dbo.Item.
 
@@ -105,6 +105,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="endSeries"></param>
 		/// <param name="startPart"></param>
 		/// <param name="endPart"></param>
+		/// <param name="pageProgression"></param>
 		public __Item(int itemID, 
 			string importKey, 
 			int importStatusID, 
@@ -164,7 +165,8 @@ namespace MOBOT.BHLImport.DataObjects
 			string startSeries, 
 			string endSeries, 
 			string startPart, 
-			string endPart) : this()
+			string endPart, 
+			string pageProgression) : this()
 		{
 			_ItemID = itemID;
 			ImportKey = importKey;
@@ -226,6 +228,7 @@ namespace MOBOT.BHLImport.DataObjects
 			EndSeries = endSeries;
 			StartPart = startPart;
 			EndPart = endPart;
+			PageProgression = pageProgression;
 		}
 		
 		#endregion Constructors
@@ -552,6 +555,11 @@ namespace MOBOT.BHLImport.DataObjects
 						_EndPart = (string)column.Value;
 						break;
 					}
+					case "PageProgression" :
+					{
+						_PageProgression = (string)column.Value;
+						break;
+					}
 								}
 			}
 			
@@ -706,9 +714,9 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: BarCode;
-		/// DBMS data type: nvarchar(40);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=40)]
+		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=200)]
 		public string BarCode
 		{
 			get
@@ -717,7 +725,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 40);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_BarCode != value)
 				{
 					_BarCode = value;
@@ -761,9 +769,9 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: MARCItemID;
-		/// DBMS data type: nvarchar(50); Nullable;
+		/// DBMS data type: nvarchar(200); Nullable;
 		/// </summary>
-		[ColumnDefinition("MARCItemID", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=50, IsNullable=true)]
+		[ColumnDefinition("MARCItemID", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=200, IsNullable=true)]
 		public string MARCItemID
 		{
 			get
@@ -772,7 +780,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 50);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_MARCItemID != value)
 				{
 					_MARCItemID = value;
@@ -929,7 +937,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: ItemDescription;
-		/// DBMS data type: ntext(1073741823); Nullable;
+		/// DBMS data type: ntext; Nullable;
 		/// </summary>
 		[ColumnDefinition("ItemDescription", DbTargetType=SqlDbType.NText, Ordinal=14, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string ItemDescription
@@ -1610,7 +1618,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: LicenseUrl;
-		/// DBMS data type: nvarchar(1073741823); Nullable;
+		/// DBMS data type: nvarchar(MAX); Nullable;
 		/// </summary>
 		[ColumnDefinition("LicenseUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=39, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string LicenseUrl
@@ -1638,7 +1646,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: Rights;
-		/// DBMS data type: nvarchar(1073741823); Nullable;
+		/// DBMS data type: nvarchar(MAX); Nullable;
 		/// </summary>
 		[ColumnDefinition("Rights", DbTargetType=SqlDbType.NVarChar, Ordinal=40, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string Rights
@@ -1666,7 +1674,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: DueDiligence;
-		/// DBMS data type: nvarchar(1073741823); Nullable;
+		/// DBMS data type: nvarchar(MAX); Nullable;
 		/// </summary>
 		[ColumnDefinition("DueDiligence", DbTargetType=SqlDbType.NVarChar, Ordinal=41, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string DueDiligence
@@ -1694,7 +1702,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: CopyrightStatus;
-		/// DBMS data type: nvarchar(1073741823); Nullable;
+		/// DBMS data type: nvarchar(MAX); Nullable;
 		/// </summary>
 		[ColumnDefinition("CopyrightStatus", DbTargetType=SqlDbType.NVarChar, Ordinal=42, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string CopyrightStatus
@@ -1750,7 +1758,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: CopyrightComment;
-		/// DBMS data type: nvarchar(1073741823); Nullable;
+		/// DBMS data type: nvarchar(MAX); Nullable;
 		/// </summary>
 		[ColumnDefinition("CopyrightComment", DbTargetType=SqlDbType.NVarChar, Ordinal=44, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string CopyrightComment
@@ -1778,7 +1786,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: CopyrightEvidence;
-		/// DBMS data type: nvarchar(1073741823); Nullable;
+		/// DBMS data type: nvarchar(MAX); Nullable;
 		/// </summary>
 		[ColumnDefinition("CopyrightEvidence", DbTargetType=SqlDbType.NVarChar, Ordinal=45, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string CopyrightEvidence
@@ -2219,6 +2227,34 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion EndPart
+		
+		#region PageProgression
+		
+		private string _PageProgression = string.Empty;
+		
+		/// <summary>
+		/// Column: PageProgression;
+		/// DBMS data type: nvarchar(10);
+		/// </summary>
+		[ColumnDefinition("PageProgression", DbTargetType=SqlDbType.NVarChar, Ordinal=61, CharacterMaxLength=10)]
+		public string PageProgression
+		{
+			get
+			{
+				return _PageProgression;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 10);
+				if (_PageProgression != value)
+				{
+					_PageProgression = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion PageProgression
 			
 		#endregion Properties
 
@@ -2322,7 +2358,8 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.StartSeries) == GetComparisonString(StartSeries) &&
 					GetComparisonString(o.EndSeries) == GetComparisonString(EndSeries) &&
 					GetComparisonString(o.StartPart) == GetComparisonString(StartPart) &&
-					GetComparisonString(o.EndPart) == GetComparisonString(EndPart) 
+					GetComparisonString(o.EndPart) == GetComparisonString(EndPart) &&
+					GetComparisonString(o.PageProgression) == GetComparisonString(PageProgression) 
 				)
 				{
 					o = null;
@@ -2417,7 +2454,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Item.SortColumn.ItemID);
 		/// </summary>
 		[Serializable]
@@ -2482,7 +2518,8 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string StartSeries = "StartSeries";	
 			public const string EndSeries = "EndSeries";	
 			public const string StartPart = "StartPart";	
-			public const string EndPart = "EndPart";
+			public const string EndPart = "EndPart";	
+			public const string PageProgression = "PageProgression";
 		}
 				
 		#endregion SortColumn

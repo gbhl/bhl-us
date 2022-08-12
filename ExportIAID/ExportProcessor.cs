@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BHL.WebServiceREST.v1.Client;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -46,8 +47,8 @@ namespace BHL.Export.IAID
                 _log.Info("Exporting identifiers...");
 
                 // Get the list of identifiers
-                BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-                string[] identifiers = client.ExportIAIdentifiers();
+                ExportsClient restClient = new ExportsClient(configParms.BHLWSEndpoint);
+                ICollection<string> identifiers = restClient.GetIAIdentifiers();
 
                 // Build the content of the file
                 StringBuilder sb = new StringBuilder();

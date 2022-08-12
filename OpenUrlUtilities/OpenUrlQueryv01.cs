@@ -125,14 +125,14 @@ namespace MOBOT.OpenUrl.Utilities
                             break;
                     }
                 }
+            }
 
-                // Check the Genre value.  If it is "article", then we need to move the
-                // BookTitle value to JournalTitle.
-                if (this.Genre == "article")
-                {
-                    this.JournalTitle = this.BookTitle;
-                    this.BookTitle = string.Empty;
-                }
+            // Check the Genre value.  If it is "article" and "atitle" was not specified, then we need to move the
+            // BookTitle value to ArticleTitle.
+            if (this.Genre == "article")
+            {
+                if (string.IsNullOrWhiteSpace(this.ArticleTitle)) this.ArticleTitle = this.BookTitle;
+                this.BookTitle = string.Empty;
             }
         }
 

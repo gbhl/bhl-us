@@ -6,6 +6,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
@@ -19,7 +20,7 @@ namespace MOBOT.BHL.DAL
 		TitleNote TitleNoteSelectAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
 			int titleNoteID);
 
-		CustomGenericList<CustomDataRow> TitleNoteSelectAutoRaw(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+		List<CustomDataRow> TitleNoteSelectAutoRaw(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
 			int titleNoteID);
 
 		TitleNote TitleNoteInsertAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction,

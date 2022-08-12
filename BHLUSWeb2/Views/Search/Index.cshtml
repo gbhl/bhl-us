@@ -159,9 +159,13 @@
                                                                         {
                                                                             if (string.IsNullOrWhiteSpace(item.Url))
                                                                             {
-                                                                                if (item.StartPageId > 0)
+                                                                                if (item.StartPageId > 0 && !item.BookIsVirtual)
                                                                                 {
                                                                                     <a href="~/page/@item.StartPageId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                                }
+                                                                                else if (item.BookIsVirtual)
+                                                                                {
+                                                                                    <a href="~/segment/@item.SegmentId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
                                                                                 }
                                                                                 else
                                                                                 {
@@ -235,7 +239,7 @@
                                                                             Publication info:
                                                                             @if (!string.IsNullOrWhiteSpace(item.PublicationPlace))
                                                                             {
-                                                                                @Html.Raw(Server.HtmlEncode(item.PublicationPlace)) <text>:</text>
+                                                                                @Html.Raw(Server.HtmlEncode(item.PublicationPlace))<text>,</text>
                                                                             }
                                                                             @Html.Raw(Server.HtmlEncode(item.Publisher))
                                                                             @if (item.Dates.Count > 0)
@@ -435,7 +439,7 @@
             </div>
             <div class="col-sm-2">
                 <p>
-                    <div class="column-wrap" style="padding-left:10px; padding-bottom:5px;"></div>
+                    <div style="padding-left:10px; padding-bottom:5px;"></div>
                 </p>
 
             @Html.Action("_DonateFeatureSmall", "Partial")

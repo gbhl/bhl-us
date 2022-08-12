@@ -1,5 +1,6 @@
 ﻿using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -7,7 +8,7 @@ namespace MOBOT.BHL.DAL
 {
     public class EditHistoryDAL
     {
-        public CustomGenericList<EditHistory> EditHistorySelectByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<EditHistory> EditHistorySelectByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int titleID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -19,12 +20,12 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<EditHistory> helper = new CustomSqlHelper<EditHistory>())
                 {
-                    CustomGenericList<EditHistory> list = helper.ExecuteReader(command);
+                    List<EditHistory> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
-        public CustomGenericList<EditHistory> EditHistorySelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<EditHistory> EditHistorySelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int itemID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -36,13 +37,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<EditHistory> helper = new CustomSqlHelper<EditHistory>())
                 {
-                    CustomGenericList<EditHistory> list = helper.ExecuteReader(command);
+                    List<EditHistory> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<EditHistory> EditHistorySelectBySegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<EditHistory> EditHistorySelectBySegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int segmentID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -54,13 +55,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<EditHistory> helper = new CustomSqlHelper<EditHistory>())
                 {
-                    CustomGenericList<EditHistory> list = helper.ExecuteReader(command);
+                    List<EditHistory> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<EditHistory> EditHistorySelectByAuthorID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<EditHistory> EditHistorySelectByAuthorID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int authorID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -72,13 +73,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<EditHistory> helper = new CustomSqlHelper<EditHistory>())
                 {
-                    CustomGenericList<EditHistory> list = helper.ExecuteReader(command);
+                    List<EditHistory> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<EditHistory> EditHistorySelectByEntityAndID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<EditHistory> EditHistorySelectByEntityAndID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string entitySchema, string entityName, string entityID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -92,13 +93,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<EditHistory> helper = new CustomSqlHelper<EditHistory>())
                 {
-                    CustomGenericList<EditHistory> list = helper.ExecuteReader(command);
+                    List<EditHistory> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<EditHistory> EditHistorySelectNameByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<EditHistory> EditHistorySelectNameByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int pageID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -110,13 +111,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<EditHistory> helper = new CustomSqlHelper<EditHistory>())
                 {
-                    CustomGenericList<EditHistory> list = helper.ExecuteReader(command);
+                    List<EditHistory> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<EditHistory> EditHistorySelectPageByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<EditHistory> EditHistorySelectPageByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int itemID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -128,7 +129,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<EditHistory> helper = new CustomSqlHelper<EditHistory>())
                 {
-                    CustomGenericList<EditHistory> list = helper.ExecuteReader(command);
+                    List<EditHistory> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

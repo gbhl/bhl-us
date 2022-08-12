@@ -1,7 +1,7 @@
 
-// Generated 1/21/2009 11:41:21 AM
+// Generated 1/5/2021 3:26:45 PM
 // Do not modify the contents of this code file.
-// This abstract class __PDF is based upon PDF.
+// This abstract class __PDF is based upon dbo.PDF.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __PDF : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -47,13 +47,15 @@ namespace MOBOT.BHL.DataObjects
 		/// </summary>
 		/// <param name="pdfID"></param>
 		/// <param name="itemID"></param>
+		/// <param name="fileLocation"></param>
 		/// <param name="emailAddress"></param>
 		/// <param name="shareWithEmailAddresses"></param>
-		/// <param name="imagesOnly"></param>
 		/// <param name="articleTitle"></param>
 		/// <param name="articleCreators"></param>
 		/// <param name="articleTags"></param>
-		/// <param name="fileLocation"></param>
+		/// <param name="creationDate"></param>
+		/// <param name="lastModifiedDate"></param>
+		/// <param name="imagesOnly"></param>
 		/// <param name="fileUrl"></param>
 		/// <param name="fileGenerationDate"></param>
 		/// <param name="fileDeletionDate"></param>
@@ -61,36 +63,36 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="numberImagesMissing"></param>
 		/// <param name="numberOcrMissing"></param>
 		/// <param name="comment"></param>
-		/// <param name="creationDate"></param>
-		/// <param name="lastModifiedDate"></param>
 		public __PDF(int pdfID, 
 			int itemID, 
+			string fileLocation, 
 			string emailAddress, 
 			string shareWithEmailAddresses, 
-			bool imagesOnly, 
 			string articleTitle, 
 			string articleCreators, 
 			string articleTags, 
-			string fileLocation, 
+			DateTime creationDate, 
+			DateTime lastModifiedDate, 
+			bool imagesOnly, 
 			string fileUrl, 
 			DateTime? fileGenerationDate, 
 			DateTime? fileDeletionDate, 
 			int pdfStatusID, 
 			int numberImagesMissing, 
 			int numberOcrMissing, 
-			string comment, 
-			DateTime creationDate, 
-			DateTime lastModifiedDate) : this()
+			string comment) : this()
 		{
 			_PdfID = pdfID;
 			ItemID = itemID;
+			FileLocation = fileLocation;
 			EmailAddress = emailAddress;
 			ShareWithEmailAddresses = shareWithEmailAddresses;
-			ImagesOnly = imagesOnly;
 			ArticleTitle = articleTitle;
 			ArticleCreators = articleCreators;
 			ArticleTags = articleTags;
-			FileLocation = fileLocation;
+			CreationDate = creationDate;
+			LastModifiedDate = lastModifiedDate;
+			ImagesOnly = imagesOnly;
 			FileUrl = fileUrl;
 			FileGenerationDate = fileGenerationDate;
 			FileDeletionDate = fileDeletionDate;
@@ -98,8 +100,6 @@ namespace MOBOT.BHL.DataObjects
 			NumberImagesMissing = numberImagesMissing;
 			NumberOcrMissing = numberOcrMissing;
 			Comment = comment;
-			CreationDate = creationDate;
-			LastModifiedDate = lastModifiedDate;
 		}
 		
 		#endregion Constructors
@@ -136,6 +136,11 @@ namespace MOBOT.BHL.DataObjects
 						_ItemID = (int)column.Value;
 						break;
 					}
+					case "FileLocation" :
+					{
+						_FileLocation = (string)column.Value;
+						break;
+					}
 					case "EmailAddress" :
 					{
 						_EmailAddress = (string)column.Value;
@@ -144,11 +149,6 @@ namespace MOBOT.BHL.DataObjects
 					case "ShareWithEmailAddresses" :
 					{
 						_ShareWithEmailAddresses = (string)column.Value;
-						break;
-					}
-					case "ImagesOnly" :
-					{
-						_ImagesOnly = (bool)column.Value;
 						break;
 					}
 					case "ArticleTitle" :
@@ -166,9 +166,19 @@ namespace MOBOT.BHL.DataObjects
 						_ArticleTags = (string)column.Value;
 						break;
 					}
-					case "FileLocation" :
+					case "CreationDate" :
 					{
-						_FileLocation = (string)column.Value;
+						_CreationDate = (DateTime)column.Value;
+						break;
+					}
+					case "LastModifiedDate" :
+					{
+						_LastModifiedDate = (DateTime)column.Value;
+						break;
+					}
+					case "ImagesOnly" :
+					{
+						_ImagesOnly = (bool)column.Value;
 						break;
 					}
 					case "FileUrl" :
@@ -206,17 +216,7 @@ namespace MOBOT.BHL.DataObjects
 						_Comment = (string)column.Value;
 						break;
 					}
-					case "CreationDate" :
-					{
-						_CreationDate = (DateTime)column.Value;
-						break;
-					}
-					case "LastModifiedDate" :
-					{
-						_LastModifiedDate = (DateTime)column.Value;
-						break;
-					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -224,7 +224,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region PdfID
 		
@@ -281,6 +281,34 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion ItemID
 		
+		#region FileLocation
+		
+		private string _FileLocation = string.Empty;
+		
+		/// <summary>
+		/// Column: FileLocation;
+		/// DBMS data type: nvarchar(200);
+		/// </summary>
+		[ColumnDefinition("FileLocation", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=200)]
+		public string FileLocation
+		{
+			get
+			{
+				return _FileLocation;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 200);
+				if (_FileLocation != value)
+				{
+					_FileLocation = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion FileLocation
+		
 		#region EmailAddress
 		
 		private string _EmailAddress = string.Empty;
@@ -289,7 +317,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: EmailAddress;
 		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("EmailAddress", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=200)]
+		[ColumnDefinition("EmailAddress", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=200)]
 		public string EmailAddress
 		{
 			get
@@ -317,7 +345,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ShareWithEmailAddresses;
 		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
-		[ColumnDefinition("ShareWithEmailAddresses", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=1073741823)]
+		[ColumnDefinition("ShareWithEmailAddresses", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=1073741823)]
 		public string ShareWithEmailAddresses
 		{
 			get
@@ -336,33 +364,6 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion ShareWithEmailAddresses
-		
-		#region ImagesOnly
-		
-		private bool _ImagesOnly = false;
-		
-		/// <summary>
-		/// Column: ImagesOnly;
-		/// DBMS data type: bit;
-		/// </summary>
-		[ColumnDefinition("ImagesOnly", DbTargetType=SqlDbType.Bit, Ordinal=5)]
-		public bool ImagesOnly
-		{
-			get
-			{
-				return _ImagesOnly;
-			}
-			set
-			{
-				if (_ImagesOnly != value)
-				{
-					_ImagesOnly = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion ImagesOnly
 		
 		#region ArticleTitle
 		
@@ -448,33 +449,86 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion ArticleTags
 		
-		#region FileLocation
+		#region CreationDate
 		
-		private string _FileLocation = string.Empty;
+		private DateTime _CreationDate;
 		
 		/// <summary>
-		/// Column: FileLocation;
-		/// DBMS data type: nvarchar(200);
+		/// Column: CreationDate;
+		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("FileLocation", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=200)]
-		public string FileLocation
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=9)]
+		public DateTime CreationDate
 		{
 			get
 			{
-				return _FileLocation;
+				return _CreationDate;
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 200);
-				if (_FileLocation != value)
+				if (_CreationDate != value)
 				{
-					_FileLocation = value;
+					_CreationDate = value;
 					_IsDirty = true;
 				}
 			}
 		}
 		
-		#endregion FileLocation
+		#endregion CreationDate
+		
+		#region LastModifiedDate
+		
+		private DateTime _LastModifiedDate;
+		
+		/// <summary>
+		/// Column: LastModifiedDate;
+		/// DBMS data type: datetime;
+		/// </summary>
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=10)]
+		public DateTime LastModifiedDate
+		{
+			get
+			{
+				return _LastModifiedDate;
+			}
+			set
+			{
+				if (_LastModifiedDate != value)
+				{
+					_LastModifiedDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedDate
+		
+		#region ImagesOnly
+		
+		private bool _ImagesOnly = false;
+		
+		/// <summary>
+		/// Column: ImagesOnly;
+		/// DBMS data type: bit;
+		/// </summary>
+		[ColumnDefinition("ImagesOnly", DbTargetType=SqlDbType.Bit, Ordinal=11)]
+		public bool ImagesOnly
+		{
+			get
+			{
+				return _ImagesOnly;
+			}
+			set
+			{
+				if (_ImagesOnly != value)
+				{
+					_ImagesOnly = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ImagesOnly
 		
 		#region FileUrl
 		
@@ -484,7 +538,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: FileUrl;
 		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("FileUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=10, CharacterMaxLength=200)]
+		[ColumnDefinition("FileUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=12, CharacterMaxLength=200)]
 		public string FileUrl
 		{
 			get
@@ -512,7 +566,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: FileGenerationDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("FileGenerationDate", DbTargetType=SqlDbType.DateTime, Ordinal=11, IsNullable=true)]
+		[ColumnDefinition("FileGenerationDate", DbTargetType=SqlDbType.DateTime, Ordinal=13, IsNullable=true)]
 		public DateTime? FileGenerationDate
 		{
 			get
@@ -539,7 +593,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: FileDeletionDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("FileDeletionDate", DbTargetType=SqlDbType.DateTime, Ordinal=12, IsNullable=true)]
+		[ColumnDefinition("FileDeletionDate", DbTargetType=SqlDbType.DateTime, Ordinal=14, IsNullable=true)]
 		public DateTime? FileDeletionDate
 		{
 			get
@@ -566,7 +620,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: PdfStatusID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("PdfStatusID", DbTargetType=SqlDbType.Int, Ordinal=13, NumericPrecision=10, IsInForeignKey=true)]
+		[ColumnDefinition("PdfStatusID", DbTargetType=SqlDbType.Int, Ordinal=15, NumericPrecision=10, IsInForeignKey=true)]
 		public int PdfStatusID
 		{
 			get
@@ -593,7 +647,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: NumberImagesMissing;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("NumberImagesMissing", DbTargetType=SqlDbType.Int, Ordinal=14, NumericPrecision=10)]
+		[ColumnDefinition("NumberImagesMissing", DbTargetType=SqlDbType.Int, Ordinal=16, NumericPrecision=10)]
 		public int NumberImagesMissing
 		{
 			get
@@ -620,7 +674,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: NumberOcrMissing;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("NumberOcrMissing", DbTargetType=SqlDbType.Int, Ordinal=15, NumericPrecision=10)]
+		[ColumnDefinition("NumberOcrMissing", DbTargetType=SqlDbType.Int, Ordinal=17, NumericPrecision=10)]
 		public int NumberOcrMissing
 		{
 			get
@@ -647,7 +701,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Comment;
 		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
-		[ColumnDefinition("Comment", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=1073741823)]
+		[ColumnDefinition("Comment", DbTargetType=SqlDbType.NVarChar, Ordinal=18, CharacterMaxLength=1073741823)]
 		public string Comment
 		{
 			get
@@ -666,63 +720,9 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion Comment
-		
-		#region CreationDate
-		
-		private DateTime _CreationDate;
-		
-		/// <summary>
-		/// Column: CreationDate;
-		/// DBMS data type: datetime;
-		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=17)]
-		public DateTime CreationDate
-		{
-			get
-			{
-				return _CreationDate;
-			}
-			set
-			{
-				if (_CreationDate != value)
-				{
-					_CreationDate = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion CreationDate
-		
-		#region LastModifiedDate
-		
-		private DateTime _LastModifiedDate;
-		
-		/// <summary>
-		/// Column: LastModifiedDate;
-		/// DBMS data type: datetime;
-		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=18)]
-		public DateTime LastModifiedDate
-		{
-			get
-			{
-				return _LastModifiedDate;
-			}
-			set
-			{
-				if (_LastModifiedDate != value)
-				{
-					_LastModifiedDate = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -766,22 +766,22 @@ namespace MOBOT.BHL.DataObjects
 					o.IsDeleted == IsDeleted &&
 					o.PdfID == PdfID &&
 					o.ItemID == ItemID &&
+					GetComparisonString(o.FileLocation) == GetComparisonString(FileLocation) &&
 					GetComparisonString(o.EmailAddress) == GetComparisonString(EmailAddress) &&
 					GetComparisonString(o.ShareWithEmailAddresses) == GetComparisonString(ShareWithEmailAddresses) &&
-					o.ImagesOnly == ImagesOnly &&
 					GetComparisonString(o.ArticleTitle) == GetComparisonString(ArticleTitle) &&
 					GetComparisonString(o.ArticleCreators) == GetComparisonString(ArticleCreators) &&
 					GetComparisonString(o.ArticleTags) == GetComparisonString(ArticleTags) &&
-					GetComparisonString(o.FileLocation) == GetComparisonString(FileLocation) &&
+					o.CreationDate == CreationDate &&
+					o.LastModifiedDate == LastModifiedDate &&
+					o.ImagesOnly == ImagesOnly &&
 					GetComparisonString(o.FileUrl) == GetComparisonString(FileUrl) &&
 					o.FileGenerationDate == FileGenerationDate &&
 					o.FileDeletionDate == FileDeletionDate &&
 					o.PdfStatusID == PdfStatusID &&
 					o.NumberImagesMissing == NumberImagesMissing &&
 					o.NumberOcrMissing == NumberOcrMissing &&
-					GetComparisonString(o.Comment) == GetComparisonString(Comment) &&
-					o.CreationDate == CreationDate &&
-					o.LastModifiedDate == LastModifiedDate 
+					GetComparisonString(o.Comment) == GetComparisonString(Comment) 
 				)
 				{
 					o = null;
@@ -876,7 +876,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __PDF.SortColumn.PdfID);
 		/// </summary>
 		[Serializable]
@@ -884,25 +883,26 @@ namespace MOBOT.BHL.DataObjects
 		{	
 			public const string PdfID = "PdfID";	
 			public const string ItemID = "ItemID";	
+			public const string FileLocation = "FileLocation";	
 			public const string EmailAddress = "EmailAddress";	
 			public const string ShareWithEmailAddresses = "ShareWithEmailAddresses";	
-			public const string ImagesOnly = "ImagesOnly";	
 			public const string ArticleTitle = "ArticleTitle";	
 			public const string ArticleCreators = "ArticleCreators";	
 			public const string ArticleTags = "ArticleTags";	
-			public const string FileLocation = "FileLocation";	
+			public const string CreationDate = "CreationDate";	
+			public const string LastModifiedDate = "LastModifiedDate";	
+			public const string ImagesOnly = "ImagesOnly";	
 			public const string FileUrl = "FileUrl";	
 			public const string FileGenerationDate = "FileGenerationDate";	
 			public const string FileDeletionDate = "FileDeletionDate";	
 			public const string PdfStatusID = "PdfStatusID";	
 			public const string NumberImagesMissing = "NumberImagesMissing";	
 			public const string NumberOcrMissing = "NumberOcrMissing";	
-			public const string Comment = "Comment";	
-			public const string CreationDate = "CreationDate";	
-			public const string LastModifiedDate = "LastModifiedDate";
+			public const string Comment = "Comment";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

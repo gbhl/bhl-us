@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Page_PageType] (
     [PagePageTypeID]           INT           IDENTITY (1, 1) NOT NULL,
-    [BarCode]                  NVARCHAR (40) NOT NULL,
+    [BarCode]                  NVARCHAR (200) NOT NULL,
     [FileNamePrefix]           NVARCHAR (50) NOT NULL,
     [SequenceOrder]            INT           NULL,
     [PageTypeID]               INT           NOT NULL,

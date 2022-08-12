@@ -1,0 +1,337 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Biodiversity Heritage Library - API Version 3 Documentation</title>
+    <style type="text/css">
+        body { font-family:Verdana; font-size:12px; }
+        hr { margin:15px 0 15px 0; }
+        div { padding:5px; }
+        table, th, td { border:1px solid lightgray; border-spacing:0px; }
+        th { text-align:left; }
+        .pagehead { height:40px; padding:0px; }
+        .pagehead #left { float:left; }
+        .pagehead #right { float:right; }
+        .header { font-weight:bold; font-size:16px; }
+        .subhead1 { font-weight:bold; font-style:italic; margin-top:10px; font-size:14px; }
+        .subhead2 { font-style:italic; }
+        .toplink { font-weight:normal; font-size:10px; }
+        .syntaxbox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding:10px; background-color:#eee; }
+        .synindent { padding-left:30px }
+        .responsebox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding-left:10px; padding-right:10px; height:600px; overflow:auto; background-color:#eee; }
+        pre { margin:0px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <div class="pagehead">
+        <div id="left">
+            Biodiversity Heritage Library<br />
+            <a href="../api3.html">API v3 Documentation</a><br />
+        </div>
+        <div id="right">
+            Created: August 27, 2018<br />
+            Revised: April 4, 2022
+        </div>
+    </div>
+    <div>
+        <a href="../api3.html#overview">Overview</a><br />
+        <a href="../api3.html#methods">Methods</a><br />
+        <a href="../api3.html#elements">Data Elements</a><br />
+        <a href="../api3.html#notes">Release Notes</a>
+    </div>
+    <hr />
+    <div class="subhead1">GetNameMetadata</div>
+    <div>Get basic title, item, and page metadata for each page on which the canonical form of the specified name appears.&nbsp; For example, assume the name &quot;Poa annua Linnaeus&quot;, or an identifier for that name, is specified.&nbsp; The API method will return title/item/page metadata for all pages on which one of the following names appears:&nbsp; &quot;Poa annua&quot;, &quot;Poa annua L.&quot;, &quot;Poa annua Linnaeus&quot;, &quot;Poa annua L. (1753)&quot;.&nbsp; Those names all share a canonical form of &quot;Poa annua&quot;.</div>
+    <div>SYNTAX</div>
+    <div class="syntaxbox">
+    <div>https://www.biodiversitylibrary.org/api3?op=GetNameMetadata</div>
+    <div class="synindent">&amp;name=&lt;a complete scientific name (not used if id/idtype are specified)&gt;</div>
+    <div class="synindent">&amp;id=&lt;identifier of a scientific name (not used if name is specified)&gt;</div>
+    <div class="synindent">&amp;idtype=&lt;namebank, eol, gni, ion, col, gbif, itis, ipni, or worms (not used if name is specified)&gt;</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
+    <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
+    </div>
+    <div>EXAMPLE REQUESTS (XML)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&amp;name=bulbophyllum+stella&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+
+https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&amp;id=5775264&amp;idtype=namebank&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (XML)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Response
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;Status&gt;ok&lt;/Status&gt;
+  &lt;ErrorMessage /&gt;
+  &lt;Result&gt;
+    &lt;Name&gt;
+      &lt;Identifiers&gt;
+        &lt;Identifier&gt;
+          &lt;IdentifierName&gt;GNI&lt;/IdentifierName&gt;
+          &lt;IdentifierValue&gt;dedb8e15-3929-581e-9b98-bde6b02d2814&lt;/IdentifierValue&gt;
+        &lt;/Identifier&gt;
+        &lt;Identifier&gt;
+          &lt;IdentifierName&gt;NameBank&lt;/IdentifierName&gt;
+          &lt;IdentifierValue&gt;5775264&lt;/IdentifierValue&gt;
+        &lt;/Identifier&gt;
+      &lt;/Identifiers&gt;
+      &lt;NameConfirmed&gt;Bulbophyllum stella&lt;/NameConfirmed&gt;
+      &lt;NameCanonical&gt;Bulbophyllum stella&lt;/NameCanonical&gt;
+      &lt;CreationDate&gt;2008/06/20 04:56:27&lt;/CreationDate&gt;
+      &lt;Titles&gt;
+        &lt;Title&gt;
+          &lt;TitleID&gt;51678&lt;/TitleID&gt;
+          &lt;ShortTitle&gt;Journal of the Asiatic Society of Bengal&lt;/ShortTitle&gt;
+          &lt;CallNumber&gt;Q73.C35 J68&lt;/CallNumber&gt;
+          &lt;PublisherPlace&gt;Calcutta&lt;/PublisherPlace&gt;
+          &lt;PublisherName&gt;Bishop's College Press&lt;/PublisherName&gt;
+          &lt;PublicationDate&gt;1832-1936&lt;/PublicationDate&gt;
+          &lt;TitleUrl&gt;https://www.biodiversitylibrary.org/title/51678&lt;/TitleUrl&gt;
+          &lt;Items&gt;
+            &lt;Item&gt;
+              &lt;ItemID&gt;110228&lt;/ItemID&gt;
+              &lt;Source&gt;Internet Archive&lt;/Source&gt;
+              &lt;SourceIdentifier&gt;journalofasiatic66unse&lt;/SourceIdentifier&gt;
+              &lt;Volume&gt;v.66:pt.2 (1897)&lt;/Volume&gt;
+              &lt;HoldingInstitution&gt;California Academy of Sciences&lt;/HoldingInstitution&gt;
+              &lt;ItemUrl&gt;https://www.biodiversitylibrary.org/item/110228&lt;/ItemUrl&gt;
+              &lt;Pages&gt;
+                &lt;Page&gt;
+                  &lt;PageID&gt;35622177&lt;/PageID&gt;
+                  &lt;ItemID&gt;110228&lt;/ItemID&gt;
+                  &lt;Volume&gt;66&lt;/Volume&gt;
+                  &lt;Year&gt;1897&lt;/Year&gt;
+                  &lt;TextSource&gt;OCR&lt;/TextSource&gt;
+                  &lt;PageUrl&gt;https://www.biodiversitylibrary.org/page/35622177&lt;/PageUrl&gt;
+                  &lt;ThumbnailUrl&gt;https://www.biodiversitylibrary.org/pagethumb/35622177&lt;/ThumbnailUrl&gt;
+                  &lt;FullSizeImageUrl&gt;https://www.biodiversitylibrary.org/pageimage/35622177&lt;/FullSizeImageUrl&gt;
+                  &lt;OcrUrl&gt;https://www.biodiversitylibrary.org/pagetext/35622177&lt;/OcrUrl&gt;
+                  &lt;PageTypes&gt;
+                    &lt;PageType&gt;
+                      &lt;PageTypeName&gt;Text&lt;/PageTypeName&gt;
+                    &lt;/PageType&gt;
+                  &lt;/PageTypes&gt;
+                  &lt;PageNumbers&gt;
+                    &lt;PageNumber /&gt;
+                  &lt;/PageNumbers&gt;
+                &lt;/Page&gt;
+                &lt;Page&gt;
+                  &lt;PageID&gt;35622324&lt;/PageID&gt;
+                  &lt;ItemID&gt;110228&lt;/ItemID&gt;
+                  &lt;TextSource&gt;OCR&lt;/TextSource&gt;
+                  &lt;PageUrl&gt;https://www.biodiversitylibrary.org/page/35622324&lt;/PageUrl&gt;
+                  &lt;ThumbnailUrl&gt;https://www.biodiversitylibrary.org/pagethumb/35622324&lt;/ThumbnailUrl&gt;
+                  &lt;FullSizeImageUrl&gt;https://www.biodiversitylibrary.org/pageimage/35622324&lt;/FullSizeImageUrl&gt;
+                  &lt;OcrUrl&gt;https://www.biodiversitylibrary.org/pagetext/35622324&lt;/OcrUrl&gt;
+                  &lt;PageTypes&gt;
+                    &lt;PageType&gt;
+                      &lt;PageTypeName&gt;Text&lt;/PageTypeName&gt;
+                    &lt;/PageType&gt;
+                  &lt;/PageTypes&gt;
+                  &lt;PageNumbers&gt;
+                    &lt;PageNumber /&gt;
+                  &lt;/PageNumbers&gt;
+                &lt;/Page&gt;
+              &lt;/Pages&gt;
+            &lt;/Item&gt;
+          &lt;/Items&gt;
+        &lt;/Title&gt;
+        &lt;Title&gt;
+          &lt;TitleID&gt;84482&lt;/TitleID&gt;
+          &lt;ShortTitle&gt;Repertorium specierum novarum regni vegetabilis&lt;/ShortTitle&gt;
+          &lt;CallNumber&gt;QK1 .R425Z&lt;/CallNumber&gt;
+          &lt;PublisherPlace&gt;Dahlem bei Berlin&lt;/PublisherPlace&gt;
+          &lt;PublisherName&gt;Verlag des Repertoriums&lt;/PublisherName&gt;
+          &lt;PublicationDate&gt;1911-1941&lt;/PublicationDate&gt;
+          &lt;TitleUrl&gt;https://www.biodiversitylibrary.org/title/84482&lt;/TitleUrl&gt;
+          &lt;Items&gt;
+            &lt;Item&gt;
+              &lt;ItemID&gt;28953&lt;/ItemID&gt;
+              &lt;Source&gt;Internet Archive&lt;/Source&gt;
+              &lt;SourceIdentifier&gt;repertoriumspeci01fedd&lt;/SourceIdentifier&gt;
+              &lt;Volume&gt;v.1 (1914)&lt;/Volume&gt;
+              &lt;HoldingInstitution&gt;New York Botanical Garden, LuEsther T. Mertz Library&lt;/HoldingInstitution&gt;
+              &lt;ItemUrl&gt;https://www.biodiversitylibrary.org/item/28953&lt;/ItemUrl&gt;
+              &lt;Pages&gt;
+                &lt;Page&gt;
+                  &lt;PageID&gt;5904859&lt;/PageID&gt;
+                  &lt;ItemID&gt;28953&lt;/ItemID&gt;
+                  &lt;TextSource&gt;OCR&lt;/TextSource&gt;
+                  &lt;PageUrl&gt;https://www.biodiversitylibrary.org/page/5904859&lt;/PageUrl&gt;
+                  &lt;ThumbnailUrl&gt;https://www.biodiversitylibrary.org/pagethumb/5904859&lt;/ThumbnailUrl&gt;
+                  &lt;FullSizeImageUrl&gt;https://www.biodiversitylibrary.org/pageimage/5904859&lt;/FullSizeImageUrl&gt;
+                  &lt;OcrUrl&gt;https://www.biodiversitylibrary.org/pagetext/5904859&lt;/OcrUrl&gt;
+                  &lt;PageTypes&gt;
+                    &lt;PageType&gt;
+                      &lt;PageTypeName&gt;Text&lt;/PageTypeName&gt;
+                    &lt;/PageType&gt;
+                  &lt;/PageTypes&gt;
+                  &lt;PageNumbers&gt;
+                    &lt;PageNumber&gt;
+                      &lt;Prefix&gt;Page&lt;/Prefix&gt;
+                      &lt;Number&gt;754&lt;/Number&gt;
+                    &lt;/PageNumber&gt;
+                  &lt;/PageNumbers&gt;
+                &lt;/Page&gt;
+              &lt;/Pages&gt;
+            &lt;/Item&gt;
+          &lt;/Items&gt;
+        &lt;/Title&gt;
+      &lt;/Titles&gt;
+    &lt;/Name&gt;
+  &lt;/Result&gt;
+&lt;/Response&gt;
+
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE REQUESTS (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&amp;name=bulbophyllum+stella&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+
+https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&amp;id=5775264&amp;idtype=namebank&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;Identifiers&quot;: [
+        {
+          &quot;IdentifierName&quot;: &quot;GNI&quot;,
+          &quot;IdentifierValue&quot;: &quot;dedb8e15-3929-581e-9b98-bde6b02d2814&quot;
+        },
+        {
+          &quot;IdentifierName&quot;: &quot;NameBank&quot;,
+          &quot;IdentifierValue&quot;: &quot;5775264&quot;
+        }
+      ],
+      &quot;NameConfirmed&quot;: &quot;Bulbophyllum stella&quot;,
+      &quot;NameCanonical&quot;: &quot;Bulbophyllum stella&quot;,
+      &quot;CreationDate&quot;: &quot;2008/06/20 04:56:27&quot;,
+      &quot;Titles&quot;: [
+        {
+          &quot;TitleID&quot;: 51678,
+          &quot;ShortTitle&quot;: &quot;Journal of the Asiatic Society of Bengal&quot;,
+          &quot;CallNumber&quot;: &quot;Q73.C35 J68&quot;,
+          &quot;PublisherPlace&quot;: &quot;Calcutta&quot;,
+          &quot;PublisherName&quot;: &quot;Bishop&#39;s College Press&quot;,
+          &quot;PublicationDate&quot;: &quot;1832-1936&quot;,
+          &quot;TitleUrl&quot;: &quot;https://www.biodiversitylibrary.org/title/51678&quot;,
+          &quot;Items&quot;: [
+            {
+              &quot;ItemID&quot;: 110228,
+              &quot;Source&quot;: &quot;Internet Archive&quot;,
+              &quot;SourceIdentifier&quot;: &quot;journalofasiatic66unse&quot;,
+              &quot;Volume&quot;: &quot;v.66:pt.2 (1897)&quot;,
+              &quot;HoldingInstitution&quot;: &quot;California Academy of Sciences&quot;,
+              &quot;ItemUrl&quot;: &quot;https://www.biodiversitylibrary.org/item/110228&quot;,
+              &quot;Pages&quot;: [
+                {
+                  &quot;PageID&quot;: 35622324,
+                  &quot;ItemID&quot;: &quot;110228&quot;,
+                  &quot;TextSource&quot;: &quot;OCR&quot;,
+                  &quot;PageUrl&quot;: &quot;https://www.biodiversitylibrary.org/page/35622324&quot;,
+                  &quot;ThumbnailUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagethumb/35622324&quot;,
+                  &quot;FullSizeImageUrl&quot;: &quot;https://www.biodiversitylibrary.org/pageimage/35622324&quot;,
+                  &quot;OcrUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagetext/35622324&quot;,
+                  &quot;PageTypes&quot;: [
+                    {
+                      &quot;PageTypeName&quot;: &quot;Text&quot;
+                    }
+                  ],
+                  &quot;PageNumbers&quot;: [
+                    {}
+                  ]
+                },
+                {
+                  &quot;PageID&quot;: 35622177,
+                  &quot;ItemID&quot;: &quot;110228&quot;,
+                  &quot;Volume&quot;: &quot;66&quot;,
+                  &quot;Year&quot;: &quot;1897&quot;,
+                  &quot;TextSource&quot;: &quot;OCR&quot;,
+                  &quot;PageUrl&quot;: &quot;https://www.biodiversitylibrary.org/page/35622177&quot;,
+                  &quot;ThumbnailUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagethumb/35622177&quot;,
+                  &quot;FullSizeImageUrl&quot;: &quot;https://www.biodiversitylibrary.org/pageimage/35622177&quot;,
+                  &quot;OcrUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagetext/35622177&quot;,
+                  &quot;PageTypes&quot;: [
+                    {
+                      &quot;PageTypeName&quot;: &quot;Text&quot;
+                    }
+                  ],
+                  &quot;PageNumbers&quot;: [
+                    {}
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          &quot;TitleID&quot;: 84482,
+          &quot;ShortTitle&quot;: &quot;Repertorium specierum novarum regni vegetabilis&quot;,
+          &quot;CallNumber&quot;: &quot;QK1 .R425Z&quot;,
+          &quot;PublisherPlace&quot;: &quot;Dahlem bei Berlin&quot;,
+          &quot;PublisherName&quot;: &quot;Verlag des Repertoriums&quot;,
+          &quot;PublicationDate&quot;: &quot;1911-1941&quot;,
+          &quot;TitleUrl&quot;: &quot;https://www.biodiversitylibrary.org/title/84482&quot;,
+          &quot;Items&quot;: [
+            {
+              &quot;ItemID&quot;: 28953,
+              &quot;Source&quot;: &quot;Internet Archive&quot;,
+              &quot;SourceIdentifier&quot;: &quot;repertoriumspeci01fedd&quot;,
+              &quot;Volume&quot;: &quot;v.1 (1914)&quot;,
+              &quot;HoldingInstitution&quot;: &quot;New York Botanical Garden, LuEsther T. Mertz Library&quot;,
+              &quot;ItemUrl&quot;: &quot;https://www.biodiversitylibrary.org/item/28953&quot;,
+              &quot;Pages&quot;: [
+                {
+                  &quot;PageID&quot;: 5904859,
+                  &quot;ItemID&quot;: &quot;28953&quot;,
+                  &quot;TextSource&quot;: &quot;OCR&quot;,
+                  &quot;PageUrl&quot;: &quot;https://www.biodiversitylibrary.org/page/5904859&quot;,
+                  &quot;ThumbnailUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagethumb/5904859&quot;,
+                  &quot;FullSizeImageUrl&quot;: &quot;https://www.biodiversitylibrary.org/pageimage/5904859&quot;,
+                  &quot;OcrUrl&quot;: &quot;https://www.biodiversitylibrary.org/pagetext/5904859&quot;,
+                  &quot;PageTypes&quot;: [
+                    {
+                      &quot;PageTypeName&quot;: &quot;Text&quot;
+                    }
+                  ],
+                  &quot;PageNumbers&quot;: [
+                    {
+                      &quot;Prefix&quot;: &quot;Page&quot;,
+                      &quot;Number&quot;: &quot;754&quot;
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+            </code>
+        </pre>
+    </div>
+    <div></div>
+</body>
+</html>

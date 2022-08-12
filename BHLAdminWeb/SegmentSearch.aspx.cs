@@ -11,7 +11,6 @@ namespace MOBOT.BHL.AdminWeb
 {
     public partial class SegmentSearch : System.Web.UI.Page
     {
-        private bool _refreshSearch = false;
         private String _redirectUrl = "/SegmentEdit.aspx?id=";
 
         protected void Page_Load(object sender, EventArgs e)
@@ -31,13 +30,18 @@ namespace MOBOT.BHL.AdminWeb
 
         private void search()
         {
-            if (txtSegmentID.Text.Trim().Length == 0 && txtTitle.Text.Trim().Length == 0) return;
+            if (txtSegmentID.Text.Trim().Length == 0 && txtSourceID.Text.Trim().Length == 0 && txtTitle.Text.Trim().Length == 0) return;
 
             BHLProvider bp = new BHLProvider();
             List<Segment> results = new List<Segment>();
             if (txtSegmentID.Text.Trim().Length > 0)
             {
                 Segment result = bp.SegmentSelectForSegmentID(Convert.ToInt32(txtSegmentID.Text));
+                if (result != null) results.Add(result);
+            }
+            else if (txtSourceID.Text.Trim().Length > 0)
+            {
+                Segment result = bp.SegmentSelectByBarCode(txtSourceID.Text);
                 if (result != null) results.Add(result);
             }
             else
@@ -59,7 +63,6 @@ namespace MOBOT.BHL.AdminWeb
 
         protected void searchButton_Click(object sender, EventArgs e)
         {
-            _refreshSearch = true;
             search();
         }
 

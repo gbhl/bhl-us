@@ -1,14 +1,14 @@
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class IdentifierDAL
+    public partial class IdentifierDAL
 	{
-        public CustomGenericList<Identifier> IdentifierSelectAll(
+        public List<Identifier> IdentifierSelectAll(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction)
         {
@@ -20,13 +20,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Identifier> helper = new CustomSqlHelper<Identifier>())
                 {
-                    CustomGenericList<Identifier> list = helper.ExecuteReader(command);
+                    List<Identifier> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Identifier> IdentifierSelectByIDType(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<Identifier> IdentifierSelectByIDType(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
           string idTypeName)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -38,7 +38,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Identifier> helper = new CustomSqlHelper<Identifier>())
                 {
-                    CustomGenericList<Identifier> list = helper.ExecuteReader(command);
+                    List<Identifier> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -56,7 +56,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Identifier> helper = new CustomSqlHelper<Identifier>())
                 {
-                    CustomGenericList<Identifier> list = helper.ExecuteReader(command);
+                    List<Identifier> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else

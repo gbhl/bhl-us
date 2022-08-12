@@ -1,5 +1,5 @@
 
-// Generated 12/19/2016 1:43:52 PM
+// Generated 4/6/2021 5:22:05 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class BSSegmentDAL is based upon dbo.BSSegment.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<BSSegment> helper = new CustomSqlHelper<BSSegment>())
 				{
-					CustomGenericList<BSSegment> list = helper.ExecuteReader(command);
+					List<BSSegment> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						BSSegment o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="segmentID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> BSSegmentSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> BSSegmentSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int segmentID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="segmentID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> BSSegmentSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> BSSegmentSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -160,6 +161,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="contributorLastModifiedDate"></param>
 		/// <param name="bHLSegmentID"></param>
 		/// <param name="contributorName"></param>
+		/// <param name="segmentStatusID"></param>
 		/// <returns>Object of type BSSegment.</returns>
 		public BSSegment BSSegmentInsertAuto(
 			SqlConnection sqlConnection, 
@@ -187,9 +189,10 @@ namespace MOBOT.BHLImport.DAL
 			DateTime? contributorCreationDate,
 			DateTime? contributorLastModifiedDate,
 			int? bHLSegmentID,
-			string contributorName)
+			string contributorName,
+			int segmentStatusID)
 		{
-			return BSSegmentInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, bioStorReferenceID, sequenceOrder, genre, title, containerTitle, publisherName, publisherPlace, volume, series, issue, year, date, iSSN, dOI, oCLC, jSTOR, startPageNumber, endPageNumber, startPageID, contributorCreationDate, contributorLastModifiedDate, bHLSegmentID, contributorName );
+			return BSSegmentInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, bioStorReferenceID, sequenceOrder, genre, title, containerTitle, publisherName, publisherPlace, volume, series, issue, year, date, iSSN, dOI, oCLC, jSTOR, startPageNumber, endPageNumber, startPageID, contributorCreationDate, contributorLastModifiedDate, bHLSegmentID, contributorName, segmentStatusID );
 		}
 		
 		/// <summary>
@@ -222,6 +225,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="contributorLastModifiedDate"></param>
 		/// <param name="bHLSegmentID"></param>
 		/// <param name="contributorName"></param>
+		/// <param name="segmentStatusID"></param>
 		/// <returns>Object of type BSSegment.</returns>
 		public BSSegment BSSegmentInsertAuto(
 			SqlConnection sqlConnection, 
@@ -250,7 +254,8 @@ namespace MOBOT.BHLImport.DAL
 			DateTime? contributorCreationDate,
 			DateTime? contributorLastModifiedDate,
 			int? bHLSegmentID,
-			string contributorName)
+			string contributorName,
+			int segmentStatusID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -280,12 +285,13 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("ContributorCreationDate", SqlDbType.DateTime, null, true, contributorCreationDate),
 					CustomSqlHelper.CreateInputParameter("ContributorLastModifiedDate", SqlDbType.DateTime, null, true, contributorLastModifiedDate),
 					CustomSqlHelper.CreateInputParameter("BHLSegmentID", SqlDbType.Int, null, true, bHLSegmentID),
-					CustomSqlHelper.CreateInputParameter("ContributorName", SqlDbType.NVarChar, 255, false, contributorName), 
+					CustomSqlHelper.CreateInputParameter("ContributorName", SqlDbType.NVarChar, 255, false, contributorName),
+					CustomSqlHelper.CreateInputParameter("SegmentStatusID", SqlDbType.Int, null, false, segmentStatusID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<BSSegment> helper = new CustomSqlHelper<BSSegment>())
 				{
-					CustomGenericList<BSSegment> list = helper.ExecuteReader(command);
+					List<BSSegment> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						BSSegment o = list[0];
@@ -353,7 +359,8 @@ namespace MOBOT.BHLImport.DAL
 				value.ContributorCreationDate,
 				value.ContributorLastModifiedDate,
 				value.BHLSegmentID,
-				value.ContributorName);
+				value.ContributorName,
+				value.SegmentStatusID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -448,6 +455,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="contributorLastModifiedDate"></param>
 		/// <param name="bHLSegmentID"></param>
 		/// <param name="contributorName"></param>
+		/// <param name="segmentStatusID"></param>
 		/// <returns>Object of type BSSegment.</returns>
 		public BSSegment BSSegmentUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -476,9 +484,10 @@ namespace MOBOT.BHLImport.DAL
 			DateTime? contributorCreationDate,
 			DateTime? contributorLastModifiedDate,
 			int? bHLSegmentID,
-			string contributorName)
+			string contributorName,
+			int segmentStatusID)
 		{
-			return BSSegmentUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", segmentID, itemID, bioStorReferenceID, sequenceOrder, genre, title, containerTitle, publisherName, publisherPlace, volume, series, issue, year, date, iSSN, dOI, oCLC, jSTOR, startPageNumber, endPageNumber, startPageID, contributorCreationDate, contributorLastModifiedDate, bHLSegmentID, contributorName);
+			return BSSegmentUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", segmentID, itemID, bioStorReferenceID, sequenceOrder, genre, title, containerTitle, publisherName, publisherPlace, volume, series, issue, year, date, iSSN, dOI, oCLC, jSTOR, startPageNumber, endPageNumber, startPageID, contributorCreationDate, contributorLastModifiedDate, bHLSegmentID, contributorName, segmentStatusID);
 		}
 		
 		/// <summary>
@@ -512,6 +521,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="contributorLastModifiedDate"></param>
 		/// <param name="bHLSegmentID"></param>
 		/// <param name="contributorName"></param>
+		/// <param name="segmentStatusID"></param>
 		/// <returns>Object of type BSSegment.</returns>
 		public BSSegment BSSegmentUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -541,7 +551,8 @@ namespace MOBOT.BHLImport.DAL
 			DateTime? contributorCreationDate,
 			DateTime? contributorLastModifiedDate,
 			int? bHLSegmentID,
-			string contributorName)
+			string contributorName,
+			int segmentStatusID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -571,12 +582,13 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("ContributorCreationDate", SqlDbType.DateTime, null, true, contributorCreationDate),
 					CustomSqlHelper.CreateInputParameter("ContributorLastModifiedDate", SqlDbType.DateTime, null, true, contributorLastModifiedDate),
 					CustomSqlHelper.CreateInputParameter("BHLSegmentID", SqlDbType.Int, null, true, bHLSegmentID),
-					CustomSqlHelper.CreateInputParameter("ContributorName", SqlDbType.NVarChar, 255, false, contributorName), 
+					CustomSqlHelper.CreateInputParameter("ContributorName", SqlDbType.NVarChar, 255, false, contributorName),
+					CustomSqlHelper.CreateInputParameter("SegmentStatusID", SqlDbType.Int, null, false, segmentStatusID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<BSSegment> helper = new CustomSqlHelper<BSSegment>())
 				{
-					CustomGenericList<BSSegment> list = helper.ExecuteReader(command);
+					List<BSSegment> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						BSSegment o = list[0];
@@ -645,7 +657,8 @@ namespace MOBOT.BHLImport.DAL
 				value.ContributorCreationDate,
 				value.ContributorLastModifiedDate,
 				value.BHLSegmentID,
-				value.ContributorName);
+				value.ContributorName,
+				value.SegmentStatusID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -713,7 +726,8 @@ namespace MOBOT.BHLImport.DAL
 						value.ContributorCreationDate,
 						value.ContributorLastModifiedDate,
 						value.BHLSegmentID,
-						value.ContributorName);
+						value.ContributorName,
+						value.SegmentStatusID);
 				
 				return new CustomDataAccessStatus<BSSegment>(
 					CustomDataAccessContext.Insert, 
@@ -763,7 +777,8 @@ namespace MOBOT.BHLImport.DAL
 						value.ContributorCreationDate,
 						value.ContributorLastModifiedDate,
 						value.BHLSegmentID,
-						value.ContributorName);
+						value.ContributorName,
+						value.SegmentStatusID);
 					
 				return new CustomDataAccessStatus<BSSegment>(
 					CustomDataAccessContext.Update, 

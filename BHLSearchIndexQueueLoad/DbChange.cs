@@ -9,5 +9,6 @@ namespace BHL.SearchIndexQueueLoad
         public string Operation { get; set; }
         public string IndexEntity { get; set; }
         public string Id { get; set; }
+        public string Queue { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 
-// Generated 8/29/2019 9:56:42 PM
+// Generated 1/5/2021 3:42:42 PM
 // Do not modify the contents of this code file.
 // This abstract class __ImportRecordErrorLog is based upon import.ImportRecordErrorLog.
 
@@ -49,30 +49,30 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="importRecordID"></param>
 		/// <param name="errorDate"></param>
 		/// <param name="errorMessage"></param>
+		/// <param name="severity"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="severity"></param>
 		public __ImportRecordErrorLog(int importRecordErrorLogID, 
 			int importRecordID, 
 			DateTime errorDate, 
 			string errorMessage, 
+			string severity, 
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int creationUserID, 
-			int lastModifiedUserID, 
-			string severity) : this()
+			int lastModifiedUserID) : this()
 		{
 			_ImportRecordErrorLogID = importRecordErrorLogID;
 			ImportRecordID = importRecordID;
 			ErrorDate = errorDate;
 			ErrorMessage = errorMessage;
+			Severity = severity;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
-			Severity = severity;
 		}
 		
 		#endregion Constructors
@@ -119,6 +119,11 @@ namespace MOBOT.BHL.DataObjects
 						_ErrorMessage = (string)column.Value;
 						break;
 					}
+					case "Severity" :
+					{
+						_Severity = (string)column.Value;
+						break;
+					}
 					case "CreationDate" :
 					{
 						_CreationDate = (DateTime)column.Value;
@@ -137,11 +142,6 @@ namespace MOBOT.BHL.DataObjects
 					case "LastModifiedUserID" :
 					{
 						_LastModifiedUserID = (int)column.Value;
-						break;
-					}
-					case "Severity" :
-					{
-						_Severity = (string)column.Value;
 						break;
 					}
 								}
@@ -264,6 +264,34 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion ErrorMessage
 		
+		#region Severity
+		
+		private string _Severity = string.Empty;
+		
+		/// <summary>
+		/// Column: Severity;
+		/// DBMS data type: nvarchar(40);
+		/// </summary>
+		[ColumnDefinition("Severity", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=40)]
+		public string Severity
+		{
+			get
+			{
+				return _Severity;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 40);
+				if (_Severity != value)
+				{
+					_Severity = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Severity
+		
 		#region CreationDate
 		
 		private DateTime _CreationDate;
@@ -272,7 +300,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=5)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=6)]
 		public DateTime CreationDate
 		{
 			get
@@ -299,7 +327,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=6)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=7)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -326,7 +354,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationUserID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=7, NumericPrecision=10)]
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=8, NumericPrecision=10)]
 		public int CreationUserID
 		{
 			get
@@ -353,7 +381,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedUserID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=8, NumericPrecision=10)]
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=9, NumericPrecision=10)]
 		public int LastModifiedUserID
 		{
 			get
@@ -371,34 +399,6 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion LastModifiedUserID
-		
-		#region Severity
-		
-		private string _Severity = string.Empty;
-		
-		/// <summary>
-		/// Column: Severity;
-		/// DBMS data type: nvarchar(40);
-		/// </summary>
-		[ColumnDefinition("Severity", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=40)]
-		public string Severity
-		{
-			get
-			{
-				return _Severity;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 40);
-				if (_Severity != value)
-				{
-					_Severity = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion Severity
 			
 		#endregion Properties
 
@@ -447,11 +447,11 @@ namespace MOBOT.BHL.DataObjects
 					o.ImportRecordID == ImportRecordID &&
 					o.ErrorDate == ErrorDate &&
 					GetComparisonString(o.ErrorMessage) == GetComparisonString(ErrorMessage) &&
+					GetComparisonString(o.Severity) == GetComparisonString(Severity) &&
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
-					o.LastModifiedUserID == LastModifiedUserID &&
-					GetComparisonString(o.Severity) == GetComparisonString(Severity) 
+					o.LastModifiedUserID == LastModifiedUserID 
 				)
 				{
 					o = null;
@@ -546,7 +546,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __ImportRecordErrorLog.SortColumn.ImportRecordErrorLogID);
 		/// </summary>
 		[Serializable]
@@ -556,11 +555,11 @@ namespace MOBOT.BHL.DataObjects
 			public const string ImportRecordID = "ImportRecordID";	
 			public const string ErrorDate = "ErrorDate";	
 			public const string ErrorMessage = "ErrorMessage";	
+			public const string Severity = "Severity";	
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";	
-			public const string Severity = "Severity";
+			public const string LastModifiedUserID = "LastModifiedUserID";
 		}
 				
 		#endregion SortColumn

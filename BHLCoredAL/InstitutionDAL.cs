@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -8,7 +9,7 @@ namespace MOBOT.BHL.DAL
 {
 	public partial class InstitutionDAL
 	{
-		public CustomGenericList<Institution> InstitutionSelectAll(
+		public List<Institution> InstitutionSelectAll(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction )
 		{
@@ -18,11 +19,30 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>() )
 				{
-					CustomGenericList<Institution> list = helper.ExecuteReader( command );
+                    List<Institution> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
 		}
+
+        public Institution InstitutionSelectByName(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string institutionName)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectByName", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("InstitutionName", SqlDbType.NVarChar, 255, false, institutionName)))
+            {
+                using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
+                {
+                    List<Institution> list = helper.ExecuteReader(command);
+                    if (list.Count > 0)
+                        return list[0];
+                    else
+                        return null;
+                }
+            }
+        }
 
         public Institution InstitutionSelectWithGroups(
                 SqlConnection sqlConnection,
@@ -37,7 +57,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
                 {
-                    CustomGenericList<Institution> list = helper.ExecuteReader(command);
+                    List<Institution> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                     {
                         return list[0];
@@ -50,7 +70,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<Institution> InstitutionSelectByItemID(
+        public List<Institution> InstitutionSelectByItemID(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction,
 				int itemID )
@@ -63,7 +83,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>() )
 				{
-					CustomGenericList<Institution> list = helper.ExecuteReader( command );
+                    List<Institution> list = helper.ExecuteReader( command );
 					if ( list.Count > 0 )
 					{
 						return list;
@@ -76,7 +96,7 @@ namespace MOBOT.BHL.DAL
 			}
 		}
 
-        public CustomGenericList<Institution> InstitutionSelectByTitleID(
+        public List<Institution> InstitutionSelectByTitleID(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 int titleID)
@@ -89,13 +109,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
                 {
-                    CustomGenericList<Institution> list = helper.ExecuteReader(command);
+                    List<Institution> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Institution> InstitutionSelectWithPublishedItems(
+        public List<Institution> InstitutionSelectWithPublishedItems(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 bool onlyMemberLibraries,
@@ -109,13 +129,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
                 {
-                    CustomGenericList<Institution> list = helper.ExecuteReader(command);
+                    List<Institution> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<Institution> InstitutionSelectWithPublishedSegments(
+        public List<Institution> InstitutionSelectWithPublishedSegments(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 bool onlyMemberLibraries,
@@ -129,13 +149,27 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
                 {
-                    CustomGenericList<Institution> list = helper.ExecuteReader(command);
+                    List<Institution> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<Institution> InstitutionSelectDOIStats(
+        public List<Institution> InstitutionSelectForMonthlyStats(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectForMonthlyStats", connection, transaction))
+            {
+                using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
+                {
+                    List<Institution> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        public List<Institution> InstitutionSelectDOIStats(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int sortBy,
@@ -149,13 +183,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
                 {
-                    CustomGenericList<Institution> list = helper.ExecuteReader(command);
+                    List<Institution> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<Institution> InstitutionSelectBySegmentIDAndRole(
+        public List<Institution> InstitutionSelectBySegmentIDAndRole(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int segmentID,
@@ -169,13 +203,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
                 {
-                    CustomGenericList<Institution> list = helper.ExecuteReader(command);
+                    List<Institution> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<Institution> InstitutionSelectByItemIDAndRole(
+        public List<Institution> InstitutionSelectByItemIDAndRole(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int itemID,
@@ -189,13 +223,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
                 {
-                    CustomGenericList<Institution> list = helper.ExecuteReader(command);
+                    List<Institution> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<Institution> InstitutionSelectByTitleIDAndRole(
+        public List<Institution> InstitutionSelectByTitleIDAndRole(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int titleID,
@@ -209,7 +243,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
                 {
-                    CustomGenericList<Institution> list = helper.ExecuteReader(command);
+                    List<Institution> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -248,7 +282,7 @@ namespace MOBOT.BHL.DAL
 			}
 		}
 
-        public CustomGenericList<InstitutionRole> InstitutionRoleSelectAll(
+        public List<InstitutionRole> InstitutionRoleSelectAll(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction)
         {
@@ -258,7 +292,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<InstitutionRole> helper = new CustomSqlHelper<InstitutionRole>())
                 {
-                    CustomGenericList<InstitutionRole> list = helper.ExecuteReader(command);
+                    List<InstitutionRole> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

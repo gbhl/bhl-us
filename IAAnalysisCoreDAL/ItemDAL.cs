@@ -1,6 +1,7 @@
 
 #region Using
 
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -27,11 +28,11 @@ namespace MOBOT.IAAnalysis.DAL
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectByIdentifier", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("Identifier", SqlDbType.NVarChar, 50, false, identifier)))
+                CustomSqlHelper.CreateInputParameter("Identifier", SqlDbType.NVarChar, 200, false, identifier)))
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {
@@ -51,7 +52,7 @@ namespace MOBOT.IAAnalysis.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of objects of type Item.</returns>
-        public CustomGenericList<Item> ItemSelectForXMLDownload(
+        public List<Item> ItemSelectForXMLDownload(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction)
         {
@@ -62,9 +63,20 @@ namespace MOBOT.IAAnalysis.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
                     return list;
                 }
+            }
+        }
+
+        public List<CustomDataRow> ItemSelectNextStartDate(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("IAAnalysis"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.ItemSelectNextStartDate", connection, transaction))
+            {
+                return CustomSqlHelper.ExecuteReaderAndReturnRows(command);
             }
         }
     }

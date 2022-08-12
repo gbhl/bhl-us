@@ -1,13 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.Win32;
-using System.Collections.Specialized;
-using System.Text;
 
 namespace CustomDataAccess
 {
+    /// <summary>
+    /// Specifies how elements in a list are sorted.
+    /// </summary>
+    [Serializable]
+    public enum SortOrder
+    {
+        /// <summary>
+        /// The elements are sorted in ascending order.
+        /// </summary>
+        Ascending = 0,
+        /// <summary>
+        /// The elements are sorted in descending order.
+        /// </summary>
+        Descending = 1
+    }
+
     /// <summary>
     /// This Sql Helper based upon a named type provides helper functions assisting in the retrieval of the named type from a data base table.
     /// </summary>
@@ -25,7 +39,7 @@ namespace CustomDataAccess
         /// <param name="command"></param>
         /// <param name="loadObjectCallBack"></param>
         /// <returns></returns>
-        public CustomGenericList<T> ExecuteReader(SqlCommand command, CustomDataDelegate<T>.LoadObjectCallBack
+        public List<T> ExecuteReader(SqlCommand command, CustomDataDelegate<T>.LoadObjectCallBack
             loadObjectCallBack)
         {
             return executeReader(null, command, loadObjectCallBack);
@@ -36,7 +50,7 @@ namespace CustomDataAccess
         /// </summary>
         /// <param name="transporterCallBack"></param>
         /// <param name="command"></param>
-        public CustomGenericList<T> ExecuteReader(CustomDataDelegate<T>.TransporterCallBack transporterCallBack,
+        public List<T> ExecuteReader(CustomDataDelegate<T>.TransporterCallBack transporterCallBack,
             SqlCommand command, CustomDataDelegate<T>.LoadObjectCallBack loadObjectCallBack)
         {
             return executeReader(transporterCallBack, command, loadObjectCallBack);
@@ -48,10 +62,10 @@ namespace CustomDataAccess
         /// <param name="transporterCallBack"></param>
         /// <param name="command"></param>
         /// <returns></returns>
-        internal CustomGenericList<T> executeReader(CustomDataDelegate<T>.TransporterCallBack transporterCallBack,
+        internal List<T> executeReader(CustomDataDelegate<T>.TransporterCallBack transporterCallBack,
             SqlCommand command, CustomDataDelegate<T>.LoadObjectCallBack loadObjectCallBack)
         {
-            CustomGenericList<T> list = new CustomGenericList<T>();
+            List<T> list = new List<T>();
 
             // rectify connection state, i.e. if connection is closed, open connection
             command = CustomSqlHelper.rectifyConnectionState(command);
@@ -128,7 +142,7 @@ namespace CustomDataAccess
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        public CustomGenericList<T> ExecuteReader(SqlCommand command)
+        public List<T> ExecuteReader(SqlCommand command)
         {
             return executeReader(null, command, null);
         }
@@ -138,7 +152,7 @@ namespace CustomDataAccess
         /// </summary>
         /// <param name="transporterCallBack"></param>
         /// <param name="command"></param>
-        public CustomGenericList<T> ExecuteReader(CustomDataDelegate<T>.TransporterCallBack transporterCallBack,
+        public List<T> ExecuteReader(CustomDataDelegate<T>.TransporterCallBack transporterCallBack,
             SqlCommand command)
         {
             return executeReader(transporterCallBack, command, null);
@@ -659,10 +673,10 @@ namespace CustomDataAccess
             return s;
         }
 
-        public static CustomGenericList<CustomDataRow> ExecuteReaderAndReturnRows(SqlCommand command)
+        public static List<CustomDataRow> ExecuteReaderAndReturnRows(SqlCommand command)
         {
             CustomSqlHelper<CustomDataRow> helper = new CustomSqlHelper<CustomDataRow>();
-            CustomGenericList<CustomDataRow> rows = helper.executeReader(null, command, new CustomDataDelegate<CustomDataRow>.LoadObjectCallBack(helper.loadDataRow));
+            List<CustomDataRow> rows = helper.executeReader(null, command, new CustomDataDelegate<CustomDataRow>.LoadObjectCallBack(helper.loadDataRow));
 
             return rows;
         }

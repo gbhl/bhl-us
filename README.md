@@ -274,27 +274,22 @@ Application Configuration
 <tr><th>Original File</th><th>Copy To</th></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLAdminWeb\Web.config.template</td><td>&lt;BHLRoot&gt;\BHLAdminWeb\Web.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLApiDALTest\App.config.template</td><td>&lt;BHLRoot&gt;\BHLApiDALTest\App.config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\BHLBibTeXExport\App.config.template</td><td>&lt;BHLRoot&gt;\BHLBibTeXExport\App.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLBioStorHarvest\app.config.template</td><td>&lt;BHLRoot&gt;\BHLBioStorHarvest\app.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLCoreDALTest\App.config.template</td><td>&lt;BHLRoot&gt;\BHLCoreDALTest\App.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLDOIService\app.config.template</td><td>&lt;BHLRoot&gt;\BHLDOIService\app.config</td></tr>
+<tr><td>&lt;BHLRoot&gt;\BHLExportProcessor\App.config.template</td><td>&lt;BHLRoot&gt;\BHLExportProcessor\App.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLFileAccessRemotingUtilities\Remoting.config.template</td><td>&lt;BHLRoot&gt;\BHLFileAccessRemotingUtilities\Remoting.config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\BHLFileAccessService\App.config.template</td><td>&lt;BHLRoot&gt;\BHLFileAccessService\App.config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\BHLFlatExport\app.config.template</td><td>&lt;BHLRoot&gt;\BHLFlatExport\app.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLFlickrTagHarvest\app.config.template</td><td>&lt;BHLRoot&gt;\BHLFlickrTagHarvest\app.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLFlickrThumbGrab\app.config.template</td><td>&lt;BHLRoot&gt;\BHLFlickrThumbGrab\app.config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\BHLIAIDExport\app.config.template</td><td>&lt;BHLRoot&gt;\BHLIAIDExport\app.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLImportEFDataModel\App.Config.template</td><td>&lt;BHLRoot&gt;\BHLImportEFDataModel\App.Config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLImportService\Web.config.template</td><td>&lt;BHLRoot&gt;\BHLImportService\Web.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLMETSUpload\app.config.template</td><td>&lt;BHLRoot&gt;\BHLMETSUpload\app.config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\BHLMODSExport\app.config.template</td><td>&lt;BHLRoot&gt;\BHLMODSExport\app.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLNameFileGenerator\app.config.template</td><td>&lt;BHLRoot&gt;\BHLNameFileGenerator\app.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLNameFileGenerator\Remoting.config.template</td><td>&lt;BHLRoot&gt;\BHLNameFileGenerator\Remoting.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLOAIHarvester\app.config.template</td><td>&lt;BHLRoot&gt;\BHLOAIHarvester\app.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLOCRRefresh\app.config.template</td><td>&lt;BHLRoot&gt;\BHLOCRRefresh\app.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLPageNameRefresh\app.config.template</td><td>&lt;BHLRoot&gt;\BHLPageNameRefresh\app.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLPDFGenerator\app.config.template</td><td>&lt;BHLRoot&gt;\BHLPDFGenerator\app.config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\BHLRISExport\app.config.template</td><td>&lt;BHLRoot&gt;\BHLRISExport\app.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLSearchIndexer\AppConfig.xml.template</td><td>&lt;BHLRoot&gt;\BHLSearchIndexer\AppConfig.xml</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLSearchIndexer\AppConfig.xml.template</td><td>&lt;BHLRoot&gt;\BHLSearchIndexer\AppConfig.Names.xml</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLSearchIndexer\AppConfig.xml.template</td><td>&lt;BHLRoot&gt;\BHLSearchIndexer\AppConfig.Full.xml</td></tr>
@@ -448,24 +443,6 @@ Application Configuration
 &nbsp;  
 **UTILITY APPS**
 
-**&lt;BHLRoot&gt;\BHLBibTeXExport\App.config**
-
-<table>
-<tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>	SMTP host address</td></tr>
-<tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
-<tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
-<tr><td>appSettings/BibTeXTitleTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/BibTeXTitleFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/BibTeXTitleZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td><tr><td>appSettings/BibTeXItemTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/BibTeXItemFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/BibTeXItemZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/BibTeXSegmentTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/BibTeXSegmentFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/BibTeXSegmentZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-</table>
-
 **&lt;BHLRoot&gt;\BHLDOIService\app.config**
 
 <table>
@@ -479,18 +456,91 @@ Application Configuration
 <tr><td>appSettings/CrossRefPassword</td><td>Password for CrossRef account</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLFlatExport\app.config**
+**&lt;BHLRoot&gt;\BHLExportProcessor\App.config**
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
+<tr><td># appSettings/SMTPHost</td><td>	SMTP host address</td></tr>
 <tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
 <tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
+<tr><td>appSettings/RISTitleTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISTitleFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISTitleZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISItemTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISItemFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISItemZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISSegmentTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISSegmentFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISSegmentZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISInternalTitleTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISInternalTitleFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISInternalTitleZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISInternalItemTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISInternalItemFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISInternalItemZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISInternalSegmentTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISInternalSegmentFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/RISInternalSegmentZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSTitleTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSTitleFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSTitleZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSItemTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSItemFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSItemZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSSegmentTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSSegmentFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSSegmentZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSInternalTitleTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSInternalTitleFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSInternalTitleZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSInternalItemTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSInternalItemFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSInternalItemZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSInternalSegmentTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSInternalSegmentFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/MODSInternalSegmentZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXTitleTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXTitleFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXTitleZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXItemTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXItemFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXItemZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXSegmentTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXSegmentFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXSegmentZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXInternalTitleTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXInternalTitleFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXInternalTitleZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXInternalItemTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXInternalItemFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXInternalItemZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXInternalSegmentTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXInternalSegmentFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BibTeXInternalSegmentZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVDOIFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVAuthorFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVItemFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVPageFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVPageNameFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVPartFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVPartAuthorFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVKeywordFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVTitleFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVTitleIdentifierFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVInternalDOIFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVInternalAuthorFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVInternalItemFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVInternalPageFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVInternalPageNameFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVInternalPartFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVInternalPartAuthorFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVInternalKeywordFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVInternalTitleFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/TSVInternalTitleIdentifierFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
 <tr><td># system.net/mailSettings/smtp/network(@host) </td><td>SMTP host address</td></tr>
 <tr><td># system.net/mailSettings/smtp/network(@port)</td><td>STMP host port</td></tr>
 <tr><td># system.net/mailSettings/smtp/network(@userName)</td><td>SMTP host username</td></tr>
 <tr><td># system.net/mailSettings/smtp/network(@password)</td><td>SMTP host password</td></tr>
-<tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
 </table>
 
 **&lt;BHLRoot&gt;\BHLFlickrTagHarvest\app.config**
@@ -522,20 +572,6 @@ Application Configuration
 <tr><td>appSettings/DefaultFilesFolder</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLIAIDExport\app.config**
-
-<table>
-<tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
-<tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
-<tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
-<tr><td># system.serviceModel/client/endpoint(@address)</td><td>BHL web service SOAP endpoint</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@host) </td><td>SMTP host address</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@port)</td><td>STMP host port</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@userName)</td><td>SMTP host username</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@password)</td><td>SMTP host password</td></tr>
-</table>
-
 **&lt;BHLRoot&gt;\BHLMETSUpload\app.config**
 
 <table>
@@ -546,24 +582,6 @@ Application Configuration
 <tr><td>appSettings/METSEmail</td><td>Organization email address to place in METS files</td></tr>
 <tr><td>appSettings/IAS3AccessKey</td><td>Internet Archive access key</td></tr>
 <tr><td>appSettings/IAS3SecretKey</td><td>Internet Archive secret key</td></tr>
-</table>
-
-**&lt;BHLRoot&gt;\BHLMODSExport\app.config**
-
-<table>
-<tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>	SMTP host address</td></tr>
-<tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
-<tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
-<tr><td>appSettings/MODSTitleTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/MODSTitleFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/MODSTitleZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/MODSItemTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/MODSItemFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/MODSItemZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/MODSSegmentTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/MODSSegmentFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/MODSSegmentZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
 </table>
 
 **&lt;BHLRoot&gt;\BHLNameFileGenerator\app.config**
@@ -626,28 +644,6 @@ Application Configuration
 <tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
 <tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
 <tr><td>appSettings/PdfFilePath</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-</table>
-
-**&lt;BHLRoot&gt;\BHLRISExport\app.config**
-
-<table>
-<tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
-<tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
-<tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
-<tr><td>appSettings/RISTitleTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/RISTitleFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/RISTitleZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/RISItemTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/RISItemFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/RISItemZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/RISSegmentTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/RISSegmentFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td>appSettings/RISSegmentZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@host) </td><td>SMTP host address</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@port)</td><td>STMP host port</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@userName)</td><td>SMTP host username</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@password)</td><td>SMTP host password</td></tr>
 </table>
 
 **&lt;BHLRoot&gt;\BHLSearchIndexer\AppConfig.xml**

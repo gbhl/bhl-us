@@ -1,19 +1,18 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class SegmentStatusDAL
+    public partial class SegmentStatusDAL
 	{
-        public CustomGenericList<SegmentStatus> SegmentStatusSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<ItemStatus> SegmentStatusSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -21,9 +20,9 @@ namespace MOBOT.BHL.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentStatusSelectAll", connection, transaction))
             {
-                using (CustomSqlHelper<SegmentStatus> helper = new CustomSqlHelper<SegmentStatus>())
+                using (CustomSqlHelper<ItemStatus> helper = new CustomSqlHelper<ItemStatus>())
                 {
-                    CustomGenericList<SegmentStatus> list = helper.ExecuteReader(command);
+                    List<ItemStatus> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

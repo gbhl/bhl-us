@@ -190,6 +190,19 @@ namespace MOBOT.BHL.OAIMODS
                     creator.FullName = string.Format("{0}, {1}", familyName, givenName);
                 }
 
+                var authorIdentifiers = from id in author.Elements(ns + "nameIdentifier") select id;
+                foreach (XElement authorIdentifier in authorIdentifiers)
+                {
+                    XAttribute idTypeAttribute = authorIdentifier.Attribute("type");
+                    if (idTypeAttribute != null)
+                    {
+                        OAIRecord.Identifier identifier = new OAIRecord.Identifier();
+                        identifier.IdentifierType = idTypeAttribute.Value;
+                        identifier.IdentifierValue = authorIdentifier.Value;
+                        creator.Identifiers.Add(identifier);
+                    }
+                }
+
                 _oaiRecord.Creators.Add(new KeyValuePair<string, OAIRecord.Creator>(authorType, creator));
             }
 
@@ -398,6 +411,7 @@ namespace MOBOT.BHL.OAIMODS
 
             string mods30Header = "<mods xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"3.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.loc.gov/mods/v3\" xsi:schemaLocation=\"http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-0.xsd\">\n";
             string mods33Header = "<mods xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"3.3\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.loc.gov/mods/v3\" xsi:schemaLocation=\"http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-3.xsd\">\n";
+            string mods37Header = "<mods xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"3.7\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.loc.gov/mods/v3\" xsi:schemaLocation=\"http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd\">\n";
 
             // MODS needs to be formatted differently for articles, issues, and books, so check the type
             // of record we have and get the appropriate MODS body
@@ -405,15 +419,15 @@ namespace MOBOT.BHL.OAIMODS
             {
                 case OAIRecord.RecordType.Article:
                 case OAIRecord.RecordType.Segment:
-                    sb.Append(mods30Header);
+                    sb.Append(mods37Header);
                     sb.Append(this.ArticleToString());
                     break;
                 case OAIRecord.RecordType.Issue:
-                    sb.Append(mods33Header);
+                    sb.Append(mods37Header);
                     sb.Append(this.IssueToString());
                     break;
                 default:
-                    sb.Append(mods30Header);
+                    sb.Append(mods37Header);
                     sb.Append(this.BookToString());
                     break;
             }
@@ -1027,6 +1041,7 @@ namespace MOBOT.BHL.OAIMODS
             sb.Append(this.GetOriginInfoElement());
             sb.Append(this.GetClassificationElement(_oaiRecord));
             sb.Append(this.GetPartElement());
+            if (!string.IsNullOrWhiteSpace(_oaiRecord.ParentUrl)) sb.Append(this.GetIdentifierUriElement(_oaiRecord.ParentUrl));
 
             sb.Append("</relatedItem>\n");
 
@@ -1087,13 +1102,14 @@ namespace MOBOT.BHL.OAIMODS
         /// Build the identifier element with type = 'uri'
         /// </summary>
         /// <returns></returns>
-        private String GetIdentifierUriElement()
+        private String GetIdentifierUriElement(string url = "")
         {
             StringBuilder sb = new StringBuilder();
 
-            if (!String.IsNullOrEmpty(_oaiRecord.Url))
+            if (string.IsNullOrWhiteSpace(url)) url = _oaiRecord.Url;
+            if (!string.IsNullOrWhiteSpace(url))
             {
-                sb.Append("<identifier type=\"uri\">" + HttpUtility.HtmlEncode(_oaiRecord.Url) + "</identifier>\n");
+                sb.Append("<identifier type=\"uri\">" + HttpUtility.HtmlEncode(url) + "</identifier>\n");
             }
 
             return sb.ToString();
@@ -1107,23 +1123,27 @@ namespace MOBOT.BHL.OAIMODS
         {
             StringBuilder sb = new StringBuilder();
 
-            if (!String.IsNullOrEmpty(title.Isbn))
+            if (!String.IsNullOrWhiteSpace(title.Isbn))
             {
                 sb.Append("<identifier type=\"isbn\">" + HttpUtility.HtmlEncode(title.Isbn) + "</identifier>\n");
             }
-            if (!String.IsNullOrEmpty(title.Issn))
+            if (!String.IsNullOrWhiteSpace(title.Issn))
             {
                 sb.Append("<identifier type=\"issn\">" + HttpUtility.HtmlEncode(title.Issn) + "</identifier>\n");
+            }
+            if (!String.IsNullOrWhiteSpace(title.EIssn))
+            {
+                sb.Append("<identifier type=\"issn\">" + HttpUtility.HtmlEncode(title.EIssn) + "</identifier>\n");
             }
             foreach (String oclcNumber in title.oclcNumbers)
             {
                 sb.Append("<identifier type=\"oclc\">" + HttpUtility.HtmlEncode(oclcNumber) + "</identifier>\n");
             }
-            if (!String.IsNullOrEmpty(title.Nlm))
+            if (!String.IsNullOrWhiteSpace(title.Nlm))
             {
                 sb.Append("<identifier type=\"nlm\">" + HttpUtility.HtmlEncode(title.Nlm) + "</identifier>\n");
             }
-            if (!String.IsNullOrEmpty(title.Llc))
+            if (!String.IsNullOrWhiteSpace(title.Llc))
             {
                 sb.Append("<identifier type=\"lccn\">" + HttpUtility.HtmlEncode(title.Llc) + "</identifier>\n");
             }

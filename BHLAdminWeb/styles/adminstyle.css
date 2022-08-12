@@ -85,6 +85,14 @@ A.HeaderLinks:active {
 	font-style: italic;
 }
 
+.ImportSegReviewSubHead {
+    font-family: Helvetica, Verdana, Times, serif;
+    font-size: 11px;
+    color: #000000;
+    font-style: italic;
+    font-weight: bold;
+}
+
 .ErrorText {
 	font-family: Helvetica, Verdana, Times, serif;
 	font-size: 12px;
@@ -327,6 +335,11 @@ div .field {
     background: -ms-linear-gradient(top,  #f2f6fb 0%,#e7eff7 100%); /* IE10+ */
     background: linear-gradient(to bottom,  #f2f6fb 0%,#e7eff7 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6fb', endColorstr='#e7eff7',GradientType=0 ); /* IE6-9 */
+}
+
+.citeImport .mappingTable td, .citeImport .mappingTable th {
+    padding-left:3px;
+    padding-right: 3px;
 }
 
 td.import-detail, th.import-detail {

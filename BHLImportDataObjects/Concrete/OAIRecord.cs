@@ -1,46 +1,46 @@
 using System;
-using CustomDataAccess;
+using System.Collections.Generic;
 
 namespace MOBOT.BHLImport.DataObjects
 {
-	[Serializable]
+    [Serializable]
 	public class OAIRecord : __OAIRecord
 	{
-        private CustomGenericList<OAIRecordCreator> _creators = new CustomGenericList<OAIRecordCreator>();
+        private List<OAIRecordCreator> _creators = new List<OAIRecordCreator>();
 
-        public CustomGenericList<OAIRecordCreator> Creators
+        public List<OAIRecordCreator> Creators
         {
             get { return _creators; }
             set { _creators = value; }
         }
 
-        private CustomGenericList<OAIRecordDCType> _dcTypes = new CustomGenericList<OAIRecordDCType>();
+        private List<OAIRecordDCType> _dcTypes = new List<OAIRecordDCType>();
 
-        public CustomGenericList<OAIRecordDCType> DcTypes
+        public List<OAIRecordDCType> DcTypes
         {
             get { return _dcTypes; }
             set { _dcTypes = value; }
         }
 
-        private CustomGenericList<OAIRecordRight> _rights = new CustomGenericList<OAIRecordRight>();
+        private List<OAIRecordRight> _rights = new List<OAIRecordRight>();
 
-        public CustomGenericList<OAIRecordRight> Rights
+        public List<OAIRecordRight> Rights
         {
             get { return _rights; }
             set { _rights = value; }
         }
 
-        private CustomGenericList<OAIRecordSubject> _subjects = new CustomGenericList<OAIRecordSubject>();
+        private List<OAIRecordSubject> _subjects = new List<OAIRecordSubject>();
 
-        public CustomGenericList<OAIRecordSubject> Subjects
+        public List<OAIRecordSubject> Subjects
         {
             get { return _subjects; }
             set { _subjects = value; }
         }
 
-        private CustomGenericList<OAIRecordRelatedTitle> _relatedTitles = new CustomGenericList<OAIRecordRelatedTitle>();
+        private List<OAIRecordRelatedTitle> _relatedTitles = new List<OAIRecordRelatedTitle>();
 
-        public CustomGenericList<OAIRecordRelatedTitle> RelatedTitles
+        public List<OAIRecordRelatedTitle> RelatedTitles
         {
             get { return _relatedTitles; }
             set { _relatedTitles = value; }

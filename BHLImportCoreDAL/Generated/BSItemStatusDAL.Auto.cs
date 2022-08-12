@@ -1,8 +1,8 @@
 
-// Generated 10/23/2012 3:24:24 PM
+// Generated 1/5/2021 2:11:52 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class BSItemStatusDAL is based upon BSItemStatus.
+// This partial class BSItemStatusDAL is based upon dbo.BSItemStatus.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from BSItemStatus by primary key(s).
+		/// Select values from dbo.BSItemStatus by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 			
 		/// <summary>
-		/// Select values from BSItemStatus by primary key(s).
+		/// Select values from dbo.BSItemStatus by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<BSItemStatus> helper = new CustomSqlHelper<BSItemStatus>())
 				{
-					CustomGenericList<BSItemStatus> list = helper.ExecuteReader(command);
+					List<BSItemStatus> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						BSItemStatus o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from BSItemStatus by primary key(s).
+		/// Select values from dbo.BSItemStatus by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="itemStatusID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> BSItemStatusSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> BSItemStatusSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int itemStatusID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from BSItemStatus by primary key(s).
+		/// Select values from dbo.BSItemStatus by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="itemStatusID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> BSItemStatusSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> BSItemStatusSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into BSItemStatus.
+		/// Insert values into dbo.BSItemStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -151,7 +152,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into BSItemStatus.
+		/// Insert values into dbo.BSItemStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -179,7 +180,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<BSItemStatus> helper = new CustomSqlHelper<BSItemStatus>())
 				{
-					CustomGenericList<BSItemStatus> list = helper.ExecuteReader(command);
+					List<BSItemStatus> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						BSItemStatus o = list[0];
@@ -195,7 +196,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into BSItemStatus. Returns an object of type BSItemStatus.
+		/// Insert values into dbo.BSItemStatus. Returns an object of type BSItemStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -210,7 +211,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into BSItemStatus. Returns an object of type BSItemStatus.
+		/// Insert values into dbo.BSItemStatus. Returns an object of type BSItemStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -234,7 +235,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from BSItemStatus by primary key(s).
+		/// Delete values from dbo.BSItemStatus by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -249,7 +250,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from BSItemStatus by primary key(s).
+		/// Delete values from dbo.BSItemStatus by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -292,7 +293,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in BSItemStatus. Returns an object of type BSItemStatus.
+		/// Update values in dbo.BSItemStatus. Returns an object of type BSItemStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -311,7 +312,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in BSItemStatus. Returns an object of type BSItemStatus.
+		/// Update values in dbo.BSItemStatus. Returns an object of type BSItemStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -339,7 +340,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<BSItemStatus> helper = new CustomSqlHelper<BSItemStatus>())
 				{
-					CustomGenericList<BSItemStatus> list = helper.ExecuteReader(command);
+					List<BSItemStatus> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						BSItemStatus o = list[0];
@@ -355,7 +356,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in BSItemStatus. Returns an object of type BSItemStatus.
+		/// Update values in dbo.BSItemStatus. Returns an object of type BSItemStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -370,7 +371,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in BSItemStatus. Returns an object of type BSItemStatus.
+		/// Update values in dbo.BSItemStatus. Returns an object of type BSItemStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -394,9 +395,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage BSItemStatus object.
+		/// Manage dbo.BSItemStatus object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in BSItemStatus.
+		/// then either insert values into, delete values from, or update values in dbo.BSItemStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -411,9 +412,9 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Manage BSItemStatus object.
+		/// Manage dbo.BSItemStatus object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in BSItemStatus.
+		/// then either insert values into, delete values from, or update values in dbo.BSItemStatus.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -479,4 +480,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

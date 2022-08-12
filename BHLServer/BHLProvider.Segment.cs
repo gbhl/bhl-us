@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHL.Utility;
 
 namespace MOBOT.BHL.Server
 {
@@ -13,47 +14,67 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectAuto(null, null, segmentID);
         }
 
-        public CustomGenericList<Segment> SegmentSimpleSelectByAuthor(int authorID)
+        public List<Segment> SegmentSimpleSelectByAuthor(int authorID)
         {
             return new SegmentDAL().SegmentSimpleSelectByAuthor(null, null, authorID);
         }
 
-        public CustomGenericList<Segment> SegmentSelectForAuthorID(int authorID)
+        public Tuple<int, List<Segment>> SegmentSelectForAuthorIDPaged(int authorID, int pageNum, int numPages, string sort)
         {
-            return new SegmentDAL().SegmentSelectForAuthorID(null, null, authorID);
+            return new SegmentDAL().SegmentSelectForAuthorIDPaged(null, null, authorID, pageNum, numPages, sort);
         }
 
-        public CustomGenericList<Segment> SegmentSelectByDateRange(string startDate, string endDate)
+        public Tuple<int, List<Segment>> SegmentSelectByDateRange(int startDate, int endDate, int pageNum, int numPages, string sort)
         {
-            return new SegmentDAL().SegmentSelectByDateRange(null, null, startDate, endDate);
+            return new SegmentDAL().SegmentSelectByDateRange(null, null, startDate.ToString(), endDate.ToString(), pageNum, numPages, sort);
         }
 
-        public CustomGenericList<Segment> SegmentSelectByTitleLike(string title)
+        public Tuple<int, List<Segment>> SegmentSelectByTitleLike(string title, int pageNum, int numPages, string sort)
         {
-            return new SegmentDAL().SegmentSelectByTitleLike(null, null, title);
+            return new SegmentDAL().SegmentSelectByTitleLike(null, null, title, pageNum, numPages, sort);
         }
 
-        public CustomGenericList<Segment> SegmentSelectByTitleNotLike(string title)
+        public Tuple<int, List<Segment>> SegmentSelectForKeywordPaged(string keyword, int pageNum, int numPages, string sort)
         {
-            return new SegmentDAL().SegmentSelectByTitleNotLike(null, null, title);
+            return new SegmentDAL().SegmentSelectForKeywordPaged(null, null, keyword, pageNum, numPages, sort);
         }
 
-        public CustomGenericList<Segment> SegmentSelectForKeyword(string keyword)
+        public List<Segment> SegmentSelectByBookID(int bookID)
         {
-            return new SegmentDAL().SegmentSelectForKeyword(null, null, keyword);
+            return new SegmentDAL().SegmentSelectByBookID(null, null, bookID, 0);
         }
 
-        public CustomGenericList<Segment> SegmentSelectByItemID(int itemID)
+        public List<Segment> SegmentSelectByTitleID(int titleID)
         {
-            return new SegmentDAL().SegmentSelectByItemID(null, null, itemID, 0);
+            return new SegmentDAL().SegmentSelectByTitleID(null, null, titleID);
         }
 
-        public CustomGenericList<TitleBibTeX> SegmentSelectAllBibTeXCitations()
+        public Segment SegmentSelectByItemID(int itemID)
+        {
+            return new SegmentDAL().SegmentSelectByItemID(null, null, itemID);
+        }
+
+        public Segment SegmentSelectByBarCode(string barcode)
+        {
+            return new SegmentDAL().SegmentSelectByBarCode(null, null, barcode);
+        }
+
+        public List<Segment> SegmentSelectWithoutDOIByItemID(int itemID)
+        {
+            return new SegmentDAL().SegmentSelectWithoutDOIByItemID(null, null, itemID);
+        }
+
+        public List<Segment> SegmentSelectWithoutDOIByTitleID(int titleID)
+        {
+            return new SegmentDAL().SegmentSelectWithoutDOIByTitleID(null, null, titleID);
+        }
+
+        public List<TitleBibTeX> SegmentSelectAllBibTeXCitations()
         {
             return new SegmentDAL().SegmentSelectAllBibTeXCitations(null, null);
         }
 
-        public CustomGenericList<TitleBibTeX> SegmentSelectBibTeXForSegmentID(int segmentID, short includeNoContent)
+        public List<TitleBibTeX> SegmentSelectBibTeXForSegmentID(int segmentID, short includeNoContent)
         {
             return new SegmentDAL().SegmentSelectBibTexForSegmentID(null, null, segmentID, includeNoContent);
         }
@@ -61,7 +82,7 @@ namespace MOBOT.BHL.Server
         public String SegmentBibTeXGetCitationStringForSegmentID(int segmentID, bool includeNoContent)
         {
             System.Text.StringBuilder bibtexString = new System.Text.StringBuilder("");
-            CustomGenericList<TitleBibTeX> citations = this.SegmentSelectBibTeXForSegmentID(segmentID, (short)(includeNoContent ? 1 : 0));
+            List<TitleBibTeX> citations = this.SegmentSelectBibTeXForSegmentID(segmentID, (short)(includeNoContent ? 1 : 0));
             foreach (TitleBibTeX citation in citations)
             {
                 string journal = String.Empty;
@@ -106,7 +127,7 @@ namespace MOBOT.BHL.Server
             return bibtexString.ToString();
         }
 
-        public CustomGenericList<RISCitation> SegmentSelectAllRISCitations()
+        public List<RISCitation> SegmentSelectAllRISCitations()
         {
             return new SegmentDAL().SegmentSelectAllRISCitations(null, null);
         }
@@ -114,7 +135,7 @@ namespace MOBOT.BHL.Server
         public String SegmentGetRISCitationStringForSegmentID(int segmentID)
         {
             System.Text.StringBuilder risString = new System.Text.StringBuilder("");
-            CustomGenericList<RISCitation> citations = new SegmentDAL().SegmentSelectRISCitationForSegmentID(null, null, segmentID);
+            List<RISCitation> citations = new SegmentDAL().SegmentSelectRISCitationForSegmentID(null, null, segmentID);
             foreach (RISCitation citation in citations)
             {
                 risString.Append(this.GenerateRISCitation(citation));
@@ -127,7 +148,7 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectForSegmentID(null, null, segmentID);
         }
 
-        public CustomGenericList<Segment> SegmentSelectPublished()
+        public List<Segment> SegmentSelectPublished()
         {
             return new SegmentDAL().SegmentSelectPublished(null, null);
         }
@@ -142,7 +163,7 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectExtended(null, null, segmentID);
         }
 
-        public CustomGenericList<Segment> SegmentSelectRelated(int segmentID)
+        public List<Segment> SegmentSelectRelated(int segmentID)
         {
             return new SegmentDAL().SegmentSelectRelated(null, null, segmentID);
         }
@@ -181,6 +202,9 @@ namespace MOBOT.BHL.Server
                 }
             }
 
+            // Clean up the sort title
+            segment.SortTitle = DataCleaner.CleanSortTitle(segment.SortTitle);
+
             return new SegmentDAL().Save(null, null, segment, userId);
         }
 
@@ -190,14 +214,31 @@ namespace MOBOT.BHL.Server
             Segment segment = dal.SegmentSelectAuto(null, null, segmentID);
             if (segment != null)
             {
-                segment.SegmentStatusID = segmentStatusID;
-                segment = dal.SegmentUpdateAuto(null, null, segment);
+                this.ItemUpdateStatus((int)segment.ItemID, segmentStatusID);
             }
             else
             {
                 throw new Exception("Could not find existing segment record");
             }
             return segment;
+        }
+
+        public Segment SegmentUpdatePaginationStatus(int segmentID, int paginationStatusID, int userID)
+        {
+            SegmentDAL dal = new SegmentDAL();
+            Segment savedSegment = dal.SegmentSelectAuto(null, null, segmentID);
+            if (savedSegment != null)
+            {
+                savedSegment.PaginationStatusID = paginationStatusID;
+                savedSegment.PaginationStatusUserID = userID;
+                savedSegment.PaginationStatusDate = DateTime.Now;
+                savedSegment = dal.SegmentUpdateAuto(null, null, savedSegment);
+            }
+            else
+            {
+                throw new Exception("Could not find existing Segment record.");
+            }
+            return savedSegment;
         }
 
         public SegmentCluster SegmentClusterInsertAuto(int userID)
@@ -212,14 +253,29 @@ namespace MOBOT.BHL.Server
             return dal.SegmentClusterSegmentInsertAuto(null, null, segmentID, clusterID, 0, userID, userID);
         }
 
-        public CustomGenericList<Segment> SegmentSelectByStatusID(int segmentStatusID)
+        public List<Segment> SegmentSelectByStatusID(int segmentStatusID)
         {
             return new SegmentDAL().SegmentSelectByStatusID(null, null, segmentStatusID);
         }
 
-        public CustomGenericList<Segment> SegmentSelectRecentlyClustered(int numberOfClusters)
+        public List<Segment> SegmentSelectRecentlyClustered(int numberOfClusters)
         {
             return new SegmentDAL().SegmentSelectRecentlyClustered(null, null, numberOfClusters);
+        }
+
+        public List<Segment> SegmentSelectChildSegmentsBySegmentID(int segmentID)
+        {
+            return new SegmentDAL().SegmentSelectChildSegmentsBySegmentID(null, null, segmentID);
+        }
+
+        public List<Segment> SegmentSelectSiblingSegmentsBySegmentID(int segmentID)
+        {
+            return new SegmentDAL().SegmentSelectSiblingSegmentsBySegmentID(null, null, segmentID);
+        }
+
+        public List<ItemAuthor> SegmentAuthorSelectBySegmentID(int segmentID)
+        {
+            return new ItemAuthorDAL().ItemAuthorSelectBySegmentID(null, null, segmentID);
         }
 
         /// <summary>
@@ -227,24 +283,29 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="titleID"></param>
         /// <returns></returns>
-        public CustomGenericList<SegmentIdentifier> SegmentIdentifierSelectForDisplayBySegmentID(int segmentID)
+        public List<ItemIdentifier> ItemIdentifierSelectForDisplayBySegmentID(int segmentID)
         {
-            return (new SegmentIdentifierDAL().SegmentIdentifierSelectBySegmentID(null, null, segmentID, 1));
+            return (new ItemIdentifierDAL().ItemIdentifierSelectBySegmentID(null, null, segmentID, 1));
         }
 
-        public CustomGenericList<Segment> SegmentSelectByInstitutionAndStartsWith(string institutionCode, string startsWith)
+        public Tuple<int, List<Segment>> SegmentSelectByInstitutionAndStartsWith(string institutionCode, string startsWith, int pageNum, int numPages, string sort)
         {
-            return new SegmentDAL().SegmentSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith);
+            return new SegmentDAL().SegmentSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith, pageNum, numPages, sort);
         }
 
-        public CustomGenericList<Segment> SegmentSelectByInstitutionAndStartsWithout(string institutionCode, string startsWith)
-        {
-            return new SegmentDAL().SegmentSelectByInstitutionAndStartsWithout(null, null, institutionCode, startsWith);
-        }
-
-        public CustomGenericList<Segment> SegmentResolve(string doi, int startPageID)
+        public List<Segment> SegmentResolve(string doi, int startPageID)
         {
             return new SegmentDAL().SegmentResolve(null, null, doi, startPageID);
+        }
+
+        public List<Segment> SegmentSelectRecentlyChanged(string startDate)
+        {
+            return new SegmentDAL().SegmentSelectRecentlyChanged(null, null, startDate);
+        }
+
+        public Item SegmentSelectPagination(int segmentID)
+        {
+            return new SegmentDAL().SegmentSelectPagination(null, null, segmentID);
         }
     }
 }

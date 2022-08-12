@@ -1,7 +1,6 @@
-﻿
-CREATE PROCEDURE [dbo].[Page_PageTypeSelectNewByKeyValuesAndSource]
+﻿CREATE PROCEDURE [dbo].[Page_PageTypeSelectNewByKeyValuesAndSource]
 
-@BarCode NVARCHAR(40),
+@BarCode NVARCHAR(200),
 @FileNamePrefix NVARCHAR(200),
 @PageTypeID INT,
 @ImportSourceID INT
@@ -46,4 +45,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-

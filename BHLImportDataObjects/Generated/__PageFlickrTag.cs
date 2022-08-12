@@ -1,7 +1,7 @@
 
-// Generated 9/21/2015 4:15:19 PM
+// Generated 1/5/2021 2:18:05 PM
 // Do not modify the contents of this code file.
-// This abstract class __PageFlickrTag is based upon PageFlickrTag.
+// This abstract class __PageFlickrTag is based upon dbo.PageFlickrTag.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __PageFlickrTag : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -160,7 +160,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_DeleteDate = (DateTime?)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -168,7 +168,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region PageFlickrTagID
 		
@@ -473,7 +473,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion DeleteDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -620,7 +620,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __PageFlickrTag.SortColumn.PageFlickrTagID);
 		/// </summary>
 		[Serializable]
@@ -643,3 +642,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

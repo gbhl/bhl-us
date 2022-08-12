@@ -1,8 +1,8 @@
 
-// Generated 10/31/2013 4:01:46 PM
+// Generated 1/5/2021 2:17:35 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class OAIRecordSubjectDAL is based upon OAIRecordSubject.
+// This partial class OAIRecordSubjectDAL is based upon dbo.OAIRecordSubject.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from OAIRecordSubject by primary key(s).
+		/// Select values from dbo.OAIRecordSubject by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 			
 		/// <summary>
-		/// Select values from OAIRecordSubject by primary key(s).
+		/// Select values from dbo.OAIRecordSubject by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<OAIRecordSubject> helper = new CustomSqlHelper<OAIRecordSubject>())
 				{
-					CustomGenericList<OAIRecordSubject> list = helper.ExecuteReader(command);
+					List<OAIRecordSubject> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						OAIRecordSubject o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from OAIRecordSubject by primary key(s).
+		/// Select values from dbo.OAIRecordSubject by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="oAIRecordSubjectID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> OAIRecordSubjectSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> OAIRecordSubjectSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int oAIRecordSubjectID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from OAIRecordSubject by primary key(s).
+		/// Select values from dbo.OAIRecordSubject by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="oAIRecordSubjectID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> OAIRecordSubjectSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> OAIRecordSubjectSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into OAIRecordSubject.
+		/// Insert values into dbo.OAIRecordSubject.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -151,7 +152,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into OAIRecordSubject.
+		/// Insert values into dbo.OAIRecordSubject.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -180,7 +181,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<OAIRecordSubject> helper = new CustomSqlHelper<OAIRecordSubject>())
 				{
-					CustomGenericList<OAIRecordSubject> list = helper.ExecuteReader(command);
+					List<OAIRecordSubject> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						OAIRecordSubject o = list[0];
@@ -196,7 +197,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into OAIRecordSubject. Returns an object of type OAIRecordSubject.
+		/// Insert values into dbo.OAIRecordSubject. Returns an object of type OAIRecordSubject.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -211,7 +212,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into OAIRecordSubject. Returns an object of type OAIRecordSubject.
+		/// Insert values into dbo.OAIRecordSubject. Returns an object of type OAIRecordSubject.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -235,7 +236,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from OAIRecordSubject by primary key(s).
+		/// Delete values from dbo.OAIRecordSubject by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -250,7 +251,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from OAIRecordSubject by primary key(s).
+		/// Delete values from dbo.OAIRecordSubject by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -293,7 +294,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in OAIRecordSubject. Returns an object of type OAIRecordSubject.
+		/// Update values in dbo.OAIRecordSubject. Returns an object of type OAIRecordSubject.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -314,7 +315,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in OAIRecordSubject. Returns an object of type OAIRecordSubject.
+		/// Update values in dbo.OAIRecordSubject. Returns an object of type OAIRecordSubject.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -345,7 +346,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<OAIRecordSubject> helper = new CustomSqlHelper<OAIRecordSubject>())
 				{
-					CustomGenericList<OAIRecordSubject> list = helper.ExecuteReader(command);
+					List<OAIRecordSubject> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						OAIRecordSubject o = list[0];
@@ -361,7 +362,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in OAIRecordSubject. Returns an object of type OAIRecordSubject.
+		/// Update values in dbo.OAIRecordSubject. Returns an object of type OAIRecordSubject.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -376,7 +377,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in OAIRecordSubject. Returns an object of type OAIRecordSubject.
+		/// Update values in dbo.OAIRecordSubject. Returns an object of type OAIRecordSubject.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -401,9 +402,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage OAIRecordSubject object.
+		/// Manage dbo.OAIRecordSubject object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in OAIRecordSubject.
+		/// then either insert values into, delete values from, or update values in dbo.OAIRecordSubject.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -418,9 +419,9 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Manage OAIRecordSubject object.
+		/// Manage dbo.OAIRecordSubject object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in OAIRecordSubject.
+		/// then either insert values into, delete values from, or update values in dbo.OAIRecordSubject.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -487,4 +488,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

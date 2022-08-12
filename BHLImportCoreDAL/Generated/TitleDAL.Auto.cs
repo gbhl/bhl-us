@@ -1,8 +1,8 @@
 
-// Generated 5/19/2009 10:35:29 AM
+// Generated 1/5/2021 2:18:18 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class TitleDAL is based upon Title.
+// This partial class TitleDAL is based upon dbo.Title.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Title by primary key(s).
+		/// Select values from dbo.Title by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 			
 		/// <summary>
-		/// Select values from Title by primary key(s).
+		/// Select values from dbo.Title by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
 				{
-					CustomGenericList<Title> list = helper.ExecuteReader(command);
+					List<Title> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Title o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Title by primary key(s).
+		/// Select values from dbo.Title by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="titleID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int titleID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Title by primary key(s).
+		/// Select values from dbo.Title by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="titleID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Title.
+		/// Insert values into dbo.Title.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -145,8 +146,6 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="shortTitle"></param>
 		/// <param name="uniformTitle"></param>
 		/// <param name="sortTitle"></param>
-		/// <param name="partNumber"></param>
-		/// <param name="partName"></param>
 		/// <param name="callNumber"></param>
 		/// <param name="publicationDetails"></param>
 		/// <param name="startYear"></param>
@@ -159,17 +158,19 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="titleDescription"></param>
 		/// <param name="tL2Author"></param>
 		/// <param name="publishReady"></param>
-		/// <param name="rareBooks"></param>
-		/// <param name="originalCatalogingSource"></param>
-		/// <param name="editionStatement"></param>
-		/// <param name="currentPublicationFrequency"></param>
 		/// <param name="note"></param>
 		/// <param name="externalCreationDate"></param>
 		/// <param name="externalLastModifiedDate"></param>
 		/// <param name="externalCreationUser"></param>
 		/// <param name="externalLastModifiedUser"></param>
 		/// <param name="productionDate"></param>
+		/// <param name="rareBooks"></param>
+		/// <param name="originalCatalogingSource"></param>
+		/// <param name="editionStatement"></param>
+		/// <param name="currentPublicationFrequency"></param>
 		/// <param name="productionTitleID"></param>
+		/// <param name="partNumber"></param>
+		/// <param name="partName"></param>
 		/// <returns>Object of type Title.</returns>
 		public Title TitleInsertAuto(
 			SqlConnection sqlConnection, 
@@ -183,8 +184,6 @@ namespace MOBOT.BHLImport.DAL
 			string shortTitle,
 			string uniformTitle,
 			string sortTitle,
-			string partNumber,
-			string partName,
 			string callNumber,
 			string publicationDetails,
 			short? startYear,
@@ -197,23 +196,25 @@ namespace MOBOT.BHLImport.DAL
 			string titleDescription,
 			string tL2Author,
 			bool? publishReady,
-			bool? rareBooks,
-			string originalCatalogingSource,
-			string editionStatement,
-			string currentPublicationFrequency,
 			string note,
 			DateTime? externalCreationDate,
 			DateTime? externalLastModifiedDate,
 			int? externalCreationUser,
 			int? externalLastModifiedUser,
 			DateTime? productionDate,
-			int? productionTitleID)
+			bool? rareBooks,
+			string originalCatalogingSource,
+			string editionStatement,
+			string currentPublicationFrequency,
+			int? productionTitleID,
+			string partNumber,
+			string partName)
 		{
-			return TitleInsertAuto( sqlConnection, sqlTransaction, "BHLImport", importKey, importStatusID, importSourceID, mARCBibID, mARCLeader, fullTitle, shortTitle, uniformTitle, sortTitle, partNumber, partName, callNumber, publicationDetails, startYear, endYear, datafield_260_a, datafield_260_b, datafield_260_c, institutionCode, languageCode, titleDescription, tL2Author, publishReady, rareBooks, originalCatalogingSource, editionStatement, currentPublicationFrequency, note, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, productionTitleID );
+			return TitleInsertAuto( sqlConnection, sqlTransaction, "BHLImport", importKey, importStatusID, importSourceID, mARCBibID, mARCLeader, fullTitle, shortTitle, uniformTitle, sortTitle, callNumber, publicationDetails, startYear, endYear, datafield_260_a, datafield_260_b, datafield_260_c, institutionCode, languageCode, titleDescription, tL2Author, publishReady, note, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, rareBooks, originalCatalogingSource, editionStatement, currentPublicationFrequency, productionTitleID, partNumber, partName );
 		}
 		
 		/// <summary>
-		/// Insert values into Title.
+		/// Insert values into dbo.Title.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -227,8 +228,6 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="shortTitle"></param>
 		/// <param name="uniformTitle"></param>
 		/// <param name="sortTitle"></param>
-		/// <param name="partNumber"></param>
-		/// <param name="partName"></param>
 		/// <param name="callNumber"></param>
 		/// <param name="publicationDetails"></param>
 		/// <param name="startYear"></param>
@@ -241,17 +240,19 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="titleDescription"></param>
 		/// <param name="tL2Author"></param>
 		/// <param name="publishReady"></param>
-		/// <param name="rareBooks"></param>
-		/// <param name="originalCatalogingSource"></param>
-		/// <param name="editionStatement"></param>
-		/// <param name="currentPublicationFrequency"></param>
 		/// <param name="note"></param>
 		/// <param name="externalCreationDate"></param>
 		/// <param name="externalLastModifiedDate"></param>
 		/// <param name="externalCreationUser"></param>
 		/// <param name="externalLastModifiedUser"></param>
 		/// <param name="productionDate"></param>
+		/// <param name="rareBooks"></param>
+		/// <param name="originalCatalogingSource"></param>
+		/// <param name="editionStatement"></param>
+		/// <param name="currentPublicationFrequency"></param>
 		/// <param name="productionTitleID"></param>
+		/// <param name="partNumber"></param>
+		/// <param name="partName"></param>
 		/// <returns>Object of type Title.</returns>
 		public Title TitleInsertAuto(
 			SqlConnection sqlConnection, 
@@ -266,8 +267,6 @@ namespace MOBOT.BHLImport.DAL
 			string shortTitle,
 			string uniformTitle,
 			string sortTitle,
-			string partNumber,
-			string partName,
 			string callNumber,
 			string publicationDetails,
 			short? startYear,
@@ -280,17 +279,19 @@ namespace MOBOT.BHLImport.DAL
 			string titleDescription,
 			string tL2Author,
 			bool? publishReady,
-			bool? rareBooks,
-			string originalCatalogingSource,
-			string editionStatement,
-			string currentPublicationFrequency,
 			string note,
 			DateTime? externalCreationDate,
 			DateTime? externalLastModifiedDate,
 			int? externalCreationUser,
 			int? externalLastModifiedUser,
 			DateTime? productionDate,
-			int? productionTitleID)
+			bool? rareBooks,
+			string originalCatalogingSource,
+			string editionStatement,
+			string currentPublicationFrequency,
+			int? productionTitleID,
+			string partNumber,
+			string partName)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -306,8 +307,6 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("ShortTitle", SqlDbType.NVarChar, 255, true, shortTitle),
 					CustomSqlHelper.CreateInputParameter("UniformTitle", SqlDbType.NVarChar, 255, true, uniformTitle),
 					CustomSqlHelper.CreateInputParameter("SortTitle", SqlDbType.NVarChar, 60, true, sortTitle),
-					CustomSqlHelper.CreateInputParameter("PartNumber", SqlDbType.NVarChar, 255, true, partNumber),
-					CustomSqlHelper.CreateInputParameter("PartName", SqlDbType.NVarChar, 255, true, partName),
 					CustomSqlHelper.CreateInputParameter("CallNumber", SqlDbType.NVarChar, 100, true, callNumber),
 					CustomSqlHelper.CreateInputParameter("PublicationDetails", SqlDbType.NVarChar, 255, true, publicationDetails),
 					CustomSqlHelper.CreateInputParameter("StartYear", SqlDbType.SmallInt, null, true, startYear),
@@ -320,22 +319,24 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("TitleDescription", SqlDbType.NText, 1073741823, true, titleDescription),
 					CustomSqlHelper.CreateInputParameter("TL2Author", SqlDbType.NVarChar, 100, true, tL2Author),
 					CustomSqlHelper.CreateInputParameter("PublishReady", SqlDbType.Bit, null, true, publishReady),
-					CustomSqlHelper.CreateInputParameter("RareBooks", SqlDbType.Bit, null, true, rareBooks),
-					CustomSqlHelper.CreateInputParameter("OriginalCatalogingSource", SqlDbType.NVarChar, 100, true, originalCatalogingSource),
-					CustomSqlHelper.CreateInputParameter("EditionStatement", SqlDbType.NVarChar, 450, true, editionStatement),
-					CustomSqlHelper.CreateInputParameter("CurrentPublicationFrequency", SqlDbType.NVarChar, 100, true, currentPublicationFrequency),
 					CustomSqlHelper.CreateInputParameter("Note", SqlDbType.NVarChar, 255, true, note),
 					CustomSqlHelper.CreateInputParameter("ExternalCreationDate", SqlDbType.DateTime, null, true, externalCreationDate),
 					CustomSqlHelper.CreateInputParameter("ExternalLastModifiedDate", SqlDbType.DateTime, null, true, externalLastModifiedDate),
 					CustomSqlHelper.CreateInputParameter("ExternalCreationUser", SqlDbType.Int, null, true, externalCreationUser),
 					CustomSqlHelper.CreateInputParameter("ExternalLastModifiedUser", SqlDbType.Int, null, true, externalLastModifiedUser),
 					CustomSqlHelper.CreateInputParameter("ProductionDate", SqlDbType.DateTime, null, true, productionDate),
-					CustomSqlHelper.CreateInputParameter("ProductionTitleID", SqlDbType.Int, null, true, productionTitleID), 
+					CustomSqlHelper.CreateInputParameter("RareBooks", SqlDbType.Bit, null, true, rareBooks),
+					CustomSqlHelper.CreateInputParameter("OriginalCatalogingSource", SqlDbType.NVarChar, 100, true, originalCatalogingSource),
+					CustomSqlHelper.CreateInputParameter("EditionStatement", SqlDbType.NVarChar, 450, true, editionStatement),
+					CustomSqlHelper.CreateInputParameter("CurrentPublicationFrequency", SqlDbType.NVarChar, 100, true, currentPublicationFrequency),
+					CustomSqlHelper.CreateInputParameter("ProductionTitleID", SqlDbType.Int, null, true, productionTitleID),
+					CustomSqlHelper.CreateInputParameter("PartNumber", SqlDbType.NVarChar, 255, true, partNumber),
+					CustomSqlHelper.CreateInputParameter("PartName", SqlDbType.NVarChar, 255, true, partName), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
 				{
-					CustomGenericList<Title> list = helper.ExecuteReader(command);
+					List<Title> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Title o = list[0];
@@ -351,7 +352,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Title. Returns an object of type Title.
+		/// Insert values into dbo.Title. Returns an object of type Title.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -366,7 +367,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Title. Returns an object of type Title.
+		/// Insert values into dbo.Title. Returns an object of type Title.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -389,8 +390,6 @@ namespace MOBOT.BHLImport.DAL
 				value.ShortTitle,
 				value.UniformTitle,
 				value.SortTitle,
-				value.PartNumber,
-				value.PartName,
 				value.CallNumber,
 				value.PublicationDetails,
 				value.StartYear,
@@ -403,17 +402,19 @@ namespace MOBOT.BHLImport.DAL
 				value.TitleDescription,
 				value.TL2Author,
 				value.PublishReady,
-				value.RareBooks,
-				value.OriginalCatalogingSource,
-				value.EditionStatement,
-				value.CurrentPublicationFrequency,
 				value.Note,
 				value.ExternalCreationDate,
 				value.ExternalLastModifiedDate,
 				value.ExternalCreationUser,
 				value.ExternalLastModifiedUser,
 				value.ProductionDate,
-				value.ProductionTitleID);
+				value.RareBooks,
+				value.OriginalCatalogingSource,
+				value.EditionStatement,
+				value.CurrentPublicationFrequency,
+				value.ProductionTitleID,
+				value.PartNumber,
+				value.PartName);
 		}
 		
 		#endregion ===== INSERT =====
@@ -421,7 +422,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Title by primary key(s).
+		/// Delete values from dbo.Title by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -436,7 +437,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from Title by primary key(s).
+		/// Delete values from dbo.Title by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -479,7 +480,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Title. Returns an object of type Title.
+		/// Update values in dbo.Title. Returns an object of type Title.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -493,8 +494,6 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="shortTitle"></param>
 		/// <param name="uniformTitle"></param>
 		/// <param name="sortTitle"></param>
-		/// <param name="partNumber"></param>
-		/// <param name="partName"></param>
 		/// <param name="callNumber"></param>
 		/// <param name="publicationDetails"></param>
 		/// <param name="startYear"></param>
@@ -507,17 +506,19 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="titleDescription"></param>
 		/// <param name="tL2Author"></param>
 		/// <param name="publishReady"></param>
-		/// <param name="rareBooks"></param>
-		/// <param name="originalCatalogingSource"></param>
-		/// <param name="editionStatement"></param>
-		/// <param name="currentPublicationFrequency"></param>
 		/// <param name="note"></param>
 		/// <param name="externalCreationDate"></param>
 		/// <param name="externalLastModifiedDate"></param>
 		/// <param name="externalCreationUser"></param>
 		/// <param name="externalLastModifiedUser"></param>
 		/// <param name="productionDate"></param>
+		/// <param name="rareBooks"></param>
+		/// <param name="originalCatalogingSource"></param>
+		/// <param name="editionStatement"></param>
+		/// <param name="currentPublicationFrequency"></param>
 		/// <param name="productionTitleID"></param>
+		/// <param name="partNumber"></param>
+		/// <param name="partName"></param>
 		/// <returns>Object of type Title.</returns>
 		public Title TitleUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -532,8 +533,6 @@ namespace MOBOT.BHLImport.DAL
 			string shortTitle,
 			string uniformTitle,
 			string sortTitle,
-			string partNumber,
-			string partName,
 			string callNumber,
 			string publicationDetails,
 			short? startYear,
@@ -546,23 +545,25 @@ namespace MOBOT.BHLImport.DAL
 			string titleDescription,
 			string tL2Author,
 			bool? publishReady,
-			bool? rareBooks,
-			string originalCatalogingSource,
-			string editionStatement,
-			string currentPublicationFrequency,
 			string note,
 			DateTime? externalCreationDate,
 			DateTime? externalLastModifiedDate,
 			int? externalCreationUser,
 			int? externalLastModifiedUser,
 			DateTime? productionDate,
-			int? productionTitleID)
+			bool? rareBooks,
+			string originalCatalogingSource,
+			string editionStatement,
+			string currentPublicationFrequency,
+			int? productionTitleID,
+			string partNumber,
+			string partName)
 		{
-			return TitleUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", titleID, importKey, importStatusID, importSourceID, mARCBibID, mARCLeader, fullTitle, shortTitle, uniformTitle, sortTitle, partNumber, partName, callNumber, publicationDetails, startYear, endYear, datafield_260_a, datafield_260_b, datafield_260_c, institutionCode, languageCode, titleDescription, tL2Author, publishReady, rareBooks, originalCatalogingSource, editionStatement, currentPublicationFrequency, note, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, productionTitleID);
+			return TitleUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", titleID, importKey, importStatusID, importSourceID, mARCBibID, mARCLeader, fullTitle, shortTitle, uniformTitle, sortTitle, callNumber, publicationDetails, startYear, endYear, datafield_260_a, datafield_260_b, datafield_260_c, institutionCode, languageCode, titleDescription, tL2Author, publishReady, note, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, rareBooks, originalCatalogingSource, editionStatement, currentPublicationFrequency, productionTitleID, partNumber, partName);
 		}
 		
 		/// <summary>
-		/// Update values in Title. Returns an object of type Title.
+		/// Update values in dbo.Title. Returns an object of type Title.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -577,8 +578,6 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="shortTitle"></param>
 		/// <param name="uniformTitle"></param>
 		/// <param name="sortTitle"></param>
-		/// <param name="partNumber"></param>
-		/// <param name="partName"></param>
 		/// <param name="callNumber"></param>
 		/// <param name="publicationDetails"></param>
 		/// <param name="startYear"></param>
@@ -591,17 +590,19 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="titleDescription"></param>
 		/// <param name="tL2Author"></param>
 		/// <param name="publishReady"></param>
-		/// <param name="rareBooks"></param>
-		/// <param name="originalCatalogingSource"></param>
-		/// <param name="editionStatement"></param>
-		/// <param name="currentPublicationFrequency"></param>
 		/// <param name="note"></param>
 		/// <param name="externalCreationDate"></param>
 		/// <param name="externalLastModifiedDate"></param>
 		/// <param name="externalCreationUser"></param>
 		/// <param name="externalLastModifiedUser"></param>
 		/// <param name="productionDate"></param>
+		/// <param name="rareBooks"></param>
+		/// <param name="originalCatalogingSource"></param>
+		/// <param name="editionStatement"></param>
+		/// <param name="currentPublicationFrequency"></param>
 		/// <param name="productionTitleID"></param>
+		/// <param name="partNumber"></param>
+		/// <param name="partName"></param>
 		/// <returns>Object of type Title.</returns>
 		public Title TitleUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -617,8 +618,6 @@ namespace MOBOT.BHLImport.DAL
 			string shortTitle,
 			string uniformTitle,
 			string sortTitle,
-			string partNumber,
-			string partName,
 			string callNumber,
 			string publicationDetails,
 			short? startYear,
@@ -631,17 +630,19 @@ namespace MOBOT.BHLImport.DAL
 			string titleDescription,
 			string tL2Author,
 			bool? publishReady,
-			bool? rareBooks,
-			string originalCatalogingSource,
-			string editionStatement,
-			string currentPublicationFrequency,
 			string note,
 			DateTime? externalCreationDate,
 			DateTime? externalLastModifiedDate,
 			int? externalCreationUser,
 			int? externalLastModifiedUser,
 			DateTime? productionDate,
-			int? productionTitleID)
+			bool? rareBooks,
+			string originalCatalogingSource,
+			string editionStatement,
+			string currentPublicationFrequency,
+			int? productionTitleID,
+			string partNumber,
+			string partName)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -657,8 +658,6 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("ShortTitle", SqlDbType.NVarChar, 255, true, shortTitle),
 					CustomSqlHelper.CreateInputParameter("UniformTitle", SqlDbType.NVarChar, 255, true, uniformTitle),
 					CustomSqlHelper.CreateInputParameter("SortTitle", SqlDbType.NVarChar, 60, true, sortTitle),
-					CustomSqlHelper.CreateInputParameter("PartNumber", SqlDbType.NVarChar, 255, true, partNumber),
-					CustomSqlHelper.CreateInputParameter("PartName", SqlDbType.NVarChar, 255, true, partName),
 					CustomSqlHelper.CreateInputParameter("CallNumber", SqlDbType.NVarChar, 100, true, callNumber),
 					CustomSqlHelper.CreateInputParameter("PublicationDetails", SqlDbType.NVarChar, 255, true, publicationDetails),
 					CustomSqlHelper.CreateInputParameter("StartYear", SqlDbType.SmallInt, null, true, startYear),
@@ -671,22 +670,24 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("TitleDescription", SqlDbType.NText, 1073741823, true, titleDescription),
 					CustomSqlHelper.CreateInputParameter("TL2Author", SqlDbType.NVarChar, 100, true, tL2Author),
 					CustomSqlHelper.CreateInputParameter("PublishReady", SqlDbType.Bit, null, true, publishReady),
-					CustomSqlHelper.CreateInputParameter("RareBooks", SqlDbType.Bit, null, true, rareBooks),
-					CustomSqlHelper.CreateInputParameter("OriginalCatalogingSource", SqlDbType.NVarChar, 100, true, originalCatalogingSource),
-					CustomSqlHelper.CreateInputParameter("EditionStatement", SqlDbType.NVarChar, 450, true, editionStatement),
-					CustomSqlHelper.CreateInputParameter("CurrentPublicationFrequency", SqlDbType.NVarChar, 100, true, currentPublicationFrequency),
 					CustomSqlHelper.CreateInputParameter("Note", SqlDbType.NVarChar, 255, true, note),
 					CustomSqlHelper.CreateInputParameter("ExternalCreationDate", SqlDbType.DateTime, null, true, externalCreationDate),
 					CustomSqlHelper.CreateInputParameter("ExternalLastModifiedDate", SqlDbType.DateTime, null, true, externalLastModifiedDate),
 					CustomSqlHelper.CreateInputParameter("ExternalCreationUser", SqlDbType.Int, null, true, externalCreationUser),
 					CustomSqlHelper.CreateInputParameter("ExternalLastModifiedUser", SqlDbType.Int, null, true, externalLastModifiedUser),
 					CustomSqlHelper.CreateInputParameter("ProductionDate", SqlDbType.DateTime, null, true, productionDate),
-					CustomSqlHelper.CreateInputParameter("ProductionTitleID", SqlDbType.Int, null, true, productionTitleID), 
+					CustomSqlHelper.CreateInputParameter("RareBooks", SqlDbType.Bit, null, true, rareBooks),
+					CustomSqlHelper.CreateInputParameter("OriginalCatalogingSource", SqlDbType.NVarChar, 100, true, originalCatalogingSource),
+					CustomSqlHelper.CreateInputParameter("EditionStatement", SqlDbType.NVarChar, 450, true, editionStatement),
+					CustomSqlHelper.CreateInputParameter("CurrentPublicationFrequency", SqlDbType.NVarChar, 100, true, currentPublicationFrequency),
+					CustomSqlHelper.CreateInputParameter("ProductionTitleID", SqlDbType.Int, null, true, productionTitleID),
+					CustomSqlHelper.CreateInputParameter("PartNumber", SqlDbType.NVarChar, 255, true, partNumber),
+					CustomSqlHelper.CreateInputParameter("PartName", SqlDbType.NVarChar, 255, true, partName), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
 				{
-					CustomGenericList<Title> list = helper.ExecuteReader(command);
+					List<Title> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Title o = list[0];
@@ -702,7 +703,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Title. Returns an object of type Title.
+		/// Update values in dbo.Title. Returns an object of type Title.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -717,7 +718,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Title. Returns an object of type Title.
+		/// Update values in dbo.Title. Returns an object of type Title.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -741,8 +742,6 @@ namespace MOBOT.BHLImport.DAL
 				value.ShortTitle,
 				value.UniformTitle,
 				value.SortTitle,
-				value.PartNumber,
-				value.PartName,
 				value.CallNumber,
 				value.PublicationDetails,
 				value.StartYear,
@@ -755,17 +754,19 @@ namespace MOBOT.BHLImport.DAL
 				value.TitleDescription,
 				value.TL2Author,
 				value.PublishReady,
-				value.RareBooks,
-				value.OriginalCatalogingSource,
-				value.EditionStatement,
-				value.CurrentPublicationFrequency,
 				value.Note,
 				value.ExternalCreationDate,
 				value.ExternalLastModifiedDate,
 				value.ExternalCreationUser,
 				value.ExternalLastModifiedUser,
 				value.ProductionDate,
-				value.ProductionTitleID);
+				value.RareBooks,
+				value.OriginalCatalogingSource,
+				value.EditionStatement,
+				value.CurrentPublicationFrequency,
+				value.ProductionTitleID,
+				value.PartNumber,
+				value.PartName);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -773,9 +774,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Title object.
+		/// Manage dbo.Title object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Title.
+		/// then either insert values into, delete values from, or update values in dbo.Title.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -790,9 +791,9 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Manage Title object.
+		/// Manage dbo.Title object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Title.
+		/// then either insert values into, delete values from, or update values in dbo.Title.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -819,8 +820,6 @@ namespace MOBOT.BHLImport.DAL
 						value.ShortTitle,
 						value.UniformTitle,
 						value.SortTitle,
-						value.PartNumber,
-						value.PartName,
 						value.CallNumber,
 						value.PublicationDetails,
 						value.StartYear,
@@ -833,17 +832,19 @@ namespace MOBOT.BHLImport.DAL
 						value.TitleDescription,
 						value.TL2Author,
 						value.PublishReady,
-						value.RareBooks,
-						value.OriginalCatalogingSource,
-						value.EditionStatement,
-						value.CurrentPublicationFrequency,
 						value.Note,
 						value.ExternalCreationDate,
 						value.ExternalLastModifiedDate,
 						value.ExternalCreationUser,
 						value.ExternalLastModifiedUser,
 						value.ProductionDate,
-						value.ProductionTitleID);
+						value.RareBooks,
+						value.OriginalCatalogingSource,
+						value.EditionStatement,
+						value.CurrentPublicationFrequency,
+						value.ProductionTitleID,
+						value.PartNumber,
+						value.PartName);
 				
 				return new CustomDataAccessStatus<Title>(
 					CustomDataAccessContext.Insert, 
@@ -879,8 +880,6 @@ namespace MOBOT.BHLImport.DAL
 						value.ShortTitle,
 						value.UniformTitle,
 						value.SortTitle,
-						value.PartNumber,
-						value.PartName,
 						value.CallNumber,
 						value.PublicationDetails,
 						value.StartYear,
@@ -893,17 +892,19 @@ namespace MOBOT.BHLImport.DAL
 						value.TitleDescription,
 						value.TL2Author,
 						value.PublishReady,
-						value.RareBooks,
-						value.OriginalCatalogingSource,
-						value.EditionStatement,
-						value.CurrentPublicationFrequency,
 						value.Note,
 						value.ExternalCreationDate,
 						value.ExternalLastModifiedDate,
 						value.ExternalCreationUser,
 						value.ExternalLastModifiedUser,
 						value.ProductionDate,
-						value.ProductionTitleID);
+						value.RareBooks,
+						value.OriginalCatalogingSource,
+						value.EditionStatement,
+						value.CurrentPublicationFrequency,
+						value.ProductionTitleID,
+						value.PartNumber,
+						value.PartName);
 					
 				return new CustomDataAccessStatus<Title>(
 					CustomDataAccessContext.Update, 
@@ -921,4 +922,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

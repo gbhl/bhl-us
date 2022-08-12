@@ -1,5 +1,5 @@
 
-// Generated 1/2/2020 3:40:22 PM
+// Generated 1/5/2021 3:25:02 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class BibliographicLevelDAL is based upon dbo.BibliographicLevel.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<BibliographicLevel> helper = new CustomSqlHelper<BibliographicLevel>())
 				{
-					CustomGenericList<BibliographicLevel> list = helper.ExecuteReader(command);
+					List<BibliographicLevel> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						BibliographicLevel o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="bibliographicLevelID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> BibliographicLevelSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> BibliographicLevelSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int bibliographicLevelID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="bibliographicLevelID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> BibliographicLevelSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> BibliographicLevelSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -180,7 +181,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<BibliographicLevel> helper = new CustomSqlHelper<BibliographicLevel>())
 				{
-					CustomGenericList<BibliographicLevel> list = helper.ExecuteReader(command);
+					List<BibliographicLevel> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						BibliographicLevel o = list[0];
@@ -345,7 +346,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<BibliographicLevel> helper = new CustomSqlHelper<BibliographicLevel>())
 				{
-					CustomGenericList<BibliographicLevel> list = helper.ExecuteReader(command);
+					List<BibliographicLevel> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						BibliographicLevel o = list[0];

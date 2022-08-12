@@ -1,7 +1,7 @@
-using System;
-using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
@@ -12,12 +12,12 @@ namespace MOBOT.BHL.Server
             new ItemNameFileLogDAL().ItemNameFileLogRefreshSinceDate(null, null, startDate);
         }
 
-        public CustomGenericList<ItemNameFileLog> ItemNameFileLogSelectForCreate()
+        public List<ItemNameFileLog> ItemNameFileLogSelectForCreate()
         {
             return new ItemNameFileLogDAL().ItemNameFileLogSelectForCreate(null, null);
         }
 
-        public CustomGenericList<ItemNameFileLog> ItemNameFileLogSelectForUpload()
+        public List<ItemNameFileLog> ItemNameFileLogSelectForUpload()
         {
             return new ItemNameFileLogDAL().ItemNameFileLogSelectForUpload(null, null);
         }

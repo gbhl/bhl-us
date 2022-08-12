@@ -17,7 +17,7 @@ SET @ItemCount = 0
 
 BEGIN TRY
 	CREATE TABLE #tmpItem (
-		IAIdentifier nvarchar(50) NOT NULL,
+		IAIdentifier nvarchar(200) NOT NULL,
 		ItemStatusID int NOT NULL,
 		LocalFileFolder nvarchar(200) NOT NULL,
 		IADateStamp datetime NULL,
@@ -48,6 +48,7 @@ BEGIN TRY
 					ON ic.CollectionID = c.CollectionID
 		WHERE	c.CollectionName LIKE '%lendinglibrary%'
 		OR		c.CollectionName LIKE '%printdisabled%'
+		OR		c.CollectionName LIKE '%inlibrary%'
 		OR		c.CollectionName LIKE '%browserlending%'
 		OR		c.CollectionName LIKE '%stream_only%'
 	)
@@ -74,3 +75,5 @@ BEGIN
 END
 
 END
+
+GO

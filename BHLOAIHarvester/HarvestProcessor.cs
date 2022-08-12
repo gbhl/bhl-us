@@ -1,4 +1,6 @@
-﻿using MOBOT.BHL.OAI2;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
+using MOBOT.BHL.OAI2;
 using MOBOT.BHLImport.DataObjects;
 using MOBOT.BHLImport.Server;
 using System;
@@ -247,6 +249,14 @@ namespace BHLOAIHarvester
                     MatchCollection matches = regex.Matches(creator.Value.Dates);
                     if (matches.Count > 0 && matches.Count <= 2) oaiRecordCreator.StartDate = matches[0].Value;
                     if (matches.Count == 2) oaiRecordCreator.EndDate = matches[1].Value;
+                }
+
+                foreach (MOBOT.BHL.OAI2.OAIRecord.Identifier identifier in creator.Value.Identifiers)
+                {
+                    OAIRecordCreatorIdentifier oaiRecordCreatorIdentifier = new OAIRecordCreatorIdentifier();
+                    oaiRecordCreatorIdentifier.IdentifierType = identifier.IdentifierType;
+                    oaiRecordCreatorIdentifier.IdentifierValue = identifier.IdentifierValue;
+                    oaiRecordCreator.Identifiers.Add(oaiRecordCreatorIdentifier);
                 }
 
                 oaiDataRecord.Creators.Add(oaiRecordCreator);
@@ -533,16 +543,24 @@ namespace BHLOAIHarvester
         {
             try
             {
-                MailMessage mailMessage = new MailMessage();
-                MailAddress mailAddress = new MailAddress(fromAddress);
-                mailMessage.From = mailAddress;
-                mailMessage.To.Add(toAddress);
-                if (ccAddresses != String.Empty) mailMessage.CC.Add(ccAddresses);
-                mailMessage.Subject = subject;
-                mailMessage.Body = message;
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = subject;
+                mailRequest.Body = message;
+                mailRequest.From = fromAddress;
 
-                SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
-                smtpClient.Send(mailMessage);
+                List<string> recipients = new List<string>();
+                foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
+
+                if (ccAddresses != String.Empty)
+                {
+                    List<string> ccs = new List<string>();
+                    foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
+                    mailRequest.Cc = ccs;
+                }
+
+                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {

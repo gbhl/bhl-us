@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+	<OpenApiDocumentName>v1</OpenApiDocumentName>
+	<Configurations>Debug;Release</Configurations>
+	<RootNamespace>BHL.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+  </PropertyGroup>
+
+  <Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
+	<Exec Command="dotnet swagger tofile --serializeasv2 --output $(OutputPath)$(AssemblyName).json $(OutputPath)$(AssemblyName).dll $(OpenApiDocumentName)" ContinueOnError="true" />
+  </Target>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\GetItemPdfController.cs" />
+    <Compile Remove="Controllers\GetItemTextController.cs" />
+    <Compile Remove="Controllers\v1Controller.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="3.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.2.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.3.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj" />
+    <ProjectReference Include="..\BHLServer\BHLServer.csproj" />
+    <ProjectReference Include="..\BHLUtility\BHLUtility.csproj" />
+    <ProjectReference Include="..\BHLWebUtilities\BHLWebUtilities.csproj" />
+    <ProjectReference Include="..\QueueUtility\QueueUtility.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,6 +1,9 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Utility;
+using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Text;
 using System.Web;
 
@@ -64,41 +67,38 @@ namespace MOBOT.BHL.AdminWeb.Services
         /// <returns></returns>
         private void GetReportCSVString(HttpContext context, List<Segment> segments)
         {
-            StringBuilder csvString = new StringBuilder();
-
-            // Write file header
-            csvString.AppendLine("\"ClusterID\",\"Date\",\"SegmentID\",\"Relationship\",\"Edit By\",\"ItemID\",\"StartPageID\",\"Type\",\"Title\",\"Container\",\"Volume\",\"Date\",\"Authors\",\"DOI\",\"StartPage\",\"EndPage\",\"PageRange\"");
-            context.Response.Write(csvString.ToString());
-            context.Response.Flush();
-
+            var data = new List<dynamic>();
             foreach (Segment segment in segments)
             {
-                // Write record
-                csvString.Remove(0, csvString.Length);
-                csvString.Append("\"" + segment.SegmentClusterId.ToString() + "\",");
-                csvString.Append("\"" + segment.CreationDate.ToString() + "\",");
-                csvString.Append("\"" + segment.SegmentID.ToString() + "\",");
-                csvString.Append("\"" + segment.SegmentClusterTypeLabel.ToString() + "\",");
-                if (segment.CreationUserID == 1)
-                    csvString.Append("\"System\",");
-                else 
-                    csvString.Append("\"User\",");
-                csvString.Append("\"" + segment.ItemID.ToString() + "\",");
-                csvString.Append("\"" + segment.StartPageID.ToString() + "\",");
-                csvString.Append("\"" + segment.GenreName + "\",");
-                csvString.Append("\"" + segment.Title+ "\",");
-                csvString.Append("\"" + segment.ContainerTitle + "\",");
-                csvString.Append("\"" + segment.Volume + "\",");
-                csvString.Append("\"" + segment.Date + "\",");
-                csvString.Append("\"" + segment.Authors.Replace("|", " - ") + "\",");
-                csvString.Append("\"" + segment.DOIName + "\",");
-                csvString.Append("\"" + segment.StartPageNumber + "\",");
-                csvString.Append("\"" + segment.EndPageNumber + "\",");
-                csvString.AppendLine("\"" + segment.PageRange + "\",");
+                var record = new ExpandoObject() as IDictionary<string, Object>;
+                record.Add("ClusterID", segment.SegmentClusterId.ToString());
+                record.Add("CreationDate", segment.CreationDate.ToString());
+                record.Add("SegmentID", segment.SegmentID.ToString());
+                record.Add("Relationship", segment.SegmentClusterTypeLabel.ToString());
 
-                context.Response.Write(csvString.ToString());
-                context.Response.Flush();
+                if (segment.CreationUserID == 1)
+                    record.Add("Edit By", "System");
+                else
+                    record.Add("Edit By", "User");
+
+                record.Add("ItemID", segment.BookID.ToString());
+                record.Add("StartPageID", segment.StartPageID.ToString());
+                record.Add("Type", segment.GenreName);
+                record.Add("Title", segment.Title);
+                record.Add("Container", segment.ContainerTitle);
+                record.Add("Volume", segment.Volume);
+                record.Add("Date", segment.Date);
+                record.Add("Authors", segment.Authors.Replace("|", " - "));
+                record.Add("DOI", segment.DOIName);
+                record.Add("StartPage", segment.StartPageNumber);
+                record.Add("EndPage", segment.EndPageNumber);
+                record.Add("PageRange", segment.PageRange);
+                data.Add(record);
             }
+
+            byte[] csvBytes = new CSV().FormatCSVData(data);
+            context.Response.Write(Encoding.UTF8.GetString(csvBytes, 0, csvBytes.Length));
+            context.Response.Flush();
         }
 
         public bool IsReusable

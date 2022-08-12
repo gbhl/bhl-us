@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MOBOT.BHL.AdminWeb</RootNamespace>
     <AssemblyName>MOBOT.BHL.AdminWeb</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -29,6 +29,7 @@
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,9 +54,6 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="CsvHelper, Version=7.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
-      <HintPath>..\packages\CsvHelper.7.1.1\lib\net45\CsvHelper.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -68,9 +66,6 @@
     <Reference Include="FredCK.FCKeditorV2, Version=2.6.5.26992, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibraries\FCKEditorV2\FredCK.FCKeditorV2.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\packages\ExcelDataReader.2.1.1\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -112,10 +107,6 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -167,6 +158,9 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="netstandard">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
@@ -273,6 +267,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CitationImportController.cs" />
+    <Compile Include="Controllers\DoiController.cs" />
     <Compile Include="Controllers\DownloadsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibraryController.cs" />
@@ -455,6 +450,7 @@
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\CitationImportHistoryModel.cs" />
     <Compile Include="Models\CitationImportModel.cs" />
+    <Compile Include="Models\DoiModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryModel.cs" />
     <Compile Include="Models\MonitorModel.cs" />
@@ -623,11 +619,6 @@
     </Compile>
     <Compile Include="SegmentTypeEdit.aspx.designer.cs">
       <DependentUpon>SegmentTypeEdit.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\SiteService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Services\AuthorService.ashx.cs">
       <DependentUpon>AuthorService.ashx</DependentUpon>
@@ -996,46 +987,6 @@
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.4\jquery-ui.min.js" />
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.DOIGetFileContentsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.GetOcrTextResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.MarcCreateFileResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.MARCFileExistsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.MARCGetFileContentsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.SendEmailResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.QueueMessagesResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.GetQueueMessageCountResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.GetItemTextResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.PageGetImageDimensionsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.ViewerPage.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Service References\SiteService\SiteService.disco" />
-    <None Include="Service References\SiteService\configuration91.svcinfo" />
-    <None Include="Service References\SiteService\configuration.svcinfo" />
-    <None Include="Service References\SiteService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="styles\adminstyle.css" />
     <Content Include="styles\jqgridtheme\jquery-ui-1.8.10.custom.css" />
     <Content Include="styles\jqgridtheme\ui.jqgrid.css" />
@@ -1116,7 +1067,6 @@
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\Forgot.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
-    <None Include="Service References\SiteService\SiteService.wsdl" />
     <Content Include="Views\Account\Unlock.cshtml" />
     <Content Include="Views\Report\ReportingStats.cshtml" />
     <Content Include="Views\Report\Orphans.cshtml" />
@@ -1133,6 +1083,12 @@
     <Content Include="Views\Admin\Groups.cshtml" />
     <Content Include="Views\Admin\GroupEdit.cshtml" />
     <Content Include="Views\Admin\GroupInstitutions.cshtml" />
+    <Content Include="Views\Doi\Queue.cshtml" />
+    <Content Include="Views\Doi\QueueAdd.cshtml" />
+    <Content Include="Views\Doi\QueueAddConfirm.cshtml" />
+    <Content Include="Views\Doi\QueueDelete.cshtml" />
+    <Content Include="Views\Doi\QueueAddInfo.cshtml" />
+    <Content Include="Views\CitationImport\ImportFileStatus.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -1213,10 +1169,6 @@
       <Project>{65499e9e-4829-469e-8b5e-3f96012649af}</Project>
       <Name>BHLDataObjects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BHLFileAccessRemotingUtilities\BHLFileAccessRemotingUtilities.csproj">
-      <Project>{c4c907e6-860c-4684-aff3-26269bf193f3}</Project>
-      <Name>BHLFileAccessRemotingUtilities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BHLFileAccess\BHLFileAccess.csproj">
       <Project>{90020027-ad6a-4052-820e-057bebaa8e2e}</Project>
       <Name>BHLFileAccess</Name>
@@ -1249,6 +1201,10 @@
       <Project>{f9d69fa5-9ee0-43fb-aba3-dc443ace3f18}</Project>
       <Name>FlickrUtility</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SiteServiceREST.v1.Client\SiteServicesREST.v1.Client.csproj">
+      <Project>{ec62a99c-efeb-4efa-962f-d2ce0baca6c7}</Project>
+      <Name>SiteServicesREST.v1.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TextImportUtility\TextImportUtility.csproj">
       <Project>{534cfd16-b8ec-4527-8e3e-f1e64ebd2a21}</Project>
       <Name>TextImportUtility</Name>
@@ -1264,7 +1220,12 @@
     <Folder Include="Views\Downloads\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\SiteService\" />
+    <PackageReference Include="NETStandard.Library">
+      <Version>2.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

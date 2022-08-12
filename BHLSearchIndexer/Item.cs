@@ -60,6 +60,7 @@ namespace BHL.SearchIndexer
         public string pageRange { get; set; }
         public string container { get; set; }
         public string text { get; set; }
+        public bool bookIsVirtual { get; set; }
         public bool hasSegments { get; set; }
         public bool hasLocalContent { get; set; }
         public bool hasExternalContent { get; set; }

@@ -10,13 +10,11 @@ BEGIN
 SET NOCOUNT ON
 
 DECLARE @IdentifierOAI int
-DECLARE @IdentifierISSN int
 DECLARE @IdentifierISBN int
 DECLARE @IdentifierLCCN int
 DECLARE @UniformTitle nvarchar(255)
 
 SELECT @IdentifierOAI = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'OAI'
-SELECT @IdentifierISSN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'ISSN'
 SELECT @IdentifierISBN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'ISBN'
 SELECT @IdentifierLCCN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'DLC'
 
@@ -50,33 +48,39 @@ INSERT	dbo.BHLTitle
 		BibliographicLevelID
 		)
 SELECT	r.BHLInstitutionCode + REPLACE(REPLACE(o.OAIIdentifier, ':', ''), '/', '') AS MarcBibID,
-		Title AS FullTitle,
-		LEFT(Title, 255) AS ShortTitle,
-		LEFT(CASE
-			WHEN LEFT(o.Title, 1) = '"' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 1))
-			WHEN LEFT(o.Title, 1) = '''' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 1))
-			WHEN LEFT(o.Title, 1) = '[' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 1)) 
-			WHEN LEFT(o.Title, 1) = '(' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 1))
-			WHEN LEFT(o.Title, 1) = '|' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 1))
-			WHEN LOWER(LEFT(o.Title, 2)) = 'a ' AND Title <> 'a' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 2)) 
-			WHEN LOWER(LEFT(o.Title, 3)) = 'an ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 3)) 
-			WHEN LOWER(LEFT(o.Title, 3)) = 'el ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 3)) 
-			WHEN LOWER(LEFT(o.Title, 3)) = 'il ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 3)) 
-			WHEN LOWER(LEFT(o.Title, 3)) = 'la ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 3)) 
-			WHEN LOWER(LEFT(o.Title, 3)) = 'le ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 3)) 
-			WHEN LOWER(LEFT(o.Title, 4)) = 'das ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
-			WHEN LOWER(LEFT(o.Title, 4)) = 'der ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
-			WHEN LOWER(LEFT(o.Title, 4)) = 'die ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
-			WHEN LOWER(LEFT(o.Title, 4)) = 'ein ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
-			WHEN LOWER(LEFT(o.Title, 4)) = 'las ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
-			WHEN LOWER(LEFT(o.Title, 4)) = 'les ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
-			WHEN LOWER(LEFT(o.Title, 4)) = 'los ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
-			WHEN LOWER(LEFT(o.Title, 4)) = 'the ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
-			ELSE o.Title
-			END, 60) AS SortTitle,
-		@UniformTitle,
+		dbo.BHLfnRemoveTrailingPunctuation(Title, DEFAULT) AS FullTitle,
+		dbo.BHLfnRemoveTrailingPunctuation(LEFT(Title, 255), DEFAULT) AS ShortTitle,
+		dbo.fnGetSortString (
+			LEFT(CASE
+				WHEN LEFT(o.Title, 1) = '"' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 1))
+				WHEN LEFT(o.Title, 1) = '''' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 1))
+				WHEN LEFT(o.Title, 1) = '[' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 1)) 
+				WHEN LEFT(o.Title, 1) = '(' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 1))
+				WHEN LEFT(o.Title, 1) = '|' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 1))
+				WHEN LOWER(LEFT(o.Title, 2)) = 'a ' AND Title <> 'a' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 2)) 
+				WHEN LOWER(LEFT(o.Title, 3)) = 'an ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 3)) 
+				WHEN LOWER(LEFT(o.Title, 3)) = 'el ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 3)) 
+				WHEN LOWER(LEFT(o.Title, 3)) = 'il ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 3)) 
+				WHEN LOWER(LEFT(o.Title, 3)) = 'la ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 3)) 
+				WHEN LOWER(LEFT(o.Title, 3)) = 'le ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 3)) 
+				WHEN LOWER(LEFT(o.Title, 4)) = 'das ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
+				WHEN LOWER(LEFT(o.Title, 4)) = 'der ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
+				WHEN LOWER(LEFT(o.Title, 4)) = 'die ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
+				WHEN LOWER(LEFT(o.Title, 4)) = 'ein ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
+				WHEN LOWER(LEFT(o.Title, 4)) = 'las ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
+				WHEN LOWER(LEFT(o.Title, 4)) = 'les ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
+				WHEN LOWER(LEFT(o.Title, 4)) = 'los ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
+				WHEN LOWER(LEFT(o.Title, 4)) = 'the ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 4)) 
+				ELSE o.Title
+				END, 60) 
+		) AS SortTitle,
+		dbo.BHLfnRemoveTrailingPunctuation(@UniformTitle, DEFAULT),
 		CallNumber,
-		LEFT(o.PublicationPlace + ' ' + o.Publisher + ' ' + o.PublicationDate, 255) AS PublicationDetails,
+		dbo.BHLfnRemoveTrailingPunctuation(LEFT(
+			ISNULL(o.PublicationPlace, '') + CASE WHEN LEN(o.PublicationPlace) > 0 THEN ', ' ELSE '' END + 
+			ISNULL(o.Publisher, '') + CASE WHEN LEN(o.Publisher) > 0 THEN ', ' ELSE '' END + 
+			ISNULL(o.PublicationDate, '')
+			, 255), DEFAULT) AS PublicationDetails,
 		CONVERT(int, 
 			CASE WHEN ISNUMERIC(LEFT([Date], 4)) = 1 THEN 
 				CASE WHEN CONVERT(int, LEFT([Date], 4)) BETWEEN 1400 AND 2025 THEN
@@ -101,9 +105,10 @@ SELECT	r.BHLInstitutionCode + REPLACE(REPLACE(o.OAIIdentifier, ':', ''), '/', ''
 			ELSE
 				NULL
 			END) AS EndYear,
-		o.PublicationPlace AS Datafield_260_a,
-		o.Publisher AS Datafield_260_b,
-		[Date] AS Datafield_260_c,
+		dbo.BHLfnRemoveTrailingPunctuation(o.PublicationPlace, DEFAULT) AS Datafield_260_a,
+		dbo.BHLfnRemoveTrailingPunctuation(o.Publisher, DEFAULT) AS Datafield_260_b,
+		-- As this field may contain date range values (ex. "1990-"), don't remove trailing hyphens when cleaning punctuation
+		dbo.BHLfnRemoveTrailingPunctuation([Date], '[a-zA-Z0-9)\]?!>*%"''-]%') AS Datafield_260_c,
 		l.BHLLanguageCode AS LanguageCode,
 		1 AS PublishReady,
 		0 AS RareBooks,
@@ -125,7 +130,7 @@ INSERT dbo.BHLTitle_Identifier (TitleID, IdentifierID, IdentifierValue)
 SELECT @ProductionTitleID, @IdentifierOAI, OAIIdentifier FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID
 
 INSERT dbo.BHLTitle_Identifier (TitleID, IdentifierID, IdentifierValue)
-SELECT @ProductionTitleID, @IdentifierISSN, Issn FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID AND Issn <> ''
+SELECT @ProductionTitleID, dbo.BHLfnGetISSNID(Issn), dbo.BHLfnGetISSNValue(Issn) FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID AND Issn <> ''
 
 INSERT dbo.BHLTitle_Identifier (TitleID, IdentifierID, IdentifierValue)
 SELECT @ProductionTitleID, @IdentifierISBN, Isbn FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID AND Isbn <> ''
@@ -134,8 +139,12 @@ INSERT dbo.BHLTitle_Identifier (TitleID, IdentifierID, IdentifierValue)
 SELECT @ProductionTitleID, @IdentifierLCCN, Lccn FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID AND Lccn <> ''
 			
 -- Insert DOI record
-INSERT dbo.BHLDOI (DOIEntityTypeID, EntityID, DOIStatusID, DOIName, StatusDate, IsValid)
-SELECT 10, @ProductionTitleID, 200, Doi, GETDATE(), 1 FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID AND Doi <> ''
+DECLARE @DOI nvarchar(50)
+SELECT	@DOI = Doi
+FROM	dbo.OAIRecord
+WHERE	OAIRecordID = @OAIRecordID AND Doi <> '' 
+
+exec dbo.BHLDOIInsert @DOIEntityTypeID = 10, @EntityID = @ProductionTitleID, @DOIStatusID = 200, @DOIName = @DOI, @IsValid = 1, @ExcludeBHLDOI = 1
 
 -- Insert TitleKeyword records
 INSERT dbo.BHLTitleKeyword (TitleID, KeywordID)
@@ -148,7 +157,7 @@ FROM	dbo.OAIRecordCreator WHERE OAIRecordID = @OAIRecordID
 
 -- Insert TitleAssociation records
 INSERT	dbo.BHLTitleAssociation (TitleID, TitleAssociationTypeID, Title)
-SELECT	@ProductionTitleID, a.BHLTitleAssociationTypeID, r.Title
+SELECT	@ProductionTitleID, a.BHLTitleAssociationTypeID, dbo.BHLfnRemoveTrailingPunctuation(r.Title, DEFAULT)
 FROM	dbo.OAIRecordRelatedTitle r INNER JOIN dbo.OAIRecordRelatedTitleTypeAssociation a ON r.TitleType = a.TitleType
 WHERE	r.OAIRecordID = @OAIRecordID
 
@@ -164,7 +173,7 @@ AND		rt.OAIRecordID = @OAIRecordID
 
 -- Insert TitleVariant records
 INSERT	dbo.BHLTitleVariant (TitleID, TitleVariantTypeID, Title, CreationUserID, LastModifiedUserID)
-SELECT	@ProductionTitleID, a.BHLTitleVariantTypeID, r.Title, 1, 1
+SELECT	@ProductionTitleID, a.BHLTitleVariantTypeID, dbo.BHLfnRemoveTrailingPunctuation(r.Title, DEFAULT), 1, 1
 FROM	dbo.OAIRecordRelatedTitle r INNER JOIN dbo.OAIRecordRelatedTitleTypeVariant a ON r.TitleType = a.TitleType
 WHERE	r.OAIRecordID = @OAIRecordID
 
@@ -181,3 +190,5 @@ AND		rt.OAIRecordID = @OAIRecordID
 COMMIT TRAN
 
 END
+
+GO

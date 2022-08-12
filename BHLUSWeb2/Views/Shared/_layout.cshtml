@@ -5,24 +5,22 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="description" content="The Biodiversity Heritage Library works collaboratively to make biodiversity literature openly available to the world as part of a global biodiversity community." />
-    <meta name="viewport" content="width=1080" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>@ViewBag.Title</title>
     @RenderSection("CSS", required: false)
-    <link rel="stylesheet" href="/css/style.css?v=19" />
+    <link rel="stylesheet" href="/css/style.css?v=24" />
     <script src="/js/libs/modernizr-1.6.min.js"></script>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-540641666fd1b673"></script>
-    <script>
-        (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date(); a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-        ga('create', 'UA-3353213-1', 'auto');
-        ga('send', 'pageview');
+    <script async src="https://www.googletagmanager.com/gtag/js?id=@System.Configuration.ConfigurationManager.AppSettings["GoogleAnalyticsTrackingID"]"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', '@System.Configuration.ConfigurationManager.AppSettings["GoogleAnalyticsTrackingID"]');
     </script>
     <!-- START OF SmartSource Data Collector TAG v10.4.23 -->
     <!-- Copyright (c) 2018 Webtrends Inc.  All rights reserved. -->
@@ -61,7 +59,6 @@
                     <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageAbout"]">About</a>
                     <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageHelp"]">Help</a>
                     <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageFAQ"]">FAQ</a>
-                    <a class="storelink" target="_blank" rel="noopener noreferrer" href="http://www.cafepress.com/biodiversityheritagelibrary">BHL Store</a>
                 </nav>
                 <span id="altmetricbadge">
                     <div data-badge-popover="bottom" data-badge-type="donut" data-uri="" data-hide-no-mentions="true" data-no-score="true" data-template="biodiversitylibrary" class="altmetric-embed"></div>
@@ -71,6 +68,9 @@
                 </span>
             </div>
         </header>
+        <div class="harmfulcontentbanner">
+            Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgment of Harmful Content</a>
+        </div>
         @Html.Action("_AlertMessage", "Partial")
         <div id="main">
             <nav id="content-nav">
@@ -109,14 +109,25 @@
                     <h3>Stay Connected</h3>
                     <p>Keep up to date with the latest news via these social media platforms</p>
                     <div class="addthis_horizontal_follow_toolbox" style="margin-bottom:10px;padding-bottom:15px;border-bottom:1px solid #c9c9c9;"></div>
-                    <h3>Join Our Mailing List</h3>
-                    <p>Sign up to receive the latest news, content highlights, and promotions</p>
-                    <a class="subscribe" title="Subscribe to BHL Newsletter" target="_blank" rel="noopener noreferrer" href="http://library.si.edu/bhl-newsletter-signup"><img src="/images/envelope_icon.png" alt="subscribe here" /> Subscribe Here</a>
+                    <div class="mailinglist">
+                        <h3>Join Our Mailing List</h3>
+                        <p>Sign up to receive the latest news, content highlights, and promotions</p>
+                        <a class="subscribe" title="Subscribe to BHL Newsletter" target="_blank" rel="noopener noreferrer" href="http://library.si.edu/bhl-newsletter-signup"><img src="/images/envelope_icon.png" alt="subscribe here" /> Subscribe Here</a>
+                    </div>
+                    <div class="getinvolved">
+                        <h3>Get Involved</h3>
+                        <a class="community" target="_blank" rel="noopener noreferrer" href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageContribute"]">Ways To Contribute</a>
+                    </div>
                 </div>
                 <div id="socialmiddle" class="socialcolumn">
-                    <h3>BHL on Twitter</h3>
-                    @Html.Action("_TwitterFeed", "Partial")
-                    <a class="community" title="Twitter Feed" target="_blank" rel="noopener noreferrer" href="https://twitter.com/biodivlibrary">BHL Twitter Feed</a>
+                    <div class="harmfulcontent">
+                        <h3>Harmful Content</h3>
+                        <p>BHL acknowledges the existence of harmful content in many biodiversity science publications and original materials included in its collection. Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgment of Harmful Content</a> for more information. </p>
+                    </div>
+                    <div class="toolsandservices">
+                        <h3>Tools and Services</h3>
+                        <p>BHL offers a wide range of free <a title="tools and services" href="https://about.biodiversitylibrary.org/tools-and-services/">tools and services</a> to support the use and re-use of our collections and data.</p>
+                    </div>
                 </div>
                 <div id="socialright" class="socialcolumn">
                     <h3>
@@ -129,28 +140,22 @@
                         <br />
                         <a title="Recent Additions" href="/recent">Recent Additions</a>
                     </div>
-                    <hr />
                     <div class="ourpartners">
-                        <h3>Visit Our Partners</h3>
-                        <a title="EOL" target="_blank" rel="noopener noreferrer" href="https://www.eol.org"><img src="/images/eol_11px.png" alt="" /> Encyclopedia of Life</a>
+                        <h3>BHL Consortium</h3>
+                        <p>BHL operates as a <a title="consortium" href="https://about.biodiversitylibrary.org/about/bhl-consortium">worldwide consortium</a> of natural history, botanical, research, and national libraries working together to digitize the natural history literature held in their collections and make it freely available for open access as part of a global &quot;biodiversity community.&quot;</p>
                     </div>
                     <hr />
-                    <div class="getinvolved">
-                        <h3>Get Involved</h3>
-                        <a class="community" target="_blank" rel="noopener noreferrer" href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageContribute"]">Ways To Contribute</a>
-                    </div>
                 </div>
             </div>
             <div class="floatclear"></div>
         </div>
         <nav>
             <div class="column-wrap">
-                <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageToolsServices"]">Tools and Services</a>
-                <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageDeveloper"]">Developer and Data Tools</a>
-                <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageMembers"]">Partners</a>
-                <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageCopyright"]">Copyright and Reuse</a>
+                <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageCopyright"]">Copyright and Reuse</a> |
+                <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageDeveloper"]">Developer and Data Tools</a> |
+                <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageMembers"]">Partners</a> |
+                <a href="http://si.edu/Privacy">Privacy</a> |
                 <a href="http://si.edu/Termsofuse">Terms of Use</a>
-                <a href="http://si.edu/Privacy">Privacy</a>
             </div>
         </nav>
     </footer>
@@ -159,7 +164,7 @@
     <script>!window.jQuery && document.write(unescape('%3Cscript src="/js/libs/jquery-1.12.4.min.js"%3E%3C/script%3E'))</script>
 
     <script src="/js/plugins.js?v=2"></script>
-    <script src="/js/script.js?v=4"></script>
+    <script src="/js/script.js?v=6"></script>
     <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
 
     @RenderSection("scripts", required:false)

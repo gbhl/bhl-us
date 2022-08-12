@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -18,7 +19,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="fromDate"></param>
         /// <param name="untilDate"></param>
         /// <returns></returns>
-        public CustomGenericList<SearchBookResult> SearchBook(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<SearchBookResult> SearchBook(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string title, string authorLastName, string volume, string edition, int? year, string subject, string languageCode, 
             int? collectionID, int returnCount, string searchSort)
         {
@@ -39,13 +40,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<SearchAnnotationResult> SearchAnnotation(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<SearchAnnotationResult> SearchAnnotation(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string annotationText, string title, string authorLastName, string volume, string edition, int? year, int? collectionID, 
             int? annotationSourceID, int returnCount)
         {
@@ -65,7 +66,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchAnnotationResult> helper = new CustomSqlHelper<SearchAnnotationResult>())
                 {
-                    CustomGenericList<SearchAnnotationResult> list = helper.ExecuteReader(command);
+                    List<SearchAnnotationResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -77,21 +78,28 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByNameLike(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction,
-                        string name)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByNameLike(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string name, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByNameLike", connection, transaction,
-                            CustomSqlHelper.CreateInputParameter("Name", SqlDbType.VarChar, 1000, false, name)))
+                            CustomSqlHelper.CreateInputParameter("Name", SqlDbType.VarChar, 1000, false, name),
+                            CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                            CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                            CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                            CustomSqlHelper.CreateOutputParameter("TotalTitles", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
-                    return (list);
+                    // Get the page of titles
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
+                    // Get the total number of titles
+                    int totalTitles = (int)command.Parameters[4].Value;
+
+                    return new Tuple<int, List<SearchBookResult>>(totalTitles, list);
+
                 }
             }
         }
@@ -102,7 +110,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByNameNotLike(
+        public List<SearchBookResult> TitleSelectByNameNotLike(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         string name)
@@ -115,7 +123,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -127,7 +135,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByAuthor(
+        public List<SearchBookResult> TitleSelectByAuthor(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         int authorId)
@@ -140,48 +148,82 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<SearchBookResult> TitleSelectByInstitutionAndStartsWith(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction,
-                        String institutionCode,
-                        String startsWith)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByAuthorPaged(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+                        int authorId, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByInstitutionAndStartsWith", connection, transaction,
-                     CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
-                     CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith)))
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.TitleSelectByAuthorPaged", connection, transaction,
+                            CustomSqlHelper.CreateInputParameter("AuthorId", SqlDbType.Int, null, false, authorId),
+                            CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                            CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                            CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                            CustomSqlHelper.CreateOutputParameter("TotalTitles", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
-                    return list;
+                    // Get the page of titles for the author
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
+                    // Get the total number of titles for the author from the output parameter
+                    int totalTitles = (int)command.Parameters[4].Value;
+
+                    return new Tuple<int, List<SearchBookResult>>(totalTitles, list);
                 }
             }
         }
 
-        public CustomGenericList<SearchBookResult> TitleSelectByInstitutionAndStartsWithout(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction,
-                        String institutionCode,
-                        String startsWith)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByInstitutionAndStartsWith(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+                        string institutionCode, string startsWith, int pageNum, int numPages, string sort)        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByInstitutionAndStartsWith", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
+                    CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith),
+                    CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                    CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                    CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                    CustomSqlHelper.CreateOutputParameter("TotalTitles", SqlDbType.Int, null, false)))
+            {
+                using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
+                {
+                    // Get the page of titles
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
+                    // Get the total number of titles for the author from the output parameter
+                    int totalTitles = (int)command.Parameters[5].Value;
+
+                    return new Tuple<int, List<SearchBookResult>>(totalTitles, list);
+                }
+            }
+        }
+
+        public Tuple<int, List<SearchBookResult>> TitleSelectByInstitutionAndStartsWithout(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+                        string institutionCode, string startsWith, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByInstitutionAndStartsWithout", connection, transaction,
-                     CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
-                     CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith)))
+                    CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
+                    CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith),
+                    CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                    CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                    CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                    CustomSqlHelper.CreateOutputParameter("TotalTitles", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
-                    return list;
+                    // Get the page of titles
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
+                    // Get the total number of titles for the author from the output parameter
+                    int totalTitles = (int)command.Parameters[5].Value;
+
+                    return new Tuple<int, List<SearchBookResult>>(totalTitles, list);
                 }
             }
         }
@@ -193,7 +235,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <param name="languageCode">ID of the language for which to retrieve titles</param>
         /// <returns>List of objects of type SearchBookResult.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByLanguage(
+        public List<SearchBookResult> TitleSelectByLanguage(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         String languageCode)
@@ -205,13 +247,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<SearchBookResult> TitleSelectByKeyword(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<SearchBookResult> TitleSelectByKeyword(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string keyword)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -222,8 +264,33 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
+                }
+            }
+        }
+
+        public Tuple<int, List<SearchBookResult>> TitleSelectByKeywordPaged(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string keyword, int pageNum, int numPages, string sort)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.TitleSelectByKeywordPaged", connection, transaction,
+                            CustomSqlHelper.CreateInputParameter("Keyword", SqlDbType.NVarChar, 50, false, keyword),
+                            CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                            CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                            CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                            CustomSqlHelper.CreateOutputParameter("TotalTitles", SqlDbType.Int, null, false)))
+            {
+                using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
+                {
+                    // Get the page of titles for the keyword
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
+                    // Get the total number of titles for the keyword from the output parameter
+                    int totalTitles = (int)command.Parameters[4].Value;
+
+                    return new Tuple<int, List<SearchBookResult>>(totalTitles, list);
                 }
             }
         }
@@ -234,22 +301,28 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByDateRange(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction,
-                        int startYear, int endYear)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByDateRange(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+                        int startYear, int endYear, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByDateRange", connection, transaction,
                             CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.Int, null, false, startYear),
-                            CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.Int, null, false, endYear)))
+                            CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.Int, null, false, endYear),
+                            CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                            CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                            CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                            CustomSqlHelper.CreateOutputParameter("TotalTitles", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
-                    return (list);
+                    // Get the page of titles
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
+                    // Get the total number of titles
+                    int totalTitles = (int)command.Parameters[5].Value;
+
+                    return new Tuple<int, List<SearchBookResult>>(totalTitles, list);
                 }
             }
         }
@@ -263,23 +336,28 @@ namespace MOBOT.BHL.DAL
         /// <param name="collectionID"></param>
         /// <param name="startString"></param>
         /// <returns>List of SearchBookResults</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByCollectionAndStartsWith(
-            SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction,
-            int collectionID,
-            string startString)
+        public Tuple<int, List<SearchBookResult>> TitleSelectByCollectionAndStartsWith(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int collectionID, string startString, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByCollectionAndStartsWith",
                 connection, transaction,
                 CustomSqlHelper.CreateInputParameter("CollectionID", SqlDbType.Int, null, false, collectionID),
-                CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.VarChar, 1000, false, startString)))
+                CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.VarChar, 1000, false, startString),
+                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                CustomSqlHelper.CreateOutputParameter("TotalTitles", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
-                    return (list);
+                    // Get the page of titles
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
+                    // Get the total number of titles
+                    int totalTitles = (int)command.Parameters[5].Value;
+
+                    return new Tuple<int, List<SearchBookResult>>(totalTitles, list);
                 }
             }
         }
@@ -293,7 +371,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="collectionID"></param>
         /// <param name="startString"></param>
         /// <returns>List of SearchBookResult</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByCollectionAndStartsWithout(
+        public List<SearchBookResult> TitleSelectByCollectionAndStartsWithout(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int collectionID,
@@ -308,7 +386,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -323,23 +401,28 @@ namespace MOBOT.BHL.DAL
         /// <param name="collectionID"></param>
         /// <param name="startString"></param>
         /// <returns>List of SearchBookResult</returns>
-        public CustomGenericList<SearchBookResult> ItemSelectByCollectionAndStartsWith(
-            SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction,
-            int collectionID,
-            string startString)
+        public Tuple<int, List<SearchBookResult>> ItemSelectByCollectionAndStartsWith(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int collectionID, string startString, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectByCollectionAndStartsWith",
                 connection, transaction,
                 CustomSqlHelper.CreateInputParameter("CollectionID", SqlDbType.Int, null, false, collectionID),
-                CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.VarChar, 255, false, startString)))
+                CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.VarChar, 255, false, startString),
+                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                CustomSqlHelper.CreateOutputParameter("TotalItems", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
-                    return (list);
+                    // Get the page of items
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
+                    // Get the total number of items
+                    int totalItems = (int)command.Parameters[5].Value;
+
+                    return new Tuple<int, List<SearchBookResult>>(totalItems, list);
                 }
             }
         }
@@ -353,7 +436,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="collectionID"></param>
         /// <param name="startString"></param>
         /// <returns>List of SesarchBookresult</returns>
-        public CustomGenericList<SearchBookResult> ItemSelectByCollectionAndStartsWithout(
+        public List<SearchBookResult> ItemSelectByCollectionAndStartsWithout(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int collectionID,
@@ -368,7 +451,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -383,7 +466,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="languageCode"></param>
         /// <param name="returnCount"></param>
         /// <returns></returns>
-        public CustomGenericList<TitleKeyword> SearchTitleKeyword(
+        public List<TitleKeyword> SearchTitleKeyword(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string keyword,
@@ -401,7 +484,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleKeyword> helper = new CustomSqlHelper<TitleKeyword>())
                 {
-                    CustomGenericList<TitleKeyword> list = helper.ExecuteReader(command);
+                    List<TitleKeyword> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -415,7 +498,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="creatorName"></param>
         /// <param name="returnCount"></param>
         /// <returns></returns>
-        public CustomGenericList<Author> SearchAuthor(
+        public List<Author> SearchAuthor(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string authorName,
@@ -430,7 +513,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    List<Author> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -443,7 +526,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="creatorName"></param>
         /// <returns></returns>
-        public CustomGenericList<Author> SearchAuthorComplete(
+        public List<Author> SearchAuthorComplete(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string authorName)
@@ -456,7 +539,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    List<Author> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -469,7 +552,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="creatorName"></param>
         /// <returns></returns>
-        public CustomGenericList<Segment> SearchSegmentComplete(
+        public List<Segment> SearchSegmentComplete(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string title)
@@ -482,13 +565,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Segment> SearchSegment(
+        public List<Segment> SearchSegment(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string title,
@@ -518,13 +601,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Segment> SearchSegmentFullText(
+        public List<Segment> SearchSegmentFullText(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string searchText,
@@ -541,13 +624,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Segment> SearchSegmentAdvancedFullText(
+        public List<Segment> SearchSegmentAdvancedFullText(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string title,
@@ -577,7 +660,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -593,7 +676,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="fromDate"></param>
         /// <param name="untilDate"></param>
         /// <returns></returns>
-        public CustomGenericList<SearchBookResult> SearchBookFullText(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<SearchBookResult> SearchBookFullText(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string title, string authorLastName, string volume, string edition, int? year, string subject, string languageCode, 
             int? collectionID, int returnCount, string searchSort)
         {
@@ -614,7 +697,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -630,7 +713,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="fromDate"></param>
         /// <param name="untilDate"></param>
         /// <returns></returns>
-        public CustomGenericList<SearchBookResult> SearchBookGlobalFullText(SqlConnection sqlConnection, 
+        public List<SearchBookResult> SearchBookGlobalFullText(SqlConnection sqlConnection, 
             SqlTransaction sqlTransaction, string searchText, int returnCount, string searchSort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -643,7 +726,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

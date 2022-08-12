@@ -1,17 +1,17 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class AnnotatedPageTypeDAL
+    public partial class AnnotatedPageTypeDAL
 	{
         public AnnotatedPageType AnnotatedPageTypeSelectByPageID(
             SqlConnection sqlConnection,
@@ -27,7 +27,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<AnnotatedPageType> helper = new CustomSqlHelper<AnnotatedPageType>())
                 {
-                    CustomGenericList<AnnotatedPageType> list = helper.ExecuteReader(command);
+                    List<AnnotatedPageType> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else

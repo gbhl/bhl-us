@@ -1,6 +1,6 @@
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
@@ -51,7 +51,7 @@ namespace MOBOT.BHL.Server
             return new StatsDAL().StatsSelectForInstitution(null, null, institutionCode);
         }
 
-        public CustomGenericList<EntityCount> EntityCountSelectLatest()
+        public List<EntityCount> EntityCountSelectLatest()
         {
             return new StatsDAL().EntityCountSelectLatest(null, null);
         }

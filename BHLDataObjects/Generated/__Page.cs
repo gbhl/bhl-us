@@ -1,7 +1,7 @@
 
-// Generated 2/26/2008 2:23:06 PM
+// Generated 1/5/2021 3:26:32 PM
 // Do not modify the contents of this code file.
-// This abstract class __Page is based upon Page.
+// This abstract class __Page is based upon dbo.Page.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Page : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -54,23 +54,23 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="note"></param>
 		/// <param name="fileSize_Temp"></param>
 		/// <param name="fileExtension"></param>
+		/// <param name="creationDate"></param>
+		/// <param name="lastModifiedDate"></param>
+		/// <param name="creationUserID"></param>
+		/// <param name="lastModifiedUserID"></param>
 		/// <param name="active"></param>
 		/// <param name="year"></param>
 		/// <param name="series"></param>
 		/// <param name="volume"></param>
 		/// <param name="issue"></param>
 		/// <param name="externalURL"></param>
-		/// <param name="altExternalURL"></param>
 		/// <param name="issuePrefix"></param>
 		/// <param name="lastPageNameLookupDate"></param>
 		/// <param name="paginationUserID"></param>
 		/// <param name="paginationDate"></param>
-		/// <param name="creationDate"></param>
-		/// <param name="lastModifiedDate"></param>
-		/// <param name="creationUserID"></param>
-		/// <param name="lastModifiedUserID"></param>
+		/// <param name="altExternalURL"></param>
 		public __Page(int pageID, 
-			int itemID, 
+			int? itemID, 
 			string fileNamePrefix, 
 			int? sequenceOrder, 
 			string pageDescription, 
@@ -78,21 +78,21 @@ namespace MOBOT.BHL.DataObjects
 			string note, 
 			int? fileSize_Temp, 
 			string fileExtension, 
+			DateTime? creationDate, 
+			DateTime? lastModifiedDate, 
+			int? creationUserID, 
+			int? lastModifiedUserID, 
 			bool active, 
 			string year, 
 			string series, 
 			string volume, 
 			string issue, 
 			string externalURL, 
-			string altExternalURL, 
 			string issuePrefix, 
 			DateTime? lastPageNameLookupDate, 
 			int? paginationUserID, 
 			DateTime? paginationDate, 
-			DateTime? creationDate, 
-			DateTime? lastModifiedDate, 
-			int? creationUserID, 
-			int? lastModifiedUserID) : this()
+			string altExternalURL) : this()
 		{
 			_PageID = pageID;
 			ItemID = itemID;
@@ -103,21 +103,21 @@ namespace MOBOT.BHL.DataObjects
 			Note = note;
 			FileSize_Temp = fileSize_Temp;
 			FileExtension = fileExtension;
+			CreationDate = creationDate;
+			LastModifiedDate = lastModifiedDate;
+			CreationUserID = creationUserID;
+			LastModifiedUserID = lastModifiedUserID;
 			Active = active;
 			Year = year;
 			Series = series;
 			Volume = volume;
 			Issue = issue;
 			ExternalURL = externalURL;
-			AltExternalURL = altExternalURL;
 			IssuePrefix = issuePrefix;
 			LastPageNameLookupDate = lastPageNameLookupDate;
 			PaginationUserID = paginationUserID;
 			PaginationDate = paginationDate;
-			CreationDate = creationDate;
-			LastModifiedDate = lastModifiedDate;
-			CreationUserID = creationUserID;
-			LastModifiedUserID = lastModifiedUserID;
+			AltExternalURL = altExternalURL;
 		}
 		
 		#endregion Constructors
@@ -151,7 +151,7 @@ namespace MOBOT.BHL.DataObjects
 					}
 					case "ItemID" :
 					{
-						_ItemID = (int)column.Value;
+						_ItemID = (int?)column.Value;
 						break;
 					}
 					case "FileNamePrefix" :
@@ -189,6 +189,26 @@ namespace MOBOT.BHL.DataObjects
 						_FileExtension = (string)column.Value;
 						break;
 					}
+					case "CreationDate" :
+					{
+						_CreationDate = (DateTime?)column.Value;
+						break;
+					}
+					case "LastModifiedDate" :
+					{
+						_LastModifiedDate = (DateTime?)column.Value;
+						break;
+					}
+					case "CreationUserID" :
+					{
+						_CreationUserID = (int?)column.Value;
+						break;
+					}
+					case "LastModifiedUserID" :
+					{
+						_LastModifiedUserID = (int?)column.Value;
+						break;
+					}
 					case "Active" :
 					{
 						_Active = (bool)column.Value;
@@ -219,11 +239,6 @@ namespace MOBOT.BHL.DataObjects
 						_ExternalURL = (string)column.Value;
 						break;
 					}
-					case "AltExternalURL" :
-					{
-						_AltExternalURL = (string)column.Value;
-						break;
-					}
 					case "IssuePrefix" :
 					{
 						_IssuePrefix = (string)column.Value;
@@ -244,27 +259,12 @@ namespace MOBOT.BHL.DataObjects
 						_PaginationDate = (DateTime?)column.Value;
 						break;
 					}
-					case "CreationDate" :
+					case "AltExternalURL" :
 					{
-						_CreationDate = (DateTime?)column.Value;
+						_AltExternalURL = (string)column.Value;
 						break;
 					}
-					case "LastModifiedDate" :
-					{
-						_LastModifiedDate = (DateTime?)column.Value;
-						break;
-					}
-					case "CreationUserID" :
-					{
-						_CreationUserID = (int?)column.Value;
-						break;
-					}
-					case "LastModifiedUserID" :
-					{
-						_LastModifiedUserID = (int?)column.Value;
-						break;
-					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -272,7 +272,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region PageID
 		
@@ -304,14 +304,14 @@ namespace MOBOT.BHL.DataObjects
 		
 		#region ItemID
 		
-		private int _ItemID = default(int);
+		private int? _ItemID = null;
 		
 		/// <summary>
 		/// Column: ItemID;
-		/// DBMS data type: int;
+		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("ItemID", DbTargetType=SqlDbType.Int, Ordinal=2, NumericPrecision=10, IsInForeignKey=true)]
-		public int ItemID
+		[ColumnDefinition("ItemID", DbTargetType=SqlDbType.Int, Ordinal=2, NumericPrecision=10, IsNullable=true)]
+		public int? ItemID
 		{
 			get
 			{
@@ -335,7 +335,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: FileNamePrefix;
-		/// DBMS data type: nvarchar(50);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
 		[ColumnDefinition("FileNamePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=200)]
 		public string FileNamePrefix
@@ -522,6 +522,114 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion FileExtension
 		
+		#region CreationDate
+		
+		private DateTime? _CreationDate = null;
+		
+		/// <summary>
+		/// Column: CreationDate;
+		/// DBMS data type: datetime; Nullable;
+		/// </summary>
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=10, IsNullable=true)]
+		public DateTime? CreationDate
+		{
+			get
+			{
+				return _CreationDate;
+			}
+			set
+			{
+				if (_CreationDate != value)
+				{
+					_CreationDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreationDate
+		
+		#region LastModifiedDate
+		
+		private DateTime? _LastModifiedDate = null;
+		
+		/// <summary>
+		/// Column: LastModifiedDate;
+		/// DBMS data type: datetime; Nullable;
+		/// </summary>
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=11, IsNullable=true)]
+		public DateTime? LastModifiedDate
+		{
+			get
+			{
+				return _LastModifiedDate;
+			}
+			set
+			{
+				if (_LastModifiedDate != value)
+				{
+					_LastModifiedDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedDate
+		
+		#region CreationUserID
+		
+		private int? _CreationUserID = null;
+		
+		/// <summary>
+		/// Column: CreationUserID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=12, NumericPrecision=10, IsNullable=true)]
+		public int? CreationUserID
+		{
+			get
+			{
+				return _CreationUserID;
+			}
+			set
+			{
+				if (_CreationUserID != value)
+				{
+					_CreationUserID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreationUserID
+		
+		#region LastModifiedUserID
+		
+		private int? _LastModifiedUserID = null;
+		
+		/// <summary>
+		/// Column: LastModifiedUserID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=13, NumericPrecision=10, IsNullable=true)]
+		public int? LastModifiedUserID
+		{
+			get
+			{
+				return _LastModifiedUserID;
+			}
+			set
+			{
+				if (_LastModifiedUserID != value)
+				{
+					_LastModifiedUserID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedUserID
+		
 		#region Active
 		
 		private bool _Active = false;
@@ -530,7 +638,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Active;
 		/// DBMS data type: bit;
 		/// </summary>
-		[ColumnDefinition("Active", DbTargetType=SqlDbType.Bit, Ordinal=10)]
+		[ColumnDefinition("Active", DbTargetType=SqlDbType.Bit, Ordinal=14)]
 		public bool Active
 		{
 			get
@@ -557,7 +665,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Year;
 		/// DBMS data type: nvarchar(20); Nullable;
 		/// </summary>
-		[ColumnDefinition("Year", DbTargetType=SqlDbType.NVarChar, Ordinal=11, CharacterMaxLength=20, IsNullable=true)]
+		[ColumnDefinition("Year", DbTargetType=SqlDbType.NVarChar, Ordinal=15, CharacterMaxLength=20, IsNullable=true)]
 		public string Year
 		{
 			get
@@ -585,7 +693,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Series;
 		/// DBMS data type: nvarchar(20); Nullable;
 		/// </summary>
-		[ColumnDefinition("Series", DbTargetType=SqlDbType.NVarChar, Ordinal=12, CharacterMaxLength=20, IsNullable=true)]
+		[ColumnDefinition("Series", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=20, IsNullable=true)]
 		public string Series
 		{
 			get
@@ -613,7 +721,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Volume;
 		/// DBMS data type: nvarchar(20); Nullable;
 		/// </summary>
-		[ColumnDefinition("Volume", DbTargetType=SqlDbType.NVarChar, Ordinal=13, CharacterMaxLength=20, IsNullable=true)]
+		[ColumnDefinition("Volume", DbTargetType=SqlDbType.NVarChar, Ordinal=17, CharacterMaxLength=20, IsNullable=true)]
 		public string Volume
 		{
 			get
@@ -641,7 +749,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Issue;
 		/// DBMS data type: nvarchar(20); Nullable;
 		/// </summary>
-		[ColumnDefinition("Issue", DbTargetType=SqlDbType.NVarChar, Ordinal=14, CharacterMaxLength=20, IsNullable=true)]
+		[ColumnDefinition("Issue", DbTargetType=SqlDbType.NVarChar, Ordinal=18, CharacterMaxLength=20, IsNullable=true)]
 		public string Issue
 		{
 			get
@@ -669,7 +777,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ExternalURL;
 		/// DBMS data type: nvarchar(500); Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=15, CharacterMaxLength=500, IsNullable=true)]
+		[ColumnDefinition("ExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=19, CharacterMaxLength=500, IsNullable=true)]
 		public string ExternalURL
 		{
 			get
@@ -689,34 +797,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion ExternalURL
 		
-		#region AltExternalURL
-		
-		private string _AltExternalURL = null;
-		
-		/// <summary>
-		/// Column: AltExternalURL;
-		/// DBMS data type: nvarchar(500); Nullable;
-		/// </summary>
-		[ColumnDefinition("AltExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=500, IsNullable=true)]
-		public string AltExternalURL
-		{
-			get
-			{
-				return _AltExternalURL;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 500);
-				if (_AltExternalURL != value)
-				{
-					_AltExternalURL = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion AltExternalURL
-		
 		#region IssuePrefix
 		
 		private string _IssuePrefix = null;
@@ -725,7 +805,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: IssuePrefix;
 		/// DBMS data type: nvarchar(20); Nullable;
 		/// </summary>
-		[ColumnDefinition("IssuePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=17, CharacterMaxLength=20, IsNullable=true)]
+		[ColumnDefinition("IssuePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=20, CharacterMaxLength=20, IsNullable=true)]
 		public string IssuePrefix
 		{
 			get
@@ -753,7 +833,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastPageNameLookupDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("LastPageNameLookupDate", DbTargetType=SqlDbType.DateTime, Ordinal=18, IsNullable=true)]
+		[ColumnDefinition("LastPageNameLookupDate", DbTargetType=SqlDbType.DateTime, Ordinal=21, IsNullable=true)]
 		public DateTime? LastPageNameLookupDate
 		{
 			get
@@ -780,7 +860,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: PaginationUserID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("PaginationUserID", DbTargetType=SqlDbType.Int, Ordinal=19, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("PaginationUserID", DbTargetType=SqlDbType.Int, Ordinal=22, NumericPrecision=10, IsNullable=true)]
 		public int? PaginationUserID
 		{
 			get
@@ -807,7 +887,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: PaginationDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("PaginationDate", DbTargetType=SqlDbType.DateTime, Ordinal=20, IsNullable=true)]
+		[ColumnDefinition("PaginationDate", DbTargetType=SqlDbType.DateTime, Ordinal=23, IsNullable=true)]
 		public DateTime? PaginationDate
 		{
 			get
@@ -826,116 +906,36 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion PaginationDate
 		
-		#region CreationDate
+		#region AltExternalURL
 		
-		private DateTime? _CreationDate = null;
+		private string _AltExternalURL = null;
 		
 		/// <summary>
-		/// Column: CreationDate;
-		/// DBMS data type: datetime; Nullable;
+		/// Column: AltExternalURL;
+		/// DBMS data type: nvarchar(500); Nullable;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=21, IsNullable=true)]
-		public DateTime? CreationDate
+		[ColumnDefinition("AltExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=24, CharacterMaxLength=500, IsNullable=true)]
+		public string AltExternalURL
 		{
 			get
 			{
-				return _CreationDate;
+				return _AltExternalURL;
 			}
 			set
 			{
-				if (_CreationDate != value)
+				if (value != null) value = CalibrateValue(value, 500);
+				if (_AltExternalURL != value)
 				{
-					_CreationDate = value;
+					_AltExternalURL = value;
 					_IsDirty = true;
 				}
 			}
 		}
 		
-		#endregion CreationDate
-		
-		#region LastModifiedDate
-		
-		private DateTime? _LastModifiedDate = null;
-		
-		/// <summary>
-		/// Column: LastModifiedDate;
-		/// DBMS data type: datetime; Nullable;
-		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=22, IsNullable=true)]
-		public DateTime? LastModifiedDate
-		{
-			get
-			{
-				return _LastModifiedDate;
-			}
-			set
-			{
-				if (_LastModifiedDate != value)
-				{
-					_LastModifiedDate = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion LastModifiedDate
-		
-		#region CreationUserID
-		
-		private int? _CreationUserID = null;
-		
-		/// <summary>
-		/// Column: CreationUserID;
-		/// DBMS data type: int; Nullable;
-		/// </summary>
-		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=23, NumericPrecision=10, IsNullable=true)]
-		public int? CreationUserID
-		{
-			get
-			{
-				return _CreationUserID;
-			}
-			set
-			{
-				if (_CreationUserID != value)
-				{
-					_CreationUserID = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion CreationUserID
-		
-		#region LastModifiedUserID
-		
-		private int? _LastModifiedUserID = null;
-		
-		/// <summary>
-		/// Column: LastModifiedUserID;
-		/// DBMS data type: int; Nullable;
-		/// </summary>
-		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=24, NumericPrecision=10, IsInForeignKey=true, IsNullable=true)]
-		public int? LastModifiedUserID
-		{
-			get
-			{
-				return _LastModifiedUserID;
-			}
-			set
-			{
-				if (_LastModifiedUserID != value)
-				{
-					_LastModifiedUserID = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion LastModifiedUserID
+		#endregion AltExternalURL
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -986,21 +986,21 @@ namespace MOBOT.BHL.DataObjects
 					GetComparisonString(o.Note) == GetComparisonString(Note) &&
 					o.FileSize_Temp == FileSize_Temp &&
 					GetComparisonString(o.FileExtension) == GetComparisonString(FileExtension) &&
+					o.CreationDate == CreationDate &&
+					o.LastModifiedDate == LastModifiedDate &&
+					o.CreationUserID == CreationUserID &&
+					o.LastModifiedUserID == LastModifiedUserID &&
 					o.Active == Active &&
 					GetComparisonString(o.Year) == GetComparisonString(Year) &&
 					GetComparisonString(o.Series) == GetComparisonString(Series) &&
 					GetComparisonString(o.Volume) == GetComparisonString(Volume) &&
 					GetComparisonString(o.Issue) == GetComparisonString(Issue) &&
 					GetComparisonString(o.ExternalURL) == GetComparisonString(ExternalURL) &&
-					GetComparisonString(o.AltExternalURL) == GetComparisonString(AltExternalURL) &&
 					GetComparisonString(o.IssuePrefix) == GetComparisonString(IssuePrefix) &&
 					o.LastPageNameLookupDate == LastPageNameLookupDate &&
 					o.PaginationUserID == PaginationUserID &&
 					o.PaginationDate == PaginationDate &&
-					o.CreationDate == CreationDate &&
-					o.LastModifiedDate == LastModifiedDate &&
-					o.CreationUserID == CreationUserID &&
-					o.LastModifiedUserID == LastModifiedUserID 
+					GetComparisonString(o.AltExternalURL) == GetComparisonString(AltExternalURL) 
 				)
 				{
 					o = null;
@@ -1095,7 +1095,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Page.SortColumn.PageID);
 		/// </summary>
 		[Serializable]
@@ -1110,24 +1109,25 @@ namespace MOBOT.BHL.DataObjects
 			public const string Note = "Note";	
 			public const string FileSize_Temp = "FileSize_Temp";	
 			public const string FileExtension = "FileExtension";	
+			public const string CreationDate = "CreationDate";	
+			public const string LastModifiedDate = "LastModifiedDate";	
+			public const string CreationUserID = "CreationUserID";	
+			public const string LastModifiedUserID = "LastModifiedUserID";	
 			public const string Active = "Active";	
 			public const string Year = "Year";	
 			public const string Series = "Series";	
 			public const string Volume = "Volume";	
 			public const string Issue = "Issue";	
 			public const string ExternalURL = "ExternalURL";	
-			public const string AltExternalURL = "AltExternalURL";	
 			public const string IssuePrefix = "IssuePrefix";	
 			public const string LastPageNameLookupDate = "LastPageNameLookupDate";	
 			public const string PaginationUserID = "PaginationUserID";	
 			public const string PaginationDate = "PaginationDate";	
-			public const string CreationDate = "CreationDate";	
-			public const string LastModifiedDate = "LastModifiedDate";	
-			public const string CreationUserID = "CreationUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";
+			public const string AltExternalURL = "AltExternalURL";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

@@ -157,7 +157,7 @@ q q:after { content: '\2019'; }
 }
 #main
 {
-	padding:0 0 36px;
+	padding:0 0 0px;
 }
 .floatclear
 {
@@ -392,6 +392,16 @@ footer nav a:hover
     margin-top: 2px; 
     background-color: #DDECF6;
 }
+.harmfulcontentbanner {
+    background-color: #f6ede2;
+    color: #000000;
+    font-size: 13px;
+    padding: 4px;
+    text-align: center;
+}
+.harmfulcontentbanner a {
+    text-decoration: none
+}
 
 /* Footer Styles */
 footer 
@@ -404,7 +414,6 @@ footer
 }
 footer .social
 { min-height:288px;
-  padding:24px 0 56px 0;
 }
 footer nav 
 {
@@ -1197,15 +1206,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 }
 #featured-home
 {
-    padding:36px 0 0;
-    height:382px;
+    padding:36px 0 36px;
+    height:392px;
 }
 .featurebox
 {
     padding:26px;
     border:1px solid #ccd4d9;
     /*final box width 312px */
-    width: 258px; /*312 - (26 +1)*2 */
+    /*width: 258px; */   /*312 - (26 +1)*2 */
     background-color: #fafaf7; 
     -webkit-border-radius:3px;
     -moz-border-radius:3px;
@@ -1432,7 +1441,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 #promobox-home
 {
     position:absolute;
-    top:281px;
+    top:311px;
     background:  #fafaf7 url(../images/support.png) 0 0 no-repeat;
     padding:34px 26px 23px 26px;
     border:1px solid #c9d0d5;   
@@ -1478,13 +1487,26 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
     text-decoration:none;
 }
 
-/* partners */
-.ourpartners
-{
+.harmfulcontent {
     border-bottom: 1px solid #C9C9C9;
     margin-bottom: 10px;
     padding-bottom: 15px;
 }
+.harmfulcontent a {
+    text-decoration: none;
+}
+
+.mailinglist {
+    border-bottom: 1px solid #C9C9C9;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+}
+
+.toolsandservices a {
+    text-decoration: none;
+}
+
+/* partners */
 .ourpartners a
 {
     text-decoration:none;
@@ -1649,6 +1671,10 @@ aside
     font:14px/20px Georgia;
     color: #364555;
     width:530px;
+}
+#content section.browse {
+    margin-top: 30px;
+    width: 645px;
 }
 #content section.search
 {
@@ -2383,6 +2409,7 @@ ul.data.collections li .collectiontitle
 {
     color: #607890; 
 }
+.partlink .download,
 .volume .download
 {
 	background:#c5ced3;
@@ -2391,10 +2418,19 @@ ul.data.collections li .collectiontitle
 	padding:0 15px;
 	border-bottom: 1px solid #000;
 }
+.partlink .downloadlabel,
+.volume .downloadlabel {
+    margin:0 0 0 2px;
+    float:left;
+}
 .volume .icon
 {
-	float:right;
-	margin:6px 0 0 11px;
+	float:left;
+	margin:6px 2px 0 3px;
+}
+.partlink .icon {
+    float: left;
+    margin: 6px 2px 0 3px;
 }
 .icon
 {
@@ -2443,6 +2479,15 @@ ul.data.collections li .collectiontitle
 .large-icon.all
 {
 	background:url("../images/large_icon_all.png") 0 0 no-repeat;	
+}
+.icon.mods {
+    background:url("../images/icon_mods.png") 0 0 no-repeat;
+}
+.icon.ris {
+    background:url("../images/icon_ris.png") 0 0 no-repeat;
+}
+.icon.bibtex {
+    background: url("../images/icon_bibtex.png") 0 0 no-repeat;
 }
 .volume .view-book
 {

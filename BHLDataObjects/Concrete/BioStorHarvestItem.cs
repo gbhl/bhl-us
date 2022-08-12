@@ -46,6 +46,22 @@ namespace MOBOT.BHL.DataObjects
             set { _totalSegments = value; }
         }
 
+        private int _publishedSegments = 0;
+
+        public int PublishedSegments
+        {
+            get { return _publishedSegments; }
+            set { _publishedSegments = value; }
+        }
+
+        private int _skippedSegments = 0;
+
+        public int SkippedSegments
+        {
+            get { return _skippedSegments; }
+            set { _skippedSegments = value; }
+        }
+
         private DateTime _creationDate;
 
         public DateTime CreationDate

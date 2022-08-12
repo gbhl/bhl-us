@@ -2,6 +2,7 @@
 #region Using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -13,7 +14,7 @@ namespace MOBOT.BHL.DAL
 {
 	public partial class KeywordDAL
 	{
-        public CustomGenericList<CustomDataRow> KeywordSelectNewLocations(SqlConnection sqlConnection,
+        public List<CustomDataRow> KeywordSelectNewLocations(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -34,7 +35,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="institutionCode">Institution for which to return title tags</param>
         /// <param name="maxAge">Age in days of title tags to consider (i.e. title tags new in the last 30 days)</param>
         /// <returns></returns>
-        public CustomGenericList<KeywordSuspectCharacter> KeywordSelectWithSuspectCharacters(
+        public List<KeywordSuspectCharacter> KeywordSelectWithSuspectCharacters(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 String institutionCode,
@@ -48,7 +49,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<KeywordSuspectCharacter> helper = new CustomSqlHelper<KeywordSuspectCharacter>())
                 {
-                    CustomGenericList<KeywordSuspectCharacter> list = helper.ExecuteReader(command);
+                    List<KeywordSuspectCharacter> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -66,7 +67,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Keyword> helper = new CustomSqlHelper<Keyword>())
                 {
-                    CustomGenericList<Keyword> list = helper.ExecuteReader(command);
+                    List<Keyword> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else

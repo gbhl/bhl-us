@@ -1,8 +1,8 @@
 
-// Generated 7/8/2013 2:53:08 PM
+// Generated 1/5/2021 2:14:45 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class IAMarcControlDAL is based upon IAMarcControl.
+// This partial class IAMarcControlDAL is based upon dbo.IAMarcControl.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from IAMarcControl by primary key(s).
+		/// Select values from dbo.IAMarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 			
 		/// <summary>
-		/// Select values from IAMarcControl by primary key(s).
+		/// Select values from dbo.IAMarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAMarcControl> helper = new CustomSqlHelper<IAMarcControl>())
 				{
-					CustomGenericList<IAMarcControl> list = helper.ExecuteReader(command);
+					List<IAMarcControl> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAMarcControl o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IAMarcControl by primary key(s).
+		/// Select values from dbo.IAMarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="marcControlID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IAMarcControlSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAMarcControlSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int marcControlID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IAMarcControl by primary key(s).
+		/// Select values from dbo.IAMarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="marcControlID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IAMarcControlSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAMarcControlSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into IAMarcControl.
+		/// Insert values into dbo.IAMarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -151,7 +152,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into IAMarcControl.
+		/// Insert values into dbo.IAMarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -180,7 +181,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAMarcControl> helper = new CustomSqlHelper<IAMarcControl>())
 				{
-					CustomGenericList<IAMarcControl> list = helper.ExecuteReader(command);
+					List<IAMarcControl> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAMarcControl o = list[0];
@@ -196,7 +197,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into IAMarcControl. Returns an object of type IAMarcControl.
+		/// Insert values into dbo.IAMarcControl. Returns an object of type IAMarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -211,7 +212,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into IAMarcControl. Returns an object of type IAMarcControl.
+		/// Insert values into dbo.IAMarcControl. Returns an object of type IAMarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -235,7 +236,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from IAMarcControl by primary key(s).
+		/// Delete values from dbo.IAMarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -250,7 +251,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from IAMarcControl by primary key(s).
+		/// Delete values from dbo.IAMarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -293,7 +294,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in IAMarcControl. Returns an object of type IAMarcControl.
+		/// Update values in dbo.IAMarcControl. Returns an object of type IAMarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -314,7 +315,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAMarcControl. Returns an object of type IAMarcControl.
+		/// Update values in dbo.IAMarcControl. Returns an object of type IAMarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -345,7 +346,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAMarcControl> helper = new CustomSqlHelper<IAMarcControl>())
 				{
-					CustomGenericList<IAMarcControl> list = helper.ExecuteReader(command);
+					List<IAMarcControl> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAMarcControl o = list[0];
@@ -361,7 +362,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAMarcControl. Returns an object of type IAMarcControl.
+		/// Update values in dbo.IAMarcControl. Returns an object of type IAMarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -376,7 +377,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAMarcControl. Returns an object of type IAMarcControl.
+		/// Update values in dbo.IAMarcControl. Returns an object of type IAMarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -401,9 +402,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage IAMarcControl object.
+		/// Manage dbo.IAMarcControl object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IAMarcControl.
+		/// then either insert values into, delete values from, or update values in dbo.IAMarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -418,9 +419,9 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Manage IAMarcControl object.
+		/// Manage dbo.IAMarcControl object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IAMarcControl.
+		/// then either insert values into, delete values from, or update values in dbo.IAMarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -487,4 +488,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

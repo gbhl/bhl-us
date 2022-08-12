@@ -1,5 +1,5 @@
 
-// Generated 5/23/2017 3:34:43 PM
+// Generated 4/27/2021 1:08:33 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class ItemDAL is based upon dbo.Item.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
 				{
-					CustomGenericList<Item> list = helper.ExecuteReader(command);
+					List<Item> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Item o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="itemID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ItemSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ItemSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int itemID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="itemID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ItemSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ItemSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -193,6 +194,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="endSeries"></param>
 		/// <param name="startPart"></param>
 		/// <param name="endPart"></param>
+		/// <param name="pageProgression"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -253,9 +255,10 @@ namespace MOBOT.BHLImport.DAL
 			string startSeries,
 			string endSeries,
 			string startPart,
-			string endPart)
+			string endPart,
+			string pageProgression)
 		{
-			return ItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, scanningInstitutionCode, rightsHolderCode, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart );
+			return ItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, scanningInstitutionCode, rightsHolderCode, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, pageProgression );
 		}
 		
 		/// <summary>
@@ -321,6 +324,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="endSeries"></param>
 		/// <param name="startPart"></param>
 		/// <param name="endPart"></param>
+		/// <param name="pageProgression"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -382,7 +386,8 @@ namespace MOBOT.BHLImport.DAL
 			string startSeries,
 			string endSeries,
 			string startPart,
-			string endPart)
+			string endPart,
+			string pageProgression)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -393,9 +398,9 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("ImportStatusID", SqlDbType.Int, null, false, importStatusID),
 					CustomSqlHelper.CreateInputParameter("ImportSourceID", SqlDbType.Int, null, true, importSourceID),
 					CustomSqlHelper.CreateInputParameter("MARCBibID", SqlDbType.NVarChar, 50, false, mARCBibID),
-					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
+					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, false, barCode),
 					CustomSqlHelper.CreateInputParameter("ItemSequence", SqlDbType.SmallInt, null, true, itemSequence),
-					CustomSqlHelper.CreateInputParameter("MARCItemID", SqlDbType.NVarChar, 50, true, mARCItemID),
+					CustomSqlHelper.CreateInputParameter("MARCItemID", SqlDbType.NVarChar, 200, true, mARCItemID),
 					CustomSqlHelper.CreateInputParameter("CallNumber", SqlDbType.NVarChar, 100, true, callNumber),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, true, volume),
 					CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, true, institutionCode),
@@ -445,12 +450,13 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("StartSeries", SqlDbType.NVarChar, 10, false, startSeries),
 					CustomSqlHelper.CreateInputParameter("EndSeries", SqlDbType.NVarChar, 10, false, endSeries),
 					CustomSqlHelper.CreateInputParameter("StartPart", SqlDbType.NVarChar, 10, false, startPart),
-					CustomSqlHelper.CreateInputParameter("EndPart", SqlDbType.NVarChar, 10, false, endPart), 
+					CustomSqlHelper.CreateInputParameter("EndPart", SqlDbType.NVarChar, 10, false, endPart),
+					CustomSqlHelper.CreateInputParameter("PageProgression", SqlDbType.NVarChar, 10, false, pageProgression), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
 				{
-					CustomGenericList<Item> list = helper.ExecuteReader(command);
+					List<Item> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Item o = list[0];
@@ -551,7 +557,8 @@ namespace MOBOT.BHLImport.DAL
 				value.StartSeries,
 				value.EndSeries,
 				value.StartPart,
-				value.EndPart);
+				value.EndPart,
+				value.PageProgression);
 		}
 		
 		#endregion ===== INSERT =====
@@ -679,6 +686,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="endSeries"></param>
 		/// <param name="startPart"></param>
 		/// <param name="endPart"></param>
+		/// <param name="pageProgression"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -740,9 +748,10 @@ namespace MOBOT.BHLImport.DAL
 			string startSeries,
 			string endSeries,
 			string startPart,
-			string endPart)
+			string endPart,
+			string pageProgression)
 		{
-			return ItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, scanningInstitutionCode, rightsHolderCode, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart);
+			return ItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, scanningInstitutionCode, rightsHolderCode, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, pageProgression);
 		}
 		
 		/// <summary>
@@ -809,6 +818,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="endSeries"></param>
 		/// <param name="startPart"></param>
 		/// <param name="endPart"></param>
+		/// <param name="pageProgression"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -871,7 +881,8 @@ namespace MOBOT.BHLImport.DAL
 			string startSeries,
 			string endSeries,
 			string startPart,
-			string endPart)
+			string endPart,
+			string pageProgression)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -882,9 +893,9 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("ImportStatusID", SqlDbType.Int, null, false, importStatusID),
 					CustomSqlHelper.CreateInputParameter("ImportSourceID", SqlDbType.Int, null, true, importSourceID),
 					CustomSqlHelper.CreateInputParameter("MARCBibID", SqlDbType.NVarChar, 50, false, mARCBibID),
-					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
+					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, false, barCode),
 					CustomSqlHelper.CreateInputParameter("ItemSequence", SqlDbType.SmallInt, null, true, itemSequence),
-					CustomSqlHelper.CreateInputParameter("MARCItemID", SqlDbType.NVarChar, 50, true, mARCItemID),
+					CustomSqlHelper.CreateInputParameter("MARCItemID", SqlDbType.NVarChar, 200, true, mARCItemID),
 					CustomSqlHelper.CreateInputParameter("CallNumber", SqlDbType.NVarChar, 100, true, callNumber),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, true, volume),
 					CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, true, institutionCode),
@@ -934,12 +945,13 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("StartSeries", SqlDbType.NVarChar, 10, false, startSeries),
 					CustomSqlHelper.CreateInputParameter("EndSeries", SqlDbType.NVarChar, 10, false, endSeries),
 					CustomSqlHelper.CreateInputParameter("StartPart", SqlDbType.NVarChar, 10, false, startPart),
-					CustomSqlHelper.CreateInputParameter("EndPart", SqlDbType.NVarChar, 10, false, endPart), 
+					CustomSqlHelper.CreateInputParameter("EndPart", SqlDbType.NVarChar, 10, false, endPart),
+					CustomSqlHelper.CreateInputParameter("PageProgression", SqlDbType.NVarChar, 10, false, pageProgression), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
 				{
-					CustomGenericList<Item> list = helper.ExecuteReader(command);
+					List<Item> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Item o = list[0];
@@ -1041,7 +1053,8 @@ namespace MOBOT.BHLImport.DAL
 				value.StartSeries,
 				value.EndSeries,
 				value.StartPart,
-				value.EndPart);
+				value.EndPart,
+				value.PageProgression);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -1142,7 +1155,8 @@ namespace MOBOT.BHLImport.DAL
 						value.StartSeries,
 						value.EndSeries,
 						value.StartPart,
-						value.EndPart);
+						value.EndPart,
+						value.PageProgression);
 				
 				return new CustomDataAccessStatus<Item>(
 					CustomDataAccessContext.Insert, 
@@ -1225,7 +1239,8 @@ namespace MOBOT.BHLImport.DAL
 						value.StartSeries,
 						value.EndSeries,
 						value.StartPart,
-						value.EndPart);
+						value.EndPart,
+						value.PageProgression);
 					
 				return new CustomDataAccessStatus<Item>(
 					CustomDataAccessContext.Update, 

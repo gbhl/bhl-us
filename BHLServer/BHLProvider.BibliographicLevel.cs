@@ -1,12 +1,12 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
     public partial class BHLProvider
     {
-        public CustomGenericList<BibliographicLevel> BibliographicLevelSelectAll()
+        public List<BibliographicLevel> BibliographicLevelSelectAll()
         {
             return new BibliographicLevelDAL().BibliographicLevelSelectAll(null, null);
         }

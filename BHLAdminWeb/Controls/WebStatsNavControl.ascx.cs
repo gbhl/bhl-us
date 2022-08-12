@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHL.Utility;
 
 namespace MOBOT.BHL.AdminWeb.Controls
 {
@@ -33,7 +33,7 @@ namespace MOBOT.BHL.AdminWeb.Controls
             if (!IsPostBack)
             {
                 // Set the menu title
-                litTitle.Text = new BHL.Web.Utilities.RequestLog().SelectApplicationName(ApplicationID);
+                litTitle.Text = new MOBOT.BHL.Utility.RequestLog().SelectApplicationName(ApplicationID);
 
                 // Set all navigation links
                 dailyLink.NavigateUrl = string.Format(dailyLink.NavigateUrl, ApplicationID.ToString(), Menu);

@@ -1,5 +1,5 @@
 ﻿using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -56,7 +56,9 @@ namespace MOBOT.BHL.Server
             string callNumber = citation.CallNumber;
             string doi = citation.Doi;
             string edition = citation.Edition;
-            string issnisbn = citation.IssnIsbn;
+            string issn = citation.Issn;
+            string eissn = citation.Eissn;
+            string isbn = citation.Isbn;
             string language = citation.Language;
             string notes = citation.Notes;
             string summary = citation.Abstract;
@@ -77,7 +79,9 @@ namespace MOBOT.BHL.Server
             if (!string.IsNullOrWhiteSpace(callNumber)) elements.Add(GetRISElement(RISElementName.CALLNUMBER, callNumber));
             if (!string.IsNullOrWhiteSpace(doi)) elements.Add(GetRISElement(RISElementName.DOI, doi));
             if (!string.IsNullOrWhiteSpace(edition)) elements.Add(GetRISElement(RISElementName.EDITION, edition));
-            if (!string.IsNullOrWhiteSpace(issnisbn)) elements.Add(GetRISElement(RISElementName.ISSNISBN, issnisbn));
+            if (!string.IsNullOrWhiteSpace(issn)) elements.Add(GetRISElement(RISElementName.ISSNISBN, issn));
+            if (!string.IsNullOrWhiteSpace(eissn)) elements.Add(GetRISElement(RISElementName.ISSNISBN, eissn));
+            if (!string.IsNullOrWhiteSpace(isbn)) elements.Add(GetRISElement(RISElementName.ISSNISBN, isbn));
             if (!string.IsNullOrWhiteSpace(language)) elements.Add(GetRISElement(RISElementName.LANGUAGE, language));
             if (!string.IsNullOrWhiteSpace(notes)) elements.Add(GetRISElement(RISElementName.NOTES, notes));
             if (!string.IsNullOrWhiteSpace(summary)) elements.Add(GetRISElement(RISElementName.ABSTRACT, summary));

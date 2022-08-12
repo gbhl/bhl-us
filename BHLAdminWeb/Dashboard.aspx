@@ -434,8 +434,13 @@
 					</tr>
                     <tr><td>&nbsp;</td></tr>
                     <tr>
+                        <td align="center" colspan="2" runat="server" id="tdManageDoiQueue">
+                            <a href="/doi/queue">Manage DOI Queue</a>
+                        </td>
+                    </tr>
+                    <tr>
                         <td align="center" colspan="2" runat="server" id="tdViewUpdateDoi">
-                            <a href="/doilist.aspx">View/Update DOI Details</a>
+                            <a href="/doilist.aspx">View/Update DOI Status</a>
                         </td>
                     </tr>
                 </table>
@@ -547,7 +552,7 @@
 
 					<tr>
 						<td align="center" runat="server" id="tdImportItemText">
-							<a href="/TextImport">Import Item Text</a>
+							<a href="/TextImport">Import Text</a>
 						</td>
 					</tr>
 					<tr>

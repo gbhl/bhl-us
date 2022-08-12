@@ -1,19 +1,19 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class NamePageDAL
+    public partial class NamePageDAL
 	{
-        public CustomGenericList<NamePage> NamePageSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID)
+        public List<NamePage> NamePageSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -28,7 +28,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<NamePage> NamePageSelectByPageIDAndSource(SqlConnection sqlConnection, 
+        public List<NamePage> NamePageSelectByPageIDAndSource(SqlConnection sqlConnection, 
             SqlTransaction sqlTransaction, int pageID, string sourceName)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -56,7 +56,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<NamePage> helper = new CustomSqlHelper<NamePage>())
                 {
-                    CustomGenericList<NamePage> list = helper.ExecuteReader(command);
+                    List<NamePage> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -85,7 +85,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<NamePage> helper = new CustomSqlHelper<NamePage>())
                 {
-                    CustomGenericList<NamePage> list = helper.ExecuteReader(command);
+                    List<NamePage> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else

@@ -1,13 +1,7 @@
-﻿
--- ItemUpdateAuto PROCEDURE
--- Generated 3/24/2009 1:57:09 PM
--- Do not modify the contents of this procedure.
--- Update Procedure for Item
-
-CREATE PROCEDURE ItemUpdateAuto
+﻿CREATE PROCEDURE dbo.ItemUpdateAuto
 
 @ItemID INT,
-@Identifier NVARCHAR(50),
+@Identifier NVARCHAR(200),
 @MARCLeader NVARCHAR(200),
 @Sponsor NVARCHAR(50),
 @Contributor NVARCHAR(100),
@@ -32,9 +26,7 @@ AS
 SET NOCOUNT ON
 
 UPDATE [dbo].[Item]
-
 SET
-
 	[Identifier] = @Identifier,
 	[MARCLeader] = @MARCLeader,
 	[Sponsor] = @Sponsor,
@@ -54,19 +46,17 @@ SET
 	[ItemStatusID] = @ItemStatusID,
 	[MetaGetStatus] = @MetaGetStatus,
 	[MarcGetStatus] = @MarcGetStatus
-
 WHERE
 	[ItemID] = @ItemID
 		
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure ItemUpdateAuto. No information was updated as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.ItemUpdateAuto. No information was updated as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[ItemID],
 		[Identifier],
 		[MARCLeader],
@@ -88,12 +78,10 @@ ELSE BEGIN
 		[MetaGetStatus],
 		[MarcGetStatus],
 		[CreationDate]
-
 	FROM [dbo].[Item]
-	
 	WHERE
 		[ItemID] = @ItemID
 	
 	RETURN -- update successful
 END
-
+GO

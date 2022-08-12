@@ -55,6 +55,20 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _sequenceOrder = value; }
         }
 
+        private string _Source = null;
+        public string Source
+        {
+            get { return _Source; }
+            set { _Source = value; }
+        }
+
+        private string _SourceIdentifier = null;
+        public string SourceIdentifier
+        {
+            get { return _SourceIdentifier; }
+            set { _SourceIdentifier = value; }
+        }
+
         private string _genre = null;
         public string Genre
         {
@@ -181,6 +195,17 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _downloadUrl = value; }
         }
 
+        private string _Contributor = null;
+        public string Contributor
+        {
+            get { return _Contributor; }
+            set
+            {
+                if (value != null) value = CalibrateValue(value, 255);
+                _Contributor = value;
+            }
+        }
+
         private string _rightsStatus = null;
         public string RightsStatus
         {
@@ -249,6 +274,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         {
             get { return _identifiers; }
             set { _identifiers = value; }
+        }
+
+        private List<Part> _parts = null;
+        public List<Part> Parts
+        {
+            get { return _parts; }
+            set { _parts = value; }
         }
 
         private List<Page> _pages = null;

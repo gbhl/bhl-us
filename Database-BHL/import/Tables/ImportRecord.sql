@@ -6,6 +6,7 @@
 	TitleID int NULL,
 	ItemID int NULL,
 	SegmentID int NULL,
+	ImportSegmentID int NULL,
 	Genre nvarchar(50) NOT NULL CONSTRAINT DF_ImportRecord_Genre DEFAULT(''),
 	Title nvarchar(2000) NOT NULL CONSTRAINT DF_ImportRecord_Title DEFAULT(''),
 	TranslatedTitle nvarchar(2000) NOT NULL CONSTRAINT DF_ImportRecord_TranslatedTitle DEFAULT(''),
@@ -40,6 +41,11 @@
 	ISBN nvarchar(125) NOT NULL CONSTRAINT DF_ImportRecord_ISBN DEFAULT(''),
 	OCLC nvarchar(125) NOT NULL CONSTRAINT DF_ImportRecord_OCLC DEFAULT(''),
 	LCCN nvarchar(125) NOT NULL CONSTRAINT DF_ImportRecord_LCCN DEFAULT(''),
+	ARK nvarchar(125) NOT NULL CONSTRAINT DF_ImportRecord_ARK DEFAULT(''),
+	Biostor nvarchar(125) NOT NULL CONSTRAINT DF_ImportRecord_Biostor DEFAULT(''),
+	JSTOR nvarchar(125) NOT NULL CONSTRAINT DF_ImportRecord_JSTOR DEFAULT(''),
+	TL2 nvarchar(125) NOT NULL CONSTRAINT DF_ImportRecord_TL2 DEFAULT(''),
+	Wikidata nvarchar(125) NOT NULL CONSTRAINT DF_ImportRecord_Wikidata DEFAULT(''),
 	CreationDate datetime NOT NULL CONSTRAINT DF_ImportRecord_CreationDate DEFAULT(GETDATE()),
 	LastModifiedDate datetime NOT NULL CONSTRAINT DF_ImportRecord_LastModifiedDate DEFAULT(GETDATE()),
 	CreationUserID int NOT NULL CONSTRAINT DF_ImportRecord_CreationUserID DEFAULT(1),
@@ -49,4 +55,14 @@
 	CONSTRAINT FK_ImportFile_ImportRecordStatus FOREIGN KEY (ImportRecordStatusID) 
 			REFERENCES import.ImportRecordStatus (ImportRecordStatusID)
 	)
+GO
 
+CREATE NONCLUSTERED INDEX IX_ImportRecord_ImportFileID ON [import].[ImportRecord] 
+(
+	ImportFileID
+)
+INCLUDE 
+(
+	ImportRecordID,ImportRecordStatusID,Title,JournalTitle,Volume,Issue,[Year],StartPage,ItemID
+)
+GO

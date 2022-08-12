@@ -1,12 +1,12 @@
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace MOBOT.BHLImport.DAL
 {
-	public partial class OAIRecordDAL
+    public partial class OAIRecordDAL
 	{
         public void OAIRecordDeleteForOAIRecordID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int oaiRecordID)
@@ -50,7 +50,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<OAIRecord> helper = new CustomSqlHelper<OAIRecord>())
                 {
-                    CustomGenericList<OAIRecord> list = helper.ExecuteReader(command);
+                    List<OAIRecord> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {
@@ -76,7 +76,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<OAIRecord> helper = new CustomSqlHelper<OAIRecord>())
                 {
-                    CustomGenericList<OAIRecord> list = helper.ExecuteReader(command);
+                    List<OAIRecord> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {
@@ -122,7 +122,17 @@ namespace MOBOT.BHLImport.DAL
                         foreach (OAIRecordCreator creator in oaiRecord.Creators)
                         {
                             creator.OAIRecordID = newOaiRecord.OAIRecordID;
-                            creatorDAL.OAIRecordCreatorInsertAuto(connection, transaction, creator);
+                            OAIRecordCreator newOaiCreator = creatorDAL.OAIRecordCreatorInsertAuto(connection, transaction, creator);
+
+                            if (creator.Identifiers.Count > 0)
+                            {
+                                OAIRecordCreatorIdentifierDAL creatorIdentifierDAL = new OAIRecordCreatorIdentifierDAL();
+                                foreach(OAIRecordCreatorIdentifier identifier in creator.Identifiers)
+                                {
+                                    identifier.OAIRecordCreatorID = newOaiCreator.OAIRecordCreatorID;
+                                    creatorIdentifierDAL.OAIRecordCreatorIdentifierInsertAuto(connection, transaction, identifier);
+                                }
+                            }
                         }
                     }
 

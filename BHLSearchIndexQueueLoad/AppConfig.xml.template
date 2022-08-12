@@ -6,11 +6,22 @@
     <MQUser>MESSAGE QUEUE USERNAME</MQUser>
     <MQPassword>MESSAGE QUEUE PASSWORD</MQPassword>
     <MQQueue>NAME OF MESSAGE QUEUE FOR ITEMS/AUTHORS/KEYWORDS</MQQueue>
+
+    <!-- 
+    To write backups of the queued messages to a secondary queue, specify the name of the exchange.
+    For example, "bhl.prod.exchange.index".  This would typically done while rebuilding indexes.
+    To queues messages normally (no secondary copies), leave the exchange name blank.
+    -->
+    <MQExchange>NAME OF MESSAGE QUEUE EXCHANGE FOR ITEMS/AUTHORS/KEYWORDS</MQExchange>
+    
     <MQErrorExchange>NAME OF MESSAGE QUEUE ERROR EXCHANGE FOR ITEMS/AUTHORS/KEYWORDS</MQErrorExchange>
     <MQErrorQueue>NAME OF MESSAGE QUEUE ERROR QUEUE FOR ITEMS/AUTHORS/KEYWORDS</MQErrorQueue>
     <MQQueueNames>NAME OF MESSAGE QUEUE FOR NAMES</MQQueueNames>
     <MQErrorExchangeNames>NAME OF MESSAGE QUEUE ERROR EXCHANGE FOR NAMES</MQErrorExchangeNames>
     <MQErrorQueueNames>NAME OF MESSAGE QUEUE ERROR QUEUE FOR NAMES</MQErrorQueueNames>
+    <MQQueuePDF>NAME OF MESSAGE QUEUE FOR ARTICLE PDF CREATION</MQQueuePDF>
+    <MQErrorExchangePDF>NAME OF MESSAGE QUEUE ERROR EXCHANGE FOR ARTICLE PDF CREATION</MQErrorExchangePDF>
+    <MQErrorQueuePDF>NAME OF MESSAGE QUEUE ERROR QUEUE FOR ARTICLE PDF CREATION</MQErrorQueuePDF>
 
     <!-- 
       Set these to MM-DD-YYYY values to queue messages for indexing entities that changed 
@@ -20,14 +31,11 @@
     <EndDate></EndDate>
 
     <!-- Email settings -->
-    <SmtpHost>MAIL SERVER ADDRESS</SmtpHost>
-    <SmtpPort>MAIL SERVER PORT</SmtpPort>
-    <SmtpEnableSsl>false</SmtpEnableSsl>
-    <SmtpDefaultCredentials>false</SmtpDefaultCredentials>
-    <SmtpUsername></SmtpUsername>
-    <SmtpPassword></SmtpPassword>
     <EmailFromAddress>noreply@biodiversitylibrary.org</EmailFromAddress>
     <EmailToAddresses>EMAIL RECIPIENT EMAIL ADDRESSES</EmailToAddresses>  <!-- comma-separated -->
+
+    <!-- BHLWS service endpoint -->
+    <BHLWSUrl>BHLWS SERVICE URL</BHLWSUrl>
 
     <!-- Connection key-->
     <ConnectionKey>QA</ConnectionKey>

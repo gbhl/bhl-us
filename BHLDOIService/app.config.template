@@ -9,7 +9,6 @@
     <add key="Service_SubmitSegments" value="true"/>
     <add key="Service_ValidateSubmissions" value="true"/>
     <!-- Email settings -->
-    <add key="SMTPHost" value="SMTP SERVER NAME"/>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
     <!-- Prefix assigned to BHL by CrossRef.  All BHL DOIs must begin with this prefix.  -->
@@ -54,15 +53,9 @@
     <add key="BHLPartUrlFormat" value="https://www.biodiversitylibrary.org/part/{0}"/>
     <!-- DOI Status codes.  These should match the rows in the DOIStatus database table. -->
     <add key="DOIStatus_Null" value="0"/>
-    <add key="DOIStatus_None" value="10"/>
-    <add key="DOIStatus_Assigned" value="20"/>
-    <add key="DOIStatus_Resubmit" value="30"/>
-    <add key="DOIStatus_BatchAssigned" value="40"/>
+    <add key="DOIStatus_Queued" value="30"/>
     <add key="DOIStatus_Submitted" value="50"/>
-    <add key="DOIStatus_SubmitError" value="60"/>
-    <add key="DOIStatus_GetLogError" value="70"/>
-    <add key="DOIStatus_CrossRefError" value="80"/>
-    <add key="DOIStatus_CrossRefWarning" value="90"/>
+    <add key="DOIStatus_Error" value="80"/>
     <add key="DOIStatus_Approved" value="100"/>
     <add key="DOIStatus_External" value="200"/>
     <!-- DOI Entity Types.  These should match the rows in the DOIEntityType database table. -->
@@ -90,6 +83,12 @@
     <add key="AuthorRole_700" value="4"/>
     <add key="AuthorRole_710" value="5"/>
     <add key="AuthorRole_711" value="6"/>
+    <!-- Author Types.  These should match the rows in teh AuthorType database table. -->
+    <add key="AuthorTypePerson" value="1"/>
+    <add key="AuthorTypeCorporation" value="2"/>
+    <add key="AuthorTypeMeeting" value="3"/>
+    <!-- REST endpoint -->
+    <add key="BHLWSUrl" value="BHLWS REST ENDPOINT URL"/>
   </appSettings>
   <!-- This section contains the log4net configuration settings -->
   <log4net>
@@ -113,44 +112,6 @@
       <appender-ref ref="RollingLogFileAppender"/>
     </root>
   </log4net>
-  <system.serviceModel>
-        <bindings>
-              <basicHttpBinding>
-                    <binding name="BHLWSSoap" closeTimeout="00:01:00" openTimeout="00:01:00"
-                          receiveTimeout="00:10:00" sendTimeout="00:05:00" allowCookies="false"
-                          bypassProxyOnLocal="false" hostNameComparisonMode="StrongWildcard"
-                          maxBufferSize="5242880" maxBufferPoolSize="524288" maxReceivedMessageSize="5242880"
-                          messageEncoding="Text" textEncoding="utf-8" transferMode="Buffered"
-                          useDefaultWebProxy="true">
-                          <readerQuotas maxDepth="32" maxStringContentLength="5242880"
-                                maxArrayLength="16384" maxBytesPerRead="4096" maxNameTableCharCount="16384" />
-                          <security mode="None">
-                                <transport clientCredentialType="None" proxyCredentialType="None"
-                                      realm="" />
-                                <message clientCredentialType="UserName" algorithmSuite="Default" />
-                          </security>
-                    </binding>
-              </basicHttpBinding>
-        </bindings>
-        <client>
-              <endpoint address="http://localhost:26504/BHLWS.asmx" binding="basicHttpBinding"
-                    bindingConfiguration="BHLWSSoap" contract="BHLWS.BHLWSSoap"
-                    name="BHLWSSoap" />
-        </client>
-  </system.serviceModel>
-    <system.net>
-      <mailSettings>
-        <smtp deliveryMethod="Network">
-          <network defaultCredentials="false"
-                   enableSsl="false"
-                   host="MAIL_SERVER_ADDRESS"
-                   port="MAIL_SERVER_PORT"
-                   userName="MAIL_SERVER_USERNAME"
-                   password="MAIL_SERVER_PASSWORD"
-                   />
-        </smtp>
-      </mailSettings>
-    </system.net>
   <startup>
     <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/>
   </startup>

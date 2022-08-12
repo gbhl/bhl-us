@@ -13,6 +13,22 @@ namespace MOBOT.BHL.DataObjects
     {
         #region Properties
 
+        private int? _bookID;
+
+        public int? BookID
+        {
+            get { return _bookID; }
+            set { _bookID = value; }
+        }
+
+        private int? _segmentID;
+
+        public int? SegmentID
+        {
+            get { return _segmentID; }
+            set { _segmentID = value; }
+        }
+
         private int _numberOfPages;
 
         public int NumberOfPages
@@ -29,6 +45,14 @@ namespace MOBOT.BHL.DataObjects
             set { _minutesToGenerate = value; }
         }
 
+        private string _itemTypeName = string.Empty;
+
+        public string ItemTypeName
+        {
+            get { return _itemTypeName;}
+            set { _itemTypeName = value; }
+        }
+
         #endregion Properties
 
         #region ISet override
@@ -39,6 +63,16 @@ namespace MOBOT.BHL.DataObjects
             {
                 switch (column.Name)
                 {
+                    case "BookID":
+                        {
+                            _bookID = (int?)column.Value;
+                            break;
+                        }
+                    case "SegmentID":
+                        {
+                            _segmentID = (int?)column.Value;
+                            break;
+                        }
                     case "NumberOfPages":
                         {
                             _numberOfPages = (int)column.Value;
@@ -47,6 +81,11 @@ namespace MOBOT.BHL.DataObjects
                     case "MinutesToGenerate":
                         {
                             _minutesToGenerate = Utility.ZeroIfNull(column.Value);
+                            break;
+                        }
+                    case "ItemTypeName":
+                        {
+                            _itemTypeName = Utility.EmptyIfNull(column.Value);
                             break;
                         }
                 }

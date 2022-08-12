@@ -11,8 +11,8 @@ FROM	dbo.Item
 WHERE	ItemStatusID = 10
 AND		MetaGetStatus <> 'NotFound'
 AND		MarcGetStatus <> 'NotFound'
--- Disregard items more than 30 days old, as they are unlikely to be "fixed".
-AND		CreationDate > GETDATE() - 30
+-- Disregard items more than 15 days old, as they are unlikely to be "fixed".
+AND		CreationDate > GETDATE() - 15
 
 IF @@ERROR <> 0
 BEGIN

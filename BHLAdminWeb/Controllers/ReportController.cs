@@ -83,7 +83,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public ActionResult CitationImportHistory()
         {
             CitationImportHistoryModel model = new CitationImportHistoryModel();
-            model.Institution = string.Empty;
+            model.User = string.Empty;
             model.ImportFileStatus = string.Empty;
             model.ReportDateRange = "30";
 
@@ -106,7 +106,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         {
             CitationService service = new CitationService();
             ViewBag.PageTitle += "Segment Import History";
-            ViewBag.InstitutionList = service.InstitutionList();
+            ViewBag.UserList = service.UserList();
             ViewBag.ImportFileStatusList = service.ImportFileStatusList();
             ViewBag.ReportDateRangeList = service.ReportDateRangeList();
 

@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[MarcSelectTitleIdentifiersByMarcID]
+﻿CREATE PROCEDURE [dbo].[MarcSelectTitleIdentifiersByMarcID]
 
 @MarcID int
 
@@ -55,7 +54,7 @@ AND		t.MarcID = @MarcID
 INSERT INTO #tmpTitleIdentifier
 SELECT DISTINCT
 		'DLC',
-		LTRIM(RTRIM(m.SubFieldValue))
+		dbo.fnGetLCCNValue(m.SubFieldValue)
 FROM	dbo.vwMarcDataField m
 WHERE	DataFieldTag = '010'
 AND		Code = 'a'
@@ -74,8 +73,8 @@ AND		m.MarcID = @MarcID
 -- Get the ISSN identifiers
 INSERT INTO #tmpTitleIdentifier
 SELECT DISTINCT
-		'ISSN',
-		m.SubFieldValue
+		dbo.fnGetISSNName(m.SubFieldValue),
+		dbo.fnGetISSNValue(m.SubFieldValue)
 FROM	dbo.vwMarcDataField m
 WHERE	m.DataFieldTag = '022'
 AND		m.Code = 'a'
@@ -192,5 +191,4 @@ DROP TABLE #tmpTitleIdentifier
 
 END
 
-
-
+GO

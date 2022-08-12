@@ -30,41 +30,38 @@ namespace MOBOT.BHL.Web2
             WriteLine("<lastBuildDate>" + DateTime.Now.ToUniversalTime().ToString() + "</lastBuildDate>");
             WriteLine("<generator>https://www.biodiversitylibrary.org/</generator>");
 
-            List<Item> list = new BHLProvider().ItemSelectRecent(top, languageCode, institutionCode);
-            foreach (Item item in list)
+            List<DataObjects.Book> books = new BHLProvider().BookSelectRecent(top, languageCode, institutionCode);
+            foreach (DataObjects.Book book in books)
             {
                 String description = String.Empty;
-                if ((item.AuthorStrings.Length > 1) || (item.AuthorStrings.Length == 1 && !String.IsNullOrEmpty(item.AuthorStrings[0]))) description += "<b>By:</b><br/>";
-                foreach (String creator in item.AuthorStrings)
+                if ((book.AuthorStrings.Length > 1) || (book.AuthorStrings.Length == 1 && !String.IsNullOrEmpty(book.AuthorStrings[0]))) description += "<b>By:</b><br/>";
+                foreach (String creator in book.AuthorStrings)
                 {
                     if (!String.IsNullOrEmpty(creator)) description += creator + "<br/>";
                 }
-                if (!String.IsNullOrEmpty(item.PublicationDetails)) description += "<b>Publication Info:</b><br/>" + item.PublicationDetails + "<br/>";
-                if ((item.TagStrings.Length > 1) || (item.TagStrings.Length == 1 && !String.IsNullOrEmpty(item.TagStrings[0]))) description += "<b>Subjects:</b><br/>" + String.Join(", ", item.TagStrings) + "<br/>";
-                if ((item.AssociationStrings.Length > 1) || (item.AssociationStrings.Length == 1 && !String.IsNullOrEmpty(item.AssociationStrings[0]))) description += "<b>Related Titles:</b><br/>";
-                foreach (String association in item.AssociationStrings)
+                if (!String.IsNullOrEmpty(book.PublicationDetails)) description += "<b>Publication Info:</b><br/>" + book.PublicationDetails + "<br/>";
+                if ((book.TagStrings.Length > 1) || (book.TagStrings.Length == 1 && !String.IsNullOrEmpty(book.TagStrings[0]))) description += "<b>Subjects:</b><br/>" + String.Join(", ", book.TagStrings) + "<br/>";
+                if ((book.AssociationStrings.Length > 1) || (book.AssociationStrings.Length == 1 && !String.IsNullOrEmpty(book.AssociationStrings[0]))) description += "<b>Related Titles:</b><br/>";
+                foreach (String association in book.AssociationStrings)
                 {
                     if (!String.IsNullOrEmpty(association)) description += association + "<br/>";
                 }
-                if (item.InstitutionStrings.Count() > 1) description += "<b>Contributing Library:</b><br/>Multiple institutions<br/>";
-                if (item.InstitutionStrings.Count() == 1) description += "<b>Contributing Library:</b><br/>" + item.InstitutionStrings[0] + "<br/>";
-                if (!String.IsNullOrEmpty(item.Sponsor)) description += "<b>Sponsor:</b><br/>" + item.Sponsor + "<br/>";
-                if (!String.IsNullOrEmpty(item.LicenseUrl)) description += "<b>License Type:</b><br/>" + item.LicenseUrl + "<br/>";
-                if (!String.IsNullOrEmpty(item.Rights)) description += "<b>Rights:</b><br/>" + item.Rights + "<br/>";
-                if (!String.IsNullOrEmpty(item.DueDiligence)) description += "<b>Due Diligence:</b><br/>" + item.DueDiligence + "<br/>";
-                if (!String.IsNullOrEmpty(item.CopyrightStatus)) description += "<b>Copyright Status:</b><br/>" + item.CopyrightStatus + "<br/>";
-                if (!String.IsNullOrEmpty(item.CopyrightRegion)) description += "<b>Copyright Region:</b><br/>" + item.CopyrightRegion + "<br/>";
-                if (!String.IsNullOrEmpty(item.CopyrightComment)) description += "<b>Copyright Comments:</b><br/>" + item.CopyrightComment + "<br/>";
-                if (!String.IsNullOrEmpty(item.CopyrightEvidence)) description += "<b>Copyright Evidence:</b><br/>" + item.CopyrightEvidence + "<br/>";
+                if (book.InstitutionStrings.Count() > 1) description += "<b>Contributing Library:</b><br/>Multiple institutions<br/>";
+                if (book.InstitutionStrings.Count() == 1) description += "<b>Contributing Library:</b><br/>" + book.InstitutionStrings[0] + "<br/>";
+                if (!String.IsNullOrEmpty(book.Sponsor)) description += "<b>Sponsor:</b><br/>" + book.Sponsor + "<br/>";
+                if (!String.IsNullOrEmpty(book.LicenseUrl)) description += "<b>License Type:</b><br/>" + book.LicenseUrl + "<br/>";
+                if (!String.IsNullOrEmpty(book.Rights)) description += "<b>Rights:</b><br/>" + book.Rights + "<br/>";
+                if (!String.IsNullOrEmpty(book.DueDiligence)) description += "<b>Due Diligence:</b><br/>" + book.DueDiligence + "<br/>";
+                if (!String.IsNullOrEmpty(book.CopyrightStatus)) description += "<b>Copyright Status:</b><br/>" + book.CopyrightStatus + "<br/>";
 
-                string itemElement = string.IsNullOrWhiteSpace(item.ExternalUrl) ? "<item>" : "<item bhl:externalcontent=\"true\">";
+                string itemElement = string.IsNullOrWhiteSpace(book.ExternalUrl) ? "<item>" : "<item bhl:externalcontent=\"true\">";
 
                 WriteLine(itemElement);
-                WriteLine("<title>" + Server.HtmlEncode(item.FullTitle + " " + item.PartNumber + " " + item.PartName + " " + item.Volume) + " (added: " + DateTime.Parse(item.CreationDate.ToString()).ToString("MM/dd/yyyy") + ")</title>");
-                WriteLine("<link>https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString() + "</link>");
+                WriteLine("<title>" + Server.HtmlEncode(book.FullTitle + " " + book.PartNumber + " " + book.PartName + " " + book.Volume) + " (added: " + DateTime.Parse(book.CreationDate.ToString()).ToString("MM/dd/yyyy") + ")</title>");
+                WriteLine("<link>https://www.biodiversitylibrary.org/item/" + book.ItemID.ToString() + "</link>");
                 WriteLine("<description>" + Server.HtmlEncode(description) + "</description>");
-                WriteLine("<pubDate>" + item.CreationDate.ToString() + "</pubDate>");
-                WriteLine("<guid>https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString() + "</guid>");
+                WriteLine("<pubDate>" + book.CreationDate.ToString() + "</pubDate>");
+                WriteLine("<guid>https://www.biodiversitylibrary.org/item/" + book.ItemID.ToString() + "</guid>");
                 WriteLine("</item>");
             }
 

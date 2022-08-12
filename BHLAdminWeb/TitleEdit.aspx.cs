@@ -14,7 +14,7 @@ namespace MOBOT.BHL.AdminWeb
 {
     public partial class TitleEdit : System.Web.UI.Page
 	{
-        private TitleItemComparer.CompareEnum _itemSortColumn = TitleItemComparer.CompareEnum.ItemSequence;
+        private ItemTitleComparer.CompareEnum _itemSortColumn = ItemTitleComparer.CompareEnum.ItemSequence;
 		private SortOrder _sortOrder = SortOrder.Ascending;
 
         protected void Page_Load( object sender, EventArgs e )
@@ -105,9 +105,9 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         // Make sure the selected item isn't already associated with this title
                         bool itemExists = false;
-                        foreach (TitleItem existingTitleItem in title.TitleItems)
+                        foreach (ItemTitle existingItemTitle in title.ItemTitles)
                         {
-                            if (existingTitleItem.ItemID.ToString() == selectedItemId)
+                            if (existingItemTitle.BookID.ToString() == selectedItemId)
                             {
                                 itemExists = true;
                                 break;
@@ -116,27 +116,28 @@ namespace MOBOT.BHL.AdminWeb
 
                         if (!itemExists)
                         {
-                            TitleItem newTitleItem = new TitleItem();
+                            ItemTitle newItemTitle = new ItemTitle();
 
                             // Get the current maximum itemsequence value
                             short? itemSequence = 0;
-                            foreach (TitleItem titleItem in title.TitleItems)
+                            foreach (ItemTitle itemTitle in title.ItemTitles)
                             {
-                                if (titleItem.ItemSequence > itemSequence) itemSequence = titleItem.ItemSequence;
+                                if (itemTitle.ItemSequence > itemSequence) itemSequence = itemTitle.ItemSequence;
                             }
 
                             // Get details for "selectedItemId" from database
                             BHLProvider provider = new BHLProvider();
-                            Item item = provider.ItemSelectAuto(Convert.ToInt32(selectedItemId));
-                            newTitleItem.ItemID = Convert.ToInt32(selectedItemId);
-                            newTitleItem.TitleID = title.TitleID;
-                            newTitleItem.ItemSequence = ++itemSequence;
-                            newTitleItem.ItemStatusID = item.ItemStatusID;
-                            newTitleItem.BarCode = item.BarCode;
-                            newTitleItem.Volume = item.Volume;
-                            newTitleItem.PrimaryTitleID = (makePrimary.Checked) ? title.TitleID : item.PrimaryTitleID;
-                            newTitleItem.IsNew = true;
-                            title.TitleItems.Add(newTitleItem);
+                            Book book = provider.BookSelectByBarcodeOrItemID(Convert.ToInt32(selectedItemId), null);
+                            newItemTitle.BookID = book.BookID;
+                            newItemTitle.ItemID = book.ItemID;
+                            newItemTitle.TitleID = title.TitleID;
+                            newItemTitle.ItemSequence = ++itemSequence;
+                            newItemTitle.ItemStatusID = book.ItemStatusID;
+                            newItemTitle.BarCode = book.BarCode;
+                            newItemTitle.Volume = book.Volume;
+                            newItemTitle.PrimaryTitleID = (makePrimary.Checked) ? title.TitleID : (int)book.PrimaryTitleID;
+                            newItemTitle.IsNew = true;
+                            title.ItemTitles.Add(newItemTitle);
                         }
                     }
 
@@ -153,7 +154,7 @@ namespace MOBOT.BHL.AdminWeb
 
                 if (ViewState["ItemSortColumn"] != null)
 				{
-					_itemSortColumn = (TitleItemComparer.CompareEnum)ViewState[ "ItemSortColumn" ];
+					_itemSortColumn = (ItemTitleComparer.CompareEnum)ViewState[ "ItemSortColumn" ];
 					_sortOrder = (SortOrder)ViewState[ "SortOrder" ];
 				}
             }
@@ -233,7 +234,7 @@ namespace MOBOT.BHL.AdminWeb
 
             // Look up flickr status of each item associated with the title
             List<Item> items = bp.ItemInFlickrByTitleID(id);
-            foreach(TitleItem item in title.TitleItems)
+            foreach(ItemTitle item in title.ItemTitles)
             {
                 foreach (Item flickrItem in items)
                 {
@@ -245,9 +246,12 @@ namespace MOBOT.BHL.AdminWeb
                 }
             }
 
-			Session[ "Title" + title.TitleID.ToString()] = title;
+            // Enable segment download link if segments exist
+            hypSegmentDownload.HRef = "~/downloads/SegmentsForTitle/" + title.TitleID.ToString();
+            hypSegmentDownload.Visible = (bp.SegmentSelectByTitleID(title.TitleID).Count > 0 ? true : false);
 
-            doiTextBox.Text = title.DOIName;
+            Session[ "Title" + title.TitleID.ToString()] = title;
+
             replacedByTextBox.Text = title.RedirectTitleID.ToString();
             replacedByOrig.Value = title.RedirectTitleID.ToString();
             String displayTitle = ((title.ShortTitle.Length > 30) ? title.ShortTitle.Substring(0, 30) + "..." : title.ShortTitle);
@@ -663,15 +667,11 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     continue;
                 }
-                if (titleIdentifierId == 0 && tti.TitleIdentifierID == 0 && 
-                    identifierID == 0 && tti.TitleIdentifierID == 0 &&
-                    identifierValue == "" && tti.IdentifierValue == "")
+                if (titleIdentifierId == tti.TitleIdentifierID &&
+                    identifierID == tti.IdentifierID &&
+                    identifierValue == tti.IdentifierValue)
                 {
-                    return tti;
-                }
-                else if (titleIdentifierId > 0 && tti.TitleIdentifierID == titleIdentifierId)
-                {
-                    return tti;
+                        return tti;
                 }
             }
 
@@ -875,10 +875,10 @@ namespace MOBOT.BHL.AdminWeb
 		{
             Title title = (Title)Session["Title" + idLabel.Text];
 
-            List<TitleItem> items = new List<TitleItem>();
+            List<ItemTitle> items = new List<ItemTitle>();
 			if ( showPubRadioButton.Checked || ( showAllRadioButton.Checked == false && showPubRadioButton.Checked == false ) )
 			{
-				foreach ( TitleItem item in title.TitleItems )
+				foreach (ItemTitle item in title.ItemTitles)
 				{
 					if (( item.ItemStatusID == 40 ) && (!item.IsDeleted))
 					{
@@ -888,7 +888,7 @@ namespace MOBOT.BHL.AdminWeb
 			}
 			else if ( showAllRadioButton.Checked )
 			{
-                foreach(TitleItem item in title.TitleItems)
+                foreach(ItemTitle item in title.ItemTitles)
                 {
                     if (!item.IsDeleted) items.Add(item);
                 }
@@ -896,25 +896,25 @@ namespace MOBOT.BHL.AdminWeb
 
             switch (_itemSortColumn)
             {
-                case TitleItemComparer.CompareEnum.BarCode:
+                case ItemTitleComparer.CompareEnum.BarCode:
                     if (_sortOrder == SortOrder.Ascending)
                         items.Sort((i1, i2) => (i1.BarCode).CompareTo(i2.BarCode));
                     else
                         items.Sort((i1, i2) => (i2.BarCode).CompareTo(i1.BarCode));
                     break;
-                case TitleItemComparer.CompareEnum.ItemID:
+                case ItemTitleComparer.CompareEnum.ItemID:
                     if (_sortOrder == SortOrder.Ascending)
                         items.Sort((i1, i2) => (i1.ItemID).CompareTo(i2.ItemID));
                     else
                         items.Sort((i1, i2) => (i2.ItemID).CompareTo(i1.ItemID));
                     break;
-                case TitleItemComparer.CompareEnum.ItemSequence:
+                case ItemTitleComparer.CompareEnum.ItemSequence:
                     if (_sortOrder == SortOrder.Ascending)
                         items.Sort((i1, i2) => (i1.ItemSequence ?? 0).CompareTo(i2.ItemSequence ?? 0));
                     else
                         items.Sort((i1, i2) => (i2.ItemSequence ?? 0).CompareTo(i1.ItemSequence ?? 0));
                     break;
-                case TitleItemComparer.CompareEnum.Volume:
+                case ItemTitleComparer.CompareEnum.Volume:
                     if (_sortOrder == SortOrder.Ascending)
                         items.Sort((i1, i2) => (i1.Volume).CompareTo(i2.Volume));
                     else
@@ -1574,11 +1574,11 @@ namespace MOBOT.BHL.AdminWeb
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 int selectedItem = (int)itemsList.DataKeys[rowNum].Values[0];
                 Title title = (Title)Session["Title" + idLabel.Text];
-                foreach (TitleItem titleItem in title.TitleItems)
+                foreach (ItemTitle itemTitle in title.ItemTitles)
                 {
-                    if (selectedItem == titleItem.ItemID)
+                    if (selectedItem == itemTitle.BookID)
                     {
-                        if ((title.TitleID == titleItem.PrimaryTitleID) && (!titleItem.IsNew))
+                        if ((title.TitleID == itemTitle.PrimaryTitleID) && (!itemTitle.IsNew))
                         {
                             errorControl.AddErrorText("Cannot delete previously saved items for which this is the primary title.");
                             errorControl.Visible = true;
@@ -1586,7 +1586,7 @@ namespace MOBOT.BHL.AdminWeb
                         }
                         else
                         {
-                            titleItem.IsDeleted = true;
+                            itemTitle.IsDeleted = true;
                         }
                         break;
                     }
@@ -1618,11 +1618,11 @@ namespace MOBOT.BHL.AdminWeb
 					{
 						// Find item being changed
 						short? oldItemSeq = 0;
-                        TitleItem changedItem = null;
+                        ItemTitle changedItem = null;
 
-						foreach ( TitleItem item in title.TitleItems )
+						foreach (ItemTitle item in title.ItemTitles)
 						{
-							if ( item.ItemID == itemId && item.ItemSequence.HasValue )
+							if ( item.BookID == itemId && item.ItemSequence.HasValue )
 							{
                                 changedItem = item;
 								oldItemSeq = changedItem.ItemSequence.Value;
@@ -1636,7 +1636,7 @@ namespace MOBOT.BHL.AdminWeb
                             if (newItemSeq < oldItemSeq)
                             {
                                 // Increment all item sequences between the old and new sequence values
-                                foreach (TitleItem item in title.TitleItems)
+                                foreach (ItemTitle item in title.ItemTitles)
                                 {
                                     if (item.ItemSequence >= newItemSeq && item.ItemSequence < oldItemSeq)
                                     {
@@ -1649,7 +1649,7 @@ namespace MOBOT.BHL.AdminWeb
                             if (newItemSeq > oldItemSeq)
                             {
                                 // Decrement all item sequences between the old and new sequence values
-                                foreach (TitleItem item in title.TitleItems)
+                                foreach (ItemTitle item in title.ItemTitles)
                                 {
                                     if (item.ItemSequence <= newItemSeq && item.ItemSequence > oldItemSeq)
                                     {
@@ -1660,17 +1660,6 @@ namespace MOBOT.BHL.AdminWeb
 
                             // Change the old sequence value to the new sequence value
                             changedItem.ItemSequence = newItemSeq;
-
-                            /*
-                            foreach ( TitleItem item in title.TitleItems )
-                            {
-                                if ( item.ItemID == itemId )
-                                {
-                                    item.ItemSequence = newItemSeq;
-                                    break;
-                                }
-                            }
-                            */
                         }
 					}
 				}
@@ -1688,23 +1677,23 @@ namespace MOBOT.BHL.AdminWeb
 
 		protected void itemsList_Sorting( object sender, GridViewSortEventArgs e )
 		{
-			TitleItemComparer.CompareEnum sortColumn = _itemSortColumn;
+			ItemTitleComparer.CompareEnum sortColumn = _itemSortColumn;
 
 			if ( e.SortExpression.Equals( "ItemID" ) )
 			{
-                _itemSortColumn = TitleItemComparer.CompareEnum.ItemID;
+                _itemSortColumn = ItemTitleComparer.CompareEnum.ItemID;
 			}
 			else if ( e.SortExpression.Equals( "BarCode" ) )
 			{
-                _itemSortColumn = TitleItemComparer.CompareEnum.BarCode;
+                _itemSortColumn = ItemTitleComparer.CompareEnum.BarCode;
 			}
 			else if ( e.SortExpression.Equals( "ItemSequence" ) )
 			{
-                _itemSortColumn = TitleItemComparer.CompareEnum.ItemSequence;
+                _itemSortColumn = ItemTitleComparer.CompareEnum.ItemSequence;
 			}
 			else if ( e.SortExpression.Equals( "Volume" ) )
 			{
-                _itemSortColumn = TitleItemComparer.CompareEnum.Volume;
+                _itemSortColumn = ItemTitleComparer.CompareEnum.Volume;
 			}
 
 			if ( sortColumn == _itemSortColumn)
@@ -1747,17 +1736,17 @@ namespace MOBOT.BHL.AdminWeb
                 int sortColumnIndex = 2;
 				switch (_itemSortColumn)
 				{
-					case TitleItemComparer.CompareEnum.BarCode:
+					case ItemTitleComparer.CompareEnum.BarCode:
 						{
 							sortColumnIndex = 4;
 							break;
 						}
-					case TitleItemComparer.CompareEnum.ItemSequence:
+					case ItemTitleComparer.CompareEnum.ItemSequence:
 						{
 							sortColumnIndex = 5;
 							break;
 						}
-					case TitleItemComparer.CompareEnum.Volume:
+					case ItemTitleComparer.CompareEnum.Volume:
 						{
 							sortColumnIndex = 6;
 							break;
@@ -1770,7 +1759,7 @@ namespace MOBOT.BHL.AdminWeb
 			}
             else if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                TitleItem item = (TitleItem)e.Row.DataItem;
+                ItemTitle item = (ItemTitle)e.Row.DataItem;
                 if (item != null)
                 {
                     Image flickrImage = (Image)e.Row.FindControl("FlickrImage");
@@ -1812,7 +1801,6 @@ namespace MOBOT.BHL.AdminWeb
 
                 //----------------------------------------
                 // Gather up data on form
-                title.DOIName = doiTextBox.Text.Trim();
                 title.RedirectTitleID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
                 title.PublishReady = publishReadyCheckBox.Checked;
                 title.BibliographicLevelID = bibLevelID;
@@ -1826,7 +1814,9 @@ namespace MOBOT.BHL.AdminWeb
 				title.CallNumber = callNumberTextBox.Text.Trim();
 				title.LanguageCode = ( ddlLang.SelectedValue.Length == 0 ? null : ddlLang.SelectedValue );
 				title.TitleDescription = descTextBox.Text.Trim();
-				title.PublicationDetails = publicationPlaceTextBox.Text.Trim() + publisherNameTextBox.Text.Trim() + publicationDateTextBox.Text.Trim();
+				title.PublicationDetails = publicationPlaceTextBox.Text.Trim() + (publicationPlaceTextBox.Text.Trim().Length > 0 ? " " : "") + 
+                    publisherNameTextBox.Text.Trim() + (publisherNameTextBox.Text.Trim().Length > 0 ? " " : "") +
+                    publicationDateTextBox.Text.Trim();
                 title.Datafield_260_a = publicationPlaceTextBox.Text.Trim();
                 title.Datafield_260_b = publisherNameTextBox.Text.Trim();
                 title.Datafield_260_c = publicationDateTextBox.Text.Trim();
@@ -1877,7 +1867,7 @@ namespace MOBOT.BHL.AdminWeb
                 title.TitleCollections.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 title.TitleIdentifiers.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 title.TitleAuthors.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
-                title.TitleItems.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                title.ItemTitles.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 title.TitleKeywords.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 title.TitleAssociations.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 title.TitleVariants.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
@@ -2013,6 +2003,19 @@ namespace MOBOT.BHL.AdminWeb
                     }
                 }
                 ix++;
+            }
+
+            // Validate identifiers
+            IdentifierValidationResult identifierValidationResult = new BHLProvider().ValidateIdentifiers(title.TitleIdentifiers);
+            if (!identifierValidationResult.IsValid)
+            {
+                flag = true;
+                foreach (string message in identifierValidationResult.Messages) errorControl.AddErrorText(message);
+            }
+            if (identifierValidationResult.IncludesNewBHLDOI)
+            {
+                flag = true;
+                errorControl.AddErrorText("A BHL-created DOI can only be added by submitting the Title metadata to a DOI registrar (such as Crossref)");
             }
 
             /*

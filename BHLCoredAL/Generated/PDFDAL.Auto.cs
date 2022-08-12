@@ -1,8 +1,8 @@
 
-// Generated 1/21/2009 11:41:21 AM
+// Generated 1/5/2021 3:26:45 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class PDFDAL is based upon PDF.
+// This partial class PDFDAL is based upon dbo.PDF.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from PDF by primary key(s).
+		/// Select values from dbo.PDF by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from PDF by primary key(s).
+		/// Select values from dbo.PDF by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PDF> helper = new CustomSqlHelper<PDF>())
 				{
-					CustomGenericList<PDF> list = helper.ExecuteReader(command);
+					List<PDF> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PDF o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from PDF by primary key(s).
+		/// Select values from dbo.PDF by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="pdfID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> PDFSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PDFSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int pdfID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from PDF by primary key(s).
+		/// Select values from dbo.PDF by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="pdfID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> PDFSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PDFSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,22 +129,22 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into PDF.
+		/// Insert values into dbo.PDF.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="itemID"></param>
+		/// <param name="fileLocation"></param>
 		/// <param name="emailAddress"></param>
 		/// <param name="shareWithEmailAddresses"></param>
-		/// <param name="imagesOnly"></param>
 		/// <param name="articleTitle"></param>
 		/// <param name="articleCreators"></param>
 		/// <param name="articleTags"></param>
-		/// <param name="fileLocation"></param>
+		/// <param name="imagesOnly"></param>
 		/// <param name="fileUrl"></param>
 		/// <param name="fileGenerationDate"></param>
 		/// <param name="fileDeletionDate"></param>
@@ -156,13 +157,13 @@ namespace MOBOT.BHL.DAL
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int itemID,
+			string fileLocation,
 			string emailAddress,
 			string shareWithEmailAddresses,
-			bool imagesOnly,
 			string articleTitle,
 			string articleCreators,
 			string articleTags,
-			string fileLocation,
+			bool imagesOnly,
 			string fileUrl,
 			DateTime? fileGenerationDate,
 			DateTime? fileDeletionDate,
@@ -171,23 +172,23 @@ namespace MOBOT.BHL.DAL
 			int numberOcrMissing,
 			string comment)
 		{
-			return PDFInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, emailAddress, shareWithEmailAddresses, imagesOnly, articleTitle, articleCreators, articleTags, fileLocation, fileUrl, fileGenerationDate, fileDeletionDate, pdfStatusID, numberImagesMissing, numberOcrMissing, comment );
+			return PDFInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, fileLocation, emailAddress, shareWithEmailAddresses, articleTitle, articleCreators, articleTags, imagesOnly, fileUrl, fileGenerationDate, fileDeletionDate, pdfStatusID, numberImagesMissing, numberOcrMissing, comment );
 		}
 		
 		/// <summary>
-		/// Insert values into PDF.
+		/// Insert values into dbo.PDF.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="itemID"></param>
+		/// <param name="fileLocation"></param>
 		/// <param name="emailAddress"></param>
 		/// <param name="shareWithEmailAddresses"></param>
-		/// <param name="imagesOnly"></param>
 		/// <param name="articleTitle"></param>
 		/// <param name="articleCreators"></param>
 		/// <param name="articleTags"></param>
-		/// <param name="fileLocation"></param>
+		/// <param name="imagesOnly"></param>
 		/// <param name="fileUrl"></param>
 		/// <param name="fileGenerationDate"></param>
 		/// <param name="fileDeletionDate"></param>
@@ -201,13 +202,13 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
 			int itemID,
+			string fileLocation,
 			string emailAddress,
 			string shareWithEmailAddresses,
-			bool imagesOnly,
 			string articleTitle,
 			string articleCreators,
 			string articleTags,
-			string fileLocation,
+			bool imagesOnly,
 			string fileUrl,
 			DateTime? fileGenerationDate,
 			DateTime? fileDeletionDate,
@@ -222,13 +223,13 @@ namespace MOBOT.BHL.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("PDFInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("PdfID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
+					CustomSqlHelper.CreateInputParameter("FileLocation", SqlDbType.NVarChar, 200, false, fileLocation),
 					CustomSqlHelper.CreateInputParameter("EmailAddress", SqlDbType.NVarChar, 200, false, emailAddress),
 					CustomSqlHelper.CreateInputParameter("ShareWithEmailAddresses", SqlDbType.NVarChar, 1073741823, false, shareWithEmailAddresses),
-					CustomSqlHelper.CreateInputParameter("ImagesOnly", SqlDbType.Bit, null, false, imagesOnly),
 					CustomSqlHelper.CreateInputParameter("ArticleTitle", SqlDbType.NVarChar, 1073741823, false, articleTitle),
 					CustomSqlHelper.CreateInputParameter("ArticleCreators", SqlDbType.NVarChar, 1073741823, false, articleCreators),
 					CustomSqlHelper.CreateInputParameter("ArticleTags", SqlDbType.NVarChar, 1073741823, false, articleTags),
-					CustomSqlHelper.CreateInputParameter("FileLocation", SqlDbType.NVarChar, 200, false, fileLocation),
+					CustomSqlHelper.CreateInputParameter("ImagesOnly", SqlDbType.Bit, null, false, imagesOnly),
 					CustomSqlHelper.CreateInputParameter("FileUrl", SqlDbType.NVarChar, 200, false, fileUrl),
 					CustomSqlHelper.CreateInputParameter("FileGenerationDate", SqlDbType.DateTime, null, true, fileGenerationDate),
 					CustomSqlHelper.CreateInputParameter("FileDeletionDate", SqlDbType.DateTime, null, true, fileDeletionDate),
@@ -240,7 +241,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PDF> helper = new CustomSqlHelper<PDF>())
 				{
-					CustomGenericList<PDF> list = helper.ExecuteReader(command);
+					List<PDF> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PDF o = list[0];
@@ -256,7 +257,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into PDF. Returns an object of type PDF.
+		/// Insert values into dbo.PDF. Returns an object of type PDF.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -271,7 +272,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into PDF. Returns an object of type PDF.
+		/// Insert values into dbo.PDF. Returns an object of type PDF.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -286,13 +287,13 @@ namespace MOBOT.BHL.DAL
 		{
 			return PDFInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.ItemID,
+				value.FileLocation,
 				value.EmailAddress,
 				value.ShareWithEmailAddresses,
-				value.ImagesOnly,
 				value.ArticleTitle,
 				value.ArticleCreators,
 				value.ArticleTags,
-				value.FileLocation,
+				value.ImagesOnly,
 				value.FileUrl,
 				value.FileGenerationDate,
 				value.FileDeletionDate,
@@ -307,7 +308,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from PDF by primary key(s).
+		/// Delete values from dbo.PDF by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -322,7 +323,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from PDF by primary key(s).
+		/// Delete values from dbo.PDF by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -365,19 +366,19 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in PDF. Returns an object of type PDF.
+		/// Update values in dbo.PDF. Returns an object of type PDF.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="pdfID"></param>
 		/// <param name="itemID"></param>
+		/// <param name="fileLocation"></param>
 		/// <param name="emailAddress"></param>
 		/// <param name="shareWithEmailAddresses"></param>
-		/// <param name="imagesOnly"></param>
 		/// <param name="articleTitle"></param>
 		/// <param name="articleCreators"></param>
 		/// <param name="articleTags"></param>
-		/// <param name="fileLocation"></param>
+		/// <param name="imagesOnly"></param>
 		/// <param name="fileUrl"></param>
 		/// <param name="fileGenerationDate"></param>
 		/// <param name="fileDeletionDate"></param>
@@ -391,13 +392,13 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			int pdfID,
 			int itemID,
+			string fileLocation,
 			string emailAddress,
 			string shareWithEmailAddresses,
-			bool imagesOnly,
 			string articleTitle,
 			string articleCreators,
 			string articleTags,
-			string fileLocation,
+			bool imagesOnly,
 			string fileUrl,
 			DateTime? fileGenerationDate,
 			DateTime? fileDeletionDate,
@@ -406,24 +407,24 @@ namespace MOBOT.BHL.DAL
 			int numberOcrMissing,
 			string comment)
 		{
-			return PDFUpdateAuto( sqlConnection, sqlTransaction, "BHL", pdfID, itemID, emailAddress, shareWithEmailAddresses, imagesOnly, articleTitle, articleCreators, articleTags, fileLocation, fileUrl, fileGenerationDate, fileDeletionDate, pdfStatusID, numberImagesMissing, numberOcrMissing, comment);
+			return PDFUpdateAuto( sqlConnection, sqlTransaction, "BHL", pdfID, itemID, fileLocation, emailAddress, shareWithEmailAddresses, articleTitle, articleCreators, articleTags, imagesOnly, fileUrl, fileGenerationDate, fileDeletionDate, pdfStatusID, numberImagesMissing, numberOcrMissing, comment);
 		}
 		
 		/// <summary>
-		/// Update values in PDF. Returns an object of type PDF.
+		/// Update values in dbo.PDF. Returns an object of type PDF.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="pdfID"></param>
 		/// <param name="itemID"></param>
+		/// <param name="fileLocation"></param>
 		/// <param name="emailAddress"></param>
 		/// <param name="shareWithEmailAddresses"></param>
-		/// <param name="imagesOnly"></param>
 		/// <param name="articleTitle"></param>
 		/// <param name="articleCreators"></param>
 		/// <param name="articleTags"></param>
-		/// <param name="fileLocation"></param>
+		/// <param name="imagesOnly"></param>
 		/// <param name="fileUrl"></param>
 		/// <param name="fileGenerationDate"></param>
 		/// <param name="fileDeletionDate"></param>
@@ -438,13 +439,13 @@ namespace MOBOT.BHL.DAL
 			string connectionKeyName,
 			int pdfID,
 			int itemID,
+			string fileLocation,
 			string emailAddress,
 			string shareWithEmailAddresses,
-			bool imagesOnly,
 			string articleTitle,
 			string articleCreators,
 			string articleTags,
-			string fileLocation,
+			bool imagesOnly,
 			string fileUrl,
 			DateTime? fileGenerationDate,
 			DateTime? fileDeletionDate,
@@ -459,13 +460,13 @@ namespace MOBOT.BHL.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("PDFUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("PdfID", SqlDbType.Int, null, false, pdfID),
 					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
+					CustomSqlHelper.CreateInputParameter("FileLocation", SqlDbType.NVarChar, 200, false, fileLocation),
 					CustomSqlHelper.CreateInputParameter("EmailAddress", SqlDbType.NVarChar, 200, false, emailAddress),
 					CustomSqlHelper.CreateInputParameter("ShareWithEmailAddresses", SqlDbType.NVarChar, 1073741823, false, shareWithEmailAddresses),
-					CustomSqlHelper.CreateInputParameter("ImagesOnly", SqlDbType.Bit, null, false, imagesOnly),
 					CustomSqlHelper.CreateInputParameter("ArticleTitle", SqlDbType.NVarChar, 1073741823, false, articleTitle),
 					CustomSqlHelper.CreateInputParameter("ArticleCreators", SqlDbType.NVarChar, 1073741823, false, articleCreators),
 					CustomSqlHelper.CreateInputParameter("ArticleTags", SqlDbType.NVarChar, 1073741823, false, articleTags),
-					CustomSqlHelper.CreateInputParameter("FileLocation", SqlDbType.NVarChar, 200, false, fileLocation),
+					CustomSqlHelper.CreateInputParameter("ImagesOnly", SqlDbType.Bit, null, false, imagesOnly),
 					CustomSqlHelper.CreateInputParameter("FileUrl", SqlDbType.NVarChar, 200, false, fileUrl),
 					CustomSqlHelper.CreateInputParameter("FileGenerationDate", SqlDbType.DateTime, null, true, fileGenerationDate),
 					CustomSqlHelper.CreateInputParameter("FileDeletionDate", SqlDbType.DateTime, null, true, fileDeletionDate),
@@ -477,7 +478,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PDF> helper = new CustomSqlHelper<PDF>())
 				{
-					CustomGenericList<PDF> list = helper.ExecuteReader(command);
+					List<PDF> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PDF o = list[0];
@@ -493,7 +494,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in PDF. Returns an object of type PDF.
+		/// Update values in dbo.PDF. Returns an object of type PDF.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -508,7 +509,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in PDF. Returns an object of type PDF.
+		/// Update values in dbo.PDF. Returns an object of type PDF.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -524,13 +525,13 @@ namespace MOBOT.BHL.DAL
 			return PDFUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.PdfID,
 				value.ItemID,
+				value.FileLocation,
 				value.EmailAddress,
 				value.ShareWithEmailAddresses,
-				value.ImagesOnly,
 				value.ArticleTitle,
 				value.ArticleCreators,
 				value.ArticleTags,
-				value.FileLocation,
+				value.ImagesOnly,
 				value.FileUrl,
 				value.FileGenerationDate,
 				value.FileDeletionDate,
@@ -545,9 +546,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage PDF object.
+		/// Manage dbo.PDF object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in PDF.
+		/// then either insert values into, delete values from, or update values in dbo.PDF.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -562,9 +563,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage PDF object.
+		/// Manage dbo.PDF object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in PDF.
+		/// then either insert values into, delete values from, or update values in dbo.PDF.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -583,13 +584,13 @@ namespace MOBOT.BHL.DAL
 				
 				PDF returnValue = PDFInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.ItemID,
+						value.FileLocation,
 						value.EmailAddress,
 						value.ShareWithEmailAddresses,
-						value.ImagesOnly,
 						value.ArticleTitle,
 						value.ArticleCreators,
 						value.ArticleTags,
-						value.FileLocation,
+						value.ImagesOnly,
 						value.FileUrl,
 						value.FileGenerationDate,
 						value.FileDeletionDate,
@@ -624,13 +625,13 @@ namespace MOBOT.BHL.DAL
 				PDF returnValue = PDFUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.PdfID,
 						value.ItemID,
+						value.FileLocation,
 						value.EmailAddress,
 						value.ShareWithEmailAddresses,
-						value.ImagesOnly,
 						value.ArticleTitle,
 						value.ArticleCreators,
 						value.ArticleTags,
-						value.FileLocation,
+						value.ImagesOnly,
 						value.FileUrl,
 						value.FileGenerationDate,
 						value.FileDeletionDate,
@@ -655,4 +656,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

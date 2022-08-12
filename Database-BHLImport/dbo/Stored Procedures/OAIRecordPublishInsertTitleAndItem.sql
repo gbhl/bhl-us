@@ -11,11 +11,9 @@ SET NOCOUNT ON
 DECLARE @ProductionTitleID int
 DECLARE @ProductionItemID int
 
-DECLARE @IdentifierISSN int
 DECLARE @IdentifierISBN int
 DECLARE @IdentifierLCCN int
 
-SELECT @IdentifierISSN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'ISSN'
 SELECT @IdentifierISBN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'ISBN'
 SELECT @IdentifierLCCN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'DLC'
 
@@ -34,39 +32,39 @@ SELECT @IdentifierLCCN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierNam
 -- then a new title record will be inserted into the production database.
 
 -- Match on DOI
-SELECT	@ProductionTitleID = t.TitleID
+DECLARE @DOIIdentifierID int
+SELECT @DOIIdentifierID = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'DOI'
+
+SELECT	@ProductionTitleID = ti.TitleID
 FROM	dbo.OAIRecord o 
-		INNER JOIN dbo.BHLDOI d ON o.Doi = d.DoiName AND d.DOIEntityTypeID = 10 -- title
-		INNER JOIN dbo.BHLTitle t ON d.EntityID = t.TitleID
+		INNER JOIN dbo.BHLTitle_Identifier ti ON o.Doi = ti.IdentifierValue AND ti.IdentifierID = @DOIIdentifierID
 WHERE	o.OAIRecordID = @OAIRecordID
 
 -- Match on ISSN
 IF @ProductionTitleID IS NULL
 BEGIN
-	SELECT	@ProductionTitleID = t.TitleID
+	SELECT	@ProductionTitleID = ti.TitleID
 	FROM	dbo.OAIRecord o
-			INNER JOIN dbo.BHLTitle_Identifier ti ON o.Issn = ti.IdentifierValue AND ti.IdentifierID = @IdentifierISSN
-			INNER JOIN dbo.BHLTitle t ON ti.TitleID = t.TitleID
+			INNER JOIN dbo.BHLTitle_Identifier ti ON dbo.BHLfnGetISSNValue(o.Issn) = ti.IdentifierValue
+			INNER JOIN dbo.BHLIdentifier bid ON ti.IdentifierID = bid.IdentifierID AND bid.IdentifierType = 'ISSN'
 	WHERE	o.OAIRecordID = @OAIRecordID
 END
 
 -- Match on ISBN
 IF @ProductionTitleID IS NULL
 BEGIN
-	SELECT	@ProductionTitleID = t.TitleID
+	SELECT	@ProductionTitleID = ti.TitleID
 	FROM	dbo.OAIRecord o
 			INNER JOIN dbo.BHLTitle_Identifier ti ON o.Isbn = ti.IdentifierValue AND ti.IdentifierID = @IdentifierISBN
-			INNER JOIN dbo.BHLTitle t ON ti.TitleID = t.TitleID
 	WHERE	o.OAIRecordID = @OAIRecordID
 END
 
 -- Match on LCCN
 IF @ProductionTitleID IS NULL
 BEGIN
-	SELECT	@ProductionTitleID = t.TitleID
+	SELECT	@ProductionTitleID = ti.TitleID
 	FROM	dbo.OAIRecord o
 			INNER JOIN dbo.BHLTitle_Identifier ti ON o.Lccn = ti.IdentifierValue AND ti.IdentifierID = @IdentifierLCCN
-			INNER JOIN dbo.BHLTitle t ON ti.TitleID = t.TitleID
 	WHERE	o.OAIRecordID = @OAIRecordID
 END
 

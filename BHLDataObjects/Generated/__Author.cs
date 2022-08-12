@@ -1,5 +1,5 @@
 
-// Generated 6/6/2019 11:14:00 AM
+// Generated 1/5/2021 3:24:51 PM
 // Do not modify the contents of this code file.
 // This abstract class __Author is based upon dbo.Author.
 
@@ -767,7 +767,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Author.SortColumn.AuthorID);
 		/// </summary>
 		[Serializable]

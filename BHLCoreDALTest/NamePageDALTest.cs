@@ -1,14 +1,13 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for NamePageDALTest and is intended
     ///to contain all NamePageDALTest Unit Tests
@@ -77,7 +76,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int pageID = 3299787;
-            CustomGenericList<NamePage> actual = target.NamePageSelectByPageID(sqlConnection, sqlTransaction, pageID);
+            List<NamePage> actual = target.NamePageSelectByPageID(sqlConnection, sqlTransaction, pageID);
             Assert.IsTrue(actual.Count > 0);
         }
 

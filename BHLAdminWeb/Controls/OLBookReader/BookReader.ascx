@@ -526,7 +526,8 @@
 
     // Set the parameters for the page
     var qsParm = new Array();
-    qsParm["item"] = "<%= ItemID %>";
+    qsParm["objectType"] = "<%= ObjectType%>";
+    qsParm["objectId"] = "<%= ObjectID %>";
     qsParm["pgs"] = "<%= NumPages %>";
     qsParm["fixedWidth"] = "<%= FixedImageWidth %>";
     qsParm["fixedHeight"] = "<%= FixedImageHeight %>";
@@ -537,8 +538,10 @@
         
         // Make AJAX call here to get an object containing page information
         var pages = null;
-        if (qsParm["item"] != "") {
-            $.getJSON("/Services/PageSummaryService.ashx?op=PageSummarySelectForViewerByItemID&itemID=" + qsParm["item"],
+        if (qsParm["objectId"] != "") {
+            var operation = "PageSummarySelectForViewerByItemID";
+            if (qsParm["objectType"] == "Segment") operation = "PageSummarySelectForViewerBySegmentID";
+            $.getJSON("/Services/PageSummaryService.ashx?op=" + operation + "&itemID=" + qsParm["objectId"],
                 function (data) {
                     pages = data;
                     InitializeViewer(<%= StartPage %>);
@@ -658,7 +661,8 @@
         br.bookUrl = '';
 
         // Store the item identifier for later use
-        br.bhlItemId = qsParm["item"];
+        br.bhlObjectType = qsParm["objectType"];
+        br.bhlObjectId = qsParm["objectId"];
 
         br.ui = "embed";
 

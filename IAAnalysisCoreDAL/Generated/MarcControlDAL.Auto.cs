@@ -1,8 +1,8 @@
 
-// Generated 11/12/2008 3:12:29 PM
+// Generated 1/5/2021 12:29:53 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class MarcControlDAL is based upon MarcControl.
+// This partial class MarcControlDAL is based upon dbo.MarcControl.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.IAAnalysis.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from MarcControl by primary key(s).
+		/// Select values from dbo.MarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 			
 		/// <summary>
-		/// Select values from MarcControl by primary key(s).
+		/// Select values from dbo.MarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.IAAnalysis.DAL
 			{
 				using (CustomSqlHelper<MarcControl> helper = new CustomSqlHelper<MarcControl>())
 				{
-					CustomGenericList<MarcControl> list = helper.ExecuteReader(command);
+					List<MarcControl> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						MarcControl o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Select values from MarcControl by primary key(s).
+		/// Select values from dbo.MarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="marcControlID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> MarcControlSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> MarcControlSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int marcControlID)
@@ -104,14 +105,14 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Select values from MarcControl by primary key(s).
+		/// Select values from dbo.MarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="marcControlID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> MarcControlSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> MarcControlSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into MarcControl.
+		/// Insert values into dbo.MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -151,7 +152,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into MarcControl.
+		/// Insert values into dbo.MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -180,7 +181,7 @@ namespace MOBOT.IAAnalysis.DAL
 			{
 				using (CustomSqlHelper<MarcControl> helper = new CustomSqlHelper<MarcControl>())
 				{
-					CustomGenericList<MarcControl> list = helper.ExecuteReader(command);
+					List<MarcControl> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						MarcControl o = list[0];
@@ -196,7 +197,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 
 		/// <summary>
-		/// Insert values into MarcControl. Returns an object of type MarcControl.
+		/// Insert values into dbo.MarcControl. Returns an object of type MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -211,7 +212,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into MarcControl. Returns an object of type MarcControl.
+		/// Insert values into dbo.MarcControl. Returns an object of type MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -235,7 +236,7 @@ namespace MOBOT.IAAnalysis.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from MarcControl by primary key(s).
+		/// Delete values from dbo.MarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -250,7 +251,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from MarcControl by primary key(s).
+		/// Delete values from dbo.MarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -293,7 +294,7 @@ namespace MOBOT.IAAnalysis.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in MarcControl. Returns an object of type MarcControl.
+		/// Update values in dbo.MarcControl. Returns an object of type MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -314,7 +315,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Update values in MarcControl. Returns an object of type MarcControl.
+		/// Update values in dbo.MarcControl. Returns an object of type MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -345,7 +346,7 @@ namespace MOBOT.IAAnalysis.DAL
 			{
 				using (CustomSqlHelper<MarcControl> helper = new CustomSqlHelper<MarcControl>())
 				{
-					CustomGenericList<MarcControl> list = helper.ExecuteReader(command);
+					List<MarcControl> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						MarcControl o = list[0];
@@ -361,7 +362,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Update values in MarcControl. Returns an object of type MarcControl.
+		/// Update values in dbo.MarcControl. Returns an object of type MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -376,7 +377,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Update values in MarcControl. Returns an object of type MarcControl.
+		/// Update values in dbo.MarcControl. Returns an object of type MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -401,9 +402,9 @@ namespace MOBOT.IAAnalysis.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage MarcControl object.
+		/// Manage dbo.MarcControl object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in MarcControl.
+		/// then either insert values into, delete values from, or update values in dbo.MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -418,9 +419,9 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Manage MarcControl object.
+		/// Manage dbo.MarcControl object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in MarcControl.
+		/// then either insert values into, delete values from, or update values in dbo.MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -487,4 +488,4 @@ namespace MOBOT.IAAnalysis.DAL
 
 	}	
 }
-// end of source generation
+

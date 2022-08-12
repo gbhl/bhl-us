@@ -1,7 +1,7 @@
 
-// Generated 4/16/2009 4:40:13 PM
+// Generated 1/5/2021 3:46:42 PM
 // Do not modify the contents of this code file.
-// This abstract class __vwMarcDataField is based upon vwMarcDataField.
+// This abstract class __vwMarcDataField is based upon dbo.vwMarcDataField.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __vwMarcDataField : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -160,7 +160,7 @@ namespace MOBOT.BHL.DataObjects
 						_SubFieldValue = (string)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -168,7 +168,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region MarcImportBatchID
 		
@@ -452,9 +452,9 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: SubFieldValue;
-		/// DBMS data type: nvarchar(200); Nullable;
+		/// DBMS data type: nvarchar(MAX); Nullable;
 		/// </summary>
-		[ColumnDefinition("SubFieldValue", DbTargetType=SqlDbType.NVarChar, Ordinal=11, CharacterMaxLength=200, IsNullable=true)]
+		[ColumnDefinition("SubFieldValue", DbTargetType=SqlDbType.NVarChar, Ordinal=11, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string SubFieldValue
 		{
 			get
@@ -463,7 +463,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 200);
+				if (value != null) value = CalibrateValue(value, 1073741823);
 				if (_SubFieldValue != value)
 				{
 					_SubFieldValue = value;
@@ -475,7 +475,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion SubFieldValue
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -622,7 +622,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __vwMarcDataField.SortColumn.MarcImportBatchID);
 		/// </summary>
 		[Serializable]
@@ -645,3 +644,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

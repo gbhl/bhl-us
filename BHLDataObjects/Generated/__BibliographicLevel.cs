@@ -1,5 +1,5 @@
 
-// Generated 1/2/2020 3:40:22 PM
+// Generated 1/5/2021 3:25:02 PM
 // Do not modify the contents of this code file.
 // This abstract class __BibliographicLevel is based upon dbo.BibliographicLevel.
 
@@ -367,7 +367,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __BibliographicLevel.SortColumn.BibliographicLevelID);
 		/// </summary>
 		[Serializable]

@@ -1,12 +1,13 @@
 ﻿using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
     public class ReportDAL
     {
-        public CustomGenericList<ReportOrphan> ReportSelectOrphanedEntities(
+        public List<ReportOrphan> ReportSelectOrphanedEntities(
             SqlConnection sqlConnection, 
             SqlTransaction sqlTransaction)
         {
@@ -18,7 +19,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ReportOrphan> helper = new CustomSqlHelper<ReportOrphan>())
                 {
-                    CustomGenericList<ReportOrphan> list = helper.ExecuteReader(command);
+                    List<ReportOrphan> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

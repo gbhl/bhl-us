@@ -1,6 +1,7 @@
 ﻿using BHL.Search;
 using MOBOT.BHL.API.BHLApiDAL;
 using MOBOT.BHL.API.BHLApiDataObjects3;
+using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace MOBOT.BHL.API.BHLApi
     {
         private int _apiApplicationID = 5;  // application ID 5 corresponds to "BHL API v3";
         private bool _useElasticSearch = true;  // if this is set to false, some API methods will not return data
+        public const int MaxPubSearchPageSize = 200;    // maximum page size for PublicationSearch methods
+        public const int DefaultPubSearchPageSize = 100;    // default page size for PublicationSearch methods
 
         #region Constructor
 
@@ -166,13 +169,16 @@ namespace MOBOT.BHL.API.BHLApi
                 item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
                 item.TitleUrl = (item.TitleID == null) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.TitleID.ToString();
                 item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
-                item.ItemTextUrl = "https://www.biodiversitylibrary.org/itemtext/" + item.ItemID.ToString();
-                item.ItemPDFUrl = "https://www.biodiversitylibrary.org/itempdf/" + item.ItemID.ToString();
-                item.ItemImagesUrl = "https://www.biodiversitylibrary.org/itemimages/" + item.ItemID.ToString();
+                if ((item.IsVirtual ?? "0") == "0")
+                {
+                    item.ItemTextUrl = "https://www.biodiversitylibrary.org/itemtext/" + item.ItemID.ToString();
+                    item.ItemPDFUrl = "https://www.biodiversitylibrary.org/itempdf/" + item.ItemID.ToString();
+                    item.ItemImagesUrl = "https://www.biodiversitylibrary.org/itemimages/" + item.ItemID.ToString();
+                }
 
-                List<Contributor> scanningInstitutions = dal.InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                List<Contributor> scanningInstitutions = dal.InstitutionSelectByBookIDAndRole(null, null, item.ItemID, "Scanning Institution");
                 if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                List<Contributor> rightsHolders = dal.InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                List<Contributor> rightsHolders = dal.InstitutionSelectByBookIDAndRole(null, null, item.ItemID, "Rights Holder");
                 if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
                 if (pages) item.Pages = this.GetItemPages(item.ItemID.ToString(), includeOcr);
@@ -203,7 +209,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 Page page = new Page();
                 page.PageID = pageDetail.PageID;
-                page.ItemID = pageDetail.ItemID;
+                page.ItemID = pageDetail.ItemID.ToString();
                 page.Issue = pageDetail.Issue;
                 page.Year = pageDetail.Year;
                 page.Volume = pageDetail.Volume;
@@ -483,7 +489,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 Page page = new Page();
                 page.PageID = pageDetail.PageID;
-                page.ItemID = pageDetail.ItemID;
+                page.ItemID = pageDetail.ItemID.ToString();
                 page.Issue = pageDetail.Issue;
                 page.Year = pageDetail.Year;
                 page.Volume = pageDetail.Volume;
@@ -733,6 +739,7 @@ namespace MOBOT.BHL.API.BHLApi
             Name name = null;
             Title currentTitle = null;
             Item currentItem = null;
+            Part currentPart = null;
             Page currentPage = null;
 
             if (pageDetails.Count > 0)
@@ -749,7 +756,7 @@ namespace MOBOT.BHL.API.BHLApi
                 currentItem = new Item();
                 currentPage = new Page();
 
-                // Get the title, item, and page information
+                // Get the title, item, part, and page information
                 foreach (PageDetail pageDetail in pageDetails)
                 {
                     if (pageDetail.TitleID != currentTitle.TitleID)
@@ -778,9 +785,36 @@ namespace MOBOT.BHL.API.BHLApi
                         item.Volume = pageDetail.VolumeInfo;
                         item.HoldingInstitution = pageDetail.HoldingInstitution;
                         item.ItemUrl = pageDetail.ItemUrl;
-                        item.Pages = new List<Page>();
+                        //item.Pages = new List<Page>();
                         currentTitle.Items.Add(item);
                         currentItem = item;
+                    }
+
+                    if (pageDetail.SegmentID != null)
+                    {
+                        if (currentPart == null) currentPart = new Part();
+
+                        if (pageDetail.SegmentID != currentPart.PartID)
+                        {
+                            // Add a new part
+                            Part part = new Part();
+                            part.PartID = (int)pageDetail.SegmentID;
+                            part.Title = pageDetail.Title;
+                            part.Source = pageDetail.SegmentSourceName;
+                            part.SourceIdentifier = pageDetail.SegmentSourceIdentifier;
+                            part.Contributor = pageDetail.SegmentContributors;
+                            part.StartPageNumber = pageDetail.StartPageNumber;
+                            part.EndPageNumber = pageDetail.EndPageNumber;
+                            part.PartUrl = pageDetail.SegmentUrl;
+                            //part.Pages = new List<Page>();
+                            if (currentItem.Parts == null) currentItem.Parts = new List<Part>();
+                            currentItem.Parts.Add(part);
+                            currentPart = part;
+                        }
+                    }
+                    else
+                    {
+                        currentPart = null;
                     }
 
                     if (pageDetail.PageID != currentPage.PageID)
@@ -788,7 +822,7 @@ namespace MOBOT.BHL.API.BHLApi
                         // Add a new page
                         Page page = new Page();
                         page.PageID = pageDetail.PageID;
-                        page.ItemID = pageDetail.ItemID;
+                        page.ItemID = pageDetail.ItemID.ToString();
                         page.Year = pageDetail.Year;
                         page.Volume = pageDetail.Volume;
                         page.Issue = pageDetail.Issue;
@@ -816,7 +850,18 @@ namespace MOBOT.BHL.API.BHLApi
                             }
                         }
 
-                        currentItem.Pages.Add(page);
+                        if (currentPart != null)
+                        {
+                            // Add page to the current part
+                            if (currentPart.Pages == null) currentPart.Pages = new List<Page>();
+                            currentPart.Pages.Add(page);
+                        }
+                        else
+                        {
+                            // Add page to the current item
+                            if (currentItem.Pages == null) currentItem.Pages = new List<Page>();
+                            currentItem.Pages.Add(page);
+                        }
                         currentPage = page;
                     }
                     else
@@ -900,7 +945,7 @@ namespace MOBOT.BHL.API.BHLApi
         #region Search methods
 
         public List<Publication> SearchPublication(string searchTerm, string searchType, 
-            string page, bool sqlFullText)
+            string page, string pageSize, bool sqlFullText)
         {
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(searchTerm))
@@ -915,6 +960,25 @@ namespace MOBOT.BHL.API.BHLApi
                 throw new InvalidApiParamException("searchtype (" + searchType + ") must be one of the following values: F, C");
             }
 
+            int pageSizeInt = DefaultPubSearchPageSize;
+            if (!string.IsNullOrWhiteSpace(pageSize))
+            {
+                if (!Int32.TryParse(pageSize, out pageSizeInt))
+                {
+                    throw new InvalidApiParamException("pageSize (" + pageSize + ") must be a valid integer value.");
+                }
+
+                if (pageSizeInt < 1)
+                {
+                    throw new InvalidApiParamException("pageSize (" + pageSize + ") must be greater than zero.");
+                }
+
+                if (pageSizeInt > MaxPubSearchPageSize)
+                {
+                    throw new InvalidApiParamException("pageSize (" + pageSize + ") must be less than or equal to " + MaxPubSearchPageSize + ".");
+                }
+            }
+
             int pageInt = 1;
             if (page != string.Empty)
             {
@@ -925,9 +989,9 @@ namespace MOBOT.BHL.API.BHLApi
 
                 /*
                  * Page must be between 1 and 50.  
-                 * Total results must be less than 10000.  With a page size of 200 results, 50 pages 
-                 * is the maximum.  If page greater than 50 is requested, ElasticSearch returns the 
-                 * following error:  
+                 * Total results must be less than 10000.  For example, with a page size of 200 results, 
+                 * 50 pages is the maximum.  If page greater than 50 is requested, ElasticSearch returns
+                 * the following error:  
                  *  Result window is too large, from + size must be less than or equal to: [10000] 
                  *  but was [XXXXX]. See the scroll api for a more efficient way to request large 
                  *  data sets. This limit can be set by changing the [index.max_result_window] index 
@@ -938,16 +1002,16 @@ namespace MOBOT.BHL.API.BHLApi
                     throw new InvalidApiParamException("page (" + page + ") must be greater than zero.");
                 }
 
-                if (pageInt > 50)
+                if (pageInt * pageSizeInt > 10000)
                 {
-                    throw new InvalidApiParamException("page (" + page + ") must be less than or equal to 50.");
+                    throw new InvalidApiParamException(string.Format("With {0} results per page, page {1} must be less than or equal to {2}", pageSize, page, ((int)10000 / pageSizeInt)).ToString());
                 }
             }
 
             List<Publication> pubs = new List<Publication>();
             if (_useElasticSearch)
             {
-                pubs = SearchPublicationGlobal(searchTerm, searchType, pageInt);
+                pubs = SearchPublicationGlobal(searchTerm, searchType, pageInt, pageSizeInt);
             }
             else
             {
@@ -959,7 +1023,8 @@ namespace MOBOT.BHL.API.BHLApi
 
         public List<Publication> SearchPublication(string title, string titleOp, 
             string authorName, string year, string subject, string languageCode, string collectionID, 
-            string notes, string notesOp, string text, string textOp, string page, bool sqlFullText)
+            string notes, string notesOp, string text, string textOp, string page, string pageSize, 
+            bool sqlFullText)
         {
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(title) && string.IsNullOrWhiteSpace(authorName) && 
@@ -1025,6 +1090,25 @@ namespace MOBOT.BHL.API.BHLApi
                 }
             }
 
+            int pageSizeInt = DefaultPubSearchPageSize;
+            if (!string.IsNullOrWhiteSpace(pageSize))
+            {
+                if (!Int32.TryParse(pageSize, out pageSizeInt))
+                {
+                    throw new InvalidApiParamException("pageSize (" + pageSize + ") must be a valid integer value.");
+                }
+
+                if (pageSizeInt < 1)
+                {
+                    throw new InvalidApiParamException("pageSize (" + pageSize + ") must be greater than zero.");
+                }
+
+                if (pageSizeInt > MaxPubSearchPageSize)
+                {
+                    throw new InvalidApiParamException("pageSize (" + pageSize + ") must be less than or equal to " + MaxPubSearchPageSize + ".");
+                }
+            }
+
             int pageInt = 1;
             if (page != string.Empty)
             {
@@ -1035,9 +1119,9 @@ namespace MOBOT.BHL.API.BHLApi
 
                 /*
                  * Page must be between 1 and 50.  
-                 * Total results must be less than 10000.  With a page size of 200 results, 50 pages 
-                 * is the maximum.  If page greater than 50 is requested, ElasticSearch returns the 
-                 * following error:  
+                 * Total results must be less than 10000.  For example, with a page size of 200 results, 
+                 * 50 pages is the maximum.  If page greater than 50 is requested, ElasticSearch returns
+                 * the following error:  
                  *  Result window is too large, from + size must be less than or equal to: [10000] 
                  *  but was [XXXXX]. See the scroll api for a more efficient way to request large 
                  *  data sets. This limit can be set by changing the [index.max_result_window] index 
@@ -1048,9 +1132,9 @@ namespace MOBOT.BHL.API.BHLApi
                     throw new InvalidApiParamException("page (" + page + ") must be greater than zero.");
                 }
 
-                if (pageInt > 50)
+                if (pageInt * pageSizeInt > 10000)
                 {
-                    throw new InvalidApiParamException("page (" + page + ") must be less than or equal to 50.");
+                    throw new InvalidApiParamException(string.Format("With {0} results per page, page {1} must be less than or equal to {2}", pageSize, page, ((int)10000/pageSizeInt)).ToString());
                 }
             }
 
@@ -1058,7 +1142,7 @@ namespace MOBOT.BHL.API.BHLApi
             if (_useElasticSearch)
             {
                 pubs = SearchPublicationAdvanced(title, titleOp, authorName, year, subject, languageCode,
-                    collectionID, notes, notesOp, text, textOp, pageInt);
+                    collectionID, notes, notesOp, text, textOp, pageInt, pageSizeInt);
             }
             else
             {
@@ -1088,7 +1172,7 @@ namespace MOBOT.BHL.API.BHLApi
         /// <returns></returns>
         private List<Publication> SearchPublicationAdvanced(string title, string titleOp,
             string authorName, string year, string subject, string languageCode, string collectionID, 
-            string notes, string notesOp, string text, string textOp, int page)
+            string notes, string notesOp, string text, string textOp, int page, int pageSize)
         {
             // Build the language and collection parameters
             Tuple<string, string> languageParam = null;
@@ -1108,7 +1192,7 @@ namespace MOBOT.BHL.API.BHLApi
             // Submit the request to ElasticSearch
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
             search.StartPage = page;
-            search.NumResults = 200;
+            search.NumResults = (pageSize < 1 || pageSize > MaxPubSearchPageSize) ? DefaultPubSearchPageSize : pageSize;
             if (!string.IsNullOrWhiteSpace(text)) search.Highlight = true;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
 
@@ -1136,12 +1220,12 @@ namespace MOBOT.BHL.API.BHLApi
         /// <param name="searchTerm"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        private List<Publication> SearchPublicationGlobal(string searchTerm, string searchType, int page)
+        private List<Publication> SearchPublicationGlobal(string searchTerm, string searchType, int page, int pageSize)
         {
             // Submit the request to ElasticSearch
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
             search.StartPage = page;
-            search.NumResults = 200;
+            search.NumResults = (pageSize < 1 || pageSize > MaxPubSearchPageSize) ? DefaultPubSearchPageSize : pageSize;
             search.Highlight = true;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
 
@@ -1653,17 +1737,33 @@ namespace MOBOT.BHL.API.BHLApi
             return names;
         }
 
-        public List<Page> PageSearch(string itemID, string text)
+        public List<Page> PageSearch(string entityType, string entityID, string text)
         {
             // Validate the parameters
-            int itemIDint;
-            if (!Int32.TryParse(itemID, out itemIDint))
+            int entityIDint;
+            if (entityType.ToUpper() != "ITEM" && entityType.ToUpper() != "PART")
             {
-                throw new InvalidApiParamException("itemID (" + itemID + ") must be a valid integer value.");
+                throw new InvalidApiParamException("idType (" + entityType + ") must be 'Item' or 'Part'.");
+            }
+            if (!Int32.TryParse(entityID, out entityIDint))
+            {
+                throw new InvalidApiParamException("itemID (" + entityID + ") must be a valid integer value.");
             }
             if (text == String.Empty)
             {
                 throw new InvalidApiParamException("Please supply text for which to search.");
+            }
+
+            int itemID = 0;
+            if (entityType.ToUpper() == "ITEM")
+            {
+                MOBOT.BHL.DataObjects.Book book = new BHLProvider().BookSelectAuto(entityIDint);
+                if (book != null) itemID = book.ItemID;
+            }
+            else
+            {
+                MOBOT.BHL.DataObjects.Segment segment = new BHLProvider().SegmentSelectAuto(entityIDint);
+                if (segment != null) itemID = segment.ItemID;
             }
 
             List<Page> pages = new List<Page>();
@@ -1688,14 +1788,16 @@ namespace MOBOT.BHL.API.BHLApi
                 {
                     Page page = new Page
                     {
-                        PageID = Convert.ToInt32(hit.Id),
-                        ItemID = itemIDint,
-                        PageUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.Id,
-                        ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + hit.Id,
-                        FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + hit.Id,
-                        OcrUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.Id,
+                        PageID = Convert.ToInt32(hit.PageId),
+                        PageUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.PageId,
+                        ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + hit.PageId,
+                        FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + hit.PageId,
+                        OcrUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.PageId,
                         OcrText = hit.Text
                     };
+
+                    if (entityType.ToUpper() == "ITEM") { page.BHLType = BHLType.Item; page.ItemID = entityID; }
+                    if (entityType.ToUpper() == "PART") { page.BHLType = BHLType.Part; page.PartID = entityID; }
 
                     pageIDs.Rows.Add(page.PageID);
 
@@ -1810,7 +1912,7 @@ namespace MOBOT.BHL.API.BHLApi
             if (!isValid) detail = "[INVALID USER] " + detail;
 
             // Log the request.
-            new RequestLog().SaveRequestLog(_apiApplicationID, ipAddress, userID, (int)requestTypeID, detail);
+            new MOBOT.BHL.Utility.RequestLog().SaveRequestLog(_apiApplicationID, ipAddress, userID, (int)requestTypeID, detail);
 
             return isValid;
         }

@@ -1,17 +1,17 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHLImport.DAL
 {
-	public partial class TitleDAL
+    public partial class TitleDAL
 	{
         /// <summary>
         /// Select the new title with the specified marcBibID and importSourceID.
@@ -36,7 +36,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
                 {
-                    CustomGenericList<Title> list = helper.ExecuteReader(command);
+                    List<Title> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {

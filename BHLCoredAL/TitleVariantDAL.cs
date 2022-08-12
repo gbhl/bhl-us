@@ -1,19 +1,19 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class TitleVariantDAL
+    public partial class TitleVariantDAL
 	{
-        public CustomGenericList<TitleVariant> TitleVariantSelectByTitleID(SqlConnection sqlConnection,
+        public List<TitleVariant> TitleVariantSelectByTitleID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int titleID)
         {
@@ -26,13 +26,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleVariant> helper = new CustomSqlHelper<TitleVariant>())
                 {
-                    CustomGenericList<TitleVariant> list = helper.ExecuteReader(command);
+                    List<TitleVariant> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<TitleVariantType> TitleVariantTypeSelectAll(SqlConnection sqlConnection,
+        public List<TitleVariantType> TitleVariantTypeSelectAll(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -43,7 +43,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleVariantType> helper = new CustomSqlHelper<TitleVariantType>())
                 {
-                    CustomGenericList<TitleVariantType> list = helper.ExecuteReader(command);
+                    List<TitleVariantType> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

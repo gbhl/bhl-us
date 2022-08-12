@@ -1,13 +1,7 @@
-﻿
--- ItemInsertAuto PROCEDURE
--- Generated 3/24/2009 1:57:09 PM
--- Do not modify the contents of this procedure.
--- Insert Procedure for Item
-
-CREATE PROCEDURE ItemInsertAuto
+﻿CREATE PROCEDURE dbo.ItemInsertAuto
 
 @ItemID INT OUTPUT,
-@Identifier NVARCHAR(50),
+@Identifier NVARCHAR(200),
 @MARCLeader NVARCHAR(200),
 @Sponsor NVARCHAR(50),
 @Contributor NVARCHAR(100),
@@ -32,8 +26,7 @@ AS
 SET NOCOUNT ON
 
 INSERT INTO [dbo].[Item]
-(
-	[Identifier],
+( 	[Identifier],
 	[MARCLeader],
 	[Sponsor],
 	[Contributor],
@@ -52,11 +45,9 @@ INSERT INTO [dbo].[Item]
 	[ItemStatusID],
 	[MetaGetStatus],
 	[MarcGetStatus],
-	[CreationDate]
-)
+	[CreationDate] )
 VALUES
-(
-	@Identifier,
+( 	@Identifier,
 	@MARCLeader,
 	@Sponsor,
 	@Contributor,
@@ -75,20 +66,18 @@ VALUES
 	@ItemStatusID,
 	@MetaGetStatus,
 	@MarcGetStatus,
-	getdate()
-)
+	getdate() )
 
 SET @ItemID = Scope_Identity()
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure ItemInsertAuto. No information was inserted as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.ItemInsertAuto. No information was inserted as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[ItemID],
 		[Identifier],
 		[MARCLeader],
@@ -110,12 +99,10 @@ ELSE BEGIN
 		[MetaGetStatus],
 		[MarcGetStatus],
 		[CreationDate]	
-
 	FROM [dbo].[Item]
-	
 	WHERE
 		[ItemID] = @ItemID
 	
 	RETURN -- insert successful
 END
-
+GO

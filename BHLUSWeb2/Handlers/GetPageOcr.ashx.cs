@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BHL.SiteServiceREST.v1.Client;
+using System;
+using System.Configuration;
 using System.Web;
 
 namespace MOBOT.BHL.Web2
@@ -14,8 +16,8 @@ namespace MOBOT.BHL.Web2
             int pageID;
             if (Int32.TryParse(pageIDString, out pageID))
             {
-                SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-                string ocrText = service.GetOcrText(pageID);
+                Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                string ocrText = client.GetPageText(pageID);
                 context.Response.ContentType = "text/plain";
                 context.Response.Write(ocrText);
             }

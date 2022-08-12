@@ -1,14 +1,13 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for NameSegmentDALTest and is intended
     ///to contain all NameSegmentDALTest Unit Tests
@@ -77,7 +76,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int segmentID = 41797;
-            CustomGenericList<NameSegment> actual = target.NameSegmentSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
+            List<Name> actual = target.NameSegmentSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
             Assert.IsNotNull(actual);
         }
     }

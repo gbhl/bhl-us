@@ -10,7 +10,6 @@ namespace MOBOT.BHL.Web2
         public string Barcode { get; set; }
         public string Genre { get; set; }
         public string Material { get; set; }
-        public string DOI { get; set; }
         public string DDC { get; set; }
         public string LanguageName { get; set; }
         public string LocalLibraryUrl { get; set; }
@@ -32,13 +31,13 @@ namespace MOBOT.BHL.Web2
 
         public class BibliographyItem
         {
-            public Item Item { get; set; }
+            public DataObjects.Book Book { get; set; }
             public string ThumbUrl { get; set; }
             public List<Institution> institutions { get; set; }
 
-            public BibliographyItem(Item item, string thumbUrl)
+            public BibliographyItem(DataObjects.Book book, string thumbUrl)
             {
-                Item = item;
+                Book = book;
                 ThumbUrl = thumbUrl;
                 institutions = new List<Institution>();
             }
@@ -46,9 +45,6 @@ namespace MOBOT.BHL.Web2
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            PageSummaryView pageSummary;
-            DOI = string.Empty;
-
             // Parse TitleID
             int titleId;
             if (!int.TryParse((string)RouteData.Values["titleid"], out titleId))
@@ -82,25 +78,22 @@ namespace MOBOT.BHL.Web2
                 }
             }
 
-            List<Item> Items = bhlProvider.ItemSelectByTitleId(titleId);
-            if (Items == null)
+            List<DataObjects.Book> Books = bhlProvider.BookSelectByTitleId(titleId);
+            if (Books == null)
             {
                 Response.Redirect("~/titleunavailable");
             }
-            if (Items.Count == 0)
+            if (Books.Count == 0)
             {
                 Response.Redirect("~/titleunavailable");
             }
             else
             {
-                Barcode = Items[0].BarCode;
+                Barcode = Books[0].BarCode;
             }
 
             // Set the title for the COinS
             COinS.TitleID = titleId;
-
-            // Set up the Mendeley share control
-            mendeley.TitleID = titleId;
 
             // Assign Authors
             Authors = new List<Author>();
@@ -137,20 +130,17 @@ namespace MOBOT.BHL.Web2
             MaterialType materialType = bhlProvider.MaterialTypeSelect(BhlTitle.MaterialTypeID ?? 0);
             Material = (materialType == null) ? string.Empty : materialType.MaterialTypeLabel;
 
-            List<DOI> dois = bhlProvider.DOISelectValidForTitle(titleId);
-            if (dois.Count > 0) DOI = ConfigurationManager.AppSettings["DOIResolverURL"] + dois[0].DOIName;
-
             main.Page.Title = string.Format("Details - {0} - Biodiversity Heritage Library", BhlTitle.FullTitle);
 
             BibliographyItems = new List<BibliographyItem>();
-            foreach (Item item in Items)
+            foreach (DataObjects.Book book in Books)
             {
                 // Populate empty volume descriptions with default text
-                if (string.IsNullOrWhiteSpace(item.Volume)) item.Volume = "Volume details";
+                if (string.IsNullOrWhiteSpace(book.Volume)) book.Volume = "Volume details";
 
-                string externalUrl = (item.FirstPageID == null) ? "" : string.Format("/pagethumb/{0},100,100", item.FirstPageID.ToString());
-                BibliographyItem bibliographyItem = new BibliographyItem(item, externalUrl);
-                bibliographyItem.institutions = bhlProvider.InstitutionSelectByItemID(item.ItemID);
+                string externalUrl = (book.FirstPageID == null) ? "" : string.Format("/pagethumb/{0},100,100", book.FirstPageID.ToString());
+                BibliographyItem bibliographyItem = new BibliographyItem(book, externalUrl);
+                bibliographyItem.institutions = bhlProvider.InstitutionSelectByItemID((int)book.ItemID);
 
                 BibliographyItems.Add(bibliographyItem);
             }
@@ -195,32 +185,6 @@ namespace MOBOT.BHL.Web2
                     // Don't show this in the identifier list
                     TitleIdentifiers.Remove(titleIdentifier);
                 }
-            }
-
-            // Get the MODS for this title
-            //hypMODS.NavigateUrl += title.TitleID.ToString();
-            OAI2.OAIRecord record = new OAI2.OAIRecord("oai:" + ConfigurationManager.AppSettings["OAIIdentifierNamespace"] + ":title/" + TitleId);
-            OAIMODS.Convert mods = new OAIMODS.Convert(record);
-            litMods.Text = Server.HtmlEncode(mods.ToString()).Replace("\n", "<br />");
-
-            // Get the BibTex citations for this title
-            try
-            {
-                litBibTeX.Text = bhlProvider.TitleBibTeXGetCitationStringForTitleID(BhlTitle.TitleID).Replace("\n", "<br />");
-            }
-            catch
-            {
-                litBibTeX.Text = string.Empty;
-            }
-
-            // Get the RIS citation for this title
-            try
-            {
-                litRIS.Text = bhlProvider.ItemSelectRISCitationsForTitleID(BhlTitle.TitleID).Replace("\n", "<br />");
-            }
-            catch
-            {
-                litRIS.Text = string.Empty;
             }
         }
 

@@ -1,7 +1,7 @@
 
-// Generated 1/10/2014 11:05:49 AM
+// Generated 1/5/2021 3:42:44 PM
 // Do not modify the contents of this code file.
-// This abstract class __ImportRecordKeyword is based upon ImportRecordKeyword.
+// This abstract class __ImportRecordKeyword is based upon import.ImportRecordKeyword.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __ImportRecordKeyword : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -128,7 +128,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedUserID = (int)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -136,7 +136,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region ImportRecordKeywordID
 		
@@ -330,7 +330,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion LastModifiedUserID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -473,7 +473,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __ImportRecordKeyword.SortColumn.ImportRecordKeywordID);
 		/// </summary>
 		[Serializable]
@@ -492,3 +491,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

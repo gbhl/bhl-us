@@ -1,5 +1,5 @@
 
-// Generated 1/24/2020 4:10:38 PM
+// Generated 1/5/2021 2:15:49 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class IASegmentAuthorDAL is based upon dbo.IASegmentAuthor.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IASegmentAuthor> helper = new CustomSqlHelper<IASegmentAuthor>())
 				{
-					CustomGenericList<IASegmentAuthor> list = helper.ExecuteReader(command);
+					List<IASegmentAuthor> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IASegmentAuthor o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="segmentAuthorID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IASegmentAuthorSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IASegmentAuthorSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int segmentAuthorID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="segmentAuthorID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IASegmentAuthorSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IASegmentAuthorSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -215,7 +216,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IASegmentAuthor> helper = new CustomSqlHelper<IASegmentAuthor>())
 				{
-					CustomGenericList<IASegmentAuthor> list = helper.ExecuteReader(command);
+					List<IASegmentAuthor> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IASegmentAuthor o = list[0];
@@ -422,7 +423,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IASegmentAuthor> helper = new CustomSqlHelper<IASegmentAuthor>())
 				{
-					CustomGenericList<IASegmentAuthor> list = helper.ExecuteReader(command);
+					List<IASegmentAuthor> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IASegmentAuthor o = list[0];

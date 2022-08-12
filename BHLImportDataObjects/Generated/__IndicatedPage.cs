@@ -1,7 +1,7 @@
 
-// Generated 1/16/2008 1:54:48 PM
+// Generated 4/27/2021 10:41:57 AM
 // Do not modify the contents of this code file.
-// This abstract class __IndicatedPage is based upon IndicatedPage.
+// This abstract class __IndicatedPage is based upon dbo.IndicatedPage.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __IndicatedPage : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -208,7 +208,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -216,7 +216,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region IndicatedPageID
 		
@@ -252,9 +252,9 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: BarCode;
-		/// DBMS data type: nvarchar(40);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=2, CharacterMaxLength=40)]
+		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=2, CharacterMaxLength=200)]
 		public string BarCode
 		{
 			get
@@ -263,7 +263,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 40);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_BarCode != value)
 				{
 					_BarCode = value;
@@ -280,7 +280,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: FileNamePrefix;
-		/// DBMS data type: nvarchar(50);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
 		[ColumnDefinition("FileNamePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=200)]
 		public string FileNamePrefix
@@ -416,9 +416,9 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: PagePrefix;
-		/// DBMS data type: nvarchar(20); Nullable;
+		/// DBMS data type: nvarchar(40); Nullable;
 		/// </summary>
-		[ColumnDefinition("PagePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=20, IsNullable=true)]
+		[ColumnDefinition("PagePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=40, IsNullable=true)]
 		public string PagePrefix
 		{
 			get
@@ -427,7 +427,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 20);
+				if (value != null) value = CalibrateValue(value, 40);
 				if (_PagePrefix != value)
 				{
 					_PagePrefix = value;
@@ -683,7 +683,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -836,7 +836,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __IndicatedPage.SortColumn.IndicatedPageID);
 		/// </summary>
 		[Serializable]
@@ -865,3 +864,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using MOBOT.BHL.RequestLog.DataObjects;
 using CustomDataAccess;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.RequestLog.DAL
 {
@@ -32,20 +33,20 @@ namespace MOBOT.BHL.RequestLog.DAL
 			{
 				using ( CustomSqlHelper<int> helper = new CustomSqlHelper<int>() )
 				{
-					CustomGenericList<int> k = helper.ExecuteReader( command );
+					List<int> k = helper.ExecuteReader( command );
 
 					return k[ 0 ];
 				}
 			}
 		}
 
-        public static CustomGenericList<GenericStat> SelectTypeByDateRange(SqlConnection sqlConnection,
+        public static List<GenericStat> SelectTypeByDateRange(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, DateTime startDate, DateTime endDate, int applicationId)
         {
             return SelectTypeByDateRange(sqlConnection, sqlTransaction, startDate, endDate, applicationId, true);
         }
 
-        public static CustomGenericList<GenericStat> SelectTypeByDateRange(SqlConnection sqlConnection,
+        public static List<GenericStat> SelectTypeByDateRange(SqlConnection sqlConnection,
 			SqlTransaction sqlTransaction, DateTime startDate, DateTime endDate, int applicationId, bool includeWebServices )
 		{
 			SqlConnection connection = sqlConnection;
@@ -63,20 +64,20 @@ namespace MOBOT.BHL.RequestLog.DAL
 			{
 				using ( CustomSqlHelper<GenericStat> helper = new CustomSqlHelper<GenericStat>() )
 				{
-					CustomGenericList<GenericStat> list = helper.ExecuteReader( command );
+					List<GenericStat> list = helper.ExecuteReader( command );
 
 					return list;
 				}
 			}
 		}
 
-        public static CustomGenericList<GenericStat> SelectHourRangeTotal(SqlConnection sqlConnection,
+        public static List<GenericStat> SelectHourRangeTotal(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, DateTime date, int applicationId)
         {
             return SelectHourRangeTotal(sqlConnection, sqlTransaction, date, applicationId, true);
         }
 
-		public static CustomGenericList<GenericStat> SelectHourRangeTotal( SqlConnection sqlConnection,
+		public static List<GenericStat> SelectHourRangeTotal( SqlConnection sqlConnection,
 			SqlTransaction sqlTransaction, DateTime date, int applicationId, bool includeWebServices )
 		{
 			SqlConnection connection = sqlConnection;
@@ -94,20 +95,20 @@ namespace MOBOT.BHL.RequestLog.DAL
 			{
 				using ( CustomSqlHelper<GenericStat> helper = new CustomSqlHelper<GenericStat>() )
 				{
-					CustomGenericList<GenericStat> list = helper.ExecuteReader( command );
+					List<GenericStat> list = helper.ExecuteReader( command );
 
 					return list;
 				}
 			}
 		}
 
-        public static CustomGenericList<GenericStat> SelectIPTotal(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public static List<GenericStat> SelectIPTotal(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             DateTime startDate, DateTime endDate, int applicationId)
         {
             return SelectIPTotal(sqlConnection, sqlTransaction, startDate, endDate, applicationId, true);
         }
 
-		public static CustomGenericList<GenericStat> SelectIPTotal( SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+		public static List<GenericStat> SelectIPTotal( SqlConnection sqlConnection, SqlTransaction sqlTransaction,
 			DateTime startDate, DateTime endDate, int applicationId, bool includeWebServices )
 		{
 			SqlConnection connection = sqlConnection;
@@ -125,20 +126,20 @@ namespace MOBOT.BHL.RequestLog.DAL
 			{
 				using ( CustomSqlHelper<GenericStat> helper = new CustomSqlHelper<GenericStat>() )
 				{
-					CustomGenericList<GenericStat> list = helper.ExecuteReader( command );
+					List<GenericStat> list = helper.ExecuteReader( command );
 
 					return list;
 				}
 			}
 		}
 
-        public static CustomGenericList<GenericStat> SelectUserTotal(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public static List<GenericStat> SelectUserTotal(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             DateTime startDate, DateTime endDate, int applicationId)
         {
             return SelectUserTotal(sqlConnection, sqlTransaction, startDate, endDate, applicationId, true);
         }
 
-		public static CustomGenericList<GenericStat> SelectUserTotal(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+		public static List<GenericStat> SelectUserTotal(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
 			DateTime startDate, DateTime endDate, int applicationId, bool includeWebServices)
 		{
 			SqlConnection connection = sqlConnection;
@@ -156,14 +157,14 @@ namespace MOBOT.BHL.RequestLog.DAL
 			{
 				using (CustomSqlHelper<GenericStat> helper = new CustomSqlHelper<GenericStat>())
 				{
-					CustomGenericList<GenericStat> list = helper.ExecuteReader(command);
+					List<GenericStat> list = helper.ExecuteReader(command);
 
 					return list;
 				}
 			}
 		}
 
-        public static CustomGenericList<MOBOT.BHL.RequestLog.DataObjects.RequestLog> SelectStatDetails(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public static List<MOBOT.BHL.RequestLog.DataObjects.RequestLog> SelectStatDetails(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             DateTime startDate, DateTime endDate, int? requestTypeId, string ipAddress, 
             int? userId, int orderBy, int applicationId)
         {
@@ -185,7 +186,7 @@ namespace MOBOT.BHL.RequestLog.DAL
             {
                 using (CustomSqlHelper<MOBOT.BHL.RequestLog.DataObjects.RequestLog> helper = new CustomSqlHelper<MOBOT.BHL.RequestLog.DataObjects.RequestLog>())
                 {
-                    CustomGenericList<MOBOT.BHL.RequestLog.DataObjects.RequestLog> list = helper.ExecuteReader(command);
+					List<MOBOT.BHL.RequestLog.DataObjects.RequestLog> list = helper.ExecuteReader(command);
 
                     return list;
                 }
@@ -222,7 +223,7 @@ namespace MOBOT.BHL.RequestLog.DAL
 			}
 		}
 
-        public static CustomGenericList<HistoryStat> RequestHistorySelectByDateRangeAndRequestType(SqlConnection sqlConnection,
+        public static List<HistoryStat> RequestHistorySelectByDateRangeAndRequestType(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, DateTime startDate, DateTime endDate, int applicationID, int requestTypeID)
         {
             SqlConnection connection = sqlConnection;
@@ -240,7 +241,7 @@ namespace MOBOT.BHL.RequestLog.DAL
             {
                 using (CustomSqlHelper<HistoryStat> helper = new CustomSqlHelper<HistoryStat>())
                 {
-                    CustomGenericList<HistoryStat> list = helper.ExecuteReader(command);
+					List<HistoryStat> list = helper.ExecuteReader(command);
 
                     return list;
                 }

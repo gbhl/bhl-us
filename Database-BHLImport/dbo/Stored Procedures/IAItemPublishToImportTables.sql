@@ -130,7 +130,7 @@ BEGIN TRY
 
 	CREATE TABLE #tmpTitle (
 		[ItemID] int NOT NULL,
-		[IAIdentifier] [nvarchar](50) NOT NULL,
+		[IAIdentifier] [nvarchar](200) NOT NULL,
 		[MARCBibID] [nvarchar](50) NOT NULL,
 		[MARCLeader] [nvarchar](24) NULL,
 		[FullTitle] [ntext] NOT NULL,
@@ -232,13 +232,13 @@ BEGIN TRY
 
 	CREATE TABLE #tmpItem(
 		[ItemID] int NOT NULL,
-		[IAIdentifier] [nvarchar](50) NOT NULL,
+		[IAIdentifier] [nvarchar](200) NOT NULL,
 		[MARCBibID] [nvarchar](50) NOT NULL,
 		[TitleID] [int] NOT NULL,
-		[BarCode] [nvarchar](40) NOT NULL,
+		[BarCode] [nvarchar](200) NOT NULL,
 		[ItemSequence] [smallint] NULL,
 		[MaxExistingItemSequence] [smallint] NULL DEFAULT(0),	-- highest existing production sequence for this barcode
-		[MARCItemID] [nvarchar](50) NULL,
+		[MARCItemID] [nvarchar](200) NULL,
 		[Volume] [nvarchar](100) NULL,
 		[InstitutionCode] [nvarchar](10) NULL,
 		[LanguageCode] [nvarchar](10) NULL,
@@ -272,19 +272,20 @@ BEGIN TRY
 		[StartSeries] [nvarchar](10) NULL,
 		[EndSeries] [nvarchar](10) NULL,
 		[StartPart] [nvarchar](10) NULL,
-		[EndPart] [nvarchar](10) NULL
+		[EndPart] [nvarchar](10) NULL,
+		[PageProgression] [nvarchar](10) NULL
 		)
 
 	CREATE TABLE #tmpItemLanguage(
 		[ItemID] [int] NOT NULL,
-		[BarCode] [nvarchar](40) NOT NULL,
+		[BarCode] [nvarchar](200) NOT NULL,
 		[LanguageCode] [nvarchar](10) NOT NULL DEFAULT('')
 		)		
 
 	CREATE TABLE #tmpPage (
 		[ItemID] [int] NOT NULL,
 		[BHLItemID] [int] NOT NULL,
-		[BarCode] [nvarchar](40) NOT NULL,
+		[BarCode] [nvarchar](200) NOT NULL,
 		[FileNamePrefix] [nvarchar](200) NOT NULL,
 		[SequenceOrder] [int] NULL,
 		[SequenceOrderCorrected] [int] NULL,
@@ -298,7 +299,7 @@ BEGIN TRY
 		)
 
 	CREATE TABLE #tmpPage_PageType (
-		[BarCode] [nvarchar](40) NOT NULL,
+		[BarCode] [nvarchar](200) NOT NULL,
 		[FileNamePrefix] [nvarchar](200) NOT NULL,
 		[SequenceOrder] [int] NOT NULL,
 		[SequenceOrderCorrected] [int] NULL,
@@ -306,7 +307,7 @@ BEGIN TRY
 		)
 
 	CREATE TABLE #tmpIndicatedPage (
-		[BarCode] [nvarchar](40) NOT NULL,
+		[BarCode] [nvarchar](200) NOT NULL,
 		[FileNamePrefix] [nvarchar](200) NOT NULL,
 		[SequenceOrder] [int] NOT NULL,
 		[SequenceOrderCorrected] [int] NULL,
@@ -319,7 +320,7 @@ BEGIN TRY
 
 	CREATE TABLE #tmpSegment (
 		ItemID int NOT NULL,
-		BarCode nvarchar(40) NOT NULL,
+		BarCode nvarchar(200) NOT NULL,
 		SequenceOrder smallint NOT NULL DEFAULT ((1)),
 		SegmentGenreID int NOT NULL,
 		Title nvarchar(2000) NOT NULL DEFAULT (''),
@@ -346,7 +347,7 @@ BEGIN TRY
 
 	CREATE TABLE #tmpSegmentPage (
 		ItemID int NOT NULL,
-		BarCode nvarchar(40) NOT NULL,
+		BarCode nvarchar(200) NOT NULL,
 		SegmentSequenceOrder smallint NOT NULL,
 		PageSequenceOrder int NULL
 		)
@@ -354,7 +355,7 @@ BEGIN TRY
 	CREATE TABLE #tmpSegmentIdentifier
 		(
 		ItemID int NOT NULL,
-		BarCode nvarchar(40) NOT NULL,
+		BarCode nvarchar(200) NOT NULL,
 		SegmentSequenceOrder smallint NOT NULL,
 		IdentifierName nvarchar(40) NOT NULL,
 		IdentifierValue nvarchar(125) NULL,
@@ -363,7 +364,7 @@ BEGIN TRY
 	CREATE TABLE #tmpSegmentAuthor
 		(
 		ItemID int NOT NULL,
-		BarCode	nvarchar(40) NOT NULL DEFAULT(''),
+		BarCode	nvarchar(200) NOT NULL DEFAULT(''),
 		SegmentSequenceOrder int NOT NULL,
 		SequenceOrder int NOT NULL,
 		BHLAuthorID int NULL,
@@ -376,7 +377,7 @@ BEGIN TRY
 	CREATE TABLE #tmpSegmentAuthorIdentifier
 		(
 		ItemID int NOT NULL,
-		BarCode	nvarchar(40) NOT NULL DEFAULT(''),
+		BarCode	nvarchar(200) NOT NULL DEFAULT(''),
 		SegmentSequenceOrder int NOT NULL,
 		SequenceOrder int NOT NULL,
 		ProductionIdentifierID int NOT NULL,
@@ -420,7 +421,7 @@ BEGIN TRY
 
 	-- Get the publication titles
 	UPDATE	#tmpTitle
-	SET		ShortTitle = SUBSTRING(df.SubFieldValue, 1, 255)
+	SET		ShortTitle = dbo.BHLfnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 255), DEFAULT)
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField df
 				ON t.ItemID = df.ItemID
 	WHERE	df.DataFieldTag = '245'
@@ -428,7 +429,7 @@ BEGIN TRY
 
 	-- Get the uniform title (stored in either MARC 130 or MARC 240)
 	UPDATE	#tmpTitle
-	SET		UniformTitle = SUBSTRING(df.SubFieldValue, 1, 255)
+	SET		UniformTitle = dbo.BHLfnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 255), DEFAULT)
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField df
 				ON t.ItemID = df.ItemID
 	WHERE	df.DataFieldTag in ('130', '240')
@@ -436,8 +437,7 @@ BEGIN TRY
 
 	-- Full Title
 	UPDATE	#tmpTitle
-	SET		FullTitle = LTRIM(RTRIM(dfA.SubFieldValue + ' ' + 
-							ISNULL(dfB.SubFieldValue, '')))
+	SET		FullTitle = dbo.BHLfnRemoveTrailingPunctuation(LTRIM(RTRIM(dfA.SubFieldValue + ' ' + ISNULL(dfB.SubFieldValue, ''))), DEFAULT)
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField dfA
 				ON t.ItemID = dfA.ItemID
 				AND dfA.DataFieldTag = '245' 
@@ -447,6 +447,7 @@ BEGIN TRY
 				AND dfB.DataFieldTag = '245'
 				AND dfB.Code = 'b'
 
+	/*
 	-- Strip forward slashes, commas, and semicolons from the end of title strings
 	UPDATE	#tmpTitle
 	SET		FullTitle = RTRIM(SUBSTRING(CONVERT(nvarchar(max), FullTitle), 1, LEN(CONVERT(nvarchar(max), FullTitle)) - 1))
@@ -455,21 +456,33 @@ BEGIN TRY
 	UPDATE	#tmpTitle
 	SET		ShortTitle = RTRIM(SUBSTRING(ShortTitle, 1, LEN(ShortTitle) - 1))
 	WHERE	SUBSTRING(REVERSE(RTRIM(ShortTitle)), 1, 1) in ('/', ',', ';')
+	*/
 
 	-- Part Number and Part Name
 	UPDATE	#tmpTitle
-	SET		PartNumber = SUBSTRING(df.SubFieldValue, 1, 255)
+	SET		PartNumber = dbo.BHLfnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 255), DEFAULT)
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField df
 				ON t.ItemID = df.ItemID
 	AND		df.DataFieldTag = '245'
 	AND		df.Code = 'n'
 
 	UPDATE	#tmpTitle
-	SET		PartName = SUBSTRING(df.SubFieldValue, 1, 255)
+	SET		PartName = dbo.BHLfnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 255), DEFAULT)
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField df
 				ON t.ItemID = df.ItemID
 	AND		df.DataFieldTag = '245'
 	AND		df.Code = 'p';
+
+	/*
+	-- Strip forward slashes, commas, and semicolons from the end of title parts
+	UPDATE	#tmpTitle
+	SET		PartNumber = RTRIM(SUBSTRING(PartNumber, 1, LEN(PartNumber) - 1))
+	WHERE	SUBSTRING(REVERSE(RTRIM(PartNumber)), 1, 1) in ('/', ',', ';')
+
+	UPDATE	#tmpTitle
+	SET		PartName = RTRIM(SUBSTRING(PartName, 1, LEN(PartName) - 1))
+	WHERE	SUBSTRING(REVERSE(RTRIM(PartName)), 1, 1) in ('/', ',', ';');
+	*/
 
 	-- Get datafield 260/264 information
 	/*
@@ -498,28 +511,28 @@ BEGIN TRY
 
 	-- Get the 260/264 values
 	UPDATE	#tmpTitle
-	SET		Datafield_260_a = SUBSTRING(df.SubFieldValue, 1, 150)
+	SET		Datafield_260_a = dbo.BHLfnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 150), DEFAULT)
 	FROM	#tmpTitle t 
 			INNER JOIN #PublisherInfo p ON t.ItemID = p.ItemID
 			INNER JOIN dbo.vwIAMarcDataField df	ON p.ItemID = df.ItemID	AND p.MarcSubFieldID = df.MarcSubFieldID
 	WHERE	p.Code = 'a'
 
 	UPDATE	#tmpTitle
-	SET		Datafield_260_b = SUBSTRING(df.SubFieldValue, 1, 255)
+	SET		Datafield_260_b = dbo.BHLfnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 255), DEFAULT)
 	FROM	#tmpTitle t 
 			INNER JOIN #PublisherInfo p ON t.ItemID = p.ItemID
 			INNER JOIN dbo.vwIAMarcDataField df	ON p.ItemID = df.ItemID	AND p.MarcSubFieldID = df.MarcSubFieldID
 	WHERE	p.Code = 'b'
 
 	UPDATE	#tmpTitle
-	SET		Datafield_260_c = SUBSTRING(df.SubFieldValue, 1, 100)
+	SET		Datafield_260_c = dbo.BHLfnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 100), '[a-zA-Z0-9)\]?!>*%"''-]%')
 	FROM	#tmpTitle t 
 			INNER JOIN #PublisherInfo p ON t.ItemID = p.ItemID
 			INNER JOIN dbo.vwIAMarcDataField df	ON p.ItemID = df.ItemID	AND p.MarcSubFieldID = df.MarcSubFieldID
 	WHERE	p.Code = 'c'
 
 	UPDATE	#tmpTitle
-	SET		Datafield_260_c = SUBSTRING(df.SubFieldValue, 1, 100)
+	SET		Datafield_260_c = dbo.BHLfnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 100), '[a-zA-Z0-9)\]?!>*%"''-]%')
 	FROM	#tmpTitle t 
 			INNER JOIN #PublisherInfo p ON t.ItemID = p.ItemID
 			INNER JOIN dbo.vwIAMarcDataField df	ON p.ItemID = df.ItemID	AND p.MarcSubFieldID = df.MarcSubFieldID
@@ -550,7 +563,14 @@ BEGIN TRY
 
 	-- Get publication details
 	UPDATE	#tmpTitle
-	SET		PublicationDetails = SUBSTRING(ISNULL(Datafield_260_a, '') + ISNULL(Datafield_260_b, '') + ISNULL(Datafield_260_c, ''), 1, 255)
+	SET		PublicationDetails = dbo.BHLfnRemoveTrailingPunctuation(RTRIM(
+				SUBSTRING(
+					ISNULL(Datafield_260_a, '') + CASE WHEN LEN(Datafield_260_a) > 0 THEN ', ' ELSE '' END + 
+					ISNULL(Datafield_260_b, '') + CASE WHEN LEN(Datafield_260_b) > 0 THEN ', ' ELSE '' END + 
+					ISNULL(Datafield_260_c, ''),
+					1, 255
+				)
+			), DEFAULT)
 
 	-- Get the call number (first check the 050 record, then the 090... use the 050 value if both exist)
 	UPDATE	#tmpTitle
@@ -668,8 +688,8 @@ BEGIN TRY
 	AND		m.DCElementValue <> ''
 
 	UPDATE	#tmpTitle
-	SET		FullTitle = m.DCElementValue,
-			ShortTitle = SUBSTRING(m.DCElementValue, 1, 255)
+	SET		FullTitle = dbo.BHLfnRemoveTrailingPunctuation(m.DCElementValue, DEFAULT),
+			ShortTitle = dbo.BHLfnRemoveTrailingPunctuation(SUBSTRING(m.DCElementValue, 1, 255), DEFAULT)
 	FROM	#tmpTitle t INNER JOIN dbo.IADCMetadata m
 				ON t.ItemID = m.ItemID
 				AND m.DCElementName = 'title'
@@ -677,8 +697,8 @@ BEGIN TRY
 	AND		m.DCElementValue <> ''
 
 	UPDATE	#tmpTitle
-	SET		PublicationDetails = SUBSTRING(m.DCElementValue, 1, 255),
-			Datafield_260_b = SUBSTRING(m.DCElementValue, 1, 255)
+	SET		PublicationDetails = dbo.BHLfnRemoveTrailingPunctuation(SUBSTRING(m.DCElementValue, 1, 255), DEFAULT),
+			Datafield_260_b = dbo.BHLfnRemoveTrailingPunctuation(SUBSTRING(m.DCElementValue, 1, 255), DEFAULT)
 	FROM	#tmpTitle t INNER JOIN dbo.IADCMetadata m
 				ON t.ItemID = m.ItemID
 				AND m.DCElementName = 'publisher'
@@ -713,12 +733,12 @@ BEGIN TRY
 
 	-- Use Indicator2 of the 245a field to build the appropriate SortTitle for all titles
 	UPDATE	#tmpTitle
-	SET		SortTitle = LTRIM(RTRIM(SUBSTRING(	FullTitle, 
+	SET		SortTitle = dbo.fnGetSortString(SUBSTRING(
+												FullTitle, 
 												CASE WHEN ISNUMERIC(ISNULL(Indicator2, '')) = 1 THEN 
 													CASE WHEN Indicator2 = '0' THEN 1 ELSE CONVERT(int, Indicator2) END
 												ELSE 1 END, 
-												60)
-									))
+												60))
 	FROM	#tmpTitle t LEFT JOIN dbo.vwIAMarcDataField v
 				ON t.ItemID = v.ItemID
 				AND v.DataFieldTag = '245'
@@ -884,7 +904,7 @@ BEGIN TRY
 	SELECT DISTINCT
 			t.ItemID,
 			'DLC',
-			LTRIM(RTRIM(m.SubFieldValue))
+			dbo.BHLfnGetLCCNValue(m.SubFieldValue)
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField m
 				ON t.ItemID = m.ItemID
 	WHERE	DataFieldTag = '010'
@@ -906,8 +926,8 @@ BEGIN TRY
 	INSERT INTO #tmpTitleIdentifier
 	SELECT DISTINCT
 			t.ItemID,
-			'ISSN',
-			m.SubFieldValue
+			dbo.BHLfnGetISSNName(m.SubFieldValue),
+			dbo.BHLfnGetISSNValue(m.SubFieldValue)
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField m
 				ON t.ItemID = m.ItemID
 	WHERE	m.DataFieldTag = '022'
@@ -1098,7 +1118,7 @@ BEGIN TRY
 			m.DataFieldTag, 
 			m.Indicator1 AS MARCIndicator1,
 			'' AS MARCIndicator2, 
-			m.SubFieldValue AS Title, 
+			dbo.BHLfnRemoveTrailingPunctuation(m.SubFieldValue, DEFAULT) AS Title, 
 			'' AS Section, 
 			'' AS Volume,
 			'' AS Heading,
@@ -1115,7 +1135,7 @@ BEGIN TRY
 	-- with titles (there's no guaranteed relational way of making the
 	-- matches, so this is the best guess approach).
 	UPDATE	#tmpTitleAssociation
-	SET		Section = x.SubFieldValue
+	SET		Section = dbo.BHLfnRemoveTrailingPunctuation(x.SubFieldValue, DEFAULT)
 	FROM	#tmpTitleAssociation t INNER JOIN (
 					SELECT	ROW_NUMBER() OVER (PARTITION BY m.MarcDataFieldID
 												ORDER BY m.MarcSubFieldID) AS NewSequence,
@@ -1130,7 +1150,7 @@ BEGIN TRY
 				AND t.Sequence = x.NewSequence
 
 	UPDATE	#tmpTitleAssociation
-	SET		Volume = x.SubFieldValue
+	SET		Volume = dbo.BHLfnRemoveTrailingPunctuation(x.SubFieldValue, DEFAULT)
 	FROM	#tmpTitleAssociation t INNER JOIN (
 					SELECT	ROW_NUMBER() OVER (PARTITION BY m.MarcDataFieldID
 												ORDER BY m.MarcSubFieldID) AS NewSequence,
@@ -1186,9 +1206,9 @@ BEGIN TRY
 			t8.DataFieldTag,
 			'',
 			'',
-			ISNULL(t8.Title, ''),
-			ISNULL(t8.Section, ''),
-			ISNULL(t8.Volume, ''),
+			dbo.BHLfnRemoveTrailingPunctuation(ISNULL(t8.Title, ''), DEFAULT),
+			dbo.BHLfnRemoveTrailingPunctuation(ISNULL(t8.Section, ''), DEFAULT),
+			dbo.BHLfnRemoveTrailingPunctuation(ISNULL(t8.Volume, ''), DEFAULT),
 			'',
 			'',
 			''
@@ -1224,14 +1244,14 @@ BEGIN TRY
 	AND		m.SubFieldValue <> ''
 
 	UPDATE	#tmpTitleAssociation
-	SET		Title = m.SubFieldValue
+	SET		Title = dbo.BHLfnRemoveTrailingPunctuation(m.SubFieldValue, DEFAULT)
 	FROM	#tmpTitleAssociation t INNER JOIN vwIAMarcDataField m
 				ON t.MarcDataFieldID = m.MarcDataFieldID
 	WHERE	m.Code = 't'
 	AND		m.DataFieldTag IN ('780', '785')
 
 	UPDATE	#tmpTitleAssociation
-	SET		Title = CONVERT(NVARCHAR(200), m.SubFieldValue + ' ' + Title)
+	SET		Title = dbo.BHLfnRemoveTrailingPunctuation(CONVERT(NVARCHAR(200), m.SubFieldValue + ' ' + Title), DEFAULT)
 	FROM	#tmpTitleAssociation t INNER JOIN vwIAMarcDataField m
 				ON t.MarcDataFieldID = m.MarcDataFieldID
 	WHERE	m.Code = 'a'
@@ -1251,12 +1271,13 @@ BEGIN TRY
 			x.DataFieldTag,
 			'',
 			'',
-			ISNULL(MIN([t]), '') AS Title,
+			dbo.BHLfnRemoveTrailingPunctuation(ISNULL(MIN([t]), ''), DEFAULT) AS Title,
 			'' AS Section,
 			'' AS Volume,
-			ISNULL(MIN([a]), '') AS Heading, 
-			ISNULL(MIN([d]), '') AS Publication, 
-			ISNULL(MIN([g]), '') AS Relationship
+			-- As these fields may contain date range values (ex. "1990-"), don't remove hyphens when cleaning trailing punctuation
+			dbo.BHLfnRemoveTrailingPunctuation(ISNULL(MIN([a]), ''), '[a-zA-Z0-9)\]?!>*%"''-]%') AS Heading, 
+			dbo.BHLfnRemoveTrailingPunctuation(ISNULL(MIN([d]), ''), '[a-zA-Z0-9)\]?!>*%"''-]%') AS Publication, 
+			dbo.BHLfnRemoveTrailingPunctuation(ISNULL(MIN([g]), ''), '[a-zA-Z0-9)\]?!>*%"''-]%') AS Relationship
 	FROM	(
 			SELECT ItemID, MarcDataFieldID, DataFieldTag, [a], [d], [g], [t]
 			FROM	(SELECT * FROM dbo.vwIAMarcDataField
@@ -1274,9 +1295,9 @@ BEGIN TRY
 			x.DataFieldTag, 
 			'',
 			'',
-			ISNULL(MIN([a]), '') AS Title, 
-			ISNULL(MIN([n]), '') AS Section, 
-			ISNULL(MIN([p]), '') AS Volume,
+			dbo.BHLfnRemoveTrailingPunctuation(ISNULL(MIN([a]), ''), DEFAULT) AS Title, 
+			dbo.BHLfnRemoveTrailingPunctuation(ISNULL(MIN([n]), ''), DEFAULT) AS Section, 
+			dbo.BHLfnRemoveTrailingPunctuation(ISNULL(MIN([p]), ''), DEFAULT) AS Volume,
 			'',
 			'',
 			''
@@ -1300,7 +1321,7 @@ BEGIN TRY
 			m.MarcDataFieldID,
 			m.DataFieldTag, 
 			CASE WHEN m.DataFieldTag = '246' AND m.Indicator2 = '1' THEN '1' ELSE '' END AS MARCIndicator2,
-			m.SubFieldValue AS Title, 
+			dbo.BHLfnRemoveTrailingPunctuation(m.SubFieldValue, DEFAULT) AS Title, 
 			'' AS TitleRemainder, 
 			'' AS PartNumber,
 			'' AS PartName
@@ -1311,8 +1332,9 @@ BEGIN TRY
 	AND		m.SubFieldValue <> ''
 
 	-- Add the title remainders to the original data set.
+	-- As this field may contain date range values (ex. "1990-"), don't remove hyphens when cleaning up trailing punctuation.
 	UPDATE	#tmpTitleVariant
-	SET		TitleRemainder = x.SubFieldValue
+	SET		TitleRemainder = dbo.BHLfnRemoveTrailingPunctuation(x.SubFieldValue, '[a-zA-Z0-9)\]?!>*%"''-]%')
 	FROM	#tmpTitleVariant t INNER JOIN (
 					SELECT	m.*
 					FROM	#tmpTitle ti INNER JOIN vwIAMarcDataField m
@@ -1325,7 +1347,7 @@ BEGIN TRY
 
 	-- Add the part numbers to the original data set.
 	UPDATE	#tmpTitleVariant
-	SET		PartNumber = x.SubFieldValue
+	SET		PartNumber = dbo.BHLfnRemoveTrailingPunctuation(x.SubFieldValue, DEFAULT)
 	FROM	#tmpTitleVariant t INNER JOIN (
 					SELECT	m.*
 					FROM	#tmpTitle ti INNER JOIN vwIAMarcDataField m
@@ -1338,7 +1360,7 @@ BEGIN TRY
 
 	-- Add the part names to the original data set.
 	UPDATE	#tmpTitleVariant
-	SET		PartName = x.SubFieldValue
+	SET		PartName = dbo.BHLfnRemoveTrailingPunctuation(x.SubFieldValue, DEFAULT)
 	FROM	#tmpTitleVariant t INNER JOIN (
 					SELECT	m.*
 					FROM	#tmpTitle ti INNER JOIN vwIAMarcDataField m
@@ -1606,7 +1628,8 @@ BEGIN TRY
 			StartSeries = i.StartSeries,
 			EndSeries = i.EndSeries,
 			StartPart = i.StartPart,
-			EndPart = i.EndPart
+			EndPart = i.EndPart,
+			PageProgression = ISNULL(i.PageProgression, '')
 	FROM	#tmpItem t INNER JOIN dbo.IAItem i
 				ON t.ItemID = i.ItemID
 
@@ -1871,28 +1894,30 @@ BEGIN TRY
 			s.Sequence,
 			s.BHLSegmentGenreID,
 			s.Title,
-			CASE
-				WHEN LEFT(s.Title, 1) = '"' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
-				WHEN LEFT(s.Title, 1) = '''' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
-				WHEN LEFT(s.Title, 1) = '[' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1)) 
-				WHEN LEFT(s.Title, 1) = '(' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
-				WHEN LEFT(s.Title, 1) = '|' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
-				WHEN LOWER(LEFT(s.Title, 2)) = 'a ' AND s.Title <> 'a' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 2)) 
-				WHEN LOWER(LEFT(s.Title, 3)) = 'an ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
-				WHEN LOWER(LEFT(s.Title, 3)) = 'el ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
-				WHEN LOWER(LEFT(s.Title, 3)) = 'il ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
-				WHEN LOWER(LEFT(s.Title, 3)) = 'la ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
-				WHEN LOWER(LEFT(s.Title, 3)) = 'le ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'das ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'der ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'die ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'ein ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'las ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'les ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'los ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				WHEN LOWER(LEFT(s.Title, 4)) = 'the ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
-				ELSE s.Title
-			END AS SortTitle,
+			dbo.fnGetSortString(
+				CASE
+					WHEN LEFT(s.Title, 1) = '"' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
+					WHEN LEFT(s.Title, 1) = '''' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
+					WHEN LEFT(s.Title, 1) = '[' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1)) 
+					WHEN LEFT(s.Title, 1) = '(' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
+					WHEN LEFT(s.Title, 1) = '|' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
+					WHEN LOWER(LEFT(s.Title, 2)) = 'a ' AND s.Title <> 'a' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 2)) 
+					WHEN LOWER(LEFT(s.Title, 3)) = 'an ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+					WHEN LOWER(LEFT(s.Title, 3)) = 'el ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+					WHEN LOWER(LEFT(s.Title, 3)) = 'il ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+					WHEN LOWER(LEFT(s.Title, 3)) = 'la ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+					WHEN LOWER(LEFT(s.Title, 3)) = 'le ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'das ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'der ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'die ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'ein ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'las ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'les ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'los ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					WHEN LOWER(LEFT(s.Title, 4)) = 'the ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+					ELSE s.Title
+				END 
+			) AS SortTitle,
 			SUBSTRING(t.FullTitle, 1, 2000) AS ContainerTitle,
 			ISNULL(t.PublicationDetails, ''),
 			SUBSTRING(ISNULL(t.Datafield_260_b, ''), 1, 250) AS PublisherName,
@@ -2079,7 +2104,7 @@ BEGIN TRY
 		SELECT	10, @ImportSourceID, t.MARCTag, 
 				t.MARCIndicator2, t.Title, t.Section, t.Volume, 
 				t.Heading, t.Publication, t.Relationship, 'DLC' as IdentifierName, 
-				LTRIM(RTRIM(REPLACE(m.SubFieldValue, '(DLC)', ''))) AS IdentifierValue,
+				dbo.BHLfnGetLCCNValue(REPLACE(m.SubFieldValue, '(DLC)', '')) AS IdentifierValue,
 				CONVERT(nvarchar(50), t.ItemID)
 		FROM	#tmpTitleAssociation t INNER JOIN vwIAMarcDataField m
 					ON t.MarcDataFieldID = m.MarcDataFieldID
@@ -2093,8 +2118,9 @@ BEGIN TRY
 			ImportKey)
 		SELECT	10, @ImportSourceID, t.MARCTag, 
 				t.MARCIndicator2, t.Title, t.Section, t.Volume, 
-				t.Heading, t.Publication, t.Relationship, 'ISSN' as IdentifierName, 
-				LTRIM(RTRIM(REPLACE(m.SubFieldValue, ';', ''))) AS IdentifierValue,
+				t.Heading, t.Publication, t.Relationship, 
+				dbo.BHLfnGetISSNName(REPLACE(m.SubFieldValue, ';', '')) AS IdentifierName, 
+				dbo.BHLfnGetISSNValue(REPLACE(m.SubFieldValue, ';', '')) AS IdentifierValue,
 				CONVERT(nvarchar(50), t.ItemID)
 		FROM	#tmpTitleAssociation t INNER JOIN vwIAMarcDataField m
 					ON t.MarcDataFieldID = m.MarcDataFieldID
@@ -2117,9 +2143,9 @@ BEGIN TRY
 		INSERT INTO dbo.Creator (ImportStatusID, ImportSourceID, CreatorName, DOB, DOD, 
 			MARCDataFieldTag, MARCCreator_a, MARCCreator_b, MARCCreator_c, MARCCreator_d, 
 			MARCCreator_q, MARCCreator_Full)
-		SELECT	10, @ImportSourceID, t.CreatorName, t.DOB, t.DOD, t.MARCDataFieldTag, 
-				t.MARCCreator_a, t.MARCCreator_b, t.MARCCreator_c, t.MARCCreator_d, 
-				t.MARCCreator_q, t.MARCCreator_Full
+		SELECT	10, @ImportSourceID, dbo.BHLfnConvertToTitleCase(dbo.BHLfnAddAuthorNameSpaces(t.CreatorName)), 
+				t.DOB, t.DOD, t.MARCDataFieldTag, t.MARCCreator_a, t.MARCCreator_b, t.MARCCreator_c, 
+				t.MARCCreator_d, t.MARCCreator_q, t.MARCCreator_Full
 		FROM	#tmpCreator t LEFT JOIN dbo.Creator c
 					ON ISNULL(t.MARCCreator_a, '') = ISNULL(c.MARCCreator_a, '')
 					AND ISNULL(t.MARCCreator_b, '') = ISNULL(c.MARCCreator_b, '')
@@ -2134,9 +2160,9 @@ BEGIN TRY
 			MARCCreator_b, MARCCreator_c, MARCCreator_d, MARCCreator_e,
 			MARCCreator_q, MARCCreator_t, CreatorRoleTypeID, SequenceOrder,
 			ImportStatusID, ImportSourceID, ImportKey)
-		SELECT	c.CreatorName, c.MARCCreator_a, c.MARCCreator_b, 
-				c.MARCCreator_c, c.MARCCreator_d, c.MARCCreator_e,
-				c.MARCCreator_q, c.MARCCreator_t, c.CreatorRoleTypeID, 
+		SELECT	dbo.BHLfnConvertToTitleCase(dbo.BHLfnAddAuthorNameSpaces(c.CreatorName)),
+				c.MARCCreator_a, c.MARCCreator_b, c.MARCCreator_c, c.MARCCreator_d, 
+				c.MARCCreator_e, c.MARCCreator_q, c.MARCCreator_t, c.CreatorRoleTypeID, 
 				c.SequenceOrder, 10, @ImportSourceID, CONVERT(nvarchar(50), c.ItemID)
 		FROM	#tmpCreator c
 		WHERE	c.MARCCreator_5 IS NULL
@@ -2159,7 +2185,8 @@ BEGIN TRY
 			CopyrightComment, CopyrightEvidence, CopyrightEvidenceOperator,
 			CopyrightEvidenceDate, ImportKey, ScanningInstitutionCode, RightsHolderCode,
 			ItemDescription, EndYear, StartVolume, EndVolume, StartIssue, EndIssue,
-			StartNumber, EndNumber, StartSeries, EndSeries, StartPart, EndPart)
+			StartNumber, EndNumber, StartSeries, EndSeries, StartPart, EndPart, 
+			PageProgression)
 		SELECT	10, @ImportSourceID, t.MARCBibID, t.Sponsor, t.BarCode,
 				t.MaxExistingItemSequence + t.ItemSequence, t.MARCItemID, t.Volume, 
 				t.InstitutionCode, t.LanguageCode, t.VaultID, t.ItemStatusID, 
@@ -2169,7 +2196,7 @@ BEGIN TRY
 				t.CopyrightEvidenceDate, CONVERT(nvarchar(50), t.ItemID), 
 				ScanningInstitutionCode, RightsHolderCode, ItemDescription, EndYear, 
 				StartVolume, EndVolume, StartIssue, EndIssue, StartNumber, EndNumber, 
-				StartSeries, EndSeries, StartPart, EndPart
+				StartSeries, EndSeries, StartPart, EndPart, PageProgression
 		FROM	#tmpItem t
 
 		-- =======================================================================
@@ -2377,3 +2404,5 @@ END CATCH
 SET NOCOUNT OFF
 
 END
+
+GO

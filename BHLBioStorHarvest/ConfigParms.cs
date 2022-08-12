@@ -6,7 +6,6 @@ namespace MOBOT.BHL.BHLBioStorHarvest
 {
     public class ConfigParms
     {
-        public string SMTPHost { get; set; }
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
 
@@ -17,6 +16,10 @@ namespace MOBOT.BHL.BHLBioStorHarvest
 
         public int ImportSourceID { get; set; }
 
+        public int SegmentStatusHarvestedID { get; set; }
+        public int SegmentStatusPublishedID { get; set; }
+        public int SegmentStatusSkippedID { get; set; }
+        
         public bool NoDownload { get; set; }
         public bool NoPublish { get; set; }
         public bool NoCluster { get; set; }
@@ -27,10 +30,11 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         public string BioStorItemArticlesUrl { get; set; }
         public string BioStorItemsChangedSinceUrl { get; set; }
         public string CrossRefOpenUrlDOIGet { get; set; }
+        
+        public string BHLWSEndpoint { get; set; } = string.Empty;
 
         public void LoadAppConfig()
         {
-            SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
 
@@ -40,6 +44,9 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             File = ConfigurationManager.AppSettings["File"];
 
             ImportSourceID = Convert.ToInt32(ConfigurationManager.AppSettings["ImportSourceID"]);
+            SegmentStatusHarvestedID = Convert.ToInt32(ConfigurationManager.AppSettings["SegmentStatusHarvestedID"]);
+            SegmentStatusPublishedID = Convert.ToInt32(ConfigurationManager.AppSettings["SegmentStatusPublishedID"]);
+            SegmentStatusSkippedID = Convert.ToInt32(ConfigurationManager.AppSettings["SegmentStatusSkippedID"]);
 
             NoDownload = (ConfigurationManager.AppSettings["NoDownload"] == "true");
             NoPublish = (ConfigurationManager.AppSettings["NoPublish"] == "true");
@@ -51,6 +58,8 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             BioStorItemArticlesUrl = ConfigurationManager.AppSettings["BioStorItemArticlesUrl"];
             BioStorItemsChangedSinceUrl = ConfigurationManager.AppSettings["BioStorItemsChangedSinceUrl"];
             CrossRefOpenUrlDOIGet = ConfigurationManager.AppSettings["CrossRefOpenUrlDOIGet"];
+
+            BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
 
         public void UpdateAppSetting(string key, object value)

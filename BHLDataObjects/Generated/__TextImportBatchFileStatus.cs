@@ -1,5 +1,5 @@
 
-// Generated 9/17/2018 2:48:01 PM
+// Generated 1/5/2021 3:45:11 PM
 // Do not modify the contents of this code file.
 // This abstract class __TextImportBatchFileStatus is based upon txtimport.TextImportBatchFileStatus.
 
@@ -473,7 +473,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __TextImportBatchFileStatus.SortColumn.TextImportBatchFileStatusID);
 		/// </summary>
 		[Serializable]

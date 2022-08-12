@@ -1,0 +1,80 @@
+﻿@{
+    var path = ViewData["path"] as string;
+    var sort = ViewData["sort"] as string;
+    var target = ViewData["target"] as string;
+    var bookPage = Convert.ToInt32(ViewData["bookPage"]);
+    var partPage = Convert.ToInt32(ViewData["partPage"]);
+    var numPerPage = Convert.ToInt32(ViewData["numPerPage"]);
+    var totalPublications = Convert.ToInt32(ViewData["totalPublications"]);
+    var hash = ViewData["hash"] as string;
+    var totalPages = (totalPublications % numPerPage == 0 ?  totalPublications / numPerPage : totalPublications / numPerPage + 1);
+
+    var page = (target == "book") ? bookPage : partPage;
+
+}
+@if (totalPublications > numPerPage)
+{
+    <div class="searchPagerContainer">
+        <div class="searchPager">
+            @{
+                long start = 1;
+                long end = (totalPages > 10) ? 10 : totalPages;
+                if (page - 5 > 1)
+                {
+                    if ((page + 4) <= totalPages)
+                    {
+                        start = page - 5; end = page + 4;
+                    }
+                    else
+                    {
+                        start = ((totalPages - 9) < 1 ? 1 : totalPages - 9); end = totalPages;
+                    }
+                }
+            }
+
+            @if (page > 1)
+            {
+                if (target == "book")
+                {
+                   <a href="@path/@sort?bpg=@(page - 1)&ppg=@partPage&psize=@numPerPage@hash" class="searchPagerControl">< Prev</a><text>&nbsp;&nbsp;</text>
+                }
+                else
+                {
+                    <a href="@path/@sort?bpg=@bookPage&ppg=@(page - 1)&psize=@numPerPage@hash" class="searchPagerControl">< Prev</a><text>&nbsp;&nbsp;</text>
+                }
+            }
+
+            @for (long x = start; x <= end; x++)
+            {
+                if (x == page)
+                {
+                    <text>@x</text>
+                }
+                else
+                {
+                    if (target == "book")
+                    {
+                        <a href="@path/@sort?bpg=@x&ppg=@partPage&psize=@numPerPage@hash" class="searchPagerPage">@x</a>
+                    }
+                    else
+                    {
+                        <a href="@path/@sort?bpg=@bookPage&ppg=@x&psize=@numPerPage@hash" class="searchPagerPage">@x</a>
+                    }
+                }
+            }
+            @if (page < totalPages)
+            {
+                if (target == "book")
+                {
+                   <text>&nbsp; &nbsp;</text><a href="@path/@sort?bpg=@(page + 1)&ppg=@partPage&psize=@numPerPage@hash" class="searchPagerControl">Next ></a>
+                }
+                else
+                {
+                    <text>&nbsp; &nbsp;</text><a href="@path/@sort?bpg=@bookPage&ppg=@(page + 1)&psize=@numPerPage@hash" class="searchPagerControl">Next ></a>
+                }
+            }
+        </div>
+    </div>
+}
+
+

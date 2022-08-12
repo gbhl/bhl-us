@@ -1,18 +1,18 @@
 
 #region Using
 
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class ItemSourceDAL
+    public partial class ItemSourceDAL
 	{
-        public CustomGenericList<ItemSource> ItemSourceSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<ItemSource> ItemSourceSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
               CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -22,7 +22,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ItemSource> helper = new CustomSqlHelper<ItemSource>())
                 {
-                    CustomGenericList<ItemSource> list = helper.ExecuteReader(command);
+                    List<ItemSource> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

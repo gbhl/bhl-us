@@ -1,10 +1,4 @@
-﻿
--- DOIInsertAuto PROCEDURE
--- Generated 11/11/2011 1:11:27 PM
--- Do not modify the contents of this procedure.
--- Insert Procedure for DOI
-
-CREATE PROCEDURE DOIInsertAuto
+﻿CREATE PROCEDURE dbo.DOIInsertAuto
 
 @DOIID INT OUTPUT,
 @DOIEntityTypeID INT,
@@ -14,15 +8,16 @@ CREATE PROCEDURE DOIInsertAuto
 @DOIName NVARCHAR(50),
 @StatusDate DATETIME,
 @StatusMessage NVARCHAR(1000),
-@IsValid SMALLINT
+@IsValid SMALLINT,
+@CreationUserID INT,
+@LastModifiedUserID INT
 
 AS 
 
 SET NOCOUNT ON
 
 INSERT INTO [dbo].[DOI]
-(
-	[DOIEntityTypeID],
+( 	[DOIEntityTypeID],
 	[EntityID],
 	[DOIStatusID],
 	[DOIBatchID],
@@ -31,11 +26,11 @@ INSERT INTO [dbo].[DOI]
 	[StatusMessage],
 	[IsValid],
 	[CreationDate],
-	[LastModifiedDate]
-)
+	[LastModifiedDate],
+	[CreationUserID],
+	[LastModifiedUserID] )
 VALUES
-(
-	@DOIEntityTypeID,
+( 	@DOIEntityTypeID,
 	@EntityID,
 	@DOIStatusID,
 	@DOIBatchID,
@@ -44,20 +39,20 @@ VALUES
 	@StatusMessage,
 	@IsValid,
 	getdate(),
-	getdate()
-)
+	getdate(),
+	@CreationUserID,
+	@LastModifiedUserID )
 
 SET @DOIID = Scope_Identity()
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure DOIInsertAuto. No information was inserted as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.DOIInsertAuto. No information was inserted as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[DOIID],
 		[DOIEntityTypeID],
 		[EntityID],
@@ -68,13 +63,13 @@ ELSE BEGIN
 		[StatusMessage],
 		[IsValid],
 		[CreationDate],
-		[LastModifiedDate]	
-
+		[LastModifiedDate],
+		[CreationUserID],
+		[LastModifiedUserID]	
 	FROM [dbo].[DOI]
-	
 	WHERE
 		[DOIID] = @DOIID
 	
 	RETURN -- insert successful
 END
-
+GO

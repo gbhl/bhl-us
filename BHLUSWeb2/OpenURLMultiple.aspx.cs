@@ -54,7 +54,7 @@ namespace MOBOT.BHL.Web2
                                 {
                                     PageSummaryView psv = bhlProvider.PageSummarySelectByItemId(id, true);
                                     OpenUrlBookResult book = new OpenUrlBookResult();
-                                    book.Url = string.Format(ConfigurationManager.AppSettings["ItemPageUrl"], psv.ItemID.ToString());
+                                    book.Url = string.Format(ConfigurationManager.AppSettings["ItemPageUrl"], psv.BookID.ToString());
                                     book.Title = psv.ShortTitle;
                                     book.Volume = psv.Volume;
                                     BookList.Add(book);

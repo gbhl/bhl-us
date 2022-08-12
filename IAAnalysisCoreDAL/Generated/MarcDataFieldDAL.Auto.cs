@@ -1,8 +1,8 @@
 
-// Generated 11/12/2008 3:12:29 PM
+// Generated 1/5/2021 12:30:00 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class MarcDataFieldDAL is based upon MarcDataField.
+// This partial class MarcDataFieldDAL is based upon dbo.MarcDataField.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.IAAnalysis.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from MarcDataField by primary key(s).
+		/// Select values from dbo.MarcDataField by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 			
 		/// <summary>
-		/// Select values from MarcDataField by primary key(s).
+		/// Select values from dbo.MarcDataField by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.IAAnalysis.DAL
 			{
 				using (CustomSqlHelper<MarcDataField> helper = new CustomSqlHelper<MarcDataField>())
 				{
-					CustomGenericList<MarcDataField> list = helper.ExecuteReader(command);
+					List<MarcDataField> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						MarcDataField o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Select values from MarcDataField by primary key(s).
+		/// Select values from dbo.MarcDataField by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="marcDataFieldID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> MarcDataFieldSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> MarcDataFieldSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int marcDataFieldID)
@@ -104,14 +105,14 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Select values from MarcDataField by primary key(s).
+		/// Select values from dbo.MarcDataField by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="marcDataFieldID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> MarcDataFieldSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> MarcDataFieldSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into MarcDataField.
+		/// Insert values into dbo.MarcDataField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -153,7 +154,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into MarcDataField.
+		/// Insert values into dbo.MarcDataField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -185,7 +186,7 @@ namespace MOBOT.IAAnalysis.DAL
 			{
 				using (CustomSqlHelper<MarcDataField> helper = new CustomSqlHelper<MarcDataField>())
 				{
-					CustomGenericList<MarcDataField> list = helper.ExecuteReader(command);
+					List<MarcDataField> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						MarcDataField o = list[0];
@@ -201,7 +202,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 
 		/// <summary>
-		/// Insert values into MarcDataField. Returns an object of type MarcDataField.
+		/// Insert values into dbo.MarcDataField. Returns an object of type MarcDataField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -216,7 +217,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into MarcDataField. Returns an object of type MarcDataField.
+		/// Insert values into dbo.MarcDataField. Returns an object of type MarcDataField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -241,7 +242,7 @@ namespace MOBOT.IAAnalysis.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from MarcDataField by primary key(s).
+		/// Delete values from dbo.MarcDataField by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -256,7 +257,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from MarcDataField by primary key(s).
+		/// Delete values from dbo.MarcDataField by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -299,7 +300,7 @@ namespace MOBOT.IAAnalysis.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in MarcDataField. Returns an object of type MarcDataField.
+		/// Update values in dbo.MarcDataField. Returns an object of type MarcDataField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -322,7 +323,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Update values in MarcDataField. Returns an object of type MarcDataField.
+		/// Update values in dbo.MarcDataField. Returns an object of type MarcDataField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -356,7 +357,7 @@ namespace MOBOT.IAAnalysis.DAL
 			{
 				using (CustomSqlHelper<MarcDataField> helper = new CustomSqlHelper<MarcDataField>())
 				{
-					CustomGenericList<MarcDataField> list = helper.ExecuteReader(command);
+					List<MarcDataField> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						MarcDataField o = list[0];
@@ -372,7 +373,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Update values in MarcDataField. Returns an object of type MarcDataField.
+		/// Update values in dbo.MarcDataField. Returns an object of type MarcDataField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -387,7 +388,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Update values in MarcDataField. Returns an object of type MarcDataField.
+		/// Update values in dbo.MarcDataField. Returns an object of type MarcDataField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -413,9 +414,9 @@ namespace MOBOT.IAAnalysis.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage MarcDataField object.
+		/// Manage dbo.MarcDataField object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in MarcDataField.
+		/// then either insert values into, delete values from, or update values in dbo.MarcDataField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -430,9 +431,9 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Manage MarcDataField object.
+		/// Manage dbo.MarcDataField object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in MarcDataField.
+		/// then either insert values into, delete values from, or update values in dbo.MarcDataField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -501,4 +502,4 @@ namespace MOBOT.IAAnalysis.DAL
 
 	}	
 }
-// end of source generation
+

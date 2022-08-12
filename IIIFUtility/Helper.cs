@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Xml;
 using System.Configuration;
+using MOBOT.BHL.DataObjects.Enum;
+using System.IO;
 
 namespace BHL.IIIF
 {
@@ -25,7 +27,7 @@ namespace BHL.IIIF
 
         public ScanData GetScanData(int itemId, string barCode)
         {
-            Item item = new BHLProvider().ItemSelectFilenames(itemId);
+            Item item = new BHLProvider().ItemSelectFilenames(ItemType.Book, itemId);
             if (string.IsNullOrWhiteSpace(item.ScandataFilename)) item.ScandataFilename = barCode + "_scandata.xml";
 
             WebClient wc = new WebClient();
@@ -39,9 +41,7 @@ namespace BHL.IIIF
             try
             {
                 // Local for a local copy first
-                System.IO.StringReader reader = new System.IO.StringReader(
-                    new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").GetFileText(filePath)
-                    );
+                StringReader reader = new StringReader(new BHLProvider().GetFileAccessProvider().GetFileText(filePath));
                 xml.Load(reader);
             }
             catch

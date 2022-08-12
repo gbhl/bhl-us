@@ -13,9 +13,10 @@ namespace BHL.SearchIndexer
             segments = new List<int>();
         }
 
-        public int id { get; set; }
+        public string id { get; set; }
         public int sequence { get; set; }
         public int itemId { get; set; }
+        public int pageId { get; set; }
         public List<string> pageIndicators { get; set; }
         public List<string> pageTypes { get; set; }
         public List<string> names { get; set; }

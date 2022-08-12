@@ -1,7 +1,7 @@
 
-// Generated 1/18/2008 11:10:47 AM
+// Generated 1/5/2021 3:25:09 PM
 // Do not modify the contents of this code file.
-// This abstract class __Configuration is based upon Configuration.
+// This abstract class __Configuration is based upon dbo.Configuration.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Configuration : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -96,7 +96,7 @@ namespace MOBOT.BHL.DataObjects
 						_ConfigurationValue = (string)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region ConfigurationID
 		
@@ -190,7 +190,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion ConfigurationValue
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -329,7 +329,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Configuration.SortColumn.ConfigurationID);
 		/// </summary>
 		[Serializable]
@@ -344,3 +343,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

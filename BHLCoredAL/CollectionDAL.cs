@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -8,7 +9,7 @@ namespace MOBOT.BHL.DAL
 {
 	public partial class CollectionDAL
 	{
-        public CustomGenericList<Collection> SelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<Collection> SelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -18,13 +19,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
                 {
-                    CustomGenericList<Collection> list = helper.ExecuteReader(command);
+                    List<Collection> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Collection> SelectActive(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<Collection> SelectActive(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -34,7 +35,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
                 {
-                    CustomGenericList<Collection> list = helper.ExecuteReader(command);
+                    List<Collection> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -50,13 +51,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
                 {
-                    CustomGenericList<Collection> list = helper.ExecuteReader(command);
+                    List<Collection> list = helper.ExecuteReader(command);
                     return (list.Count > 0 ? list[0] : null);
                 }
             }
         }
 
-        public CustomGenericList<Collection> SelectByContents(SqlConnection sqlConnection,
+        public List<Collection> SelectByContents(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int canContainTitles, int canContainItems)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -69,13 +70,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
                 {
-                    CustomGenericList<Collection> list = helper.ExecuteReader(command);
+                    List<Collection> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Collection> CollectionSelectByNameAndAllowedContent(SqlConnection sqlConnection,
+        public List<Collection> CollectionSelectByNameAndAllowedContent(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string collectionName, short canContainTitles, short canContainItems)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -90,13 +91,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
                 {
-                    CustomGenericList<Collection> list = helper.ExecuteReader(command);
+                    List<Collection> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Collection> CollectionSelectByUrl(SqlConnection sqlConnection,
+        public List<Collection> CollectionSelectByUrl(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string collectionUrl)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -109,13 +110,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
                 {
-                    CustomGenericList<Collection> list = helper.ExecuteReader(command);
+                    List<Collection> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Collection> CollectionSelectByNameLike(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string collectionName)
+        public List<Collection> CollectionSelectByNameLike(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string collectionName)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -126,7 +127,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
                 {
-                    CustomGenericList<Collection> list = helper.ExecuteReader(command);
+                    List<Collection> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -139,7 +140,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="titleID"></param>
         /// <returns>List of Collection</returns>
-        public CustomGenericList<Collection> CollectionSelectAllForTitle(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
+        public List<Collection> CollectionSelectAllForTitle(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
             int titleID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -151,7 +152,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
                 {
-                    CustomGenericList<Collection> list = helper.ExecuteReader(command);
+                    List<Collection> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -167,7 +168,7 @@ namespace MOBOT.BHL.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("CollectionClearOtherFeatured", connection, transaction,
                             CustomSqlHelper.CreateInputParameter("CollectionID", SqlDbType.Int, null, false, collectionID)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
 

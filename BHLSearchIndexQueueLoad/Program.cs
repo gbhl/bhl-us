@@ -1,8 +1,9 @@
 ﻿using BHL.QueueUtility;
-using MailKit.Net.Smtp;
-using MimeKit;
+using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -20,20 +21,20 @@ namespace BHL.SearchIndexQueueLoad
         private static string _mqUser = string.Empty;
         private static string _mqPw = string.Empty;
         private static string _mqQueue = string.Empty;
+        private static string _mqExchange = string.Empty;
         private static string _mqErrorExchange = string.Empty;
         private static string _mqErrorQueue = string.Empty;
         private static string _mqQueueNames = string.Empty;
         private static string _mqErrorExchangeNames = string.Empty;
         private static string _mqErrorQueueNames = string.Empty;
+        private static string _mqQueuePdf = string.Empty;
+        private static string _mqErrorExchangePdf = string.Empty;
+        private static string _mqErrorQueuePdf = string.Empty;
 
-        private static string _smtpHost = string.Empty;
-        private static int _smtpPort= 0;
-        private static bool _smtpEnableSsl = false;
-        private static bool _smtpDefaultCredentials = false;
-        private static string _smtpUser = string.Empty;
-        private static string _smtpPw = string.Empty;
         private static string _emailFromAddress = string.Empty;
         private static string _emailToAddresses = string.Empty;
+
+        private static string _bhlwsurl = string.Empty;
 
         private static string _connectionKey = string.Empty;
 
@@ -78,31 +79,50 @@ namespace BHL.SearchIndexQueueLoad
 
                                 try
                                 {
-                                    switch (change.IndexEntity)
+                                    if (change.Queue.ToLower() == "search")
                                     {
-                                        case "nameresolved":
-                                            // Name messages belong on a queue separate from the other messages
-                                            queueUtil.PutMessage(queueMsg,
-                                                queueName: _mqQueueNames,
-                                                errorQueueName: _mqErrorQueueNames,
-                                                errorExchangeName: _mqErrorExchangeNames);
-                                            break;
-                                        case "item":
-                                        case "segment":
-                                        case "author":
-                                        case "keyword":
-                                        default:
-                                            queueUtil.PutMessage(queueMsg,
-                                                queueName: _mqQueue,
-                                                errorQueueName: _mqErrorQueue,
-                                                errorExchangeName: _mqErrorExchange);
-                                            break;
+                                        switch (change.IndexEntity)
+                                        {
+                                            case "nameresolved":
+                                                // Name messages belong on a queue separate from the other messages
+                                                queueUtil.PutMessage(queueMsg,
+                                                    queueName: _mqQueueNames,
+                                                    errorQueueName: _mqErrorQueueNames,
+                                                    errorExchangeName: _mqErrorExchangeNames);
+                                                break;
+                                            case "item":
+                                            case "segment":
+                                            case "author":
+                                            case "keyword":
+                                            default:
+                                                queueUtil.PutMessage(queueMsg,
+                                                    queueName: _mqQueue,
+                                                    exchangeName: _mqExchange,
+                                                    errorQueueName: _mqErrorQueue,
+                                                    errorExchangeName: _mqErrorExchange);
+                                                break;
+                                        }
+                                    }
+                                    if (change.Queue.ToLower() == "pdf")
+                                    {
+                                        queueUtil.PutMessage(queueMsg,
+                                            queueName: _mqQueuePdf,
+                                            errorQueueName: _mqErrorQueuePdf,
+                                            errorExchangeName: _mqErrorExchangePdf);
+                                    }
+                                    if (change.Queue.ToLower() == "doi")
+                                    {
+                                        dataAccess.InsertDOIQueue(
+                                            dOIEntityTypeID: DBLookups.DOIEntityTypeID[change.IndexEntity.ToLower()], 
+                                            entityID: Convert.ToInt32(change.Id), 
+                                            creationUserID: 1, 
+                                            lastModifiedUserID: 1);
                                     }
                                 }
                                 catch (Exception ex)
                                 {
                                     string errMsg = string.Format(
-                                        "Error adding a message to the search index queue: {0}", queueMsg);
+                                        "Error adding a message to the {0} queue: {1}", change.Queue, queueMsg);
                                     Log.Error(ex, errMsg);
                                     isError = true;
                                     break;
@@ -152,28 +172,17 @@ namespace BHL.SearchIndexQueueLoad
         {
             try
             {
-                string thisComputer = Environment.MachineName;
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = "BHLSearchIndexQueueLoad: Index Message Queueing on " + Environment.MachineName + " completed with errors"; ;
+                mailRequest.Body = "An error occurred while adding messages to the index queue.See the BHLSearchIndexQueueLoad logs for detailed information.";
+                mailRequest.From = _emailFromAddress;
 
-                var mimeMessage = new MimeMessage();
-                mimeMessage.From.Add(new MailboxAddress("", _emailFromAddress));
-                string[] toAddresses = _emailToAddresses.Split(',');
-                foreach (string toAddress in toAddresses)
-                {
-                    mimeMessage.To.Add(new MailboxAddress("", toAddress));
-                }
-                mimeMessage.Subject = "BHLSearchIndexQueueLoad: Index Message Queueing on " + thisComputer + " completed with errors";
-                mimeMessage.Body = new TextPart("plain")
-                {
-                    Text = "An error occurred while adding messages to the index queue.  See the BHLSearchIndexQueueLoad logs for detailed information."
-                };
+                List<string> recipients = new List<string>();
+                foreach (string recipient in _emailToAddresses.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
 
-                using (var client = new SmtpClient())
-                {
-                    client.Connect(_smtpHost, _smtpPort, _smtpEnableSsl);
-                    if (!string.IsNullOrWhiteSpace(_smtpUser)) client.Authenticate(_smtpUser, _smtpPw);
-                    client.Send(mimeMessage);
-                    client.Disconnect(true);
-                }
+                EmailClient restClient = new EmailClient(_bhlwsurl);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {
@@ -222,20 +231,20 @@ namespace BHL.SearchIndexQueueLoad
             _mqUser = new ConfigurationManager(_configFile).AppSettings("MQUser");
             _mqPw = new ConfigurationManager(_configFile).AppSettings("MQPassword");
             _mqQueue = new ConfigurationManager(_configFile).AppSettings("MQQueue");
+            _mqExchange = new ConfigurationManager(_configFile).AppSettings("MQExchange");
             _mqErrorExchange = new ConfigurationManager(_configFile).AppSettings("MQErrorExchange");
             _mqErrorQueue = new ConfigurationManager(_configFile).AppSettings("MQErrorQueue");
             _mqQueueNames = new ConfigurationManager(_configFile).AppSettings("MQQueueNames");
             _mqErrorExchangeNames = new ConfigurationManager(_configFile).AppSettings("MQErrorExchangeNames");
             _mqErrorQueueNames = new ConfigurationManager(_configFile).AppSettings("MQErrorQueueNames");
+            _mqQueuePdf = new ConfigurationManager(_configFile).AppSettings("MQQueuePDF");
+            _mqErrorExchangePdf = new ConfigurationManager(_configFile).AppSettings("MQErrorExchangePDF");
+            _mqErrorQueuePdf = new ConfigurationManager(_configFile).AppSettings("MQErrorQueuePDF");
 
-            _smtpHost = new ConfigurationManager(_configFile).AppSettings("SmtpHost");
-            _smtpPort = Convert.ToInt32(new ConfigurationManager(_configFile).AppSettings("SmtpPort"));
-            _smtpEnableSsl = new ConfigurationManager(_configFile).AppSettings("SmtpEnableSsl") == "true";
-            _smtpDefaultCredentials = new ConfigurationManager(_configFile).AppSettings("SmtpDefaultCredentials") == "true";
-            _smtpUser = new ConfigurationManager(_configFile).AppSettings("SmtpUsername");
-            _smtpPw = new ConfigurationManager(_configFile).AppSettings("SmtpPassword");
             _emailFromAddress = new ConfigurationManager(_configFile).AppSettings("EmailFromAddress");
             _emailToAddresses = new ConfigurationManager(_configFile).AppSettings("EmailToAddresses");
+
+            _bhlwsurl = new ConfigurationManager(_configFile).AppSettings("BHLWSUrl");
 
             _connectionKey = new ConfigurationManager(_configFile).AppSettings("ConnectionKey");
         }

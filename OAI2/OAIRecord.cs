@@ -313,6 +313,14 @@ namespace MOBOT.BHL.OAI2
             set { _issn = value; }
         }
 
+        String _eissn = String.Empty;
+
+        public String EIssn
+        {
+            get { return _eissn; }
+            set { _eissn = value; }
+        }
+
         String _isbn = String.Empty;
 
         public String Isbn
@@ -492,10 +500,6 @@ namespace MOBOT.BHL.OAI2
                         this.Type = RecordType.BookJournal;
                         LoadTitle(intID);
                         break;
-                    case OAI2Util.IDPrefix.ARTICLE:
-                        this.Type = RecordType.Article;
-                        LoadPdf(intID);
-                        break;
                     case OAI2Util.IDPrefix.SEGMENT:
                         this.Type = RecordType.Segment;
                         LoadSegment(intID);
@@ -519,15 +523,15 @@ namespace MOBOT.BHL.OAI2
         private void LoadItem(int identifier)
         {
             BHLProvider provider = new BHLProvider();
-            Item item = provider.ItemSelectOAIDetail(identifier);
+            Book book = provider.BookSelectOAIDetail(identifier);
 
-            if (item != null)
+            if (book != null)
             {
-                this.Descriptions.Add(item.Volume);
-                this.JournalVolume = item.Volume;
-                this.Date = item.Year;
+                this.Descriptions.Add(book.Volume);
+                this.JournalVolume = book.Volume;
+                this.Date = book.StartYear;
 
-                List<Institution> contributors = provider.ItemHoldingInstitutionSelectByItemID(item.ItemID);
+                List<Institution> contributors = provider.ItemHoldingInstitutionSelectByItemID(book.ItemID);
                 if (contributors.Count > 0)
                 {
                     foreach(Institution contributor in contributors)
@@ -536,11 +540,11 @@ namespace MOBOT.BHL.OAI2
                     }
                 }
 
-                if (!String.IsNullOrEmpty(item.CopyrightStatus)) this.Rights.Add(item.CopyrightStatus);
+                if (!String.IsNullOrEmpty(book.CopyrightStatus)) this.Rights.Add(book.CopyrightStatus);
                 //if (!String.IsNullOrEmpty(item.Rights)) this.Rights.Add(item.Rights);
                 //if (!String.IsNullOrEmpty(item.LicenseUrl)) this.Rights.Add(item.LicenseUrl);
 
-                List<ItemLanguage> itemLanguages = provider.ItemLanguageSelectByItemID(item.ItemID);
+                List<ItemLanguage> itemLanguages = provider.ItemLanguageSelectByItemID(book.BookID);
                 if (itemLanguages.Count > 0)
                 {
                     foreach (ItemLanguage itemLanguage in itemLanguages)
@@ -550,29 +554,29 @@ namespace MOBOT.BHL.OAI2
                 }
                 else
                 {
-                    if (!String.IsNullOrEmpty(item.LanguageCode))
+                    if (!String.IsNullOrEmpty(book.LanguageCode))
                     {
-                        Language lang = provider.LanguageSelectAuto(item.LanguageCode);
+                        Language lang = provider.LanguageSelectAuto(book.LanguageCode);
                         if (lang != null) this.Languages.Add(lang.LanguageName);
                     }
                 }
 
                 this.Sequence = "1";
-                List<TitleItem> titleItems = provider.TitleItemSelectByItem(item.ItemID);
-                foreach (TitleItem titleItem in titleItems)
+                List<ItemTitle> itemTitles = provider.ItemTitleSelectByItem(book.BookID);
+                foreach (ItemTitle itemTitle in itemTitles)
                 {
-                    if (titleItem.TitleID == item.PrimaryTitleID) this.Sequence = titleItem.ItemSequence.ToString();
+                    if (itemTitle.TitleID == book.PrimaryTitleID) this.Sequence = itemTitle.ItemSequence.ToString();
                 }
 
-                this.Url = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
-                this.ParentUrl = "https://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
-                if (item.ThumbnailPageID != null) this.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
+                this.Url = "https://www.biodiversitylibrary.org/item/" + book.BookID.ToString();
+                this.ParentUrl = "https://www.biodiversitylibrary.org/bibliography/" + book.PrimaryTitleID.ToString();
+                if (book.ThumbnailPageID != null) this.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + book.ThumbnailPageID.ToString();
 
                 this.Types.Add("text");
 
                 if (_includeExtraDetail)
                 {
-                    List<CustomDataRow> pages = provider.NameMetadataSelectByItemID(item.ItemID);
+                    List<CustomDataRow> pages = provider.NameMetadataSelectByItemID(book.BookID);
 
                     OAIRecord.Page oaiPage = null;
                     int currentPageID = 0;
@@ -601,7 +605,7 @@ namespace MOBOT.BHL.OAI2
                     if (oaiPage != null) this.Pages.Add(new KeyValuePair<string, OAIRecord.Page>(currentPageID.ToString(), oaiPage));
                 }
 
-                Title title = provider.TitleSelectAuto(item.PrimaryTitleID);
+                Title title = provider.TitleSelectAuto((int)book.PrimaryTitleID);
                 if (title != null)
                 {
                     this.PublicationDetails = title.PublicationDetails;
@@ -641,13 +645,13 @@ namespace MOBOT.BHL.OAI2
                     MaterialType materialType = provider.MaterialTypeSelect(title.MaterialTypeID ?? 0);
                     if (materialType != null) this.MaterialCode = materialType.MARCCode;
 
-                    List<TitleKeyword> subjects = provider.TitleKeywordSelectByTitleID(item.PrimaryTitleID);
+                    List<TitleKeyword> subjects = provider.TitleKeywordSelectByTitleID((int)book.PrimaryTitleID);
                     foreach (TitleKeyword subject in subjects)
                     {
                         this.Subjects.Add(new KeyValuePair<string, string>(subject.MarcDataFieldTag + "|" + subject.MarcSubFieldCode, subject.Keyword));
                     }
 
-                    List<DataObjects.Author> authors = provider.AuthorSelectByTitleId(item.PrimaryTitleID);
+                    List<DataObjects.Author> authors = provider.AuthorSelectByTitleId((int)book.PrimaryTitleID);
                     foreach (DataObjects.Author author in authors)
                     {
                         OAIRecord.Creator creator = new OAIRecord.Creator(author.FullName, (string.IsNullOrEmpty(author.Numeration) ? author.Unit : author.Numeration), 
@@ -662,29 +666,39 @@ namespace MOBOT.BHL.OAI2
                         this.TitleVariants.Add(new KeyValuePair<string, 
                             OAIRecord.TitleVariant>("uniform", new OAIRecord.TitleVariant(title.UniformTitle, string.Empty, string.Empty)));
                     }
-                    List<DataObjects.TitleVariant> variants = provider.TitleVariantSelectByTitleID(item.PrimaryTitleID);
+                    List<DataObjects.TitleVariant> variants = provider.TitleVariantSelectByTitleID((int)book.PrimaryTitleID);
                     foreach (DataObjects.TitleVariant variant in variants)
                     {
-                        OAIRecord.TitleVariant newVariant = new TitleVariant((variant.Title + " " + variant.TitleRemainder).Trim(), variant.PartNumber, variant.PartName);
+                        List<string> variantTitle = new List<string>();
+                        if (!string.IsNullOrWhiteSpace(variant.Title)) variantTitle.Add(variant.Title.Trim());
+                        if (!string.IsNullOrWhiteSpace(variant.TitleRemainder)) variantTitle.Add(variant.TitleRemainder.Trim());
+
+                        OAIRecord.TitleVariant newVariant = new TitleVariant((string.Join(", ", variantTitle.ToArray())).Trim(), variant.PartNumber, variant.PartName);
                         this.TitleVariants.Add(new KeyValuePair<string,OAIRecord.TitleVariant>(variant.TitleVariantLabel.ToLower(), newVariant));
                     }
 
-                    List<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID(item.PrimaryTitleID);
+                    List<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID((int)book.PrimaryTitleID);
                     this.LoadIdentifiers(titleIdentifiers, this);
 
-                    List<DOI> dois = provider.DOISelectValidForTitle(title.TitleID);
-                    foreach (DOI doi in dois)
+                    List<Title_Identifier> dois = provider.DOISelectValidForTitle(title.TitleID);
+                    foreach (Title_Identifier doi in dois)
                     {
-                        this.SetIdentifier("doi", doi.DOIName, this);
+                        this.SetIdentifier("doi", doi.IdentifierValue, this);
                     }
 
                     List<TitleAssociation> titleAssociations = provider.TitleAssociationSelectExtendedForTitle(title.TitleID);
                     foreach (TitleAssociation titleAssociation in titleAssociations)
                     {
                         OAIRecord association = new OAIRecord();
-                        association.Title = (titleAssociation.Title + " " + titleAssociation.Section + " " + 
-                            titleAssociation.Volume + " " + titleAssociation.Heading + " " + titleAssociation.Publication + " " + 
-                            titleAssociation.Relationship).Trim();
+                        List<string> associationTitle = new List<string>();
+                        if (!string.IsNullOrWhiteSpace(titleAssociation.Title)) associationTitle.Add(titleAssociation.Title.Trim());
+                        if (!string.IsNullOrWhiteSpace(titleAssociation.Section)) associationTitle.Add(titleAssociation.Section.Trim());
+                        if (!string.IsNullOrWhiteSpace(titleAssociation.Volume)) associationTitle.Add(titleAssociation.Volume.Trim());
+                        if (!string.IsNullOrWhiteSpace(titleAssociation.Heading)) associationTitle.Add(titleAssociation.Heading.Trim());
+                        if (!string.IsNullOrWhiteSpace(titleAssociation.Publication)) associationTitle.Add(titleAssociation.Publication.Trim());
+                        if (!string.IsNullOrWhiteSpace(titleAssociation.Relationship)) associationTitle.Add(titleAssociation.Relationship.Trim());
+                        association.Title = string.Join(", ", associationTitle.ToArray());
+
                         if (titleAssociation.AssociatedTitleID != null)
                         {
                             association.Url = "https://www.biodiversitylibrary.org/bibliography/" + titleAssociation.AssociatedTitleID.ToString();
@@ -811,26 +825,36 @@ namespace MOBOT.BHL.OAI2
                 List<DataObjects.TitleVariant> variants = provider.TitleVariantSelectByTitleID(title.TitleID);
                 foreach (DataObjects.TitleVariant variant in variants)
                 {
-                    OAIRecord.TitleVariant newVariant = new TitleVariant((variant.Title + " " + variant.TitleRemainder).Trim(), variant.PartNumber, variant.PartName);
+                    List<string> variantTitle = new List<string>();
+                    if (!string.IsNullOrWhiteSpace(variant.Title)) variantTitle.Add(variant.Title.Trim());
+                    if (!string.IsNullOrWhiteSpace(variant.TitleRemainder)) variantTitle.Add(variant.TitleRemainder.Trim());
+
+                    OAIRecord.TitleVariant newVariant = new TitleVariant((string.Join(", ", variantTitle.ToArray())).Trim(), variant.PartNumber, variant.PartName);
                     this.TitleVariants.Add(new KeyValuePair<string, OAIRecord.TitleVariant>(variant.TitleVariantLabel.ToLower(), newVariant));
                 }
 
                 List<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID(title.TitleID);
                 this.LoadIdentifiers(titleIdentifiers, this);
 
-                List<DOI> dois = provider.DOISelectValidForTitle(title.TitleID);
-                foreach(DOI doi in dois)
+                List<Title_Identifier> dois = provider.DOISelectValidForTitle(title.TitleID);
+                foreach(Title_Identifier doi in dois)
                 {
-                    this.SetIdentifier("doi", doi.DOIName, this);
+                    this.SetIdentifier("doi", doi.IdentifierValue, this);
                 }
 
                 List<TitleAssociation> titleAssociations = provider.TitleAssociationSelectExtendedForTitle(title.TitleID);
                 foreach (TitleAssociation titleAssociation in titleAssociations)
                 {
                     OAIRecord association = new OAIRecord();
-                    association.Title = (titleAssociation.Title + " " + titleAssociation.Section + " " +
-                        titleAssociation.Volume + " " + titleAssociation.Heading + " " + titleAssociation.Publication + " " +
-                        titleAssociation.Relationship).Trim();
+                    List<string> associationTitle = new List<string>();
+                    if (!string.IsNullOrWhiteSpace(titleAssociation.Title)) associationTitle.Add(titleAssociation.Title.Trim());
+                    if (!string.IsNullOrWhiteSpace(titleAssociation.Section)) associationTitle.Add(titleAssociation.Section.Trim());
+                    if (!string.IsNullOrWhiteSpace(titleAssociation.Volume)) associationTitle.Add(titleAssociation.Volume.Trim());
+                    if (!string.IsNullOrWhiteSpace(titleAssociation.Heading)) associationTitle.Add(titleAssociation.Heading.Trim());
+                    if (!string.IsNullOrWhiteSpace(titleAssociation.Publication)) associationTitle.Add(titleAssociation.Publication.Trim());
+                    if (!string.IsNullOrWhiteSpace(titleAssociation.Relationship)) associationTitle.Add(titleAssociation.Relationship.Trim());
+                    association.Title = string.Join(", ", associationTitle.ToArray());
+
                     if (titleAssociation.AssociatedTitleID != null)
                     {
                         association.Url = "https://www.biodiversitylibrary.org/bibliography/" + titleAssociation.AssociatedTitleID.ToString();
@@ -842,116 +866,6 @@ namespace MOBOT.BHL.OAI2
                     this.RelatedTitles.Add(
                         new KeyValuePair<string, OAIRecord>(
                             titleAssociation.TitleAssociationLabel, association));
-                }
-            }
-        }
-
-        /// <summary>
-        /// Load data for the PDF with the specified identifier
-        /// </summary>
-        /// <param name="identifier"></param>
-        /// <returns></returns>
-        private void LoadPdf(int identifier)
-        {
-            BHLProvider provider = new BHLProvider();
-
-            PDF pdf = provider.PDFSelectAuto(identifier);
-            if (pdf != null)
-            {
-                this.Title = pdf.ArticleTitle;
-                this.Url= pdf.FileUrl;
-                this.Formats.Add("application/pdf");
-                this.Types.Add("Journal Article");
-                this.Types.Add("text");
-
-                if (!String.IsNullOrEmpty(pdf.ArticleCreators))
-                {
-                    String[] authors = pdf.ArticleCreators.Split(',');
-                    foreach (String author in authors)
-                    {
-                        OAIRecord.Creator creator = new OAIRecord.Creator(string.Empty, string.Empty, string.Empty,
-                            string.Empty, string.Empty, string.Empty, string.Empty, author);
-                        KeyValuePair<string, OAIRecord.Creator> authorData = new KeyValuePair<string, OAIRecord.Creator>(string.Empty, creator);
-                        this.Creators.Add(authorData);
-                    }
-                }
-
-                if (!String.IsNullOrEmpty(pdf.ArticleTags))
-                {
-                    String[] subjects = pdf.ArticleTags.Split(',');
-                    foreach (String subject in subjects)
-                    {
-                        this.Subjects.Add(new KeyValuePair<string, string>(string.Empty, subject));
-                    }
-                }
-
-                List<PDFPage> pdfPages = provider.PDFPageSelectForPdfID(pdf.PdfID);
-                if (pdfPages != null)
-                {
-                    if (pdfPages.Count > 0)
-                    {
-                        this.NumberOfPages = pdfPages.Count.ToString();
-
-                        foreach (PDFPage pdfPage in pdfPages)
-                        {
-                            // Assume the first non-"title" page is the first page of the article
-                            if (pdfPage.PageTypeName != "Title Page")
-                            {
-                                this.ArticleStartPage = pdfPage.PageNumber;
-                                break;
-                            }
-                        }
-                        this.ArticleEndPage = pdfPages[pdfPages.Count - 1].PageNumber;
-                    }
-                }
-
-                Item item = provider.ItemSelectAuto(pdf.ItemID);
-                if (item != null)
-                {
-                    this.Descriptions.Add(item.Volume);
-                    this.JournalVolume = item.Volume;
-                    this.Date = item.Year;
-
-                    List<Institution> contributors = provider.ItemHoldingInstitutionSelectByItemID(item.ItemID);
-                    if (contributors.Count > 0)
-                    {
-                        foreach (Institution contributor in contributors)
-                        {
-                            this.Contributors.Add(contributor.InstitutionName);
-                        }
-                    }
-
-                    if (!String.IsNullOrEmpty(item.CopyrightStatus)) this.Rights.Add(item.CopyrightStatus);
-
-                    Title title = provider.TitleSelectAuto(item.PrimaryTitleID);
-                    if (title != null)
-                    {
-                        this.JournalTitle = title.FullTitle;
-                        this.PartNumber = (title.PartNumber == null) ? String.Empty : title.PartNumber;
-                        this.PartName = (title.PartName == null) ? String.Empty : title.PartName;
-                        this.CallNumber = (title.CallNumber == null) ? String.Empty : title.CallNumber;
-                        this.MarcLeader = title.MARCLeader;
-                        this.PublicationDetails = title.PublicationDetails;
-                        this.Publisher = title.Datafield_260_b;
-                        this.PublicationPlace = title.Datafield_260_a;
-                        this.PublicationDates = title.Datafield_260_c;
-                        this.PublicationStartYear = (title.StartYear == null) ? String.Empty : title.StartYear.ToString();
-                        this.PublicationEndYear = (title.EndYear == null) ? String.Empty : title.EndYear.ToString();
-                        if (string.IsNullOrWhiteSpace(this.PublicationDates))
-                        {
-                            if (!string.IsNullOrWhiteSpace(this.PublicationStartYear) && !string.IsNullOrWhiteSpace(this.PublicationEndYear))
-                                this.PublicationDates = this.PublicationStartYear + "-" + this.PublicationEndYear;
-                            else
-                                this.PublicationDates = (this.PublicationStartYear + this.PublicationEndYear).Trim();
-                        }
-                        this.Edition = (title.EditionStatement == null) ? String.Empty : title.EditionStatement;
-                        this.OriginalCatalogingSource = (title.OriginalCatalogingSource == null) ? String.Empty : title.OriginalCatalogingSource;
-                        this.PublicationFrequency = (title.CurrentPublicationFrequency == null) ? String.Empty : title.CurrentPublicationFrequency;
-                        if (String.IsNullOrEmpty(this.Date) && title.StartYear != null) this.Date = title.StartYear.ToString();
-
-                        List<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID(title.TitleID);
-                        this.LoadIdentifiers(titleIdentifiers, this);
-                    }
                 }
             }
         }
@@ -970,6 +884,8 @@ namespace MOBOT.BHL.OAI2
                 switch (segment.GenreName)
                 {
                     case OAI2Util.SegmentGenre.ARTICLE:
+                        this.Type = RecordType.Article;
+                        break;
                     case OAI2Util.SegmentGenre.CHAPTER:
                     case OAI2Util.SegmentGenre.TREATMENT:
                         this.Type = RecordType.Segment;
@@ -986,9 +902,9 @@ namespace MOBOT.BHL.OAI2
                 this.Url = "https://www.biodiversitylibrary.org/part/" + segment.SegmentID.ToString();
                 this.Sequence = "1";
 
-                if (segment.ItemID != null)
+                if (segment.BookID != null)
                 {
-                    this.ParentUrl = "https://www.biodiversitylibrary.org/item/" + segment.ItemID.ToString();
+                    this.ParentUrl = "https://www.biodiversitylibrary.org/item/" + segment.BookID.ToString();
                     this.Sequence = segment.SequenceOrder.ToString();
                 }
 
@@ -1021,7 +937,7 @@ namespace MOBOT.BHL.OAI2
                     this.Contributors.Add(contributor.InstitutionName);
                 }
 
-                foreach (SegmentAuthor author in segment.AuthorList)
+                foreach (ItemAuthor author in segment.AuthorList)
                 {
                     OAIRecord.Creator creator = new OAIRecord.Creator(string.Empty, string.Empty, string.Empty,
                         string.Empty, string.Empty, string.Empty, string.Empty, author.FullName);
@@ -1029,13 +945,20 @@ namespace MOBOT.BHL.OAI2
                     this.Creators.Add(authorData);
                 }
 
-                foreach (SegmentKeyword keyword in segment.KeywordList)
+                foreach (ItemKeyword keyword in segment.KeywordList)
                 {
                     this.Subjects.Add(new KeyValuePair<string, string>(string.Empty, keyword.Keyword));
                 }
 
                 this.LoadIdentifiers(segment.IdentifierList, this);
-                if (!string.IsNullOrWhiteSpace(segment.DOIName)) this.SetIdentifier("doi", segment.DOIName, this);
+                foreach(ItemIdentifier itemIdentifier in segment.IdentifierList)
+                {
+                    if (string.Compare("doi", itemIdentifier.IdentifierName, true) == 0)
+                    {
+                        this.SetIdentifier("doi", itemIdentifier.IdentifierValue, this);
+                        break;
+                    }
+                }
             }
         }
 
@@ -1071,15 +994,11 @@ namespace MOBOT.BHL.OAI2
         /// </summary>
         /// <param name="identifierList"></param>
         /// <param name="record"></param>
-        private void LoadIdentifiers(List<SegmentIdentifier> identifierList, OAIRecord record)
+        private void LoadIdentifiers(List<ItemIdentifier> identifierList, OAIRecord record)
         {
-            foreach (SegmentIdentifier segmentIdentifier in identifierList)
+            foreach (ItemIdentifier itemIdentifier in identifierList)
             {
-                // Only include identifiers of the actual article (not the container object)
-                if (segmentIdentifier.IsContainerIdentifier == 0)
-                {
-                    this.SetIdentifier(segmentIdentifier.IdentifierName, segmentIdentifier.IdentifierValue, record);
-                }
+                this.SetIdentifier(itemIdentifier.IdentifierName, itemIdentifier.IdentifierValue, record);
             }
         }
 
@@ -1098,6 +1017,9 @@ namespace MOBOT.BHL.OAI2
                     break;
                 case "issn":
                     record.Issn = identifierValue;
+                    break;
+                case "eissn":
+                    record.EIssn = identifierValue;
                     break;
                 case "isbn":
                     record.Isbn = identifierValue;
@@ -1234,6 +1156,24 @@ namespace MOBOT.BHL.OAI2
                 set { _fullName = value; }
             }
 
+            private List<OAIRecord.Identifier> _identifiers = new List<OAIRecord.Identifier>();
+
+            public List<OAIRecord.Identifier> Identifiers
+            {
+                get { return _identifiers; }
+                set { _identifiers = value; }
+            }
+        }
+
+        public class Identifier
+        {
+            public Identifier() { }
+
+            private string _identifierType;
+            private string _identifierValue;
+
+            public string IdentifierType { get => _identifierType; set => _identifierType = value; }
+            public string IdentifierValue { get => _identifierValue; set => _identifierValue = value; }
         }
 
         /// <summary>

@@ -1,8 +1,8 @@
 
-// Generated 11/18/2009 1:43:59 PM
+// Generated 1/5/2021 2:14:04 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class IAItemErrorDAL is based upon IAItemError.
+// This partial class IAItemErrorDAL is based upon dbo.IAItemError.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from IAItemError by primary key(s).
+		/// Select values from dbo.IAItemError by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 			
 		/// <summary>
-		/// Select values from IAItemError by primary key(s).
+		/// Select values from dbo.IAItemError by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAItemError> helper = new CustomSqlHelper<IAItemError>())
 				{
-					CustomGenericList<IAItemError> list = helper.ExecuteReader(command);
+					List<IAItemError> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAItemError o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IAItemError by primary key(s).
+		/// Select values from dbo.IAItemError by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="itemErrorID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IAItemErrorSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAItemErrorSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int itemErrorID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IAItemError by primary key(s).
+		/// Select values from dbo.IAItemError by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="itemErrorID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IAItemErrorSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAItemErrorSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into IAItemError.
+		/// Insert values into dbo.IAItemError.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -161,7 +162,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into IAItemError.
+		/// Insert values into dbo.IAItemError.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -205,7 +206,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAItemError> helper = new CustomSqlHelper<IAItemError>())
 				{
-					CustomGenericList<IAItemError> list = helper.ExecuteReader(command);
+					List<IAItemError> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAItemError o = list[0];
@@ -221,7 +222,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into IAItemError. Returns an object of type IAItemError.
+		/// Insert values into dbo.IAItemError. Returns an object of type IAItemError.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -236,7 +237,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into IAItemError. Returns an object of type IAItemError.
+		/// Insert values into dbo.IAItemError. Returns an object of type IAItemError.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -265,7 +266,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from IAItemError by primary key(s).
+		/// Delete values from dbo.IAItemError by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -280,7 +281,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from IAItemError by primary key(s).
+		/// Delete values from dbo.IAItemError by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -323,7 +324,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in IAItemError. Returns an object of type IAItemError.
+		/// Update values in dbo.IAItemError. Returns an object of type IAItemError.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -354,7 +355,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAItemError. Returns an object of type IAItemError.
+		/// Update values in dbo.IAItemError. Returns an object of type IAItemError.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -400,7 +401,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAItemError> helper = new CustomSqlHelper<IAItemError>())
 				{
-					CustomGenericList<IAItemError> list = helper.ExecuteReader(command);
+					List<IAItemError> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAItemError o = list[0];
@@ -416,7 +417,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAItemError. Returns an object of type IAItemError.
+		/// Update values in dbo.IAItemError. Returns an object of type IAItemError.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -431,7 +432,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAItemError. Returns an object of type IAItemError.
+		/// Update values in dbo.IAItemError. Returns an object of type IAItemError.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -461,9 +462,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage IAItemError object.
+		/// Manage dbo.IAItemError object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IAItemError.
+		/// then either insert values into, delete values from, or update values in dbo.IAItemError.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -478,9 +479,9 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Manage IAItemError object.
+		/// Manage dbo.IAItemError object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IAItemError.
+		/// then either insert values into, delete values from, or update values in dbo.IAItemError.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -557,4 +558,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

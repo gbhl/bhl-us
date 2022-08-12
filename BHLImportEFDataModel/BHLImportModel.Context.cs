@@ -63,7 +63,7 @@ namespace MOBOT.BHLImport.BHLImportEFDataModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BSSegmentResolveAuthors", segmentIDParameter);
         }
     
-        public virtual int BSSegmentPublishToProduction(Nullable<int> itemID, Nullable<int> segmentID)
+        public virtual int BSSegmentPublishToProduction(Nullable<int> itemID, Nullable<int> segmentID, ObjectParameter segmentStatusID)
         {
             var itemIDParameter = itemID.HasValue ?
                 new ObjectParameter("ItemID", itemID) :
@@ -73,7 +73,7 @@ namespace MOBOT.BHLImport.BHLImportEFDataModel
                 new ObjectParameter("SegmentID", segmentID) :
                 new ObjectParameter("SegmentID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BSSegmentPublishToProduction", itemIDParameter, segmentIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BSSegmentPublishToProduction", itemIDParameter, segmentIDParameter, segmentStatusID);
         }
     
         public virtual ObjectResult<BSItem> BSItemAvailabilityCheck(Nullable<int> bHLItemID)

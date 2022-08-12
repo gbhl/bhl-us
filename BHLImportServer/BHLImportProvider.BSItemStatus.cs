@@ -1,13 +1,12 @@
-﻿using System;
-using CustomDataAccess;
-using MOBOT.BHLImport.DAL;
+﻿using MOBOT.BHLImport.DAL;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
 
 namespace MOBOT.BHLImport.Server
 {
     public partial class BHLImportProvider
     {
-        public CustomGenericList<BSItemStatus> BSItemStatusSelectAll()
+        public List<BSItemStatus> BSItemStatusSelectAll()
         {
             return new BSItemStatusDAL().BSItemStatusSelectAll(null, null);
         }

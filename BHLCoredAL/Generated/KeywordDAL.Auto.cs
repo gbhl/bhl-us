@@ -1,5 +1,5 @@
 
-// Generated 5/9/2016 1:52:35 PM
+// Generated 1/5/2021 3:25:57 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class KeywordDAL is based upon dbo.Keyword.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -32,7 +33,7 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class KeywordDAL : IKeywordDAL
+	partial class KeywordDAL 
 	{
  		#region ===== SELECT =====
 
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Keyword> helper = new CustomSqlHelper<Keyword>())
 				{
-					CustomGenericList<Keyword> list = helper.ExecuteReader(command);
+					List<Keyword> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Keyword o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="keywordID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> KeywordSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> KeywordSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int keywordID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="keywordID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> KeywordSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> KeywordSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -180,7 +181,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Keyword> helper = new CustomSqlHelper<Keyword>())
 				{
-					CustomGenericList<Keyword> list = helper.ExecuteReader(command);
+					List<Keyword> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Keyword o = list[0];
@@ -340,7 +341,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Keyword> helper = new CustomSqlHelper<Keyword>())
 				{
-					CustomGenericList<Keyword> list = helper.ExecuteReader(command);
+					List<Keyword> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Keyword o = list[0];

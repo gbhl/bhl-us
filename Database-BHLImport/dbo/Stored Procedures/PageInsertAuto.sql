@@ -1,19 +1,12 @@
-﻿
--- PageInsertAuto PROCEDURE
--- Generated 2/26/2008 3:15:49 PM
--- Do not modify the contents of this procedure.
--- Insert Procedure for Page
-
-CREATE PROCEDURE PageInsertAuto
+CREATE PROCEDURE dbo.PageInsertAuto
 
 @PageID INT OUTPUT,
 @ImportStatusID INT,
 @ImportSourceID INT = null,
-@BarCode NVARCHAR(40),
+@BarCode NVARCHAR(200),
 @FileNamePrefix NVARCHAR(200),
 @SequenceOrder INT = null,
 @PageDescription NVARCHAR(255) = null,
-@Illustration BIT = null,
 @Note NVARCHAR(255) = null,
 @FileSize_Temp INT = null,
 @FileExtension NVARCHAR(5) = null,
@@ -23,7 +16,6 @@ CREATE PROCEDURE PageInsertAuto
 @Volume NVARCHAR(20) = null,
 @Issue NVARCHAR(20) = null,
 @ExternalURL NVARCHAR(500) = null,
-@AltExternalURL NVARCHAR(500) = null,
 @IssuePrefix NVARCHAR(20) = null,
 @LastPageNameLookupDate DATETIME = null,
 @PaginationUserID INT = null,
@@ -32,21 +24,21 @@ CREATE PROCEDURE PageInsertAuto
 @ExternalLastModifiedDate DATETIME = null,
 @ExternalCreationUser INT = null,
 @ExternalLastModifiedUser INT = null,
-@ProductionDate DATETIME = null
+@ProductionDate DATETIME = null,
+@Illustration BIT = null,
+@AltExternalURL NVARCHAR(500) = null
 
 AS 
 
 SET NOCOUNT ON
 
 INSERT INTO [dbo].[Page]
-(
-	[ImportStatusID],
+( 	[ImportStatusID],
 	[ImportSourceID],
 	[BarCode],
 	[FileNamePrefix],
 	[SequenceOrder],
 	[PageDescription],
-	[Illustration],
 	[Note],
 	[FileSize_Temp],
 	[FileExtension],
@@ -56,7 +48,6 @@ INSERT INTO [dbo].[Page]
 	[Volume],
 	[Issue],
 	[ExternalURL],
-	[AltExternalURL],
 	[IssuePrefix],
 	[LastPageNameLookupDate],
 	[PaginationUserID],
@@ -67,17 +58,16 @@ INSERT INTO [dbo].[Page]
 	[ExternalLastModifiedUser],
 	[ProductionDate],
 	[CreatedDate],
-	[LastModifiedDate]
-)
+	[LastModifiedDate],
+	[Illustration],
+	[AltExternalURL] )
 VALUES
-(
-	@ImportStatusID,
+( 	@ImportStatusID,
 	@ImportSourceID,
 	@BarCode,
 	@FileNamePrefix,
 	@SequenceOrder,
 	@PageDescription,
-	@Illustration,
 	@Note,
 	@FileSize_Temp,
 	@FileExtension,
@@ -87,7 +77,6 @@ VALUES
 	@Volume,
 	@Issue,
 	@ExternalURL,
-	@AltExternalURL,
 	@IssuePrefix,
 	@LastPageNameLookupDate,
 	@PaginationUserID,
@@ -98,20 +87,20 @@ VALUES
 	@ExternalLastModifiedUser,
 	@ProductionDate,
 	getdate(),
-	getdate()
-)
+	getdate(),
+	@Illustration,
+	@AltExternalURL )
 
 SET @PageID = Scope_Identity()
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure PageInsertAuto. No information was inserted as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.PageInsertAuto. No information was inserted as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[PageID],
 		[ImportStatusID],
 		[ImportSourceID],
@@ -119,7 +108,6 @@ ELSE BEGIN
 		[FileNamePrefix],
 		[SequenceOrder],
 		[PageDescription],
-		[Illustration],
 		[Note],
 		[FileSize_Temp],
 		[FileExtension],
@@ -129,7 +117,6 @@ ELSE BEGIN
 		[Volume],
 		[Issue],
 		[ExternalURL],
-		[AltExternalURL],
 		[IssuePrefix],
 		[LastPageNameLookupDate],
 		[PaginationUserID],
@@ -140,13 +127,13 @@ ELSE BEGIN
 		[ExternalLastModifiedUser],
 		[ProductionDate],
 		[CreatedDate],
-		[LastModifiedDate]	
-
+		[LastModifiedDate],
+		[Illustration],
+		[AltExternalURL]	
 	FROM [dbo].[Page]
-	
 	WHERE
 		[PageID] = @PageID
 	
 	RETURN -- insert successful
 END
-
+GO

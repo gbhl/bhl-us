@@ -1,5 +1,5 @@
 
-// Generated 8/27/2019 10:08:10 PM
+// Generated 1/5/2021 3:42:40 PM
 // Do not modify the contents of this code file.
 // This abstract class __ImportRecordCreator is based upon import.ImportRecordCreator.
 
@@ -53,12 +53,12 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="startYear"></param>
 		/// <param name="endYear"></param>
 		/// <param name="authorType"></param>
+		/// <param name="productionAuthorID"></param>
+		/// <param name="importedAuthorID"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="productionAuthorID"></param>
-		/// <param name="importedAuthorID"></param>
 		public __ImportRecordCreator(int importRecordCreatorID, 
 			int importRecordID, 
 			string fullName, 
@@ -67,12 +67,12 @@ namespace MOBOT.BHL.DataObjects
 			string startYear, 
 			string endYear, 
 			string authorType, 
+			int? productionAuthorID, 
+			int? importedAuthorID, 
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int creationUserID, 
-			int lastModifiedUserID, 
-			int? productionAuthorID, 
-			int? importedAuthorID) : this()
+			int lastModifiedUserID) : this()
 		{
 			_ImportRecordCreatorID = importRecordCreatorID;
 			ImportRecordID = importRecordID;
@@ -82,12 +82,12 @@ namespace MOBOT.BHL.DataObjects
 			StartYear = startYear;
 			EndYear = endYear;
 			AuthorType = authorType;
+			ProductionAuthorID = productionAuthorID;
+			ImportedAuthorID = importedAuthorID;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
-			ProductionAuthorID = productionAuthorID;
-			ImportedAuthorID = importedAuthorID;
 		}
 		
 		#endregion Constructors
@@ -154,6 +154,16 @@ namespace MOBOT.BHL.DataObjects
 						_AuthorType = (string)column.Value;
 						break;
 					}
+					case "ProductionAuthorID" :
+					{
+						_ProductionAuthorID = (int?)column.Value;
+						break;
+					}
+					case "ImportedAuthorID" :
+					{
+						_ImportedAuthorID = (int?)column.Value;
+						break;
+					}
 					case "CreationDate" :
 					{
 						_CreationDate = (DateTime)column.Value;
@@ -172,16 +182,6 @@ namespace MOBOT.BHL.DataObjects
 					case "LastModifiedUserID" :
 					{
 						_LastModifiedUserID = (int)column.Value;
-						break;
-					}
-					case "ProductionAuthorID" :
-					{
-						_ProductionAuthorID = (int?)column.Value;
-						break;
-					}
-					case "ImportedAuthorID" :
-					{
-						_ImportedAuthorID = (int?)column.Value;
 						break;
 					}
 								}
@@ -417,114 +417,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion AuthorType
 		
-		#region CreationDate
-		
-		private DateTime _CreationDate;
-		
-		/// <summary>
-		/// Column: CreationDate;
-		/// DBMS data type: datetime;
-		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=9)]
-		public DateTime CreationDate
-		{
-			get
-			{
-				return _CreationDate;
-			}
-			set
-			{
-				if (_CreationDate != value)
-				{
-					_CreationDate = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion CreationDate
-		
-		#region LastModifiedDate
-		
-		private DateTime _LastModifiedDate;
-		
-		/// <summary>
-		/// Column: LastModifiedDate;
-		/// DBMS data type: datetime;
-		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=10)]
-		public DateTime LastModifiedDate
-		{
-			get
-			{
-				return _LastModifiedDate;
-			}
-			set
-			{
-				if (_LastModifiedDate != value)
-				{
-					_LastModifiedDate = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion LastModifiedDate
-		
-		#region CreationUserID
-		
-		private int _CreationUserID = default(int);
-		
-		/// <summary>
-		/// Column: CreationUserID;
-		/// DBMS data type: int;
-		/// </summary>
-		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=11, NumericPrecision=10)]
-		public int CreationUserID
-		{
-			get
-			{
-				return _CreationUserID;
-			}
-			set
-			{
-				if (_CreationUserID != value)
-				{
-					_CreationUserID = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion CreationUserID
-		
-		#region LastModifiedUserID
-		
-		private int _LastModifiedUserID = default(int);
-		
-		/// <summary>
-		/// Column: LastModifiedUserID;
-		/// DBMS data type: int;
-		/// </summary>
-		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=12, NumericPrecision=10)]
-		public int LastModifiedUserID
-		{
-			get
-			{
-				return _LastModifiedUserID;
-			}
-			set
-			{
-				if (_LastModifiedUserID != value)
-				{
-					_LastModifiedUserID = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion LastModifiedUserID
-		
 		#region ProductionAuthorID
 		
 		private int? _ProductionAuthorID = null;
@@ -533,7 +425,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ProductionAuthorID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("ProductionAuthorID", DbTargetType=SqlDbType.Int, Ordinal=13, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("ProductionAuthorID", DbTargetType=SqlDbType.Int, Ordinal=9, NumericPrecision=10, IsNullable=true)]
 		public int? ProductionAuthorID
 		{
 			get
@@ -560,7 +452,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ImportedAuthorID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("ImportedAuthorID", DbTargetType=SqlDbType.Int, Ordinal=14, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("ImportedAuthorID", DbTargetType=SqlDbType.Int, Ordinal=10, NumericPrecision=10, IsNullable=true)]
 		public int? ImportedAuthorID
 		{
 			get
@@ -578,6 +470,114 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion ImportedAuthorID
+		
+		#region CreationDate
+		
+		private DateTime _CreationDate;
+		
+		/// <summary>
+		/// Column: CreationDate;
+		/// DBMS data type: datetime;
+		/// </summary>
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=11)]
+		public DateTime CreationDate
+		{
+			get
+			{
+				return _CreationDate;
+			}
+			set
+			{
+				if (_CreationDate != value)
+				{
+					_CreationDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreationDate
+		
+		#region LastModifiedDate
+		
+		private DateTime _LastModifiedDate;
+		
+		/// <summary>
+		/// Column: LastModifiedDate;
+		/// DBMS data type: datetime;
+		/// </summary>
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=12)]
+		public DateTime LastModifiedDate
+		{
+			get
+			{
+				return _LastModifiedDate;
+			}
+			set
+			{
+				if (_LastModifiedDate != value)
+				{
+					_LastModifiedDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedDate
+		
+		#region CreationUserID
+		
+		private int _CreationUserID = default(int);
+		
+		/// <summary>
+		/// Column: CreationUserID;
+		/// DBMS data type: int;
+		/// </summary>
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=13, NumericPrecision=10)]
+		public int CreationUserID
+		{
+			get
+			{
+				return _CreationUserID;
+			}
+			set
+			{
+				if (_CreationUserID != value)
+				{
+					_CreationUserID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreationUserID
+		
+		#region LastModifiedUserID
+		
+		private int _LastModifiedUserID = default(int);
+		
+		/// <summary>
+		/// Column: LastModifiedUserID;
+		/// DBMS data type: int;
+		/// </summary>
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=14, NumericPrecision=10)]
+		public int LastModifiedUserID
+		{
+			get
+			{
+				return _LastModifiedUserID;
+			}
+			set
+			{
+				if (_LastModifiedUserID != value)
+				{
+					_LastModifiedUserID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedUserID
 			
 		#endregion Properties
 
@@ -630,12 +630,12 @@ namespace MOBOT.BHL.DataObjects
 					GetComparisonString(o.StartYear) == GetComparisonString(StartYear) &&
 					GetComparisonString(o.EndYear) == GetComparisonString(EndYear) &&
 					GetComparisonString(o.AuthorType) == GetComparisonString(AuthorType) &&
+					o.ProductionAuthorID == ProductionAuthorID &&
+					o.ImportedAuthorID == ImportedAuthorID &&
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
-					o.LastModifiedUserID == LastModifiedUserID &&
-					o.ProductionAuthorID == ProductionAuthorID &&
-					o.ImportedAuthorID == ImportedAuthorID 
+					o.LastModifiedUserID == LastModifiedUserID 
 				)
 				{
 					o = null;
@@ -730,7 +730,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __ImportRecordCreator.SortColumn.ImportRecordCreatorID);
 		/// </summary>
 		[Serializable]
@@ -744,12 +743,12 @@ namespace MOBOT.BHL.DataObjects
 			public const string StartYear = "StartYear";	
 			public const string EndYear = "EndYear";	
 			public const string AuthorType = "AuthorType";	
+			public const string ProductionAuthorID = "ProductionAuthorID";	
+			public const string ImportedAuthorID = "ImportedAuthorID";	
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";	
-			public const string ProductionAuthorID = "ProductionAuthorID";	
-			public const string ImportedAuthorID = "ImportedAuthorID";
+			public const string LastModifiedUserID = "LastModifiedUserID";
 		}
 				
 		#endregion SortColumn

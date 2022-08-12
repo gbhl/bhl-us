@@ -3,7 +3,7 @@
 	SegmentAuthorID int IDENTITY(1,1) NOT NULL,
 	ImportStatusID int NOT NULL,
 	ImportSourceID	int NOT NULL,
-	BarCode	nvarchar(40) NOT NULL CONSTRAINT DF_SegmentAuthor_BarCode DEFAULT(''),
+	BarCode	nvarchar(200) NOT NULL CONSTRAINT DF_SegmentAuthor_BarCode DEFAULT(''),
 	SegmentSequenceOrder int NOT NULL,
 	SequenceOrder int NOT NULL,
 	LastName nvarchar(150) NOT NULL CONSTRAINT DF_SegmentAuthor_LastName DEFAULT(''),

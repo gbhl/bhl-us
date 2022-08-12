@@ -1,19 +1,18 @@
 
 #region Using
 
-using System;
+using CustomDataAccess;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class Annotation_AnnotationConceptDAL
+    public partial class Annotation_AnnotationConceptDAL
     {
-        public CustomGenericList<CustomDataRow> Annotation_AnnotationConceptSelectByAnnotationID(
+        public List<CustomDataRow> Annotation_AnnotationConceptSelectByAnnotationID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int annotationID)

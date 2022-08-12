@@ -1,8 +1,10 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Dynamic;
 using System.Text;
 using System.Web;
 
@@ -26,7 +28,6 @@ namespace MOBOT.BHL.AdminWeb.Services
             string endDate = context.Request.QueryString["edate"] as string;
 
             // Make sure parameters are valid
-            int verifyInt;
             paginationStatuses = String.IsNullOrEmpty(paginationStatuses) ? "" : paginationStatuses;
             if (!Int32.TryParse(published, out publishedOnly)) publishedOnly = 0;
             DateTime verifyDate;
@@ -92,38 +93,31 @@ namespace MOBOT.BHL.AdminWeb.Services
         /// <returns></returns>
         private void GetReportCSVString(HttpContext context, List<Item> searchResult)
         {
-            StringBuilder csvString = new StringBuilder();
-
-            // Add a BOM (Byte-Order Mark) to the output
-            csvString.Append(Encoding.UTF8.GetString(new UTF8Encoding(true).GetPreamble()));
-
-            // Write file header
-            csvString.AppendLine("\"TitleId\",\"Title\",\"BibliographicLevel\",\"ItemId\",\"InternetArchiveId\",\"Volume\",\"Year\",\"Item Status\",\"ScanningDate\",\"Holding Institution\",\"PaginationStatusName\",\"PaginationStatusDate\",\"PaginationUserName\",\"NumberOfPages\"");
-            context.Response.Write(csvString.ToString());
-            context.Response.Flush();
-
+            var data = new List<dynamic>();
             foreach (Item item in searchResult)
             {
-                // Write record
-                csvString.Remove(0, csvString.Length);
-                csvString.Append("\"" + item.PrimaryTitleID.ToString() + "\",");
-                csvString.Append("\"" + item.FullTitle.Replace("\"", "\"\"") + "\",");
-                csvString.Append("\"" + item.BibliographicLevel + "\",");
-                csvString.Append("\"" + item.ItemID.ToString() + "\",");
-                csvString.Append("\"" + item.BarCode + "\",");
-                csvString.Append("\"" + item.Volume.Replace("\"", "\"\"") + "\",");
-                csvString.Append("\"" + item.Year + "\",");
-                csvString.Append("\"" + item.ItemStatusName.Replace("\"", "\"\"") + "\",");
-                csvString.Append("\"" + item.ScanningDate.ToString() + "\",");
-                csvString.Append("\"" + item.InstitutionStrings[0].Replace("\"", "\"\"") + "\",");
-                csvString.Append("\"" + item.PaginationStatusName + "\",");
-                csvString.Append("\"" + item.PaginationStatusDate.ToString() + "\",");
-                csvString.Append("\"" + item.PaginationUserName.Replace("\"", "\"\"") + "\",");
-                csvString.AppendLine("\"" + item.NumberOfPages.ToString() + "\",");
-
-                context.Response.Write(csvString.ToString());
-                context.Response.Flush();
+                var record = new ExpandoObject() as IDictionary<string, Object>;
+                record.Add("TitleId", item.PrimaryTitleID.ToString());
+                record.Add("Title", item.FullTitle);
+                record.Add("BibliographicLevel", item.BibliographicLevel);
+                record.Add("Id", item.ItemID.ToString());
+                record.Add("InternetArchiveId", item.BarCode);
+                record.Add("Volume", item.Volume);
+                record.Add("Year", item.StartYear);
+                record.Add("ItemStatus", item.ItemStatusName);
+                record.Add("ScanningDate", item.ScanningDate.ToString());
+                record.Add("Holding Institution", item.InstitutionStrings[0]);
+                record.Add("PaginationStatusName", item.PaginationStatusName);
+                record.Add("PaginationStatusDate", item.PaginationStatusDate.ToString());
+                record.Add("PaginationUserName", item.PaginationUserName);
+                record.Add("NumberOfPages", item.NumberOfPages.ToString());
+                data.Add(record);
             }
+
+            byte[] csvBytes = new CSV().FormatCSVData(data);
+            context.Response.Write(Encoding.UTF8.GetString(csvBytes, 0, csvBytes.Length));
+            context.Response.Flush();
+
         }
 
         public bool IsReusable

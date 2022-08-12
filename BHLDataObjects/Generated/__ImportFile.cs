@@ -1,5 +1,5 @@
 
-// Generated 9/20/2017 9:55:25 AM
+// Generated 6/28/2021 12:51:29 PM
 // Do not modify the contents of this code file.
 // This abstract class __ImportFile is based upon import.ImportFile.
 
@@ -49,30 +49,30 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="importFileStatusID"></param>
 		/// <param name="importFileName"></param>
 		/// <param name="contributorCode"></param>
+		/// <param name="segmentGenreID"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="segmentGenreID"></param>
 		public __ImportFile(int importFileID, 
 			int importFileStatusID, 
 			string importFileName, 
 			string contributorCode, 
+			int? segmentGenreID, 
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int creationUserID, 
-			int lastModifiedUserID, 
-			int? segmentGenreID) : this()
+			int lastModifiedUserID) : this()
 		{
 			_ImportFileID = importFileID;
 			ImportFileStatusID = importFileStatusID;
 			ImportFileName = importFileName;
 			ContributorCode = contributorCode;
+			SegmentGenreID = segmentGenreID;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
-			SegmentGenreID = segmentGenreID;
 		}
 		
 		#endregion Constructors
@@ -119,6 +119,11 @@ namespace MOBOT.BHL.DataObjects
 						_ContributorCode = (string)column.Value;
 						break;
 					}
+					case "SegmentGenreID" :
+					{
+						_SegmentGenreID = (int?)column.Value;
+						break;
+					}
 					case "CreationDate" :
 					{
 						_CreationDate = (DateTime)column.Value;
@@ -137,11 +142,6 @@ namespace MOBOT.BHL.DataObjects
 					case "LastModifiedUserID" :
 					{
 						_LastModifiedUserID = (int)column.Value;
-						break;
-					}
-					case "SegmentGenreID" :
-					{
-						_SegmentGenreID = (int?)column.Value;
 						break;
 					}
 								}
@@ -239,13 +239,13 @@ namespace MOBOT.BHL.DataObjects
 		
 		#region ContributorCode
 		
-		private string _ContributorCode = string.Empty;
+		private string _ContributorCode = null;
 		
 		/// <summary>
 		/// Column: ContributorCode;
-		/// DBMS data type: nvarchar(10);
+		/// DBMS data type: nvarchar(10); Nullable;
 		/// </summary>
-		[ColumnDefinition("ContributorCode", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=10)]
+		[ColumnDefinition("ContributorCode", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=10, IsNullable=true)]
 		public string ContributorCode
 		{
 			get
@@ -265,6 +265,33 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion ContributorCode
 		
+		#region SegmentGenreID
+		
+		private int? _SegmentGenreID = null;
+		
+		/// <summary>
+		/// Column: SegmentGenreID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("SegmentGenreID", DbTargetType=SqlDbType.Int, Ordinal=5, NumericPrecision=10, IsNullable=true)]
+		public int? SegmentGenreID
+		{
+			get
+			{
+				return _SegmentGenreID;
+			}
+			set
+			{
+				if (_SegmentGenreID != value)
+				{
+					_SegmentGenreID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion SegmentGenreID
+		
 		#region CreationDate
 		
 		private DateTime _CreationDate;
@@ -273,7 +300,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=5)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=6)]
 		public DateTime CreationDate
 		{
 			get
@@ -300,7 +327,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=6)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=7)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -327,7 +354,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationUserID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=7, NumericPrecision=10)]
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=8, NumericPrecision=10)]
 		public int CreationUserID
 		{
 			get
@@ -354,7 +381,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedUserID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=8, NumericPrecision=10)]
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=9, NumericPrecision=10)]
 		public int LastModifiedUserID
 		{
 			get
@@ -372,33 +399,6 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion LastModifiedUserID
-		
-		#region SegmentGenreID
-		
-		private int? _SegmentGenreID = null;
-		
-		/// <summary>
-		/// Column: SegmentGenreID;
-		/// DBMS data type: int; Nullable;
-		/// </summary>
-		[ColumnDefinition("SegmentGenreID", DbTargetType=SqlDbType.Int, Ordinal=9, NumericPrecision=10, IsNullable=true)]
-		public int? SegmentGenreID
-		{
-			get
-			{
-				return _SegmentGenreID;
-			}
-			set
-			{
-				if (_SegmentGenreID != value)
-				{
-					_SegmentGenreID = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion SegmentGenreID
 			
 		#endregion Properties
 
@@ -447,11 +447,11 @@ namespace MOBOT.BHL.DataObjects
 					o.ImportFileStatusID == ImportFileStatusID &&
 					GetComparisonString(o.ImportFileName) == GetComparisonString(ImportFileName) &&
 					GetComparisonString(o.ContributorCode) == GetComparisonString(ContributorCode) &&
+					o.SegmentGenreID == SegmentGenreID &&
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
-					o.LastModifiedUserID == LastModifiedUserID &&
-					o.SegmentGenreID == SegmentGenreID 
+					o.LastModifiedUserID == LastModifiedUserID 
 				)
 				{
 					o = null;
@@ -546,7 +546,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __ImportFile.SortColumn.ImportFileID);
 		/// </summary>
 		[Serializable]
@@ -556,11 +555,11 @@ namespace MOBOT.BHL.DataObjects
 			public const string ImportFileStatusID = "ImportFileStatusID";	
 			public const string ImportFileName = "ImportFileName";	
 			public const string ContributorCode = "ContributorCode";	
+			public const string SegmentGenreID = "SegmentGenreID";	
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";	
-			public const string SegmentGenreID = "SegmentGenreID";
+			public const string LastModifiedUserID = "LastModifiedUserID";
 		}
 				
 		#endregion SortColumn

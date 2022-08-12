@@ -1,7 +1,7 @@
 
-// Generated 1/24/2008 10:03:58 AM
+// Generated 1/5/2021 3:27:33 PM
 // Do not modify the contents of this code file.
-// This abstract class __Vault is based upon Vault.
+// This abstract class __Vault is based upon dbo.Vault.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Vault : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -112,7 +112,7 @@ namespace MOBOT.BHL.DataObjects
 						_OCRFolderShare = (string)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -120,7 +120,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region VaultID
 		
@@ -129,9 +129,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Column: VaultID;
 		/// DBMS data type: int;
-		/// Description: Unique identifier for each Vault entry.
 		/// </summary>
-		[ColumnDefinition("VaultID", DbTargetType=SqlDbType.Int, Ordinal=1, Description="Unique identifier for each Vault entry.", NumericPrecision=10, IsInForeignKey=true, IsInPrimaryKey=true)]
+		[ColumnDefinition("VaultID", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsInForeignKey=true, IsInPrimaryKey=true)]
 		public int VaultID
 		{
 			get
@@ -157,9 +156,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Column: Server;
 		/// DBMS data type: nvarchar(30); Nullable;
-		/// Description: Name of server for this Vault entry.
 		/// </summary>
-		[ColumnDefinition("Server", DbTargetType=SqlDbType.NVarChar, Ordinal=2, Description="Name of server for this Vault entry.", CharacterMaxLength=30, IsNullable=true)]
+		[ColumnDefinition("Server", DbTargetType=SqlDbType.NVarChar, Ordinal=2, CharacterMaxLength=30, IsNullable=true)]
 		public string Server
 		{
 			get
@@ -186,9 +184,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Column: FolderShare;
 		/// DBMS data type: nvarchar(30); Nullable;
-		/// Description: Name for the folder share for this Vault entry.
 		/// </summary>
-		[ColumnDefinition("FolderShare", DbTargetType=SqlDbType.NVarChar, Ordinal=3, Description="Name for the folder share for this Vault entry.", CharacterMaxLength=30, IsNullable=true)]
+		[ColumnDefinition("FolderShare", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=30, IsNullable=true)]
 		public string FolderShare
 		{
 			get
@@ -215,9 +212,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Column: WebVirtualDirectory;
 		/// DBMS data type: nvarchar(30); Nullable;
-		/// Description: Name for the Web Virtual Directory for this Vault entry.
 		/// </summary>
-		[ColumnDefinition("WebVirtualDirectory", DbTargetType=SqlDbType.NVarChar, Ordinal=4, Description="Name for the Web Virtual Directory for this Vault entry.", CharacterMaxLength=30, IsNullable=true)]
+		[ColumnDefinition("WebVirtualDirectory", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=30, IsNullable=true)]
 		public string WebVirtualDirectory
 		{
 			get
@@ -266,7 +262,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion OCRFolderShare
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -407,7 +403,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Vault.SortColumn.VaultID);
 		/// </summary>
 		[Serializable]
@@ -424,3 +419,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

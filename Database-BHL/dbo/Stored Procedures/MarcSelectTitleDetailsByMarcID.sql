@@ -82,7 +82,7 @@ WHERE	l.LanguageCode IS NULL
 
 -- Get the publication titles
 UPDATE	#tmpTitle
-SET		ShortTitle = SUBSTRING(df.SubFieldValue, 1, 255)
+SET		ShortTitle = dbo.fnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 255), DEFAULT)
 FROM	dbo.vwMarcDataField df
 WHERE	df.DataFieldTag = '245'
 AND		df.Code = 'a'
@@ -90,7 +90,7 @@ AND		df.MarcID = @MarcID
 
 -- Get the uniform title (stored in either MARC 130 or MARC 240)
 UPDATE	#tmpTitle
-SET		UniformTitle = SUBSTRING(df.SubFieldValue, 1, 255)
+SET		UniformTitle = dbo.fnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 255), DEFAULT)
 FROM	dbo.vwMarcDataField df
 WHERE	df.DataFieldTag in ('130', '240')
 AND		df.Code = 'a'
@@ -98,7 +98,7 @@ AND		df.MarcID = @MarcID
 
 -- Full Title
 UPDATE	#tmpTitle
-SET		FullTitle = LTRIM(RTRIM(dfA.SubFieldValue + ' ' +  ISNULL(dfB.SubFieldValue, '')))
+SET		FullTitle = dbo.fnRemoveTrailingPunctuation(LTRIM(RTRIM(dfA.SubFieldValue + ' ' +  ISNULL(dfB.SubFieldValue, ''))), DEFAULT)
 FROM	dbo.Marc m INNER JOIN dbo.vwMarcDataField dfA
 			ON m.MarcID = dfA.MarcID
 			AND dfA.DataFieldTag = '245' 
@@ -109,6 +109,7 @@ FROM	dbo.Marc m INNER JOIN dbo.vwMarcDataField dfA
 			AND dfB.Code = 'b'
 WHERE	m.MarcID = @MarcID
 
+/*
 -- Strip forward slashes, commas, and semicolons from the end of title strings
 UPDATE	#tmpTitle
 SET		FullTitle = RTRIM(SUBSTRING(CONVERT(nvarchar(max), FullTitle), 1, LEN(CONVERT(nvarchar(max), FullTitle)) - 1))
@@ -117,21 +118,33 @@ WHERE	SUBSTRING(REVERSE(RTRIM(CONVERT(nvarchar(max), FullTitle))), 1, 1) in ('/'
 UPDATE	#tmpTitle
 SET		ShortTitle = RTRIM(SUBSTRING(ShortTitle, 1, LEN(ShortTitle) - 1))
 WHERE	SUBSTRING(REVERSE(RTRIM(ShortTitle)), 1, 1) in ('/', ',', ';')
+*/
 
 -- Part Number and Part Name
 UPDATE	#tmpTitle
-SET		PartNumber = SUBSTRING(df.SubFieldValue, 1, 255)
+SET		PartNumber = dbo.fnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 255), DEFAULT)
 FROM	dbo.vwMarcDataField df
 WHERE	df.DataFieldTag = '245'
 AND		df.Code = 'n'
 AND		df.MarcID = @MarcID
 
 UPDATE	#tmpTitle
-SET		PartName = SUBSTRING(df.SubFieldValue, 1, 255)
+SET		PartName = dbo.fnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 255), DEFAULT)
 FROM	dbo.vwMarcDataField df
 WHERE	df.DataFieldTag = '245'
 AND		df.Code = 'p'
 AND		df.MarcID = @MarcID;
+
+/*
+-- Strip forward slashes, commas, and semicolons from the end of title parts
+UPDATE	#tmpTitle
+SET		PartNumber = RTRIM(SUBSTRING(PartNumber, 1, LEN(PartNumber) - 1))
+WHERE	SUBSTRING(REVERSE(RTRIM(PartNumber)), 1, 1) in ('/', ',', ';')
+
+UPDATE	#tmpTitle
+SET		PartName = RTRIM(SUBSTRING(PartName, 1, LEN(PartName) - 1))
+WHERE	SUBSTRING(REVERSE(RTRIM(PartName)), 1, 1) in ('/', ',', ';');
+*/
 
 -- Get datafield 260/264 information
 /*
@@ -160,25 +173,25 @@ GROUP BY d.MarcID, d.MarcDataFieldID, v.Code
 
 -- Get the 260/264 values
 UPDATE	#tmpTitle
-SET		Datafield_260_a = SUBSTRING(df.SubFieldValue, 1, 150)
+SET		Datafield_260_a = dbo.fnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 150), DEFAULT)
 FROM	#PublisherInfo p
 		INNER JOIN dbo.vwMarcDataField df ON p.MarcID = df.MarcID AND p.MarcSubFieldID = df.MarcSubFieldID
 WHERE	p.Code = 'a'
 
 UPDATE	#tmpTitle
-SET		Datafield_260_b = SUBSTRING(df.SubFieldValue, 1, 255)
+SET		Datafield_260_b = dbo.fnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 255), DEFAULT)
 FROM	#PublisherInfo p
 		INNER JOIN dbo.vwMarcDataField df ON p.MarcID = df.MarcID AND p.MarcSubFieldID = df.MarcSubFieldID
 WHERE	p.Code = 'b'
 
 UPDATE	#tmpTitle
-SET		Datafield_260_c = SUBSTRING(df.SubFieldValue, 1, 100)
+SET		Datafield_260_c = dbo.fnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 100), '[a-zA-Z0-9)\]?!>*%"''-]%')
 FROM	#PublisherInfo p
 		INNER JOIN dbo.vwMarcDataField df ON p.MarcID = df.MarcID AND p.MarcSubFieldID = df.MarcSubFieldID
 WHERE	p.Code = 'c'
 
 UPDATE	#tmpTitle
-SET		Datafield_260_c = SUBSTRING(df.SubFieldValue, 1, 100)
+SET		Datafield_260_c = dbo.fnRemoveTrailingPunctuation(SUBSTRING(df.SubFieldValue, 1, 100), '[a-zA-Z0-9)\]?!>*%"''-]%')
 FROM	#PublisherInfo p
 		INNER JOIN dbo.vwMarcDataField df ON p.MarcID = df.MarcID AND p.MarcSubFieldID = df.MarcSubFieldID
 WHERE	p.Code = '3'
@@ -208,8 +221,14 @@ AND     (
 
 -- Get publication details
 UPDATE	#tmpTitle
-SET		PublicationDetails = SUBSTRING(ISNULL(Datafield_260_a, '') + ISNULL(Datafield_260_b, '') + 
-			ISNULL(Datafield_260_c, ''), 1, 255)
+SET		PublicationDetails = RTRIM(
+			SUBSTRING(
+				ISNULL(Datafield_260_a, '') + CASE WHEN LEN(Datafield_260_a) > 0 THEN ', ' ELSE '' END + 
+				ISNULL(Datafield_260_b, '') + CASE WHEN LEN(Datafield_260_b) > 0 THEN ', ' ELSE '' END + 
+				ISNULL(Datafield_260_c, ''),
+				1, 255
+			)
+		)
 
 -- Get the call number (first check the 050 record, then the 090... use the 050 value if both exist)
 UPDATE	#tmpTitle
@@ -314,3 +333,5 @@ SELECT	[MARCBibID],
 FROM	#tmpTitle
 
 END
+
+GO

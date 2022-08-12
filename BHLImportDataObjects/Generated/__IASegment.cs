@@ -1,5 +1,5 @@
 
-// Generated 1/24/2020 4:10:26 PM
+// Generated 1/5/2021 2:15:43 PM
 // Do not modify the contents of this code file.
 // This abstract class __IASegment is based upon dbo.IASegment.
 
@@ -732,7 +732,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __IASegment.SortColumn.SegmentID);
 		/// </summary>
 		[Serializable]

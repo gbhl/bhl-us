@@ -1,4 +1,5 @@
-﻿using MOBOT.BHL.DataObjects;
+﻿using BHL.SiteServiceREST.v1.Client;
+using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
@@ -140,8 +141,8 @@ namespace MOBOT.BHL.AdminWeb
                         // - Copy MARC.XML file to new folder (using MarcBibID as name)
                         try
                         {
-                            SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-                            service.MarcCreateFile(title.MARCBibID, System.IO.File.ReadAllText(marc.MarcFileLocation));
+                            Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                            client.CreateMarcFile(title.MARCBibID, System.IO.File.ReadAllText(marc.MarcFileLocation));
                         }
                         catch
                         {
@@ -234,12 +235,16 @@ namespace MOBOT.BHL.AdminWeb
                             title.TitleAuthors.Add(titleAuthor);
                         }
 
-                        // Replace all identifiers associated with this title
+                        // Delete all identifiers that will be replaced by MARC values
+                        List<string> identifiersToDelete = new List<string>{
+                                "OCLC", "DLC", "ISBN", "ISSN", "eISSN", "CODEN", "NLM", "NAL", 
+                                "GPO", "DDC", "MARC001", "WonderFetch", "Abbreviation"};
                         foreach (Title_Identifier title_identifier in title.TitleIdentifiers)
                         {
-                            title_identifier.IsDeleted = true;
+                            if (identifiersToDelete.Contains(title_identifier.IdentifierName)) title_identifier.IsDeleted = true;
                         }
 
+                        // Add new identifier values from MARC
                         List<Title_Identifier> titleIdentifiers = provider.MarcSelectTitleIdentifiersByMarcID(marc.MarcID);
                         foreach (Title_Identifier titleIdentifier in titleIdentifiers)
                         {
@@ -294,8 +299,7 @@ namespace MOBOT.BHL.AdminWeb
                             foreach (PageSummaryView folder in folders)
                             {
                                 // Get the files in the folder
-                                MOBOT.FileAccess.IFileAccessProvider fileAccess =
-                                    provider.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                                MOBOT.FileAccess.IFileAccessProvider fileAccess = provider.GetFileAccessProvider();
                                 String destinationFolder = folder.OCRFolderShare + "\\" + folder.FileRootFolder;
                                 String[] marcXmlFiles = fileAccess.GetFiles(destinationFolder);
 

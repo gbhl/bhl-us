@@ -1,13 +1,12 @@
-using System;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
-	public partial class BHLProvider
+    public partial class BHLProvider
 	{
-		public CustomGenericList<ItemStatus> ItemStatusSelectAll()
+		public List<ItemStatus> ItemStatusSelectAll()
 		{
 			return new ItemStatusDAL().SelectAll(null, null );
 		}

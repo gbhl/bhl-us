@@ -1,7 +1,7 @@
 
-// Generated 3/24/2009 1:57:09 PM
+// Generated 4/27/2021 9:49:50 AM
 // Do not modify the contents of this code file.
-// This abstract class __Item is based upon Item.
+// This abstract class __Item is based upon dbo.Item.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.IAAnalysis.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Item : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -240,7 +240,7 @@ namespace MOBOT.IAAnalysis.DataObjects
 						_CreationDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -248,7 +248,7 @@ namespace MOBOT.IAAnalysis.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region ItemID
 		
@@ -284,9 +284,9 @@ namespace MOBOT.IAAnalysis.DataObjects
 		
 		/// <summary>
 		/// Column: Identifier;
-		/// DBMS data type: nvarchar(50);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("Identifier", DbTargetType=SqlDbType.NVarChar, Ordinal=2, CharacterMaxLength=50)]
+		[ColumnDefinition("Identifier", DbTargetType=SqlDbType.NVarChar, Ordinal=2, CharacterMaxLength=200)]
 		public string Identifier
 		{
 			get
@@ -295,7 +295,7 @@ namespace MOBOT.IAAnalysis.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 50);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_Identifier != value)
 				{
 					_Identifier = value;
@@ -833,7 +833,7 @@ namespace MOBOT.IAAnalysis.DataObjects
 		#endregion CreationDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -990,7 +990,6 @@ namespace MOBOT.IAAnalysis.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Item.SortColumn.ItemID);
 		/// </summary>
 		[Serializable]
@@ -1023,3 +1022,4 @@ namespace MOBOT.IAAnalysis.DataObjects
 	}
 }
 // end of source generation
+

@@ -1,12 +1,12 @@
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
-using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class ItemInstitutionDAL
+    public partial class ItemInstitutionDAL
 	{
         public ItemInstitution ItemInstitutionInsert(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int itemID, string institutionCode, string institutionRoleName, int userID)
@@ -22,7 +22,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ItemInstitution> helper = new CustomSqlHelper<ItemInstitution>())
                 {
-                    CustomGenericList<ItemInstitution> list = helper.ExecuteReader(command);
+                    List<ItemInstitution> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -43,7 +43,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ItemInstitution> helper = new CustomSqlHelper<ItemInstitution>())
                 {
-                    CustomGenericList<ItemInstitution> list = helper.ExecuteReader(command);
+                    List<ItemInstitution> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else

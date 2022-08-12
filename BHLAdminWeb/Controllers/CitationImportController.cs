@@ -32,6 +32,16 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             return RedirectToAction("SelectFile");
         }
 
+        // GET: /CitationImport/ImportFileStatus
+        [HttpGet]
+        public ActionResult ImportFileStatus()
+        {
+            CitationService service = new CitationService();
+            CitationImportFileStatusModel model = new CitationImportFileStatusModel();
+            model.ImportFileStatuses = service.ImportFileStatusList();
+            return View(model);
+        }
+
         //
         // GET: /CitationImport/SelectFile
         [HttpGet]
@@ -40,7 +50,6 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             CitationService service = new CitationService();
 
             ViewBag.PageTitle += "Segment Import";
-            ViewBag.Contributor = new SelectList(service.InstitutionList(), "InstitutionCode", "InstitutionName");
             ViewBag.Genre = new SelectList(service.GenreList(), "SegmentGenreID", "GenreName");
             ViewBag.DataSourceType = new SelectList(service.DataSourceTypeList(), "key", "value", "text/plain");
 
@@ -55,7 +64,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             // Upload and save the file
             foreach (string file in Request.Files)
             {
-                HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
+                HttpPostedFileBase hpf = Request.Files[file];
                 if (hpf.ContentLength == 0) continue;
                 string savedFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "." + Path.GetFileName(hpf.FileName);
                 string savedFilePath = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["CitationNewPath"], savedFileName);
@@ -151,6 +160,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             CitationImportModel model = (CitationImportModel)TempData["Model"] ?? new CitationImportModel();
 
             int userId = Helper.GetCurrentUserUID(Request);//  new HttpRequestWrapper(Request));
+            model.GetRowCount();
             model.GetRows(true, false, userId);
 
             ViewBag.PageTitle += "Segment Import";
@@ -235,10 +245,10 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             switch (iSortCol_0)
             {
                 case 0:
-                case 2:
+                case 4:
                     sortColumn = "Title";
                     break;
-                case 10:
+                case 12:
                     sortColumn = "Status";
                     break;
                 default:
@@ -249,6 +259,13 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             ImportRecordJson.Rootobject json = new CitationImportModel().GetImportRecords(importFileID, iDisplayLength, 
                 iDisplayStart, sortColumn, sSortDir_0);
             json.sEcho = sEcho;
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetRecord(int importRecordID)
+        {
+            ImportRecordJson.Rootobject json = new CitationImportModel().GetImportRecord(importRecordID);
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 

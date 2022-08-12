@@ -1,7 +1,7 @@
 
-// Generated 12/5/2008 3:06:57 PM
+// Generated 1/3/2022 1:56:26 PM
 // Do not modify the contents of this code file.
-// This abstract class __ItemCOinSView is based upon ItemCOinSView.
+// This abstract class __ItemCOinSView is based upon dbo.ItemCOinSView.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __ItemCOinSView : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -67,6 +67,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="rft_edition"></param>
 		/// <param name="rft_tpages"></param>
 		/// <param name="rft_issn"></param>
+		/// <param name="rft_eissn"></param>
 		/// <param name="rft_coden"></param>
 		/// <param name="rft_subject"></param>
 		/// <param name="rft_contributor_ITEM"></param>
@@ -94,6 +95,7 @@ namespace MOBOT.BHL.DataObjects
 			string rft_edition, 
 			int? rft_tpages, 
 			string rft_issn, 
+			string rft_eissn, 
 			string rft_coden, 
 			string rft_subject, 
 			string rft_contributor_ITEM, 
@@ -122,6 +124,7 @@ namespace MOBOT.BHL.DataObjects
 			Rft_edition = rft_edition;
 			Rft_tpages = rft_tpages;
 			Rft_issn = rft_issn;
+			Rft_eissn = rft_eissn;
 			Rft_coden = rft_coden;
 			Rft_subject = rft_subject;
 			Rft_contributor_ITEM = rft_contributor_ITEM;
@@ -263,6 +266,11 @@ namespace MOBOT.BHL.DataObjects
 						_Rft_issn = (string)column.Value;
 						break;
 					}
+					case "rft_eissn" :
+					{
+						_Rft_eissn = (string)column.Value;
+						break;
+					}
 					case "rft_coden" :
 					{
 						_Rft_coden = (string)column.Value;
@@ -288,7 +296,7 @@ namespace MOBOT.BHL.DataObjects
 						_Rft_genre = (string)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -296,7 +304,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region TitleID
 		
@@ -386,9 +394,9 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: oclc;
-		/// DBMS data type: nvarchar(4000); Nullable;
+		/// DBMS data type: nvarchar(125); Nullable;
 		/// </summary>
-		[ColumnDefinition("oclc", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=4000, IsNullable=true)]
+		[ColumnDefinition("oclc", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=125, IsNullable=true)]
 		public string Oclc
 		{
 			get
@@ -397,7 +405,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 4000);
+				if (value != null) value = CalibrateValue(value, 125);
 				if (_Oclc != value)
 				{
 					_Oclc = value;
@@ -410,13 +418,13 @@ namespace MOBOT.BHL.DataObjects
 		
 		#region Rft_title
 		
-		private string _Rft_title = null;
+		private string _Rft_title = string.Empty;
 		
 		/// <summary>
 		/// Column: rft_title;
-		/// DBMS data type: nvarchar(MAX); Nullable;
+		/// DBMS data type: nvarchar(2000);
 		/// </summary>
-		[ColumnDefinition("rft_title", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=1073741823, IsNullable=true)]
+		[ColumnDefinition("rft_title", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=2000)]
 		public string Rft_title
 		{
 			get
@@ -425,7 +433,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 1073741823);
+				if (value != null) value = CalibrateValue(value, 2000);
 				if (_Rft_title != value)
 				{
 					_Rft_title = value;
@@ -470,9 +478,9 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: rft_volume;
-		/// DBMS data type: nvarchar(100);
+		/// DBMS data type: nvarchar(10);
 		/// </summary>
-		[ColumnDefinition("rft_volume", DbTargetType=SqlDbType.NVarChar, Ordinal=7, CharacterMaxLength=100)]
+		[ColumnDefinition("rft_volume", DbTargetType=SqlDbType.NVarChar, Ordinal=7, CharacterMaxLength=10)]
 		public string Rft_volume
 		{
 			get
@@ -481,7 +489,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 100);
+				if (value != null) value = CalibrateValue(value, 10);
 				if (_Rft_volume != value)
 				{
 					_Rft_volume = value;
@@ -911,6 +919,34 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Rft_issn
 		
+		#region Rft_eissn
+		
+		private string _Rft_eissn = string.Empty;
+		
+		/// <summary>
+		/// Column: rft_eissn;
+		/// DBMS data type: varchar(1);
+		/// </summary>
+		[ColumnDefinition("rft_eissn", DbTargetType=SqlDbType.VarChar, Ordinal=23, CharacterMaxLength=1)]
+		public string Rft_eissn
+		{
+			get
+			{
+				return _Rft_eissn;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 1);
+				if (_Rft_eissn != value)
+				{
+					_Rft_eissn = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Rft_eissn
+		
 		#region Rft_coden
 		
 		private string _Rft_coden = null;
@@ -919,7 +955,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: rft_coden;
 		/// DBMS data type: nvarchar(125); Nullable;
 		/// </summary>
-		[ColumnDefinition("rft_coden", DbTargetType=SqlDbType.NVarChar, Ordinal=23, CharacterMaxLength=125, IsNullable=true)]
+		[ColumnDefinition("rft_coden", DbTargetType=SqlDbType.NVarChar, Ordinal=24, CharacterMaxLength=125, IsNullable=true)]
 		public string Rft_coden
 		{
 			get
@@ -947,7 +983,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: rft_subject;
 		/// DBMS data type: nvarchar(1024); Nullable;
 		/// </summary>
-		[ColumnDefinition("rft_subject", DbTargetType=SqlDbType.NVarChar, Ordinal=24, CharacterMaxLength=1024, IsNullable=true)]
+		[ColumnDefinition("rft_subject", DbTargetType=SqlDbType.NVarChar, Ordinal=25, CharacterMaxLength=1024, IsNullable=true)]
 		public string Rft_subject
 		{
 			get
@@ -969,13 +1005,13 @@ namespace MOBOT.BHL.DataObjects
 		
 		#region Rft_contributor_ITEM
 		
-		private string _Rft_contributor_ITEM = null;
+		private string _Rft_contributor_ITEM = string.Empty;
 		
 		/// <summary>
 		/// Column: rft_contributor_ITEM;
-		/// DBMS data type: nvarchar(255); Nullable;
+		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
-		[ColumnDefinition("rft_contributor_ITEM", DbTargetType=SqlDbType.NVarChar, Ordinal=25, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("rft_contributor_ITEM", DbTargetType=SqlDbType.NVarChar, Ordinal=26, CharacterMaxLength=1073741823)]
 		public string Rft_contributor_ITEM
 		{
 			get
@@ -984,7 +1020,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 255);
+				if (value != null) value = CalibrateValue(value, 1073741823);
 				if (_Rft_contributor_ITEM != value)
 				{
 					_Rft_contributor_ITEM = value;
@@ -997,13 +1033,13 @@ namespace MOBOT.BHL.DataObjects
 		
 		#region Rft_contributor_TITLE
 		
-		private string _Rft_contributor_TITLE = null;
+		private string _Rft_contributor_TITLE = string.Empty;
 		
 		/// <summary>
 		/// Column: rft_contributor_TITLE;
-		/// DBMS data type: nvarchar(255); Nullable;
+		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
-		[ColumnDefinition("rft_contributor_TITLE", DbTargetType=SqlDbType.NVarChar, Ordinal=26, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("rft_contributor_TITLE", DbTargetType=SqlDbType.NVarChar, Ordinal=27, CharacterMaxLength=1073741823)]
 		public string Rft_contributor_TITLE
 		{
 			get
@@ -1012,7 +1048,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 255);
+				if (value != null) value = CalibrateValue(value, 1073741823);
 				if (_Rft_contributor_TITLE != value)
 				{
 					_Rft_contributor_TITLE = value;
@@ -1031,7 +1067,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: rft_genre;
 		/// DBMS data type: varchar(7);
 		/// </summary>
-		[ColumnDefinition("rft_genre", DbTargetType=SqlDbType.VarChar, Ordinal=27, CharacterMaxLength=7)]
+		[ColumnDefinition("rft_genre", DbTargetType=SqlDbType.VarChar, Ordinal=28, CharacterMaxLength=7)]
 		public string Rft_genre
 		{
 			get
@@ -1052,7 +1088,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion Rft_genre
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -1116,6 +1152,7 @@ namespace MOBOT.BHL.DataObjects
 					GetComparisonString(o.Rft_edition) == GetComparisonString(Rft_edition) &&
 					o.Rft_tpages == Rft_tpages &&
 					GetComparisonString(o.Rft_issn) == GetComparisonString(Rft_issn) &&
+					GetComparisonString(o.Rft_eissn) == GetComparisonString(Rft_eissn) &&
 					GetComparisonString(o.Rft_coden) == GetComparisonString(Rft_coden) &&
 					GetComparisonString(o.Rft_subject) == GetComparisonString(Rft_subject) &&
 					GetComparisonString(o.Rft_contributor_ITEM) == GetComparisonString(Rft_contributor_ITEM) &&
@@ -1215,7 +1252,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __ItemCOinSView.SortColumn.TitleID);
 		/// </summary>
 		[Serializable]
@@ -1243,6 +1279,7 @@ namespace MOBOT.BHL.DataObjects
 			public const string Rft_edition = "Rft_edition";	
 			public const string Rft_tpages = "Rft_tpages";	
 			public const string Rft_issn = "Rft_issn";	
+			public const string Rft_eissn = "Rft_eissn";	
 			public const string Rft_coden = "Rft_coden";	
 			public const string Rft_subject = "Rft_subject";	
 			public const string Rft_contributor_ITEM = "Rft_contributor_ITEM";	
@@ -1254,3 +1291,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

@@ -33,6 +33,15 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.Literal litMessage;
 
         /// <summary>
+        /// litWarning control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litWarning;
+
+        /// <summary>
         /// idLabel control.
         /// </summary>
         /// <remarks>
@@ -60,13 +69,13 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.Label itemDescLabel;
 
         /// <summary>
-        /// doiTextBox control.
+        /// sourceIdLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox doiTextBox;
+        protected global::System.Web.UI.WebControls.Label sourceIdLabel;
 
         /// <summary>
         /// ddlSegmentStatus control.
@@ -303,6 +312,15 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.TextBox volumeTextBox;
 
         /// <summary>
+        /// litVolume control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litVolume;
+
+        /// <summary>
         /// seriesTextBox control.
         /// </summary>
         /// <remarks>
@@ -310,6 +328,15 @@ namespace MOBOT.BHL.AdminWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox seriesTextBox;
+
+        /// <summary>
+        /// litSeries control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litSeries;
 
         /// <summary>
         /// issueTextBox control.
@@ -321,6 +348,15 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.TextBox issueTextBox;
 
         /// <summary>
+        /// litIssue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litIssue;
+
+        /// <summary>
         /// dateTextBox control.
         /// </summary>
         /// <remarks>
@@ -328,6 +364,15 @@ namespace MOBOT.BHL.AdminWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox dateTextBox;
+
+        /// <summary>
+        /// litDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litDate;
 
         /// <summary>
         /// authorsList control.
@@ -400,6 +445,24 @@ namespace MOBOT.BHL.AdminWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView relatedSegmentsList;
+
+        /// <summary>
+        /// btnAddPage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnAddPage;
+
+        /// <summary>
+        /// btnPaginator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnPaginator;
 
         /// <summary>
         /// pagesList control.

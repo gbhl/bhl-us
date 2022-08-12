@@ -1,4 +1,6 @@
-﻿using Countersoft.Gemini.Api;
+﻿using BHL.SiteServiceREST.v1.Client;
+using BHL.SiteServicesREST.v1;
+using Countersoft.Gemini.Api;
 using Countersoft.Gemini.Commons.Dto;
 using Countersoft.Gemini.Commons.Entity;
 using MOBOT.BHL.DataObjects;
@@ -379,17 +381,21 @@ namespace MOBOT.BHL.Web2
         {
             try
             {
-                MOBOT.BHL.Web2.SiteService.ArrayOfString recipients = new MOBOT.BHL.Web2.SiteService.ArrayOfString();
-                recipients.Add(recipient);
                 string message = this.GetReceivedMessage();
-                string faqLink = System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"];
+                string faqLink = ConfigurationManager.AppSettings["WikiPageFAQ"];
                 message = message.Replace("[FAQLink]", faqLink);
                 message = message.Replace("[Feedback]", this.CleanStringForEmail(feedbackReceived));
+
                 if (message != String.Empty)
                 {
-                    SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-                    service.SendEmail("noreply@biodiversitylibrary.org", recipients, null, null,
-                        subject, message);
+                    Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                    MailRequestModel mailRequest = new MailRequestModel();
+                    mailRequest.From = "noreply@biodiversitylibrary.org";
+                    mailRequest.To = new List<string>();
+                    mailRequest.To.Add(recipient);
+                    mailRequest.Subject = subject;
+                    mailRequest.Body = message;
+                    client.SendEmail(mailRequest);
                 }
             }
             catch

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -42,7 +43,7 @@ namespace MOBOT.BHL.DAL
 
         }
 
-        public CustomGenericList<PageFlickr> PageFlickrSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<PageFlickr> PageFlickrSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
               CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<PageFlickr> helper = new CustomSqlHelper<PageFlickr>())
                 {
-                    CustomGenericList<PageFlickr> list = helper.ExecuteReader(command);
+                    List<PageFlickr> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -70,7 +71,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<PageFlickr> helper = new CustomSqlHelper<PageFlickr>())
                 {
-                    CustomGenericList<PageFlickr> list = helper.ExecuteReader(command);
+                    List<PageFlickr> list = helper.ExecuteReader(command);
                     if (list != null && list.Count > 0)
                         return list[0];
                     else
@@ -79,7 +80,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<PageFlickr> PageFlickrSelectRandom(
+        public List<PageFlickr> PageFlickrSelectRandom(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int numberToReturn)
@@ -91,7 +92,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<PageFlickr> helper = new CustomSqlHelper<PageFlickr>())
                 {
-                    CustomGenericList<PageFlickr> list = helper.ExecuteReader(command);
+                    List<PageFlickr> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -104,7 +105,7 @@ namespace MOBOT.BHL.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("PageFlickrDeleteByPageID", connection, transaction,
                     CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
     }

@@ -1,5 +1,5 @@
 
-// Generated 6/14/2019 5:14:33 PM
+// Generated 1/5/2021 3:27:14 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class TitleAuthorDAL is based upon dbo.TitleAuthor.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleAuthor> helper = new CustomSqlHelper<TitleAuthor>())
 				{
-					CustomGenericList<TitleAuthor> list = helper.ExecuteReader(command);
+					List<TitleAuthor> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleAuthor o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="titleAuthorID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleAuthorSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleAuthorSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int titleAuthorID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="titleAuthorID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleAuthorSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleAuthorSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -139,11 +140,11 @@ namespace MOBOT.BHL.DAL
 		/// <param name="titleID"></param>
 		/// <param name="authorID"></param>
 		/// <param name="authorRoleID"></param>
+		/// <param name="sequenceOrder"></param>
 		/// <param name="relationship"></param>
 		/// <param name="titleOfWork"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="sequenceOrder"></param>
 		/// <returns>Object of type TitleAuthor.</returns>
 		public TitleAuthor TitleAuthorInsertAuto(
 			SqlConnection sqlConnection, 
@@ -151,13 +152,13 @@ namespace MOBOT.BHL.DAL
 			int titleID,
 			int authorID,
 			int? authorRoleID,
+			short sequenceOrder,
 			string relationship,
 			string titleOfWork,
 			int? creationUserID,
-			int? lastModifiedUserID,
-			short sequenceOrder)
+			int? lastModifiedUserID)
 		{
-			return TitleAuthorInsertAuto( sqlConnection, sqlTransaction, "BHL", titleID, authorID, authorRoleID, relationship, titleOfWork, creationUserID, lastModifiedUserID, sequenceOrder );
+			return TitleAuthorInsertAuto( sqlConnection, sqlTransaction, "BHL", titleID, authorID, authorRoleID, sequenceOrder, relationship, titleOfWork, creationUserID, lastModifiedUserID );
 		}
 		
 		/// <summary>
@@ -169,11 +170,11 @@ namespace MOBOT.BHL.DAL
 		/// <param name="titleID"></param>
 		/// <param name="authorID"></param>
 		/// <param name="authorRoleID"></param>
+		/// <param name="sequenceOrder"></param>
 		/// <param name="relationship"></param>
 		/// <param name="titleOfWork"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="sequenceOrder"></param>
 		/// <returns>Object of type TitleAuthor.</returns>
 		public TitleAuthor TitleAuthorInsertAuto(
 			SqlConnection sqlConnection, 
@@ -182,11 +183,11 @@ namespace MOBOT.BHL.DAL
 			int titleID,
 			int authorID,
 			int? authorRoleID,
+			short sequenceOrder,
 			string relationship,
 			string titleOfWork,
 			int? creationUserID,
-			int? lastModifiedUserID,
-			short sequenceOrder)
+			int? lastModifiedUserID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -196,16 +197,16 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID),
 					CustomSqlHelper.CreateInputParameter("AuthorID", SqlDbType.Int, null, false, authorID),
 					CustomSqlHelper.CreateInputParameter("AuthorRoleID", SqlDbType.Int, null, true, authorRoleID),
+					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.SmallInt, null, false, sequenceOrder),
 					CustomSqlHelper.CreateInputParameter("Relationship", SqlDbType.NVarChar, 150, false, relationship),
 					CustomSqlHelper.CreateInputParameter("TitleOfWork", SqlDbType.NVarChar, 500, false, titleOfWork),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
-					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.SmallInt, null, false, sequenceOrder), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<TitleAuthor> helper = new CustomSqlHelper<TitleAuthor>())
 				{
-					CustomGenericList<TitleAuthor> list = helper.ExecuteReader(command);
+					List<TitleAuthor> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleAuthor o = list[0];
@@ -253,11 +254,11 @@ namespace MOBOT.BHL.DAL
 				value.TitleID,
 				value.AuthorID,
 				value.AuthorRoleID,
+				value.SequenceOrder,
 				value.Relationship,
 				value.TitleOfWork,
 				value.CreationUserID,
-				value.LastModifiedUserID,
-				value.SequenceOrder);
+				value.LastModifiedUserID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -331,10 +332,10 @@ namespace MOBOT.BHL.DAL
 		/// <param name="titleID"></param>
 		/// <param name="authorID"></param>
 		/// <param name="authorRoleID"></param>
+		/// <param name="sequenceOrder"></param>
 		/// <param name="relationship"></param>
 		/// <param name="titleOfWork"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="sequenceOrder"></param>
 		/// <returns>Object of type TitleAuthor.</returns>
 		public TitleAuthor TitleAuthorUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -343,12 +344,12 @@ namespace MOBOT.BHL.DAL
 			int titleID,
 			int authorID,
 			int? authorRoleID,
+			short sequenceOrder,
 			string relationship,
 			string titleOfWork,
-			int? lastModifiedUserID,
-			short sequenceOrder)
+			int? lastModifiedUserID)
 		{
-			return TitleAuthorUpdateAuto( sqlConnection, sqlTransaction, "BHL", titleAuthorID, titleID, authorID, authorRoleID, relationship, titleOfWork, lastModifiedUserID, sequenceOrder);
+			return TitleAuthorUpdateAuto( sqlConnection, sqlTransaction, "BHL", titleAuthorID, titleID, authorID, authorRoleID, sequenceOrder, relationship, titleOfWork, lastModifiedUserID);
 		}
 		
 		/// <summary>
@@ -361,10 +362,10 @@ namespace MOBOT.BHL.DAL
 		/// <param name="titleID"></param>
 		/// <param name="authorID"></param>
 		/// <param name="authorRoleID"></param>
+		/// <param name="sequenceOrder"></param>
 		/// <param name="relationship"></param>
 		/// <param name="titleOfWork"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="sequenceOrder"></param>
 		/// <returns>Object of type TitleAuthor.</returns>
 		public TitleAuthor TitleAuthorUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -374,10 +375,10 @@ namespace MOBOT.BHL.DAL
 			int titleID,
 			int authorID,
 			int? authorRoleID,
+			short sequenceOrder,
 			string relationship,
 			string titleOfWork,
-			int? lastModifiedUserID,
-			short sequenceOrder)
+			int? lastModifiedUserID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -387,15 +388,15 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID),
 					CustomSqlHelper.CreateInputParameter("AuthorID", SqlDbType.Int, null, false, authorID),
 					CustomSqlHelper.CreateInputParameter("AuthorRoleID", SqlDbType.Int, null, true, authorRoleID),
+					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.SmallInt, null, false, sequenceOrder),
 					CustomSqlHelper.CreateInputParameter("Relationship", SqlDbType.NVarChar, 150, false, relationship),
 					CustomSqlHelper.CreateInputParameter("TitleOfWork", SqlDbType.NVarChar, 500, false, titleOfWork),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
-					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.SmallInt, null, false, sequenceOrder), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<TitleAuthor> helper = new CustomSqlHelper<TitleAuthor>())
 				{
-					CustomGenericList<TitleAuthor> list = helper.ExecuteReader(command);
+					List<TitleAuthor> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleAuthor o = list[0];
@@ -444,10 +445,10 @@ namespace MOBOT.BHL.DAL
 				value.TitleID,
 				value.AuthorID,
 				value.AuthorRoleID,
+				value.SequenceOrder,
 				value.Relationship,
 				value.TitleOfWork,
-				value.LastModifiedUserID,
-				value.SequenceOrder);
+				value.LastModifiedUserID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -495,11 +496,11 @@ namespace MOBOT.BHL.DAL
 					value.TitleID,
 						value.AuthorID,
 						value.AuthorRoleID,
+						value.SequenceOrder,
 						value.Relationship,
 						value.TitleOfWork,
 						value.CreationUserID,
-						value.LastModifiedUserID,
-						value.SequenceOrder);
+						value.LastModifiedUserID);
 				
 				return new CustomDataAccessStatus<TitleAuthor>(
 					CustomDataAccessContext.Insert, 
@@ -529,10 +530,10 @@ namespace MOBOT.BHL.DAL
 						value.TitleID,
 						value.AuthorID,
 						value.AuthorRoleID,
+						value.SequenceOrder,
 						value.Relationship,
 						value.TitleOfWork,
-						value.LastModifiedUserID,
-						value.SequenceOrder);
+						value.LastModifiedUserID);
 					
 				return new CustomDataAccessStatus<TitleAuthor>(
 					CustomDataAccessContext.Update, 

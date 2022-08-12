@@ -1,7 +1,7 @@
-using System;
-using CustomDataAccess;
 using MOBOT.BHLImport.DAL;
 using MOBOT.BHLImport.DataObjects;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHLImport.Server
 {
@@ -36,7 +36,7 @@ namespace MOBOT.BHLImport.Server
             return savedLog;
         }
 
-        public CustomGenericList<BotanicusHarvestLog> BotanicusHarvestLogSelectRecent(int numLogs)
+        public List<BotanicusHarvestLog> BotanicusHarvestLogSelectRecent(int numLogs)
         {
             return (new BotanicusHarvestLogDAL().BotanicusHarvestLogSelectRecent(null, null, numLogs));
         }

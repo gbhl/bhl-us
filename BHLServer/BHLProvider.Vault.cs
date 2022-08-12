@@ -1,12 +1,12 @@
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
-	public partial class BHLProvider
+    public partial class BHLProvider
 	{
-		public CustomGenericList<Vault> VaultSelectAll()
+		public List<Vault> VaultSelectAll()
 		{
 			return new VaultDAL().SelectAll( null, null );
 		}

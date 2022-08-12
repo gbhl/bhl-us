@@ -1,16 +1,15 @@
 
 #region using
 
-using System;
-using System.Data.SqlClient;
-using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 #endregion using
 
 namespace MOBOT.BHL.DAL
 {
-	public interface IStatsDAL
+    public interface IStatsDAL
 	{
         Stats StatsSelect(SqlConnection sqlConnection, SqlTransaction sqlTransaction);
 
@@ -32,7 +31,7 @@ namespace MOBOT.BHL.DAL
         Stats StatsSelectForInstitution(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
             string institutionCode);
 
-        CustomGenericList<EntityCount> EntityCountSelectLatest(SqlConnection sqlConnection, SqlTransaction sqlTransaction);
+        List<EntityCount> EntityCountSelectLatest(SqlConnection sqlConnection, SqlTransaction sqlTransaction);
     }
 }
 

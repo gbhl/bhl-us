@@ -1,6 +1,6 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
@@ -11,7 +11,7 @@ namespace MOBOT.BHL.Server
             return new NoteTypeDAL().NoteTypeSelectAuto(null, null, noteTypeID);
         }
 
-        public CustomGenericList<NoteType> NoteTypeSelectAll()
+        public List<NoteType> NoteTypeSelectAll()
         {
             return new NoteTypeDAL().NoteTypeSelectAll(null, null);
         }

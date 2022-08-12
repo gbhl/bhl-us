@@ -10,7 +10,6 @@
     <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </configSections>
   <appSettings>
-    <add key="SMTPHost" value="SMTP SERVER NAME"/>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
 
@@ -29,6 +28,11 @@
     <!-- BHLImport database value for the BioStor ImportSource -->
     <add key="ImportSourceID" value="3"/>
 
+    <!-- BHLImport database values for the Segment Status -->
+    <add key="SegmentStatusHarvestedID" value="10"/>
+    <add key="SegmentStatusPublishedID" value="20"/>
+    <add key="SegmentStatusSkippedID" value="90"/>
+
     <!-- Indicates whether the process should get new items from BioStor (false), or just harvest articles for items already in the log (true).-->
     <add key="NoDownload" value="true"/>
 
@@ -43,12 +47,14 @@
     <add key="JsonFileFormat" value="biostoritemarticles{0}.json"/>
     
     <!-- URL of BioStor service used to get all articles for a given BHL ItemID -->
-    <add key="BioStorItemArticlesUrl" value="http://direct.biostor.org/itemarticles.php?item={0}"/>
+    <add key="BioStorItemArticlesUrl" value="http://biostor.org/itemarticles.php?item={0}"/>
     <!-- <add key="BioStorItemArticlesUrl" value="http://biostor.org/items/{0}.json"/> -->
     <!-- URL of BioStor service used to get all items changed since a given date -->
-    <add key="BioStorItemsChangedSinceUrl" value="http://direct.biostor.org/itemsince.php?since={0}" />
+    <add key="BioStorItemsChangedSinceUrl" value="http://biostor.org/itemsince.php?since={0}" />
     <!-- CrossRef URL for retreive DOI metadata -->
     <add key="CrossRefOpenUrlDOIGet" value="http://www.crossref.org/openurl?pid=sbhl:sbhl1018&amp;id=doi:{0}&amp;noredirect=true"/>
+    <!-- BHLWS service endpoint -->
+    <add key = "BHLWSUrl" value="BHLWS SERVICE URL" />
   </appSettings>
   <connectionStrings>
     <remove name="BHL"/>
@@ -85,18 +91,5 @@
       </parameters>
     </defaultConnectionFactory>
   </entityFramework>
-    <system.net>
-      <mailSettings>
-        <smtp deliveryMethod="Network">
-          <network defaultCredentials="false"
-                   enableSsl="true"
-                   host="MAIL_SERVER_ADDRESS"
-                   port="MAIL_SERVER_PORT"
-                   userName="MAIL_SERVER_USERNAME"
-                   password="MAIL_SERVER_PASSWORD"
-                   />
-        </smtp>
-      </mailSettings>
-    </system.net>
   <startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/></startup>
 </configuration>

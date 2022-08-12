@@ -1,8 +1,8 @@
 
-// Generated 5/6/2009 2:57:04 PM
+// Generated 1/5/2021 3:27:09 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class TitleAssociationTypeDAL is based upon TitleAssociationType.
+// This partial class TitleAssociationTypeDAL is based upon dbo.TitleAssociationType.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from TitleAssociationType by primary key(s).
+		/// Select values from dbo.TitleAssociationType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from TitleAssociationType by primary key(s).
+		/// Select values from dbo.TitleAssociationType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleAssociationType> helper = new CustomSqlHelper<TitleAssociationType>())
 				{
-					CustomGenericList<TitleAssociationType> list = helper.ExecuteReader(command);
+					List<TitleAssociationType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleAssociationType o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from TitleAssociationType by primary key(s).
+		/// Select values from dbo.TitleAssociationType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="titleAssociationTypeID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleAssociationTypeSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleAssociationTypeSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int titleAssociationTypeID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from TitleAssociationType by primary key(s).
+		/// Select values from dbo.TitleAssociationType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="titleAssociationTypeID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleAssociationTypeSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleAssociationTypeSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into TitleAssociationType.
+		/// Insert values into dbo.TitleAssociationType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -153,7 +154,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into TitleAssociationType.
+		/// Insert values into dbo.TitleAssociationType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -185,7 +186,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleAssociationType> helper = new CustomSqlHelper<TitleAssociationType>())
 				{
-					CustomGenericList<TitleAssociationType> list = helper.ExecuteReader(command);
+					List<TitleAssociationType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleAssociationType o = list[0];
@@ -201,7 +202,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into TitleAssociationType. Returns an object of type TitleAssociationType.
+		/// Insert values into dbo.TitleAssociationType. Returns an object of type TitleAssociationType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -216,7 +217,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into TitleAssociationType. Returns an object of type TitleAssociationType.
+		/// Insert values into dbo.TitleAssociationType. Returns an object of type TitleAssociationType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -241,7 +242,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from TitleAssociationType by primary key(s).
+		/// Delete values from dbo.TitleAssociationType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -256,7 +257,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from TitleAssociationType by primary key(s).
+		/// Delete values from dbo.TitleAssociationType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -299,7 +300,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in TitleAssociationType. Returns an object of type TitleAssociationType.
+		/// Update values in dbo.TitleAssociationType. Returns an object of type TitleAssociationType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -322,7 +323,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleAssociationType. Returns an object of type TitleAssociationType.
+		/// Update values in dbo.TitleAssociationType. Returns an object of type TitleAssociationType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -356,7 +357,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleAssociationType> helper = new CustomSqlHelper<TitleAssociationType>())
 				{
-					CustomGenericList<TitleAssociationType> list = helper.ExecuteReader(command);
+					List<TitleAssociationType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleAssociationType o = list[0];
@@ -372,7 +373,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleAssociationType. Returns an object of type TitleAssociationType.
+		/// Update values in dbo.TitleAssociationType. Returns an object of type TitleAssociationType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -387,7 +388,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleAssociationType. Returns an object of type TitleAssociationType.
+		/// Update values in dbo.TitleAssociationType. Returns an object of type TitleAssociationType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -413,9 +414,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage TitleAssociationType object.
+		/// Manage dbo.TitleAssociationType object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in TitleAssociationType.
+		/// then either insert values into, delete values from, or update values in dbo.TitleAssociationType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -430,9 +431,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage TitleAssociationType object.
+		/// Manage dbo.TitleAssociationType object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in TitleAssociationType.
+		/// then either insert values into, delete values from, or update values in dbo.TitleAssociationType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -501,4 +502,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

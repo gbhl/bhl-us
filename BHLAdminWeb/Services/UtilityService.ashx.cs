@@ -33,6 +33,20 @@ namespace MOBOT.BHL.AdminWeb.Services
                         response = this.ValidateYear(year);
                         break;
                     }
+                case "ValidateSegmentVolume":
+                    {
+                        string volume = context.Request.QueryString["volume"] as string;
+                        context.Response.ContentType = "application/json";
+                        response = this.ValidateSegmentVolumeIssue(volume);
+                        break;
+                    }
+                case "ValidateSegmentIssue":
+                    {
+                        string issue = context.Request.QueryString["issue"] as string;
+                        context.Response.ContentType = "application/json";
+                        response = this.ValidateSegmentVolumeIssue(issue);
+                        break;
+                    }
                 default:
                     {
                         response = null;
@@ -54,6 +68,13 @@ namespace MOBOT.BHL.AdminWeb.Services
         private string ValidateYear(string year)
         {
             bool isValid = DataCleaner.ValidateItemSimpleYear(year);
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            return js.Serialize(isValid);
+        }
+
+        private string ValidateSegmentVolumeIssue(string value)
+        {
+            bool isValid = DataCleaner.ValidateSegmentVolumeIssue(value);
             JavaScriptSerializer js = new JavaScriptSerializer();
             return js.Serialize(isValid);
         }

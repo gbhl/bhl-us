@@ -1,0 +1,87 @@
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.DataObjects.Enum;
+using System;
+using System.Collections.Generic;
+
+namespace MOBOT.BHL.Server
+{
+    public interface IBHLProvider
+    {
+        string GetItemText(ItemType itemType, int entityID);
+        byte[] GetItemPdf(ItemType itemType, int entityID);
+        string GetItemPdfPath(ItemType itemType, int entityID);
+        List<BHLProvider.ViewerPage> PageGetImageDimensions(List<BHLProvider.ViewerPage> pages, ItemType itemType, int entityID);
+        string DOIGetFileContents(string batchId, string type);
+        string MarcGetFileContents(int id, string type);
+        void MarcCreateFile(string marcBibID, string content);
+        bool OcrJobExists(int itemID);
+        void OcrCreateJob(int itemID);
+        string GetOcrText(int pageID);
+        Book BookSelectAuto(int bookID);
+        Book BookSelectByItemID(int itemID);
+        List<Book> BookSelectRecentlyChanged(string startDate);
+        Item ItemSelectFilenames(ItemType itemType, int entityID);
+        List<Page> PageMetadataSelectByItemID(int bookID);
+        List<NameFinderResponse> GetNamesFromOcr(string nameFinderService, int pageID, bool usePreferredNameResults, int maxReadAttempts);
+        bool ItemCheckForOcrText(int itemID, string ocrTextPath);
+        bool PageCheckForOcrText(int pageID);
+        List<PageFlickr> PageFlickrSelectRandom(int numberToReturn);
+        List<PageSummaryView> PDFPageSummaryViewSelectByPdfID(int pdfId);
+        Vault VaultSelect(int vaultID);
+        Title TitleSelectAuto(int titleID);
+        Title TitleSelectExtended(int titleID);
+        List<Title_Identifier> Title_IdentifierSelectByTitleID(int titleID);
+        List<Title_Identifier> DOISelectValidForTitle(int titleID);
+        List<DOI> TitleSelectWithoutSubmittedDOI(int numberToReturn);
+        List<Title> TitleSelectAllPublished();
+        DOI DOISelectAuto(int doiID);
+        void DOIInsertIdentifier(int doiEntityTypeId, int entityID, string doiName, int? userId);
+        void DOIInsert(int doiEntityTypeId, int entityID, int doiStatusId, string doiName, short isValid, string doiBatchId, string message, int userId, int excludeBHLDOI);
+        DOI DOIUpdateBatchID(int doiID, int doiStatusId, string doiBatchID, int? userId);
+        DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName, int? userId);
+        DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, short? setValid, int? userId);
+        List<DOI> DOISelectSubmitted(int minutesSinceSubmit);
+        List<TitleBibTeX> TitleBibTeXSelectAllTitleCitations();
+        List<TitleBibTeX> TitleBibTeXSelectAllItemCitations();
+        List<TitleBibTeX> SegmentSelectAllBibTeXCitations();
+        List<RISCitation> TitleSelectAllRISCitations();
+        List<RISCitation> ItemSelectAllRISCitations();
+        List<RISCitation> SegmentSelectAllRISCitations();
+        List<Item> ItemSelectBarcodes();
+        List<KBART> ExportKBART(string urlRoot);
+        string GenerateRISCitation(RISCitation citation);
+        void ItemNameFileLogRefreshSinceDate(DateTime startDate);
+        List<ItemNameFileLog> ItemNameFileLogSelectForCreate();
+        List<ItemNameFileLog> ItemNameFileLogSelectForUpload();
+        void ItemNameFileLogUpdateCreateDate(int logID);
+        void ItemNameFileLogUpdateUploadDate(int logID);
+        List<Item> ItemSelectWithoutPageNames();
+        List<Item> ItemSelectPublished();
+        List<Item> ItemSelectWithExpiredPageNames(int maxAge);
+        Item ItemSelectAuto(int itemID);
+        List<Page> PageSelectFileNameByItemID(int itemID);
+        List<Institution> InstitutionSelectByItemIDAndRole(int itemID, string role);
+        string ItemGetNamesXMLByItemID(int itemID);
+        void NamePageDeleteByItemID(int itemID);
+        Item ItemUpdateLastPageNameLookupDate(int itemID);
+        void PageTextLogInsertForItem(int itemID, string textSource, int userID);
+        Segment SegmentSelectAuto(int segmentID);
+        Segment SegmentSelectExtended(int segmentID);
+        List<Institution> InstitutionSelectBySegmentIDAndRole(int segmentID, string role);
+        List<Page> PageMetadataSelectBySegmentID(int segmentID);
+        List<DOI> SegmentSelectWithoutSubmittedDOI(int numberToReturn);
+        List<Segment> SegmentSelectPublished();
+        List<Segment> SegmentSelectRecentlyChanged(string startDate);
+        Segment SegmentSelectByItemID(int itemID);
+        List<PDF> PDFSelectForFileCreation();
+        List<PDF> PDFSelectForDeletion();
+        PDF PDFUpdateFileDeletion(int pdfId);
+        PDF PDFUpdateGenerationInfo(int pdfId, string fileLocation, string fileUrl, int numberImagesMissing, int numberOcrMissing);
+        bool PDFUpdatePdfStatus(int pdfId, int pdfStatusId);
+        Page PageUpdateLastPageNameLookupDate(int pageID);
+        int[] PageNameUpdateList(int pageID, List<NameFinderResponse>items, string sourceName);
+        List<Page> PageSelectWithExpiredPageNamesByItemID(int itemID, int maxAge);
+        List<Page> PageSelectWithoutPageNames();
+        List<Page> PageSelectWithoutPageNamesByItemID(int itemID);
+    }
+}

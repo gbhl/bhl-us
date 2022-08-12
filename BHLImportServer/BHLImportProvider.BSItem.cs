@@ -1,7 +1,7 @@
-﻿using System;
-using CustomDataAccess;
-using MOBOT.BHLImport.DAL;
+﻿using MOBOT.BHLImport.DAL;
 using MOBOT.BHLImport.DataObjects;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHLImport.Server
 {
@@ -56,7 +56,7 @@ namespace MOBOT.BHLImport.Server
             return results;
         }
 
-        public CustomGenericList<BSItem> BSItemSelectByStatus(int itemStatusID, int numberOfRows, int pageNumber,
+        public List<BSItem> BSItemSelectByStatus(int itemStatusID, int numberOfRows, int pageNumber,
         string sortColumn, string sortDirection)
         {
             return new BSItemDAL().BSItemSelectByStatus(null, null, itemStatusID, numberOfRows, pageNumber, sortColumn, sortDirection);

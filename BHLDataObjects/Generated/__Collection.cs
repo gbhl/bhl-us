@@ -1,7 +1,7 @@
 
-// Generated 4/2/2012 3:02:06 PM
+// Generated 1/5/2021 3:25:07 PM
 // Do not modify the contents of this code file.
-// This abstract class __Collection is based upon Collection.
+// This abstract class __Collection is based upon dbo.Collection.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Collection : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -49,54 +49,54 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="collectionName"></param>
 		/// <param name="collectionDescription"></param>
 		/// <param name="collectionURL"></param>
-		/// <param name="imageURL"></param>
 		/// <param name="htmlContent"></param>
 		/// <param name="canContainTitles"></param>
 		/// <param name="canContainItems"></param>
 		/// <param name="institutionCode"></param>
 		/// <param name="languageCode"></param>
-		/// <param name="collectionTarget"></param>
-		/// <param name="iTunesImageURL"></param>
-		/// <param name="iTunesURL"></param>
-		/// <param name="featured"></param>
 		/// <param name="active"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
+		/// <param name="collectionTarget"></param>
+		/// <param name="iTunesImageURL"></param>
+		/// <param name="iTunesURL"></param>
+		/// <param name="imageURL"></param>
+		/// <param name="featured"></param>
 		public __Collection(int collectionID, 
 			string collectionName, 
 			string collectionDescription, 
 			string collectionURL, 
-			string imageURL, 
 			string htmlContent, 
 			short canContainTitles, 
 			short canContainItems, 
 			string institutionCode, 
 			string languageCode, 
+			short active, 
+			DateTime creationDate, 
+			DateTime lastModifiedDate, 
 			string collectionTarget, 
 			string iTunesImageURL, 
 			string iTunesURL, 
-			short featured, 
-			short active, 
-			DateTime creationDate, 
-			DateTime lastModifiedDate) : this()
+			string imageURL, 
+			short featured) : this()
 		{
 			_CollectionID = collectionID;
 			CollectionName = collectionName;
 			CollectionDescription = collectionDescription;
 			CollectionURL = collectionURL;
-			ImageURL = imageURL;
 			HtmlContent = htmlContent;
 			CanContainTitles = canContainTitles;
 			CanContainItems = canContainItems;
 			InstitutionCode = institutionCode;
 			LanguageCode = languageCode;
-			CollectionTarget = collectionTarget;
-			ITunesImageURL = iTunesImageURL;
-			ITunesURL = iTunesURL;
-			Featured = featured;
 			Active = active;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
+			CollectionTarget = collectionTarget;
+			ITunesImageURL = iTunesImageURL;
+			ITunesURL = iTunesURL;
+			ImageURL = imageURL;
+			Featured = featured;
 		}
 		
 		#endregion Constructors
@@ -143,11 +143,6 @@ namespace MOBOT.BHL.DataObjects
 						_CollectionURL = (string)column.Value;
 						break;
 					}
-					case "ImageURL" :
-					{
-						_ImageURL = (string)column.Value;
-						break;
-					}
 					case "HtmlContent" :
 					{
 						_HtmlContent = (string)column.Value;
@@ -173,26 +168,6 @@ namespace MOBOT.BHL.DataObjects
 						_LanguageCode = (string)column.Value;
 						break;
 					}
-					case "CollectionTarget" :
-					{
-						_CollectionTarget = (string)column.Value;
-						break;
-					}
-					case "ITunesImageURL" :
-					{
-						_ITunesImageURL = (string)column.Value;
-						break;
-					}
-					case "ITunesURL" :
-					{
-						_ITunesURL = (string)column.Value;
-						break;
-					}
-					case "Featured" :
-					{
-						_Featured = (short)column.Value;
-						break;
-					}
 					case "Active" :
 					{
 						_Active = (short)column.Value;
@@ -208,7 +183,32 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+					case "CollectionTarget" :
+					{
+						_CollectionTarget = (string)column.Value;
+						break;
+					}
+					case "ITunesImageURL" :
+					{
+						_ITunesImageURL = (string)column.Value;
+						break;
+					}
+					case "ITunesURL" :
+					{
+						_ITunesURL = (string)column.Value;
+						break;
+					}
+					case "ImageURL" :
+					{
+						_ImageURL = (string)column.Value;
+						break;
+					}
+					case "Featured" :
+					{
+						_Featured = (short)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -216,7 +216,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region CollectionID
 		
@@ -330,34 +330,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion CollectionURL
 		
-		#region ImageURL
-		
-		private string _ImageURL = string.Empty;
-		
-		/// <summary>
-		/// Column: ImageURL;
-		/// DBMS data type: nvarchar(100);
-		/// </summary>
-		[ColumnDefinition("ImageURL", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=100)]
-		public string ImageURL
-		{
-			get
-			{
-				return _ImageURL;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 100);
-				if (_ImageURL != value)
-				{
-					_ImageURL = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion ImageURL
-		
 		#region HtmlContent
 		
 		private string _HtmlContent = string.Empty;
@@ -366,7 +338,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: HtmlContent;
 		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
-		[ColumnDefinition("HtmlContent", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=1073741823)]
+		[ColumnDefinition("HtmlContent", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=1073741823)]
 		public string HtmlContent
 		{
 			get
@@ -394,7 +366,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CanContainTitles;
 		/// DBMS data type: smallint;
 		/// </summary>
-		[ColumnDefinition("CanContainTitles", DbTargetType=SqlDbType.SmallInt, Ordinal=7, NumericPrecision=5)]
+		[ColumnDefinition("CanContainTitles", DbTargetType=SqlDbType.SmallInt, Ordinal=6, NumericPrecision=5)]
 		public short CanContainTitles
 		{
 			get
@@ -421,7 +393,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CanContainItems;
 		/// DBMS data type: smallint;
 		/// </summary>
-		[ColumnDefinition("CanContainItems", DbTargetType=SqlDbType.SmallInt, Ordinal=8, NumericPrecision=5)]
+		[ColumnDefinition("CanContainItems", DbTargetType=SqlDbType.SmallInt, Ordinal=7, NumericPrecision=5)]
 		public short CanContainItems
 		{
 			get
@@ -448,7 +420,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: InstitutionCode;
 		/// DBMS data type: nvarchar(10); Nullable;
 		/// </summary>
-		[ColumnDefinition("InstitutionCode", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=10, IsInForeignKey=true, IsNullable=true)]
+		[ColumnDefinition("InstitutionCode", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=10, IsInForeignKey=true, IsNullable=true)]
 		public string InstitutionCode
 		{
 			get
@@ -476,7 +448,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LanguageCode;
 		/// DBMS data type: nvarchar(10); Nullable;
 		/// </summary>
-		[ColumnDefinition("LanguageCode", DbTargetType=SqlDbType.NVarChar, Ordinal=10, CharacterMaxLength=10, IsInForeignKey=true, IsNullable=true)]
+		[ColumnDefinition("LanguageCode", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=10, IsInForeignKey=true, IsNullable=true)]
 		public string LanguageCode
 		{
 			get
@@ -496,6 +468,87 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion LanguageCode
 		
+		#region Active
+		
+		private short _Active = default(short);
+		
+		/// <summary>
+		/// Column: Active;
+		/// DBMS data type: smallint;
+		/// </summary>
+		[ColumnDefinition("Active", DbTargetType=SqlDbType.SmallInt, Ordinal=10, NumericPrecision=5)]
+		public short Active
+		{
+			get
+			{
+				return _Active;
+			}
+			set
+			{
+				if (_Active != value)
+				{
+					_Active = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Active
+		
+		#region CreationDate
+		
+		private DateTime _CreationDate;
+		
+		/// <summary>
+		/// Column: CreationDate;
+		/// DBMS data type: datetime;
+		/// </summary>
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=11)]
+		public DateTime CreationDate
+		{
+			get
+			{
+				return _CreationDate;
+			}
+			set
+			{
+				if (_CreationDate != value)
+				{
+					_CreationDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreationDate
+		
+		#region LastModifiedDate
+		
+		private DateTime _LastModifiedDate;
+		
+		/// <summary>
+		/// Column: LastModifiedDate;
+		/// DBMS data type: datetime;
+		/// </summary>
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=12)]
+		public DateTime LastModifiedDate
+		{
+			get
+			{
+				return _LastModifiedDate;
+			}
+			set
+			{
+				if (_LastModifiedDate != value)
+				{
+					_LastModifiedDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedDate
+		
 		#region CollectionTarget
 		
 		private string _CollectionTarget = string.Empty;
@@ -504,7 +557,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CollectionTarget;
 		/// DBMS data type: nvarchar(30);
 		/// </summary>
-		[ColumnDefinition("CollectionTarget", DbTargetType=SqlDbType.NVarChar, Ordinal=11, CharacterMaxLength=30)]
+		[ColumnDefinition("CollectionTarget", DbTargetType=SqlDbType.NVarChar, Ordinal=13, CharacterMaxLength=30)]
 		public string CollectionTarget
 		{
 			get
@@ -532,7 +585,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ITunesImageURL;
 		/// DBMS data type: nvarchar(100);
 		/// </summary>
-		[ColumnDefinition("ITunesImageURL", DbTargetType=SqlDbType.NVarChar, Ordinal=12, CharacterMaxLength=100)]
+		[ColumnDefinition("ITunesImageURL", DbTargetType=SqlDbType.NVarChar, Ordinal=14, CharacterMaxLength=100)]
 		public string ITunesImageURL
 		{
 			get
@@ -560,7 +613,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ITunesURL;
 		/// DBMS data type: nvarchar(100);
 		/// </summary>
-		[ColumnDefinition("ITunesURL", DbTargetType=SqlDbType.NVarChar, Ordinal=13, CharacterMaxLength=100)]
+		[ColumnDefinition("ITunesURL", DbTargetType=SqlDbType.NVarChar, Ordinal=15, CharacterMaxLength=100)]
 		public string ITunesURL
 		{
 			get
@@ -580,6 +633,34 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion ITunesURL
 		
+		#region ImageURL
+		
+		private string _ImageURL = string.Empty;
+		
+		/// <summary>
+		/// Column: ImageURL;
+		/// DBMS data type: nvarchar(100);
+		/// </summary>
+		[ColumnDefinition("ImageURL", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=100)]
+		public string ImageURL
+		{
+			get
+			{
+				return _ImageURL;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 100);
+				if (_ImageURL != value)
+				{
+					_ImageURL = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ImageURL
+		
 		#region Featured
 		
 		private short _Featured = default(short);
@@ -588,7 +669,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Featured;
 		/// DBMS data type: smallint;
 		/// </summary>
-		[ColumnDefinition("Featured", DbTargetType=SqlDbType.SmallInt, Ordinal=14, NumericPrecision=5)]
+		[ColumnDefinition("Featured", DbTargetType=SqlDbType.SmallInt, Ordinal=17, NumericPrecision=5)]
 		public short Featured
 		{
 			get
@@ -606,90 +687,9 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion Featured
-		
-		#region Active
-		
-		private short _Active = default(short);
-		
-		/// <summary>
-		/// Column: Active;
-		/// DBMS data type: smallint;
-		/// </summary>
-		[ColumnDefinition("Active", DbTargetType=SqlDbType.SmallInt, Ordinal=15, NumericPrecision=5)]
-		public short Active
-		{
-			get
-			{
-				return _Active;
-			}
-			set
-			{
-				if (_Active != value)
-				{
-					_Active = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion Active
-		
-		#region CreationDate
-		
-		private DateTime _CreationDate;
-		
-		/// <summary>
-		/// Column: CreationDate;
-		/// DBMS data type: datetime;
-		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=16)]
-		public DateTime CreationDate
-		{
-			get
-			{
-				return _CreationDate;
-			}
-			set
-			{
-				if (_CreationDate != value)
-				{
-					_CreationDate = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion CreationDate
-		
-		#region LastModifiedDate
-		
-		private DateTime _LastModifiedDate;
-		
-		/// <summary>
-		/// Column: LastModifiedDate;
-		/// DBMS data type: datetime;
-		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=17)]
-		public DateTime LastModifiedDate
-		{
-			get
-			{
-				return _LastModifiedDate;
-			}
-			set
-			{
-				if (_LastModifiedDate != value)
-				{
-					_LastModifiedDate = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -735,19 +735,19 @@ namespace MOBOT.BHL.DataObjects
 					GetComparisonString(o.CollectionName) == GetComparisonString(CollectionName) &&
 					GetComparisonString(o.CollectionDescription) == GetComparisonString(CollectionDescription) &&
 					GetComparisonString(o.CollectionURL) == GetComparisonString(CollectionURL) &&
-					GetComparisonString(o.ImageURL) == GetComparisonString(ImageURL) &&
 					GetComparisonString(o.HtmlContent) == GetComparisonString(HtmlContent) &&
 					o.CanContainTitles == CanContainTitles &&
 					o.CanContainItems == CanContainItems &&
 					GetComparisonString(o.InstitutionCode) == GetComparisonString(InstitutionCode) &&
 					GetComparisonString(o.LanguageCode) == GetComparisonString(LanguageCode) &&
+					o.Active == Active &&
+					o.CreationDate == CreationDate &&
+					o.LastModifiedDate == LastModifiedDate &&
 					GetComparisonString(o.CollectionTarget) == GetComparisonString(CollectionTarget) &&
 					GetComparisonString(o.ITunesImageURL) == GetComparisonString(ITunesImageURL) &&
 					GetComparisonString(o.ITunesURL) == GetComparisonString(ITunesURL) &&
-					o.Featured == Featured &&
-					o.Active == Active &&
-					o.CreationDate == CreationDate &&
-					o.LastModifiedDate == LastModifiedDate 
+					GetComparisonString(o.ImageURL) == GetComparisonString(ImageURL) &&
+					o.Featured == Featured 
 				)
 				{
 					o = null;
@@ -842,7 +842,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Collection.SortColumn.CollectionID);
 		/// </summary>
 		[Serializable]
@@ -852,22 +851,23 @@ namespace MOBOT.BHL.DataObjects
 			public const string CollectionName = "CollectionName";	
 			public const string CollectionDescription = "CollectionDescription";	
 			public const string CollectionURL = "CollectionURL";	
-			public const string ImageURL = "ImageURL";	
 			public const string HtmlContent = "HtmlContent";	
 			public const string CanContainTitles = "CanContainTitles";	
 			public const string CanContainItems = "CanContainItems";	
 			public const string InstitutionCode = "InstitutionCode";	
 			public const string LanguageCode = "LanguageCode";	
+			public const string Active = "Active";	
+			public const string CreationDate = "CreationDate";	
+			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CollectionTarget = "CollectionTarget";	
 			public const string ITunesImageURL = "ITunesImageURL";	
 			public const string ITunesURL = "ITunesURL";	
-			public const string Featured = "Featured";	
-			public const string Active = "Active";	
-			public const string CreationDate = "CreationDate";	
-			public const string LastModifiedDate = "LastModifiedDate";
+			public const string ImageURL = "ImageURL";	
+			public const string Featured = "Featured";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

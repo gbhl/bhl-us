@@ -1,14 +1,13 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for NameDALTest and is intended
     ///to contain all NameDALTest Unit Tests
@@ -77,7 +76,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string name = "zea mays";
-            CustomGenericList<Name> actual = target.NameSelectByNameString(sqlConnection, sqlTransaction, name);
+            List<Name> actual = target.NameSelectByNameString(sqlConnection, sqlTransaction, name);
             Assert.IsTrue(actual.Count > 0);
         }
 

@@ -22,12 +22,14 @@
                 url: 'services/dataharvestservice.ashx?id=<%=statusId%>&type=bsstatus', // tells where to get the data
                 datatype: 'xml',    // format of the data (xml,json,jsonp,array,xmlstring,jsonstring,script,function)
                 mtype: 'GET',   // specify if AJAX call is a GET or POST
-                colNames: ['BHL Item ID', 'Title', 'Volume', '# of Segments', 'Creation Date'],    // column names
+                colNames: ['BHL Item ID', 'Title', 'Volume', 'Total Segments', 'Published Segments', 'Skipped Segments', 'Creation Date'],    // column names
                 colModel: [
                   { name: 'BHLItemID', index: 'BHLItemID', sortable: false, width: '50px' },
                   { name: 'Title', index: 'Title', width: '300px' },
                   { name: 'Volume', index: 'Volume', sortable: false, width: '100px' },
                   { name: 'TotalSegments', index: 'TotalSegments', sortable: false, width: '60px' },
+                  { name: 'PublishedSegments', index: 'PublishedSegments', sortable: false, width: '60px' },
+                  { name: 'SkippedSegments', index: 'SkippedSegments', sortable: false, width: '60px' },
                   { name: 'CreationDate', index: 'CreationDate', width: '80px' },
                 ],  // model of the columns to display
                 pager: '#pager',    // show a pager bar for record navigation

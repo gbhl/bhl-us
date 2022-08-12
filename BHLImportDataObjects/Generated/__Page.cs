@@ -1,7 +1,7 @@
 
-// Generated 2/26/2008 3:15:49 PM
+// Generated 4/27/2021 10:42:10 AM
 // Do not modify the contents of this code file.
-// This abstract class __Page is based upon Page.
+// This abstract class __Page is based upon dbo.Page.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Page : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -52,7 +52,6 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="fileNamePrefix"></param>
 		/// <param name="sequenceOrder"></param>
 		/// <param name="pageDescription"></param>
-		/// <param name="illustration"></param>
 		/// <param name="note"></param>
 		/// <param name="fileSize_Temp"></param>
 		/// <param name="fileExtension"></param>
@@ -62,7 +61,6 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="volume"></param>
 		/// <param name="issue"></param>
 		/// <param name="externalURL"></param>
-		/// <param name="altExternalURL"></param>
 		/// <param name="issuePrefix"></param>
 		/// <param name="lastPageNameLookupDate"></param>
 		/// <param name="paginationUserID"></param>
@@ -74,6 +72,8 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="productionDate"></param>
 		/// <param name="createdDate"></param>
 		/// <param name="lastModifiedDate"></param>
+		/// <param name="illustration"></param>
+		/// <param name="altExternalURL"></param>
 		public __Page(int pageID, 
 			int importStatusID, 
 			int? importSourceID, 
@@ -81,7 +81,6 @@ namespace MOBOT.BHLImport.DataObjects
 			string fileNamePrefix, 
 			int? sequenceOrder, 
 			string pageDescription, 
-			bool? illustration, 
 			string note, 
 			int? fileSize_Temp, 
 			string fileExtension, 
@@ -91,7 +90,6 @@ namespace MOBOT.BHLImport.DataObjects
 			string volume, 
 			string issue, 
 			string externalURL, 
-			string altExternalURL, 
 			string issuePrefix, 
 			DateTime? lastPageNameLookupDate, 
 			int? paginationUserID, 
@@ -102,7 +100,9 @@ namespace MOBOT.BHLImport.DataObjects
 			int? externalLastModifiedUser, 
 			DateTime? productionDate, 
 			DateTime createdDate, 
-			DateTime lastModifiedDate) : this()
+			DateTime lastModifiedDate, 
+			bool? illustration, 
+			string altExternalURL) : this()
 		{
 			_PageID = pageID;
 			ImportStatusID = importStatusID;
@@ -111,7 +111,6 @@ namespace MOBOT.BHLImport.DataObjects
 			FileNamePrefix = fileNamePrefix;
 			SequenceOrder = sequenceOrder;
 			PageDescription = pageDescription;
-			Illustration = illustration;
 			Note = note;
 			FileSize_Temp = fileSize_Temp;
 			FileExtension = fileExtension;
@@ -121,7 +120,6 @@ namespace MOBOT.BHLImport.DataObjects
 			Volume = volume;
 			Issue = issue;
 			ExternalURL = externalURL;
-			AltExternalURL = altExternalURL;
 			IssuePrefix = issuePrefix;
 			LastPageNameLookupDate = lastPageNameLookupDate;
 			PaginationUserID = paginationUserID;
@@ -133,6 +131,8 @@ namespace MOBOT.BHLImport.DataObjects
 			ProductionDate = productionDate;
 			CreatedDate = createdDate;
 			LastModifiedDate = lastModifiedDate;
+			Illustration = illustration;
+			AltExternalURL = altExternalURL;
 		}
 		
 		#endregion Constructors
@@ -194,11 +194,6 @@ namespace MOBOT.BHLImport.DataObjects
 						_PageDescription = (string)column.Value;
 						break;
 					}
-					case "Illustration" :
-					{
-						_Illustration = (bool?)column.Value;
-						break;
-					}
 					case "Note" :
 					{
 						_Note = (string)column.Value;
@@ -242,11 +237,6 @@ namespace MOBOT.BHLImport.DataObjects
 					case "ExternalURL" :
 					{
 						_ExternalURL = (string)column.Value;
-						break;
-					}
-					case "AltExternalURL" :
-					{
-						_AltExternalURL = (string)column.Value;
 						break;
 					}
 					case "IssuePrefix" :
@@ -304,7 +294,17 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+					case "Illustration" :
+					{
+						_Illustration = (bool?)column.Value;
+						break;
+					}
+					case "AltExternalURL" :
+					{
+						_AltExternalURL = (string)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -312,7 +312,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region PageID
 		
@@ -402,9 +402,9 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: BarCode;
-		/// DBMS data type: nvarchar(40);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=40)]
+		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=200)]
 		public string BarCode
 		{
 			get
@@ -413,7 +413,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 40);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_BarCode != value)
 				{
 					_BarCode = value;
@@ -430,7 +430,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: FileNamePrefix;
-		/// DBMS data type: nvarchar(50);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
 		[ColumnDefinition("FileNamePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=200)]
 		public string FileNamePrefix
@@ -507,33 +507,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion PageDescription
 		
-		#region Illustration
-		
-		private bool? _Illustration = null;
-		
-		/// <summary>
-		/// Column: Illustration;
-		/// DBMS data type: bit; Nullable;
-		/// </summary>
-		[ColumnDefinition("Illustration", DbTargetType=SqlDbType.Bit, Ordinal=8, IsNullable=true)]
-		public bool? Illustration
-		{
-			get
-			{
-				return _Illustration;
-			}
-			set
-			{
-				if (_Illustration != value)
-				{
-					_Illustration = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion Illustration
-		
 		#region Note
 		
 		private string _Note = null;
@@ -542,7 +515,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Note;
 		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=255, IsNullable=true)]
 		public string Note
 		{
 			get
@@ -570,7 +543,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: FileSize_Temp;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("FileSize_Temp", DbTargetType=SqlDbType.Int, Ordinal=10, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("FileSize_Temp", DbTargetType=SqlDbType.Int, Ordinal=9, NumericPrecision=10, IsNullable=true)]
 		public int? FileSize_Temp
 		{
 			get
@@ -597,7 +570,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: FileExtension;
 		/// DBMS data type: nvarchar(5); Nullable;
 		/// </summary>
-		[ColumnDefinition("FileExtension", DbTargetType=SqlDbType.NVarChar, Ordinal=11, CharacterMaxLength=5, IsNullable=true)]
+		[ColumnDefinition("FileExtension", DbTargetType=SqlDbType.NVarChar, Ordinal=10, CharacterMaxLength=5, IsNullable=true)]
 		public string FileExtension
 		{
 			get
@@ -625,7 +598,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Active;
 		/// DBMS data type: bit;
 		/// </summary>
-		[ColumnDefinition("Active", DbTargetType=SqlDbType.Bit, Ordinal=12)]
+		[ColumnDefinition("Active", DbTargetType=SqlDbType.Bit, Ordinal=11)]
 		public bool Active
 		{
 			get
@@ -652,7 +625,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Year;
 		/// DBMS data type: nvarchar(20); Nullable;
 		/// </summary>
-		[ColumnDefinition("Year", DbTargetType=SqlDbType.NVarChar, Ordinal=13, CharacterMaxLength=20, IsNullable=true)]
+		[ColumnDefinition("Year", DbTargetType=SqlDbType.NVarChar, Ordinal=12, CharacterMaxLength=20, IsNullable=true)]
 		public string Year
 		{
 			get
@@ -680,7 +653,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Series;
 		/// DBMS data type: nvarchar(20); Nullable;
 		/// </summary>
-		[ColumnDefinition("Series", DbTargetType=SqlDbType.NVarChar, Ordinal=14, CharacterMaxLength=20, IsNullable=true)]
+		[ColumnDefinition("Series", DbTargetType=SqlDbType.NVarChar, Ordinal=13, CharacterMaxLength=20, IsNullable=true)]
 		public string Series
 		{
 			get
@@ -708,7 +681,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Volume;
 		/// DBMS data type: nvarchar(20); Nullable;
 		/// </summary>
-		[ColumnDefinition("Volume", DbTargetType=SqlDbType.NVarChar, Ordinal=15, CharacterMaxLength=20, IsNullable=true)]
+		[ColumnDefinition("Volume", DbTargetType=SqlDbType.NVarChar, Ordinal=14, CharacterMaxLength=20, IsNullable=true)]
 		public string Volume
 		{
 			get
@@ -736,7 +709,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Issue;
 		/// DBMS data type: nvarchar(20); Nullable;
 		/// </summary>
-		[ColumnDefinition("Issue", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=20, IsNullable=true)]
+		[ColumnDefinition("Issue", DbTargetType=SqlDbType.NVarChar, Ordinal=15, CharacterMaxLength=20, IsNullable=true)]
 		public string Issue
 		{
 			get
@@ -764,7 +737,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ExternalURL;
 		/// DBMS data type: nvarchar(500); Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=17, CharacterMaxLength=500, IsNullable=true)]
+		[ColumnDefinition("ExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=500, IsNullable=true)]
 		public string ExternalURL
 		{
 			get
@@ -784,34 +757,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion ExternalURL
 		
-		#region AltExternalURL
-		
-		private string _AltExternalURL = null;
-		
-		/// <summary>
-		/// Column: AltExternalURL;
-		/// DBMS data type: nvarchar(500); Nullable;
-		/// </summary>
-		[ColumnDefinition("AltExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=18, CharacterMaxLength=500, IsNullable=true)]
-		public string AltExternalURL
-		{
-			get
-			{
-				return _AltExternalURL;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 500);
-				if (_AltExternalURL != value)
-				{
-					_AltExternalURL = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion AltExternalURL
-		
 		#region IssuePrefix
 		
 		private string _IssuePrefix = null;
@@ -820,7 +765,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: IssuePrefix;
 		/// DBMS data type: nvarchar(20); Nullable;
 		/// </summary>
-		[ColumnDefinition("IssuePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=19, CharacterMaxLength=20, IsNullable=true)]
+		[ColumnDefinition("IssuePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=17, CharacterMaxLength=20, IsNullable=true)]
 		public string IssuePrefix
 		{
 			get
@@ -848,7 +793,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: LastPageNameLookupDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("LastPageNameLookupDate", DbTargetType=SqlDbType.DateTime, Ordinal=20, IsNullable=true)]
+		[ColumnDefinition("LastPageNameLookupDate", DbTargetType=SqlDbType.DateTime, Ordinal=18, IsNullable=true)]
 		public DateTime? LastPageNameLookupDate
 		{
 			get
@@ -875,7 +820,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: PaginationUserID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("PaginationUserID", DbTargetType=SqlDbType.Int, Ordinal=21, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("PaginationUserID", DbTargetType=SqlDbType.Int, Ordinal=19, NumericPrecision=10, IsNullable=true)]
 		public int? PaginationUserID
 		{
 			get
@@ -902,7 +847,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: PaginationDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("PaginationDate", DbTargetType=SqlDbType.DateTime, Ordinal=22, IsNullable=true)]
+		[ColumnDefinition("PaginationDate", DbTargetType=SqlDbType.DateTime, Ordinal=20, IsNullable=true)]
 		public DateTime? PaginationDate
 		{
 			get
@@ -929,7 +874,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ExternalCreationDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalCreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=23, IsNullable=true)]
+		[ColumnDefinition("ExternalCreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=21, IsNullable=true)]
 		public DateTime? ExternalCreationDate
 		{
 			get
@@ -956,7 +901,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ExternalLastModifiedDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalLastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=24, IsNullable=true)]
+		[ColumnDefinition("ExternalLastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=22, IsNullable=true)]
 		public DateTime? ExternalLastModifiedDate
 		{
 			get
@@ -983,7 +928,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ExternalCreationUser;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalCreationUser", DbTargetType=SqlDbType.Int, Ordinal=25, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("ExternalCreationUser", DbTargetType=SqlDbType.Int, Ordinal=23, NumericPrecision=10, IsNullable=true)]
 		public int? ExternalCreationUser
 		{
 			get
@@ -1010,7 +955,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ExternalLastModifiedUser;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalLastModifiedUser", DbTargetType=SqlDbType.Int, Ordinal=26, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("ExternalLastModifiedUser", DbTargetType=SqlDbType.Int, Ordinal=24, NumericPrecision=10, IsNullable=true)]
 		public int? ExternalLastModifiedUser
 		{
 			get
@@ -1037,7 +982,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ProductionDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("ProductionDate", DbTargetType=SqlDbType.DateTime, Ordinal=27, IsNullable=true)]
+		[ColumnDefinition("ProductionDate", DbTargetType=SqlDbType.DateTime, Ordinal=25, IsNullable=true)]
 		public DateTime? ProductionDate
 		{
 			get
@@ -1064,7 +1009,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: CreatedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreatedDate", DbTargetType=SqlDbType.DateTime, Ordinal=28)]
+		[ColumnDefinition("CreatedDate", DbTargetType=SqlDbType.DateTime, Ordinal=26)]
 		public DateTime CreatedDate
 		{
 			get
@@ -1091,7 +1036,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=29)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=27)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -1109,9 +1054,64 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion LastModifiedDate
+		
+		#region Illustration
+		
+		private bool? _Illustration = null;
+		
+		/// <summary>
+		/// Column: Illustration;
+		/// DBMS data type: bit; Nullable;
+		/// </summary>
+		[ColumnDefinition("Illustration", DbTargetType=SqlDbType.Bit, Ordinal=28, IsNullable=true)]
+		public bool? Illustration
+		{
+			get
+			{
+				return _Illustration;
+			}
+			set
+			{
+				if (_Illustration != value)
+				{
+					_Illustration = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Illustration
+		
+		#region AltExternalURL
+		
+		private string _AltExternalURL = null;
+		
+		/// <summary>
+		/// Column: AltExternalURL;
+		/// DBMS data type: nvarchar(500); Nullable;
+		/// </summary>
+		[ColumnDefinition("AltExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=29, CharacterMaxLength=500, IsNullable=true)]
+		public string AltExternalURL
+		{
+			get
+			{
+				return _AltExternalURL;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 500);
+				if (_AltExternalURL != value)
+				{
+					_AltExternalURL = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion AltExternalURL
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -1160,7 +1160,6 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.FileNamePrefix) == GetComparisonString(FileNamePrefix) &&
 					o.SequenceOrder == SequenceOrder &&
 					GetComparisonString(o.PageDescription) == GetComparisonString(PageDescription) &&
-					o.Illustration == Illustration &&
 					GetComparisonString(o.Note) == GetComparisonString(Note) &&
 					o.FileSize_Temp == FileSize_Temp &&
 					GetComparisonString(o.FileExtension) == GetComparisonString(FileExtension) &&
@@ -1170,7 +1169,6 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.Volume) == GetComparisonString(Volume) &&
 					GetComparisonString(o.Issue) == GetComparisonString(Issue) &&
 					GetComparisonString(o.ExternalURL) == GetComparisonString(ExternalURL) &&
-					GetComparisonString(o.AltExternalURL) == GetComparisonString(AltExternalURL) &&
 					GetComparisonString(o.IssuePrefix) == GetComparisonString(IssuePrefix) &&
 					o.LastPageNameLookupDate == LastPageNameLookupDate &&
 					o.PaginationUserID == PaginationUserID &&
@@ -1181,7 +1179,9 @@ namespace MOBOT.BHLImport.DataObjects
 					o.ExternalLastModifiedUser == ExternalLastModifiedUser &&
 					o.ProductionDate == ProductionDate &&
 					o.CreatedDate == CreatedDate &&
-					o.LastModifiedDate == LastModifiedDate 
+					o.LastModifiedDate == LastModifiedDate &&
+					o.Illustration == Illustration &&
+					GetComparisonString(o.AltExternalURL) == GetComparisonString(AltExternalURL) 
 				)
 				{
 					o = null;
@@ -1276,7 +1276,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Page.SortColumn.PageID);
 		/// </summary>
 		[Serializable]
@@ -1289,7 +1288,6 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string FileNamePrefix = "FileNamePrefix";	
 			public const string SequenceOrder = "SequenceOrder";	
 			public const string PageDescription = "PageDescription";	
-			public const string Illustration = "Illustration";	
 			public const string Note = "Note";	
 			public const string FileSize_Temp = "FileSize_Temp";	
 			public const string FileExtension = "FileExtension";	
@@ -1299,7 +1297,6 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string Volume = "Volume";	
 			public const string Issue = "Issue";	
 			public const string ExternalURL = "ExternalURL";	
-			public const string AltExternalURL = "AltExternalURL";	
 			public const string IssuePrefix = "IssuePrefix";	
 			public const string LastPageNameLookupDate = "LastPageNameLookupDate";	
 			public const string PaginationUserID = "PaginationUserID";	
@@ -1310,10 +1307,13 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string ExternalLastModifiedUser = "ExternalLastModifiedUser";	
 			public const string ProductionDate = "ProductionDate";	
 			public const string CreatedDate = "CreatedDate";	
-			public const string LastModifiedDate = "LastModifiedDate";
+			public const string LastModifiedDate = "LastModifiedDate";	
+			public const string Illustration = "Illustration";	
+			public const string AltExternalURL = "AltExternalURL";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

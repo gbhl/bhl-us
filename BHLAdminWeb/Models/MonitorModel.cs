@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BHL.SiteServiceREST.v1.Client;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -117,12 +118,13 @@ namespace MOBOT.BHL.AdminWeb.Models
                     .Split('|')
                     .ToList<string>();
 
-                SiteService.SiteServiceSoapClient client = new SiteService.SiteServiceSoapClient();
+                Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+
                 foreach (string queueName in queueNames)
                 {
                     MessageQueue mq = new MessageQueue();
                     mq.Name = queueName;
-                    mq.Messages = client.GetQueueMessageCount(queueName);
+                    mq.Messages = (uint)client.GetQueueMessageCount(queueName);
                     mqMonitor.Queues.Add(mq);
                 }
             }

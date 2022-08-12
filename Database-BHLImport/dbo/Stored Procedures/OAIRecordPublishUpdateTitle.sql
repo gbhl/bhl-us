@@ -10,13 +10,11 @@ BEGIN
 SET NOCOUNT ON
 
 DECLARE @IdentifierOAI int
-DECLARE @IdentifierISSN int
 DECLARE @IdentifierISBN int
 DECLARE @IdentifierLCCN int
 DECLARE @UniformTitle nvarchar(255)
 
 SELECT @IdentifierOAI = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'OAI'
-SELECT @IdentifierISSN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'ISSN'
 SELECT @IdentifierISBN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'ISBN'
 SELECT @IdentifierLCCN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'DLC'
 
@@ -61,34 +59,41 @@ BEGIN
 	BEGIN TRAN
 
 	UPDATE	dbo.BHLTitle
-	SET		FullTitle = @Title,
-			ShortTitle = LEFT(@Title, 255),
-			SortTitle = LEFT(
-				CASE
-				WHEN LEFT(@Title, 1) = '"' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
-				WHEN LEFT(@Title, 1) = '''' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
-				WHEN LEFT(@Title, 1) = '[' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1)) 
-				WHEN LEFT(@Title, 1) = '(' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
-				WHEN LEFT(@Title, 1) = '|' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
-				WHEN LOWER(LEFT(@Title, 2)) = 'a ' AND @Title <> 'a' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 2)) 
-				WHEN LOWER(LEFT(@Title, 3)) = 'an ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
-				WHEN LOWER(LEFT(@Title, 3)) = 'el ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
-				WHEN LOWER(LEFT(@Title, 3)) = 'il ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
-				WHEN LOWER(LEFT(@Title, 3)) = 'la ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
-				WHEN LOWER(LEFT(@Title, 3)) = 'le ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'das ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'der ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'die ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'ein ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'las ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'les ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'los ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				WHEN LOWER(LEFT(@Title, 4)) = 'the ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
-				ELSE @Title
-				END, 60),
-			UniformTitle = @UniformTitle,
+	SET		FullTitle = dbo.BHLfnRemoveTrailingPunctuation(@Title, DEFAULT),
+			ShortTitle = dbo.BHLfnRemoveTrailingPunctuation(LEFT(@Title, 255), DEFAULT),
+			SortTitle = 
+				dbo.fnGetSortString(
+				LEFT(
+					CASE
+						WHEN LEFT(@Title, 1) = '"' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
+						WHEN LEFT(@Title, 1) = '''' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
+						WHEN LEFT(@Title, 1) = '[' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1)) 
+						WHEN LEFT(@Title, 1) = '(' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
+						WHEN LEFT(@Title, 1) = '|' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
+						WHEN LOWER(LEFT(@Title, 2)) = 'a ' AND @Title <> 'a' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 2)) 
+						WHEN LOWER(LEFT(@Title, 3)) = 'an ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
+						WHEN LOWER(LEFT(@Title, 3)) = 'el ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
+						WHEN LOWER(LEFT(@Title, 3)) = 'il ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
+						WHEN LOWER(LEFT(@Title, 3)) = 'la ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
+						WHEN LOWER(LEFT(@Title, 3)) = 'le ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'das ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'der ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'die ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'ein ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'las ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'les ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'los ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						WHEN LOWER(LEFT(@Title, 4)) = 'the ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 4)) 
+						ELSE @Title
+					END, 60)
+				),
+			UniformTitle = dbo.BHLfnRemoveTrailingPunctuation(@UniformTitle, DEFAULT),
 			CallNumber = @CallNumber,
-			PublicationDetails = LEFT(@PublicationPlace + ' ' + @Publisher + ' ' + @PublicationDate, 255),
+			PublicationDetails = dbo.BHLfnRemoveTrailingPunctuation(LEFT(
+				ISNULL(@PublicationPlace, '') + CASE WHEN LEN(@PublicationPlace) > 0 THEN ', ' ELSE '' END + 
+				ISNULL(@Publisher, '') + CASE WHEN LEN(@Publisher) > 0 THEN ', ' ELSE '' END + 
+				ISNULL(@PublicationDate, '')
+				, 255), DEFAULT),
 			StartYear =	CONVERT(int, CASE WHEN ISNUMERIC(LEFT(@Date, 4)) = 1 THEN 
 										CASE WHEN CONVERT(int, LEFT(@Date, 4)) BETWEEN 1400 AND 2025 THEN
 											LEFT(@Date, 4) 
@@ -111,9 +116,10 @@ BEGIN
 									ELSE
 										NULL
 									END),
-			Datafield_260_a = @PublicationPlace,
-			Datafield_260_b = @Publisher,
-			Datafield_260_c = @PublicationDate,
+			Datafield_260_a = dbo.BHLfnRemoveTrailingPunctuation(@PublicationPlace, DEFAULT),
+			Datafield_260_b = dbo.BHLfnRemoveTrailingPunctuation(@Publisher, DEFAULT),
+			-- As this field may contain date range values (ex. "1990-"), don't remove trailing hyphens when cleaning punctuation
+			Datafield_260_c = dbo.BHLfnRemoveTrailingPunctuation(@PublicationDate, '[a-zA-Z0-9)\]?!>*%"''-]%'),
 			LanguageCode = @LanguageCode,
 			EditionStatement = @EditionStatement
 	WHERE	TitleID = @ProductionTitleID
@@ -154,7 +160,7 @@ BEGIN
 		DELETE FROM dbo.BHLTitle_Identifier WHERE TitleID = @ProductionTitleID AND IdentifierID <> @IdentifierOAI
 
 		INSERT dbo.BHLTitle_Identifier (TitleID, IdentifierID, IdentifierValue)
-		SELECT @ProductionTitleID, @IdentifierISSN, Issn FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID AND Issn <> ''
+		SELECT @ProductionTitleID, dbo.BHLfnGetISSNID(Issn), dbo.BHLfnGetISSNValue(Issn) FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID AND Issn <> ''
 
 		INSERT dbo.BHLTitle_Identifier (TitleID, IdentifierID, IdentifierValue)
 		SELECT @ProductionTitleID, @IdentifierISBN, Isbn FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID AND Isbn <> ''
@@ -164,10 +170,12 @@ BEGIN
 	END
 				
 	-- Replace the DOI record
-	DELETE FROM dbo.BHLDOI WHERE DOIEntityTypeID = 10 AND EntityID = @ProductionTitleID
+	DECLARE @DOI nvarchar(50)
+	SELECT	@DOI = Doi 
+	FROM	dbo.OAIRecord
+	WHERE	OAIRecordID = @OAIRecordID AND Doi <> ''
 
-	INSERT dbo.BHLDOI (DOIEntityTypeID, EntityID, DOIStatusID, DOIName, StatusDate, IsValid)
-	SELECT 10, @ProductionTitleID, 200, Doi, GETDATE(), 1 FROM dbo.OAIRecord WHERE OAIRecordID = @OAIRecordID AND Doi <> ''
+	exec dbo.BHLDOIUpdate @DOIEntityTypeID = 10, @EntityID = @ProductionTitleID, @DOIStatusID = 200, @DOIName = @DOI, @IsValid = 1, @ExcludeBHLDOI = 1
 				
 	-- Replace the TitleAssociation records if none have been added/updated by a user
 	IF NOT EXISTS(	SELECT	TitleAssociationID
@@ -178,7 +186,7 @@ BEGIN
 		DELETE FROM dbo.BHLTitleAssociation WHERE TitleID = @ProductionTitleID
 
 		INSERT	dbo.BHLTitleAssociation (TitleID, TitleAssociationTypeID, Title)
-		SELECT	@ProductionTitleID, a.BHLTitleAssociationTypeID, r.Title
+		SELECT	@ProductionTitleID, a.BHLTitleAssociationTypeID, dbo.BHLfnRemoveTrailingPunctuation(r.Title, DEFAULT)
 		FROM	dbo.OAIRecordRelatedTitle r INNER JOIN dbo.OAIRecordRelatedTitleTypeAssociation a ON r.TitleType = a.TitleType
 		WHERE	r.OAIRecordID = @OAIRecordID
 
@@ -202,7 +210,7 @@ BEGIN
 		DELETE FROM dbo.BHLTitleVariant WHERE TitleID = @ProductionTitleID
 
 		INSERT	dbo.BHLTitleVariant (TitleID, TitleVariantTypeID, Title, CreationUserID, LastModifiedUserID)
-		SELECT	@ProductionTitleID, a.BHLTitleVariantTypeID, r.Title, 1, 1
+		SELECT	@ProductionTitleID, a.BHLTitleVariantTypeID, dbo.BHLfnRemoveTrailingPunctuation(r.Title, DEFAULT), 1, 1
 		FROM	dbo.OAIRecordRelatedTitle r INNER JOIN dbo.OAIRecordRelatedTitleTypeVariant a ON r.TitleType = a.TitleType
 		WHERE	r.OAIRecordID = @OAIRecordID
 
@@ -222,3 +230,4 @@ END
 
 END 
 
+GO

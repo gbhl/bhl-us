@@ -166,6 +166,8 @@ namespace MOBOT.BHL.AdminWeb.Services
                     item.Title = bsItem.Title;
                     item.Volume = bsItem.Volume;
                     item.TotalSegments = bsItem.TotalSegments;
+                    item.PublishedSegments = bsItem.PublishedSegments;
+                    item.SkippedSegments = bsItem.SkippedSegments;
                     item.CreationDate = bsItem.CreationDate;
                     item.TotalItems = bsItem.TotalItems;
                     items.Add(item);
@@ -204,6 +206,8 @@ namespace MOBOT.BHL.AdminWeb.Services
                     response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Title) + " </cell>");
                     response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Volume) + " </cell>");
                     response.Append("<cell> <![CDATA[<a href=\"#\" title=\"Segments\" onclick=\"window.open('BioStorSegmentsForItem.aspx?id=" + searchResult[x].ItemId.ToString() + "', 'Segments', 'resizeable=0,scrollbars=1,height=500,width=500,status=0,toolbar=0,menubar=0,location=0');\">" + searchResult[x].TotalSegments + "</a>]]> </cell>");
+                    response.Append("<cell> " + searchResult[x].PublishedSegments + " </cell>");
+                    response.Append("<cell> " + searchResult[x].SkippedSegments + " </cell>");
                     response.Append("<cell> " + searchResult[x].CreationDate + " </cell>");
                     response.Append("</row>");
                 }

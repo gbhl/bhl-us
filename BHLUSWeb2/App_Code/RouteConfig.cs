@@ -1,6 +1,7 @@
 ﻿using MOBOT.BHL.Web.Utilities;
 using MOBOT.BHL.Web2.services;
 using MOBOT.BHL.Web2.Services;
+using System;
 using System.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -53,37 +54,15 @@ namespace MOBOT.BHL.Web2
                 routes.MapPageRoute("Advanced-Search", "advsearch", "~/AdvancedSearch.aspx");
             }
 
-            routes.MapPageRoute("Browse-TitleList", "browse/titles/{start}/{*sort}", "~/TitleList.aspx", false,
-                new RouteValueDictionary { {"start", "a"}, {"sort",""} } );
-
-            routes.MapPageRoute("Browse-CreatorList", "browse/authors/{*start}", "~/CreatorList.aspx");
+            routes.MapRoute("BrowseTitles", "browse/titles/{start}/{sort}", new { controller = "Browse", action = "Titles", start = "a", sort="title" });
+            routes.MapRoute("BrowseAuthors", "browse/authors/{start}", new { controller = "Browse", action = "Authors", start = "a" });
+            routes.MapRoute("BrowseYear", "browse/year/{start}/{end}/{sort}", new { controller = "Browse", action = "Year", start = 1450, end = 1580, sort = "title" });
+            routes.MapRoute("BrowseCollection", "browse/collection/{id}/{start}/{sort}", new { controller = "Browse", action = "Collection", start = "all", sort = "title" });
+            routes.MapRoute("BrowseContributor", "browse/contributor/{id}/{start}/{sort}", new { controller = "Browse", action = "Contributor", start = "all", sort = "title" });
 
             routes.MapPageRoute("Browse-ContributorList", "browse/contributors", "~/BrowseContributors.aspx");
-
-            routes.MapPageRoute("Contributor-Titles", "browse/contributor/{contributorid}/{start}/{sort}/",
-                "~/ContributorPage.aspx", false,
-                new RouteValueDictionary { {"start", ""}, {"sort", ""}, {"contributorid", "-1"} } );
-
             routes.MapPageRoute("Browse-CollectionList", "browse/collections", "~/BrowseCollections.aspx");
-
-            routes.MapPageRoute("Collection - Titles", "browse/collection/{collectionID}/{start}/{sort}/",
-                "~/CollectionPage.aspx", false,
-                new RouteValueDictionary { {"start", ""}, {"sort", ""}, {"collectionID", "-1"} } );
-
             routes.MapPageRoute("Collection-details", "collection/{collectionid}", "~/CollectionDetails.aspx");
-
-            routes.MapPageRoute("Browse-Year", "browse/year/{startdate}/{enddate}/{sort}",
-                "~/BrowseByYear.aspx", false,
-                new RouteValueDictionary {
-                    { "startdate", ConfigurationManager.AppSettings["browseByYearDefaultStart"] },
-                        { "enddate", ConfigurationManager.AppSettings["browseByYearDefaultEnd"] },
-                        { "sort", "title"}
-                    },
-                new RouteValueDictionary
-                    {
-                        { "startdate", @"\d{4}" },
-                        { "enddate", @"\d{4}" }
-                    });
 
             routes.MapPageRoute("Name", "name/{name}", "~/NameList.aspx");
 
@@ -96,6 +75,8 @@ namespace MOBOT.BHL.Web2
             routes.MapPageRoute("IA", "ia/{iabarcode}", "~/TitlePage.aspx");
 
             routes.MapPageRoute("Title", "title/{titleid}", "~/TitlePage.aspx");
+
+            routes.MapPageRoute("Segment", "segment/{segmentid}", "~/TitlePage.aspx");
 
             if (ConfigurationManager.AppSettings["IIIFState"] == "off") // IIIF disabled
             {
@@ -137,6 +118,12 @@ namespace MOBOT.BHL.Web2
 
             routes.Add("ItemImages", new Route("itemimages/{itemid}", new HttpHandlerRouteHandler<GetItemImages>()));
 
+            routes.Add("PartText", new Route("parttext/{id}", new HttpHandlerRouteHandler<GetPartText>()));
+
+            routes.Add("PartPdf", new Route("partpdf/{id}", new HttpHandlerRouteHandler<GetPartPdf>()));
+
+            routes.Add("PartImages", new Route("partimages/{id}", new HttpHandlerRouteHandler<GetPartImages>()));
+
             routes.MapPageRoute("Bibliography", "bibliography/{titleid}", "~/bibliography.aspx");
 
             routes.Add("MODSDownload", new Route("modsdownload/{id}", new HttpHandlerRouteHandler<MODSDownload>()));
@@ -162,11 +149,8 @@ namespace MOBOT.BHL.Web2
             routes.MapPageRoute("Recent", "recent/{top}/{lang}/{inst}", "~/recent.aspx", false, new RouteValueDictionary { { "top", "100" }, { "lang", "" }, { "inst", "" } });
             routes.MapPageRoute("RecentRSS", "recentrss/{top}/{lang}/{inst}", "~/recentrss.aspx", false, new RouteValueDictionary { { "top", "100" }, { "lang", "" }, { "inst", "" } });
 
-            routes.MapPageRoute("Creator", "creator/{creatorid}/{sort}", "~/CreatorPage.aspx", false,
-                new RouteValueDictionary { {"creatorid",0}, {"sort",""} } );
-
-            routes.MapPageRoute("Subject","subject/{subject}/{sort}", "~/BrowseByTitleTag.aspx", false,
-                new RouteValueDictionary { {"subject",""}, {"sort",""} } );
+            routes.MapRoute("BrowseCreator", "creator/{creatorid}/{sort}", new { controller = "Creator", action = "Index", sort = "title" });
+            routes.MapRoute("BrowseSubject", "subject/{subject}/{sort}", new { controller = "Subject", action = "Index", sort = "title" });
 
             routes.MapPageRoute("Error-TitleNotFound", "titlenotfound", "~/TitleNotFound.aspx");
             routes.MapPageRoute("Error-TitleUnavailable", "titleunavailable", "~/TitleUnavailable.aspx");

@@ -1,5 +1,6 @@
-﻿using BHL.Export.BibTeX.BHLWS;
-using MOBOT.BHL.Web.Utilities;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
+using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,17 +42,16 @@ namespace BHL.Export.BibTeX
 
         private void ProcessBibTeX()
         {
-            BHLWS.BHLWSSoapClient service = null;
+            ExportsClient restClient = null;
 
             try
             {
-                service = new BHLWS.BHLWSSoapClient();
-                service.InnerChannel.OperationTimeout = new TimeSpan(0, 30, 0); // wait thirty minutes for this call to return
-                TitleBibTeX[] citations = null;
+                restClient = new ExportsClient(configParms.BHLWSEndpoint);
+                ICollection<TitleBibTeX> citations = null;
 
                 _log.Info("Processing items...");
                 _log.Info("Getting BibTeX data for all items.");
-                citations = service.TitleBibTeXSelectAllItemCitations();
+                citations = restClient.GetItemBibTexCitations();
                 this.GenerateCitations(citations, configParms.BibTexItemTempFile,
                     configParms.BibTexItemFile, configParms.BibTexItemZipFile, 
                     configParms.BibTexInternalItemTempFile, configParms.BibTexInternalItemFile, 
@@ -60,7 +60,7 @@ namespace BHL.Export.BibTeX
 
                 _log.Info("Processing titles...");
                 _log.Info("Getting BibTeX data for all titles.");
-                citations = service.TitleBibTeXSelectAllTitleCitations();
+                citations = restClient.GetTitleBibTexCitations();
                 this.GenerateCitations(citations, configParms.BibTexTitleTempFile,
                     configParms.BibTexTitleFile, configParms.BibTexTitleZipFile,
                     configParms.BibTexInternalTitleTempFile, configParms.BibTexInternalTitleFile, 
@@ -69,7 +69,7 @@ namespace BHL.Export.BibTeX
 
                 _log.Info("Processing segments...");
                 _log.Info("Getting BibTeX data for all segments.");
-                citations = service.SegmentSelectAllBibTeXCitations();
+                citations = restClient.GetSegmentBibTexCitations();
                 this.GenerateCitations(citations, configParms.BibTexSegmentTempFile,
                     configParms.BibTexSegmentFile, configParms.BibTexSegmentZipFile,
                     configParms.BibTexInternalSegmentTempFile, configParms.BibTexInternalSegmentFile, 
@@ -83,7 +83,7 @@ namespace BHL.Export.BibTeX
             }
         }
 
-        private void GenerateCitations(TitleBibTeX[] citations, string bibtexTempFile,
+        private void GenerateCitations(ICollection<TitleBibTeX> citations, string bibtexTempFile,
             string bibtexFile, string bibtexZipFile, string bibtexInternalTempFile,
             string bibtexInternalFile, string bibtexInternalZipFile, string statsKey)
         {
@@ -91,7 +91,7 @@ namespace BHL.Export.BibTeX
             if (File.Exists(bibtexTempFile)) File.Delete(bibtexTempFile);
             if (File.Exists(bibtexInternalTempFile)) File.Delete(bibtexInternalTempFile);
 
-            if (citations.Length > 0)
+            if (citations.Count > 0)
             {
                 foreach (TitleBibTeX citation in citations)
                 {
@@ -102,7 +102,7 @@ namespace BHL.Export.BibTeX
                         UpdateStats(statsKey);
 
                         // If this is content held internally within BHL, write it to the "internal" file
-                        if (citation.HasLocalContent)
+                        if (citation.HasLocalContent ?? false)
                         {
                             File.AppendAllText(bibtexInternalTempFile, citationText, Encoding.UTF8);
                             UpdateStats(string.Format("{0} (Internal)", statsKey));
@@ -121,10 +121,10 @@ namespace BHL.Export.BibTeX
                     }
                 }
 
-                if ((_errors.Count / Convert.ToDouble(citations.Length) * 100) > 1.0)
+                if ((_errors.Count / Convert.ToDouble(citations.Count) * 100) > 1.0)
                 {
-                    _log.Error(string.Format("BibTeX processing failed. {0} out of {1} item citations produced errors.", _errors.Count.ToString(), citations.Length));
-                    _errors.Add(string.Format("BibTeX processing failed. {0} out of {1} item citations produced errors.", _errors.Count.ToString(), citations.Length));
+                    _log.Error(string.Format("BibTeX processing failed. {0} out of {1} item citations produced errors.", _errors.Count.ToString(), citations.Count));
+                    _errors.Add(string.Format("BibTeX processing failed. {0} out of {1} item citations produced errors.", _errors.Count.ToString(), citations.Count));
                 }
                 else
                 {
@@ -200,7 +200,7 @@ namespace BHL.Export.BibTeX
             if (pages != String.Empty && pages != "0") elements.Add(BibTeXRefElementName.PAGES, pages);
             if (keywords != String.Empty) elements.Add(BibTeXRefElementName.KEYWORDS, keywords);
 
-            MOBOT.BHL.Web.Utilities.BibTeX bibtex = new MOBOT.BHL.Web.Utilities.BibTeX(citationType, citationKey, elements);
+            MOBOT.BHL.Utility.BibTeX bibtex = new MOBOT.BHL.Utility.BibTeX(citationType, citationKey, elements);
             citationText = bibtex.GenerateReference();
 
             return citationText;

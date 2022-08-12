@@ -2,6 +2,7 @@
 #region Using
 
 using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 
 #endregion Using
@@ -17,6 +18,22 @@ namespace MOBOT.BHL.DataObjects
         {
             get { return _titleId; }
             set { _titleId = value; }
+        }
+
+        private int? _bookID = null;
+
+        public int? BookID
+        {
+            get { return _bookID; }
+            set { _bookID = value; }
+        }
+
+        private byte _bookIsVirtual = 0;
+
+        public byte BookIsVirtual
+        {
+            get { return _bookIsVirtual; }
+            set { _bookIsVirtual = value; }
         }
 
         private int? _segmentClusterId = null;
@@ -91,6 +108,22 @@ namespace MOBOT.BHL.DataObjects
             set { _itemVolume = value; }
         }
 
+        private string _itemSeries = string.Empty;
+
+        public string ItemSeries
+        {
+            get { return _itemSeries; }
+            set { _itemSeries = value; }
+        }
+
+        private string _itemIssue = string.Empty;
+
+        public string ItemIssue
+        {
+            get { return _itemIssue; }
+            set { _itemIssue = value; }
+        }
+
         private string _itemYear = string.Empty;
 
         public string ItemYear
@@ -131,6 +164,14 @@ namespace MOBOT.BHL.DataObjects
             set { _languageName = value; }
         }
 
+        private int? _endPageID = null;
+
+        public int? EndPageID
+        {
+            get { return _endPageID; }
+            set { _endPageID = value; }
+        }
+
         private string _doiName = string.Empty;
 
         public string DOIName
@@ -147,12 +188,28 @@ namespace MOBOT.BHL.DataObjects
             set { _authors = value; }
         }
 
+        private string _authorIDs = string.Empty;
+
+        public string AuthorIDs
+        {
+            get { return _authorIDs; }
+            set { _authorIDs = value; }
+        }
+
         private string _keywords = string.Empty;
 
         public string Keywords
         {
             get { return _keywords; }
             set { _keywords = value; }
+        }
+
+        private string _additionalPages = string.Empty;
+
+        public string AdditionalPages
+        {
+            get { return _additionalPages; }
+            set { _additionalPages = value; }
         }
 
         private short _isPrimary = 0;
@@ -185,66 +242,114 @@ namespace MOBOT.BHL.DataObjects
             set { _hasExternalContent = value; }
         }
 
-        private CustomGenericList<SegmentAuthor> _authorList = new CustomGenericList<SegmentAuthor>();
+        private int? _sequenceOrder = null;
 
-        public CustomGenericList<SegmentAuthor> AuthorList
+        public int? SequenceOrder
+        {
+            get { return _sequenceOrder; }
+            set { _sequenceOrder = value; }
+        }
+
+        private int _segmentStatusID;
+
+        public int SegmentStatusID
+        { 
+            get { return _segmentStatusID; }
+            set { _segmentStatusID = value; }
+        }
+
+        public string _notes = string.Empty;
+        
+        public string Notes
+        {
+            get { return _notes; }
+            set { _notes = value; }
+        }
+
+        private Item _item = null;
+
+        public Item Item
+        {
+            get { return _item; }
+            set { _item = value; }
+        }
+
+        private List<ItemAuthor> _authorList = new List<ItemAuthor>();
+
+        public List<ItemAuthor> AuthorList
         {
             get { return _authorList; }
             set { _authorList = value; }
         }
 
-        private CustomGenericList<SegmentKeyword> _keywordList = new CustomGenericList<SegmentKeyword>();
+        private List<ItemKeyword> _keywordList = new List<ItemKeyword>();
 
-        public CustomGenericList<SegmentKeyword> KeywordList
+        public List<ItemKeyword> KeywordList
         {
             get { return _keywordList; }
             set { _keywordList = value; }
         }
 
-        private CustomGenericList<SegmentIdentifier> _identifierList = new CustomGenericList<SegmentIdentifier>();
+        private List<ItemIdentifier> _identifierList = new List<ItemIdentifier>();
 
-        public CustomGenericList<SegmentIdentifier> IdentifierList
+        public List<ItemIdentifier> IdentifierList
         {
             get { return _identifierList; }
             set { _identifierList = value; }
         }
 
-        private CustomGenericList<Institution> _contributorList = new CustomGenericList<Institution>();
+        private List<Institution> _contributorList = new List<Institution>();
 
-        public CustomGenericList<Institution> ContributorList
+        public List<Institution> ContributorList
         {
             get { return this._contributorList; }
             set { this._contributorList = value; }
         }
 
-        private CustomGenericList<SegmentPage> _pageList = new CustomGenericList<SegmentPage>();
+        private List<ItemPage> _pageList = new List<ItemPage>();
 
-        public CustomGenericList<SegmentPage> PageList
+        public List<ItemPage> PageList
         {
             get { return _pageList; }
             set { _pageList = value; }
         }
 
-        private CustomGenericList<NameSegment> _nameList = new CustomGenericList<NameSegment>();
+        private List<Name> _nameList = new List<Name>();
 
-        public CustomGenericList<NameSegment> NameList
+        public List<Name> NameList
         {
             get { return _nameList; }
             set { _nameList = value; }
         }
 
-        private CustomGenericList<Segment> _relatedSegmentList = new CustomGenericList<Segment>();
+        private List<Segment> _relatedSegmentList = new List<Segment>();
 
-        public CustomGenericList<Segment> RelatedSegmentList
+        public List<Segment> RelatedSegmentList
         {
             get { return _relatedSegmentList; }
             set { _relatedSegmentList = value; }
+        }
+
+        private List<ItemRelationship> _relationshipList = new List<ItemRelationship>();
+
+        public List<ItemRelationship> RelationshipList
+        {
+            get { return _relationshipList; }
+            set { _relationshipList = value; }
         }
 
         public override void SetValues(CustomDataRow row)
         {
             foreach (CustomDataColumn column in row)
             {
+                if (column.Name == "BookID")
+                {
+                    _bookID = (int?)(column.Value);
+                }
+				if (column.Name == "BookIsVirtual")
+				{
+                    _bookIsVirtual = column.Value == null ? (byte)0 : (byte)column.Value;
+                }
                 if (column.Name == "TitleID")
                 {
                     _titleId = Utility.ZeroIfNull(column.Value);
@@ -273,6 +378,11 @@ namespace MOBOT.BHL.DataObjects
                 {
                     _contributorName = Utility.EmptyIfNull(column.Value);
                 }
+                if (column.Name == "ContributorCodes")
+                {
+                    string[] codes = Utility.EmptyIfNull(column.Value).Split('|');
+                    foreach (string code in codes) _contributorList.Add(new Institution { InstitutionCode = code });
+                }
                 if (column.Name == "GenreName")
                 {
                     _genreName = Utility.EmptyIfNull(column.Value);
@@ -285,6 +395,10 @@ namespace MOBOT.BHL.DataObjects
                 {
                     _languageName = Utility.EmptyIfNull(column.Value);
                 }
+                if (column.Name == "EndPageID")
+                {
+                    _endPageID = (int?)column.Value;
+                }
                 if (column.Name == "DOIName")
                 {
                     _doiName = Utility.EmptyIfNull(column.Value);
@@ -293,9 +407,17 @@ namespace MOBOT.BHL.DataObjects
                 {
                     _authors = Utility.EmptyIfNull(column.Value);
                 }
+                if (column.Name == "AuthorIDs")
+                {
+                    _authorIDs = Utility.EmptyIfNull(column.Value);
+                }
                 if (column.Name == "Subjects")
                 {
                     _keywords = Utility.EmptyIfNull(column.Value);
+                }
+                if (column.Name == "AdditionalPages")
+                {
+                    _additionalPages = Utility.EmptyIfNull(column.Value);
                 }
                 if (column.Name == "IsPrimary")
                 {
@@ -308,6 +430,18 @@ namespace MOBOT.BHL.DataObjects
                 if (column.Name == "HasExternalContent")
                 {
                     _hasExternalContent = Convert.ToInt16(column.Value) == 1;
+                }
+                if (column.Name == "SequenceOrder")
+                {
+                    _sequenceOrder = Convert.ToInt32(column.Value);
+                }
+                if (column.Name == "SegmentStatusID")
+                {
+                    _segmentStatusID = (int)column.Value;
+                }
+                if (column.Name == "Notes")
+                {
+                    _notes = Utility.EmptyIfNull(column.Value);
                 }
             }
             base.SetValues(row);

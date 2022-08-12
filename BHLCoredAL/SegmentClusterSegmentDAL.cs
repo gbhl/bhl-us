@@ -1,12 +1,12 @@
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class SegmentClusterSegmentDAL
+    public partial class SegmentClusterSegmentDAL
 	{
         public SegmentClusterSegment SegmentClusterSegmentInsert(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int segmentID, int? segmentClusterID, int isPrimary, int? segmentClusterTypeID, int? userID)
@@ -24,7 +24,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SegmentClusterSegment> helper = new CustomSqlHelper<SegmentClusterSegment>())
                 {
-                    CustomGenericList<SegmentClusterSegment> list = helper.ExecuteReader(command);
+                    List<SegmentClusterSegment> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -48,7 +48,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SegmentClusterSegment> helper = new CustomSqlHelper<SegmentClusterSegment>())
                 {
-                    CustomGenericList<SegmentClusterSegment> list = helper.ExecuteReader(command);
+                    List<SegmentClusterSegment> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -67,7 +67,7 @@ namespace MOBOT.BHL.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentClusterSegmentDeleteForSegment", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
     }

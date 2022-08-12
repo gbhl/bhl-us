@@ -26,7 +26,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public ActionResult AlignAdd(LibraryModel model)
         {
             model.AddPagesToItem();
-            ResetModelForAlign(model, model.AddItemID, model.AddIAID);
+            ResetModelForAlign(model, model.AddItemType, model.AddItemID, model.AddIAID);
             ViewBag.Action = "0"; // "#divAdd";
             return View("Align", model);
         }
@@ -37,7 +37,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public ActionResult AlignDelete(LibraryModel model)
         {
             model.DeletePagesFromItem();
-            ResetModelForAlign(model, model.DelItemID, model.DelIAID);
+            ResetModelForAlign(model, model.DelItemType, model.DelItemID, model.DelIAID);
             ViewBag.Action = "1"; // "#divDelete";
             return View("Align", model);
         }
@@ -49,7 +49,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         {
             model.OcrJobPath = ConfigurationManager.AppSettings["OCRJobNewPath"];
             model.CreateNewOCRJobFile();
-            ResetModelForAlign(model, model.OcrItemID, model.OcrIAID);
+            ResetModelForAlign(model, model.OcrItemType, model.OcrItemID, model.OcrIAID);
             ViewBag.Action = "2"; // "#divOcr";
             return View("Align", model);
         }
@@ -60,18 +60,21 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         /// <param name="model"></param>
         /// <param name="itemID"></param>
         /// <param name="iaID"></param>
-        private void ResetModelForAlign(LibraryModel model, string itemID, string iaID)
+        private void ResetModelForAlign(LibraryModel model, string itemType, string itemID, string iaID)
         {
             string message = model.Message;
             ModelState.Clear();
+            model.AddItemType = itemType;
             model.AddItemID = itemID;
             model.AddIAID = iaID;
             model.AddPageID = string.Empty;
             model.AddNum = string.Empty;
+            model.DelItemType = itemType;
             model.DelItemID = itemID;
             model.DelIAID = iaID;
             model.DelPageID = string.Empty;
             model.DelNum = string.Empty;
+            model.OcrItemType = itemType;
             model.OcrItemID = itemID;
             model.OcrIAID = iaID;
             model.Message = message;

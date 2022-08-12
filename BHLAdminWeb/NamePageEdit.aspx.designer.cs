@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.AdminWeb {
-    
-    
-    public partial class NamePageEdit {
-        
+namespace MOBOT.BHL.AdminWeb
+{
+
+
+    public partial class NamePageEdit
+    {
+
         /// <summary>
         /// pageIdTextBox control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox pageIdTextBox;
-        
+
         /// <summary>
         /// searchButton control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button searchButton;
-        
+
         /// <summary>
         /// errorControl control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.AdminWeb.ErrorControl errorControl;
-        
+
         /// <summary>
         /// litMessage control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litMessage;
-        
+
         /// <summary>
         /// pageIdLabel control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label pageIdLabel;
-        
+
         /// <summary>
         /// titleLink control.
         /// </summary>
@@ -65,7 +67,16 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink titleLink;
-        
+
+        /// <summary>
+        /// itemLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label itemLabel;
+
         /// <summary>
         /// itemLink control.
         /// </summary>
@@ -74,7 +85,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink itemLink;
-        
+
         /// <summary>
         /// descriptionLabel control.
         /// </summary>
@@ -83,7 +94,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label descriptionLabel;
-        
+
         /// <summary>
         /// namePageList control.
         /// </summary>
@@ -92,7 +103,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView namePageList;
-        
+
         /// <summary>
         /// btnFindName control.
         /// </summary>
@@ -101,7 +112,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputButton btnFindName;
-        
+
         /// <summary>
         /// addNamePageButton control.
         /// </summary>
@@ -110,7 +121,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button addNamePageButton;
-        
+
         /// <summary>
         /// pageViewer control.
         /// </summary>
@@ -119,7 +130,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableCell pageViewer;
-        
+
         /// <summary>
         /// imgPage control.
         /// </summary>
@@ -128,7 +139,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlImage imgPage;
-        
+
         /// <summary>
         /// saveButton control.
         /// </summary>
@@ -137,7 +148,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button saveButton;
-        
+
         /// <summary>
         /// editHistoryControl control.
         /// </summary>
@@ -146,7 +157,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.AdminWeb.Controls.EditHistoryLink editHistoryControl;
-        
+
         /// <summary>
         /// selectedName control.
         /// </summary>

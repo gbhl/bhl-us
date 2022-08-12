@@ -2,7 +2,7 @@
     [ItemID]                    INT            IDENTITY (1, 1) NOT NULL,
     [ItemStatusID]              INT            CONSTRAINT [DF_Item_ItemStatusID] DEFAULT ((10)) NOT NULL,
     [IAIdentifierPrefix]        NVARCHAR (50)  CONSTRAINT [DF_Item_IAIdentifierPrefix] DEFAULT ('') NOT NULL,
-    [IAIdentifier]              NVARCHAR (50)  CONSTRAINT [DF_Table_1_ExternalIdentifier] DEFAULT ('') NOT NULL,
+    [IAIdentifier]              NVARCHAR (200) CONSTRAINT [DF_Table_1_ExternalIdentifier] DEFAULT ('') NOT NULL,
     [Sponsor]                   NVARCHAR (100) CONSTRAINT [DF_Item_Sponsor] DEFAULT ('') NOT NULL,
     [SponsorName]               NVARCHAR (50)  NULL,
     [ScanningCenter]            NVARCHAR (50)  CONSTRAINT [DF_Item_ScanningCenter] DEFAULT ('') NOT NULL,
@@ -15,7 +15,7 @@
     [ScanDate]                  NVARCHAR (50)  CONSTRAINT [DF_Item_ScanDate] DEFAULT ('') NOT NULL,
     [ExternalStatus]            NVARCHAR (50)  CONSTRAINT [DF_Item_ExternalStatus] DEFAULT ('') NOT NULL,
     [MARCBibID]                 NVARCHAR (50)  CONSTRAINT [DF_IAItem_MARCBibID] DEFAULT ('') NOT NULL,
-    [BarCode]                   NVARCHAR (40)  CONSTRAINT [DF_IAItem_BarCode] DEFAULT ('') NOT NULL,
+    [BarCode]                   NVARCHAR (200) CONSTRAINT [DF_IAItem_BarCode] DEFAULT ('') NOT NULL,
     [IADateStamp]               DATETIME       NULL,
     [IAAddedDate]               DATETIME       NULL,
     [LastOAIDataHarvestDate]    DATETIME       NULL,
@@ -54,6 +54,7 @@
 	[EndSeries]                 NVARCHAR(10)   CONSTRAINT [DF_IAItem_EndSeries] DEFAULT '' NOT NULL,
 	[StartPart]                 NVARCHAR(10)   CONSTRAINT [DF_IAItem_StartPart] DEFAULT '' NOT NULL,
 	[EndPart]                   NVARCHAR(10)   CONSTRAINT [DF_IAItem_EndPart] DEFAULT '' NOT NULL,
+    [PageProgression]           NVARCHAR(10)   CONSTRAINT [DF_IAItem_PageProgression] DEFAULT '' NOT NULL,
     CONSTRAINT [PK_Item] PRIMARY KEY CLUSTERED ([ItemID] ASC),
     CONSTRAINT [FK_Item_ItemStatus] FOREIGN KEY ([ItemStatusID]) REFERENCES [dbo].[IAItemStatus] ([ItemStatusID])
 );

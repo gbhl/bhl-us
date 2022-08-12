@@ -25,6 +25,8 @@ namespace BHL.Export.RIS
         public string RISInternalSegmentFile { get; set; }
         public string RISInternalSegmentZipFile { get; set; }
 
+        public string BHLWSEndpoint { get; set; } = string.Empty;
+
         public void LoadAppConfig()
         {
             this.RISItemTempFile = ConfigurationManager.AppSettings["RISItemTempFile"];
@@ -46,6 +48,8 @@ namespace BHL.Export.RIS
             this.RISInternalSegmentTempFile = ConfigurationManager.AppSettings["RISInternalSegmentTempFile"];
             this.RISInternalSegmentFile = ConfigurationManager.AppSettings["RISInternalSegmentFile"];
             this.RISInternalSegmentZipFile = ConfigurationManager.AppSettings["RISInternalSegmentZipFile"];
+
+            this.BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
     }
 }

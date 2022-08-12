@@ -1,0 +1,34 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.CitationImportFileStatusModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Segment Import File Statuses</title>
+    <link rel="stylesheet" type="text/css" runat="server" id="link1" href="/styles/adminstyle.css" />
+</head>
+<body>
+    <div>
+        <h3>Segment Import File Statuses</h3>
+        <table>
+            <tr>
+                <td><b>Status</b></td>
+                <td>&nbsp;</td>
+                <td><b>Description</b></td>
+            </tr>
+            @for (int x = 0; x < Model.ImportFileStatuses.Count; x++)
+            {
+                <tr valign="top">
+                    <td nowrap>@Html.DisplayTextFor(m => m.ImportFileStatuses[x].StatusName)</td>
+                    <td></td>
+                    <td>@Html.DisplayTextFor(m => m.ImportFileStatuses[x].StatusDescription)</td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

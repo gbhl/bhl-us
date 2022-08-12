@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Biodiversity Heritage Library" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
     CodeBehind="Default.aspx.cs" Inherits="MOBOT.BHL.Web2._Default" %>
     <%@ MasterType VirtualPath="~/Site.master" %>
-    <%@ Register TagPrefix="MOBOT" Assembly="MOBOT.BHL.Web.Utilities" Namespace="MOBOT.BHL.Web.Utilities" %>
+    <%@ Register TagPrefix="rss" Assembly="BHLUSWeb2" Namespace="MOBOT.BHL.Web2" %>
     <%@ Register TagPrefix="uc" TagName="FeatureBox" Src="~/controls/ucFeatureBox.ascx" %>
     <asp:Content ContentPlaceHolderID="PageHeaderIncludesPlaceHolder" runat="server">
     <link href="/js/jMyCarousel/jMyCarousel.css?v=2" type="text/css" rel="stylesheet">
@@ -23,6 +23,7 @@
     <div style="padding: 15px 0px">
         <p class="intro-home-tagline">Inspiring discovery through free access to biodiversity knowledge.</p>
         <p>The Biodiversity Heritage Library improves research methodology by collaboratively making biodiversity literature openly available to the world as part of a global biodiversity community.</p>
+        <p>Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgment of Harmful Content</a></p>
     </div>
 </div>
 
@@ -58,7 +59,7 @@
             <h3>New on the</h3>
             <h4>BHL <span>Blog</span></h4>
              <span class="content">
-             <MOBOT:RssFeedControlVersion2 ID="rssFeed" runat="server" MaxRecords="3" Target="_blank" NoItemsFoundText="No BHL blog items found."
+             <rss:RssFeedControlVersion2 ID="rssFeed" runat="server" MaxRecords="3" Target="_blank" NoItemsFoundText="No BHL blog items found."
 											ShowDescription="true" DescriptionLimit="100" />
              </span>
             <a target="_blank" rel="noopener noreferrer" class="featurebutton-home" href="http://blog.biodiversitylibrary.org/">View More Blog Posts</a>

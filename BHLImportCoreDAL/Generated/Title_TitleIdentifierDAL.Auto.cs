@@ -1,8 +1,8 @@
 
-// Generated 9/4/2008 2:16:32 PM
+// Generated 1/5/2021 2:18:33 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class Title_TitleIdentifierDAL is based upon Title_TitleIdentifier.
+// This partial class Title_TitleIdentifierDAL is based upon dbo.Title_TitleIdentifier.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Title_TitleIdentifier by primary key(s).
+		/// Select values from dbo.Title_TitleIdentifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 			
 		/// <summary>
-		/// Select values from Title_TitleIdentifier by primary key(s).
+		/// Select values from dbo.Title_TitleIdentifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<Title_TitleIdentifier> helper = new CustomSqlHelper<Title_TitleIdentifier>())
 				{
-					CustomGenericList<Title_TitleIdentifier> list = helper.ExecuteReader(command);
+					List<Title_TitleIdentifier> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Title_TitleIdentifier o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Title_TitleIdentifier by primary key(s).
+		/// Select values from dbo.Title_TitleIdentifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="title_TitleIdentifierID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> Title_TitleIdentifierSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> Title_TitleIdentifierSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int title_TitleIdentifierID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Title_TitleIdentifier by primary key(s).
+		/// Select values from dbo.Title_TitleIdentifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="title_TitleIdentifierID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> Title_TitleIdentifierSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> Title_TitleIdentifierSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Title_TitleIdentifier.
+		/// Insert values into dbo.Title_TitleIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -161,7 +162,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Title_TitleIdentifier.
+		/// Insert values into dbo.Title_TitleIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -205,7 +206,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<Title_TitleIdentifier> helper = new CustomSqlHelper<Title_TitleIdentifier>())
 				{
-					CustomGenericList<Title_TitleIdentifier> list = helper.ExecuteReader(command);
+					List<Title_TitleIdentifier> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Title_TitleIdentifier o = list[0];
@@ -221,7 +222,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Title_TitleIdentifier. Returns an object of type Title_TitleIdentifier.
+		/// Insert values into dbo.Title_TitleIdentifier. Returns an object of type Title_TitleIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -236,7 +237,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Title_TitleIdentifier. Returns an object of type Title_TitleIdentifier.
+		/// Insert values into dbo.Title_TitleIdentifier. Returns an object of type Title_TitleIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -265,7 +266,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Title_TitleIdentifier by primary key(s).
+		/// Delete values from dbo.Title_TitleIdentifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -280,7 +281,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from Title_TitleIdentifier by primary key(s).
+		/// Delete values from dbo.Title_TitleIdentifier by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -323,7 +324,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Title_TitleIdentifier. Returns an object of type Title_TitleIdentifier.
+		/// Update values in dbo.Title_TitleIdentifier. Returns an object of type Title_TitleIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -354,7 +355,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Title_TitleIdentifier. Returns an object of type Title_TitleIdentifier.
+		/// Update values in dbo.Title_TitleIdentifier. Returns an object of type Title_TitleIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -400,7 +401,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<Title_TitleIdentifier> helper = new CustomSqlHelper<Title_TitleIdentifier>())
 				{
-					CustomGenericList<Title_TitleIdentifier> list = helper.ExecuteReader(command);
+					List<Title_TitleIdentifier> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Title_TitleIdentifier o = list[0];
@@ -416,7 +417,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Title_TitleIdentifier. Returns an object of type Title_TitleIdentifier.
+		/// Update values in dbo.Title_TitleIdentifier. Returns an object of type Title_TitleIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -431,7 +432,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Title_TitleIdentifier. Returns an object of type Title_TitleIdentifier.
+		/// Update values in dbo.Title_TitleIdentifier. Returns an object of type Title_TitleIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -461,9 +462,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Title_TitleIdentifier object.
+		/// Manage dbo.Title_TitleIdentifier object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Title_TitleIdentifier.
+		/// then either insert values into, delete values from, or update values in dbo.Title_TitleIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -478,9 +479,9 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Manage Title_TitleIdentifier object.
+		/// Manage dbo.Title_TitleIdentifier object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Title_TitleIdentifier.
+		/// then either insert values into, delete values from, or update values in dbo.Title_TitleIdentifier.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -557,4 +558,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

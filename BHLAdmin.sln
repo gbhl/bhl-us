@@ -1,12 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2043
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLAdminWeb", "BHLAdminWeb\BHLAdminWeb.csproj", "{53463F60-2878-46CC-A088-0B09C8F55CC7}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F} = {F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrUtility", "FlickrUtility\FlickrUtility.csproj", "{F9D69FA5-9EE0-43FB-ABA3-DC443ACE3F18}"
 EndProject
@@ -17,35 +14,35 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E49350
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLCoreDAL", "BHLCoreDAL\BHLCoreDAL.csproj", "{96BF5B64-D65D-43F2-A2F3-500F9E28FE53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLCoreDAL", "BHLCoreDAL\BHLCoreDAL.csproj", "{96BF5B64-D65D-43F2-A2F3-500F9E28FE53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLDataObjects", "BHLDataObjects\BHLDataObjects.csproj", "{65499E9E-4829-469E-8B5E-3F96012649AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLDataObjects", "BHLDataObjects\BHLDataObjects.csproj", "{65499E9E-4829-469E-8B5E-3F96012649AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomDataAccess", "CustomDataAccess\CustomDataAccess.csproj", "{28227DF3-62E5-46B2-BABB-C21684EA7425}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomDataAccess", "CustomDataAccess\CustomDataAccess.csproj", "{28227DF3-62E5-46B2-BABB-C21684EA7425}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLServer", "BHLServer\BHLServer.csproj", "{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLServer", "BHLServer\BHLServer.csproj", "{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLUtility", "BHLUtility\BHLUtility.csproj", "{270E7816-13EC-4D51-A27F-C959981B1275}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLUtility", "BHLUtility\BHLUtility.csproj", "{270E7816-13EC-4D51-A27F-C959981B1275}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLWebUtilities", "BHLWebUtilities\BHLWebUtilities.csproj", "{7E1631E8-F28A-4F9E-97E4-F8A69522D9DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLWebUtilities", "BHLWebUtilities\BHLWebUtilities.csproj", "{7E1631E8-F28A-4F9E-97E4-F8A69522D9DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFileAccess", "BHLFileAccess\BHLFileAccess.csproj", "{90020027-AD6A-4052-820E-057BEBAA8E2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLFileAccess", "BHLFileAccess\BHLFileAccess.csproj", "{90020027-AD6A-4052-820E-057BEBAA8E2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFileAccessRemotingUtilities", "BHLFileAccessRemotingUtilities\BHLFileAccessRemotingUtilities.csproj", "{C4C907E6-860C-4684-AFF3-26269BF193F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLImportServer", "BHLImportServer\BHLImportServer.csproj", "{5D08C39C-54E8-42CE-BDA5-99B56DE972BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLImportServer", "BHLImportServer\BHLImportServer.csproj", "{5D08C39C-54E8-42CE-BDA5-99B56DE972BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLImportCoreDAL", "BHLImportCoreDAL\BHLImportCoreDAL.csproj", "{BBD99822-F1A3-43C1-A242-686F807DBE33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLImportCoreDAL", "BHLImportCoreDAL\BHLImportCoreDAL.csproj", "{BBD99822-F1A3-43C1-A242-686F807DBE33}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLImportDataObjects", "BHLImportDataObjects\BHLImportDataObjects.csproj", "{D936AD4D-99F3-4095-B538-A097B23ACCD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHLImportDataObjects", "BHLImportDataObjects\BHLImportDataObjects.csproj", "{D936AD4D-99F3-4095-B538-A097B23ACCD8}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database-BHL", "Database-BHL\Database-BHL.sqlproj", "{1EBA8419-B379-473B-B641-7AA6FDDB30A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteServices", "SiteServices\SiteServices.csproj", "{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueUtility", "QueueUtility\QueueUtility.csproj", "{0DE1BE81-B922-411F-A4EC-01FD9822936B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextImportUtility", "TextImportUtility\TextImportUtility.csproj", "{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextImportUtility", "TextImportUtility\TextImportUtility.csproj", "{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteServicesREST.v1", "SiteServiceREST.v1\SiteServicesREST.v1.csproj", "{E9C958FA-3A33-424D-AD7E-7BCB34550976}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteServicesREST.v1.Client", "SiteServiceREST.v1.Client\SiteServicesREST.v1.Client.csproj", "{EC62A99C-EFEB-4EFA-962F-D2CE0BACA6C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,10 +86,6 @@ Global
 		{90020027-AD6A-4052-820E-057BEBAA8E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90020027-AD6A-4052-820E-057BEBAA8E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90020027-AD6A-4052-820E-057BEBAA8E2E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5D08C39C-54E8-42CE-BDA5-99B56DE972BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5D08C39C-54E8-42CE-BDA5-99B56DE972BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D08C39C-54E8-42CE-BDA5-99B56DE972BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -111,10 +104,6 @@ Global
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0DE1BE81-B922-411F-A4EC-01FD9822936B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0DE1BE81-B922-411F-A4EC-01FD9822936B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DE1BE81-B922-411F-A4EC-01FD9822936B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -123,6 +112,14 @@ Global
 		{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9C958FA-3A33-424D-AD7E-7BCB34550976}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9C958FA-3A33-424D-AD7E-7BCB34550976}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9C958FA-3A33-424D-AD7E-7BCB34550976}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9C958FA-3A33-424D-AD7E-7BCB34550976}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC62A99C-EFEB-4EFA-962F-D2CE0BACA6C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC62A99C-EFEB-4EFA-962F-D2CE0BACA6C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC62A99C-EFEB-4EFA-962F-D2CE0BACA6C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC62A99C-EFEB-4EFA-962F-D2CE0BACA6C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

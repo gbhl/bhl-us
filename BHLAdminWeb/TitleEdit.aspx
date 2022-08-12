@@ -145,7 +145,7 @@
         var row = document.createElement("tr");
         row.setAttribute("align", "left");
         var td1 = document.createElement("td");
-        td1.appendChild(document.createTextNode(item.ItemID));
+        td1.appendChild(document.createTextNode(item.BookID));
         var td2 = document.createElement("td");
         td2.appendChild(document.createTextNode(item.BarCode));
         var td3 = document.createElement("td");
@@ -155,7 +155,7 @@
         input.setAttribute("type", "checkbox");
         input.setAttribute("id", "makePrimaryCheckbox");
         input.setAttribute("name", "makePrimaryCheckbox");
-        input.setAttribute("value", item.ItemID);
+        input.setAttribute("value", item.BookID);
         td4.appendChild(input);
         row.appendChild(td1);
         row.appendChild(td2);
@@ -284,10 +284,6 @@
 				<asp:Label ID="marcBibIdLabel" runat="server" ForeColor="Blue"></asp:Label>
 			</td>
 		</tr>
-        <tr>
-            <td style="white-space: nowrap" align="right" class="dataHeader">DOI:</td>
-			<td><asp:TextBox ID="doiTextBox" runat="server" Width="300px"></asp:TextBox></td>
-        </tr>
 		<tr>
 			<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
 				Bibliographic Level (MARC Leader char 07):
@@ -835,7 +831,7 @@
 		<legend class="dataHeader">Title Items</legend>
 		<asp:GridView ID="itemsList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" AllowSorting="true" AlternatingRowStyle-BackColor="#F7FAFB"
 			RowStyle-BackColor="white" Width="800px" CssClass="boxTable" OnRowCancelingEdit="itemsList_RowCancelingEdit" OnRowEditing="itemsList_RowEditing" OnRowUpdating="itemsList_RowUpdating"
-			OnRowCommand="itemsList_RowCommand" OnSorting="itemsList_Sorting" OnRowDataBound="itemsList_RowDataBound" DataKeyNames="ItemID">
+			OnRowCommand="itemsList_RowCommand" OnSorting="itemsList_Sorting" OnRowDataBound="itemsList_RowDataBound" DataKeyNames="BookID">
 			<Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
                 <asp:TemplateField>
@@ -843,13 +839,13 @@
                         <asp:Image ID="FlickrImage" runat="server" ImageUrl="images/flickr_sml.png" AlternateText="Item in Flickr" ToolTip="Item in Flickr" />
                     </ItemTemplate>
                 </asp:TemplateField>
-				<asp:BoundField DataField="ItemID" HeaderText="Item ID" SortExpression="ItemID" ItemStyle-Width="80px" ReadOnly="true" />
+				<asp:BoundField DataField="BookID" HeaderText="Item ID" SortExpression="ItemID" ItemStyle-Width="80px" ReadOnly="true" />
                 <asp:TemplateField HeaderText="MARC" HeaderStyle-HorizontalAlign="Left">
                     <ItemTemplate>
-                        <a id="hypItemMarc" href="#titleitem" onclick="javascript:window.open('TitleItemMarc.aspx?type=i&id=<%# Eval("ItemID") %>', '', 'width=600,height=600,location=0,status=0,scrollbars=1');">View</a>
+                        <a id="hypItemMarc" href="#titleitem" onclick="javascript:window.open('TitleItemMarc.aspx?type=i&id=<%# Eval("BookID") %>', '', 'width=600,height=600,location=0,status=0,scrollbars=1');">View</a>
                     </ItemTemplate>                    
                 </asp:TemplateField>
-				<asp:HyperLinkField HeaderText="Barcode" DataNavigateUrlFields="ItemID" DataNavigateUrlFormatString="/ItemEdit.aspx?id={0}"
+				<asp:HyperLinkField HeaderText="Barcode" DataNavigateUrlFields="BookID" DataNavigateUrlFormatString="/ItemEdit.aspx?id={0}"
 					DataTextField="BarCode" NavigateUrl="/ItemEdit.aspx" SortExpression="BarCode" />
 				<asp:TemplateField HeaderText="Sequence" ItemStyle-Width="80px" SortExpression="ItemSequence">
 					<ItemTemplate>
@@ -881,7 +877,10 @@
 	</fieldset>
 	<br />
 	<asp:Button ID="saveButton" runat="server" OnClick="saveButton_Click" Text="Save" />
-	<div style="float:right;"><mobot:EditHistoryControl runat="server" id="editHistoryControl" /></div>
+	<div style="float:right;">
+		<a id="hypSegmentDownload" runat="server" href="" style="margin-right:10px;">Download Segments</a>
+		<mobot:EditHistoryControl runat="server" id="editHistoryControl" />
+	</div>
 </div>
 <div id="overlayauthor" class="overlay">
     <div style="top:1000px">

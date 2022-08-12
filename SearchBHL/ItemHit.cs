@@ -8,6 +8,7 @@ namespace BHL.Search
         private int _itemId = 0;
         private int _segmentId = 0;
         private int _startPageId = 0;
+        private bool _bookIsVirtual = false;
         private string _title = string.Empty;
         private string _translatedTitle = string.Empty;
         private string _uniformTitle = string.Empty;
@@ -64,6 +65,12 @@ namespace BHL.Search
         {
             get { return _startPageId; }
             set { _startPageId = value; }
+        }
+
+        public bool BookIsVirtual
+        {
+            get { return _bookIsVirtual; }
+            set { _bookIsVirtual = value; }
         }
 
         public string Title

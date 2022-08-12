@@ -1,8 +1,8 @@
 
-// Generated 1/17/2008 3:54:35 PM
+// Generated 1/5/2021 2:10:52 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class BotanicusHarvestLogDAL is based upon BotanicusHarvestLog.
+// This partial class BotanicusHarvestLogDAL is based upon dbo.BotanicusHarvestLog.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from BotanicusHarvestLog by primary key(s).
+		/// Select values from dbo.BotanicusHarvestLog by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -48,7 +49,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int botanicusHarvestLogID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return BotanicusHarvestLogSelectAuto(	sqlConnection, sqlTransaction, "BHLImport",	botanicusHarvestLogID );
+		}
+			
+		/// <summary>
+		/// Select values from dbo.BotanicusHarvestLog by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="botanicusHarvestLogID"></param>
+		/// <returns>Object of type BotanicusHarvestLog.</returns>
+		public BotanicusHarvestLog BotanicusHarvestLogSelectAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int botanicusHarvestLogID )
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings( connectionKeyName ), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("BotanicusHarvestLogSelectAuto", connection, transaction, 
@@ -56,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<BotanicusHarvestLog> helper = new CustomSqlHelper<BotanicusHarvestLog>())
 				{
-					CustomGenericList<BotanicusHarvestLog> list = helper.ExecuteReader(command);
+					List<BotanicusHarvestLog> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						BotanicusHarvestLog o = list[0];
@@ -72,18 +90,35 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from BotanicusHarvestLog by primary key(s).
+		/// Select values from dbo.BotanicusHarvestLog by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="botanicusHarvestLogID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> BotanicusHarvestLogSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> BotanicusHarvestLogSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int botanicusHarvestLogID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return BotanicusHarvestLogSelectAutoRaw( sqlConnection, sqlTransaction, "BHLImport", botanicusHarvestLogID );
+		}
+		
+		/// <summary>
+		/// Select values from dbo.BotanicusHarvestLog by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="botanicusHarvestLogID"></param>
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> BotanicusHarvestLogSelectAutoRaw(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int botanicusHarvestLogID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("BotanicusHarvestLogSelectAuto", connection, transaction,
@@ -94,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into BotanicusHarvestLog.
+		/// Insert values into dbo.BotanicusHarvestLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -133,7 +168,48 @@ namespace MOBOT.BHLImport.DAL
 			int pagePageType,
 			int pageName)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return BotanicusHarvestLogInsertAuto( sqlConnection, sqlTransaction, "BHLImport", harvestStartDate, harvestEndDate, automaticHarvest, successfulHarvest, title, titleTag, titleCreator, creator, item, page, indicatedPage, pagePageType, pageName );
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.BotanicusHarvestLog.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="harvestStartDate"></param>
+		/// <param name="harvestEndDate"></param>
+		/// <param name="automaticHarvest"></param>
+		/// <param name="successfulHarvest"></param>
+		/// <param name="title"></param>
+		/// <param name="titleTag"></param>
+		/// <param name="titleCreator"></param>
+		/// <param name="creator"></param>
+		/// <param name="item"></param>
+		/// <param name="page"></param>
+		/// <param name="indicatedPage"></param>
+		/// <param name="pagePageType"></param>
+		/// <param name="pageName"></param>
+		/// <returns>Object of type BotanicusHarvestLog.</returns>
+		public BotanicusHarvestLog BotanicusHarvestLogInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			DateTime harvestStartDate,
+			DateTime harvestEndDate,
+			bool automaticHarvest,
+			bool successfulHarvest,
+			int title,
+			int titleTag,
+			int titleCreator,
+			int creator,
+			int item,
+			int page,
+			int indicatedPage,
+			int pagePageType,
+			int pageName)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("BotanicusHarvestLogInsertAuto", connection, transaction, 
@@ -155,7 +231,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<BotanicusHarvestLog> helper = new CustomSqlHelper<BotanicusHarvestLog>())
 				{
-					CustomGenericList<BotanicusHarvestLog> list = helper.ExecuteReader(command);
+					List<BotanicusHarvestLog> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						BotanicusHarvestLog o = list[0];
@@ -171,7 +247,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into BotanicusHarvestLog. Returns an object of type BotanicusHarvestLog.
+		/// Insert values into dbo.BotanicusHarvestLog. Returns an object of type BotanicusHarvestLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -182,7 +258,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			BotanicusHarvestLog value)
 		{
-			return BotanicusHarvestLogInsertAuto(sqlConnection, sqlTransaction, 
+			return BotanicusHarvestLogInsertAuto(sqlConnection, sqlTransaction, "BHLImport", value);
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.BotanicusHarvestLog. Returns an object of type BotanicusHarvestLog.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type BotanicusHarvestLog.</param>
+		/// <returns>Object of type BotanicusHarvestLog.</returns>
+		public BotanicusHarvestLog BotanicusHarvestLogInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			BotanicusHarvestLog value)
+		{
+			return BotanicusHarvestLogInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.HarvestStartDate,
 				value.HarvestEndDate,
 				value.AutomaticHarvest,
@@ -203,7 +296,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from BotanicusHarvestLog by primary key(s).
+		/// Delete values from dbo.BotanicusHarvestLog by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -214,7 +307,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int botanicusHarvestLogID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return BotanicusHarvestLogDeleteAuto( sqlConnection, sqlTransaction, "BHLImport", botanicusHarvestLogID );
+		}
+		
+		/// <summary>
+		/// Delete values from dbo.BotanicusHarvestLog by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="botanicusHarvestLogID"></param>
+		/// <returns>true if successful otherwise false.</returns>
+		public bool BotanicusHarvestLogDeleteAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int botanicusHarvestLogID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("BotanicusHarvestLogDeleteAuto", connection, transaction, 
@@ -244,7 +354,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in BotanicusHarvestLog. Returns an object of type BotanicusHarvestLog.
+		/// Update values in dbo.BotanicusHarvestLog. Returns an object of type BotanicusHarvestLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -281,7 +391,50 @@ namespace MOBOT.BHLImport.DAL
 			int pagePageType,
 			int pageName)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+			return BotanicusHarvestLogUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", botanicusHarvestLogID, harvestStartDate, harvestEndDate, automaticHarvest, successfulHarvest, title, titleTag, titleCreator, creator, item, page, indicatedPage, pagePageType, pageName);
+		}
+		
+		/// <summary>
+		/// Update values in dbo.BotanicusHarvestLog. Returns an object of type BotanicusHarvestLog.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="botanicusHarvestLogID"></param>
+		/// <param name="harvestStartDate"></param>
+		/// <param name="harvestEndDate"></param>
+		/// <param name="automaticHarvest"></param>
+		/// <param name="successfulHarvest"></param>
+		/// <param name="title"></param>
+		/// <param name="titleTag"></param>
+		/// <param name="titleCreator"></param>
+		/// <param name="creator"></param>
+		/// <param name="item"></param>
+		/// <param name="page"></param>
+		/// <param name="indicatedPage"></param>
+		/// <param name="pagePageType"></param>
+		/// <param name="pageName"></param>
+		/// <returns>Object of type BotanicusHarvestLog.</returns>
+		public BotanicusHarvestLog BotanicusHarvestLogUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int botanicusHarvestLogID,
+			DateTime harvestStartDate,
+			DateTime harvestEndDate,
+			bool automaticHarvest,
+			bool successfulHarvest,
+			int title,
+			int titleTag,
+			int titleCreator,
+			int creator,
+			int item,
+			int page,
+			int indicatedPage,
+			int pagePageType,
+			int pageName)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("BotanicusHarvestLogUpdateAuto", connection, transaction, 
@@ -303,7 +456,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<BotanicusHarvestLog> helper = new CustomSqlHelper<BotanicusHarvestLog>())
 				{
-					CustomGenericList<BotanicusHarvestLog> list = helper.ExecuteReader(command);
+					List<BotanicusHarvestLog> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						BotanicusHarvestLog o = list[0];
@@ -319,7 +472,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in BotanicusHarvestLog. Returns an object of type BotanicusHarvestLog.
+		/// Update values in dbo.BotanicusHarvestLog. Returns an object of type BotanicusHarvestLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -330,7 +483,24 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			BotanicusHarvestLog value)
 		{
-			return BotanicusHarvestLogUpdateAuto(sqlConnection, sqlTransaction,
+			return BotanicusHarvestLogUpdateAuto(sqlConnection, sqlTransaction, "BHLImport", value );
+		}
+		
+		/// <summary>
+		/// Update values in dbo.BotanicusHarvestLog. Returns an object of type BotanicusHarvestLog.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type BotanicusHarvestLog.</param>
+		/// <returns>Object of type BotanicusHarvestLog.</returns>
+		public BotanicusHarvestLog BotanicusHarvestLogUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			BotanicusHarvestLog value)
+		{
+			return BotanicusHarvestLogUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.BotanicusHarvestLogID,
 				value.HarvestStartDate,
 				value.HarvestEndDate,
@@ -352,9 +522,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage BotanicusHarvestLog object.
+		/// Manage dbo.BotanicusHarvestLog object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in BotanicusHarvestLog.
+		/// then either insert values into, delete values from, or update values in dbo.BotanicusHarvestLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -365,11 +535,30 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			BotanicusHarvestLog value  )
 		{
+			return BotanicusHarvestLogManageAuto( sqlConnection, sqlTransaction, "BHLImport", value  );
+		}
+		
+		/// <summary>
+		/// Manage dbo.BotanicusHarvestLog object.
+		/// If the object is of type CustomObjectBase, 
+		/// then either insert values into, delete values from, or update values in dbo.BotanicusHarvestLog.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type BotanicusHarvestLog.</param>
+		/// <returns>Object of type CustomDataAccessStatus<BotanicusHarvestLog>.</returns>
+		public CustomDataAccessStatus<BotanicusHarvestLog> BotanicusHarvestLogManageAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			BotanicusHarvestLog value  )
+		{
 			if (value.IsNew && !value.IsDeleted)
 			{
 				
 				
-				BotanicusHarvestLog returnValue = BotanicusHarvestLogInsertAuto(sqlConnection, sqlTransaction, 
+				BotanicusHarvestLog returnValue = BotanicusHarvestLogInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.HarvestStartDate,
 						value.HarvestEndDate,
 						value.AutomaticHarvest,
@@ -390,7 +579,7 @@ namespace MOBOT.BHLImport.DAL
 			}
 			else if (!value.IsNew && value.IsDeleted)
 			{
-				if (BotanicusHarvestLogDeleteAuto(sqlConnection, sqlTransaction, 
+				if (BotanicusHarvestLogDeleteAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.BotanicusHarvestLogID))
 				{
 				return new CustomDataAccessStatus<BotanicusHarvestLog>(
@@ -407,7 +596,7 @@ namespace MOBOT.BHLImport.DAL
 			else if (value.IsDirty && !value.IsDeleted)
 			{
 				
-				BotanicusHarvestLog returnValue = BotanicusHarvestLogUpdateAuto(sqlConnection, sqlTransaction, 
+				BotanicusHarvestLog returnValue = BotanicusHarvestLogUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.BotanicusHarvestLogID,
 						value.HarvestStartDate,
 						value.HarvestEndDate,
@@ -439,4 +628,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -9,40 +10,6 @@ namespace MOBOT.BHL.DAL
 	public partial class ItemDAL
 	{
 		#region Select methods
-
-		public Item ItemSelectByBarCodeOrItemID( SqlConnection sqlConnection, SqlTransaction sqlTransaction,
-			int? itemId, string barCode )
-		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(
-				CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );
-			SqlTransaction transaction = sqlTransaction;
-
-			using ( SqlCommand command = CustomSqlHelper.CreateCommand( "ItemSelectByBarCodeOrItemID", connection, transaction,
-				CustomSqlHelper.CreateInputParameter( "ItemID", SqlDbType.Int, null, true, itemId ),
-				CustomSqlHelper.CreateInputParameter( "BarCode", SqlDbType.NVarChar, 40, true, barCode ) ) )
-			{
-				using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
-				{
-					CustomGenericList<Item> list = helper.ExecuteReader( command );
-					if ( list.Count > 0 )
-					{
-						Item item = (Item)list[ 0 ];
-						item.Pages = new PageDAL().PageSelectByItemID( connection, transaction, item.ItemID );
-                        //item.Titles = new TitleDAL().TitleSelectByItem(connection, transaction, item.ItemID);
-                        item.TitleItems = new TitleItemDAL().TitleItemSelectByItem(connection, transaction, item.ItemID);
-                        item.ItemLanguages = new ItemLanguageDAL().ItemLanguageSelectByItemID(connection, transaction, item.ItemID);
-                        item.ItemCollections = new ItemCollectionDAL().SelectByItem(connection, transaction, item.ItemID);
-                        item.Segments = new SegmentDAL().SegmentSelectByItemID(connection, transaction, item.ItemID, 1);
-                        item.Institutions = new InstitutionDAL().InstitutionSelectByItemID(connection, transaction, item.ItemID);
-                        return item;
-					}
-					else
-					{
-						return null;
-					}
-				}
-			}
-		}
 
 		/// <summary>
 		/// Select values from Item by barcode.
@@ -60,11 +27,11 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction transaction = sqlTransaction;
 
 			using ( SqlCommand command = CustomSqlHelper.CreateCommand( "ItemSelectByBarCode", connection, transaction,
-							CustomSqlHelper.CreateInputParameter( "BarCode", SqlDbType.NVarChar, 40, false, barCode ) ) )
+							CustomSqlHelper.CreateInputParameter( "BarCode", SqlDbType.NVarChar, 200, false, barCode ) ) )
 			{
 				using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
 				{
-					CustomGenericList<Item> list = helper.ExecuteReader( command );
+					List<Item> list = helper.ExecuteReader( command );
 					if ( list.Count > 0 )
 					{
 						return list[ 0 ];
@@ -73,77 +40,6 @@ namespace MOBOT.BHL.DAL
 					{
 						return null;
 					}
-				}
-			}
-		}
-
-        public Item ItemSelectOAIDetail(
-            SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction,
-            int itemID)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectOAIDetail", connection, transaction,
-                            CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
-            {
-                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
-                {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
-                    if (list.Count > 0)
-                    {
-                        return list[0];
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Select all Items for a particular Title.
-        /// </summary>
-        /// <param name="sqlConnection">Sql connection or null.</param>
-        /// <param name="sqlTransaction">Sql transaction or null.</param>
-        /// <returns>Object of type Title.</returns>
-        public CustomGenericList<Item> ItemSelectByTitleID(
-				SqlConnection sqlConnection,
-				SqlTransaction sqlTransaction,
-				int titleID )
-		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection( 
-        CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );
-			SqlTransaction transaction = sqlTransaction;
-
-			using ( SqlCommand command = CustomSqlHelper.CreateCommand( "ItemSelectByTitleID", connection, transaction,
-					CustomSqlHelper.CreateInputParameter( "TitleID", SqlDbType.Int, null, false, titleID ) ) )
-			{
-				using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
-				{
-					CustomGenericList<Item> list = helper.ExecuteReader( command );
-					return ( list );
-				}
-			}
-		}
-
-		// This does not filter on item status
-		public CustomGenericList<Item> ItemSelectByMarcBibId( SqlConnection sqlConnection,	SqlTransaction sqlTransaction,
-			string marcBibId)
-		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(
-				CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );
-			SqlTransaction transaction = sqlTransaction;
-
-			using ( SqlCommand command = CustomSqlHelper.CreateCommand( "ItemSelectByMARCBibID", connection, transaction,
-					CustomSqlHelper.CreateInputParameter( "MARCBibID", SqlDbType.NVarChar, 50, false, marcBibId) ) )
-			{
-				using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
-				{
-					CustomGenericList<Item> list = helper.ExecuteReader( command );
-					return ( list );
 				}
 			}
 		}
@@ -159,7 +55,7 @@ namespace MOBOT.BHL.DAL
 		/// Page Names are considered to be expired if the LastPageNameLookupDate on the
 		/// Item object is older than the specified number of days.
 		/// </remarks>
-		public CustomGenericList<Item> ItemSelectWithExpiredPageNames(
+		public List<Item> ItemSelectWithExpiredPageNames(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction,
 				int maxAge )
@@ -172,7 +68,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
 				{
-					CustomGenericList<Item> list = helper.ExecuteReader( command );
+					List<Item> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
@@ -188,7 +84,7 @@ namespace MOBOT.BHL.DAL
 		/// Items are considered to not have page names if the LastPageNameLookupDate 
 		/// is null.
 		/// </remarks>
-		public CustomGenericList<Item> ItemSelectWithoutPageNames(
+		public List<Item> ItemSelectWithoutPageNames(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction )
 		{
@@ -199,13 +95,13 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
 				{
-					CustomGenericList<Item> list = helper.ExecuteReader( command );
+					List<Item> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
 		}
 
-		public CustomGenericList<Item> ItemSelectPaginationReport( SqlConnection sqlConnection, 
+		public List<Item> ItemSelectPaginationReport( SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, int publishedOnly, string institutionCode, DataTable statusIDs, 
             DateTime startDate, DateTime endDate, int numRows, int pageNum, string sortColumn, string sortDirection)
 		{
@@ -230,32 +126,8 @@ namespace MOBOT.BHL.DAL
 
                 using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
 				{
-					CustomGenericList<Item> list = helper.ExecuteReader( command );
+					List<Item> list = helper.ExecuteReader( command );
 					return ( list );
-				}
-			}
-		}
-
-		public Item ItemSelectPagination( SqlConnection sqlConnection,	SqlTransaction sqlTransaction, int itemId )
-		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(
-				CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );
-			SqlTransaction transaction = sqlTransaction;
-
-			using ( SqlCommand command = CustomSqlHelper.CreateCommand( "ItemSelectPagination", connection, transaction,
-				CustomSqlHelper.CreateInputParameter( "ItemID", SqlDbType.Int, null, false, itemId ) ) )
-			{
-				using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
-				{
-					CustomGenericList<Item> list = helper.ExecuteReader( command );
-					if ( list == null || list.Count == 0 )
-					{
-						return null;
-					}
-					else
-					{
-						return list[ 0 ];
-					}
 				}
 			}
 		}
@@ -266,7 +138,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of type RISCitation.</returns>
-        public CustomGenericList<RISCitation> ItemSelectAllRISCitations(
+        public List<RISCitation> ItemSelectAllRISCitations(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction)
         {
@@ -276,7 +148,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
                 {
-                    CustomGenericList<RISCitation> list = helper.ExecuteReader(command);
+                    List<RISCitation> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -288,7 +160,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of type RISCitation.</returns>
-        public CustomGenericList<RISCitation> ItemSelectRISCitationsForTitleID(
+        public List<RISCitation> ItemSelectRISCitationsForTitleID(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         int titleID)
@@ -300,7 +172,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
                 {
-                    CustomGenericList<RISCitation> list = helper.ExecuteReader(command);
+                    List<RISCitation> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -319,7 +191,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="volume"></param>
         /// <param name="year"></param>
         /// <returns></returns>
-        public CustomGenericList<Item> ItemResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<Item> ItemResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string title, string issn, string isbn, string oclc, string volume, string issue, string year)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -337,7 +209,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -364,7 +236,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
 				{
-					CustomGenericList<Item> list = helper.ExecuteReader( command );
+					List<Item> list = helper.ExecuteReader( command );
 					if ( list.Count > 0 )
 						return list[ 0 ];
 					else
@@ -385,7 +257,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -440,12 +312,12 @@ namespace MOBOT.BHL.DAL
 					}
 				}
 
-                if (item.TitleItems.Count > 0)
+                if (item.ItemTitles.Count > 0)
                 {
-                    TitleItemDAL titleItemDAL = new TitleItemDAL();
-                    foreach (TitleItem titleItem in item.TitleItems)
+                    ItemTitleDAL itemTitleDAL = new ItemTitleDAL();
+                    foreach (ItemTitle itemTitle in item.ItemTitles)
                     {
-                        titleItemDAL.TitleItemManageAuto(connection, transaction, titleItem, userId);
+                        itemTitleDAL.ItemTitleManageAuto(connection, transaction, itemTitle, userId);
                     }
                 }
 
@@ -492,38 +364,6 @@ namespace MOBOT.BHL.DAL
 		}
 
         /// <summary>
-        /// Select recent values from Item.
-        /// </summary>
-        /// <param name="sqlConnection">Sql connection or null.</param>
-        /// <param name="sqlTransaction">Sql transaction or null.</param>
-        /// <param name="top">Number of values to return</param>
-        /// <param name="languageCode">Language of items to be included</param>
-        /// <param name="institutionCode">Contributing institution of items to be included</param>
-        /// <returns>List of objects of type Item.</returns>
-        public CustomGenericList<Item> ItemSelectRecent(
-            SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction,
-            int top,
-            string languageCode,
-            string institutionCode)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectRecent", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("Top", SqlDbType.Int, null, false, top),
-                CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, false, languageCode),
-                CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode)))
-            {
-                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
-                {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
-                    return list;
-                }
-            }
-        }
-
-        /// <summary>
         /// Returns a list of items that have suspected character encoding problems.
         /// </summary>
         /// <param name="sqlConnection"></param>
@@ -531,7 +371,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="institutionCode">Institution for which to return items</param>
         /// <param name="maxAge">Age in days of items to consider (i.e. items new in the last 30 days)</param>
         /// <returns></returns>
-        public CustomGenericList<ItemSuspectCharacter> ItemSelectWithSuspectCharacters(
+        public List<ItemSuspectCharacter> ItemSelectWithSuspectCharacters(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 String institutionCode,
@@ -545,7 +385,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ItemSuspectCharacter> helper = new CustomSqlHelper<ItemSuspectCharacter>())
                 {
-                    CustomGenericList<ItemSuspectCharacter> list = helper.ExecuteReader(command);
+                    List<ItemSuspectCharacter> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -556,36 +396,9 @@ namespace MOBOT.BHL.DAL
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemGetNamesXMLByItemID", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
-                CustomSqlHelper.CreateReturnValueParameter("Count", SqlDbType.Int, null, false)))
+                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
             {
                 return CustomSqlHelper.ExecuteScalar(command).ToString();
-            }
-        }
-
-        /// <summary>
-        /// Select titles associated with the specified collection
-        /// </summary>
-        /// <param name="sqlConnection"></param>
-        /// <param name="sqlTransaction"></param>
-        /// <param name="collectionID"></param>
-        /// <returns></returns>
-        public CustomGenericList<Item> ItemSelectByCollection(
-                SqlConnection sqlConnection,
-                SqlTransaction sqlTransaction,
-                int collectionID)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectByCollection",
-                connection, transaction,
-                CustomSqlHelper.CreateInputParameter("CollectionID", SqlDbType.Int, null, false, collectionID)))
-            {
-                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
-                {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
-                    return (list);
-                }
             }
         }
 
@@ -595,7 +408,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection"></param>
         /// <param name="sqlTransaction"></param>
         /// <returns></returns>
-        public CustomGenericList<Item> ItemSelectPublished(
+        public List<Item> ItemSelectPublished(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction
             )
@@ -606,33 +419,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<Item> ItemSelectRecentlyChanged(
-            SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction,
-            string startDate)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectRecentlyChanged", connection, transaction,
-                 CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.DateTime, null, false, startDate)
-                ))
-            {
-                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
-                {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
-                    return list;
-                }
-            }
-        }
-
-        public CustomGenericList<NonMemberMonograph> ItemSelectNonMemberMonograph(
+        public List<NonMemberMonograph> ItemSelectNonMemberMonograph(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string sinceDate,
@@ -650,70 +443,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<NonMemberMonograph> helper = new CustomSqlHelper<NonMemberMonograph>())
                 {
-                    CustomGenericList<NonMemberMonograph> list = helper.ExecuteReader(command);
-                    return list;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Return the specified number of items associated with the specified institution.
-        /// </summary>
-        /// <param name="sqlConnection"></param>
-        /// <param name="sqlTransaction"></param>
-        /// <param name="institutionCode">Identifier of the institution</param>
-        /// <param name="returnCount">Number of items to return</param>
-        /// <param name="sortBy">'Date' or 'Title' are valid values.  'Date' returns list sorted by CreationDate DESC.</param>
-        /// <returns>List of items.</returns>
-        public CustomGenericList<Item> ItemSelectByInstitution(
-            SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction,
-            string institutionCode,
-            int returnCount,
-            string sortBy)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectByInstitution", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
-                CustomSqlHelper.CreateInputParameter("ReturnCount", SqlDbType.Int, null, false, returnCount),
-                CustomSqlHelper.CreateInputParameter("SortBy", SqlDbType.NVarChar, 10, false, sortBy)))
-            {
-                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
-                {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
-                    return list;
-                }
-            }
-        }
-
-        public CustomGenericList<Item> ItemSelectByInstitutionAndRole(
-            SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction,
-            string institutionCode,
-            int institutionRoleID,
-            string barcode,
-            int numRows,
-            int pageNum,
-            string sortColumn,
-            string sortOrder)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectByInstitutionAndRole", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
-                CustomSqlHelper.CreateInputParameter("InstitutionRoleID", SqlDbType.Int, null, false, institutionRoleID),
-                CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 50, false, barcode),
-                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numRows),
-                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
-                CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sortColumn),
-                CustomSqlHelper.CreateInputParameter("SortDirection", SqlDbType.NVarChar, 4, false, sortOrder)))
-            {
-                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
-                {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<NonMemberMonograph> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -732,7 +462,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<Item> ItemSelectBarcodes(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<Item> ItemSelectBarcodes(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -742,7 +472,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> barcodes = helper.ExecuteReader(command);
+                    List<Item> barcodes = helper.ExecuteReader(command);
                     return barcodes;
                 }
             }
@@ -756,7 +486,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="titleId"></param>
         /// <returns></returns>
-        public CustomGenericList<Item> ItemInFlickrByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<Item> ItemInFlickrByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int titleId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -767,7 +497,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -791,7 +521,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
                     if (list == null || list.Count == 0)
                         return null;
                     else
@@ -811,7 +541,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
                     if (list == null || list.Count == 0)
                         return null;
                     else
@@ -820,22 +550,40 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public Item ItemSelectTextPathForItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID)
+        public Item ItemSelectFilenamesBySegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentID)
         {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(
-                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectTextPathForItemID", connection, transaction,
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectFilenamesBySegmentID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
+            {
+                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
+                {
+                    List<Item> list = helper.ExecuteReader(command);
+                    if (list == null || list.Count == 0)
+                        return null;
+                    else
+                        return list[0];
+                }
+            }
+        }
+
+        public Item ItemSelectFilenamesByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectFilenamesByItemID", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
-                    if (list.Count > 0)
-                        return list[0];
-                    else
+                    List<Item> list = helper.ExecuteReader(command);
+                    if (list == null || list.Count == 0)
                         return null;
+                    else
+                        return list[0];
                 }
             }
         }

@@ -130,6 +130,21 @@ namespace MOBOT.BHL.Utility
             return isValid;
         }
 
+        public static bool ValidateSegmentVolumeIssue(string value)
+        {
+            bool isValid = true;
+
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                // XX or XX-YY or XX/YY
+                Regex regex = new Regex("^[0-9]+([/-][0-9]+)?$");
+                Match match = regex.Match(value);
+                isValid = match.Success;
+            }
+
+            return isValid;
+        }
+
         public static YearData ParseYearString(string year)
         {
             bool found = false;
@@ -1165,6 +1180,38 @@ namespace MOBOT.BHL.Utility
             if (volumeParsed.StartsWith("=")) volumeParsed = volumeParsed.Substring(1);
 
             return volumeParsed;
+        }
+
+        /// <summary>
+        /// Clean up the specified SortTitle value.
+        /// 
+        /// Largely following the guidelines at https://www.niso.org/sites/default/files/2017-08/tr03.pdf, this method will do the following:
+        /// Replace with spaces:    - / \ '
+		/// Remove:                 . , ; : ( )[] < > { } " ! ?
+        /// Ignore:                 Letters, numbers, and all symbols not listed in previous lists
+        /// 
+        /// The apostrophe (') that is on the "Replace with spaces" list is the only character that does not following the published
+        /// guidelines.  This difference is in place to handle some non-English language values.
+        ///     For example, the French "d'amphipodes" becomes "d amphipodes", and not "damphipodes".
+        ///     
+        /// In addition to these replacements, change multiple spaces to single spaces.
+        /// </summary>
+        /// <param name="sortTitle"></param>
+        /// <returns>The transformed value for sortTitle</returns>
+        public static string CleanSortTitle(string sortTitle)
+        {
+            string cleanSortTitle = sortTitle;
+
+            string[] replaceChars = new string[] { "\'", "-", "/", "\\" };
+            foreach (string target in replaceChars) cleanSortTitle = cleanSortTitle.Replace(target, " ");
+
+            replaceChars = new string[] { ".", ",", ";", ":", "(", ")", "[", "]", "{", "}", "<", ">", "\"", "!", "?" };
+            foreach (string target in replaceChars) cleanSortTitle = cleanSortTitle.Replace(target, "");
+
+            // Replace multiple spaces with single spaces
+            cleanSortTitle = string.Join(" ", cleanSortTitle.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
+
+            return cleanSortTitle;
         }
 
         private static GroupCollection GetMatchGroups(string pattern, string volume)

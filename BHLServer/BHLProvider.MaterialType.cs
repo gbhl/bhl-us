@@ -1,12 +1,12 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
     public partial class BHLProvider
     {
-        public CustomGenericList<MaterialType> MaterialTypeSelectAll()
+        public List<MaterialType> MaterialTypeSelectAll()
         {
             return new MaterialTypeDAL().MaterialTypeSelectAll(null, null);
         }

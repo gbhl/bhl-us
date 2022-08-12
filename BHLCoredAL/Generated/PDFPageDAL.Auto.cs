@@ -1,8 +1,8 @@
 
-// Generated 11/24/2008 4:39:21 PM
+// Generated 1/5/2021 3:26:47 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class PDFPageDAL is based upon PDFPage.
+// This partial class PDFPageDAL is based upon dbo.PDFPage.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from PDFPage by primary key(s).
+		/// Select values from dbo.PDFPage by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from PDFPage by primary key(s).
+		/// Select values from dbo.PDFPage by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PDFPage> helper = new CustomSqlHelper<PDFPage>())
 				{
-					CustomGenericList<PDFPage> list = helper.ExecuteReader(command);
+					List<PDFPage> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PDFPage o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from PDFPage by primary key(s).
+		/// Select values from dbo.PDFPage by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="pdfPageID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> PDFPageSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PDFPageSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int pdfPageID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from PDFPage by primary key(s).
+		/// Select values from dbo.PDFPage by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="pdfPageID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> PDFPageSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PDFPageSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into PDFPage.
+		/// Insert values into dbo.PDFPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -149,7 +150,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into PDFPage.
+		/// Insert values into dbo.PDFPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -175,7 +176,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PDFPage> helper = new CustomSqlHelper<PDFPage>())
 				{
-					CustomGenericList<PDFPage> list = helper.ExecuteReader(command);
+					List<PDFPage> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PDFPage o = list[0];
@@ -191,7 +192,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into PDFPage. Returns an object of type PDFPage.
+		/// Insert values into dbo.PDFPage. Returns an object of type PDFPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -206,7 +207,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into PDFPage. Returns an object of type PDFPage.
+		/// Insert values into dbo.PDFPage. Returns an object of type PDFPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -229,7 +230,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from PDFPage by primary key(s).
+		/// Delete values from dbo.PDFPage by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -244,7 +245,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from PDFPage by primary key(s).
+		/// Delete values from dbo.PDFPage by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -287,7 +288,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in PDFPage. Returns an object of type PDFPage.
+		/// Update values in dbo.PDFPage. Returns an object of type PDFPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -306,7 +307,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in PDFPage. Returns an object of type PDFPage.
+		/// Update values in dbo.PDFPage. Returns an object of type PDFPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -334,7 +335,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PDFPage> helper = new CustomSqlHelper<PDFPage>())
 				{
-					CustomGenericList<PDFPage> list = helper.ExecuteReader(command);
+					List<PDFPage> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PDFPage o = list[0];
@@ -350,7 +351,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in PDFPage. Returns an object of type PDFPage.
+		/// Update values in dbo.PDFPage. Returns an object of type PDFPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -365,7 +366,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in PDFPage. Returns an object of type PDFPage.
+		/// Update values in dbo.PDFPage. Returns an object of type PDFPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -389,9 +390,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage PDFPage object.
+		/// Manage dbo.PDFPage object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in PDFPage.
+		/// then either insert values into, delete values from, or update values in dbo.PDFPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -406,9 +407,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage PDFPage object.
+		/// Manage dbo.PDFPage object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in PDFPage.
+		/// then either insert values into, delete values from, or update values in dbo.PDFPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -473,4 +474,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

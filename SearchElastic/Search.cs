@@ -98,7 +98,7 @@ namespace BHL.Search.Elastic
                 ESField.HASLOCALCONTENT, ESField.HASSEGMENTS, ESField.ID, ESField.ISBN, ESField.ISSN,
                 ESField.ISSUE, ESField.ITEMID, ESField.KEYWORDS, ESField.LANGUAGE, ESField.MATERIALTYPE,
                 ESField.NOTES, ESField.OCLC, ESField.PAGERANGE, ESField.PUBLICATIONPLACE, ESField.PUBLISHER, 
-                ESField.SCORE, ESField.SEGMENTID, ESField.SERIES, ESField.STARTPAGEID, ESField.TEXT, ESField.TITLE,
+                ESField.SCORE, ESField.SEGMENTID, ESField.SERIES, ESField.STARTPAGEID, ESField.TITLE,
                 ESField.TITLEID, ESField.TRANSLATEDTITLE, ESField.UNIFORMTITLE, ESField.URL, ESField.VARIANTS,
                 ESField.VOLUME, ESField.AUTHORNAMES, ESField.PRIMARYAUTHORNAME, ESField.KEYWORD,
                 ESField.COUNT, ESField.NAME};
@@ -138,7 +138,7 @@ namespace BHL.Search.Elastic
                 ESField.HASLOCALCONTENT, ESField.HASSEGMENTS, ESField.ID, ESField.ISBN, ESField.ISSN,
                 ESField.ISSUE, ESField.ITEMID, ESField.KEYWORDS, ESField.LANGUAGE, ESField.MATERIALTYPE,
                 ESField.NOTES, ESField.OCLC, ESField.PAGERANGE, ESField.PUBLICATIONPLACE, ESField.PUBLISHER, 
-                ESField.SCORE, ESField.SEGMENTID, ESField.SERIES, ESField.STARTPAGEID, ESField.TEXT, ESField.TITLE,
+                ESField.SCORE, ESField.SEGMENTID, ESField.SERIES, ESField.STARTPAGEID, ESField.TITLE,
                 ESField.TITLEID, ESField.TRANSLATEDTITLE, ESField.UNIFORMTITLE, ESField.URL, ESField.VARIANTS,
                 ESField.VOLUME };
             List<Tuple<string, ESFacetSortOrder>> facetFields = new List<Tuple<string, ESFacetSortOrder>> {
@@ -203,7 +203,7 @@ namespace BHL.Search.Elastic
                 ESField.HASLOCALCONTENT, ESField.HASSEGMENTS, ESField.ID, ESField.ISBN, ESField.ISSN,
                 ESField.ISSUE, ESField.ITEMID, ESField.KEYWORDS, ESField.LANGUAGE, ESField.MATERIALTYPE,
                 ESField.NOTES, ESField.OCLC, ESField.PAGERANGE, ESField.PUBLICATIONPLACE, ESField.PUBLISHER, 
-                ESField.SCORE, ESField.SEGMENTID, ESField.SERIES, ESField.STARTPAGEID, ESField.TEXT, ESField.TITLE,
+                ESField.SCORE, ESField.SEGMENTID, ESField.SERIES, ESField.STARTPAGEID, ESField.TITLE,
                 ESField.TITLEID, ESField.TRANSLATEDTITLE, ESField.UNIFORMTITLE, ESField.URL, ESField.VARIANTS,
                 ESField.VOLUME };
             List<Tuple<string, ESFacetSortOrder>> facetFields = new List<Tuple<string, ESFacetSortOrder>> {
@@ -239,7 +239,7 @@ namespace BHL.Search.Elastic
                 ESField.HASLOCALCONTENT, ESField.HASSEGMENTS, ESField.ID, ESField.ISBN, ESField.ISSN,
                 ESField.ISSUE, ESField.ITEMID, ESField.KEYWORDS, ESField.LANGUAGE, ESField.MATERIALTYPE,
                 ESField.NOTES, ESField.OCLC, ESField.PAGERANGE, ESField.PUBLICATIONPLACE, ESField.PUBLISHER, 
-                ESField.SCORE, ESField.SEGMENTID, ESField.SERIES, ESField.STARTPAGEID, ESField.TEXT, ESField.TITLE,
+                ESField.SCORE, ESField.SEGMENTID, ESField.SERIES, ESField.STARTPAGEID, ESField.TITLE,
                 ESField.TITLEID, ESField.TRANSLATEDTITLE, ESField.UNIFORMTITLE, ESField.URL, ESField.VARIANTS,
                 ESField.VOLUME };
             List<Tuple<string, ESFacetSortOrder>> facetFields = new List<Tuple<string, ESFacetSortOrder>> {
@@ -316,7 +316,7 @@ namespace BHL.Search.Elastic
         {
             List<Tuple<string, string>> searchLimits = GetSearchLimitsList(limits);
             List<string> returnFields = new List<string> {
-                    ESField.ID, ESField.ITEMID, ESField.SEQUENCE, ESField.PAGEINDICATORS,
+                    ESField.ID, ESField.ITEMID, ESField.PAGEID, ESField.SEQUENCE, ESField.PAGEINDICATORS,
                     ESField.PAGETYPES, ESField.SEGMENTS
                     };
             if (includeText) returnFields.Add(ESField.TEXT);

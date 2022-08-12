@@ -3,7 +3,7 @@
 
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
-using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -11,9 +11,9 @@ using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class TextImportBatchDAL
+    public partial class TextImportBatchDAL
 	{
-        public CustomGenericList<TextImportBatch> TextImportBatchSelectDetails(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
+        public List<TextImportBatch> TextImportBatchSelectDetails(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
             //string institutionCode,
             int fileStatusID, int numberOfDays)
         {
@@ -27,7 +27,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TextImportBatch> helper = new CustomSqlHelper<TextImportBatch> ())
                 {
-                    CustomGenericList<TextImportBatch> list = helper.ExecuteReader(command);
+                    List<TextImportBatch> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -44,7 +44,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TextImportBatch> helper = new CustomSqlHelper<TextImportBatch>())
                 {
-                    CustomGenericList<TextImportBatch> list = helper.ExecuteReader(command);
+                    List<TextImportBatch> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -53,7 +53,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<TextImportBatch> TextImportBatchSelectForFileCreation(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<TextImportBatch> TextImportBatchSelectForFileCreation(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -62,7 +62,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TextImportBatch> helper = new CustomSqlHelper<TextImportBatch>())
                 {
-                    CustomGenericList<TextImportBatch> list = helper.ExecuteReader(command);
+                    List<TextImportBatch> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

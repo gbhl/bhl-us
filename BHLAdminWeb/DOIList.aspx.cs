@@ -12,7 +12,12 @@ namespace MOBOT.BHL.AdminWeb
 {
     public partial class DOIList : System.Web.UI.Page
     {
-        protected string statusId = "0";
+        protected string userId = "0";
+        protected string statusId = "-1";
+        protected string typeId = "0";
+        protected string entityId = "";
+        protected string startDate = "";
+        protected string endDate = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -41,17 +46,34 @@ namespace MOBOT.BHL.AdminWeb
 
             if (!IsPostBack)
             {
-                List<DOIStatus> statuses = new BHLProvider().DOIStatusSelectAll();
+                txtStartDate.Text = "1/1/1980";
+                txtEndDate.Text = DateTime.Now.AddDays(1).ToShortDateString();
 
-                ddlStatusView.Items.Add(new ListItem("", "0"));
+                Dictionary<int, string> users = new BHLProvider().AspNetUserSelectWithDoi();
+                ddlQueuedBy.Items.Add(new ListItem("(Anyone)", "0"));
+                foreach(KeyValuePair<int, string> user in users)
+                {
+                    ddlQueuedBy.Items.Add(new ListItem(user.Value, user.Key.ToString()));
+                }
+
+                List<DOIStatus> statuses = new BHLProvider().DOIStatusSelectAll();
+                ddlStatusView.Items.Add(new ListItem("(All Statuses)", "0"));
                 foreach (DOIStatus status in statuses)
                 {
-                    ListItem li = new ListItem(status.DOIStatusName, status.DOIStatusID.ToString());
-                    ddlStatusView.Items.Add(li);
+                    if (status.DOIStatusID.ToString() != DOISTATUS_EXTERNAL)
+                    {
+                        ListItem li = new ListItem(status.DOIStatusName, status.DOIStatusID.ToString());
+                        ddlStatusView.Items.Add(li);
+                    }
+                }
+
+                List<DOIEntityType> types = new BHLProvider().DOIEntityTypeSelectWithDoi();
+                ddlEntityType.Items.Add(new ListItem("(All Types)", "0"));
+                foreach(DOIEntityType type in types)
+                {
+                    ddlEntityType.Items.Add(new ListItem(type.DOIEntityTypeName, type.DOIEntityTypeID.ToString()));
                 }
             }
-
-            litUpdateResult.Text = string.Empty;
         }
 
         /// <summary>
@@ -61,104 +83,32 @@ namespace MOBOT.BHL.AdminWeb
         /// <param name="e"></param>
         protected void btnView_Click(object sender, EventArgs e)
         {
-            // Modify ddlStatusChange list to contain items that are valid for the displayed status
-            SetStatusChangeItems(ddlStatusView.SelectedValue, ddlStatusView.Items);
-
-            litDisplayed.Text = (ddlStatusView.SelectedValue == DOISTATUS_NONESELECTED) ? string.Empty : "DOIs in <b>" + ddlStatusView.SelectedItem.Text + "</b> status.";
+            userId = ddlQueuedBy.SelectedValue;
             statusId = ddlStatusView.SelectedValue;
-            litUpdateResult.Text = string.Empty;
+            typeId = ddlEntityType.SelectedValue;
+            entityId = txtEntityID.Text;
+            startDate = txtStartDate.Text;
+            endDate = txtEndDate.Text;
+
+            lnkDownloadResults.Visible = true;
+            lnkDownloadResults.HRef = String.Format(
+                "/services/doiservice.ashx?uid={0}&sid={1}&tid={2}&eid={3}&sdate={4}&edate={5}&dl=1&rows=100000000",
+                userId, statusId, typeId, entityId, startDate, endDate);
+
+            string userName = (userId == "0") ? "Anyone" : ddlQueuedBy.SelectedItem.Text;
+            string statusName = (statusId == DOISTATUS_ALLSELECTED) ? "Any" : ddlStatusView.SelectedItem.Text;
+            string entityName = (typeId == "0") ? "Any" : string.Empty;
+            string entityDetail = (typeId== "0") ? string.Empty : ddlEntityType.SelectedItem.Text + 
+                (entityId == string.Empty ? string.Empty : " (" + entityId + ")");
+
+            litDisplayed.Text = (statusId == DOISTATUS_NONESELECTED)
+                ? string.Empty
+                : string.Format("DOIs queued between <b>{0}</b> and <b>{1}</b> by <b>{2}</b> in <b>{3}</b> status and <b>{4}</b> entity type <b>{5}</b>",
+                    startDate, endDate, userName, statusName, entityName, entityDetail);
         }
 
-        /// <summary>
-        /// Update the selected DOIs and set them to the specified status
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btnChange_Click(object sender, EventArgs e)
-        {
-            string updateMsg = string.Empty;
-            litUpdateResult.Text = string.Empty;
-
-            BHLProvider service = new BHLProvider();
-
-            try
-            {
-                // Get the list of selected DOIs
-                string selected = hidSelected.Value;
-                string[] ids = selected.Split('|');
-
-                if (string.IsNullOrEmpty(selected))
-                {
-                    updateMsg = "No DOIs selected";
-                }
-                else
-                {
-                    for (int x = 0; x < ids.Length; x++)
-                    {
-                        if (ids[x] != "cb_list")    // ignore checkbox "cb_list"
-                        {
-                            // Update the DOI
-                            string id = ids[x].Replace("jqg_list_", "");
-                            service.DOIUpdateStatus(Convert.ToInt32(id), Convert.ToInt32(ddlStatusChange.SelectedValue));
-                        }
-                    }
-                }
-                if (updateMsg.Length == 0) updateMsg = "Update successful";
-            }
-            catch (Exception ex)
-            {
-                // do nothing
-                updateMsg += "<font color='red'>Error: " + ex.Message + "</font>";
-            }
-
-            // Refresh the grid
-            litUpdateResult.Text = "<font color='red'>" + updateMsg + "</font>";
-            statusId = ddlStatusView.SelectedValue;
-        }
-
-        private const string DOISTATUS_NONESELECTED = "0";
-        private const string DOISTATUS_NODOI = "10";
-        private const string DOISTATUS_DOIASSIGNED = "20";
-        private const string DOISTATUS_PENDINGRESUBMIT = "30";
-        private const string DOISTATUS_BATCHIDASSSIGNED = "40";
-        private const string DOISTATUS_SUBMITTED = "50";
-        private const string DOISTATUS_SUBMITERROR = "60";
-        private const string DOISTATUS_GETSUBMITLOGERROR = "70";
-        private const string DOISTATUS_CROSSREFERROR = "80";
-        private const string DOISTATUS_CROSSREFWARNING = "90";
-        private const string DOISTATUS_DOIAPPROVED = "100";
-
-        /// <summary>
-        /// Add the appropriate items to the StatusChange dropdown, based on the status of the currently displayed items
-        /// </summary>
-        /// <param name="selectedStatus"></param>
-        /// <param name="statuses"></param>
-        private void SetStatusChangeItems(string selectedStatus, ListItemCollection statuses)
-        {
-            ddlStatusChange.Items.Clear();
-            ddlStatusChange.Enabled = true;
-            btnChange.Enabled = true;
-
-            switch (selectedStatus)
-            {
-                case DOISTATUS_NONESELECTED:
-                case DOISTATUS_NODOI:
-                case DOISTATUS_DOIASSIGNED:
-                case DOISTATUS_PENDINGRESUBMIT:
-                case DOISTATUS_BATCHIDASSSIGNED:
-                    ddlStatusChange.Enabled = false;
-                    btnChange.Enabled = false;
-                    break;
-                case DOISTATUS_SUBMITTED:
-                case DOISTATUS_SUBMITERROR:
-                case DOISTATUS_GETSUBMITLOGERROR:
-                case DOISTATUS_CROSSREFERROR:
-                case DOISTATUS_CROSSREFWARNING:
-                case DOISTATUS_DOIAPPROVED:
-                default:
-                    ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(DOISTATUS_PENDINGRESUBMIT).Text, DOISTATUS_PENDINGRESUBMIT));
-                    break;
-            }
-        }
+        private const string DOISTATUS_NONESELECTED = "-1";
+        private const string DOISTATUS_ALLSELECTED = "0";
+        private const string DOISTATUS_EXTERNAL = "200";
     }
 }

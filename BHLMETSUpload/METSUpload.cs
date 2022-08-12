@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Net.Mail;
-using System.Web;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
 using MOBOT.IA.Utilities;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Web;
 
 namespace MOBOT.BHL.BHLMETSUpload
 {
@@ -37,134 +38,9 @@ namespace MOBOT.BHL.BHLMETSUpload
                 this.LogMessage("LoadAppConfig Error: " + e.Message, true);
             }
 
-            BHLWS.BHLWSSoapClient service = new BHLWS.BHLWSSoapClient();
-
-            BHLWS.Item[] items = null;
-            try
-            {
-                //1 - Get new Items
-                //2 - check for updated items (including title, pages, authors, etc)
-                string startDate = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy 0:00");
-                items = service.ItemSelectRecentlyChanged(startDate);
-            }
-            catch (Exception e)
-            {
-                this.LogMessage("GetItemsChanged Error: " + e.Message, true);
-            }
-
-            if (items != null && items.Length > 0)
-            {
-                foreach (BHLWS.Item item in items)
-                {
-                    try
-                    {
-                        //3 - generate mets file for all new & updated items
-                        BHLWS.Title title = service.TitleSelectByTitleID(item.PrimaryTitleID);
-                        string mods = service.GetMODSRecordForItem(item.ItemID);
-                        BHLWS.Page[] pages = service.PageMetadataSelectByItemID(item.ItemID);
-
-                        StringBuilder sb = new StringBuilder("");
-                        sb.AppendFormat("<mets:mets xmlns:mods=\"http://www.loc.gov/mods/v3\" xmlns:rights=\"http://www.loc.gov/rights/\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:lc=\"http://www.loc.gov/mets/profiles\" xmlns:mets=\"http://www.loc.gov/METS/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.loc.gov/METS_Profile/ http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-2.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-3.xsd\" OBJID=\"item/{0}\" LABEL=\"{1}\" PROFILE=\"lc:printMaterial\">", item.ItemID, HttpUtility.HtmlEncode(title.FullTitle));
-                        sb.AppendFormat("<mets:metsHdr CREATEDATE=\"{0}\">", DateTime.Now.ToString("yyyy-MM-ddThh:mm:ss"));
-                        sb.Append("<mets:agent ROLE=\"CREATOR\" TYPE=\"ORGANIZATION\">");
-                        sb.Append("<mets:name>Biodiversity Heritage Library</mets:name>");
-                        sb.AppendFormat("<mets:note>mailto:{0}</mets:note>", configParms.MetsEmail);
-                        sb.Append("</mets:agent>");
-                        sb.Append("</mets:metsHdr>");
-                        sb.Append("<mets:dmdSec ID=\"MODS1\">");
-                        sb.Append("<mets:mdWrap MDTYPE=\"MODS\">");
-                        sb.Append("<mets:xmlData>");
-                        sb.Append(mods);
-                        sb.Append("</mets:xmlData>");
-                        sb.Append("</mets:mdWrap>");
-                        sb.Append("</mets:dmdSec>");
-                        if (item.CopyrightStatus != null && item.CopyrightStatus.Length > 0)
-                        {
-                            sb.Append("<mets:amdSec>");
-                            sb.Append("<mets:rightsMD ID=\"RIGHTS1\">");
-                            sb.Append("<mets:mdWrap MDTYPE=\"OTHER\" LABEL=\"RIGHTSMD\">");
-                            sb.Append("<mets:xmlData>");
-                            sb.Append("<rights:RightsDeclarationMD RIGHTSCATEGORY=\"COPYRIGHTED\">");
-                            sb.AppendFormat("<rights:RightsDeclaration>{0}</rights:RightsDeclaration>", HttpUtility.HtmlEncode(item.CopyrightStatus));
-                            sb.Append("</rights:RightsDeclarationMD>");
-                            sb.Append("</mets:xmlData>");
-                            sb.Append("</mets:mdWrap>");
-                            sb.Append("</mets:rightsMD>");
-                            sb.Append("</mets:amdSec>");
-                        }
-
-                        if (pages != null && pages.Length > 0)
-                        {
-                            StringBuilder refImages = new StringBuilder("");
-                            StringBuilder containerPages = new StringBuilder("");
-                            StringBuilder pageTypes = new StringBuilder("");
-
-                            int count = 1;
-                            foreach (BHLWS.Page p in pages)
-                            {
-                                refImages.AppendFormat("<mets:file ID=\"pageImg{0}\" GROUPID=\"G{1}\" USE=\"reference image\" MIMETYPE=\"image/jpeg\">", p.PageID, count);
-                                refImages.AppendFormat("<mets:FLocat LOCTYPE=\"URL\" xlink:href=\"https://www.biodiversitylibrary.org/pageimage/{0}\" />", p.PageID);
-                                refImages.AppendFormat("</mets:file>");
-
-                                containerPages.AppendFormat("<mets:file ID=\"page{0}\" GROUPID=\"G{1}\" USE=\"container page\" MIMETYPE=\"text/html\">", p.PageID, count);
-                                containerPages.AppendFormat("<mets:FLocat LOCTYPE=\"URL\" xlink:href=\"https://www.biodiversitylibrary.org/page/{0}\" />", p.PageID);
-                                containerPages.AppendFormat("</mets:file>");
-
-                                string orderLabel = "";
-                                if (p.IndicatedPages != null && p.IndicatedPages.Length > 0 && p.IndicatedPages.StartsWith("Page "))
-                                {
-                                    orderLabel = p.IndicatedPages.Substring(5);
-                                    pageTypes.AppendFormat("<mets:div TYPE=\"page\" ORDER=\"{0}\" ORDERLABEL=\"{1}\" LABEL=\"{2}\">", count, HttpUtility.HtmlEncode(orderLabel), (p.IndicatedPages != null && p.IndicatedPages.Length > 0 ? HttpUtility.HtmlEncode(p.IndicatedPages) : HttpUtility.HtmlEncode(p.PageTypes)));
-                                }
-                                else
-                                {
-                                    pageTypes.AppendFormat("<mets:div TYPE=\"page\" ORDER=\"{0}\" LABEL=\"{1}\">", count, (p.IndicatedPages != null && p.IndicatedPages.Length > 0 ? HttpUtility.HtmlEncode(p.IndicatedPages) : HttpUtility.HtmlEncode(p.PageTypes)));
-                                }
-                                pageTypes.AppendFormat("<mets:fptr FILEID=\"pageImg{0}\" />", p.PageID);
-                                pageTypes.AppendFormat("<mets:fptr FILEID=\"page{0}\" />", p.PageID);
-                                pageTypes.AppendFormat("</mets:div>");
-
-                                count++;
-                            }
-
-                            sb.Append("<mets:fileSec>");
-                            sb.Append("<mets:fileGrp ID=\"FG1\" USE=\"reference images\">");
-                            sb.Append(refImages.ToString());
-                            sb.Append("</mets:fileGrp>");
-                            sb.Append("<mets:fileGrp ID=\"FG2\" USE=\"container web pages\">");
-                            sb.Append(containerPages.ToString());
-                            sb.Append("</mets:fileGrp>");
-                            sb.Append("</mets:fileSec>");
-
-                            sb.Append("<mets:structMap TYPE=\"mixed\">");
-                            if (item.CopyrightStatus != null && item.CopyrightStatus.Length > 0)
-                            {
-                                sb.Append("<mets:div DMDID=\"MODS1\" ADMID=\"RIGHTS1\" TYPE=\"book\">");
-                            }
-                            else
-                            {
-                                sb.Append("<mets:div DMDID=\"MODS1\" TYPE=\"book\">");
-                            }
-                            sb.Append(pageTypes.ToString());
-                            sb.Append("</mets:div>");
-                            sb.AppendFormat("</mets:structMap>");
-                        }
-                        sb.Append("</mets:mets>");
-
-                        File.WriteAllText(configParms.UploadFilePath + item.ItemID + ".xml", sb.ToString());
-
-                        filesCreated.Add(item.ItemID.ToString());
-                        this.LogMessage("METS file created (" + item.ItemID + ")");
-                    }
-                    catch (Exception ex)
-                    {
-                        this.LogMessage("Error creating mets file(" + item.ItemID + "): " + ex.Message, true);
-                    }
-
-                    //4 - upload the mets file to IA
-                    UploadFiles(item);
-                }
-            }
+            string startDate = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy 0:00");
+            ProcessBooks(startDate);
+            ProcessSegments(startDate);
 
             // Report the results of mets generation
             this.ProcessResults();
@@ -172,14 +48,191 @@ namespace MOBOT.BHL.BHLMETSUpload
             this.LogMessage("METSUpload Processing Complete");
         }
 
-        private void UploadFiles(BHLWS.Item item)
+        private void ProcessBooks(string startDate)
+        {
+            ICollection<Book> items = null;
+            try
+            {
+                //1 - check for updated items (including title, pages, authors, etc)
+                items = new BooksClient(configParms.BHLWSEndpoint).GetBooksRecentlyChanged(startDate);
+            }
+            catch (Exception e)
+            {
+                this.LogMessage("Error getting recently changed items: " + e.Message, true);
+            }
+
+            if (items != null && items.Count > 0)
+            {
+                foreach (Book item in items)
+                {
+                    string filename = string.Format("{0}{1}{2}.xml", configParms.UploadFilePath, "book", item.BookID.ToString());
+
+                    try
+                    {
+                        //2 - generate mets file for all new & updated items
+                        Title title = new TitlesClient(configParms.BHLWSEndpoint).GetTitle((int)item.PrimaryTitleID);
+                        string mods = new ExportsClient(configParms.BHLWSEndpoint).GetItemMODS((int)item.BookID);
+                        ICollection<Page> pages = new BooksClient(configParms.BHLWSEndpoint).GetBookPages((int)item.BookID);
+
+                        string mets = GetMETS((int)item.BookID, title.FullTitle, item.CopyrightStatus, mods, pages);
+                        File.WriteAllText(filename, mets);
+
+                        filesCreated.Add(item.BookID.ToString());
+                        this.LogMessage("METS file created (Book " + item.BookID + ")");
+                    }
+                    catch (Exception ex)
+                    {
+                        this.LogMessage("Error creating METS file (Book " + item.BookID + "): " + ex.Message, true);
+                    }
+
+                    //3 - upload the mets file to IA
+                    UploadFiles("book", item.BookID.ToString(), filename, item.BarCode);
+                }
+            }
+        }
+
+        private void ProcessSegments(string startDate)
+        {
+            ICollection<Segment> segments = null;
+            try
+            {
+                //1 - check for updated segments (including pages, authors, etc)
+                segments = new SegmentsClient(configParms.BHLWSEndpoint).GetSegmentsRecentlyChanged(startDate);
+            }
+            catch (Exception e)
+            {
+                this.LogMessage("Error getting recently changed items: " + e.Message, true);
+            }
+
+            if (segments != null && segments.Count > 0)
+            {
+                foreach (Segment segment in segments)
+                {
+                    string filename = string.Format("{0}{1}{2}.xml", configParms.UploadFilePath, "segment", segment.SegmentID.ToString());
+
+                    try
+                    {
+                        //2 - generate mets file for all new & updated segments
+                        string mods = new ExportsClient(configParms.BHLWSEndpoint).GetSegmentMODS((int)segment.SegmentID);
+                        ICollection<Page> pages = new SegmentsClient(configParms.BHLWSEndpoint).GetSegmentPages((int)segment.SegmentID);
+
+                        string mets = GetMETS((int)segment.SegmentID, segment.Title, segment.CopyrightStatus, mods, pages);
+                        File.WriteAllText(filename, mets);
+
+                        filesCreated.Add(segment.SegmentID.ToString());
+                        this.LogMessage("METS file created (Segment " + segment.SegmentID+ ")");
+                    }
+                    catch (Exception ex)
+                    {
+                        this.LogMessage("Error creating METS file (Segment " + segment.SegmentID + "): " + ex.Message, true);
+                    }
+
+                    //3 - upload the mets file to IA
+                    UploadFiles("segment", segment.SegmentID.ToString(), filename, segment.BarCode);
+                }
+            }
+        }
+
+        private string GetMETS(int entityID, string title, string copyrightStatus, string mods, ICollection<Page> pages)
+        {
+            StringBuilder sb = new StringBuilder("");
+            sb.AppendLine(string.Format("<mets:mets xmlns:mods=\"http://www.loc.gov/mods/v3\" xmlns:rights=\"http://www.loc.gov/rights/\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:lc=\"http://www.loc.gov/mets/profiles\" xmlns:mets=\"http://www.loc.gov/METS/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.loc.gov/METS_Profile/ http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-2.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd\" OBJID=\"part/{0}\" LABEL=\"{1}\" PROFILE=\"lc:printMaterial\">", entityID.ToString(), HttpUtility.HtmlEncode(title)));
+            sb.AppendLine(string.Format("<mets:metsHdr CREATEDATE=\"{0}\">", DateTime.Now.ToString("yyyy-MM-ddThh:mm:ss")));
+            sb.AppendLine("<mets:agent ROLE=\"CREATOR\" TYPE=\"ORGANIZATION\">");
+            sb.AppendLine("<mets:name>Biodiversity Heritage Library</mets:name>");
+            sb.AppendLine(string.Format("<mets:note>mailto:{0}</mets:note>", configParms.MetsEmail));
+            sb.AppendLine("</mets:agent>");
+            sb.AppendLine("</mets:metsHdr>");
+            sb.AppendLine("<mets:dmdSec ID=\"MODS1\">");
+            sb.AppendLine("<mets:mdWrap MDTYPE=\"MODS\">");
+            sb.AppendLine("<mets:xmlData>");
+            sb.Append(mods);
+            sb.AppendLine("</mets:xmlData>");
+            sb.AppendLine("</mets:mdWrap>");
+            sb.AppendLine("</mets:dmdSec>");
+            if (copyrightStatus != null && copyrightStatus.Length > 0)
+            {
+                sb.AppendLine("<mets:amdSec>");
+                sb.AppendLine("<mets:rightsMD ID=\"RIGHTS1\">");
+                sb.AppendLine("<mets:mdWrap MDTYPE=\"OTHER\" LABEL=\"RIGHTSMD\">");
+                sb.AppendLine("<mets:xmlData>");
+                sb.AppendLine("<rights:RightsDeclarationMD RIGHTSCATEGORY=\"COPYRIGHTED\">");
+                sb.AppendLine(string.Format("<rights:RightsDeclaration>{0}</rights:RightsDeclaration>", HttpUtility.HtmlEncode(copyrightStatus)));
+                sb.AppendLine("</rights:RightsDeclarationMD>");
+                sb.AppendLine("</mets:xmlData>");
+                sb.AppendLine("</mets:mdWrap>");
+                sb.AppendLine("</mets:rightsMD>");
+                sb.AppendLine("</mets:amdSec>");
+            }
+
+            if (pages != null && pages.Count > 0)
+            {
+                StringBuilder refImages = new StringBuilder("");
+                StringBuilder containerPages = new StringBuilder("");
+                StringBuilder pageTypes = new StringBuilder("");
+
+                int count = 1;
+                foreach (Page p in pages)
+                {
+                    refImages.AppendLine(string.Format("<mets:file ID=\"pageImg{0}\" GROUPID=\"G{1}\" USE=\"reference image\" MIMETYPE=\"image/jpeg\">", p.PageID, count));
+                    refImages.AppendLine(string.Format("<mets:FLocat LOCTYPE=\"URL\" xlink:href=\"https://www.biodiversitylibrary.org/pageimage/{0}\" />", p.PageID));
+                    refImages.AppendLine("</mets:file>");
+
+                    containerPages.AppendLine(string.Format("<mets:file ID=\"page{0}\" GROUPID=\"G{1}\" USE=\"container page\" MIMETYPE=\"text/html\">", p.PageID, count));
+                    containerPages.AppendLine(string.Format("<mets:FLocat LOCTYPE=\"URL\" xlink:href=\"https://www.biodiversitylibrary.org/page/{0}\" />", p.PageID));
+                    containerPages.AppendLine("</mets:file>");
+
+                    string orderLabel = "";
+                    if (p.IndicatedPages != null && p.IndicatedPages.Length > 0 && p.IndicatedPages.StartsWith("Page "))
+                    {
+                        orderLabel = p.IndicatedPages.Substring(5);
+                        pageTypes.AppendLine(string.Format("<mets:div TYPE=\"page\" ORDER=\"{0}\" ORDERLABEL=\"{1}\" LABEL=\"{2}\">", count, HttpUtility.HtmlEncode(orderLabel), (p.IndicatedPages != null && p.IndicatedPages.Length > 0 ? HttpUtility.HtmlEncode(p.IndicatedPages) : HttpUtility.HtmlEncode(p.PageTypes))));
+                    }
+                    else
+                    {
+                        pageTypes.AppendLine(string.Format("<mets:div TYPE=\"page\" ORDER=\"{0}\" LABEL=\"{1}\">", count, (p.IndicatedPages != null && p.IndicatedPages.Length > 0 ? HttpUtility.HtmlEncode(p.IndicatedPages) : HttpUtility.HtmlEncode(p.PageTypes))));
+                    }
+                    pageTypes.AppendLine(string.Format("<mets:fptr FILEID=\"pageImg{0}\" />", p.PageID));
+                    pageTypes.AppendLine(string.Format("<mets:fptr FILEID=\"page{0}\" />", p.PageID));
+                    pageTypes.AppendLine("</mets:div>");
+
+                    count++;
+                }
+
+                sb.AppendLine("<mets:fileSec>");
+                sb.AppendLine("<mets:fileGrp ID=\"FG1\" USE=\"reference images\">");
+                sb.AppendLine(refImages.ToString());
+                sb.AppendLine("</mets:fileGrp>");
+                sb.AppendLine("<mets:fileGrp ID=\"FG2\" USE=\"container web pages\">");
+                sb.AppendLine(containerPages.ToString());
+                sb.AppendLine("</mets:fileGrp>");
+                sb.AppendLine("</mets:fileSec>");
+
+                sb.AppendLine("<mets:structMap TYPE=\"mixed\">");
+                if (copyrightStatus != null && copyrightStatus.Length > 0)
+                {
+                    sb.AppendLine("<mets:div DMDID=\"MODS1\" ADMID=\"RIGHTS1\" TYPE=\"book\">");
+                }
+                else
+                {
+                    sb.AppendLine("<mets:div DMDID=\"MODS1\" TYPE=\"book\">");
+                }
+                sb.AppendLine(pageTypes.ToString());
+                sb.AppendLine("</mets:div>");
+                sb.AppendLine("</mets:structMap>");
+            }
+            sb.AppendLine("</mets:mets>");
+
+            return sb.ToString();
+        }
+
+        private void UploadFiles(string entityType, string entityID, string filename, string barcode)
         {
             S3 s3 = null;
 
             try
             {
                 this.LogMessage("Uploading file");
-                BHLWS.BHLWSSoapClient wsClient = new BHLWS.BHLWSSoapClient();
                 
                 int consecutiveErrors = 0;
                 s3 = new S3(configParms.IA3AccessKey, configParms.IA3SecretKey);
@@ -187,25 +240,23 @@ namespace MOBOT.BHL.BHLMETSUpload
                 try
                 {
                     // Upload the file
-                    string putResult = s3.PutObject(configParms.UploadFilePath + item.ItemID + ".xml", item.BarCode,
-                        item.BarCode + configParms.IAFileName,
-                        "application/xml", null, true, false);
+                    string putResult = s3.PutObject(filename, barcode, barcode + configParms.IAFileName,"application/xml", null, true, false);
 
                     // Update log information
                     if (putResult == "Success")
                     {
-                        filesUploaded.Add(item.ItemID.ToString());
-                        this.LogMessage("Mets file uploaded for item " + item.ItemID.ToString());
-                        File.Delete(configParms.UploadFilePath + item.ItemID + ".xml");
+                        filesUploaded.Add(entityID);
+                        this.LogMessage(string.Format("Mets file uploaded for {0} {1}", entityType, entityID));
+                        File.Delete(filename);
                     }
                     else if (putResult.ToLower().Contains("403"))   // "Forbidden" error; see details below
                     {
-                        filesSkipped.Add(item.ItemID.ToString());
-                        this.LogMessage("Mets file skipped (forbidden) for item " + item.ItemID.ToString());
+                        filesSkipped.Add(entityID);
+                        this.LogMessage(string.Format("Mets file skipped (forbidden) for {0} {1}", entityType, entityID));
                     }
                     else
                     {
-                        this.LogMessage("Error uploading file for item " + item.ItemID + ": " + putResult, true);
+                        this.LogMessage(string.Format("Error uploading file for {0} {1} - {2}", entityType, entityID, putResult), true);
                     }
 
                     // Clear consecutive error count on "Success" or "403" message.  "403" is
@@ -220,7 +271,7 @@ namespace MOBOT.BHL.BHLMETSUpload
                 catch (Exception ex)
                 {
                     consecutiveErrors++;
-                    LogMessage("Error uploading file for item " + item.ItemID + ": " + ex.Message, true);
+                    LogMessage(string.Format("Error uploading file for {0} {1} : {2}", entityType, entityID, ex.Message), true);
 
                     // If we've had 10 consecutive upload failures, then it's time to give up
                     if (consecutiveErrors >= 10)
@@ -231,14 +282,14 @@ namespace MOBOT.BHL.BHLMETSUpload
             }
             catch (Exception ex)
             {
-                LogMessage("Error uploading file (" + item.ItemID + "): " + ex.Message, true);
+                LogMessage(string.Format("Error uploading file ({0}): {1}", filename, ex.Message), true);
             }
             finally
             {
                 if (s3 != null) s3 = null;
-                if(File.Exists(configParms.UploadFilePath + item.ItemID + ".xml"))
+                if(File.Exists(filename))
                 {
-                    File.Delete(configParms.UploadFilePath + item.ItemID + ".xml");
+                    File.Delete(filename);
                 }
             }
         }
@@ -349,16 +400,26 @@ namespace MOBOT.BHL.BHLMETSUpload
         {
             try
             {
-                MailMessage mailMessage = new MailMessage();
-                MailAddress mailAddress = new MailAddress(fromAddress);
-                mailMessage.From = mailAddress;
-                mailMessage.To.Add(toAddress);
-                if (ccAddresses != String.Empty) mailMessage.CC.Add(ccAddresses);
-                mailMessage.Subject = subject;
-                mailMessage.Body = message;
+                EmailClient restClient = null;
 
-                SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
-                smtpClient.Send(mailMessage);
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = subject;
+                mailRequest.Body = message;
+                mailRequest.From = fromAddress;
+
+                List<string> recipients = new List<string>();
+                foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
+
+                if (ccAddresses != String.Empty)
+                {
+                    List<string> ccs = new List<string>();
+                    foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
+                    mailRequest.Cc = ccs;
+                }
+
+                restClient = new EmailClient(configParms.BHLWSEndpoint);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {

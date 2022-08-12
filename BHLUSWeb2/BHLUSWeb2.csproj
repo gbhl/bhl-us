@@ -37,6 +37,7 @@
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
     <Use64BitIISExpress />
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -75,12 +76,13 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="RestSharp, Version=102.7.0.0, Culture=neutral, PublicKeyToken=3aeec8c590ff36f5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibraries\CounterSoft7.0.0\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="RssToolkit, Version=1.0.0.1, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibraries\RssToolkit1.0.0.1\RssToolkit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -122,6 +124,9 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="netstandard">
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\Default.html" />
@@ -169,23 +174,23 @@
     <Content Include="api2\docs\TitleSearchSimple.xml" />
     <Content Include="api2\soap.asmx" />
     <Content Include="css\nspop.css" />
-    <Content Include="Docs\api3\AuthorSearch.xml" />
     <Content Include="Docs\api3.html" />
-    <Content Include="Docs\api3\GetAuthorMetadata.xml" />
-    <Content Include="Docs\api3\GetCollections.xml" />
-    <Content Include="Docs\api3\GetInstitutions.xml" />
-    <Content Include="Docs\api3\GetItemMetadata.xml" />
-    <Content Include="Docs\api3\GetLanguages.xml" />
-    <Content Include="Docs\api3\GetNameMetadata.xml" />
-    <Content Include="Docs\api3\GetPageMetadata.xml" />
-    <Content Include="Docs\api3\GetPartMetadata.xml" />
-    <Content Include="Docs\api3\GetSubjectMetadata.xml" />
-    <Content Include="Docs\api3\GetTitleMetadata.xml" />
-    <Content Include="Docs\api3\NameSearch.xml" />
-    <Content Include="Docs\api3\PageSearch.xml" />
-    <Content Include="Docs\api3\PublicationSearch.xml" />
-    <Content Include="Docs\api3\PublicationSearchAdvanced.xml" />
-    <Content Include="Docs\api3\SubjectSearch.xml" />
+    <Content Include="Docs\api3\NameSearch.html" />
+    <Content Include="Docs\api3\AuthorSearch.html" />
+    <Content Include="Docs\api3\SubjectSearch.html" />
+    <Content Include="Docs\api3\PageSearch.html" />
+    <Content Include="Docs\api3\PublicationSearchAdvanced.html" />
+    <Content Include="Docs\api3\PublicationSearch.html" />
+    <Content Include="Docs\api3\GetLanguages.html" />
+    <Content Include="Docs\api3\GetInstitutions.html" />
+    <Content Include="Docs\api3\GetCollections.html" />
+    <Content Include="Docs\api3\GetNameMetadata.html" />
+    <Content Include="Docs\api3\GetAuthorMetadata.html" />
+    <Content Include="Docs\api3\GetSubjectMetadata.html" />
+    <Content Include="Docs\api3\GetPartMetadata.html" />
+    <Content Include="Docs\api3\GetTitleMetadata.html" />
+    <Content Include="Docs\api3\GetItemMetadata.html" />
+    <Content Include="Docs\api3\GetPageMetadata.html" />
     <Content Include="apikeymsg.txt" />
     <Content Include="api\docs\docs.html" />
     <Content Include="api\docs\docs.txt" />
@@ -198,13 +203,9 @@
     <Content Include="Bibliography.aspx" />
     <Content Include="BiblioSelect.aspx" />
     <Content Include="bot_list.txt" />
-    <Content Include="BrowseByTitleTag.aspx" />
-    <Content Include="BrowseByYear.aspx" />
     <Content Include="BrowseCollections.aspx" />
     <Content Include="BrowseContributors.aspx" />
     <Content Include="CollectionDetails.aspx" />
-    <Content Include="CollectionPage.aspx" />
-    <Content Include="ContributorPage.aspx" />
     <Content Include="controls\BookBrowseControl.ascx" />
     <Content Include="controls\COinSControl.ascx" />
     <Content Include="controls\CollectionListControl.ascx" />
@@ -215,8 +216,6 @@
     <Content Include="controls\SocialLinksPanel.ascx" />
     <Content Include="controls\TwitterFeedControl.ascx" />
     <Content Include="controls\ucFeatureBox.ascx" />
-    <Content Include="CreatorList.aspx" />
-    <Content Include="CreatorPage.aspx" />
     <Content Include="css\bhlaustylereference.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -340,9 +339,11 @@
     <Content Include="images\BHLAU Images\image_not_found.jpg" />
     <Content Include="images\BHLAU Images\image_resources.jpg" />
     <Content Include="images\BHLAU Images\large_icon_all.png" />
+    <Content Include="images\BHLAU Images\large_icon_bibtex.png" />
     <Content Include="images\BHLAU Images\large_icon_jp2.png" />
     <Content Include="images\BHLAU Images\large_icon_ocr.png" />
     <Content Include="images\BHLAU Images\large_icon_pdf.png" />
+    <Content Include="images\BHLAU Images\large_icon_ris.png" />
     <Content Include="images\BHLAU Images\left_edges.png" />
     <Content Include="images\BHLAU Images\logo_ala.png" />
     <Content Include="images\BHLAU Images\logo_mv.png" />
@@ -402,9 +403,12 @@
     <Content Include="images\home_shadow_search.png" />
     <Content Include="images\howToGraphic.png" />
     <Content Include="images\icon_all.png" />
+    <Content Include="images\icon_bibtex.png" />
     <Content Include="images\icon_jp2.png" />
+    <Content Include="images\icon_mods.png" />
     <Content Include="images\icon_ocr.png" />
     <Content Include="images\icon_pdf.png" />
+    <Content Include="images\icon_ris.png" />
     <Content Include="images\image_about.jpg" />
     <Content Include="images\image_contact.jpg" />
     <Content Include="images\image_general.jpg" />
@@ -435,6 +439,12 @@
     <Content Include="ItemNotFound.aspx" />
     <Content Include="ItemPage.aspx" />
     <Content Include="js\nspop.js" />
+    <Content Include="Handlers\GetPartPdf.ashx" />
+    <Content Include="Handlers\GetPartImages.ashx" />
+    <Content Include="Handlers\GetPartText.ashx" />
+    <Content Include="libman.json" />
+    <Content Include="libs\countersoft\10.0.3\Newtonsoft.Json.dll" />
+    <Content Include="libs\countersoft\10.0.3\Newtonsoft.Json.xml" />
     <Content Include="tify\tify.html" />
     <Content Include="tify\tifysrc\supporters\sub-logo.svg" />
     <Content Include="tify\tifysrc\tify-logo-white.svg" />
@@ -511,10 +521,6 @@
     <None Include="Properties\PublishProfiles\Beta - BHL %28SI%29.pubxml" />
     <None Include="Properties\PublishProfiles\Production - BHL %28local%29.pubxml" />
     <None Include="Remoting.config.template" />
-    <Content Include="Service References\SiteService\MOBOT.BHL.Web2.SiteService.ViewerPage.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Service References\SiteService\SiteService.wsdl" />
     <None Include="services\Name\Web.config.template" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_layout.cshtml" />
@@ -539,6 +545,16 @@
     <Content Include="Views\Shared\_layoutBook.cshtml" />
     <Content Include="Views\IIIF\Item.cshtml" />
     <Content Include="Views\IIIF\Page.cshtml" />
+    <Content Include="Views\Browse\Titles.cshtml" />
+    <Content Include="Views\Browse\Authors.cshtml" />
+    <Content Include="Views\Browse\Year.cshtml" />
+    <Content Include="Views\Browse\Collection.cshtml" />
+    <Content Include="Views\Browse\Contributor.cshtml" />
+    <Content Include="Views\Creator\Index.cshtml" />
+    <Content Include="Views\Subject\Index.cshtml" />
+    <Content Include="Views\Shared\_BookBrowse.cshtml" />
+    <Content Include="Views\Shared\_SegmentBrowse.cshtml" />
+    <Content Include="Views\Shared\_BrowsePager.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -551,18 +567,10 @@
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\SiteService\SiteService.disco" />
-    <None Include="Service References\SiteService\configuration91.svcinfo" />
-    <None Include="Service References\SiteService\configuration.svcinfo" />
-    <None Include="Service References\SiteService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="services\Name\NameService.asmx" />
     <Content Include="services\PageSummaryService.asmx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="TitleList.aspx" />
     <Content Include="TitleNotFound.aspx" />
     <Content Include="TitlePage.aspx" />
     <Content Include="Search.aspx" />
@@ -637,20 +645,6 @@
     <Compile Include="Book.Master.designer.cs">
       <DependentUpon>Book.Master</DependentUpon>
     </Compile>
-    <Compile Include="BrowseByTitleTag.aspx.cs">
-      <DependentUpon>BrowseByTitleTag.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="BrowseByTitleTag.aspx.designer.cs">
-      <DependentUpon>BrowseByTitleTag.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="BrowseByYear.aspx.cs">
-      <DependentUpon>BrowseByYear.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="BrowseByYear.aspx.designer.cs">
-      <DependentUpon>BrowseByYear.aspx</DependentUpon>
-    </Compile>
     <Compile Include="BrowseCollections.aspx.cs">
       <DependentUpon>BrowseCollections.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -665,6 +659,7 @@
     <Compile Include="BrowseContributors.aspx.designer.cs">
       <DependentUpon>BrowseContributors.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BrowseOutputCacheAttribute.cs" />
     <Compile Include="BrowsePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -675,24 +670,13 @@
     <Compile Include="CollectionDetails.aspx.designer.cs">
       <DependentUpon>CollectionDetails.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CollectionPage.aspx.cs">
-      <DependentUpon>CollectionPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CollectionPage.aspx.designer.cs">
-      <DependentUpon>CollectionPage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ContributorPage.aspx.cs">
-      <DependentUpon>ContributorPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ContributorPage.aspx.designer.cs">
-      <DependentUpon>ContributorPage.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="Controllers\BrowseController.cs" />
+    <Compile Include="Controllers\CreatorController.cs" />
     <Compile Include="Controllers\IIIFController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="controls\BookBrowseControl.ascx.cs">
       <DependentUpon>BookBrowseControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -762,20 +746,6 @@
     </Compile>
     <Compile Include="controls\ucFeatureBox.ascx.designer.cs">
       <DependentUpon>ucFeatureBox.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="CreatorList.aspx.cs">
-      <DependentUpon>CreatorList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CreatorList.aspx.designer.cs">
-      <DependentUpon>CreatorList.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CreatorPage.aspx.cs">
-      <DependentUpon>CreatorPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CreatorPage.aspx.designer.cs">
-      <DependentUpon>CreatorPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -853,6 +823,15 @@
     <Compile Include="Handlers\GetPageThumb.ashx.cs">
       <DependentUpon>GetPageThumb.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\GetPartImages.ashx.cs">
+      <DependentUpon>GetPartImages.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\GetPartPdf.ashx.cs">
+      <DependentUpon>GetPartPdf.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\GetPartText.ashx.cs">
+      <DependentUpon>GetPartText.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handlers\ITunesRSS.ashx.cs">
       <DependentUpon>ITunesRSS.ashx</DependentUpon>
     </Compile>
@@ -878,6 +857,16 @@
     </Compile>
     <Compile Include="ItemPage.aspx.designer.cs">
       <DependentUpon>ItemPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AuthorsBrowseModel.cs" />
+    <Compile Include="Models\CollectionBrowseModel.cs" />
+    <Compile Include="Models\ContributorBrowseModel.cs" />
+    <Compile Include="Models\CreatorModel.cs" />
+    <Compile Include="Models\SubjectModel.cs" />
+    <Compile Include="Models\TitleBrowseModel.cs" />
+    <Compile Include="Models\YearBrowseModel.cs" />
+    <Compile Include="RssFeedControlVersion2.cs">
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="TitleUnavailable.aspx.cs">
       <DependentUpon>TitleUnavailable.aspx</DependentUpon>
@@ -944,7 +933,6 @@
     <Compile Include="PageNotFound.aspx.designer.cs">
       <DependentUpon>PageNotFound.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recent.aspx.cs">
       <DependentUpon>Recent.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -965,14 +953,6 @@
     </Compile>
     <Compile Include="SectionPage.aspx.designer.cs">
       <DependentUpon>SectionPage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\SiteService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="services\DOIService.ashx.cs">
-      <DependentUpon>DOIService.ashx</DependentUpon>
     </Compile>
     <Compile Include="services\GeneratePdf.ashx.cs">
       <DependentUpon>GeneratePdf.ashx</DependentUpon>
@@ -1012,13 +992,6 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
-    </Compile>
-    <Compile Include="TitleList.aspx.cs">
-      <DependentUpon>TitleList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TitleList.aspx.designer.cs">
-      <DependentUpon>TitleList.aspx</DependentUpon>
     </Compile>
     <Compile Include="TitleNotFound.aspx.cs">
       <DependentUpon>TitleNotFound.aspx</DependentUpon>
@@ -1082,6 +1055,10 @@
       <Project>{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}</Project>
       <Name>BHLServer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BHLUtility\BHLUtility.csproj">
+      <Project>{270e7816-13ec-4d51-a27f-c959981b1275}</Project>
+      <Name>BHLUtility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BHLWebUtilities\BHLWebUtilities.csproj">
       <Project>{7E1631E8-F28A-4F9E-97E4-F8A69522D9DD}</Project>
       <Name>BHLWebUtilities</Name>
@@ -1138,9 +1115,9 @@
       <Project>{b792f1c8-5971-400b-8ced-65a8e0b9bd3f}</Project>
       <Name>SearchSQL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SiteServices\SiteServices.csproj">
-      <Project>{f3f5e38d-5028-4249-8db8-a86fd6a09a8f}</Project>
-      <Name>SiteServices</Name>
+    <ProjectReference Include="..\SiteServiceREST.v1.Client\SiteServicesREST.v1.Client.csproj">
+      <Project>{aefe2bdb-bea0-4dce-b12d-57f1e1335bab}</Project>
+      <Name>SiteServicesREST.v1.Client</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -1155,7 +1132,6 @@
     <Content Include="Handlers\MODSDownload.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="services\DOIService.ashx" />
     <Content Include="services\NameListDownloadService.ashx" />
     <Content Include="services\NameListService.ashx" />
     <Content Include="services\oai2.ashx" />
@@ -1183,7 +1159,12 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\SiteService\" />
+    <PackageReference Include="NETStandard.Library">
+      <Version>2.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -1200,7 +1181,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49673</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49275</IISUrl>
+          <IISUrl>http://localhost:49270</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -1,8 +1,10 @@
+using BHL.SiteServiceREST.v1.Client;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -40,15 +42,15 @@ namespace MOBOT.BHL.AdminWeb
                 String selectedTitleId = this.selectedTitle.Value;
                 if (selectedTitleId != "")
                 {
-                    List<ItemTitle> itemTitles = (List<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
-                    ItemTitle itemTitle = new ItemTitle();
+                    List<DataObjects.ItemTitle> itemTitles = (List<DataObjects.ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
+                    DataObjects.ItemTitle itemTitle = new DataObjects.ItemTitle();
 
                     // Get details for "selectedTitleId" from database
                     BHLProvider provider = new BHLProvider();
                     Title title = provider.TitleSelect(Convert.ToInt32(selectedTitleId));
                     itemTitle.TitleID = title.TitleID;
                     itemTitle.ShortTitle = title.ShortTitle;
-                    itemTitle.IsPrimary = false;
+                    itemTitle.IsPrimary = 0;
                     itemTitles.Add(itemTitle);
                     Session["ItemTitleList" + itemIdTextBox.Text] = itemTitles;
                     this.selectedTitle.Value = "";
@@ -58,7 +60,7 @@ namespace MOBOT.BHL.AdminWeb
                 String selectedSegmentId = this.selectedSegment.Value;
                 if (selectedSegmentId != "")
                 {
-                    Item item = (Item)Session["Item" + itemIdTextBox.Text];
+                    Book item = (Book)Session["Item" + itemIdTextBox.Text];
 
                     // Make sure the selected segment isn't already associated with this item
                     int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
@@ -68,7 +70,7 @@ namespace MOBOT.BHL.AdminWeb
                         if (existingSegment.SegmentID.ToString() == selectedSegmentId)
                         {
                             // Re-eneable this segment, if necessary
-                            if (existingSegment.ItemID == null)
+                            if (existingSegment.BookID == null)
                             {
                                 existingSegment.ItemID = item.ItemID;
 
@@ -93,7 +95,7 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         // Get details for "selectedSegmentId" from database
                         Segment segment = new BHLProvider().SegmentSelectForSegmentID(Convert.ToInt32(selectedSegmentId));
-                        segment.ItemID = item.ItemID;
+                        segment.BookID = item.BookID;
                         segment.SequenceOrder = (short)(segmentsList.Rows.Count + 1);
                         item.Segments.Add(segment);
                     }
@@ -109,9 +111,6 @@ namespace MOBOT.BHL.AdminWeb
 					_sortOrder = (SortOrder)ViewState[ "SortOrder" ];
 				}
 			}
-
-            editHistoryControl.EntityName = "item";
-            editHistoryControl.EntityId = itemIdTextBox.Text;
 
             litMessage.Text = "";
             errorControl.Visible = false;
@@ -180,42 +179,46 @@ namespace MOBOT.BHL.AdminWeb
 
 		private void fillUI()
 		{
-            Item item = (Item)Session["Item" + itemIdTextBox.Text];
+            Book book = (Book)Session["Item" + itemIdTextBox.Text];
 
-            if (item != null)
+            if (book != null)
             {
 
-                itemIdLabel.Text = item.ItemID.ToString();
-                FlickrImage.Visible = item.HasFlickrImages;
-                barcodeLabel.Text = item.BarCode;
-                marcItemIDTextBox.Text = item.MARCItemID;
-                callNumberTextBox.Text = item.CallNumber;
-                volumeTextBox.Text = item.Volume;
-                itemDescriptionTextBox.Text = item.ItemDescription;
-                notesTextBox.Text = item.Note;
-                replacedByTextBox.Text = item.RedirectItemID.ToString();
-                replacedByOrig.Value = item.RedirectItemID.ToString();
-                startYearTextBox.Text = item.Year;
-                endYearTextBox.Text = item.EndYear;
-                identifierBibTextBox.Text = item.IdentifierBib;
-                zQueryTextBox.Text = item.ZQuery;
-                sponsorTextBox.Text = item.Sponsor;
-                licenseUrlTextBox.Text = item.LicenseUrl;
-                rightsTextBox.Text = item.Rights;
-                dueDiligenceTextBox.Text = item.DueDiligence;
-                copyrightStatusTextBox.Text = item.CopyrightStatus;
-                copyrightRegionTextBox.Text = item.CopyrightRegion;
-                copyrightCommentTextBox.Text = item.CopyrightComment;
-                copyrightEvidenceTextBox.Text = item.CopyrightEvidence;
-                externalUrlTextBox.Text = item.ExternalUrl;
+                itemIdLabel.Text = book.BookID.ToString();
+                FlickrImage.Visible = book.HasFlickrImages;
+                sourceLabel.Text = book.SourceName;
+                sourceIDLabel.Text = book.BarCode;
+                hidMarcItemID.Value = book.MARCItemID;
+                callNumberTextBox.Text = book.CallNumber;
+                volumeTextBox.Text = book.Volume;
+                itemDescriptionTextBox.Text = book.ItemDescription;
+                notesTextBox.Text = book.Note;
+                replacedByTextBox.Text = book.RedirectBookID.ToString();
+                replacedByOrig.Value = book.RedirectBookID.ToString();
+                startYearTextBox.Text = book.StartYear;
+                endYearTextBox.Text = book.EndYear;
+                identifierBibTextBox.Text = book.IdentifierBib;
+                zQueryTextBox.Text = book.ZQuery;
+                sponsorTextBox.Text = book.Sponsor;
+                licenseUrlTextBox.Text = book.LicenseUrl;
+                rightsTextBox.Text = book.Rights;
+                dueDiligenceTextBox.Text = book.DueDiligence;
+                copyrightStatusTextBox.Text = book.CopyrightStatus;
+                copyrightRegionTextBox.Text = book.CopyrightRegion;
+                copyrightCommentTextBox.Text = book.CopyrightComment;
+                copyrightEvidenceTextBox.Text = book.CopyrightEvidence;
+                externalUrlTextBox.Text = book.ExternalUrl;
 
-                List<ItemTitle> itemTitles = new List<ItemTitle>();
-                foreach (TitleItem titleItem in item.TitleItems)
+                editHistoryControl.EntityName = "item";
+                editHistoryControl.EntityId = book.BookID.ToString();
+
+                List<DataObjects.ItemTitle> itemTitles = new List<DataObjects.ItemTitle>();
+                foreach (DataObjects.ItemTitle it in book.ItemTitles)
                 {
-                    ItemTitle itemTitle = new ItemTitle();
-                    itemTitle.TitleID = titleItem.TitleID;
-                    itemTitle.ShortTitle = titleItem.ShortTitle;
-                    itemTitle.IsPrimary = (item.PrimaryTitleID == titleItem.TitleID);
+                    DataObjects.ItemTitle itemTitle = new DataObjects.ItemTitle();
+                    itemTitle.TitleID = it.TitleID;
+                    itemTitle.ShortTitle = it.ShortTitle;
+                    itemTitle.IsPrimary = (short)(book.PrimaryTitleID == it.TitleID ? 1 : 0);
                     itemTitles.Add(itemTitle);
                 }
                 Session["ItemTitleList" + itemIdTextBox.Text] = itemTitles;
@@ -223,23 +226,25 @@ namespace MOBOT.BHL.AdminWeb
                 titleList.DataSource = itemTitles;// item.Titles;
                 titleList.DataBind();
 
-                languagesList.DataSource = item.ItemLanguages;
+                languagesList.DataSource = book.ItemLanguages;
                 languagesList.DataBind();
 
-                collectionsList.DataSource = item.ItemCollections;
+                collectionsList.DataSource = book.ItemCollections;
                 collectionsList.DataBind();
 
-                segmentsList.DataSource = item.Segments;
+                segmentsList.DataSource = book.Segments;
                 segmentsList.DataBind();
 
-                scannedByLabel.Text = item.ScanningUser;
-                scannedDateLabel.Text = (item.ScanningDate.HasValue ? item.ScanningDate.Value.ToShortDateString() : "");
-                creationDateLabel.Text = (item.CreationDate.HasValue ? item.CreationDate.Value.ToShortDateString() : "");
+                isVirtualLabel.Text = (book.IsVirtual == 1) ? "True" : "False";
+
+                scannedByLabel.Text = book.ScanningUser;
+                scannedDateLabel.Text = (book.ScanningDate.HasValue ? book.ScanningDate.Value.ToShortDateString() : "");
+                creationDateLabel.Text = (book.CreationDate.HasValue ? book.CreationDate.Value.ToShortDateString() : "");
                 lastModifiedDateLabel.Text =
-                    (item.LastModifiedDate.HasValue ? item.LastModifiedDate.Value.ToShortDateString() : "");
+                    (book.LastModifiedDate.HasValue ? book.LastModifiedDate.Value.ToShortDateString() : "");
 
                 ddlInst.SelectedValue = "UNKNOWN";
-                foreach (Institution contributor in item.Institutions)
+                foreach (Institution contributor in book.Institutions)
                 {
                     if (contributor.InstitutionRoleName == InstitutionRole.HoldingInstitution)
                     {
@@ -249,7 +254,7 @@ namespace MOBOT.BHL.AdminWeb
                 }
 
                 ddlRights.SelectedValue = "";
-                foreach (Institution contributor in item.Institutions)
+                foreach (Institution contributor in book.Institutions)
                 {
                     if (contributor.InstitutionRoleName == InstitutionRole.RightsHolder)
                     {
@@ -259,7 +264,7 @@ namespace MOBOT.BHL.AdminWeb
                 }
 
                 ddlScanningInstitution.SelectedValue = "";
-                foreach (Institution contributor in item.Institutions)
+                foreach (Institution contributor in book.Institutions)
                 {
                     if (contributor.InstitutionRoleName == InstitutionRole.ScanningInstitution)
                     {
@@ -272,7 +277,7 @@ namespace MOBOT.BHL.AdminWeb
                 if (ddlThumbnailPageID.Items.Count == 0)
                 {
                     ddlThumbnailPageID.Items.Add(new ListItem("(use default)", ""));
-                    foreach(DataObjects.Page page in item.Pages)
+                    foreach(DataObjects.Page page in book.Pages)
                     {
                         if (page.Active)
                         {
@@ -286,47 +291,53 @@ namespace MOBOT.BHL.AdminWeb
                 }
 
                 ddlThumbnailPageID.SelectedValue = "";
-                if (item.ThumbnailPageID.HasValue)
+                if (book.ThumbnailPageID.HasValue)
                 {
-                    ddlThumbnailPageID.SelectedValue = item.ThumbnailPageID.Value.ToString();
+                    ddlThumbnailPageID.SelectedValue = book.ThumbnailPageID.Value.ToString();
                 }
                 else
                 {
                     ddlThumbnailPageID.SelectedIndex = 0;
                 }
 
-                if (item.LanguageCode != null && item.LanguageCode.Length > 0)
+                ddlPageProgression.SelectedValue = "";
+                if (!string.IsNullOrWhiteSpace(book.PageProgression))
+                    ddlPageProgression.SelectedValue = book.PageProgression;
+                else
+                    ddlPageProgression.SelectedIndex = 0;
+
+                if (book.LanguageCode != null && book.LanguageCode.Length > 0)
                 {
-                    ddlLang.SelectedValue = item.LanguageCode.ToUpper();
+                    ddlLang.SelectedValue = book.LanguageCode.ToUpper();
                 }
                 else
                 {
                     ddlLang.SelectedIndex = 0;
                 }
 
-                if (item.VaultID.HasValue)
+                if (book.VaultID.HasValue)
                 {
-                    ddlVault.SelectedValue = item.VaultID.Value.ToString();
+                    ddlVault.SelectedValue = book.VaultID.Value.ToString();
                 }
                 else
                 {
                     ddlVault.SelectedIndex = 0;
                 }
 
-                if (item.ItemStatusID > 0)
+                if (book.ItemStatusID > 0)
                 {
-                    ddlItemStatus.SelectedValue = item.ItemStatusID.ToString();
+                    ddlItemStatus.SelectedValue = book.ItemStatusID.ToString();
                 }
                 else
                 {
                     ddlItemStatus.SelectedIndex = 0;
                 }
-                itemStatusOrig.Value = item.ItemStatusID.ToString();
+                itemStatusOrig.Value = book.ItemStatusID.ToString();
 
-                if (item.Pages.Count > 0)
+                if (book.Pages.Count > 0)
                 {
                     pageFieldSet.Visible = true;
-                    pageList.DataSource = item.Pages;
+                    pageList.DataSource = book.Pages;
                     pageList.DataBind();
                 }
                 else
@@ -336,10 +347,10 @@ namespace MOBOT.BHL.AdminWeb
 
 
                 // See if we can display a link to the MARC file
-                SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-                if (service.MARCFileExists(item.ItemID, "i"))
+                Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                if (!string.IsNullOrWhiteSpace(client.GetMarcFile(book.BookID, "i")))
                 {
-                    hypMarc.Attributes["onclick"] = string.Format("javascript:window.open('TitleItemMarc.aspx?type=i&id={0}', '', 'width=600,height=600,location=0,status=0,scrollbars=1');", item.ItemID.ToString());
+                    hypMarc.Attributes["onclick"] = string.Format("javascript:window.open('TitleItemMarc.aspx?type=i&id={0}', '', 'width=600,height=600,location=0,status=0,scrollbars=1');", book.BookID.ToString());
                     hypMarc.Visible = true;                        
                 }
             }
@@ -348,25 +359,25 @@ namespace MOBOT.BHL.AdminWeb
 		private void search( int? id, string barcode )
 		{
 			BHLProvider bp = new BHLProvider();
-			Item item = bp.ItemSelectByBarcodeOrItemID( id, barcode );
+			Book book = bp.BookSelectByBarcodeOrItemID( id, barcode );
 
-            if (item != null)
+            if (book != null)
             {
                 // Look up flickr status of the item
-                Item flickrItem = bp.ItemInFlickrByItemID(item.ItemID);
-                item.HasFlickrImages = (flickrItem != null) ? flickrItem.HasFlickrImages : false;
+                Item flickrItem = bp.ItemInFlickrByItemID(book.BookID);
+                book.HasFlickrImages = (flickrItem != null) ? flickrItem.HasFlickrImages : false;
             }
 
             // Clear the thumbnail pages dropdown
             ddlThumbnailPageID.Items.Clear();
 
-            Session["Item" + itemIdTextBox.Text] = item;
+            Session["Item" + itemIdTextBox.Text] = book;
 			fillUI();
 		}
 
 		private void bindPageData()
 		{
-            Item item = (Item)Session["Item" + itemIdTextBox.Text];
+            Book item = (Book)Session["Item" + itemIdTextBox.Text];
             item.Pages.Sort((p1, p2) => (p1.SequenceOrder ?? 0).CompareTo(p2.SequenceOrder ?? 0));
             switch (_sortColumn)
             {
@@ -395,22 +406,22 @@ namespace MOBOT.BHL.AdminWeb
 
         private void bindTitleData()
         {
-            List<ItemTitle> itemTitles = (List<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
+            List<DataObjects.ItemTitle> itemTitles = (List<DataObjects.ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
             titleList.DataSource = itemTitles;
             titleList.DataBind();
         }
 
-        private bool validate(Item item)
+        private bool validate(Book book)
 		{
 			bool flag = false;
 
             // Make sure that one and only one title is designated as the primary title.
             int primaryTitleId = 0;
             int numPrimary = 0;
-            List<ItemTitle> itemTitles = (List<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
-            foreach (ItemTitle itemTitle in itemTitles)
+            List<DataObjects.ItemTitle> itemTitles = (List<DataObjects.ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
+            foreach (DataObjects.ItemTitle itemTitle in itemTitles)
             {
-                if (itemTitle.IsPrimary)
+                if (itemTitle.IsPrimary == 1)
                 {
                     numPrimary++;
                     primaryTitleId = itemTitle.TitleID;
@@ -418,7 +429,7 @@ namespace MOBOT.BHL.AdminWeb
             }
             if (numPrimary == 1)
             {
-                item.PrimaryTitleID = primaryTitleId;
+                book.PrimaryTitleID = primaryTitleId;
             }
             else
             {
@@ -494,12 +505,12 @@ namespace MOBOT.BHL.AdminWeb
 
             bool br = false;
             int ix = 0;
-            foreach (ItemCollection ic in item.ItemCollections)
+            foreach (ItemCollection ic in book.ItemCollections)
             {
                 if (ic.IsDeleted == false)
                 {
                     int iy = 0;
-                    foreach (ItemCollection ic2 in item.ItemCollections)
+                    foreach (ItemCollection ic2 in book.ItemCollections)
                     {
                         if (ic2.IsDeleted == false)
                         {
@@ -533,7 +544,7 @@ namespace MOBOT.BHL.AdminWeb
 
         private void bindLanguageData()
         {
-            Item item = (Item)Session["Item" + itemIdTextBox.Text];
+            Book item = (Book)Session["Item" + itemIdTextBox.Text];
 
             // filter out deleted items
             List<ItemLanguage> itemLanguages = new List<ItemLanguage>();
@@ -603,7 +614,7 @@ namespace MOBOT.BHL.AdminWeb
 
         private void bindCollectionData()
         {
-            Item item = (Item)Session["Item" + itemIdTextBox.Text];
+            Book item = (Book)Session["Item" + itemIdTextBox.Text];
 
             // filter out deleted items
             List<ItemCollection> itemCollections = new List<ItemCollection>();
@@ -678,13 +689,13 @@ namespace MOBOT.BHL.AdminWeb
 
         private void bindSegmentData()
         {
-            Item item = (Item)Session["Item" + itemIdTextBox.Text];
+            Book item = (Book)Session["Item" + itemIdTextBox.Text];
 
             // filter out deleted segments
             List<Segment> segments = new List<Segment>();
             foreach (Segment s in item.Segments)
             {
-                if (s.ItemID != null) segments.Add(s);
+                if (s.BookID != null) segments.Add(s);
             }
 
             SegmentSequenceComparer comp = new SegmentSequenceComparer();
@@ -731,7 +742,7 @@ namespace MOBOT.BHL.AdminWeb
                 CheckBox checkBox = row.FindControl("isPrimaryCheckBoxEdit") as CheckBox;
                 if (checkBox != null)
                 {
-                    List<ItemTitle> itemTitles = (List<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
+                    List<DataObjects.ItemTitle> itemTitles = (List<DataObjects.ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
                     bool isPrimary = checkBox.Checked;
 
                     String titleIdString = row.Cells[1].Text;
@@ -741,11 +752,11 @@ namespace MOBOT.BHL.AdminWeb
                     if (titleId > 0)
                     {
                         // Update primary title
-                        foreach (ItemTitle itemTitle in itemTitles)
+                        foreach (DataObjects.ItemTitle itemTitle in itemTitles)
                         {
                             if (titleId == itemTitle.TitleID)
                             {
-                                itemTitle.IsPrimary = isPrimary;
+                                itemTitle.IsPrimary = (short)(isPrimary ? 1 : 0);
                                 break;
                             }
                         }
@@ -763,7 +774,7 @@ namespace MOBOT.BHL.AdminWeb
             {
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 int selectedTitle = (int)titleList.DataKeys[rowNum].Values[0];
-                List<ItemTitle> itemTitles = (List<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
+                List<DataObjects.ItemTitle> itemTitles = (List<DataObjects.ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
 
                 for (int i = 0; i < itemTitles.Count; i++)
                 {
@@ -803,7 +814,7 @@ namespace MOBOT.BHL.AdminWeb
                 DropDownList ddlLanguageName = row.FindControl("ddlLanguageName") as DropDownList;
                 if (ddlLanguageName != null)
                 {
-                    Item item = (Item)Session["Item" + itemIdTextBox.Text];
+                    Book item = (Book)Session["Item" + itemIdTextBox.Text];
                     String languageCode = ddlLanguageName.SelectedValue;
 
                     ItemLanguage itemLanguage = findItemLanguage(item.ItemLanguages,
@@ -829,7 +840,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
-            Item item = (Item)Session["Item" + itemIdTextBox.Text];
+            Book item = (Book)Session["Item" + itemIdTextBox.Text];
             ItemLanguage il = new ItemLanguage(0, item.ItemID, "", DateTime.Now, userId);
             item.ItemLanguages.Add(il);
             languagesList.EditIndex = languagesList.Rows.Count;
@@ -841,7 +852,7 @@ namespace MOBOT.BHL.AdminWeb
             if (e.CommandName.Equals("RemoveButton"))
             {
                 int rowNum = int.Parse(e.CommandArgument.ToString());
-                Item item = (Item)Session["Item" + itemIdTextBox.Text];
+                Book item = (Book)Session["Item" + itemIdTextBox.Text];
 
                 ItemLanguage itemLanguage = findItemLanguage(item.ItemLanguages,
                     (int)languagesList.DataKeys[rowNum].Values[0],
@@ -871,7 +882,7 @@ namespace MOBOT.BHL.AdminWeb
                 DropDownList ddlCollection = row.FindControl("ddlCollection") as DropDownList;
                 if (ddlCollection != null)
                 {
-                    Item item = (Item)Session["Item" + itemIdTextBox.Text];
+                    Book item = (Book)Session["Item" + itemIdTextBox.Text];
                     int collectionId = int.Parse(ddlCollection.SelectedValue);
 
                     ItemCollection itemCollection = findCollection(item.ItemCollections,
@@ -895,7 +906,7 @@ namespace MOBOT.BHL.AdminWeb
 
         protected void addCollectionButton_Click(object sender, EventArgs e)
         {
-            Item item = (Item)Session["Item" + itemIdTextBox.Text];
+            Book item = (Book)Session["Item" + itemIdTextBox.Text];
             ItemCollection ic = new ItemCollection(0, item.ItemID, 0);
             item.ItemCollections.Add(ic);
             collectionsList.EditIndex = collectionsList.Rows.Count;
@@ -907,7 +918,7 @@ namespace MOBOT.BHL.AdminWeb
             if (e.CommandName.Equals("RemoveButton"))
             {
                 int rowNum = int.Parse(e.CommandArgument.ToString());
-                Item item = (Item)Session["Item" + itemIdTextBox.Text];
+                Book item = (Book)Session["Item" + itemIdTextBox.Text];
 
                 ItemCollection collection = findCollection(item.ItemCollections,
                     (int)collectionsList.DataKeys[rowNum].Values[0],
@@ -937,7 +948,7 @@ namespace MOBOT.BHL.AdminWeb
                 TextBox sequenceTextBox = row.FindControl("segmentSequenceTextBox") as TextBox;
                 if (sequenceTextBox != null)
                 {
-                    Item item = (Item)Session["Item" + itemIdTextBox.Text];
+                    Book item = (Book)Session["Item" + itemIdTextBox.Text];
 
                     int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
@@ -951,7 +962,7 @@ namespace MOBOT.BHL.AdminWeb
                         Segment changedSegment = findSegment(item.Segments,
                             (int)segmentsList.DataKeys[e.RowIndex].Values[0]);
 
-                        short oldSeq = changedSegment.SequenceOrder;
+                        int oldSeq = (int)changedSegment.SequenceOrder;
 
                         if (changedSegment != null)
                         {
@@ -1005,12 +1016,12 @@ namespace MOBOT.BHL.AdminWeb
             if (e.CommandName.Equals("RemoveButton"))
             {
                 int rowNum = int.Parse(e.CommandArgument.ToString());
-                Item item = (Item)Session["Item" + itemIdTextBox.Text];
+                Book item = (Book)Session["Item" + itemIdTextBox.Text];
 
                 Segment currentSegment = findSegment(item.Segments,
                     (int)segmentsList.DataKeys[rowNum].Values[0]);
 
-                currentSegment.ItemID = null;
+                currentSegment.BookID = null;
 
                 // Adjust the sequence order of all segments "after" the one being "deleted"
                 int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
@@ -1047,7 +1058,7 @@ namespace MOBOT.BHL.AdminWeb
 				TextBox textBox = row.FindControl( "sequenceOrderTextBox" ) as TextBox;
 				if ( textBox != null )
 				{
-                    Item item = (Item)Session["Item" + itemIdTextBox.Text];
+                    Book item = (Book)Session["Item" + itemIdTextBox.Text];
 					string seqOrderString = textBox.Text.Trim();
 
 					int seqOrder = 0;
@@ -1223,47 +1234,61 @@ namespace MOBOT.BHL.AdminWeb
             {
                 search(itemId, null);
             }
-            else if (barCodeTextBox.Text.Trim().Length > 0)
+            else if (sourceIDTextBox.Text.Trim().Length > 0)
             {
-                search(null, barCodeTextBox.Text.Trim());
+                search(null, sourceIDTextBox.Text.Trim());
             }
         }
 
         protected void saveButton_Click(object sender, EventArgs e)
 		{
-            Item item = (Item)Session["Item" + itemIdTextBox.Text];
+            Book book = (Book)Session["Item" + itemIdTextBox.Text];
 
-			if ( validate( item ) )
+			if ( validate( book ) )
 			{
                 int? i = null;
                 int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
                 // Gather up data on form
-                item.RedirectItemID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
-				item.MARCItemID = marcItemIDTextBox.Text.Trim();
-				item.CallNumber = callNumberTextBox.Text.Trim();
-				item.Volume = volumeTextBox.Text.Trim();
-				item.LanguageCode = ( ddlLang.SelectedValue.Length == 0 ? null : ddlLang.SelectedValue );
-                item.ItemDescription = itemDescriptionTextBox.Text.Trim();
-				item.Note = notesTextBox.Text.Trim();
-                item.Year = startYearTextBox.Text.Trim();
-                item.EndYear = endYearTextBox.Text.Trim();
-                item.IdentifierBib = identifierBibTextBox.Text.Trim();
-                item.ZQuery = zQueryTextBox.Text.Trim();
-                item.Sponsor = sponsorTextBox.Text.Trim();
-                item.LicenseUrl = licenseUrlTextBox.Text.Trim();
-                item.Rights = rightsTextBox.Text.Trim();
-                item.DueDiligence = dueDiligenceTextBox.Text.Trim();
-                item.CopyrightStatus = copyrightStatusTextBox.Text.Trim();
-                item.CopyrightRegion = copyrightRegionTextBox.Text.Trim();
-                item.CopyrightComment = copyrightCommentTextBox.Text.Trim();
-                item.CopyrightEvidence = copyrightEvidenceTextBox.Text.Trim();
-                item.ExternalUrl = externalUrlTextBox.Text.Trim();
-				item.VaultID = ( ddlVault.SelectedIndex == 0 ? i : int.Parse(ddlVault.SelectedValue) );
-				item.ItemStatusID = int.Parse( ddlItemStatus.SelectedValue );
-                item.ThumbnailPageID = ddlThumbnailPageID.SelectedValue == "" ? (int?)null : int.Parse(ddlThumbnailPageID.SelectedValue);
+                book.RedirectBookID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
+				book.MARCItemID = hidMarcItemID.Value;
+				book.CallNumber = callNumberTextBox.Text.Trim();
+				book.Volume = volumeTextBox.Text.Trim();
+				book.LanguageCode = ( ddlLang.SelectedValue.Length == 0 ? null : ddlLang.SelectedValue );
+                book.ItemDescription = itemDescriptionTextBox.Text.Trim();
+				book.Note = notesTextBox.Text.Trim();
+                book.StartYear = startYearTextBox.Text.Trim();
+                book.EndYear = endYearTextBox.Text.Trim();
+                book.IdentifierBib = identifierBibTextBox.Text.Trim();
+                book.ZQuery = zQueryTextBox.Text.Trim();
+                book.Sponsor = sponsorTextBox.Text.Trim();
+                book.LicenseUrl = licenseUrlTextBox.Text.Trim();
+                book.Rights = rightsTextBox.Text.Trim();
+                book.DueDiligence = dueDiligenceTextBox.Text.Trim();
+                book.CopyrightStatus = copyrightStatusTextBox.Text.Trim();
+                book.CopyrightRegion = copyrightRegionTextBox.Text.Trim();
+                book.CopyrightComment = copyrightCommentTextBox.Text.Trim();
+                book.CopyrightEvidence = copyrightEvidenceTextBox.Text.Trim();
+                book.ExternalUrl = externalUrlTextBox.Text.Trim();
+				book.VaultID = ( ddlVault.SelectedIndex == 0 ? i : int.Parse(ddlVault.SelectedValue) );
+				book.ItemStatusID = int.Parse( ddlItemStatus.SelectedValue );
+                book.ThumbnailPageID = ddlThumbnailPageID.SelectedValue == "" ? (int?)null : int.Parse(ddlThumbnailPageID.SelectedValue);
+                book.PageProgression = ddlPageProgression.SelectedValue;
 
-				item.IsNew = false;
+				book.IsNew = false;
+
+                //----------------------------------------
+
+                // Update the Item information
+                if (book.Item != null)
+                {
+                    bool updated = false;
+                    if (book.ItemStatusID != book.Item.ItemStatusID) { book.Item.ItemStatusID = book.ItemStatusID; updated = true; }
+                    if (book.VaultID != book.Item.VaultID) { book.Item.VaultID = book.VaultID; updated = true; }
+                    if (book.ItemDescription.CompareTo(book.Item.ItemDescription) != 0) { book.Item.ItemDescription = book.ItemDescription; updated = true; }
+                    if (book.Note.CompareTo(book.Item.Note) != 0) { book.Item.Note = book.Note; updated = true; }
+                    if (updated) book.Item.LastModifiedDate = DateTime.Now;
+                }
 
                 //----------------------------------------
 
@@ -1274,7 +1299,7 @@ namespace MOBOT.BHL.AdminWeb
                 bool rightsHolderExists = false;
                 bool scanningInstitutionChanged = false;
                 bool scanningInstitutionExists = false;
-                foreach (Institution institution in item.Institutions)
+                foreach (Institution institution in book.Institutions)
                 {
                     if (institution.InstitutionRoleName == InstitutionRole.HoldingInstitution)
                     {
@@ -1300,7 +1325,7 @@ namespace MOBOT.BHL.AdminWeb
                     newHoldingInstitution.InstitutionCode = ddlInst.SelectedValue;
                     newHoldingInstitution.InstitutionRoleName = InstitutionRole.HoldingInstitution;
                     newHoldingInstitution.IsNew = true;
-                    item.Institutions.Add(newHoldingInstitution);
+                    book.Institutions.Add(newHoldingInstitution);
                 }
 
                 if ((rightsHolderChanged || !rightsHolderExists) && ddlRights.SelectedValue != string.Empty)
@@ -1309,7 +1334,7 @@ namespace MOBOT.BHL.AdminWeb
                     newRightsHolder.InstitutionCode = ddlRights.SelectedValue;
                     newRightsHolder.InstitutionRoleName = InstitutionRole.RightsHolder;
                     newRightsHolder.IsNew = true;
-                    item.Institutions.Add(newRightsHolder);
+                    book.Institutions.Add(newRightsHolder);
                 }
 
                 if ((scanningInstitutionChanged || !scanningInstitutionExists) && ddlScanningInstitution.SelectedValue != string.Empty)
@@ -1318,58 +1343,103 @@ namespace MOBOT.BHL.AdminWeb
                     newScanningInstitutution.InstitutionCode = ddlScanningInstitution.SelectedValue;
                     newScanningInstitutution.InstitutionRoleName = InstitutionRole.ScanningInstitution;
                     newScanningInstitutution.IsNew = true;
-                    item.Institutions.Add(newScanningInstitutution);
+                    book.Institutions.Add(newScanningInstitutution);
+                }
+
+                //----------------------------------------
+                // Update the ItemRelationship information
+                foreach(Segment segment in book.Segments)
+                {
+                    //if (segment.IsDeleted || segment.IsDirty || segment.IsNew)
+                    //{
+                        //Book book = null;
+                        //if (segment.BookID != null) book = bp.BookSelectAuto((int)segment.BookID);
+
+                        bool existing = false;
+                        foreach(ItemRelationship ir in book.ItemRelationships)
+                        {
+                            if (ir.IsParent == 1 && ir.ChildID == segment.ItemID)
+                            {
+                                existing = true;
+                                if (segment.BookID == null)
+                                    ir.IsDeleted = true;
+                                else
+                                    ir.SequenceOrder = segment.SequenceOrder ?? 0;
+
+                                break;
+                            }
+                        }
+
+                        if (!existing)// && book != null)
+                        {
+                            book.ItemRelationships.Add(
+                                new ItemRelationship
+                                {
+                                    ParentID = book.ItemID,
+                                    ChildID = segment.ItemID,
+                                    SequenceOrder = segment.SequenceOrder ?? 0,
+                                    IsNew = true
+                                });
+                        }
+                    //}
                 }
 
                 //----------------------------------------
                 // Update the title information
-                List<ItemTitle> itemTitles = (List<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
+                List<DataObjects.ItemTitle> itemTitles = (List<DataObjects.ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
 
                 // Add new titles
-                foreach (ItemTitle itemTitle in itemTitles)
+                foreach (DataObjects.ItemTitle itemTitle in itemTitles)
                 {
                     bool found = false;
-                    foreach (TitleItem titleItem in item.TitleItems)
+                    foreach (DataObjects.ItemTitle it in book.ItemTitles)
                     {
-                        if (itemTitle.TitleID == titleItem.TitleID)
+                        if (itemTitle.TitleID == it.TitleID)
                         {
                             found = true;
+                            if (itemTitle.IsPrimary != it.IsPrimary)
+                            {
+                                // Set "LastModifiedDate" to force the "IsDirty" flag to "true"
+                                it.LastModifiedDate = DateTime.Now;
+                                it.IsPrimary = itemTitle.IsPrimary;
+                            }
                             break;
                         }
                     }
                     if (!found)
                     {
-                        TitleItem newTitleItem = new TitleItem();
+                        DataObjects.ItemTitle newTitleItem = new DataObjects.ItemTitle();
                         newTitleItem.TitleID = itemTitle.TitleID;
-                        newTitleItem.ItemID = item.ItemID;
+                        newTitleItem.ItemID = (int)book.ItemID;
+                        newTitleItem.IsPrimary = itemTitle.IsPrimary;
                         newTitleItem.ItemSequence = 10000;
                         newTitleItem.IsNew = true;
-                        item.TitleItems.Add(newTitleItem);
+                        book.ItemTitles.Add(newTitleItem);
                     }
                 }
 
                 // Flag deleted titles
-                foreach (TitleItem titleItem in item.TitleItems)
+                foreach (DataObjects.ItemTitle it in book.ItemTitles)
                 {
                     bool found = false;
-                    foreach (ItemTitle itemTitle in itemTitles)
+                    foreach (DataObjects.ItemTitle itemTitle in itemTitles)
                     {
-                        if (titleItem.TitleID == itemTitle.TitleID)
+                        if (it.TitleID == itemTitle.TitleID)
                         {
                             found = true;
                             break;
                         }
                     }
-                    if (!found) titleItem.IsDeleted = true;
+                    if (!found) it.IsDeleted = true;
                 }
                 //----------------------------------------
 
 				BHLProvider bp = new BHLProvider();
                 // Don't catch errors... allow global error handler to take over
-				bp.ItemSave( item, (int)userId );
+				bp.BookSave( book, (int)userId );
 
                 // After a successful save operation, reload the item
-                Session["Item" + itemIdTextBox.Text] = bp.ItemSelectByBarcodeOrItemID(item.ItemID, item.BarCode);
+                Session["Item" + itemIdTextBox.Text] = bp.BookSelectByBarcodeOrItemID(book.BookID, book.BarCode);
                 fillUI();
 			}
 			else
@@ -1386,10 +1456,10 @@ namespace MOBOT.BHL.AdminWeb
         {
             int titleId = 0;
 
-            List<ItemTitle> itemTitles = (List<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
-            foreach (ItemTitle itemTitle in itemTitles)
+            List<DataObjects.ItemTitle> itemTitles = (List<DataObjects.ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
+            foreach (DataObjects.ItemTitle itemTitle in itemTitles)
             {
-                if (itemTitle.IsPrimary) { titleId = itemTitle.TitleID; break; }
+                if (itemTitle.IsPrimary == 1) { titleId = itemTitle.TitleID; break; }
             }
 
             Response.Redirect("/Paginator.aspx?TitleID=" + titleId.ToString() + 

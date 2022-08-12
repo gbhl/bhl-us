@@ -207,16 +207,23 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     continue;
                 }
+                if (authorIdentifierId == ai.AuthorIdentifierID &&
+                    identifierID == ai.IdentifierID &&
+                    identifierValue == ai.IdentifierValue)
+                /*
                 if (authorIdentifierId == 0 && ai.AuthorIdentifierID == 0 &&
                     identifierID == ai.IdentifierID &&
                     identifierValue == ai.IdentifierValue)
+                */
                 {
                     return ai;
                 }
+                /*
                 else if (authorIdentifierId > 0 && ai.AuthorIdentifierID == authorIdentifierId)
                 {
                     return ai;
                 }
+                */
             }
 
             return null;
@@ -540,6 +547,14 @@ namespace MOBOT.BHL.AdminWeb
                     isValid = false;
                     errorControl.AddErrorText("Make sure the 'Replaced By' identifier is a valid Author ID.");
                 }
+            }
+
+            // Validate identifiers
+            IdentifierValidationResult identifierValidationResult = new BHLProvider().ValidateIdentifiers(author.AuthorIdentifiers);
+            if (!identifierValidationResult.IsValid)
+            {
+                isValid = false;
+                foreach (string message in identifierValidationResult.Messages) errorControl.AddErrorText(message);
             }
 
             errorControl.Visible = !isValid;

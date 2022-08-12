@@ -9,12 +9,12 @@ namespace MOBOT.BHL.Server
 {
     public partial class BHLProvider
     {
-        public CustomGenericList<NamePage> NamePageSelectByPageID(int pageID)
+        public List<NamePage> NamePageSelectByPageID(int pageID)
         {
             return new NamePageDAL().NamePageSelectByPageID(null, null, pageID);
         }
 
-        public CustomGenericList<NamePage> NamePageSelectByPageIDAndSource(int pageID, string sourceName)
+        public List<NamePage> NamePageSelectByPageIDAndSource(int pageID, string sourceName)
         {
             return new NamePageDAL().NamePageSelectByPageIDAndSource(null, null, pageID, sourceName);
         }
@@ -141,7 +141,7 @@ namespace MOBOT.BHL.Server
             // Deactivate any names that were previously contributed by this name source, 
             // but were not not returned by the just-completed source request (this means 
             // they've fallen out of the list of page names for this page)
-            CustomGenericList<NamePage> namePages = this.NamePageSelectByPageIDAndSource(pageID, sourceName);
+            List<NamePage> namePages = this.NamePageSelectByPageIDAndSource(pageID, sourceName);
             foreach (NamePage namePage in namePages)
             {
                 if (!this.NameIsInList(namePage.NameString, names))

@@ -1,7 +1,7 @@
-using System;
-using CustomDataAccess;
 using MOBOT.BHLImport.DAL;
 using MOBOT.BHLImport.DataObjects;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHLImport.Server
 {
@@ -36,12 +36,12 @@ namespace MOBOT.BHLImport.Server
             return savedFile;
         }
 
-        public CustomGenericList<IAFile> IAFileSelectForDownload(int itemID)
+        public List<IAFile> IAFileSelectForDownload(int itemID)
         {
             return (new IAFileDAL().IAFileSelectForDownload(null, null, itemID));
         }
 
-        public CustomGenericList<IAFile> IAFileSelectByItem(int itemID)
+        public List<IAFile> IAFileSelectByItem(int itemID)
         {
             return (new IAFileDAL().IAFileSelectByItem(null, null, itemID));
         }

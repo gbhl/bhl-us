@@ -10,15 +10,15 @@ namespace MOBOT.BHL.Web2
     {
 
         protected Segment BhlSegment { get; set; }
+        protected int IsVirtual { get; set; } = 0;
+        protected int HasLocalContent { get; set; } = 1;
         protected int SegmentID { get; set; }
         protected string SchemaType { get; set; }
-        protected string DOI { get; set; }
 
         protected override void Page_Load(object sender, EventArgs e)
         {
             base.Page_Load(sender, e);
             int segmentID;
-            DOI = string.Empty;
 
             if (!int.TryParse((string)RouteData.Values["segmentid"], out segmentID))
             {
@@ -42,14 +42,22 @@ namespace MOBOT.BHL.Web2
                     }
 
                     // Make sure the title is published.
-                    if (BhlSegment.SegmentStatusID != (int)SegmentStatusValue.New && 
-                        BhlSegment.SegmentStatusID != (int)SegmentStatusValue.Published)
+                    if (BhlSegment.SegmentStatusID != (int)ItemStatus.ItemStatusValue.New && 
+                        BhlSegment.SegmentStatusID != (int)ItemStatus.ItemStatusValue.Published)
                     {
                         Response.Redirect("~/itemunavailable");
                     }
                 }
 
-                BhlSegment.IdentifierList = bhlProvider.SegmentIdentifierSelectForDisplayBySegmentID(SegmentID);
+                List<PageSummaryView> psv = bhlProvider.PageSummarySegmentSelectBySegmentID(SegmentID);
+                if (psv.Count > 0) {
+                    IsVirtual = psv[0].IsVirtual; BhlSegment.BarCode = psv[0].BarCode; 
+                }
+                else { 
+                    HasLocalContent = 0; 
+                }
+
+                BhlSegment.IdentifierList = bhlProvider.ItemIdentifierSelectForDisplayBySegmentID(SegmentID);
                 InstitutionNameComparer comp = new InstitutionNameComparer();
                 BhlSegment.ContributorList.Sort(comp);
 
@@ -65,9 +73,6 @@ namespace MOBOT.BHL.Web2
 
                 COinS.SegmentID = SegmentID;
                 
-                // Set up the Mendeley share control
-                mendeley.SegmentID = SegmentID;
-
                 // Set the Schema.org itemtype
                 switch (BhlSegment.GenreName)
                 {
@@ -84,35 +89,7 @@ namespace MOBOT.BHL.Web2
                         break;
                 }
 
-                List<DOI> dois = bhlProvider.DOISelectValidForSegment(SegmentID);
-                if (dois.Count > 0) DOI = ConfigurationManager.AppSettings["DOIResolverURL"] + dois[0].DOIName;
-
                 main.Page.Title = string.Format("Details - {0} - Biodiversity Heritage Library", BhlSegment.Title);
-
-                // Get the MODS
-                OAI2.OAIRecord record = new OAI2.OAIRecord("oai:" + ConfigurationManager.AppSettings["OAIIdentifierNamespace"] + ":part/" + BhlSegment.SegmentID);
-                OAIMODS.Convert mods = new OAIMODS.Convert(record);
-                litMods.Text = Server.HtmlEncode(mods.ToString()).Replace("\n", "<br />");
-
-                // Get the BibTex citations
-                try
-                {
-                    litBibTeX.Text = bhlProvider.SegmentBibTeXGetCitationStringForSegmentID(BhlSegment.SegmentID, false).Replace("\n", "<br />");
-                }
-                catch
-                {
-                    litBibTeX.Text = string.Empty;
-                }
-
-                // Get the RIS citation
-                try
-                {
-                    litRIS.Text = bhlProvider.SegmentGetRISCitationStringForSegmentID(BhlSegment.SegmentID).Replace("\n", "<br />");
-                }
-                catch
-                {
-                    litRIS.Text = string.Empty;
-                }
             }
         }
     }

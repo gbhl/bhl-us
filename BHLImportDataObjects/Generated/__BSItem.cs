@@ -1,7 +1,7 @@
 
-// Generated 10/23/2012 3:54:50 PM
+// Generated 1/5/2021 2:11:00 PM
 // Do not modify the contents of this code file.
-// This abstract class __BSItem is based upon BSItem.
+// This abstract class __BSItem is based upon dbo.BSItem.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __BSItem : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -112,7 +112,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -120,7 +120,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region ItemID
 		
@@ -259,7 +259,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -400,7 +400,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __BSItem.SortColumn.ItemID);
 		/// </summary>
 		[Serializable]
@@ -417,3 +416,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

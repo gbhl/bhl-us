@@ -1,5 +1,5 @@
 
-// Generated 5/9/2016 1:52:44 PM
+// Generated 1/5/2021 3:26:01 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class MarcDAL is based upon dbo.Marc.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -32,7 +33,7 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class MarcDAL : IMarcDAL
+	partial class MarcDAL 
 	{
  		#region ===== SELECT =====
 
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Marc> helper = new CustomSqlHelper<Marc>())
 				{
-					CustomGenericList<Marc> list = helper.ExecuteReader(command);
+					List<Marc> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Marc o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="marcID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> MarcSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> MarcSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int marcID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="marcID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> MarcSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> MarcSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -195,7 +196,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Marc> helper = new CustomSqlHelper<Marc>())
 				{
-					CustomGenericList<Marc> list = helper.ExecuteReader(command);
+					List<Marc> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Marc o = list[0];
@@ -378,7 +379,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Marc> helper = new CustomSqlHelper<Marc>())
 				{
-					CustomGenericList<Marc> list = helper.ExecuteReader(command);
+					List<Marc> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Marc o = list[0];

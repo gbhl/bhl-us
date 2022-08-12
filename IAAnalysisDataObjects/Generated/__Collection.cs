@@ -1,7 +1,7 @@
 
-// Generated 11/12/2008 3:38:13 PM
+// Generated 1/5/2021 12:29:05 PM
 // Do not modify the contents of this code file.
-// This abstract class __Collection is based upon Collection.
+// This abstract class __Collection is based upon dbo.Collection.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.IAAnalysis.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Collection : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -96,7 +96,7 @@ namespace MOBOT.IAAnalysis.DataObjects
 						_CreationDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -104,7 +104,7 @@ namespace MOBOT.IAAnalysis.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region CollectionID
 		
@@ -190,7 +190,7 @@ namespace MOBOT.IAAnalysis.DataObjects
 		#endregion CreationDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -329,7 +329,6 @@ namespace MOBOT.IAAnalysis.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Collection.SortColumn.CollectionID);
 		/// </summary>
 		[Serializable]
@@ -344,3 +343,4 @@ namespace MOBOT.IAAnalysis.DataObjects
 	}
 }
 // end of source generation
+

@@ -1,7 +1,7 @@
 
-// Generated 1/15/2008 11:27:51 AM
+// Generated 1/5/2021 2:14:23 PM
 // Do not modify the contents of this code file.
-// This abstract class __IAItemSet is based upon IAItemSet.
+// This abstract class __IAItemSet is based upon dbo.IAItemSet.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __IAItemSet : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -96,7 +96,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_CreatedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -104,7 +104,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region ItemID
 		
@@ -188,7 +188,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion CreatedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -327,7 +327,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __IAItemSet.SortColumn.ItemID);
 		/// </summary>
 		[Serializable]
@@ -342,3 +341,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

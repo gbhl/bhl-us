@@ -1,7 +1,6 @@
-﻿
-CREATE PROCEDURE [dbo].[IndicatedPageSelectNewByKeyValuesAndSource]
+﻿CREATE PROCEDURE [dbo].[IndicatedPageSelectNewByKeyValuesAndSource]
 
-@BarCode NVARCHAR(40),
+@BarCode NVARCHAR(200),
 @FileNamePrefix NVARCHAR(200),
 @Sequence SMALLINT,
 @ImportSourceID INT
@@ -11,34 +10,29 @@ AS
 
 SET NOCOUNT ON
 
-SELECT 
-
-	[IndicatedPageID],
-	[BarCode],
-	[FileNamePrefix],
-	[SequenceOrder],
-	[Sequence],
-	[ImportStatusID],
-	[ImportSourceID],
-	[PagePrefix],
-	[PageNumber],
-	[Implied],
-	[ExternalCreationDate],
-	[ExternalLastModifiedDate],
-	[ExternalCreationUser],
-	[ExternalLastModifiedUser],
-	[ProductionDate],
-	[CreatedDate],
-	[LastModifiedDate]
-
-FROM [dbo].[IndicatedPage]
-
-WHERE
-	[BarCode] = @BarCode
-AND	[FileNamePrefix] = @FileNamePrefix
-AND	[Sequence] = @Sequence
-AND [ImportSourceID] = @ImportSourceID
-AND	[ImportStatusID] = 10  -- new only
+SELECT	[IndicatedPageID],
+		[BarCode],
+		[FileNamePrefix],
+		[SequenceOrder],
+		[Sequence],
+		[ImportStatusID],
+		[ImportSourceID],
+		[PagePrefix],
+		[PageNumber],
+		[Implied],
+		[ExternalCreationDate],
+		[ExternalLastModifiedDate],
+		[ExternalCreationUser],
+		[ExternalLastModifiedUser],
+		[ProductionDate],
+		[CreatedDate],
+		[LastModifiedDate]
+FROM	[dbo].[IndicatedPage]
+WHERE	[BarCode] = @BarCode
+AND		[FileNamePrefix] = @FileNamePrefix
+AND		[Sequence] = @Sequence
+AND		[ImportSourceID] = @ImportSourceID
+AND		[ImportStatusID] = 10  -- new only
 
 IF @@ERROR <> 0
 BEGIN
@@ -49,4 +43,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-

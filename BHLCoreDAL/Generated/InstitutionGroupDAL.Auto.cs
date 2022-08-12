@@ -1,5 +1,5 @@
 
-// Generated 3/31/2020 12:15:04 PM
+// Generated 1/5/2021 3:25:22 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class InstitutionGroupDAL is based upon dbo.InstitutionGroup.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<InstitutionGroup> helper = new CustomSqlHelper<InstitutionGroup>())
 				{
-					CustomGenericList<InstitutionGroup> list = helper.ExecuteReader(command);
+					List<InstitutionGroup> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						InstitutionGroup o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="institutionGroupID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> InstitutionGroupSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> InstitutionGroupSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int institutionGroupID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="institutionGroupID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> InstitutionGroupSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> InstitutionGroupSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -185,7 +186,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<InstitutionGroup> helper = new CustomSqlHelper<InstitutionGroup>())
 				{
-					CustomGenericList<InstitutionGroup> list = helper.ExecuteReader(command);
+					List<InstitutionGroup> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						InstitutionGroup o = list[0];
@@ -351,7 +352,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<InstitutionGroup> helper = new CustomSqlHelper<InstitutionGroup>())
 				{
-					CustomGenericList<InstitutionGroup> list = helper.ExecuteReader(command);
+					List<InstitutionGroup> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						InstitutionGroup o = list[0];

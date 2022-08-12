@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace BHL.SearchIndexQueueLoad
@@ -30,7 +31,7 @@ namespace BHL.SearchIndexQueueLoad
                     sqlCommand.Connection = sqlConnection;
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.CommandTimeout = 300;
-                    sqlCommand.CommandText = "audit.AuditBasicSelectForSearchIndexQueue";
+                    sqlCommand.CommandText = "audit.AuditBasicSelectForProcessQueues";
 
                     // Add StartDate and EndDate parameters, if specified
                     if (!string.IsNullOrWhiteSpace(startDate))
@@ -52,6 +53,7 @@ namespace BHL.SearchIndexQueueLoad
                             change.Operation = reader.GetString(reader.GetOrdinal("Operation"));
                             change.IndexEntity = reader.GetString(reader.GetOrdinal("IndexEntity"));
                             change.Id = reader.GetString(reader.GetOrdinal("EntityID"));
+                            change.Queue = reader.GetString(reader.GetOrdinal("Queue"));
                             changeSet.Changes.Add(change);
 
                             if (changeSet.Changes.Count == 1)
@@ -96,5 +98,36 @@ namespace BHL.SearchIndexQueueLoad
                 sqlConnection.Dispose();
             }
         }
+
+        public void InsertDOIQueue(int dOIEntityTypeID, int entityID, int creationUserID, int lastModifiedUserID)
+        {
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "dbo.DOIInsertQueue";
+                    sqlCommand.Parameters.AddWithValue("@DOIEntityTypeID", dOIEntityTypeID);
+                    sqlCommand.Parameters.AddWithValue("@EntityID", entityID);
+                    sqlCommand.Parameters.AddWithValue("@CreationUserID", creationUserID);
+                    sqlCommand.Parameters.AddWithValue("@LastModifiedUserID", lastModifiedUserID);
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+        }
+    }
+
+    public static class DBLookups
+    {
+        public static readonly Dictionary<string, int> DOIEntityTypeID = new Dictionary<string, int> { { "title", 10 }, { "segment", 40 } };
     }
 }

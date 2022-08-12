@@ -1,8 +1,7 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using CustomDataAccess;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
@@ -84,7 +83,7 @@ namespace BHLCoreDALTest
             string issue = string.Empty;
             string year = string.Empty;
             string startPage = string.Empty;
-            CustomGenericList<OpenUrlCitation> actual;
+            List<OpenUrlCitation> actual;
             actual = target.OpenUrlCitationSelectByCitationDetails(sqlConnection, sqlTransaction, titleID, itemID, doi, title, articleTitle, authorLast, authorFirst, volume, issue, year, startPage);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -110,7 +109,7 @@ namespace BHLCoreDALTest
             string issue = string.Empty;
             string year = string.Empty;
             string startPage = string.Empty;
-            CustomGenericList<OpenUrlCitation> actual;
+            List<OpenUrlCitation> actual;
             actual = target.OpenUrlCitationSelectByCitationDetailsFT(sqlConnection, sqlTransaction, titleID, itemID, doi, title, articleTitle, authorLast, authorFirst, volume, issue, year, startPage);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -125,7 +124,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string doi = "10.4039/Ent13220-11";
-            CustomGenericList<OpenUrlCitation> actual;
+            List<OpenUrlCitation> actual;
             actual = target.OpenUrlCitationSelectByDOI(sqlConnection, sqlTransaction, doi);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -140,7 +139,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string doi = "10.5962/bhl.title.3938";
-            CustomGenericList<OpenUrlCitation> actual;
+            List<OpenUrlCitation> actual;
             actual = target.OpenUrlCitationSelectByDOI(sqlConnection, sqlTransaction, doi);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -155,7 +154,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int pageID = 3299787;
-            CustomGenericList<OpenUrlCitation> actual;
+            List<OpenUrlCitation> actual;
             actual = target.OpenUrlCitationSelectByPageID(sqlConnection, sqlTransaction, pageID);
             Assert.IsTrue(actual.Count == 1);
         }

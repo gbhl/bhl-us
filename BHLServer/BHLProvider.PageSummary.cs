@@ -1,10 +1,10 @@
-using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
-  public partial class BHLProvider
+    public partial class BHLProvider
   {
       /// <summary>
       /// Select values from PageSummaryView by Item identifier.
@@ -14,7 +14,7 @@ namespace MOBOT.BHL.Server
       /// <returns></returns>
     public PageSummaryView PageSummarySelectByItemId( int itemId, bool showPrimaryTitle )
     {
-        CustomGenericList<PageSummaryView> list = new PageSummaryDAL().PageSummarySelectByItemId( null, null, itemId );
+        List<PageSummaryView> list = new PageSummaryDAL().PageSummarySelectByItemId( null, null, itemId );
 
         if (list != null)
         {
@@ -40,7 +40,7 @@ namespace MOBOT.BHL.Server
     /// </summary>
     /// <param name="itemId"></param>
     /// <returns></returns>
-    public CustomGenericList<PageSummaryView> PageSummarySelectAllByItemID( int itemId )
+    public List<PageSummaryView> PageSummarySelectAllByItemID( int itemId )
     {
         return new PageSummaryDAL().PageSummarySelectAllByItemID( null, null, itemId );
     }
@@ -50,9 +50,14 @@ namespace MOBOT.BHL.Server
         return (new PageSummaryDAL().PageSummarySelectByItemIdAndTitleId(null, null, itemId, titleId));
     }
 
-    public CustomGenericList<PageSummaryView> PageSummarySelectForViewerByItemID(int itemId)
+    public List<PageSummaryView> PageSummarySelectForViewerByItemID(int itemId)
     {
         return (new PageSummaryDAL().PageSummarySelectForViewerByItemID(null, null, itemId));
+    }
+
+    public List<PageSummaryView> PageSummarySelectForViewerBySegmentID(int segmentId)
+    {
+        return (new PageSummaryDAL().PageSummarySelectForViewerBySegmentID(null, null, segmentId));
     }
 
     /// <summary>
@@ -63,7 +68,7 @@ namespace MOBOT.BHL.Server
     /// <returns>Object of type Title.</returns>
     public PageSummaryView PageSummarySelectByBarcode( string barcode, bool showPrimaryTitle )
     {
-        CustomGenericList<PageSummaryView> list = new PageSummaryDAL().PageSummarySelectByBarcode( null, null, barcode );
+        List<PageSummaryView> list = new PageSummaryDAL().PageSummarySelectByBarcode( null, null, barcode );
 
         if (list != null)
         {
@@ -90,16 +95,6 @@ namespace MOBOT.BHL.Server
     }
 
     /// <summary>
-    /// Select values from PageSummaryView by MARC Bib Id.
-    /// </summary>
-    /// <param name="bibID"></param>
-    /// <returns>Object of type PageSummaryView.</returns>
-    public PageSummaryView PageSummarySelectByBibID(string bibID)
-    {
-        return (new PageSummaryDAL().PageSummarySelectByBibId(null, null, bibID));
-    }
-
-    /// <summary>
     /// Select values from PageSummaryView by Page Id.
     /// </summary>
     /// <param name="pageId"></param>
@@ -111,7 +106,7 @@ namespace MOBOT.BHL.Server
 
     public PageSummaryView PageSummarySelectByPageId(int pageId, bool showPrimaryTitle)
     {
-        CustomGenericList<PageSummaryView> list = new PageSummaryDAL().PageSummarySelectByPageId(null, null, pageId);
+        List<PageSummaryView> list = new PageSummaryDAL().PageSummarySelectByPageId(null, null, pageId);
 
         if (showPrimaryTitle && list != null)
         {
@@ -138,14 +133,34 @@ namespace MOBOT.BHL.Server
       return ( new PageSummaryDAL().PageSummarySelectByItemAndSequence( null, null, itemID, sequence ) );
     }
 
-    public CustomGenericList<PageSummaryView> PageSummarySelectFoldersForTitleID(int titleID)
+    public List<PageSummaryView> PageSummarySelectFoldersForTitleID(int titleID)
     {
         return (new PageSummaryDAL().PageSummarySelectFoldersForTitleID(null, null, titleID));
     }
 
-    public CustomGenericList<PageSummaryView> PageSummarySelectBarcodeForTitleID(int titleID)
+    public List<PageSummaryView> PageSummarySelectBarcodeForTitleID(int titleID)
     {
         return (new PageSummaryDAL().PageSummarySelectBarcodeForTitleID(null, null, titleID));
+    }
+
+    public List<PageSummaryView> PageSummarySegmentSelectAllByItemID(int itemID)
+    {
+        return (new PageSummaryDAL().PageSummarySegmentSelectAllByItemID(null, null, itemID));
+    }
+
+    public List<PageSummaryView> PageSummarySegmentSelectBySegmentID(int segmentID)
+    {
+        return new PageSummaryDAL().PageSummarySegmentSelectBySegmentID(null, null, segmentID);
+    }
+
+    public PageSummaryView PageSummarySegmentSelectByPageID(int pageID)
+    {
+        return new PageSummaryDAL().PageSummarySegmentSelectByPageID(null, null, pageID);
+    }
+
+    public PageSummaryView PageSummarySegmentSelectByItemAndSequence(int itemID, int sequence)
+    {
+        return new PageSummaryDAL().PageSummarySegmentSelectByItemAndSequence(null, null, itemID, sequence);
     }
   }
 }

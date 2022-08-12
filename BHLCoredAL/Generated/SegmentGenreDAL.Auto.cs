@@ -1,8 +1,8 @@
 
-// Generated 9/18/2012 12:12:30 PM
+// Generated 1/5/2021 3:27:00 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class SegmentGenreDAL is based upon SegmentGenre.
+// This partial class SegmentGenreDAL is based upon dbo.SegmentGenre.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from SegmentGenre by primary key(s).
+		/// Select values from dbo.SegmentGenre by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from SegmentGenre by primary key(s).
+		/// Select values from dbo.SegmentGenre by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<SegmentGenre> helper = new CustomSqlHelper<SegmentGenre>())
 				{
-					CustomGenericList<SegmentGenre> list = helper.ExecuteReader(command);
+					List<SegmentGenre> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						SegmentGenre o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from SegmentGenre by primary key(s).
+		/// Select values from dbo.SegmentGenre by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="segmentGenreID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> SegmentGenreSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> SegmentGenreSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int segmentGenreID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from SegmentGenre by primary key(s).
+		/// Select values from dbo.SegmentGenre by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="segmentGenreID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> SegmentGenreSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> SegmentGenreSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into SegmentGenre.
+		/// Insert values into dbo.SegmentGenre.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -151,7 +152,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into SegmentGenre.
+		/// Insert values into dbo.SegmentGenre.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -180,7 +181,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<SegmentGenre> helper = new CustomSqlHelper<SegmentGenre>())
 				{
-					CustomGenericList<SegmentGenre> list = helper.ExecuteReader(command);
+					List<SegmentGenre> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						SegmentGenre o = list[0];
@@ -196,7 +197,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into SegmentGenre. Returns an object of type SegmentGenre.
+		/// Insert values into dbo.SegmentGenre. Returns an object of type SegmentGenre.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -211,7 +212,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into SegmentGenre. Returns an object of type SegmentGenre.
+		/// Insert values into dbo.SegmentGenre. Returns an object of type SegmentGenre.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -235,7 +236,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from SegmentGenre by primary key(s).
+		/// Delete values from dbo.SegmentGenre by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -250,7 +251,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from SegmentGenre by primary key(s).
+		/// Delete values from dbo.SegmentGenre by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -293,7 +294,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in SegmentGenre. Returns an object of type SegmentGenre.
+		/// Update values in dbo.SegmentGenre. Returns an object of type SegmentGenre.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -312,7 +313,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in SegmentGenre. Returns an object of type SegmentGenre.
+		/// Update values in dbo.SegmentGenre. Returns an object of type SegmentGenre.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -340,7 +341,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<SegmentGenre> helper = new CustomSqlHelper<SegmentGenre>())
 				{
-					CustomGenericList<SegmentGenre> list = helper.ExecuteReader(command);
+					List<SegmentGenre> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						SegmentGenre o = list[0];
@@ -356,7 +357,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in SegmentGenre. Returns an object of type SegmentGenre.
+		/// Update values in dbo.SegmentGenre. Returns an object of type SegmentGenre.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -371,7 +372,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in SegmentGenre. Returns an object of type SegmentGenre.
+		/// Update values in dbo.SegmentGenre. Returns an object of type SegmentGenre.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -395,9 +396,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage SegmentGenre object.
+		/// Manage dbo.SegmentGenre object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in SegmentGenre.
+		/// then either insert values into, delete values from, or update values in dbo.SegmentGenre.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -412,9 +413,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage SegmentGenre object.
+		/// Manage dbo.SegmentGenre object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in SegmentGenre.
+		/// then either insert values into, delete values from, or update values in dbo.SegmentGenre.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -480,4 +481,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

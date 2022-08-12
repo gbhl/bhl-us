@@ -1,9 +1,8 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
@@ -73,7 +72,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int titleId = 3926;
-            CustomGenericList<TitleBibTeX> actual;
+            List<TitleBibTeX> actual;
             actual = target.TitleBibTeXSelectForTitleID(sqlConnection, sqlTransaction, titleId);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -85,7 +84,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int collectionID = 12;
-            CustomGenericList<Title> actual = target.TitleSelectByCollection(sqlConnection, sqlTransaction, collectionID);
+            List<Title> actual = target.TitleSelectByCollection(sqlConnection, sqlTransaction, collectionID);
             Assert.IsNotNull(actual);
         }
 
@@ -98,7 +97,7 @@ namespace BHLCoreDALTest
             string name = "mollusca";
             string languageCode = "ENG";
             int returnCount = 10;
-            CustomGenericList<Title> actual = target.TitleSelectSearchName(sqlConnection, sqlTransaction, name, languageCode, returnCount);
+            List<Title> actual = target.TitleSelectSearchName(sqlConnection, sqlTransaction, name, languageCode, returnCount);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -110,7 +109,7 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             string institutionCode = string.Empty;
             int maxAge = 5000;
-            CustomGenericList<TitleSuspectCharacter> actual = target.TitleSelectWithSuspectCharacters(sqlConnection, sqlTransaction, institutionCode, maxAge);
+            List<TitleSuspectCharacter> actual = target.TitleSelectWithSuspectCharacters(sqlConnection, sqlTransaction, institutionCode, maxAge);
             Assert.IsNotNull(actual);
         }
     }

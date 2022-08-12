@@ -1,7 +1,7 @@
 
-// Generated 12/15/2010 3:05:49 PM
+// Generated 1/5/2021 3:36:23 PM
 // Do not modify the contents of this code file.
-// This abstract class __AnnotatedPageCharacteristic is based upon AnnotatedPageCharacteristic.
+// This abstract class __AnnotatedPageCharacteristic is based upon annotation.AnnotatedPageCharacteristic.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __AnnotatedPageCharacteristic : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -128,7 +128,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -136,7 +136,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region AnnotatedPageCharacteristicID
 		
@@ -332,7 +332,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -475,7 +475,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __AnnotatedPageCharacteristic.SortColumn.AnnotatedPageCharacteristicID);
 		/// </summary>
 		[Serializable]
@@ -494,3 +493,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

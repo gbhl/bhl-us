@@ -1,46 +1,33 @@
-﻿using System;
-using System.Configuration;
+﻿using MOBOT.BHL.DAL;
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.DataObjects.Enum;
+using MOBOT.FileAccess;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
-using System.Web;
-using System.Xml;
 using System.Xml.Linq;
-using MOBOT.BHL.DAL;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using MOBOT.FileAccess;
-using System.Web.ModelBinding;
-using System.Web.Hosting;
-using Newtonsoft.Json.Schema;
 
 namespace MOBOT.BHL.Server
 {
-    public partial class BHLProvider
+    public partial class BHLProvider : IBHLProvider
     {
-        public MOBOT.FileAccess.IFileAccessProvider GetFileAccessProvider(bool useRemoteProvider)
+        public MOBOT.FileAccess.IFileAccessProvider GetFileAccessProvider()
         {
-            if (useRemoteProvider)
-            {
-                return MOBOT.FileAccess.RemotingUtilities.RemotingHelper.GetRemotedFileAccessProvider();
-            }
-            else
-            {
-                return new MOBOT.FileAccess.FileAccessProvider();
-            }
+            return new MOBOT.FileAccess.FileAccessProvider();
         }
 
-        public string GetTextUrl(bool useRemoteProvider, string textLocation)
+        public string GetTextUrl(string textLocation)
         {
             try
             {
-                if (GetFileAccessProvider(useRemoteProvider).FileExists(textLocation))
+                if (GetFileAccessProvider().FileExists(textLocation))
                     return (textLocation);
                 else
                     return ("");
@@ -63,13 +50,13 @@ namespace MOBOT.BHL.Server
         /// <param name="pages"></param>
         /// <param name="itemID"></param>
         /// <returns></returns>
-        public List<BHLProvider.ViewerPage> PageGetImageDimensions(List<BHLProvider.ViewerPage> pages, int itemID)
+        public List<BHLProvider.ViewerPage> PageGetImageDimensions(List<BHLProvider.ViewerPage> pages, ItemType itemType, int entityID)
         {
             try
             {
                 var xml = new XDocument();
                 bool scanDataLoaded = false;
-                string scanData = this.ScandataGetFileContents(itemID);
+                string scanData = this.ScandataGetFileContents(itemType, entityID);
                 if (!string.IsNullOrWhiteSpace(scanData))
                 {
                     try
@@ -86,7 +73,7 @@ namespace MOBOT.BHL.Server
                 if (!scanDataLoaded)
                 {
                     // Local file not loaded; look for a remote copy (at Internet Archive)
-                    Item item = this.ItemSelectFilenames(itemID);
+                    Item item = this.ItemSelectFilenames(itemType, entityID);
                     xml = XDocument.Load(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.ScandataFilename));
                 }
 
@@ -151,21 +138,21 @@ namespace MOBOT.BHL.Server
         /// <param name="usePreferredResults">True to use the "preferred" results.  Only applies to GNRD service.</param>
         /// <param name="maxReadAttempts">Maximum number of times to attempt to read service results.  Only applies to GNRD service.</param>
         /// <returns>Array of NameFinderResponse objects.</returns>
-        public List<NameFinderResponse> GetNamesFromOcr(string resolverName, int pageID, bool useRemoteFileAccessProvider, bool usePreferredResults, int maxReadAttempts)
+        public List<NameFinderResponse> GetNamesFromOcr(string resolverName, int pageID, bool usePreferredResults, int maxReadAttempts)
         {
             List<NameFinderResponse> nameFinderResponses = new List<NameFinderResponse>();
 
             switch (resolverName)
             {
                 case "TaxonFinder":
-                    nameFinderResponses = this.GetNamesFromOcrTaxonFinder(pageID, useRemoteFileAccessProvider, usePreferredResults, maxReadAttempts);
+                    nameFinderResponses = this.GetNamesFromOcrTaxonFinder(pageID, usePreferredResults, maxReadAttempts);
                     break;
                 case "GNFinder":
-                    nameFinderResponses = this.GetNamesFromOcrGNFinderService(pageID, useRemoteFileAccessProvider, usePreferredResults, maxReadAttempts);
+                    nameFinderResponses = this.GetNamesFromOcrGNFinderService(pageID, usePreferredResults, maxReadAttempts);
                     break;
                 case "GNFinderLocal":
                 default:
-                    nameFinderResponses = this.GetNamesFromOcrGNFinder(pageID, useRemoteFileAccessProvider);
+                    nameFinderResponses = this.GetNamesFromOcrGNFinder(pageID);
                     break;
             }
 
@@ -180,15 +167,16 @@ namespace MOBOT.BHL.Server
         /// <param name="usePreferredResults"></param>
         /// <param name="maxReadAttempts"></param>
         /// <returns></returns>
-        private List<NameFinderResponse> GetNamesFromOcrTaxonFinder(int pageID, bool useRemoteFileAccessProvider, bool usePreferredResults, int maxReadAttempts)
+        private List<NameFinderResponse> GetNamesFromOcrTaxonFinder(int pageID, bool usePreferredResults, int maxReadAttempts)
         {
             string webServiceUrl = string.Empty;
 
             PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId(pageID);
+            if (ps == null) ps = new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
             string filepath = ps.OcrTextLocation;
 
             // Get the OCR text
-            string ocrText = this.GetFileAccessProvider(useRemoteFileAccessProvider).GetFileText(filepath);
+            string ocrText = this.GetFileAccessProvider().GetFileText(filepath);
 
             // Replace non-printing control characters (tabs, line feeds, etc) with spaces.
             // The GNRD service doesn't like 'empty' strings that contain no printable characters
@@ -207,7 +195,7 @@ namespace MOBOT.BHL.Server
             if (ocrText.Length > 0)
             {
                 // Add the user-reported page names for this Page to the ocrText
-                CustomGenericList<NamePage> namePages = new BHLProvider().NamePageSelectByPageID(pageID);
+                List<NamePage> namePages = new BHLProvider().NamePageSelectByPageID(pageID);
                 foreach (NamePage namePage in namePages)
                 {
                     // NameSourceID 1 = "User Reported"
@@ -365,15 +353,16 @@ namespace MOBOT.BHL.Server
         /// <param name="usePreferredResults"></param>
         /// <param name="maxReadAttempts"></param>
         /// <returns></returns>
-        private List<NameFinderResponse> GetNamesFromOcrGNFinderService(int pageID, bool useRemoteFileAccessProvider, bool usePreferredResults, int maxReadAttempts)
+        private List<NameFinderResponse> GetNamesFromOcrGNFinderService(int pageID, bool usePreferredResults, int maxReadAttempts)
         {
             string webServiceUrl = string.Empty;
 
             PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId(pageID);
+            if (ps == null) ps = new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
             string filepath = ps.OcrTextLocation;
 
             // Get the OCR text
-            string ocrText = this.GetFileAccessProvider(useRemoteFileAccessProvider).GetFileText(filepath);
+            string ocrText = this.GetFileAccessProvider().GetFileText(filepath);
 
             // Replace non-printing control characters (tabs, line feeds, etc) with spaces.
             // The GNRD service doesn't like 'empty' strings that contain no printable characters
@@ -392,7 +381,7 @@ namespace MOBOT.BHL.Server
             if (ocrText.Length > 0)
             {
                 // Add the user-reported page names for this Page to the ocrText
-                CustomGenericList<NamePage> namePages = new BHLProvider().NamePageSelectByPageID(pageID);
+                List<NamePage> namePages = new BHLProvider().NamePageSelectByPageID(pageID);
                 foreach (NamePage namePage in namePages)
                 {
                     // NameSourceID 1 = "User Reported"
@@ -555,18 +544,19 @@ namespace MOBOT.BHL.Server
         /// <param name="useRemoteFileAccessProvider"></param>
         /// <param name="maxReadAttempts"></param>
         /// <returns></returns>
-        private List<NameFinderResponse> GetNamesFromOcrGNFinder(int pageID, bool useRemoteFileAccessProvider)
+        private List<NameFinderResponse> GetNamesFromOcrGNFinder(int pageID)
         {
             List<NameFinderResponse> nameResponseList = new List<NameFinderResponse>();
 
             // Only continue if the gnfinder tool exists
             string toolPath = AppDomain.CurrentDomain.BaseDirectory + "bin\\gnfinder.exe";
-            if (this.GetFileAccessProvider(useRemoteFileAccessProvider).FileExists(toolPath))
+            if (this.GetFileAccessProvider().FileExists(toolPath))
             {
                 PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId(pageID);
+                if (ps == null) ps = new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
                 string filepath = ps.OcrTextLocation;
 
-                if (this.GetFileAccessProvider(useRemoteFileAccessProvider).FileExists(filepath))
+                if (this.GetFileAccessProvider().FileExists(filepath))
                 {
                     try
                     {
@@ -574,7 +564,7 @@ namespace MOBOT.BHL.Server
                         using (System.Diagnostics.Process process = new System.Diagnostics.Process())
                         {
                             process.StartInfo.FileName = toolPath;
-                            process.StartInfo.Arguments = "find -c " + filepath;
+                            process.StartInfo.Arguments = "-v -f pretty \"" + filepath + "\"";
                             process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
                             process.StartInfo.UseShellExecute = false;
                             process.StartInfo.RedirectStandardOutput = true;
@@ -585,69 +575,89 @@ namespace MOBOT.BHL.Server
                             process.WaitForExit();
                         }
 
-                        JObject jsonResponse = JObject.Parse(gnfinderOutput);
-                        JToken metadata = jsonResponse["metadata"];
-
-                        // Did we get name data?
-                        if (metadata["totalNames"].ToString() != "0")
+                        if (!string.IsNullOrWhiteSpace(gnfinderOutput))
                         {
-                            // Read the name data from the JSON response
-                            foreach (JToken name in jsonResponse["names"])
+                            JObject jsonResponse = JObject.Parse(gnfinderOutput);
+                            JToken metadata = jsonResponse["metadata"];
+
+                            // Did we get name data?
+                            if (metadata["totalNames"].ToString() != "0")
                             {
-                                string nameString = (string)(name["name"] ?? string.Empty);
-                                string nameResolvedString = string.Empty;
-                                string canonicalName = string.Empty;
-                                List<string> identifiers = new List<string>();
-                                string matchType = string.Empty;
-                                double odds = (double)name["odds"];
-                                string curation = string.Empty;
-
-                                JToken verification = name["verification"];
-                                if (verification != null)   // If the name was resolved, get the details
+                                // Read the name data from the JSON response
+                                foreach (JToken name in jsonResponse["names"])
                                 {
-                                    curation = (string)(verification["dataSourceQuality"] ?? string.Empty);
-                                    JToken bestResult = verification["bestResult"];
-                                    if (bestResult != null)
+                                    string nameString = (string)(name["name"] ?? string.Empty);
+                                    string nameResolvedString = string.Empty;
+                                    string canonicalName = string.Empty;
+                                    List<string> identifiers = new List<string>();
+                                    string matchType = string.Empty;
+                                    double odds;
+                                    try
                                     {
-                                        matchType = (bestResult["matchType"] != null) ? bestResult["matchType"].ToString() : "";
+                                        odds = (double)name["oddsLog10"];
+                                    }
+                                    catch (System.OverflowException)
+                                    {
+                                        odds = double.MaxValue;
+                                    }
+                                    string curation = string.Empty;
 
-                                        // Possible match_type values
-                                        // (blank) - unknown; probable error processing name
-                                        // NoMatch - no match
-                                        // ExactMatch - exact string match
-                                        // ExactCanonicalMatch - exact string match
-                                        // ExactPartialMatch - partial match on trinomial, or exact match on genus but no match on species (binomial) part (mostly good results here)
-                                        // FuzzyCanonicalMatch - fuzzy match of canonical form
-                                        // FuzzyPartialMatch - fuzzy partial match on trinomial
-                                        if (matchType != "" && matchType != "NoMatch")
+                                    JToken verification = name["verification"];
+                                    if (verification != null)   // If the name was resolved, get the details
+                                    {
+                                        // *** Possible curation values ***
+                                        // NotCurated - no DataSources were curated sufficiently
+                                        // AutoCurated - at least one of the DataSources invested significantly in curating their data by scripts
+                                        // Curated - at least one DataSource is sufficiently curated
+                                        curation = (string)(verification["curation"] ?? string.Empty);
+
+                                        JToken bestResult = verification["bestResult"];
+                                        if (bestResult != null)
                                         {
-                                            nameResolvedString = (string)(bestResult["matchedName"] ?? string.Empty);
-                                            canonicalName = (string)(bestResult["matchedCanonicalFull"] ?? string.Empty);
+                                            matchType = (bestResult["matchType"] != null) ? bestResult["matchType"].ToString() : "";
 
-                                            // Get the identifiers
-                                            string identifier = string.Empty;
-                                            identifier = this.GetIdentifierFromGNFinder(bestResult, "taxonId", "dataSourceId");
-                                            if (!string.IsNullOrWhiteSpace(identifier)) identifiers.Add(identifier);
+                                            // *** Possible match_type values *** 
+                                            //  (blank) - unknown; likely due to no matching name
+                                            //  NoMatch - no match
+                                            //  Exact - exact string match
+                                            //  PartialExact - partial match on trinomial, or exact match on genus but no match on species(binomial) part(mostly good results here)
+                                            //  Fuzzy - fuzzy match of canonical form
+                                            //  PartialFuzzy - fuzzy partial match on trinomial
+                                            // *** These are also possible, but not supported by BHL ***
+                                            //  Virus - matches of viruses names
+                                            //  ExactSpeciesGroup - optional match for autonyms for botany or coordinated names in zoology
+                                            //  FacetedSearch - only happens when advanced search Language option is used (https://github.com/gnames/gnverifier#advanced-search-query-language)
+                                            if (matchType != "" && matchType != "NoMatch" && matchType != "Virus" &&
+                                                matchType != "ExactSpeciesGroup" && matchType != "FacetedSearch")
+                                            {
+                                                nameResolvedString = (string)(bestResult["matchedName"] ?? string.Empty);
+                                                canonicalName = (string)(bestResult["matchedCanonicalFull"] ?? string.Empty);
+
+                                                // Get the identifiers
+                                                string identifier = string.Empty;
+                                                identifier = this.GetIdentifierFromGNFinder(bestResult, "recordId", "dataSourceId");
+                                                if (!string.IsNullOrWhiteSpace(identifier)) identifiers.Add(identifier);
+                                            }
                                         }
                                     }
-                                }
 
-                                // Add the data from the JSON response to our list of names to return 
-                                bool keepName = false;
-                                if ((matchType == "ExactMatch" || matchType == "ExactCanonicalMatch") && curation != "Unknown") keepName = true;
-                                if ((matchType == "FuzzyCanonical" || matchType == "FuzzyPartial" || matchType == "NoMatch" || matchType == "") && odds > 1000000) keepName = true;
-                                if (matchType == "ExactPartialMatch") keepName = true;
+                                    // Add the data from the JSON response to our list of names to return 
+                                    bool keepName = false;
+                                    if (matchType == "Exact" && curation != "NotCurated") keepName = true;
+                                    if ((matchType == "Fuzzy" || matchType == "PartialFuzzy" || matchType == "NoMatch" || matchType == "") && odds > 6) keepName = true;
+                                    if (matchType == "PartialExact") keepName = true;
 
-                                if (keepName)
-                                {
-                                    NameFinderResponse nameFinderResponse = new NameFinderResponse();
-                                    nameFinderResponse.Name = nameString;
-                                    nameFinderResponse.NameResolved = nameResolvedString;
-                                    nameFinderResponse.CanonicalName = canonicalName;
-                                    nameFinderResponse.MatchType = matchType;
-                                    nameFinderResponse.Curation = curation;
-                                    nameFinderResponse.Identifiers = identifiers;
-                                    nameResponseList.Add(nameFinderResponse);
+                                    if (keepName)
+                                    {
+                                        NameFinderResponse nameFinderResponse = new NameFinderResponse();
+                                        nameFinderResponse.Name = nameString;
+                                        nameFinderResponse.NameResolved = nameResolvedString;
+                                        nameFinderResponse.CanonicalName = canonicalName;
+                                        nameFinderResponse.MatchType = matchType;
+                                        nameFinderResponse.Curation = curation;
+                                        nameFinderResponse.Identifiers = identifiers;
+                                        nameResponseList.Add(nameFinderResponse);
+                                    }
                                 }
                             }
                         }
@@ -675,10 +685,10 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="nameDetail"></param>
         /// <returns></returns>
-        public string GetIdentifierFromGNFinder(JToken nameDetail, string taxonIdField, string dataSourceIdField)
+        public string GetIdentifierFromGNFinder(JToken nameDetail, string recordIdField, string dataSourceIdField)
         {
             string identifier = string.Empty;
-            string identifierValue = (string)(nameDetail[taxonIdField] ?? string.Empty);
+            string identifierValue = (string)(nameDetail[recordIdField] ?? string.Empty);
             if (nameDetail[dataSourceIdField] != null && !string.IsNullOrWhiteSpace(identifierValue))
             {
                 int dataSourceID = (int)nameDetail[dataSourceIdField];
@@ -862,7 +872,7 @@ namespace MOBOT.BHL.Server
         /// <returns></returns>
         public bool OcrJobExists(int itemID)
         {
-            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider();
             string fileName = string.Format("{0}{1}", ConfigurationManager.AppSettings["OCRJobNewPath"], itemID.ToString());
             return fileAccessProvider.FileExists(fileName);
         }
@@ -873,7 +883,7 @@ namespace MOBOT.BHL.Server
         /// <param name="itemID"></param>
         public void OcrCreateJob(int itemID)
         {
-            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider();
             string fileName = string.Format("{0}{1}", ConfigurationManager.AppSettings["OCRJobNewPath"], itemID.ToString());
             byte[] fileContent = new byte[] { 0x20 };
             fileAccessProvider.SaveFile(fileContent, fileName);
@@ -887,7 +897,7 @@ namespace MOBOT.BHL.Server
             // Make sure we found an active page
             if (page != null)
             {
-                IFileAccessProvider fileAccessProvider = GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                IFileAccessProvider fileAccessProvider = GetFileAccessProvider();
                 String ocrTextLocation = String.Format(ConfigurationManager.AppSettings["OCRTextLocation"],
                     page.OcrFolderShare, page.FileRootFolder, page.BarCode, page.FileNamePrefix);
                 if (fileAccessProvider.FileExists(ocrTextLocation)) ocrText = fileAccessProvider.GetFileText(ocrTextLocation);
@@ -896,16 +906,24 @@ namespace MOBOT.BHL.Server
             return ocrText;
         }
 
-        public string GetItemText(int itemID)
+        public string GetItemText(ItemType itemType, int entityID)
         {
-            Item item = this.ItemSelectTextPathForItemID(itemID);
+            Book book = null;
+            if (itemType == ItemType.Book)
+            {
+                book = this.BookSelectTextPathForItemID(entityID);
+            }
+            else if (itemType == ItemType.Segment)
+            {
+                book = this.BookSelectTextPathForSegmentID(entityID);
+            }
             string itemText = "Text unavailable for this item.";
 
             // Make sure we found an active item
-            if (item != null)
+            if (book != null)
             {
-                IFileAccessProvider fileAccessProvider = GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
-                String ocrTextLocation = String.Format(ConfigurationManager.AppSettings["ItemTextLocation"], item.OcrFolderShare, item.FileRootFolder, item.BarCode);
+                IFileAccessProvider fileAccessProvider = GetFileAccessProvider();
+                String ocrTextLocation = String.Format(ConfigurationManager.AppSettings["ItemTextLocation"], book.OcrFolderShare, book.FileRootFolder, book.BarCode);
 
                 string[] files = fileAccessProvider.GetFiles(ocrTextLocation);
                 Array.Sort(files);
@@ -922,6 +940,50 @@ namespace MOBOT.BHL.Server
             return itemText;
         }
 
+        public byte[] GetItemPdf(ItemType itemType, int entityID)
+        {
+            byte[] pdf = null;
+
+            if (itemType == ItemType.Book)
+            {
+                throw new NotImplementedException();
+            }
+            else if (itemType == ItemType.Segment)
+            {
+                IFileAccessProvider fileAccessProvider = GetFileAccessProvider();
+                string pdfLocation = GetItemPdfPath(itemType, entityID);
+                pdf = fileAccessProvider.ReadAllBytes(pdfLocation);
+            }
+
+            return pdf;
+        }
+
+        public string GetItemPdfPath(ItemType itemType, int entityID)
+        {
+            string pdfPath = string.Empty;
+
+            if (itemType == ItemType.Book)
+            {
+                throw new NotImplementedException();
+            }
+            else if (itemType == ItemType.Segment)
+            {
+                // PDF are stored in the following folder structure
+                // Segment 1
+                //  root\1\bhl-segment-1.pdf
+                // Segment 10
+                //  root\1\0\bhl-segment-10.pdf
+                // Segment 110 and Segment 1123
+                //  root\1\1\bhl-segment-110.pdf
+                //  root\1\1\bhl-segment-1123.pdf
+                string folder1 = entityID.ToString()[0].ToString() + "\\";
+                string folder2 = entityID > 9 ? entityID.ToString()[1].ToString() + "\\" : "";
+                pdfPath = String.Format(ConfigurationManager.AppSettings["PregeneratedPdfLocation"], folder1, folder2, entityID.ToString());
+            }
+
+            return pdfPath;
+        }
+
         /// <summary>
         /// Determine if a MARC file exists for the specified title or item
         /// </summary>
@@ -931,13 +993,13 @@ namespace MOBOT.BHL.Server
         public string MarcFileExists(int id, string type)
         {
             string filepath = string.Empty;
-            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider();
 
             if (type == "t")
             {
                 // Check vaults for imported MARC file
                 Title title = this.TitleSelectAuto(id);
-                CustomGenericList<Vault> vaults = this.VaultSelectAll();
+                List<Vault> vaults = this.VaultSelectAll();
                 foreach (Vault vault in vaults)
                 {
                     if (fileAccessProvider.FileExists(String.Format(ConfigurationManager.AppSettings["MARCXmlLocation"], vault.OCRFolderShare, title.MARCBibID, title.MARCBibID)))
@@ -971,7 +1033,7 @@ namespace MOBOT.BHL.Server
             string fileContents = "MARC not found.";
             string filepath = string.Empty;
 
-            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider();
             filepath = this.MarcFileExists(id, type);
             if (!string.IsNullOrWhiteSpace(filepath))
             {
@@ -996,7 +1058,7 @@ namespace MOBOT.BHL.Server
                 {
                     String destinationFile = string.Format("{0}\\{1}\\{2}_marc.xml", vault.OCRFolderShare, marcBibID, marcBibID);
                     MOBOT.FileAccess.IFileAccessProvider fileAccess =
-                        this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                        this.GetFileAccessProvider();
                     fileAccess.SaveFile(Encoding.ASCII.GetBytes(content), destinationFile);
                 }
             }
@@ -1007,12 +1069,21 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Path to the file</returns>
-        public string ScandataFileExists(int id)
+        public string ScandataFileExists(ItemType itemType, int id)
         {
             string filepath = string.Empty;
-            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider();
 
-            PageSummaryView ps = this.PageSummarySelectByItemId(id, false);
+            PageSummaryView ps = null;
+            if (itemType == ItemType.Book)
+            {
+                ps = this.PageSummarySelectByItemId(id, false);
+            }
+            else if (itemType == ItemType.Segment)
+            {
+                var pages = this.PageSummarySegmentSelectBySegmentID(id);
+                if (pages.Count > 0) ps = pages[0];
+            }
             if (ps != null)
             {
                 if (fileAccessProvider.FileExists(ps.ScandataXmlLocation)) filepath = ps.ScandataXmlLocation;
@@ -1026,13 +1097,13 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public string ScandataGetFileContents(int id)
+        public string ScandataGetFileContents(ItemType itemType, int id)
         {
             string fileContents = string.Empty;
             string filepath = string.Empty;
 
-            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
-            filepath = this.ScandataFileExists(id);
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider();
+            filepath = this.ScandataFileExists(itemType, id);
             if (!string.IsNullOrWhiteSpace(filepath))
             {
                 fileContents = fileAccessProvider.GetFileText(filepath);
@@ -1052,41 +1123,47 @@ namespace MOBOT.BHL.Server
             List<KeyValuePair<string, string>> tags = new List<KeyValuePair<string, string>>();
 
             BHLProvider service = new BHLProvider();
-            Item item = service.ItemSelectByBarcodeOrItemID(itemID, null);
+            Book book = service.BookSelectByBarcodeOrItemID(itemID, null);
 
-            if (item != null)
+            if (book != null)
             {
                 // Return no tags for external segments
-                if (string.IsNullOrWhiteSpace(item.ExternalUrl))
+                if (string.IsNullOrWhiteSpace(book.ExternalUrl))
                 {
-                    Title title = service.TitleSelectAuto(item.PrimaryTitleID);
-                    string itemDate = string.IsNullOrWhiteSpace(item.Year) ? title.StartYear.ToString() : item.Year;
+                    Title title = service.TitleSelectAuto((int)book.PrimaryTitleID);
+                    string itemDate = string.IsNullOrWhiteSpace(book.StartYear) ? title.StartYear.ToString() : book.StartYear;
 
-                    AddGoogleScholarTag(tags, "citation_title", item.TitleName);
+                    AddGoogleScholarTag(tags, "citation_title", book.TitleName);
                     AddGoogleScholarTag(tags, "citation_publication_date", itemDate);
                     AddGoogleScholarTag(tags, "citation_publisher", title.Datafield_260_b);
-                    AddGoogleScholarTag(tags, "citation_language", item.LanguageCode);
-                    AddGoogleScholarTag(tags, "citation_volume", item.Volume);
+                    AddGoogleScholarTag(tags, "citation_language", book.LanguageCode);
+                    AddGoogleScholarTag(tags, "citation_volume", book.Volume);
 
-                    AddGoogleScholarTag(tags, "DC.title", item.TitleName);
+                    AddGoogleScholarTag(tags, "DC.title", book.TitleName);
                     AddGoogleScholarTag(tags, "DC.issued", itemDate);
                     AddGoogleScholarTag(tags, "DC.publisher", title.Datafield_260_b);
-                    AddGoogleScholarTag(tags, "DC.language", item.LanguageCode);
-                    AddGoogleScholarTag(tags, "DC.citation.volume", item.Volume);
-                    AddGoogleScholarTag(tags, "DC.identifier.URI", string.Format(uriFormat, item.ItemID.ToString()));
+                    AddGoogleScholarTag(tags, "DC.language", book.LanguageCode);
+                    AddGoogleScholarTag(tags, "DC.citation.volume", book.Volume);
+                    AddGoogleScholarTag(tags, "DC.identifier.URI", string.Format(uriFormat, book.BookID.ToString()));
 
-                    CustomGenericList<TitleAuthor> authors = service.TitleAuthorSelectByTitle(item.PrimaryTitleID);
+                    List<TitleAuthor> authors = service.TitleAuthorSelectByTitle((int)book.PrimaryTitleID);
                     foreach (TitleAuthor author in authors)
                     {
                         AddGoogleScholarTag(tags, "citation_author", author.FullName);
                         AddGoogleScholarTag(tags, "DC.creator", author.FullName);
                     }
 
-                    CustomGenericList<Title_Identifier> identifiers = service.Title_IdentifierSelectByTitleID(item.PrimaryTitleID);
+                    List<Title_Identifier> identifiers = service.Title_IdentifierSelectByTitleID((int)book.PrimaryTitleID);
                     foreach (Title_Identifier identifier in identifiers)
                     {
                         AddGoogleScholarTag(tags, "citation_" + identifier.IdentifierName.ToLower(), identifier.IdentifierValue);
                     }
+
+                    if (book.Pages.Count > 0)
+                    {
+                        AddGoogleScholarTag(tags, "citation_pdf_url", string.Format(ConfigurationManager.AppSettings["ItemPdfUrl"], book.BookID.ToString()));
+                    }
+
                 }
             }
 
@@ -1132,30 +1209,32 @@ namespace MOBOT.BHL.Server
                     AddGoogleScholarTag(tags, "DC.citation.epage", segment.EndPageNumber);
                     AddGoogleScholarTag(tags, "DC.identifier.URI", string.Format(uriFormat, segment.SegmentID.ToString()));
 
-                    foreach (SegmentAuthor author in segment.AuthorList)
+                    foreach (ItemAuthor author in segment.AuthorList)
                     {
                         AddGoogleScholarTag(tags, "citation_author", author.FullName);
                         AddGoogleScholarTag(tags, "DC.creator", author.FullName);
                     }
 
-                    foreach (SegmentKeyword keyword in segment.KeywordList)
+                    foreach (ItemKeyword keyword in segment.KeywordList)
                     {
                         AddGoogleScholarTag(tags, "citation_keywords", keyword.Keyword);
                         AddGoogleScholarTag(tags, "DC.subject", keyword.Keyword);
                     }
 
-                    foreach (SegmentIdentifier identifier in segment.IdentifierList)
+                    foreach (ItemIdentifier identifier in segment.IdentifierList)
                     {
-                        if ((identifier.IsContainerIdentifier ?? 0) == 0)
-                        {
-                            AddGoogleScholarTag(tags, "citation_" + identifier.IdentifierName.ToLower(), identifier.IdentifierValue);
-                        }
+                        AddGoogleScholarTag(tags, "citation_" + identifier.IdentifierName.ToLower(), identifier.IdentifierValue);
                     }
 
-                    CustomGenericList<DOI> dois = service.DOISelectValidForSegment(segmentID);
-                    foreach (DOI doi in dois)
+                    List<ItemIdentifier> dois = service.DOISelectValidForSegment(segmentID);
+                    foreach (ItemIdentifier doi in dois)
                     {
-                        AddGoogleScholarTag(tags, "citation_doi", doi.DOIName);
+                        AddGoogleScholarTag(tags, "citation_doi", doi.IdentifierValue);
+                    }
+
+                    if (segment.PageList.Count > 0 && ConfigurationManager.AppSettings["UsePregeneratedPDFs"].ToLower() == "true")
+                    {
+                        AddGoogleScholarTag(tags, "citation_pdf_url", string.Format(ConfigurationManager.AppSettings["PartPdfUrl"], segment.SegmentID.ToString()));
                     }
                 }
             }
@@ -1171,7 +1250,7 @@ namespace MOBOT.BHL.Server
             }
         }
 
-        public CustomGenericList<Tuple<string, string, string>> LinkSelectToExternalContent()
+        public List<Tuple<string, string, string>> LinkSelectToExternalContent()
         {
             return new DownloadDAL().LinkSelectToExternalContent(null, null);
         }

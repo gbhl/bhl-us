@@ -1,7 +1,7 @@
 
-// Generated 2/27/2015 2:20:32 PM
+// Generated 1/5/2021 3:26:30 PM
 // Do not modify the contents of this code file.
-// This abstract class __NoteType is based upon NoteType.
+// This abstract class __NoteType is based upon dbo.NoteType.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __NoteType : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -144,7 +144,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedUserID = (int?)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -152,7 +152,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region NoteTypeID
 		
@@ -403,7 +403,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion LastModifiedUserID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -548,7 +548,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __NoteType.SortColumn.NoteTypeID);
 		/// </summary>
 		[Serializable]
@@ -569,3 +568,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

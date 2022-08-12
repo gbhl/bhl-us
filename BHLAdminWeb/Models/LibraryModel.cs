@@ -1,12 +1,9 @@
-﻿using MOBOT.BHL.DataObjects;
+﻿using BHL.SiteServiceREST.v1.Client;
+using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
@@ -29,6 +26,8 @@ namespace MOBOT.BHL.AdminWeb.Models
             get { return _ocrJobPath; }
             set { _ocrJobPath = value; }
         }
+
+        public string AddItemType { get; set; }
 
         private string _addItemID = string.Empty;
 
@@ -62,6 +61,8 @@ namespace MOBOT.BHL.AdminWeb.Models
             set { _addNum = value; }
         }
 
+        public string DelItemType { get; set; }
+
         private string _delItemID = string.Empty;
 
         public string DelItemID
@@ -94,6 +95,8 @@ namespace MOBOT.BHL.AdminWeb.Models
             set { _delNum = value; }
         }
 
+        public string OcrItemType { get; set; }
+
         private string _ocrItemID = string.Empty;
 
         public string OcrItemID
@@ -124,169 +127,185 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         public void AddPagesToItem()
         {
-            int itemID = -1;
-            int pageID = -1;
-            int addNum = -1;
+            if (ValidateForm(this.AddItemType, this.AddItemID, this.AddIAID, this.AddPageID, this.AddNum, out string id, out string barcode))
+            {
+                this.AddItemID = id;
+                this.AddIAID = barcode;
 
-            if (!Int32.TryParse(this.AddItemID, out itemID) && !string.IsNullOrWhiteSpace(this.AddItemID))
-            {
-                this.Message = "Item ID must be a numeric value.";
-                return;
-            }
-            if (!Int32.TryParse(this.AddPageID, out pageID))
-            {
-                this.Message = "Page ID must be a numeric value.";
-                return;
-            }
-
-            if (!Int32.TryParse(this.AddNum, out addNum))
-            {
-                this.Message = "Number of Pages to Add must be a numeric value.";
-                return;
-            }
-            if (addNum <= 0)
-            {
-                this.Message = "Number of Pages to Add must be a positive value.";
-                return;
-            }
-
-            BHLProvider provider = new BHLProvider();
-            Item item = null;
-            if (!string.IsNullOrWhiteSpace(this.AddIAID))
-            {
-                item = provider.ItemSelectByBarCode(this.AddIAID);
-            }
-            else
-            {
-                item = provider.ItemSelectAuto(itemID);
-            }
-
-            if (item == null)
-            {
-                this.Message = "Item not found.";
-                return;
-            }
-
-            this.AddItemID = item.ItemID.ToString();
-            this.AddIAID = item.BarCode;
-
-            try
-            {
-                provider.PageInsertIntoItem(this.AddIAID, pageID, addNum);
-                this.Message = string.Format("Inserted {0} page(s) into item {1} ({2}).", addNum.ToString(),
-                    itemID.ToString(), this.AddIAID);
-            }
-            catch (SqlException ex)
-            {
-                this.Message = ex.Message;
+                try
+                {
+                    new BHLProvider().PageInsertIntoItem(this.AddIAID, Int32.Parse(this.AddPageID), Int32.Parse(this.AddNum));
+                    this.Message = string.Format("Inserted {0} page(s) into {1} {2} ({3}).", this.AddNum, this.AddItemType, this.AddItemID, this.AddIAID);
+                }
+                catch (SqlException ex)
+                {
+                    this.Message = ex.Message;
+                }
             }
         }
 
         public void DeletePagesFromItem()
         {
+            if (ValidateForm(this.DelItemType, this.DelItemID, this.DelIAID, this.DelPageID, this.DelNum, out string id, out string barcode))
+            {
+                this.DelItemID = id;
+                this.DelIAID = barcode;
+
+                try
+                {
+                    new BHLProvider().PageDeleteFromItem(this.DelIAID, Int32.Parse(this.DelPageID), Int32.Parse(this.DelNum));
+                    this.Message = string.Format("Deleted {0} page(s) from {1} {2} ({3}).", this.DelNum, this.DelItemType, this.DelItemID, this.DelIAID);
+                }
+                catch (SqlException ex)
+                {
+                    this.Message = ex.Message;
+                }
+            }
+        }
+
+        public bool ValidateForm(string itemType, string itemIDIn, string barcodeIn, string pageIDIn, string numPages, out string idOut, out string barcodeOut)
+        {
+            bool isValid = true;
+            idOut = string.Empty;
+            barcodeOut = string.Empty;
+
             int itemID = -1;
             int pageID = -1;
-            int delNum = -1;
+            int addNum = -1;
 
-            if (!Int32.TryParse(this.DelItemID, out itemID) && !string.IsNullOrWhiteSpace(this.DelItemID))
+            if (!Int32.TryParse(itemIDIn, out itemID) && !string.IsNullOrWhiteSpace(itemIDIn) && isValid)
             {
-                this.Message = "Item ID must be a numeric value.";
-                return;
+                this.Message = "ID must be a numeric value.";
+                isValid = false;
             }
-            if (!Int32.TryParse(this.DelPageID, out pageID))
+            if (!Int32.TryParse(pageIDIn, out pageID) && isValid)
             {
                 this.Message = "Page ID must be a numeric value.";
-                return;
+                isValid = false;
             }
 
-            if (!Int32.TryParse(this.DelNum, out delNum))
+            if (!Int32.TryParse(numPages, out addNum) && isValid)
             {
-                this.Message = "Number of Pages to Delete must be a numeric value.";
-                return;
+                this.Message = "Number of Pages must be a numeric value.";
+                isValid = false;
             }
-            if (delNum <= 0)
+            if (addNum <= 0 && isValid)
             {
-                this.Message = "Number of Pages to Delete must be a positive value.";
-                return;
-            }
-
-            BHLProvider provider = new BHLProvider();
-            Item item = null;
-            if (!string.IsNullOrWhiteSpace(this.DelIAID))
-            {
-                item = provider.ItemSelectByBarCode(this.DelIAID);
-            }
-            else
-            {
-                item = provider.ItemSelectAuto(itemID);
+                this.Message = "Number of Pages must be a positive value.";
+                isValid = false;
             }
 
-            if (item == null)
+            if (isValid)
             {
-                this.Message = "Item not found.";
-                return;
+                BHLProvider provider = new BHLProvider();
+
+                if (itemType == "Book")
+                {
+                    Book book = null;
+                    if (!string.IsNullOrWhiteSpace(barcodeIn))
+                        book = provider.BookSelectByBarcodeOrItemID(null, barcodeIn);
+                    else
+                        book = provider.BookSelectAuto(itemID);
+
+                    if (book == null)
+                    {
+                        this.Message = "Book not found.";
+                        isValid = false;
+                    }
+                    else
+                    {
+                        idOut = book.BookID.ToString();
+                        barcodeOut = book.BarCode;
+                    }
+                }
+                else
+                {
+                    Segment segment = null;
+                    if (!string.IsNullOrWhiteSpace(barcodeIn))
+                        segment = provider.SegmentSelectByBarCode(barcodeIn);
+                    else
+                        segment = provider.SegmentSelectAuto(itemID);
+
+                    if (segment == null)
+                    {
+                        this.Message = "Segment not found.";
+                        isValid = false;
+                    }
+                    else
+                    {
+                        idOut = segment.SegmentID.ToString();
+                        barcodeOut = segment.BarCode;
+                    }
+                }
             }
 
-            this.DelItemID = item.ItemID.ToString();
-            this.DelIAID = item.BarCode;
-
-            try
-            {
-                provider.PageDeleteFromItem(this.DelIAID, pageID, delNum);
-                this.Message = string.Format("Deleted {0} page(s) from item {1} ({2}).", delNum.ToString(),
-                    itemID.ToString(), this.DelIAID);
-            }
-            catch (SqlException ex)
-            {
-                this.Message = ex.Message;
-            }
+            return isValid;
         }
 
         public void CreateNewOCRJobFile()
         {
-            int itemID = -1;
+            int itemID;
 
-            if (!Int32.TryParse(this.OcrItemID, out itemID) && !string.IsNullOrWhiteSpace(this.OcrItemID))
+            if (!Int32.TryParse(this.OcrItemID, out int id) && !string.IsNullOrWhiteSpace(this.OcrItemID))
             {
-                this.Message = "Item ID must be a numeric value.";
+                this.Message = "ID must be a numeric value.";
                 return;
             }
 
             BHLProvider provider = new BHLProvider();
-            Item item = null;
-            if (!string.IsNullOrWhiteSpace(this.OcrIAID))
+            if (this.OcrItemType == "Book")
             {
-                item = provider.ItemSelectByBarCode(this.OcrIAID);
+                Book book = null;
+                if (!string.IsNullOrWhiteSpace(this.OcrIAID))
+                    book = provider.BookSelectByBarcodeOrItemID(null, this.OcrIAID);
+                else
+                    book = provider.BookSelectAuto(Int32.Parse(this.OcrItemID));
+
+                if (book == null)
+                {
+                    this.Message = "Book not found.";
+                    return;
+                }
+
+                this.OcrItemID = book.BookID.ToString();
+                this.OcrIAID = book.BarCode;
+                itemID = book.ItemID;
             }
             else
             {
-                item = provider.ItemSelectAuto(itemID);
+                Segment segment = null;
+                if (!string.IsNullOrWhiteSpace(this.OcrIAID))
+                    segment = provider.SegmentSelectByBarCode(this.OcrIAID);
+                else
+                    segment = provider.SegmentSelectAuto(Int32.Parse(this.OcrItemID));
+
+                if (segment == null)
+                {
+                    this.Message = "Segment not found.";
+                    return;
+                }
+
+                this.OcrItemID = segment.SegmentID.ToString();
+                this.OcrIAID = segment.BarCode;
+                itemID = segment.ItemID;
             }
 
-            if (item == null)
+            if (provider.PageTextLogSelectNonOCRForItem(itemID).Count > 0 && !this.ForceOverwrite)
             {
-                this.Message = "Item not found.";
+                this.Message = "Existing text is NOT derived from OCR.  Check 'Force Override' to update the text anyway.";
                 return;
             }
 
-            this.OcrItemID = item.ItemID.ToString();
-            this.OcrIAID = item.BarCode;
+            Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
 
-            if (provider.PageTextLogSelectNonOCRForItem(item.ItemID).Count > 0 && !this.ForceOverwrite)
+            if (client.OcrJobExists(itemID))
             {
-                this.Message = "Existing text for item is NOT derived from OCR.  Check 'Force Override' to update the text anyway.";
+                this.Message = string.Format("Ocr regeneration job pending for {0} {1} ({2}).", this.OcrItemType, this.OcrItemID, this.OcrIAID);
                 return;
             }
 
-            SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-            if (service.OcrJobExists(item.ItemID))
-            {
-                this.Message = string.Format("Ocr regeneration job pending for item {0} ({1}).", this.OcrItemID, this.OcrIAID);
-                return;
-            }
-
-            service.OcrCreateJob(item.ItemID);
-            this.Message = string.Format("Ocr regeneration job created for item {0} ({1}).", this.OcrItemID, this.OcrIAID);
+            client.CreateOcrJob(itemID);
+            this.Message = string.Format("Ocr regeneration job created for {0} {1} ({2}).", this.OcrItemType, this.OcrItemID, this.OcrIAID);
         }
 
         #endregion Public methods

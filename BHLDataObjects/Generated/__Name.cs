@@ -1,7 +1,7 @@
 
-// Generated 12/10/2012 3:05:47 PM
+// Generated 1/5/2021 3:26:17 PM
 // Do not modify the contents of this code file.
-// This abstract class __Name is based upon Name.
+// This abstract class __Name is based upon dbo.Name.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Name : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -144,7 +144,7 @@ namespace MOBOT.BHL.DataObjects
 						_NameResolvedID = (int?)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -152,7 +152,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region NameID
 		
@@ -400,7 +400,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion NameResolvedID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -545,7 +545,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Name.SortColumn.NameID);
 		/// </summary>
 		[Serializable]
@@ -566,3 +565,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

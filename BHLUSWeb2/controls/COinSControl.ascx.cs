@@ -42,10 +42,10 @@ namespace MOBOT.BHL.Web2
             if (titleId != 0)
             {
                 coins = provider.ItemCOinSSelectByTitleId(titleId);
-                List<Data.DOI> doi = provider.DOISelectValidForTitle(titleId);
+                List<Data.Title_Identifier> doi = provider.DOISelectValidForTitle(titleId);
                 if (doi != null && coins != null)
                 {
-                    if (doi.Count > 0) coins.Doi = doi[0].DOIName;
+                    if (doi.Count > 0) coins.Doi = doi[0].IdentifierValue;
                 }
             }
             else
@@ -62,6 +62,7 @@ namespace MOBOT.BHL.Web2
                 if (coins.Doi != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("info:doi/" + coins.Doi));
                 if (coins.Oclc != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("info:oclcnum/" + coins.Oclc));
                 if (coins.Rft_issn != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISSN:" + coins.Rft_issn));
+                if (coins.Rft_eissn != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISSN:" + coins.Rft_eissn));
                 if (coins.Rft_isbn != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISBN:" + coins.Rft_isbn));
                 if (coins.Lccn != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("info:lccn/" + coins.Lccn));
                 if (titleId != 0) output.Append("&amp;rft_id=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["BibPageUrl"], titleId)));
@@ -71,7 +72,7 @@ namespace MOBOT.BHL.Web2
                 switch (coins.Rft_genre)
                 {
                     // Journal COinS do not work with Mendeley or Zotero unless they represent journal articles.
-                    // Per discussion with Chris, decided to represent full journal volumes as books.
+                    // Per discussion with BHL technical director, decided to represent full journal volumes as books.
                     case "book":    // book
                     case "journal":     // journal
                         output.Append("&amp;rft_val_fmt=" + Server.UrlEncode("info:ofi/fmt:kev:mtx:book"));
@@ -89,6 +90,7 @@ namespace MOBOT.BHL.Web2
                         if (coins.Rft_edition != String.Empty) output.Append("&amp;rft.edition=" + Server.UrlEncode(coins.Rft_edition));
 
                         if (coins.Rft_issn != String.Empty) output.Append("&amp;rft.issn=" + Server.UrlEncode(coins.Rft_issn));
+                        if (coins.Rft_eissn != String.Empty) output.Append("&amp;rft.eissn=" + Server.UrlEncode(coins.Rft_eissn));
                         if (coins.Rft_isbn != String.Empty) output.Append("&amp;rft.isbn=" + Server.UrlEncode(coins.Rft_isbn));
                         if (coins.Rft_aufirst != String.Empty) output.Append("&amp;rft.aufirst=" + Server.UrlEncode(coins.Rft_aufirst));
                         if (coins.Rft_aulast != String.Empty) output.Append("&amp;rft.aulast=" + Server.UrlEncode(coins.Rft_aulast));
@@ -178,10 +180,10 @@ namespace MOBOT.BHL.Web2
 
             // Get the data
             coins = provider.SegmentCOinSSelectBySegmentId(segmentId);
-            List<Data.DOI> doi = provider.DOISelectValidForSegment(segmentId);
+            List<Data.ItemIdentifier> doi = provider.DOISelectValidForSegment(segmentId);
             if (doi != null && coins != null) 
             {
-                if (doi.Count > 0) coins.Doi = doi[0].DOIName;
+                if (doi.Count > 0) coins.Doi = doi[0].IdentifierValue;
             }
 
             if (coins != null)
@@ -192,6 +194,7 @@ namespace MOBOT.BHL.Web2
                 // Add identifiers
                 if (coins.Doi != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("info:doi/" + coins.Doi));
                 if (coins.Rft_issn != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISSN:" + coins.Rft_issn));
+                if (coins.Rft_eissn != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISSN:" + coins.Rft_eissn));
                 if (coins.Rft_isbn != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISBN:" + coins.Rft_isbn));
                 output.Append("&amp;rft_id=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["PartPageUrl"], segmentId)));
 
@@ -215,6 +218,7 @@ namespace MOBOT.BHL.Web2
                         if (coins.Rft_pages != String.Empty) output.Append("&amp;rft.pages=" + Server.UrlEncode(coins.Rft_pages));
                         if (coins.Rft_coden != String.Empty) output.Append("&amp;rft.coden=" + Server.UrlEncode(coins.Rft_coden));
                         if (coins.Rft_issn != String.Empty) output.Append("&amp;rft.issn=" + Server.UrlEncode(coins.Rft_issn));
+                        if (coins.Rft_eissn != String.Empty) output.Append("&amp;rft.eissn=" + Server.UrlEncode(coins.Rft_eissn));
                         if (coins.Rft_isbn != String.Empty) output.Append("&amp;rft.isbn=" + Server.UrlEncode(coins.Rft_isbn));
                         if (coins.Rft_aufirst != String.Empty) output.Append("&amp;rft.aufirst=" + Server.UrlEncode(coins.Rft_aufirst));
                         if (coins.Rft_aulast != String.Empty) output.Append("&amp;rft.aulast=" + Server.UrlEncode(coins.Rft_aulast));

@@ -14,7 +14,7 @@ using Page = MOBOT.BHL.DataObjects.Page;
 
 namespace MOBOT.BHL.AdminWeb
 {
-	public partial class Paginator : System.Web.UI.Page
+    public partial class Paginator : System.Web.UI.Page
 	{
 		private BHLProvider bp = new BHLProvider();
 		private bool _maintainScrollPos = true;
@@ -22,34 +22,42 @@ namespace MOBOT.BHL.AdminWeb
 		private string _completeStatus = "Complete";
 		private string _unlockStatus = "Unlock";
 		private string _pendingStatus = "Incomplete";
+		private string _bookObjectType = "Book";
+		private string _segmentObjectType = "Segment";
 
         public string GetOAuthToken { get { return hidAuthToken.Value; } }
         public string GetOAuthTokenSecret { get { return hidAuthTokenSecret.Value; } }
 
-		private void fillItemsDropDown( int titleId )
-		{
-			List<Item> items = bp.ItemSelectByTitleId( titleId );
+		private void fillItemsDropDown(int id)
+        {
+			if (hidObjectType.Value == _bookObjectType) fillDropDownWithBooks(id);
+			if (hidObjectType.Value == _segmentObjectType) fillDropDownWithSegments(id);
+        }
 
-			for (int x = items.Count - 1; x >= 0; x--)
+		private void fillDropDownWithBooks( int titleId )
+		{
+			List<Book> books = bp.BookSelectByTitleId( titleId );
+
+			for (int x = books.Count - 1; x >= 0; x--)
 			{
-				if (!items[x].HasLocalContent)
+				if (!books[x].HasLocalContent)
 				{
 					// Dont' include items without local content (no pages to paginate)
-					items.RemoveAt(x);
+					books.RemoveAt(x);
 				}
                 else
                 {
 					// Add Item ID to volume string
-					items[x].Volume = string.Format("{0} ~ Item ID: {1}", items[x].Volume, items[x].ItemID.ToString()).Trim();
+					books[x].Volume = string.Format("{0} ~ Item ID: {1}", books[x].Volume, books[x].BookID.ToString()).Trim();
                 }
 			}
 
-            itemDropDownList.DataSource = items;
+            itemDropDownList.DataSource = books;
 			itemDropDownList.DataTextField = "Volume";
-			itemDropDownList.DataValueField = "ItemID";
+			itemDropDownList.DataValueField = "BookID";
 			itemDropDownList.DataBind();
 
-			if ( items.Count == 0 )
+			if ( books.Count == 0 )
 			{
 				detailGridView.DataSource = null;
 				detailGridView.DataBind();
@@ -57,26 +65,64 @@ namespace MOBOT.BHL.AdminWeb
 			}
 			else
 			{
-				fillPageList( items[ 0 ].ItemID );
+				fillPageList( books[ 0 ].BookID);
 			}
 		}
 
-		private void fillPageList( int itemId )
+		private void fillDropDownWithSegments(int itemId)
 		{
-			checkPaginationStatus();
-			List<Page> pages = bp.PageMetadataSelectByItemID( itemId );
+			List<Segment> segments = bp.SegmentSelectByBookID(itemId);
+
+			for (int x = segments.Count - 1; x >= 0; x--)
+			{
+				if (string.IsNullOrWhiteSpace(segments[x].BarCode))
+				{
+					// Dont' include segments not based on IA items
+					segments.RemoveAt(x);
+				}
+				else
+				{
+					// Add Segment ID to volume string
+					segments[x].Title = string.Format("{0} ~ Segment ID: {1}", segments[x].Title, segments[x].SegmentID.ToString()).Trim();
+				}
+			}
+
+			itemDropDownList.DataSource = segments;
+			itemDropDownList.DataTextField = "Title";
+			itemDropDownList.DataValueField = "SegmentID";
+			itemDropDownList.DataBind();
+
+			if (segments.Count == 0)
+			{
+				detailGridView.DataSource = null;
+				detailGridView.DataBind();
+				clearAll();
+			}
+			else
+			{
+				fillPageList(segments[0].SegmentID);
+			}
+		}
+
+		private void fillPageList( int id )
+		{
+			checkPaginationStatus(id);
+			List<Page> pages = null;
+			
+			if (hidObjectType.Value == _bookObjectType) pages = bp.PageMetadataSelectByItemID( id );
+			if (hidObjectType.Value == _segmentObjectType) pages = bp.PageMetadataSelectBySegmentID(id);
 
 			detailGridView.DataSource = pages;
 			detailGridView.DataBind();
 			clearAll();
 
             editHistoryControl.EntityName = "pagination";
-            editHistoryControl.EntityId = itemId.ToString();
+            editHistoryControl.EntityId = id.ToString();
         }
 
         private void loadPageTypes()
 		{
-			List<PageType> pageTypes = bp.PageTypeSelectAll();
+			List<PageType> pageTypes = bp.PageTypeSelectActive();
 			pageTypeCombo.DataSource = pageTypes;
 			pageTypeCombo.DataValueField = "PageTypeID";
 			pageTypeCombo.DataTextField = "PageTypeName";
@@ -116,16 +162,19 @@ namespace MOBOT.BHL.AdminWeb
 			pageTypeCombo.SelectedIndex = 0;
 		}
 
-		private void checkPaginationStatus()
+		private void checkPaginationStatus(int? id = null)
 		{
-			int itemId = int.Parse( itemDropDownList.SelectedValue );
-			Item item = bp.ItemSelectPagination( itemId );
+			if (id == null) id = int.Parse( itemDropDownList.SelectedValue );
+
+			Item item = null;
+			if (hidObjectType.Value == _bookObjectType) item = bp.BookSelectPagination( (int)id );
+			if (hidObjectType.Value == _segmentObjectType) item = bp.SegmentSelectPagination((int)id);
 
 			if ( item != null )
 			{
 				paginationStatusLabel.Text = PaginationStatus.GetStatusString( item.PaginationStatusID );
 
-				if ( item.PaginationStatusID != 5 )
+				if ( (item.PaginationStatusID ?? 5) != 5 )
 				{
 					DateTime paginationStatusDate = (DateTime)item.PaginationStatusDate;
 					paginationDetailStatusLabel.Text = "Pagination status set by " + item.PaginationUserName + " on " +
@@ -195,9 +244,10 @@ namespace MOBOT.BHL.AdminWeb
 			errorControl.Visible = true;
 		}
 
-		private void updatePaginationStatus( int itemId, int paginationStatusId, int userId )
+		private void updatePaginationStatus( int id, int paginationStatusId, int userId )
 		{
-			bp.ItemUpdatePaginationStatus( itemId, paginationStatusId, userId );
+			if (hidObjectType.Value == _bookObjectType) bp.BookUpdatePaginationStatus( id, paginationStatusId, userId );
+			if (hidObjectType.Value == _segmentObjectType) bp.SegmentUpdatePaginationStatus(id, paginationStatusId, userId);
 			checkPaginationStatus();
 		}
 
@@ -207,34 +257,97 @@ namespace MOBOT.BHL.AdminWeb
 		{
             // Using an old version of jQuery here because the bookviewer code requires it
             ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, ConfigurationManager.AppSettings["jQuery142Path"]);
+			bool isError = false;
 
             if ( !IsPostBack )
 			{
 				loadPageTypes();
 
-                String titleIDString = Request.QueryString["TitleID"] as String;
-                int titleID = 0;
-                if (titleIDString != null) Int32.TryParse(titleIDString, out titleID);
-                if (titleID != 0)
+                string titleIDString = Request.QueryString["TitleID"];
+				string itemIDString = Request.QueryString["ItemID"];
+				string segmentIDString = Request.QueryString["SegmentID"];
+				Int32.TryParse(titleIDString, out int titleID);
+				Int32.TryParse(itemIDString, out int itemID);
+				Int32.TryParse(segmentIDString, out int segmentID);
+
+				// Make sure the specified segment can be paginated (is a standalone segment)
+				Segment segment = null;
+				if (segmentID != 0) segment = bp.SegmentSelectForSegmentID(segmentID);
+
+				if (segment != null)
                 {
+					if (string.IsNullOrWhiteSpace(segment.BarCode))	// Only standalone segments can be paginated
+					{
+						segmentID = 0;
+						itemID = 0;
+						titleID = 0;
+						isError = true;
+						errorControl.AddErrorText("Only standalone Segments can be paginated");
+					}
+					else
+					{
+						if (itemID == 0) itemID = segment.BookID ?? 0;  // Make sure we have an Item ID
+						titleID = 0;
+					}
+                }
+
+				string displayTitle = string.Empty;
+
+				// If an IA-based segment is NOT being paginated, make sure we have a Title ID for non-virtual Items
+				Book book = null;
+				if (itemID != 0) book = bp.BookSelectByBarcodeOrItemID(itemID, null);
+				if (book != null)
+				{
+					displayTitle = book.TitleName + " | " + book.DisplayedShortVolume;
+
+					if (book.IsVirtual == 0)
+					{
+						if (titleID == 0) titleID = book.PrimaryTitleID ?? 0;
+					}
+					else
+					{
+						titleID = 0;
+					}
+				}
+
+				if (titleID != 0)
+                {
+					hidObjectType.Value = _bookObjectType;
+					titleLabel.Text = "Title";
+					itemLabel.Text = "Item";
+
                     Title title = bp.TitleSelectAuto(titleID);
                     litTitle.Text = title.DisplayedShortTitle;
-                }
 
-                fillItemsDropDown(titleID);
+					fillItemsDropDown(titleID);
 
-                String itemIDString = Request.QueryString["ItemID"] as String;
-                int itemID = 0;
-                if (itemIDString != null) Int32.TryParse(itemIDString, out itemID);
-                if (itemID != 0)
+					if (itemID != 0)
+					{
+						itemDropDownList.SelectedValue = itemID.ToString();
+						fillPageList(itemID);
+					}
+				}
+				else if (itemID != 0)
                 {
-                    itemDropDownList.SelectedValue = itemID.ToString();
-                    fillPageList(itemID);
-                }
+					hidObjectType.Value = _segmentObjectType;
+					titleLabel.Text = "Item";
+					itemLabel.Text = "Segment";
+
+					litTitle.Text = displayTitle;
+
+					fillItemsDropDown(itemID);
+
+					if (segmentID != 0)
+                    {
+						itemDropDownList.SelectedValue = segmentID.ToString();
+						fillPageList(segmentID);
+                    }
+				}
+
 			}
 
 			FlickrDeleteRow.Visible = Helper.IsUserAuthorized(new HttpRequestWrapper(Request), Helper.SecurityRole.BHLAdminUserAdvanced);
-			errorControl.Visible = false;
+			errorControl.Visible = isError;
 		}
 
 		protected override void OnPreRender( EventArgs e )
@@ -273,8 +386,8 @@ namespace MOBOT.BHL.AdminWeb
 
 		protected void itemDropDownList_SelectedIndexChanged( object sender, EventArgs e )
 		{
-			int itemId = int.Parse( itemDropDownList.SelectedValue );
-			fillPageList( itemId );
+			int id = int.Parse( itemDropDownList.SelectedValue );
+			fillPageList(id);
 		}
 
 		protected void detailGridView_RowCommand( object sender, GridViewCommandEventArgs e )
@@ -283,11 +396,14 @@ namespace MOBOT.BHL.AdminWeb
 			{
 				int rowNum = int.Parse( e.CommandArgument.ToString() );
 				int pageId = (int)detailGridView.DataKeys[ rowNum ].Value;
-				PageSummaryView ps = bp.PageSummarySelectByPageId( pageId );
+				PageSummaryView ps = null;
+				if (hidObjectType.Value == _bookObjectType) ps = bp.PageSummarySelectByPageId( pageId );
+				if (hidObjectType.Value == _segmentObjectType) ps = bp.PageSummarySegmentSelectByPageID(pageId);
 
-                // Set the Book Reader properties
-                BookReader1.ItemID = ps.ItemID;
-                BookReader1.NumPages = new BHLProvider().PageSelectCountByItemID(ps.ItemID);
+				// Set the Book Reader properties
+				BookReader1.ObjectType = hidObjectType.Value;
+				BookReader1.ObjectID = ps.BookID;
+				BookReader1.NumPages = detailGridView.Rows.Count;
                 BookReader1.StartPage = ps.SequenceOrder;
                 BookReader1.FixedImageHeight = 2400;
                 BookReader1.FixedImageWidth = 1600;
@@ -463,7 +579,6 @@ namespace MOBOT.BHL.AdminWeb
                 string year = DataCleaner.CleanYear(yearTextBox.Text.Trim());
                 bp.PageUpdateYear( arrPages, year, userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
-				//fillPageList( itemId );
 
                 // By manually filling the cells in the datagrid (instead of just
                 // refreshing/refilling the dataset, we are able to preserve the 
@@ -499,7 +614,6 @@ namespace MOBOT.BHL.AdminWeb
 				pages.CopyTo( arrPages );
 				bp.PageUpdateVolume( arrPages, volumeTextBox.Text.Trim(), userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
-				//fillPageList( itemId );
 
                 // By manually filling the cells in the datagrid (instead of just
                 // refreshing/refilling the dataset, we are able to preserve the 
@@ -537,7 +651,6 @@ namespace MOBOT.BHL.AdminWeb
                 bp.PageUpdateYear( arrPages, year, userId );
 				bp.PageUpdateVolume( arrPages, volumeTextBox.Text.Trim(), userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
-				//fillPageList( itemId );
 
                 // By manually filling the cells in the datagrid (instead of just
                 // refreshing/refilling the dataset, we are able to preserve the 
@@ -574,7 +687,6 @@ namespace MOBOT.BHL.AdminWeb
 				pages.CopyTo( arrPages );
 				bp.PageUpdateIssue( arrPages, issuePrefixCombo.SelectedItem.Text, issueTextBox.Text.Trim(), userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
-				//fillPageList( itemId );
 
                 // By manually filling the cells in the datagrid (instead of just
                 // refreshing/refilling the dataset, we are able to preserve the 
@@ -610,7 +722,14 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             string qsParams = "&rotate=" + RotateImage.SelectedValue;
-            qsParams += "&titleid=" + Request.QueryString["TitleID"];
+
+			if (!string.IsNullOrWhiteSpace(Request.QueryString["SegmentID"]))
+				qsParams += "&segmentid=" + Request.QueryString["SegmentID"];
+			else if (!string.IsNullOrWhiteSpace(Request.QueryString["TitleID"]))
+				qsParams += "&titleid=" + Request.QueryString["TitleID"];
+			else
+				qsParams += "&itemid=" + Request.QueryString["ItemID"];
+
             string pageIds = "";
             foreach (GridViewRow gvr in detailGridView.Rows)
             {
@@ -706,7 +825,6 @@ namespace MOBOT.BHL.AdminWeb
 				pages.CopyTo( arrPages );
 				bp.IndicatedPageDeleteAllForPage( arrPages, userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
-				//fillPageList( itemId );
 
                 // By manually filling the cells in the datagrid (instead of just
                 // refreshing/refilling the dataset, we are able to preserve the 
@@ -740,7 +858,6 @@ namespace MOBOT.BHL.AdminWeb
 				pages.CopyTo( arrPages );
 				bp.Page_PageTypeSave( arrPages, int.Parse( pageTypeCombo.SelectedValue ), userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
-				//fillPageList( itemId );
 
                 // By manually filling the cells in the datagrid (instead of just
                 // refreshing/refilling the dataset, we are able to preserve the 
@@ -784,7 +901,6 @@ namespace MOBOT.BHL.AdminWeb
                 bp.Page_PageTypeDeleteAllForPage(arrPages, userId);
                 bp.Page_PageTypeSave(arrPages, int.Parse(pageTypeCombo.SelectedValue), userId);
                 int itemId = int.Parse(itemDropDownList.SelectedValue);
-                //fillPageList(itemId);
 
                 // By manually filling the cells in the datagrid (instead of just
                 // refreshing/refilling the dataset, we are able to preserve the 
@@ -814,7 +930,6 @@ namespace MOBOT.BHL.AdminWeb
 				pages.CopyTo( arrPages );
 				bp.Page_PageTypeDeleteAllForPage( arrPages, userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
-				//fillPageList( itemId );
 
                 // By manually filling the cells in the datagrid (instead of just
                 // refreshing/refilling the dataset, we are able to preserve the 
@@ -835,8 +950,11 @@ namespace MOBOT.BHL.AdminWeb
 		protected void lockButton_Click( object sender, EventArgs e )
 		{
 			// Validate the state of the button and the selected item before performing any updates
-			int itemId = int.Parse( itemDropDownList.SelectedValue );
-			Item item = bp.ItemSelectPagination( itemId );
+			int id = int.Parse( itemDropDownList.SelectedValue );
+			Item item = null;
+			if (hidObjectType.Value == _bookObjectType) item = bp.BookSelectPagination( id );
+			if (hidObjectType.Value == _segmentObjectType) item = bp.SegmentSelectPagination(id);
+
 			string paginationStatus = lockButton.Text;
             int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
@@ -851,7 +969,7 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.InProgress, userId );
+					updatePaginationStatus( id, PaginationStatus.InProgress, userId );
 				}
 			}
 			else if ( item.PaginationStatusID.Value == PaginationStatus.InProgress )
@@ -864,7 +982,7 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.Pending, userId );
+					updatePaginationStatus( id, PaginationStatus.Pending, userId );
 				}
 			}
 			else if ( item.PaginationStatusID.Value == PaginationStatus.Complete )
@@ -876,7 +994,7 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.Pending, userId );
+					updatePaginationStatus( id, PaginationStatus.Pending, userId );
 				}
 			}
 		}
@@ -884,8 +1002,12 @@ namespace MOBOT.BHL.AdminWeb
 		protected void statusButton_Click( object sender, EventArgs e )
 		{
 			// Validate the state of the button and the selected item before performing any updates
-			int itemId = int.Parse( itemDropDownList.SelectedValue );
-			Item item = bp.ItemSelectPagination( itemId );
+			int id = int.Parse( itemDropDownList.SelectedValue );
+
+			Item item = null;
+			if (hidObjectType.Value == _bookObjectType) item = bp.BookSelectPagination(id);
+			if (hidObjectType.Value == _segmentObjectType) item = bp.SegmentSelectPagination(id);
+
 			string paginationStatus = statusButton.Text;
             int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
@@ -898,10 +1020,10 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.Complete, userId );
+					updatePaginationStatus( id, PaginationStatus.Complete, userId );
 				}
 			}
-			else if ( item.PaginationStatusID.Value == PaginationStatus.InProgress )
+			else if (item.PaginationStatusID.Value == PaginationStatus.InProgress )
 			{
 				// If the status is "In Progress", validate that the action will set it to "Complete"
 				// also make sure that the logged in user has rights to unlock this item
@@ -911,10 +1033,10 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.Complete, userId );
+					updatePaginationStatus( id, PaginationStatus.Complete, userId );
 				}
 			}
-			else if ( item.PaginationStatusID.Value == PaginationStatus.Complete )
+			else if (item.PaginationStatusID.Value == PaginationStatus.Complete )
 			{
 				// If the status is "Complete", validate that the action will set it to "In Progress"
 				if ( paginationStatus.Equals( _lockEditStatus ) == false )
@@ -923,7 +1045,7 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.InProgress, userId );
+					updatePaginationStatus( id, PaginationStatus.InProgress, userId );
 				}
 			}
 		}
@@ -1009,7 +1131,6 @@ namespace MOBOT.BHL.AdminWeb
                     bp.IndicatedPageSave(arrPages, prefixTextBox.Text.Trim(), style, start, i, impliedCheckBox.Checked,
                         userId);
                     int itemId = int.Parse(itemDropDownList.SelectedValue);
-                    //fillPageList(itemId);
 
                     // By manually filling the cells in the datagrid (instead of just
                     // refreshing/refilling the dataset, we are able to preserve the 
@@ -1080,11 +1201,6 @@ namespace MOBOT.BHL.AdminWeb
 
             return nextPageNumber;
         }
-
-		protected void detailViewRadio_CheckedChanged( object sender, EventArgs e )
-		{
-			fillPageList( int.Parse( itemDropDownList.SelectedValue ) );
-		}
 
 		#endregion
 

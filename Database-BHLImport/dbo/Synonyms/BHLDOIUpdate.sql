@@ -1,0 +1,2 @@
+﻿CREATE SYNONYM dbo.BHLDOIUpdate FOR BHL.dbo.DOIUpdate
+GO

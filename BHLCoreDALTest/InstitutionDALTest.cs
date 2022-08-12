@@ -1,9 +1,8 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
@@ -65,7 +64,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int itemID = 22500;
-            CustomGenericList<Institution> actual = target.InstitutionSelectByItemID(sqlConnection, sqlTransaction, itemID);
+            List<Institution> actual = target.InstitutionSelectByItemID(sqlConnection, sqlTransaction, itemID);
             Assert.IsNotNull(actual);
         }
 
@@ -77,7 +76,7 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             int sortBy = 1;
             int bhlOnly = 0;
-            CustomGenericList<Institution> actual = target.InstitutionSelectDOIStats(sqlConnection, sqlTransaction, sortBy, bhlOnly);
+            List<Institution> actual = target.InstitutionSelectDOIStats(sqlConnection, sqlTransaction, sortBy, bhlOnly);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -88,7 +87,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             bool onlyMemberLibraries = false;
-            CustomGenericList<Institution> actual = target.InstitutionSelectWithPublishedItems(sqlConnection, sqlTransaction, onlyMemberLibraries);
+            List<Institution> actual = target.InstitutionSelectWithPublishedItems(sqlConnection, sqlTransaction, onlyMemberLibraries);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -99,7 +98,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             bool onlyMemberLibraries = false;
-            CustomGenericList<Institution> actual = target.InstitutionSelectWithPublishedSegments(sqlConnection, sqlTransaction, onlyMemberLibraries);
+            List<Institution> actual = target.InstitutionSelectWithPublishedSegments(sqlConnection, sqlTransaction, onlyMemberLibraries);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -111,7 +110,7 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             int itemID = 22004;
             string role = "Holding Institution";
-            CustomGenericList<Institution> actual = target.InstitutionSelectByItemIDAndRole(sqlConnection, sqlTransaction, itemID, role);
+            List<Institution> actual = target.InstitutionSelectByItemIDAndRole(sqlConnection, sqlTransaction, itemID, role);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -123,7 +122,7 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             int segmentID = 6450;
             string role = "Contributor";
-            CustomGenericList<Institution> actual = target.InstitutionSelectBySegmentIDAndRole(sqlConnection, sqlTransaction, segmentID, role);
+            List<Institution> actual = target.InstitutionSelectBySegmentIDAndRole(sqlConnection, sqlTransaction, segmentID, role);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -135,7 +134,7 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             int titleID = 2187;
             string role = "Holding Institution";
-            CustomGenericList<Institution> actual = target.InstitutionSelectByTitleIDAndRole(sqlConnection, sqlTransaction, titleID, role);
+            List<Institution> actual = target.InstitutionSelectByTitleIDAndRole(sqlConnection, sqlTransaction, titleID, role);
             Assert.IsTrue(actual.Count > 0);
         }
     }

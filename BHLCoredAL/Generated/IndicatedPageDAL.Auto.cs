@@ -1,8 +1,8 @@
 
-// Generated 5/17/2010 4:03:17 PM
+// Generated 1/5/2021 3:25:18 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class IndicatedPageDAL is based upon IndicatedPage.
+// This partial class IndicatedPageDAL is based upon dbo.IndicatedPage.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from IndicatedPage by primary key(s).
+		/// Select values from dbo.IndicatedPage by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -54,7 +55,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from IndicatedPage by primary key(s).
+		/// Select values from dbo.IndicatedPage by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -78,7 +79,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<IndicatedPage> helper = new CustomSqlHelper<IndicatedPage>())
 				{
-					CustomGenericList<IndicatedPage> list = helper.ExecuteReader(command);
+					List<IndicatedPage> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IndicatedPage o = list[0];
@@ -94,14 +95,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IndicatedPage by primary key(s).
+		/// Select values from dbo.IndicatedPage by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="pageID"></param>
 		/// <param name="sequence"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IndicatedPageSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IndicatedPageSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int pageID,
@@ -111,15 +112,15 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IndicatedPage by primary key(s).
+		/// Select values from dbo.IndicatedPage by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="pageID"></param>
 		/// <param name="sequence"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IndicatedPageSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IndicatedPageSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -138,11 +139,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into IndicatedPage.
+		/// Insert values into dbo.IndicatedPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -169,7 +170,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into IndicatedPage.
+		/// Insert values into dbo.IndicatedPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -209,7 +210,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<IndicatedPage> helper = new CustomSqlHelper<IndicatedPage>())
 				{
-					CustomGenericList<IndicatedPage> list = helper.ExecuteReader(command);
+					List<IndicatedPage> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IndicatedPage o = list[0];
@@ -225,7 +226,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into IndicatedPage. Returns an object of type IndicatedPage.
+		/// Insert values into dbo.IndicatedPage. Returns an object of type IndicatedPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -240,7 +241,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into IndicatedPage. Returns an object of type IndicatedPage.
+		/// Insert values into dbo.IndicatedPage. Returns an object of type IndicatedPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -268,7 +269,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from IndicatedPage by primary key(s).
+		/// Delete values from dbo.IndicatedPage by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -285,7 +286,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from IndicatedPage by primary key(s).
+		/// Delete values from dbo.IndicatedPage by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -331,7 +332,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in IndicatedPage. Returns an object of type IndicatedPage.
+		/// Update values in dbo.IndicatedPage. Returns an object of type IndicatedPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -356,7 +357,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IndicatedPage. Returns an object of type IndicatedPage.
+		/// Update values in dbo.IndicatedPage. Returns an object of type IndicatedPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -393,7 +394,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<IndicatedPage> helper = new CustomSqlHelper<IndicatedPage>())
 				{
-					CustomGenericList<IndicatedPage> list = helper.ExecuteReader(command);
+					List<IndicatedPage> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IndicatedPage o = list[0];
@@ -409,7 +410,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IndicatedPage. Returns an object of type IndicatedPage.
+		/// Update values in dbo.IndicatedPage. Returns an object of type IndicatedPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -424,7 +425,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IndicatedPage. Returns an object of type IndicatedPage.
+		/// Update values in dbo.IndicatedPage. Returns an object of type IndicatedPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -451,9 +452,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage IndicatedPage object.
+		/// Manage dbo.IndicatedPage object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IndicatedPage.
+		/// then either insert values into, delete values from, or update values in dbo.IndicatedPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -468,9 +469,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage IndicatedPage object.
+		/// Manage dbo.IndicatedPage object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IndicatedPage.
+		/// then either insert values into, delete values from, or update values in dbo.IndicatedPage.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -544,4 +545,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

@@ -135,9 +135,18 @@ namespace MOBOT.BHL.AdminWeb
                         if (ids[x] != "cb_list")    // ignore checkbox "cb_list"
                         {
                             string id = ids[x].Replace("jqg_list_", "");
+
+                            // Separate the id type from the id value
+                            string idType = id.Substring(0, 1);
+                            id = id.Substring(1);
+
                             // Call the web service to update the item
-                            new BHLProvider().ItemUpdatePaginationStatus(Convert.ToInt32(id),
-                                Convert.ToInt32(ddlStatusChange.SelectedValue), userId);
+                            if (idType == "b")
+                                new BHLProvider().BookUpdatePaginationStatus(Convert.ToInt32(id),
+                                    Convert.ToInt32(ddlStatusChange.SelectedValue), userId);
+                            else
+                                new BHLProvider().SegmentUpdatePaginationStatus(Convert.ToInt32(id),
+                                    Convert.ToInt32(ddlStatusChange.SelectedValue), userId);
                         }
                     }
                 }

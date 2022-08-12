@@ -1,14 +1,14 @@
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class PageTypeDAL
+    public partial class PageTypeDAL
 	{
-		public CustomGenericList<PageType> PageTypeSelectAll( SqlConnection sqlConnection, SqlTransaction sqlTransaction )
+		public List<PageType> PageTypeSelectAll( SqlConnection sqlConnection, SqlTransaction sqlTransaction )
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection( 
 				CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );
@@ -18,13 +18,13 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<PageType> helper = new CustomSqlHelper<PageType>() )
 				{
-					CustomGenericList<PageType> list = helper.ExecuteReader( command );
+					List<PageType> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
 		}
 
-		public void Save( SqlConnection sqlConnection, SqlTransaction sqlTransaction, PageType pageType )
+		public void Save( SqlConnection sqlConnection, SqlTransaction sqlTransaction, PageType pageType, int userId )
 		{
 			SqlConnection connection = sqlConnection;
 			SqlTransaction transaction = sqlTransaction;
@@ -41,7 +41,7 @@ namespace MOBOT.BHL.DAL
 			{
 				transaction = CustomSqlHelper.BeginTransaction( connection, transaction, isTransactionCoordinator );
 
-				new PageTypeDAL().PageTypeManageAuto( connection, transaction, pageType );
+				new PageTypeDAL().PageTypeManageAuto( connection, transaction, pageType, userId );
 
 				CustomSqlHelper.CommitTransaction( transaction, isTransactionCoordinator );
 			}

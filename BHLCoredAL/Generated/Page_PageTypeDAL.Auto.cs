@@ -1,8 +1,8 @@
 
-// Generated 1/18/2008 11:10:47 AM
+// Generated 1/5/2021 3:26:43 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class Page_PageTypeDAL is based upon Page_PageType.
+// This partial class Page_PageTypeDAL is based upon dbo.Page_PageType.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,12 +38,12 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Page_PageType by primary key(s).
+		/// Select values from dbo.Page_PageType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="pageID">Unique identifier for each Page record.</param>
-		/// <param name="pageTypeID">Unique identifier for each Page Type record.</param>
+		/// <param name="pageID"></param>
+		/// <param name="pageTypeID"></param>
 		/// <returns>Object of type Page_PageType.</returns>
 		public Page_PageType Page_PageTypeSelectAuto(
 			SqlConnection sqlConnection, 
@@ -50,7 +51,26 @@ namespace MOBOT.BHL.DAL
 			int pageID,
 			int pageTypeID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return Page_PageTypeSelectAuto(	sqlConnection, sqlTransaction, "BHL",	pageID, pageTypeID );
+		}
+			
+		/// <summary>
+		/// Select values from dbo.Page_PageType by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="pageID"></param>
+		/// <param name="pageTypeID"></param>
+		/// <returns>Object of type Page_PageType.</returns>
+		public Page_PageType Page_PageTypeSelectAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int pageID,
+			int pageTypeID )
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings( connectionKeyName ), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("Page_PageTypeSelectAuto", connection, transaction, 
@@ -59,7 +79,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Page_PageType> helper = new CustomSqlHelper<Page_PageType>())
 				{
-					CustomGenericList<Page_PageType> list = helper.ExecuteReader(command);
+					List<Page_PageType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Page_PageType o = list[0];
@@ -75,20 +95,39 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Page_PageType by primary key(s).
+		/// Select values from dbo.Page_PageType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="pageID">Unique identifier for each Page record.</param>
-		/// <param name="pageTypeID">Unique identifier for each Page Type record.</param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> Page_PageTypeSelectAutoRaw(
+		/// <param name="pageID"></param>
+		/// <param name="pageTypeID"></param>
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> Page_PageTypeSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int pageID,
 			int pageTypeID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return Page_PageTypeSelectAutoRaw( sqlConnection, sqlTransaction, "BHL", pageID, pageTypeID );
+		}
+		
+		/// <summary>
+		/// Select values from dbo.Page_PageType by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="pageID"></param>
+		/// <param name="pageTypeID"></param>
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> Page_PageTypeSelectAutoRaw(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int pageID,
+			int pageTypeID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("Page_PageTypeSelectAuto", connection, transaction,
@@ -100,16 +139,16 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Page_PageType.
+		/// Insert values into dbo.Page_PageType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="pageID">Unique identifier for each Page record.</param>
-		/// <param name="pageTypeID">Unique identifier for each Page Type record.</param>
+		/// <param name="pageID"></param>
+		/// <param name="pageTypeID"></param>
 		/// <param name="verified"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
@@ -123,7 +162,32 @@ namespace MOBOT.BHL.DAL
 			int? creationUserID,
 			int? lastModifiedUserID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return Page_PageTypeInsertAuto( sqlConnection, sqlTransaction, "BHL", pageID, pageTypeID, verified, creationUserID, lastModifiedUserID );
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.Page_PageType.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="pageID"></param>
+		/// <param name="pageTypeID"></param>
+		/// <param name="verified"></param>
+		/// <param name="creationUserID"></param>
+		/// <param name="lastModifiedUserID"></param>
+		/// <returns>Object of type Page_PageType.</returns>
+		public Page_PageType Page_PageTypeInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int pageID,
+			int pageTypeID,
+			bool verified,
+			int? creationUserID,
+			int? lastModifiedUserID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("Page_PageTypeInsertAuto", connection, transaction, 
@@ -136,7 +200,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Page_PageType> helper = new CustomSqlHelper<Page_PageType>())
 				{
-					CustomGenericList<Page_PageType> list = helper.ExecuteReader(command);
+					List<Page_PageType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Page_PageType o = list[0];
@@ -152,7 +216,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Page_PageType. Returns an object of type Page_PageType.
+		/// Insert values into dbo.Page_PageType. Returns an object of type Page_PageType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -163,7 +227,24 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			Page_PageType value)
 		{
-			return Page_PageTypeInsertAuto(sqlConnection, sqlTransaction, 
+			return Page_PageTypeInsertAuto(sqlConnection, sqlTransaction, "BHL", value);
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.Page_PageType. Returns an object of type Page_PageType.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type Page_PageType.</param>
+		/// <returns>Object of type Page_PageType.</returns>
+		public Page_PageType Page_PageTypeInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			Page_PageType value)
+		{
+			return Page_PageTypeInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.PageID,
 				value.PageTypeID,
 				value.Verified,
@@ -176,12 +257,12 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Page_PageType by primary key(s).
+		/// Delete values from dbo.Page_PageType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="pageID">Unique identifier for each Page record.</param>
-		/// <param name="pageTypeID">Unique identifier for each Page Type record.</param>
+		/// <param name="pageID"></param>
+		/// <param name="pageTypeID"></param>
 		/// <returns>true if successful otherwise false.</returns>
 		public bool Page_PageTypeDeleteAuto(
 			SqlConnection sqlConnection, 
@@ -189,7 +270,26 @@ namespace MOBOT.BHL.DAL
 			int pageID,
 			int pageTypeID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return Page_PageTypeDeleteAuto( sqlConnection, sqlTransaction, "BHL", pageID, pageTypeID );
+		}
+		
+		/// <summary>
+		/// Delete values from dbo.Page_PageType by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="pageID"></param>
+		/// <param name="pageTypeID"></param>
+		/// <returns>true if successful otherwise false.</returns>
+		public bool Page_PageTypeDeleteAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int pageID,
+			int pageTypeID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("Page_PageTypeDeleteAuto", connection, transaction, 
@@ -220,12 +320,12 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Page_PageType. Returns an object of type Page_PageType.
+		/// Update values in dbo.Page_PageType. Returns an object of type Page_PageType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="pageID">Unique identifier for each Page record.</param>
-		/// <param name="pageTypeID">Unique identifier for each Page Type record.</param>
+		/// <param name="pageID"></param>
+		/// <param name="pageTypeID"></param>
 		/// <param name="verified"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type Page_PageType.</returns>
@@ -237,7 +337,30 @@ namespace MOBOT.BHL.DAL
 			bool verified,
 			int? lastModifiedUserID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return Page_PageTypeUpdateAuto( sqlConnection, sqlTransaction, "BHL", pageID, pageTypeID, verified, lastModifiedUserID);
+		}
+		
+		/// <summary>
+		/// Update values in dbo.Page_PageType. Returns an object of type Page_PageType.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="pageID"></param>
+		/// <param name="pageTypeID"></param>
+		/// <param name="verified"></param>
+		/// <param name="lastModifiedUserID"></param>
+		/// <returns>Object of type Page_PageType.</returns>
+		public Page_PageType Page_PageTypeUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int pageID,
+			int pageTypeID,
+			bool verified,
+			int? lastModifiedUserID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("Page_PageTypeUpdateAuto", connection, transaction, 
@@ -249,7 +372,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Page_PageType> helper = new CustomSqlHelper<Page_PageType>())
 				{
-					CustomGenericList<Page_PageType> list = helper.ExecuteReader(command);
+					List<Page_PageType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Page_PageType o = list[0];
@@ -265,7 +388,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Page_PageType. Returns an object of type Page_PageType.
+		/// Update values in dbo.Page_PageType. Returns an object of type Page_PageType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -276,7 +399,24 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			Page_PageType value)
 		{
-			return Page_PageTypeUpdateAuto(sqlConnection, sqlTransaction,
+			return Page_PageTypeUpdateAuto(sqlConnection, sqlTransaction, "BHL", value );
+		}
+		
+		/// <summary>
+		/// Update values in dbo.Page_PageType. Returns an object of type Page_PageType.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type Page_PageType.</param>
+		/// <returns>Object of type Page_PageType.</returns>
+		public Page_PageType Page_PageTypeUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			Page_PageType value)
+		{
+			return Page_PageTypeUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.PageID,
 				value.PageTypeID,
 				value.Verified,
@@ -288,9 +428,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Page_PageType object.
+		/// Manage dbo.Page_PageType object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Page_PageType.
+		/// then either insert values into, delete values from, or update values in dbo.Page_PageType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -301,11 +441,30 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			Page_PageType value , int userId )
 		{
+			return Page_PageTypeManageAuto( sqlConnection, sqlTransaction, "BHL", value , userId );
+		}
+		
+		/// <summary>
+		/// Manage dbo.Page_PageType object.
+		/// If the object is of type CustomObjectBase, 
+		/// then either insert values into, delete values from, or update values in dbo.Page_PageType.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type Page_PageType.</param>
+		/// <returns>Object of type CustomDataAccessStatus<Page_PageType>.</returns>
+		public CustomDataAccessStatus<Page_PageType> Page_PageTypeManageAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			Page_PageType value , int userId )
+		{
 			if (value.IsNew && !value.IsDeleted)
 			{
 				value.CreationUserID = userId;
 				value.LastModifiedUserID = userId;
-				Page_PageType returnValue = Page_PageTypeInsertAuto(sqlConnection, sqlTransaction, 
+				Page_PageType returnValue = Page_PageTypeInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.PageID,
 						value.PageTypeID,
 						value.Verified,
@@ -318,7 +477,7 @@ namespace MOBOT.BHL.DAL
 			}
 			else if (!value.IsNew && value.IsDeleted)
 			{
-				if (Page_PageTypeDeleteAuto(sqlConnection, sqlTransaction, 
+				if (Page_PageTypeDeleteAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.PageID,
 						value.PageTypeID))
 				{
@@ -336,7 +495,7 @@ namespace MOBOT.BHL.DAL
 			else if (value.IsDirty && !value.IsDeleted)
 			{
 				value.LastModifiedUserID = userId;
-				Page_PageType returnValue = Page_PageTypeUpdateAuto(sqlConnection, sqlTransaction, 
+				Page_PageType returnValue = Page_PageTypeUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.PageID,
 						value.PageTypeID,
 						value.Verified,
@@ -358,4 +517,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

@@ -1,0 +1,297 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Biodiversity Heritage Library - API Version 3 Documentation</title>
+    <style type="text/css">
+        body { font-family:Verdana; font-size:12px; }
+        hr { margin:15px 0 15px 0; }
+        div { padding:5px; }
+        table, th, td { border:1px solid lightgray; border-spacing:0px; }
+        th { text-align:left; }
+        .pagehead { height:40px; padding:0px; }
+        .pagehead #left { float:left; }
+        .pagehead #right { float:right; }
+        .header { font-weight:bold; font-size:16px; }
+        .subhead1 { font-weight:bold; font-style:italic; margin-top:10px; font-size:14px; }
+        .subhead2 { font-style:italic; }
+        .toplink { font-weight:normal; font-size:10px; }
+        .syntaxbox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding:10px; background-color:#eee; }
+        .synindent { padding-left:30px }
+        .responsebox { display:inline-block; width:70%; margin-left:30px; border-color:lightgray; border-width:1px; border-style:solid; padding-left:10px; padding-right:10px; height:600px; overflow:auto; background-color:#eee; }
+        pre { margin:0px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <div class="pagehead">
+        <div id="left">
+            Biodiversity Heritage Library<br />
+            <a href="../api3.html">API v3 Documentation</a><br />
+        </div>
+        <div id="right">
+            Created: August 27, 2018<br />
+            Revised: April 4, 2022
+        </div>
+    </div>
+    <div>
+        <a href="../api3.html#overview">Overview</a><br />
+        <a href="../api3.html#methods">Methods</a><br />
+        <a href="../api3.html#elements">Data Elements</a><br />
+        <a href="../api3.html#notes">Release Notes</a>
+    </div>
+    <hr />
+    <div class="subhead1">GetAuthorMetadata</div>
+    <div>Return metadata about an author.  You may choose to include a list of the author's publications.  The BHLType element identifies the type of each publication (Title or Part).</div>
+    <div>SYNTAX</div>
+    <div class="syntaxbox">
+    <div>https://www.biodiversitylibrary.org/api3?op=GetAuthorMetadata</div>
+    <div class="synindent">&amp;id=&lt;identifier of an author&gt;</div>
+    <div class="synindent">&amp;idtype=&lt;abbreviation, ark, bhl, biostor, dlc, oclc, orcid, tropicos, or viaf (OPTIONAL; "bhl" is the default)&gt;</div>
+    <div class="synindent">&amp;pubs=&lt;"t" or "true" to include the author's publications in the response&gt;</div>
+    <div class="synindent">&amp;format=&lt;"xml" for an XML response or "json" for JSON (OPTIONAL; "xml" is the default)&gt;</div>
+    <div class="synindent">&amp;apikey=&lt;API key value&gt;</div>
+    </div>
+    <div>EXAMPLE REQUEST (XML)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetAuthorMetadata&amp;id=13188&amp;idtype=bhl&amp;pubs=t&amp;format=xml&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (XML)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Response
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;Status&gt;ok&lt;/Status&gt;
+  &lt;ErrorMessage /&gt;
+  &lt;Result&gt;
+    &lt;Author&gt;
+      &lt;AuthorID&gt;13188&lt;/AuthorID&gt;
+      &lt;Name&gt;Allis, Edward Phelps,&lt;/Name&gt;
+      &lt;Dates&gt;1851-1947&lt;/Dates&gt;
+      &lt;CreatorUrl&gt;https://www.biodiversitylibrary.org/creator/13188&lt;/CreatorUrl&gt;
+      &lt;CreationDate&gt;2009/09/13 00:02:26&lt;/CreationDate&gt;
+      &lt;Identifiers&gt;
+        &lt;Identifier&gt;
+          &lt;IdentifierName&gt;BioStor&lt;/IdentifierName&gt;
+          &lt;IdentifierValue&gt;55160&lt;/IdentifierValue&gt;
+        &lt;/Identifier&gt;
+        &lt;Identifier&gt;
+          &lt;IdentifierName&gt;BioStor&lt;/IdentifierName&gt;
+          &lt;IdentifierValue&gt;91602&lt;/IdentifierValue&gt;
+        &lt;/Identifier&gt;
+        &lt;Identifier&gt;
+          &lt;IdentifierName&gt;VIAF&lt;/IdentifierName&gt;
+          &lt;IdentifierValue&gt;50009431&lt;/IdentifierValue&gt;
+        &lt;/Identifier&gt;
+        &lt;Identifier&gt;
+          &lt;IdentifierName&gt;Wikidata&lt;/IdentifierName&gt;
+          &lt;IdentifierValue&gt;Q94832546&lt;/IdentifierValue&gt;
+        &lt;/Identifier&gt;
+      &lt;/Identifiers&gt;
+      &lt;Publications&gt;
+        &lt;Publication&gt;
+          &lt;BHLType&gt;Title&lt;/BHLType&gt;
+          &lt;FoundIn&gt;Metadata&lt;/FoundIn&gt;
+          &lt;TitleID&gt;15946&lt;/TitleID&gt;
+          &lt;TitleUrl&gt;https://www.biodiversitylibrary.org/bibliography/15946&lt;/TitleUrl&gt;
+          &lt;MaterialType&gt;Published material&lt;/MaterialType&gt;
+          &lt;PublisherPlace&gt;Stuttgart&lt;/PublisherPlace&gt;
+          &lt;PublisherName&gt;E. Schweizerbart&lt;/PublisherName&gt;
+          &lt;PublicationDate&gt;1909&lt;/PublicationDate&gt;
+          &lt;Authors&gt;
+            &lt;Author&gt;
+              &lt;Name&gt;Allis, Edward Phelps,&lt;/Name&gt;
+            &lt;/Author&gt;
+          &lt;/Authors&gt;
+          &lt;Genre&gt;Monograph/Item&lt;/Genre&gt;
+          &lt;Title&gt;The cranial anatomy of the mail-cheeked fishes&lt;/Title&gt;
+        &lt;/Publication&gt;
+        &lt;Publication&gt;
+          &lt;BHLType&gt;Part&lt;/BHLType&gt;
+          &lt;FoundIn&gt;Metadata&lt;/FoundIn&gt;
+          &lt;Volume&gt;1923&lt;/Volume&gt;
+          &lt;Authors&gt;
+            &lt;Author&gt;
+              &lt;Name&gt;Allis, Edward Phelps,&lt;/Name&gt;
+            &lt;/Author&gt;
+          &lt;/Authors&gt;
+          &lt;PartUrl&gt;https://www.biodiversitylibrary.org/part/71982&lt;/PartUrl&gt;
+          &lt;PartID&gt;71982&lt;/PartID&gt;
+          &lt;Genre&gt;Article&lt;/Genre&gt;
+          &lt;Title&gt;The Postorbital Articulation of the Palatoquadrate with the Neurocranium in the Cœlacanthid Fishes&lt;/Title&gt;
+          &lt;ContainerTitle&gt;Proceedings of the Zoological Society of London&lt;/ContainerTitle&gt;
+          &lt;Date&gt;1923&lt;/Date&gt;
+          &lt;PageRange&gt;41--58&lt;/PageRange&gt;
+        &lt;/Publication&gt;
+        &lt;Publication&gt;
+          &lt;BHLType&gt;Part&lt;/BHLType&gt;
+          &lt;FoundIn&gt;Metadata&lt;/FoundIn&gt;
+          &lt;Volume&gt;62&lt;/Volume&gt;
+          &lt;Authors&gt;
+            &lt;Author&gt;
+              &lt;Name&gt;Allis, Edward Phelps,&lt;/Name&gt;
+            &lt;/Author&gt;
+          &lt;/Authors&gt;
+          &lt;PartUrl&gt;https://www.biodiversitylibrary.org/part/201213&lt;/PartUrl&gt;
+          &lt;PartID&gt;201213&lt;/PartID&gt;
+          &lt;Genre&gt;Article&lt;/Genre&gt;
+          &lt;Title&gt;Memoirs: The So-called Labial Cartilage of Raia Clavata&lt;/Title&gt;
+          &lt;ContainerTitle&gt;Quarterly journal of microscopical science&lt;/ContainerTitle&gt;
+          &lt;Series&gt;2&lt;/Series&gt;
+          &lt;Date&gt;1916-11-01&lt;/Date&gt;
+          &lt;PageRange&gt;95--114&lt;/PageRange&gt;
+        &lt;/Publication&gt;
+        &lt;Publication&gt;
+          &lt;BHLType&gt;Part&lt;/BHLType&gt;
+          &lt;FoundIn&gt;Metadata&lt;/FoundIn&gt;
+          &lt;Volume&gt;62&lt;/Volume&gt;
+          &lt;Authors&gt;
+            &lt;Author&gt;
+              &lt;Name&gt;Allis, Edward Phelps,&lt;/Name&gt;
+            &lt;/Author&gt;
+          &lt;/Authors&gt;
+          &lt;PartUrl&gt;https://www.biodiversitylibrary.org/part/201224&lt;/PartUrl&gt;
+          &lt;PartID&gt;201224&lt;/PartID&gt;
+          &lt;Genre&gt;Article&lt;/Genre&gt;
+          &lt;Title&gt;Memoirs: The Homologies of the Muscles related to the Visceral Arches of the Gnathostome Fishes&lt;/Title&gt;
+          &lt;ContainerTitle&gt;Quarterly journal of microscopical science&lt;/ContainerTitle&gt;
+          &lt;Series&gt;2&lt;/Series&gt;
+          &lt;Date&gt;1917-08-01&lt;/Date&gt;
+          &lt;PageRange&gt;303--406&lt;/PageRange&gt;
+        &lt;/Publication&gt;
+      &lt;/Publications&gt;
+    &lt;/Author&gt;
+  &lt;/Result&gt;
+&lt;/Response&gt;
+
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE REQUEST (JSON)</div>
+    <div class="syntaxbox">
+        <pre>
+            <code>
+https://www.biodiversitylibrary.org/api3?op=GetAuthorMetadata&amp;id=13188&amp;idtype=bhl&amp;pubs=t&amp;format=json&amp;apikey=12345678-BBBB-DDDD-FFFF-123456789012
+            </code>
+        </pre>
+    </div>
+    <div>EXAMPLE RESPONSE (JSON)</div>
+    <div class="responsebox">
+        <pre>
+            <code>
+{
+  &quot;Status&quot;: &quot;ok&quot;,
+  &quot;ErrorMessage&quot;: &quot;&quot;,
+  &quot;Result&quot;: [
+    {
+      &quot;AuthorID&quot;: &quot;13188&quot;,
+      &quot;Name&quot;: &quot;Allis, Edward Phelps,&quot;,
+      &quot;Dates&quot;: &quot;1851-1947&quot;,
+      &quot;CreatorUrl&quot;: &quot;https://www.biodiversitylibrary.org/creator/13188&quot;,
+      &quot;CreationDate&quot;: &quot;2009/09/13 00:02:26&quot;,
+      &quot;Identifiers&quot;: [
+        {
+          &quot;IdentifierName&quot;: &quot;BioStor&quot;,
+          &quot;IdentifierValue&quot;: &quot;55160&quot;
+        },
+        {
+          &quot;IdentifierName&quot;: &quot;BioStor&quot;,
+          &quot;IdentifierValue&quot;: &quot;91602&quot;
+        },
+        {
+          &quot;IdentifierName&quot;: &quot;VIAF&quot;,
+          &quot;IdentifierValue&quot;: &quot;50009431&quot;
+        },
+        {
+          &quot;IdentifierName&quot;: &quot;Wikidata&quot;,
+          &quot;IdentifierValue&quot;: &quot;Q94832546&quot;
+        }
+      ],
+      &quot;Publications&quot;: [
+        {
+          &quot;BHLType&quot;: &quot;Title&quot;,
+          &quot;FoundIn&quot;: &quot;Metadata&quot;,
+          &quot;TitleID&quot;: &quot;15946&quot;,
+          &quot;TitleUrl&quot;: &quot;https://www.biodiversitylibrary.org/bibliography/15946&quot;,
+          &quot;MaterialType&quot;: &quot;Published material&quot;,
+          &quot;PublisherPlace&quot;: &quot;Stuttgart&quot;,
+          &quot;PublisherName&quot;: &quot;E. Schweizerbart&quot;,
+          &quot;PublicationDate&quot;: &quot;1909&quot;,
+          &quot;Authors&quot;: [
+            {
+              &quot;Name&quot;: &quot;Allis, Edward Phelps,&quot;
+            }
+          ],
+          &quot;Genre&quot;: &quot;Monograph/Item&quot;,
+          &quot;Title&quot;: &quot;The cranial anatomy of the mail-cheeked fishes&quot;
+        },
+        {
+          &quot;BHLType&quot;: &quot;Part&quot;,
+          &quot;FoundIn&quot;: &quot;Metadata&quot;,
+          &quot;Volume&quot;: &quot;1923&quot;,
+          &quot;Authors&quot;: [
+            {
+              &quot;Name&quot;: &quot;Allis, Edward Phelps,&quot;
+            }
+          ],
+          &quot;PartUrl&quot;: &quot;https://www.biodiversitylibrary.org/part/71982&quot;,
+          &quot;PartID&quot;: &quot;71982&quot;,
+          &quot;Genre&quot;: &quot;Article&quot;,
+          &quot;Title&quot;: &quot;The Postorbital Articulation of the Palatoquadrate with the Neurocranium in the Cœlacanthid Fishes&quot;,
+          &quot;ContainerTitle&quot;: &quot;Proceedings of the Zoological Society of London&quot;,
+          &quot;Date&quot;: &quot;1923&quot;,
+          &quot;PageRange&quot;: &quot;41--58&quot;
+        },
+        {
+          &quot;BHLType&quot;: &quot;Part&quot;,
+          &quot;FoundIn&quot;: &quot;Metadata&quot;,
+          &quot;Volume&quot;: &quot;62&quot;,
+          &quot;Authors&quot;: [
+            {
+              &quot;Name&quot;: &quot;Allis, Edward Phelps,&quot;
+            }
+          ],
+          &quot;PartUrl&quot;: &quot;https://www.biodiversitylibrary.org/part/201213&quot;,
+          &quot;PartID&quot;: &quot;201213&quot;,
+          &quot;Genre&quot;: &quot;Article&quot;,
+          &quot;Title&quot;: &quot;Memoirs: The So-called Labial Cartilage of Raia Clavata&quot;,
+          &quot;ContainerTitle&quot;: &quot;Quarterly journal of microscopical science&quot;,
+          &quot;Series&quot;: &quot;2&quot;,
+          &quot;Date&quot;: &quot;1916-11-01&quot;,
+          &quot;PageRange&quot;: &quot;95--114&quot;
+        },
+        {
+          &quot;BHLType&quot;: &quot;Part&quot;,
+          &quot;FoundIn&quot;: &quot;Metadata&quot;,
+          &quot;Volume&quot;: &quot;62&quot;,
+          &quot;Authors&quot;: [
+            {
+              &quot;Name&quot;: &quot;Allis, Edward Phelps,&quot;
+            }
+          ],
+          &quot;PartUrl&quot;: &quot;https://www.biodiversitylibrary.org/part/201224&quot;,
+          &quot;PartID&quot;: &quot;201224&quot;,
+          &quot;Genre&quot;: &quot;Article&quot;,
+          &quot;Title&quot;: &quot;Memoirs: The Homologies of the Muscles related to the Visceral Arches of the Gnathostome Fishes&quot;,
+          &quot;ContainerTitle&quot;: &quot;Quarterly journal of microscopical science&quot;,
+          &quot;Series&quot;: &quot;2&quot;,
+          &quot;Date&quot;: &quot;1917-08-01&quot;,
+          &quot;PageRange&quot;: &quot;303--406&quot;
+        }
+      ]
+    }
+  ]
+}
+
+            </code>
+        </pre>
+    </div>
+    <div></div>
+</body>
+</html>

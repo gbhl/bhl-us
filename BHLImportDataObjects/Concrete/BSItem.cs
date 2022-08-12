@@ -35,6 +35,21 @@ namespace MOBOT.BHLImport.DataObjects
             set { _totalSegments = value; }
         }
 
+        private int _publishedSegments = 0;
+        public int PublishedSegments
+        {
+            get { return _publishedSegments; }
+            set { _publishedSegments = value; }
+        }
+
+        private int _skippedSegments = 0;
+
+        public int SkippedSegments
+        {
+            get { return _skippedSegments; }
+            set { _skippedSegments = value; }
+        }
+
         private int _totalItems = 0;
 
         public int TotalItems
@@ -62,6 +77,16 @@ namespace MOBOT.BHLImport.DataObjects
                     case "TotalSegments":
                         {
                             _totalSegments = Utility.ZeroIfNull(column.Value);
+                            break;
+                        }
+                    case "PublishedSegments":
+                        {
+                            _publishedSegments = Utility.ZeroIfNull(column.Value);
+                            break;
+                        }
+                    case "SkippedSegments":
+                        {
+                             _skippedSegments = Utility.ZeroIfNull(column.Value);
                             break;
                         }
                     case "TotalItems":

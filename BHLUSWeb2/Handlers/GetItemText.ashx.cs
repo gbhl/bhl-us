@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BHL.SiteServiceREST.v1.Client;
+using MOBOT.BHL.DataObjects.Enum;
+using System;
 using System.Configuration;
 using System.Web;
 
@@ -26,8 +28,8 @@ namespace MOBOT.BHL.Web2
                 else
                 {
                     // Refresh cache
-                    SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-                    itemText = service.GetItemText(itemID);
+                    Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                    itemText = client.GetItemText(itemID);
                     context.Cache.Add(cacheKey, itemText, null, DateTime.Now.AddMinutes(
                         Convert.ToDouble(ConfigurationManager.AppSettings["ItemTextCacheTime"])),
                         System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);

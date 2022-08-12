@@ -164,10 +164,13 @@ namespace BHL.TextImportUtility
 
             using (StreamReader reader = File.OpenText(fileName))
             {
-                CsvReader csv = new CsvReader(reader);
-                csv.Configuration.HasHeaderRecord = true;
-                csv.Configuration.HeaderValidated = null;
-                csv.Configuration.MissingFieldFound = null;
+                var config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
+                {
+                    HasHeaderRecord = true,
+                    HeaderValidated = null,
+                    MissingFieldFound = (_1) => { }
+                };
+                CsvReader csv = new CsvReader(reader, config);
 
                 var dvRecord = new
                 {
@@ -181,7 +184,7 @@ namespace BHL.TextImportUtility
                     dateTranscribed = string.Empty,
                     dateValidated = string.Empty,
                     individualCount = string.Empty,
-                    institutionCode = string.Empty,
+                    //institutionCode = string.Empty,
                     occurrenceRemarks = string.Empty,
                     sequenceNumber = default(int),  // 1-based index
                     transcriberNotes = string.Empty,
@@ -209,8 +212,11 @@ namespace BHL.TextImportUtility
 
             using (StreamReader reader = File.OpenText(fileName))
             {
-                CsvReader csv = new CsvReader(reader);
-                csv.Configuration.HasHeaderRecord = true;
+                var config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
+                {
+                    HasHeaderRecord = true
+                };
+                CsvReader csv = new CsvReader(reader, config);
 
                 var dvRecord = new
                 {
@@ -241,8 +247,11 @@ namespace BHL.TextImportUtility
 
             using (StreamReader reader = File.OpenText(fileName))
             {
-                CsvReader csv = new CsvReader(reader);
-                csv.Configuration.HasHeaderRecord = true;
+                var config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
+                {
+                    HasHeaderRecord = true
+                };
+                CsvReader csv = new CsvReader(reader, config);
 
                 var dvRecord = new
                 {
@@ -253,8 +262,20 @@ namespace BHL.TextImportUtility
                 var records = csv.GetRecords(dvRecord);
 
                 // Get the pages for the item from the database
-                string itemID = Path.GetFileNameWithoutExtension(fileName).Substring(15);   // ignore the date info added to the filename
-                List<Page> pages = new BHLProvider().PageSelectByItemID(Convert.ToInt32(itemID));
+                string itemType = Path.GetFileNameWithoutExtension(fileName).Substring(15, 1);  // Get the item type indicator from the filename
+                string entityID = Path.GetFileNameWithoutExtension(fileName).Substring(17);   // ignore the info added to the filename
+                int itemID;
+                if (itemType.ToUpper() == "S")
+                {
+                    Segment segment = new BHLProvider().SegmentSelectAuto(Convert.ToInt32(entityID));
+                    itemID = segment.ItemID;
+                }
+                else // itemType == "I")
+                {
+                    Book book = new BHLProvider().BookSelectAuto(Convert.ToInt32(entityID));
+                    itemID = book.ItemID;
+                }
+                List<Page> pages = new BHLProvider().PageSelectByItemID(itemID);
 
                 foreach (var record in records)
                 {
@@ -296,10 +317,14 @@ namespace BHL.TextImportUtility
             {
                 // Parse the records in the file, and add Sequence Numbers
                 var writeRecords = new List<object>();
+
                 using (StreamReader reader = File.OpenText(fileName))
                 {
-                    CsvReader csv = new CsvReader(reader);
-                    csv.Configuration.HasHeaderRecord = true;
+                    var config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
+                    {
+                        HasHeaderRecord = true
+                    };
+                    CsvReader csv = new CsvReader(reader, config);
 
                     var dvRecord = new
                     {
@@ -310,8 +335,20 @@ namespace BHL.TextImportUtility
                     var readRecords = csv.GetRecords(dvRecord);
 
                     // Get the pages for the item from the database
-                    string itemID = Path.GetFileNameWithoutExtension(fileName).Substring(15);   // ignore the date info added to the filename
-                    List<Page> pages = new BHLProvider().PageSelectByItemID(Convert.ToInt32(itemID));
+                    string itemType = Path.GetFileNameWithoutExtension(fileName).Substring(15, 1);  // Get the item type indicator from the filename
+                    string entityID = Path.GetFileNameWithoutExtension(fileName).Substring(17);   // ignore the info added to the filename
+                    int itemID;
+                    if (itemType.ToUpper() == "S")
+                    {
+                        Segment segment = new BHLProvider().SegmentSelectAuto(Convert.ToInt32(entityID));
+                        itemID = segment.ItemID;
+                    }
+                    else // itemType == "I")
+                    {
+                        Book book = new BHLProvider().BookSelectAuto(Convert.ToInt32(entityID));
+                        itemID = book.ItemID;
+                    }
+                    List<Page> pages = new BHLProvider().PageSelectByItemID(itemID);
 
                     foreach (var record in readRecords)
                     {
@@ -326,7 +363,7 @@ namespace BHL.TextImportUtility
                             // Get the sequence number for the page from the database records
                             var bhlPages = (
                                 from page in pages
-                                where page.PageID == Convert.ToInt32(record.PageID) && page.ItemID == Convert.ToInt32(itemID)
+                                where page.PageID == Convert.ToInt32(record.PageID) && page.ItemID == itemID
                                 select new
                                 {
                                     page.SequenceOrder
@@ -334,7 +371,7 @@ namespace BHL.TextImportUtility
                             if (bhlPages.Count() == 0) throw new Exception(string.Format(
                                     "Page {0} not found in Item {1}.  Make sure all Page IDs are valid for the Item.", 
                                     record.PageID, 
-                                    itemID
+                                    entityID
                                 ));
                             sequenceOrder = bhlPages.First().SequenceOrder.ToString();
 
@@ -346,10 +383,11 @@ namespace BHL.TextImportUtility
 
                 // Write the updated records to the file
                 using (var writer = new StreamWriter(fileName))
-                using (var csv = new CsvWriter(writer))
+                using (var csv = new CsvWriter(writer, System.Globalization.CultureInfo.InvariantCulture))
                 {
                     csv.WriteRecords(writeRecords);
                 }
+
             }
         }
     }

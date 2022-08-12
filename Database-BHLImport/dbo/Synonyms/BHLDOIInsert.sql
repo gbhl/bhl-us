@@ -1,0 +1,2 @@
+﻿CREATE SYNONYM dbo.BHLDOIInsert FOR BHL.dbo.DOIInsert
+GO

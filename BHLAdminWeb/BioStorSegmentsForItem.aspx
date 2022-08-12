@@ -15,6 +15,8 @@
             <tr>
                 <td><b>Type</b></td>
                 <td>&nbsp;</td>
+                <td><b>Status</b></td>
+                <td>&nbsp;</td>
                 <td><b>Title</b></td>
                 <td><b>Volume</b></td>
                 <td><b>Date</b></td>
@@ -24,6 +26,8 @@
         <ItemTemplate>
             <tr valign="top">
                 <td nowrap><%# DataBinder.Eval(Container.DataItem, "Genre") %></td>
+                <td>&nbsp;</td>
+                <td nowrap><%# DataBinder.Eval(Container.DataItem, "StatusLabel") %></td>
                 <td>&nbsp;</td>
                 <td><%# DataBinder.Eval(Container.DataItem, "Title") %></td>
                 <td nowrap align="center"><%# DataBinder.Eval(Container.DataItem, "Volume") %></td>

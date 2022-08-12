@@ -1,7 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[SegmentSelectByItemID]
 
-@ItemID int,
-@ShowAll smallint = 0
+@ItemID int
 
 AS
 
@@ -10,13 +9,12 @@ BEGIN
 SET NOCOUNT ON
 
 SELECT	s.SegmentID,
+		s.BookID,
 		s.ItemID,
+		s.BarCode,
 		s.SegmentStatusID,
-		st.StatusName,
 		s.SequenceOrder,
-		i.PrimaryTitleID AS TitleID,
 		s.SegmentGenreID,
-		g.GenreName,
 		s.Title,
 		s.SortTitle,
 		s.TranslatedTitle,
@@ -39,29 +37,21 @@ SELECT	s.SegmentID,
 		s.EndPageNumber,
 		s.StartPageID,
 		s.LanguageCode,
-		l.LanguageName,
 		s.Url,
 		s.DownloadUrl,
 		s.RightsStatus,
 		s.RightsStatement,
 		s.LicenseName,
 		s.LicenseUrl,
-		s.ContributorCreationDate,
-		s.ContributorLastModifiedDate,
+		CAST(NULL AS DATETIME) AS ContributorCreationDate,
+		CAST(NULL AS DATETIME) AS ContributorLastModifiedDate,
 		s.CreationDate,
 		s.LastModifiedDate,
 		s.CreationUserID,
-		s.LastModifiedUserID,
-		scs.Authors
+		s.LastModifiedUserID
 FROM	dbo.vwSegment s 
-		LEFT JOIN dbo.Item i ON s.ItemID = i.ItemID
-		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
-		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
-		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
-		LEFT JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
 WHERE	s.ItemID = @ItemID
-AND		(@ShowAll = 1 OR s.SegmentStatusID IN (10, 20))  -- New, Published
-ORDER BY
-		s.SequenceOrder
 
 END
+
+GO

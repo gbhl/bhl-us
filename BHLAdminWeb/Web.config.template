@@ -54,6 +54,8 @@
     <add key="MessageQueues" value="bhl.dev.index|bhl.dev.index.error|bhl.dev.index.names|bhl.dev.index.names.error" />
     <!-- List of search indexes, delimited by | -->
     <add key="SearchServerIndexes" value="catalog|items|authors|keywords|names|pages" />
+    <!-- SiteServices address -->
+    <add key="SiteServicesURL" value="SITE SERVICES HTTP ADDRESS"/>
 
     <!-- ###################################################################### -->
 
@@ -68,14 +70,12 @@
     <add key="BHLUserAdminEmailAddress" value="ADMINISTRATOR_EMAIL_ADDRESS"/>
     <!-- Indicates if full-text search is enabled on the BHL web site -->
     <add key="EnableFullTextSearch" value="true" />
-    <!-- Indicates whether to use the remote file access services -->
-    <add key="UseRemoteFileAccessProvider" value="false" />
     <!-- Path to OCR files -->
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt" />
     <!-- Folder into which to place items downloaded from Internet Archive -->
     <add key="LocalFileFolder" value="DOWNLOAD_FOLDER_FOR_IA_HARVESTS" />
     <!-- Wiki paths -->
-    <add key="WikiPageHelpDocs" value="https://about.biodiversitylibrary.org/help/documentation/" />
+    <add key="WikiPageHelpDocs" value="https://s.si.edu/bhldocumentation" />
     <!-- jQuery libraries -->
     <add key="jQueryPath" value="/Scripts/jquery-1.9.1.min.js" />
     <add key="jQuery142Path" value="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" />
@@ -88,7 +88,7 @@
     <add key="jqGridLocalePath" value="/js/grid.locale-en.js" />
     <add key="jqGridPath" value="/js/jquery.jqGrid.min.js" />
     <!-- Required for forms with large numbers of fields (such as the paginator) -->
-    <add key="aspnet:MaxHttpCollectionKeys" value="2500" />
+    <add key="aspnet:MaxHttpCollectionKeys" value="10000" />
     <add key="StatsNumberOfLogItemsToDisplay" value="10" />
     <add key="StatsPendingApprovalDownloadLimit" value="7" />
     <!-- value is in days -->
@@ -162,25 +162,13 @@
     <globalization requestEncoding="utf-8" responseEncoding="utf-8" />
     <customErrors mode="Off" />
     <authentication mode="None" />
-    <sessionState mode="StateServer" stateConnectionString="state server address"></sessionState>
+    <sessionState mode="StateServer" timeout="1080" stateConnectionString="state server address"></sessionState>
     <machineKey
       validationKey="validation key"
       decryptionKey="decryption key"
       validation="SHA1"
   	/>
   </system.web>
-  <system.serviceModel>
-    <bindings>
-      <basicHttpBinding>
-        <binding name="SiteServiceSoap" maxBufferSize="9437184" maxBufferPoolSize="524288" maxReceivedMessageSize="9437184" />
-      </basicHttpBinding>
-    </bindings>
-    <client>
-      <endpoint address="http://localhost:55786/SiteService.asmx" binding="basicHttpBinding"
-        bindingConfiguration="SiteServiceSoap" contract="SiteService.SiteServiceSoap"
-        name="SiteServiceSoap" />
-    </client>
-  </system.serviceModel>
   <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
       <dependentAssembly>

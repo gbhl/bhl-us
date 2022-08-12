@@ -1,7 +1,7 @@
 
-// Generated 11/20/2013 3:49:07 PM
+// Generated 1/5/2021 2:17:18 PM
 // Do not modify the contents of this code file.
-// This abstract class __OAIRecordRelatedTitle is based upon OAIRecordRelatedTitle.
+// This abstract class __OAIRecordRelatedTitle is based upon dbo.OAIRecordRelatedTitle.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __OAIRecordRelatedTitle : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -136,7 +136,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -144,7 +144,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region OAIRecordRelatedTitleID
 		
@@ -367,7 +367,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -511,7 +511,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __OAIRecordRelatedTitle.SortColumn.OAIRecordRelatedTitleID);
 		/// </summary>
 		[Serializable]
@@ -531,3 +530,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

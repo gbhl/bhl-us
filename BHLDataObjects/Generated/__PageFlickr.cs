@@ -1,7 +1,7 @@
 
-// Generated 1/25/2012 9:05:46 AM
+// Generated 1/5/2021 3:26:36 PM
 // Do not modify the contents of this code file.
-// This abstract class __PageFlickr is based upon PageFlickr.
+// This abstract class __PageFlickr is based upon dbo.PageFlickr.
 
 #region How To Implement
 
@@ -20,14 +20,18 @@
 
 #endregion How To Implement
 
+#region Using 
+
 using System;
 using System.Data;
 using CustomDataAccess;
 
+#endregion Using
+
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
-    public abstract class __PageFlickr : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
+	public abstract class __PageFlickr : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
 		#region Constructors
 		
@@ -75,11 +79,11 @@ namespace MOBOT.BHL.DataObjects
 		#region Set Values
 		
 		/// <summary>
-		/// Set the property values of this instance from the specified <see cref="DataItemRow"/>.
+		/// Set the property values of this instance from the specified <see cref="CustomDataRow"/>.
 		/// </summary>
-        public virtual void SetValues(CustomDataRow row)
+		public virtual void SetValues(CustomDataRow row)
 		{
-            foreach (CustomDataColumn column in row)
+			foreach (CustomDataColumn column in row)
 			{
 				switch (column.Name)
 				{
@@ -108,7 +112,7 @@ namespace MOBOT.BHL.DataObjects
 						_CreationDate = (DateTime?)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -116,7 +120,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region PageFlickrID
 		
@@ -126,7 +130,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: PageFlickrID;
 		/// DBMS data type: int; Auto key;
 		/// </summary>
-        [ColumnDefinition("PageFlickrID", DbTargetType = SqlDbType.Int, Ordinal = 1, NumericPrecision = 10, IsAutoKey = true, IsInPrimaryKey = true)]
+		[ColumnDefinition("PageFlickrID", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsAutoKey=true, IsInPrimaryKey=true)]
 		public int PageFlickrID
 		{
 			get
@@ -256,7 +260,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion CreationDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -270,7 +274,7 @@ namespace MOBOT.BHL.DataObjects
 			
 			try
 			{
-                o = (__PageFlickr)CustomObjectBase.FromArray(byteArray);
+				o = (__PageFlickr) CustomObjectBase.FromArray(byteArray);
 			}
 			catch (Exception e)
 			{
@@ -397,7 +401,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="DataCollection">, 
 		/// list.Sort(SortOrder.Ascending, __PageFlickr.SortColumn.PageFlickrID);
 		/// </summary>
 		[Serializable]
@@ -414,3 +417,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

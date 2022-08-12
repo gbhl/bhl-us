@@ -279,7 +279,7 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         collection.ITunesImageURL = iTunesImagePath;
                         lbliTunesImageUrl.Text = iTunesImagePath;
-                        MOBOT.FileAccess.IFileAccessProvider fileAccessProvider = bhlProvider.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                        MOBOT.FileAccess.IFileAccessProvider fileAccessProvider = bhlProvider.GetFileAccessProvider();
                         fileAccessProvider.SaveFile(iTunesImageUpload.FileBytes, iTunesImageUploadPath);
                     }
                 }
@@ -299,7 +299,7 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         collection.ImageURL = imagePath;
                         lblImageUrl.Text = imagePath;
-                        MOBOT.FileAccess.IFileAccessProvider fileAccessProvider = bhlProvider.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                        MOBOT.FileAccess.IFileAccessProvider fileAccessProvider = bhlProvider.GetFileAccessProvider();
                         fileAccessProvider.SaveFile(imageUpload.FileBytes, imageUploadPath);
                     }
                 }
@@ -342,7 +342,7 @@ namespace MOBOT.BHL.AdminWeb
                     string imageUploadPath = string.Format(ConfigurationManager.AppSettings["CollectionImageUploadPath"], imageUpload.FileName);
                     collection.ImageURL = imagePath;
                     lblImageUrl.Text = imagePath;
-                    MOBOT.FileAccess.IFileAccessProvider fileAccessProvider = bhlProvider.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                    MOBOT.FileAccess.IFileAccessProvider fileAccessProvider = bhlProvider.GetFileAccessProvider();
                     fileAccessProvider.SaveFile(imageUpload.FileBytes, imageUploadPath);
                 }
 
@@ -352,7 +352,7 @@ namespace MOBOT.BHL.AdminWeb
                     string iTunesImageUploadPath = string.Format(ConfigurationManager.AppSettings["iTunesImageUploadPath"], iTunesImageUpload.FileName);
                     collection.ITunesImageURL = iTunesImagePath;
                     lbliTunesImageUrl.Text = iTunesImagePath;
-                    MOBOT.FileAccess.IFileAccessProvider fileAccessProvider = bhlProvider.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                    MOBOT.FileAccess.IFileAccessProvider fileAccessProvider = bhlProvider.GetFileAccessProvider();
                     fileAccessProvider.SaveFile(iTunesImageUpload.FileBytes, iTunesImageUploadPath);
                 }
 
@@ -427,8 +427,8 @@ namespace MOBOT.BHL.AdminWeb
                 gvwTitles.DataBind();
 
                 // search items
-                List<Item> items = bhlProvider.ItemSelectByCollection(collectionID);
-                gvwItems.DataSource = items;
+                List<Book> books = bhlProvider.BookSelectByCollection(collectionID);
+                gvwItems.DataSource = books;
                 gvwItems.DataBind();
 
                 contentPanel.Visible = true;

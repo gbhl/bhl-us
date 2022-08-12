@@ -48,7 +48,7 @@ namespace MOBOT.BHL.AdminWeb
                 sb.Append("</td>");
 
                 sb.Append("<td align='right' valign='top'>");
-                sb.Append(segment.ItemID.ToString());
+                sb.Append(segment.BookID.ToString());
                 sb.Append("</td>");
 
                 sb.Append("<td align='right' valign='top'>");

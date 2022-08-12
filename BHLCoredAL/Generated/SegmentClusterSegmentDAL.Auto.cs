@@ -1,8 +1,8 @@
 
-// Generated 9/18/2012 12:12:30 PM
+// Generated 1/5/2021 3:26:58 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class SegmentClusterSegmentDAL is based upon SegmentClusterSegment.
+// This partial class SegmentClusterSegmentDAL is based upon dbo.SegmentClusterSegment.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,43 +38,48 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from SegmentClusterSegment by primary key(s).
+		/// Select values from dbo.SegmentClusterSegment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="segmentID"></param>
+		/// <param name="segmentClusterID"></param>
 		/// <returns>Object of type SegmentClusterSegment.</returns>
 		public SegmentClusterSegment SegmentClusterSegmentSelectAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
-			int segmentID)
+			int segmentID,
+			int segmentClusterID)
 		{
-			return SegmentClusterSegmentSelectAuto(	sqlConnection, sqlTransaction, "BHL",	segmentID );
+			return SegmentClusterSegmentSelectAuto(	sqlConnection, sqlTransaction, "BHL",	segmentID, segmentClusterID );
 		}
 			
 		/// <summary>
-		/// Select values from SegmentClusterSegment by primary key(s).
+		/// Select values from dbo.SegmentClusterSegment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="segmentID"></param>
+		/// <param name="segmentClusterID"></param>
 		/// <returns>Object of type SegmentClusterSegment.</returns>
 		public SegmentClusterSegment SegmentClusterSegmentSelectAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
-			int segmentID )
+			int segmentID,
+			int segmentClusterID )
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings( connectionKeyName ), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentClusterSegmentSelectAuto", connection, transaction, 
-				CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
+				CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID),
+					CustomSqlHelper.CreateInputParameter("SegmentClusterID", SqlDbType.Int, null, false, segmentClusterID)))
 			{
 				using (CustomSqlHelper<SegmentClusterSegment> helper = new CustomSqlHelper<SegmentClusterSegment>())
 				{
-					CustomGenericList<SegmentClusterSegment> list = helper.ExecuteReader(command);
+					List<SegmentClusterSegment> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						SegmentClusterSegment o = list[0];
@@ -89,50 +95,55 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from SegmentClusterSegment by primary key(s).
+		/// Select values from dbo.SegmentClusterSegment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="segmentID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> SegmentClusterSegmentSelectAutoRaw(
+		/// <param name="segmentClusterID"></param>
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> SegmentClusterSegmentSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
-			int segmentID)
+			int segmentID,
+			int segmentClusterID)
 		{
-			return SegmentClusterSegmentSelectAutoRaw( sqlConnection, sqlTransaction, "BHL", segmentID );
+			return SegmentClusterSegmentSelectAutoRaw( sqlConnection, sqlTransaction, "BHL", segmentID, segmentClusterID );
 		}
 		
 		/// <summary>
-		/// Select values from SegmentClusterSegment by primary key(s).
+		/// Select values from dbo.SegmentClusterSegment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="segmentID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> SegmentClusterSegmentSelectAutoRaw(
+		/// <param name="segmentClusterID"></param>
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> SegmentClusterSegmentSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
-			int segmentID)
+			int segmentID,
+			int segmentClusterID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentClusterSegmentSelectAuto", connection, transaction,
-				CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
+				CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID),
+					CustomSqlHelper.CreateInputParameter("SegmentClusterID", SqlDbType.Int, null, false, segmentClusterID)))
 			{
 				return CustomSqlHelper.ExecuteReaderAndReturnRows(command);
 			}
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into SegmentClusterSegment.
+		/// Insert values into dbo.SegmentClusterSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -155,7 +166,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into SegmentClusterSegment.
+		/// Insert values into dbo.SegmentClusterSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -189,7 +200,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<SegmentClusterSegment> helper = new CustomSqlHelper<SegmentClusterSegment>())
 				{
-					CustomGenericList<SegmentClusterSegment> list = helper.ExecuteReader(command);
+					List<SegmentClusterSegment> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						SegmentClusterSegment o = list[0];
@@ -205,7 +216,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into SegmentClusterSegment. Returns an object of type SegmentClusterSegment.
+		/// Insert values into dbo.SegmentClusterSegment. Returns an object of type SegmentClusterSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -220,7 +231,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into SegmentClusterSegment. Returns an object of type SegmentClusterSegment.
+		/// Insert values into dbo.SegmentClusterSegment. Returns an object of type SegmentClusterSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -246,39 +257,44 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from SegmentClusterSegment by primary key(s).
+		/// Delete values from dbo.SegmentClusterSegment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="segmentID"></param>
+		/// <param name="segmentClusterID"></param>
 		/// <returns>true if successful otherwise false.</returns>
 		public bool SegmentClusterSegmentDeleteAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
-			int segmentID)
+			int segmentID,
+			int segmentClusterID)
 		{
-			return SegmentClusterSegmentDeleteAuto( sqlConnection, sqlTransaction, "BHL", segmentID );
+			return SegmentClusterSegmentDeleteAuto( sqlConnection, sqlTransaction, "BHL", segmentID, segmentClusterID );
 		}
 		
 		/// <summary>
-		/// Delete values from SegmentClusterSegment by primary key(s).
+		/// Delete values from dbo.SegmentClusterSegment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="segmentID"></param>
+		/// <param name="segmentClusterID"></param>
 		/// <returns>true if successful otherwise false.</returns>
 		public bool SegmentClusterSegmentDeleteAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
-			int segmentID)
+			int segmentID,
+			int segmentClusterID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentClusterSegmentDeleteAuto", connection, transaction, 
-				CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID), 
+				CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID),
+					CustomSqlHelper.CreateInputParameter("SegmentClusterID", SqlDbType.Int, null, false, segmentClusterID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				int returnCode = CustomSqlHelper.ExecuteNonQuery(command, "ReturnCode");
@@ -304,7 +320,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in SegmentClusterSegment. Returns an object of type SegmentClusterSegment.
+		/// Update values in dbo.SegmentClusterSegment. Returns an object of type SegmentClusterSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -325,7 +341,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in SegmentClusterSegment. Returns an object of type SegmentClusterSegment.
+		/// Update values in dbo.SegmentClusterSegment. Returns an object of type SegmentClusterSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -356,7 +372,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<SegmentClusterSegment> helper = new CustomSqlHelper<SegmentClusterSegment>())
 				{
-					CustomGenericList<SegmentClusterSegment> list = helper.ExecuteReader(command);
+					List<SegmentClusterSegment> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						SegmentClusterSegment o = list[0];
@@ -372,7 +388,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in SegmentClusterSegment. Returns an object of type SegmentClusterSegment.
+		/// Update values in dbo.SegmentClusterSegment. Returns an object of type SegmentClusterSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -387,7 +403,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in SegmentClusterSegment. Returns an object of type SegmentClusterSegment.
+		/// Update values in dbo.SegmentClusterSegment. Returns an object of type SegmentClusterSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -412,9 +428,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage SegmentClusterSegment object.
+		/// Manage dbo.SegmentClusterSegment object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in SegmentClusterSegment.
+		/// then either insert values into, delete values from, or update values in dbo.SegmentClusterSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -429,9 +445,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage SegmentClusterSegment object.
+		/// Manage dbo.SegmentClusterSegment object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in SegmentClusterSegment.
+		/// then either insert values into, delete values from, or update values in dbo.SegmentClusterSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -462,7 +478,8 @@ namespace MOBOT.BHL.DAL
 			else if (!value.IsNew && value.IsDeleted)
 			{
 				if (SegmentClusterSegmentDeleteAuto(sqlConnection, sqlTransaction, connectionKeyName,
-					value.SegmentID))
+					value.SegmentID,
+						value.SegmentClusterID))
 				{
 				return new CustomDataAccessStatus<SegmentClusterSegment>(
 					CustomDataAccessContext.Delete, 
@@ -500,4 +517,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

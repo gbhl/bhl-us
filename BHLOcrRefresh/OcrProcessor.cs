@@ -1,12 +1,11 @@
-﻿using System;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
-using System.Xml;
-using System.Xml.Xsl;
 
 namespace MOBOT.BHL.BHLOcrRefresh
 {
@@ -21,6 +20,8 @@ namespace MOBOT.BHL.BHLOcrRefresh
 
         private ConfigParms configParms = new ConfigParms();
         private List<string> errorMessages = new List<string>();
+
+        public object ItemsClientclient { get; private set; }
 
         public void Process()
         {
@@ -37,23 +38,25 @@ namespace MOBOT.BHL.BHLOcrRefresh
             string itemID = string.Empty;
             try
             {
-                BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-
-                itemID = GetNextJobId();
+                itemID = this.GetNextJobId();
                 while (!string.IsNullOrWhiteSpace(itemID))
                 {
                     string status = this.GetOcrForItem(itemID);
-                    client.NamePageDeleteByItemID(Convert.ToInt32(itemID)); // Clear names and reset last name lookup date
-                    client.PageTextLogInsertForItem(Convert.ToInt32(itemID), "OCR", 1); // Log the new source of the page text
-                    LogMessage(status);
-                    MarkJobComplete(itemID, status);
-                    itemID = GetNextJobId();
+                    new ItemsClient(configParms.BHLWSEndpoint).DeleteItemNames(Convert.ToInt32(itemID)); // Clear names and reset last name lookup date
+                    new PageTextLogsClient(configParms.BHLWSEndpoint).InsertPageTextLog(new PageTextLogModel {
+                        Itemid = Convert.ToInt32(itemID),
+                        Textsource = "OCR", 
+                        Userid = 1
+                    }); // Log the new source of the page text
+                    this.LogMessage(status);
+                    this.MarkJobComplete(itemID, status);
+                    itemID = this.GetNextJobId();
                 }
             }
             catch(Exception ex)
             {
                 LogMessage("Error processing Ocr job", ex);
-                if (!string.IsNullOrWhiteSpace(itemID)) MarkJobError(itemID, ex.Message + "\n\r" + ex.StackTrace);
+                if (!string.IsNullOrWhiteSpace(itemID)) this.MarkJobError(itemID, ex.Message + "\n\r" + ex.StackTrace);
             }
 
             // Report the results of pdf generation
@@ -123,23 +126,23 @@ namespace MOBOT.BHL.BHLOcrRefresh
 
             try
             {
-                string barcode = GetBarcodeForItem(itemID);
+                string barcode = this.GetBarcodeForItem(itemID);
 
                 // Create a temp directory for processing this item
                 tempFolder = string.Format("{0}{1}", configParms.OcrJobTempPath, barcode);
                 if (!Directory.Exists(tempFolder)) Directory.CreateDirectory(tempFolder);
 
                 // Get the DJVU from IA
-                string djvu = GetDJVU(itemID);
+                string djvu = this.GetDJVU(itemID);
 
                 // Convert the DJVU into XML files (one per page)
-                ConvertDjvuToXml(djvu, tempFolder, barcode);
+                this.ConvertDjvuToXml(djvu, tempFolder, barcode);
 
                 // Convert the OCR XML files to plain text
-                TransformXmlToText(tempFolder);
+                this.TransformXmlToText(tempFolder);
 
                 // Move the OCR files to their final destination
-                status = MoveOcrToProduction(itemID, tempFolder);
+                status = this.MoveOcrToProduction(itemID, barcode, tempFolder);
             }
             finally
             {
@@ -159,9 +162,24 @@ namespace MOBOT.BHL.BHLOcrRefresh
         {
             string barcode = string.Empty;
 
-            BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-            BHLWS.Item item = client.ItemSelectAuto(Convert.ToInt32(itemID));
-            if (item != null) barcode = item.BarCode;
+            try
+            {
+                Book book = new BooksClient(configParms.BHLWSEndpoint).GetBookByItemID(Convert.ToInt32(itemID));
+                if (book != null)
+                {
+                    barcode = book.BarCode;
+                }
+                else
+                {
+                    Segment segment = new SegmentsClient(configParms.BHLWSEndpoint).GetSegmentByItemID(Convert.ToInt32(itemID));
+                    if (segment != null) barcode = segment.BarCode;
+                }
+            }
+            catch (Exception e)
+            {
+                this.LogMessage("Error getting barcode for item " + itemID, e);
+            }
+
 
             return barcode;
         }
@@ -178,8 +196,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
 
             try
             {
-                BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-                BHLWS.Item item = client.ItemSelectFilenames(Convert.ToInt32(itemID));
+                Item item = new ItemsClient(configParms.BHLWSEndpoint).GetItemFilenames(Convert.ToInt32(itemID));
 
                 String iaUrl = string.Format("https://www.archive.org/download/{0}/{1}", item.BarCode, item.DjvuFilename);
 
@@ -190,6 +207,10 @@ namespace MOBOT.BHL.BHLOcrRefresh
                 reader = new StreamReader((System.IO.Stream)resp.GetResponseStream());
 
                 djvu = reader.ReadToEnd();
+            }
+            catch (Exception e)
+            {
+                this.LogMessage("Error getting DJVU for item " + itemID, e);
             }
             finally
             {
@@ -211,25 +232,32 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// <param name="barcode"></param>
         private void ConvertDjvuToXml(string djvu, string tempFolder, string barcode)
         {
-            StringBuilder sb = new StringBuilder(djvu);
-
-            // Shred the response into multiple "pages" (files) within the new directory
-            int startPosition = sb.ToString().IndexOf("<OBJECT");
-            int endPosition = sb.Length - 1;
-            int counter = 1;
-            while (startPosition != -1)
+            try
             {
-                sb.Remove(0, startPosition);
-                endPosition = sb.ToString().IndexOf("<MAP");
-                String pageText = sb.ToString().Substring(0, endPosition);
-                sb.Remove(0, endPosition);
+                StringBuilder sb = new StringBuilder(djvu);
 
-                String pageFile = string.Format("{0}\\{1}_{2}.xml", tempFolder, barcode, Convert.ToString(counter).PadLeft(4, '0'));
-                if (File.Exists(pageFile)) File.Delete(pageFile);
-                File.WriteAllText(pageFile, pageText);
+                // Shred the response into multiple "pages" (files) within the new directory
+                int startPosition = sb.ToString().IndexOf("<OBJECT");
+                int endPosition = sb.Length - 1;
+                int counter = 1;
+                while (startPosition != -1)
+                {
+                    sb.Remove(0, startPosition);
+                    endPosition = sb.ToString().IndexOf("<MAP");
+                    String pageText = sb.ToString().Substring(0, endPosition);
+                    sb.Remove(0, endPosition);
 
-                startPosition = sb.ToString().IndexOf("<OBJECT");
-                counter++;
+                    String pageFile = string.Format("{0}\\{1}_{2}.xml", tempFolder, barcode, Convert.ToString(counter).PadLeft(4, '0'));
+                    if (File.Exists(pageFile)) File.Delete(pageFile);
+                    File.WriteAllText(pageFile, pageText);
+
+                    startPosition = sb.ToString().IndexOf("<OBJECT");
+                    counter++;
+                }
+            }
+            catch (Exception e)
+            {
+                this.LogMessage("Error converting DJVU to XML for " + barcode, e);
             }
         }
 
@@ -240,41 +268,49 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// <param name="tempFolder"></param>
         private void TransformXmlToText(string tempFolder)
         {
-            String[] xmlFiles = Directory.GetFiles(tempFolder, "*.xml");
-            foreach (string xmlFile in xmlFiles)
+            try
             {
-                if (File.Exists(xmlFile + ".txt")) File.Delete(xmlFile + ".txt");
-
-                StringBuilder pageText = new StringBuilder();
-
-                string ocr = File.ReadAllText(xmlFile);
-                System.Xml.Linq.XDocument ocrXml = System.Xml.Linq.XDocument.Parse(ocr);
-
-                IEnumerable<System.Xml.Linq.XElement> lines = ocrXml.Root.Descendants("LINE");
-                foreach (System.Xml.Linq.XElement line in lines)
+                String[] xmlFiles = Directory.GetFiles(tempFolder, "*.xml");
+                foreach (string xmlFile in xmlFiles)
                 {
-                    IEnumerable<System.Xml.Linq.XElement> words = line.Descendants("WORD");
-                    foreach (System.Xml.Linq.XElement word in words) pageText.Append(word.Value + " ");
-                    pageText.AppendLine();
-                }
+                    if (File.Exists(xmlFile + ".txt")) File.Delete(xmlFile + ".txt");
 
-                File.WriteAllText(xmlFile.Replace(".xml", ".txt"), pageText.ToString());
-                File.Delete(xmlFile);
+                    StringBuilder pageText = new StringBuilder();
+
+                    string ocr = File.ReadAllText(xmlFile);
+                    System.Xml.Linq.XDocument ocrXml = System.Xml.Linq.XDocument.Parse(ocr);
+
+                    IEnumerable<System.Xml.Linq.XElement> lines = ocrXml.Root.Descendants("LINE");
+                    foreach (System.Xml.Linq.XElement line in lines)
+                    {
+                        IEnumerable<System.Xml.Linq.XElement> words = line.Descendants("WORD");
+                        foreach (System.Xml.Linq.XElement word in words) pageText.Append(word.Value + " ");
+                        pageText.AppendLine();
+                    }
+
+                    File.WriteAllText(xmlFile.Replace(".xml", ".txt"), pageText.ToString());
+                    File.Delete(xmlFile);
+                }
             }
+            catch (Exception e)
+            {
+                this.LogMessage("Error transforming XML to text", e);
+            }
+
         }
 
         /// <summary>
         /// Move the OCR files for the specified item from the specified temp folder
         /// to their production location.
         /// </summary>
-        /// <param name="barcode"></param>
+        /// <param name="itemID"></param>
         /// <param name="tempFolder"></param>
         /// <returns></returns>
-        private string MoveOcrToProduction(string itemID, string tempFolder)
+        private string MoveOcrToProduction(string itemID, string barcode, string tempFolder)
         {
             string status = string.Empty;
 
-            string path = GetFilePath(itemID);
+            string path = this.GetFilePath(itemID, barcode);
             if (!string.IsNullOrWhiteSpace(path))
             {
                 string[] files = Directory.GetFiles(tempFolder);
@@ -298,18 +334,13 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// </summary>
         /// <param name="barcode"></param>
         /// <returns></returns>
-        private string GetFilePath(string itemID)
+        private string GetFilePath(string itemID, string barcode)
         {
             string path = string.Empty;
 
-            BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-            BHLWS.Item item = client.ItemSelectAuto(Convert.ToInt32(itemID));
-
-            if (item != null)
-            {
-                BHLWS.Vault vault = client.VaultSelect((int)item.VaultID);
-                path = string.Format("{0}\\{1}\\{2}", vault.OCRFolderShare, item.FileRootFolder, item.BarCode);
-            }
+            Item item = new ItemsClient(configParms.BHLWSEndpoint).GetItem(Convert.ToInt32(itemID));
+            Vault vault = new VaultsClient(configParms.BHLWSEndpoint).GetVault((int)item.VaultID);
+            path = string.Format("{0}\\{1}\\{2}", vault.OcrFolderShare, item.FileRootFolder, barcode);
 
             return path;
         }
@@ -409,16 +440,24 @@ namespace MOBOT.BHL.BHLOcrRefresh
         private void SendEmail(String subject, String message, String fromAddress,
             String toAddress, String ccAddresses)
         {
-            MailMessage mailMessage = new MailMessage();
-            MailAddress mailAddress = new MailAddress(fromAddress);
-            mailMessage.From = mailAddress;
-            mailMessage.To.Add(toAddress);
-            if (ccAddresses != String.Empty) mailMessage.CC.Add(ccAddresses);
-            mailMessage.Subject = subject;
-            mailMessage.Body = message;
+            MailRequestModel mailRequest = new MailRequestModel();
+            mailRequest.Subject = subject;
+            mailRequest.Body = message;
+            mailRequest.From = fromAddress;
 
-            SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
-            smtpClient.Send(mailMessage);
+            List<string> recipients = new List<string>();
+            foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
+            mailRequest.To = recipients;
+
+            if (ccAddresses != String.Empty)
+            {
+                List<string> ccs = new List<string>();
+                foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
+                mailRequest.Cc = ccs;
+            }
+
+            EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+            restClient.SendEmail(mailRequest);
         }
 
         private void LogMessage(string message)

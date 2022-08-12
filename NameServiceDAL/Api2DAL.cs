@@ -36,7 +36,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
                 connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"));
             }
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("PageSelectAuto", connection, transaction,
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiPageSelectByPageID", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID)))
             {
                 using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
@@ -316,13 +316,13 @@ namespace MOBOT.BHL.API.BHLApiDAL
         }
 
         public List<Title> TitleSelectByIdentifier(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
-            string identifierName, string identifierValue)
+            string identifierType, string identifierValue)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiTitleSelectByIdentifier", connection, transaction,
-                    CustomSqlHelper.CreateInputParameter("IdentifierName", SqlDbType.NVarChar, 40, false, identifierName),
+                    CustomSqlHelper.CreateInputParameter("IdentifierType", SqlDbType.NVarChar, 40, false, identifierType),
                     CustomSqlHelper.CreateInputParameter("IdentifierValue", SqlDbType.NVarChar, 145, false, identifierValue)))
             {
                 using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
@@ -420,7 +420,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectForSegmentID", connection, transaction,
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiSegmentSelectForSegmentID", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentId)))
             {
                 using (CustomSqlHelper<Part> helper = new CustomSqlHelper<Part>())
@@ -550,13 +550,13 @@ namespace MOBOT.BHL.API.BHLApiDAL
         }
 
         public List<Part> SegmentSelectByIdentifier(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
-            string identifierName, string identifierValue)
+            string identifierType, string identifierValue)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiSegmentSelectByIdentifier", connection, transaction,
-                    CustomSqlHelper.CreateInputParameter("IdentifierName", SqlDbType.NVarChar, 40, false, identifierName),
+                    CustomSqlHelper.CreateInputParameter("IdentifierType", SqlDbType.NVarChar, 40, false, identifierType),
                     CustomSqlHelper.CreateInputParameter("IdentifierValue", SqlDbType.NVarChar, 125, false, identifierValue)))
             {
                 using (CustomSqlHelper<Part> helper = new CustomSqlHelper<Part>())
@@ -1211,16 +1211,16 @@ namespace MOBOT.BHL.API.BHLApiDAL
             }
         }
 
-        public List<Contributor> InstitutionSelectByItemIDAndRole(
+        public List<Contributor> InstitutionSelectByBookIDAndRole(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
-            int itemID,
+            int bookID,
             string institutionRoleName)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectByItemIDAndRole", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiInstitutionSelectByBookIDAndRole", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("BookID", SqlDbType.Int, null, false, bookID),
                 CustomSqlHelper.CreateInputParameter("InstitutionRoleName", SqlDbType.NVarChar, 100, false, institutionRoleName)))
             {
                 using (CustomSqlHelper<Contributor> helper = new CustomSqlHelper<Contributor>())

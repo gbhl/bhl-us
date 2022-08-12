@@ -1,23 +1,11 @@
 using System;
+using System.Configuration;
 using System.Xml;
 
 namespace IAHarvest
 {
     public class ConfigParms
     {
-        private string _smtpHost = "";
-        public string SMTPHost
-        {
-            get
-            {
-                return _smtpHost;
-            }
-            set
-            {
-                _smtpHost = value;
-            }
-        }
-
         private string _emailFromAddress = "";
         public string EmailFromAddress
         {
@@ -80,6 +68,20 @@ namespace IAHarvest
             set
             {
                 _download = value;
+            }
+        }
+
+        private bool _quiet = false;
+
+        public bool Quiet
+        {
+            get
+            {
+                return _quiet;
+            }
+            set
+            {
+                _quiet = value;
             }
         }
 
@@ -390,125 +392,38 @@ namespace IAHarvest
             }
         }
 
+        public string BHLWSEndpoint { get; set; } = string.Empty;
+
         public void LoadAppConfig()
         {
-            XmlDocument doc = new XmlDocument();
-            string configPath = AppDomain.CurrentDomain.FriendlyName + ".config";
-            doc.Load(configPath);
-            foreach (XmlNode node in doc["configuration"]["appSettings"])
-            {
-                if (node.Name == "add")
-                {
-                    if (node.Attributes.GetNamedItem("key").Value == "SMTPHost")
-                    {
-                        this.SMTPHost = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "EmailFromAddress")
-                    {
-                        this.EmailFromAddress = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "EmailToAddress")
-                    {
-                        this.EmailToAddress = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "Mode")
-                    {
-                        this.Mode = node.Attributes.GetNamedItem("value").Value.ToUpper();
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "Download")
-                    {
-                        this.Download = Convert.ToBoolean(node.Attributes.GetNamedItem("value").Value.ToLower());
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "Upload")
-                    {
-                        this.Upload = Convert.ToBoolean(node.Attributes.GetNamedItem("value").Value.ToLower());
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "AllowUnapprovedPublish")
-                    {
-                        this.AllowUnapprovedPublish = Convert.ToBoolean(node.Attributes.GetNamedItem("value").Value.ToLower());
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "MinimumDaysBeforeAllowUnapprovedPublish")
-                    {
-                        this.MinimumDaysBeforeAllowUnapprovedPublish = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "ItemPrefix")
-                    {
-                        this.ItemPrefix = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "Item")
-                    {
-                        this.Item = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "OAIListIdentifiersUrl")
-                    {
-                        this.OaiListIdentifiersUrl = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "OAIGetRecordUrl")
-                    {
-                        this.OaiGetRecordUrl = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "SearchListIdentifiersUrl")
-                    {
-                        this.SearchListIdentifiersUrl = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "SearchListIdentifiersItemUrl")
-                    {
-                        this.SearchListIdentifiersItemUrl = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "FileDownloadUrl")
-                    {
-                        this.FileDownloadUrl = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "ScandataDownloadUrl")
-                    {
-                        this.ScandataDownloadUrl = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "PhysicalLocationUrl")
-                    {
-                        this.PhysicalLocationUrl = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "PageExternalUrl")
-                    {
-                        this.PageExternalUrl = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "FilesExtension")
-                    {
-                        this.FilesExtension = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DCMetadataExtension")
-                    {
-                        this.DCMetadataExtension = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "MetadataExtension")
-                    {
-                        this.MetadataExtension = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "MetadataSourceExtension")
-                    {
-                        this.MetadataSourceExtension = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "MarcExtension")
-                    {
-                        this.MarcExtension = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DjvuExtension")
-                    {
-                        this.DjvuExtension = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "ScandataExtension")
-                    {
-                        this.ScandataExtension = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "ScandataFile")
-                    {
-                        this.ScandataFile = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "LocalFileFolder")
-                    {
-                        this.LocalFileFolder = node.Attributes.GetNamedItem("value").Value;
-                    }
-                }
-            }
+            EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
+            EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            Mode = ConfigurationManager.AppSettings["Mode"];
+            Download = Convert.ToBoolean(ConfigurationManager.AppSettings["Download"]);
+            Upload = Convert.ToBoolean(ConfigurationManager.AppSettings["Upload"]);
+            Quiet = Convert.ToBoolean(ConfigurationManager.AppSettings["Quiet"]);
+            AllowUnapprovedPublish = Convert.ToBoolean(ConfigurationManager.AppSettings["AllowUnapprovedPublish"]);
+            MinimumDaysBeforeAllowUnapprovedPublish = Convert.ToInt32(ConfigurationManager.AppSettings["MinimumDaysBeforeAllowUnapprovedPublish"]);
+            ItemPrefix = ConfigurationManager.AppSettings["ItemPrefix"];
+            Item = ConfigurationManager.AppSettings["Item"];
+            OaiListIdentifiersUrl = ConfigurationManager.AppSettings["OAIListIdentifiersUrl"];
+            OaiGetRecordUrl = ConfigurationManager.AppSettings["OAIGetRecordUrl"];
+            SearchListIdentifiersUrl = ConfigurationManager.AppSettings["SearchListIdentifiersUrl"];
+            SearchListIdentifiersItemUrl = ConfigurationManager.AppSettings["SearchListIdentifiersItemUrl"];
+            FileDownloadUrl = ConfigurationManager.AppSettings["FileDownloadUrl"];
+            ScandataDownloadUrl = ConfigurationManager.AppSettings["ScandataDownloadUrl"];
+            PhysicalLocationUrl = ConfigurationManager.AppSettings["PhysicalLocationUrl"];
+            PageExternalUrl = ConfigurationManager.AppSettings["PageExternalUrl"];
+            FilesExtension = ConfigurationManager.AppSettings["FilesExtension"];
+            DCMetadataExtension = ConfigurationManager.AppSettings["DCMetadataExtension"];
+            MetadataExtension = ConfigurationManager.AppSettings["MetadataExtension"];
+            MetadataSourceExtension = ConfigurationManager.AppSettings["MetadataSourceExtension"];
+            MarcExtension = ConfigurationManager.AppSettings["MarcExtension"];
+            DjvuExtension = ConfigurationManager.AppSettings["DjvuExtension"];
+            ScandataExtension = ConfigurationManager.AppSettings["ScandataExtension"];
+            ScandataFile = ConfigurationManager.AppSettings["ScandataFile"];
+            LocalFileFolder = ConfigurationManager.AppSettings["LocalFileFolder"];
+            BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
     }
 }

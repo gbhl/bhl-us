@@ -1,7 +1,7 @@
 
-// Generated 1/15/2008 11:27:51 AM
+// Generated 1/5/2021 2:13:40 PM
 // Do not modify the contents of this code file.
-// This abstract class __IADCMetadata is based upon IADCMetadata.
+// This abstract class __IADCMetadata is based upon dbo.IADCMetadata.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __IADCMetadata : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -128,7 +128,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -136,7 +136,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region DCMetadataID
 		
@@ -332,7 +332,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -475,7 +475,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __IADCMetadata.SortColumn.DCMetadataID);
 		/// </summary>
 		[Serializable]
@@ -494,3 +493,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

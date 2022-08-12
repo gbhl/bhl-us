@@ -3,7 +3,7 @@
 
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
-using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class ImportFileDAL
+    public partial class ImportFileDAL
 	{
         public void ImportFileDeleteByImportFileID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int importFileID)
         {
@@ -62,7 +62,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ImportFile> helper = new CustomSqlHelper<ImportFile>())
                 {
-                    CustomGenericList<ImportFile> list = helper.ExecuteReader(command);
+                    List<ImportFile> list = helper.ExecuteReader(command);
                     if (list != null)
                         return list[0];
                     else
@@ -71,20 +71,20 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<ImportFile> ImportFileSelectDetails(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string institutionCode,
+        public List<ImportFile> ImportFileSelectDetails(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int userId,
             int fileStatusID, int numberOfDays)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportFileSelectDetails", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("ContributorCode", SqlDbType.NVarChar, 10, false, institutionCode),
+                CustomSqlHelper.CreateInputParameter("UserID", SqlDbType.Int, null, false, userId),
                 CustomSqlHelper.CreateInputParameter("FileStatusID", SqlDbType.Int, null, false, fileStatusID),
                 CustomSqlHelper.CreateInputParameter("NumDays", SqlDbType.Int, null, false, numberOfDays)))
             {
                 using (CustomSqlHelper<ImportFile> helper = new CustomSqlHelper<ImportFile>())
                 {
-                    CustomGenericList<ImportFile> list = helper.ExecuteReader(command);
+                    List<ImportFile> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -101,7 +101,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ImportFile> helper = new CustomSqlHelper<ImportFile>())
                 {
-                    CustomGenericList<ImportFile> list = helper.ExecuteReader(command);
+                    List<ImportFile> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else

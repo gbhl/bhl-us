@@ -2,7 +2,7 @@
     [ItemLanguageID]   INT           IDENTITY (1, 1) NOT NULL,
     [ImportStatusID]   INT           NOT NULL,
     [ImportSourceID]   INT           NULL,
-    [BarCode]          NVARCHAR (40) NOT NULL,
+    [BarCode]          NVARCHAR (200) NOT NULL,
     [LanguageCode]     NVARCHAR (10) CONSTRAINT [DF__ItemLangu__Langu__0D8FDC76] DEFAULT ('') NOT NULL,
     [ProductionDate]   DATETIME      NULL,
     [CreatedDate]      DATETIME      CONSTRAINT [DF__ItemLangu__Creat__0E8400AF] DEFAULT (getdate()) NOT NULL,

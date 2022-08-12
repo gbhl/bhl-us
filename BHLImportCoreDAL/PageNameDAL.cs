@@ -1,17 +1,17 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHLImport.DAL
 {
-	public partial class PageNameDAL
+    public partial class PageNameDAL
 	{
         /// <summary>
         /// Select the new page name with the barcode, filenameprefix, sequence order,
@@ -37,14 +37,14 @@ namespace MOBOT.BHLImport.DAL
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("PageNameSelectNewByKeyValuesAndSource", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
+                CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, false, barCode),
                 CustomSqlHelper.CreateInputParameter("FileNamePrefix", SqlDbType.NVarChar, 200, false, fileNamePrefix),
                 CustomSqlHelper.CreateInputParameter("NameFound", SqlDbType.NVarChar, 100, false, nameFound),
                 CustomSqlHelper.CreateInputParameter("ImportSourceID", SqlDbType.Int, null, false, importSourceID)))
             {
                 using (CustomSqlHelper<PageName> helper = new CustomSqlHelper<PageName>())
                 {
-                    CustomGenericList<PageName> list = helper.ExecuteReader(command);
+                    List<PageName> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {

@@ -1,5 +1,5 @@
 
-// Generated 9/27/2019 3:50:04 PM
+// Generated 1/5/2021 3:26:10 PM
 // Do not modify the contents of this code file.
 // This abstract class __MarcSubField is based upon dbo.MarcSubField.
 
@@ -438,7 +438,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __MarcSubField.SortColumn.MarcSubFieldID);
 		/// </summary>
 		[Serializable]

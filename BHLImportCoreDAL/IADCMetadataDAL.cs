@@ -1,17 +1,17 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHLImport.DAL
 {
-	public partial class IADCMetadataDAL
+    public partial class IADCMetadataDAL
 	{
         /// <summary>
         /// Select the DCMetadata record for the specified item, element, and source.
@@ -39,7 +39,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IADCMetadata> helper = new CustomSqlHelper<IADCMetadata>())
                 {
-                    CustomGenericList<IADCMetadata> list = helper.ExecuteReader(command);
+                    List<IADCMetadata> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {

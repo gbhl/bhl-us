@@ -1,9 +1,10 @@
-﻿using System;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
 using System.Text;
-using MOBOT.BHL.BHLPDFGenerator.BHLWS;
 
 namespace MOBOT.BHL.BHLPDFGenerator
 {
@@ -20,6 +21,12 @@ namespace MOBOT.BHL.BHLPDFGenerator
         private List<string> deletedPdfs = new List<string>();
         private List<string> generatedPdfs = new List<string>();
         private List<string> errorMessages = new List<string>();
+
+        private int _pdfStatusPending = 10;
+        private int _pdfStatusProcessing = 20;
+        private int _pdfStatusGenerated = 30;
+        private int _pdfStatusError = 40;
+        private int _pdfStatusRejected = 50;
 
         public void Generate()
         {
@@ -49,16 +56,14 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
         private void RemoveOldPdfs()
         {
-            BHLWS.BHLWS service = null;
-
             try
             {
                 this.LogMessage("Deleting old PDFs...");
-                service = new BHLWS.BHLWS();
+                PdfClient restClient = new PdfClient(configParms.BHLWSEndpoint);
 
                 // Get data for PDFs that need to be deleted
                 this.LogMessage("Getting PDFs to be deleted.");
-                PDF[] pdfs = service.PDFSelectForDeletion();
+                ICollection<PDF> pdfs = restClient.GetPdfsForDeletion();
 
                 foreach (PDF pdf in pdfs)
                 {
@@ -66,7 +71,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                     if (File.Exists(pdf.FileLocation)) File.Delete(pdf.FileLocation);
 
                     // Mark the PDF record as deleted
-                    service.PDFUpdateFileDeletion(pdf.PdfID);
+                    restClient.UpdatePdfDeletionDate((int)pdf.PdfID, new PdfModel());
 
                     this.deletedPdfs.Add(pdf.PdfID.ToString());
                 }
@@ -76,28 +81,22 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 log.Error("Exception deleting old PDFs.", ex);
                 errorMessages.Add("Exception deleting old PDFs:  " + ex.Message);
             }
-            finally
-            {
-                if (service != null) service.Dispose();
-            }
         }
 
         private void ProcessNewPdfs()
         {
-            BHLWS.BHLWS service = null;
-
             try
             {
                 this.LogMessage("Processing new PDFs...");
-                service = new BHLWS.BHLWS();
+                PdfClient pdfRestClient = new PdfClient(configParms.BHLWSEndpoint);
 
                 // Get data for the first PDF that needs to be generated
                 this.LogMessage("Getting PDF to be generated.");
-                PDF[] pdfs = service.PDFSelectForFileCreation();
-                PageSummaryView[] pdfPages = null;
-                List<String> pageUrls = new List<string>();
+                ICollection<PDF> pdfs = pdfRestClient.GetPdfsForCreation();
+                ICollection<PageSummaryView> pdfPages = null;
+                List<string> pageUrls = new List<string>();
 
-                while (pdfs.Length > 0)
+                while (pdfs.Count > 0)
                 {
                     foreach (PDF pdf in pdfs)
                     {
@@ -105,7 +104,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                         {
                             // Get the pages for this pdf and process them
                             this.LogMessage("Getting pages for PDF: " + pdf.PdfID);
-                            pdfPages = service.PDFPageSummaryViewSelectByPdfID(pdf.PdfID);
+                            pdfPages = new PageSummaryViewClient(configParms.BHLWSEndpoint).GetPageSummaryViewByPdf((int)pdf.PdfID);
                             pageUrls.Clear();
 
                             foreach (PageSummaryView pdfPage in pdfPages)
@@ -113,21 +112,21 @@ namespace MOBOT.BHL.BHLPDFGenerator
                                 // Build the URLs to the page and OCR text and add them to the list
                                 String urlString = String.Empty;
                                 String ocrTextLocation = String.Format(configParms.OcrTextLocation,
-                                    pdfPage.OCRFolderShare, pdfPage.FileRootFolder, pdfPage.BarCode,
+                                    pdfPage.OcrFolderShare, pdfPage.FileRootFolder, pdfPage.BarCode,
                                     pdfPage.FileNamePrefix);
 
                                 String extUrl = String.Empty;
-                                if (pdfPage.AltExternalURL.EndsWith(".jp2"))
+                                if (pdfPage.ExternalURL.EndsWith(".jp2"))
                                 {
-                                    extUrl = pdfPage.AltExternalURL.Substring(0, pdfPage.AltExternalURL.Length - 3) + "jpg";
+                                    extUrl = pdfPage.ExternalURL.Substring(0, pdfPage.ExternalURL.Length - 3) + "jpg";
                                 }
-                                else if (pdfPage.AltExternalURL.IndexOf("/download/" + pdfPage.BarCode + "/page/n", StringComparison.OrdinalIgnoreCase) >= 0)
+                                else if (pdfPage.ExternalURL.IndexOf("/download/" + pdfPage.BarCode + "/page/n", StringComparison.OrdinalIgnoreCase) >= 0)
                                 {
-                                    extUrl = pdfPage.AltExternalURL + "_w1000"; // scale the image down a bit for inclusion in the PDF
+                                    extUrl = pdfPage.ExternalURL + "_w1000"; // scale the image down a bit for inclusion in the PDF
                                 }
                                 else
                                 {
-                                    extUrl = pdfPage.AltExternalURL;
+                                    extUrl = pdfPage.ExternalURL;
                                 }
                                 urlString = extUrl;
 
@@ -140,19 +139,19 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
                                 // Generate the PDF
                                 PDFDocument pdfDoc = new PDFDocument(pdf, pageUrls,
-                                    configParms.PdfFilePath, configParms.PdfUrl);
+                                    configParms.PdfFilePath, configParms.PdfUrl, configParms.BHLWSEndpoint);
                                 pdfDoc.GenerateFile(configParms.RetryImageWait);
 
-                                this.LogMessage(string.Format("Generated file for PDF {0} with {1} image errors.", 
+                                this.LogMessage(string.Format("Generated file for PDF {0} with {1} image errors.",
                                     pdf.PdfID.ToString(), pdf.NumberImagesMissing.ToString()));
-                                foreach(string error in pdfDoc.ImageErrors)
+                                foreach (string error in pdfDoc.ImageErrors)
                                 {
                                     this.LogMessage(string.Format("Image error for PDF {0}\r\n{1}",
                                         pdf.PdfID.ToString(), error));
                                 }
 
                                 // Send email to the PDF requestor
-                                String emailBody = this.GetRequestorEmailBody(pdf.PdfID, pdfDoc.FileUrl,
+                                String emailBody = this.GetRequestorEmailBody((int)pdf.PdfID, pdfDoc.FileUrl,
                                     pdf.ArticleTitle, pdf.ArticleCreators, pdf.ArticleTags);
                                 this.SendEmail("BHL PDF Generation request #" + pdf.PdfID.ToString() + " - Complete",
                                     emailBody, "noreply@biodiversitylibrary.org", pdf.EmailAddress,
@@ -160,15 +159,22 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
                                 // Update PDF record feedback from the generation process.
                                 // This also marks the PDF as generated.
-                                service.PDFUpdateGenerationInfo(pdf.PdfID, pdfDoc.FileLocation,
-                                    pdfDoc.FileUrl, pdfDoc.NumberImagesMissing, pdfDoc.NumberOcrMissing);
+                                pdfRestClient.UpdatePdfGenerationInfo((int)pdf.PdfID, new PdfModel {
+                                    FileLocation = pdfDoc.FileLocation,
+                                    FileUrl = pdfDoc.FileUrl, 
+                                    NumberImagesMissing = pdfDoc.NumberImagesMissing, 
+                                    NumberOcrMissing = pdfDoc.NumberOcrMissing 
+                                });
                             }
 
                             this.generatedPdfs.Add(pdf.PdfID.ToString());
                         }
                         catch (Exception ex)
                         {
-                            service.PDFUpdatePdfStatusError(pdf.PdfID);
+                            pdfRestClient.UpdatePdfStatus((int)pdf.PdfID, new PdfModel
+                            {
+                                Pdfstatusid = _pdfStatusError
+                            });
                             log.Error("Exception processing pdf: " + pdf.PdfID, ex);
                             errorMessages.Add("Exception processing pdf" + pdf.PdfID + ":  " + ex.Message);
                             // don't bomb.  try next PDF
@@ -177,7 +183,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
                     // Get data for the next PDF that needs to be generated
                     this.LogMessage("Getting PDF to be generated.");
-                    pdfs = service.PDFSelectForFileCreation();
+                    pdfs = pdfRestClient.GetPdfsForCreation();
                     pdfPages = null;
                 }
 
@@ -187,10 +193,6 @@ namespace MOBOT.BHL.BHLPDFGenerator
             {
                 log.Error("Exception processing new PDFs.", ex);
                 errorMessages.Add("Exception processing new PDFs:  " + ex.Message);
-            }
-            finally
-            {
-                if (service != null) service.Dispose();
             }
         }
 
@@ -356,16 +358,24 @@ namespace MOBOT.BHL.BHLPDFGenerator
         {
             try
             {
-                MailMessage mailMessage = new MailMessage();
-                MailAddress mailAddress = new MailAddress(fromAddress);
-                mailMessage.From = mailAddress;
-                mailMessage.To.Add(toAddress);
-                if (ccAddresses != String.Empty) mailMessage.CC.Add(ccAddresses);
-                mailMessage.Subject = subject;
-                mailMessage.Body = message;
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = subject;
+                mailRequest.Body = message;
+                mailRequest.From = fromAddress;
 
-                SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
-                smtpClient.Send(mailMessage);
+                List<string> recipients = new List<string>();
+                foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
+
+                if (ccAddresses != String.Empty)
+                {
+                    List<string> ccs = new List<string>();
+                    foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
+                    mailRequest.Cc = ccs;
+                }
+
+                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {

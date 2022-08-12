@@ -6,19 +6,19 @@ namespace BHLFlickrTagHarvest
 {
     public class ConfigParms
     {
-        public string SMTPHost { get; set; }
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
         public string FlickrApiKey { get; set; }
         public string BHLFlickrUserID { get; set; }
+        public string BHLWSEndpoint { get; set; } = string.Empty;
 
         public void LoadAppConfig()
         {
-            SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
             FlickrApiKey = ConfigurationManager.AppSettings["FlickrApiKey"];
             BHLFlickrUserID = ConfigurationManager.AppSettings["BHLFlickrUserID"];
+            BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
 
         public void UpdateAppSetting(string key, object value)

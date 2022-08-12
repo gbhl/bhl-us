@@ -1,16 +1,15 @@
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHLImport.DAL
 {
-	public partial class BSItemStatusDAL
+    public partial class BSItemStatusDAL
 	{
         /// <summary>
         /// Select all BSItemStatus records.
@@ -18,7 +17,7 @@ namespace MOBOT.BHLImport.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of BSItemStatus.</returns>
-        public CustomGenericList<BSItemStatus> BSItemStatusSelectAll(
+        public List<BSItemStatus> BSItemStatusSelectAll(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction)
         {

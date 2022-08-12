@@ -1,7 +1,7 @@
 
-// Generated 9/4/2008 2:16:32 PM
+// Generated 1/5/2021 2:18:33 PM
 // Do not modify the contents of this code file.
-// This abstract class __Title_TitleIdentifier is based upon Title_TitleIdentifier.
+// This abstract class __Title_TitleIdentifier is based upon dbo.Title_TitleIdentifier.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Title_TitleIdentifier : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -160,7 +160,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -168,7 +168,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region Title_TitleIdentifierID
 		
@@ -472,7 +472,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -619,7 +619,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Title_TitleIdentifier.SortColumn.Title_TitleIdentifierID);
 		/// </summary>
 		[Serializable]
@@ -642,3 +641,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

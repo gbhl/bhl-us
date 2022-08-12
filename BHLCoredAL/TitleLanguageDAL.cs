@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -7,7 +8,7 @@ namespace MOBOT.BHL.DAL
 {
 	public partial class TitleLanguageDAL
 	{
-        public CustomGenericList<TitleLanguage> TitleLanguageSelectByTitleID(SqlConnection sqlConnection,
+        public List<TitleLanguage> TitleLanguageSelectByTitleID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int titleId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -19,7 +20,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleLanguage> helper = new CustomSqlHelper<TitleLanguage>())
                 {
-                    CustomGenericList<TitleLanguage> list = helper.ExecuteReader(command);
+                    List<TitleLanguage> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

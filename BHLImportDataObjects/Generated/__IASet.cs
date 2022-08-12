@@ -1,7 +1,7 @@
 
-// Generated 5/27/2008 11:38:08 AM
+// Generated 1/5/2021 2:16:04 PM
 // Do not modify the contents of this code file.
-// This abstract class __IASet is based upon IASet.
+// This abstract class __IASet is based upon dbo.IASet.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __IASet : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -49,24 +49,24 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="setSpecification"></param>
 		/// <param name="downloadAll"></param>
 		/// <param name="lastDownloadDate"></param>
-		/// <param name="lastFullDownloadDate"></param>
 		/// <param name="createdDate"></param>
 		/// <param name="lastModifiedDate"></param>
+		/// <param name="lastFullDownloadDate"></param>
 		public __IASet(int setID, 
 			string setSpecification, 
 			bool downloadAll, 
 			DateTime? lastDownloadDate, 
-			DateTime? lastFullDownloadDate, 
 			DateTime createdDate, 
-			DateTime lastModifiedDate) : this()
+			DateTime lastModifiedDate, 
+			DateTime? lastFullDownloadDate) : this()
 		{
 			_SetID = setID;
 			SetSpecification = setSpecification;
 			DownloadAll = downloadAll;
 			LastDownloadDate = lastDownloadDate;
-			LastFullDownloadDate = lastFullDownloadDate;
 			CreatedDate = createdDate;
 			LastModifiedDate = lastModifiedDate;
+			LastFullDownloadDate = lastFullDownloadDate;
 		}
 		
 		#endregion Constructors
@@ -113,11 +113,6 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastDownloadDate = (DateTime?)column.Value;
 						break;
 					}
-					case "LastFullDownloadDate" :
-					{
-						_LastFullDownloadDate = (DateTime?)column.Value;
-						break;
-					}
 					case "CreatedDate" :
 					{
 						_CreatedDate = (DateTime)column.Value;
@@ -128,7 +123,12 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+					case "LastFullDownloadDate" :
+					{
+						_LastFullDownloadDate = (DateTime?)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -136,7 +136,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region SetID
 		
@@ -248,33 +248,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion LastDownloadDate
 		
-		#region LastFullDownloadDate
-		
-		private DateTime? _LastFullDownloadDate = null;
-		
-		/// <summary>
-		/// Column: LastFullDownloadDate;
-		/// DBMS data type: datetime; Nullable;
-		/// </summary>
-		[ColumnDefinition("LastFullDownloadDate", DbTargetType=SqlDbType.DateTime, Ordinal=5, IsNullable=true)]
-		public DateTime? LastFullDownloadDate
-		{
-			get
-			{
-				return _LastFullDownloadDate;
-			}
-			set
-			{
-				if (_LastFullDownloadDate != value)
-				{
-					_LastFullDownloadDate = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion LastFullDownloadDate
-		
 		#region CreatedDate
 		
 		private DateTime _CreatedDate;
@@ -283,7 +256,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: CreatedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreatedDate", DbTargetType=SqlDbType.DateTime, Ordinal=6)]
+		[ColumnDefinition("CreatedDate", DbTargetType=SqlDbType.DateTime, Ordinal=5)]
 		public DateTime CreatedDate
 		{
 			get
@@ -310,7 +283,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=7)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=6)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -328,9 +301,36 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion LastModifiedDate
+		
+		#region LastFullDownloadDate
+		
+		private DateTime? _LastFullDownloadDate = null;
+		
+		/// <summary>
+		/// Column: LastFullDownloadDate;
+		/// DBMS data type: datetime; Nullable;
+		/// </summary>
+		[ColumnDefinition("LastFullDownloadDate", DbTargetType=SqlDbType.DateTime, Ordinal=7, IsNullable=true)]
+		public DateTime? LastFullDownloadDate
+		{
+			get
+			{
+				return _LastFullDownloadDate;
+			}
+			set
+			{
+				if (_LastFullDownloadDate != value)
+				{
+					_LastFullDownloadDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastFullDownloadDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -376,9 +376,9 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.SetSpecification) == GetComparisonString(SetSpecification) &&
 					o.DownloadAll == DownloadAll &&
 					o.LastDownloadDate == LastDownloadDate &&
-					o.LastFullDownloadDate == LastFullDownloadDate &&
 					o.CreatedDate == CreatedDate &&
-					o.LastModifiedDate == LastModifiedDate 
+					o.LastModifiedDate == LastModifiedDate &&
+					o.LastFullDownloadDate == LastFullDownloadDate 
 				)
 				{
 					o = null;
@@ -473,7 +473,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __IASet.SortColumn.SetID);
 		/// </summary>
 		[Serializable]
@@ -483,12 +482,13 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string SetSpecification = "SetSpecification";	
 			public const string DownloadAll = "DownloadAll";	
 			public const string LastDownloadDate = "LastDownloadDate";	
-			public const string LastFullDownloadDate = "LastFullDownloadDate";	
 			public const string CreatedDate = "CreatedDate";	
-			public const string LastModifiedDate = "LastModifiedDate";
+			public const string LastModifiedDate = "LastModifiedDate";	
+			public const string LastFullDownloadDate = "LastFullDownloadDate";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

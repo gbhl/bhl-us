@@ -1,9 +1,9 @@
-﻿CREATE PROCEDURE dbo.IAItemUpdateAuto
+CREATE PROCEDURE dbo.IAItemUpdateAuto
 
 @ItemID INT,
 @ItemStatusID INT,
 @IAIdentifierPrefix NVARCHAR(50),
-@IAIdentifier NVARCHAR(50),
+@IAIdentifier NVARCHAR(200),
 @Sponsor NVARCHAR(100),
 @SponsorName NVARCHAR(50),
 @ScanningCenter NVARCHAR(50),
@@ -16,7 +16,7 @@
 @ScanDate NVARCHAR(50),
 @ExternalStatus NVARCHAR(50),
 @MARCBibID NVARCHAR(50),
-@BarCode NVARCHAR(40),
+@BarCode NVARCHAR(200),
 @IADateStamp DATETIME,
 @IAAddedDate DATETIME,
 @LastOAIDataHarvestDate DATETIME,
@@ -52,7 +52,8 @@
 @StartSeries NVARCHAR(10),
 @EndSeries NVARCHAR(10),
 @StartPart NVARCHAR(10),
-@EndPart NVARCHAR(10)
+@EndPart NVARCHAR(10),
+@PageProgression NVARCHAR(10)
 
 AS 
 
@@ -112,7 +113,8 @@ SET
 	[StartSeries] = @StartSeries,
 	[EndSeries] = @EndSeries,
 	[StartPart] = @StartPart,
-	[EndPart] = @EndPart
+	[EndPart] = @EndPart,
+	[PageProgression] = @PageProgression
 WHERE
 	[ItemID] = @ItemID
 		
@@ -178,10 +180,12 @@ ELSE BEGIN
 		[StartSeries],
 		[EndSeries],
 		[StartPart],
-		[EndPart]
+		[EndPart],
+		[PageProgression]
 	FROM [dbo].[IAItem]
 	WHERE
 		[ItemID] = @ItemID
 	
 	RETURN -- update successful
 END
+GO

@@ -127,5 +127,7 @@
       <QuotedIdentifier>Off</QuotedIdentifier>
     </None>
     <None Include="dbo\Synonyms\BHLItem.sql" />
+    <None Include="dbo\Stored Procedures\ItemSelectNextStartDate.sql" />
+    <None Include="IAAnalysisDBBuildScript.bat" />
   </ItemGroup>
 </Project>

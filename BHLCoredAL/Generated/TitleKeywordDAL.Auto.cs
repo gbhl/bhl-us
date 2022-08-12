@@ -1,8 +1,8 @@
 
-// Generated 5/3/2012 1:28:21 PM
+// Generated 1/5/2021 3:27:20 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class TitleKeywordDAL is based upon TitleKeyword.
+// This partial class TitleKeywordDAL is based upon dbo.TitleKeyword.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from TitleKeyword by primary key(s).
+		/// Select values from dbo.TitleKeyword by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from TitleKeyword by primary key(s).
+		/// Select values from dbo.TitleKeyword by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleKeyword> helper = new CustomSqlHelper<TitleKeyword>())
 				{
-					CustomGenericList<TitleKeyword> list = helper.ExecuteReader(command);
+					List<TitleKeyword> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleKeyword o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from TitleKeyword by primary key(s).
+		/// Select values from dbo.TitleKeyword by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="titleKeywordID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleKeywordSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleKeywordSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int titleKeywordID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from TitleKeyword by primary key(s).
+		/// Select values from dbo.TitleKeyword by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="titleKeywordID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> TitleKeywordSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> TitleKeywordSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into TitleKeyword.
+		/// Insert values into dbo.TitleKeyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -157,7 +158,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into TitleKeyword.
+		/// Insert values into dbo.TitleKeyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -195,7 +196,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleKeyword> helper = new CustomSqlHelper<TitleKeyword>())
 				{
-					CustomGenericList<TitleKeyword> list = helper.ExecuteReader(command);
+					List<TitleKeyword> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleKeyword o = list[0];
@@ -211,7 +212,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into TitleKeyword. Returns an object of type TitleKeyword.
+		/// Insert values into dbo.TitleKeyword. Returns an object of type TitleKeyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -226,7 +227,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into TitleKeyword. Returns an object of type TitleKeyword.
+		/// Insert values into dbo.TitleKeyword. Returns an object of type TitleKeyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -253,7 +254,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from TitleKeyword by primary key(s).
+		/// Delete values from dbo.TitleKeyword by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -268,7 +269,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from TitleKeyword by primary key(s).
+		/// Delete values from dbo.TitleKeyword by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -311,7 +312,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in TitleKeyword. Returns an object of type TitleKeyword.
+		/// Update values in dbo.TitleKeyword. Returns an object of type TitleKeyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -336,7 +337,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleKeyword. Returns an object of type TitleKeyword.
+		/// Update values in dbo.TitleKeyword. Returns an object of type TitleKeyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -373,7 +374,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<TitleKeyword> helper = new CustomSqlHelper<TitleKeyword>())
 				{
-					CustomGenericList<TitleKeyword> list = helper.ExecuteReader(command);
+					List<TitleKeyword> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						TitleKeyword o = list[0];
@@ -389,7 +390,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleKeyword. Returns an object of type TitleKeyword.
+		/// Update values in dbo.TitleKeyword. Returns an object of type TitleKeyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -404,7 +405,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleKeyword. Returns an object of type TitleKeyword.
+		/// Update values in dbo.TitleKeyword. Returns an object of type TitleKeyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -431,9 +432,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage TitleKeyword object.
+		/// Manage dbo.TitleKeyword object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in TitleKeyword.
+		/// then either insert values into, delete values from, or update values in dbo.TitleKeyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -448,9 +449,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage TitleKeyword object.
+		/// Manage dbo.TitleKeyword object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in TitleKeyword.
+		/// then either insert values into, delete values from, or update values in dbo.TitleKeyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -522,4 +523,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

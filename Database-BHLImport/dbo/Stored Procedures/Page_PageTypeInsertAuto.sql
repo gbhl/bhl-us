@@ -1,13 +1,7 @@
-﻿
--- Page_PageTypeInsertAuto PROCEDURE
--- Generated 1/16/2008 1:54:48 PM
--- Do not modify the contents of this procedure.
--- Insert Procedure for Page_PageType
-
-CREATE PROCEDURE Page_PageTypeInsertAuto
+CREATE PROCEDURE dbo.Page_PageTypeInsertAuto
 
 @PagePageTypeID INT OUTPUT,
-@BarCode NVARCHAR(40),
+@BarCode NVARCHAR(200),
 @FileNamePrefix NVARCHAR(200),
 @SequenceOrder INT = null,
 @PageTypeID INT,
@@ -25,8 +19,7 @@ AS
 SET NOCOUNT ON
 
 INSERT INTO [dbo].[Page_PageType]
-(
-	[BarCode],
+( 	[BarCode],
 	[FileNamePrefix],
 	[SequenceOrder],
 	[PageTypeID],
@@ -39,11 +32,9 @@ INSERT INTO [dbo].[Page_PageType]
 	[ExternalLastModifiedUser],
 	[ProductionDate],
 	[CreatedDate],
-	[LastModifiedDate]
-)
+	[LastModifiedDate] )
 VALUES
-(
-	@BarCode,
+( 	@BarCode,
 	@FileNamePrefix,
 	@SequenceOrder,
 	@PageTypeID,
@@ -56,20 +47,18 @@ VALUES
 	@ExternalLastModifiedUser,
 	@ProductionDate,
 	getdate(),
-	getdate()
-)
+	getdate() )
 
 SET @PagePageTypeID = Scope_Identity()
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure Page_PageTypeInsertAuto. No information was inserted as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.Page_PageTypeInsertAuto. No information was inserted as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[PagePageTypeID],
 		[BarCode],
 		[FileNamePrefix],
@@ -85,12 +74,10 @@ ELSE BEGIN
 		[ProductionDate],
 		[CreatedDate],
 		[LastModifiedDate]	
-
 	FROM [dbo].[Page_PageType]
-	
 	WHERE
 		[PagePageTypeID] = @PagePageTypeID
 	
 	RETURN -- insert successful
 END
-
+GO

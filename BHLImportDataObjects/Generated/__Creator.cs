@@ -1,7 +1,7 @@
 
-// Generated 4/4/2008 9:03:06 AM
+// Generated 1/5/2021 2:13:31 PM
 // Do not modify the contents of this code file.
-// This abstract class __Creator is based upon Creator.
+// This abstract class __Creator is based upon dbo.Creator.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Creator : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -66,6 +66,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="productionDate"></param>
 		/// <param name="createdDate"></param>
 		/// <param name="lastModifiedDate"></param>
+		/// <param name="mARCCreator_q"></param>
 		public __Creator(int creatorID, 
 			int importStatusID, 
 			int? importSourceID, 
@@ -86,7 +87,8 @@ namespace MOBOT.BHLImport.DataObjects
 			DateTime? externalLastModifiedDate, 
 			DateTime? productionDate, 
 			DateTime createdDate, 
-			DateTime lastModifiedDate) : this()
+			DateTime lastModifiedDate, 
+			string mARCCreator_q) : this()
 		{
 			_CreatorID = creatorID;
 			ImportStatusID = importStatusID;
@@ -109,6 +111,7 @@ namespace MOBOT.BHLImport.DataObjects
 			ProductionDate = productionDate;
 			CreatedDate = createdDate;
 			LastModifiedDate = lastModifiedDate;
+			MARCCreator_q = mARCCreator_q;
 		}
 		
 		#endregion Constructors
@@ -240,7 +243,12 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+					case "MARCCreator_q" :
+					{
+						_MARCCreator_q = (string)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -248,7 +256,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region CreatorID
 		
@@ -830,9 +838,37 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion LastModifiedDate
+		
+		#region MARCCreator_q
+		
+		private string _MARCCreator_q = null;
+		
+		/// <summary>
+		/// Column: MARCCreator_q;
+		/// DBMS data type: nvarchar(450); Nullable;
+		/// </summary>
+		[ColumnDefinition("MARCCreator_q", DbTargetType=SqlDbType.NVarChar, Ordinal=22, CharacterMaxLength=450, IsNullable=true)]
+		public string MARCCreator_q
+		{
+			get
+			{
+				return _MARCCreator_q;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 450);
+				if (_MARCCreator_q != value)
+				{
+					_MARCCreator_q = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion MARCCreator_q
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -894,7 +930,8 @@ namespace MOBOT.BHLImport.DataObjects
 					o.ExternalLastModifiedDate == ExternalLastModifiedDate &&
 					o.ProductionDate == ProductionDate &&
 					o.CreatedDate == CreatedDate &&
-					o.LastModifiedDate == LastModifiedDate 
+					o.LastModifiedDate == LastModifiedDate &&
+					GetComparisonString(o.MARCCreator_q) == GetComparisonString(MARCCreator_q) 
 				)
 				{
 					o = null;
@@ -989,7 +1026,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Creator.SortColumn.CreatorID);
 		/// </summary>
 		[Serializable]
@@ -1015,10 +1051,12 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string ExternalLastModifiedDate = "ExternalLastModifiedDate";	
 			public const string ProductionDate = "ProductionDate";	
 			public const string CreatedDate = "CreatedDate";	
-			public const string LastModifiedDate = "LastModifiedDate";
+			public const string LastModifiedDate = "LastModifiedDate";	
+			public const string MARCCreator_q = "MARCCreator_q";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

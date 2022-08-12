@@ -2,7 +2,7 @@
 	SegmentID int IDENTITY(1,1) NOT NULL,
 	ImportStatusID int NOT NULL,
 	ImportSourceID int NULL,
-	BarCode nvarchar(40) NOT NULL,
+	BarCode nvarchar(200) NOT NULL,
 	SequenceOrder smallint NOT NULL CONSTRAINT DF_Segment_SequenceOrder DEFAULT ((1)),
 	SegmentStatusID int NOT NULL,
 	SegmentGenreID int NOT NULL,

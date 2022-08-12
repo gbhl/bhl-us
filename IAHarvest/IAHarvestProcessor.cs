@@ -1,3 +1,5 @@
+using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
 using MOBOT.BHLImport.DataObjects;
 using MOBOT.BHLImport.Server;
 using System;
@@ -618,6 +620,7 @@ namespace IAHarvest
                     String scanningInstitution = String.Empty;
                     String rightsHolder = String.Empty;
                     String itemDescription = String.Empty;
+                    string pageProgression = string.Empty;
 
                     XmlNode element = xml.SelectSingleNode("metadata/sponsor");
                     if (element != null) sponsor = element.InnerText;
@@ -683,13 +686,16 @@ namespace IAHarvest
                     if (element != null) rightsHolder = element.InnerText;
                     element = xml.SelectSingleNode("metadata/copy-specific-information");
                     if (element != null) itemDescription = element.InnerText;
+                    element = xml.SelectSingleNode("metadata/page-progression");
+                    if (element != null) pageProgression = element.InnerText;
 
                     provider.IAItemUpdateMetadata(itemID, sponsor, sponsorDate, scanningCenter, 
                         callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator,
                         scanDate, addedDate, externalStatus, titleID, year, identifierBib,
                         licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion,
                         copyrightComment, copyrightEvidence, copyrightEvidenceOperator,
-                        copyrightEvidenceDate, scanningInstitution, rightsHolder, itemDescription);
+                        copyrightEvidenceDate, scanningInstitution, rightsHolder, itemDescription,
+                        pageProgression);
 
                     // Read the identifier information
                     provider.IAItemIdentifierDeleteByItem(itemID);  // Delete existing, as we're doing a full replace
@@ -724,7 +730,7 @@ namespace IAHarvest
                 provider.IADCMetadataDeleteForItemAndSource(itemID, DC_SOURCE_META);
                 provider.IAItemSetDeleteByItem(itemID);
                 provider.IAItemUpdateMetadata(itemID, "", "", "", "", 0, "", "", "", "", "", null, 
-                    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+                    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
             }
         }
 
@@ -1421,14 +1427,15 @@ namespace IAHarvest
         {
             try
             {
-                // send email with process results to Exchange group
-                if (retrievedIds.Count > 0 || harvestedXml.Count > 0 || 
-                    publishedItems.Count > 0 || errorMessages.Count > 0)
+                // Report the process results
+                if (retrievedIds.Count > 0 || harvestedXml.Count > 0 || publishedItems.Count > 0 || errorMessages.Count > 0)
                 {
                     this.LogMessage("Sending Email....");
                     string message = this.GetEmailBody();
                     this.LogMessage(message);
-                    this.SendEmail(message);
+
+                    // Send email if not in Quiet mode or if errors occurred
+                    if (!configParms.Quiet || errorMessages.Count > 0) this.SendEmail(message);
                 }
                 else
                 {
@@ -1475,6 +1482,7 @@ namespace IAHarvest
                 if (String.Compare(split[0], "/ENDDATE", true) == 0) configParms.SearchEndDate = Convert.ToDateTime(split[1]);
                 if (String.Compare(split[0], "/DOWNLOAD", true) == 0) configParms.Download = Convert.ToBoolean(split[1]);
                 if (String.Compare(split[0], "/UPLOAD", true) == 0) configParms.Upload = Convert.ToBoolean(split[1]);
+                if (String.Compare(split[0], "/QUIET", true) == 0) configParms.Quiet = Convert.ToBoolean(split[1]);
             }
 
             return true;
@@ -1539,23 +1547,20 @@ namespace IAHarvest
         {
             try
             {
-                string thisComputer = Environment.MachineName;
-                MailMessage mailMessage = new MailMessage();
-                MailAddress mailAddress = new MailAddress(configParms.EmailFromAddress);
-                mailMessage.From = mailAddress;
-                mailMessage.To.Add(configParms.EmailToAddress);
-                if (this.errorMessages.Count == 0)
-                {
-                    mailMessage.Subject = "IAHarvest: IA Harvesting on " + thisComputer + " completed successfully.";
-                }
-                else
-                {
-                    mailMessage.Subject = "IAHarvest: IA Harvesting on " + thisComputer + " completed with errors.";
-                }
-                mailMessage.Body = message;
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = string.Format(
+                    "IAHarvest: IA Harvesting on {0} completed {1}.",
+                    Environment.MachineName,
+                    (errorMessages.Count == 0 ? "successfully" : "with errors"));
+                mailRequest.Body = message;
+                mailRequest.From = configParms.EmailFromAddress;
 
-                SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
-                smtpClient.Send(mailMessage);
+                List<string> recipients = new List<string>();
+                foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
+
+                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {

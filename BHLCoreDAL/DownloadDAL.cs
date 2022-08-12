@@ -1,12 +1,13 @@
 ﻿using CustomDataAccess;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
     public class DownloadDAL
     {
-        public CustomGenericList<Tuple<string, string, string>> LinkSelectToExternalContent(
+        public List<Tuple<string, string, string>> LinkSelectToExternalContent(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction)
         {
@@ -15,9 +16,9 @@ namespace MOBOT.BHL.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("LinkSelectToExternalContent", connection, transaction))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
 
-                CustomGenericList<Tuple<string, string, string>> links = new CustomGenericList<Tuple<string, string, string>>();
+                List<Tuple<string, string, string>> links = new List<Tuple<string, string, string>>();
                 foreach(CustomDataRow row in list)
                 {
                     Tuple<string, string, string> link = new Tuple<string, string, string>(

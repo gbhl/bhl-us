@@ -1,47 +1,63 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class PageDAL
+    public partial class PageDAL
 	{
 		#region Select methods
 
 		/// <summary>
-		/// Select all Page objects for a particular Item ID.
+		/// Select all Page objects for a particular Book ID.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="itemID">Item identifier</param>
+		/// <param name="bookID">Book identifier</param>
 		/// <returns>Object of type Title.</returns>
-		public CustomGenericList<Page> PageSelectByItemID(
+		public List<Page> PageSelectByBookID(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction,
-				int itemID )
+				int bookID )
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection( CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );
 			SqlTransaction transaction = sqlTransaction;
 
-			using ( SqlCommand command = CustomSqlHelper.CreateCommand( "PageSelectByItemID", connection, transaction,
-					CustomSqlHelper.CreateInputParameter( "ItemID", SqlDbType.Int, null, false, itemID ) ) )
+			using ( SqlCommand command = CustomSqlHelper.CreateCommand( "PageSelectByBookID", connection, transaction,
+					CustomSqlHelper.CreateInputParameter( "BookID", SqlDbType.Int, null, false, bookID ) ) )
 			{
 				using ( CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>() )
 				{
-					CustomGenericList<Page> list = helper.ExecuteReader( command );
+					List<Page> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
 		}
 
-		public CustomGenericList<Page> PageMetadataSelectByItemID(
+		public List<Page> PageSelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			SqlTransaction transaction = sqlTransaction;
+
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageSelectByItemID", connection, transaction,
+					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
+			{
+				using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
+				{
+					List<Page> list = helper.ExecuteReader(command);
+					return (list);
+				}
+			}
+		}
+
+		public List<Page> PageMetadataSelectByItemID(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction,
 				int itemID )
@@ -54,8 +70,24 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>() )
 				{
-					CustomGenericList<Page> list = helper.ExecuteReader( command );
+					List<Page> list = helper.ExecuteReader( command );
 					return ( list );
+				}
+			}
+		}
+
+		public List<Page> PageMetadataSelectBySegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			SqlTransaction transaction = sqlTransaction;
+
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageMetadataSelectBySegmentID", connection, transaction,
+					CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
+			{
+				using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
+				{
+					List<Page> list = helper.ExecuteReader(command);
+					return (list);
 				}
 			}
 		}
@@ -70,7 +102,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>() )
 				{
-					CustomGenericList<Page> list = helper.ExecuteReader( command );
+					List<Page> list = helper.ExecuteReader( command );
 					if ( list.Count > 0 )
 						return list[ 0 ];
 					else
@@ -115,7 +147,7 @@ namespace MOBOT.BHL.DAL
 		/// Page Names are considered to be expired if the LastPageNameLookupDate on the
 		/// Page object is older than the specified number of days.
 		/// </remarks>
-		public CustomGenericList<Page> PageSelectWithExpiredPageNamesByItemID(
+		public List<Page> PageSelectWithExpiredPageNamesByItemID(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction,
 				int itemID,
@@ -130,7 +162,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>() )
 				{
-					CustomGenericList<Page> list = helper.ExecuteReader( command );
+					List<Page> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
@@ -147,7 +179,7 @@ namespace MOBOT.BHL.DAL
 		/// Pages are considered to not have page names if the LastPageNameLookupDate 
 		/// is null.
 		/// </remarks>
-		public CustomGenericList<Page> PageSelectWithoutPageNamesForItem(
+		public List<Page> PageSelectWithoutPageNamesForItem(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction,
 				int itemID )
@@ -160,13 +192,13 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>() )
 				{
-					CustomGenericList<Page> list = helper.ExecuteReader( command );
+					List<Page> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
 		}
 
-        public CustomGenericList<Page> PageSelectFileNameByItemID(
+        public List<Page> PageSelectFileNameByItemID(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 int itemID)
@@ -179,7 +211,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
                 {
-                    CustomGenericList<Page> list = helper.ExecuteReader(command);
+                    List<Page> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -196,7 +228,7 @@ namespace MOBOT.BHL.DAL
 		/// Pages are considered to not have page names if the LastPageNameLookupDate 
 		/// is null.
 		/// </remarks>
-		public CustomGenericList<Page> PageSelectWithoutPageNames(
+		public List<Page> PageSelectWithoutPageNames(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction )
 		{
@@ -207,7 +239,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>() )
 				{
-					CustomGenericList<Page> list = helper.ExecuteReader( command );
+					List<Page> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
@@ -223,7 +255,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="endPageID"></param>
         /// <param name="itemID"></param>
         /// <returns></returns>
-        public CustomGenericList<Page> PageSelectRangeForPagesAndItem(SqlConnection sqlConnection, 
+        public List<Page> PageSelectRangeForPagesAndItem(SqlConnection sqlConnection, 
             SqlTransaction sqlTransaction, int startPageID, int endPageID, int? itemID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -232,11 +264,11 @@ namespace MOBOT.BHL.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("import.PageSelectRangeForPagesAndItem", connection, transaction,
                     CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, false, startPageID),
                     CustomSqlHelper.CreateInputParameter("EndPageID", SqlDbType.Int, null, false, endPageID),
-                    CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
+                    CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID)))
             {
                 using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
                 {
-                    CustomGenericList<Page> list = helper.ExecuteReader(command);
+                    List<Page> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -252,7 +284,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="issue"></param>
         /// <param name="pageNumber"></param>
         /// <returns></returns>
-        public CustomGenericList<Page> PageSelectByItemAndPageNumber(SqlConnection sqlConnection,
+        public List<Page> PageSelectByItemAndPageNumber(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int itemID, string volume, string issue, string pageNumber)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -266,7 +298,32 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
                 {
-                    CustomGenericList<Page> list = helper.ExecuteReader(command);
+                    List<Page> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Return the page IDs that match the specified Segment and Page Number.
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="segmentID"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
+        public List<Page> PageSelectBySegmentAndPageNumber(SqlConnection sqlConnection,SqlTransaction sqlTransaction, int segmentID, string pageNumber)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.PageSelectBySegmentAndPageNumber", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID),
+                    CustomSqlHelper.CreateInputParameter("PageNumber", SqlDbType.NVarChar, 20, false, pageNumber)))
+            {
+                using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
+                {
+                    List<Page> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -274,34 +331,14 @@ namespace MOBOT.BHL.DAL
 
         #endregion
 
-        public CustomGenericList<CustomDataRow> PageResolve( SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
-			int titleID, string volume, string issue, string year, string startPage )
-		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection( 
-				CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );
-			SqlTransaction transaction = sqlTransaction;
-
-			using ( SqlCommand command = CustomSqlHelper.CreateCommand( "PageResolve", connection, transaction,
-					CustomSqlHelper.CreateInputParameter( "TitleID", SqlDbType.Int, 4, false, titleID ),
-					CustomSqlHelper.CreateInputParameter( "Volume", SqlDbType.VarChar, 20, false, volume ),
-					CustomSqlHelper.CreateInputParameter( "Issue", SqlDbType.VarChar, 20, false, issue ),
-					CustomSqlHelper.CreateInputParameter( "Year", SqlDbType.VarChar, 20, false, year ),
-					CustomSqlHelper.CreateInputParameter( "StartPage", SqlDbType.VarChar, 20, false, startPage ) ) )
-			{
-
-				CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows( command );
-				return list;
-			}
-		}
-
-		/// <summary>
-		/// Update the LastPageNameLookupDate for the specified Page.
-		/// </summary>
-		/// <param name="sqlConnection">Sql connection or null</param>
-		/// <param name="sqlTransaction">Sql transaction or null</param>
-		/// <param name="pageID">Identifier of a specific page</param>
-		/// <returns>The updated page</returns>
-		public Page PageUpdateLastPageNameLookupDate( SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID )
+        /// <summary>
+        /// Update the LastPageNameLookupDate for the specified Page.
+        /// </summary>
+        /// <param name="sqlConnection">Sql connection or null</param>
+        /// <param name="sqlTransaction">Sql transaction or null</param>
+        /// <param name="pageID">Identifier of a specific page</param>
+        /// <returns>The updated page</returns>
+        public Page PageUpdateLastPageNameLookupDate( SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID )
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection( 
 				CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );
@@ -313,7 +350,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>() )
 				{
-					CustomGenericList<Page> list = helper.ExecuteReader( command );
+					List<Page> list = helper.ExecuteReader( command );
 					if ( list.Count > 0 )
 						return list[ 0 ];
 					else
@@ -337,7 +374,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
                 {
-                    CustomGenericList<Page> list = helper.ExecuteReader(command);
+                    List<Page> list = helper.ExecuteReader(command);
                 }
             }
         }
@@ -353,7 +390,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
                 {
-                    CustomGenericList<Page> list = helper.ExecuteReader(command);
+                    List<Page> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -373,7 +410,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
                 {
-                    CustomGenericList<Page> list = helper.ExecuteReader(command);
+                    List<Page> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -393,7 +430,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
                 {
-                    CustomGenericList<Page> list = helper.ExecuteReader(command);
+                    List<Page> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -409,7 +446,7 @@ namespace MOBOT.BHL.DAL
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("PageInsertIntoItem", connection, transaction,
-                    CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 40, false, barCode),
+                    CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 200, false, barCode),
                     CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID),
                     CustomSqlHelper.CreateInputParameter("NumPagesToAdd", SqlDbType.Int, null, false, numPagesToAdd)))
             {
@@ -424,7 +461,7 @@ namespace MOBOT.BHL.DAL
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("PageDeleteFromItem", connection, transaction,
-                    CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 40, false, barCode),
+                    CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 200, false, barCode),
                     CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID),
                     CustomSqlHelper.CreateInputParameter("NumPagesToDelete", SqlDbType.Int, null, false, numPagesToDelete)))
             {

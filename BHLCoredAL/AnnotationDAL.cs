@@ -2,6 +2,7 @@
 #region Using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -13,7 +14,7 @@ namespace MOBOT.BHL.DAL
 {
 	public partial class AnnotationDAL
 	{
-        public CustomGenericList<Annotation> AnnotationsSelectByItemID(
+        public List<Annotation> AnnotationsSelectByItemID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int itemID)
@@ -27,7 +28,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Annotation> helper = new CustomSqlHelper<Annotation>())
                 {
-                    CustomGenericList<Annotation> list = helper.ExecuteReader(command);
+                    List<Annotation> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list;
                     else
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Annotation> helper = new CustomSqlHelper<Annotation>())
                 {
-                    CustomGenericList<Annotation> list = helper.ExecuteReader(command);
+                    List<Annotation> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -62,7 +63,7 @@ namespace MOBOT.BHL.DAL
         }
 
 
-        public CustomGenericList<CustomDataRow> AnnotationRelationSelectByAnnotationID(
+        public List<CustomDataRow> AnnotationRelationSelectByAnnotationID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int annotationID)
@@ -76,13 +77,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<CustomDataRow> helper = new CustomSqlHelper<CustomDataRow>())
                 {
-                    CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                    List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<SearchBookResult> SearchPageForConcept(
+        public List<SearchBookResult> SearchPageForConcept(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string annotationConceptCode)
@@ -96,13 +97,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<SearchBookResult> SearchPageForSubject(
+        public List<SearchBookResult> SearchPageForSubject(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int annotationSubjectCategoryID,
@@ -118,7 +119,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

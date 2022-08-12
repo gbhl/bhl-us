@@ -102,8 +102,19 @@ namespace MOBOT.BHL.AdminWeb
 			pageIdLabel.Text = ps.PageID.ToString();
 			titleLink.NavigateUrl = "/TitleEdit.aspx?id=" + ps.TitleID.ToString();
 			titleLink.Text = ps.ShortTitle + " (" + ps.TitleID.ToString() + ")";
-            itemLink.NavigateUrl = "/ItemEdit.aspx?id=" + ps.ItemID.ToString();
-            itemLink.Text = (ps.Volume == "") ? "(click to edit volume)" : ps.Volume;
+			if (ps.IsVirtual == 0)
+			{
+				itemLabel.Text = "Volume";
+				itemLink.NavigateUrl = "/ItemEdit.aspx?id=" + ps.BookID.ToString();
+				itemLink.Text = (ps.Volume == "") ? "(click to edit volume)" : ps.Volume;
+			}
+			else
+			{
+				itemLabel.Text = "Segment";
+				itemLink.NavigateUrl = "/SegmentEdit.aspx?id=" + ps.BookID.ToString();
+				Segment segment = new BHLProvider().SegmentSelectAuto(ps.BookID);
+				itemLink.Text = (segment == null) ? "(click to edit segment)" : segment.Title;
+			}
 			descriptionLabel.Text = ps.PageDescription;
 			addNamePageButton.Enabled = true;
             btnFindName.Disabled = false;
@@ -121,6 +132,7 @@ namespace MOBOT.BHL.AdminWeb
 			BHLProvider bp = new BHLProvider();
 
 			PageSummaryView ps = bp.PageSummarySelectByPageId( id, true );
+			if (ps == null) ps = bp.PageSummarySegmentSelectByPageID(id);
             if (ps == null) ps = new PageSummaryView();
             Session["Page" + pageIdTextBox.Text] = ps;
 
@@ -275,6 +287,7 @@ namespace MOBOT.BHL.AdminWeb
                     break;
                 }
 
+				/*
                 if (!string.IsNullOrEmpty(namePage.ResolvedNameString) && string.IsNullOrEmpty(namePage.NameBankID) &&
                     string.IsNullOrEmpty(namePage.EOLID))
                 {
@@ -282,6 +295,7 @@ namespace MOBOT.BHL.AdminWeb
                     errorControl.AddErrorText("If a Resolved Name is specified, then a NameBank ID or EOL ID must also be specified.");
                     break;
                 }
+				*/
 			}
 
 			errorControl.Visible = flag;

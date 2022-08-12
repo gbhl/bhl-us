@@ -1,13 +1,13 @@
-﻿CREATE PROCEDURE dbo.ItemInsertAuto
+CREATE PROCEDURE dbo.ItemInsertAuto
 
 @ItemID INT OUTPUT,
 @ImportKey NVARCHAR(50),
 @ImportStatusID INT,
 @ImportSourceID INT = null,
 @MARCBibID NVARCHAR(50),
-@BarCode NVARCHAR(40),
+@BarCode NVARCHAR(200),
 @ItemSequence SMALLINT = null,
-@MARCItemID NVARCHAR(50) = null,
+@MARCItemID NVARCHAR(200) = null,
 @CallNumber NVARCHAR(100) = null,
 @Volume NVARCHAR(100) = null,
 @InstitutionCode NVARCHAR(10) = null,
@@ -57,7 +57,8 @@
 @StartSeries NVARCHAR(10),
 @EndSeries NVARCHAR(10),
 @StartPart NVARCHAR(10),
-@EndPart NVARCHAR(10)
+@EndPart NVARCHAR(10),
+@PageProgression NVARCHAR(10)
 
 AS 
 
@@ -122,7 +123,8 @@ INSERT INTO [dbo].[Item]
 	[StartSeries],
 	[EndSeries],
 	[StartPart],
-	[EndPart] )
+	[EndPart],
+	[PageProgression] )
 VALUES
 ( 	@ImportKey,
 	@ImportStatusID,
@@ -182,7 +184,8 @@ VALUES
 	@StartSeries,
 	@EndSeries,
 	@StartPart,
-	@EndPart )
+	@EndPart,
+	@PageProgression )
 
 SET @ItemID = Scope_Identity()
 
@@ -253,10 +256,12 @@ ELSE BEGIN
 		[StartSeries],
 		[EndSeries],
 		[StartPart],
-		[EndPart]	
+		[EndPart],
+		[PageProgression]	
 	FROM [dbo].[Item]
 	WHERE
 		[ItemID] = @ItemID
 	
 	RETURN -- insert successful
 END
+GO

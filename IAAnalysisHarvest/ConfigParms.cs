@@ -1,21 +1,25 @@
 using System;
+using System.Configuration;
 using System.Xml;
 
 namespace IAAnalysisHarvest
 {
     public class ConfigParms
     {
-        private string _smtpHost = "";
-        public string SMTPHost
+        private DateTime? _startDate = null;
+
+        public DateTime? StartDate
         {
-            get
-            {
-                return _smtpHost;
-            }
-            set
-            {
-                _smtpHost = value;
-            }
+            get { return _startDate; }
+            set { _startDate = value; }
+        }
+
+        private DateTime? _endDate = null;
+
+        public DateTime? EndDate
+        {
+            get { return _endDate; }
+            set { _endDate = value; }
         }
 
         private string _emailFromAddress = "";
@@ -97,49 +101,20 @@ namespace IAAnalysisHarvest
             }
         }
 
+        public string BHLWSEndpoint { get; set; } = string.Empty;
+
         public void LoadAppConfig()
         {
-            XmlDocument doc = new XmlDocument();
-            string configPath = AppDomain.CurrentDomain.FriendlyName + ".config";
-            doc.Load(configPath);
-            foreach (XmlNode node in doc["configuration"]["appSettings"])
-            {
-                if (node.Name == "add")
-                {
-                    if (node.Attributes.GetNamedItem("key").Value == "SMTPHost")
-                    {
-                        this.SMTPHost = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "EmailFromAddress")
-                    {
-                        this.EmailFromAddress = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "EmailToAddress")
-                    {
-                        this.EmailToAddress = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "DownloadIDs")
-                    {
-                        this.DownloadIDs = Convert.ToBoolean(node.Attributes.GetNamedItem("value").Value.ToLower());
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "GetXML")
-                    {
-                        this.GetXml = Convert.ToBoolean(node.Attributes.GetNamedItem("value").Value.ToLower());
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "SearchListIdentifiersUrl")
-                    {
-                        this.SearchListIdentifiersUrl = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "MetadataExtension")
-                    {
-                        this.MetadataExtension = node.Attributes.GetNamedItem("value").Value;
-                    }
-                    if (node.Attributes.GetNamedItem("key").Value == "MarcExtension")
-                    {
-                        this.MarcExtension = node.Attributes.GetNamedItem("value").Value;
-                    }
-                }
-            }
+            if (DateTime.TryParse(ConfigurationManager.AppSettings["StartDate"], out DateTime startDate)) this.StartDate = startDate;
+            if (DateTime.TryParse(ConfigurationManager.AppSettings["EndDate"], out DateTime endDate)) this.EndDate = endDate;
+            EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
+            EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            DownloadIDs = Convert.ToBoolean(ConfigurationManager.AppSettings["DownloadIDs"]);
+            GetXml = Convert.ToBoolean(ConfigurationManager.AppSettings["GetXML"]);
+            SearchListIdentifiersUrl = ConfigurationManager.AppSettings["SearchListIdentifiersUrl"];
+            MetadataExtension = ConfigurationManager.AppSettings["MetadataExtension"];
+            MarcExtension = ConfigurationManager.AppSettings["MarcExtension"];
+            BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
     }
 }

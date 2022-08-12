@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[BSSegmentUpdateAuto]
+﻿CREATE PROCEDURE dbo.BSSegmentUpdateAuto
 
 @SegmentID INT,
 @ItemID INT,
@@ -24,7 +24,8 @@
 @ContributorCreationDate DATETIME,
 @ContributorLastModifiedDate DATETIME,
 @BHLSegmentID INT,
-@ContributorName NVARCHAR(255)
+@ContributorName NVARCHAR(255),
+@SegmentStatusID INT
 
 AS 
 
@@ -56,7 +57,8 @@ SET
 	[ContributorLastModifiedDate] = @ContributorLastModifiedDate,
 	[BHLSegmentID] = @BHLSegmentID,
 	[LastModifiedDate] = getdate(),
-	[ContributorName] = @ContributorName
+	[ContributorName] = @ContributorName,
+	[SegmentStatusID] = @SegmentStatusID
 WHERE
 	[SegmentID] = @SegmentID
 		
@@ -94,7 +96,8 @@ ELSE BEGIN
 		[BHLSegmentID],
 		[CreationDate],
 		[LastModifiedDate],
-		[ContributorName]
+		[ContributorName],
+		[SegmentStatusID]
 	FROM [dbo].[BSSegment]
 	WHERE
 		[SegmentID] = @SegmentID

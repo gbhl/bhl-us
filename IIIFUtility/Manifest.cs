@@ -23,15 +23,16 @@ namespace BHL.IIIF
         public string GetManifest(int itemId)
         {
             BHLProvider provider = new BHLProvider();
-            Item item = provider.ItemSelectAuto(itemId);
-            item.Institutions = provider.InstitutionSelectByItemID(itemId);
-            Title title = provider.TitleSelectExtended(item.PrimaryTitleID);
+            Book book = provider.BookSelectByBarcodeOrItemID(itemId, null);
+            Book bookextra = provider.BookSelectAuto(itemId);
+            book.Institutions = provider.InstitutionSelectByItemID((int)bookextra.ItemID);
+            Title title = provider.TitleSelectExtended((int)book.PrimaryTitleID);
 
             string thumbnailAttr = string.Empty;
-            int? thumbnailPageID = item.ThumbnailPageID;
+            int? thumbnailPageID = book.ThumbnailPageID;
             if (thumbnailPageID == null)
             {
-                Page firstPage = provider.PageSelectFirstPageForItem(Convert.ToInt32(itemId));
+                Page firstPage = provider.PageSelectFirstPageForItem(book.ItemID);
                 thumbnailPageID = (firstPage == null ? thumbnailPageID : firstPage.PageID);
             }
             if (thumbnailPageID != null) thumbnailAttr = 
@@ -43,8 +44,8 @@ namespace BHL.IIIF
             List< Title> titles = provider.TitleSelectByItem(itemId);
 
             List<Page> pages = provider.PageMetadataSelectByItemID(itemId);
-            List<Segment> segments = provider.SegmentSelectByItemID(itemId);
-            ScanData scanData = new Helper().GetScanData(itemId, item.BarCode);
+            List<Segment> segments = provider.SegmentSelectByBookID(itemId);
+            ScanData scanData = new Helper().GetScanData(itemId, book.BarCode);
 
             string manifest = 
                 "{" +
@@ -52,38 +53,40 @@ namespace BHL.IIIF
                   "\"@id\": \"" + _rootUrl + "/iiif/" + itemId.ToString() + "/manifest\"," +
                   "\"@type\": \"sc:Manifest\"," +
                   "\"attribution\": \"\"," +
+                  "\"behavior\": \"paged\"," +
                   "\"description\": \"\"," +
                   "\"logo\": \"\"," +
                   "\"label\": \"" + Helper.CleanManifestData(title.FullTitle) + "\"," +
+                  "\"viewingDirection\": \"" + (book.PageProgression == "rl" ? "right-to-left" : "left-to-right") + "\"," +
                   thumbnailAttr +
-                  GetMetadata(title, item) +
-                  GetSeeAlso(itemId, item.BarCode) +
-                  GetSequences(itemId, item.BarCode, pages, scanData) +
+                  GetMetadata(title, book) +
+                  GetSeeAlso(itemId, book.BarCode) +
+                  GetSequences(itemId, book.BarCode, pages, scanData) +
                   GetStructures(itemId, segments, pages, scanData) +
-                  GetRelated(titles.Count, item) +
+                  GetRelated(titles.Count, book) +
                 "}";
 
             return manifest;
         }
 
-        private string GetMetadata(Title title, Item item)
+        private string GetMetadata(Title title, Book book)
         {
             string metadata = string.Empty;
 
-            if (!string.IsNullOrWhiteSpace(item.Volume) ||
+            if (!string.IsNullOrWhiteSpace(book.Volume) ||
                 title.TitleAuthors.Count > 0 ||
                 !string.IsNullOrWhiteSpace(title.PublicationDetails) ||
-                !string.IsNullOrWhiteSpace(item.Year) ||
-                item.Institutions.Count > 0 ||
-                !string.IsNullOrWhiteSpace(item.Sponsor) ||
-                !string.IsNullOrWhiteSpace(item.LicenseUrl) ||
-                !string.IsNullOrWhiteSpace(item.Rights) ||
-                !string.IsNullOrWhiteSpace(item.CopyrightStatus))
+                !string.IsNullOrWhiteSpace(book.StartYear) ||
+                book.Institutions.Count > 0 ||
+                !string.IsNullOrWhiteSpace(book.Sponsor) ||
+                !string.IsNullOrWhiteSpace(book.LicenseUrl) ||
+                !string.IsNullOrWhiteSpace(book.Rights) ||
+                !string.IsNullOrWhiteSpace(book.CopyrightStatus))
             {
 
-                if (!string.IsNullOrWhiteSpace(item.Volume))
+                if (!string.IsNullOrWhiteSpace(book.Volume))
                 {
-                    metadata += GetMetadataSingleValue("volume", item.Volume);
+                    metadata += GetMetadataSingleValue("volume", book.Volume);
                 }
 
                 List<string> authors = new List<string>();
@@ -107,13 +110,13 @@ namespace BHL.IIIF
                     metadata += GetMetadataSingleValue("publisher", title.PublicationDetails);
                 }
 
-                if (!string.IsNullOrWhiteSpace(item.Year))
+                if (!string.IsNullOrWhiteSpace(book.StartYear))
                 {
                     if (metadata.Length > 0) metadata += ",";
-                    metadata += GetMetadataSingleValue("date", item.Year);
+                    metadata += GetMetadataSingleValue("date", book.StartYear);
                 }
 
-                foreach(Institution institution in item.Institutions)
+                foreach(Institution institution in book.Institutions)
                 {
                     if (institution.InstitutionRoleName.ToLower() == "holding institution")
                     {
@@ -125,31 +128,31 @@ namespace BHL.IIIF
                     }
                 }
 
-                if (!string.IsNullOrWhiteSpace(item.Sponsor))
+                if (!string.IsNullOrWhiteSpace(book.Sponsor))
                 {
                     if (metadata.Length > 0) metadata += ",";
-                    metadata += GetMetadataSingleValue("sponsor", item.Sponsor);
+                    metadata += GetMetadataSingleValue("sponsor", book.Sponsor);
                 }
 
-                if (!string.IsNullOrWhiteSpace(item.LicenseUrl))
+                if (!string.IsNullOrWhiteSpace(book.LicenseUrl))
                 {
                     if (metadata.Length > 0) metadata += ",";
-                    metadata += GetMetadataSingleValue("license type", "<a target='_top' href='" + item.LicenseUrl + "'>" + item.LicenseUrl + "</a>");
+                    metadata += GetMetadataSingleValue("license type", "<a target='_top' href='" + book.LicenseUrl + "'>" + book.LicenseUrl + "</a>");
                 }
 
-                if (!string.IsNullOrWhiteSpace(item.Rights))
+                if (!string.IsNullOrWhiteSpace(book.Rights))
                 {
                     if (metadata.Length > 0) metadata += ",";
-                    metadata += GetMetadataSingleValue("rights", "<a target='_top' href='" + item.Rights+ "'>" + item.Rights+ "</a>");
+                    metadata += GetMetadataSingleValue("rights", "<a target='_top' href='" + book.Rights+ "'>" + book.Rights+ "</a>");
                 }
 
-                if (!string.IsNullOrWhiteSpace(item.CopyrightStatus))
+                if (!string.IsNullOrWhiteSpace(book.CopyrightStatus))
                 {
                     if (metadata.Length > 0) metadata += ",";
-                    metadata += GetMetadataSingleValue("copyright status", item.CopyrightStatus);
+                    metadata += GetMetadataSingleValue("copyright status", book.CopyrightStatus);
                 }
 
-                foreach (Institution institution in item.Institutions)
+                foreach (Institution institution in book.Institutions)
                 {
                     if (institution.InstitutionRoleName.ToLower() == "rights holder")
                     {
@@ -191,10 +194,10 @@ namespace BHL.IIIF
             return metadata;
         }
 
-        private string GetRelated(int numTitles, Item item)
+        private string GetRelated(int numTitles, Book book)
         {
-            string bibUrl = _rootUrl + "/bibliography/" + item.PrimaryTitleID.ToString();
-            if (numTitles > 1) bibUrl = _rootUrl + "/biblioselect/" + item.ItemID.ToString();
+            string bibUrl = _rootUrl + "/bibliography/" + book.PrimaryTitleID.ToString();
+            if (numTitles > 1) bibUrl = _rootUrl + "/biblioselect/" + book.BookID.ToString();
 
             string related =
                 "\"related\": [" +
@@ -204,7 +207,7 @@ namespace BHL.IIIF
                       "\"format\": \"text/html\"" + 
                   "}," +
                   "{" +
-                      "\"@id\": \"https://www.archive.org/details/" + item.BarCode + "\"," +
+                      "\"@id\": \"https://www.archive.org/details/" + book.BarCode + "\"," +
                       "\"label\": \"View at Internet Archive\"," +
                       "\"format\": \"text/html\"" +
                   "}" +
@@ -254,7 +257,6 @@ namespace BHL.IIIF
 //                        "\"@context\": \"http://iiif.io/api/image/2/context.json\"," +
                         "\"@id\": \"" + _rootUrl + "/iiif/" + itemId.ToString() + "/canvas/default\"," +
                         "\"@type\": \"sc:Sequence\"," +
-                        "\"viewingDirection\": \"left-to-right\"," +
                         "\"viewingHint\": \"paged\"," +
                         GetCanvases(itemId, barCode, pages, scanData) +
                         "\"label\": \"default\"" +

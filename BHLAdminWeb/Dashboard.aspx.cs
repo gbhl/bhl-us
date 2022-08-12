@@ -36,7 +36,7 @@ namespace MOBOT.BHL.AdminWeb
             apiv2StatsLink.HRef = string.Format(apiv2StatsLink.HRef, ConfigurationManager.AppSettings["APIStatsAppID"]);
             apiv3StatsLink.HRef = string.Format(apiv3StatsLink.HRef, ConfigurationManager.AppSettings["APIV3StatsAppID"]);
             openurlStatsLink.HRef = string.Format(openurlStatsLink.HRef, ConfigurationManager.AppSettings["OpenUrlStatsAppID"]);
-            trafficStatsMenu.Visible = new BHL.Web.Utilities.RequestLog().Loaded; // Show the web stats menu if stats are available
+            trafficStatsMenu.Visible = new MOBOT.BHL.Utility.RequestLog().Loaded; // Show the web stats menu if stats are available
 
             // Get the PDF generation stats
             gvPDFGeneration.DataSource = bp.PDFStatsSelectOverview();
@@ -168,7 +168,6 @@ namespace MOBOT.BHL.AdminWeb
                 tdInstitutions.InnerHtml = GetMenuText(tdInstitutions.InnerHtml);
                 tdLanguages.InnerHtml = GetMenuText(tdLanguages.InnerHtml);
                 tdNoteTypes.InnerHtml = GetMenuText(tdNoteTypes.InnerHtml);
-                tdPageTypes.InnerHtml = GetMenuText(tdPageTypes.InnerHtml);
                 tdPDFRequests.InnerHtml = GetMenuText(tdPDFRequests.InnerHtml);
                 tdSegmentTypes.InnerHtml = GetMenuText(tdSegmentTypes.InnerHtml);
 
@@ -185,6 +184,7 @@ namespace MOBOT.BHL.AdminWeb
                 tdViewUpdateIA.InnerHtml = GetMenuText(tdViewUpdateIA.InnerHtml);
                 tdIAHarvestDash.InnerHtml = GetMenuText(tdIAHarvestDash.InnerHtml);
                 tdViewUpdateBioStor.InnerHtml = GetMenuText(tdViewUpdateBioStor.InnerHtml);
+                tdManageDoiQueue.InnerHtml = GetMenuText(tdManageDoiQueue.InnerHtml);
                 tdViewUpdateDoi.InnerHtml = GetMenuText(tdViewUpdateDoi.InnerHtml);
 
                 tdRptReportingStats.InnerHtml = GetMenuText(tdRptReportingStats.InnerHtml);
@@ -213,6 +213,7 @@ namespace MOBOT.BHL.AdminWeb
             }
             if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityRole.BHLAdminSysAdmin))
             {
+                tdPageTypes.InnerHtml = GetMenuText(tdPageTypes.InnerHtml);
                 spnMonitor.Visible = false;
                 //tdImageServer.InnerHtml = GetMenuText(tdImageServer.InnerHtml);
                 //tdVaults.InnerHtml = GetMenuText(tdVaults.InnerHtml);

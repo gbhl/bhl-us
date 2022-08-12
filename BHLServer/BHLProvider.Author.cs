@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using CustomDataAccess;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
@@ -20,12 +19,17 @@ namespace MOBOT.BHL.Server
         /// <param name="languageCode"></param>
         /// <param name="returnCount"></param>
         /// <returns></returns>
-        public CustomGenericList<Author> AuthorSelectByNameLike(string fullName, int returnCount)
+        public List<Author> AuthorSelectByNameLike(string fullName, int returnCount)
         {
             return new AuthorDAL().AuthorSelectByNameLike(null, null, fullName, returnCount);
         }
 
-        public CustomGenericList<Author> AuthorSelectByTitleId(int titleId)
+        public Tuple<int, List<Author>> AuthorSelectByNameLikePaged(string start, int pageNum, int numPerPage)
+        {
+            return new AuthorDAL().AuthorSelectByNameLikePaged(null, null, start, pageNum, numPerPage);
+        }
+
+        public List<Author> AuthorSelectByTitleId(int titleId)
         {
             return new AuthorDAL().AuthorSelectByTitleId(null, null, titleId);
         }
@@ -35,7 +39,7 @@ namespace MOBOT.BHL.Server
             return new AuthorDAL().AuthorSelectWithNameByAuthorId(null, null, authorId);
         }
 
-        public CustomGenericList<Author> AuthorSelectByIdentifier(int identifierID, string identifierValue)
+        public List<Author> AuthorSelectByIdentifier(int identifierID, string identifierValue)
         {
             return new AuthorDAL().AuthorSelectByIdentifier(null, null, identifierID, identifierValue);
         }
@@ -45,13 +49,13 @@ namespace MOBOT.BHL.Server
             return new AuthorDAL().AuthorSelectAuto(null, null, authorID);
         }
 
-        public CustomGenericList<AuthorSuspectCharacter> AuthorSelectWithSuspectCharacters(
+        public List<AuthorSuspectCharacter> AuthorSelectWithSuspectCharacters(
             string institutionCode, int maxAge)
         {
             return new AuthorDAL().AuthorSelectWithSuspectCharacters(null, null, institutionCode, maxAge);
         }
 
-        public CustomGenericList<Author> AuthorResolve(string fullName, string lastName, string firstName,
+        public List<Author> AuthorResolve(string fullName, string lastName, string firstName,
             string startDate, string endDate, int? authorID)
         {
             return new AuthorDAL().AuthorResolve(null, null, fullName, lastName, firstName, startDate, endDate, authorID);

@@ -3,6 +3,7 @@ using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -74,7 +75,9 @@ namespace MOBOT.BHL.AdminWeb
 					return;
 				}
 
-				ItemStatus itemStatus = new ItemStatus( int.Parse( hidId.Value ), statusTextBox.Text.Trim() );
+				int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+
+				ItemStatus itemStatus = new ItemStatus( int.Parse( hidId.Value ), statusTextBox.Text.Trim(), "", DateTime.Now, DateTime.Now, userId, userId );
 
 				itemStatus.IsNew = false;
 
@@ -118,7 +121,8 @@ namespace MOBOT.BHL.AdminWeb
 							}
 						}
 
-						ItemStatus itemStatus = new ItemStatus( id, statusTextBox.Text.Trim() );
+						int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+						ItemStatus itemStatus = new ItemStatus( id, statusTextBox.Text.Trim(), "", DateTime.Now, DateTime.Now, userId, userId);
 						itemStatus.IsNew = true;
 
 						bp.SaveItemStatus( itemStatus );

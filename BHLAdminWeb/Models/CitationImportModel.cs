@@ -15,14 +15,6 @@ namespace MOBOT.BHL.AdminWeb.Models
     {
         #region Properties
 
-        private string _contributor = string.Empty;
-
-        public string Contributor
-        {
-            get { return _contributor; }
-            set { _contributor = value; }
-        }
-
         private int _genre = -1;
 
         public int Genre
@@ -169,6 +161,14 @@ namespace MOBOT.BHL.AdminWeb.Models
             set { _rows = value; }
         }
 
+        private int _numRows = 0;
+
+        public int NumRows
+        {
+            get { return _numRows; }
+            set { _numRows = value; }
+        }
+
         #endregion Properties
 
         #region Enum
@@ -197,21 +197,23 @@ namespace MOBOT.BHL.AdminWeb.Models
             public string name { get; private set; }
             public int value { get; private set; }
 
-            public static readonly TemplateColumn TITLE = new TemplateColumn(1, "Title");
-            public static readonly TemplateColumn TRANSLATEDTITLE = new TemplateColumn(2, "Translated Title");
-            public static readonly TemplateColumn ITEMID = new TemplateColumn(3, "Item ID");
-            public static readonly TemplateColumn VOLUME = new TemplateColumn(4, "Volume");
-            public static readonly TemplateColumn ISSUE = new TemplateColumn(5, "Issue");
-            public static readonly TemplateColumn SERIES = new TemplateColumn(6, "Series");
-            public static readonly TemplateColumn DATE = new TemplateColumn(7, "Date");
-            public static readonly TemplateColumn LANGUAGE = new TemplateColumn(8, "Language");
-            public static readonly TemplateColumn AUTHORS = new TemplateColumn(9, "Authors");
-            public static readonly TemplateColumn STARTPAGE = new TemplateColumn(10, "Start Page");
-            public static readonly TemplateColumn ENDPAGE = new TemplateColumn(11, "End Page");
-            public static readonly TemplateColumn STARTPAGEID = new TemplateColumn(12, "Start Page BHL ID");
-            public static readonly TemplateColumn ENDPAGEID = new TemplateColumn(13, "End Page BHL ID");
-            public static readonly TemplateColumn ADDITIONALPAGEIDS = new TemplateColumn(14, "Additional Page IDs");
-            public static readonly TemplateColumn DOI = new TemplateColumn(15, "Article DOI");
+            public static readonly TemplateColumn SEGMENTID = new TemplateColumn(1, "Segment ID");
+            public static readonly TemplateColumn TITLE = new TemplateColumn(2, "Title");
+            public static readonly TemplateColumn TRANSLATEDTITLE = new TemplateColumn(3, "Translated Title");
+            public static readonly TemplateColumn ITEMID = new TemplateColumn(4, "Item ID");
+            public static readonly TemplateColumn VOLUME = new TemplateColumn(5, "Volume");
+            public static readonly TemplateColumn ISSUE = new TemplateColumn(6, "Issue");
+            public static readonly TemplateColumn SERIES = new TemplateColumn(7, "Series");
+            public static readonly TemplateColumn DATE = new TemplateColumn(8, "Date");
+            public static readonly TemplateColumn LANGUAGE = new TemplateColumn(9, "Language");
+            public static readonly TemplateColumn AUTHORS = new TemplateColumn(10, "Authors");
+            public static readonly TemplateColumn STARTPAGE = new TemplateColumn(11, "Start Page");
+            public static readonly TemplateColumn ENDPAGE = new TemplateColumn(12, "End Page");
+            public static readonly TemplateColumn STARTPAGEID = new TemplateColumn(13, "Start Page BHL ID");
+            public static readonly TemplateColumn ENDPAGEID = new TemplateColumn(14, "End Page BHL ID");
+            public static readonly TemplateColumn ADDITIONALPAGEIDS = new TemplateColumn(15, "Additional Page IDs");
+            public static readonly TemplateColumn DOI = new TemplateColumn(16, "Article DOI");
+            public static readonly TemplateColumn CONTRIBUTORS = new TemplateColumn(16, "Contributors");
 
             private TemplateColumn(int value, string name)
             {
@@ -233,47 +235,47 @@ namespace MOBOT.BHL.AdminWeb.Models
             public static readonly MappedColumn NONE = new MappedColumn(0, "");
             public static readonly MappedColumn ABSTRACT = new MappedColumn(1, "Abstract");
             public static readonly MappedColumn ADDITIONALPAGES = new MappedColumn(2, "Additional Page IDs");
-            //public static readonly MappedColumn AUTHORENDDATE = new MappedColumn(1, "Author End Date");
-            //public static readonly MappedColumn AUTHORFIRSTNAME = new MappedColumn(2, "Author First Name");
-            //public static readonly MappedColumn AUTHORLASTNAME = new MappedColumn(3, "Author Last Name");
-            public static readonly MappedColumn AUTHORNAMES = new MappedColumn(3, "Author Name(s)");
-            //public static readonly MappedColumn AUTHORSTARTDATE = new MappedColumn(5, "Author Start Date");
-            //public static readonly MappedColumn AUTHORTYPE = new MappedColumn(6, "Author Type");
-            public static readonly MappedColumn DOI = new MappedColumn(4, "Article DOI");
-            public static readonly MappedColumn ARTICLEPAGERANGE = new MappedColumn(5, "Article Page Range");
-            public static readonly MappedColumn ARTICLEENDPAGE = new MappedColumn(6, "Article End Page");
-            public static readonly MappedColumn ARTICLEENDPAGEID = new MappedColumn(7, "Article End Page ID");
-            public static readonly MappedColumn ARTICLESTARTPAGE = new MappedColumn(8, "Article Start Page");
-            public static readonly MappedColumn ARTICLESTARTPAGEID = new MappedColumn(9, "Article Start Page ID");
-            public static readonly MappedColumn ARTICLETITLE = new MappedColumn(10, "Article Title");
-            public static readonly MappedColumn BOOKJOURNALTITLE = new MappedColumn(11, "Book/Journal Title");
-            public static readonly MappedColumn COPYRIGHTSTATUS = new MappedColumn(12, "Copyright Status");
-            public static readonly MappedColumn DOWNLOADURL = new MappedColumn(13, "Download Url");
-            public static readonly MappedColumn DUEDILIGENCE = new MappedColumn(14, "Due Diligence");
-            public static readonly MappedColumn EDITION = new MappedColumn(15, "Edition");
-            public static readonly MappedColumn ISBN = new MappedColumn(16, "ISBN");
-            public static readonly MappedColumn ISSN = new MappedColumn(17, "ISSN");
-            public static readonly MappedColumn ISSUE = new MappedColumn(18, "Issue");
-            public static readonly MappedColumn ITEMID = new MappedColumn(19, "Item ID");
-            public static readonly MappedColumn JOURNALENDYEAR = new MappedColumn(20, "Journal End Year");
-            public static readonly MappedColumn JOURNALSTARTYEAR = new MappedColumn(21, "Journal Start Year");
-            public static readonly MappedColumn KEYWORDS = new MappedColumn(22, "Keyword(s)");
-            public static readonly MappedColumn LANGUAGE = new MappedColumn(23, "Language");
-            public static readonly MappedColumn LCCN = new MappedColumn(24, "LCCN");
-            public static readonly MappedColumn LICENSE = new MappedColumn(25, "License");
-            public static readonly MappedColumn LICENSEURL = new MappedColumn(26, "License Url");
-            public static readonly MappedColumn NOTES = new MappedColumn(27, "Notes");
-            public static readonly MappedColumn OCLC = new MappedColumn(28, "OCLC");
-            public static readonly MappedColumn PUBLICATIONDETAILS = new MappedColumn(29, "Publication Details");
-            public static readonly MappedColumn PUBLISHERNAME = new MappedColumn(30, "Publisher Name");
-            public static readonly MappedColumn PUBLISHERPLACE = new MappedColumn(31, "Publisher Place");
-            public static readonly MappedColumn RIGHTS = new MappedColumn(32, "Rights");
-            public static readonly MappedColumn SERIES = new MappedColumn(33, "Series");
-            public static readonly MappedColumn TITLEID = new MappedColumn(34, "TitleID");
-            public static readonly MappedColumn TRANSLATEDTITLE = new MappedColumn(35, "Translated Title");
-            public static readonly MappedColumn URL = new MappedColumn(36, "Url");
-            public static readonly MappedColumn VOLUME = new MappedColumn(37, "Volume");
-            public static readonly MappedColumn YEAR = new MappedColumn(38, "Year");
+            public static readonly MappedColumn ARK = new MappedColumn(3, "ARK");
+            public static readonly MappedColumn AUTHORNAMES = new MappedColumn(4, "Author Name(s)");
+            public static readonly MappedColumn BIOSTOR = new MappedColumn(5, "Biostor");
+            public static readonly MappedColumn DOI = new MappedColumn(6, "Article DOI");
+            public static readonly MappedColumn ARTICLEPAGERANGE = new MappedColumn(7, "Article Page Range");
+            public static readonly MappedColumn ARTICLEENDPAGE = new MappedColumn(8, "Article End Page");
+            public static readonly MappedColumn ARTICLEENDPAGEID = new MappedColumn(9, "Article End Page ID");
+            public static readonly MappedColumn ARTICLESTARTPAGE = new MappedColumn(10, "Article Start Page");
+            public static readonly MappedColumn ARTICLESTARTPAGEID = new MappedColumn(11, "Article Start Page ID");
+            public static readonly MappedColumn ARTICLETITLE = new MappedColumn(12, "Article Title");
+            public static readonly MappedColumn BOOKJOURNALTITLE = new MappedColumn(13, "Book/Journal Title");
+            public static readonly MappedColumn CONTRIBUTORS = new MappedColumn(14, "Contributors");
+            public static readonly MappedColumn COPYRIGHTSTATUS = new MappedColumn(15, "Copyright Status");
+            public static readonly MappedColumn DOWNLOADURL = new MappedColumn(16, "Download Url");
+            public static readonly MappedColumn DUEDILIGENCE = new MappedColumn(17, "Due Diligence");
+            public static readonly MappedColumn EDITION = new MappedColumn(18, "Edition");
+            public static readonly MappedColumn ISBN = new MappedColumn(19, "ISBN");
+            public static readonly MappedColumn ISSN = new MappedColumn(20, "ISSN");
+            public static readonly MappedColumn ISSUE = new MappedColumn(21, "Issue");
+            public static readonly MappedColumn ITEMID = new MappedColumn(22, "Item ID");
+            public static readonly MappedColumn JSTOR = new MappedColumn(23, "JSTOR");
+            public static readonly MappedColumn KEYWORDS = new MappedColumn(24, "Keyword(s)");
+            public static readonly MappedColumn LANGUAGE = new MappedColumn(25, "Language");
+            public static readonly MappedColumn LCCN = new MappedColumn(26, "LCCN");
+            public static readonly MappedColumn LICENSE = new MappedColumn(27, "License");
+            public static readonly MappedColumn LICENSEURL = new MappedColumn(28, "License Url");
+            public static readonly MappedColumn NOTES = new MappedColumn(29, "Notes");
+            public static readonly MappedColumn OCLC = new MappedColumn(30, "OCLC");
+            public static readonly MappedColumn PUBLICATIONDETAILS = new MappedColumn(31, "Publication Details");
+            public static readonly MappedColumn PUBLISHERNAME = new MappedColumn(32, "Publisher Name");
+            public static readonly MappedColumn PUBLISHERPLACE = new MappedColumn(33, "Publisher Place");
+            public static readonly MappedColumn RIGHTS = new MappedColumn(34, "Rights");
+            public static readonly MappedColumn SEGMENTID = new MappedColumn(35, "Segment ID");
+            public static readonly MappedColumn SERIES = new MappedColumn(36, "Series");
+            public static readonly MappedColumn TITLEID = new MappedColumn(37, "TitleID");
+            public static readonly MappedColumn TL2 = new MappedColumn(38, "TL2");
+            public static readonly MappedColumn TRANSLATEDTITLE = new MappedColumn(39, "Translated Title");
+            public static readonly MappedColumn URL = new MappedColumn(40, "Url");
+            public static readonly MappedColumn VOLUME = new MappedColumn(41, "Volume");
+            public static readonly MappedColumn WIKIDATA = new MappedColumn(42, "Wikidata");
+            public static readonly MappedColumn YEAR = new MappedColumn(43, "Year");
 
             private MappedColumn(int value, string name)
             {
@@ -290,6 +292,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         {
             MappedColumn mappedColumn = MappedColumn.NONE;
 
+            if (templateColumn == TemplateColumn.SEGMENTID.name) mappedColumn = MappedColumn.SEGMENTID;
             if (templateColumn == TemplateColumn.TITLE.name) mappedColumn = MappedColumn.ARTICLETITLE;
             if (templateColumn == TemplateColumn.TRANSLATEDTITLE.name) mappedColumn = MappedColumn.TRANSLATEDTITLE;
             if (templateColumn == TemplateColumn.ITEMID.name) mappedColumn = MappedColumn.ITEMID;
@@ -305,7 +308,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             if (templateColumn == TemplateColumn.ENDPAGEID.name) mappedColumn = MappedColumn.ARTICLEENDPAGEID;
             if (templateColumn == TemplateColumn.ADDITIONALPAGEIDS.name) mappedColumn = MappedColumn.ADDITIONALPAGES;
             if (templateColumn == TemplateColumn.DOI.name) mappedColumn = MappedColumn.DOI;
-
+            if (templateColumn == TemplateColumn.CONTRIBUTORS.name) mappedColumn = MappedColumn.CONTRIBUTORS;
 
             return mappedColumn;
         }
@@ -315,6 +318,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             string delimiter = "";
 
             if (templateColumn == TemplateColumn.AUTHORS.name ||
+                templateColumn == TemplateColumn.CONTRIBUTORS.name ||
                 templateColumn == TemplateColumn.ADDITIONALPAGEIDS.name) delimiter = ";";
 
             return delimiter;
@@ -372,6 +376,29 @@ namespace MOBOT.BHL.AdminWeb.Models
         }
 
         /// <summary>
+        /// Count the number of data rows in the specified file
+        /// </summary>
+        public void GetRowCount()
+        {
+            int numRows = 0;
+
+            switch(this.DataSourceType)
+            {
+                case "text/plain":
+                    numRows = GetRowCountFromTextFile();
+                    break;
+                case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+                    numRows = GetRowCountFromExcel(ExcelType.Xlsx);
+                    break;
+                case "application/vnd.ms-excel":
+                    numRows = GetRowCountFromExcel(ExcelType.Xls);
+                    break;
+            }
+
+            this.NumRows = numRows;
+        }
+
+        /// <summary>
         /// Save the contents of a file to the "import" database tables.
         /// </summary>
         /// <param name="securityToken"></param>
@@ -391,8 +418,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                 else
                 {
                     // Insert a new ImportFile record.
-                    ImportFile importFile = service.ImportFileInsertAuto((int)FileStatus.Loading, this.FileName, this.Contributor,
-                        userId, this.Genre);
+                    ImportFile importFile = service.ImportFileInsertAuto((int)FileStatus.Loading, this.FileName, null, userId, this.Genre);
                     this.ImportFileID = importFile.ImportFileID;
 
                     // Read and save all of the rows from the file
@@ -444,7 +470,6 @@ namespace MOBOT.BHL.AdminWeb.Models
             {
                 this.ImportFileID = importFile.ImportFileID;
                 this.FileName = importFile.ImportFileName;
-                this.Contributor = importFile.ContributorCode;
                 this.Genre = importFile.SegmentGenreID ?? 0;
                 this.GenreName = string.IsNullOrWhiteSpace(importFile.GenreName) ? "Unknown" : importFile.GenreName;
                 this.FileCreationDate = importFile.CreationDate.ToShortDateString();
@@ -462,7 +487,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         /// <param name="sortDirection">Direction of sort</param>
         public ImportRecordJson.Rootobject GetImportRecords(int importFileID, int numRows, int startRow, string sortColumn, string sortDirection)
         {
-            List<ImportRecord> records = new BHLProvider().ImportRecordSelectByImportFileID(importFileID,
+            List<ImportRecordReview> records = new BHLProvider().ImportRecordSelectForReviewByImportFileID(importFileID,
                 numRows, startRow, sortColumn, sortDirection, 1);
 
             ImportRecordJson.Rootobject json = new ImportRecordJson.Rootobject();
@@ -473,49 +498,298 @@ namespace MOBOT.BHL.AdminWeb.Models
 
             for(int x = 0; x < records.Count; x++)
             {
-                string sPageID = records[x].StartPageID == null ? "" : string.Format(" (ID: {0})", records[x].StartPageID.ToString());
-                string ePageID = records[x].EndPageID == null ? "" : string.Format(" (ID: {0})", records[x].EndPageID.ToString());
+                string sPageID = records[x].NSStartPageID == null ? 
+                    (records[x].ESStartPageID == null ? "" : string.Format(" (ID: {0})", records[x].ESStartPageID.ToString())) : 
+                    string.Format(" (ID: {0})", records[x].NSStartPageID.ToString());
+                string ePageID = records[x].NSEndPageID == null ? 
+                    (records[x].ESEndPageID == null ? "" : string.Format(" (ID: {0})", records[x].ESEndPageID.ToString())) : 
+                    string.Format(" (ID: {0})", records[x].NSEndPageID.ToString());
 
                 aaData[x] = new ImportRecordJson.Datum()
                 {
-                    // Summary
                     id = records[x].ImportRecordID.ToString(),
-                    title = records[x].Title,
-                    itemID = records[x].ItemID.ToString(),
+                    operation = (records[x].ImportSegmentID == null ? "NEW" : "UPDATE"),
                     segmentID = records[x].SegmentID.ToString(),
-                    journal = records[x].JournalTitle,
-                    year = records[x].Year,
-                    volume = records[x].Volume,
-                    issue = records[x].Issue,
-                    startPageID = records[x].StartPageID.ToString(),
-                    startPage = records[x].StartPage + sPageID,
-                    endPage = records[x].EndPage + ePageID,
+                    importSegmentID = records[x].ImportSegmentID.ToString(),
                     status = records[x].StatusName,
-                    // Detailed
-                    translatedTitle = records[x].TranslatedTitle,
-                    series = records[x].Series,
-                    edition = records[x].Edition,
-                    publicationDetails = records[x].PublicationDetails,
-                    publisherName = records[x].PublisherName,
-                    publisherPlace = records[x].PublisherPlace,
-                    language = records[x].Language,
-                    rights = records[x].Rights,
-                    dueDiligence = records[x].DueDiligence,
-                    copyrightStatus = records[x].CopyrightStatus,
-                    license = records[x].License,
-                    licenseUrl = records[x].LicenseUrl,
-                    url = records[x].Url,
-                    issn = records[x].ISSN,
-                    isbn = records[x].ISBN,
-                    oclc = records[x].OCLC,
-                    lccn = records[x].LCCN,
-                    doi = records[x].DOI,
-                    summary = records[x].Summary,
-                    notes = records[x].Notes,
-                    authors = records[x].AuthorString,
-                    keywords = records[x].KeywordString,
                     errors = records[x].ErrorString,
-                    warnings = records[x].WarningString
+                    warnings = records[x].WarningString,
+                    // Summary values
+                    sumTitle = string.IsNullOrWhiteSpace(records[x].NSTitle) ? records[x].ESTitle : records[x].NSTitle,
+                    sumItemID = records[x].NCItemID == null ? (records[x].ECItemID == null ? "" : records[x].ECItemID.ToString()) : records[x].NCItemID.ToString(),
+                    sumJournal = records[x].NCTitle,
+                    sumYear = records[x].NCYear,
+                    sumVolume = records[x].NCVolume,
+                    sumIssue = records[x].NCIssue,
+                    sumStartPageID = records[x].NSStartPageID == null ? (records[x].ESStartPageID == null ? "" : records[x].ESStartPageID.ToString()) : records[x].NSStartPageID.ToString(),
+                    sumStartPage = (string.IsNullOrWhiteSpace(records[x].NSStartPage) ? records[x].ESStartPage : records[x].NSStartPage), // + sPageID,
+                    sumEndPage = (string.IsNullOrWhiteSpace(records[x].NSEndPage) ? records[x].ESEndPage : records[x].NSEndPage), // + ePageID,
+                    // New values (detailed)
+                    ncItemID = records[x].NCItemID.ToString(),
+                    ncJournal = records[x].NCTitle,
+                    ncVolume = records[x].NCVolume,
+                    ncSeries = records[x].NCSeries,
+                    ncIssue = records[x].NCIssue,
+                    ncEdition = records[x].NCEdition,
+                    ncPublicationDetails = records[x].NCPublicationDetails,
+                    ncPublisherName = records[x].NCPublisherName,
+                    ncPublisherPlace = records[x].NCPublisherPlace,
+                    ncYear = records[x].NCYear,
+                    ncRights = records[x].NCRights,
+                    ncCopyrightStatus = records[x].NCCopyrightStatus,
+                    ncLicenseUrl = records[x].NCLicenseUrl,
+                    nsGenre = records[x].NSGenre,
+                    nsTitle = records[x].NSTitle,
+                    nsTranslatedTitle = records[x].NSTranslatedTitle,
+                    nsContainerTitle = records[x].NSJournalTitle,
+                    nsVolume = records[x].NSVolume,
+                    nsSeries = records[x].NSSeries,
+                    nsIssue = records[x].NSIssue,
+                    nsEdition = records[x].NSEdition,
+                    nsPublicationDetails = records[x].NSPublicationDetails,
+                    nsPublisherName = records[x].NSPublisherName,
+                    nsPublisherPlace = records[x].NSPublisherPlace,
+                    nsYear = records[x].NSYear,
+                    nsLanguage = records[x].NSLanguage,
+                    nsSummary = records[x].NSSummary,
+                    nsNotes = records[x].NSNotes,
+                    nsRights = records[x].NSRights,
+                    nsCopyrightStatus = records[x].NSCopyrightStatus,
+                    nsLicense = records[x].NSLicense,
+                    nsLicenseUrl = records[x].NSLicenseUrl,
+                    nsPageRange = records[x].NSPageRange,
+                    nsStartPageID = records[x].NSStartPageID.ToString(),
+                    nsStartPage = records[x].NSStartPage,
+                    nsEndPageID = records[x].NSEndPageID.ToString(),
+                    nsEndPage = records[x].NSEndPage,
+                    nsUrl = records[x].NSUrl,
+                    nsDownloadUrl = records[x].NSDownloadUrl,
+                    nsDoi = records[x].NSDOI,
+                    nsIssn = records[x].NSISSN,
+                    nsIsbn = records[x].NSISBN,
+                    nsOclc = records[x].NSOCLC,
+                    nsLccn = records[x].NSLCCN,
+                    nsArk = records[x].NSARK,
+                    nsBiostor = records[x].NSBiostor,
+                    nsJstor = records[x].NSJSTOR,
+                    nsTl2 = records[x].NSTL2,
+                    nsWikidata = records[x].NSWikidata,
+                    nsAuthors = records[x].NSAuthorString,
+                    nsKeywords = records[x].NSKeywordString,
+                    nsContributors = records[x].NSContributorString,
+                    nsPages = records[x].NSPageString,
+                    // Existing values
+                    ecItemID = records[x].ECItemID.ToString(),
+                    ecJournal = records[x].ECTitle,
+                    ecVolume = records[x].ECVolume,
+                    ecSeries = records[x].ECSeries,
+                    ecIssue = records[x].ECIssue,
+                    ecEdition = records[x].ECEdition,
+                    ecPublicationDetails = records[x].ECPublicationDetails,
+                    ecPublisherName = records[x].ECPublisherName,
+                    ecPublisherPlace = records[x].ECPublisherPlace,
+                    ecYear = records[x].ECYear,
+                    ecRights = records[x].ECRights,
+                    ecCopyrightStatus = records[x].ECCopyrightStatus,
+                    ecLicenseUrl = records[x].ECLicenseUrl,
+                    esGenre = records[x].ESGenre,
+                    esTitle = records[x].ESTitle,
+                    esTranslatedTitle = records[x].ESTranslatedTitle,
+                    esContainerTitle = records[x].ESJournalTitle,
+                    esVolume = records[x].ESVolume,
+                    esSeries = records[x].ESSeries,
+                    esIssue = records[x].ESIssue,
+                    esEdition = records[x].ESEdition,
+                    esPublicationDetails = records[x].ESPublicationDetails,
+                    esPublisherName = records[x].ESPublisherName,
+                    esPublisherPlace = records[x].ESPublisherPlace,
+                    esYear = records[x].ESYear,
+                    esLanguage = records[x].ESLanguage,
+                    esSummary = records[x].ESSummary,
+                    esNotes = records[x].ESNotes,
+                    esRights = records[x].ESRights,
+                    esCopyrightStatus = records[x].ESCopyrightStatus,
+                    esLicense = records[x].ESLicense,
+                    esLicenseUrl = records[x].ESLicenseUrl,
+                    esPageRange = records[x].ESPageRange,
+                    esStartPage = records[x].ESStartPage,
+                    esStartPageID = records[x].ESStartPageID.ToString(),
+                    esEndPage = records[x].ESEndPage,
+                    esEndPageID = records[x].ESEndPageID.ToString(),
+                    esUrl = records[x].ESUrl,
+                    esDownloadUrl = records[x].ESDownloadUrl,
+                    esDoi = records[x].ESDOI,
+                    esIssn = records[x].ESISSN,
+                    esIsbn = records[x].ESISBN,
+                    esOclc = records[x].ESOCLC,
+                    esLccn = records[x].ESLCCN,
+                    esArk = records[x].ESARK,
+                    esBiostor = records[x].ESBiostor,
+                    esJstor = records[x].ESJSTOR,
+                    esTl2 = records[x].ESTL2,
+                    esWikidata = records[x].ESWikidata,
+                    esAuthors = records[x].ESAuthorString,
+                    esKeywords = records[x].ESKeywordString,
+                    esContributors = records[x].ESContributorString,
+                    esPages = records[x].ESPageString,
+                    // Actions
+                    actRow = records[x].ImportSegmentID == null ? "ADD" : "UPDATE"
+                };
+            }
+            json.aaData = aaData;
+
+            return json;
+        }
+
+        /// <summary>
+        /// Get the specified import record
+        /// </summary>
+        /// <param name="importRecordID">Identifier of the import record</param>
+        public ImportRecordJson.Rootobject GetImportRecord(int importRecordID)
+        {
+            List<ImportRecordReview> records = new BHLProvider().ImportRecordSelectForReviewByImportRecordID(importRecordID);
+
+            ImportRecordJson.Rootobject json = new ImportRecordJson.Rootobject();
+            ImportRecordJson.Datum[] aaData = new ImportRecordJson.Datum[records.Count];
+
+            for (int x = 0; x < records.Count; x++)
+            {
+                string sPageID = records[x].NSStartPageID == null ?
+                    (records[x].ESStartPageID == null ? "" : string.Format(" (ID: {0})", records[x].ESStartPageID.ToString())) :
+                    string.Format(" (ID: {0})", records[x].NSStartPageID.ToString());
+                string ePageID = records[x].NSEndPageID == null ?
+                    (records[x].ESEndPageID == null ? "" : string.Format(" (ID: {0})", records[x].ESEndPageID.ToString())) :
+                    string.Format(" (ID: {0})", records[x].NSEndPageID.ToString());
+
+                aaData[x] = new ImportRecordJson.Datum()
+                {
+                    id = records[x].ImportRecordID.ToString(),
+                    operation = (records[x].ImportSegmentID == null ? "NEW" : "UPDATE"),
+                    segmentID = records[x].SegmentID.ToString(),
+                    importSegmentID = records[x].ImportSegmentID.ToString(),
+                    status = records[x].StatusName,
+                    errors = records[x].ErrorString,
+                    warnings = records[x].WarningString,
+                    // Summary values
+                    sumTitle = string.IsNullOrWhiteSpace(records[x].NSTitle) ? records[x].ESTitle : records[x].NSTitle,
+                    sumItemID = records[x].NCItemID == null ? (records[x].ECItemID == null ? "" : records[x].ECItemID.ToString()) : records[x].NCItemID.ToString(),
+                    sumJournal = records[x].NCTitle,
+                    sumYear = records[x].NCYear,
+                    sumVolume = records[x].NCVolume,
+                    sumIssue = records[x].NCIssue,
+                    sumStartPageID = records[x].NSStartPageID == null ? (records[x].ESStartPageID == null ? "" : records[x].ESStartPageID.ToString()) : records[x].NSStartPageID.ToString(),
+                    sumStartPage = (string.IsNullOrWhiteSpace(records[x].NSStartPage) ? records[x].ESStartPage : records[x].NSStartPage), // + sPageID,
+                    sumEndPage = (string.IsNullOrWhiteSpace(records[x].NSEndPage) ? records[x].ESEndPage : records[x].NSEndPage), // + ePageID,
+                    // New values (detailed)
+                    ncItemID = records[x].NCItemID.ToString(),
+                    ncJournal = records[x].NCTitle,
+                    ncVolume = records[x].NCVolume,
+                    ncSeries = records[x].NCSeries,
+                    ncIssue = records[x].NCIssue,
+                    ncEdition = records[x].NCEdition,
+                    ncPublicationDetails = records[x].NCPublicationDetails,
+                    ncPublisherName = records[x].NCPublisherName,
+                    ncPublisherPlace = records[x].NCPublisherPlace,
+                    ncYear = records[x].NCYear,
+                    ncRights = records[x].NCRights,
+                    ncCopyrightStatus = records[x].NCCopyrightStatus,
+                    ncLicenseUrl = records[x].NCLicenseUrl,
+                    nsGenre = records[x].NSGenre,
+                    nsTitle = records[x].NSTitle,
+                    nsTranslatedTitle = records[x].NSTranslatedTitle,
+                    nsContainerTitle = records[x].NSJournalTitle,
+                    nsVolume = records[x].NSVolume,
+                    nsSeries = records[x].NSSeries,
+                    nsIssue = records[x].NSIssue,
+                    nsEdition = records[x].NSEdition,
+                    nsPublicationDetails = records[x].NSPublicationDetails,
+                    nsPublisherName = records[x].NSPublisherName,
+                    nsPublisherPlace = records[x].NSPublisherPlace,
+                    nsYear = records[x].NSYear,
+                    nsLanguage = records[x].NSLanguage,
+                    nsSummary = records[x].NSSummary,
+                    nsNotes = records[x].NSNotes,
+                    nsRights = records[x].NSRights,
+                    nsCopyrightStatus = records[x].NSCopyrightStatus,
+                    nsLicense = records[x].NSLicense,
+                    nsLicenseUrl = records[x].NSLicenseUrl,
+                    nsPageRange = records[x].NSPageRange,
+                    nsStartPageID = records[x].NSStartPageID.ToString(),
+                    nsStartPage = records[x].NSStartPage,
+                    nsEndPageID = records[x].NSEndPageID.ToString(),
+                    nsEndPage = records[x].NSEndPage,
+                    nsUrl = records[x].NSUrl,
+                    nsDownloadUrl = records[x].NSDownloadUrl,
+                    nsDoi = records[x].NSDOI,
+                    nsIssn = records[x].NSISSN,
+                    nsIsbn = records[x].NSISBN,
+                    nsOclc = records[x].NSOCLC,
+                    nsLccn = records[x].NSLCCN,
+                    nsArk = records[x].NSARK,
+                    nsBiostor = records[x].NSBiostor,
+                    nsJstor = records[x].NSJSTOR,
+                    nsTl2 = records[x].NSTL2,
+                    nsWikidata = records[x].NSWikidata,
+                    nsAuthors = records[x].NSAuthorString,
+                    nsKeywords = records[x].NSKeywordString,
+                    nsContributors = records[x].NSContributorString,
+                    nsPages = records[x].NSPageString,
+                    // Existing values
+                    ecItemID = records[x].ECItemID.ToString(),
+                    ecJournal = records[x].ECTitle,
+                    ecVolume = records[x].ECVolume,
+                    ecSeries = records[x].ECSeries,
+                    ecIssue = records[x].ECIssue,
+                    ecEdition = records[x].ECEdition,
+                    ecPublicationDetails = records[x].ECPublicationDetails,
+                    ecPublisherName = records[x].ECPublisherName,
+                    ecPublisherPlace = records[x].ECPublisherPlace,
+                    ecYear = records[x].ECYear,
+                    ecRights = records[x].ECRights,
+                    ecCopyrightStatus = records[x].ECCopyrightStatus,
+                    ecLicenseUrl = records[x].ECLicenseUrl,
+                    esGenre = records[x].ESGenre,
+                    esTitle = records[x].ESTitle,
+                    esTranslatedTitle = records[x].ESTranslatedTitle,
+                    esContainerTitle = records[x].ESJournalTitle,
+                    esVolume = records[x].ESVolume,
+                    esSeries = records[x].ESSeries,
+                    esIssue = records[x].ESIssue,
+                    esEdition = records[x].ESEdition,
+                    esPublicationDetails = records[x].ESPublicationDetails,
+                    esPublisherName = records[x].ESPublisherName,
+                    esPublisherPlace = records[x].ESPublisherPlace,
+                    esYear = records[x].ESYear,
+                    esLanguage = records[x].ESLanguage,
+                    esSummary = records[x].ESSummary,
+                    esNotes = records[x].ESNotes,
+                    esRights = records[x].ESRights,
+                    esCopyrightStatus = records[x].ESCopyrightStatus,
+                    esLicense = records[x].ESLicense,
+                    esLicenseUrl = records[x].ESLicenseUrl,
+                    esPageRange = records[x].ESPageRange,
+                    esStartPage = records[x].ESStartPage,
+                    esStartPageID = records[x].ESStartPageID.ToString(),
+                    esEndPage = records[x].ESEndPage,
+                    esEndPageID = records[x].ESEndPageID.ToString(),
+                    esUrl = records[x].ESUrl,
+                    esDownloadUrl = records[x].ESDownloadUrl,
+                    esDoi = records[x].ESDOI,
+                    esIssn = records[x].ESISSN,
+                    esIsbn = records[x].ESISBN,
+                    esOclc = records[x].ESOCLC,
+                    esLccn = records[x].ESLCCN,
+                    esArk = records[x].ESARK,
+                    esBiostor = records[x].ESBiostor,
+                    esJstor = records[x].ESJSTOR,
+                    esTl2 = records[x].ESTL2,
+                    esWikidata = records[x].ESWikidata,
+                    esAuthors = records[x].ESAuthorString,
+                    esKeywords = records[x].ESKeywordString,
+                    esContributors = records[x].ESContributorString,
+                    esPages = records[x].ESPageString,
+                    // Actions
+                    actRow = records[x].ImportSegmentID == null ? "ADD" : "UPDATE"
                 };
             }
             json.aaData = aaData;
@@ -580,7 +854,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             if (line != null)
             {
                 // Get the column values
-                string[] columns = line.Split(GetDelimiterChar(this.ColumnDelimiter), StringSplitOptions.RemoveEmptyEntries);
+                string[] columns = line.Split(GetDelimiterChar(this.ColumnDelimiter));//, StringSplitOptions.RemoveEmptyEntries);
 
                 // Parse the details of each column
                 for (int x = 0; x < columns.Length; x++)
@@ -714,10 +988,14 @@ namespace MOBOT.BHL.AdminWeb.Models
                         row.Add(value);
                     }
 
-                    if (persist)
-                        this.SaveCitation(row, userId);
-                    else
-                        importRows.Add(row);
+                    // Skip blank rows
+                    if (!IsRowBlank(row))
+                    {
+                        if (persist)
+                            this.SaveCitation(row, userId);
+                        else
+                            importRows.Add(row);
+                    }
                     count++;
                 }
             }
@@ -769,11 +1047,15 @@ namespace MOBOT.BHL.AdminWeb.Models
                             row.Add(value);
                         }
 
-                        // Save the row
-                        if (persist)
-                            this.SaveCitation(row, userId);
-                        else
-                            importRows.Add(row);
+                        // Skip blank rows
+                        if (!IsRowBlank(row))
+                        {
+                            // Save the row
+                            if (persist)
+                                this.SaveCitation(row, userId);
+                            else
+                                importRows.Add(row);
+                        }
                     }
                     count++;
                 }
@@ -789,6 +1071,87 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             return importRows;
+        }
+
+        /// <summary>
+        /// Count the total number of rows in a text file
+        /// </summary>
+        /// <returns></returns>
+        private int GetRowCountFromTextFile()
+        {
+            int numRows = 0;
+
+            using (System.IO.StreamReader file = new System.IO.StreamReader(this.FilePath, Encoding.GetEncoding(Convert.ToInt32(this.CodePage))))
+            {
+                string line = null;
+
+                // Skip the specified number of rows
+                if (this.HeaderRowsToSkip > 0)
+                {
+                    int counter = 0;
+                    while ((line = ReadTextLine(file, this.RowDelimiter)) != null && counter < this.HeaderRowsToSkip) counter++;
+                }
+
+                // Skip the row with the column names
+                if (this.ColumnNamesInFirstRow) if (file.Peek() >= 0) line = ReadTextLine(file, this.RowDelimiter);
+
+                // Read the rows
+                while ((line = ReadTextLine(file, this.RowDelimiter)) != null) numRows++;
+            }
+
+            return numRows;
+        }
+
+        /// <summary>
+        /// Count the total number of rows in an Excel file
+        /// </summary>
+        /// <param name="excelType"></param>
+        /// <returns></returns>
+        private int GetRowCountFromExcel(ExcelType excelType)
+        {
+            int numRows = 0;
+
+            FileStream stream = File.Open(this.FilePath, FileMode.Open, System.IO.FileAccess.Read);
+            IExcelDataReader excelReader = null;
+            try
+            {
+                if (excelType == ExcelType.Xls)
+                    // Reading from a binary Excel file ('97-2003 format; *.xls)
+                    excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
+                else
+                    // Reading from a OpenXml Excel file (2007 format; *.xlsx)
+                    excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+
+                numRows = excelReader.AsDataSet().Tables[excelReader.Name].Rows.Count;
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                // Free resources (IExcelDataReader is IDisposable)
+                if (!excelReader.IsClosed) excelReader.Close();
+            }
+
+            return numRows;
+        }
+
+        /// <summary>
+        /// Checks all the elements in the row for blank values
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns>True if all values are blank, otherwise False</returns>
+        private bool IsRowBlank(List<string> row)
+        {
+            bool isBlank = true;
+
+            foreach(string value in row) 
+            {
+                if (!string.IsNullOrWhiteSpace(value)) { isBlank = false; break; }
+            }
+
+            return isBlank;
         }
 
         /// <summary>
@@ -918,6 +1281,13 @@ namespace MOBOT.BHL.AdminWeb.Models
             return importRecordKeyword;
         }
 
+        private ImportRecordContributor GetNewContributor(string contributor)
+        {
+            ImportRecordContributor importRecordContributor = new ImportRecordContributor();
+            importRecordContributor.InstitutionCode = contributor;
+            return importRecordContributor;
+        }
+
         #endregion Private Methods
 
         #region Database interactions
@@ -950,6 +1320,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                 CitationImportColumn column = this.Columns[x];
 
                 if (column.MappedColumn == MappedColumn.ABSTRACT.name) citation.Summary = row[x];
+                if (column.MappedColumn == MappedColumn.ARK.name) citation.ARK = row[x];
                 if (column.MappedColumn == MappedColumn.ARTICLEPAGERANGE.name) citation.PageRange = row[x];
                 if (column.MappedColumn == MappedColumn.ARTICLEENDPAGE.name) citation.EndPage = row[x];
                 if (column.MappedColumn == MappedColumn.ARTICLEENDPAGEID.name) citation.EndPageIDString = row[x];
@@ -961,26 +1332,39 @@ namespace MOBOT.BHL.AdminWeb.Models
                 {
                     string[] pages = string.IsNullOrWhiteSpace(column.ValueDelimiter) ?
                         new string[] { row[x] } :
-                        row[x].Split(column.ValueDelimiter.ToCharArray());
+                        row[x].Split(column.ValueDelimiter.ToCharArray()).Distinct().ToArray();
 
+                    bool nullInList = false;
                     foreach(string page in pages)
                     {
-                        if (!string.IsNullOrWhiteSpace(page)) citation.PageIDs.Add(page);
+                        if (!string.IsNullOrWhiteSpace(page))
+                        {
+                            if (page.ToUpper().Trim() == "NULL") nullInList = true;
+                            else citation.PageIDs.Add(page);
+                        }
                     }
+                    if (nullInList && citation.PageIDs.Count == 0) citation.PageIDs.Add("NULL");
                 }
 
                 if (column.MappedColumn == MappedColumn.AUTHORNAMES.name)
                 {
                     string[] authors = string.IsNullOrWhiteSpace(column.ValueDelimiter) ?
                         new string[] { row[x] } :
-                        row[x].Split(column.ValueDelimiter.ToCharArray());
+                        row[x].Split(column.ValueDelimiter.ToCharArray()).Distinct().ToArray();
 
+                    bool nullInList = false;
                     foreach (string author in authors)
                     {
-                        if (!string.IsNullOrWhiteSpace(author)) citation.Authors.Add(GetNewCreator(author));
+                        if (!string.IsNullOrWhiteSpace(author))
+                        {
+                            if (author.ToUpper().Trim() == "NULL") nullInList = true;
+                            else citation.Authors.Add(GetNewCreator(author));
+                        }
                     }
+                    if (nullInList && citation.Authors.Count == 0) citation.Authors.Add(GetNewCreator("NULL"));
                 }
 
+                if (column.MappedColumn == MappedColumn.BIOSTOR.name) citation.Biostor = row[x];
                 if (column.MappedColumn == MappedColumn.BOOKJOURNALTITLE.name) bookJournalTitle = row[x];
                 if (column.MappedColumn == MappedColumn.COPYRIGHTSTATUS.name) citation.CopyrightStatus = row[x];
                 if (column.MappedColumn == MappedColumn.DOI.name) citation.DOI = row[x];
@@ -992,27 +1376,42 @@ namespace MOBOT.BHL.AdminWeb.Models
                 if (column.MappedColumn == MappedColumn.ISSN.name) citation.ISSN = row[x];
                 if (column.MappedColumn == MappedColumn.ISSUE.name) citation.Issue = row[x];
                 if (column.MappedColumn == MappedColumn.ITEMID.name) citation.ItemIDString = row[x];
+                if (column.MappedColumn == MappedColumn.JSTOR.name) citation.JSTOR = row[x];
 
-                int year;
-                if (column.MappedColumn == MappedColumn.JOURNALENDYEAR.name)
+                if (column.MappedColumn == MappedColumn.CONTRIBUTORS.name)
                 {
-                    if (Int32.TryParse(row[x], out year)) citation.EndYear = (short)year;
-                }
-                if (column.MappedColumn == MappedColumn.JOURNALSTARTYEAR.name)
-                {
-                    if (Int32.TryParse(row[x], out year)) citation.StartYear = (short)year;
+                    string[] contributors = string.IsNullOrWhiteSpace(column.ValueDelimiter) ?
+                        new string[] { row[x] } :
+                        row[x].Split(column.ValueDelimiter.ToCharArray()).Distinct().ToArray();
+
+                    bool nullInList = false;
+                    foreach(string contributor in contributors)
+                    {
+                        if (!string.IsNullOrWhiteSpace(contributor))
+                        {
+                            if (contributor.ToUpper().Trim() == "NULL") nullInList = true;
+                            else citation.Contributors.Add(GetNewContributor(contributor));
+                        }
+                    }
+                    if (nullInList && citation.Contributors.Count == 0) citation.Contributors.Add(GetNewContributor("NULL"));
                 }
 
                 if (column.MappedColumn == MappedColumn.KEYWORDS.name)
                 {
                     string[] keywords = string.IsNullOrWhiteSpace(column.ValueDelimiter) ?
                         new string[] { row[x] } :
-                        row[x].Split(column.ValueDelimiter.ToCharArray());
+                        row[x].Split(column.ValueDelimiter.ToCharArray()).Distinct().ToArray();
 
+                    bool nullInList = false;
                     foreach (string keyword in keywords)
                     {
-                        citation.Keywords.Add(GetNewKeyword(keyword));
+                        if (!string.IsNullOrWhiteSpace(keyword))
+                        {
+                            if (keyword.ToUpper().Trim() == "NULL") nullInList = true;
+                            else citation.Keywords.Add(GetNewKeyword(keyword));
+                        }
                     }
+                    if (nullInList && citation.Keywords.Count == 0) citation.Keywords.Add(GetNewKeyword("NULL"));
                 }
 
                 if (column.MappedColumn == MappedColumn.LANGUAGE.name) citation.Language = row[x];
@@ -1025,11 +1424,14 @@ namespace MOBOT.BHL.AdminWeb.Models
                 if (column.MappedColumn == MappedColumn.PUBLISHERNAME.name) citation.PublisherName = row[x];
                 if (column.MappedColumn == MappedColumn.PUBLISHERPLACE.name) citation.PublisherPlace = row[x];
                 if (column.MappedColumn == MappedColumn.RIGHTS.name) citation.Rights = row[x];
+                if (column.MappedColumn == MappedColumn.SEGMENTID.name) citation.SegmentIDString = row[x];
                 if (column.MappedColumn == MappedColumn.SERIES.name) citation.Series = row[x];
                 if (column.MappedColumn == MappedColumn.TITLEID.name) citation.TitleIDString = row[x];
+                if (column.MappedColumn == MappedColumn.TL2.name) citation.TL2 = row[x];
                 if (column.MappedColumn == MappedColumn.TRANSLATEDTITLE.name) citation.TranslatedTitle = row[x];
                 if (column.MappedColumn == MappedColumn.URL.name) citation.Url = row[x];
                 if (column.MappedColumn == MappedColumn.VOLUME.name) citation.Volume = row[x];
+                if (column.MappedColumn == MappedColumn.WIKIDATA.name) citation.Wikidata = row[x];
                 if (column.MappedColumn == MappedColumn.YEAR.name) citation.Year = row[x];
             }
 
@@ -1091,6 +1493,17 @@ namespace MOBOT.BHL.AdminWeb.Models
         }
     }
 
+    [Serializable]
+    public class CitationImportFileStatusModel
+    {
+        private List<ImportFileStatus> _importFileStatuses = new List<ImportFileStatus>();
+        public List<ImportFileStatus> ImportFileStatuses
+        {
+            get { return _importFileStatuses; }
+            set { _importFileStatuses = value; }
+        }
+    }
+
     /// <summary>
     /// Class used to produce the JSON representation of citations records that is needed by jQuery DataTables
     /// </summary>
@@ -1108,42 +1521,134 @@ namespace MOBOT.BHL.AdminWeb.Models
         public class Datum
         {
             public string id { get; set; }
-            public string title { get; set; }
-            public string itemID { get; set; }
+            public string operation { get; set; }
             public string segmentID { get; set; }
-            public string journal { get; set; }
-            public string year { get; set; }
-            public string volume { get; set; }
-            public string issue { get; set; }
-            public string startPageID { get; set; }
-            public string startPage { get; set; }
-            public string endPage { get; set; }
+            public string importSegmentID { get; set; }
             public string status { get; set; }
-
-            public string translatedTitle { get; set; }
-            public string series { get; set; }
-            public string edition { get; set; }
-            public string publicationDetails { get; set; }
-            public string publisherName { get; set; }
-            public string publisherPlace { get; set; }
-            public string language { get; set; }
-            public string rights { get; set; }
-            public string dueDiligence { get; set; }
-            public string copyrightStatus { get; set; }
-            public string license { get; set; }
-            public string licenseUrl { get; set; }
-            public string url { get; set; }
-            public string issn { get; set; }
-            public string isbn { get; set; }
-            public string oclc { get; set; }
-            public string lccn { get; set; }
-            public string doi { get; set; }
-            public string summary { get; set; }
-            public string notes { get; set; }
-            public string authors { get; set; }
-            public string keywords { get; set; }
             public string errors { get; set; }
             public string warnings { get; set; }
+
+            public string sumTitle { get; set; }
+            public string sumItemID { get; set; }
+            public string sumJournal { get; set; }
+            public string sumYear { get; set; }
+            public string sumVolume { get; set; }
+            public string sumIssue { get; set; }
+            public string sumStartPageID { get; set; }
+            public string sumStartPage { get; set; }
+            public string sumEndPage { get; set; }
+
+            public string ncItemID { get; set; }
+            public string ncJournal { get; set; }
+            public string ncVolume { get; set; }
+            public string ncSeries { get; set; }
+            public string ncIssue { get; set; }
+            public string ncEdition { get; set; }
+            public string ncPublicationDetails { get; set; }
+            public string ncPublisherName { get; set; }
+            public string ncPublisherPlace { get; set; }
+            public string ncYear { get; set; }
+            public string ncRights { get; set; }
+            public string ncCopyrightStatus { get; set; }
+            public string ncLicenseUrl { get; set; }
+
+            public string ecItemID { get; set; }
+            public string ecJournal { get; set; }
+            public string ecVolume { get; set; }
+            public string ecSeries { get; set; }
+            public string ecIssue { get; set; }
+            public string ecEdition { get; set; }
+            public string ecPublicationDetails { get; set; }
+            public string ecPublisherName { get; set; }
+            public string ecPublisherPlace { get; set; }
+            public string ecYear { get; set; }
+            public string ecRights { get; set; }
+            public string ecCopyrightStatus { get; set; }
+            public string ecLicenseUrl { get; set; }
+
+            public string nsGenre { get; set; }
+            public string nsTitle { get; set; }
+            public string nsTranslatedTitle { get; set; }
+            public string nsContainerTitle { get; set; }
+            public string nsVolume { get; set; }
+            public string nsSeries { get; set; }
+            public string nsIssue { get; set; }
+            public string nsEdition { get; set; }
+            public string nsPublicationDetails { get; set; }
+            public string nsPublisherName { get; set; }
+            public string nsPublisherPlace { get; set; }
+            public string nsYear { get; set; }
+            public string nsLanguage { get; set; }
+            public string nsSummary { get; set; }
+            public string nsNotes { get; set; }
+            public string nsRights { get; set; }
+            public string nsCopyrightStatus { get; set; }
+            public string nsLicense { get; set; }
+            public string nsLicenseUrl { get; set; }
+            public string nsPageRange { get; set; }
+            public string nsStartPage { get; set; }
+            public string nsStartPageID { get; set; }
+            public string nsEndPage { get; set; }
+            public string nsEndPageID { get; set; }
+            public string nsUrl { get; set; }
+            public string nsDownloadUrl { get; set; }
+            public string nsDoi { get; set; }
+            public string nsIssn { get; set; }
+            public string nsIsbn { get; set; }
+            public string nsOclc { get; set; }
+            public string nsLccn { get; set; }
+            public string nsArk { get; set; }
+            public string nsBiostor { get; set; }
+            public string nsJstor { get; set; }
+            public string nsTl2 { get; set; }
+            public string nsWikidata { get; set; }
+            public string nsAuthors { get; set; }
+            public string nsKeywords { get; set; }
+            public string nsContributors { get; set; }
+            public string nsPages { get; set; }
+
+            public string esGenre { get; set; }
+            public string esTitle { get; set; }
+            public string esTranslatedTitle { get; set; }
+            public string esContainerTitle { get; set; }
+            public string esVolume { get; set; }
+            public string esSeries { get; set; }
+            public string esIssue { get; set; }
+            public string esEdition { get; set; }
+            public string esPublicationDetails { get; set; }
+            public string esPublisherName { get; set; }
+            public string esPublisherPlace { get; set; }
+            public string esYear { get; set; }
+            public string esLanguage { get; set; }
+            public string esSummary { get; set; }
+            public string esNotes { get; set; }
+            public string esRights { get; set; }
+            public string esCopyrightStatus { get; set; }
+            public string esLicense { get; set; }
+            public string esLicenseUrl { get; set; }
+            public string esPageRange { get; set; }
+            public string esStartPage { get; set; }
+            public string esStartPageID { get; set; }
+            public string esEndPage { get; set; }
+            public string esEndPageID { get; set; }
+            public string esUrl { get; set; }
+            public string esDownloadUrl { get; set; }
+            public string esDoi { get; set; }
+            public string esIssn { get; set; }
+            public string esIsbn { get; set; }
+            public string esOclc { get; set; }
+            public string esLccn { get; set; }
+            public string esArk { get; set; }
+            public string esBiostor { get; set; }
+            public string esJstor { get; set; }
+            public string esTl2 { get; set; }
+            public string esWikidata { get; set; }
+            public string esAuthors { get; set; }
+            public string esKeywords { get; set; }
+            public string esContributors { get; set; }
+            public string esPages { get; set; }
+
+            public string actRow { get; set; }
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
+using System.Linq;
 
 namespace MOBOT.BHL.AdminWeb.Services
 {
@@ -22,21 +23,23 @@ namespace MOBOT.BHL.AdminWeb.Services
             String response = String.Empty;
 
             // Clean up inputs
-            String qsItemID = context.Request.QueryString["itemID"] as String;
-            String barCode = context.Request.QueryString["barcode"] as String;
-            String qsTitleID = context.Request.QueryString["titleID"] as String;
-            String marcBibId = context.Request.QueryString["marcBibId"] as String;
+            string qsItemID = context.Request.QueryString["itemID"] as string;
+            string barCode = context.Request.QueryString["barcode"] as string;
+            string qsTitleID = context.Request.QueryString["titleID"] as string;
+            string marcBibId = context.Request.QueryString["marcBibId"] as string;
 
             string published = context.Request.QueryString["pub"] as string;
             int publishedOnly = Int32.MinValue;
             string institutionCode = context.Request.QueryString["inst"] as string;
-            String paginationStatuses = context.Request.QueryString["psid"] as String;
-            String startDate = context.Request.QueryString["sdate"] as String;
-            String endDate = context.Request.QueryString["edate"] as String;
-            String numRows = context.Request.QueryString["rows"] as String;
-            String pageNum = context.Request.QueryString["page"] as String;
-            String sortColumn = context.Request.QueryString["sidx"] as String;
-            String sortOrder = context.Request.QueryString["sord"] as String;
+            string paginationStatuses = context.Request.QueryString["psid"] as string;
+            string startDate = context.Request.QueryString["sdate"] as string;
+            string endDate = context.Request.QueryString["edate"] as string;
+            string numRows = context.Request.QueryString["rows"] as string;
+            string pageNum = context.Request.QueryString["page"] as string;
+            string sortColumn = context.Request.QueryString["sidx"] as string;
+            string sortOrder = context.Request.QueryString["sord"] as string;
+
+            string qsVirtual = context.Request.QueryString["virtual"] as string;
 
             int itemID;
             Int32.TryParse(qsItemID, out itemID);
@@ -62,19 +65,29 @@ namespace MOBOT.BHL.AdminWeb.Services
             sortOrder = String.IsNullOrEmpty(sortOrder) ? "asc" : sortOrder;
             sortOrder = (!(sortOrder.ToLower() == "asc") && !(sortOrder.ToLower() == "desc")) ? "asc" : sortOrder;
 
+            int? virtualOnly = null;
+            if (qsVirtual != null)
+            {
+                switch (qsVirtual.ToLower())
+                {
+                    case "true": virtualOnly = 1; break;
+                    case "false": virtualOnly = 0; break;
+                    default: virtualOnly = null; break;
+                }
+            }
 
             switch (context.Request.QueryString["op"])
             {
                 case "ItemSearch":
                     {
                         context.Response.ContentType = "application/json";
-                        response = this.ItemSearch(itemID, barCode);
+                        response = this.ItemSearch(itemID, virtualOnly);
                         break;
                     }
                 case "ItemSearchByTitle":
                     {
                         context.Response.ContentType = "application/json";
-                        response = this.ItemSearchByTitle(titleID, marcBibId);
+                        response = this.ItemSearchByTitle(titleID, marcBibId, virtualOnly);
                         break;
                     }
                 case "ItemPaginationReport":
@@ -98,22 +111,20 @@ namespace MOBOT.BHL.AdminWeb.Services
             context.Response.Write(response);
         }
 
-        private string ItemSearch(int itemId, String barCode)
+        private string ItemSearch(int itemId, int? virtualOnly)
         {
             try
             {
-                Item item = null;
-                if (itemId != 0)
+                Book book = new BHLProvider().BookSelectByBarcodeOrItemID(itemId, null);
+
+                // If the "type" of book (virtual or non-virtual) was specified, then only return that type
+                if (book != null && virtualOnly != null)
                 {
-                    item = new BHLProvider().ItemSelectAuto(itemId);
-                }
-                else
-                {
-                    item = new BHLProvider().ItemSelectByBarCode(barCode);
+                    if (book.IsVirtual != virtualOnly) book = null;
                 }
 
                 JavaScriptSerializer js = new JavaScriptSerializer();
-                return js.Serialize(item);
+                return js.Serialize(book);
             }
             catch
             {
@@ -121,22 +132,28 @@ namespace MOBOT.BHL.AdminWeb.Services
             }
         }
 
-        private string ItemSearchByTitle(int titleId, String marcBibId)
+        private string ItemSearchByTitle(int titleId, String marcBibId, int? virtualOnly)
         {
             try
             {
-                List<Item> items = null;
+                List<Book> books = null;
                 if (titleId != 0)
                 {
-                    items = new BHLProvider().ItemSelectByTitleId(titleId);
+                    books = new BHLProvider().BookSelectByTitleId(titleId);
                 }
                 else
                 {
-                    items = new BHLProvider().ItemSelectByMarcBibId(marcBibId);
+                    books = new BHLProvider().BookSelectByMarcBibId(marcBibId);
+                }
+
+                // If the "type" of book (virtual or non-virtual) was specified, then only return that type
+                if (books.Count > 0 && virtualOnly != null)
+                {
+                    books = books.Where(b => b.IsVirtual == virtualOnly).ToList();
                 }
 
                 JavaScriptSerializer js = new JavaScriptSerializer();
-                return js.Serialize(items);
+                return js.Serialize(books);
             }
             catch
             {
@@ -178,13 +195,13 @@ namespace MOBOT.BHL.AdminWeb.Services
 
                     foreach (Item item in items)
                     {
-                        response.Append("<row id='" + item.ItemID.ToString() + "'>");
+                        response.Append("<row id='" + (item.ItemTypeID == 10 ? "b" : "s") + item.ItemID.ToString() + "'>");
                         response.Append("<cell> <![CDATA[<a title=\"Title Info\" href=\"titleedit.aspx?id=" + item.PrimaryTitleID.ToString() + "\">" + item.PrimaryTitleID.ToString() + "</a>]]> </cell>");
                         response.Append("<cell> <![CDATA[" + item.FullTitle + "]]> </cell>");
                         response.Append("<cell> " + item.BibliographicLevel + " </cell>");
-                        response.Append("<cell> <![CDATA[<a title=\"Item Info\" href=\"itemedit.aspx?id=" + item.ItemID.ToString() + "\">" + item.ItemID.ToString() + "</a>]]> </cell>");
+                        response.Append("<cell> <![CDATA[<a title=\"Item Info\" href=\"" + (item.ItemTypeID == 10 ? "item" : "segment") + "edit.aspx?id=" + item.ItemID.ToString() + "\">" + item.ItemID.ToString() + "</a>]]> </cell>");
                         response.Append("<cell> <![CDATA[" + item.Volume + "]]> </cell>");
-                        response.Append("<cell> " + item.Year + " </cell>");
+                        response.Append("<cell> " + item.StartYear + " </cell>");
                         response.Append("<cell> <![CDATA[" + item.ItemStatusName + "]]> </cell>");
                         response.Append("<cell> " + item.ScanningDate.ToString() + " </cell>");
                         response.Append("<cell> <![CDATA[" + item.InstitutionStrings[0] + "]]> </cell>");

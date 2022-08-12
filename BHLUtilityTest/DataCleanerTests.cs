@@ -1348,5 +1348,60 @@ namespace BHLUtilityTest
 
         #endregion ParseVolumeStringTest supporting methods
 
+        [TestMethod]
+        public void CleanSortTitleTest1()
+        {
+            string expected = "Annales de l Institut Pasteur";
+            string actual = DataCleaner.CleanSortTitle("Annales de l'Institut Pasteur.");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void CleanSortTitleTest2()
+        {
+            string expected = "Atlas des champignons comestibles et ve ne neux";
+            string actual = DataCleaner.CleanSortTitle("Atlas des champignons comestibles et ve'ne'neux.");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void CleanSortTitleTest3()
+        {
+            string expected = "Our reptiles and batrachians a plain and easy account of the lizards snakes newts toads frogs and tortoises indigenous to Great Britain by MCCooke with original figures of every species and numerous woodcuts";
+            string actual = DataCleaner.CleanSortTitle("Our reptiles and batrachians : a plain and easy account of the lizards, snakes, newts, toads, frogs and tortoises indigenous to Great Britain / by M.C.Cooke... with original figures of every species and numerous woodcuts.");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void CleanSortTitleTest4()
+        {
+            string expected = "Man s place in nature and other anthropological essays by Thomas H Huxley";
+            string actual = DataCleaner.CleanSortTitle("Man's place in nature : and other anthropological essays / by Thomas H. Huxley.");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void CleanSortTitleTest5()
+        {
+            string expected = "Year book Carnegie Institution of Washington";
+            string actual = DataCleaner.CleanSortTitle("Year book -Carnegie Institution of Washington.");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void CleanSortTitleTest6()
+        {
+            string expected = "a a";
+            string actual = DataCleaner.CleanSortTitle("a'-/\\a");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void CleanSortTitleTest7()
+        {
+            string expected = "";
+            string actual = DataCleaner.CleanSortTitle(".,;:()[]{}<>\"!?");
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

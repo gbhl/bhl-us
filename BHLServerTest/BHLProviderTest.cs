@@ -4,6 +4,7 @@ using MOBOT.BHL.Server;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using System.Collections.Generic;
+using MOBOT.BHL.DataObjects.Enum;
 
 namespace BHLServerTest
 {
@@ -63,7 +64,7 @@ namespace BHLServerTest
         {
             BHLProvider target = new BHLProvider();
             MOBOT.FileAccess.IFileAccessProvider actual;
-            actual = target.GetFileAccessProvider(false);
+            actual = target.GetFileAccessProvider();
             Assert.IsNotNull(actual);
             Assert.IsInstanceOfType(actual, typeof(MOBOT.FileAccess.IFileAccessProvider));
         }
@@ -83,7 +84,7 @@ namespace BHLServerTest
             BHLProvider target = new BHLProvider();
             string fileLocation = @"OcrTestFile.txt";
             string actual = string.Empty;
-            actual = target.GetTextUrl(false, fileLocation);
+            actual = target.GetTextUrl(fileLocation);
             Assert.AreEqual(fileLocation, actual);
         }
 
@@ -93,7 +94,7 @@ namespace BHLServerTest
             BHLProvider target = new BHLProvider();
             string fileLocation = @"OcrTestFile2.txt";
             string actual = string.Empty;
-            actual = target.GetTextUrl(false, fileLocation);
+            actual = target.GetTextUrl(fileLocation);
             Assert.AreEqual(string.Empty, actual);
         }
 
@@ -102,6 +103,7 @@ namespace BHLServerTest
         {
             BHLProvider target = new BHLProvider();
 
+            ItemType itemType = ItemType.Book;
             int itemid = 22010;
             List<BHLProvider.ViewerPage> actual = new List<BHLProvider.ViewerPage>();
             BHLProvider.ViewerPage page = new BHLProvider.ViewerPage();
@@ -110,7 +112,7 @@ namespace BHLServerTest
             page.Height = 0;
             page.Width = 0;
             actual.Add(page);
-            actual = target.PageGetImageDimensions(actual, itemid);
+            actual = target.PageGetImageDimensions(actual, itemType, itemid);
             Assert.IsTrue(actual[0].Height > 0);
         }
 
@@ -121,11 +123,10 @@ namespace BHLServerTest
 
             string resolverName = "TaxonFinder";
             int pageID = 3001717;
-            bool useRemoteFileAccessProvider = false;
             bool usePreferredResults = true;
             int maxReadAttempts = 5;
             List<NameFinderResponse> actual = null;
-            actual = target.GetNamesFromOcr(resolverName, pageID, useRemoteFileAccessProvider, usePreferredResults, maxReadAttempts);
+            actual = target.GetNamesFromOcr(resolverName, pageID, usePreferredResults, maxReadAttempts);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -136,11 +137,10 @@ namespace BHLServerTest
 
             string resolverName = "GNFinder";
             int pageID = 3001717;
-            bool useRemoteFileAccessProvider = false;
             bool usePreferredResults = true;
             int maxReadAttempts = 5;
             List<NameFinderResponse> actual = null;
-            actual = target.GetNamesFromOcr(resolverName, pageID, useRemoteFileAccessProvider, usePreferredResults, maxReadAttempts);
+            actual = target.GetNamesFromOcr(resolverName, pageID, usePreferredResults, maxReadAttempts);
             Assert.IsTrue(actual.Count > 0);
         }
 

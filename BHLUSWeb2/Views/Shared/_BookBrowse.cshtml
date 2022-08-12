@@ -1,0 +1,50 @@
+﻿@{
+    var result = ViewData["searchResult"] as List<MOBOT.BHL.DataObjects.SearchBookResult>;
+    var showVolume = Convert.ToBoolean(ViewData["showVolume"]);
+}
+
+<ol class="data titles">
+    @foreach (MOBOT.BHL.DataObjects.SearchBookResult book in result)
+    {
+        bool useOriginal = false;
+        if (Request.Cookies.AllKeys.Contains("originalsearch"))
+        {
+            if (Request.Cookies["originalsearch"].Value == "1") { useOriginal = true; }
+        }
+
+    <li class="titlelisting">
+        @if (System.Configuration.ConfigurationManager.AppSettings["UseElasticSearch"].ToLower() == "true" && !useOriginal)
+        {
+            <div style="display:inline-block; width:620px">
+                <div style="float:left">
+                    <a target="@Html.Raw((book.ExternalUrl == string.Empty ? "_self\" class=\"title" : "_blank\" rel=\"noopener noreferrer\" class=\"title ExtLinkBrowse"))" href="/item/@book.ItemID">@book.FullTitle @book.PartNumber @book.PartName</a>
+                </div>
+                <div style="float:right">
+                    <a class="titleviewbook" href="/bibliography/@book.TitleID">View Metadata</a>
+                </div>
+            </div>
+            <div class="titledetails" @(book.Authors == string.Empty ? "hidden" : "")>By: @book.Authors.ToString().Replace("|", " - ")</div>
+            <div class="titledetails" @(book.EditionStatement == string.Empty ? "hidden" : "")>Edition: @book.EditionStatement </div>
+            <div class="titledetails" @(book.PublicationDetails == string.Empty ? "hidden" : "")>Publication info: @book.PublicationDetails</div>
+            <div class="titledetails" @(book.Volume == string.Empty || !showVolume ? "hidden" : "")>Volume: @book.Volume</div>
+            <div class="titledetails" @(book.Associations == string.Empty ? "hidden" : "")>Series: @Html.Raw(book.Associations.ToString().Replace("|", "<br />Series: "))</div>
+            <div class="titledetails" @(book.InstitutionName == string.Empty ? "hidden" : "")>Holding Institution: @(book.InstitutionName.Contains("|") ? "Multiple institutions" : book.InstitutionName)</div>
+            <div class="titledetails" @(book.Subjects == string.Empty ? "hidden" : "")>Subjects: @Html.Raw(book.Subjects.ToString().Replace("|", "&nbsp;&nbsp;"))</div>
+            <div class="titledetails" @(book.Collections == string.Empty ? "hidden" : "")>BHL Collections: @book.Collections</div>
+        }
+        else
+        {
+            <a class="title" style="width:540px" href="/bibliography/@book.TitleID">@book.FullTitle @book.PartNumber @book.PartName</a>
+            <div class="titledetails" @(book.Authors == string.Empty ? "hidden" : "")>By: @book.Authors.ToString().Replace("|", " - ")</div>
+            <div class="titledetails" @(book.EditionStatement == string.Empty ? "hidden" : "")>Edition: @book.EditionStatement </div>
+            <div class="titledetails" @(book.PublicationDetails == string.Empty ? "hidden" : "")>Publication info: @book.PublicationDetails</div>
+            <div class="titledetails" @(book.Volume == string.Empty || !showVolume ? "hidden" : "")>Volume: @book.Volume</div>
+            <div class="titledetails" @(book.Associations == string.Empty ? "hidden" : "")>Series: @Html.Raw(book.Associations.ToString().Replace("|", "<br />Series: "))</div>
+            <div class="titledetails" @(book.InstitutionName == string.Empty ? "hidden" : "")>Holding Institution: @(book.InstitutionName.Contains("|") ? "Multiple institutions" : book.InstitutionName)</div>
+            <div class="titledetails" @(book.Subjects == string.Empty ? "hidden" : "")>Subjects: @Html.Raw(book.Subjects.ToString().Replace("|", "&nbsp;&nbsp;"))</div>
+            <div class="titledetails" @(book.Collections == string.Empty ? "hidden" : "")>BHL Collections: @book.Collections</div>
+            <a class="titleviewbook" style="position:relative;top:-25px;" target="@Html.Raw((book.ExternalUrl == string.Empty ? "_self" : "_blank"))" rel="noopener noreferrer" href="/item/@book.ItemID">View Book@(book.ExternalUrl == string.Empty ? "" : " (External)")</a>
+        }
+    </li>
+    }
+</ol>

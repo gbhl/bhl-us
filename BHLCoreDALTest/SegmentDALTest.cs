@@ -1,14 +1,14 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for SegmentDALTest and is intended
     ///to contain all SegmentDALTest Unit Tests
@@ -77,7 +77,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int authorId = 45632;
-            CustomGenericList<Segment> actual = target.SegmentSimpleSelectByAuthor(sqlConnection, sqlTransaction, authorId);
+            List<Segment> actual = target.SegmentSimpleSelectByAuthor(sqlConnection, sqlTransaction, authorId);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -92,7 +92,7 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             int segmentId = 2341;
             short includeNoContent = 0;
-            CustomGenericList<TitleBibTeX> actual = target.SegmentSelectBibTexForSegmentID(sqlConnection, sqlTransaction, segmentId, includeNoContent);
+            List<TitleBibTeX> actual = target.SegmentSelectBibTexForSegmentID(sqlConnection, sqlTransaction, segmentId, includeNoContent);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -136,24 +136,9 @@ namespace BHLCoreDALTest
             SegmentDAL target = new SegmentDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int itemId = 22102;
-            short showAll = 0;
-            CustomGenericList<Segment> actual = target.SegmentSelectByItemID(sqlConnection, sqlTransaction, itemId, showAll);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        /// <summary>
-        ///A test for SegmentSelectForAuthorID
-        ///</summary>
-        [TestMethod()]
-        public void SegmentSelectForAuthorIDTest()
-        {
-            SegmentDAL target = new SegmentDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            int authorId = 45632;
-            CustomGenericList<Segment> actual = target.SegmentSelectForAuthorID(sqlConnection, sqlTransaction, authorId);
-            Assert.IsTrue(actual.Count > 0);
+            int itemId = 282;
+            Segment actual = target.SegmentSelectByItemID(sqlConnection, sqlTransaction, itemId);
+            Assert.AreEqual(actual.ItemID, 282);
         }
 
         /// <summary>
@@ -165,7 +150,7 @@ namespace BHLCoreDALTest
             SegmentDAL target = new SegmentDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            CustomGenericList<Segment> actual = target.SegmentSelectPublished(sqlConnection, sqlTransaction);
+            List<Segment> actual = target.SegmentSelectPublished(sqlConnection, sqlTransaction);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -179,7 +164,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int segmentId = 25777;
-            CustomGenericList<Segment> actual = target.SegmentSelectRelated(sqlConnection, sqlTransaction, segmentId);
+            List<Segment> actual = target.SegmentSelectRelated(sqlConnection, sqlTransaction, segmentId);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -195,8 +180,11 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             string startDate = "1900";
             string endDate = "1923";
-            CustomGenericList<Segment> actual = target.SegmentSelectByDateRange(sqlConnection, sqlTransaction, startDate, endDate);
-            Assert.IsTrue(actual.Count > 0);
+            int pageNum = 1;
+            int numPages = 10;
+            string sort = "title";
+            Tuple<int, List<Segment>> actual = target.SegmentSelectByDateRange(sqlConnection, sqlTransaction, startDate, endDate, pageNum, numPages, sort);
+            Assert.IsTrue(actual.Item2.Count > 0);
         }
 
         /// <summary>
@@ -209,22 +197,11 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string title = "q";
-            CustomGenericList<Segment> actual = target.SegmentSelectByTitleLike(sqlConnection, sqlTransaction, title);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        /// <summary>
-        ///A test for SegmentSelectByTitleNotLike
-        ///</summary>
-        [TestMethod()]
-        public void SegmentSelectByTitleNotLikeTest()
-        {
-            SegmentDAL target = new SegmentDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            string title = "[a-z]";
-            CustomGenericList<Segment> actual = target.SegmentSelectByTitleNotLike(sqlConnection, sqlTransaction, title);
-            Assert.IsNotNull(actual);
+            int pageNum = 1;
+            int numPages = 10;
+            string sort = "title";
+            Tuple<int, List<Segment>> actual = target.SegmentSelectByTitleLike(sqlConnection, sqlTransaction, title, pageNum, numPages, sort);
+            Assert.IsTrue(actual.Item2.Count > 0);
         }
 
         [TestMethod()]
@@ -235,31 +212,11 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             string institutionCode = "BSTOR";
             string startsWith = "N";
-            CustomGenericList<Segment> actual = target.SegmentSelectByInstitutionAndStartsWith(sqlConnection, sqlTransaction, institutionCode, startsWith);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        [TestMethod()]
-        public void SegmentSelectByInstitutionAndStartsWithoutTest()
-        {
-            SegmentDAL target = new SegmentDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            string institutionCode = "BSTOR";
-            string startsWith = "N";
-            CustomGenericList<Segment> actual = target.SegmentSelectByInstitutionAndStartsWithout(sqlConnection, sqlTransaction, institutionCode, startsWith);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        [TestMethod()]
-        public void SegmentSelectForKeywordTest()
-        {
-            SegmentDAL target = new SegmentDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            string keyword = "test";
-            CustomGenericList<Segment> actual = target.SegmentSelectForKeyword(sqlConnection, sqlTransaction, keyword);
-            Assert.IsNotNull(actual);
+            int pageNum = 1;
+            int numPages = 10;
+            string sort = "title";
+            Tuple<int, List<Segment>> actual = target.SegmentSelectByInstitutionAndStartsWith(sqlConnection, sqlTransaction, institutionCode, startsWith, pageNum, numPages, sort);
+            Assert.IsTrue(actual.Item2.Count > 0);
         }
 
         [TestMethod()]
@@ -269,7 +226,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int numberToReturn = 10;
-            CustomGenericList<DOI> actual = target.SegmentSelectWithoutSubmittedDOI(sqlConnection, sqlTransaction, numberToReturn);
+            List<DOI> actual = target.SegmentSelectWithoutSubmittedDOI(sqlConnection, sqlTransaction, numberToReturn);
             Assert.IsTrue(actual.Count > 0);
             Assert.IsTrue(actual.Count <= 10);
         }

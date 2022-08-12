@@ -1,39 +1,48 @@
-using System;
-using System.Collections.Generic;
-using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Utility;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
-	public partial class BHLProvider
+    public partial class BHLProvider
 	{
 		private PageDAL pageDal = null;
 
 		#region Select methods
 
 		/// <summary>
-		/// Select all Page objects for a particular Item ID.
+		/// Select all Page objects for a particular Book ID.
 		/// </summary>
-		/// <param name="itemID"></param>
+		/// <param name="bookID"></param>
 		/// <returns>Object of type Title.</returns>
-		public CustomGenericList<Page> PageSelectByItemID( int itemID )
+		public List<Page> PageSelectByBookID( int bookID )
 		{
-			return ( new PageDAL().PageSelectByItemID( null, null, itemID ) );
+			return ( new PageDAL().PageSelectByBookID( null, null, bookID ) );
 		}
 
-        public CustomGenericList<Page> PageSelectFileNameByItemID(int itemID)
+		public List<Page> PageSelectByItemID(int itemID)
+		{
+			return (new PageDAL().PageSelectByItemID(null, null, itemID));
+		}
+
+		public List<Page> PageSelectFileNameByItemID(int itemID)
         {
             return (new PageDAL().PageSelectFileNameByItemID(null, null, itemID));
         }
 
-		public CustomGenericList<Page> PageMetadataSelectByItemID( int itemID )
+		public List<Page> PageMetadataSelectByItemID( int itemID )
 		{
 			return ( new PageDAL().PageMetadataSelectByItemID( null, null, itemID ) );
 		}
 
-        public Page PageMetadataSelectByPageID(int pageID)
+		public List<Page> PageMetadataSelectBySegmentID(int segmentID)
+        {
+			return new PageDAL().PageMetadataSelectBySegmentID(null, null, segmentID);
+		}
+
+		public Page PageMetadataSelectByPageID(int pageID)
         {
             return (new PageDAL().PageMetadataSelectByPageID(null, null, pageID));
         }
@@ -44,7 +53,7 @@ namespace MOBOT.BHL.Server
 		/// <param name="itemID"></param>
 		/// <param name="maxAge"></param>
 		/// <returns>List of objects of type Page.</returns>
-		public CustomGenericList<Page> PageSelectWithExpiredPageNamesByItemID( int itemID, int maxAge )
+		public List<Page> PageSelectWithExpiredPageNamesByItemID( int itemID, int maxAge )
 		{
 			return ( new PageDAL().PageSelectWithExpiredPageNamesByItemID( null, null, itemID, maxAge ) );
 		}
@@ -54,7 +63,7 @@ namespace MOBOT.BHL.Server
 		/// </summary>
 		/// <param name="itemID"></param>
 		/// <returns>List of objects of type Page.</returns>
-		public CustomGenericList<Page> PageSelectWithoutPageNamesByItemID( int itemID )
+		public List<Page> PageSelectWithoutPageNamesByItemID( int itemID )
 		{
 			return ( new PageDAL().PageSelectWithoutPageNamesForItem( null, null, itemID ) );
 		}
@@ -64,7 +73,7 @@ namespace MOBOT.BHL.Server
 		/// that do not have Page Names of their own.
 		/// </summary>
 		/// <returns>List of objects of type Page.</returns>
-		public CustomGenericList<Page> PageSelectWithoutPageNames()
+		public List<Page> PageSelectWithoutPageNames()
 		{
 			return ( new PageDAL().PageSelectWithoutPageNames( null, null ) );
 		}
@@ -84,23 +93,22 @@ namespace MOBOT.BHL.Server
 			return GetPageDalInstance().PageSelectAuto( null, null, pageID );
 		}
 
-        public CustomGenericList<Page> PageSelectRangeForPagesAndItem(int startPageID, int endPageID, int? itemID)
+        public List<Page> PageSelectRangeForPagesAndItem(int startPageID, int endPageID, int? itemID)
         {
             return GetPageDalInstance().PageSelectRangeForPagesAndItem(null, null, startPageID, endPageID, itemID);
         }
 
-        public CustomGenericList<Page> PageSelectByItemAndPageNumber(int itemID, string volume, string issue, string pageNumber)
+        public List<Page> PageSelectByItemAndPageNumber(int itemID, string volume, string issue, string pageNumber)
         {
             return GetPageDalInstance().PageSelectByItemAndPageNumber(null, null, itemID, volume, issue, pageNumber);
         }
 
-        #endregion
-
-        public CustomGenericList<CustomDataRow> PageResolve( int titleID, string volume, string issue, string year, 
-			string startPage )
+		public List<Page> PageSelectBySegmentAndPageNumber(int segmentID, string pageNumber)
 		{
-			return ( new PageDAL().PageResolve( null, null, titleID, volume, issue, year, startPage ) );
+			return GetPageDalInstance().PageSelectBySegmentAndPageNumber(null, null, segmentID, pageNumber);
 		}
+
+		#endregion
 
 		public Page PageUpdateYear( int pageID, string year, int userID )
 		{
@@ -221,12 +229,13 @@ namespace MOBOT.BHL.Server
 		/// <param name="pageID"></param>
 		/// <param name="ocrTextLocation"></param>
 		/// <returns></returns>
-		public bool PageCheckForOcrText( int pageID, bool useRemoteProvider )
+		public bool PageCheckForOcrText(int pageID)
 		{
 			try
 			{
 				PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId( pageID );
-                return this.GetFileAccessProvider(useRemoteProvider).FileExists(ps.OcrTextLocation);
+				if (ps == null) ps = new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
+				return this.GetFileAccessProvider().FileExists(ps.OcrTextLocation);
 			}
 			catch ( Exception ex )
 			{
@@ -259,7 +268,7 @@ namespace MOBOT.BHL.Server
             new PageDAL().PageDeleteFromItem(null, null, barCode, pageID, numPagesToDelete);
         }
 
-        public CustomGenericList<PageTextLog> PageTextLogSelectForItem(int itemID)
+        public List<PageTextLog> PageTextLogSelectForItem(int itemID)
         {
             return new PageTextLogDAL().PageTextLogSelectForItem(null, null, itemID);
         }
@@ -269,7 +278,7 @@ namespace MOBOT.BHL.Server
             new PageTextLogDAL().PageTextLogInsertForItem(null, null, itemID, textSource, userID);
         }
 
-        public CustomGenericList<PageTextLog> PageTextLogSelectNonOCRForItem(int itemID)
+        public List<PageTextLog> PageTextLogSelectNonOCRForItem(int itemID)
         {
             return new PageTextLogDAL().PageTextLogSelectNonOCRForItem(null, null, itemID);
         }

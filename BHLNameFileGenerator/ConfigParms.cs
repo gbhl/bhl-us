@@ -95,6 +95,8 @@ namespace MOBOT.BHL.BHLNameFileGenerator
             set { _iaS3SecretKey = value; }
         }
 
+        public string BHLWSEndpoint { get; set; } = string.Empty;
+
         public void LoadAppConfig()
         {
             this.SMTPHost = ConfigurationManager.AppSettings[SMTPHostKey];
@@ -108,6 +110,7 @@ namespace MOBOT.BHL.BHLNameFileGenerator
             this.NameFilePathFormat = ConfigurationManager.AppSettings[NameFilePathFormatKey];
             this.IaS3AccessKey = ConfigurationManager.AppSettings[IAS3AccessKeyKey];
             this.IaS3SecretKey = ConfigurationManager.AppSettings[IAS3SecretKeyKey];
+            this.BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
 
         public void UpdateAppSetting(string key, object value)

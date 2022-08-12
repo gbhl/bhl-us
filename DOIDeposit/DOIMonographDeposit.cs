@@ -103,6 +103,8 @@ namespace MOBOT.BHL.DOIDeposit
                         bookContent.Append("<person_name sequence=\"" + sequence + "\" contributor_role=\"" + role + "\">\n");
                         if (firstName.Length > 0) bookContent.Append("<given_name>" + HttpUtility.HtmlEncode(firstName) + "</given_name>\n");
                         bookContent.Append("<surname>" + HttpUtility.HtmlEncode(lastName) + "</surname>\n");
+                        if (!string.IsNullOrWhiteSpace(contributor.Suffix)) bookContent.Append("<suffix>" + HttpUtility.HtmlEncode(contributor.Suffix) + "</suffix>\n");
+                        if (!string.IsNullOrWhiteSpace(contributor.ORCID)) bookContent.Append("<ORCID authenticated=\"false\">" + HttpUtility.HtmlEncode(contributor.ORCID) + "</ORCID>\n");
                         bookContent.Append("</person_name>\n");
                     }
                     else

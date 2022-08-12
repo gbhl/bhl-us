@@ -1,7 +1,7 @@
 
-// Generated 5/1/2012 2:41:41 PM
+// Generated 12/29/2021 11:15:07 AM
 // Do not modify the contents of this code file.
-// This abstract class __Identifier is based upon Identifier.
+// This abstract class __Identifier is based upon dbo.Identifier.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Identifier : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -46,16 +46,26 @@ namespace MOBOT.BHL.DataObjects
 		/// Overloaded constructor specifying each column value.
 		/// </summary>
 		/// <param name="identifierID"></param>
+		/// <param name="identifierType"></param>
 		/// <param name="identifierName"></param>
 		/// <param name="identifierLabel"></param>
+		/// <param name="prefix"></param>
+		/// <param name="patternExpression"></param>
+		/// <param name="patternDescription"></param>
+		/// <param name="maximumPerEntity"></param>
 		/// <param name="display"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
 		public __Identifier(int identifierID, 
+			string identifierType, 
 			string identifierName, 
 			string identifierLabel, 
+			string prefix, 
+			string patternExpression, 
+			string patternDescription, 
+			int maximumPerEntity, 
 			short display, 
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
@@ -63,8 +73,13 @@ namespace MOBOT.BHL.DataObjects
 			int? lastModifiedUserID) : this()
 		{
 			_IdentifierID = identifierID;
+			IdentifierType = identifierType;
 			IdentifierName = identifierName;
 			IdentifierLabel = identifierLabel;
+			Prefix = prefix;
+			PatternExpression = patternExpression;
+			PatternDescription = patternDescription;
+			MaximumPerEntity = maximumPerEntity;
 			Display = display;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
@@ -101,6 +116,11 @@ namespace MOBOT.BHL.DataObjects
 						_IdentifierID = (int)column.Value;
 						break;
 					}
+					case "IdentifierType" :
+					{
+						_IdentifierType = (string)column.Value;
+						break;
+					}
 					case "IdentifierName" :
 					{
 						_IdentifierName = (string)column.Value;
@@ -109,6 +129,26 @@ namespace MOBOT.BHL.DataObjects
 					case "IdentifierLabel" :
 					{
 						_IdentifierLabel = (string)column.Value;
+						break;
+					}
+					case "Prefix" :
+					{
+						_Prefix = (string)column.Value;
+						break;
+					}
+					case "PatternExpression" :
+					{
+						_PatternExpression = (string)column.Value;
+						break;
+					}
+					case "PatternDescription" :
+					{
+						_PatternDescription = (string)column.Value;
+						break;
+					}
+					case "MaximumPerEntity" :
+					{
+						_MaximumPerEntity = (int)column.Value;
 						break;
 					}
 					case "Display" :
@@ -136,7 +176,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedUserID = (int?)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -144,7 +184,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region IdentifierID
 		
@@ -174,6 +214,34 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion IdentifierID
 		
+		#region IdentifierType
+		
+		private string _IdentifierType = string.Empty;
+		
+		/// <summary>
+		/// Column: IdentifierType;
+		/// DBMS data type: nvarchar(40);
+		/// </summary>
+		[ColumnDefinition("IdentifierType", DbTargetType=SqlDbType.NVarChar, Ordinal=2, CharacterMaxLength=40)]
+		public string IdentifierType
+		{
+			get
+			{
+				return _IdentifierType;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 40);
+				if (_IdentifierType != value)
+				{
+					_IdentifierType = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion IdentifierType
+		
 		#region IdentifierName
 		
 		private string _IdentifierName = string.Empty;
@@ -182,7 +250,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: IdentifierName;
 		/// DBMS data type: nvarchar(40);
 		/// </summary>
-		[ColumnDefinition("IdentifierName", DbTargetType=SqlDbType.NVarChar, Ordinal=2, CharacterMaxLength=40)]
+		[ColumnDefinition("IdentifierName", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=40)]
 		public string IdentifierName
 		{
 			get
@@ -210,7 +278,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: IdentifierLabel;
 		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("IdentifierLabel", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=50)]
+		[ColumnDefinition("IdentifierLabel", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=50)]
 		public string IdentifierLabel
 		{
 			get
@@ -230,6 +298,117 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion IdentifierLabel
 		
+		#region Prefix
+		
+		private string _Prefix = string.Empty;
+		
+		/// <summary>
+		/// Column: Prefix;
+		/// DBMS data type: nvarchar(100);
+		/// </summary>
+		[ColumnDefinition("Prefix", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=100)]
+		public string Prefix
+		{
+			get
+			{
+				return _Prefix;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 100);
+				if (_Prefix != value)
+				{
+					_Prefix = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Prefix
+		
+		#region PatternExpression
+		
+		private string _PatternExpression = string.Empty;
+		
+		/// <summary>
+		/// Column: PatternExpression;
+		/// DBMS data type: nvarchar(200);
+		/// </summary>
+		[ColumnDefinition("PatternExpression", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=200)]
+		public string PatternExpression
+		{
+			get
+			{
+				return _PatternExpression;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 200);
+				if (_PatternExpression != value)
+				{
+					_PatternExpression = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion PatternExpression
+		
+		#region PatternDescription
+		
+		private string _PatternDescription = string.Empty;
+		
+		/// <summary>
+		/// Column: PatternDescription;
+		/// DBMS data type: nvarchar(500);
+		/// </summary>
+		[ColumnDefinition("PatternDescription", DbTargetType=SqlDbType.NVarChar, Ordinal=7, CharacterMaxLength=500)]
+		public string PatternDescription
+		{
+			get
+			{
+				return _PatternDescription;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 500);
+				if (_PatternDescription != value)
+				{
+					_PatternDescription = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion PatternDescription
+		
+		#region MaximumPerEntity
+		
+		private int _MaximumPerEntity = default(int);
+		
+		/// <summary>
+		/// Column: MaximumPerEntity;
+		/// DBMS data type: int;
+		/// </summary>
+		[ColumnDefinition("MaximumPerEntity", DbTargetType=SqlDbType.Int, Ordinal=8, NumericPrecision=10)]
+		public int MaximumPerEntity
+		{
+			get
+			{
+				return _MaximumPerEntity;
+			}
+			set
+			{
+				if (_MaximumPerEntity != value)
+				{
+					_MaximumPerEntity = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion MaximumPerEntity
+		
 		#region Display
 		
 		private short _Display = default(short);
@@ -238,7 +417,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Display;
 		/// DBMS data type: smallint;
 		/// </summary>
-		[ColumnDefinition("Display", DbTargetType=SqlDbType.SmallInt, Ordinal=4, NumericPrecision=5)]
+		[ColumnDefinition("Display", DbTargetType=SqlDbType.SmallInt, Ordinal=9, NumericPrecision=5)]
 		public short Display
 		{
 			get
@@ -265,7 +444,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=5)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=10)]
 		public DateTime CreationDate
 		{
 			get
@@ -292,7 +471,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=6)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=11)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -319,7 +498,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationUserID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=7, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=12, NumericPrecision=10, IsNullable=true)]
 		public int? CreationUserID
 		{
 			get
@@ -346,7 +525,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedUserID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=8, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=13, NumericPrecision=10, IsNullable=true)]
 		public int? LastModifiedUserID
 		{
 			get
@@ -366,7 +545,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion LastModifiedUserID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -409,8 +588,13 @@ namespace MOBOT.BHL.DataObjects
 					o.IsNew == IsNew &&
 					o.IsDeleted == IsDeleted &&
 					o.IdentifierID == IdentifierID &&
+					GetComparisonString(o.IdentifierType) == GetComparisonString(IdentifierType) &&
 					GetComparisonString(o.IdentifierName) == GetComparisonString(IdentifierName) &&
 					GetComparisonString(o.IdentifierLabel) == GetComparisonString(IdentifierLabel) &&
+					GetComparisonString(o.Prefix) == GetComparisonString(Prefix) &&
+					GetComparisonString(o.PatternExpression) == GetComparisonString(PatternExpression) &&
+					GetComparisonString(o.PatternDescription) == GetComparisonString(PatternDescription) &&
+					o.MaximumPerEntity == MaximumPerEntity &&
 					o.Display == Display &&
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
@@ -510,15 +694,19 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __Identifier.SortColumn.IdentifierID);
 		/// </summary>
 		[Serializable]
 		public sealed class SortColumn
 		{	
 			public const string IdentifierID = "IdentifierID";	
+			public const string IdentifierType = "IdentifierType";	
 			public const string IdentifierName = "IdentifierName";	
 			public const string IdentifierLabel = "IdentifierLabel";	
+			public const string Prefix = "Prefix";	
+			public const string PatternExpression = "PatternExpression";	
+			public const string PatternDescription = "PatternDescription";	
+			public const string MaximumPerEntity = "MaximumPerEntity";	
 			public const string Display = "Display";	
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
@@ -530,3 +718,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

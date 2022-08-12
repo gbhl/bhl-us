@@ -129,7 +129,7 @@
 					</tr>
 					<tr>
 						<td style="white-space: nowrap" align="right" class="dataHeader">
-							Volume:
+                            <asp:Label ID="itemLabel" runat="server"></asp:Label>:
 						</td>
 						<td>
 							<asp:HyperLink ID="itemLink" runat="server"></asp:HyperLink>

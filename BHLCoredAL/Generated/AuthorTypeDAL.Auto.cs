@@ -1,8 +1,8 @@
 
-// Generated 5/18/2012 11:11:49 AM
+// Generated 1/5/2021 3:25:00 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class AuthorTypeDAL is based upon AuthorType.
+// This partial class AuthorTypeDAL is based upon dbo.AuthorType.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from AuthorType by primary key(s).
+		/// Select values from dbo.AuthorType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from AuthorType by primary key(s).
+		/// Select values from dbo.AuthorType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<AuthorType> helper = new CustomSqlHelper<AuthorType>())
 				{
-					CustomGenericList<AuthorType> list = helper.ExecuteReader(command);
+					List<AuthorType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						AuthorType o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from AuthorType by primary key(s).
+		/// Select values from dbo.AuthorType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="authorTypeID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> AuthorTypeSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> AuthorTypeSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int authorTypeID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from AuthorType by primary key(s).
+		/// Select values from dbo.AuthorType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="authorTypeID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> AuthorTypeSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> AuthorTypeSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into AuthorType.
+		/// Insert values into dbo.AuthorType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -151,7 +152,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into AuthorType.
+		/// Insert values into dbo.AuthorType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -180,7 +181,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<AuthorType> helper = new CustomSqlHelper<AuthorType>())
 				{
-					CustomGenericList<AuthorType> list = helper.ExecuteReader(command);
+					List<AuthorType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						AuthorType o = list[0];
@@ -196,7 +197,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into AuthorType. Returns an object of type AuthorType.
+		/// Insert values into dbo.AuthorType. Returns an object of type AuthorType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -211,7 +212,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into AuthorType. Returns an object of type AuthorType.
+		/// Insert values into dbo.AuthorType. Returns an object of type AuthorType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -235,7 +236,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from AuthorType by primary key(s).
+		/// Delete values from dbo.AuthorType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -250,7 +251,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from AuthorType by primary key(s).
+		/// Delete values from dbo.AuthorType by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -293,7 +294,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in AuthorType. Returns an object of type AuthorType.
+		/// Update values in dbo.AuthorType. Returns an object of type AuthorType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -312,7 +313,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in AuthorType. Returns an object of type AuthorType.
+		/// Update values in dbo.AuthorType. Returns an object of type AuthorType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -340,7 +341,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<AuthorType> helper = new CustomSqlHelper<AuthorType>())
 				{
-					CustomGenericList<AuthorType> list = helper.ExecuteReader(command);
+					List<AuthorType> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						AuthorType o = list[0];
@@ -356,7 +357,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in AuthorType. Returns an object of type AuthorType.
+		/// Update values in dbo.AuthorType. Returns an object of type AuthorType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -371,7 +372,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in AuthorType. Returns an object of type AuthorType.
+		/// Update values in dbo.AuthorType. Returns an object of type AuthorType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -395,9 +396,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage AuthorType object.
+		/// Manage dbo.AuthorType object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in AuthorType.
+		/// then either insert values into, delete values from, or update values in dbo.AuthorType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -412,9 +413,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage AuthorType object.
+		/// Manage dbo.AuthorType object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in AuthorType.
+		/// then either insert values into, delete values from, or update values in dbo.AuthorType.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -480,4 +481,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

@@ -46,6 +46,7 @@ namespace MOBOT.BHLImport.BHLImportEFDataModel
         public string OCLC { get; set; }
         public string JSTOR { get; set; }
         public string ContributorName { get; set; }
+        public int SegmentStatusID { get; set; }
     
         public virtual BSItem BSItem { get; set; }
         public virtual ICollection<BSSegmentPage> BSSegmentPages { get; set; }

@@ -1,14 +1,14 @@
-﻿using MOBOT.BHL.DAL;
+﻿using CustomDataAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for NameResolvedDALTest and is intended
     ///to contain all NameResolvedDALTest Unit Tests
@@ -78,7 +78,7 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             string name = "Mollusca";
             int returnCount = 1;
-            CustomGenericList<NameResolved> actual = target.NameResolvedSelectByNameLike(sqlConnection, sqlTransaction, name, returnCount);
+            List<NameResolved> actual = target.NameResolvedSelectByNameLike(sqlConnection, sqlTransaction, name, returnCount);
             Assert.AreEqual(actual.Count, 1);
         }
 
@@ -96,7 +96,7 @@ namespace BHLCoreDALTest
             int pageNumber = 1;
             string sortColumn = "ShortTitle";
             string sortDirection = "ASC";
-            CustomGenericList<CustomDataRow> actual = target.NameResolvedSearchForPages(sqlConnection, sqlTransaction, name, numberOfRows, pageNumber, sortColumn, sortDirection);
+            List<CustomDataRow> actual = target.NameResolvedSearchForPages(sqlConnection, sqlTransaction, name, numberOfRows, pageNumber, sortColumn, sortDirection);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -110,7 +110,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string name = "Mollusca";
-            CustomGenericList<CustomDataRow> actual = target.NameResolvedSearchForPagesDownload(sqlConnection, sqlTransaction, name);
+            List<CustomDataRow> actual = target.NameResolvedSearchForPagesDownload(sqlConnection, sqlTransaction, name);
             Assert.IsTrue(actual.Count > 0);
         }
     }

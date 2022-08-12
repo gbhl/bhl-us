@@ -1,6 +1,7 @@
 
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IAItemIdentifier> helper = new CustomSqlHelper<IAItemIdentifier>())
                 {
-                    CustomGenericList<IAItemIdentifier> list = helper.ExecuteReader(command);
+                    List<IAItemIdentifier> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {

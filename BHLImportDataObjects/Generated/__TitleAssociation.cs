@@ -1,7 +1,7 @@
 
-// Generated 9/4/2008 2:16:32 PM
+// Generated 1/5/2021 2:18:42 PM
 // Do not modify the contents of this code file.
-// This abstract class __TitleAssociation is based upon TitleAssociation.
+// This abstract class __TitleAssociation is based upon dbo.TitleAssociation.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __TitleAssociation : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -54,13 +54,13 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="title"></param>
 		/// <param name="section"></param>
 		/// <param name="volume"></param>
-		/// <param name="heading"></param>
-		/// <param name="publication"></param>
-		/// <param name="relationship"></param>
 		/// <param name="active"></param>
 		/// <param name="productionDate"></param>
 		/// <param name="createdDate"></param>
 		/// <param name="lastModifiedDate"></param>
+		/// <param name="heading"></param>
+		/// <param name="publication"></param>
+		/// <param name="relationship"></param>
 		public __TitleAssociation(int titleAssociationID, 
 			string importKey, 
 			int importStatusID, 
@@ -70,13 +70,13 @@ namespace MOBOT.BHLImport.DataObjects
 			string title, 
 			string section, 
 			string volume, 
-			string heading, 
-			string publication, 
-			string relationship, 
 			bool active, 
 			DateTime? productionDate, 
 			DateTime createdDate, 
-			DateTime lastModifiedDate) : this()
+			DateTime lastModifiedDate, 
+			string heading, 
+			string publication, 
+			string relationship) : this()
 		{
 			_TitleAssociationID = titleAssociationID;
 			ImportKey = importKey;
@@ -87,13 +87,13 @@ namespace MOBOT.BHLImport.DataObjects
 			Title = title;
 			Section = section;
 			Volume = volume;
-			Heading = heading;
-			Publication = publication;
-			Relationship = relationship;
 			Active = active;
 			ProductionDate = productionDate;
 			CreatedDate = createdDate;
 			LastModifiedDate = lastModifiedDate;
+			Heading = heading;
+			Publication = publication;
+			Relationship = relationship;
 		}
 		
 		#endregion Constructors
@@ -165,21 +165,6 @@ namespace MOBOT.BHLImport.DataObjects
 						_Volume = (string)column.Value;
 						break;
 					}
-					case "Heading" :
-					{
-						_Heading = (string)column.Value;
-						break;
-					}
-					case "Publication" :
-					{
-						_Publication = (string)column.Value;
-						break;
-					}
-					case "Relationship" :
-					{
-						_Relationship = (string)column.Value;
-						break;
-					}
 					case "Active" :
 					{
 						_Active = (bool)column.Value;
@@ -200,7 +185,22 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+					case "Heading" :
+					{
+						_Heading = (string)column.Value;
+						break;
+					}
+					case "Publication" :
+					{
+						_Publication = (string)column.Value;
+						break;
+					}
+					case "Relationship" :
+					{
+						_Relationship = (string)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -208,7 +208,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region TitleAssociationID
 		
@@ -460,6 +460,114 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Volume
 		
+		#region Active
+		
+		private bool _Active = false;
+		
+		/// <summary>
+		/// Column: Active;
+		/// DBMS data type: bit;
+		/// </summary>
+		[ColumnDefinition("Active", DbTargetType=SqlDbType.Bit, Ordinal=10)]
+		public bool Active
+		{
+			get
+			{
+				return _Active;
+			}
+			set
+			{
+				if (_Active != value)
+				{
+					_Active = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Active
+		
+		#region ProductionDate
+		
+		private DateTime? _ProductionDate = null;
+		
+		/// <summary>
+		/// Column: ProductionDate;
+		/// DBMS data type: datetime; Nullable;
+		/// </summary>
+		[ColumnDefinition("ProductionDate", DbTargetType=SqlDbType.DateTime, Ordinal=11, IsNullable=true)]
+		public DateTime? ProductionDate
+		{
+			get
+			{
+				return _ProductionDate;
+			}
+			set
+			{
+				if (_ProductionDate != value)
+				{
+					_ProductionDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ProductionDate
+		
+		#region CreatedDate
+		
+		private DateTime _CreatedDate;
+		
+		/// <summary>
+		/// Column: CreatedDate;
+		/// DBMS data type: datetime;
+		/// </summary>
+		[ColumnDefinition("CreatedDate", DbTargetType=SqlDbType.DateTime, Ordinal=12)]
+		public DateTime CreatedDate
+		{
+			get
+			{
+				return _CreatedDate;
+			}
+			set
+			{
+				if (_CreatedDate != value)
+				{
+					_CreatedDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreatedDate
+		
+		#region LastModifiedDate
+		
+		private DateTime _LastModifiedDate;
+		
+		/// <summary>
+		/// Column: LastModifiedDate;
+		/// DBMS data type: datetime;
+		/// </summary>
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=13)]
+		public DateTime LastModifiedDate
+		{
+			get
+			{
+				return _LastModifiedDate;
+			}
+			set
+			{
+				if (_LastModifiedDate != value)
+				{
+					_LastModifiedDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedDate
+		
 		#region Heading
 		
 		private string _Heading = string.Empty;
@@ -468,7 +576,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Heading;
 		/// DBMS data type: nvarchar(500);
 		/// </summary>
-		[ColumnDefinition("Heading", DbTargetType=SqlDbType.NVarChar, Ordinal=10, CharacterMaxLength=500)]
+		[ColumnDefinition("Heading", DbTargetType=SqlDbType.NVarChar, Ordinal=14, CharacterMaxLength=500)]
 		public string Heading
 		{
 			get
@@ -496,7 +604,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Publication;
 		/// DBMS data type: nvarchar(500);
 		/// </summary>
-		[ColumnDefinition("Publication", DbTargetType=SqlDbType.NVarChar, Ordinal=11, CharacterMaxLength=500)]
+		[ColumnDefinition("Publication", DbTargetType=SqlDbType.NVarChar, Ordinal=15, CharacterMaxLength=500)]
 		public string Publication
 		{
 			get
@@ -524,7 +632,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Relationship;
 		/// DBMS data type: nvarchar(500);
 		/// </summary>
-		[ColumnDefinition("Relationship", DbTargetType=SqlDbType.NVarChar, Ordinal=12, CharacterMaxLength=500)]
+		[ColumnDefinition("Relationship", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=500)]
 		public string Relationship
 		{
 			get
@@ -543,117 +651,9 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion Relationship
-		
-		#region Active
-		
-		private bool _Active = false;
-		
-		/// <summary>
-		/// Column: Active;
-		/// DBMS data type: bit;
-		/// </summary>
-		[ColumnDefinition("Active", DbTargetType=SqlDbType.Bit, Ordinal=13)]
-		public bool Active
-		{
-			get
-			{
-				return _Active;
-			}
-			set
-			{
-				if (_Active != value)
-				{
-					_Active = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion Active
-		
-		#region ProductionDate
-		
-		private DateTime? _ProductionDate = null;
-		
-		/// <summary>
-		/// Column: ProductionDate;
-		/// DBMS data type: datetime; Nullable;
-		/// </summary>
-		[ColumnDefinition("ProductionDate", DbTargetType=SqlDbType.DateTime, Ordinal=14, IsNullable=true)]
-		public DateTime? ProductionDate
-		{
-			get
-			{
-				return _ProductionDate;
-			}
-			set
-			{
-				if (_ProductionDate != value)
-				{
-					_ProductionDate = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion ProductionDate
-		
-		#region CreatedDate
-		
-		private DateTime _CreatedDate;
-		
-		/// <summary>
-		/// Column: CreatedDate;
-		/// DBMS data type: datetime;
-		/// </summary>
-		[ColumnDefinition("CreatedDate", DbTargetType=SqlDbType.DateTime, Ordinal=15)]
-		public DateTime CreatedDate
-		{
-			get
-			{
-				return _CreatedDate;
-			}
-			set
-			{
-				if (_CreatedDate != value)
-				{
-					_CreatedDate = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion CreatedDate
-		
-		#region LastModifiedDate
-		
-		private DateTime _LastModifiedDate;
-		
-		/// <summary>
-		/// Column: LastModifiedDate;
-		/// DBMS data type: datetime;
-		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=16)]
-		public DateTime LastModifiedDate
-		{
-			get
-			{
-				return _LastModifiedDate;
-			}
-			set
-			{
-				if (_LastModifiedDate != value)
-				{
-					_LastModifiedDate = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -704,13 +704,13 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.Title) == GetComparisonString(Title) &&
 					GetComparisonString(o.Section) == GetComparisonString(Section) &&
 					GetComparisonString(o.Volume) == GetComparisonString(Volume) &&
-					GetComparisonString(o.Heading) == GetComparisonString(Heading) &&
-					GetComparisonString(o.Publication) == GetComparisonString(Publication) &&
-					GetComparisonString(o.Relationship) == GetComparisonString(Relationship) &&
 					o.Active == Active &&
 					o.ProductionDate == ProductionDate &&
 					o.CreatedDate == CreatedDate &&
-					o.LastModifiedDate == LastModifiedDate 
+					o.LastModifiedDate == LastModifiedDate &&
+					GetComparisonString(o.Heading) == GetComparisonString(Heading) &&
+					GetComparisonString(o.Publication) == GetComparisonString(Publication) &&
+					GetComparisonString(o.Relationship) == GetComparisonString(Relationship) 
 				)
 				{
 					o = null;
@@ -805,7 +805,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __TitleAssociation.SortColumn.TitleAssociationID);
 		/// </summary>
 		[Serializable]
@@ -820,16 +819,17 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string Title = "Title";	
 			public const string Section = "Section";	
 			public const string Volume = "Volume";	
-			public const string Heading = "Heading";	
-			public const string Publication = "Publication";	
-			public const string Relationship = "Relationship";	
 			public const string Active = "Active";	
 			public const string ProductionDate = "ProductionDate";	
 			public const string CreatedDate = "CreatedDate";	
-			public const string LastModifiedDate = "LastModifiedDate";
+			public const string LastModifiedDate = "LastModifiedDate";	
+			public const string Heading = "Heading";	
+			public const string Publication = "Publication";	
+			public const string Relationship = "Relationship";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

@@ -3,7 +3,7 @@
 
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
-using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -11,9 +11,9 @@ using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class ImportRecordDAL
+    public partial class ImportRecordDAL
 	{
-        public CustomGenericList<ImportRecord> ImportRecordSelectByImportFileID(SqlConnection sqlConnection, 
+        public List<ImportRecord> ImportRecordSelectByImportFileID(SqlConnection sqlConnection, 
             SqlTransaction sqlTransaction, int importFileID, int numRows, int startRow, string sortColumn, string sortDirection,
             int extended = 0)
         {
@@ -30,7 +30,47 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ImportRecord> helper = new CustomSqlHelper<ImportRecord>())
                 {
-                    CustomGenericList<ImportRecord> list = helper.ExecuteReader(command);
+                    List<ImportRecord> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        public List<ImportRecordReview> ImportRecordSelectForReviewByImportFileID(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int importFileID, int numRows, int startRow, string sortColumn, string sortDirection,
+            int extended = 0)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordSelectForReviewByImportFileID", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("ImportFileID", SqlDbType.Int, null, false, importFileID),
+                    CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numRows),
+                    CustomSqlHelper.CreateInputParameter("StartRow", SqlDbType.Int, null, false, startRow),
+                    CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sortColumn),
+                    CustomSqlHelper.CreateInputParameter("SortDirection", SqlDbType.NVarChar, 4, false, sortDirection),
+                    CustomSqlHelper.CreateInputParameter("Extended", SqlDbType.Int, null, false, extended)))
+            {
+                using (CustomSqlHelper<ImportRecordReview> helper = new CustomSqlHelper<ImportRecordReview>())
+                {
+                    List<ImportRecordReview> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        public List<ImportRecordReview> ImportRecordSelectForReviewByImportRecordID(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int importRecordID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordSelectForReviewByImportRecordID", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("ImportRecordID", SqlDbType.Int, null, false, importRecordID)))
+            {
+                using (CustomSqlHelper<ImportRecordReview> helper = new CustomSqlHelper<ImportRecordReview>())
+                {
+                    List<ImportRecordReview> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -72,6 +112,16 @@ namespace MOBOT.BHL.DAL
                     }
                 }
 
+                if (citation.Contributors.Count > 0)
+                {
+                    ImportRecordContributorDAL importRecordContributorDAL = new ImportRecordContributorDAL();
+                    foreach(ImportRecordContributor contributor in citation.Contributors)
+                    {
+                        if (contributor.ImportRecordID == 0) contributor.ImportRecordID = updatedCitation.ReturnObject.ImportRecordID;
+                        importRecordContributorDAL.ImportRecordContributorManageAuto(sqlConnection, sqlTransaction, contributor, userID);
+                    }
+                }
+
                 if (citation.Pages.Count > 0)
                 {
                     ImportRecordPageDAL importRecordPageDAL = new ImportRecordPageDAL();
@@ -89,6 +139,16 @@ namespace MOBOT.BHL.DAL
                     {
                         if (error.ImportRecordID == 0) error.ImportRecordID = updatedCitation.ReturnObject.ImportRecordID;
                         importRecordErrorLogDAL.ImportRecordErrorLogManageAuto(sqlConnection, sqlTransaction, error, userID);
+                    }
+                }
+
+                if (citation.Warnings.Count > 0)
+                {
+                    ImportRecordErrorLogDAL importRecordErrorLogDAL = new ImportRecordErrorLogDAL();
+                    foreach (ImportRecordErrorLog warning in citation.Warnings)
+                    {
+                        if (warning.ImportRecordID == 0) warning.ImportRecordID = updatedCitation.ReturnObject.ImportRecordID;
+                        importRecordErrorLogDAL.ImportRecordErrorLogManageAuto(sqlConnection, sqlTransaction, warning, userID);
                     }
                 }
 

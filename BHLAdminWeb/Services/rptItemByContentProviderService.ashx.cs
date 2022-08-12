@@ -40,7 +40,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             sortOrder = String.IsNullOrEmpty(sortOrder) ? "asc" : sortOrder;
             sortOrder = (!(sortOrder.ToLower() == "asc") && !(sortOrder.ToLower() == "desc")) ? "asc" : sortOrder;
 
-            List<Item> searchResult = ItemSelectByInstitutionAndRole(institutionCode,
+            List<Book> searchResult = ItemSelectByInstitutionAndRole(institutionCode,
                 Convert.ToInt32(roleId), barcode, Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, sortOrder);
 
             string xmlResponse = GetItemXmlResponse(searchResult, Convert.ToInt32(pageNum), Convert.ToInt32(numRows));
@@ -60,16 +60,16 @@ namespace MOBOT.BHL.AdminWeb.Services
         /// <param name="sortColumn"></param>
         /// <param name="sortOrder"></param>
         /// <returns></returns>
-        private List<Item> ItemSelectByInstitutionAndRole(string institutionCode,
+        private List<Book> ItemSelectByInstitutionAndRole(string institutionCode,
             int roleID, string barcode, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
-            List<Item> items = new List<Item>();
+            List<Book> items = new List<Book>();
             BHLProvider service = null;
 
             try
             {
                 service = new BHLProvider();
-                items = service.ItemSelectByInstitutionAndRole(institutionCode, roleID, barcode, numRows, pageNum, sortColumn, sortOrder);
+                items = service.BookSelectByInstitutionAndRole(institutionCode, roleID, barcode, numRows, pageNum, sortColumn, sortOrder);
             }
             catch
             {
@@ -79,7 +79,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             return items;
         }
 
-        private string GetItemXmlResponse(List<Item> searchResult, int pageNum, int numRows)
+        private string GetItemXmlResponse(List<Book> searchResult, int pageNum, int numRows)
         {
             StringBuilder response = new StringBuilder(); ;
 
@@ -100,12 +100,12 @@ namespace MOBOT.BHL.AdminWeb.Services
                 for (int x = 0; x < searchResult.Count; x++)
                 {
                     response.Append("<row id='" + searchResult[x].ItemID.ToString() + "'>");
-                    response.Append("<cell> <![CDATA[<a title=\"Info\" target=\"_blank\" href=\"/ItemEdit.aspx/?id=" + searchResult[x].ItemID.ToString() + "\">" + searchResult[x].ItemID.ToString() + "</a>]]> </cell>");
+                    response.Append("<cell> <![CDATA[<a title=\"Info\" target=\"_blank\" href=\"/ItemEdit.aspx/?id=" + searchResult[x].BookID.ToString() + "\">" + searchResult[x].BookID.ToString() + "</a>]]> </cell>");
                     response.Append("<cell> <![CDATA[<a title=\"Info\" rel=\"noopener noreferrer\" target=\"_blank\" href=\"https://www.archive.org/details/" + searchResult[x].BarCode + "\">" + searchResult[x].BarCode + "</a>]]> </cell>");
                     response.Append("<cell> " + searchResult[x].PrimaryTitleID.ToString() + " </cell>");
                     response.Append("<cell> " + SecurityElement.Escape(searchResult[x].TitleName) + " </cell>");
                     response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Volume) + " </cell>");
-                    response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Year) + " </cell>");
+                    response.Append("<cell> " + SecurityElement.Escape(searchResult[x].StartYear) + " </cell>");
                     //response.Append("<cell> " + SecurityElement.Escape(searchResult[x].AuthorListString) + " </cell>");
 
                     response.Append("<cell> ");

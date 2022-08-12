@@ -10,84 +10,83 @@
 
 <div class="citeImport" style="width:100%">
 
-@using (Html.BeginForm(null, null, FormMethod.Post))
-{
-
-    @Html.HiddenFor(m => m.Contributor)
-    @Html.HiddenFor(m => m.DataSourceType)
-    @Html.HiddenFor(m => m.Genre)
-    @Html.HiddenFor(m => m.GenreName)
-    @Html.HiddenFor(m => m.FilePath)
-    @Html.HiddenFor(m => m.FileName)
-    @Html.HiddenFor(m => m.CodePage)
-    @Html.HiddenFor(m => m.ColumnDelimiter)
-    @Html.HiddenFor(m => m.ColumnNamesInFirstRow)
-    @Html.HiddenFor(m => m.HeaderRowsToSkip)
-    @Html.HiddenFor(m => m.RowDelimiter)
-    @Html.HiddenFor(m => m.TextQualifier)
-
-    <p>Preview a sample of the data being imported.  Clicking "Next" will copy the data from the file into a temporary space in the database.  From there, you will be able to review ALL of the data before making it "live" in BHL.</p>
-    <div style="margin:10px 0px">Data Source: @Html.DisplayFor(m => m.FileNameClean)</div>
-    <div style="margin:10px 0px">Type: @Html.DisplayFor(m => m.GenreName)</div>
-
-    if (!string.IsNullOrWhiteSpace(Model.ImportFileError))
+    @using (Html.BeginForm(null, null, FormMethod.Post))
     {
-        <div class="ErrorText">@Html.DisplayFor(m => m.ImportFileError)</div>
-    }
-    else
-    {
-        <div style="width: 100%; height: 500px; overflow: auto; position: relative;">
-        <table>
-            <thead>
-                <tr>
-                    @for (int x = 0; x < Model.Columns.Count; x++)
-                    {
-                        if (Model.Columns[x].MappedColumn != null)
-                        {
-                            <th style="min-width:120px">@Html.DisplayTextFor(m => m.Columns[x].MappedColumn) @Html.HiddenFor(m => m.Columns[x].Position) @Html.HiddenFor(m => m.Columns[x].ColumnName) @Html.HiddenFor(m => m.Columns[x].MappedColumn) @Html.HiddenFor(m => m.Columns[x].ValueDelimiter)</th>
-                        }
-                        else
-                        {
-                            @Html.HiddenFor(m => m.Columns[x].Position) @Html.HiddenFor(m => m.Columns[x].ColumnName) @Html.HiddenFor(m => m.Columns[x].MappedColumn) @Html.HiddenFor(m => m.Columns[x].ValueDelimiter)                        
-                        }
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @for (int x = 0; x < Model.Rows.Count; x++)
-                {
-                    <tr class="@((x % 2 > 0) ? "evenrow" : "oddrow")" >
-                    @for (int y = 0; y < Model.Rows[x].Count; y++)
-                    {
-                        if (Model.Columns[y].MappedColumn != null)
-                        {
-                            if (!string.IsNullOrWhiteSpace(Model.Columns[y].ValueDelimiter))
-                            {
-                                <td white-space: nowrap">@Html.Raw(@Model.Rows[x][y].Replace(Model.Columns[y].ValueDelimiter, "<br/>"))</td>
-                            }
-                            else
-                            {
-                                <td>@Html.Raw(@Model.Rows[x][y])</td>
-                            }
-                        }
-                    }
-                    </tr>
-                }
-            </tbody>
-        </table>
-        </div>
-    }
 
-    <div style="margin:10px 0px">
-        @if (string.IsNullOrWhiteSpace(Model.ImportFileError))
+        @Html.HiddenFor(m => m.DataSourceType)
+        @Html.HiddenFor(m => m.Genre)
+        @Html.HiddenFor(m => m.GenreName)
+        @Html.HiddenFor(m => m.FilePath)
+        @Html.HiddenFor(m => m.FileName)
+        @Html.HiddenFor(m => m.CodePage)
+        @Html.HiddenFor(m => m.ColumnDelimiter)
+        @Html.HiddenFor(m => m.ColumnNamesInFirstRow)
+        @Html.HiddenFor(m => m.HeaderRowsToSkip)
+        @Html.HiddenFor(m => m.RowDelimiter)
+        @Html.HiddenFor(m => m.TextQualifier)
+
+        <p>Preview a sample of the data being imported.  Clicking "Next" will copy the data from the file into a temporary space in the database.  From there, you will be able to review ALL of the data before making it "live" in BHL.</p>
+        <div style="margin:10px 0px">Data Source: @Html.DisplayFor(m => m.FileNameClean)</div>
+        <div style="margin:10px 0px">Type: @Html.DisplayFor(m => m.GenreName)</div>
+
+        if (!string.IsNullOrWhiteSpace(Model.ImportFileError))
         {
-        <input class="formButton" type="submit" name="btnBack" id="btnBack" value="< Back" />
-        <input class="formButton" type="submit" name="btnNext" id="btnNext" value="Next >" />
+            <div class="ErrorText">@Html.DisplayFor(m => m.ImportFileError)</div>
         }
-        <input class="formButton" type="button" name="btnCancel" id="btnCancel" value="Cancel" />
-    </div>
+        else
+        {
+            <div style="width: 100%; height: 500px; overflow: auto; position: relative;">
+                <table>
+                    <thead>
+                        <tr>
+                            @for (int x = 0; x < Model.Columns.Count; x++)
+                            {
+                                if (Model.Columns[x].MappedColumn != null)
+                                {
+                                    <th style="min-width:120px">@Html.DisplayTextFor(m => m.Columns[x].MappedColumn) @Html.HiddenFor(m => m.Columns[x].Position) @Html.HiddenFor(m => m.Columns[x].ColumnName) @Html.HiddenFor(m => m.Columns[x].MappedColumn) @Html.HiddenFor(m => m.Columns[x].ValueDelimiter)</th>
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(m => m.Columns[x].Position) @Html.HiddenFor(m => m.Columns[x].ColumnName) @Html.HiddenFor(m => m.Columns[x].MappedColumn) @Html.HiddenFor(m => m.Columns[x].ValueDelimiter)
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int x = 0; x < Model.Rows.Count; x++)
+                        {
+                            <tr class="@((x % 2 > 0) ? "evenrow" : "oddrow")">
+                                @for (int y = 0; y < Model.Rows[x].Count; y++)
+                                {
+                                    if (Model.Columns[y].MappedColumn != null)
+                                    {
+                                        if (!string.IsNullOrWhiteSpace(Model.Columns[y].ValueDelimiter))
+                                        {
+                                            <td white-space: nowrap">@Html.Raw(@Model.Rows[x][y].Replace(Model.Columns[y].ValueDelimiter, "<br/>"))</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@Html.Raw(@Model.Rows[x][y])</td>
+                                        }
+                                    }
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
 
-}
+        <div style="margin:10px 0px">
+            @if (string.IsNullOrWhiteSpace(Model.ImportFileError))
+            {
+                <input class="formButton" type="submit" name="btnBack" id="btnBack" value="< Back" />
+                <input class="formButton" type="submit" name="btnNext" id="btnNext" value="Next >" />
+            }
+            <input class="formButton" type="button" name="btnCancel" id="btnCancel" value="Cancel" />
+        </div>
+
+    }
 
 </div>
 
@@ -96,6 +95,14 @@
     
 <script type="text/javascript">
     $(document).ready(function () {
+
+        $("#btnNext").click(function (event) {
+            if (@Model.NumRows >= 50) {
+                if (!confirm("You are about to import @Model.NumRows segments.  Click OK to proceed.")) {
+                    event.preventDefault();
+                }
+            }
+        });
 
         $("#btnCancel").click(function () {
             window.location.href = "/";

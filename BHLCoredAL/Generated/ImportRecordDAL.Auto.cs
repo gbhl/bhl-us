@@ -1,5 +1,5 @@
 
-// Generated 11/7/2017 10:02:12 AM
+// Generated 7/13/2021 2:42:30 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class ImportRecordDAL is based upon import.ImportRecord.
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ImportRecord> helper = new CustomSqlHelper<ImportRecord>())
 				{
-					CustomGenericList<ImportRecord> list = helper.ExecuteReader(command);
+					List<ImportRecord> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ImportRecord o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="importRecordID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ImportRecordSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ImportRecordSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int importRecordID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="importRecordID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ImportRecordSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ImportRecordSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -138,6 +139,9 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="importFileID"></param>
 		/// <param name="importRecordStatusID"></param>
+		/// <param name="titleID"></param>
+		/// <param name="itemID"></param>
+		/// <param name="segmentID"></param>
 		/// <param name="genre"></param>
 		/// <param name="title"></param>
 		/// <param name="translatedTitle"></param>
@@ -162,7 +166,9 @@ namespace MOBOT.BHL.DAL
 		/// <param name="licenseUrl"></param>
 		/// <param name="pageRange"></param>
 		/// <param name="startPage"></param>
+		/// <param name="startPageID"></param>
 		/// <param name="endPage"></param>
+		/// <param name="endPageID"></param>
 		/// <param name="url"></param>
 		/// <param name="downloadUrl"></param>
 		/// <param name="dOI"></param>
@@ -172,17 +178,21 @@ namespace MOBOT.BHL.DAL
 		/// <param name="lCCN"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="titleID"></param>
-		/// <param name="itemID"></param>
-		/// <param name="startPageID"></param>
-		/// <param name="endPageID"></param>
-		/// <param name="segmentID"></param>
+		/// <param name="importSegmentID"></param>
+		/// <param name="aRK"></param>
+		/// <param name="biostor"></param>
+		/// <param name="jSTOR"></param>
+		/// <param name="tL2"></param>
+		/// <param name="wikidata"></param>
 		/// <returns>Object of type ImportRecord.</returns>
 		public ImportRecord ImportRecordInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int importFileID,
 			int importRecordStatusID,
+			int? titleID,
+			int? itemID,
+			int? segmentID,
 			string genre,
 			string title,
 			string translatedTitle,
@@ -207,7 +217,9 @@ namespace MOBOT.BHL.DAL
 			string licenseUrl,
 			string pageRange,
 			string startPage,
+			int? startPageID,
 			string endPage,
+			int? endPageID,
 			string url,
 			string downloadUrl,
 			string dOI,
@@ -217,13 +229,14 @@ namespace MOBOT.BHL.DAL
 			string lCCN,
 			int creationUserID,
 			int lastModifiedUserID,
-			int? titleID,
-			int? itemID,
-			int? startPageID,
-			int? endPageID,
-			int? segmentID)
+			int? importSegmentID,
+			string aRK,
+			string biostor,
+			string jSTOR,
+			string tL2,
+			string wikidata)
 		{
-			return ImportRecordInsertAuto( sqlConnection, sqlTransaction, "BHL", importFileID, importRecordStatusID, genre, title, translatedTitle, journalTitle, volume, series, issue, edition, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, summary, notes, rights, dueDiligence, copyrightStatus, license, licenseUrl, pageRange, startPage, endPage, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, creationUserID, lastModifiedUserID, titleID, itemID, startPageID, endPageID, segmentID );
+			return ImportRecordInsertAuto( sqlConnection, sqlTransaction, "BHL", importFileID, importRecordStatusID, titleID, itemID, segmentID, genre, title, translatedTitle, journalTitle, volume, series, issue, edition, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, summary, notes, rights, dueDiligence, copyrightStatus, license, licenseUrl, pageRange, startPage, startPageID, endPage, endPageID, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, creationUserID, lastModifiedUserID, importSegmentID, aRK, biostor, jSTOR, tL2, wikidata );
 		}
 		
 		/// <summary>
@@ -234,6 +247,9 @@ namespace MOBOT.BHL.DAL
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="importFileID"></param>
 		/// <param name="importRecordStatusID"></param>
+		/// <param name="titleID"></param>
+		/// <param name="itemID"></param>
+		/// <param name="segmentID"></param>
 		/// <param name="genre"></param>
 		/// <param name="title"></param>
 		/// <param name="translatedTitle"></param>
@@ -258,7 +274,9 @@ namespace MOBOT.BHL.DAL
 		/// <param name="licenseUrl"></param>
 		/// <param name="pageRange"></param>
 		/// <param name="startPage"></param>
+		/// <param name="startPageID"></param>
 		/// <param name="endPage"></param>
+		/// <param name="endPageID"></param>
 		/// <param name="url"></param>
 		/// <param name="downloadUrl"></param>
 		/// <param name="dOI"></param>
@@ -268,11 +286,12 @@ namespace MOBOT.BHL.DAL
 		/// <param name="lCCN"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="titleID"></param>
-		/// <param name="itemID"></param>
-		/// <param name="startPageID"></param>
-		/// <param name="endPageID"></param>
-		/// <param name="segmentID"></param>
+		/// <param name="importSegmentID"></param>
+		/// <param name="aRK"></param>
+		/// <param name="biostor"></param>
+		/// <param name="jSTOR"></param>
+		/// <param name="tL2"></param>
+		/// <param name="wikidata"></param>
 		/// <returns>Object of type ImportRecord.</returns>
 		public ImportRecord ImportRecordInsertAuto(
 			SqlConnection sqlConnection, 
@@ -280,6 +299,9 @@ namespace MOBOT.BHL.DAL
 			string connectionKeyName,
 			int importFileID,
 			int importRecordStatusID,
+			int? titleID,
+			int? itemID,
+			int? segmentID,
 			string genre,
 			string title,
 			string translatedTitle,
@@ -304,7 +326,9 @@ namespace MOBOT.BHL.DAL
 			string licenseUrl,
 			string pageRange,
 			string startPage,
+			int? startPageID,
 			string endPage,
+			int? endPageID,
 			string url,
 			string downloadUrl,
 			string dOI,
@@ -314,11 +338,12 @@ namespace MOBOT.BHL.DAL
 			string lCCN,
 			int creationUserID,
 			int lastModifiedUserID,
-			int? titleID,
-			int? itemID,
-			int? startPageID,
-			int? endPageID,
-			int? segmentID)
+			int? importSegmentID,
+			string aRK,
+			string biostor,
+			string jSTOR,
+			string tL2,
+			string wikidata)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -327,6 +352,9 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateOutputParameter("ImportRecordID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("ImportFileID", SqlDbType.Int, null, false, importFileID),
 					CustomSqlHelper.CreateInputParameter("ImportRecordStatusID", SqlDbType.Int, null, false, importRecordStatusID),
+					CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, true, titleID),
+					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
+					CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, true, segmentID),
 					CustomSqlHelper.CreateInputParameter("Genre", SqlDbType.NVarChar, 50, false, genre),
 					CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title),
 					CustomSqlHelper.CreateInputParameter("TranslatedTitle", SqlDbType.NVarChar, 2000, false, translatedTitle),
@@ -351,7 +379,9 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("LicenseUrl", SqlDbType.NVarChar, 200, false, licenseUrl),
 					CustomSqlHelper.CreateInputParameter("PageRange", SqlDbType.NVarChar, 50, false, pageRange),
 					CustomSqlHelper.CreateInputParameter("StartPage", SqlDbType.NVarChar, 20, false, startPage),
+					CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, true, startPageID),
 					CustomSqlHelper.CreateInputParameter("EndPage", SqlDbType.NVarChar, 20, false, endPage),
+					CustomSqlHelper.CreateInputParameter("EndPageID", SqlDbType.Int, null, true, endPageID),
 					CustomSqlHelper.CreateInputParameter("Url", SqlDbType.NVarChar, 200, false, url),
 					CustomSqlHelper.CreateInputParameter("DownloadUrl", SqlDbType.NVarChar, 200, false, downloadUrl),
 					CustomSqlHelper.CreateInputParameter("DOI", SqlDbType.NVarChar, 125, false, dOI),
@@ -361,16 +391,17 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("LCCN", SqlDbType.NVarChar, 125, false, lCCN),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, false, creationUserID),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
-					CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, true, titleID),
-					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
-					CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, true, startPageID),
-					CustomSqlHelper.CreateInputParameter("EndPageID", SqlDbType.Int, null, true, endPageID),
-					CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, true, segmentID), 
+					CustomSqlHelper.CreateInputParameter("ImportSegmentID", SqlDbType.Int, null, true, importSegmentID),
+					CustomSqlHelper.CreateInputParameter("ARK", SqlDbType.NVarChar, 125, false, aRK),
+					CustomSqlHelper.CreateInputParameter("Biostor", SqlDbType.NVarChar, 125, false, biostor),
+					CustomSqlHelper.CreateInputParameter("JSTOR", SqlDbType.NVarChar, 125, false, jSTOR),
+					CustomSqlHelper.CreateInputParameter("TL2", SqlDbType.NVarChar, 125, false, tL2),
+					CustomSqlHelper.CreateInputParameter("Wikidata", SqlDbType.NVarChar, 125, false, wikidata), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<ImportRecord> helper = new CustomSqlHelper<ImportRecord>())
 				{
-					CustomGenericList<ImportRecord> list = helper.ExecuteReader(command);
+					List<ImportRecord> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ImportRecord o = list[0];
@@ -417,6 +448,9 @@ namespace MOBOT.BHL.DAL
 			return ImportRecordInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.ImportFileID,
 				value.ImportRecordStatusID,
+				value.TitleID,
+				value.ItemID,
+				value.SegmentID,
 				value.Genre,
 				value.Title,
 				value.TranslatedTitle,
@@ -441,7 +475,9 @@ namespace MOBOT.BHL.DAL
 				value.LicenseUrl,
 				value.PageRange,
 				value.StartPage,
+				value.StartPageID,
 				value.EndPage,
+				value.EndPageID,
 				value.Url,
 				value.DownloadUrl,
 				value.DOI,
@@ -451,11 +487,12 @@ namespace MOBOT.BHL.DAL
 				value.LCCN,
 				value.CreationUserID,
 				value.LastModifiedUserID,
-				value.TitleID,
-				value.ItemID,
-				value.StartPageID,
-				value.EndPageID,
-				value.SegmentID);
+				value.ImportSegmentID,
+				value.ARK,
+				value.Biostor,
+				value.JSTOR,
+				value.TL2,
+				value.Wikidata);
 		}
 		
 		#endregion ===== INSERT =====
@@ -528,6 +565,9 @@ namespace MOBOT.BHL.DAL
 		/// <param name="importRecordID"></param>
 		/// <param name="importFileID"></param>
 		/// <param name="importRecordStatusID"></param>
+		/// <param name="titleID"></param>
+		/// <param name="itemID"></param>
+		/// <param name="segmentID"></param>
 		/// <param name="genre"></param>
 		/// <param name="title"></param>
 		/// <param name="translatedTitle"></param>
@@ -552,7 +592,9 @@ namespace MOBOT.BHL.DAL
 		/// <param name="licenseUrl"></param>
 		/// <param name="pageRange"></param>
 		/// <param name="startPage"></param>
+		/// <param name="startPageID"></param>
 		/// <param name="endPage"></param>
+		/// <param name="endPageID"></param>
 		/// <param name="url"></param>
 		/// <param name="downloadUrl"></param>
 		/// <param name="dOI"></param>
@@ -561,11 +603,12 @@ namespace MOBOT.BHL.DAL
 		/// <param name="oCLC"></param>
 		/// <param name="lCCN"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="titleID"></param>
-		/// <param name="itemID"></param>
-		/// <param name="startPageID"></param>
-		/// <param name="endPageID"></param>
-		/// <param name="segmentID"></param>
+		/// <param name="importSegmentID"></param>
+		/// <param name="aRK"></param>
+		/// <param name="biostor"></param>
+		/// <param name="jSTOR"></param>
+		/// <param name="tL2"></param>
+		/// <param name="wikidata"></param>
 		/// <returns>Object of type ImportRecord.</returns>
 		public ImportRecord ImportRecordUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -573,6 +616,9 @@ namespace MOBOT.BHL.DAL
 			int importRecordID,
 			int importFileID,
 			int importRecordStatusID,
+			int? titleID,
+			int? itemID,
+			int? segmentID,
 			string genre,
 			string title,
 			string translatedTitle,
@@ -597,7 +643,9 @@ namespace MOBOT.BHL.DAL
 			string licenseUrl,
 			string pageRange,
 			string startPage,
+			int? startPageID,
 			string endPage,
+			int? endPageID,
 			string url,
 			string downloadUrl,
 			string dOI,
@@ -606,13 +654,14 @@ namespace MOBOT.BHL.DAL
 			string oCLC,
 			string lCCN,
 			int lastModifiedUserID,
-			int? titleID,
-			int? itemID,
-			int? startPageID,
-			int? endPageID,
-			int? segmentID)
+			int? importSegmentID,
+			string aRK,
+			string biostor,
+			string jSTOR,
+			string tL2,
+			string wikidata)
 		{
-			return ImportRecordUpdateAuto( sqlConnection, sqlTransaction, "BHL", importRecordID, importFileID, importRecordStatusID, genre, title, translatedTitle, journalTitle, volume, series, issue, edition, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, summary, notes, rights, dueDiligence, copyrightStatus, license, licenseUrl, pageRange, startPage, endPage, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, lastModifiedUserID, titleID, itemID, startPageID, endPageID, segmentID);
+			return ImportRecordUpdateAuto( sqlConnection, sqlTransaction, "BHL", importRecordID, importFileID, importRecordStatusID, titleID, itemID, segmentID, genre, title, translatedTitle, journalTitle, volume, series, issue, edition, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, summary, notes, rights, dueDiligence, copyrightStatus, license, licenseUrl, pageRange, startPage, startPageID, endPage, endPageID, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, lastModifiedUserID, importSegmentID, aRK, biostor, jSTOR, tL2, wikidata);
 		}
 		
 		/// <summary>
@@ -624,6 +673,9 @@ namespace MOBOT.BHL.DAL
 		/// <param name="importRecordID"></param>
 		/// <param name="importFileID"></param>
 		/// <param name="importRecordStatusID"></param>
+		/// <param name="titleID"></param>
+		/// <param name="itemID"></param>
+		/// <param name="segmentID"></param>
 		/// <param name="genre"></param>
 		/// <param name="title"></param>
 		/// <param name="translatedTitle"></param>
@@ -648,7 +700,9 @@ namespace MOBOT.BHL.DAL
 		/// <param name="licenseUrl"></param>
 		/// <param name="pageRange"></param>
 		/// <param name="startPage"></param>
+		/// <param name="startPageID"></param>
 		/// <param name="endPage"></param>
+		/// <param name="endPageID"></param>
 		/// <param name="url"></param>
 		/// <param name="downloadUrl"></param>
 		/// <param name="dOI"></param>
@@ -657,11 +711,12 @@ namespace MOBOT.BHL.DAL
 		/// <param name="oCLC"></param>
 		/// <param name="lCCN"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="titleID"></param>
-		/// <param name="itemID"></param>
-		/// <param name="startPageID"></param>
-		/// <param name="endPageID"></param>
-		/// <param name="segmentID"></param>
+		/// <param name="importSegmentID"></param>
+		/// <param name="aRK"></param>
+		/// <param name="biostor"></param>
+		/// <param name="jSTOR"></param>
+		/// <param name="tL2"></param>
+		/// <param name="wikidata"></param>
 		/// <returns>Object of type ImportRecord.</returns>
 		public ImportRecord ImportRecordUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -670,6 +725,9 @@ namespace MOBOT.BHL.DAL
 			int importRecordID,
 			int importFileID,
 			int importRecordStatusID,
+			int? titleID,
+			int? itemID,
+			int? segmentID,
 			string genre,
 			string title,
 			string translatedTitle,
@@ -694,7 +752,9 @@ namespace MOBOT.BHL.DAL
 			string licenseUrl,
 			string pageRange,
 			string startPage,
+			int? startPageID,
 			string endPage,
+			int? endPageID,
 			string url,
 			string downloadUrl,
 			string dOI,
@@ -703,11 +763,12 @@ namespace MOBOT.BHL.DAL
 			string oCLC,
 			string lCCN,
 			int lastModifiedUserID,
-			int? titleID,
-			int? itemID,
-			int? startPageID,
-			int? endPageID,
-			int? segmentID)
+			int? importSegmentID,
+			string aRK,
+			string biostor,
+			string jSTOR,
+			string tL2,
+			string wikidata)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -716,6 +777,9 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateInputParameter("ImportRecordID", SqlDbType.Int, null, false, importRecordID),
 					CustomSqlHelper.CreateInputParameter("ImportFileID", SqlDbType.Int, null, false, importFileID),
 					CustomSqlHelper.CreateInputParameter("ImportRecordStatusID", SqlDbType.Int, null, false, importRecordStatusID),
+					CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, true, titleID),
+					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
+					CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, true, segmentID),
 					CustomSqlHelper.CreateInputParameter("Genre", SqlDbType.NVarChar, 50, false, genre),
 					CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title),
 					CustomSqlHelper.CreateInputParameter("TranslatedTitle", SqlDbType.NVarChar, 2000, false, translatedTitle),
@@ -740,7 +804,9 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("LicenseUrl", SqlDbType.NVarChar, 200, false, licenseUrl),
 					CustomSqlHelper.CreateInputParameter("PageRange", SqlDbType.NVarChar, 50, false, pageRange),
 					CustomSqlHelper.CreateInputParameter("StartPage", SqlDbType.NVarChar, 20, false, startPage),
+					CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, true, startPageID),
 					CustomSqlHelper.CreateInputParameter("EndPage", SqlDbType.NVarChar, 20, false, endPage),
+					CustomSqlHelper.CreateInputParameter("EndPageID", SqlDbType.Int, null, true, endPageID),
 					CustomSqlHelper.CreateInputParameter("Url", SqlDbType.NVarChar, 200, false, url),
 					CustomSqlHelper.CreateInputParameter("DownloadUrl", SqlDbType.NVarChar, 200, false, downloadUrl),
 					CustomSqlHelper.CreateInputParameter("DOI", SqlDbType.NVarChar, 125, false, dOI),
@@ -749,16 +815,17 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("OCLC", SqlDbType.NVarChar, 125, false, oCLC),
 					CustomSqlHelper.CreateInputParameter("LCCN", SqlDbType.NVarChar, 125, false, lCCN),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
-					CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, true, titleID),
-					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
-					CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, true, startPageID),
-					CustomSqlHelper.CreateInputParameter("EndPageID", SqlDbType.Int, null, true, endPageID),
-					CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, true, segmentID), 
+					CustomSqlHelper.CreateInputParameter("ImportSegmentID", SqlDbType.Int, null, true, importSegmentID),
+					CustomSqlHelper.CreateInputParameter("ARK", SqlDbType.NVarChar, 125, false, aRK),
+					CustomSqlHelper.CreateInputParameter("Biostor", SqlDbType.NVarChar, 125, false, biostor),
+					CustomSqlHelper.CreateInputParameter("JSTOR", SqlDbType.NVarChar, 125, false, jSTOR),
+					CustomSqlHelper.CreateInputParameter("TL2", SqlDbType.NVarChar, 125, false, tL2),
+					CustomSqlHelper.CreateInputParameter("Wikidata", SqlDbType.NVarChar, 125, false, wikidata), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<ImportRecord> helper = new CustomSqlHelper<ImportRecord>())
 				{
-					CustomGenericList<ImportRecord> list = helper.ExecuteReader(command);
+					List<ImportRecord> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ImportRecord o = list[0];
@@ -806,6 +873,9 @@ namespace MOBOT.BHL.DAL
 				value.ImportRecordID,
 				value.ImportFileID,
 				value.ImportRecordStatusID,
+				value.TitleID,
+				value.ItemID,
+				value.SegmentID,
 				value.Genre,
 				value.Title,
 				value.TranslatedTitle,
@@ -830,7 +900,9 @@ namespace MOBOT.BHL.DAL
 				value.LicenseUrl,
 				value.PageRange,
 				value.StartPage,
+				value.StartPageID,
 				value.EndPage,
+				value.EndPageID,
 				value.Url,
 				value.DownloadUrl,
 				value.DOI,
@@ -839,11 +911,12 @@ namespace MOBOT.BHL.DAL
 				value.OCLC,
 				value.LCCN,
 				value.LastModifiedUserID,
-				value.TitleID,
-				value.ItemID,
-				value.StartPageID,
-				value.EndPageID,
-				value.SegmentID);
+				value.ImportSegmentID,
+				value.ARK,
+				value.Biostor,
+				value.JSTOR,
+				value.TL2,
+				value.Wikidata);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -890,6 +963,9 @@ namespace MOBOT.BHL.DAL
 				ImportRecord returnValue = ImportRecordInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.ImportFileID,
 						value.ImportRecordStatusID,
+						value.TitleID,
+						value.ItemID,
+						value.SegmentID,
 						value.Genre,
 						value.Title,
 						value.TranslatedTitle,
@@ -914,7 +990,9 @@ namespace MOBOT.BHL.DAL
 						value.LicenseUrl,
 						value.PageRange,
 						value.StartPage,
+						value.StartPageID,
 						value.EndPage,
+						value.EndPageID,
 						value.Url,
 						value.DownloadUrl,
 						value.DOI,
@@ -924,11 +1002,12 @@ namespace MOBOT.BHL.DAL
 						value.LCCN,
 						value.CreationUserID,
 						value.LastModifiedUserID,
-						value.TitleID,
-						value.ItemID,
-						value.StartPageID,
-						value.EndPageID,
-						value.SegmentID);
+						value.ImportSegmentID,
+						value.ARK,
+						value.Biostor,
+						value.JSTOR,
+						value.TL2,
+						value.Wikidata);
 				
 				return new CustomDataAccessStatus<ImportRecord>(
 					CustomDataAccessContext.Insert, 
@@ -957,6 +1036,9 @@ namespace MOBOT.BHL.DAL
 					value.ImportRecordID,
 						value.ImportFileID,
 						value.ImportRecordStatusID,
+						value.TitleID,
+						value.ItemID,
+						value.SegmentID,
 						value.Genre,
 						value.Title,
 						value.TranslatedTitle,
@@ -981,7 +1063,9 @@ namespace MOBOT.BHL.DAL
 						value.LicenseUrl,
 						value.PageRange,
 						value.StartPage,
+						value.StartPageID,
 						value.EndPage,
+						value.EndPageID,
 						value.Url,
 						value.DownloadUrl,
 						value.DOI,
@@ -990,11 +1074,12 @@ namespace MOBOT.BHL.DAL
 						value.OCLC,
 						value.LCCN,
 						value.LastModifiedUserID,
-						value.TitleID,
-						value.ItemID,
-						value.StartPageID,
-						value.EndPageID,
-						value.SegmentID);
+						value.ImportSegmentID,
+						value.ARK,
+						value.Biostor,
+						value.JSTOR,
+						value.TL2,
+						value.Wikidata);
 					
 				return new CustomDataAccessStatus<ImportRecord>(
 					CustomDataAccessContext.Update, 

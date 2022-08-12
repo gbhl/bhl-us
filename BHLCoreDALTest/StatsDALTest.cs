@@ -1,13 +1,12 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for StatsDALTest and is intended
     ///to contain all StatsDALTest Unit Tests
@@ -73,23 +72,17 @@ namespace BHLCoreDALTest
         [DeploymentItem("BHLCoreDAL.dll")]
         public void StatsSelectTest()
         {
-            StatsDAL_Accessor target = new StatsDAL_Accessor();
+            StatsDAL target = new StatsDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            bool expanded = false; // TODO: Initialize to an appropriate value
-            bool names = true;
-            bool uniqueNames = false;
-            bool verifiedNames = false; // TODO: Initialize to an appropriate value
-            bool eolNames = false;
-            bool eolPages = false;
-            Stats actual = target.StatsSelect(sqlConnection, sqlTransaction, expanded, names, uniqueNames, verifiedNames, eolNames, eolPages);
+            Stats actual = target.StatsSelect(sqlConnection, sqlTransaction);
             Assert.IsTrue(actual.NameCount > 0);
         }
 
         [TestMethod()]
         public void StatsSelectForInstitutionTest()
         {
-            StatsDAL_Accessor target = new StatsDAL_Accessor();
+            StatsDAL target = new StatsDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string institutionCode = "MBLWHOI";

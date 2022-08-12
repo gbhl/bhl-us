@@ -15,6 +15,15 @@ namespace MOBOT.BHL.AdminWeb
     {
 
         /// <summary>
+        /// hidObjectType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hidObjectType;
+
+        /// <summary>
         /// errorControl control.
         /// </summary>
         /// <remarks>
@@ -22,6 +31,15 @@ namespace MOBOT.BHL.AdminWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.AdminWeb.ErrorControl errorControl;
+
+        /// <summary>
+        /// titleLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label titleLabel;
 
         /// <summary>
         /// litTitle control.
@@ -33,6 +51,15 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.Literal litTitle;
 
         /// <summary>
+        /// itemLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label itemLabel;
+
+        /// <summary>
         /// itemDropDownList control.
         /// </summary>
         /// <remarks>
@@ -40,42 +67,6 @@ namespace MOBOT.BHL.AdminWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList itemDropDownList;
-
-        /// <summary>
-        /// detailViewRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton detailViewRadio;
-
-        /// <summary>
-        /// thumbnailViewRadio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton thumbnailViewRadio;
-
-        /// <summary>
-        /// thumbnailImg control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage thumbnailImg;
-
-        /// <summary>
-        /// thumbnailLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label thumbnailLabel;
 
         /// <summary>
         /// gridPanel control.

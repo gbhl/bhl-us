@@ -1,7 +1,9 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Text;
 using System.Web;
 
@@ -73,65 +75,71 @@ namespace MOBOT.BHL.AdminWeb.Services
         /// <returns></returns>
         private void GetReportCSVString(HttpContext context, List<ImportRecord> searchResult)
         {
-            StringBuilder csvString = new StringBuilder();
-
-            // Start the response content with a UTF-8 Byte Order Mark
-            context.Response.BinaryWrite(Encoding.UTF8.GetPreamble());
-            context.Response.Flush();
-
-            // Write file header
-            csvString.AppendLine("\"Status\",\"Type\",\"Title\",\"Translated Title\",\"Authors\",\"Keywords\",\"Journal\",\"Volume\",\"Series\",\"Issue\",\"Edition\",\"Publication Details\",\"Publisher Name\",\"Publisher Place\",\"Year\",\"Journal Start Year\",\"Journal End Year\",\"Language\",\"Rights\",\"DueDiligence\",\"CopyrightStatus\",\"License\",\"LicenseUrl\",\"PageRange\",\"StartPage\",\"EndPage\",\"Url\",\"DownloadUrl\",\"Article DOI\",\"ISSN\",\"ISBN\",\"OCLC\",\"LCCN\",\"Summary\",\"Notes\",\"ItemID\",\"StartPageID\",\"EndPageID\",\"Errors\"");
-
-            context.Response.Write(csvString.ToString());
-            context.Response.Flush();
-
-            foreach (ImportRecord record in searchResult)
+            var data = new List<dynamic>();
+            foreach (ImportRecord result in searchResult)
             {
-                // Write record
-                csvString.Remove(0, csvString.Length);
-                csvString.Append("\"" + record.StatusName + "\",");
-                csvString.Append("\"" + record.Genre + "\",");
-                csvString.Append("\"" + record.Title.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.TranslatedTitle.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.AuthorString.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.KeywordString.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.JournalTitle.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.Volume.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.Series.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.Issue.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.Edition.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.PublicationDetails.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.PublisherName.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.PublisherPlace.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.Year + "\",");
-                csvString.Append("\"" + (record.StartYear == null ? "" : record.StartYear.ToString()) + "\",");
-                csvString.Append("\"" + (record.EndYear == null ? "" : record.EndYear.ToString()) + "\",");
-                csvString.Append("\"" + record.Language.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.Rights.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.DueDiligence.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.CopyrightStatus.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.License.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.LicenseUrl.Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.PageRange + "\",");
-                csvString.Append("\"" + record.StartPage + "\",");
-                csvString.Append("\"" + record.EndPage + "\",");
-                csvString.Append("\"" + record.Url + "\",");
-                csvString.Append("\"" + record.DownloadUrl + "\",");
-                csvString.Append("\"" + record.DOI + "\",");
-                csvString.Append("\"" + record.ISSN + "\",");
-                csvString.Append("\"" + record.ISBN + "\",");
-                csvString.Append("\"" + record.OCLC + "\",");
-                csvString.Append("\"" + record.LCCN + "\",");
-                csvString.Append("\"" + record.Summary.Replace('\n', ' ').Replace('\r', ' ').Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.Notes.Replace('\n', ' ').Replace('\r', ' ').Replace("\"", "'") + "\",");
-                csvString.Append("\"" + record.ItemID.ToString() + "\",");
-                csvString.Append("\"" + record.StartPageID.ToString() + "\",");
-                csvString.Append("\"" + record.EndPageID.ToString() + "\",");
-                csvString.AppendLine("\"" + record.ErrorString.Replace("\"", "'") + "\",");
+                if (!string.IsNullOrWhiteSpace(result.AuthorString))
+                {
+                    string[] authors = result.AuthorString.Split(new string[] { "+++" }, StringSplitOptions.RemoveEmptyEntries);
+                    List<string> newAuthors = new List<string>();
+                    foreach (string author in authors) newAuthors.Add(author.Split('|')[1]);
+                    result.AuthorString = string.Join("+++", newAuthors.ToArray());
+                }
 
-                context.Response.Write(csvString.ToString());
-                context.Response.Flush();
+                var record = new ExpandoObject() as IDictionary<string, Object>;
+                record.Add("Status", result.StatusName);
+                record.Add("Type", result.Genre);
+                record.Add("ItemID", result.ItemID.ToString());
+                record.Add("SegmentID", result.SegmentID.ToString());
+                record.Add("Title", result.Title);
+                record.Add("Translated Title", result.TranslatedTitle);
+                record.Add("Authors", result.AuthorString);
+                record.Add("Keywords", result.KeywordString);
+                record.Add("Contributors", result.ContributorString);
+                record.Add("Journal", result.JournalTitle);
+                record.Add("Volume", result.Volume);
+                record.Add("Series", result.Series);
+                record.Add("Issue", result.Issue);
+                record.Add("Edition", result.Edition);
+                record.Add("Publication Details", result.PublicationDetails);
+                record.Add("Publisher Name", result.PublisherName);
+                record.Add("Publisher Place", result.PublisherPlace);
+                record.Add("Year", result.Year);
+                record.Add("Journal Start Year", (result.StartYear == null ? "" : result.StartYear.ToString()));
+                record.Add("Journal End Year", (result.EndYear == null ? "" : result.EndYear.ToString()));
+                record.Add("Language", result.Language);
+                record.Add("Rights", result.Rights);
+                record.Add("DueDiligence", result.DueDiligence);
+                record.Add("CopyrightStatus", result.CopyrightStatus);
+                record.Add("License", result.License);
+                record.Add("LicenseUrl", result.LicenseUrl);
+                record.Add("PageRange", result.PageRange);
+                record.Add("StartPage", result.StartPage);
+                record.Add("EndPage", result.EndPage);
+                record.Add("Url", result.Url);
+                record.Add("DownloadUrl", result.DownloadUrl);
+                record.Add("Article DOI", result.DOI);
+                record.Add("ISSN", result.ISSN);
+                record.Add("ISBN", result.ISBN);
+                record.Add("OCLC", result.OCLC);
+                record.Add("LCCN", result.LCCN);
+                record.Add("ARK", result.ARK);
+                record.Add("BioStor", result.Biostor);
+                record.Add("JSTOR", result.JSTOR);
+                record.Add("TL2", result.TL2);
+                record.Add("Wikidata", result.Wikidata);
+                record.Add("Summary", result.Summary);
+                record.Add("Notes", result.Notes);
+                record.Add("Pages", result.PageString);
+                record.Add("Errors", result.ErrorString);
+                record.Add("Warnings", result.WarningString);
+
+                data.Add(record);
             }
+
+            byte[] csvBytes = new CSV().FormatCSVData(data);
+            context.Response.Write(Encoding.UTF8.GetString(csvBytes, 0, csvBytes.Length));
+            context.Response.Flush();
         }
 
         public bool IsReusable

@@ -24,13 +24,13 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.TextBox itemIdTextBox;
 
         /// <summary>
-        /// barCodeTextBox control.
+        /// sourceIDTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox barCodeTextBox;
+        protected global::System.Web.UI.WebControls.TextBox sourceIDTextBox;
 
         /// <summary>
         /// searchButton control.
@@ -78,13 +78,22 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.Image FlickrImage;
 
         /// <summary>
-        /// barcodeLabel control.
+        /// sourceLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label barcodeLabel;
+        protected global::System.Web.UI.WebControls.Label sourceLabel;
+
+        /// <summary>
+        /// sourceIDLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label sourceIDLabel;
 
         /// <summary>
         /// hypMarc control.
@@ -94,15 +103,6 @@ namespace MOBOT.BHL.AdminWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink hypMarc;
-
-        /// <summary>
-        /// marcItemIDTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox marcItemIDTextBox;
 
         /// <summary>
         /// callNumberTextBox control.
@@ -348,6 +348,24 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.DropDownList ddlThumbnailPageID;
 
         /// <summary>
+        /// ddlPageProgression control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlPageProgression;
+
+        /// <summary>
+        /// isVirtualLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label isVirtualLabel;
+
+        /// <summary>
         /// scannedByLabel control.
         /// </summary>
         /// <remarks>
@@ -481,6 +499,15 @@ namespace MOBOT.BHL.AdminWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.AdminWeb.Controls.EditHistoryLink editHistoryControl;
+
+        /// <summary>
+        /// hidMarcItemID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hidMarcItemID;
 
         /// <summary>
         /// selectedTitle control.

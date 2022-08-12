@@ -26,6 +26,9 @@
 			"itemId" : {
 				"type" : "long"
 			},
+			"pageId" : {
+				"type" : "long"
+			},
 			"names" : {
 				"type" : "text",
 				"analyzer" : "default",

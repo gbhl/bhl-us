@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ImportRecordPage> helper = new CustomSqlHelper<ImportRecordPage>())
 				{
-					CustomGenericList<ImportRecordPage> list = helper.ExecuteReader(command);
+					List<ImportRecordPage> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ImportRecordPage o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="importRecordPageID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ImportRecordPageSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ImportRecordPageSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int importRecordPageID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="importRecordPageID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ImportRecordPageSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ImportRecordPageSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -190,7 +191,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ImportRecordPage> helper = new CustomSqlHelper<ImportRecordPage>())
 				{
-					CustomGenericList<ImportRecordPage> list = helper.ExecuteReader(command);
+					List<ImportRecordPage> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ImportRecordPage o = list[0];
@@ -362,7 +363,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ImportRecordPage> helper = new CustomSqlHelper<ImportRecordPage>())
 				{
-					CustomGenericList<ImportRecordPage> list = helper.ExecuteReader(command);
+					List<ImportRecordPage> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ImportRecordPage o = list[0];

@@ -33,7 +33,8 @@ SELECT
 	[BHLSegmentID],
 	[CreationDate],
 	[LastModifiedDate],
-	[ContributorName]
+	[ContributorName],
+	[SegmentStatusID]
 FROM	
 	[dbo].[BSSegment]
 WHERE	

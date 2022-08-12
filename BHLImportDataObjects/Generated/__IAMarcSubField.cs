@@ -1,5 +1,5 @@
 
-// Generated 9/27/2019 3:36:32 PM
+// Generated 1/5/2021 2:14:58 PM
 // Do not modify the contents of this code file.
 // This abstract class __IAMarcSubField is based upon dbo.IAMarcSubField.
 
@@ -438,7 +438,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __IAMarcSubField.SortColumn.MarcSubFieldID);
 		/// </summary>
 		[Serializable]

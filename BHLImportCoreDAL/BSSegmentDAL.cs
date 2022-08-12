@@ -1,19 +1,19 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHLImport.DAL
 {
-	public partial class BSSegmentDAL
+    public partial class BSSegmentDAL
 	{
-        public CustomGenericList<BSSegment> BSSegmentSelectByItem(SqlConnection sqlConnection,
+        public List<BSSegment> BSSegmentSelectByItem(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int itemId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -25,7 +25,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<BSSegment> helper = new CustomSqlHelper<BSSegment>())
                 {
-                    CustomGenericList<BSSegment> list = helper.ExecuteReader(command);
+                    List<BSSegment> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

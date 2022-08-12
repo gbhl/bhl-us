@@ -63,8 +63,8 @@ BEGIN
 			INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID
 	WHERE	n.IsPreferredName = 1
 	ORDER BY 
-			n.FullName, a.Numeration, a.Unit, a.Title, 
-			a.Location, a.StartDate, a.EndDate, n.FullerForm
+			n.FullName, n.FullerForm, a.Numeration, a.Unit, 
+			a.Title, a.Location, a.StartDate, a.EndDate
 END
 
 -- Now try searching without the catalog.  Newly added authors may not be in the catalog,
@@ -96,9 +96,17 @@ FROM	dbo.Author a
 WHERE	a.AuthorID IN (SELECT AuthorID FROM #tmpAuthorName)
 AND		n.IsPreferredName = 1
 AND		t.AuthorID IS NULL
-ORDER BY n.FullName
+ORDER BY 
+		n.FullName, n.FullerForm, a.Numeration, a.Unit, 
+		a.Title, a.Location, a.StartDate, a.EndDate
 
 -- Return final result set
-SELECT * FROM #tmpAuthor
+SELECT	* 
+FROM	#tmpAuthor
+ORDER BY 
+		FullName, FullerForm, Numeration, Unit, 
+		Title, Location, StartDate, EndDate
 
 END
+
+GO

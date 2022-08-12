@@ -3,16 +3,16 @@
 
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
-using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class NameSourceGNFinderDAL
+    public partial class NameSourceGNFinderDAL
 	{
-		public CustomGenericList<NameSourceGNFinder> NameSourceGNFinderSelectAll(
+		public List<NameSourceGNFinder> NameSourceGNFinderSelectAll(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction)
 		{
@@ -22,7 +22,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<NameSourceGNFinder> helper = new CustomSqlHelper<NameSourceGNFinder>())
 				{
-					CustomGenericList<NameSourceGNFinder> list = helper.ExecuteReader(command);
+					List<NameSourceGNFinder> list = helper.ExecuteReader(command);
 					return (list);
 				}
 			}

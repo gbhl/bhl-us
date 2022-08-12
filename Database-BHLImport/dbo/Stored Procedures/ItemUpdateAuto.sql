@@ -1,13 +1,13 @@
-﻿CREATE PROCEDURE dbo.ItemUpdateAuto
+CREATE PROCEDURE dbo.ItemUpdateAuto
 
 @ItemID INT,
 @ImportKey NVARCHAR(50),
 @ImportStatusID INT,
 @ImportSourceID INT,
 @MARCBibID NVARCHAR(50),
-@BarCode NVARCHAR(40),
+@BarCode NVARCHAR(200),
 @ItemSequence SMALLINT,
-@MARCItemID NVARCHAR(50),
+@MARCItemID NVARCHAR(200),
 @CallNumber NVARCHAR(100),
 @Volume NVARCHAR(100),
 @InstitutionCode NVARCHAR(10),
@@ -57,7 +57,8 @@
 @StartSeries NVARCHAR(10),
 @EndSeries NVARCHAR(10),
 @StartPart NVARCHAR(10),
-@EndPart NVARCHAR(10)
+@EndPart NVARCHAR(10),
+@PageProgression NVARCHAR(10)
 
 AS 
 
@@ -122,7 +123,8 @@ SET
 	[StartSeries] = @StartSeries,
 	[EndSeries] = @EndSeries,
 	[StartPart] = @StartPart,
-	[EndPart] = @EndPart
+	[EndPart] = @EndPart,
+	[PageProgression] = @PageProgression
 WHERE
 	[ItemID] = @ItemID
 		
@@ -193,10 +195,12 @@ ELSE BEGIN
 		[StartSeries],
 		[EndSeries],
 		[StartPart],
-		[EndPart]
+		[EndPart],
+		[PageProgression]
 	FROM [dbo].[Item]
 	WHERE
 		[ItemID] = @ItemID
 	
 	RETURN -- update successful
 END
+GO

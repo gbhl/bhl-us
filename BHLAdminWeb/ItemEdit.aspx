@@ -97,7 +97,7 @@
             a.appendChild(document.createTextNode(segments[i].Title));
             td2.appendChild(a);
             var td3 = document.createElement("td");
-            td3.appendChild(document.createTextNode(segments[i].ItemID == null ? "" : segments[i].ItemID));
+            td3.appendChild(document.createTextNode(segments[i].BookID == null ? "" : segments[i].BookID));
             row.appendChild(td1);
             row.appendChild(td2);
             row.appendChild(td3);
@@ -203,8 +203,8 @@
 				<asp:TextBox ID="itemIdTextBox" runat="server"></asp:TextBox>
 			</td>
 			<td style="padding-left: 10px">
-				Barcode:
-				<asp:TextBox ID="barCodeTextBox" runat="server"></asp:TextBox>
+				Source ID (ex. Internet Archive ID):
+				<asp:TextBox ID="sourceIDTextBox" runat="server"></asp:TextBox>
 			</td>
 			<td style="padding-left: 10px">
 				<asp:Button ID="searchButton" runat="server" Text="Search" OnClick="searchButton_Click" />
@@ -228,10 +228,18 @@
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">
-					Barcode:
+					Source:
 				</td>
 				<td>
-					<asp:Label ID="barcodeLabel" runat="server" ForeColor="Blue"></asp:Label>
+					<asp:Label ID="sourceLabel" runat="server" ForeColor="Blue"></asp:Label>
+				</td>
+			</tr>
+			<tr>
+				<td style="white-space: nowrap" align="right" class="dataHeader">
+					Source ID:
+				</td>
+				<td>
+					<asp:Label ID="sourceIDLabel" runat="server" ForeColor="Blue"></asp:Label>
 				</td>
 			</tr>
             <tr>
@@ -240,14 +248,6 @@
                     <asp:HyperLink ID="hypMarc" runat="server" NavigateUrl="#" Text="View Original MARC Record" Visible="false"></asp:HyperLink>
                 </td>
             </tr>
-			<tr>
-				<td style="white-space: nowrap" align="right" class="dataHeader">
-					Marc Item ID:
-				</td>
-				<td>
-					<asp:TextBox ID="marcItemIDTextBox" runat="server" MaxLength="50" Width="400px"></asp:TextBox>
-				</td>
-			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">
 					Call Number:
@@ -456,6 +456,27 @@
                 </td>
             </tr>
 			<tr>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
+					Page Progression:
+				</td>
+				<td>
+					<asp:DropDownList ID="ddlPageProgression" runat="server">
+						<asp:ListItem Value=""></asp:ListItem>
+						<asp:ListItem Value="lr">Left-to-Right</asp:ListItem>
+						<asp:ListItem Value="rl">Right-to-Left</asp:ListItem>
+					</asp:DropDownList><br />
+					(If no value is selected, the item will default to Left-to-Right page progression.)
+				</td>
+			</tr>
+			<tr>
+				<td style="white-space: nowrap" align="right" class="dataHeader">
+					Is Virtual:
+				</td>
+				<td>
+					<asp:Label ID="isVirtualLabel" runat="server" ForeColor="Blue"></asp:Label>
+				</td>
+			</tr>
+			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">
 					Scanned By:
 				</td>
@@ -502,10 +523,10 @@
 
 					<asp:TemplateField HeaderText="Primary" ItemStyle-Width="70px">
 						<ItemTemplate>
-						    <asp:CheckBox ID="isPrimaryCheckBox" Enabled=false Checked='<%# Eval("IsPrimary") %>' runat="server" />
+						    <asp:CheckBox ID="isPrimaryCheckBox" Enabled=false Checked='<%# Eval("IsPrimary").ToString() == "1" %>' runat="server" />
 						</ItemTemplate>
 						<EditItemTemplate>
-						    <asp:CheckBox ID="isPrimaryCheckBoxEdit" Checked='<%# Eval("IsPrimary") %>' runat="server" />
+						    <asp:CheckBox ID="isPrimaryCheckBoxEdit" Checked='<%# Eval("IsPrimary").ToString() == "1" %>' runat="server" />
 						</EditItemTemplate>
 					</asp:TemplateField>
 
@@ -594,7 +615,7 @@
 			<input type="button" onclick="overlaySegmentSearch();document.getElementById('srchSegmentID').focus();" id="btnAddSegment" value="Add Segment" />
 			<asp:GridView ID="segmentsList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 			    AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
-				Width="800px" CssClass="boxTable" OnRowCancelingEdit="segmentsList_RowCancelingEdit" OnRowEditing="segmentsList_RowEditing"
+				Width="900px" CssClass="boxTable" OnRowCancelingEdit="segmentsList_RowCancelingEdit" OnRowEditing="segmentsList_RowEditing"
 				OnRowUpdating="segmentsList_RowUpdating" OnRowCommand="segmentsList_RowCommand" DataKeyNames="SegmentID">
 				<Columns>
 					<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" ItemStyle-VerticalAlign="Top "/>
@@ -603,6 +624,16 @@
 					<asp:TemplateField HeaderText="Title" ItemStyle-Width="350px" HeaderStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top">
 						<ItemTemplate>
 							<%# Eval( "Title" ) %>
+						</ItemTemplate>
+					</asp:TemplateField>
+					<asp:TemplateField HeaderText="Series" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top">
+						<ItemTemplate>
+							<%# Eval( "Series" ) %>
+						</ItemTemplate>
+					</asp:TemplateField>
+					<asp:TemplateField HeaderText="Issue" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top">
+						<ItemTemplate>
+							<%# Eval( "Issue" ) %>
 						</ItemTemplate>
 					</asp:TemplateField>
 					<asp:TemplateField HeaderText="Volume" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top">
@@ -675,6 +706,7 @@
 		<br />
 		<asp:Button ID="saveButton" runat="server" ClientIDMode="Static" OnClick="saveButton_Click" Text="Save" />
 		<div style="float:right;"><mobot:EditHistoryControl runat="server" id="editHistoryControl" /></div>
+		<asp:HiddenField ID="hidMarcItemID" runat="server" />
 	</div>
 	<div id="overlay" class="overlay">
 	    <div style="top:900px">

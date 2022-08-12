@@ -1,61 +1,126 @@
-﻿using System;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 
 namespace MOBOT.BHL.Server
 {
     public partial class BHLProvider
     {
-        public CustomGenericList<DOI> DOISelectSubmitted(int minutesSinceSubmit)
+        public DOI DOISelectAuto(int doiID)
+        {
+            return new DOIDAL().DOISelectAuto(null, null, doiID);
+        }
+
+        public List<DOI> DOISelectSubmitted(int minutesSinceSubmit)
         {
             return new DOIDAL().DOISelectSubmitted(null, null, minutesSinceSubmit);
         }
 
-        public CustomGenericList<DOI> DOISelectValidForTitle(int titleID)
+        public List<DOI> DOISelectQueued()
+        {
+            return new DOIDAL().DOISelectQueued(null, null);
+        }
+
+        public List<Title_Identifier> DOISelectValidForTitle(int titleID)
         {
             return new DOIDAL().DOISelectValidForTitle(null, null, titleID);
         }
 
-        public CustomGenericList<DOI> DOISelectValidForSegment(int segmentID)
+        public List<ItemIdentifier> DOISelectValidForSegment(int segmentID)
         {
             return new DOIDAL().DOISelectValidForSegment(null, null, segmentID);
         }
 
-        public CustomGenericList<DOI> TitleSelectWithoutSubmittedDOI(int numberToReturn)
+        public List<DOI> TitleSelectWithoutSubmittedDOI(int numberToReturn)
         {
             return new TitleDAL().TitleSelectWithoutSubmittedDOI(null, null, numberToReturn);
         }
 
-        public CustomGenericList<DOI> SegmentSelectWithoutSubmittedDOI(int numberToReturn)
+        public List<DOI> SegmentSelectWithoutSubmittedDOI(int numberToReturn)
         {
             return new SegmentDAL().SegmentSelectWithoutSubmittedDOI(null, null, numberToReturn);
         }
 
-        public DOI DOInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, 
-            string doiBatchId, string doiName, string message, short isValid)
+        public void DOIInsertQueue(int doiEntityTypeId, List<int> entityIds, int userId)
         {
-            return new DOIDAL().DOIInsertAuto(null, null, 
-                doiEntityTypeId, entityId, doiStatusId, doiBatchId, doiName, DateTime.Now, message, isValid);
+            TransactionController transactionController = new TransactionController();
+            try
+            {
+                transactionController.BeginTransaction();
+
+                DOIDAL dal = new DOIDAL();
+                foreach (int entityID in entityIds)
+                {
+                    dal.DOIInsertQueue(transactionController.Connection, transactionController.Transaction, 
+                        doiEntityTypeId, entityID, userId, userId);
+                }
+
+                transactionController.CommitTransaction();
+            }
+            catch
+            {
+                transactionController.RollbackTransaction();
+            }
+            finally
+            {
+                transactionController.Dispose();
+            }
         }
 
-        public CustomGenericList<DOI> DOISelectByStatus(int doiStatusId, int numRows, int pageNum, string sortColumn, string sortOrder)
+        public void DOIInsert(int doiEntityTypeId, int entityID, int doiStatusId, string doiName, short isValid,
+            string doiBatchId, string message, int userId, int excludeBHLDOI)
+        {
+            new DOIDAL().DOIInsert(null, null, doiEntityTypeId, entityID, doiStatusId, doiName, isValid, doiBatchId, 
+                message, userId, excludeBHLDOI);
+        }
+
+        public DOI DOInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, 
+            string doiBatchId, string doiName, string message, short isValid, int userId)
+        {
+            return new DOIDAL().DOIInsertAuto(null, null, 
+                doiEntityTypeId, entityId, doiStatusId, doiBatchId, doiName, DateTime.Now, message, isValid, userId, userId);
+        }
+
+        public void DOIInsertIdentifier(int doiEntityTypeId, int entityID, string doiName, int? userId)
+        {
+            new DOIDAL().DOIInsertIdentifier(null, null, doiEntityTypeId, entityID, doiName, userId);
+        }
+
+        public List<DOI> DOISelectByStatus(int doiStatusId, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
             return new DOIDAL().DOISelectByStatus(null, null, doiStatusId, numRows, pageNum, sortColumn, sortOrder);
         }
 
-        public DOI DOIUpdateStatus(int doiID, int doiStatusId)
+        public List<DOI> DOISelectStatusReport(int userId, int doiStatusId, int doiEntityTypeId, int? entityID,
+            DateTime startDate, DateTime endDate, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
-            return this.DOIUpdateStatus(doiID, doiStatusId, string.Empty, null, null, null);
+            return new DOIDAL().DOISelectStatusReport(null, null, userId, doiStatusId, doiEntityTypeId, entityID, 
+                startDate, endDate, numRows, pageNum, sortColumn, sortOrder);
         }
 
-        public DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, short? setValid)
+        public DOI DOISelectQueuedByTypeAndID(string doiEntityTypeName, int entityID)
         {
-            return this.DOIUpdateStatus(doiID, doiStatusId, message, null, null, setValid);
+            return new DOIDAL().DOISelectQueuedByTypeAndID(null, null, doiEntityTypeName, entityID);
         }
 
-        private DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, string doiName, string doiBatchID, short? isValid)
+        public void DOIDeleteQueuedByTypeAndID(int doiEntityTypeID, int entityID)
+        {
+            new DOIDAL().DOIDeleteQueuedByTypeAndID(null, null, doiEntityTypeID, entityID);
+        }
+
+        public DOI DOIUpdateStatus(int doiID, int doiStatusId, int? userId)
+        {
+            return this.DOIUpdateStatus(doiID, doiStatusId, string.Empty, null, null, null, userId);
+        }
+
+        public DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, short? setValid, int? userId)
+        {
+            return this.DOIUpdateStatus(doiID, doiStatusId, message, null, null, setValid, userId);
+        }
+
+        private DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, string doiName, string doiBatchID, short? isValid, int? userId)
         {
             DOIDAL dal = new DOIDAL();
             DOI doi = dal.DOISelectAuto(null, null, doiID);
@@ -68,6 +133,7 @@ namespace MOBOT.BHL.Server
                 doi.DOIName = (doiName ?? doi.DOIName);
                 doi.DOIBatchID = (doiBatchID ?? doi.DOIBatchID);
                 doi.IsValid = (isValid ?? doi.IsValid);
+                doi.LastModifiedUserID = (userId ?? doi.LastModifiedUserID);
                 doi = dal.DOIUpdateAuto(null, null, doi);
             }
             else
@@ -77,19 +143,29 @@ namespace MOBOT.BHL.Server
             return doi;
         }
 
-        public DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName)
+        public DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName, int? userId)
         {
-            return this.DOIUpdateStatus(doiID, doiStatusId, null, doiName, null, null);
+            return this.DOIUpdateStatus(doiID, doiStatusId, null, doiName, null, null, userId);
         }
 
-        public DOI DOIUpdateBatchID(int doiID, int doiStatusID, string doiBatchID)
+        public DOI DOIUpdateBatchID(int doiID, int doiStatusID, string doiBatchID, int? userId)
         {
-            return this.DOIUpdateStatus(doiID, doiStatusID, null, null, doiBatchID, null);
+            return this.DOIUpdateStatus(doiID, doiStatusID, null, null, doiBatchID, null, userId);
         }
 
-        public CustomGenericList<DOIStatus> DOIStatusSelectAll()
+        public List<DOIStatus> DOIStatusSelectAll()
         {
             return new DOIDAL().DOIStatusSelectAll(null, null);
+        }
+
+        public List<DOIEntityType> DOIEntityTypeSelectAll()
+        {
+            return new DOIDAL().DOIEntityTypeSelectAll(null, null);
+        }
+
+        public List<DOIEntityType> DOIEntityTypeSelectWithDoi()
+        {
+            return new DOIDAL().DOIEntityTypeSelectWithDoi(null, null);
         }
 
         public string DOIGetFileContents(string batchId, string type)
@@ -108,9 +184,9 @@ namespace MOBOT.BHL.Server
             }
 
             BHLProvider service = new BHLProvider();
-            if (service.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").FileExists(filepath))
+            if (service.GetFileAccessProvider().FileExists(filepath))
             {
-                fileContents = new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").GetFileText(filepath);
+                fileContents = new BHLProvider().GetFileAccessProvider().GetFileText(filepath);
             }
 
             return fileContents;

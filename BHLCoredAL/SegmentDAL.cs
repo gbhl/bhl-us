@@ -1,13 +1,14 @@
+using CustomDataAccess;
+using MOBOT.BHL.DataObjects;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class SegmentDAL
+    public partial class SegmentDAL
 	{
         /// <summary>
         /// Select the specified segment and all of its related objects for editing.
@@ -29,8 +30,11 @@ namespace MOBOT.BHL.DAL
                 // NOTE: The selection of IsPrimary and PageRange values could be included with the previous database request
                 // Get a couple extra segment details for editing
                 Segment segmentExtra = SegmentSelectForSegmentID(connection, transaction, segmentId);
+                segment.BookID = segmentExtra.BookID;
+                segment.SegmentStatusID = segmentExtra.SegmentStatusID;
                 segment.IsPrimary = segmentExtra.IsPrimary;
                 segment.PageRange = segmentExtra.PageRange;
+                segment.Notes = segmentExtra.Notes;
             }
 
             // Get the rest of the segment details
@@ -71,45 +75,52 @@ namespace MOBOT.BHL.DAL
         {
             if (segment != null)
             {
-                if (segment.ItemID != null)
-                {
-                    Item item = new ItemDAL().ItemSelectAuto(connection, transaction, (int)segment.ItemID);
-                    segment.ItemVolume = item.Volume;
-                    segment.ItemYear = item.Year ?? string.Empty;
+                segment.Item = new ItemDAL().ItemSelectAuto(connection, transaction, segment.ItemID);
 
-                    Title title = new TitleDAL().TitleSelectAuto(connection, transaction, item.PrimaryTitleID);
-                    segment.TitleId = title.TitleID;
-                    segment.TitleFullTitle = title.FullTitle;
-                    segment.TitleShortTitle = title.ShortTitle;
-                    segment.TitlePublicationPlace = title.Datafield_260_a;
-                    segment.TitlePublisherName = title.Datafield_260_b;
-                    segment.TitlePublicationDate = (title.StartYear == null ? "" : title.StartYear.ToString());
-                }
-
-                segment.AuthorList = new SegmentAuthorDAL().SegmentAuthorSelectBySegmentID(connection, transaction, segment.SegmentID);
-                if (segment.AuthorList != null && segment.AuthorList.Count > 0)
+                if (segment.BookID != null)
                 {
-                    AuthorDAL authorDAL = new AuthorDAL();
-                    foreach (SegmentAuthor segmentAuthor in segment.AuthorList)
+                    Book book = new BookDAL().BookSelectAuto(connection, transaction, (int)segment.BookID);
+                    segment.ItemVolume = book.Volume;
+                    segment.ItemSeries = string.Join("-", (new string[] { book.StartSeries ?? string.Empty, book.EndSeries ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s)));
+                    segment.ItemIssue = string.Join("-", (new string[] { book.StartIssue ?? string.Empty, book.EndIssue ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s)));
+                    segment.ItemYear = string.Join("-", (new string[] { book.StartYear ?? string.Empty, book.EndYear ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s)));
+
+                    List<ItemTitle> itemTitles = new ItemTitleDAL().ItemTitleSelectByItem(connection, transaction, (int)segment.BookID);
+                    foreach (ItemTitle itemTitle in itemTitles)
                     {
-                        segmentAuthor.Author = authorDAL.AuthorSelectAuto(connection, transaction, segmentAuthor.AuthorID);
+                        if (itemTitle.IsPrimary == 1)
+                        {
+                            Title title = new TitleDAL().TitleSelectAuto(connection, transaction, itemTitle.TitleID);
+                            segment.TitleId = title.TitleID;
+                            segment.TitleFullTitle = title.FullTitle;
+                            segment.TitleShortTitle = title.ShortTitle;
+                            segment.TitlePublicationPlace = title.Datafield_260_a;
+                            segment.TitlePublisherName = title.Datafield_260_b;
+                            segment.TitlePublicationDate = (title.StartYear == null ? "" : title.StartYear.ToString());
+                            break;
+                        }
                     }
                 }
 
-                CustomGenericList<DOI> dois = new DOIDAL().DOISelectValidForSegment(connection, transaction, segment.SegmentID);
-                foreach (DOI doi in dois)
+                segment.AuthorList = new ItemAuthorDAL().ItemAuthorSelectBySegmentID(connection, transaction, segment.SegmentID);
+                if (segment.AuthorList != null && segment.AuthorList.Count > 0)
                 {
-                    // Grab the first DOI for the segment (by the very nature of DOIs, there should only be one)
-                    segment.DOIName = doi.DOIName;
-                    break;
+                    AuthorDAL authorDAL = new AuthorDAL();
+                    foreach (ItemAuthor itemAuthor in segment.AuthorList)
+                    {
+                        itemAuthor.Author = authorDAL.AuthorSelectAuto(connection, transaction, itemAuthor.AuthorID);
+                        itemAuthor.Author.AuthorIdentifiers = new AuthorIdentifierDAL().AuthorIdentifierSelectByAuthorID(connection, transaction, itemAuthor.Author.AuthorID);
+                    }
                 }
 
                 segment.ContributorList = new InstitutionDAL().InstitutionSelectBySegmentIDAndRole(connection, transaction, segment.SegmentID, InstitutionRole.Contributor);
-                segment.IdentifierList = new SegmentIdentifierDAL().SegmentIdentifierSelectBySegmentID(connection, transaction, segment.SegmentID, null);
-                segment.KeywordList = new SegmentKeywordDAL().SegmentKeywordSelectBySegmentID(connection, transaction, segment.SegmentID);
-                segment.PageList = new SegmentPageDAL().SegmentPageSelectBySegmentID(connection, transaction, segment.SegmentID);
-                segment.NameList = new NameSegmentDAL().NameSegmentSelectBySegmentID(connection, transaction, segment.SegmentID);
+                segment.IdentifierList = new ItemIdentifierDAL().ItemIdentifierSelectBySegmentID(connection, transaction, segment.SegmentID, null);
+                segment.KeywordList = new ItemKeywordDAL().ItemKeywordSelectBySegmentID(connection, transaction, segment.SegmentID);
+                segment.PageList = new ItemPageDAL().ItemPageSelectBySegmentID(connection, transaction, segment.SegmentID);
+                // The data held in NameList is not used anywhere, so the expensive NameSegmentSelectBySegmentID database query is unnecessary
+                //segment.NameList = new NameSegmentDAL().NameSegmentSelectBySegmentID(connection, transaction, segment.SegmentID);
                 segment.RelatedSegmentList = SegmentSelectRelated(connection, transaction, segment.SegmentID);
+                segment.RelationshipList = new ItemRelationshipDAL().ItemRelationshipSelectByItemID(connection, transaction, segment.ItemID);
             }
         }
 
@@ -120,7 +131,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="authorId">Identifier of the author</param>
         /// <returns>A list of type Segment</returns>
-        public CustomGenericList<Segment> SegmentSimpleSelectByAuthor(SqlConnection sqlConnection,
+        public List<Segment> SegmentSimpleSelectByAuthor(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int authorId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -132,35 +143,33 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
                 }
             }
         }
 
-        /// <summary>
-        /// Select detailed information about the segments associated with the specified author
-        /// </summary>
-        /// <param name="sqlConnection"></param>
-        /// <param name="sqlTransaction"></param>
-        /// <param name="authorId">Identifier of the author</param>
-        /// <returns>A list of type Segment</returns>
-        public CustomGenericList<Segment> SegmentSelectForAuthorID(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, int authorId)
+        public Tuple<int, List<Segment>> SegmentSelectForAuthorIDPaged(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+                int authorId, int pageNum, int numPages, string sort)
         {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(
-                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectForAuthorID", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("AuthorId", SqlDbType.Int, null, false, authorId)))
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.SegmentSelectForAuthorIDPaged", connection, transaction,
+                            CustomSqlHelper.CreateInputParameter("AuthorId", SqlDbType.Int, null, false, authorId),
+                            CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                            CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                            CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                            CustomSqlHelper.CreateOutputParameter("TotalSegments", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
-
-                    return list;
+                    // Get the page of segments for the author
+                    List<Segment> list = helper.ExecuteReader(command);
+                    // Get the total number of segments for the author from the output parameter
+                    int totalSegments = (int)command.Parameters[4].Value;
+                    return new Tuple<int, List<Segment>>(totalSegments, list);
                 }
             }
         }
@@ -173,8 +182,8 @@ namespace MOBOT.BHL.DAL
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns>A list of type Segment</returns>
-        public CustomGenericList<Segment> SegmentSelectByDateRange(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, string startDate, string endDate)
+        public Tuple<int, List<Segment>> SegmentSelectByDateRange(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
+            string startDate, string endDate, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -182,13 +191,19 @@ namespace MOBOT.BHL.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByDateRange", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.VarChar, 20, false, startDate),
-                CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.VarChar, 20, false, endDate)))
+                CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.VarChar, 20, false, endDate),
+                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                CustomSqlHelper.CreateOutputParameter("TotalSegments", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
-
-                    return list;
+                    // Get the page of segments
+                    List<Segment> list = helper.ExecuteReader(command);
+                    // Get the total number of segments
+                    int totalSegments = (int)command.Parameters[5].Value;
+                    return new Tuple<int, List<Segment>>(totalSegments, list);
                 }
             }
         }
@@ -201,74 +216,51 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="title"></param>
         /// <returns></returns>
-        public CustomGenericList<Segment> SegmentSelectByTitleLike(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, string title)
+        public Tuple<int, List<Segment>> SegmentSelectByTitleLike(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
+            string title, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByTitleLike", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title)))
+                CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title),
+                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                CustomSqlHelper.CreateOutputParameter("TotalSegments", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
-
-                    return list;
+                    // Get the page of segments
+                    List<Segment> list = helper.ExecuteReader(command);
+                    // Get the total number of segments
+                    int totalSegments = (int)command.Parameters[4].Value;
+                    return new Tuple<int, List<Segment>>(totalSegments, list);
                 }
             }
         }
 
-        /// <summary>
-        /// Select segments that do not start with the specified title string.  Can use regular expressions as argument
-        /// (as long as the expression is recognized by the SQL Server "LIKE" operator.
-        /// </summary>
-        /// <param name="sqlConnection"></param>
-        /// <param name="sqlTransaction"></param>
-        /// <param name="title"></param>
-        /// <returns></returns>
-        public CustomGenericList<Segment> SegmentSelectByTitleNotLike(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, string title)
+        public Tuple<int, List<Segment>> SegmentSelectForKeywordPaged(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+                string keyword, int pageNum, int numPages, string sort)
         {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(
-                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByTitleNotLike", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title)))
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.SegmentSelectForKeywordPaged", connection, transaction,
+                            CustomSqlHelper.CreateInputParameter("Keyword", SqlDbType.NVarChar, 50, false, keyword),
+                            CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                            CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                            CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                            CustomSqlHelper.CreateOutputParameter("TotalSegments", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
-
-                    return list;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Select detailed information about the segments associated with the specified keyword
-        /// </summary>
-        /// <param name="sqlConnection"></param>
-        /// <param name="sqlTransaction"></param>
-        /// <param name="keyword">The keyword with which segments are associated</param>
-        /// <returns>A list of type Segment</returns>
-        public CustomGenericList<Segment> SegmentSelectForKeyword(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, string keyword)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(
-                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectForKeyword", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("Keyword", SqlDbType.NVarChar, 50, false, keyword)))
-            {
-                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
-                {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
-
-                    return list;
+                    // Get the page of segments for the author
+                    List<Segment> list = helper.ExecuteReader(command);
+                    // Get the total number of segments for the author from the output parameter
+                    int totalSegments = (int)command.Parameters[4].Value;
+                    return new Tuple<int, List<Segment>>(totalSegments, list);
                 }
             }
         }
@@ -278,22 +270,154 @@ namespace MOBOT.BHL.DAL
         /// </summary>
         /// <param name="sqlConnection"></param>
         /// <param name="sqlTransaction"></param>
-        /// <param name="itemId">Identifier of the item.</param>
+        /// <param name="bookID">Identifier of the item.</param>
         /// <returns>A list of type segment</returns>
-        public CustomGenericList<Segment> SegmentSelectByItemID(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, int itemId, short showAll)
+        public List<Segment> SegmentSelectByBookID(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int bookID, short showAll)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByBookID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("BookID", SqlDbType.Int, null, false, bookID),
+                CustomSqlHelper.CreateInputParameter("ShowAll", SqlDbType.SmallInt, null, false, showAll)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+
+                    return list;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Select the segment associated with the specified item ID
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="itemID">Identifier of the item.</param>
+        /// <returns>A segment object</returns>
+        public Segment SegmentSelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByItemID", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemId),
-                CustomSqlHelper.CreateInputParameter("ShowAll", SqlDbType.SmallInt, null, false, showAll)))
+                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
+
+                    if (list.Count > 0)
+                        return list[0];
+                    else
+                        return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Select the segments associated with the specified title
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="titleID">Identifier of the title.</param>
+        /// <returns>A list of type segment</returns>
+        public List<Segment> SegmentSelectByTitleID(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int titleID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByTitleID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+
+                    return list;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Select the segment with the specified barcode
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="barcode">Barcode for the segment</param>
+        /// <returns>An object type Segment</returns>
+        public Segment SegmentSelectByBarCode(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string barcode)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByBarCode", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 200, false, barcode)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+
+                    if (list.Count > 0)
+                        return list[0];
+                    else
+                        return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Select the segments associated with the specified item
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="itemId">Identifier of the item</param>
+        /// <returns>A list of type segment</returns>
+        public List<Segment> SegmentSelectWithoutDOIByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemId)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectWithoutDOIByItemID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemId)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+
+                    return list;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Select the segments associated with the specified title
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="titleId">Identifier of the title</param>
+        /// <returns>A list of type segment</returns>
+        public List<Segment> SegmentSelectWithoutDOIByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int titleId)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectWithoutDOIByTitleID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleId)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
                 }
@@ -306,7 +430,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of type TitleBibTeX.</returns>
-        public CustomGenericList<TitleBibTeX> SegmentSelectAllBibTeXCitations(
+        public List<TitleBibTeX> SegmentSelectAllBibTeXCitations(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction)
         {
@@ -316,7 +440,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleBibTeX> helper = new CustomSqlHelper<TitleBibTeX>())
                 {
-                    CustomGenericList<TitleBibTeX> list = helper.ExecuteReader(command);
+                    List<TitleBibTeX> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -329,7 +453,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <param name="titleId">Segment identifier for which to get BibTex data</param>
         /// <returns>List of type TitleBibTeX.</returns>
-        public CustomGenericList<TitleBibTeX> SegmentSelectBibTexForSegmentID(
+        public List<TitleBibTeX> SegmentSelectBibTexForSegmentID(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         int segmentId,
@@ -343,7 +467,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleBibTeX> helper = new CustomSqlHelper<TitleBibTeX>())
                 {
-                    CustomGenericList<TitleBibTeX> list = helper.ExecuteReader(command);
+                    List<TitleBibTeX> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -356,7 +480,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <param name="titleId">Segment identifier for which to get BibTex data</param>
         /// <returns>List of type TitleBibTeX.</returns>
-        public CustomGenericList<Segment> SegmentSelectPublished(
+        public List<Segment> SegmentSelectPublished(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction)
         {
@@ -366,7 +490,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -378,7 +502,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of type RISCitation.</returns>
-        public CustomGenericList<RISCitation> SegmentSelectAllRISCitations(
+        public List<RISCitation> SegmentSelectAllRISCitations(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction)
         {
@@ -388,7 +512,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
                 {
-                    CustomGenericList<RISCitation> list = helper.ExecuteReader(command);
+                    List<RISCitation> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -400,7 +524,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of type RISCitation.</returns>
-        public CustomGenericList<RISCitation>SegmentSelectRISCitationForSegmentID(
+        public List<RISCitation>SegmentSelectRISCitationForSegmentID(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         int segmentID)
@@ -412,7 +536,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
                 {
-                    CustomGenericList<RISCitation> list = helper.ExecuteReader(command);
+                    List<RISCitation> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -425,7 +549,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="segmentId">Identifier of the segment</param>
         /// <returns>A list of type Segment</returns>
-        public CustomGenericList<Segment> SegmentSelectRelated(SqlConnection sqlConnection,
+        public List<Segment> SegmentSelectRelated(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int segmentId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -437,7 +561,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
                 }
@@ -460,7 +584,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return (list[0]);
                     else
@@ -476,7 +600,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="statusId">Segment status for which to search.</param>
         /// <returns>A list of type segment</returns>
-        public CustomGenericList<Segment> SegmentSelectByStatusID(SqlConnection sqlConnection,
+        public List<Segment> SegmentSelectByStatusID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int statusId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -488,7 +612,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
                 }
@@ -502,7 +626,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="numberOfClusters">The number of clusters to return.</param>
         /// <returns></returns>
-        public CustomGenericList<Segment> SegmentSelectRecentlyClustered(SqlConnection sqlConnection,
+        public List<Segment> SegmentSelectRecentlyClustered(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int numberOfClusters)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -514,49 +638,69 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Segment> SegmentSelectByInstitutionAndStartsWith(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction,
-                        String institutionCode,
-                        String startsWith)
+        public List<Segment> SegmentSelectChildSegmentsBySegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectChildSegmentsBySegmentID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+
+                    return list;
+                }
+            }
+        }
+
+        public List<Segment> SegmentSelectSiblingSegmentsBySegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectSiblingSegmentsBySegmentID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+
+                    return list;
+                }
+            }
+        }
+
+        public Tuple<int, List<Segment>> SegmentSelectByInstitutionAndStartsWith(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+                        String institutionCode, String startsWith, int pageNum, int numPages, string sort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByInstitutionAndStartsWith", connection, transaction,
-                     CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
-                     CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith)))
+                    CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
+                    CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith),
+                    CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                    CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPages),
+                    CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sort),
+                    CustomSqlHelper.CreateOutputParameter("TotalSegments", SqlDbType.Int, null, false)))
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
-                    return list;
-                }
-            }
-        }
-
-        public CustomGenericList<Segment> SegmentSelectByInstitutionAndStartsWithout(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction,
-                        String institutionCode,
-                        String startsWith)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByInstitutionAndStartsWithout", connection, transaction,
-                     CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
-                     CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith)))
-            {
-                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
-                {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
-                    return list;
+                    // Get the page of segments
+                    List<Segment> list = helper.ExecuteReader(command);
+                    // Get the total number of segments for the author from the output parameter
+                    int totalSegments = (int)command.Parameters[5].Value;
+                    return new Tuple<int, List<Segment>>(totalSegments, list);
                 }
             }
         }
@@ -570,7 +714,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="startPageID"></param>
         /// <param name="endPageID"></param>
         /// <returns></returns>
-        public CustomGenericList<Segment> SegmentResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<Segment> SegmentResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string doi, int? startPageID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -583,7 +727,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -615,13 +759,19 @@ namespace MOBOT.BHL.DAL
             {
                 transaction = CustomSqlHelper.BeginTransaction(connection, transaction, isTransactionCoordinator);
 
+                CustomDataAccessStatus<Item> updatedItem =
+                    new ItemDAL().ItemManageAuto(connection, transaction, segment.Item, userId);
+
+                if (segment.IsNew) segment.ItemID = updatedItem.ReturnObject.ItemID;
+
                 CustomDataAccessStatus<Segment> updatedSegment =
                     new SegmentDAL().SegmentManageAuto(connection, transaction, segment, userId);
 
                 segmentID = updatedSegment.ReturnObject.SegmentID;
 
+                /*
                 DOIDAL doiDAL = new DOIDAL();
-                CustomGenericList<DOI> doiList = doiDAL.DOISelectValidForSegment(connection, transaction, segmentID);
+                List<DOI> doiList = doiDAL.DOISelectValidForSegment(connection, transaction, segmentID);
 
                 DOI doi = null;
                 if (doiList.Count == 0)
@@ -668,20 +818,21 @@ namespace MOBOT.BHL.DAL
                         doi.IsDeleted = true;
                     }
                 }
-                if (doi != null) doiDAL.DOIManageAuto(connection, transaction, doi);
+                if (doi != null) doiDAL.DOIManageAuto(connection, transaction, doi, userId);
+                */
 
                 if (segment.ContributorList.Count > 0)
                 {
-                    SegmentInstitutionDAL segmentInstitutionDAL = new SegmentInstitutionDAL();
+                    ItemInstitutionDAL itemInstitutionDAL = new ItemInstitutionDAL();
                     foreach (Institution institution in segment.ContributorList)
                     {
                         if (institution.IsDeleted)
                         {
-                            segmentInstitutionDAL.SegmentInstitutionDeleteAuto(connection, transaction, (int)institution.EntityInstitutionID);
+                            itemInstitutionDAL.ItemInstitutionDeleteAuto(connection, transaction, (int)institution.EntityInstitutionID);
                         }
                         if (institution.IsNew)
                         {
-                            segmentInstitutionDAL.SegmentInstitutionInsert(connection, transaction, segmentID, 
+                            itemInstitutionDAL.ItemInstitutionInsert(connection, transaction, (int)segment.ItemID, 
                                 institution.InstitutionCode, institution.InstitutionRoleName, userId);
                         }
                     }
@@ -689,29 +840,39 @@ namespace MOBOT.BHL.DAL
 
                 if (segment.AuthorList.Count > 0)
                 {
-                    SegmentAuthorDAL segmentAuthorDAL = new SegmentAuthorDAL();
-                    foreach (SegmentAuthor segmentAuthor in segment.AuthorList)
+                    ItemAuthorDAL itemAuthorDAL = new ItemAuthorDAL();
+                    foreach (ItemAuthor itemAuthor in segment.AuthorList)
                     {
-                        if (segmentAuthor.SegmentID == 0) segmentAuthor.SegmentID = updatedSegment.ReturnObject.SegmentID;
-                        segmentAuthorDAL.SegmentAuthorManageAuto(connection, transaction, segmentAuthor, userId);
+                        if (itemAuthor.ItemID == 0) itemAuthor.ItemID = (int)updatedSegment.ReturnObject.ItemID;
+                        itemAuthorDAL.ItemAuthorManageAuto(connection, transaction, itemAuthor, userId);
                     }
+                }
+
+                if (segment.RelationshipList.Count > 0)
+                {
+                    ItemRelationshipDAL irDAL = new ItemRelationshipDAL();
+                    foreach(ItemRelationship ir in segment.RelationshipList)
+                    {
+                        if (ir.ChildID == 0) ir.ChildID = (int)updatedSegment.ReturnObject.ItemID;
+                        irDAL.ItemRelationshipManageAuto(connection, transaction, ir, userId);
+                    }    
                 }
 
                 if (segment.KeywordList.Count > 0)
                 {
-                    SegmentKeywordDAL segmentKeywordDAL = new SegmentKeywordDAL();
+                    ItemKeywordDAL itemKeywordDAL = new ItemKeywordDAL();
                     KeywordDAL keywordDAL = new KeywordDAL();
-                    foreach (SegmentKeyword segmentKeyword in segment.KeywordList)
+                    foreach (ItemKeyword itemKeyword in segment.KeywordList)
                     {
                         // If we have a newly entered keyword, insert it and/or get its ID
-                        if (segmentKeyword.KeywordID == 0)
+                        if (itemKeyword.KeywordID == 0)
                         {
-                            Keyword keyword = keywordDAL.KeywordSelectByKeyword(connection, transaction, segmentKeyword.Keyword);
+                            Keyword keyword = keywordDAL.KeywordSelectByKeyword(connection, transaction, itemKeyword.Keyword);
                             if (keyword == null)
                             {
                                 // Keyword not found, so insert a new one
                                 keyword = new Keyword();
-                                keyword.Keyword = segmentKeyword.Keyword;
+                                keyword.Keyword = itemKeyword.Keyword;
                                 keyword.CreationUserID = userId;
                                 keyword.CreationDate = DateTime.Now;
                                 keyword.LastModifiedUserID = userId;
@@ -719,32 +880,49 @@ namespace MOBOT.BHL.DAL
                                 keyword.IsNew = true;
                                 keyword = keywordDAL.KeywordInsertAuto(connection, transaction, keyword);
                             }
-                            segmentKeyword.KeywordID = keyword.KeywordID;
+                            itemKeyword.KeywordID = keyword.KeywordID;
                         }
 
                         // Insert/Update the TitleKeyword record
-                        if (segmentKeyword.SegmentID == 0) segmentKeyword.SegmentID = updatedSegment.ReturnObject.SegmentID;
-                        segmentKeywordDAL.SegmentKeywordManageAuto(connection, transaction, segmentKeyword, userId);
+                        if (itemKeyword.ItemID == 0) itemKeyword.ItemID = (int)updatedSegment.ReturnObject.ItemID;
+                        itemKeywordDAL.ItemKeywordManageAuto(connection, transaction, itemKeyword, userId);
                     }
                 }
 
                 if (segment.IdentifierList.Count > 0)
                 {
-                    SegmentIdentifierDAL segmentIdentifierDAL = new SegmentIdentifierDAL();
-                    foreach (SegmentIdentifier segmentIdentifier in segment.IdentifierList)
+                    ItemIdentifierDAL itemIdentifierDAL = new ItemIdentifierDAL();
+                    foreach (ItemIdentifier itemIdentifier in segment.IdentifierList)
                     {
-                        if (segmentIdentifier.SegmentID == 0) segmentIdentifier.SegmentID = updatedSegment.ReturnObject.SegmentID;
-                        segmentIdentifierDAL.SegmentIdentifierManageAuto(connection, transaction, segmentIdentifier, userId);
+                        if (itemIdentifier.ItemID == 0) itemIdentifier.ItemID = (int)updatedSegment.ReturnObject.ItemID;
+
+                        if (string.Compare(itemIdentifier.IdentifierName, "DOI", true) == 0)
+                        {
+                            if (itemIdentifier.IsDeleted)
+                            {
+                                new DOIDAL().DOIDelete(connection, transaction, doiEntityTypeID: 40, segmentID, userId, excludeBHLDOI: 0);
+                            }
+                            else if (itemIdentifier.IsNew || itemIdentifier.IsDirty)
+                            {
+                                new DOIDAL().DOIUpdate(connection, transaction, doiEntityTypeID: 40, segmentID, doiStatusID: 200,
+                                    doiName: itemIdentifier.IdentifierValue, isValid: 1, processName: "Segment Edit", doiBatchID: string.Empty,
+                                    statusMessage: "User-edited", userId, excludeBHLDOI: 0);
+                            }
+                        }
+                        else
+                        {
+                            itemIdentifierDAL.ItemIdentifierManageAuto(connection, transaction, itemIdentifier, userId);
+                        }
                     }
                 }
 
                 if (segment.PageList.Count > 0)
                 {
-                    SegmentPageDAL segmentPageDAL = new SegmentPageDAL();
-                    foreach (SegmentPage segmentPage in segment.PageList)
+                    ItemPageDAL itemPageDAL = new ItemPageDAL();
+                    foreach (ItemPage itemPage in segment.PageList)
                     {
-                        if (segmentPage.SegmentID == 0) segmentPage.SegmentID = updatedSegment.ReturnObject.SegmentID;
-                        segmentPageDAL.SegmentPageManageAuto(connection, transaction, segmentPage, userId);
+                        if (itemPage.ItemID == 0) itemPage.ItemID = (int)updatedSegment.ReturnObject.ItemID;
+                        itemPageDAL.ItemPageManageAuto(connection, transaction, itemPage, userId);
                     }
                 }
 
@@ -819,7 +997,7 @@ namespace MOBOT.BHL.DAL
             return segmentID;
         }
 
-        public CustomGenericList<DOI> SegmentSelectWithoutSubmittedDOI(SqlConnection sqlConnection,
+        public List<DOI> SegmentSelectWithoutSubmittedDOI(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int numberToReturn)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -830,8 +1008,49 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<DOI> helper = new CustomSqlHelper<DOI>())
                 {
-                    CustomGenericList<DOI> list = helper.ExecuteReader(command);
+                    List<DOI> list = helper.ExecuteReader(command);
                     return (list);
+                }
+            }
+        }
+
+        public List<Segment> SegmentSelectRecentlyChanged(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string startDate)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectRecentlyChanged", connection, transaction,
+                 CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.DateTime, null, false, startDate)
+                ))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
+        public Item SegmentSelectPagination(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectPagination", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
+            {
+                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
+                {
+                    List<Item> list = helper.ExecuteReader(command);
+                    if (list == null || list.Count == 0)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return list[0];
+                    }
                 }
             }
         }

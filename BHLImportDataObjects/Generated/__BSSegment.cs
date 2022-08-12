@@ -1,5 +1,5 @@
 
-// Generated 12/19/2016 1:43:52 PM
+// Generated 4/6/2021 5:22:05 PM
 // Do not modify the contents of this code file.
 // This abstract class __BSSegment is based upon dbo.BSSegment.
 
@@ -72,6 +72,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="contributorName"></param>
+		/// <param name="segmentStatusID"></param>
 		public __BSSegment(int segmentID, 
 			int itemID, 
 			string bioStorReferenceID, 
@@ -98,7 +99,8 @@ namespace MOBOT.BHLImport.DataObjects
 			int? bHLSegmentID, 
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
-			string contributorName) : this()
+			string contributorName, 
+			int segmentStatusID) : this()
 		{
 			_SegmentID = segmentID;
 			ItemID = itemID;
@@ -127,6 +129,7 @@ namespace MOBOT.BHLImport.DataObjects
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
 			ContributorName = contributorName;
+			SegmentStatusID = segmentStatusID;
 		}
 		
 		#endregion Constructors
@@ -286,6 +289,11 @@ namespace MOBOT.BHLImport.DataObjects
 					case "ContributorName" :
 					{
 						_ContributorName = (string)column.Value;
+						break;
+					}
+					case "SegmentStatusID" :
+					{
+						_SegmentStatusID = (int)column.Value;
 						break;
 					}
 								}
@@ -1045,6 +1053,33 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion ContributorName
+		
+		#region SegmentStatusID
+		
+		private int _SegmentStatusID = default(int);
+		
+		/// <summary>
+		/// Column: SegmentStatusID;
+		/// DBMS data type: int;
+		/// </summary>
+		[ColumnDefinition("SegmentStatusID", DbTargetType=SqlDbType.Int, Ordinal=28, NumericPrecision=10, IsInForeignKey=true)]
+		public int SegmentStatusID
+		{
+			get
+			{
+				return _SegmentStatusID;
+			}
+			set
+			{
+				if (_SegmentStatusID != value)
+				{
+					_SegmentStatusID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion SegmentStatusID
 			
 		#endregion Properties
 
@@ -1115,7 +1150,8 @@ namespace MOBOT.BHLImport.DataObjects
 					o.BHLSegmentID == BHLSegmentID &&
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
-					GetComparisonString(o.ContributorName) == GetComparisonString(ContributorName) 
+					GetComparisonString(o.ContributorName) == GetComparisonString(ContributorName) &&
+					o.SegmentStatusID == SegmentStatusID 
 				)
 				{
 					o = null;
@@ -1210,7 +1246,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __BSSegment.SortColumn.SegmentID);
 		/// </summary>
 		[Serializable]
@@ -1242,7 +1277,8 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string BHLSegmentID = "BHLSegmentID";	
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
-			public const string ContributorName = "ContributorName";
+			public const string ContributorName = "ContributorName";	
+			public const string SegmentStatusID = "SegmentStatusID";
 		}
 				
 		#endregion SortColumn

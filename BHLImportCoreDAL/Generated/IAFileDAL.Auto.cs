@@ -1,8 +1,8 @@
 
-// Generated 8/23/2010 3:08:23 PM
+// Generated 1/5/2021 2:13:50 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class IAFileDAL is based upon IAFile.
+// This partial class IAFileDAL is based upon dbo.IAFile.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from IAFile by primary key(s).
+		/// Select values from dbo.IAFile by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 			
 		/// <summary>
-		/// Select values from IAFile by primary key(s).
+		/// Select values from dbo.IAFile by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAFile> helper = new CustomSqlHelper<IAFile>())
 				{
-					CustomGenericList<IAFile> list = helper.ExecuteReader(command);
+					List<IAFile> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAFile o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IAFile by primary key(s).
+		/// Select values from dbo.IAFile by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="fileID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IAFileSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAFileSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int fileID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IAFile by primary key(s).
+		/// Select values from dbo.IAFile by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="fileID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> IAFileSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> IAFileSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into IAFile.
+		/// Insert values into dbo.IAFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -159,7 +160,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into IAFile.
+		/// Insert values into dbo.IAFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -200,7 +201,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAFile> helper = new CustomSqlHelper<IAFile>())
 				{
-					CustomGenericList<IAFile> list = helper.ExecuteReader(command);
+					List<IAFile> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAFile o = list[0];
@@ -216,7 +217,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into IAFile. Returns an object of type IAFile.
+		/// Insert values into dbo.IAFile. Returns an object of type IAFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -231,7 +232,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into IAFile. Returns an object of type IAFile.
+		/// Insert values into dbo.IAFile. Returns an object of type IAFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -259,7 +260,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from IAFile by primary key(s).
+		/// Delete values from dbo.IAFile by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -274,7 +275,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from IAFile by primary key(s).
+		/// Delete values from dbo.IAFile by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -317,7 +318,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in IAFile. Returns an object of type IAFile.
+		/// Update values in dbo.IAFile. Returns an object of type IAFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -346,7 +347,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAFile. Returns an object of type IAFile.
+		/// Update values in dbo.IAFile. Returns an object of type IAFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -389,7 +390,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<IAFile> helper = new CustomSqlHelper<IAFile>())
 				{
-					CustomGenericList<IAFile> list = helper.ExecuteReader(command);
+					List<IAFile> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						IAFile o = list[0];
@@ -405,7 +406,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAFile. Returns an object of type IAFile.
+		/// Update values in dbo.IAFile. Returns an object of type IAFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -420,7 +421,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAFile. Returns an object of type IAFile.
+		/// Update values in dbo.IAFile. Returns an object of type IAFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -449,9 +450,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage IAFile object.
+		/// Manage dbo.IAFile object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IAFile.
+		/// then either insert values into, delete values from, or update values in dbo.IAFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -466,9 +467,9 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Manage IAFile object.
+		/// Manage dbo.IAFile object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IAFile.
+		/// then either insert values into, delete values from, or update values in dbo.IAFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -543,4 +544,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

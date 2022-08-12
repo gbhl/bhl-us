@@ -1,31 +1,21 @@
-
-IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[SegmentUpdateAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[SegmentUpdateAuto]
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_NULLS ON
-GO
-
--- Update Procedure for dbo.Segment
--- Do not modify the contents of this procedure.
--- Generated 6/2/2016 9:32:37 AM
-
 CREATE PROCEDURE dbo.SegmentUpdateAuto
 
 @SegmentID INT,
 @ItemID INT,
-@SegmentStatusID INT,
-@SequenceOrder SMALLINT,
+@RedirectSegmentID INT,
 @SegmentGenreID INT,
+@StartPageID INT,
+@ThumbnailPageID INT,
+@LanguageCode NVARCHAR(10),
+@BarCode NVARCHAR(200),
+@MARCItemID NVARCHAR(200),
 @Title NVARCHAR(2000),
+@SortTitle NVARCHAR(2000),
 @TranslatedTitle NVARCHAR(2000),
 @ContainerTitle NVARCHAR(2000),
 @PublicationDetails NVARCHAR(400),
 @PublisherName NVARCHAR(250),
 @PublisherPlace NVARCHAR(150),
-@Notes NVARCHAR(MAX),
 @Summary NVARCHAR(MAX),
 @Volume NVARCHAR(100),
 @Series NVARCHAR(100),
@@ -35,19 +25,26 @@ CREATE PROCEDURE dbo.SegmentUpdateAuto
 @PageRange NVARCHAR(50),
 @StartPageNumber NVARCHAR(20),
 @EndPageNumber NVARCHAR(20),
-@StartPageID INT,
-@LanguageCode NVARCHAR(10),
 @Url NVARCHAR(200),
 @DownloadUrl NVARCHAR(200),
-@RightsStatus NVARCHAR(500),
-@RightsStatement NVARCHAR(500),
 @LicenseName NVARCHAR(200),
 @LicenseUrl NVARCHAR(200),
-@ContributorCreationDate DATETIME,
-@ContributorLastModifiedDate DATETIME,
+@RightsStatus NVARCHAR(500),
+@RightsStatement NVARCHAR(MAX),
+@CopyrightStatus NVARCHAR(MAX),
+@CopyrightRegion NVARCHAR(50),
+@CopyrightComment NVARCHAR(MAX),
+@CopyrightEvidence NVARCHAR(MAX),
+@ScanningUser NVARCHAR(100),
+@ScanningDate DATETIME,
+@PaginationStatusID INT,
+@PaginationStatusDate DATETIME,
+@PaginationStatusUserID INT,
+@PaginationCompleteDate DATETIME,
+@PaginationCompleteUserID INT,
+@LastPageNameLookupDate DATETIME,
 @LastModifiedUserID INT,
-@SortTitle NVARCHAR(2000),
-@RedirectSegmentID INT
+@PageProgression NVARCHAR(10)
 
 AS 
 
@@ -56,16 +53,20 @@ SET NOCOUNT ON
 UPDATE [dbo].[Segment]
 SET
 	[ItemID] = @ItemID,
-	[SegmentStatusID] = @SegmentStatusID,
-	[SequenceOrder] = @SequenceOrder,
+	[RedirectSegmentID] = @RedirectSegmentID,
 	[SegmentGenreID] = @SegmentGenreID,
+	[StartPageID] = @StartPageID,
+	[ThumbnailPageID] = @ThumbnailPageID,
+	[LanguageCode] = @LanguageCode,
+	[BarCode] = @BarCode,
+	[MARCItemID] = @MARCItemID,
 	[Title] = @Title,
+	[SortTitle] = @SortTitle,
 	[TranslatedTitle] = @TranslatedTitle,
 	[ContainerTitle] = @ContainerTitle,
 	[PublicationDetails] = @PublicationDetails,
 	[PublisherName] = @PublisherName,
 	[PublisherPlace] = @PublisherPlace,
-	[Notes] = @Notes,
 	[Summary] = @Summary,
 	[Volume] = @Volume,
 	[Series] = @Series,
@@ -75,20 +76,27 @@ SET
 	[PageRange] = @PageRange,
 	[StartPageNumber] = @StartPageNumber,
 	[EndPageNumber] = @EndPageNumber,
-	[StartPageID] = @StartPageID,
-	[LanguageCode] = @LanguageCode,
 	[Url] = @Url,
 	[DownloadUrl] = @DownloadUrl,
-	[RightsStatus] = @RightsStatus,
-	[RightsStatement] = @RightsStatement,
 	[LicenseName] = @LicenseName,
 	[LicenseUrl] = @LicenseUrl,
-	[ContributorCreationDate] = @ContributorCreationDate,
-	[ContributorLastModifiedDate] = @ContributorLastModifiedDate,
+	[RightsStatus] = @RightsStatus,
+	[RightsStatement] = @RightsStatement,
+	[CopyrightStatus] = @CopyrightStatus,
+	[CopyrightRegion] = @CopyrightRegion,
+	[CopyrightComment] = @CopyrightComment,
+	[CopyrightEvidence] = @CopyrightEvidence,
+	[ScanningUser] = @ScanningUser,
+	[ScanningDate] = @ScanningDate,
+	[PaginationStatusID] = @PaginationStatusID,
+	[PaginationStatusDate] = @PaginationStatusDate,
+	[PaginationStatusUserID] = @PaginationStatusUserID,
+	[PaginationCompleteDate] = @PaginationCompleteDate,
+	[PaginationCompleteUserID] = @PaginationCompleteUserID,
+	[LastPageNameLookupDate] = @LastPageNameLookupDate,
 	[LastModifiedDate] = getdate(),
 	[LastModifiedUserID] = @LastModifiedUserID,
-	[SortTitle] = @SortTitle,
-	[RedirectSegmentID] = @RedirectSegmentID
+	[PageProgression] = @PageProgression
 WHERE
 	[SegmentID] = @SegmentID
 		
@@ -102,16 +110,20 @@ ELSE BEGIN
 	SELECT
 		[SegmentID],
 		[ItemID],
-		[SegmentStatusID],
-		[SequenceOrder],
+		[RedirectSegmentID],
 		[SegmentGenreID],
+		[StartPageID],
+		[ThumbnailPageID],
+		[LanguageCode],
+		[BarCode],
+		[MARCItemID],
 		[Title],
+		[SortTitle],
 		[TranslatedTitle],
 		[ContainerTitle],
 		[PublicationDetails],
 		[PublisherName],
 		[PublisherPlace],
-		[Notes],
 		[Summary],
 		[Volume],
 		[Series],
@@ -121,22 +133,29 @@ ELSE BEGIN
 		[PageRange],
 		[StartPageNumber],
 		[EndPageNumber],
-		[StartPageID],
-		[LanguageCode],
 		[Url],
 		[DownloadUrl],
-		[RightsStatus],
-		[RightsStatement],
 		[LicenseName],
 		[LicenseUrl],
-		[ContributorCreationDate],
-		[ContributorLastModifiedDate],
+		[RightsStatus],
+		[RightsStatement],
+		[CopyrightStatus],
+		[CopyrightRegion],
+		[CopyrightComment],
+		[CopyrightEvidence],
+		[ScanningUser],
+		[ScanningDate],
+		[PaginationStatusID],
+		[PaginationStatusDate],
+		[PaginationStatusUserID],
+		[PaginationCompleteDate],
+		[PaginationCompleteUserID],
+		[LastPageNameLookupDate],
 		[CreationDate],
 		[LastModifiedDate],
 		[CreationUserID],
 		[LastModifiedUserID],
-		[SortTitle],
-		[RedirectSegmentID]
+		[PageProgression]
 	FROM [dbo].[Segment]
 	WHERE
 		[SegmentID] = @SegmentID
@@ -144,9 +163,3 @@ ELSE BEGIN
 	RETURN -- update successful
 END
 GO
- 
-SET QUOTED_IDENTIFIER OFF
-GO
-SET ANSI_NULLS ON
-GO
-

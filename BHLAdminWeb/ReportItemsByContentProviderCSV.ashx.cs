@@ -1,7 +1,9 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Text;
 using System.Web;
 
@@ -26,42 +28,38 @@ namespace MOBOT.BHL.AdminWeb
                 BHLProvider provider = new BHLProvider();
                 Institution institution = provider.InstitutionSelectAuto(institutionCode);
                 InstitutionRole institutionRole = provider.InstitutionRoleSelectAuto(roleId);
-                List<Item> items = provider.ItemSelectByInstitutionAndRole(institutionCode, roleId, barcode, 1000000, 1, "CreationDate", "desc");
+                List<Book> books = provider.BookSelectByInstitutionAndRole(institutionCode, roleId, barcode, 1000000, 1, "CreationDate", "desc");
 
                 this.WriteHttpHeaders(context, "text/csv", "ItemsByContentProviderAndRole" + DateTime.Now.ToString("yyyyMMdd") + ".csv");
 
-                // Write file header
-                StringBuilder csvString = new StringBuilder();
-                csvString.AppendLine("\"Content Provider\",\"Role\",\"Item ID\",\"IA Identifier\",\"Title ID\",\"Title\",\"Volume\",\"Year\",\"Authors\",\"Holding Institution\",\"Rights Holder\",\"Added By\",\"Copyright Status\",\"Rights\",\"License Type\",\"Due Diligence\",\"Date Added\",\"Date Updated\"");
-                context.Response.Write(csvString.ToString());
-                context.Response.Flush();
-
-                foreach (Item item in items)
+                var data = new List<dynamic>();
+                foreach (Book book in books)
                 {
-                    // Write record
-                    csvString.Remove(0, csvString.Length);
-                    csvString.Append("\"" + (institutionCode == "_A_L_L_" ? "- ASSIGNED -" : ((institution != null) ? institution.InstitutionName.Replace(", ", " ") : "- UNASSIGNED -")) + "\",");
-                    csvString.Append("\"" + institutionRole.InstitutionRoleLabel.Replace(",", " ") + "\",");
-                    csvString.Append("\"" + item.ItemID.ToString() + "\",");
-                    csvString.Append("\"" + item.BarCode + "\",");
-                    csvString.Append("\"" + item.PrimaryTitleID + "\",");
-                    csvString.Append("\"" + (item.TitleName ?? string.Empty).Replace(",", " ").Replace('"', '\'') + "\",");
-                    csvString.Append("\"" + (item.Volume ?? string.Empty).Replace(",", " ").Replace('"', '\'') + "\",");
-                    csvString.Append("\"" + (item.Year ?? string.Empty).Replace(",", " ").Replace('"', '\'') + "\",");
-                    csvString.Append("\"" + item.AuthorListString.Replace(",", " ") + "\",");
-                    csvString.Append("\"" + string.Join("|", item.InstitutionStrings).Replace(",", " ") + "\",");
-                    csvString.Append("\"" + string.Join("|", item.RightsHolderStrings).Replace(",", " ") + "\",");
-                    csvString.Append("\"" + string.Join("|", item.ScanningInstitutionStrings).Replace(",", " ") + "\",");
-                    csvString.Append("\"" + item.CopyrightStatus.Replace(",", " ") + "\",");
-                    csvString.Append("\"" + item.Rights.Replace(",", " ") + "\",");
-                    csvString.Append("\"" + item.LicenseUrl.Replace(",", " ") + "\",");
-                    csvString.Append("\"" + item.DueDiligence.Replace(",", " ") + "\",");
-                    csvString.Append("\"" + item.CreationDate + "\",");
-                    csvString.AppendLine("\"" + item.LastModifiedDate + "\"");
-
-                    context.Response.Write(csvString.ToString());
-                    context.Response.Flush();
+                    var record = new ExpandoObject() as IDictionary<string, Object>;
+                    record.Add("Content Provider", (institutionCode == "_A_L_L_" ? "- ASSIGNED -" : ((institution != null) ? institution.InstitutionName.Replace(", ", " ") : "- UNASSIGNED -")));
+                    record.Add("Role", institutionRole.InstitutionRoleLabel);
+                    record.Add("Item ID", book.BookID.ToString());
+                    record.Add("IA Identifier", book.BarCode);
+                    record.Add("Title ID", book.PrimaryTitleID);
+                    record.Add("Title", (book.TitleName ?? string.Empty));
+                    record.Add("Volume", (book.Volume ?? String.Empty));
+                    record.Add("Year", (book.StartYear ?? String.Empty));
+                    record.Add("Authors", book.AuthorListString);
+                    record.Add("Holding Institution", string.Join("|", book.InstitutionStrings));
+                    record.Add("Rights Holder", string.Join("|", book.RightsHolderStrings));
+                    record.Add("Added By", string.Join("|", book.ScanningInstitutionStrings));
+                    record.Add("Copyright Status", book.CopyrightStatus);
+                    record.Add("Rights", book.Rights);
+                    record.Add("License Type", book.LicenseUrl);
+                    record.Add("Due Diligence", book.DueDiligence);
+                    record.Add("Date Added", book.CreationDate);
+                    record.Add("Date Updated", book.LastModifiedDate);
+                    data.Add(record);
                 }
+
+                byte[] csvBytes = new CSV().FormatCSVData(data);
+                context.Response.Write(Encoding.UTF8.GetString(csvBytes, 0, csvBytes.Length));
+                context.Response.Flush();
             }
 
             context.Response.End();

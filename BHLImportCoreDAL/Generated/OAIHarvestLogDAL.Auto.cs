@@ -1,8 +1,8 @@
 
-// Generated 10/16/2013 3:40:53 PM
+// Generated 1/5/2021 2:16:46 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class OAIHarvestLogDAL is based upon OAIHarvestLog.
+// This partial class OAIHarvestLogDAL is based upon dbo.OAIHarvestLog.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from OAIHarvestLog by primary key(s).
+		/// Select values from dbo.OAIHarvestLog by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 			
 		/// <summary>
-		/// Select values from OAIHarvestLog by primary key(s).
+		/// Select values from dbo.OAIHarvestLog by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<OAIHarvestLog> helper = new CustomSqlHelper<OAIHarvestLog>())
 				{
-					CustomGenericList<OAIHarvestLog> list = helper.ExecuteReader(command);
+					List<OAIHarvestLog> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						OAIHarvestLog o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from OAIHarvestLog by primary key(s).
+		/// Select values from dbo.OAIHarvestLog by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="harvestLogID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> OAIHarvestLogSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> OAIHarvestLogSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int harvestLogID)
@@ -104,14 +105,14 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from OAIHarvestLog by primary key(s).
+		/// Select values from dbo.OAIHarvestLog by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="harvestLogID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> OAIHarvestLogSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> OAIHarvestLogSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into OAIHarvestLog.
+		/// Insert values into dbo.OAIHarvestLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -159,7 +160,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into OAIHarvestLog.
+		/// Insert values into dbo.OAIHarvestLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -200,7 +201,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<OAIHarvestLog> helper = new CustomSqlHelper<OAIHarvestLog>())
 				{
-					CustomGenericList<OAIHarvestLog> list = helper.ExecuteReader(command);
+					List<OAIHarvestLog> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						OAIHarvestLog o = list[0];
@@ -216,7 +217,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into OAIHarvestLog. Returns an object of type OAIHarvestLog.
+		/// Insert values into dbo.OAIHarvestLog. Returns an object of type OAIHarvestLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -231,7 +232,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into OAIHarvestLog. Returns an object of type OAIHarvestLog.
+		/// Insert values into dbo.OAIHarvestLog. Returns an object of type OAIHarvestLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -259,7 +260,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from OAIHarvestLog by primary key(s).
+		/// Delete values from dbo.OAIHarvestLog by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -274,7 +275,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from OAIHarvestLog by primary key(s).
+		/// Delete values from dbo.OAIHarvestLog by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -317,7 +318,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in OAIHarvestLog. Returns an object of type OAIHarvestLog.
+		/// Update values in dbo.OAIHarvestLog. Returns an object of type OAIHarvestLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -346,7 +347,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in OAIHarvestLog. Returns an object of type OAIHarvestLog.
+		/// Update values in dbo.OAIHarvestLog. Returns an object of type OAIHarvestLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -389,7 +390,7 @@ namespace MOBOT.BHLImport.DAL
 			{
 				using (CustomSqlHelper<OAIHarvestLog> helper = new CustomSqlHelper<OAIHarvestLog>())
 				{
-					CustomGenericList<OAIHarvestLog> list = helper.ExecuteReader(command);
+					List<OAIHarvestLog> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						OAIHarvestLog o = list[0];
@@ -405,7 +406,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in OAIHarvestLog. Returns an object of type OAIHarvestLog.
+		/// Update values in dbo.OAIHarvestLog. Returns an object of type OAIHarvestLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -420,7 +421,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in OAIHarvestLog. Returns an object of type OAIHarvestLog.
+		/// Update values in dbo.OAIHarvestLog. Returns an object of type OAIHarvestLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -449,9 +450,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage OAIHarvestLog object.
+		/// Manage dbo.OAIHarvestLog object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in OAIHarvestLog.
+		/// then either insert values into, delete values from, or update values in dbo.OAIHarvestLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -466,9 +467,9 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Manage OAIHarvestLog object.
+		/// Manage dbo.OAIHarvestLog object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in OAIHarvestLog.
+		/// then either insert values into, delete values from, or update values in dbo.OAIHarvestLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -543,4 +544,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

@@ -1,17 +1,17 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHLImport.DAL
 {
-	public partial class IAScandataDAL
+    public partial class IAScandataDAL
 	{
         /// <summary>
         /// Delete the scandata entries for the specified item.
@@ -41,7 +41,7 @@ namespace MOBOT.BHLImport.DAL
         /// <param name="sqlConnection"></param>
         /// <param name="sqlTransaction"></param>
         /// <param name="itemID"></param>
-        public CustomGenericList<IAScandata> IAScandataSelectByItem(
+        public List<IAScandata> IAScandataSelectByItem(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int itemID)
@@ -54,7 +54,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IAScandata> helper = new CustomSqlHelper<IAScandata>())
                 {
-                    CustomGenericList<IAScandata> list = helper.ExecuteReader(command);
+                    List<IAScandata> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -83,7 +83,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IAScandata> helper = new CustomSqlHelper<IAScandata>())
                 {
-                    CustomGenericList<IAScandata> list = helper.ExecuteReader(command);
+                    List<IAScandata> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {

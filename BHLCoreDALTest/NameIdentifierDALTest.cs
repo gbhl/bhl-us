@@ -1,14 +1,13 @@
-﻿using MOBOT.BHL.DAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLCoreDALTest
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for NameIdentifierDALTest and is intended
     ///to contain all NameIdentifierDALTest Unit Tests
@@ -77,7 +76,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string resolvedName = "Mollusca";
-            CustomGenericList<NameIdentifier> actual = target.NameIdentifierSelectForResolvedName(sqlConnection, sqlTransaction, resolvedName);
+            List<NameIdentifier> actual = target.NameIdentifierSelectForResolvedName(sqlConnection, sqlTransaction, resolvedName);
             Assert.IsNotNull(actual.Count > 0);
         }
     }

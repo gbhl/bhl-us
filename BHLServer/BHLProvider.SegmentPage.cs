@@ -1,13 +1,14 @@
 ﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
+
 namespace MOBOT.BHL.Server
 {
     public partial class BHLProvider
     {
-        public CustomGenericList<SegmentPage> SegmentPageSelectBySegmentID(int segmentID)
+        public List<ItemPage> ItemPageSelectBySegmentID(int segmentID)
         {
-            return new SegmentPageDAL().SegmentPageSelectBySegmentID(null, null, segmentID);
+            return new ItemPageDAL().ItemPageSelectBySegmentID(null, null, segmentID);
         }
     }
 }

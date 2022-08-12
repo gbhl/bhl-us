@@ -1,0 +1,61 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.EditDoiQueueViewModel
+@{
+    ViewBag.Title = "QueueDelete";
+}
+
+<br />
+<span class="pageHeader">Confirm Delete from DOI Queue</span>
+<hr />
+<br />
+
+<h4>Are you sure you want to delete this item from the queue?</h4>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EntityType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EntityType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EntityID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EntityID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(Model => Model.Action)
+        </dt>
+        <dd>
+            @Html.DisplayFor(Model => Model.Action)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddedBy)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AddedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateQueued)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateQueued)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.EntityTypeID)
+        @Html.HiddenFor(model => model.EntityID)
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to Queue", "Queue")
+        </div>
+    }
+</div>

@@ -1,11 +1,11 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
@@ -13,7 +13,7 @@ namespace MOBOT.BHLImport.DAL
 {
     public partial class StatsDAL
     {
-        public CustomGenericList<Stats> StatsSelectReadyForProductionBySource(
+        public List<Stats> StatsSelectReadyForProductionBySource(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int importSourceID)
@@ -24,8 +24,8 @@ namespace MOBOT.BHLImport.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("StatsSelectReadyForProductionBySource", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("ImportSourceID", SqlDbType.Int, null, false, importSourceID)))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
-                CustomGenericList<Stats> listOfStats = new CustomGenericList<Stats>();
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<Stats> listOfStats = new List<Stats>();
                 foreach (CustomDataRow row in list)
                 {
                     Stats stats = new Stats();
@@ -51,14 +51,14 @@ namespace MOBOT.BHLImport.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("StatsCountIAItemPendingApproval", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("AgeInDays", SqlDbType.Int, null, false, ageInDays)))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                 Stats stats = new Stats();
                 stats.NumberOfItems = (int)list[0]["Number Of Items"].Value;
                 return stats;
             }
         }
 
-        public CustomGenericList<Stats> StatsSelectIAItemGroupByStatus(
+        public List<Stats> StatsSelectIAItemGroupByStatus(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction)
         {
@@ -67,8 +67,8 @@ namespace MOBOT.BHLImport.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("StatsSelectIAItemGroupByStatus", connection, transaction))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
-                CustomGenericList<Stats> listOfStats = new CustomGenericList<Stats>();
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<Stats> listOfStats = new List<Stats>();
                 foreach (CustomDataRow row in list)
                 {
                     Stats stats = new Stats();
@@ -83,7 +83,7 @@ namespace MOBOT.BHLImport.DAL
             }
         }
 
-        public CustomGenericList<Stats> StatsSelectIAItemPendingApprovalGroupByAge(
+        public List<Stats> StatsSelectIAItemPendingApprovalGroupByAge(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int ageInDays)
@@ -94,8 +94,8 @@ namespace MOBOT.BHLImport.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("StatsSelectIAItemPendingApprovalGroupByAge", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("AgeInDays", SqlDbType.Int, null, false, ageInDays)))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
-                CustomGenericList<Stats> listOfStats = new CustomGenericList<Stats>();
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<Stats> listOfStats = new List<Stats>();
                 foreach (CustomDataRow row in list)
                 {
                     Stats stats = new Stats();
@@ -108,7 +108,7 @@ namespace MOBOT.BHLImport.DAL
             }
         }
 
-        public CustomGenericList<Stats> StatsSelectBSItemGroupByStatus(
+        public List<Stats> StatsSelectBSItemGroupByStatus(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction)
         {
@@ -117,8 +117,8 @@ namespace MOBOT.BHLImport.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("StatsSelectBSItemGroupByStatus", connection, transaction))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
-                CustomGenericList<Stats> listOfStats = new CustomGenericList<Stats>();
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<Stats> listOfStats = new List<Stats>();
                 foreach (CustomDataRow row in list)
                 {
                     Stats stats = new Stats();

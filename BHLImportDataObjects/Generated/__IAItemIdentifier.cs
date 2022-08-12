@@ -1,5 +1,5 @@
 
-// Generated 2/28/2019 2:07:31 PM
+// Generated 1/5/2021 2:14:15 PM
 // Do not modify the contents of this code file.
 // This abstract class __IAItemIdentifier is based upon dbo.IAItemIdentifier.
 
@@ -438,7 +438,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __IAItemIdentifier.SortColumn.ItemIdentifierID);
 		/// </summary>
 		[Serializable]

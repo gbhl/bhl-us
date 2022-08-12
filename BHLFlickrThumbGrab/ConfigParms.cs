@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace MOBOT.BHL.BHLFlickrThumbGrab
 {
@@ -17,6 +15,7 @@ namespace MOBOT.BHL.BHLFlickrThumbGrab
         public string NumberToGrab { get; set; }
         public string ImageListFilePath { get; set; }
         public string DefaultFilesFolder { get; set; }
+        public string BHLWSEndpoint { get; set; } = string.Empty;
 
         public void LoadAppConfig()
         {
@@ -31,6 +30,7 @@ namespace MOBOT.BHL.BHLFlickrThumbGrab
             ImageListFilePath = ConfigurationManager.AppSettings["ImageListFilePath"];
             NumberToGrab = ConfigurationManager.AppSettings["NumberToGrab"];
             DefaultFilesFolder = ConfigurationManager.AppSettings["DefaultFilesFolder"];
+            BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
     }
 }

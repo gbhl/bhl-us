@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MOBOT.OpenUrl.Utilities;
+using System;
 using System.Configuration;
 using System.Web;
 using System.Web.Services;
-using MOBOT.OpenUrl.Utilities;
-using MOBOT.BHL.OpenUrlProvider;
-using MOBOT.BHL.Web.Utilities;
 
 namespace MOBOT.BHL.Web2.Services
 {
@@ -22,7 +19,7 @@ namespace MOBOT.BHL.Web2.Services
             bool redirect = false;
 
             IOpenUrlQuery ouQuery = OpenUrlQueryFactory.CreateOpenUrlQuery(HttpUtility.UrlDecode(context.Request.QueryString.ToString()));
-            BHLOpenUrlProvider openurl = new BHLOpenUrlProvider();
+            MOBOT.BHL.OpenUrlProvider.BHLOpenUrlProvider openurl = new MOBOT.BHL.OpenUrlProvider.BHLOpenUrlProvider();
             openurl.UrlFormat = ConfigurationManager.AppSettings["PagePageUrl"];
             openurl.ItemUrlFormat = ConfigurationManager.AppSettings["ItemPageUrl"];
             openurl.TitleUrlFormat = ConfigurationManager.AppSettings["BibPageUrl"];

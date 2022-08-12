@@ -1,0 +1,2 @@
+﻿CREATE SYNONYM dbo.BHLfnGetLCCNValue FOR BHL.dbo.fnGetLCCNValue
+GO

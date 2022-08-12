@@ -2,15 +2,13 @@
 <%@ Import Namespace="MOBOT.BHL.DataObjects" %>
 <%@ Register TagPrefix="uc" TagName="NavBar" Src="~/controls/NavBar.ascx" %>
 <%@ Register TagPrefix="uc" TagName="COinS" Src="~/controls/COinSControl.ascx" %>
-<%@ Register TagPrefix="uc" TagName="Mendeley" Src="~/controls/MendeleyShareControl.ascx" %>
 <asp:Content ID="mainContent" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
 <uc:NavBar runat="server" />
 <div id="page-title" class="bibliography">
     <div class="column-wrap">
         <div class="ellipsis bibtitle"><%: BhlTitle.ShortTitle %></div>
         <div class="bibtitleicons">
-            <uc:Mendeley id="mendeley" runat="server" />
-            <a href="/contact/" title="Report an error" class="report"><img alt="Report an error" src="/images/rpterror.png" /></a>
+            <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>" title="FAQ" class="report"><img alt="FAQ" src="/images/rpterror.png" /></a>
         </div>
     </div>
 </div>
@@ -18,167 +16,26 @@
     <section>
         <div class="tabs js-hide">
             <ul class="tab-nav no-js-hide">
-                <li class="summary first-child"><a href="#/summary">Summary</a></li>
-                <li class="details"><a href="#/details">Details</a></li>
-                <li class="mods"><a href="#/mods">MODS</a></li>
-                <li class="bibtex"><a href="#/bibtex">BibTeX</a></li>
-                <li class="ris last-child"><a href="#/ris">RIS</a></li>
+                <li class="details first-child" style="display:none"><a href="#/details">Details</a></li>
+                <li class="mods" style="display:none"><a href="#/mods">MODS</a></li>
+                <li class="bibtex" style="display:none"><a href="#/bibtex">BibTeX</a></li>
+                <li class="ris last-child" style="display:none"><a href="#/ris">RIS</a></li>
             </ul>            
             <uc:COinS ID="COinS" runat="server" />
-            <div id="summary" class="tab-body">
-                <h3>Title</h3>
-                <span itemprop="url" style="display:none"><%: String.Format(ConfigurationManager.AppSettings["BibPageUrl"], BhlTitle.TitleID.ToString()) %></span>
-                <p><span itemprop="name"><%: BhlTitle.FullTitle %> <%: BhlTitle.PartNumber %> <%: BhlTitle.PartName %></span></p>
-                <% if (TitleVariants.Count > 0 || !string.IsNullOrWhiteSpace(BhlTitle.UniformTitle)) { %>
-                    <h3>Title Variants:</h3>
-                    <% foreach (TitleVariant titleVariant in TitleVariants) { %>
-                    <p>
-                        <i><%: titleVariant.TitleVariantLabel %>:</i>
-                        <%: titleVariant.Title %> <%: titleVariant.TitleRemainder %> <%: titleVariant.PartNumber %> <%: titleVariant.PartName %>
-                    </p>
-                    <% } 
-                    if (!string.IsNullOrWhiteSpace(BhlTitle.UniformTitle))
-                    {%>
-                      <p>
-                          <i>Uniform: </i><%: BhlTitle.UniformTitle %>
-                      </p>  
-                    <%}
-                } %>
-                <% if(TitleAssociations.Count > 0) { %>                    
-                    <h3>Related Titles</h3>
-                    <% foreach (TitleAssociation titleAssociation in TitleAssociations) { %>
-                    <p>
-                        <i><%: titleAssociation.TitleAssociationLabel %>:</i>
-					    <% if (titleAssociation.AssociatedTitleID != null) { %>
-                            <a href="/bibliography/<%: titleAssociation.AssociatedTitleID %>">
-                                <%: titleAssociation.Title %> <%: titleAssociation.Section %> <%: titleAssociation.Volume %> <%: titleAssociation.Heading %> <%: titleAssociation.Publication %> <%: titleAssociation.Relationship %>
-                            </a>
-                        <% } else { %>
-                            <%: titleAssociation.Title %> <%: titleAssociation.Section %> <%: titleAssociation.Volume %> <%: titleAssociation.Heading %> <%: titleAssociation.Publication %> <%: titleAssociation.Relationship %>
-                        <% } %>							
-                    </p>
-                    <% } %>
-                <% } %>
-                <%if (Institutions.Count > 0) {%>
-                    <%foreach (Institution institution in Institutions) {
-                        if (institution.InstitutionRoleName == "External Content Holder") {%>
-                            <h3>More Content</h3>
-                            <%break;
-                        }
-                    }%>
-                    <%foreach (Institution institution in Institutions) {
-                        if (institution.InstitutionRoleName == "External Content Holder") {%>
-                            <p><i>Available from:</i>
-                            <%if (string.IsNullOrWhiteSpace(institution.Url)) { %>
-                                <%:institution.InstitutionName%>
-                            <%} else {%>
-                                <a class="ExtLinkBrowse" href="<%:institution.Url%>" rel="noopener noreferrer" target="_blank"><%:institution.InstitutionName%></a>
-                            <%}%>
-                            </p>
-                        <%}
-                    }
-                } %>
-                <h3>By</h3>
-                <p>
-                    <% foreach (Author author in Authors) { %>
-                        <span itemprop="author" itemscope itemtype='<%: (author.AuthorRoleID.ToString() == "1" || author.AuthorRoleID.ToString() == "4") ? "https://schema.org/Person" : "https://schema.org/Organization" %>'>
-                        <a href="/creator/<%: author.AuthorID %>" title="Author">
-							<span itemprop="name"><%: author.NameExtended %></span>
-						</a><%if (!string.IsNullOrWhiteSpace(author.Relationship)) Response.Write(", " + author.Relationship); %>
-                        <span itemprop='url' style='display:none'><%: string.Format(ConfigurationManager.AppSettings["AuthorPageUrl"], author.AuthorID.ToString()) %></span>
-                        <%if (!string.IsNullOrWhiteSpace(author.StartDate)) { %>
-                              <span itemprop='birthDate' style='display:none'><%: author.StartDate %></span>
-                        <% } %>
-                        <%if (!string.IsNullOrWhiteSpace(author.EndDate)) { %>
-                              <span itemprop='deathDate' style='display:none'><%: author.EndDate %></span>
-                        <% } %>
-                        </span>
-                        <br />
-                    <% } %>
-                    <% if (Authors.Count > 0 && AdditionalAuthors.Count > 0) Response.Write("<br />"); %>
-                    <% foreach (Author author in AdditionalAuthors) { %>
-                        <span itemprop="author" itemscope itemtype='<%: (author.AuthorRoleID.ToString() == "1" || author.AuthorRoleID.ToString() == "4") ? "https://schema.org/Person" : "https://schema.org/Organization" %>'>
-                        <a href="/creator/<%: author.AuthorID %>" title="Author">
-							<span itemprop="name"><%: author.NameExtended %></span>
-						</a><%if (!string.IsNullOrWhiteSpace(author.Relationship)) Response.Write(", " + author.Relationship); %>
-                        <span itemprop='url' style='display:none'><%: string.Format(ConfigurationManager.AppSettings["AuthorPageUrl"], author.AuthorID.ToString()) %></span>
-                        <%if (!string.IsNullOrWhiteSpace(author.StartDate)) { %>
-                              <span itemprop='birthDate' style='display:none'><%: author.StartDate %></span>
-                        <% } %>
-                        <%if (!string.IsNullOrWhiteSpace(author.EndDate)) { %>
-                              <span itemprop='deathDate' style='display:none'><%: author.EndDate %></span>
-                        <% } %>
-                        </span>
-                        <br />
-                    <% } %>
-                </p>
-                <h3>Type</h3>
-                <p>
-                    <span itemprop="genre"><%= Genre %></span>
-                </p>
-                <%if (!string.IsNullOrWhiteSpace(Material)) { %>
-                <h3>Material</h3>
-                <p>
-                    <span><%= Material %></span>
-                </p>
-                <%} %>
-                <h3>Publication info</h3>
-                <p>
-                    <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><span itemprop="name"><%: BhlTitle.PublicationDetails %></span></span>
-                    <span itemprop="datePublished" style="display:none"><%: BhlTitle.StartYear.ToString() %></span>
-                </p>
-                <%if (!String.IsNullOrWhiteSpace(BhlTitle.EditionStatement)) { %>
-                    <h3>Edition</h3>
-                    <p>
-                        <span itemprop="bookEdition"><%: BhlTitle.EditionStatement%></span>
-                    </p>
-                <% } %>
-                <%if (!String.IsNullOrWhiteSpace(BhlTitle.CurrentPublicationFrequency)) { %>
-                    <h3>Frequency</h3>
-                    <p>
-                        <%: BhlTitle.CurrentPublicationFrequency%>
-                    </p>
-                <% } %>
-                <% if (TitleKeywords != null && TitleKeywords.Count > 0)
-                   { %>
-                    <h3>Subjects</h3>
-                    <p><span itemprop="keywords">
-                    <% for (int i = 0; i < TitleKeywords.Count; i++)
-                       { %>
-                        <a href="/subject/<%: Server.UrlPathEncode(TitleKeywords[i].Keyword) %>">
-                            <%: TitleKeywords[i].Keyword%>
-                        </a>
-                        <%: (i < TitleKeywords.Count - 1) ? ", " : string.Empty%>
-                    <% } %>
-                    </span></p>
-                <% } %>
-                <% if (Collections.Count > 0) { %>
-                    <h3>BHL Collections:</h3>
-                    <% foreach (Collection collection in Collections) { %>
-                    <p>
-                        <a href="/browse/collection/<%: collection.CollectionID %>" title="Collection"><%: collection.CollectionName %></a>
-                    </p>
-                    <% } %>
-                <% } %>
-                <% if (DOI != string.Empty) { %>
-                <h3>DOI</h3>
-                <p>
-                    <a href="<%= DOI%>" title="DOI"><span itemprop="DOI"><%= DOI%></span></a>
-                </p>
-                <% } %>
-                <p>
-                    <a class="button" href="<%: LocalLibraryUrl %>" rel="noopener noreferrer" target="_blank">Find in a local library</a>
-                </p>
-            </div>
             <div id="details" class="tab-body">
                 <h3>Title</h3>
                 <p><%: BhlTitle.FullTitle %> <%: BhlTitle.PartNumber %> <%: BhlTitle.PartName %></p>
                 <% if (TitleVariants.Count > 0 || !string.IsNullOrWhiteSpace(BhlTitle.UniformTitle)) { %>
-                    <h3>Title Variants:</h3>
-                    <% foreach (TitleVariant titleVariant in TitleVariants) { %>
+                    <h3>Title Variants</h3>
+                    <% foreach (TitleVariant tv in TitleVariants) { %>
                     <p>
-                        <i><%: titleVariant.TitleVariantLabel %>:</i>
-                        <%: titleVariant.Title %> <%: titleVariant.TitleRemainder %> <%: titleVariant.PartNumber %> <%: titleVariant.PartName %>
+                        <i><%: tv.TitleVariantLabel %>:</i>
+                        <%
+                        List<string> tvTitle = new List<string>();
+                        if (!string.IsNullOrWhiteSpace(tv.Title)) tvTitle.Add(tv.Title);
+                        if (!string.IsNullOrWhiteSpace(tv.TitleRemainder)) tvTitle.Add(tv.TitleRemainder);
+                        %>
+                        <%: string.Join(", ", tvTitle.ToArray()) %>
                     </p>
                     <% } 
                     if (!string.IsNullOrWhiteSpace(BhlTitle.UniformTitle))
@@ -190,15 +47,24 @@
                 } %>
                 <% if(TitleAssociations.Count > 0) { %>                    
                     <h3>Related Titles</h3>
-                    <% foreach (TitleAssociation titleAssociation in TitleAssociations) { %>
+                    <% foreach (TitleAssociation ta in TitleAssociations) { %>
                     <p>
-                        <i><%: titleAssociation.TitleAssociationLabel %>:</i>
-					    <% if (titleAssociation.AssociatedTitleID != null) { %>
-                            <a href="/bibliography/<%: titleAssociation.AssociatedTitleID %>">
-                                <%: titleAssociation.Title %> <%: titleAssociation.Section %> <%: titleAssociation.Volume %> <%: titleAssociation.Heading %> <%: titleAssociation.Publication %> <%: titleAssociation.Relationship %>
+                        <i><%: ta.TitleAssociationLabel %>:</i>
+                        <%
+                        List<string> taTitle = new List<string>();
+                        if (!string.IsNullOrEmpty(ta.Title)) taTitle.Add(ta.Title);
+                        if (!string.IsNullOrEmpty(ta.Section)) taTitle.Add(ta.Section);
+                        if (!string.IsNullOrEmpty(ta.Volume)) taTitle.Add(ta.Volume);
+                        if (!string.IsNullOrEmpty(ta.Heading)) taTitle.Add(ta.Heading);
+                        if (!string.IsNullOrEmpty(ta.Publication)) taTitle.Add(ta.Publication);
+                        if (!string.IsNullOrEmpty(ta.Relationship)) taTitle.Add(ta.Relationship);
+                        %>
+					    <% if (ta.AssociatedTitleID != null) { %>
+                            <a href="/bibliography/<%: ta.AssociatedTitleID %>">
+                                <%: string.Join(", ", taTitle.ToArray()) %>
                             </a>
                         <% } else { %>
-                            <%: titleAssociation.Title %> <%: titleAssociation.Section %> <%: titleAssociation.Volume %> <%: titleAssociation.Heading %> <%: titleAssociation.Publication %> <%: titleAssociation.Relationship %>
+                            <%: string.Join(", ", taTitle.ToArray()) %>
                         <% } %>							
                     </p>
                     <% } %>
@@ -212,7 +78,7 @@
                     }%>
                     <%foreach (Institution institution in Institutions) {
                         if (institution.InstitutionRoleName == "External Content Holder") {%>
-                            <p><i>Available from:</i>
+                            <p><i>Available from</i>
                             <%if (string.IsNullOrWhiteSpace(institution.Url)) { %>
                                 <%:institution.InstitutionName%>
                             <%} else {%>
@@ -259,7 +125,7 @@
                     </p>
                 <% } %>
                 <% if (TitleNotes != null && TitleNotes.Count > 0) { %>
-                    <h3>Notes:</h3>
+                    <h3>Notes</h3>
                     <% foreach (TitleNote titleNote in TitleNotes) { %>
                     <p>
                         <i><%: titleNote.NoteTypeDisplay %><%: (string.IsNullOrWhiteSpace(titleNote.NoteTypeDisplay) ? "" : ": ") %></i><%: titleNote.NoteText %>
@@ -272,7 +138,7 @@
                     <p>
                     <% for (int i = 0; i < TitleKeywords.Count; i++)
                        { %>
-                        <a href="/subject/<%: Server.UrlPathEncode(TitleKeywords[i].Keyword) %>">
+                        <a href="/subject/<%: Server.UrlEncode(TitleKeywords[i].Keyword) %>">
                             <%: TitleKeywords[i].Keyword%>
                         </a>
                         <%: (i < TitleKeywords.Count - 1) ? ", " : string.Empty%>
@@ -280,7 +146,7 @@
                     </p>
                 <% } %>
                 <% if (Collections.Count > 0) { %>
-                    <h3>BHL Collections:</h3>
+                    <h3>BHL Collections</h3>
                     <% foreach (Collection collection in Collections) { %>
                     <p>
                         <a href="/browse/collection/<%: collection.CollectionID %>" title="Collection"><%: collection.CollectionName %></a>
@@ -306,48 +172,26 @@
                     </p>
                 <% } %>
                 <% if (TitleIdentifiers.Count > 0) { %>
-                    <h3>Identifiers:</h3>
-                    <% foreach (Title_Identifier titleIdentifier in TitleIdentifiers) { %>
-                        <%: titleIdentifier.IdentifierLabel %>: <span itemprop="<%: titleIdentifier.IdentifierLabel%>"><%: titleIdentifier.IdentifierValue %></span><br />
-                    <% } %>
+                    <h3>Identifiers</h3>
+                    <p>
+                    <% foreach (Title_Identifier titleIdentifier in TitleIdentifiers) {%>
+                            <%: titleIdentifier.IdentifierLabel %>: 
+                            <%if (titleIdentifier.IdentifierValueDisplay.StartsWith("http", true, System.Globalization.CultureInfo.CurrentCulture))
+                            {%>
+                                <a href="<%= titleIdentifier.IdentifierValueDisplay%>" title="DOI"><span itemprop="<%: titleIdentifier.IdentifierLabel%>"><%: titleIdentifier.IdentifierValueDisplay %></span></a><br />
+                            <%}
+                            else
+                            {%>
+                                <span itemprop="<%: titleIdentifier.IdentifierLabel%>"><%: titleIdentifier.IdentifierValueDisplay %></span><br />
+                            <%}
+                        } %>
+                    </p>
                 <% } %>
-                <% if (DOI != string.Empty) { %>
-                <h3>DOI</h3>
-                <p>
-                    <a href="<%= DOI%>" title="DOI"><%= DOI%></a>
-                </p>
-                <% } %>
+                <p>&nbsp;</p>
                 <p>
                     <a class="button" href="<%: LocalLibraryUrl %>" rel="noopener noreferrer" target="_blank">Find in a local library</a>
+                    <a class="button" style="float:right" href="/modsdownload/<%: BhlTitle.TitleID %>">Download MODS</a>
                 </p>
-            </div>
-            <div id="mods" class="tab-body">                                
-                <p>
-                    <a class="button" href="/modsdownload/<%: BhlTitle.TitleID %>">Download MODS</a>
-                </p>
-                <p class="header">
-                    <asp:Literal ID="litMods" runat="server"></asp:Literal>
-                </p>
-            </div>
-            <div id="bibtex" class="tab-body">
-                <% if (!string.IsNullOrEmpty(litBibTeX.Text)) { %>
-                <p>
-                    <a class="button" href="/bibtexdownload/<%: BhlTitle.TitleID %>">Download BibTeX citations</a>
-                </p>                
-                <p class="header">
-                    <asp:Literal ID="litBibTeX" runat="server"></asp:Literal>
-                </p>
-                <% } %>
-            </div>
-            <div id="ris" class="tab-body">
-                <% if (!string.IsNullOrEmpty(litRIS.Text)) { %>
-                <p>
-                    <a class="button" href="/risdownload/<%: BhlTitle.TitleID %>">Download RIS citations</a>
-                </p>
-                <p class="header">
-                    <asp:Literal ID="litRIS" runat="server" ></asp:Literal>
-                </p>
-                <% } %>
             </div>
         </div>
     </section>
@@ -359,12 +203,12 @@
             <div class="volume js-hide">
                 <h4 class="title">
                     <a class="expand no-js-hide" title="expand or collapse volume description">expand</a>
-                    <span class="text"><%: bibliographyItem.Item.Volume%></span>
-                     <a class="viewbook" href="/item/<%: bibliographyItem.Item.ItemID %>" title="View Volume">view volume</a>
+                    <span class="text"><%: bibliographyItem.Book.Volume%></span>
+                     <a class="viewbook" href="/item/<%: bibliographyItem.Book.BookID%>" title="View">view</a>
                 </h4>
                 <div class="body">
                     <% if(!string.IsNullOrWhiteSpace(bibliographyItem.ThumbUrl)) { %>
-                    <a href="/item/<%: bibliographyItem.Item.ItemID %>">
+                    <a href="/item/<%: bibliographyItem.Book.BookID %>">
                         <img src="<%: bibliographyItem.ThumbUrl %>" width="100" />
                     </a>
                     <div class="summary">
@@ -388,7 +232,7 @@
                                 }%>                 
                         </p>
                         <h5>Sponsor:</h5>
-                        <p><%: bibliographyItem.Item.Sponsor%></p>
+                        <p><%: bibliographyItem.Book.Sponsor%></p>
 
 
                             <%foreach (Institution institution in bibliographyItem.institutions)
@@ -410,32 +254,33 @@
 
 
 
-                        <% if (bibliographyItem.Item.ScanningDate != null) { %>                        
+                        <% if (bibliographyItem.Book.ScanningDate != null) { %>                        
                             <h5>Date Scanned:</h5>
-                            <p><%: bibliographyItem.Item.ScanningDate.Value.ToString("MM/dd/yyyy")%></p>
+                            <p><%: bibliographyItem.Book.ScanningDate.Value.ToString("MM/dd/yyyy")%></p>
                         <% } %>
 
                         <div class="booklinks">
-                            <%if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.ExternalUrl))  { %>
-                                <a target="_blank" rel="noopener noreferrer" href="/item/<%: bibliographyItem.Item.ItemID %>">View Volume (External)</a>
-                            <% } else { %>
-                                <a target="_self" href="/item/<%: bibliographyItem.Item.ItemID %>">View Volume</a>
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.ExternalUrl))  { %>
+                                <a target="_blank" rel="noopener noreferrer" href="/item/<%: bibliographyItem.Book.BookID %>">View Volume (External)</a>
+                            <% } else if (bibliographyItem.Book.IsVirtual == 0) { %>
+                                <a target="_self" href="/item/<%: bibliographyItem.Book.BookID %>">View Volume</a>
                             <%} %>
-                            <% if (bibliographyItem.Item.NumberOfSegments > 0)
-                                { %>
-                                <br />
-                                <a href="/itemdetails/<%: bibliographyItem.Item.ItemID %>">View Identified Parts</a>
+                            <% if (bibliographyItem.Book.NumberOfSegments > 0) { 
+                                if (bibliographyItem.Book.IsVirtual == 0 || !string.IsNullOrWhiteSpace(bibliographyItem.Book.ExternalUrl)) {%>
+                                    <br />
+                                <%} %>
+                                <a href="/itemdetails/<%: bibliographyItem.Book.BookID %>">View Parts</a>
                             <%} %>
                         </div>
 
                     </div>
                     
-                    <%if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.ItemDescription)) { %>
+                    <%if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.ItemDescription)) { %>
                     
                         <div class="copyspecific copyright">
                             <h5>Copy-specific information:</h5>
                             <p>
-                                <%: bibliographyItem.Item.ItemDescription %>
+                                <%: bibliographyItem.Book.ItemDescription %>
                             </p>
                         </div>
 
@@ -445,51 +290,51 @@
                         <h5>Copyright &amp; Usage:</h5>
                         <p>
                             <%  bool showNone = true;
-                                if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.LicenseUrl)) { %>
+                                if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.LicenseUrl)) { %>
                                 License Type:
-                                <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
-                                    <a target="_blank" rel="noopener noreferrer" href="<%: bibliographyItem.Item.LicenseUrl%>"><%: bibliographyItem.Item.LicenseUrl%></a>
+                                <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Book.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
+                                    <a target="_blank" rel="noopener noreferrer" href="<%: bibliographyItem.Book.LicenseUrl%>"><%: bibliographyItem.Book.LicenseUrl%></a>
                                 <% } else {%>
-                                    <%: bibliographyItem.Item.LicenseUrl%>
+                                    <%: bibliographyItem.Book.LicenseUrl%>
                                 <% }
                                 showNone = false;%>
                                 <br />
                             <% } %>
-                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.Rights)) { %>
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.Rights)) { %>
                                 Rights:
-                                <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.Rights, "^(https?|ftp|file)://.+$")) { %>
-                                    <a target="_blank" rel="noopener noreferrer" href="<%: bibliographyItem.Item.Rights%>"><%: bibliographyItem.Item.Rights%></a>
+                                <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Book.Rights, "^(https?|ftp|file)://.+$")) { %>
+                                    <a target="_blank" rel="noopener noreferrer" href="<%: bibliographyItem.Book.Rights%>"><%: bibliographyItem.Book.Rights%></a>
                                 <% } else { %>
-                                    <%: bibliographyItem.Item.Rights%>
+                                    <%: bibliographyItem.Book.Rights%>
                                 <% }
                                 showNone = false;%>
                                 <br />
                             <% } %>
-                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.DueDiligence)) { %>
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.DueDiligence)) { %>
                                 Due Diligence: 
-                                <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.DueDiligence, "^(https?|ftp|file)://.+$"))
+                                <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Book.DueDiligence, "^(https?|ftp|file)://.+$"))
                                     { %>
-                                    <a target="_blank" rel="noopener noreferrer" href="<%: bibliographyItem.Item.DueDiligence%>"><%: bibliographyItem.Item.DueDiligence%></a>
+                                    <a target="_blank" rel="noopener noreferrer" href="<%: bibliographyItem.Book.DueDiligence%>"><%: bibliographyItem.Book.DueDiligence%></a>
                                 <% } else { %>
-                                    <%: bibliographyItem.Item.DueDiligence%>
+                                    <%: bibliographyItem.Book.DueDiligence%>
                                 <% }
                                 showNone = false;%>
                                 <br />
                             <% } %>
-                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightStatus)) { %>
-                                Copyright Status: <%: bibliographyItem.Item.CopyrightStatus%><br />
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.CopyrightStatus)) { %>
+                                Copyright Status: <%: bibliographyItem.Book.CopyrightStatus%><br />
                                 <%showNone = false;%>
                             <% } %>
-                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightRegion)) { %>
-                                Copyright Region: <%: bibliographyItem.Item.CopyrightRegion%><br />
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.CopyrightRegion)) { %>
+                                Copyright Region: <%: bibliographyItem.Book.CopyrightRegion%><br />
                                 <%showNone = false;%>
                             <% } %>
-                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightComment)) { %>
-                                Copyright Comments: <%: bibliographyItem.Item.CopyrightComment%><br />
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.CopyrightComment)) { %>
+                                Copyright Comments: <%: bibliographyItem.Book.CopyrightComment%><br />
                                 <%showNone = false;%>
                             <% } %>
-                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightEvidence)) { %>
-                                Copyright Evidence: <%: bibliographyItem.Item.CopyrightEvidence%><br />
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.CopyrightEvidence)) { %>
+                                Copyright Evidence: <%: bibliographyItem.Book.CopyrightEvidence%><br />
                                 <%showNone = false;%>
                             <% } %>
 
@@ -516,13 +361,18 @@
                             <% } %>
                         </p>
                     </div>
-                    <% if (bibliographyItem.Item.ItemSourceID.ToString().Trim() == "1") { %>
+                    <% if (bibliographyItem.Book.ItemSourceID.ToString().Trim() == "1") { %>
                     <div class="download">
-                        Download volume:
-                        <a class="icon all" href="<%: bibliographyItem.Item.DownloadUrl %>">All</a>
-                        <a class="icon jp2" href="/itemimages/<%: bibliographyItem.Item.ItemID %>">JP2</a>
-                        <a class="icon ocr" download="<%: bibliographyItem.Item.ItemID %>.txt" href="/itemtext/<%: bibliographyItem.Item.ItemID %>">OCR</a>
-                        <a class="icon pdf" download="<%: bibliographyItem.Item.ItemID %>.pdf" href="/itempdf/<%: bibliographyItem.Item.ItemID %>">PDF</a>
+                        <% if (bibliographyItem.Book.IsVirtual == 0) { %>
+                            <div class="downloadlabel">Download:</div>
+                            <a class="icon all" title="download all" href="<%: bibliographyItem.Book.DownloadUrl %>">All</a>
+                            <a class="icon jp2" title="download jp2" href="/itemimages/<%: bibliographyItem.Book.BookID %>">JP2</a>
+                            <a class="icon ocr" title="download ocr" download="<%: bibliographyItem.Book.BookID %>.txt" href="/itemtext/<%: bibliographyItem.Book.BookID %>">OCR</a>
+                            <a class="icon pdf" title="download pdf" download="<%: bibliographyItem.Book.BookID %>.pdf" href="/itempdf/<%: bibliographyItem.Book.BookID %>">PDF</a>
+                        <%} %>
+                        <div class="downloadlabel">Cite:</div>
+                        <a class="icon ris" title="download ris" download="bhlitem<%: bibliographyItem.Book.BookID %>.ris" href="/risdownload/<%: bibliographyItem.Book.BookID %>">RIS</a>
+                        <a class="icon bibtex" title="download bibtex" download="bhlitem<%: bibliographyItem.Book.BookID %>.bib" href="/bibtexdownload/<%: bibliographyItem.Book.BookID %>">BibTeX</a>
                     </div>
                     <% } %>
                 </div>
@@ -540,11 +390,12 @@
 <script type="text/javascript">
 //<![CDATA[
     $(document).ready(function () {
+/*
         var tabBodys = $('.tab-body').hide();
 
         // Navigate to the default sub-section if no hash
         if (!location.hash) {
-            $.History.go('/summary');
+            $.History.go('/details');
         }
 
         $.History.bind(function (state) {
@@ -562,12 +413,13 @@
 
             // If no default sub-section found then head on to the default otherwise show selected sub-section
             if (!tabBody.length) {
-                $.History.go('/summary');
+                $.History.go('/details');
                 return false;
             } else {
                 tabBody.show();
             }
         });
+*/
     });
 //]]>
 </script>

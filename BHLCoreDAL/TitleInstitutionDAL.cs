@@ -1,12 +1,12 @@
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
-using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class TitleInstitutionDAL
+    public partial class TitleInstitutionDAL
 	{
         public TitleInstitution TitleInstitutionInsert(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int titleID, string institutionCode, string institutionRoleName, string url, int userID)
@@ -23,7 +23,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleInstitution> helper = new CustomSqlHelper<TitleInstitution>())
                 {
-                    CustomGenericList<TitleInstitution> list = helper.ExecuteReader(command);
+                    List<TitleInstitution> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -32,7 +32,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<TitleInstitution> TitleSelectWithExternalContentProvider(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<TitleInstitution> TitleSelectWithExternalContentProvider(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -41,7 +41,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleInstitution> helper = new CustomSqlHelper<TitleInstitution>())
                 {
-                    CustomGenericList<TitleInstitution> list = helper.ExecuteReader(command);
+                    List<TitleInstitution> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

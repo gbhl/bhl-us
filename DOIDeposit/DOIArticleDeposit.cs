@@ -103,11 +103,11 @@ namespace MOBOT.BHL.DOIDeposit
             {
                 content.AppendLine("<full_title>" + HttpUtility.HtmlEncode(Data.Title) + "</full_title>");
             }
-            if (!string.IsNullOrEmpty(Data.Issn))
+            foreach((string MediaType, string Value) issn in Data.Issn)
             {
-                content.AppendLine("<issn media_type=\"print\">" + HttpUtility.HtmlEncode(Data.Issn) + "</issn>");
+                content.AppendLine("<issn media_type=\"" + HttpUtility.HtmlEncode(issn.MediaType) + "\">" + HttpUtility.HtmlEncode(issn.Value) + "</issn>");
             }
-            else if (!string.IsNullOrEmpty(Data.TitleDOIName))
+            if (Data.Issn.Count == 0 && !string.IsNullOrWhiteSpace(Data.TitleDOIName))
             {
                 content.AppendLine("<doi_data>");
                 content.AppendLine("<doi>" + HttpUtility.HtmlEncode(Data.TitleDOIName) + "</doi>");
@@ -120,8 +120,12 @@ namespace MOBOT.BHL.DOIDeposit
             content.AppendLine("<journal_issue>");
             if (!string.IsNullOrEmpty(Data.PublicationDate))
             {
+                DOIDate doiDate = new DOIDate(Data.PublicationDate);
+
                 content.AppendLine("<publication_date media_type=\"print\">");
-                content.AppendLine("<year>" + HttpUtility.HtmlEncode(Data.PublicationDate) + "</year>");
+                if (doiDate.Month != null) content.AppendLine("<month>" + HttpUtility.HtmlEncode(doiDate.Month) + "</month>");
+                if (doiDate.Day != null) content.AppendLine("<day>" + HttpUtility.HtmlEncode(doiDate.Day) + "</day>");
+                content.AppendLine("<year>" + HttpUtility.HtmlEncode(doiDate.Year ?? doiDate.DateString) + "</year>");
                 content.AppendLine("</publication_date>");
             }
             if (!string.IsNullOrWhiteSpace(Data.Volume))
@@ -149,33 +153,49 @@ namespace MOBOT.BHL.DOIDeposit
                 foreach (DOIDepositData.Contributor contributor in Data.Contributors)
                 {
                     string sequence = this.GetSequenceString(contributor.Sequence);
+                    string role = this.GetRoleString(contributor.Role);
 
-                    string lastName = string.Empty;
-                    string firstName = string.Empty;
-                    if (contributor.PersonName.IndexOf(',') >= 0)
+                    if (!string.IsNullOrEmpty(contributor.PersonName))
                     {
-                        lastName = contributor.PersonName.Substring(0, contributor.PersonName.IndexOf(','));
-                        firstName = contributor.PersonName.Substring(contributor.PersonName.IndexOf(',') + 1);
+                        string lastName = string.Empty;
+                        string firstName = string.Empty;
+                        if (contributor.PersonName.IndexOf(',') >= 0)
+                        {
+                            lastName = contributor.PersonName.Substring(0, contributor.PersonName.IndexOf(','));
+                            firstName = contributor.PersonName.Substring(contributor.PersonName.IndexOf(',') + 1);
+                        }
+                        else
+                        {
+                            lastName = contributor.PersonName;
+                        }
+
+                        firstName = firstName.TrimEnd(',').Trim();
+
+                        content.AppendLine("<person_name sequence=\"" + sequence + "\" contributor_role=\"" + role + "\">");
+                        if (firstName.Length > 0) content.AppendLine("<given_name>" + HttpUtility.HtmlEncode(firstName) + "</given_name>");
+                        content.AppendLine("<surname>" + HttpUtility.HtmlEncode(lastName) + "</surname>");
+                        if (!string.IsNullOrWhiteSpace(contributor.Suffix)) content.AppendLine("<suffix>" + HttpUtility.HtmlEncode(contributor.Suffix) + "</suffix>");
+                        if (!string.IsNullOrWhiteSpace(contributor.ORCID)) content.AppendLine("<ORCID authenticated=\"false\">" + HttpUtility.HtmlEncode(contributor.ORCID) + "</ORCID>");
+                        content.AppendLine("</person_name>");
                     }
                     else
                     {
-                        lastName = contributor.PersonName;
+                        content.Append("<organization sequence=\"" + sequence + "\" contributor_role=\"" + role + "\">");
+                        content.Append(HttpUtility.HtmlEncode(contributor.OrganizationName));
+                        content.Append("</organization>\n");
                     }
-
-                    firstName = firstName.TrimEnd(',').Trim();
-
-                    content.AppendLine("<person_name sequence=\"" + sequence + "\" contributor_role=\"author\">");
-                    if (firstName.Length > 0) content.AppendLine("<given_name>" + HttpUtility.HtmlEncode(firstName) + "</given_name>");
-                    content.AppendLine("<surname>" + HttpUtility.HtmlEncode(lastName) + "</surname>");
-                    content.AppendLine("</person_name>");
                 }
                 content.AppendLine("</contributors>");
             }
 
             if (!string.IsNullOrWhiteSpace(Data.ArticlePublicationDate))
             {
+                DOIDate doiDate = new DOIDate(Data.ArticlePublicationDate);
+
                 content.AppendLine("<publication_date media_type=\"print\">");
-                content.AppendLine("<year>" + HttpUtility.HtmlEncode(Data.ArticlePublicationDate) + "</year>");
+                if (doiDate.Month != null) content.AppendLine("<month>" + HttpUtility.HtmlEncode(doiDate.Month) + "</month>");
+                if (doiDate.Day != null) content.AppendLine("<day>" + HttpUtility.HtmlEncode(doiDate.Day) + "</day>");
+                content.AppendLine("<year>" + HttpUtility.HtmlEncode(doiDate.Year ?? doiDate.DateString) + "</year>");
                 content.AppendLine("</publication_date>");
             }
             if (!string.IsNullOrWhiteSpace(Data.FirstPage) || !string.IsNullOrWhiteSpace(Data.LastPage))
@@ -215,6 +235,34 @@ namespace MOBOT.BHL.DOIDeposit
             }
 
             return sequenceString;
+        }
+
+        /// <summary>
+        /// Return a string representation of the specified contributor role
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns></returns>
+        private string GetRoleString(DOIDepositData.ContributorRole role)
+        {
+            string roleString = string.Empty;
+
+            switch (role)
+            {
+                case DOIDepositData.ContributorRole.Author:
+                    roleString = "author";
+                    break;
+                case DOIDepositData.ContributorRole.Editor:
+                    roleString = "editor";
+                    break;
+                case DOIDepositData.ContributorRole.Chair:
+                    roleString = "chair";
+                    break;
+                case DOIDepositData.ContributorRole.Translator:
+                    roleString = "translator";
+                    break;
+            }
+
+            return roleString;
         }
     }
 }

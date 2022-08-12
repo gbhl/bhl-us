@@ -1,8 +1,8 @@
 
-// Generated 11/12/2008 3:38:13 PM
+// Generated 1/5/2021 12:29:05 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class CollectionDAL is based upon Collection.
+// This partial class CollectionDAL is based upon dbo.Collection.
 
 #region How To Implement
 
@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -37,7 +38,7 @@ namespace MOBOT.IAAnalysis.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Collection by primary key(s).
+		/// Select values from dbo.Collection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +53,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 			
 		/// <summary>
-		/// Select values from Collection by primary key(s).
+		/// Select values from dbo.Collection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -73,7 +74,7 @@ namespace MOBOT.IAAnalysis.DAL
 			{
 				using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
 				{
-					CustomGenericList<Collection> list = helper.ExecuteReader(command);
+					List<Collection> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Collection o = list[0];
@@ -89,13 +90,13 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Collection by primary key(s).
+		/// Select values from dbo.Collection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="collectionID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> CollectionSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> CollectionSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int collectionID)
@@ -104,14 +105,14 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Collection by primary key(s).
+		/// Select values from dbo.Collection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="collectionID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> CollectionSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> CollectionSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -128,11 +129,11 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Collection.
+		/// Insert values into dbo.Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -147,7 +148,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Collection.
+		/// Insert values into dbo.Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -170,7 +171,7 @@ namespace MOBOT.IAAnalysis.DAL
 			{
 				using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
 				{
-					CustomGenericList<Collection> list = helper.ExecuteReader(command);
+					List<Collection> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Collection o = list[0];
@@ -186,7 +187,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Collection. Returns an object of type Collection.
+		/// Insert values into dbo.Collection. Returns an object of type Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -201,7 +202,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Collection. Returns an object of type Collection.
+		/// Insert values into dbo.Collection. Returns an object of type Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -223,7 +224,7 @@ namespace MOBOT.IAAnalysis.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Collection by primary key(s).
+		/// Delete values from dbo.Collection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -238,7 +239,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from Collection by primary key(s).
+		/// Delete values from dbo.Collection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -281,7 +282,7 @@ namespace MOBOT.IAAnalysis.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Collection. Returns an object of type Collection.
+		/// Update values in dbo.Collection. Returns an object of type Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -298,7 +299,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Collection. Returns an object of type Collection.
+		/// Update values in dbo.Collection. Returns an object of type Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -323,7 +324,7 @@ namespace MOBOT.IAAnalysis.DAL
 			{
 				using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
 				{
-					CustomGenericList<Collection> list = helper.ExecuteReader(command);
+					List<Collection> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Collection o = list[0];
@@ -339,7 +340,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Collection. Returns an object of type Collection.
+		/// Update values in dbo.Collection. Returns an object of type Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -354,7 +355,7 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Collection. Returns an object of type Collection.
+		/// Update values in dbo.Collection. Returns an object of type Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -377,9 +378,9 @@ namespace MOBOT.IAAnalysis.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Collection object.
+		/// Manage dbo.Collection object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Collection.
+		/// then either insert values into, delete values from, or update values in dbo.Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -394,9 +395,9 @@ namespace MOBOT.IAAnalysis.DAL
 		}
 		
 		/// <summary>
-		/// Manage Collection object.
+		/// Manage dbo.Collection object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Collection.
+		/// then either insert values into, delete values from, or update values in dbo.Collection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -459,4 +460,4 @@ namespace MOBOT.IAAnalysis.DAL
 
 	}	
 }
-// end of source generation
+

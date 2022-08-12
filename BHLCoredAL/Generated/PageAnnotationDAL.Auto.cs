@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -78,7 +79,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PageAnnotation> helper = new CustomSqlHelper<PageAnnotation>())
 				{
-					CustomGenericList<PageAnnotation> list = helper.ExecuteReader(command);
+					List<PageAnnotation> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageAnnotation o = list[0];
@@ -100,8 +101,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="annotatedPageID"></param>
 		/// <param name="annotationID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> PageAnnotationSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PageAnnotationSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int annotatedPageID,
@@ -118,8 +119,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="annotatedPageID"></param>
 		/// <param name="annotationID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> PageAnnotationSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> PageAnnotationSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -189,7 +190,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PageAnnotation> helper = new CustomSqlHelper<PageAnnotation>())
 				{
-					CustomGenericList<PageAnnotation> list = helper.ExecuteReader(command);
+					List<PageAnnotation> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageAnnotation o = list[0];
@@ -354,7 +355,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<PageAnnotation> helper = new CustomSqlHelper<PageAnnotation>())
 				{
-					CustomGenericList<PageAnnotation> list = helper.ExecuteReader(command);
+					List<PageAnnotation> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						PageAnnotation o = list[0];

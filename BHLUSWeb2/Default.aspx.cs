@@ -11,18 +11,15 @@ namespace MOBOT.BHL.Web2
 {
     public partial class _Default : BrowsePage
     {
-        private string projectUpdateFeedLocation = "";
         public int homeHeroImage = 1;
         public string homeHeroText = "";
         protected override void Page_Load(object sender, EventArgs e)
         {
             base.Page_Load(sender, e);
             Master.bodyID = "body-home";
-            projectUpdateFeedLocation = ConfigurationManager.AppSettings["projectUpdatesFeedLocation"];
-
-            Page.Header.Controls.Add(ControlGenerator.GetRssFeedControl(projectUpdateFeedLocation,
-                ConfigurationManager.AppSettings["projectUpdatesRssTitle"]));
-            rssFeed.FeedLocation = projectUpdateFeedLocation;
+            Master.harmfulContentBannerVisible = false;
+            
+            rssFeed.FeedLocation = ConfigurationManager.AppSettings["projectUpdatesFeedLocation"];
 
             // Generate a random number betwee 1 - 9 to be used for home hero image
             Random rand = new Random();

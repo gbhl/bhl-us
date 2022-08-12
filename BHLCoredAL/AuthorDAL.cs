@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -31,7 +32,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>Object of type Author.</returns>
-        public CustomGenericList<Author> AuthorSelectByNameLike(
+        public List<Author> AuthorSelectByNameLike(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string fullName,
@@ -40,19 +41,42 @@ namespace MOBOT.BHL.DAL
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("AuthorSelectByNameLike", connection, transaction,
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.AuthorSelectByNameLike", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("FullName", SqlDbType.NVarChar, 255, false, fullName),
                 CustomSqlHelper.CreateInputParameter("ReturnCount", SqlDbType.Int, null, false, returnCount)))
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    List<Author> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Author> AuthorSelectByTitleId(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public Tuple<int, List<Author>> AuthorSelectByNameLikePaged(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string startsWith, int pageNum, int numPerPage)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.AuthorSelectByNameLikePaged", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 255, false, startsWith),
+                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numPerPage),
+                CustomSqlHelper.CreateOutputParameter("TotalAuthors", SqlDbType.Int, null, false)))
+            {
+                using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
+                {
+                    // Get the page of authors
+                    List<Author> list = helper.ExecuteReader(command);
+                    // Get the total number of authors from the output parameter
+                    int totalAuthors = (int)command.Parameters[3].Value;
+                    return new Tuple<int, List<Author>>(totalAuthors, list);
+                }
+            }
+        }
+
+        public List<Author> AuthorSelectByTitleId(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
           int titleId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -64,7 +88,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    List<Author> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -82,7 +106,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    List<Author> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -91,7 +115,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<Author> AuthorSelectByIdentifier(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<Author> AuthorSelectByIdentifier(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int identifierID, string identifierValue)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -104,7 +128,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    List<Author> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -118,7 +142,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="institutionCode">Institution for which to return authors</param>
         /// <param name="maxAge">Age in days of authors to consider (i.e. authors new in the last 30 days)</param>
         /// <returns></returns>
-        public CustomGenericList<AuthorSuspectCharacter> AuthorSelectWithSuspectCharacters(
+        public List<AuthorSuspectCharacter> AuthorSelectWithSuspectCharacters(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 String institutionCode,
@@ -132,7 +156,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<AuthorSuspectCharacter> helper = new CustomSqlHelper<AuthorSuspectCharacter>())
                 {
-                    CustomGenericList<AuthorSuspectCharacter> list = helper.ExecuteReader(command);
+                    List<AuthorSuspectCharacter> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -149,7 +173,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns>Object of type Author.</returns>
-        public CustomGenericList<Author> AuthorResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<Author> AuthorResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string fullName, string lastName, string firstName, string startDate, string endDate, int? authorID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -165,7 +189,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    List<Author> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -215,7 +239,7 @@ namespace MOBOT.BHL.DAL
                 }
 
                 // If the author record being updated has been redirected to another author record, 'move' all of the 
-                // associated TitleAuthor, SegmentAuthor, and AuthorIdentifier records to the author being redirected to.  
+                // associated TitleAuthor, ItemAuthor, and AuthorIdentifier records to the author being redirected to.  
                 // Also, copy all AuthorNames to the author being redirected to.  For AuthorIdentifier and AuthorName
                 // records, only move/copy them if they do not already exist on the target author.
                 if (author.IsActive == 0 && author.RedirectAuthorID != null)
@@ -223,7 +247,7 @@ namespace MOBOT.BHL.DAL
                     new TitleAuthorDAL().TitleAuthorUpdateAuthorID(sqlConnection, sqlTransaction, 
                         author.AuthorID, (int)author.RedirectAuthorID, userId);
 
-                    new SegmentAuthorDAL().SegmentAuthorUpdateAuthorID(sqlConnection, sqlTransaction,
+                    new ItemAuthorDAL().ItemAuthorUpdateAuthorID(sqlConnection, sqlTransaction,
                         author.AuthorID, (int)author.RedirectAuthorID, userId);
 
                     new AuthorIdentifierDAL().AuthorIdentifierUpdateAuthorID(sqlConnection, sqlTransaction,

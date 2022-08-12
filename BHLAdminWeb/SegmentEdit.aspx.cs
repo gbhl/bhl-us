@@ -1,9 +1,11 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Utility;
 using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -13,7 +15,8 @@ namespace MOBOT.BHL.AdminWeb
 {
     public partial class SegmentEdit : System.Web.UI.Page
     {
-        private SortOrder _sortOrder = SortOrder.Ascending;
+        protected string _virtualOnly = "false";
+        protected List<string> _warnings = new List<string>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -29,6 +32,7 @@ namespace MOBOT.BHL.AdminWeb
             ClientScript.RegisterClientScriptBlock(this.GetType(), "scptSelectRelatedSegment", "<script language='javascript'>function selectRelatedSegment(segmentId, clusterType, typeLabel) { document.getElementById('" + selectedRelatedSegments.ClientID + "').value+=segmentId+'|'; document.getElementById('" + selectedClusterType.ClientID + "').value=clusterType+'|'+typeLabel;}</script>");
 
             litMessage.Text = "";
+            litWarning.Text = "";
             errorControl.Visible = false;
             Page.MaintainScrollPositionOnPostBack = true;
 
@@ -55,18 +59,25 @@ namespace MOBOT.BHL.AdminWeb
                 String selectedItemId = this.selectedItem.Value;
                 if (selectedItemId == string.Empty)
                 {
-                    itemIDLabel.Text = "";
-                    itemDescLabel.Text = "Not Selected";
+                    if (!string.IsNullOrWhiteSpace(itemIDLabel.Text))
+                    {
+                        // Item has been removed
+                        removeItem(idLabel.Text, itemIDLabel.Text);
+                        itemIDLabel.Text = "";
+                        itemDescLabel.Text = "Not Selected";
+                        fillItemDetails("", "", "", "");
+                    }
                 }
                 else if (itemIDLabel.Text != selectedItemId)
                 {
                     // Get the description of the newly selected item
-                    Item item = provider.ItemSelectAuto(Convert.ToInt32(selectedItemId));
-                    List<Institution> institutions = provider.InstitutionSelectByItemIDAndRole(Convert.ToInt32(selectedItemId), InstitutionRole.Contributor);
-                    Title title = provider.TitleSelectAuto(item.PrimaryTitleID);
+                    Book book = provider.BookSelectByBarcodeOrItemID(Convert.ToInt32(selectedItemId), null);
+                    List<Institution> institutions = provider.InstitutionSelectByItemIDAndRole(Convert.ToInt32(book.ItemID), InstitutionRole.Contributor);
+                    Title title = provider.TitleSelectAuto((int)book.PrimaryTitleID);
 
+                    string oldBookID = itemIDLabel.Text;
                     itemIDLabel.Text = selectedItemId;
-                    itemDescLabel.Text = title.ShortTitle + " " + item.Volume;
+                    itemDescLabel.Text = title.ShortTitle + " " + book.Volume;
 
                     // Use Title/Item metadata to set the journal details for this segment
                     if (institutions.Count > 0) ddlContributor.SelectedValue = institutions[0].InstitutionCode;
@@ -74,9 +85,18 @@ namespace MOBOT.BHL.AdminWeb
                     publicationDetailsTextBox.Text = title.PublicationDetails ?? string.Empty;
                     publisherNameTextBox.Text = title.Datafield_260_b ?? string.Empty;
                     publisherPlaceTextBox.Text = title.Datafield_260_a ?? string.Empty;
-                    ddlLanguage.SelectedValue = item.LanguageCode ?? string.Empty;
-                    volumeTextBox.Text = item.Volume ?? string.Empty;
-                    dateTextBox.Text = string.IsNullOrWhiteSpace(item.Year) ? (title.StartYear == null ? string.Empty : title.StartYear.ToString()) : item.Year;
+                    ddlLanguage.SelectedValue = book.LanguageCode ?? string.Empty;
+
+                    fillItemDetails((book.Volume ?? string.Empty),
+                        string.Join("-", (new string[] { book.StartIssue ?? string.Empty, book.EndIssue ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s))),
+                        string.Join("-", (new string[] { book.StartSeries ?? string.Empty, book.EndSeries ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s))),
+                        string.Join("-", (new string[] { book.StartYear ?? string.Empty, book.EndYear ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s))));
+
+                    // Update the list of segments associated with this item
+                    Segment segment = (Segment)Session["Segment" + idLabel.Text];
+                    if (!string.IsNullOrWhiteSpace(oldBookID)) removeItem(idLabel.Text, oldBookID);
+                    segment.RelationshipList.AddRange(provider.ItemRelationshipSelectByItemID(book.ItemID));
+                    Session["Segment" + segment.SegmentID.ToString()] = segment;
                 }
 
                 // Check for newly added authors
@@ -87,7 +107,7 @@ namespace MOBOT.BHL.AdminWeb
 
                     // Make sure the selected author isn't already associated with this title
                     bool authorExists = false;
-                    foreach (SegmentAuthor existingAuthor in segment.AuthorList)
+                    foreach (ItemAuthor existingAuthor in segment.AuthorList)
                     {
                         if (existingAuthor.AuthorID.ToString() == selectedAuthorId)
                         {
@@ -98,12 +118,12 @@ namespace MOBOT.BHL.AdminWeb
 
                     if (!authorExists)
                     {
-                        SegmentAuthor newSegmentAuthor = new SegmentAuthor();
+                        ItemAuthor newSegmentAuthor = new ItemAuthor();
 
                         // Get details for "selectedAuthorId" from database
                         Author author = provider.AuthorSelectWithNameByAuthorId(Convert.ToInt32(selectedAuthorId));
                         newSegmentAuthor.AuthorID = Convert.ToInt32(selectedAuthorId);
-                        newSegmentAuthor.SegmentID = segment.SegmentID;
+                        newSegmentAuthor.ItemID = segment.ItemID;
                         newSegmentAuthor.FullName = author.FullName;
                         newSegmentAuthor.FullerForm = author.FullerForm;
                         newSegmentAuthor.Numeration = author.Numeration;
@@ -179,7 +199,7 @@ namespace MOBOT.BHL.AdminWeb
                     Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
                     // Get a list of all of the pages for the item
-                    List<DataObjects.Page> pages = provider.PageSelectByItemID(Convert.ToInt32(itemIDLabel.Text));
+                    List<DataObjects.Page> pages = provider.PageSelectByBookID(Convert.ToInt32(itemIDLabel.Text));
 
                     if (selectedPageIds.EndsWith("|")) selectedPageIds = selectedPageIds.Substring(0, selectedPageIds.Length - 1);
                     String[] selectedPageIdList = selectedPageIds.Split('|');
@@ -187,7 +207,7 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         // Make sure the selected page isn't already associated with this segment
                         bool pageExists = false;
-                        foreach (SegmentPage existingPage in segment.PageList)
+                        foreach (ItemPage existingPage in segment.PageList)
                         {
                             if (existingPage.PageID.ToString() == selectedPageId)
                             {
@@ -198,13 +218,13 @@ namespace MOBOT.BHL.AdminWeb
 
                         if (!pageExists)
                         {
-                            SegmentPage newPage = new SegmentPage();
+                            ItemPage newPage = new ItemPage();
 
                             // Get the current maximum itemsequence value
-                            short pageSequence = 0;
-                            foreach (SegmentPage segmentPage in segment.PageList)
+                            int pageSequence = 0;
+                            foreach (ItemPage segmentPage in segment.PageList)
                             {
-                                if (segmentPage.SequenceOrder > pageSequence) pageSequence = segmentPage.SequenceOrder;
+                                if (segmentPage.SequenceOrder > pageSequence && !segmentPage.IsDeleted) pageSequence = segmentPage.SequenceOrder;
                             }
 
                             // Get the page types and numbers for the selected page
@@ -223,9 +243,9 @@ namespace MOBOT.BHL.AdminWeb
                             }
 
                             newPage.PageID = Convert.ToInt32(selectedPageId);
-                            newPage.SegmentID = segment.SegmentID;
+                            newPage.ItemID = segment.ItemID;
                             newPage.SequenceOrder = ++pageSequence;
-                            newPage.PageSequenceOrder = pageSequenceOrder;
+                            newPage.PageSequenceOrder = (int)pageSequenceOrder;
                             newPage.PageTypes = types;
                             newPage.IndicatedPages = numbers;
                             newPage.IsNew = true;
@@ -234,11 +254,11 @@ namespace MOBOT.BHL.AdminWeb
                     }
 
                     // Re-sort the list of pages, using the order of the scanned pages as a guide
-                    SegmentPagePSequenceComparer comp = new SegmentPagePSequenceComparer();
+                    ItemPagePSequenceComparer comp = new ItemPagePSequenceComparer();
                     segment.PageList.Sort(comp);
                     short newSeqOrder = 1;
                     int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
-                    foreach (SegmentPage segmentPage in segment.PageList)
+                    foreach (ItemPage segmentPage in segment.PageList)
                     {
                         if (segmentPage.SequenceOrder != newSeqOrder)
                         {
@@ -254,6 +274,8 @@ namespace MOBOT.BHL.AdminWeb
                 }
             }
 
+            _virtualOnly = string.IsNullOrWhiteSpace(sourceIdLabel.Text) ? "false" : "true";
+
             editHistoryControl.EntityName = "segment";
             editHistoryControl.EntityId = idLabel.Text;
 
@@ -266,7 +288,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             BHLProvider bp = new BHLProvider();
 
-            List<SegmentStatus> statuses = bp.SegmentStatusSelectAll();
+            List<ItemStatus> statuses = bp.SegmentStatusSelectAll();
             ddlSegmentStatus.DataSource = statuses;
             ddlSegmentStatus.DataBind();
 
@@ -311,7 +333,7 @@ namespace MOBOT.BHL.AdminWeb
                 // Create new segment
                 segment = new Segment();
                 segment.SequenceOrder = 1;
-                ddlSegmentStatus.SelectedValue = "10";  // New
+                ddlSegmentStatus.SelectedValue = "30";  // New
             }
             else
             {
@@ -331,12 +353,12 @@ namespace MOBOT.BHL.AdminWeb
 
                 if (segment.ItemID != null)
                 {
-                    selectedItem.Value = segment.ItemID.ToString();
-                    itemIDLabel.Text = segment.ItemID.ToString();
+                    selectedItem.Value = segment.BookID.ToString();
+                    itemIDLabel.Text = segment.BookID.ToString();
                     itemDescLabel.Text = segment.TitleShortTitle + " " + segment.ItemVolume;
                 }
+                sourceIdLabel.Text = segment.BarCode;
                 replacedByTextBox.Text = segment.RedirectSegmentID.ToString();
-                doiTextBox.Text = segment.DOIName;
                 titleTextBox.Text = segment.Title;
                 sortTitleTextBox.Text = segment.SortTitle;
                 translatedTitleTextBox.Text = segment.TranslatedTitle;
@@ -350,6 +372,7 @@ namespace MOBOT.BHL.AdminWeb
                 seriesTextBox.Text = segment.Series;
                 issueTextBox.Text = segment.Issue;
                 dateTextBox.Text = segment.Date;
+                fillItemDetails(segment.ItemVolume, segment.ItemIssue, segment.ItemSeries, segment.ItemYear);
                 pageRangeTextBox.Text = segment.PageRange;
                 startPageTextBox.Text = segment.StartPageNumber;
                 endPageTextBox.Text = segment.EndPageNumber;
@@ -369,9 +392,11 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     case 0:
                         ddlContributor.SelectedIndex = 0;
+                        ddlContributor2.SelectedIndex = 0;
                         break;
                     case 1:
                         ddlContributor.SelectedValue = segment.ContributorList[0].InstitutionCode;
+                        ddlContributor2.SelectedIndex = 0;
                         break;
                     default:    // 2 or more contributors (should only be two at most)
                         ddlContributor.SelectedValue = segment.ContributorList[0].InstitutionCode;
@@ -397,6 +422,11 @@ namespace MOBOT.BHL.AdminWeb
                 identifiersList.DataSource = segment.IdentifierList;
                 identifiersList.DataBind();
 
+                pagesList.Columns[0].Visible = string.IsNullOrWhiteSpace(segment.BarCode);  // Delete link
+                pagesList.Columns[5].Visible = string.IsNullOrWhiteSpace(segment.BarCode);  // Edit link
+                pagesList.Columns[6].Visible = !string.IsNullOrWhiteSpace(segment.BarCode); // Edit Names link
+                btnAddPage.Visible = string.IsNullOrWhiteSpace(segment.BarCode);
+                btnPaginator.Visible = !string.IsNullOrWhiteSpace(segment.BarCode);
                 pagesList.DataSource = segment.PageList;
                 pagesList.DataBind();
 
@@ -411,7 +441,38 @@ namespace MOBOT.BHL.AdminWeb
             }
         }
 
+        private void fillItemDetails(string volume, string issue, string series, string date)
+        {
+            litVolume.Text = string.Format("Item Volume: {0}", volume);
+            litIssue.Text = string.Format("Item Issue: {0}", issue);
+            litSeries.Text = string.Format("Item Series: {0}", series);
+            litDate.Text = string.Format("Item Date: {0}", date);
+        }
+
         #endregion Fill methods
+
+        /// <summary>
+        /// Remove the ItemRelationship and ItemPages related to the specified segment and book
+        /// </summary>
+        /// <param name="segmentID"></param>
+        /// <param name="bookID"></param>
+        protected void removeItem(string segmentID, string bookID)
+        {
+            Segment segment = (Segment)Session["Segment" + segmentID];
+            foreach (ItemRelationship relationship in segment.RelationshipList)
+            {
+                if (segment.ItemID == relationship.ChildID && bookID == relationship.BookID.ToString()) relationship.IsDeleted = true;
+            }
+
+            // If this segment is not based on an IA item, then remove the pages
+            if (string.IsNullOrWhiteSpace(segment.BarCode))
+            {
+                foreach (ItemPage page in segment.PageList) page.IsDeleted = true;
+                bindSegmentPageData();
+            }
+
+            Session["Segment" + segment.SegmentID.ToString()] = segment;
+        }
 
         #region SegmentAuthor methods
 
@@ -420,8 +481,8 @@ namespace MOBOT.BHL.AdminWeb
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
             // filter out deleted items
-            List<SegmentAuthor> segmentAuthors = new List<SegmentAuthor>();
-            foreach (SegmentAuthor sa in segment.AuthorList)
+            List<ItemAuthor> segmentAuthors = new List<ItemAuthor>();
+            foreach (ItemAuthor sa in segment.AuthorList)
             {
                 if (sa.IsDeleted == false)
                 {
@@ -429,28 +490,28 @@ namespace MOBOT.BHL.AdminWeb
                 }
             }
 
-            SegmentAuthorSequenceComparer comp = new SegmentAuthorSequenceComparer();
+            ItemAuthorSequenceComparer comp = new ItemAuthorSequenceComparer();
             segmentAuthors.Sort(comp);
             authorsList.DataSource = segmentAuthors;
             authorsList.DataBind();
         }
 
-        private SegmentAuthor findSegmentAuthor(List<SegmentAuthor> segmentAuthors, int segmentAuthorId,
+        private ItemAuthor findSegmentAuthor(List<ItemAuthor> segmentAuthors, int segmentAuthorId,
             int authorId)
         {
-            foreach (SegmentAuthor sa in segmentAuthors)
+            foreach (ItemAuthor ia in segmentAuthors)
             {
-                if (sa.IsDeleted)
+                if (ia.IsDeleted)
                 {
                     continue;
                 }
-                if (segmentAuthorId == 0 && sa.SegmentAuthorID == 0 && authorId == sa.AuthorID)
+                if (segmentAuthorId == 0 && ia.ItemAuthorID == 0 && authorId == ia.AuthorID)
                 {
-                    return sa;
+                    return ia;
                 }
-                else if (segmentAuthorId > 0 && sa.SegmentAuthorID == segmentAuthorId)
+                else if (segmentAuthorId > 0 && ia.ItemAuthorID == segmentAuthorId)
                 {
-                    return sa;
+                    return ia;
                 }
             }
 
@@ -466,12 +527,12 @@ namespace MOBOT.BHL.AdminWeb
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
             // filter out deleted items
-            List<SegmentKeyword> titleKeywords = new List<SegmentKeyword>();
-            foreach (SegmentKeyword sk in segment.KeywordList)
+            List<ItemKeyword> titleKeywords = new List<ItemKeyword>();
+            foreach (ItemKeyword ik in segment.KeywordList)
             {
-                if (sk.IsDeleted == false)
+                if (ik.IsDeleted == false)
                 {
-                    titleKeywords.Add(sk);
+                    titleKeywords.Add(ik);
                 }
             }
 
@@ -479,20 +540,20 @@ namespace MOBOT.BHL.AdminWeb
             keywordsList.DataBind();
         }
 
-        private SegmentKeyword findSegmentKeyword(List<SegmentKeyword> segmentKeywords,
+        private ItemKeyword findSegmentKeyword(List<ItemKeyword> segmentKeywords,
             int segmentKeywordId, int keywordID, string keyword)
         {
-            foreach (SegmentKeyword sk in segmentKeywords)
+            foreach (ItemKeyword ik in segmentKeywords)
             {
-                if (sk.IsDeleted)
+                if (ik.IsDeleted)
                 {
                     continue;
                 }
-                if (segmentKeywordId == sk.SegmentKeywordID &&
-                    keywordID == sk.KeywordID &&
-                    keyword == sk.Keyword)
+                if (segmentKeywordId == ik.ItemKeywordID &&
+                    keywordID == ik.KeywordID &&
+                    keyword == ik.Keyword)
                 {
-                    return sk;
+                    return ik;
                 }
             }
 
@@ -508,12 +569,12 @@ namespace MOBOT.BHL.AdminWeb
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
             // filter out deleted items
-            List<SegmentIdentifier> segmentIdentifiers = new List<SegmentIdentifier>();
-            foreach (SegmentIdentifier si in segment.IdentifierList)
+            List<ItemIdentifier> segmentIdentifiers = new List<ItemIdentifier>();
+            foreach (ItemIdentifier ii in segment.IdentifierList)
             {
-                if (si.IsDeleted == false)
+                if (ii.IsDeleted == false)
                 {
-                    segmentIdentifiers.Add(si);
+                    segmentIdentifiers.Add(ii);
                 }
             }
 
@@ -551,30 +612,20 @@ namespace MOBOT.BHL.AdminWeb
             return 0;
         }
 
-        private SegmentIdentifier findSegmentIdentifier(List<SegmentIdentifier> segmentIdentifiers,
-            int segmentIdentifierId, int identifierID, string identifierValue)
+        private ItemIdentifier findSegmentIdentifier(List<ItemIdentifier> segmentIdentifiers,
+            int itemIdentifierId, int identifierID, string identifierValue)
         {
-            foreach (SegmentIdentifier si in segmentIdentifiers)
+            foreach (ItemIdentifier ii in segmentIdentifiers)
             {
-                if (si.IsDeleted)
+                if (ii.IsDeleted)
                 {
                     continue;
                 }
-                if (segmentIdentifierId == 0 && si.SegmentIdentifierID == 0 &&
-                    identifierID == 0 && si.IdentifierID == 0 &&
-                    identifierValue == "" && si.IdentifierValue == "")
+                if (itemIdentifierId == ii.ItemIdentifierID &&
+                    identifierID == ii.IdentifierID &&
+                    identifierValue == ii.IdentifierValue)
                 {
-                    return si;
-                }
-                if (segmentIdentifierId == 0 && si.SegmentIdentifierID == 0 &&
-                    identifierID > 0 && identifierID == si.IdentifierID &&
-                    identifierValue == si.IdentifierValue)
-                {
-                    return si;
-                }
-                else if (segmentIdentifierId > 0 && si.SegmentIdentifierID == segmentIdentifierId)
-                {
-                    return si;
+                    return ii;
                 }
             }
 
@@ -590,37 +641,37 @@ namespace MOBOT.BHL.AdminWeb
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
             // filter out deleted items
-            List<SegmentPage> segmentPages = new List<SegmentPage>();
-            foreach (SegmentPage sp in segment.PageList)
+            List<ItemPage> segmentPages = new List<ItemPage>();
+            foreach (ItemPage ip in segment.PageList)
             {
-                if (sp.IsDeleted == false)
+                if (ip.IsDeleted == false)
                 {
-                    segmentPages.Add(sp);
+                    segmentPages.Add(ip);
                 }
             }
 
-            SegmentPageSequenceComparer comp = new SegmentPageSequenceComparer();
+            ItemPageSequenceComparer comp = new ItemPageSequenceComparer();
             segmentPages.Sort(comp);
             pagesList.DataSource = segmentPages;
             pagesList.DataBind();
         }
 
-        private SegmentPage findSegmentPage(List<SegmentPage> segmentPages, int segmentPageId,
+        private ItemPage findSegmentPage(List<ItemPage> segmentPages, int itemPageId,
             int pageId)
         {
-            foreach (SegmentPage sp in segmentPages)
+            foreach (ItemPage ip in segmentPages)
             {
-                if (sp.IsDeleted)
+                if (ip.IsDeleted)
                 {
                     continue;
                 }
-                if (segmentPageId == 0 && sp.SegmentPageID == 0 && pageId == sp.PageID)
+                if (itemPageId == 0 && ip.ItemPageID == 0 && pageId == ip.PageID)
                 {
-                    return sp;
+                    return ip;
                 }
-                else if (segmentPageId > 0 && sp.SegmentPageID == segmentPageId)
+                else if (itemPageId > 0 && ip.ItemPageID == itemPageId)
                 {
-                    return sp;
+                    return ip;
                 }
             }
 
@@ -706,7 +757,7 @@ namespace MOBOT.BHL.AdminWeb
                     if (newSeq > 0)
                     {
                         // Find item being changed
-                        SegmentAuthor changedAuthor = findSegmentAuthor(segment.AuthorList,
+                        ItemAuthor changedAuthor = findSegmentAuthor(segment.AuthorList,
                             (int)authorsList.DataKeys[e.RowIndex].Values[0],
                             (int)authorsList.DataKeys[e.RowIndex].Values[1]);
 
@@ -718,7 +769,7 @@ namespace MOBOT.BHL.AdminWeb
                             if (newSeq < oldSeq)
                             {
                                 // Increment all item sequences between the old and new sequence values
-                                foreach (SegmentAuthor author in segment.AuthorList)
+                                foreach (ItemAuthor author in segment.AuthorList)
                                 {
                                     if (author.SequenceOrder >= newSeq && author.SequenceOrder < oldSeq)
                                     {
@@ -732,7 +783,7 @@ namespace MOBOT.BHL.AdminWeb
                             if (newSeq > oldSeq)
                             {
                                 // Decrement all item sequences between the old and new sequence values
-                                foreach (SegmentAuthor author in segment.AuthorList)
+                                foreach (ItemAuthor author in segment.AuthorList)
                                 {
                                     if (author.SequenceOrder <= newSeq && author.SequenceOrder > oldSeq)
                                     {
@@ -766,7 +817,7 @@ namespace MOBOT.BHL.AdminWeb
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
-                SegmentAuthor segmentAuthor = findSegmentAuthor(segment.AuthorList,
+                ItemAuthor segmentAuthor = findSegmentAuthor(segment.AuthorList,
                     (int)authorsList.DataKeys[rowNum].Values[0],
                     (int)authorsList.DataKeys[rowNum].Values[1]);
 
@@ -797,12 +848,12 @@ namespace MOBOT.BHL.AdminWeb
                     Segment segment = (Segment)Session["Segment" + idLabel.Text];
                     String keyword = txtKeyword.Text;
 
-                    SegmentKeyword segmentKeyword = findSegmentKeyword(segment.KeywordList,
+                    ItemKeyword segmentKeyword = findSegmentKeyword(segment.KeywordList,
                         (int)keywordsList.DataKeys[e.RowIndex].Values[0],
                         (int)keywordsList.DataKeys[e.RowIndex].Values[1],
                         keywordsList.DataKeys[e.RowIndex].Values[2].ToString());
 
-                    segmentKeyword.SegmentID = segment.SegmentID;
+                    segmentKeyword.ItemID = segment.ItemID;
                     segmentKeyword.Keyword = keyword;
                 }
             }
@@ -820,8 +871,8 @@ namespace MOBOT.BHL.AdminWeb
         protected void addKeywordButton_Click(object sender, EventArgs e)
         {
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
-            SegmentKeyword segmentKeyword = new SegmentKeyword();
-            segmentKeyword.SegmentID = segment.SegmentID;
+            ItemKeyword segmentKeyword = new ItemKeyword();
+            segmentKeyword.ItemID = segment.ItemID;
             segment.KeywordList.Add(segmentKeyword);
             keywordsList.EditIndex = keywordsList.Rows.Count;
             bindKeywordData();
@@ -834,7 +885,7 @@ namespace MOBOT.BHL.AdminWeb
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
-                SegmentKeyword segmentKeyword = findSegmentKeyword(segment.KeywordList,
+                ItemKeyword segmentKeyword = findSegmentKeyword(segment.KeywordList,
                     (int)keywordsList.DataKeys[rowNum].Values[0],
                     (int)keywordsList.DataKeys[rowNum].Values[1],
                     keywordsList.DataKeys[rowNum].Values[2].ToString());
@@ -869,16 +920,15 @@ namespace MOBOT.BHL.AdminWeb
                     int identifierId = int.Parse(ddlIdentifierName.SelectedValue);
                     String identifierValue = txtIdentifierValue.Text;
 
-                    SegmentIdentifier segmentIdentifier = findSegmentIdentifier(segment.IdentifierList,
+                    ItemIdentifier segmentIdentifier = findSegmentIdentifier(segment.IdentifierList,
                         (int)identifiersList.DataKeys[e.RowIndex].Values[0],
                         (int)identifiersList.DataKeys[e.RowIndex].Values[1],
                         identifiersList.DataKeys[e.RowIndex].Values[2].ToString());
 
-                    segmentIdentifier.SegmentID = segment.SegmentID;
+                    segmentIdentifier.ItemID = segment.ItemID;
                     segmentIdentifier.IdentifierID = identifierId;
                     segmentIdentifier.IdentifierName = ddlIdentifierName.SelectedItem.Text;
                     segmentIdentifier.IdentifierValue = identifierValue;
-                    segmentIdentifier.IsContainerIdentifier = (short)(cbIsContainerIdentifier.Checked ? 1 : 0);
                 }
             }
 
@@ -895,9 +945,8 @@ namespace MOBOT.BHL.AdminWeb
         protected void addSegmentIdentifierButton_Click(object sender, EventArgs e)
         {
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
-            SegmentIdentifier si = new SegmentIdentifier();
-            si.SegmentID = segment.SegmentID;
-            si.IsContainerIdentifier = (short)0;
+            ItemIdentifier si = new ItemIdentifier();
+            si.ItemID = segment.ItemID;
             segment.IdentifierList.Add(si);
             identifiersList.EditIndex = identifiersList.Rows.Count;
             bindSegmentIdentifierData();
@@ -910,7 +959,7 @@ namespace MOBOT.BHL.AdminWeb
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
-                SegmentIdentifier segmentIdentifier = findSegmentIdentifier(segment.IdentifierList,
+                ItemIdentifier segmentIdentifier = findSegmentIdentifier(segment.IdentifierList,
                     (int)identifiersList.DataKeys[rowNum].Values[0],
                     (int)identifiersList.DataKeys[rowNum].Values[1],
                     identifiersList.DataKeys[rowNum].Values[2].ToString());
@@ -949,11 +998,11 @@ namespace MOBOT.BHL.AdminWeb
                     if (newSeq > 0)
                     {
                         // Find item being changed
-                        SegmentPage changedPage = findSegmentPage(segment.PageList,
+                        ItemPage changedPage = findSegmentPage(segment.PageList,
                             (int)pagesList.DataKeys[e.RowIndex].Values[0],
                             (int)pagesList.DataKeys[e.RowIndex].Values[1]);
 
-                        short oldSeq = changedPage.SequenceOrder;
+                        int oldSeq = changedPage.SequenceOrder;
 
                         if (changedPage != null)
                         {
@@ -961,7 +1010,7 @@ namespace MOBOT.BHL.AdminWeb
                             if (newSeq < oldSeq)
                             {
                                 // Increment all item sequences between the old and new sequence values
-                                foreach (SegmentPage page in segment.PageList)
+                                foreach (ItemPage page in segment.PageList)
                                 {
                                     if (page.SequenceOrder >= newSeq && page.SequenceOrder < oldSeq)
                                     {
@@ -975,7 +1024,7 @@ namespace MOBOT.BHL.AdminWeb
                             if (newSeq > oldSeq)
                             {
                                 // Decrement all item sequences between the old and new sequence values
-                                foreach (SegmentPage page in segment.PageList)
+                                foreach (ItemPage page in segment.PageList)
                                 {
                                     if (page.SequenceOrder <= newSeq && page.SequenceOrder > oldSeq)
                                     {
@@ -1009,7 +1058,7 @@ namespace MOBOT.BHL.AdminWeb
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
-                SegmentPage segmentPage = findSegmentPage(segment.PageList,
+                ItemPage segmentPage = findSegmentPage(segment.PageList,
                     (int)pagesList.DataKeys[rowNum].Values[0],
                     (int)pagesList.DataKeys[rowNum].Values[1]);
 
@@ -1162,7 +1211,12 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         #endregion RelatedSegment event handlers
-        
+
+        protected void btnPaginator_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Paginator.aspx?SegmentID=" + idLabel.Text);
+        }
+
         protected void saveButton_Click(object sender, EventArgs e)
         {
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
@@ -1170,6 +1224,8 @@ namespace MOBOT.BHL.AdminWeb
 
             if (validate(segment))
             {
+                BHLProvider bp = new BHLProvider();
+
                 // Set the id of the editing user
                 userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
@@ -1192,9 +1248,8 @@ namespace MOBOT.BHL.AdminWeb
                 }
 
                 // Gather up data on form
-                bool isItemChanged = (segment.ItemID ?? 0) != (itemIDLabel.Text == "" ? 0 : Convert.ToInt32(itemIDLabel.Text));
-                segment.ItemID = (itemIDLabel.Text == "" ? (int?)null : Convert.ToInt32(itemIDLabel.Text));
-                segment.DOIName = doiTextBox.Text.Trim();
+                bool isItemChanged = (segment.BookID ?? 0) != (itemIDLabel.Text == "" ? 0 : Convert.ToInt32(itemIDLabel.Text));
+                segment.BookID = (itemIDLabel.Text == "" ? (int?)null : Convert.ToInt32(itemIDLabel.Text));
                 segment.RedirectSegmentID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
                 segment.SegmentStatusID = Convert.ToInt32(ddlSegmentStatus.SelectedValue);
                 segment.SegmentGenreID = Convert.ToInt32(ddlSegmentGenre.SelectedValue);
@@ -1225,6 +1280,58 @@ namespace MOBOT.BHL.AdminWeb
                 segment.Summary = summaryTextBox.Text.Trim();
                 segment.IsPrimary = (short)(chkPrimary.Checked ? 1 : 0);
                 segment.IsNew = (segment.SegmentID == 0);
+
+                //----------------------------------------
+
+                // Update the Item information
+                if (segment.Item == null)
+                {
+                    segment.Item = new Item
+                    {
+                        ItemTypeID = 20,    // 10 = Book, 20 = Segment
+                        ItemStatusID = segment.SegmentStatusID,
+                        IsNew = true
+                    };
+                }
+                bool updated = false;
+                if (segment.SegmentStatusID != segment.Item.ItemStatusID) { segment.Item.ItemStatusID = segment.SegmentStatusID; updated = true; }
+                if (segment.Notes.CompareTo(segment.Item.Note) != 0) { segment.Item.Note = segment.Notes; updated = true; }
+                if (updated) segment.Item.LastModifiedDate = DateTime.Now;
+
+                //----------------------------------------
+
+                // Update the ItemRelationship records if the Item has changed
+                if (isItemChanged)
+                {
+                    Book book = null;
+                    if (segment.BookID != null) book = bp.BookSelectAuto((int)segment.BookID);
+
+                    bool existing = false;
+                    foreach(ItemRelationship ir in segment.RelationshipList)
+                    {
+                        if (ir.IsChild == 1 && !ir.IsDeleted)
+                        {
+                            existing = true;
+                            if (segment.BookID == null)
+                                ir.IsDeleted = true;
+                            else
+                                ir.ParentID = book.ItemID;
+                        }
+                    }
+
+                    if (!existing && book != null)
+                    {
+                        int maxSeq = (from x in segment.RelationshipList where !(x.IsDeleted) select x.SequenceOrder).DefaultIfEmpty(0).Max();
+                        segment.RelationshipList.Add(
+                            new ItemRelationship
+                            {
+                                ParentID = book.ItemID,
+                                ChildID = segment.ItemID,
+                                SequenceOrder = maxSeq + 1,
+                                IsNew = true
+                            });
+                    }
+                }
 
                 //----------------------------------------
 
@@ -1268,24 +1375,17 @@ namespace MOBOT.BHL.AdminWeb
                 //----------------------------------------
 
                 // Forces deletes to happen first
-                //segment.ContributorList.Sort(SortOrder.Descending, "IsDeleted");
-                //segment.IdentifierList.Sort(SortOrder.Descending, "IsDeleted");
-                //segment.AuthorList.Sort(SortOrder.Descending, "IsDeleted");
-                //segment.KeywordList.Sort(SortOrder.Descending, "IsDeleted");
-                //segment.PageList.Sort(SortOrder.Descending, "IsDeleted");
                 segment.ContributorList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 segment.IdentifierList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 segment.AuthorList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 segment.KeywordList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 segment.PageList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
 
-                BHLProvider bp = new BHLProvider();
-
                 // If the ItemID has been modified, then reset the sequenceorder.  If other segments exist on the selected
                 // Item, make this segment the last one (with the highest sequence number).
                 if (isItemChanged)
                 {
-                    segment.SequenceOrder = (short)((segment.ItemID == null) ? 1 : (bp.SegmentSelectByItemID((int)segment.ItemID).Count + 1));
+                    segment.SequenceOrder = (short)((segment.BookID == null) ? 1 : (bp.SegmentSelectByBookID((int)segment.BookID).Count + 1));
                 }
 
                 // Don't catch errors... allow global error handler to take over
@@ -1300,6 +1400,12 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             litMessage.Text = "<span class='liveData'>Segment Saved.</span>";
+            if (_warnings.Count > 0)
+            {
+                string warningMessage = string.Empty;
+                foreach(string warning in _warnings) warningMessage += "<br/>" + warning;
+                litWarning.Text = string.Format("<span class='liveData'>{0}</span>", warningMessage);
+            }
             Page.MaintainScrollPositionOnPostBack = false;
         }
 
@@ -1308,6 +1414,7 @@ namespace MOBOT.BHL.AdminWeb
         private bool validate(Segment segment)
         {
             bool flag = false;
+            _warnings.Clear();
 
             // Check that all edits were completed
             if (authorsList.EditIndex != -1)
@@ -1367,6 +1474,24 @@ namespace MOBOT.BHL.AdminWeb
                         flag = true;
                         errorControl.AddErrorText("Make sure the 'Start Page BHL ID' is a valid Page ID.");
                     }
+                    else
+                    {
+                        // Make sure the StartpPageID is actually in the list of pages.  If it is not, replace the StartPageID with the Page ID of the first page.
+                        if (pagesList.Rows.Count > 0)
+                        {
+                            bool pageFound = false;
+                            foreach(DataKey page in pagesList.DataKeys)
+                            {
+                                if ((int)page.Values[1] == pageID) { pageFound = true; break; }
+                            }
+                            if (!pageFound)
+                            {
+                                _warnings.Add(String.Format("NOTE: The specified Start Page ID {0} is not part of this segment.  It has been replaced with {1}.", 
+                                    pageID.ToString(), pagesList.DataKeys[0].Values[1].ToString()));
+                                bhlStartPageIDTextBox.Text = pagesList.DataKeys[0].Values[1].ToString();
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -1374,6 +1499,39 @@ namespace MOBOT.BHL.AdminWeb
                     flag = true;
                     errorControl.AddErrorText("Make sure the 'Start Page BHL ID' is a valid Page ID.");
                 }
+            }
+
+            if (volumeTextBox.Text.Trim().Length > 0)
+            {
+                if (DataCleaner.ValidateSegmentVolumeIssue(volumeTextBox.Text.Trim()))
+                {
+                    volumeTextBox.Text = volumeTextBox.Text.Trim();   // Remove spaces
+                }
+                else
+                {
+                    flag = true;
+                    errorControl.AddErrorText("Volume must be formatted as 'NN' or 'NN-NN' or 'NN/NN'.");
+                }
+            }
+
+            if (issueTextBox.Text.Trim().Length > 0)
+            {
+                if (DataCleaner.ValidateSegmentVolumeIssue(issueTextBox.Text.Trim()))
+                {
+                    issueTextBox.Text = issueTextBox.Text.Trim();   // Remove spaces
+                }
+                else
+                {
+                    flag = true;
+                    errorControl.AddErrorText("Issue must be formatted as 'NN' or 'NN-NN' or 'NN/NN'.");
+                }
+            }
+
+            // Make sure that at least one contributor has been specified
+            if (ddlContributor.SelectedValue == "" && ddlContributor2.SelectedValue == "")
+            {
+                flag = true;
+                errorControl.AddErrorText("At least one contributor must be selected");
             }
 
             // Validate other inputs
@@ -1386,17 +1544,17 @@ namespace MOBOT.BHL.AdminWeb
             // Check for duplicate authors
             bool br = false;
             int ix = 0;
-            foreach (SegmentAuthor sa in segment.AuthorList)
+            foreach (ItemAuthor ia in segment.AuthorList)
             {
-                if (sa.IsDeleted == false)
+                if (ia.IsDeleted == false)
                 {
                     int iy = 0;
-                    foreach (SegmentAuthor sa2 in segment.AuthorList)
+                    foreach (ItemAuthor ia2 in segment.AuthorList)
                     {
-                        if (sa2.IsDeleted == false)
+                        if (ia2.IsDeleted == false)
                         {
-                            if ((sa.SegmentAuthorID != sa2.SegmentAuthorID && sa.AuthorID == sa2.AuthorID) ||
-                                (sa.SegmentAuthorID == 0 && sa.SegmentAuthorID == 0 && sa.AuthorID == sa2.AuthorID && ix != iy))
+                            if ((ia.ItemAuthorID != ia2.ItemAuthorID && ia.AuthorID == ia2.AuthorID) ||
+                                (ia.ItemAuthorID == 0 && ia.ItemAuthorID == 0 && ia.AuthorID == ia2.AuthorID && ix != iy))
                             {
                                 br = true;
                                 flag = true;
@@ -1416,17 +1574,17 @@ namespace MOBOT.BHL.AdminWeb
             // Check for duplicate pages
             br = false;
             ix = 0;
-            foreach (SegmentPage sp in segment.PageList)
+            foreach (ItemPage sp in segment.PageList)
             {
                 if (sp.IsDeleted == false)
                 {
                     int iy = 0;
-                    foreach (SegmentPage sp2 in segment.PageList)
+                    foreach (ItemPage sp2 in segment.PageList)
                     {
                         if (sp2.IsDeleted == false)
                         {
-                            if ((sp.SegmentPageID != sp2.SegmentPageID && sp.PageID == sp2.PageID) ||
-                                (sp.SegmentPageID == 0 && sp.SegmentPageID == 0 && sp.PageID == sp2.PageID && ix != iy))
+                            if ((sp.ItemPageID != sp2.ItemPageID && sp.PageID == sp2.PageID) ||
+                                (sp.ItemPageID == 0 && sp.ItemPageID == 0 && sp.PageID == sp2.PageID && ix != iy))
                             {
                                 br = true;
                                 flag = true;
@@ -1441,6 +1599,19 @@ namespace MOBOT.BHL.AdminWeb
                     }
                 }
                 ix++;
+            }
+
+            // Validate identifiers
+            IdentifierValidationResult identifierValidationResult = new BHLProvider().ValidateIdentifiers(segment.IdentifierList);
+            if (!identifierValidationResult.IsValid)
+            {
+                flag = true;
+                foreach (string message in identifierValidationResult.Messages) errorControl.AddErrorText(message);
+            }
+            if (identifierValidationResult.IncludesNewBHLDOI)
+            {
+                flag = true;
+                errorControl.AddErrorText("A BHL-created DOI can only be added by submitting the Segment metadata to a DOI registrar (such as Crossref)");
             }
 
             errorControl.Visible = flag;

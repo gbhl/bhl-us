@@ -1,19 +1,13 @@
-﻿
--- IndicatedPageInsertAuto PROCEDURE
--- Generated 1/16/2008 1:54:48 PM
--- Do not modify the contents of this procedure.
--- Insert Procedure for IndicatedPage
-
-CREATE PROCEDURE IndicatedPageInsertAuto
+CREATE PROCEDURE dbo.IndicatedPageInsertAuto
 
 @IndicatedPageID INT OUTPUT,
-@BarCode NVARCHAR(40),
+@BarCode NVARCHAR(200),
 @FileNamePrefix NVARCHAR(200),
 @SequenceOrder INT = null,
 @Sequence SMALLINT = null,
 @ImportStatusID INT,
 @ImportSourceID INT = null,
-@PagePrefix NVARCHAR(20) = null,
+@PagePrefix NVARCHAR(40) = null,
 @PageNumber NVARCHAR(20) = null,
 @Implied BIT,
 @ExternalCreationDate DATETIME = null,
@@ -27,8 +21,7 @@ AS
 SET NOCOUNT ON
 
 INSERT INTO [dbo].[IndicatedPage]
-(
-	[BarCode],
+( 	[BarCode],
 	[FileNamePrefix],
 	[SequenceOrder],
 	[Sequence],
@@ -43,11 +36,9 @@ INSERT INTO [dbo].[IndicatedPage]
 	[ExternalLastModifiedUser],
 	[ProductionDate],
 	[CreatedDate],
-	[LastModifiedDate]
-)
+	[LastModifiedDate] )
 VALUES
-(
-	@BarCode,
+( 	@BarCode,
 	@FileNamePrefix,
 	@SequenceOrder,
 	@Sequence,
@@ -62,20 +53,18 @@ VALUES
 	@ExternalLastModifiedUser,
 	@ProductionDate,
 	getdate(),
-	getdate()
-)
+	getdate() )
 
 SET @IndicatedPageID = Scope_Identity()
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure IndicatedPageInsertAuto. No information was inserted as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.IndicatedPageInsertAuto. No information was inserted as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[IndicatedPageID],
 		[BarCode],
 		[FileNamePrefix],
@@ -93,12 +82,10 @@ ELSE BEGIN
 		[ProductionDate],
 		[CreatedDate],
 		[LastModifiedDate]	
-
 	FROM [dbo].[IndicatedPage]
-	
 	WHERE
 		[IndicatedPageID] = @IndicatedPageID
 	
 	RETURN -- insert successful
 END
-
+GO

@@ -1,7 +1,9 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Text;
 using System.Web;
 
@@ -24,32 +26,27 @@ namespace MOBOT.BHL.AdminWeb
 
             this.WriteHttpHeaders(context, "text/csv", "MonographContributions" + DateTime.Now.ToString("yyyyMMdd") + ".csv");
 
-            // Write file header
-            StringBuilder csvString = new StringBuilder();
-            csvString.AppendLine("\"Title ID\",\"OCLC\",\"Full Title\",\"Authors\",\"Volume\",\"Start Year\",\"Call Number\",\"Publisher\",\"Publisher Place\",\"Item ID\",\"Identifier Bib\"");
-            context.Response.Write(csvString.ToString());
-            context.Response.Flush();
-
+            var data = new List<dynamic>();
             foreach (NonMemberMonograph monograph in monographs)
             {
-                // Write record
-                csvString.Remove(0, csvString.Length);
-                csvString.Append("\"" + monograph.TitleID.ToString() + "\",");
-                csvString.Append("\"" + monograph.Oclc + "\",");
-                csvString.Append("\"" + monograph.FullTitle.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + monograph.Authors.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + monograph.Volume.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + monograph.StartYear + "\",");
-                csvString.Append("\"" + monograph.CallNumber.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + monograph.Publisher.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + monograph.PublisherPlace.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + monograph.ItemID.ToString() + "\",");
-                csvString.AppendLine("\"" + monograph.IdentifierBib.Replace('"', '\'') + "\",");
-
-                context.Response.Write(csvString.ToString());
-                context.Response.Flush();
+                var record = new ExpandoObject() as IDictionary<string, Object>;
+                record.Add("Title ID", monograph.TitleID.ToString());
+                record.Add("OCLC", monograph.Oclc);
+                record.Add("Full Title", monograph.FullTitle);
+                record.Add("Authors", monograph.Authors);
+                record.Add("Volume", monograph.Volume);
+                record.Add("Start Year", monograph.StartYear);
+                record.Add("Call Number", monograph.CallNumber);
+                record.Add("Publisher", monograph.Publisher);
+                record.Add("Publisher Place", monograph.PublisherPlace);
+                record.Add("Item ID", monograph.ItemID.ToString());
+                record.Add("Identifier Bib", monograph.IdentifierBib);
+                data.Add(record);
             }
 
+            byte[] csvBytes = new CSV().FormatCSVData(data);
+            context.Response.Write(Encoding.UTF8.GetString(csvBytes, 0, csvBytes.Length));
+            context.Response.Flush();
             context.Response.End();
         }
 

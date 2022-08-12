@@ -12,6 +12,11 @@ namespace MOBOT.BHL.Web2
     public partial class SiteMaster : System.Web.UI.MasterPage
     {
         public string bodyID {get; set;}
+        public bool harmfulContentBannerVisible
+        {
+            get { return harmfulcontentbanner.Visible; }
+            set { harmfulcontentbanner.Visible = value; }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             bool debugMode = new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request);

@@ -1,7 +1,7 @@
 
-// Generated 1/18/2008 11:10:47 AM
+// Generated 1/5/2021 3:26:40 PM
 // Do not modify the contents of this code file.
-// This abstract class __PageType is based upon PageType.
+// This abstract class __PageType is based upon dbo.PageType.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __PageType : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -48,13 +48,28 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="pageTypeID"></param>
 		/// <param name="pageTypeName"></param>
 		/// <param name="pageTypeDescription"></param>
+		/// <param name="active"></param>
+		/// <param name="creationDate"></param>
+		/// <param name="lastModifiedDate"></param>
+		/// <param name="creationUserID"></param>
+		/// <param name="lastModifiedUserID"></param>
 		public __PageType(int pageTypeID, 
 			string pageTypeName, 
-			string pageTypeDescription) : this()
+			string pageTypeDescription, 
+			byte active, 
+			DateTime? creationDate, 
+			DateTime? lastModifiedDate, 
+			int? creationUserID, 
+			int? lastModifiedUserID) : this()
 		{
 			_PageTypeID = pageTypeID;
 			PageTypeName = pageTypeName;
 			PageTypeDescription = pageTypeDescription;
+			Active = active;
+			CreationDate = creationDate;
+			LastModifiedDate = lastModifiedDate;
+			CreationUserID = creationUserID;
+			LastModifiedUserID = lastModifiedUserID;
 		}
 		
 		#endregion Constructors
@@ -96,7 +111,32 @@ namespace MOBOT.BHL.DataObjects
 						_PageTypeDescription = (string)column.Value;
 						break;
 					}
-				}
+					case "Active" :
+					{
+						_Active = (byte)column.Value;
+						break;
+					}
+					case "CreationDate" :
+					{
+						_CreationDate = (DateTime?)column.Value;
+						break;
+					}
+					case "LastModifiedDate" :
+					{
+						_LastModifiedDate = (DateTime?)column.Value;
+						break;
+					}
+					case "CreationUserID" :
+					{
+						_CreationUserID = (int?)column.Value;
+						break;
+					}
+					case "LastModifiedUserID" :
+					{
+						_LastModifiedUserID = (int?)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -104,7 +144,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region PageTypeID
 		
@@ -113,9 +153,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Column: PageTypeID;
 		/// DBMS data type: int; Auto key;
-		/// Description: Unique identifier for each Page Type record.
 		/// </summary>
-		[ColumnDefinition("PageTypeID", DbTargetType=SqlDbType.Int, Ordinal=1, Description="Unique identifier for each Page Type record.", NumericPrecision=10, IsAutoKey=true, IsInForeignKey=true, IsInPrimaryKey=true)]
+		[ColumnDefinition("PageTypeID", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsAutoKey=true, IsInForeignKey=true, IsInPrimaryKey=true)]
 		public int PageTypeID
 		{
 			get
@@ -142,9 +181,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Column: PageTypeName;
 		/// DBMS data type: nvarchar(30);
-		/// Description: Name of a Page Type.
 		/// </summary>
-		[ColumnDefinition("PageTypeName", DbTargetType=SqlDbType.NVarChar, Ordinal=2, Description="Name of a Page Type.", CharacterMaxLength=30)]
+		[ColumnDefinition("PageTypeName", DbTargetType=SqlDbType.NVarChar, Ordinal=2, CharacterMaxLength=30)]
 		public string PageTypeName
 		{
 			get
@@ -171,9 +209,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Column: PageTypeDescription;
 		/// DBMS data type: nvarchar(255); Nullable;
-		/// Description: Description of the Page Type.
 		/// </summary>
-		[ColumnDefinition("PageTypeDescription", DbTargetType=SqlDbType.NVarChar, Ordinal=3, Description="Description of the Page Type.", CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("PageTypeDescription", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=255, IsNullable=true)]
 		public string PageTypeDescription
 		{
 			get
@@ -192,9 +229,144 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion PageTypeDescription
+		
+		#region Active
+		
+		private byte _Active = default(byte);
+		
+		/// <summary>
+		/// Column: Active;
+		/// DBMS data type: tinyint;
+		/// </summary>
+		[ColumnDefinition("Active", DbTargetType=SqlDbType.TinyInt, Ordinal=4, NumericPrecision=3)]
+		public byte Active
+		{
+			get
+			{
+				return _Active;
+			}
+			set
+			{
+				if (_Active != value)
+				{
+					_Active = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Active
+		
+		#region CreationDate
+		
+		private DateTime? _CreationDate = null;
+		
+		/// <summary>
+		/// Column: CreationDate;
+		/// DBMS data type: datetime; Nullable;
+		/// </summary>
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=5, IsNullable=true)]
+		public DateTime? CreationDate
+		{
+			get
+			{
+				return _CreationDate;
+			}
+			set
+			{
+				if (_CreationDate != value)
+				{
+					_CreationDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreationDate
+		
+		#region LastModifiedDate
+		
+		private DateTime? _LastModifiedDate = null;
+		
+		/// <summary>
+		/// Column: LastModifiedDate;
+		/// DBMS data type: datetime; Nullable;
+		/// </summary>
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=6, IsNullable=true)]
+		public DateTime? LastModifiedDate
+		{
+			get
+			{
+				return _LastModifiedDate;
+			}
+			set
+			{
+				if (_LastModifiedDate != value)
+				{
+					_LastModifiedDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedDate
+		
+		#region CreationUserID
+		
+		private int? _CreationUserID = null;
+		
+		/// <summary>
+		/// Column: CreationUserID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=7, NumericPrecision=10, IsNullable=true)]
+		public int? CreationUserID
+		{
+			get
+			{
+				return _CreationUserID;
+			}
+			set
+			{
+				if (_CreationUserID != value)
+				{
+					_CreationUserID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreationUserID
+		
+		#region LastModifiedUserID
+		
+		private int? _LastModifiedUserID = null;
+		
+		/// <summary>
+		/// Column: LastModifiedUserID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=8, NumericPrecision=10, IsNullable=true)]
+		public int? LastModifiedUserID
+		{
+			get
+			{
+				return _LastModifiedUserID;
+			}
+			set
+			{
+				if (_LastModifiedUserID != value)
+				{
+					_LastModifiedUserID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedUserID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -238,7 +410,12 @@ namespace MOBOT.BHL.DataObjects
 					o.IsDeleted == IsDeleted &&
 					o.PageTypeID == PageTypeID &&
 					GetComparisonString(o.PageTypeName) == GetComparisonString(PageTypeName) &&
-					GetComparisonString(o.PageTypeDescription) == GetComparisonString(PageTypeDescription) 
+					GetComparisonString(o.PageTypeDescription) == GetComparisonString(PageTypeDescription) &&
+					o.Active == Active &&
+					o.CreationDate == CreationDate &&
+					o.LastModifiedDate == LastModifiedDate &&
+					o.CreationUserID == CreationUserID &&
+					o.LastModifiedUserID == LastModifiedUserID 
 				)
 				{
 					o = null;
@@ -333,7 +510,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __PageType.SortColumn.PageTypeID);
 		/// </summary>
 		[Serializable]
@@ -341,10 +517,16 @@ namespace MOBOT.BHL.DataObjects
 		{	
 			public const string PageTypeID = "PageTypeID";	
 			public const string PageTypeName = "PageTypeName";	
-			public const string PageTypeDescription = "PageTypeDescription";
+			public const string PageTypeDescription = "PageTypeDescription";	
+			public const string Active = "Active";	
+			public const string CreationDate = "CreationDate";	
+			public const string LastModifiedDate = "LastModifiedDate";	
+			public const string CreationUserID = "CreationUserID";	
+			public const string LastModifiedUserID = "LastModifiedUserID";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

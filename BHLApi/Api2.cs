@@ -133,9 +133,9 @@ namespace MOBOT.BHL.API.BHLApi
                 item.TitleUrl = (item.PrimaryTitleID == null) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
                 item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
 
-                List<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                List<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByBookIDAndRole(null, null, item.ItemID, "Scanning Institution");
                 if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                List<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                List<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByBookIDAndRole(null, null, item.ItemID, "Rights Holder");
                 if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
                 if (pages) item.Pages = this.GetItemPages(itemID, includeOcr);
@@ -238,9 +238,9 @@ namespace MOBOT.BHL.API.BHLApi
                         item = dal.ItemSelectByBarcode(null, null, identifierValue);
                         if (item != null)
                         {
-                            List<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                            List<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByBookIDAndRole(null, null, item.ItemID, "Scanning Institution");
                             if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                            List<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                            List<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByBookIDAndRole(null, null, item.ItemID, "Rights Holder");
                             if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
                             item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
@@ -333,9 +333,9 @@ namespace MOBOT.BHL.API.BHLApi
             List<Item> items = new Api2DAL().ItemSelectByTitleID(null, null, titleIDint);
             foreach (Item item in items)
             {
-                List<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                List<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByBookIDAndRole(null, null, item.ItemID, "Scanning Institution");
                 if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                List<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                List<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByBookIDAndRole(null, null, item.ItemID, "Rights Holder");
                 if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
                 item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
@@ -1227,7 +1227,7 @@ namespace MOBOT.BHL.API.BHLApi
             if (!isValid) detail = "[INVALID USER] " + detail;
 
             // Log the request.
-            new RequestLog().SaveRequestLog(_apiApplicationID, ipAddress, userID, (int)requestTypeID, detail);
+            new MOBOT.BHL.Utility.RequestLog().SaveRequestLog(_apiApplicationID, ipAddress, userID, (int)requestTypeID, detail);
 
             return isValid;
         }

@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[MarcSelectAssociationIdsByMarcDataFieldID]
+﻿CREATE PROCEDURE [dbo].[MarcSelectAssociationIdsByMarcDataFieldID]
 
 @MarcDataFieldID int
 
@@ -21,11 +20,9 @@ CREATE TABLE #tmpIdentifier (
 
 DECLARE @OCLC int
 DECLARE @DLC int
-DECLARE @ISSN int
 
 SELECT @OCLC = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'OCLC'
 SELECT @DLC = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'DLC'
-SELECT @ISSN = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'ISSN'
 
 -- OCLC
 INSERT INTO #tmpIdentifier (TitleIdentifierID, IdentifierValue)
@@ -39,7 +36,7 @@ AND		m.MarcDataFieldID = @MarcDataFieldID
 -- DLC (Library of Congress)
 INSERT INTO #tmpIdentifier (TitleIdentifierID, IdentifierValue)
 SELECT	@DLC, 
-		LTRIM(RTRIM(REPLACE(m.SubFieldValue, '(DLC)', '')))
+		dbo.fnGetLCCNValue(REPLACE(m.SubFieldValue, '(DLC)', ''))
 FROM	vwMarcDataField m
 WHERE	m.Code = 'w' 
 AND		m.SubFieldValue LIKE '(DLC)%'
@@ -47,8 +44,8 @@ AND		m.MarcDataFieldID = @MarcDataFieldID
 
 -- ISSN
 INSERT INTO #tmpIdentifier (TitleIdentifierID, IdentifierValue)
-SELECT	@ISSN, 
-		LTRIM(RTRIM(REPLACE(m.SubFieldValue, ';', '')))
+SELECT	dbo.fnGetISSNID(m.SubFieldValue), 
+		dbo.fnGetISSNValue(REPLACE(m.SubFieldValue, ';', ''))
 FROM	vwMarcDataField m
 WHERE	Code = 'x'
 AND		m.MarcDataFieldID = @MarcDataFieldID
@@ -66,3 +63,4 @@ SET NOCOUNT OFF
 
 END
 
+GO

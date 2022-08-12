@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <configSections>
+    <section name="log4net" type="System.Configuration.IgnoreSectionHandler"/>
+  </configSections>
+  <connectionStrings>
+    <add name="BHLImport" connectionString="DATABASE CONNECTION STRING" providerName="System.Data.SqlClient"/>
+  </connectionStrings>
+  <appSettings>
+    <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
+    <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+
+    <!-- DownloadAll indicates whether or not to get new/updated items from Internet Archive -->
+    <add key="DownloadAll" value="True" />
+    <!-- DownloadItem indicates whether or not to download information for a particular item from Internet Archive -->
+    <add key="DownloadItem" value="True"/>
+    <!-- Upload indicates whether or not to publish data for a particular item to the production database -->
+    <add key="UploadItem" value="False"/>
+    <!-- Quiet indicates whether or not to suppress emails from the IAHarvest process.  If true, only errors will produce emails. -->
+    <add key="Quiet" value="True"/>
+
+    <!-- Internet Archive search URL -->
+    <add key="SearchListIdentifiersUrl" value="http://www.archive.org/advancedsearch.php?q={0}+AND+-collection:citebank+AND+mediatype:texts+AND+oai_updatedate:[{1}+TO+{2}]&amp;fl[]=identifier&amp;fl[]=oai_updatedate&amp;rows=500000&amp;fmt=xml&amp;xmlsearch=Search"/>
+
+    <add key="LocalFileFolder" value="c:\temp\bhl1\"/>
+
+    <add key="IAHarvestExecutable" value="IAHarvest.exe"/>
+    <add key="IAHarvestProcessName" value="IAHarvest"/>
+    <add key="IAHarvestMaxInstances" value="2"/>
+
+    <!-- BHLWS service endpoint -->
+    <add key = "BHLWSUrl" value="BHLWS SERVICE URL" />
+  </appSettings>
+  <log4net>
+    <!-- Define some output appenders -->
+    <appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
+      <file value="\\SERVER\${COMPUTERNAME}-IAHarvestAsync-rolling-log.txt"/>
+      <appendToFile value="true"/>
+      <maxSizeRollBackups value="10"/>
+      <maximumFileSize value="5000000"/>
+      <rollingStyle value="Size"/>
+      <staticLogFileName value="true"/>
+      <layout type="log4net.Layout.PatternLayout">
+        <header value="[Header]
+"/>
+        <footer value="[Footer]
+"/>
+        <conversionPattern value="%date [%thread] %-5level %logger [%ndc] - %message%newline"/>
+      </layout>
+    </appender>
+    <!-- Setup the root category, add the appenders and set the default level -->
+    <root>
+      <level value="ALL"/>
+      <appender-ref ref="RollingLogFileAppender"/>
+    </root>
+  </log4net>
+  <startup> 
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8" />
+  </startup>
+</configuration>

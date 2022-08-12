@@ -1,0 +1,94 @@
+﻿@model MOBOT.BHL.Web2.Models.CollectionBrowseModel
+
+@{
+    ViewBag.Title = "Browse " + Model.Collection.CollectionName + " - Biodiversity Heritage Library";
+}
+
+<nav id="sub-nav">
+    <div class="column-wrap">
+        <div id="linkbar" class="lettersandnumbers">
+            <ul>
+                <li class="first-child"><a class="@GetStartClass(Model.Start, "a")" href="/browse/collection/@Model.Collection.PreferredUrl/a#/titles">A</a></li>
+                <li><a class="@GetStartClass(Model.Start, "b")" href="/browse/collection/@Model.Collection.PreferredUrl/b#/titles">B</a></li>
+                <li><a class="@GetStartClass(Model.Start, "c")" href="/browse/collection/@Model.Collection.PreferredUrl/c#/titles">C</a></li>
+                <li><a class="@GetStartClass(Model.Start, "d")" href="/browse/collection/@Model.Collection.PreferredUrl/d#/titles">D</a></li>
+                <li><a class="@GetStartClass(Model.Start, "e")" href="/browse/collection/@Model.Collection.PreferredUrl/e#/titles">E</a></li>
+                <li><a class="@GetStartClass(Model.Start, "f")" href="/browse/collection/@Model.Collection.PreferredUrl/f#/titles">F</a></li>
+                <li><a class="@GetStartClass(Model.Start, "g")" href="/browse/collection/@Model.Collection.PreferredUrl/g#/titles">G</a></li>
+                <li><a class="@GetStartClass(Model.Start, "h")" href="/browse/collection/@Model.Collection.PreferredUrl/h#/titles">H</a></li>
+                <li><a class="@GetStartClass(Model.Start, "i")" href="/browse/collection/@Model.Collection.PreferredUrl/i#/titles">I</a></li>
+                <li><a class="@GetStartClass(Model.Start, "j")" href="/browse/collection/@Model.Collection.PreferredUrl/j#/titles">J</a></li>
+                <li><a class="@GetStartClass(Model.Start, "k")" href="/browse/collection/@Model.Collection.PreferredUrl/k#/titles">K</a></li>
+                <li><a class="@GetStartClass(Model.Start, "l")" href="/browse/collection/@Model.Collection.PreferredUrl/l#/titles">L</a></li>
+                <li><a class="@GetStartClass(Model.Start, "m")" href="/browse/collection/@Model.Collection.PreferredUrl/m#/titles">M</a></li>
+                <li><a class="@GetStartClass(Model.Start, "n")" href="/browse/collection/@Model.Collection.PreferredUrl/n#/titles">N</a></li>
+                <li><a class="@GetStartClass(Model.Start, "o")" href="/browse/collection/@Model.Collection.PreferredUrl/o#/titles">O</a></li>
+                <li><a class="@GetStartClass(Model.Start, "p")" href="/browse/collection/@Model.Collection.PreferredUrl/p#/titles">P</a></li>
+                <li><a class="@GetStartClass(Model.Start, "q")" href="/browse/collection/@Model.Collection.PreferredUrl/q#/titles">Q</a></li>
+                <li><a class="@GetStartClass(Model.Start, "r")" href="/browse/collection/@Model.Collection.PreferredUrl/r#/titles">R</a></li>
+                <li><a class="@GetStartClass(Model.Start, "s")" href="/browse/collection/@Model.Collection.PreferredUrl/s#/titles">S</a></li>
+                <li><a class="@GetStartClass(Model.Start, "t")" href="/browse/collection/@Model.Collection.PreferredUrl/t#/titles">T</a></li>
+                <li><a class="@GetStartClass(Model.Start, "u")" href="/browse/collection/@Model.Collection.PreferredUrl/u#/titles">U</a></li>
+                <li><a class="@GetStartClass(Model.Start, "v")" href="/browse/collection/@Model.Collection.PreferredUrl/v#/titles">V</a></li>
+                <li><a class="@GetStartClass(Model.Start, "w")" href="/browse/collection/@Model.Collection.PreferredUrl/w#/titles">W</a></li>
+                <li><a class="@GetStartClass(Model.Start, "x")" href="/browse/collection/@Model.Collection.PreferredUrl/x#/titles">X</a></li>
+                <li><a class="@GetStartClass(Model.Start, "y")" href="/browse/collection/@Model.Collection.PreferredUrl/y#/titles">Y</a></li>
+                <li><a class="@GetStartClass(Model.Start, "z")" href="/browse/collection/@Model.Collection.PreferredUrl/z#/titles">Z</a></li>
+                <li><a class="@GetStartClass(Model.Start, "0")" href="/browse/collection/@Model.Collection.PreferredUrl/0#/titles">#</a></li>
+                <li><a class="@GetStartClass(Model.Start, "All")" href="/browse/collection/@Model.Collection.PreferredUrl/all#/titles">All</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<nav id="page-title">
+    <h1 class="column-wrap">
+        @if (Model.Start.ToUpper() == "ALL")
+        {
+            @Html.Raw("All " + Model.TotalBooks.ToString() + " ")
+        }
+        else
+        {
+            @Html.Raw(Model.TotalBooks.ToString() + " ")
+        }
+        items in @Model.Collection.CollectionName
+        @if (Model.Start.ToUpper() != "ALL")
+        {
+            @Html.Raw(" beginning with " + (Model.Start == "0" ? " a number" : Model.Start.ToUpper()))
+        }
+    </h1>
+</nav>
+<div id="sortbar">
+    <div class="column-wrap">
+        <span>Sort By:</span>
+        <ul>
+            <li class="@(Model.Sort == "title" || Model.Sort == "" ? "activesort" : "")"><a href="/browse/collection/@Model.Collection.PreferredUrl/@Model.Start/title?bpg=1&ppg=1&psize=@Model.NumPerPage">Title</a></li>
+            <li class="@(Model.Sort == "author" ? "activesort" : "")"><a href="/browse/collection/@Model.Collection.PreferredUrl/@Model.Start/author?bpg=1&ppg=1&psize=@Model.NumPerPage">Author</a></li>
+            <li class="@(Model.Sort == "year" ? "activesort" : "")"><a href="/browse/collection/@Model.Collection.PreferredUrl/@Model.Start/year?bpg=1&ppg=1&psize=@Model.NumPerPage">Year</a></li>
+        </ul>
+        <div class="floatclear"></div>
+    </div>
+</div>
+<div id="content" class="column-wrap clearfix">
+    <section>
+        <p>This collection contains <span style='font-weight:bolder'>@Model.NumBooks</span> volumes from <span style='font-weight:bolder'>@Model.NumTitles</span> titles, containing <span style='font-weight:bolder'>@Model.NumPages</span> pages.</p>
+        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/browse/collection/" + Model.Collection.PreferredUrl + "/" + Model.Start }, { "sort", Model.Sort }, { "target", "book" }, { "bookPage", Model.BookPage }, { "partPage", "0" }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.TotalBooks }, { "hash", "#/titles" } })
+        @Html.Partial("_BookBrowse", new ViewDataDictionary { { "searchResult", Model.BookResults }, { "showVolume", Model.ShowVolume } })
+        @Html.Partial("_BrowsePager", new ViewDataDictionary { { "path", "/browse/collection/" + Model.Collection.PreferredUrl + "/" + Model.Start }, { "sort", Model.Sort }, { "target", "book" }, { "bookPage", Model.BookPage }, { "partPage", "0" }, { "numPerPage", Model.NumPerPage }, { "totalPublications", Model.TotalBooks }, { "hash", "#/titles" } })
+    </section>
+    <aside>
+        @Html.Action("_DonateFeature", "Partial")
+        @Html.Action("_CollectionFeature", "Partial")
+    </aside>
+</div>
+
+@functions {
+    public static string GetStartClass(string modelStart, string start)
+    {
+        return (modelStart ?? string.Empty).Equals(start, StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
+    }
+}
+
+@section scripts {
+    <script src="/js/libs/jquery.hoverintent.min.js"></script>
+    <script src="/js/libs/jquery.text-overflow.min.js"></script>
+}

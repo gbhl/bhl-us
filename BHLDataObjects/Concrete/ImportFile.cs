@@ -90,8 +90,8 @@ namespace MOBOT.BHL.DataObjects
         private int _invalidRecords;
         public int InvalidRecords { get => _invalidRecords; set => _invalidRecords = value; }
 
-        private int _incompleteRecords;
-        public int IncompleteRecords { get => _incompleteRecords; set => _incompleteRecords = value; }
+        private int _warningRecords;
+        public int WarningRecords { get => _warningRecords; set => _warningRecords = value; }
 
         private int _duplicateRecords;
         public int DuplicateRecords { get => _duplicateRecords; set => _duplicateRecords = value; }
@@ -168,9 +168,9 @@ namespace MOBOT.BHL.DataObjects
                             _invalidRecords = Utility.ZeroIfNull(column.Value);
                             break;
                         }
-                    case "IncompleteRecords":
+                    case "WarningRecords":
                         {
-                            _incompleteRecords = Utility.ZeroIfNull(column.Value);
+                            _warningRecords = Utility.ZeroIfNull(column.Value);
                             break;
                         }
                     case "DuplicateRecords":

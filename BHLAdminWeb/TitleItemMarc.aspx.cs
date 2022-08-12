@@ -1,4 +1,5 @@
-﻿using MOBOT.BHL.Web.Utilities;
+﻿using BHL.SiteServiceREST.v1.Client;
+using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Configuration;
 using System.IO;
@@ -22,11 +23,10 @@ namespace MOBOT.BHL.AdminWeb
 
                     if (Int32.TryParse(idString, out id) && (type == "t" || type == "i"))
                     {
-                        SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-                        if (service.MARCFileExists(id, type))
+                        Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                        string marcXML = client.GetMarcFile(id, type);
+                        if (!string.IsNullOrWhiteSpace(marcXML))
                         {
-                            string marcXML = service.MARCGetFileContents(id, type);
-
                             XmlDocument xml = new XmlDocument();
                             StringReader reader = new StringReader(marcXML);
                             xml.Load(reader);

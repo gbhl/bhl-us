@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Objects;
 using System.Linq;
 using System.Text;
 using System.Transactions;
@@ -83,10 +84,13 @@ namespace MOBOT.BHLImport.BHLImportEFDataService
             context.BSSegmentResolveAuthors(segmentID);
         }
 
-        public void PublishSegment(int itemID, int segmentID)
+        public int PublishSegment(int itemID, int segmentID)
         {
+            int segmentStatusID = int.MinValue;
             BHLImportEntities context = GetDataContext();
-            context.BSSegmentPublishToProduction(itemID, segmentID);
+            ObjectParameter segmentStatusIDParam = new ObjectParameter("SegmentStatusID", segmentStatusID);
+            context.BSSegmentPublishToProduction(itemID, segmentID, segmentStatusIDParam);
+            return Convert.ToInt32(segmentStatusIDParam.Value);
         }
     }
 }

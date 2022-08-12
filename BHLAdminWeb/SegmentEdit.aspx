@@ -41,7 +41,7 @@
 				return;
 			}
 
-			executeServiceCall('services/titleservice.ashx?op=TitleSearch&titleID=' + titleId + '&title=' + title, showTitleList);
+			executeServiceCall('services/titleservice.ashx?op=TitleSearch&virtual=<%: _virtualOnly %>&titleID=' + titleId + '&title=' + title, showTitleList);
         }
         else {
             if (itemId === "") {
@@ -49,7 +49,7 @@
                 return;
             }
 
-            executeServiceCall('services/itemservice.ashx?op=ItemSearch&itemID=' + itemId, showItemList);
+            executeServiceCall('services/itemservice.ashx?op=ItemSearch&virtual=<%: _virtualOnly %>&itemID=' + itemId, showItemList);
         }
     }
 
@@ -59,7 +59,7 @@
             return;
         }
 
-        executeServiceCall('services/itemservice.ashx?op=ItemSearchByTitle&titleID=' + titleId + '&marcBibId=' + marcBibId, showItemList);
+        executeServiceCall('services/itemservice.ashx?op=ItemSearchByTitle&virtual=<%: _virtualOnly %>&titleID=' + titleId + '&marcBibId=' + marcBibId, showItemList);
     }
 
     function authorSearch(authorId, authorName) {
@@ -86,7 +86,7 @@
             alert("Please associate an Item with this Segment.");
             return;
         }
-        executeServiceCall('services/pageservice.ashx?op=PageSelectByItemID&itemID=' + itemId, showPageList);
+        executeServiceCall('services/pageservice.ashx?op=PageSelectByBookID&bookID=' + itemId, showPageList);
     }
 
     function showTitleList(result) {
@@ -184,8 +184,8 @@
         var td1 = document.createElement("td");
         var a = document.createElement("a");
         a.setAttribute("href", "#");
-        a.onclick = new Function("selectItem('" + item.ItemID + "')");
-        a.appendChild(document.createTextNode(item.ItemID));
+        a.onclick = new Function("selectItem('" + item.BookID + "')");
+        a.appendChild(document.createTextNode(item.BookID));
         td1.appendChild(a);
         var td2 = document.createElement("td");
         td2.appendChild(document.createTextNode(item.BarCode));
@@ -332,6 +332,44 @@
                 checkboxes[x].checked = true;
             }
         }
+	}
+
+	function isYearValid(date) {
+		var regex = RegExp('^$|^([12]\\d{3}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\\d|3[01]))?)?)$');
+		var isValid = regex.test(date);
+		if (!isValid)
+			$('#dateErr').html("<p>Date must be in one of the following formats: YYYY, YYYY-MM, YYYY-MM-DD</p>");
+		else
+			$('#dateErr').html("");
+		return isValid;
+	}
+
+	function isVolIssValid(value, label, errField) {
+		isValid = true;
+		if (fetch) {
+			var opts = { method: 'GET', headers: {} };
+			fetch('/services/utilityservice.ashx?op=ValidateSegmentVolume&volume=' + encodeURIComponent(value), opts).then(function (response) {
+				return response.json();
+			})
+				.then(function (isValid) {
+					if (!isValid)
+                        errField.html("<p>" + label + " must be formatted as 'NN' or 'NN-NN' or 'NN/NN'.</p>");
+					else
+						errField.html("");
+				});
+		}
+		return isValid;
+	}
+
+	function isSeriesValid(series) {
+		// Anything except strings like the following are accepted:  s. 1, Ser. 2, ser 3, Series 1
+        var regex = RegExp('^(?![sS][a-zA-Z]*.?\\s*\\d+)');
+		var isValid = regex.test(series);
+		if (!isValid)
+			$('#seriesErr').html('<p>Do not include a prefix like \'s.\', \'Ser.\', or \'Series\'.</p>');
+		else
+			$('#seriesErr').html('');
+		return isValid;
     }
 
     function executeServiceCall(url, callback) {
@@ -377,6 +415,7 @@
 <br />
 <mobot:ErrorControl runat="server" id="errorControl"></mobot:ErrorControl>
 <asp:Literal id="litMessage" runat="server"></asp:Literal>
+<asp:Literal ID="litWarning" runat="server"></asp:Literal>
 <br />
 <div class="box" style="padding: 5px;margin-right:15px">
 	<table cellpadding="4" width="100%">
@@ -390,16 +429,16 @@
                 <asp:Label ID="itemIDLabel" ClientIDMode="Static" runat="server" />&nbsp;
                 <asp:Label ID="itemDescLabel" Text="Not Selected" style="font-style:italic" runat="server" /><br />
                 <input type="button" onclick="overlay();document.getElementById('srchTitleID').focus();" id="btnAddItem" value="Select Item" />
-                <input type="button" onclick="if (document.getElementById('pagesList')) alert('Remove all Pages before removing the Item.'); else clearItem();"; id="btnClearItem" value="Remove Item" />
+                <input type="button" onclick="clearItem();"; id="btnClearItem" value="Remove Item" />
             </td>
         </tr>
-        <tr>
-            <td style="white-space: nowrap" align="right" class="dataHeader">DOI:</td>
-			<td><asp:TextBox ID="doiTextBox" runat="server" Width="300px"></asp:TextBox></td>
-        </tr>
+		<tr>
+			<td style="white-space: nowrap" align="right" class="dataHeader">Source ID (IA ID):</td>
+			<td style="white-space: nowrap" colspan="2" valign="middle" width="100%"><asp:Label ID="sourceIdLabel" runat="server" ForeColor="blue" /></td>
+		</tr>
 		<tr>
 			<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Status:</td>
-			<td><asp:DropDownList ID="ddlSegmentStatus" DataTextField="StatusName" DataValueField="SegmentStatusID" runat="server"></asp:DropDownList></td>
+			<td><asp:DropDownList ID="ddlSegmentStatus" DataTextField="ItemStatusName" DataValueField="ItemStatusID" runat="server"></asp:DropDownList></td>
 		</tr>
 		<tr>
 			<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Replaced By (Segment ID):</td>
@@ -477,7 +516,7 @@
 	</table>
     <br />
     <fieldset>
-        <legend class="dataHeader">Original Publication Details</legend>
+        <legend class="dataHeader">Publication Details</legend>
         <table cellpadding="4" width="100%">
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Title:</td>
@@ -500,20 +539,20 @@
 				<td colspan="4" style="width: 100%"><asp:DropDownList ID="ddlLanguage" DataTextField="LanguageName" DataValueField="LanguageCode" runat="server"></asp:DropDownList></td>
 			</tr>
 			<tr>
-				<td style="white-space: nowrap" align="right" class="dataHeader">Volume:</td>
-				<td><asp:TextBox ID="volumeTextBox" runat="server" MaxLength="100" Width="400px"></asp:TextBox></td>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Volume:</td>
+				<td><asp:TextBox ID="volumeTextBox" ClientIDMode="Static" runat="server" MaxLength="100" Width="200px" onblur="isVolIssValid(this.value, 'Volume', $('#volumeErr'));"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litVolume" runat="server"></asp:Literal><span id="volumeErr" class="ErrorText"></span></td>
 			</tr>
 			<tr>
-				<td style="white-space: nowrap" align="right" class="dataHeader">Series:</td>
-				<td><asp:TextBox ID="seriesTextBox" runat="server" MaxLength="100" Width="400px"></asp:TextBox></td>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Series:</td>
+				<td><asp:TextBox ID="seriesTextBox" ClientIDMode="Static" runat="server" MaxLength="100" Width="200px" onblur="isSeriesValid(this.value);"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litSeries" runat="server"></asp:Literal><span id="seriesErr" class="ErrorText"></span></td>
 			</tr>
 			<tr>
-				<td style="white-space: nowrap" align="right" class="dataHeader">Issue:</td>
-				<td><asp:TextBox ID="issueTextBox" runat="server" MaxLength="100" Width="400px"></asp:TextBox></td>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Issue:</td>
+				<td><asp:TextBox ID="issueTextBox" ClientIDMode="Static" runat="server" MaxLength="100" Width="200px" onblur="isVolIssValid(this.value, 'Issue', $('#issueErr'));"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litIssue" runat="server"></asp:Literal><span id="issueErr" class="ErrorText"></span></td>
 			</tr>
 			<tr>
-				<td style="white-space: nowrap" align="right" class="dataHeader">Date:</td>
-				<td><asp:TextBox ID="dateTextBox" runat="server" MaxLength="20" Width="200px"></asp:TextBox></td>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Date:</td>
+				<td><asp:TextBox ID="dateTextBox" ClientIDMode="Static" runat="server" MaxLength="20" Width="200px" onblur="isYearValid(this.value);"></asp:TextBox>&nbsp;&nbsp;<asp:Literal ID="litDate" runat="server"></asp:Literal><span id="dateErr" class="ErrorText"></span></td>
 			</tr>
         </table>
     </fieldset>
@@ -523,7 +562,7 @@
 		<asp:GridView ID="authorsList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 			AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
 			Width="800px" CssClass="boxTable" OnRowCancelingEdit="authorsList_RowCancelingEdit" OnRowEditing="authorsList_RowEditing"
-			OnRowUpdating="authorsList_RowUpdating" OnRowCommand="authorsList_RowCommand" DataKeyNames="SegmentAuthorID,AuthorID">
+			OnRowUpdating="authorsList_RowUpdating" OnRowCommand="authorsList_RowCommand" DataKeyNames="ItemAuthorID,AuthorID">
 			<Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 				<asp:BoundField DataField="AuthorID" HeaderText="Author ID" ItemStyle-Width="60px" ReadOnly="true" />
@@ -561,7 +600,7 @@
 		<asp:GridView ID="keywordsList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 		AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
 			Width="800px" CssClass="boxTable" OnRowCancelingEdit="keywordsList_RowCancelingEdit" OnRowEditing="keywordsList_RowEditing"
-			OnRowUpdating="keywordsList_RowUpdating" OnRowCommand="keywordsList_RowCommand" DataKeyNames="SegmentKeywordID, KeywordID, Keyword">
+			OnRowUpdating="keywordsList_RowUpdating" OnRowCommand="keywordsList_RowCommand" DataKeyNames="ItemKeywordID, KeywordID, Keyword">
 			<Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 				<asp:TemplateField HeaderText="Subject" ItemStyle-Width="220px" HeaderStyle-HorizontalAlign="Left">
@@ -590,7 +629,7 @@
 		<asp:GridView ID="identifiersList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 		AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
 			Width="800px" CssClass="boxTable" OnRowCancelingEdit="identifiersList_RowCancelingEdit" OnRowEditing="identifiersList_RowEditing"
-			OnRowUpdating="identifiersList_RowUpdating" OnRowCommand="identifiersList_RowCommand" DataKeyNames="SegmentIdentifierID, IdentifierID, IdentifierValue">
+			OnRowUpdating="identifiersList_RowUpdating" OnRowCommand="identifiersList_RowCommand" DataKeyNames="ItemIdentifierID, IdentifierID, IdentifierValue">
 			<Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 				<asp:TemplateField HeaderText="Identifier" ItemStyle-Width="400px" HeaderStyle-HorizontalAlign="Left">
@@ -610,14 +649,6 @@
 						<asp:TextBox ID="txtIdentifierValue" runat="server" Text='<%# Eval( "IdentifierValue") %>' />
 					</EditItemTemplate>
 				</asp:TemplateField>
-                <asp:TemplateField HeaderText="Is Original Publication ID" ItemStyle-Width="70px" HeaderStyle-HorizontalAlign="Left" HeaderStyle-Wrap="false">
-                    <ItemTemplate>
-						<asp:CheckBox ID="isContainerIdentifierCheckBox" Enabled="false" Checked='<%# Convert.ToInt32(Eval("IsContainerIdentifier")) == 1 %>' runat="server" />
-                    </ItemTemplate>
-                    <EditItemTemplate>
-						<asp:CheckBox ID="isContainerIdentifierCheckBoxEdit" Checked='<%# Convert.ToInt32(Eval("IsContainerIdentifier")) == 1 %>' runat="server" />
-                    </EditItemTemplate>
-                </asp:TemplateField>
 				<asp:TemplateField ItemStyle-Width="130px">
 					<ItemTemplate>
 						<asp:LinkButton ID="editSegmentIdentifierButton" runat="server" CommandName="Edit" Text="Edit"></asp:LinkButton>
@@ -708,11 +739,12 @@
 	<fieldset>
 		<legend class="dataHeader">Pages</legend>
         <br />
-		<input type="button" onclick="pageSearch();overlayPageSelect();" id="btnAddPage" value="Add Page" />
+		<input type="button" runat="server" onclick="pageSearch();overlayPageSelect();" id="btnAddPage" value="Add Page" visible="true" />
+		<asp:Button ID="btnPaginator" runat="server" Text="Paginate This Segment" onclick="btnPaginator_Click" Visible="false" />
 		<asp:GridView ID="pagesList" ClientIDMode="Static" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 			AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
 			Width="800px" CssClass="boxTable" OnRowCancelingEdit="pagesList_RowCancelingEdit" OnRowEditing="pagesList_RowEditing"
-			OnRowUpdating="pagesList_RowUpdating" OnRowCommand="pagesList_RowCommand" DataKeyNames="SegmentPageID, PageID">
+			OnRowUpdating="pagesList_RowUpdating" OnRowCommand="pagesList_RowCommand" DataKeyNames="ItemPageID, PageID">
 			<Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 				<asp:TemplateField HeaderText="Page ID" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Left">
@@ -747,6 +779,8 @@
 						<asp:LinkButton ID="cancelPageButton" runat="server" CommandName="Cancel" Text="Cancel"></asp:LinkButton>
 					</EditItemTemplate>
 				</asp:TemplateField>
+				<asp:HyperLinkField DataNavigateUrlFields="PageID" DataNavigateUrlFormatString="/NamePageEdit.aspx?id={0}"
+					ItemStyle-Width="130px" Text="Edit Names" NavigateUrl="/NamePageEdit.aspx" />
 			</Columns>
 			<HeaderStyle HorizontalAlign="Left" CssClass="SearchResultsHeader" />
 		</asp:GridView>
@@ -948,6 +982,17 @@
     $(window).on('load', function (e) {
         this.showSearchFields();
     })
+
+	$('#masterForm').submit(function () {
+		var isValid = true;
+		var year = $('#dateTextBox').val();
+		var volume = $('#volumeTextBox').val();
+		var issue = $('#issueTextBox').val();
+
+		isValid = isYearValid(year) && isVolIssValid(volume, "Volume", $('#volumeErr')) && isVolIssValid(issue, "Issue", $('#issueErr'));
+
+		return isValid;
+	});
 
 	function showSearchFields() {
 		console.log('showSearchFields');

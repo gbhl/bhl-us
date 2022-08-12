@@ -13,7 +13,6 @@
     <add key="DebugMode" value="true" />
     <add key="DebugPath" value="PATH FOR DEBUG OUTPUT" />
     <!-- Email Settings-->
-    <add key="SMTPHost" value="SMTP SERVER NAME"/>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
     <!-- Text file path -->
@@ -25,6 +24,8 @@
     <!-- Text import file path -->
     <add key="TextImportFilePath" value="https://WEB-SITE-ADDRESS/Upload/ItemText/Files/" />
     <add key="TextImportLocalFilePath" value="temp/" />
+    <!-- BHLWS service endpoint -->
+    <add key = "BHLWSUrl" value="BHLWS SERVICE URL" />
   </appSettings>
   <!-- This section contains the log4net configuration settings -->
   <log4net>
@@ -50,19 +51,6 @@
       <appender-ref ref="RollingLogFileAppender"/>
     </root>
   </log4net>
-  <system.net>
-    <mailSettings>
-      <smtp deliveryMethod="Network">
-        <network defaultCredentials="false"
-                 enableSsl="false"
-                   host="MAIL_SERVER_ADDRESS"
-                   port="MAIL_SERVER_PORT"
-                   userName="MAIL_SERVER_USERNAME"
-                   password="MAIL_SERVER_PASSWORD"
-                   />
-      </smtp>
-    </mailSettings>
-  </system.net>
   <startup> 
         <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.2"/>
     </startup>

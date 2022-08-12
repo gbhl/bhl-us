@@ -36,7 +36,7 @@ CREATE TABLE #tmpAuthor (
 -- Get the initial creator information (MARC subfield code 'a')
 INSERT INTO #tmpAuthor (FullName, AuthorRoleID, AuthorTypeID, MARCDataFieldID, 
 						MARCDataFieldTag, MARCCreator_a, SequenceOrder)
-SELECT	m.SubFieldValue,
+SELECT	dbo.fnConvertToTitleCase(dbo.fnAddAuthorNameSpaces(m.SubFieldValue)),
 		0,
 		0,
 		m.MARCDataFieldID, 
@@ -301,3 +301,5 @@ DROP TABLE #tmpAuthor
 SET NOCOUNT OFF
 
 END
+
+GO

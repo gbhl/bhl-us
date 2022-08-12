@@ -23,6 +23,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -73,7 +74,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ImportRecordErrorLog> helper = new CustomSqlHelper<ImportRecordErrorLog>())
 				{
-					CustomGenericList<ImportRecordErrorLog> list = helper.ExecuteReader(command);
+					List<ImportRecordErrorLog> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ImportRecordErrorLog o = list[0];
@@ -94,8 +95,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="importRecordErrorLogID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ImportRecordErrorLogSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ImportRecordErrorLogSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int importRecordErrorLogID)
@@ -110,8 +111,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="importRecordErrorLogID"></param>
-		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
-		public CustomGenericList<CustomDataRow> ImportRecordErrorLogSelectAutoRaw(
+		/// <returns>List&lt;CustomDataRow&gt;</returns>
+		public List<CustomDataRow> ImportRecordErrorLogSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
@@ -195,7 +196,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ImportRecordErrorLog> helper = new CustomSqlHelper<ImportRecordErrorLog>())
 				{
-					CustomGenericList<ImportRecordErrorLog> list = helper.ExecuteReader(command);
+					List<ImportRecordErrorLog> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ImportRecordErrorLog o = list[0];
@@ -373,7 +374,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<ImportRecordErrorLog> helper = new CustomSqlHelper<ImportRecordErrorLog>())
 				{
-					CustomGenericList<ImportRecordErrorLog> list = helper.ExecuteReader(command);
+					List<ImportRecordErrorLog> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						ImportRecordErrorLog o = list[0];

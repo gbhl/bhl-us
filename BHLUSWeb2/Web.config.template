@@ -12,8 +12,11 @@
     <add key="BaseUrl" value="https://beta.biodiversitylibrary.org"/>
     <add key="BibPageUrl" value="https://beta.biodiversitylibrary.org/bibliography/{0}"/>
     <add key="ItemPageUrl" value="https://beta.biodiversitylibrary.org/item/{0}"/>
+    <add key="ItemPdfUrl" value="https://beta.biodiversitylibrary.org/itempdf/{0}"/>
+    <add key="SegmentPageUrl" value="https://beta.biodiversitylibrary.org/segment/{0}" />
     <add key="PagePageUrl" value="https://beta.biodiversitylibrary.org/page/{0}"/>
     <add key="PartPageUrl" value="https://beta.biodiversitylibrary.org/part/{0}"/>
+    <add key="PartPdfUrl" value="https://beta.biodiversitylibrary.org/partpdf/{0}"/>
     <add key="AuthorPageUrl" value="https://beta.biodiversitylibrary/creator/{0}"/>
 
     <add key="ImageNotFoundPath" value="https://beta.biodiversitylibrary.org/images/image_not_found.jpg"/>
@@ -23,6 +26,9 @@
 
     <!-- OAI Settings -->
     <add key="OAIBaseUrl" value="https://beta.biodiversitylibrary.org/oai"/>
+
+    <!-- Google settings -->
+    <add key="GoogleAnalyticsTrackingID" value="google analytics tracking identifier" />
 
     <!-- Gemini settings -->
     <add key="GeminiURL" value="issue tracking service URL"/>
@@ -69,9 +75,14 @@
     -->
     <add key="SearchProviders" value="BHL.Search.Elastic|BHL.Search.SQL|BHL.Search.Offline" />
 
+    <!-- Feature toggle for PDF delivery -->
+    <add key="UsePregeneratedPDFs" value ="true" />
+
+    <!-- SiteServices address -->
+    <add key="SiteServicesURL" value="SITESERVICES_URL"/>
+
     <!-- ###################################################################### -->
 
-    <add key="UseRemoteFileAccessProvider" value="false"/>
     <add key="DoRemoteNameLookup" value="false"/>
     <add key="ShowAnnotations" value="true"/>
     <add key="EnableFullTextSearch" value="true"/>
@@ -97,7 +108,7 @@
         olef | http://www.bhle.eu/bhl-schema/v1/ | http://www.bhle.eu/bhl-schema/v1/OLEF_v1.0.xsd | MOBOT.BHL.OAIOLEF | true | 10
 		-->
     <add key="OAIMetadataFormats" value="oai_dc | http://www.openarchives.org/OAI/2.0/ | http://www.openarchives.org/OAI/2.0/oai_dc.xsd | MOBOT.BHL.OAIDC | false | 100
-       mods | http://www.loc.gov/mods/v3 | http://www.loc.gov/standards/mods/v3/mods-3-0.xsd | MOBOT.BHL.OAIMODS | false | 100
+       mods | http://www.loc.gov/mods/v3 | http://www.loc.gov/standards/mods/v3/mods-3-7.xsd | MOBOT.BHL.OAIMODS | false | 100
        olef | http://www.bhle.eu/bhl-schema/v1/ | http://www.bhle.eu/bhl-schema/v1/OLEF_v1.0.xsd | MOBOT.BHL.OAIOLEF | true | 10"/>
 
     <!-- Valid values for NameFinderService are "TaxonFinder", "GNFinder", and "GNFinderLocal" -->
@@ -128,11 +139,11 @@
     <add key="browseByYearDefaultStart" value="1450"/>
     <add key="browseByYearDefaultEnd" value="1580"/>   
     <!-- End Default Year Browse Dates-->
+    <add key="DefaultBrowseNumPerPage" value="250" />
     <add key="PageTitle" value="{0} - Biodiversity Heritage Library" />
     <add key="TweetMessage" value="{0} @BioDivLibrary" />
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
     <add key="ItemTextLocation" value="{0}\{1}\{2}" />
-    <add key="DOIResolverURL" value="https://doi.org/"/>
 
     <add key="TwitterConsumerKey" value="your twitter consumer key goes here"/>
     <add key="TwitterConsumerSecret" value="your twitter consumer secret goes here"/>
@@ -210,6 +221,11 @@
       <httpRuntime requestValidationMode="2.0" />
     </system.web>
   </location>
+  <location path="subject">
+    <system.web>
+      <httpRuntime requestPathInvalidCharacters="&lt;,&gt;,*,%,\"/>
+    </system.web>
+  </location>
   <system.web>
     <!-- 
             machineKey is only needed if hosting the site in a web farm.
@@ -220,7 +236,7 @@
             comment out the <machineKey> element.
     -->
     <machineKey decryption="AES" decryptionKey="decryption key" validation="HMACSHA256" validationKey="validation key" />
-    <httpRuntime requestValidationMode="2.0" executionTimeout="90" maxRequestLength="8192" relaxedUrlToFileSystemMapping="true" />
+    <httpRuntime requestValidationMode="2.0" executionTimeout="90" maxRequestLength="8192" relaxedUrlToFileSystemMapping="true" targetFramework="4.8" />
     <!-- 
             Set compilation debug="true" to insert debugging 
             symbols into the compiled page. Because this 
@@ -229,14 +245,7 @@
         -->
     <!-- REF: http://aspadvice.com/blogs/joteke/archive/2006/02/02/15011.aspx -->
     <pages enableEventValidation="false" viewStateEncryptionMode="Never" controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID" />
-    <compilation debug="true">
-      <assemblies>
-        <add assembly="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
-        <add assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
-        <add assembly="System.Xml.Linq, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
-        <add assembly="System.Data.DataSetExtensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
-      </assemblies>
-    </compilation>
+    <compilation debug="true" targetFramework="4.8" />
     <globalization requestEncoding="utf-8" responseEncoding="utf-8" />
     <customErrors mode="Off" />
   </system.web>
@@ -356,32 +365,7 @@
           </outboundRules>
         </rewrite>
     </system.webServer>
-  <system.serviceModel>
-    <bindings>
-      <basicHttpBinding>
-        <binding name="SiteServiceSoap" closeTimeout="00:01:00" openTimeout="00:01:00"
-          receiveTimeout="00:10:00" sendTimeout="00:01:00" allowCookies="false"
-          bypassProxyOnLocal="false" hostNameComparisonMode="StrongWildcard"
-          maxBufferPoolSize="524288" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647"
-          textEncoding="utf-8" transferMode="Buffered" useDefaultWebProxy="true"
-          messageEncoding="Text">
-          <readerQuotas maxDepth="32" maxStringContentLength="2147483647" maxArrayLength="16384"
-            maxBytesPerRead="4096" maxNameTableCharCount="16384" />
-          <security mode="None">
-            <transport clientCredentialType="None" proxyCredentialType="None"
-              realm="" />
-            <message clientCredentialType="UserName" algorithmSuite="Default" />
-          </security>
-        </binding>
-      </basicHttpBinding>
-    </bindings>
-    <client>
-      <endpoint address="http://localhost:55786/SiteService.asmx" binding="basicHttpBinding"
-        bindingConfiguration="SiteServiceSoap" contract="SiteService.SiteServiceSoap"
-        name="SiteServiceSoap" />
-    </client>
-  </system.serviceModel>
- <runtime>
+  <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
       <dependentAssembly>
         <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35"/>
@@ -397,8 +381,7 @@
       </dependentAssembly>
       <dependentAssembly>
         <assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed"/>
-        <codeBase version="4.5.0.0" href="libs\countersoft\Newtonsoft.Json.dll"/>
-        <bindingRedirect oldVersion="0.0.0.0-12.0.0.0" newVersion="10.0.0.0"/>
+        <codeBase version="10.0.0.0" href="libs\countersoft\10.0.3\Newtonsoft.Json.dll"/>
       </dependentAssembly>
     </assemblyBinding>
   </runtime>

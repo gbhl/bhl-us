@@ -1,7 +1,7 @@
 
-// Generated 10/31/2013 4:01:46 PM
+// Generated 1/5/2021 2:17:29 PM
 // Do not modify the contents of this code file.
-// This abstract class __OAIRecordStatus is based upon OAIRecordStatus.
+// This abstract class __OAIRecordStatus is based upon dbo.OAIRecordStatus.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __OAIRecordStatus : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -52,7 +52,7 @@ namespace MOBOT.BHLImport.DataObjects
 			string recordStatus, 
 			string statusDescription) : this()
 		{
-			_OAIRecordStatusID = oAIRecordStatusID;
+			OAIRecordStatusID = oAIRecordStatusID;
 			RecordStatus = recordStatus;
 			StatusDescription = statusDescription;
 		}
@@ -96,7 +96,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_StatusDescription = (string)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -104,7 +104,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region OAIRecordStatusID
 		
@@ -112,9 +112,9 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: OAIRecordStatusID;
-		/// DBMS data type: int; Auto key;
+		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("OAIRecordStatusID", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsAutoKey=true, IsInForeignKey=true, IsInPrimaryKey=true)]
+		[ColumnDefinition("OAIRecordStatusID", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsInForeignKey=true, IsInPrimaryKey=true)]
 		public int OAIRecordStatusID
 		{
 			get
@@ -123,12 +123,11 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				// NOTE: This dummy setter provides a work-around for the following: Read-only properties cannot be exposed by XML Web Services
-				// see http://support.microsoft.com/kb/313584
-				// Cause: When an object is passed i.e. marshalled to or from a Web service, it must be serialized into an XML stream and then deserialized back into an object.
-				// The XML Serializer cannot deserialize the XML back into an object because it cannot load the read-only properties. 
-				// Thus the read-only properties are not exposed through the Web Services Description Language (WSDL). 
-				// Because the Web service proxy is generated from the WSDL, the proxy also excludes any read-only properties.
+				if (_OAIRecordStatusID != value)
+				{
+					_OAIRecordStatusID = value;
+					_IsDirty = true;
+				}
 			}
 		}
 		
@@ -191,7 +190,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion StatusDescription
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -330,7 +329,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
 		/// list.Sort(SortOrder.Ascending, __OAIRecordStatus.SortColumn.OAIRecordStatusID);
 		/// </summary>
 		[Serializable]
@@ -345,3 +343,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

@@ -1,17 +1,17 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHLImport.DAL
 {
-	public partial class IAMarcDAL
+    public partial class IAMarcDAL
 	{
         /// <summary>
         /// Select the base Marc data for the specified item.
@@ -33,7 +33,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IAMarc> helper = new CustomSqlHelper<IAMarc>())
                 {
-                    CustomGenericList<IAMarc> list = helper.ExecuteReader(command);
+                    List<IAMarc> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {

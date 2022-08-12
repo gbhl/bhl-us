@@ -3,16 +3,16 @@
 
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
-using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class ImportFileStatusDAL
+    public partial class ImportFileStatusDAL
 	{
-        public CustomGenericList<ImportFileStatus> SelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<ImportFileStatus> SelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -20,7 +20,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ImportFileStatus> helper = new CustomSqlHelper<ImportFileStatus>())
                 {
-                    CustomGenericList<ImportFileStatus> list = helper.ExecuteReader(command);
+                    List<ImportFileStatus> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

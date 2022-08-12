@@ -1,0 +1,76 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.QueueAddConfirmViewModel
+@{
+    ViewBag.Title = "QueueAddConfirm";
+}
+
+<style>
+    .validation-summary-errors {
+        color: red;
+    }
+</style>
+<br />
+<span class="pageHeader">Confirm Add to DOI Queue</span>
+<hr />
+
+@using (Html.BeginForm("QueueAddConfirm", "DOI", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div class="col-md-12">
+        <p><h5>The following items will be added to the DOI queue.  Please click the "Confirm" button to confirm.</h5></p>
+    </div>
+
+    if (Model.Titles.Count > 0)
+    {
+        <p class="col-md-9">
+            @Html.Label("Titles")
+            @for (int i = 0; i < Model.Titles.Count; i++)
+            {
+                @Html.HiddenFor(m => m.Titles[i])
+            }
+            <br />
+            <select size="5" style="width:100%;overflow:auto">
+                @foreach (var title in Model.Titles)
+                {
+                    <option disabled>@title.Split('|')[0] - @title.Split('|')[1] - @title.Split('|')[2]</option>
+                }
+            </select>
+        </p>
+    }
+    if (Model.Segments.Count > 0)
+    {
+        <p class="col-md-9">
+            @Html.Label("Segments")
+            @for (int i = 0; i < Model.Segments.Count; i++)
+            {
+                @Html.HiddenFor(m => m.Segments[i])
+            }
+            <br />
+            <select size="5" style="width:100%;overflow:auto">
+                @foreach (var segment in Model.Segments)
+                {
+                    <option disabled>@segment.Split('|')[0] - @segment.Split('|')[1] - @segment.Split('|')[2]</option>
+                }
+            </select>
+        </p>
+    }
+    <p>&nbsp;</p>
+
+    <div class="form-group">
+        <div class="col-md-offset-0 col-md-12">
+            <input type="submit" id="confirmButton" class="btn btn-default" value="Confirm" />
+            <input type="button" id="backButton" class="btn" value="Back" onclick="doBack();" />
+            <input type="button" id="cancelButton" class="btn" value="Cancel" onclick="doCancel();" />
+        </div>
+    </div>
+}
+
+<script lang="javascript">
+    function doBack() {
+        window.location.href = "/doi/queueadd";
+    }
+
+    function doCancel() {
+        window.location.href = "/doi/queue";
+    }
+</script>

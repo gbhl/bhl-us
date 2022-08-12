@@ -13,6 +13,7 @@ namespace BHL.Search.SQL
         // Item index
         public const string ASSOCIATIONS = "Associations";
         public const string AUTHORS = "Authors";
+        public const string BOOKISVIRTUAL = "BookIsVirtual";
         public const string COLLECTIONS = "Collections";
         public const string CONTAINER = "ContainerTitle";
         public const string CONTRIBUTORS = "Contributors";

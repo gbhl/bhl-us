@@ -11,12 +11,12 @@ namespace MOBOT.BHL.DataObjects
 	[Serializable]
 	public class MonthlyStats : __MonthlyStats
 	{
-        private string _institutionCode = string.Empty;
+        private string _institutionName = string.Empty;
 
-        public string InstitutionCode
+        public string InstitutionName
         {
-            get { return _institutionCode; }
-            set { _institutionCode = value; }
+            get { return _institutionName; }
+            set { _institutionName = value; }
         }
 
         private string _institutionGroupNames = string.Empty;
@@ -39,9 +39,9 @@ namespace MOBOT.BHL.DataObjects
         {
             foreach (CustomDataColumn column in row)
             {
-                if (column.Name == "InstitutionCode")
+                if (column.Name == "InstitutionName")
                 {
-                    _institutionCode = Utility.EmptyIfNull(column.Value);
+                    _institutionName = Utility.EmptyIfNull(column.Value);
                 }
                 if (column.Name == "InstitutionGroupNames")
                 {

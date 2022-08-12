@@ -10,8 +10,8 @@ namespace MOBOT.BHL.SegmentClusterer
     public class Clusterer
     {
         BHLProvider provider = null;
-        int _segmentStatusNew = 10;
-        int _segmentStatusPublished = 20;
+        int _segmentStatusNew = 30;
+        int _segmentStatusPublished = 40;
 
         public Clusterer()
         {
@@ -179,7 +179,7 @@ namespace MOBOT.BHL.SegmentClusterer
             {
                 // If no item was specified, or if the segment's item matches the specified item, then include
                 // the segment in the dictionary.
-                if (((itemID ?? 0) == 0) || (itemID ?? 0) == (segment.ItemID ?? -1))
+                if (((itemID ?? 0) == 0) || (itemID ?? 0) == (segment.BookID ?? -1))
                     dictionary.Add(segment.SegmentID, segment);
             }
             return dictionary;

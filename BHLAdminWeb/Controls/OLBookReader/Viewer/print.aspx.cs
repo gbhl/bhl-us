@@ -10,14 +10,15 @@ namespace MOBOT.BHL.AdminWeb.Controls.OLBookReader.Viewer
         protected void Page_Load(object sender, EventArgs e)
         {
             BHLProvider bp = new BHLProvider();
-            string itemIdStr = Request.QueryString["id"] as string;
+            string objectType = Request.QueryString["type"] as string;
+            string idStr = Request.QueryString["id"] as string;
             string index1Str = Request.QueryString["file"] as string;
             string index2Str = Request.QueryString["file2"] as string;
             string height1Str = Request.QueryString["height"] as string;
             string height2Str = Request.QueryString["height2"] as string;
             string width1Str = Request.QueryString["width"] as string;
             string width2Str = Request.QueryString["width2"] as string;
-            int itemId;
+            int id;
             int index1;
             int index2;
             int height1;
@@ -25,9 +26,11 @@ namespace MOBOT.BHL.AdminWeb.Controls.OLBookReader.Viewer
             int width1;
             int width2;
 
-            if (Int32.TryParse(itemIdStr, out itemId))
+            if (Int32.TryParse(idStr, out id))
             {
-                List<PageSummaryView> pageSummary = bp.PageSummarySelectForViewerByItemID(itemId);
+                List<PageSummaryView> pageSummary = null;
+                if (objectType == "Book") pageSummary = bp.PageSummarySelectForViewerByItemID(id);
+                if (objectType == "Segment") pageSummary = bp.PageSummarySelectForViewerBySegmentID(id);
 
                 if (Int32.TryParse(index1Str, out index1) && 
                     Int32.TryParse(height1Str, out height1) && 

@@ -13,7 +13,7 @@ namespace MOBOT.BHL.AdminWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             BHLProvider bp = new BHLProvider();
-            List<Item> items = new List<Item>();
+            List<Book> items = new List<Book>();
             litMsg.Text = string.Empty;
 
             if (!IsPostBack)
@@ -31,7 +31,7 @@ namespace MOBOT.BHL.AdminWeb
                 string msg = string.Empty;
                 if (this.Validate(out msg))
                 {
-                    items = bp.ItemSelectByInstitution(listInstitutions.SelectedValue, 
+                    items = bp.BookSelectByInstitution(listInstitutions.SelectedValue, 
                         Convert.ToInt32(selSince.Value), selSortBy.Value);
 
                     if (items.Count == 0) litMsg.Text = string.Format(_MsgFormat, "No items found.");

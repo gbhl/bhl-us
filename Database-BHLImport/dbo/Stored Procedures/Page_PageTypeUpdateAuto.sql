@@ -1,13 +1,7 @@
-﻿
--- Page_PageTypeUpdateAuto PROCEDURE
--- Generated 1/16/2008 1:54:48 PM
--- Do not modify the contents of this procedure.
--- Update Procedure for Page_PageType
-
-CREATE PROCEDURE Page_PageTypeUpdateAuto
+CREATE PROCEDURE dbo.Page_PageTypeUpdateAuto
 
 @PagePageTypeID INT,
-@BarCode NVARCHAR(40),
+@BarCode NVARCHAR(200),
 @FileNamePrefix NVARCHAR(200),
 @SequenceOrder INT,
 @PageTypeID INT,
@@ -25,9 +19,7 @@ AS
 SET NOCOUNT ON
 
 UPDATE [dbo].[Page_PageType]
-
 SET
-
 	[BarCode] = @BarCode,
 	[FileNamePrefix] = @FileNamePrefix,
 	[SequenceOrder] = @SequenceOrder,
@@ -41,19 +33,17 @@ SET
 	[ExternalLastModifiedUser] = @ExternalLastModifiedUser,
 	[ProductionDate] = @ProductionDate,
 	[LastModifiedDate] = getdate()
-
 WHERE
 	[PagePageTypeID] = @PagePageTypeID
 		
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure Page_PageTypeUpdateAuto. No information was updated as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.Page_PageTypeUpdateAuto. No information was updated as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[PagePageTypeID],
 		[BarCode],
 		[FileNamePrefix],
@@ -69,12 +59,10 @@ ELSE BEGIN
 		[ProductionDate],
 		[CreatedDate],
 		[LastModifiedDate]
-
 	FROM [dbo].[Page_PageType]
-	
 	WHERE
 		[PagePageTypeID] = @PagePageTypeID
 	
 	RETURN -- update successful
 END
-
+GO

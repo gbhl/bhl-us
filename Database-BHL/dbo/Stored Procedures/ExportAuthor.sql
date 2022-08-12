@@ -32,29 +32,31 @@ SELECT	ta.TitleID,
 		c.HasLocalContent,
 		c.HasExternalContent
 INTO	#Authors
-FROM	dbo.TitleAuthor ta WITH (NOLOCK)
-		INNER JOIN dbo.Author a WITH (NOLOCK) ON ta.AuthorID = a.AuthorID
-		INNER JOIN dbo.AuthorName n WITH (NOLOCK) ON a.AuthorID = n.AuthorID AND n.IsPreferredName = 1
-		INNER JOIN dbo.AuthorRole r WITH (NOLOCK) ON ta.AuthorRoleID = r.AuthorRoleID
-		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON ta.TitleID = c.TitleID
+FROM	dbo.TitleAuthor ta
+		INNER JOIN dbo.Title t ON ta.TitleID = t.TitleID
+		INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID
+		INNER JOIN dbo.Book b ON it.ItemID = b.ItemID
+		INNER JOIN dbo.Author a ON ta.AuthorID = a.AuthorID
+		INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID AND n.IsPreferredName = 1
+		INNER JOIN dbo.AuthorRole r ON ta.AuthorRoleID = r.AuthorRoleID
+		INNER JOIN dbo.SearchCatalog c ON ta.TitleID = c.TitleID AND b.BookID = c.ItemID
 
 SELECT	TitleID,
 		AuthorID,
 		CreatorType,
 		CreatorName,
-		CreationDate,
+		MIN(CreationDate) AS CreationDate,
 		MAX(HasLocalContent) AS HasLocalContent,
 		MAX(HasExternalContent) AS HasExternalContent
 FROM	#Authors
 GROUP BY
 		TitleID,
-		SequenceOrder,
 		AuthorID,
-		MarcDataFieldTag,
 		CreatorType,
-		CreatorName,
-		CreationDate
+		CreatorName
 ORDER BY 
-		TitleID, SequenceOrder, MARCDataFieldTag, CreatorName
+		TitleID, MIN(SequenceOrder), MIN(MARCDataFieldTag), CreatorName
 
 END
+
+GO

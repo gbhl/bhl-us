@@ -1,8 +1,7 @@
-using System;
-using CustomDataAccess;
+using MOBOT.BHL.Utility;
 using MOBOT.BHLImport.DAL;
 using MOBOT.BHLImport.DataObjects;
-using MOBOT.BHL.Utility;
+using System.Collections.Generic;
 
 namespace MOBOT.BHLImport.Server
 {
@@ -115,7 +114,7 @@ namespace MOBOT.BHLImport.Server
         public void IAScandataDeleteAllByItem(int itemID)
         {
             IAScandataDAL dal = new IAScandataDAL();
-            CustomGenericList<IAScandata> savedScandata = dal.IAScandataSelectByItem(null, null, itemID);
+            List<IAScandata> savedScandata = dal.IAScandataSelectByItem(null, null, itemID);
 
             foreach (IAScandata scandata in savedScandata)
             {

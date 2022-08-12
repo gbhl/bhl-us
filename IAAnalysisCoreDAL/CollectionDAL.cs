@@ -1,6 +1,7 @@
 
 #region Using
 
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -25,7 +26,7 @@ namespace MOBOT.IAAnalysis.DAL
             {
                 using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
                 {
-                    CustomGenericList<Collection> list = helper.ExecuteReader(command);
+                    List<Collection> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {

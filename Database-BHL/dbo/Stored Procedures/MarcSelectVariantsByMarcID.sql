@@ -28,7 +28,7 @@ INSERT INTO #tmpTitleVariant
 SELECT	m.MarcDataFieldID,
 		m.DataFieldTag, 
 		CASE WHEN m.DataFieldTag = '246' AND m.Indicator2 = '1' THEN '1' ELSE '' END AS MARCIndicator2,
-		m.SubFieldValue AS Title, 
+		dbo.fnRemoveTrailingPunctuation(m.SubFieldValue, DEFAULT) AS Title, 
 		'' AS TitleRemainder, 
 		'' AS PartNumber,
 		'' AS PartName
@@ -40,7 +40,8 @@ AND		m.MarcID = @MarcID
 
 -- Add the title remainders to the original data set.
 UPDATE	#tmpTitleVariant
-SET		TitleRemainder = x.SubFieldValue
+-- As this field may contain date range values (ex. "1990-"), don't remove trailing hyphens when cleaning punctuation
+SET		TitleRemainder = dbo.fnRemoveTrailingPunctuation(x.SubFieldValue, '[a-zA-Z0-9)\]?!>*%"''-]%')
 FROM	#tmpTitleVariant t INNER JOIN (
 				SELECT	m.*
 				FROM	vwMarcDataField m
@@ -53,7 +54,7 @@ FROM	#tmpTitleVariant t INNER JOIN (
 
 -- Add the part numbers to the original data set.
 UPDATE	#tmpTitleVariant
-SET		PartNumber = x.SubFieldValue
+SET		PartNumber = dbo.fnRemoveTrailingPunctuation(SUBSTRING(x.SubFieldValue, 1, 255), DEFAULT)
 FROM	#tmpTitleVariant t INNER JOIN (
 				SELECT	m.*
 				FROM	vwMarcDataField m
@@ -66,7 +67,7 @@ FROM	#tmpTitleVariant t INNER JOIN (
 
 -- Add the part names to the original data set.
 UPDATE	#tmpTitleVariant
-SET		PartName = x.SubFieldValue
+SET		PartName = dbo.fnRemoveTrailingPunctuation(SUBSTRING(x.SubFieldValue, 1, 255), DEFAULT)
 FROM	#tmpTitleVariant t INNER JOIN (
 				SELECT	m.*
 				FROM	vwMarcDataField m
@@ -94,3 +95,5 @@ FROM	#tmpTitleVariant t INNER JOIN dbo.TitleVariantType tvt
 DROP TABLE #tmpTitleVariant
 
 END
+
+GO

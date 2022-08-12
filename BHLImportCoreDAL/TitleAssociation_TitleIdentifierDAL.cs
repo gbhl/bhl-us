@@ -1,17 +1,17 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHLImport.DAL
 {
-	public partial class TitleAssociation_TitleIdentifierDAL
+    public partial class TitleAssociation_TitleIdentifierDAL
 	{
         public TitleAssociation_TitleIdentifier TitleAssociation_TitleIdentifierSelectByKey(
             SqlConnection sqlConnection,
@@ -47,7 +47,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<TitleAssociation_TitleIdentifier> helper = new CustomSqlHelper<TitleAssociation_TitleIdentifier>())
                 {
-                    CustomGenericList<TitleAssociation_TitleIdentifier> list = helper.ExecuteReader(command);
+                    List<TitleAssociation_TitleIdentifier> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {

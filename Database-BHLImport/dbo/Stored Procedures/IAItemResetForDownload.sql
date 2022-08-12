@@ -1,7 +1,6 @@
-﻿
-CREATE PROCEDURE [dbo].[IAItemResetForDownload]
+﻿CREATE PROCEDURE [dbo].[IAItemResetForDownload]
 
-@IAIdentifier nvarchar(50)
+@IAIdentifier nvarchar(200)
 
 AS
 
@@ -48,5 +47,3 @@ BEGIN CATCH
 END CATCH
 
 END
-
-
