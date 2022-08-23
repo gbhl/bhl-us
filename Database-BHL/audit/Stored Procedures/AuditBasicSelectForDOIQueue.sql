@@ -107,7 +107,7 @@ UNION
 SELECT	AuditBasicID, ab.Operation, EntityName, 'segment', s.SegmentID, NULL, AuditDate
 FROM	audit.AuditBasic ab WITH (NOLOCK)
 		INNER JOIN dbo.AuthorName n WITH (NOLOCK) ON ab.EntityKey1 = n.AuthorNameID
-		INNER JOIN dbo.ItemAuthor ia WITH (NOLOCK) ON ab.EntityKey1 = ia.AuthorID
+		INNER JOIN dbo.ItemAuthor ia WITH (NOLOCK) ON n.AuthorID = ia.AuthorID
 		INNER JOIN dbo.vwSegment s ON ia.ItemID = s.ItemID
 WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
 AND		EntityName = 'dbo.AuthorName'
