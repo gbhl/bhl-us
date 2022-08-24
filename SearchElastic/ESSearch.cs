@@ -194,7 +194,7 @@ namespace BHL.Search.Elastic
                 fields.Add(new Field(ESField.VARIANTS_ABBR + "^10"));
                 fields.Add(new Field(ESField.ASSOCIATIONS + "^5"));
                 fields.Add(new Field(ESField.ASSOCIATIONS_ABBR + "^3"));
-                fields.Add(new Field(ESField.COLLECTIONS + "^5"));
+                //fields.Add(new Field(ESField.COLLECTIONS + "^5"));
                 fields.Add(new Field(ESField.CONTAINER + "^5"));
                 fields.Add(new Field(ESField.CONTAINER_ABBR + "^3"));
                 fields.Add(new Field(ESField.CONTRIBUTORS + "^5"));
