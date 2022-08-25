@@ -106,8 +106,9 @@ namespace BHL.Search.Elastic
 
         public ESSearch(string connectionString)
         {
-            // Establish a connection to an ElasticSearch server
-            ConnectionSettings connectionSettings = new ConnectionSettings(new Uri(connectionString));
+            // Establish a connection to an ElasticSearch server.
+            // Defaults to http://locahost:9200 if no connection string supplied.
+            ConnectionSettings connectionSettings = new ConnectionSettings(connectionString == null ? (Uri)null : new Uri(connectionString));
             connectionSettings.DefaultIndex(ESIndex.DEFAULT);
             connectionSettings.DisableDirectStreaming(true); // Uncomment this to add req/resp strings to response.debuginformation
             //connectionSettings.ThrowExceptions(true);      // Uncomment to debug uncaught ElasticSearch errors
