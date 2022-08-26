@@ -85,6 +85,30 @@ namespace SearchElasticTest
         }
 
         [TestMethod]
+        public void FullTextPunctuationTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchItem("O'Grady");
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void FullTextSpecialCharsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchItem("natural history in nigeria (west-Africa) [2016]");
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void FullTextDiacriticsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchItem("Delbón");
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
         public void CatalogSingleWordTest()
         {
             Search search = new Search();
@@ -160,6 +184,30 @@ namespace SearchElasticTest
         }
 
         [TestMethod]
+        public void CatalogPunctuationTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog("O'Grady");
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void CatalogSpecialCharsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog("natural history in nigeria (west-Africa) [2016]");
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void CatalogDiacriticsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog("Delbón");
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
         public void AuthorSingleWordTest()
         {
             Search search = new Search();
@@ -221,6 +269,30 @@ namespace SearchElasticTest
             Search search = new Search();
             search.StartPage = 2;
             ISearchResult result = search.SearchAuthor("Darwin");
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AuthorPunctuationTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchAuthor("O'Grady");
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AuthorSpecialCharsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchAuthor("smith-rowe [2000]");
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AuthorDiacriticsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchAuthor("Delbón");
             Assert.IsTrue(result.IsValid);
         }
 
@@ -290,6 +362,30 @@ namespace SearchElasticTest
         }
 
         [TestMethod]
+        public void KeywordPunctuationTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchKeyword("O'Grady");
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void KeywordSpecialCharsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchKeyword("smith-rowe [2000]");
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void KeywordDiacriticsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchKeyword("Delbón");
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
         public void NameSingleWordTest()
         {
             Search search = new Search();
@@ -351,6 +447,30 @@ namespace SearchElasticTest
             Search search = new Search();
             search.StartPage = 2;
             ISearchResult result = search.SearchName("mollusca");
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void NamePunctuationTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchName("O'Grady");
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void NameSpecialCharsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchName("smith-rowe [2000]");
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void NameDiacriticsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchName("Delbón");
             Assert.IsTrue(result.IsValid);
         }
 
@@ -425,6 +545,36 @@ namespace SearchElasticTest
         }
 
         [TestMethod]
+        public void PagePunctuationTest()
+        {
+            Search search = new Search();
+            List<Tuple<SearchField, string>> limits = new List<Tuple<SearchField, string>>();
+            limits.Add(new Tuple<SearchField, string>(SearchField.ItemID, "22803"));
+            ISearchResult result = search.SearchPage("O'Grady", limits);
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void PageSpecialCharsTest()
+        {
+            Search search = new Search();
+            List<Tuple<SearchField, string>> limits = new List<Tuple<SearchField, string>>();
+            limits.Add(new Tuple<SearchField, string>(SearchField.ItemID, "22803"));
+            ISearchResult result = search.SearchPage("smith-rowe [2000]", limits);
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void PageDiacriticsTest()
+        {
+            Search search = new Search();
+            List<Tuple<SearchField, string>> limits = new List<Tuple<SearchField, string>>();
+            limits.Add(new Tuple<SearchField, string>(SearchField.ItemID, "22803"));
+            ISearchResult result = search.SearchPage("Delbón", limits);
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
         public void AdvancedTitleAllWordsTest()
         {
             Search search = new Search();
@@ -440,6 +590,58 @@ namespace SearchElasticTest
                 );
             Assert.IsTrue(result.IsValid);
         }
+
+        [TestMethod]
+        public void AdvancedTitlePunctuationTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam("O'Grady", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And),
+                "", "",
+                new SearchStringParam("", SearchStringParamOperator.And),
+                null,
+                null,
+                new SearchStringParam("", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And)
+                );
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AdvancedTitleSpecialCharsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam("smith-rowe [2000]", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And),
+                "", "",
+                new SearchStringParam("", SearchStringParamOperator.And),
+                null,
+                null,
+                new SearchStringParam("", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And)
+                );
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AdvancedTitleDiacriticsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam("Delbón", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And),
+                "", "",
+                new SearchStringParam("", SearchStringParamOperator.And),
+                null,
+                null,
+                new SearchStringParam("", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And)
+                );
+            Assert.IsTrue(result.IsValid);
+        }
+
 
         [TestMethod]
         public void AdvancedTitleExactPhraseTest()
@@ -465,6 +667,57 @@ namespace SearchElasticTest
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("", SearchStringParamOperator.And),
                 new SearchStringParam("huxley", SearchStringParamOperator.And),
+                "", "",
+                new SearchStringParam("", SearchStringParamOperator.And),
+                null,
+                null,
+                new SearchStringParam("", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And)
+                );
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AdvancedAuthorPunctuationTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam("", SearchStringParamOperator.And),
+                new SearchStringParam("O'Grady", SearchStringParamOperator.And),
+                "", "",
+                new SearchStringParam("", SearchStringParamOperator.And),
+                null,
+                null,
+                new SearchStringParam("", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And)
+                );
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AdvancedAuthorSpecialCharsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam("", SearchStringParamOperator.And),
+                new SearchStringParam("smith-rowe [2000]", SearchStringParamOperator.And),
+                "", "",
+                new SearchStringParam("", SearchStringParamOperator.And),
+                null,
+                null,
+                new SearchStringParam("", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And)
+                );
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AdvancedAuthorDiacriticsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam("", SearchStringParamOperator.And),
+                new SearchStringParam("Delbón", SearchStringParamOperator.And),
                 "", "",
                 new SearchStringParam("", SearchStringParamOperator.And),
                 null,
@@ -510,6 +763,57 @@ namespace SearchElasticTest
         }
 
         [TestMethod]
+        public void AdvancedKeywordPunctuationTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam("ocean", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And),
+                "", "",
+                new SearchStringParam("O'Grady", SearchStringParamOperator.And),
+                null,
+                null,
+                new SearchStringParam("", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And)
+                );
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AdvancedKeywordSpecialCharsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam("ocean", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And),
+                "", "",
+                new SearchStringParam("smith-rowe [2000]", SearchStringParamOperator.And),
+                null,
+                null,
+                new SearchStringParam("", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And)
+                );
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AdvancedKeywordDiacriticsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam("ocean", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And),
+                "", "",
+                new SearchStringParam("Delbón", SearchStringParamOperator.And),
+                null,
+                null,
+                new SearchStringParam("", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And)
+                );
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
         public void AdvancedKeywordMultipleWordTest()
         {
             Search search = new Search();
@@ -538,6 +842,57 @@ namespace SearchElasticTest
                 null,
                 null,
                 new SearchStringParam("water column", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And)
+                );
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AdvancedNotePunctuationTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam("ocean", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And),
+                "", "",
+                new SearchStringParam("", SearchStringParamOperator.And),
+                null,
+                null,
+                new SearchStringParam("O'Grady", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And)
+                );
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AdvancedNoteSpecialCharsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam("ocean", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And),
+                "", "",
+                new SearchStringParam("", SearchStringParamOperator.And),
+                null,
+                null,
+                new SearchStringParam("smith-rowe [2000]", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And)
+                );
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AdvancedNoteDiacriticsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam("ocean", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And),
+                "", "",
+                new SearchStringParam("", SearchStringParamOperator.And),
+                null,
+                null,
+                new SearchStringParam("Delbón", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And)
                 );
             Assert.IsTrue(result.IsValid);
@@ -573,6 +928,57 @@ namespace SearchElasticTest
                 null,
                 new SearchStringParam("", SearchStringParamOperator.And),
                 new SearchStringParam("marine life", SearchStringParamOperator.And)
+                );
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AdvancedTextPunctuationTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam("ocean", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And),
+                "", "",
+                new SearchStringParam("", SearchStringParamOperator.And),
+                null,
+                null,
+                new SearchStringParam("", SearchStringParamOperator.And),
+                new SearchStringParam("O'Grady", SearchStringParamOperator.And)
+                );
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AdvancedTextSpecialCharsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam("ocean", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And),
+                "", "",
+                new SearchStringParam("", SearchStringParamOperator.And),
+                null,
+                null,
+                new SearchStringParam("", SearchStringParamOperator.And),
+                new SearchStringParam("smith-rowe [2000]", SearchStringParamOperator.And)
+                );
+            Assert.IsTrue(result.IsValid);
+        }
+
+        [TestMethod]
+        public void AdvancedTextDiacriticsTest()
+        {
+            Search search = new Search();
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam("ocean", SearchStringParamOperator.And),
+                new SearchStringParam("", SearchStringParamOperator.And),
+                "", "",
+                new SearchStringParam("", SearchStringParamOperator.And),
+                null,
+                null,
+                new SearchStringParam("", SearchStringParamOperator.And),
+                new SearchStringParam("Delbón", SearchStringParamOperator.And)
                 );
             Assert.IsTrue(result.IsValid);
         }
