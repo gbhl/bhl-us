@@ -427,6 +427,8 @@
     <Content Include="images\pin-icon-over.png" />
     <Content Include="images\rpterror.png" />
     <Content Include="images\rss.png" />
+    <Content Include="images\sil_horizontal_clr.png" />
+    <Content Include="images\sil_vertical_clr.png" />
     <Content Include="images\start_comment.png" />
     <Content Include="images\support.png" />
     <Content Include="images\title_icon-home.png" />
