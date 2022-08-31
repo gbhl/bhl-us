@@ -26,7 +26,7 @@
         <p>Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgment of Harmful Content</a></p>
 	    <p>Major support and hosting provided by
 		    <a href="https://library.si.edu/departments/biodiversity-heritage-library" target="_blank" rel="noopener noreferrer">
-			    <img src="/images/sil_horizontal_clr.png" title="Smithsonian Libraries" alt="Smithsonian Libraries" class="sponsorimg-home">
+			    <img src="/images/sil_horizontal_clr.png" title="Smithsonian Libraries and Archives" alt="Smithsonian Libraries and Archives" class="sponsorimg-home">
 		    </a>
 	    </p>
     </div>

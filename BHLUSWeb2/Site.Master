@@ -150,13 +150,15 @@
             <nav>
                 <div class="column-wrap" id="footersponsordiv">
                     Major support and hosting provided by<br>
-                    <img src="/images/sil_vertical_clr.png" title="Smithsonian Libraries" alt="Smithsonian Libraries">
+                    <a href="https://library.si.edu/departments/biodiversity-heritage-library" target="_blank" rel="noopener noreferrer">
+                        <img src="/images/sil_vertical_clr.png" title="Smithsonian Libraries and Archives" alt="Smithsonian Libraries and Archives">
+                    </a>
                 </div>
             </nav>
         </footer>
         
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script>            !window.jQuery && document.write(unescape('%3Cscript src="/js/libs/jquery-1.12.4.min.js"%3E%3C/script%3E'))</script>
+        <script>!window.jQuery && document.write(unescape('%3Cscript src="/js/libs/jquery-1.12.4.min.js"%3E%3C/script%3E'))</script>
 
          <script type="text/javascript" src="/js/jMyCarousel/jMyCarousel.js" language="javascript"></script>
         <asp:ContentPlaceHolder ID="scriptContentPlaceHolder" runat="server" />
