@@ -737,6 +737,7 @@ namespace BHL.Search.Elastic
             searchDesc.Index(_indexName);
             searchDesc.From((_startPage - 1) * _numResults);
             searchDesc.Size(_numResults);               // Max number of results to return
+            searchDesc.TrackTotalHits(true);            // Accurately count the number of hits if > 10000
             searchDesc.Timeout("10s");                  // 10 second timeout (valid units are d, h, m, s, ms, micros, nanos)
             searchDesc.Source(f => f                    // Fields to return
                 .Includes(fi => fi
