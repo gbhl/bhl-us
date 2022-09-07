@@ -871,7 +871,10 @@ namespace BHL.Search.Elastic
         {
             CheckServerStatus();
             ISearchResponse<dynamic> results = _es.Search<dynamic>(searchDesc);
-            if (!results.IsValid) ProcessError(results);
+            if (!results.IsValid || 
+                results.TimedOut || 
+                results.TerminatedEarly || 
+                results.Shards.Failures.Count > 0) ProcessError(results);
             return results;
         }
 
@@ -1298,7 +1301,38 @@ namespace BHL.Search.Elastic
         /// Parse the error information from the specified response and throw an exception.
         /// </summary>
         /// <param name="response"></param>
-        private void ProcessError(IResponse response)
+        private void ProcessError(ISearchResponse<dynamic> response)
+        {
+            string errorMessage = "Error reported by ElasticSearch server.\n\r";
+            if (response.OriginalException != null)
+            {
+                errorMessage += response.OriginalException.Message + "\n\r";
+            }
+            else if (response.ServerError != null)
+            {
+                errorMessage += response.ServerError.Error.Reason + "\n\r";
+            }
+            else if (response.Shards.Failures.Count > 0)
+            {
+                foreach(Elasticsearch.Net.ShardFailure failure in response.Shards.Failures)
+                {
+                    errorMessage += string.Format("Index '{0}': {1}\n\r", failure.Index, failure.Reason.Reason);
+                }
+            }
+            else if (response.TimedOut)
+            {
+                errorMessage += "Query timed out after " + (response.Took / 1000).ToString() + " seconds\n\r";
+            }
+            else if (response.TerminatedEarly)
+            {
+                errorMessage += "Query terminated early";
+            }
+            errorMessage += response.DebugInformation;
+
+            throw new SearchException(errorMessage);
+        }
+
+        private void ProcessError(ClusterHealthResponse response)
         {
             string errorMessage = "Error reported by ElasticSearch server.\n\r";
             if (response.OriginalException != null)
