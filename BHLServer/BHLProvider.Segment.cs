@@ -244,7 +244,7 @@ namespace MOBOT.BHL.Server
         public SegmentCluster SegmentClusterInsertAuto(int userID)
         {
             SegmentClusterDAL dal = new SegmentClusterDAL();
-            return dal.SegmentClusterInsertAuto(null, null, userID, userID, (int)SegmentClusterTypes.SameAs);
+            return dal.SegmentClusterInsertAuto(null, null, userID, userID, (int)SegmentClusterTypes.Related);
         }
 
         public SegmentClusterSegment SegmentClusterSegmentAuto(int segmentID, int clusterID, int userID)
