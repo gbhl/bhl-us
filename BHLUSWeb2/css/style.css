@@ -1473,6 +1473,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
     color:#366c92;
 }
 
+#footersponsordiv {
+    text-align: center;
+    color: #6D6D6D;
+}
+
+#footersponsordiv img {
+    margin-top: 5px;
+    width: 120px;
+}
+
+.sponsorimg-home {
+    height: 32px;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
 /* online stats */
 .onlinestats
 {
