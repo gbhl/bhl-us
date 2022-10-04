@@ -112,7 +112,9 @@ namespace MOBOT.BHL.Server
 
 		public Page PageUpdateYear( int pageID, string year, int userID )
 		{
-            year = DataCleaner.CleanYear(year);
+			// This should be done outside of this "Update" procedure.  Different "Clean"
+			// processes may apply at different times.
+            //year = DataCleaner.CleanYear(year);
 
             PageDAL dal = new PageDAL();
 			Page storedPage = dal.PageSelectAuto( null, null, pageID );

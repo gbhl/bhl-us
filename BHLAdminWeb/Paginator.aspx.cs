@@ -576,7 +576,7 @@ namespace MOBOT.BHL.AdminWeb
                 int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
                 int[] arrPages = new int[ pages.Count ];
 				pages.CopyTo( arrPages );
-                string year = DataCleaner.CleanYear(yearTextBox.Text.Trim());
+                string year = DataCleaner.CleanPageYear(yearTextBox.Text.Trim());
                 bp.PageUpdateYear( arrPages, year, userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
 
@@ -647,7 +647,7 @@ namespace MOBOT.BHL.AdminWeb
                 int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
                 int[] arrPages = new int[ pages.Count ];
 				pages.CopyTo( arrPages );
-                string year = DataCleaner.CleanYear(yearTextBox.Text.Trim());
+                string year = DataCleaner.CleanPageYear(yearTextBox.Text.Trim());
                 bp.PageUpdateYear( arrPages, year, userId );
 				bp.PageUpdateVolume( arrPages, volumeTextBox.Text.Trim(), userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );

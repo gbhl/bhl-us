@@ -69,6 +69,64 @@ namespace MOBOT.BHL.Utility
         }
 
         /// <summary>
+        /// The preferred format for Page Years is one of the following:
+        ///     YYYY
+        ///     YYYY-MM
+        ///     YYYY-MM-DD
+        /// Extra characters and spaces are removed from the sumbmitted value, but
+        /// the final result is NOT guaranteed to match one of those formats.
+        /// </summary>
+        /// <param name="year"></param>
+        /// <returns>The transformed value for Year</returns>
+        public static string CleanPageYear(string year)
+        {
+            if (!string.IsNullOrWhiteSpace(year))
+            {
+                // Remove trailing periods
+                year = (year.Substring(year.Length - 1) == ".") ? year.Substring(0, year.Length - 1) : year;
+
+                // Remove single question marks from year values greater than four characters.
+                // This rule cleans values like 1970?, but leaves 19??-1980 and 18?? alone.
+                if (!year.Contains("??") && year.Length > 4) year = year.Replace("?", "");
+
+                // Remove parentheses
+                year = year.Replace("(", "");
+                year = year.Replace(")", "");
+
+                // Remove 'orphaned' brackets.  (In other words, a [ without a ], or a ] without a [.)
+                if (year.Contains("[") && !year.Contains("]")) year = year.Replace("[", "");
+                if (year.Contains("]") && !year.Contains("[")) year = year.Replace("]", "");
+
+                // Remove brackets at the beginning and end of the year value
+                if (year.StartsWith("[") && year.EndsWith("]")) year = year.Replace("[", "").Replace("]", "");
+
+                // Remove spaces before and after hyphens
+                year = year.Replace(" - ", "-");
+                year = year.Replace(" -", "-");
+                year = year.Replace("- ", "-");
+
+                // Remove colons
+                year = year.Replace(":", "");
+
+                // Remove spaces following commas
+                year = year.Replace(", ", ",");
+
+                // Remove leading and trailing hyphens from valid year values such as 1970--, 1980-, and -1990.
+                // This rule does not affect values like 19-- and 197-.
+                year = year.EndsWith("--") && year.Length >= 6 ? year.Substring(0, year.Length - 2) : year;
+                year = year.EndsWith("-") && !year.EndsWith("--") && year.Length > 4 ? year.Substring(0, year.Length - 1) : year;
+                year = year.Length > 1 ? year.StartsWith("-") ? year.Substring(1) : year : year;
+
+                // Removing trailing forward slashes.
+                year = year.EndsWith("/") ? year.Substring(0, year.Length - 1) : year;
+
+                year = year.Trim();
+            }
+
+            return year;
+        }
+
+        /// <summary>
         /// Verify that the specified Year value conforms to one of the following forms:
         ///     YYYY
         ///     YYYY-YYYY
