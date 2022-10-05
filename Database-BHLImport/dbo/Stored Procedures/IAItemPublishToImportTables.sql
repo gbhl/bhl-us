@@ -1681,7 +1681,7 @@ BEGIN TRY
 	
 	-- Add a default Copyright Status if none is provided
 	UPDATE	#tmpItem
-	SET		CopyrightStatus = 'Not provided. Contact contributing library to verify copyright status.'
+	SET		CopyrightStatus = 'Not provided. Contact Holding Institution to verify copyright status.'
 	WHERE	ISNULL(CopyrightStatus, '') = ''
 
 	-- Use the AddedDate as the ScanningDate if no Scan Date was specified
