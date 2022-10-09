@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using Nest;
+using Newtonsoft.Json.Serialization;
 
 namespace BHL.Search.Elastic
 {
@@ -45,12 +48,6 @@ namespace BHL.Search.Elastic
         {
             get { return _indexName; }
             set { _indexName = value ?? ESIndex.DEFAULT; }
-        }
-
-        public string TypeName
-        {
-            get { return _typeName; }
-            set { _typeName = value ?? ESType.ALL; }
         }
 
         public List<string> ReturnFields
@@ -109,8 +106,9 @@ namespace BHL.Search.Elastic
 
         public ESSearch(string connectionString)
         {
-            // Establish a connection to an ElasticSearch server
-            ConnectionSettings connectionSettings = new ConnectionSettings(new Uri(connectionString));
+            // Establish a connection to an ElasticSearch server.
+            // Defaults to http://locahost:9200 if no connection string supplied.
+            ConnectionSettings connectionSettings = new ConnectionSettings(connectionString == null ? (Uri)null : new Uri(connectionString));
             connectionSettings.DefaultIndex(ESIndex.DEFAULT);
             connectionSettings.DisableDirectStreaming(true); // Uncomment this to add req/resp strings to response.debuginformation
             //connectionSettings.ThrowExceptions(true);      // Uncomment to debug uncaught ElasticSearch errors
@@ -149,6 +147,7 @@ namespace BHL.Search.Elastic
         public SearchResult SearchAll(string query, List<Tuple<string, string>> limits = null)
         {
             ISearchResponse<dynamic> results = null;
+            if (limits != null && limits.Count == 0) limits = null;
 
             if (!string.IsNullOrWhiteSpace(query))
             {
@@ -167,16 +166,14 @@ namespace BHL.Search.Elastic
                 // A query string of "cat OR dog" and limits of "type=pet" and age=5 should produce this query:
                 //      (cat OR dog) AND type:pet AND age:5
                 string queryString = string.Empty;
-                if (limits == null)
+                queryString = CleanQuery(query);
+
+                List<QueryContainer> limitQueries = new List<QueryContainer>();
+                if (limits != null)
                 {
-                    queryString = CleanQuery(query);
-                }
-                else
-                {
-                    queryString = string.Format("({0})", CleanQuery(query));
                     foreach (Tuple<string, string> limit in limits)
                     {
-                        queryString = string.Format("{0} AND {1}:\"{2}\"", queryString, limit.Item1, limit.Item2);
+                        limitQueries.Add(new MatchPhraseQuery { Field = limit.Item1, Query = limit.Item2 });
                     }
                 }
 
@@ -198,7 +195,7 @@ namespace BHL.Search.Elastic
                 fields.Add(new Field(ESField.VARIANTS_ABBR + "^10"));
                 fields.Add(new Field(ESField.ASSOCIATIONS + "^5"));
                 fields.Add(new Field(ESField.ASSOCIATIONS_ABBR + "^3"));
-                fields.Add(new Field(ESField.COLLECTIONS + "^5"));
+                //fields.Add(new Field(ESField.COLLECTIONS + "^5"));
                 fields.Add(new Field(ESField.CONTAINER + "^5"));
                 fields.Add(new Field(ESField.CONTAINER_ABBR + "^3"));
                 fields.Add(new Field(ESField.CONTRIBUTORS + "^5"));
@@ -210,13 +207,18 @@ namespace BHL.Search.Elastic
                 fields.Add(new Field(ESField.TEXT));
 
                 // Construct the query.
-                searchDesc.Query(q => q
-                    .QueryString(qu => qu
-                        .Analyzer("default")
-                        .Query(queryString)
-                        .Fields(fields.ToArray())
-                        .DefaultOperator(Operator.And)
-                    )
+                searchDesc.Query(b => b
+                    .Bool(q => q
+                        .Must(qs => qs
+                            .QueryString(qu => qu
+                                .Analyzer("default")
+                                .Query(queryString)
+                                .Fields(fields.ToArray())
+                                .DefaultOperator(Operator.And)
+                            )
+                        )
+                        .Filter(limitQueries.ToArray())
+                    )                        
                 );
 
                 //// TODO: Validate the query string.  Check validateResponse.Valid for result.
@@ -261,6 +263,7 @@ namespace BHL.Search.Elastic
             List<Tuple<string, string>> limits = null)
         {
             ISearchResponse<dynamic> results = null;
+            if (limits != null && limits.Count == 0) limits = null;
 
             if (!string.IsNullOrWhiteSpace(title.searchValue) ||
                 !string.IsNullOrWhiteSpace(author.searchValue) ||
@@ -446,6 +449,7 @@ namespace BHL.Search.Elastic
             List<Tuple<string, string>> limits = null)
         {
             ISearchResponse<dynamic> results = null;
+            if (limits != null && limits.Count == 0) limits = null;
 
             if (!string.IsNullOrWhiteSpace(query))
             {
@@ -464,16 +468,14 @@ namespace BHL.Search.Elastic
                 // A query string of "cat OR dog" and limits of "type=pet" and age=5 should produce this query:
                 //      (cat OR dog) AND type:pet AND age:5
                 string queryString = string.Empty;
-                if (limits == null)
+                queryString = CleanQuery(query);
+
+                List<QueryContainer> limitQueries = new List<QueryContainer>();
+                if (limits != null)
                 {
-                    queryString = CleanQuery(query);
-                }
-                else
-                {
-                    queryString = string.Format("({0})", CleanQuery(query));
                     foreach (Tuple<string, string> limit in limits)
                     {
-                        queryString = string.Format("{0} AND {1}:{2}", queryString, limit.Item1, limit.Item2);
+                        limitQueries.Add(new MatchPhraseQuery { Field = limit.Item1, Query = limit.Item2 });
                     }
                 }
 
@@ -485,11 +487,16 @@ namespace BHL.Search.Elastic
                 // If necessary, add fields to be boosted here - i.e. "fields.Add(new Field("title^2"))
 
                 // Construct the query.
-                searchDesc.Query(q => q
-                    .QueryString(qu => qu
-                        .Query(queryString)
-                        .Fields(fields.ToArray())
-                        .DefaultOperator(Operator.And)
+                searchDesc.Query(b => b
+                    .Bool(q => q
+                        .Must(qs => qs
+                            .QueryString(qu => qu
+                                .Query(queryString)
+                                .Fields(fields.ToArray())
+                                .DefaultOperator(Operator.And)
+                            )
+                        )
+                        .Filter(limitQueries.ToArray())
                     )
                 );
 
@@ -728,10 +735,10 @@ namespace BHL.Search.Elastic
             // Construct the query
             SearchDescriptor<dynamic> searchDesc = new SearchDescriptor<dynamic>();
             searchDesc.Index(_indexName);
-            searchDesc.Type(TypeName ?? "");
             searchDesc.From((_startPage - 1) * _numResults);
             searchDesc.Size(_numResults);               // Max number of results to return
-            searchDesc.Timeout("10s");                  // 10 second timeout (valid units are d, h, m, s, ms, micros, nanos)
+            searchDesc.TrackTotalHits(true);            // Accurately count the number of hits if > 10000
+            searchDesc.Timeout("30s");                  // Query timeout (valid units are d, h, m, s, ms, micros, nanos)
             searchDesc.Source(f => f                    // Fields to return
                 .Includes(fi => fi
                     .Fields(_returnFields.ToArray())));
@@ -829,7 +836,8 @@ namespace BHL.Search.Elastic
                     .Terms(facet.Item1, t => t
                         .Field(facet.Item1)
                         .Size(_numFacets)
-                        .Order(facet.Item2 == ESFacetSortOrder.COUNT ? TermsOrder.CountDescending : TermsOrder.TermAscending)));
+                        .Order(f => facet.Item2 == ESFacetSortOrder.COUNT ? f.CountDescending() : f.KeyAscending())));
+                        //.Order(facet.Item2 == ESFacetSortOrder.COUNT ? TermsOrder.CountDescending : TermsOrder.KeyAscending)));
             }
 
             searchDesc.Aggregations(aggDescriptor =>
@@ -863,7 +871,10 @@ namespace BHL.Search.Elastic
         {
             CheckServerStatus();
             ISearchResponse<dynamic> results = _es.Search<dynamic>(searchDesc);
-            if (!results.IsValid) ProcessError(results);
+            if (!results.IsValid || 
+                results.TimedOut || 
+                results.TerminatedEarly || 
+                results.Shards.Failures.Count > 0) ProcessError(results);
             return results;
         }
 
@@ -881,7 +892,7 @@ namespace BHL.Search.Elastic
             if (results != null)
             {
                 // Get metadata about search results
-                result.TotalHits = results.HitsMetaData.Total;
+                result.TotalHits = results.HitsMetadata.Total.Value;
                 result.TotalPages = (result.TotalHits / (long)result.PageSize) + 1;
                 result.IsValid = results.IsValid;
                 if (_debug || !results.IsValid) result.DebugInfo = results.DebugInformation;
@@ -894,47 +905,71 @@ namespace BHL.Search.Elastic
                 // Get the search hits
                 foreach (var hit in results.Hits)
                 {
-                    switch (hit.Type)
+                    //switch (hit.Type)
+                    //{
+                    if (hit.Index.ToLower() == ESIndex.CATALOG.ToLower())
                     {
-                        case ESType.CATALOGITEM:
-                            string title = hit.Source.title;
-                            ItemHit item = hit.Source.ToObject<ItemHit>();
-                            item.Score = hit.Score;
-                            item.Highlights = GetHighlights(hit);
-                            result.Items.Add(item);
-                            break;
-                        case ESType.ITEM:
-                            title = hit.Source.title;
-                            item = hit.Source.ToObject<ItemHit>();
-                            item.Score = hit.Score;
-                            item.Highlights = GetHighlights(hit);
-                            result.Items.Add(item);
-                            break;
-                        case ESType.PAGE:
-                            PageHit page = hit.Source.ToObject<PageHit>();
-                            page.Score = hit.Score;
-                            page.Highlights = GetHighlights(hit);
-                            result.Pages.Add(page);
-                            break;
-                        case ESType.NAME:
-                            NameHit name = hit.Source.ToObject<NameHit>();
-                            name.Score = hit.Score;
-                            name.Highlights = GetHighlights(hit);
-                            result.Names.Add(name);
-                            break;
-                        case ESType.AUTHOR:
-                            AuthorHit author = hit.Source.ToObject<AuthorHit>();
-                            author.Score = hit.Score;
-                            author.Highlights = GetHighlights(hit);
-                            result.Authors.Add(author);
-                            break;
-                        case ESType.KEYWORD:
-                            KeywordHit keyword = hit.Source.ToObject<KeywordHit>();
-                            keyword.Score = hit.Score;
-                            keyword.Highlights = GetHighlights(hit);
-                            result.Keywords.Add(keyword);
-                            break;
+                        //case ESType.CATALOGITEM:
+                        //string title = hit.Source.title;
+                        ItemHit item = HitToObject<ItemHit>(hit);
+                        //ItemHit item = hit.Source.ToObject<ItemHit>();
+                        item.Score = hit.Score;
+                        item.Highlights = GetHighlights(hit);
+                        result.Items.Add(item);
+                        //break;
                     }
+                    if (hit.Index.ToLower() == ESIndex.ITEMS.ToLower())
+                    {
+                        //case ESType.ITEM:
+                        //string title = hit.Source.title;
+                        ItemHit item = HitToObject<ItemHit>(hit);
+                        //ItemHit item = hit.Source.ToObject<ItemHit>();
+                        item.Score = hit.Score;
+                        item.Highlights = GetHighlights(hit);
+                        result.Items.Add(item);
+                        //break;
+                    }
+                    if (hit.Index.ToLower() == ESIndex.PAGES.ToLower())
+                    {
+                        //case ESType.PAGE:
+                        PageHit page = HitToObject<PageHit>(hit);
+                        //PageHit page = hit.Source.ToObject<PageHit>();
+                        page.Score = hit.Score;
+                        page.Highlights = GetHighlights(hit);
+                        result.Pages.Add(page);
+                        //break;
+                    }
+                    if (hit.Index.ToLower() == ESIndex.NAMES.ToLower())
+                    {
+                        //case ESType.NAME:
+                        NameHit name = HitToObject<NameHit>(hit);
+                        //NameHit name = hit.Source.ToObject<NameHit>();
+                        name.Score = hit.Score;
+                        name.Highlights = GetHighlights(hit);
+                        result.Names.Add(name);
+                        //break;
+                    }
+                    if (hit.Index.ToLower() == ESIndex.AUTHORS.ToLower())
+                    {
+                        //case ESType.AUTHOR:
+                        AuthorHit author = HitToObject<AuthorHit>(hit);
+                        //AuthorHit author = hit.Source.ToObject<AuthorHit>();
+                        author.Score = hit.Score;
+                        author.Highlights = GetHighlights(hit);
+                        result.Authors.Add(author);
+                        //break;
+                    }
+                    if (hit.Index.ToLower() == ESIndex.KEYWORDS.ToLower())
+                    {
+                        //case ESType.KEYWORD:
+                        KeywordHit keyword = HitToObject<KeywordHit>(hit);
+                        //KeywordHit keyword = hit.Source.ToObject<KeywordHit>();
+                        keyword.Score = hit.Score;
+                        keyword.Highlights = GetHighlights(hit);
+                        result.Keywords.Add(keyword);
+                        //break;
+                    }
+                    //}
                 }
 
                 // Get facets
@@ -960,21 +995,28 @@ namespace BHL.Search.Elastic
                 }
 
                 // Get suggestions
-                foreach (var suggestResults in results.Suggest)
+                foreach(var suggestKey in results.Suggest.Keys)
+                //foreach (var suggestResults in results.Suggest)
                 {
-                    foreach (var suggestion in suggestResults.Value)
+                    foreach (var suggestion in results.Suggest[suggestKey])
+                    //foreach (var suggestion in suggestResults.Value)
                     {
                         foreach (var option in suggestion.Options)
                         {
-                            SearchField suggestKey = GetSearchFieldEnum(suggestResults.Key);
-                            if (result.Suggestions.ContainsKey(suggestKey))
+                            SearchField suggestField = GetSearchFieldEnum(suggestKey);
+                            //SearchField suggestKey = GetSearchFieldEnum(suggestResults.Key);
+                            if (result.Suggestions.ContainsKey(suggestField))
+                            //if (result.Suggestions.ContainsKey(suggestKey))
                             {
-                                if (!result.Suggestions[suggestKey].Contains(option.Text))
-                                    result.Suggestions[suggestKey].Add(option.Text);
+                                if (!result.Suggestions[suggestField].Contains(option.Text))
+                                    result.Suggestions[suggestField].Add(option.Text);
+                                //if (!result.Suggestions[suggestKey].Contains(option.Text))
+                                //    result.Suggestions[suggestKey].Add(option.Text);
                             }
                             else
                             {
-                                result.Suggestions.Add(suggestKey, new List<string> { option.Text });
+                                result.Suggestions.Add(suggestField, new List<string> { option.Text });
+                                //result.Suggestions.Add(suggestKey, new List<string> { option.Text });
                             }
 
                         }
@@ -986,6 +1028,125 @@ namespace BHL.Search.Elastic
         }
 
         /// <summary>
+        /// Deserialize the specified hit into a particular Hit object
+        /// </summary>
+        /// <remarks>
+        /// An alternate to this method is to install the NEST.JsonNetSerializer nuget package
+        /// and allow it to do the deserialization (via Json.NET).  After installing the package,
+        /// set up the ElasticSearch connection like so:
+        /// 
+        ///     var pool = new SingleNodeConnectionPool(new Uri("http://localhost:9200"));
+        ///     var connectionSettings = new ConnectionSettings(pool, sourceSerializer: JsonNetSerializer.Default);
+        ///     var client = new ElasticClient(connectionSettings);
+        /// 
+        /// Then, instead of calling this method this way:
+        /// 
+        ///     AuthorHit author = HitToObject<AuthorHit>(hit);
+        ///     
+        /// Do this instead:
+        /// 
+        ///     AuthorHit author = hit.Source.ToObject<AuthorHit>();
+        /// 
+        /// </remarks>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="hit"></param>
+        /// <returns></returns>
+        private T HitToObject<T>(dynamic hit)
+        {
+            dynamic oHit = new Hit();
+            if (typeof(T).ToString().Contains("AuthorHit"))
+            {
+                oHit = new AuthorHit();
+                oHit.PrimaryAuthorName = (string)((Dictionary<string, object>)hit.Source)["primaryAuthorName"];
+                List<object> names = (List<object>)((Dictionary<string, object>)hit.Source)["authorNames"];
+                foreach (string name in names) oHit.AuthorNames.Add(name);
+            }
+            if (typeof(T).ToString().Contains("KeywordHit"))
+            {
+                oHit = new KeywordHit();
+                oHit.Keyword = (string)((Dictionary<string, object>)hit.Source)["keyword"];
+            }
+            if (typeof(T).ToString().Contains("NameHit"))
+            {
+                oHit = new NameHit();
+                oHit.Name = (string)((Dictionary<string, object>)hit.Source)["name"];
+                oHit.Count = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["count"]);
+            }
+            if (typeof(T).ToString().Contains("PageHit"))
+            {
+                oHit = new PageHit();
+                oHit.ItemId = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["itemId"]);
+                oHit.Sequence = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["sequence"]);
+                List<object> indicators = (List<object>)((Dictionary<string, object>)hit.Source)["pageIndicators"];
+                foreach (string indicator in indicators) oHit.pageIndicators.Add(indicator);
+                List<object> types = (List<object>)((Dictionary<string, object>)hit.Source)["pageTypes"];
+                foreach (string type in types) oHit.PageTypes.Add(type);
+            }
+            if (typeof(T).ToString().Contains("ItemHit"))
+            {
+                oHit = new ItemHit();
+                oHit.TitleId = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["titleId"]);
+                oHit.ItemId = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["itemId"]);
+                oHit.SegmentId = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["segmentId"]);
+                oHit.StartPageId = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["startPageId"]);
+                oHit.Title = (string)((Dictionary<string, object>)hit.Source)["title"];
+                oHit.TranslatedTitle = (string)GetHitValue(hit.Source, "translatedTitle");
+                oHit.UniformTitle = (string)GetHitValue(hit.Source, "uniformTitle");
+                oHit.SortTitle = (string)GetHitValue(hit.Source, "sortTitle");
+                oHit.Genre = (string)GetHitValue(hit.Source, "genre");
+                oHit.MaterialType = (string)GetHitValue(hit.Source, "materialType");
+                oHit.Volume = (string)GetHitValue(hit.Source, "volume");
+                oHit.Issue = (string)GetHitValue(hit.Source, "issue");
+                oHit.Series = (string)GetHitValue(hit.Source, "series");
+                oHit.Publisher = (string)GetHitValue(hit.Source, "publisher");
+                oHit.PublicationPlace = (string)GetHitValue(hit.Source, "publicationPlace");
+                oHit.Language = (string)GetHitValue(hit.Source, "language");
+                oHit.Doi = (string)GetHitValue(hit.Source, "doi");
+                oHit.Url = (string)GetHitValue(hit.Source, "url");
+                oHit.Container = (string)GetHitValue(hit.Source, "container");
+                oHit.PageRange = (string)GetHitValue(hit.Source, "pageRange");
+                oHit.Text = (string)GetHitValue(hit.Source, "text");
+                oHit.HasSegments = (bool)(GetHitValue(hit.Source, "hasSegments") ?? false);
+                oHit.HasLocalContent = (bool)(GetHitValue(hit.Source, "hasLocalContent") ?? false);
+                oHit.HasExternalContent = (bool)(GetHitValue(hit.Source, "hasExternalContent") ?? false);
+                oHit.Authors = GetHitValueList<string>(hit.Source, "authors");
+                oHit.SearchAuthors = GetHitValueList<string>(hit.Source, "searchAuthors");
+                oHit.Keywords = GetHitValueList<string>(hit.Source, "keywords");
+                oHit.Associations = GetHitValueList<string>(hit.Source, "associations");
+                oHit.Variants = GetHitValueList<string>(hit.Source, "variants");
+                oHit.Contributors = GetHitValueList<string>(hit.Source, "contributors");
+                oHit.Notes = GetHitValueList<string>(hit.Source, "notes");
+                oHit.Dates = GetHitValueList<string>(hit.Source, "dates");
+                oHit.DateRanges = GetHitValueList<string>(hit.Source, "dateRanges");
+                oHit.Oclc = GetHitValueList<string>(hit.Source, "oclc");
+                oHit.Issn = GetHitValueList<string>(hit.Source, "issn");
+                oHit.Isbn = GetHitValueList<string>(hit.Source, "isbn");
+                oHit.Collections = GetHitValueList<string>(hit.Source, "collections");
+            }
+
+            oHit.Id = (((Dictionary<string, object>)hit.Source)["id"]).ToString();
+
+            return oHit;
+        }
+
+        private object GetHitValue(Dictionary<string, object> hit, string fieldName)
+        {
+            if (hit.ContainsKey(fieldName))
+                return hit[fieldName];
+            else
+                return null as object;
+        }
+        private List<T> GetHitValueList<T>(Dictionary<string, object> hit, string fieldName)
+        {
+            List<T> values = new List<T>();
+            if (hit.ContainsKey(fieldName))
+            {
+                foreach (T value in (List<object>)hit[fieldName]) values.Add(value);
+            }
+            return values;
+        }
+
+        /// <summary>
         /// Extract the highlights from the specified ElasticSearch hit
         /// </summary>
         /// <param name="hit"></param>
@@ -994,15 +1155,15 @@ namespace BHL.Search.Elastic
         {
             List<Tuple<string, string>> highlights = new List<Tuple<string, string>>();
 
-            foreach (var highlight in hit.Highlights)
+            foreach (var highlight in hit.Highlight)
             {
-                HighlightHit highlightHit = highlight.Value;
-                foreach (string highlightString in highlightHit.Highlights)
+                IReadOnlyCollection<string> highlightHit = highlight.Value;
+                foreach (string highlightString in highlightHit)
                 {
                     // Replace "_abbr" field names with the name of the "parent" field.  For example, replace "title_abbr"
                     // with "title".
                     string highlightField = string.Empty;
-                    switch(highlightHit.Field)
+                    switch(highlight.Key)
                     {
                         case ESField.ASSOCIATIONS_ABBR:
                             highlightField = ESField.ASSOCIATIONS;
@@ -1023,7 +1184,7 @@ namespace BHL.Search.Elastic
                             highlightField = ESField.VARIANTS;
                             break;
                         default:
-                            highlightField = highlightHit.Field;
+                            highlightField = highlight.Key;
                             break;
                     }
 
@@ -1054,7 +1215,7 @@ namespace BHL.Search.Elastic
             ClusterHealthRequest healthRequest = new ClusterHealthRequest();
             healthRequest.Timeout = new Time("30s");
             healthRequest.WaitForStatus = Elasticsearch.Net.WaitForStatus.Yellow;
-            var healthResponse = _es.ClusterHealth(healthRequest);
+            var healthResponse = _es.Cluster.Health(healthRequest);
             if (!healthResponse.IsValid) ProcessError(healthResponse);
         }
 
@@ -1140,7 +1301,38 @@ namespace BHL.Search.Elastic
         /// Parse the error information from the specified response and throw an exception.
         /// </summary>
         /// <param name="response"></param>
-        private void ProcessError(IResponse response)
+        private void ProcessError(ISearchResponse<dynamic> response)
+        {
+            string errorMessage = "Error reported by ElasticSearch server.\n\r";
+            if (response.OriginalException != null)
+            {
+                errorMessage += response.OriginalException.Message + "\n\r";
+            }
+            else if (response.ServerError != null)
+            {
+                errorMessage += response.ServerError.Error.Reason + "\n\r";
+            }
+            else if (response.Shards.Failures.Count > 0)
+            {
+                foreach(Elasticsearch.Net.ShardFailure failure in response.Shards.Failures)
+                {
+                    errorMessage += string.Format("Index '{0}': {1}\n\r", failure.Index, failure.Reason.Reason);
+                }
+            }
+            else if (response.TimedOut)
+            {
+                errorMessage += "Query timed out after " + (response.Took / 1000).ToString() + " seconds\n\r";
+            }
+            else if (response.TerminatedEarly)
+            {
+                errorMessage += "Query terminated early";
+            }
+            errorMessage += response.DebugInformation;
+
+            throw new SearchException(errorMessage);
+        }
+
+        private void ProcessError(ClusterHealthResponse response)
         {
             string errorMessage = "Error reported by ElasticSearch server.\n\r";
             if (response.OriginalException != null)
@@ -1199,7 +1391,6 @@ namespace BHL.Search.Elastic
             Console.WriteLine(string.Format("QUERY: {0}", query));
             Console.WriteLine(string.Format("LIMIT: {0}", limit));
             Console.WriteLine(string.Format("INDEX: {0}", IndexName));
-            Console.WriteLine(string.Format("TYPE: {0}", TypeName));
             Console.WriteLine(string.Format("RETURN FIELDS: {0}", string.Join(",", ReturnFields.ToArray())));
             Console.WriteLine(string.Format("SORT FIELDS: {0}", SortField));
 
@@ -1213,7 +1404,7 @@ namespace BHL.Search.Elastic
             Console.WriteLine(string.Format("HIGHLIGHT FIELDS: {0}", string.Join(",", HighlightFields.ToArray())));
             Console.WriteLine(string.Format("SUGGEST: {0}", Suggest ? "TRUE" : "FALSE"));
             Console.WriteLine(string.Format("RESULTS: {0} returned out of {1} total hits",
-                results.HitsMetaData.Hits.Count, results.HitsMetaData.Total));
+                results.HitsMetadata.Hits.Count, results.HitsMetadata.Total.Value));
             Console.WriteLine();
             Console.WriteLine("REQUEST:");
             Console.WriteLine(System.Text.Encoding.UTF8.GetString(results.ApiCall.RequestBodyInBytes));
@@ -1247,33 +1438,39 @@ namespace BHL.Search.Elastic
 
             foreach (var hit in results.Hits)
             {
-                foreach (var highlight in hit.Highlights)
+                foreach (var highlight in hit.Highlight)
                 {
-                    HighlightHit highlightHit = highlight.Value;
-                    foreach (string highlightString in highlightHit.Highlights)
+                    IReadOnlyCollection<string> highlightHits = highlight.Value;
+                    foreach (string highlightString in highlightHits)
                     {
-                        Console.WriteLine(string.Format("Highlight {0}:{1}-{2}", hit.Id, highlightHit.Field, highlightString));
+                        Console.WriteLine(string.Format("Highlight {0}:{1}-{2}", hit.Id, highlight.Key, highlightString));
                     }
                 }
 
-                if (hit.Highlights.Count > 0) Console.WriteLine();
+                if (hit.Highlight.Count > 0) Console.WriteLine();
             }
 
             Dictionary<string, List<string>> suggestions = new Dictionary<string, List<string>>();
-            foreach (var suggestResults in results.Suggest)
+            foreach (var suggestKey in results.Suggest.Keys)
+            //foreach (var suggestResults in results.Suggest)
             {
-                foreach (var suggestion in suggestResults.Value)
+                foreach (var suggestion in results.Suggest[suggestKey])
+                //foreach (var suggestion in suggestResults.Value)
                 {
                     foreach (var option in suggestion.Options)
                     {
-                        if (suggestions.ContainsKey(suggestResults.Key))
+                        if (suggestions.ContainsKey(suggestKey))
+                        //if (suggestions.ContainsKey(suggestResults.Key))
                         {
-                            if (!suggestions[suggestResults.Key].Contains(option.Text))
-                                suggestions[suggestResults.Key].Add(option.Text);
+                            if (!suggestions[suggestKey].Contains(option.Text))
+                                suggestions[suggestKey].Add(option.Text);
+                            //if (!suggestions[suggestResults.Key].Contains(option.Text))
+                            //    suggestions[suggestResults.Key].Add(option.Text);
                         }
                         else
                         {
-                            suggestions.Add(suggestResults.Key, new List<string> { option.Text });
+                            suggestions.Add(suggestKey, new List<string> { option.Text });
+                            //suggestions.Add(suggestResults.Key, new List<string> { option.Text });
                         }
                     }
                 }

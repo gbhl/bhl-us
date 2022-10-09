@@ -167,19 +167,19 @@ The BHL web site uses ElasticSearch to implement many of its search capabilities
 
 3) Get the official ElasticSearch image.
  
-	docker pull docker.elastic.co/elasticsearch/elasticsearch:5.4.2
+	docker pull docker.elastic.co/elasticsearch/elasticsearch:7.9.1
  
 4) Start a new ElasticSearch docker container that will be accessible at http://localhost:9200.
  
-	docker run -d --name es542 -p 9200:9200 -e "http.host=0.0.0.0" -e "transport.host=127.0.0.1" docker.elastic.co/elasticsearch/elasticsearch:5.4.2
+	docker run -d --name es791 -p 9200:9200 -e "http.host=0.0.0.0" -e "transport.host=127.0.0.1" docker.elastic.co/elasticsearch/elasticsearch:7.9.1
  
 5) Locate the "elasticsearch.yml" file within the running Docker container.  The following command should return something like "/usr/share/elasticsearch/config/elasticsearch.yml"
  
-	docker exec -it es542 find / -name "elasticsearch.yml"
+	docker exec -it es791 find / -name "elasticsearch.yml"
  
 6) Copy the elasticsearch.yml file from the container to the host.
  
-	docker cp es542:/usr/share/elasticsearch/config/elasticsearch.yml c:\elasticsearch.yml
+	docker cp es791:/usr/share/elasticsearch/config/elasticsearch.yml c:\elasticsearch.yml
  
 7) On the host, use a text editor to disable Xpack security by adding the following line to the elasticsearch.yml file:
  
@@ -199,19 +199,19 @@ The BHL web site uses ElasticSearch to implement many of its search capabilities
  
 8) Copy the edited elasticsearch.yml file from the host to the running Docker container.
  
-	docker cp c:\elasticsearch.yml es542:/usr/share/elasticsearch/config/elasticsearch.yml
+	docker cp c:\elasticsearch.yml es791:/usr/share/elasticsearch/config/elasticsearch.yml
 
 9) Add the ICU analysis plug-in to ElasticSearch to add better support for Unicode characters, including Asian characters.
  
-	docker exec -it es542 /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu
+	docker exec -it es791 /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu
  
 10) Stop the running container.
  
-	docker stop es542
+	docker stop es791
  
-11)  Restart the ElasticSearch container.  Note that by using the name (es542) assigned to the container is Step 4, all of the other arguments we specified in Step 4 (-d -e -p <containername>) are used by default.
+11)  Restart the ElasticSearch container.  Note that by using the name (es791) assigned to the container is Step 4, all of the other arguments we specified in Step 4 (-d -e -p <containername>) are used by default.
  
-	docker start es542
+	docker start es791
  
 12) Verify the operation of ElasticSearch by opening a browser and navigating to http://localhost:9200.  You should get a response that looks something like this:
  

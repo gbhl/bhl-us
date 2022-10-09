@@ -38,11 +38,6 @@ namespace BHL.Search.Elastic
         string IndexName { set; get; }
 
         /// <summary>
-        /// Type of index object for the search to target
-        /// </summary>
-        string TypeName { set; get; }
-
-        /// <summary>
         /// Fields to return.  Leave empty to return all fields.
         /// </summary>
         List<string> ReturnFields { set; get; }
