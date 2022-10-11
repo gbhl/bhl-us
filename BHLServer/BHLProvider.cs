@@ -594,7 +594,7 @@ namespace MOBOT.BHL.Server
                                     double odds;
                                     try
                                     {
-                                        odds = (double)name["oddsLog10"];
+                                        odds = (double)(name["oddsLog10"] ?? 0);
                                     }
                                     catch (System.OverflowException)
                                     {
