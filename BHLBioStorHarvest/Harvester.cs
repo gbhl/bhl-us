@@ -142,6 +142,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             bool isHarvested = false;
 
             WebClient webClient = new WebClient();
+            webClient.Encoding = Encoding.UTF8;
             string itemArticlesUrl = string.Format(configParms.BioStorItemArticlesUrl, bhlItemID.ToString());
 
             try
