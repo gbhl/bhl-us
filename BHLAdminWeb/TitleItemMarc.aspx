@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Original MARC Record</title>
+	<link rel="stylesheet" type="text/css" runat="server" href="/styles/adminstyle.css" />
 </head>
 <body>
     <form id="form1" runat="server">

@@ -1030,7 +1030,7 @@ namespace MOBOT.BHL.Server
         /// <returns></returns>
         public string MarcGetFileContents(int id, string type)
         {
-            string fileContents = "MARC not found.";
+            string fileContents = string.Empty;
             string filepath = string.Empty;
 
             IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider();
