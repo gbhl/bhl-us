@@ -147,12 +147,12 @@ namespace MOBOT.BHL.Web2
 
             // Look for an OCLC identifier (use the first one... might need to account for multiple at some point)
             bool oclcFound = false;
-            LocalLibraryUrl = @"http://worldcatlibraries.org/";
+            LocalLibraryUrl = @"https://worldcat.org/";
             foreach (Title_Identifier titleIdentifier in TitleIdentifiers)
             {
                 if (string.Equals(titleIdentifier.IdentifierName, "OCLC", StringComparison.OrdinalIgnoreCase))
                 {
-                    LocalLibraryUrl += "wcpa/oclc/";
+                    LocalLibraryUrl += "title/";
                     if (titleIdentifier.IdentifierValue.ToLower().StartsWith("ocm"))
                     {
                         //strip the "ocm" from the beginning of the value.
