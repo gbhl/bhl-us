@@ -44,18 +44,18 @@ namespace MOBOT.BHL.AdminWeb
                         }
                         else
                         {
-                            litMarc.Text = "MARC not found.";
+                            litMarc.Text = "<br/>BHL has no MARC record on file for this item.  Please review the associated title information.<br/><br/>The title information may include an identifier -- such as OCLC or ISSN -- that can be used to search for additional MARC data in other bibliographic databases.";
                         }
 
                     }
                 }
                 catch (Exception ex)
                 {
-                    string message = "Error retrieving MARC.<br><br>";
+                    string message = "<br/>An error occurred while retreiving the MARC record for this item.  Please try again later, or review the associated title information.<br/><br/>The title information may include an identifier -- such as OCLC or ISSN -- that can be used to search for additional MARC data in other bibliographic databases.";
                     if (new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request))
                     {
-                        message += ex.Message + "<br><br>";
-                        if (ex.StackTrace != null) message += ex.StackTrace;
+                        message += "<br/><br/>" + ex.Message;
+                        if (ex.StackTrace != null) message += "<br/><br/>" + ex.StackTrace;
                     }
                     litMarc.Text = message;
                 }
