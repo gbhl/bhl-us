@@ -44,7 +44,7 @@ namespace MOBOT.BHL.AdminWeb
                         }
                         else
                         {
-                            litMarc.Text = "<br/>The MARC record is unavailable for this item.  Please review the associated title information.<br/><br/>The title information may include an identifier -- such as OCLC or ISSN -- that can be used to search for additional MARC data in other bibliographic databases.";
+                            litMarc.Text = "<br/>BHL has no MARC record on file for this item.  Please review the associated title information.<br/><br/>The title information may include an identifier -- such as OCLC or ISSN -- that can be used to search for additional MARC data in other bibliographic databases.";
                         }
 
                     }
