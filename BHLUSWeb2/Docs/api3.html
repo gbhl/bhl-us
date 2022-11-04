@@ -35,7 +35,7 @@
         </div>
         <div id="right">
             Created: August 27, 2018<br />
-            Revised: April 4, 2022
+            Revised: November 4, 2022
         </div>
     </div>
     <div>
@@ -201,6 +201,61 @@
             <tr>
                 <td>Title/CreationDate</td>
                 <td>Date and time the title was created in BHL</td>
+            </tr>
+            <tr>
+                <td>Title/Associations/TitleAssociation/TitleAssociationTypeName</td>
+                <td>
+                    One of the following values, which identify the type of association:<br />
+                    Series Statement - Added Entry<br />
+                    Series Statement<br />
+                    Preceding Entry: Continues<br />
+                    Preceding Entry: Continues in part<br />
+                    Preceding Entry: Supercedes<br />
+                    Preceding Entry: Supercedes in part<br />
+                    Preceding Entry: Formed by the union of<br />
+                    Preceding Entry: Absorbed<br />
+                    Preceding Entry: Absorbed in part<br />
+                    Preceding Entry: Separated from<br />
+                    Succeeding Entry: Continued by<br />
+                    Succeeding Entry: Continued in part by<br />
+                    Succeeding Entry: Superceded by<br />
+                    Succeeding Entry: Superceded in part by<br />
+                    Succeeding Entry: Absorbed by<br />
+                    Succeeding Entry: Absorbed in part by<br />
+                    Succeeding Entry: Split into<br />
+                    Succeeding Entry: Merged with<br />
+                    Succeeding Entry: Changed back to<br />
+                    Series Statement - Added Entry Uniform Title<br />
+                    Host Item Entry<br />
+                    Supplement/Special Issue Entry<br />
+                    Supplement Parent Entry<br />
+                    Other Edition Entry<br />
+                    Issued With Entry<br />
+                    Other Relationship Entry<br />
+                    Uncontrolled Related/Analytical - Added Entry
+                </td>
+            </tr>
+            <tr>
+                <td>Title/Associations/TitleAssociation/Title</td>
+                <td>The associated title.  See <a href="https://www.loc.gov/marc/bibliographic/bd4xx.html" target="_blank" rel="noopener noreferrer">MARC Series Statement Fields</a> and <a href="https://www.loc.gov/marc/bibliographic/bd760787.html" target="_blank" rel="noopener noreferrer">MARC Linking Entries</a></td>
+            </tr>
+            <tr>
+                <td>Title/Associations/TitleAssociation/AssociatedTitleID</td>
+                <td>BHL Title Identifier for the associated title.</td>
+            </tr>
+            <tr>
+                <td>Title/Variants/TitleVariant/TitleVariantTypeName</td>
+                <td>
+                    One of the following values, which identify the type of variant:<br />
+                    Translated<br />
+                    Parallel (Translated)<br />
+                    Abbreviated<br />
+                    Alterative<br />
+                </td>
+            </tr>
+            <tr>
+                <td>Title/Variants/TitleVariant/Title</td>
+                <td>The variant title.  See <a href="http://www.loc.gov/marc/bibliographic/bd20x24x.html" target="_blank" rel="noopener noreferrer">MARC 210, 242, and 246</a>.</td>
             </tr>
             <tr>
                 <td>Author/AuthorID</td>
@@ -772,20 +827,6 @@
                 <td>Language/LanguageName</td>
                 <td>The name of the language</td>
             </tr>
-            <tr>
-                <td>Variant/TitleVariantTypeName</td>
-                <td>
-                    One of the following values, which identify the type of variant:<br />
-                    Translated<br />
-                    Parallel (Translated)<br />
-                    Abbreviated<br />
-                    Alterative<br />
-                </td>
-            </tr>
-            <tr>
-                <td>Variant/Title</td>
-                <td>The variant title.  See <a href="http://www.loc.gov/marc/bibliographic/bd20x24x.html" target="_blank" rel="noopener noreferrer">MARC 210, 242, and 246</a>.</td>
-            </tr>
         </table>
     </div>
     <div></div>
@@ -793,6 +834,10 @@
     <a name="notes"></a>
     <div class="header">*** RELEASE NOTES *** <a href="#top" class="toplink">Contents</a></div>
 
+    <div class="subhead1">November 4, 2022 - version 3.6.0</div>
+    <ul type="disc">
+        <li>Added &quot;Associations&quot; to the metadata returned by &quot;GetTitleMetadata&quot;.</li>
+    </ul>
     <div class="subhead1">April 4, 2022 - version 3.5.0</div>
     <ul type="disc">
         <li>Added &quot;idType&quot; and &quot;id&quot; parameters to &quot;PageSearch&quot;.</li>

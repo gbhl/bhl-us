@@ -214,6 +214,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _Collections = value; }
         }
 
+        List<TitleAssociation> _Associations;
+        public List<TitleAssociation> Associations
+        {
+            get { return _Associations; }
+            set { _Associations = value; }
+        }
+
         List<TitleVariant> _Variants;
         public List<TitleVariant> Variants
         {
