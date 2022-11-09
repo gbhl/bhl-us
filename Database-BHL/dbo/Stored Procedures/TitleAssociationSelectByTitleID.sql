@@ -13,6 +13,7 @@ SELECT	ta.TitleAssociationID,
 		ta.TitleAssociationTypeID,
 		tat.TitleAssociationLabel, 
 		tat.TitleAssociationName,
+		tat.MARCTag,
 		ta.Title,
 		ta.Section,
 		ta.Volume,
@@ -31,3 +32,5 @@ ORDER BY
 		tat.TitleAssociationLabel, tat.MarcIndicator2, ta.Title, ta.Section, ta.Volume
 
 END
+
+GO

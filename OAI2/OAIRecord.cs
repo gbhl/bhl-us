@@ -79,6 +79,14 @@ namespace MOBOT.BHL.OAI2
             set { _type = value; }
         }
 
+        String _marcTag = String.Empty;
+
+        public String MarcTag
+        {
+            get { return _marcTag; }
+            set { _marcTag = value; }
+        }
+
         String _marcLeader = String.Empty;
 
         public String MarcLeader
@@ -698,6 +706,7 @@ namespace MOBOT.BHL.OAI2
                         if (!string.IsNullOrWhiteSpace(titleAssociation.Publication)) associationTitle.Add(titleAssociation.Publication.Trim());
                         if (!string.IsNullOrWhiteSpace(titleAssociation.Relationship)) associationTitle.Add(titleAssociation.Relationship.Trim());
                         association.Title = string.Join(", ", associationTitle.ToArray());
+                        association.MarcTag = titleAssociation.MarcTag;
 
                         if (titleAssociation.AssociatedTitleID != null)
                         {
@@ -854,6 +863,7 @@ namespace MOBOT.BHL.OAI2
                     if (!string.IsNullOrWhiteSpace(titleAssociation.Publication)) associationTitle.Add(titleAssociation.Publication.Trim());
                     if (!string.IsNullOrWhiteSpace(titleAssociation.Relationship)) associationTitle.Add(titleAssociation.Relationship.Trim());
                     association.Title = string.Join(", ", associationTitle.ToArray());
+                    association.MarcTag = titleAssociation.MarcTag;
 
                     if (titleAssociation.AssociatedTitleID != null)
                     {

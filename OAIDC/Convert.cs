@@ -196,7 +196,7 @@ namespace MOBOT.BHL.OAIDC
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("<oai_dc:dc xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/oai_dc/ &#13;&#10;&#9;&#9;&#9;&#9;http://www.openarchives.org/OAI/2.0/oai_dc.xsd\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n");
+            sb.Append("<oai_dc:dc xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/oai_dc/ &#13;&#10;&#9;&#9;&#9;&#9;http://www.openarchives.org/OAI/2.0/oai_dc.xsd\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:dcterms=\"http://purl.org/dc/terms/\">\n");
 
             // Title
             if (!String.IsNullOrEmpty(_oaiRecord.Title)) sb.Append("<dc:title>" + HttpUtility.HtmlEncode(_oaiRecord.Title) + "</dc:title>\n");
@@ -259,10 +259,19 @@ namespace MOBOT.BHL.OAIDC
                 sb.Append("<dc:language>" + HttpUtility.HtmlEncode(language) + "</dc:language>\n");
             }
 
-            // Relation
+            // IsPartOf
             if (!string.IsNullOrWhiteSpace(_oaiRecord.ParentUrl))
             {
-                sb.Append("<dc:relation type='IsPartOf'>" + HttpUtility.HtmlEncode(_oaiRecord.ParentUrl) + "</dc:relation>\n");
+                sb.Append("<dcterms:isPartOf xsi:type=\"http://purl.org/dc/terms/URI\">" + HttpUtility.HtmlEncode(_oaiRecord.ParentUrl) + "</dcterms:isPartOf>\n");
+            }
+            foreach(KeyValuePair<string, OAIRecord> relatedTitle in _oaiRecord.RelatedTitles)
+            {
+                OAIRecord relation = relatedTitle.Value;
+                if ((relation.MarcTag == "490" || relation.MarcTag == "773" || relation.MarcTag == "830") &&
+                    !string.IsNullOrWhiteSpace(relation.Url))
+                {
+                    sb.Append("<dcterms:isPartOf xsi:type=\"http://purl.org/dc/terms/URI\">" + HttpUtility.HtmlEncode(relation.Url) + "</dcterms:isPartOf>\n");
+                }
             }
 
             // Coverage
