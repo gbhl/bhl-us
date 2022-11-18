@@ -15,7 +15,7 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            Author author = new AuthorDAL().AuthorSelectAuto(connection, transaction, authorId);
+            Author author = new AuthorDAL().AuthorSelectByAuthorID(connection, transaction, authorId);
 
             if (author != null)
             {
@@ -24,6 +24,26 @@ namespace MOBOT.BHL.DAL
             }
 
             return author;
+        }
+
+        public Author AuthorSelectByAuthorID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int authorId)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+              CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.AuthorSelectByAuthorID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("AuthorID", SqlDbType.Int, null, false, authorId)))
+            {
+                using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
+                {
+                    List<Author> list = helper.ExecuteReader(command);
+                    if (list.Count > 0)
+                        return list[0];
+                    else
+                        return null;
+                }
+            }
         }
 
         /// <summary>

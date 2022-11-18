@@ -1669,6 +1669,32 @@ section
 {
 	margin:0 0 30px 0;	
 }
+.authorinfo {
+    margin-top: 40px;
+    padding: 21px;
+    border-style: solid;
+    border-color: lightgray;
+    border-width: 1px;
+    font-size: 12px;
+    background-color: #f9f5f1;
+    width: 270px;
+}
+.authorinfo .ai-head {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.authorinfo .ai-subhead {
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 2px;
+}
+.authorinfo .ai-subhead-help {
+    margin-left:3px;
+    margin-bottom: -3px;
+}
+.authorinfo .ai-value {
+    margin-bottom: 2px;
+}
 aside
 {
 	float:right;

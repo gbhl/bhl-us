@@ -10,6 +10,8 @@ SELECT	ai.AuthorIdentifierID,
 		ai.AuthorID,
 		ai.IdentifierID,
 		i.IdentifierName,
+		i.IdentifierLabel,
+		i.Prefix,
 		ai.IdentifierValue,
 		ai.CreationDate,
 		ai.LastModifiedDate,
@@ -22,4 +24,4 @@ ORDER BY
 		i.IdentifierName,
 		ai.IdentifierValue
 		
-
+GO
