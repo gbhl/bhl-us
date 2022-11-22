@@ -18,7 +18,7 @@ FROM	dbo.BSSegment s
 		-- Only segments contributed by BioStor
 		INNER JOIN dbo.ImportSource src ON sa.ImportSourceID = src.ImportSourceID AND src.Source = 'BioStor'
 		INNER JOIN dbo.BHLAuthorIdentifier ai ON sa.BioStorID = ai.IdentifierValue
-		INNER JOIN dbo.BHLIdentifier id ON ai.IdentifierID = id.IdentifierID AND id.IdentifierName = 'BioStor'		
+		INNER JOIN dbo.BHLIdentifier id ON ai.IdentifierID = id.IdentifierID AND id.IdentifierName = 'BioStor Author ID'
 WHERE	s.SegmentID = @SegmentID
 AND		sa.BHLAuthorID IS NULL	-- only authors not already resolved
 
@@ -84,3 +84,5 @@ WHERE	sa.SegmentID = @SegmentID
 AND		BHLAuthorID IS NOT NULL
 
 END
+
+GO

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[AuthorIdentifierSelectByAuthorID]
+﻿CREATE PROCEDURE dbo.AuthorIdentifierSelectByAuthorID
 
 @AuthorID int
 
@@ -12,6 +12,7 @@ SELECT	ai.AuthorIdentifierID,
 		i.IdentifierName,
 		i.IdentifierLabel,
 		i.Prefix,
+		i.Display,
 		ai.IdentifierValue,
 		ai.CreationDate,
 		ai.LastModifiedDate,

@@ -34,6 +34,7 @@ namespace BHL.Export.TSV
 
             // Set up the output folder for the export files
             if (File.Exists(configParms.AuthorFile)) File.Delete(configParms.AuthorFile);
+            if (File.Exists(configParms.AuthorIdentifierFile)) File.Delete(configParms.AuthorIdentifierFile);
             if (File.Exists(configParms.DOIFile)) File.Delete(configParms.DOIFile);
             if (File.Exists(configParms.ItemFile)) File.Delete(configParms.ItemFile);
             if (File.Exists(configParms.KeywordFile)) File.Delete(configParms.KeywordFile);
@@ -41,15 +42,18 @@ namespace BHL.Export.TSV
             if (File.Exists(configParms.PageNameFile)) File.Delete(configParms.PageNameFile);
             if (File.Exists(configParms.PartAuthorFile)) File.Delete(configParms.PartAuthorFile);
             if (File.Exists(configParms.PartFile)) File.Delete(configParms.PartFile);
+            if (File.Exists(configParms.PartIdentifierFile)) File.Delete(configParms.PartIdentifierFile);
             if (File.Exists(configParms.TitleFile)) File.Delete(configParms.TitleFile);
             if (File.Exists(configParms.TitleIdentifierFile)) File.Delete(configParms.TitleIdentifierFile);
 
             if (File.Exists(configParms.InternalAuthorFile)) File.Delete(configParms.InternalAuthorFile);
+            if (File.Exists(configParms.InternalAuthorIdentifierFile)) File.Delete(configParms.InternalAuthorIdentifierFile);
             if (File.Exists(configParms.InternalDOIFile)) File.Delete(configParms.InternalDOIFile);
             if (File.Exists(configParms.InternalItemFile)) File.Delete(configParms.InternalItemFile);
             if (File.Exists(configParms.InternalKeywordFile)) File.Delete(configParms.InternalKeywordFile);
             if (File.Exists(configParms.InternalPartAuthorFile)) File.Delete(configParms.InternalPartAuthorFile);
             if (File.Exists(configParms.InternalPartFile)) File.Delete(configParms.InternalPartFile);
+            if (File.Exists(configParms.InternalPartIdentifierFile)) File.Delete(configParms.InternalPartIdentifierFile);
             if (File.Exists(configParms.InternalTitleFile)) File.Delete(configParms.InternalTitleFile);
             if (File.Exists(configParms.InternalTitleIdentifierFile)) File.Delete(configParms.InternalTitleIdentifierFile);
 

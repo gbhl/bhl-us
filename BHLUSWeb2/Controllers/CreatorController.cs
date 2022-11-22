@@ -3,6 +3,7 @@ using MOBOT.BHL.Server;
 using MOBOT.BHL.Web2.Models;
 using System;
 using System.Configuration;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace MOBOT.BHL.Web2.Controllers
@@ -38,7 +39,10 @@ namespace MOBOT.BHL.Web2.Controllers
             if (model.Author == null) Response.Redirect("~/authornotfound");
             if (model.Author.RedirectAuthorID != null) Response.Redirect("~/creator/" + model.Author.RedirectAuthorID);
 
-            foreach(AuthorName name in model.Author.AuthorNames)
+            // Remove any author identifiers not intended for display
+            model.Author.AuthorIdentifiers.RemoveAll(x => x.Display == 0);
+
+            foreach (AuthorName name in model.Author.AuthorNames)
             {
                 if (name.IsPreferredName == 1)
                 {

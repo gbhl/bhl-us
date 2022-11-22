@@ -46,6 +46,14 @@ namespace MOBOT.BHL.DataObjects
             }
         }
 
+        private int _Display = 1;
+
+        public int Display
+        {
+            get { return _Display; }
+            set { _Display = value; }
+        }
+
         public override void SetValues(CustomDataRow row)
         {
             foreach (CustomDataColumn column in row)
@@ -65,6 +73,11 @@ namespace MOBOT.BHL.DataObjects
                     case "Prefix":
                         {
                             _Prefix = (string)column.Value;
+                            break;
+                        }
+                    case "Display":
+                        {
+                            _Display = (int?)(short?)column.Value ?? 1;
                             break;
                         }
                 }

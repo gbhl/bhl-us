@@ -618,7 +618,6 @@ namespace MOBOT.BHL.API.BHLApi
                 case "bhl":
                     authors = dal.AuthorSelectByAuthorID(null, null, authorID);
                     break;
-                case "biostor":
                 case "viaf":
                 case "oclc":
                 case "dlc":
@@ -629,7 +628,7 @@ namespace MOBOT.BHL.API.BHLApi
                     authors = dal.AuthorSelectByIdentifier(null, null, idType, id);
                     break;
                 default:
-                    throw new InvalidApiParamException("idType must be one of the following values: abbreviation, ark, bhl, biostor, dlc, oclc, orcid, tropicos, viaf");
+                    throw new InvalidApiParamException("idType must be one of the following values: abbreviation, ark, bhl, dlc, oclc, orcid, tropicos, viaf");
             }
 
             // Add the extended metadata

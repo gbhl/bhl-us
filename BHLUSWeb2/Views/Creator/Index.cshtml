@@ -108,7 +108,7 @@
             @if (Model.Author.AuthorNames.Count > 1)
             {
                 <div class="ai-subhead">
-                    Alternate Name Forms <a target="_blank" rel="noopener noreferrer" href="#"><img class="ai-subhead-help" src="/images/help.png" alt="About name forms" title="What's This?" height="16" width="16" /></a>
+                    Alternate Name Forms <a target="_blank" rel="noopener noreferrer" href="#" onclick="alert('Popup or direct link to information about data quality goes here'); return false;"><img class="ai-subhead-help" src="/images/help.png" alt="About name forms" title="What's This?" height="16" width="16" /></a>
                 </div>
                 foreach (MOBOT.BHL.DataObjects.AuthorName name in Model.Author.AuthorNames)
                 {
