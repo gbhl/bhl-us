@@ -35,11 +35,22 @@ build/
 [Aa]pp.[Cc]onfig
 [Aa]pp[Cc]onfig.xml
 [Aa]pp[Cc]onfig*.xml
+!/BHLUSWeb2/data/[Ww]eb.[Cc]onfig
 
 # BHL projects
 EOL Data Export/
 ExportIAIdentifiers/
 ExportScanList/
+
+# BHL Data folder
+/BHLUSWeb2/data/BibTeX
+/BHLUSWeb2/data/KBART
+/BHLUSWeb2/data/MODS
+/BHLUSWeb2/data/RIS
+/BHLUSWeb2/data/TSV/*.txt
+/BHLUSWeb2/data/TSV/*.zip
+/BHLUSWeb2/data/TSV/hosted
+!/BHLUSWeb2/data/TSV/BHLExportSchema.*
 
 # NuGet
 # Enable only the "build/" folder in the NuGet packages folder.  NuGet packages use it for MSBuild targets.
