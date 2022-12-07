@@ -1077,6 +1077,8 @@ namespace BHL.Search.Elastic
                 oHit = new PageHit();
                 oHit.ItemId = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["itemId"]);
                 oHit.Sequence = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["sequence"]);
+                oHit.PageId = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["pageId"]);
+                oHit.Text = (string)GetHitValue(hit.Source, "text");
                 List<object> indicators = (List<object>)((Dictionary<string, object>)hit.Source)["pageIndicators"];
                 foreach (string indicator in indicators) oHit.pageIndicators.Add(indicator);
                 List<object> types = (List<object>)((Dictionary<string, object>)hit.Source)["pageTypes"];
