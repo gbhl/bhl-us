@@ -18,6 +18,12 @@ END
 
 IF (@EndDate IS NULL) SET @EndDate = GETDATE()
 
+-- Get the bibliographic levels that are valid for DOI assignment
+SELECT	BibliographicLevelID
+INTO	#BibliographicLevel
+FROM	dbo.BibliographicLevel
+WHERE	BibliographicLevelName NOT IN ('Collection', 'Subunit', 'Integrating resource')
+
 -- Book
 SELECT	AuditBasicID AS AuditID, Operation, EntityName, 'title' AS IndexEntity, t.TitleID AS EntityID1, NULL AS EntityID2, AuditDate
 INTO	#Raw
@@ -28,6 +34,7 @@ FROM	audit.AuditBasic ab WITH (NOLOCK)
 WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
 AND		EntityName = 'dbo.Title'
 AND		i.ItemStatusID = 40
+AND		t.BibliographicLevelID IN (SELECT BibliographicLevelID FROM #BibliographicLevel)
 UNION
 SELECT	AuditBasicID, ab.Operation, EntityName, 'title', t.TitleID, NULL, AuditDate
 FROM	audit.AuditBasic ab WITH (NOLOCK)
@@ -40,6 +47,7 @@ AND		EntityName = 'dbo.Author'
 AND		Operation <> 'E'
 AND		i.ItemStatusID = 40
 AND		t.PublishReady = 1
+AND		t.BibliographicLevelID IN (SELECT BibliographicLevelID FROM #BibliographicLevel)
 UNION
 SELECT	AuditBasicID, ab.Operation, EntityName, 'title', t.TitleID, NULL, AuditDate
 FROM	audit.AuditBasic ab WITH (NOLOCK)
@@ -52,6 +60,7 @@ WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
 AND		EntityName = 'dbo.AuthorName'
 AND		i.ItemStatusID = 40
 AND		t.PublishReady = 1
+AND		t.BibliographicLevelID IN (SELECT BibliographicLevelID FROM #BibliographicLevel)
 UNION
 SELECT	AuditBasicID, ab.Operation, EntityName, 'title', t.TitleID, NULL, AuditDate
 FROM	audit.AuditBasic ab WITH (NOLOCK)
@@ -63,6 +72,9 @@ FROM	audit.AuditBasic ab WITH (NOLOCK)
 		INNER JOIN dbo.Title t WITH (NOLOCK) ON it.TitleID = t.TitleID
 WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
 AND		EntityName = 'dbo.AuthorIdentifier'
+AND		i.ItemStatusID = 40
+AND		t.PublishReady = 1
+AND		t.BibliographicLevelID IN (SELECT BibliographicLevelID FROM #BibliographicLevel)
 UNION
 SELECT	AuditBasicID, ab.Operation, EntityName, 'title', t.TitleID, NULL, AuditDate
 FROM	audit.AuditBasic ab WITH (NOLOCK)
@@ -74,6 +86,7 @@ WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
 AND		EntityName = 'dbo.TitleAuthor'
 AND		i.ItemStatusID = 40
 AND		t.PublishReady = 1
+AND		t.BibliographicLevelID IN (SELECT BibliographicLevelID FROM #BibliographicLevel)
 UNION
 SELECT	AuditBasicID, ab.Operation, EntityName, 'title', t.TitleID, NULL, AuditDate
 FROM	audit.AuditBasic ab WITH (NOLOCK)
@@ -86,6 +99,7 @@ WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
 AND		EntityName = 'dbo.Title_Identifier'
 AND		i.ItemStatusID = 40
 AND		t.PublishReady = 1
+AND		t.BibliographicLevelID IN (SELECT BibliographicLevelID FROM #BibliographicLevel)
 
 UNION
 
