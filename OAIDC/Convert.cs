@@ -123,7 +123,7 @@ namespace MOBOT.BHL.OAIDC
             var languages = from l in root.Elements(ns + "language") select l;
             foreach (XElement l in languages)
             {
-                _oaiRecord.Languages.Add(l.Value);
+                _oaiRecord.Languages.Add((Code: "", Name: l.Value));
             }
 
             XElement date = root.Element(ns + "date");
@@ -196,7 +196,7 @@ namespace MOBOT.BHL.OAIDC
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("<oai_dc:dc xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/oai_dc/ &#13;&#10;&#9;&#9;&#9;&#9;http://www.openarchives.org/OAI/2.0/oai_dc.xsd\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:dcterms=\"http://purl.org/dc/terms/\">\n");
+            sb.Append("<oai_dc:dc xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/oai_dc/ &#13;&#10;&#9;&#9;&#9;&#9;http://www.openarchives.org/OAI/2.0/oai_dc.xsd\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n");
 
             // Title
             if (!String.IsNullOrEmpty(_oaiRecord.Title)) sb.Append("<dc:title>" + HttpUtility.HtmlEncode(_oaiRecord.Title) + "</dc:title>\n");
@@ -254,15 +254,15 @@ namespace MOBOT.BHL.OAIDC
             // No mapping for this DataSet
 
             // Language
-            foreach (String language in _oaiRecord.Languages)
+            foreach ((string Code, string Name) language in _oaiRecord.Languages)
             {
-                sb.Append("<dc:language>" + HttpUtility.HtmlEncode(language) + "</dc:language>\n");
+                sb.Append("<dc:language>" + HttpUtility.HtmlEncode(language.Code) + "</dc:language>\n");
             }
 
-            // IsPartOf
+            // Relation
             if (!string.IsNullOrWhiteSpace(_oaiRecord.ParentUrl))
             {
-                sb.Append("<dcterms:isPartOf xsi:type=\"http://purl.org/dc/terms/URI\">" + HttpUtility.HtmlEncode(_oaiRecord.ParentUrl) + "</dcterms:isPartOf>\n");
+                sb.Append("<dc:relation>" + HttpUtility.HtmlEncode(_oaiRecord.ParentUrl) + "</dc:relation>\n");
             }
             foreach(KeyValuePair<string, OAIRecord> relatedTitle in _oaiRecord.RelatedTitles)
             {
@@ -270,7 +270,7 @@ namespace MOBOT.BHL.OAIDC
                 if ((relation.MarcTag == "490" || relation.MarcTag == "773" || relation.MarcTag == "830") &&
                     !string.IsNullOrWhiteSpace(relation.Url))
                 {
-                    sb.Append("<dcterms:isPartOf xsi:type=\"http://purl.org/dc/terms/URI\">" + HttpUtility.HtmlEncode(relation.Url) + "</dcterms:isPartOf>\n");
+                    sb.Append("<dc:relation>" + HttpUtility.HtmlEncode(relation.Url) + "</dc:relation>\n");
                 }
             }
 

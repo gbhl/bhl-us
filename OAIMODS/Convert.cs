@@ -211,7 +211,7 @@ namespace MOBOT.BHL.OAIMODS
             if (language != null)
             {
                 XElement languageTerm = language.Element(ns + "languageTerm");
-                if (languageTerm != null) _oaiRecord.Languages.Add(languageTerm.Value);
+                if (languageTerm != null) _oaiRecord.Languages.Add((Code: "", Name: languageTerm.Value));
             }
 
             // Abstract
@@ -902,10 +902,10 @@ namespace MOBOT.BHL.OAIMODS
         {
             StringBuilder sb = new StringBuilder();
 
-            foreach (String language in _oaiRecord.Languages)
+            foreach ((string Code, string Name) language in _oaiRecord.Languages)
             {
                 sb.Append("<language>\n");
-                sb.Append("\t<languageTerm authority=\"iso639-2b\" type=\"text\">" + HttpUtility.HtmlEncode(language) + "</languageTerm>\n");
+                sb.Append("\t<languageTerm authority=\"iso639-2b\" type=\"text\">" + HttpUtility.HtmlEncode(language.Code) + "</languageTerm>\n");
                 sb.Append("</language>\n");
             }
 
