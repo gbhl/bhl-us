@@ -66,6 +66,49 @@
                 <%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Segment) ? PublicationDetail.Genre + ": " + PublicationDetail.ArticleTitle : "" %>
             </a>
         </div>
+        <div class="jqmWindow" id="textsourcehelp-dialog">
+            <div class="head">
+                <a class="jqmClose" title="Close Dialog">Close Dialog</a>
+                <h2>Text Sources</h2>
+                <hr />
+            </div>
+            <div class="dialogbody">
+                Page text in BHL originates from one of the following sources:
+                <!--
+                <ul>
+                    <li>Uncorrected OCR - Machine-generated text. May include inconsistencies with the content of the original page.</li>
+                    <li>Error-corrected OCR - Machine-generated, machine-corrected text.  Better quality than Uncorrected OCR, but may still include inconsistencies with the content of the original page.</li>
+                    <li>Manual Transcription - Human-created and reviewed text.</li>
+                </ul>
+                -->
+                <table style="margin: 0px 15px 15px 15px;">
+                    <tr style="line-height:20px;">
+                        <td width="150px;">
+                            Uncorrected OCR
+                        </td>
+                        <td style="padding-bottom:10px;">
+                            Machine-generated text. May include inconsistencies with the content of the original page.
+                        </td>
+                    </tr>
+                    <tr style="line-height:20px;">
+                        <td width="150px;">
+                            Error-corrected OCR
+                        </td>
+                        <td style="padding-bottom:10px;">
+                            Machine-generated, machine-corrected text.  Better quality than Uncorrected OCR, but may still include inconsistencies with the content of the original page.
+                        </td>
+                    </tr>
+                    <tr style="line-height:20px;">
+                        <td width="150px;">
+                            Manual Transcription
+                        </td>
+                        <td style="padding-bottom:10px;">
+                            Human-created and reviewed text.
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     <uc:COinS ID="COinS" runat="server" />
     </div> <!-- page-title -->
 
@@ -641,15 +684,15 @@
                     
                     header.append(
                         $('<h5/>', {
-                            'html': textSource + ' ' +
+                            'html': textSource + ' ' + '<a href="#" class="textsourcehelp" style="float:none" onclick="$(\'#textsourcehelp-dialog\').jqmShow()">' + 
                                 $('<img/>', {
                                     'src': '/images/help.png',
                                     'alt': 'Text source help',
                                     'title': 'What Is This?',
                                     'style': 'vertical-align: middle;margin-top: -5px; height:16px; width:16px; cursor:pointer;'
-                                }).get(0).outerHTML
+                                }).get(0).outerHTML + "</a>"
                         }));
-                    
+
                     var text = $('<div/>', { 'class': 'text' })
                         .html('<span>' + $.trim(data.ocrText).replace(/\n/g, '<br />') + '<br /><br /><br /><br /><br /></span>')
                         .appendTo(newpageOCR);
@@ -802,6 +845,11 @@
             onHide: onHideAction,
             trigger: '.downloadcitation'
         });
+        $('#textsourcehelp-dialog').jqm({
+            onHide: onHideAction,
+            trigger: '.textsourcehelp'
+        });
+
         $('#review-dialog').jqm({
             toTop: true,
             onHide: onHideAction,

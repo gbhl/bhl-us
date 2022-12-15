@@ -649,7 +649,10 @@ a.BRButtonFeatured {
     min-height: 80px;
 }
 
-#download-dialog .head a { float: right !important; }
+#download-dialog .head a, #dlcitation-dialog .head a, #textsourcehelp-dialog .head a 
+{
+    float: right !important;
+}
 .jqmWindow .head { padding-bottom: 1px; }
 .jqmWindow .delete { background: url("../images/bhlau images/bg_small_delete.png") no-repeat scroll 0 0 transparent } 
 .jqmClose { background: url("../images/bhlau images/bg_large_close.png") no-repeat scroll 0 0 transparent; }
@@ -657,28 +660,16 @@ a.BRButtonFeatured {
 .large-icon.all { background: url("../images/bhlau images/large_icon_all.png") no-repeat scroll 0 0 transparent }
 .large-icon.jp2 { background: url("../images/bhlau images/large_icon_jp2.png") no-repeat scroll 0 0 transparent }
 .large-icon.ocr { background: url("../images/bhlau images/large_icon_ocr.png") no-repeat scroll 0 0 transparent }
-#download-dialog a.large-icon  
+#download-dialog a.large-icon, #dlcitation-dialog a.large-icon, #textsourcehelp-dialog .head a 
 {
-    margin-left: 50px !important; 
-    line-height: 15px; 
-    color: #666666 !important; 
-    font-size: 12px !important; 
+    margin-left: 50px !important;
+    line-height: 15px;
+    color: #666666 !important;
+    font-size: 12px !important;
 } 
-
-#dlcitation-dialog .head a { float: right !important; }
-/*.jqmWindow .head { padding-bottom: 1px; }
-.jqmWindow .delete { background: url("../images/bhlau images/bg_small_delete.png") no-repeat scroll 0 0 transparent } 
-.jqmClose { background: url("../images/bhlau images/bg_large_close.png") no-repeat scroll 0 0 transparent; }
-*/
 .large-icon.ris { background: url("../images/bhlau images/large_icon_ris.png") no-repeat scroll 0 0 transparent }
 .large-icon.bibtex { background: url("../images/bhlau images/large_icon_bibtex.png") no-repeat scroll 0 0 transparent }
-#dlcitation-dialog a.large-icon  
-{
-    margin-left: 50px !important; 
-    line-height: 15px; 
-    color: #666666 !important; 
-    font-size: 12px !important; 
-}
+
 #dlcitation-dialog .bookcitationlinks
 {
     float: left;
@@ -693,6 +684,21 @@ a.BRButtonFeatured {
 {
     float: left;
     display: none;
+}
+#textsourcehelp-dialog .dialogbody 
+{
+    color: #000000;
+    margin: 10px 30px 10px 30px;
+}
+#textsourcehelp-dialog .dialogbody ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-right: 20px;
+    overflow: revert;
+}
+#textsourcehelp-dialog .dialogbody ul li {
+    line-height:20px;
+    padding-bottom:10px;
 }
 
 .downloadcontents {
