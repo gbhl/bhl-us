@@ -444,7 +444,7 @@
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder"
     runat="server">
     <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=4" />
-    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=9" />
+    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=10" />
     <link rel="stylesheet" type="text/css" href="/css/nspop.css?v=1" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
@@ -632,15 +632,24 @@
                             })
                         );
                     }
-                                            
-                    header.append(                                          
-                        $('<h5/>', { 
-                            'text' : 'Viewing Page as Text'
-                        })).append(
-                        $('<em/>', {
-                            'text' : 'This text is either generated from uncorrected OCR or is a manually produced transcription.  As such, it may include inconsistencies with the content of the original page.'
+
+                    var textSource = "Uncorrected OCR";
+                    switch (pages[index].TextSource) {
+                        case "Text Import": textSource = "Manual Transcription"; break;
+                        case "Purposeful Gaming": textSource = "Purposeful Gaming"; break;
+                    }
+                    
+                    header.append(
+                        $('<h5/>', {
+                            'html': textSource + ' ' +
+                                $('<img/>', {
+                                    'src': '/images/help.png',
+                                    'alt': 'Text source help',
+                                    'title': 'What Is This?',
+                                    'style': 'vertical-align: middle;margin-top: -5px; height:16px; width:16px; cursor:pointer;'
+                                }).get(0).outerHTML
                         }));
-                                        
+                    
                     var text = $('<div/>', { 'class': 'text' })
                         .html('<span>' + $.trim(data.ocrText).replace(/\n/g, '<br />') + '<br /><br /><br /><br /><br /></span>')
                         .appendTo(newpageOCR);

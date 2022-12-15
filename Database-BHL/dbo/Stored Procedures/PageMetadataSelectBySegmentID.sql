@@ -77,9 +77,17 @@ SELECT	p.PageID,
 		p.AltExternalURL,
 		p.IssuePrefix,
 		p.FlickrURL,
+		COALESCE(l.TextSource, 'OCR') AS TextSource,
 		MIN(COALESCE(s.SegmentID, p.SegmentID)) AS SegmentID,
 		MIN(COALESCE(s.GenreName, p.GenreName)) AS GenreName
-FROM	#tmpPage p LEFT JOIN #tmpChild s ON p.PageID = s.PageID
+FROM	#tmpPage p 
+		LEFT JOIN #tmpChild s ON p.PageID = s.PageID
+		OUTER APPLY (
+				SELECT  TOP 1 TextSource
+				FROM    dbo.PageTextLog 
+				WHERE   PageID = p.PageID
+				ORDER BY PageTextLogID DESC
+			) l
 GROUP BY
 		p.PageID,
 		p.SegmentID,
@@ -98,7 +106,8 @@ GROUP BY
 		p.ExternalURL,
 		p.AltExternalURL,
 		p.IssuePrefix,
-		p.FlickrURL
+		p.FlickrURL,
+		l.TextSource
 ORDER BY
 		p.SequenceOrder ASC
 
