@@ -679,7 +679,7 @@
                     var textSource = "Uncorrected OCR";
                     switch (pages[index].TextSource) {
                         case "Text Import": textSource = "Manual Transcription"; break;
-                        case "Purposeful Gaming": textSource = "Purposeful Gaming"; break;
+                        case "Purposeful Gaming": textSource = "Error-corrected OCR"; break;
                     }
                     
                     header.append(
