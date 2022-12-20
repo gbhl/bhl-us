@@ -46,6 +46,14 @@ namespace MOBOT.BHL.DataObjects
             set { _marcDataFieldID = value; }
         }
 
+        private string _marcTag;
+
+        public string MarcTag
+        {
+            get { return _marcTag; }
+            set { _marcTag = value; }
+        }
+
         #endregion Properties
 
         #region ISet override
@@ -69,6 +77,11 @@ namespace MOBOT.BHL.DataObjects
                     case "MARCDataFieldID":
                         {
                             this._marcDataFieldID = Utility.ZeroIfNull(column.Value);
+                            break;
+                        }
+                    case "MARCTag":
+                        {
+                            this._marcTag = Utility.EmptyIfNull(column.Value);
                             break;
                         }
                 }

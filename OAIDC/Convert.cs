@@ -123,7 +123,7 @@ namespace MOBOT.BHL.OAIDC
             var languages = from l in root.Elements(ns + "language") select l;
             foreach (XElement l in languages)
             {
-                _oaiRecord.Languages.Add(l.Value);
+                _oaiRecord.Languages.Add((Code: "", Name: l.Value));
             }
 
             XElement date = root.Element(ns + "date");
@@ -254,15 +254,24 @@ namespace MOBOT.BHL.OAIDC
             // No mapping for this DataSet
 
             // Language
-            foreach (String language in _oaiRecord.Languages)
+            foreach ((string Code, string Name) language in _oaiRecord.Languages)
             {
-                sb.Append("<dc:language>" + HttpUtility.HtmlEncode(language) + "</dc:language>\n");
+                sb.Append("<dc:language>" + HttpUtility.HtmlEncode(language.Name) + "</dc:language>\n");
             }
 
             // Relation
             if (!string.IsNullOrWhiteSpace(_oaiRecord.ParentUrl))
             {
-                sb.Append("<dc:relation type='IsPartOf'>" + HttpUtility.HtmlEncode(_oaiRecord.ParentUrl) + "</dc:relation>\n");
+                sb.Append("<dc:relation>" + HttpUtility.HtmlEncode(_oaiRecord.ParentUrl) + "</dc:relation>\n");
+            }
+            foreach(KeyValuePair<string, OAIRecord> relatedTitle in _oaiRecord.RelatedTitles)
+            {
+                OAIRecord relation = relatedTitle.Value;
+                if ((relation.MarcTag == "490" || relation.MarcTag == "773" || relation.MarcTag == "830") &&
+                    !string.IsNullOrWhiteSpace(relation.Url))
+                {
+                    sb.Append("<dc:relation>" + HttpUtility.HtmlEncode(relation.Url) + "</dc:relation>\n");
+                }
             }
 
             // Coverage

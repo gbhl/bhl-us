@@ -195,6 +195,22 @@ namespace MOBOT.BHL.API.BHLApiDAL
             }
         }
 
+        public List<TitleAssociation> TitleAssociationSelectByTitleID(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int titleID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiTitleAssociationSelectByTitleID", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID)))
+            {
+                using (CustomSqlHelper<TitleAssociation> helper = new CustomSqlHelper<TitleAssociation>())
+                {
+                    return helper.ExecuteReader(command);
+                }
+            }
+        }
+
         public List<TitleVariant> TitleVariantSelectByTitleID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int titleID)
         {

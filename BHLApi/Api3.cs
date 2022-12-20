@@ -355,6 +355,7 @@ namespace MOBOT.BHL.API.BHLApi
                 title.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
                 title.Authors = dal.AuthorSelectByTitleID(null, null, title.TitleID);
                 title.Identifiers = dal.TitleIdentifierSelectByTitleID(null, null, title.TitleID);
+                title.Associations = dal.TitleAssociationSelectByTitleID(null, null, title.TitleID);
                 title.Variants = dal.TitleVariantSelectByTitleID(null, null, title.TitleID);
                 title.Subjects = dal.SubjectSelectByTitleID(null, null, title.TitleID);
                 title.Notes = dal.TitleNoteSelectByTitleID(null, null, title.TitleID);

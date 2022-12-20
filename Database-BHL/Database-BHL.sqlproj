@@ -1179,6 +1179,7 @@
     <None Include="dbo\Stored Procedures\DOISelectStatusReport.sql" />
     <None Include="dbo\Functions\fnGetLCCNValue.sql" />
     <None Include="dbo\Stored Procedures\AuthorSelectByAuthorID.sql" />
+    <None Include="dbo\Stored Procedures\ApiTitleAssociationSelectByTitleID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

@@ -79,6 +79,14 @@ namespace MOBOT.BHL.OAI2
             set { _type = value; }
         }
 
+        String _marcTag = String.Empty;
+
+        public String MarcTag
+        {
+            get { return _marcTag; }
+            set { _marcTag = value; }
+        }
+
         String _marcLeader = String.Empty;
 
         public String MarcLeader
@@ -183,9 +191,10 @@ namespace MOBOT.BHL.OAI2
             set { _pages = value; }
         }
 
-        List<String> _languages = new List<string>();
+        // List of tuples with named properties
+        List<(string Code, string Name)> _languages = new List<(string Code, string Name)>();
 
-        public List<String> Languages
+        public List<(string Code, string Name)> Languages
         {
             get { return _languages; }
             set { _languages = value; }
@@ -540,16 +549,17 @@ namespace MOBOT.BHL.OAI2
                     }
                 }
 
-                if (!String.IsNullOrEmpty(book.CopyrightStatus)) this.Rights.Add(book.CopyrightStatus);
+                if (!String.IsNullOrWhiteSpace(book.CopyrightStatus)) this.Rights.Add(book.CopyrightStatus);
+                if (!String.IsNullOrWhiteSpace(book.LicenseUrl)) this.Rights.Add(book.LicenseUrl);
                 //if (!String.IsNullOrEmpty(item.Rights)) this.Rights.Add(item.Rights);
                 //if (!String.IsNullOrEmpty(item.LicenseUrl)) this.Rights.Add(item.LicenseUrl);
 
-                List<ItemLanguage> itemLanguages = provider.ItemLanguageSelectByItemID(book.BookID);
+                List<ItemLanguage> itemLanguages = provider.ItemLanguageSelectByItemID(book.ItemID);
                 if (itemLanguages.Count > 0)
                 {
                     foreach (ItemLanguage itemLanguage in itemLanguages)
                     {
-                        this.Languages.Add(itemLanguage.LanguageName);
+                        this.Languages.Add((Code: itemLanguage.LanguageCode, Name: itemLanguage.LanguageName));
                     }
                 }
                 else
@@ -557,7 +567,7 @@ namespace MOBOT.BHL.OAI2
                     if (!String.IsNullOrEmpty(book.LanguageCode))
                     {
                         Language lang = provider.LanguageSelectAuto(book.LanguageCode);
-                        if (lang != null) this.Languages.Add(lang.LanguageName);
+                        if (lang != null) this.Languages.Add((Code: lang.LanguageCode, Name: lang.LanguageName));
                     }
                 }
 
@@ -698,6 +708,7 @@ namespace MOBOT.BHL.OAI2
                         if (!string.IsNullOrWhiteSpace(titleAssociation.Publication)) associationTitle.Add(titleAssociation.Publication.Trim());
                         if (!string.IsNullOrWhiteSpace(titleAssociation.Relationship)) associationTitle.Add(titleAssociation.Relationship.Trim());
                         association.Title = string.Join(", ", associationTitle.ToArray());
+                        association.MarcTag = titleAssociation.MarcTag;
 
                         if (titleAssociation.AssociatedTitleID != null)
                         {
@@ -795,7 +806,7 @@ namespace MOBOT.BHL.OAI2
                 {
                     foreach (TitleLanguage titleLanguage in titleLanguages)
                     {
-                        this.Languages.Add(titleLanguage.LanguageName);
+                        this.Languages.Add((Code: titleLanguage.LanguageCode, Name: titleLanguage.LanguageName));
                     }
                 }
                 else
@@ -803,7 +814,7 @@ namespace MOBOT.BHL.OAI2
                     if (!String.IsNullOrEmpty(title.LanguageCode))
                     {
                         Language lang = provider.LanguageSelectAuto(title.LanguageCode);
-                        if (lang != null) this.Languages.Add(lang.LanguageName);
+                        if (lang != null) this.Languages.Add((Code: lang.LanguageCode, Name: lang.LanguageName));
                     }
                 }
 
@@ -854,6 +865,7 @@ namespace MOBOT.BHL.OAI2
                     if (!string.IsNullOrWhiteSpace(titleAssociation.Publication)) associationTitle.Add(titleAssociation.Publication.Trim());
                     if (!string.IsNullOrWhiteSpace(titleAssociation.Relationship)) associationTitle.Add(titleAssociation.Relationship.Trim());
                     association.Title = string.Join(", ", associationTitle.ToArray());
+                    association.MarcTag = titleAssociation.MarcTag;
 
                     if (titleAssociation.AssociatedTitleID != null)
                     {
@@ -918,7 +930,8 @@ namespace MOBOT.BHL.OAI2
                 if (!string.IsNullOrEmpty(segment.EndPageNumber)) this.Descriptions.Add("End Page: " + segment.EndPageNumber);
                 this.JournalVolume = segment.Volume;
                 this.Date = segment.Date;
-                if (!string.IsNullOrEmpty(segment.RightsStatus)) this.Rights.Add(segment.RightsStatus);
+                if (!string.IsNullOrWhiteSpace(segment.RightsStatus)) this.Rights.Add(segment.RightsStatus);
+                if (!string.IsNullOrWhiteSpace(segment.LicenseUrl)) this.Rights.Add(segment.LicenseUrl);
                 this.JournalTitle = segment.ContainerTitle;
                 this.Publisher = segment.PublisherName;
                 this.PublicationPlace = segment.PublisherPlace;

@@ -619,6 +619,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiSegmentSelectForSegmentID.sql
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiSegmentSelectRelated.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiSegmentSelectUnpublished.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiStatsSelect.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiTitleAssociationSelectByTitleID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiTitleIdentifierSelectByTitleID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiTitleSelectAuto.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiTitleSelectByAuthor.sql"
