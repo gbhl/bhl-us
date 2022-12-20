@@ -39,6 +39,7 @@ SELECT 	a.AuthorID,
 FROM	#Author a
 		INNER JOIN dbo.AuthorIdentifier ai ON a.AuthorID = ai.AuthorID
 		INNER JOIN dbo.Identifier id ON ai.IdentifierID = id.IdentifierID
+WHERE	id.Display = 1
 GROUP BY
 		a.AuthorID, 
 		id.IdentifierName, 

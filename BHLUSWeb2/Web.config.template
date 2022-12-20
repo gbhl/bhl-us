@@ -189,6 +189,8 @@
     <add key="AlertMessageCacheTime" value="1"/>
     <!-- Maximum time in minutes that item text is cached -->
     <add key="ItemTextCacheTime" value="10"/>
+    <!-- Maximum time in minutes that author metadata is cached -->
+    <add key="AuthorMetadataCacheTime" value="5"/>
     <!-- Search results settings -->
     <add key="MaximumDefaultResults" value="100"/>
     <add key="MaximumExpandedResults" value="500"/>

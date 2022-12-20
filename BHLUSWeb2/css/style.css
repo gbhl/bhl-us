@@ -1669,6 +1669,68 @@ section
 {
 	margin:0 0 30px 0;	
 }
+.authorinfo {
+    margin-top: 40px;
+    padding: 11px 21px 21px 21px;
+    border-style: solid;
+    border-color: #c5ced3;
+    /* border-width: 1px; */
+    font-size: 12px;
+    /* background-color: #f9f5f1; */
+    width: 270px;
+    margin-bottom: 40px;
+}
+.authorinfo .ai-head {
+	/* font-weight: bold; */
+	font-size: 14px;
+	/* text-transform: uppercase; */
+	background-color: #5f6f80;
+	padding: 11px 21px 11px 21px;
+	margin: -11px -21px 5px -21px;
+	color: #FFFFFF;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border: 1px solid #000;
+}
+.authorinfo .ai-details {
+	background-color: #f9f5f1;
+	padding: 5px 21px 21px 21px;
+	margin: -5px -21px -21px -21px;
+	border-right-width: 1px;
+	border-right-color: #c5ced3;
+	border-left-width: 1px;
+	border-style: solid;
+	border-left-color: #c5ced3;
+}
+.authorinfo .ai-subhead {
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 2px;
+}
+.authorinfo .ai-subhead-help {
+    margin-left:3px;
+    margin-bottom: -3px;
+}
+.authorinfo .ai-value {
+    margin-bottom: 2px;
+}
+.authorinfo .ai-foot {
+	height: 30px;
+	border-style: solid;
+	padding: 0px 21px 0px 21px;
+	margin: 21px -21px -0px -21px;
+	background-color: #c5ced3;
+	border-left-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-color: #c5ced3;
+	border-right-color: #c5ced3;
+	border-bottom-color: #c5ced3;
+}
 aside
 {
 	float:right;
@@ -2426,13 +2488,12 @@ ul.data.collections li .collectiontitle
     color: #607890; 
 }
 .partlink .download,
-.volume .download
-{
-	background:#c5ced3;
-	height:40px;
-	line-height:40px;
-	padding:0 15px;
-	border-bottom: 1px solid #000;
+.volume .download {
+    background: #c5ced3;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 15px;
+    border-bottom: 1px solid #c5ced3;
 }
 .partlink .downloadlabel,
 .volume .downloadlabel {

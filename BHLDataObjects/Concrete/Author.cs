@@ -7,6 +7,14 @@ namespace MOBOT.BHL.DataObjects
 	[Serializable]
 	public class Author : __Author
 	{
+        private string _authorTypeName = string.Empty;
+
+        public string AuthorTypeName
+        {
+            get { return _authorTypeName; }
+            set { _authorTypeName = value; }
+        }
+
         private string _fullName = string.Empty;
 
         public string FullName
@@ -93,6 +101,9 @@ namespace MOBOT.BHL.DataObjects
             {
                 switch (column.Name)
                 {
+                    case "AuthorTypeName":
+                        AuthorTypeName = Utility.EmptyIfNull(column.Value);
+                        break;
                     case "FullName":
                         FullName = Utility.EmptyIfNull(column.Value);
                         break;

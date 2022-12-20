@@ -54,9 +54,80 @@
         </div>
     </section>
     <aside>
+        <div class="authorinfo">
+            <div class="ai-head">Author Details</div>
+            <div class="ai-details">
+                @if (!string.IsNullOrWhiteSpace(Model.Author.AuthorTypeName))
+                {
+                    <div class="ai-subhead">Type</div>
+                    <div class="ai-value">@Model.Author.AuthorTypeName</div>
+                }
+                <div class="ai-subhead">Preferred Name Form</div>
+                <div>@Model.Author.FullName @Model.Author.FullerForm</div>
+                @if (!string.IsNullOrWhiteSpace(Model.Author.Numeration))
+                {
+                    <div class="ai-subhead">Numeration</div>
+                    <div class="ai-value">@Model.Author.Numeration</div>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.Author.Title))
+                {
+                    <div class="ai-subhead">Title</div>
+                    <div class="ai-value">@Model.Author.Title</div>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.Author.Unit))
+                {
+                    <div class="ai-subhead">Unit</div>
+                    <div class="ai-value">@Model.Author.Unit</div>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.Author.Location))
+                {
+                    <div class="ai-subhead">Location</div>
+                    <div class="ai-value">@Model.Author.Location</div>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.Author.Dates))
+                {
+                    <div class="ai-subhead">Dates</div>
+                    <div class="ai-value">@Model.Author.Dates</div>
+                }
+                @if (Model.Author.AuthorIdentifiers.Count > 0)
+                {
+                    <div class="ai-subhead">Identifiers</div>
+                    foreach (MOBOT.BHL.DataObjects.AuthorIdentifier identifier in Model.Author.AuthorIdentifiers)
+                    {
+                        <div class="ai-value">
+                            @identifier.IdentifierLabel:
+                            @if (!string.IsNullOrWhiteSpace(identifier.IdentifierValueUrl))
+                            {
+                                <a href="@identifier.IdentifierValueUrl" target="_blank">@identifier.IdentifierValue</a>
+                            }
+                            else
+                            {
+                                @identifier.IdentifierValue
+                            }
+                        </div>
+                    }
+                }
+                @if (Model.Author.AuthorNames.Count > 1)
+                {
+                    <div class="ai-subhead">
+                        Alternate Name Forms
+                    </div>
+                    foreach (MOBOT.BHL.DataObjects.AuthorName name in Model.Author.AuthorNames)
+                    {
+                        if (name.IsPreferredName == 0)
+                        {
+                            <div class="ai-value">@name.FullName @name.FullerForm</div>
+                        }
+                    }
+                }
+            </div>
+            <div class="ai-foot">
+            </div>
+        </div>
+
         @Html.Action("_DonateFeature", "Partial")
         @Html.Action("_CollectionFeature", "Partial")
-    </aside>
+</aside>
 </div>
 
 @section scripts {

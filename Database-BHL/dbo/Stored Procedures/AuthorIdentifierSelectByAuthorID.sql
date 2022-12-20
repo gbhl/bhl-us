@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[AuthorIdentifierSelectByAuthorID]
+﻿CREATE PROCEDURE dbo.AuthorIdentifierSelectByAuthorID
 
 @AuthorID int
 
@@ -10,6 +10,9 @@ SELECT	ai.AuthorIdentifierID,
 		ai.AuthorID,
 		ai.IdentifierID,
 		i.IdentifierName,
+		i.IdentifierLabel,
+		i.Prefix,
+		i.Display,
 		ai.IdentifierValue,
 		ai.CreationDate,
 		ai.LastModifiedDate,
@@ -22,4 +25,4 @@ ORDER BY
 		i.IdentifierName,
 		ai.IdentifierValue
 		
-
+GO

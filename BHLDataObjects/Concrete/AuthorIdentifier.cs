@@ -19,6 +19,41 @@ namespace MOBOT.BHL.DataObjects
             set { this._IdentifierName = value; }
         }
 
+        private string _IdentifierLabel;
+
+        public string IdentifierLabel
+        {
+            get { return this._IdentifierLabel; }
+            set { this._IdentifierLabel = value; }
+        }
+
+        private string _Prefix = string.Empty;
+        
+        public string IdentifierValueUrl
+        {
+            get
+            {
+                string url = string.Empty;
+                if (!string.IsNullOrWhiteSpace(_Prefix))
+                {
+                    url = this._Prefix + this.IdentifierValue;
+                }
+                else if (this.IdentifierValue.StartsWith("http://") || this.IdentifierValue.StartsWith("https://"))
+                {
+                    url = this.IdentifierValue;
+                }
+                return url;
+            }
+        }
+
+        private int _Display = 1;
+
+        public int Display
+        {
+            get { return _Display; }
+            set { _Display = value; }
+        }
+
         public override void SetValues(CustomDataRow row)
         {
             foreach (CustomDataColumn column in row)
@@ -28,6 +63,21 @@ namespace MOBOT.BHL.DataObjects
                     case "IdentifierName":
                         {
                             _IdentifierName = (string)column.Value;
+                            break;
+                        }
+                    case "IdentifierLabel":
+                        {
+                            _IdentifierLabel = (string)column.Value;
+                            break;
+                        }
+                    case "Prefix":
+                        {
+                            _Prefix = (string)column.Value;
+                            break;
+                        }
+                    case "Display":
+                        {
+                            _Display = (int?)(short?)column.Value ?? 1;
                             break;
                         }
                 }
