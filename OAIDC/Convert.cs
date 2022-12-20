@@ -256,7 +256,7 @@ namespace MOBOT.BHL.OAIDC
             // Language
             foreach ((string Code, string Name) language in _oaiRecord.Languages)
             {
-                sb.Append("<dc:language>" + HttpUtility.HtmlEncode(language.Code) + "</dc:language>\n");
+                sb.Append("<dc:language>" + HttpUtility.HtmlEncode(language.Name) + "</dc:language>\n");
             }
 
             // Relation
