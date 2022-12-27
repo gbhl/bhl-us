@@ -177,6 +177,13 @@ namespace MOBOT.BHL.DataObjects
             set { _genreName = value; }
         }
 
+        private string _textSource = string.Empty;
+        public string TextSource
+        {
+            get { return _textSource; }
+            set { _textSource = value; }
+        }
+
         //private bool _illustration = false;
         //public bool Illustration
         //{
@@ -324,6 +331,9 @@ namespace MOBOT.BHL.DataObjects
                         break;
                     case "GenreName":
                         GenreName = Utility.EmptyIfNull(column.Value);
+                        break;
+                    case "TextSource":
+                        TextSource = Utility.EmptyIfNull(column.Value);
                         break;
                 }
             }

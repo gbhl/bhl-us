@@ -221,6 +221,7 @@ namespace MOBOT.BHL.Web2
                                                     p.BarCode,
                                                     p.SegmentID,
                                                     p.GenreName,
+                                                    p.TextSource,
                                                     vp.ExternalBaseUrl,
                                                     vp.Height,
                                                     vp.Width,

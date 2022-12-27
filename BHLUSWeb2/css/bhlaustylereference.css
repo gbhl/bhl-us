@@ -2697,6 +2697,10 @@ ul.creator-titles li
     height:300px;
     margin-top:-150px;
 }
+#textsourcehelp-dialog
+{
+	margin-top:-150px;
+}
 #review-dialog, #generate-dialog
 {
 	height:520px;
@@ -2722,7 +2726,8 @@ ul.creator-titles li
 	float:left;
 }
 #download-dialog h2,
-#dlcitation-dialog h2
+#dlcitation-dialog h2,
+#textsourcehelp-dialog h2
 {
 	margin:8px 20px 0 30px;
 }
