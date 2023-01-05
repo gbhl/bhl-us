@@ -100,6 +100,36 @@ AND		EntityName = 'dbo.Title_Identifier'
 AND		i.ItemStatusID = 40
 AND		t.PublishReady = 1
 AND		t.BibliographicLevelID IN (SELECT BibliographicLevelID FROM #BibliographicLevel)
+-- The following two SELECTs handle changes to monographic series
+UNION
+SELECT	AuditBasicID, ab.Operation, EntityName, 'title', t2.TitleID, NULL, AuditDate
+FROM	audit.AuditBasic ab WITH (NOLOCK)
+		INNER JOIN dbo.Title_Identifier tid WITH (NOLOCK) ON ab.EntityKey1 = tid.TitleIdentifierID
+		INNER JOIN dbo.Identifier id WITH (NOLOCK) ON tid.IdentifierID = id.IdentifierID AND id.IdentifierType = 'ISSN'
+		INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON tid.TitleID = it.TitleID
+		INNER JOIN dbo.Item i WITH (NOLOCK) ON it.ItemID = i.ItemiD
+		INNER JOIN dbo.Title t WITH (NOLOCK) ON it.TitleID = t.TitleID
+		INNER JOIN dbo.TitleAssociation ta WITH (NOLOCK) ON t.TitleID = ta.AssociatedTitleID
+		INNER JOIN dbo.Title t2 WITH (NOLOCK) ON ta.TitleID = t2.TitleID
+WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
+AND		EntityName = 'dbo.Title_Identifier'
+AND		i.ItemStatusID = 40
+AND		t.PublishReady = 1
+AND		t2.PublishReady = 1
+AND		t.BibliographicLevelID IN (SELECT BibliographicLevelID FROM dbo.BibliographicLevel WHERE BibliographicLevelName IN ('Serial component part', 'Serial'))
+AND		t2.BibliographicLevelID IN (SELECT BibliographicLevelID FROM dbo.BibliographicLevel WHERE BibliographicLevelName IN ('Monographic component part', 'Monograph/Item'))
+UNION
+SELECT	AuditBasicID, ab.Operation, EntityName, 'title', t.TitleID, NULL, AuditDate
+FROM	audit.AuditBasic ab WITH (NOLOCK)
+		INNER JOIN dbo.TitleAssociation ta WITH (NOLOCK) ON ab.EntityKey1 = ta.TitleAssociationID
+		INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON ta.TitleID = it.TitleID
+		INNER JOIN dbo.Item i WITH (NOLOCK) ON it.ItemID = i.ItemiD
+		INNER JOIN dbo.Title t WITH (NOLOCK) ON it.TitleID = t.TitleID
+WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
+AND		EntityName = 'dbo.TitleAssociation'
+AND		i.ItemStatusID = 40
+AND		t.PublishReady = 1
+AND		t.BibliographicLevelID IN (SELECT BibliographicLevelID FROM #BibliographicLevel)
 
 UNION
 
