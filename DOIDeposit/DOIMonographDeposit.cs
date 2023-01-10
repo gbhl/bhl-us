@@ -51,6 +51,7 @@ namespace MOBOT.BHL.DOIDeposit
             switch (Data.PublicationType)
             {
                 case DOIDepositData.PublicationTypeValue.Monograph:
+                case DOIDepositData.PublicationTypeValue.MonographicSeries:
                     template = template.Replace("{book_type_value}", "monograph");
                     break;
                 case DOIDepositData.PublicationTypeValue.EditedBook:

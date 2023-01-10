@@ -12,6 +12,7 @@
     <PackageReference Include="RestSharp" Version="107.3.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BHLUtility\BHLUtility.csproj" />
     <ProjectReference Include="..\BHLWebServiceREST.v1.Client\BHL.WebServiceREST.v1.Client.csproj">
       <Project>{f687bc49-ff84-47f5-b67f-2101a8aefdf3}</Project>
       <Name>BHL.WebServiceREST.v1.Client</Name>

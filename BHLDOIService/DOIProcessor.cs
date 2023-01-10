@@ -86,137 +86,159 @@ namespace MOBOT.BHL.BHLDOIService
                 foreach (DOI doi in doisToSubmit)
                 {
                     DOIDepositData depositData = this.GetDepositData(entityTypeId, (int)doi.EntityID, doi.DoiName);
-                    ExistingDOICheckResult result = ExistingDOICheck(depositData, (int)doi.DoiStatusID);
 
-                    switch (result.ResultValue)
+                    if (depositData.PublicationType == DOIDepositData.PublicationTypeValue.Journal)
                     {
-                        case DOICheckResult.NotFound:
-                        case DOICheckResult.Update:
+                        // DOI assignment to serials is not supported.  Set DOI status to error and skip to the next DOI.
+                        string logMessage = string.Format("Error processing {0} {1}: {2}",
+                            this.GetEntityTypeName(entityTypeId), doi.EntityID, "DOI assignment to serials is not supported");
+                        log.Error(logMessage);
+                        errorMessages.Add(logMessage);
 
-                            // Add the DOI name, if one has not already been assigned
-                            if (string.IsNullOrWhiteSpace(doi.DoiName))
+                        restClient.UpdateDoiStatus((int)doi.Doiid,
+                            new DoiModel
                             {
-                                string doiName = this.GenerateDOIName(configParms.DoiPrefix, entityTypeId, (int)doi.EntityID);
-                                restClient.UpdateDoiName((int)doi.Doiid,
-                                    new DoiModel { 
-                                        Doistatusid = doi.DoiStatusID, 
-                                        Doiname = doiName,
-                                        Userid = null
-                                    });
-                                doi.DoiName = doiName;
-                            }
+                                Doistatusid = configParms.DoiStatusError,
+                                Message = "ERROR: " + logMessage,
+                                Isvalid = null,
+                                Userid = null
+                            });
+                    }
+                    else
+                    {
+                        ExistingDOICheckResult result = ExistingDOICheck(depositData, (int)doi.DoiStatusID);
 
-                            // Generate a batch identifier for this DOI
-                            string doiBatchID = this.GenerateDOIBatchID((int)doi.Doiid);
-                            restClient.UpdateDoiBatchID((int)doi.Doiid,
-                                new DoiModel
+                        switch (result.ResultValue)
+                        {
+                            case DOICheckResult.NotFound:
+                            case DOICheckResult.Update:
+
+                                // Add the DOI name, if one has not already been assigned
+                                if (string.IsNullOrWhiteSpace(doi.DoiName))
                                 {
-                                    Doistatusid = doi.DoiStatusID,
-                                    Doibatchid = doiBatchID,
-                                    Userid = null
-                                });
-                            doi.DoiBatchID = doiBatchID;
+                                    string doiName = this.GenerateDOIName(configParms.DoiPrefix, entityTypeId, (int)doi.EntityID);
+                                    restClient.UpdateDoiName((int)doi.Doiid,
+                                        new DoiModel
+                                        {
+                                            Doistatusid = doi.DoiStatusID,
+                                            Doiname = doiName,
+                                            Userid = null
+                                        });
+                                    doi.DoiName = doiName;
+                                }
 
-                            // Create a CrossRef deposit record for this DOI
-                            depositData.BatchID = doi.DoiBatchID;
-                            depositData.DoiName = doi.DoiName;
-                            string depositTemplate = this.GetDepositTemplate(depositData);
-                            string doiDeposit = this.GenerateDOIDepositRecord(depositData, depositTemplate);
-                            File.WriteAllText(configParms.DepositFolder + string.Format(configParms.DepositFileFormat, doiBatchID), doiDeposit);
-
-                            try
-                            {
-                                // Submit the new DOI to CrossRef and update the DOI status to "Submitted"
-                                this.SubmitDOI(doiDeposit, string.Format(configParms.DepositFileFormat, doiBatchID));
-                                restClient.UpdateDoiStatus((int)doi.Doiid,
+                                // Generate a batch identifier for this DOI
+                                string doiBatchID = this.GenerateDOIBatchID((int)doi.Doiid);
+                                restClient.UpdateDoiBatchID((int)doi.Doiid,
                                     new DoiModel
                                     {
-                                        Doistatusid = configParms.DoiStatusSubmitted,
-                                        Message = String.Empty,
-                                        Isvalid = null,
+                                        Doistatusid = doi.DoiStatusID,
+                                        Doibatchid = doiBatchID,
                                         Userid = null
                                     });
-                                if (depositData.IsUpdate)
-                                    submittedDOIUpdates.Add(doi.DoiName);
-                                else
-                                    submittedDOIAdds.Add(doi.DoiName);
-                            }
-                            catch (Exception ex)
-                            {
-                                // Set DOI error status and record the error
-                                log.Error("Exception submitting DOI " + doi.DoiName, ex);
-                                errorMessages.Add("Exception submitting DOI " + doi.DoiName + ": " + ex.Message);
+                                doi.DoiBatchID = doiBatchID;
+
+                                // Create a CrossRef deposit record for this DOI
+                                depositData.BatchID = doi.DoiBatchID;
+                                depositData.DoiName = doi.DoiName;
+                                string depositTemplate = this.GetDepositTemplate(depositData);
+                                string doiDeposit = this.GenerateDOIDepositRecord(depositData, depositTemplate);
+                                File.WriteAllText(configParms.DepositFolder + string.Format(configParms.DepositFileFormat, doiBatchID), doiDeposit);
+
+                                try
+                                {
+                                    // Submit the new DOI to CrossRef and update the DOI status to "Submitted"
+                                    this.SubmitDOI(doiDeposit, string.Format(configParms.DepositFileFormat, doiBatchID));
+                                    restClient.UpdateDoiStatus((int)doi.Doiid,
+                                        new DoiModel
+                                        {
+                                            Doistatusid = configParms.DoiStatusSubmitted,
+                                            Message = String.Empty,
+                                            Isvalid = null,
+                                            Userid = null
+                                        });
+                                    if (depositData.IsUpdate)
+                                        submittedDOIUpdates.Add(doi.DoiName);
+                                    else
+                                        submittedDOIAdds.Add(doi.DoiName);
+                                }
+                                catch (Exception ex)
+                                {
+                                    // Set DOI error status and record the error
+                                    log.Error("Exception submitting DOI " + doi.DoiName, ex);
+                                    errorMessages.Add("Exception submitting DOI " + doi.DoiName + ": " + ex.Message);
+                                    restClient.UpdateDoiStatus((int)doi.Doiid,
+                                        new DoiModel
+                                        {
+                                            Doistatusid = configParms.DoiStatusError,
+                                            Message = "ERROR (SUBMIT): " + ex.Message,
+                                            Isvalid = null,
+                                            Userid = null
+                                        });
+                                }
+
+                                this.LogMessage("DOI " + doi.DoiName + " processed");
+
+                                break;
+                            case DOICheckResult.Found:
+                                // Add the external DOI to the database
+                                restClient.AddDoi(new DoiModel
+                                {
+                                    Entitytypeid = entityTypeId,
+                                    Entityid = doi.EntityID,
+                                    Doistatusid = configParms.DoiStatusExternal,
+                                    Doiname = result.DoiList.First(),
+                                    Isvalid = 1,
+                                    Doibatchid = string.Empty,
+                                    Message = string.Empty,
+                                    Userid = 1,
+                                    Excludebhldoi = 1
+                                });
+                                foundDOIs.Add(result.DoiList.First());
+
+                                this.LogMessage("DOI " + result.DoiList.First() + " added");
+
+                                break;
+                            case DOICheckResult.Unknown:
+                                // Log the unresolvable entities.  The appropriate external DOI will need to be
+                                // manually assigned.
+                                // Once we determine how commonly these occur, a more robust logging mechanism
+                                // may be needed.
+                                unresolvedEntities.Add(string.Format("{0}\t{1}", entityTypeId.ToString(), doi.EntityID.ToString()));
+
+                                string unresolvableMessage = string.Format("Entity {0}, Type {1} cound not be resolved", doi.EntityID.ToString(), doi.DoiEntityTypeID.ToString());
+                                this.LogMessage(unresolvableMessage);
+
+                                foreach (string doiName in result.DoiList)
+                                {
+                                    string possibleDOIMessage = string.Format("\r\nEntity {0}, Type {1} - possible DOI: {2}", doi.EntityID.ToString(), doi.DoiEntityTypeID.ToString(), doiName);
+                                    unresolvableMessage += possibleDOIMessage;
+                                    this.LogMessage(possibleDOIMessage);
+                                }
+
+                                // Set queue item status to Error, since it cannot be resolved
                                 restClient.UpdateDoiStatus((int)doi.Doiid,
                                     new DoiModel
                                     {
                                         Doistatusid = configParms.DoiStatusError,
-                                        Message = "ERROR (SUBMIT): " + ex.Message,
+                                        Message = "UNRESOLVABLE: " + unresolvableMessage,
                                         Isvalid = null,
                                         Userid = null
                                     });
-                            }
 
-                            this.LogMessage("DOI " + doi.DoiName + " processed");
-
-                            break;
-                        case DOICheckResult.Found:
-                            // Add the external DOI to the database
-                            restClient.AddDoi(new DoiModel
-                            {
-                                Entitytypeid = entityTypeId,
-                                Entityid = doi.EntityID,
-                                Doistatusid = configParms.DoiStatusExternal,
-                                Doiname = result.DoiList.First(),
-                                Isvalid = 1,
-                                Doibatchid = string.Empty,
-                                Message = string.Empty,
-                                Userid = 1,
-                                Excludebhldoi = 1
-                            });
-                            foundDOIs.Add(result.DoiList.First());
-
-                            this.LogMessage("DOI " + result.DoiList.First() + " added");
-
-                            break;
-                        case DOICheckResult.Unknown:
-                            // Log the unresolvable entities.  The appropriate external DOI will need to be
-                            // manually assigned.
-                            // Once we determine how commonly these occur, a more robust logging mechanism
-                            // may be needed.
-                            unresolvedEntities.Add(string.Format("{0}\t{1}", entityTypeId.ToString(), doi.EntityID.ToString()));
-
-                            string unresolvableMessage = string.Format("Entity {0}, Type {1} cound not be resolved", doi.EntityID.ToString(), doi.DoiEntityTypeID.ToString());
-                            this.LogMessage(unresolvableMessage);
-
-                            foreach(string doiName in result.DoiList)
-                            {
-                                string possibleDOIMessage = string.Format("\r\nEntity {0}, Type {1} - possible DOI: {2}", doi.EntityID.ToString(), doi.DoiEntityTypeID.ToString(), doiName);
-                                unresolvableMessage += possibleDOIMessage;
-                                this.LogMessage(possibleDOIMessage);
-                            }
-
-                            // Set queue item status to Error, since it cannot be resolved
-                            restClient.UpdateDoiStatus((int)doi.Doiid,
-                                new DoiModel
+                                break;
+                            case DOICheckResult.Error:
+                                // Report any error messages returned from CrossRef.  Otherwise, do nothing.
+                                // Will get picked up and re-tried the next time this process is run.
+                                if (!string.IsNullOrWhiteSpace(result.Message))
                                 {
-                                    Doistatusid = configParms.DoiStatusError,
-                                    Message = "UNRESOLVABLE: " + unresolvableMessage,
-                                    Isvalid = null,
-                                    Userid = null
-                                });
-
-                            break;
-                        case DOICheckResult.Error:
-                            // Report any error messages returned from CrossRef.  Otherwise, do nothing.
-                            // Will get picked up and re-tried the next time this process is run.
-                            if (!string.IsNullOrWhiteSpace(result.Message))
-                            {
-                                string logMessage = string.Format("Error processing {0} {1}: {2}",
-                                    this.GetEntityTypeName(entityTypeId), doi.EntityID, result.Message);
-                                log.Error(logMessage);
-                                errorMessages.Add(logMessage);
-                            }
-                            break;
+                                    string logMessage = string.Format("Error processing {0} {1}: {2}",
+                                        this.GetEntityTypeName(entityTypeId), doi.EntityID, result.Message);
+                                    log.Error(logMessage);
+                                    errorMessages.Add(logMessage);
+                                }
+                                break;
+                        }
                     }
                 }
             }
@@ -431,23 +453,10 @@ namespace MOBOT.BHL.BHLDOIService
         /// <returns></returns>
         private DOIDepositData GetBookDepositData(int entityID)
         {
-            DOIDepositData data = new DOIDepositData();
-            TitlesClient restClient = null;
-
-            restClient = new TitlesClient(configParms.BHLWSRestEndpoint);
-
+            TitlesClient restClient = new TitlesClient(configParms.BHLWSRestEndpoint);
             Title title = restClient.GetTitleDetails(entityID);
 
-            if (title.BibliographicLevelID == configParms.BibLevelMonographComponent ||
-                title.BibliographicLevelID == configParms.BibLevelMonograph)
-            {
-                data.PublicationType = DOIDepositData.PublicationTypeValue.Monograph;
-            }
-            else
-            {
-                data.PublicationType = DOIDepositData.PublicationTypeValue.EditedBook;
-            }
-
+            DOIDepositData data = new DOIDepositData();
             data.Title = title.FullTitle;
             data.PublisherName = title.Datafield_260_b;
             data.PublisherPlace = title.Datafield_260_a;
@@ -503,7 +512,94 @@ namespace MOBOT.BHL.BHLDOIService
                 data.Contributors.Add(contributor);
             }
 
+            // Set the PublicationType
+            if (title.BibliographicLevelID == configParms.BibLevelMonographComponent ||
+                title.BibliographicLevelID == configParms.BibLevelMonograph)
+            {
+                SeriesMetadata seriesMetadata = ValidateMonographicSeries(title);
+                if (seriesMetadata.IsMonographicSeries)
+                {
+                    data.PublicationType = DOIDepositData.PublicationTypeValue.MonographicSeries;
+                    data.SeriesTitle = seriesMetadata.Title;
+                    data.SeriesISSN = seriesMetadata.ISSN;
+                    data.SeriesVolume = seriesMetadata.Volume;
+                }
+                else
+                {
+                    data.PublicationType = DOIDepositData.PublicationTypeValue.Monograph;
+                }
+            }
+            else if (title.BibliographicLevelID == configParms.BibLevelSerial ||
+                title.BibliographicLevelID == configParms.BibLevelSerialComponent)
+            {
+                data.PublicationType = DOIDepositData.PublicationTypeValue.Journal;
+            }
+            else
+            {
+                data.PublicationType = DOIDepositData.PublicationTypeValue.EditedBook;
+            }
+
             return data;
+        }
+
+        /// <summary>
+        /// Checks to see if the specified Title has a single TitleAssociation that meets all of the requirements of a monographic series
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        private SeriesMetadata ValidateMonographicSeries(Title title)
+        {
+            SeriesMetadata seriesMetadata = new SeriesMetadata();
+            int seriesCount = 0;
+            TitlesClient restClient = new TitlesClient(configParms.BHLWSRestEndpoint);
+
+            foreach (TitleAssociation ta in title.TitleAssociations)
+            {
+                // Only consider associated titles with MARC tags 440, 490, and 830
+                if ((ta.MarcTag == "440" || ta.MarcTag == "490" || ta.MarcTag == "830") && (ta.Active ?? true))
+                {
+                    // Make sure the asssociated title is linked to another BHL title
+                    if (ta.AssociatedTitleID != null)
+                    {
+                        Title associatedTitle = restClient.GetTitleDetails((int)ta.AssociatedTitleID);
+
+                        // The associated title must be a serial
+                        if (associatedTitle.BibliographicLevelID == configParms.BibLevelSerial ||
+                            associatedTitle.BibliographicLevelID == configParms.BibLevelSerialComponent)
+                        {
+                            foreach(Title_Identifier ti in associatedTitle.TitleIdentifiers)
+                            {
+                                // The associated title must have an ISSN
+                                if (string.Compare(ti.IdentifierName, "ISSN", CultureInfo.CurrentCulture, CompareOptions.IgnoreCase) == 0 ||
+                                    string.Compare(ti.IdentifierName, "eISSN", CultureInfo.CurrentCulture,  CompareOptions.IgnoreCase) == 0)
+                                {
+                                    // An associated series was found with all necessary metadata, so save the important details
+                                    seriesCount++;
+                                    seriesMetadata.Volume = Utility.DataCleaner.ParseVolumeString(ta.Volume).StartVolume;
+                                    seriesMetadata.Title = associatedTitle.FullTitle;
+                                    seriesMetadata.ISSN = ti.IdentifierValue;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // If exactly one series was identified, then the title is part of a Monographic Series
+            seriesMetadata.IsMonographicSeries = (seriesCount == 1);
+
+            return seriesMetadata;
+        }
+
+        /// <summary>
+        /// Contains the details of the series associated with a Monographic Series title.
+        /// </summary>
+        private class SeriesMetadata
+        {
+            public bool IsMonographicSeries { get; set; } = false;
+            public string Volume { get; set; } = string.Empty;
+            public string Title { get; set; } = string.Empty;
+            public string ISSN { get; set; } = string.Empty;
         }
 
         /// <summary>
@@ -625,7 +721,8 @@ namespace MOBOT.BHL.BHLDOIService
         private string GetDepositTemplate(DOIDepositData data)
         {
             string depositTemplate = string.Empty;
-            if (data.PublicationType == DOIDepositData.PublicationTypeValue.Monograph)
+            if (data.PublicationType == DOIDepositData.PublicationTypeValue.Monograph ||
+                data.PublicationType == DOIDepositData.PublicationTypeValue.MonographicSeries)
                 depositTemplate = File.ReadAllText(configParms.MonographDepositTemplateFile);
             else if (data.PublicationType == DOIDepositData.PublicationTypeValue.Article)
                 depositTemplate = File.ReadAllText(configParms.ArticleDepositTemplateFile);
@@ -657,7 +754,8 @@ namespace MOBOT.BHL.BHLDOIService
             DOIDepositFactory depositFactory = new DOIDepositFactory(data);
             DOIDeposit.DOIDeposit deposit;
 
-            if (data.PublicationType == DOIDepositData.PublicationTypeValue.Monograph)
+            if (data.PublicationType == DOIDepositData.PublicationTypeValue.Monograph ||
+                data.PublicationType == DOIDepositData.PublicationTypeValue.MonographicSeries)
                 deposit = depositFactory.GetDOIDeposit(DOIDepositFactory.DOIDepositType.Monograph);
             else if (data.PublicationType == DOIDepositData.PublicationTypeValue.Article)
                 deposit = depositFactory.GetDOIDeposit(DOIDepositFactory.DOIDepositType.Article);
@@ -680,7 +778,8 @@ namespace MOBOT.BHL.BHLDOIService
             DOIXmlQueryFactory xmlQueryFactory = new DOIXmlQueryFactory(data);
             DOIDeposit.DOIQuery query;
 
-            if (queryType == DOIDepositData.PublicationTypeValue.Monograph)
+            if (queryType == DOIDepositData.PublicationTypeValue.Monograph ||
+                queryType == DOIDepositData.PublicationTypeValue.MonographicSeries)
                 query = xmlQueryFactory.GetDOIQuery(DOIXmlQueryFactory.DOIQueryType.Monograph);
             else if (queryType == DOIDepositData.PublicationTypeValue.Journal)
                 query = xmlQueryFactory.GetDOIQuery(DOIXmlQueryFactory.DOIQueryType.Journal);
