@@ -567,17 +567,25 @@ namespace MOBOT.BHL.BHLDOIService
                         if (associatedTitle.BibliographicLevelID == configParms.BibLevelSerial ||
                             associatedTitle.BibliographicLevelID == configParms.BibLevelSerialComponent)
                         {
+                            bool firstIssnForAssociation = true;
                             foreach(Title_Identifier ti in associatedTitle.TitleIdentifiers)
                             {
                                 // The associated title must have an ISSN
                                 if (string.Compare(ti.IdentifierName, "ISSN", CultureInfo.CurrentCulture, CompareOptions.IgnoreCase) == 0 ||
                                     string.Compare(ti.IdentifierName, "eISSN", CultureInfo.CurrentCulture,  CompareOptions.IgnoreCase) == 0)
                                 {
-                                    // An associated series was found with all necessary metadata, so save the important details
-                                    seriesCount++;
+                                    // An associated series was found with all necessary metadata
+
+                                    // Make sure the series is only counted once, even if more than one ISSN exists
+                                    if (firstIssnForAssociation) seriesCount++; 
+                                    firstIssnForAssociation = false;
+
+                                    // Save the important details about this series
                                     seriesMetadata.Volume = Utility.DataCleaner.ParseVolumeString(ta.Volume).StartVolume;
                                     seriesMetadata.Title = associatedTitle.FullTitle;
                                     seriesMetadata.ISSN = ti.IdentifierValue;
+
+                                    if (string.Compare(ti.IdentifierName, "ISSN", CultureInfo.CurrentCulture, CompareOptions.IgnoreCase) == 0) break;
                                 }
                             }
                         }

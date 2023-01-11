@@ -39,8 +39,6 @@ namespace MOBOT.BHL.DOIDeposit
 
         public override string ToString(string template)
         {
-            StringBuilder bookContent = new StringBuilder();
-
             // Add the header values
             template = template.Replace("{doi_batch_id}", HttpUtility.HtmlEncode(Data.BatchID));
             template = template.Replace("{timestamp}", HttpUtility.HtmlEncode(Data.Timestamp));
@@ -68,11 +66,24 @@ namespace MOBOT.BHL.DOIDeposit
                     break;
             }
 
+            StringBuilder bookContent = new StringBuilder();
+            string contentRoot = (Data.PublicationType == DOIDepositData.PublicationTypeValue.MonographicSeries) ? "book_series_metadata" : "book_metadata";
+
             // Build the book metadata content
             if (!string.IsNullOrEmpty(Data.Language))
-                bookContent.Append("<book_metadata language=\"" + HttpUtility.HtmlEncode(Data.Language) + "\">\n");
+                bookContent.Append("<" + contentRoot + " language=\"" + HttpUtility.HtmlEncode(Data.Language) + "\">\n");
             else
-                bookContent.Append("<book_metadata>\n");
+                bookContent.Append("<" + contentRoot + ">\n");
+
+            if (Data.PublicationType == DOIDepositData.PublicationTypeValue.MonographicSeries)
+            {
+                bookContent.Append("<series_metadata>\n");
+                bookContent.Append("<titles>\n");
+                bookContent.Append("<title>" + HttpUtility.HtmlEncode(Data.SeriesTitle) + "</title>\n");
+                bookContent.Append("</titles>\n");
+                bookContent.Append("<issn>" + HttpUtility.HtmlEncode(Data.SeriesISSN) + "</issn>\n");
+                bookContent.Append("</series_metadata>\n");
+            }
 
             if (Data.Contributors.Count() > 0)
             {
@@ -122,19 +133,24 @@ namespace MOBOT.BHL.DOIDeposit
             bookContent.Append("<title>" + HttpUtility.HtmlEncode(Data.Title) + "</title>\n");
             bookContent.Append("</titles>\n");
 
-            if (!string.IsNullOrEmpty(Data.Edition))
+            if (!string.IsNullOrWhiteSpace(Data.SeriesVolume) && Data.PublicationType == DOIDepositData.PublicationTypeValue.MonographicSeries)
             {
-                bookContent.Append("<edition_number>" + Data.Edition + "</edition_number>\n");
+                bookContent.Append("<volume>" + HttpUtility.HtmlEncode(Data.SeriesVolume) + "</volume>\n");
+            }    
+
+            if (!string.IsNullOrWhiteSpace(Data.Edition))
+            {
+                bookContent.Append("<edition_number>" + HttpUtility.HtmlEncode(Data.Edition) + "</edition_number>\n");
             }
 
-            if (!string.IsNullOrEmpty(Data.PublicationDate))
+            if (!string.IsNullOrWhiteSpace(Data.PublicationDate))
             {
                 bookContent.Append("<publication_date>\n");
                 bookContent.Append("<year>" + HttpUtility.HtmlEncode(Data.PublicationDate) + "</year>\n");
                 bookContent.Append("</publication_date>\n");
             }
 
-            if (!string.IsNullOrEmpty(Data.Isbn))
+            if (!string.IsNullOrWhiteSpace(Data.Isbn))
             {
                 bookContent.Append("<isbn media_type=\"print\">" + HttpUtility.HtmlEncode(Data.Isbn) + "</isbn>\n");
             }
@@ -145,9 +161,9 @@ namespace MOBOT.BHL.DOIDeposit
 
             bookContent.Append("<publisher>\n");
             bookContent.Append("<publisher_name>" + 
-                HttpUtility.HtmlEncode(string.IsNullOrEmpty(Data.PublisherName) ? "[s.n.]" : Data.PublisherName) + 
+                HttpUtility.HtmlEncode(string.IsNullOrWhiteSpace(Data.PublisherName) ? "[s.n.]" : Data.PublisherName) + 
                 "</publisher_name>\n");
-            if (!string.IsNullOrEmpty(Data.PublisherPlace)) bookContent.Append("<publisher_place>" + HttpUtility.HtmlEncode(Data.PublisherPlace) + "</publisher_place>\n");
+            if (!string.IsNullOrWhiteSpace(Data.PublisherPlace)) bookContent.Append("<publisher_place>" + HttpUtility.HtmlEncode(Data.PublisherPlace) + "</publisher_place>\n");
             bookContent.Append("</publisher>\n");
 
             bookContent.Append("<doi_data>\n");
@@ -155,7 +171,7 @@ namespace MOBOT.BHL.DOIDeposit
             bookContent.Append("<resource>" + HttpUtility.HtmlEncode(Data.DoiResource) + "</resource>\n");
             bookContent.Append("</doi_data>\n");
 
-            bookContent.Append("</book_metadata>\n");
+            bookContent.Append("</" + contentRoot + ">\n");
 
             // Insert the book metadata into the template and return the result
             return template.Replace("{book_content}", bookContent.ToString());
