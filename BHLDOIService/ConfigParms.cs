@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BHL.WebServiceREST.v1;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
@@ -154,6 +155,13 @@ namespace MOBOT.BHL.BHLDOIService
         {
             get { return _minMinutesSinceSubmit; }
             set { _minMinutesSinceSubmit = value; }
+        }
+
+        private bool _checkForMonoSeries = true;
+        public bool CheckForMonoSeries
+        {
+            get { return _checkForMonoSeries; }
+            set { _checkForMonoSeries = value; }
         }
 
         private string _monographDepositTemplateFile = "MonographDepositTemplate.xml";
@@ -441,6 +449,7 @@ namespace MOBOT.BHL.BHLDOIService
             CrossrefXmlQueryFormat = ConfigurationManager.AppSettings["CrossRefXmlQueryFormat"];
             NumberToSubmit = Convert.ToInt32(ConfigurationManager.AppSettings["NumberToSubmit"]);
             MinMinutesSinceSubmit = Convert.ToInt32(ConfigurationManager.AppSettings["MinimumMinutesSinceSubmit"]);
+            CheckForMonoSeries = ConfigurationManager.AppSettings["CheckForMonoSeries"].ToLower() == "true";
             MonographDepositTemplateFile = ConfigurationManager.AppSettings["MonographDepositTemplateFile"];
             JournalDepositTemplateFile = ConfigurationManager.AppSettings["JournalDepositTemplateFile"];
             ArticleDepositTemplateFile = ConfigurationManager.AppSettings["ArticleDepositTemplateFile"];

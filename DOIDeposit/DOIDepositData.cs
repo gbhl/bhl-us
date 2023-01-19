@@ -245,12 +245,37 @@ namespace MOBOT.BHL.DOIDeposit
             set { _lastPage = value; }
         }
 
+        // Only applies to monographic series
+        private string _seriesTitle = string.Empty;
+        public string SeriesTitle
+        {
+            get { return _seriesTitle; }
+            set { _seriesTitle = value; }
+        }
+
+        // Only applies to monographic series
+        private string _seriesISSN = string.Empty;
+        public string SeriesISSN
+        {
+            get { return _seriesISSN; }
+            set { _seriesISSN = value; }
+        }
+
+        // Only applies to monographic series. Optional.
+        private string _seriesVolume = string.Empty;
+        public string SeriesVolume
+        {
+            get { return _seriesVolume; }
+            set { _seriesVolume = value; }
+        }
+
         #endregion Deposit Body properties
 
         public enum PublicationTypeValue
         {
             EditedBook,
             Monograph,
+            MonographicSeries,
             Reference,
             Journal,
             Article,
