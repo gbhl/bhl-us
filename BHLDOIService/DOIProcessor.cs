@@ -516,8 +516,9 @@ namespace MOBOT.BHL.BHLDOIService
             if (title.BibliographicLevelID == configParms.BibLevelMonographComponent ||
                 title.BibliographicLevelID == configParms.BibLevelMonograph)
             {
-                SeriesMetadata seriesMetadata = ValidateMonographicSeries(title);
-                if (seriesMetadata.IsMonographicSeries)
+                SeriesMetadata seriesMetadata = new SeriesMetadata();
+                if (configParms.CheckForMonoSeries) seriesMetadata = ValidateMonographicSeries(title);
+                if (seriesMetadata.IsMonographicSeries) // always false if check for mono series is not performed
                 {
                     data.PublicationType = DOIDepositData.PublicationTypeValue.MonographicSeries;
                     data.SeriesTitle = seriesMetadata.Title;

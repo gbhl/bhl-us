@@ -35,6 +35,8 @@
     <add key="NumberToSubmit" value="1"/>
     <!-- Minimum number of minutes to wait before checking the CrossRef submission log for a new DOI -->
     <add key="MinimumMinutesSinceSubmit" value="1"/>
+    <!-- Check for monographic series titles.  If true, a book_series deposit will be used for monographic series titles. -->
+    <add key="CheckForMonoSeries" value="true" />
     <!-- Deposit template file names-->
     <add key="MonographDepositTemplateFile" value="MonographDepositTemplate.xml"/>
     <add key="JournalDepositTemplateFile" value="JournalDepositTemplate.xml"/>
