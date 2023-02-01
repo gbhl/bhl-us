@@ -259,6 +259,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "BHL.Admin.PortalEditor, BHL.Admin.Admin, BHL.Admin.SysAdmin")]
+        [ValidateInput(false)]
         public async Task<ActionResult> QueueAddConfirm(QueueAddConfirmViewModel model)
         {
             HttpContext.Server.ScriptTimeout = 600;  // 10 minutes
