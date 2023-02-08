@@ -15,7 +15,7 @@ namespace MOBOT.BHL.AdminWeb
 
             if (!this.IsPostBack)
             {
-                List<Institution> institutions = provider.InstitutionSelectForMonthlyStats();
+                List<Institution> institutions = provider.InstituationSelectAll();
                 foreach (Institution institution in institutions)
                 {
                     ddlInstitutions.Items.Add(new ListItem(institution.InstitutionName, institution.InstitutionCode));

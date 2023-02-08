@@ -779,7 +779,6 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\InstitutionSelectBySegmentIDAndR
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\InstitutionSelectByTitleID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\InstitutionSelectByTitleIDAndRole.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\InstitutionSelectDOIStats.sql"
-sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\InstitutionSelectForMonthlyStats.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\InstitutionSelectWithGroups.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\InstitutionSelectWithPublishedItems.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\InstitutionSelectWithPublishedSegments.sql"

@@ -1157,7 +1157,6 @@
     <None Include="dbo\Functions\fnContributorCodesForSegment.sql" />
     <None Include="dbo\Functions\fnAuthorInfoForSegment.sql" />
     <None Include="import\Stored Procedures\ImportRecordSelectForReviewByImportRecordID.sql" />
-    <None Include="dbo\Stored Procedures\InstitutionSelectForMonthlyStats.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectByItemID.sql" />
     <None Include="dbo\Stored Procedures\ItemSelectFilenamesByItemID.sql" />
     <None Include="dbo\Stored Procedures\PageSelectByBookID.sql" />
