@@ -582,7 +582,11 @@ namespace MOBOT.BHL.BHLDOIService
                                     firstIssnForAssociation = false;
 
                                     // Save the important details about this series
-                                    seriesMetadata.Volume = Utility.DataCleaner.ParseVolumeString(ta.Volume).StartVolume;
+                                    // If a volume exists, use it.  Else, use number if not also a part.  Finally, use part if no number.
+                                    Utility.VolumeData vol = Utility.DataCleaner.ParseVolumeString(ta.Volume);
+                                    if (!string.IsNullOrWhiteSpace(vol.StartVolume)) seriesMetadata.Volume = vol.StartVolume;
+                                    else if (!string.IsNullOrWhiteSpace(vol.StartNumber) && string.IsNullOrWhiteSpace(vol.StartPart)) seriesMetadata.Volume = vol.StartNumber;
+                                    else if (string.IsNullOrWhiteSpace(vol.StartNumber) && !string.IsNullOrWhiteSpace(vol.StartPart)) seriesMetadata.Volume = vol.StartPart;
                                     seriesMetadata.Title = associatedTitle.FullTitle;
                                     seriesMetadata.ISSN = ti.IdentifierValue;
 
