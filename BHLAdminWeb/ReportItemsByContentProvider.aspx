@@ -30,7 +30,7 @@
                         <td><asp:TextBox ID="txtIAIdentifier" runat="server" placeholder="(Optional)"></asp:TextBox></td>
                     </tr>
                     <tr>
-                        <td><b>Only Items Where TitleID Is:</b></td>
+                        <td><b>Only Items Where Title ID Is:</b></td>
                         <td><asp:TextBox ID="txtTitleID" runat="server" placeholder="(Optional)"></asp:TextBox></td>
                     </tr>
                 </table>
