@@ -30,7 +30,8 @@
                         <td><asp:TextBox ID="txtIAIdentifier" runat="server" placeholder="(Optional)"></asp:TextBox></td>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td>
+                        <td><b>Only Items Where TitleID Is:</b></td>
+                        <td><asp:TextBox ID="txtTitleID" runat="server" placeholder="(Optional)"></asp:TextBox></td>
                     </tr>
                 </table>
             <td>
@@ -54,7 +55,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#list").jqGrid({
-                url: 'services/rptItemByContentProviderService.ashx?id=<%=selectedInstitutionCode%>&role=<%=selectedRoleID%>&barcode=<%=specifiedBarcode%>', // tells where to get the data
+                url: 'services/rptItemByContentProviderService.ashx?id=<%=selectedInstitutionCode%>&role=<%=selectedRoleID%>&barcode=<%=specifiedBarcode%>&titleid=<%=specifiedTitleID%>', // tells where to get the data
                 datatype: 'xml',    // format of the data (xml,json,jsonp,array,xmlstring,jsonstring,script,function)
                 mtype: 'GET',   // specify if AJAX call is a GET or POST
                 colNames: ['Item ID', 'IA Identifier', 'Title ID', 'Title', 'Volume', 'Year', 'Holding Institution', 'Rights Holder', 'Added By', 'Date Added', 'Date Updated'],    // column names

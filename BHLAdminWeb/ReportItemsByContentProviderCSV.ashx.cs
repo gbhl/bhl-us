@@ -1,4 +1,5 @@
-﻿using MOBOT.BHL.DataObjects;
+﻿using Microsoft.Ajax.Utilities;
+using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Utility;
 using System;
@@ -20,6 +21,8 @@ namespace MOBOT.BHL.AdminWeb
             string institutionCode = context.Request.QueryString["id"] as string;
             string institutionRoleID = context.Request.QueryString["role"] as string;
             string barcode = context.Request.QueryString["barcode"] as string;
+            string titleID = context.Request.QueryString["titleid"] as string;
+            if (!int.TryParse(titleID, out int titleIDint)) titleID = string.Empty;
 
             int roleId;
             // Make sure roleId is a valid integer value
@@ -28,7 +31,8 @@ namespace MOBOT.BHL.AdminWeb
                 BHLProvider provider = new BHLProvider();
                 Institution institution = provider.InstitutionSelectAuto(institutionCode);
                 InstitutionRole institutionRole = provider.InstitutionRoleSelectAuto(roleId);
-                List<Book> books = provider.BookSelectByInstitutionAndRole(institutionCode, roleId, barcode, 1000000, 1, "CreationDate", "desc");
+                List<Book> books = provider.BookSelectByInstitutionAndRole(institutionCode, roleId, barcode, 
+                    (string.IsNullOrWhiteSpace(titleID) ? (int?)null : Convert.ToInt32(titleID)), 1000000, 1, "CreationDate", "desc");
 
                 this.WriteHttpHeaders(context, "text/csv", "ItemsByContentProviderAndRole" + DateTime.Now.ToString("yyyyMMdd") + ".csv");
 

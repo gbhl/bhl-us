@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.AdminWeb {
-    
-    
-    public partial class ReportItemsByContentProvider {
-        
+namespace MOBOT.BHL.AdminWeb
+{
+
+
+    public partial class ReportItemsByContentProvider
+    {
+
         /// <summary>
         /// ddlInstitutions control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlInstitutions;
-        
+
         /// <summary>
         /// ddlInstitutionRoles control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlInstitutionRoles;
-        
+
         /// <summary>
         /// txtIAIdentifier control.
         /// </summary>
@@ -38,7 +40,16 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtIAIdentifier;
-        
+
+        /// <summary>
+        /// txtTitleID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTitleID;
+
         /// <summary>
         /// btnShow control.
         /// </summary>
@@ -47,7 +58,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnShow;
-        
+
         /// <summary>
         /// btnDownload control.
         /// </summary>
@@ -56,7 +67,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnDownload;
-        
+
         /// <summary>
         /// litDisplayed control.
         /// </summary>
@@ -65,7 +76,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litDisplayed;
-        
+
         /// <summary>
         /// ddlInstitutionRoleChange control.
         /// </summary>
@@ -74,7 +85,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlInstitutionRoleChange;
-        
+
         /// <summary>
         /// ddlInstitutionChange control.
         /// </summary>
@@ -83,7 +94,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlInstitutionChange;
-        
+
         /// <summary>
         /// btnChange control.
         /// </summary>
@@ -92,7 +103,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnChange;
-        
+
         /// <summary>
         /// hidSelected control.
         /// </summary>
@@ -101,7 +112,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hidSelected;
-        
+
         /// <summary>
         /// litUpdateResult control.
         /// </summary>

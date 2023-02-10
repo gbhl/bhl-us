@@ -22,16 +22,18 @@ namespace MOBOT.BHL.AdminWeb.Services
             string institutionCode = context.Request.QueryString["id"] as string;
             string roleId = context.Request.QueryString["role"] as string;
             string barcode = context.Request.QueryString["barcode"] as string;
+            string titleID = context.Request.QueryString["titleid"] as string;
             string numRows = context.Request.QueryString["rows"] as string;
             string pageNum = context.Request.QueryString["page"] as string;
             string sortColumn = context.Request.QueryString["sidx"] as string;
             string sortOrder = context.Request.QueryString["sord"] as string;
 
             int verifyInt;
-            // Make sure roleId, numRows, and pageNum are valid integer values
-            roleId = String.IsNullOrEmpty(roleId) ? "0" : (!Int32.TryParse(roleId, out verifyInt) ? "0" : roleId);
-            numRows = String.IsNullOrEmpty(numRows) ? "100" : (!Int32.TryParse(numRows, out verifyInt) ? "100" : numRows);
-            pageNum = String.IsNullOrEmpty(pageNum) ? "1" : (!Int32.TryParse(pageNum, out verifyInt) ? "1" : pageNum);
+            // Make sure roleId, titleID, numRows, and pageNum are valid integer values
+            roleId = string.IsNullOrEmpty(roleId) ? "0" : (!Int32.TryParse(roleId, out verifyInt) ? "0" : roleId);
+            titleID = string.IsNullOrWhiteSpace(titleID) ? string.Empty : (!Int32.TryParse(titleID, out verifyInt) ? string.Empty : titleID);
+            numRows = string.IsNullOrEmpty(numRows) ? "100" : (!Int32.TryParse(numRows, out verifyInt) ? "100" : numRows);
+            pageNum = string.IsNullOrEmpty(pageNum) ? "1" : (!Int32.TryParse(pageNum, out verifyInt) ? "1" : pageNum);
 
             // Make sure sortColumn is a value column name
             sortColumn = String.IsNullOrEmpty(sortColumn) ? "TitleName" : sortColumn;
@@ -41,7 +43,9 @@ namespace MOBOT.BHL.AdminWeb.Services
             sortOrder = (!(sortOrder.ToLower() == "asc") && !(sortOrder.ToLower() == "desc")) ? "asc" : sortOrder;
 
             List<Book> searchResult = ItemSelectByInstitutionAndRole(institutionCode,
-                Convert.ToInt32(roleId), barcode, Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, sortOrder);
+                Convert.ToInt32(roleId), barcode, 
+                (string.IsNullOrWhiteSpace(titleID) ? (int?)null : Convert.ToInt32(titleID)), 
+                Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, sortOrder);
 
             string xmlResponse = GetItemXmlResponse(searchResult, Convert.ToInt32(pageNum), Convert.ToInt32(numRows));
 
@@ -61,7 +65,7 @@ namespace MOBOT.BHL.AdminWeb.Services
         /// <param name="sortOrder"></param>
         /// <returns></returns>
         private List<Book> ItemSelectByInstitutionAndRole(string institutionCode,
-            int roleID, string barcode, int numRows, int pageNum, string sortColumn, string sortOrder)
+            int roleID, string barcode, int? titleID, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
             List<Book> items = new List<Book>();
             BHLProvider service = null;
@@ -69,7 +73,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             try
             {
                 service = new BHLProvider();
-                items = service.BookSelectByInstitutionAndRole(institutionCode, roleID, barcode, numRows, pageNum, sortColumn, sortOrder);
+                items = service.BookSelectByInstitutionAndRole(institutionCode, roleID, barcode, titleID, numRows, pageNum, sortColumn, sortOrder);
             }
             catch
             {

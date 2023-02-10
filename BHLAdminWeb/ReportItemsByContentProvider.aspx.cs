@@ -17,6 +17,7 @@ namespace MOBOT.BHL.AdminWeb
         public string selectedInstitutionCode = string.Empty;
         public string selectedRoleID = string.Empty;
         public string specifiedBarcode = string.Empty;
+        public string specifiedTitleID = string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
 		{
@@ -100,6 +101,7 @@ namespace MOBOT.BHL.AdminWeb
                 selectedInstitutionCode = ddlInstitutions.SelectedValue;
                 selectedRoleID = ddlInstitutionRoles.SelectedValue;
                 specifiedBarcode = txtIAIdentifier.Text;
+                specifiedTitleID = txtTitleID.Text;
                 ddlInstitutionChange.SelectedIndex = 0;
                 ddlInstitutionRoleChange.SelectedIndex = 0;
                 litUpdateResult.Text = string.Empty;
@@ -115,7 +117,7 @@ namespace MOBOT.BHL.AdminWeb
             string msg = string.Empty;
             if (this.Validate(out msg))
             {
-                Response.Redirect("ReportItemsByContentProviderCSV.ashx?id=" + ddlInstitutions.SelectedValue + "&role=" + ddlInstitutionRoles.SelectedValue + "&barcode=" + txtIAIdentifier.Text);
+                Response.Redirect("ReportItemsByContentProviderCSV.ashx?id=" + ddlInstitutions.SelectedValue + "&role=" + ddlInstitutionRoles.SelectedValue + "&barcode=" + txtIAIdentifier.Text + "&titleid=" + txtTitleID.Text);
             }
             else
             {
@@ -201,6 +203,7 @@ namespace MOBOT.BHL.AdminWeb
             selectedInstitutionCode = ddlInstitutions.SelectedValue;
             selectedRoleID = ddlInstitutionRoles.SelectedValue;
             specifiedBarcode = txtIAIdentifier.Text;
+            specifiedTitleID = txtTitleID.Text;
         }
     }
 }

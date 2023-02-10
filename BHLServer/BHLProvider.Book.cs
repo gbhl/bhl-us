@@ -82,9 +82,9 @@ namespace MOBOT.BHL.Server
 			return new BookDAL().BookSelectByInstitution(null, null, institutionCode, returnCode, sortBy);
 		}
 
-		public List<Book> BookSelectByInstitutionAndRole(string institutionCode, int institutionRoleID, string barcode, int numRows, int pageNum, string sortColumn, string sortOrder)
+		public List<Book> BookSelectByInstitutionAndRole(string institutionCode, int institutionRoleID, string barcode, int? titleID, int numRows, int pageNum, string sortColumn, string sortOrder)
 		{
-			return new BookDAL().BookSelectByInstitutionAndRole(null, null, institutionCode, institutionRoleID, barcode, numRows, pageNum, sortColumn, sortOrder);
+			return new BookDAL().BookSelectByInstitutionAndRole(null, null, institutionCode, institutionRoleID, barcode, titleID, numRows, pageNum, sortColumn, sortOrder);
 		}
 
 		public Item BookSelectPagination(int bookID)
