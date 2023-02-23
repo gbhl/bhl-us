@@ -49,6 +49,8 @@ namespace MOBOT.BHL.DAL
 
                 title.TitleLanguages = new TitleLanguageDAL().TitleLanguageSelectByTitleID(connection, transaction, titleId);
 
+                title.TitleExternalResources = new TitleExternalResourceDAL().TitleExternalResourceSelectByTitleID(connection, transaction, titleId);
+
                 title.TitleNotes = new TitleNoteDAL().TitleNoteSelectByTitleID(connection, transaction, titleId);
 
                 title.TitleInstitutions = new InstitutionDAL().InstitutionSelectByTitleID(connection, transaction, titleId);
@@ -356,58 +358,6 @@ namespace MOBOT.BHL.DAL
 
                 updatedTitle = new TitleDAL().TitleManageAuto( connection, transaction, title, userId );
 
-                /*
-                DOIDAL doiDAL = new DOIDAL();
-                List<DOI> doiList = doiDAL.DOISelectValidForTitle(connection, transaction, title.TitleID);
-
-                DOI doi = null;
-                if (doiList.Count == 0)
-                {
-                    if (!string.IsNullOrWhiteSpace(title.DOIName))
-                    {
-                        // Insert
-                        doi = new DOI();
-                        doi.IsNew = true;
-                        doi.EntityID = title.TitleID;
-                        doi.DOIEntityTypeID = 10;   // Title
-                        doi.DOIName = title.DOIName;
-                        doi.DOIStatusID = 200;
-                        doi.StatusDate = DateTime.Now;
-                        doi.StatusMessage = "User-edited";
-                        doi.IsValid = 1;
-                        doi.CreationDate = DateTime.Now;
-                        doi.LastModifiedDate = DateTime.Now;
-                    }
-                }
-                else // DOI exists
-                {
-                    doi = doiList[0];
-                    doi.IsNew = false;
-
-                    if (!string.IsNullOrWhiteSpace(title.DOIName))
-                    {
-                        // Update
-                        if (string.Compare(doi.DOIName, title.DOIName, true) != 0)
-                        {
-                            doi.DOIName = title.DOIName;
-                            if (!doi.DOIName.StartsWith("10.5962"))
-                            {
-                                doi.DOIStatusID = 200;
-                                doi.StatusDate = DateTime.Now;
-                            }
-                            doi.StatusMessage = "User-edited";
-                            doi.LastModifiedDate = DateTime.Now;
-                        }
-                    }
-                    else
-                    {
-                        // Delete
-                        doi.IsDeleted = true;
-                    }
-                }
-                if (doi != null) doiDAL.DOIManageAuto(connection, transaction, doi, userId);
-                */
-
                 if ( title.TitleAuthors.Count > 0 )
 				{
 					TitleAuthorDAL titleAuthorDAL = new TitleAuthorDAL();
@@ -503,6 +453,16 @@ namespace MOBOT.BHL.DAL
                     {
                         if (titleLanguage.TitleID == 0) titleLanguage.TitleID = updatedTitle.ReturnObject.TitleID;
                         titleLanguageDAL.TitleLanguageManageAuto(connection, transaction, titleLanguage, userId);
+                    }
+                }
+
+                if (title.TitleExternalResources.Count > 0)
+                {
+                    TitleExternalResourceDAL externalResourceDAL = new TitleExternalResourceDAL();
+                    foreach(TitleExternalResource resource in title.TitleExternalResources)
+                    {
+                        if (resource.TitleID == 0) resource.TitleID = updatedTitle.ReturnObject.TitleID;
+                        externalResourceDAL.TitleExternalResourceManageAuto(connection, transaction, resource, userId);
                     }
                 }
 

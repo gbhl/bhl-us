@@ -180,11 +180,6 @@ namespace MOBOT.BHL.AdminWeb
             emptyInstitution.InstitutionName = string.Empty;
             institutions.Insert(0, emptyInstitution);
 
-            ddlExtContent.DataSource = institutions;
-            ddlExtContent.DataTextField = "InstitutionName";
-            ddlExtContent.DataValueField = "InstitutionCode";
-            ddlExtContent.DataBind();
-
             List<BibliographicLevel> bibliographicLevels = bp.BibliographicLevelSelectAll();
 
             BibliographicLevel emptyBibLevel = new BibliographicLevel();
@@ -270,17 +265,6 @@ namespace MOBOT.BHL.AdminWeb
             partNameTextBox.Text = title.PartName;
 			callNumberTextBox.Text = title.CallNumber;
 
-            ddlExtContent.SelectedValue = "";
-            foreach (Institution contributor in title.TitleInstitutions)
-            {
-                if (contributor.InstitutionRoleName == InstitutionRole.ExternalContentHolder)
-                {
-                    ddlExtContent.SelectedValue = contributor.InstitutionCode;
-                    RepositoryUrlTextBox.Text = contributor.Url;
-                    break;
-                }
-            }
-
             if ( title.LanguageCode != null && title.LanguageCode.Length > 0 )
 			{
 				ddlLang.SelectedValue = title.LanguageCode;
@@ -306,6 +290,9 @@ namespace MOBOT.BHL.AdminWeb
 
             subjectsList.DataSource = title.TitleKeywords;
             subjectsList.DataBind();
+
+            resourcesList.DataSource = title.TitleExternalResources;
+            resourcesList.DataBind();
 
             notesList.DataSource = title.TitleNotes;
             notesList.DataBind();
@@ -448,6 +435,95 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         #endregion TitleKeyword methods
+
+        #region TitleExternalResource methods
+
+        private void bindExternalResourceData()
+        {
+            Title title = (Title)Session["Title" + idLabel.Text];
+
+            // filter out deleted items
+            List<TitleExternalResource> titleExternalResources = new List<TitleExternalResource>();
+            foreach (TitleExternalResource tr in title.TitleExternalResources)
+            {
+                if (tr.IsDeleted == false)
+                {
+                    titleExternalResources.Add(tr);
+                }
+            }
+
+            resourcesList.DataSource = titleExternalResources;
+            resourcesList.DataBind();
+        }
+
+        private TitleExternalResource findTitleExternalResource(List<TitleExternalResource> titleExternalResources,
+            int titleExternalResourceId, int externalResourceTypeID, string urlText, string url)
+        {
+            foreach (TitleExternalResource tr in titleExternalResources)
+            {
+                if (tr.IsDeleted)
+                {
+                    continue;
+                }
+                if (titleExternalResourceId == tr.TitleExternalResourceID &&
+                    externalResourceTypeID == tr.TitleExternalResourceTypeID &&
+                    urlText == tr.UrlText &&
+                    url == tr.Url)
+                {
+                    return tr;
+                }
+            }
+
+            return null;
+        }
+
+        protected short GetMaxExternalResourceSequence()
+        {
+            short maxSeq = 0;
+
+            Title title = (Title)Session["Title" + idLabel.Text];
+            foreach (TitleExternalResource titleExternalResource in title.TitleExternalResources)
+            {
+                if (!titleExternalResource.IsDeleted)
+                {
+                    if (titleExternalResource.SequenceOrder  > maxSeq) maxSeq = titleExternalResource.SequenceOrder;
+                }
+            }
+
+            return maxSeq;
+        }
+
+        List<TitleExternalResourceType> _externalResourceTypes = null;
+        protected List<TitleExternalResourceType> GetExternalResourceTypes()
+        {
+            BHLProvider bp = new BHLProvider();
+            _externalResourceTypes = bp.TitleExternalResourceTypeSelectAll();
+
+            return _externalResourceTypes;
+        }
+
+        protected int GetExternalResourceIndex(object dataItem)
+        {
+            string externalResourceTypeIdString = DataBinder.Eval(dataItem, "TitleExternalResourceTypeID").ToString();
+
+            if (!externalResourceTypeIdString.Equals("0"))
+            {
+                int externalResourceTypeId = int.Parse(externalResourceTypeIdString);
+                int ix = 0;
+                foreach (TitleExternalResourceType externalResourceType in _externalResourceTypes)
+                {
+                    if (externalResourceType.TitleExternalResourceTypeID == externalResourceTypeId)
+                    {
+                        return ix;
+                    }
+                    ix++;
+                }
+            }
+
+            return 0;
+        }
+
+        #endregion
 
         #region TitleNote methods
 
@@ -1132,6 +1208,127 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         #endregion TitleKeyword event handlers
+
+        #region TitleExternalResource event handlers
+
+        protected void resourcesList_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            resourcesList.EditIndex = e.NewEditIndex;
+            bindExternalResourceData();
+        }
+
+        protected void resourcesList_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            GridViewRow row = resourcesList.Rows[e.RowIndex];
+
+            if (row != null)
+            {
+                DropDownList ddlExternalResourceType = row.FindControl("ddlExternalResourceType") as DropDownList;
+                TextBox txtUrlText = row.FindControl("txtUrlText") as TextBox;
+                TextBox txtUrl = row.FindControl("txtUrl") as TextBox;
+                TextBox txtExternalResourceSequence = row.FindControl("txtExternalResourceSequence") as TextBox;
+                if (txtUrlText != null)
+                {
+                    short sequenceOrder = 0;
+                    Title title = (Title)Session["Title" + idLabel.Text];
+
+                    string urlText = txtUrlText.Text;
+                    string url = txtUrl.Text;
+                    string resourceSequenceText = txtExternalResourceSequence.Text;
+                    if (!short.TryParse(resourceSequenceText, out sequenceOrder)) sequenceOrder = 0;
+                    int resourceTypeID;
+                    if (!Int32.TryParse(ddlExternalResourceType.Text, out resourceTypeID)) resourceTypeID = 1;
+
+                    TitleExternalResource titleExternalResource = findTitleExternalResource(title.TitleExternalResources,
+                        (int)resourcesList.DataKeys[e.RowIndex].Values[0],
+                        (int)resourcesList.DataKeys[e.RowIndex].Values[1],
+                        resourcesList.DataKeys[e.RowIndex].Values[2].ToString(),
+                        resourcesList.DataKeys[e.RowIndex].Values[3].ToString());
+
+                    // Update all sequences if necessary
+                    short oldSeq = titleExternalResource.SequenceOrder;
+
+                    // If sequence has been decreased
+                    if (sequenceOrder < oldSeq)
+                    {
+                        // Increment all sequences between the old and new sequence values
+                        foreach (TitleExternalResource resource in title.TitleExternalResources)
+                        {
+                            if (resource.SequenceOrder >= sequenceOrder && resource.SequenceOrder < oldSeq) resource.SequenceOrder++;
+                        }
+                    }
+
+                    // If sequence has been increased
+                    if (sequenceOrder > oldSeq)
+                    {
+                        // Decrement all sequences between the old and new sequence values
+                        foreach (TitleExternalResource resource in title.TitleExternalResources)
+                        {
+                            if (resource.SequenceOrder <= sequenceOrder && resource.SequenceOrder > oldSeq)
+                            {
+                                resource.SequenceOrder--;
+                            }
+                        }
+                    }
+
+                    // Update the external resource being edited
+                    //TitleExternalResourceType resourceType = new BHLProvider().NoteTypeSelectAuto(Convert.ToInt32(ddlNoteType.SelectedValue));
+
+                    titleExternalResource.TitleID = title.TitleID;
+                    titleExternalResource.TitleExternalResourceTypeID = resourceTypeID;
+                    titleExternalResource.UrlText = urlText;
+                    titleExternalResource.Url = url;
+                    titleExternalResource.SequenceOrder = sequenceOrder;
+                    titleExternalResource.ExternalResourceTypeLabel = ddlExternalResourceType.SelectedItem.Text;
+                    //titleNote.NoteTypeName = noteType.NoteTypeName;
+                    //titleNote.NoteTypeDisplay = noteType.NoteTypeDisplay;
+                    //titleNote.MarcDataFieldTag = noteType.MarcDataFieldTag;
+                    //titleNote.MarcIndicator1 = noteType.MarcIndicator1;
+                }
+            }
+
+            resourcesList.EditIndex = -1;
+            bindExternalResourceData();
+        }
+
+        protected void resourcesList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            resourcesList.EditIndex = -1;
+            bindExternalResourceData();
+        }
+
+        protected void resourcesList_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName.Equals("RemoveButton"))
+            {
+                int rowNum = int.Parse(e.CommandArgument.ToString());
+                Title title = (Title)Session["Title" + idLabel.Text];
+                                
+                TitleExternalResource externalResource = findTitleExternalResource(title.TitleExternalResources,
+                    (int)resourcesList.DataKeys[rowNum].Values[0],
+                    (int)resourcesList.DataKeys[rowNum].Values[1],
+                    resourcesList.DataKeys[rowNum].Values[2].ToString(),
+                    resourcesList.DataKeys[rowNum].Values[3].ToString());
+                
+                externalResource.IsDeleted = true;                
+                bindExternalResourceData();
+            }
+        }
+
+        protected void addResourceButton_Click(object sender, EventArgs e)
+        {
+            Title title = (Title)Session["Title" + idLabel.Text];
+            TitleExternalResource externalResource = new TitleExternalResource();
+            externalResource.TitleID = title.TitleID;
+            externalResource.TitleExternalResourceTypeID = 0;
+            externalResource.SequenceOrder = GetMaxExternalResourceSequence();
+            externalResource.SequenceOrder++;
+            title.TitleExternalResources.Add(externalResource);
+            resourcesList.EditIndex = resourcesList.Rows.Count;
+            bindExternalResourceData();
+        }
+
+        #endregion
 
         #region TitleNote event handlers
 
@@ -1830,45 +2027,13 @@ namespace MOBOT.BHL.AdminWeb
 				title.IsNew = false;
 
                 //----------------------------------------
-                // Mark for deletion any existing institutions that have changed
-                bool externalContentHolderChanged = false;
-                bool externalContentHolderExists = false;
-                foreach (Institution institution in title.TitleInstitutions)
-                {
-                    if (institution.InstitutionRoleName == InstitutionRole.ExternalContentHolder)
-                    {
-                        externalContentHolderExists = true;
-                        if (institution.InstitutionCode != ddlExtContent.SelectedValue || institution.Url != RepositoryUrlTextBox.Text) {
-                            institution.IsDeleted = true; externalContentHolderChanged = true;
-                        }
-                    }
-                }
-
-                // Add new institutions
-                if ((externalContentHolderChanged || !externalContentHolderExists) && ddlExtContent.SelectedValue != string.Empty)
-                {
-                    Institution newExternalContentHolder = new Institution();
-                    newExternalContentHolder.InstitutionCode = ddlExtContent.SelectedValue;
-                    newExternalContentHolder.InstitutionRoleName = InstitutionRole.ExternalContentHolder;
-                    newExternalContentHolder.IsNew = true;
-                    newExternalContentHolder.Url = RepositoryUrlTextBox.Text;
-                    title.TitleInstitutions.Add(newExternalContentHolder);
-                }
-
-                //----------------------------------------
                 // Forces deletes to happen first
-                //title.TitleCollections.Sort( SortOrder.Descending, "IsDeleted" );
-                //title.TitleIdentifiers.Sort(SortOrder.Descending, "IsDeleted");
-				//title.TitleAuthors.Sort( SortOrder.Descending, "IsDeleted" );
-                //title.TitleItems.Sort(SortOrder.Descending, "IsDeleted");
-                //title.TitleKeywords.Sort(SortOrder.Descending, "IsDeleted");
-                //title.TitleAssociations.Sort(SortOrder.Descending, "IsDeleted");
-                //title.TitleVariants.Sort(SortOrder.Descending, "IsDeleted");
                 title.TitleCollections.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 title.TitleIdentifiers.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 title.TitleAuthors.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 title.ItemTitles.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 title.TitleKeywords.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                title.TitleExternalResources.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 title.TitleAssociations.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 title.TitleVariants.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
 
@@ -1901,6 +2066,18 @@ namespace MOBOT.BHL.AdminWeb
             {
                 flag = true;
                 errorControl.AddErrorText("Creators has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+            }
+
+            if (subjectsList.EditIndex != -1)
+            {
+                flag = true;
+                errorControl.AddErrorText("Subjects has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+            }
+
+            if (resourcesList.EditIndex != -1)
+            {
+                flag = true;
+                errorControl.AddErrorText("External Resources has an edit pending.  Click \\\"Update\\\" to accept the change or \\\"Cancel\\\" to reject it.\"");
             }
 
             if (identifiersList.EditIndex != -1)
@@ -2017,39 +2194,6 @@ namespace MOBOT.BHL.AdminWeb
                 flag = true;
                 errorControl.AddErrorText("A BHL-created DOI can only be added by submitting the Title metadata to a DOI registrar (such as Crossref)");
             }
-
-            /*
-            br = false;
-            ix = 0;
-            foreach (TitleAuthor tc in title.TitleAuthors)
-            {
-                if (tc.IsDeleted == false)
-                {
-                    int iy = 0;
-                    foreach (TitleAuthor tc2 in title.TitleAuthors)
-                    {
-                        if (tc2.IsDeleted == false)
-                        {
-                            if ((tc.TitleAuthorID != tc2.TitleAuthorID && tc.AuthorID == tc2.AuthorID &&
-                                tc.AuthorRoleID == tc2.AuthorRoleID) ||
-                                (tc.TitleAuthorID == 0 && tc.TitleAuthorID == 0 && tc.AuthorID == tc2.AuthorID &&
-                                tc.AuthorRoleID == tc2.AuthorRoleID && ix != iy))
-                            {
-                                br = true;
-                                flag = true;
-                                errorControl.AddErrorText("Cannot duplicate title creators");
-                            }
-                        }
-                        iy++;
-                    }
-                    if (br)
-                    {
-                        break;
-                    }
-                }
-                ix++;
-            }
-             */
 
             errorControl.Visible = flag;
             Page.MaintainScrollPositionOnPostBack = !flag;

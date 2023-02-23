@@ -69,25 +69,20 @@
                     </p>
                     <% } %>
                 <% } %>
-                <%if (Institutions.Count > 0) {%>
-                    <%foreach (Institution institution in Institutions) {
-                        if (institution.InstitutionRoleName == "External Content Holder") {%>
-                            <h3>More Content</h3>
-                            <%break;
-                        }
-                    }%>
-                    <%foreach (Institution institution in Institutions) {
-                        if (institution.InstitutionRoleName == "External Content Holder") {%>
-                            <p><i>Available from</i>
-                            <%if (string.IsNullOrWhiteSpace(institution.Url)) { %>
-                                <%:institution.InstitutionName%>
-                            <%} else {%>
-                                <a class="ExtLinkBrowse" href="<%:institution.Url%>" rel="noopener noreferrer" target="_blank"><%:institution.InstitutionName%></a>
+                <%if (TitleExternalResources.Count > 0) { %>
+                    <h3>External Resources</h3>
+                    <%foreach (TitleExternalResource resource in TitleExternalResources)
+                    {%>
+                        <p>
+                            <%:resource.ExternalResourceTypeLabel%>:
+                            <%if (string.IsNullOrWhiteSpace(resource.Url)) { %>
+                                <%:resource.UrlText %>
+                            <%} else { %>
+                                <a class="ExtLinkBrowse" href="<%:resource.Url%>" rel="noopener noreferrer" target="_blank"><%:resource.UrlText%></a>
                             <%}%>
-                            </p>
-                        <%}
-                    }
-                } %>
+                        </p>
+                    <%}
+                }%>
                 <h3>By</h3>
                 <p>
                     <% foreach (Author author in AuthorsDetail) { %>
