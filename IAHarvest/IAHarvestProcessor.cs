@@ -825,6 +825,7 @@ namespace IAHarvest
                     // Insert or update the root Marc information
                     String leader = String.Empty;
                     XmlNode marcNode = xml.SelectSingleNode("//marc:record/marc:leader", nsmgr);
+                    if (marcNode == null) marcNode = xml.SelectSingleNode("//marc:record/leader", nsmgr);
                     if (marcNode != null) leader = marcNode.InnerText;
                     IAMarc marc = provider.SaveIAMarc(itemID, leader);
 
@@ -833,6 +834,7 @@ namespace IAHarvest
 
                     // Insert the new Marc control information
                     XmlNodeList controlFields = xml.SelectNodes("//marc:record/marc:controlfield", nsmgr);
+                    if (controlFields.Count == 0) controlFields = xml.SelectNodes("//marc:record/controlfield", nsmgr);
                     foreach (XmlNode controlField in controlFields)
                     {
                         String tag = (controlField.Attributes["tag"] == null) ? String.Empty : controlField.Attributes["tag"].Value;
