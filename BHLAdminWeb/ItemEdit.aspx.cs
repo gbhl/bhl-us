@@ -772,6 +772,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                titleList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 int selectedTitle = (int)titleList.DataKeys[rowNum].Values[0];
                 List<DataObjects.ItemTitle> itemTitles = (List<DataObjects.ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
@@ -851,6 +852,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                languagesList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Book item = (Book)Session["Item" + itemIdTextBox.Text];
 
@@ -917,6 +919,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                collectionsList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Book item = (Book)Session["Item" + itemIdTextBox.Text];
 
@@ -1015,6 +1018,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                segmentsList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Book item = (Book)Session["Item" + itemIdTextBox.Text];
 

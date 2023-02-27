@@ -814,6 +814,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                authorsList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
@@ -882,6 +883,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                keywordsList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
@@ -956,6 +958,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                identifiersList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
@@ -1055,6 +1058,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                pagesList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
@@ -1199,6 +1203,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                relatedSegmentsList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 

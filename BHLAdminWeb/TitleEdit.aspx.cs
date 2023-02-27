@@ -1119,7 +1119,8 @@ namespace MOBOT.BHL.AdminWeb
 		{
 			if ( e.CommandName.Equals( "RemoveButton" ) )
 			{
-				int rowNum = int.Parse( e.CommandArgument.ToString() );
+                creatorsList.EditIndex = -1;
+                int rowNum = int.Parse( e.CommandArgument.ToString() );
                 Title title = (Title)Session["Title" + idLabel.Text];
 
 				TitleAuthor titleAuthor = findTitleAuthor( title.TitleAuthors,
@@ -1194,6 +1195,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                subjectsList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Title title = (Title)Session["Title" + idLabel.Text];
 
@@ -1301,6 +1303,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                resourcesList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Title title = (Title)Session["Title" + idLabel.Text];
                                 
@@ -1416,6 +1419,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                notesList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Title title = (Title)Session["Title" + idLabel.Text];
 
@@ -1511,6 +1515,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                variantsList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Title title = (Title)Session["Title" + idLabel.Text];
 
@@ -1582,6 +1587,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                identifiersList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Title title = (Title)Session["Title" + idLabel.Text];
 
@@ -1603,6 +1609,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                associationsList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Title title = (Title)Session["Title" + idLabel.Text];
 
@@ -1675,6 +1682,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                languagesList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Title title = (Title)Session["Title" + idLabel.Text];
 
@@ -1741,7 +1749,8 @@ namespace MOBOT.BHL.AdminWeb
 		{
 			if ( e.CommandName.Equals( "RemoveButton" ) )
 			{
-				int rowNum = int.Parse( e.CommandArgument.ToString() );
+                collectionsList.EditIndex = -1;
+                int rowNum = int.Parse( e.CommandArgument.ToString() );
                 Title title = (Title)Session["Title" + idLabel.Text];
 
 				TitleCollection collection = findCollection( title.TitleCollections,
@@ -1768,6 +1777,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                itemsList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 int selectedItem = (int)itemsList.DataKeys[rowNum].Values[0];
                 Title title = (Title)Session["Title" + idLabel.Text];
