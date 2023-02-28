@@ -34,7 +34,6 @@ namespace MOBOT.BHL.AdminWeb
             litMessage.Text = "";
             litWarning.Text = "";
             errorControl.Visible = false;
-            Page.MaintainScrollPositionOnPostBack = true;
 
             if (!IsPostBack)
             {
@@ -1411,7 +1410,7 @@ namespace MOBOT.BHL.AdminWeb
                 foreach(string warning in _warnings) warningMessage += "<br/>" + warning;
                 litWarning.Text = string.Format("<span class='liveData'>{0}</span>", warningMessage);
             }
-            Page.MaintainScrollPositionOnPostBack = false;
+            ResetScrollPosition();
         }
 
         #endregion Event Handlers
@@ -1620,9 +1619,29 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             errorControl.Visible = flag;
-            Page.MaintainScrollPositionOnPostBack = !flag;
+            if (!flag) ResetScrollPosition();
 
             return !flag;
+        }
+
+        private void ResetScrollPosition()
+        {
+            if (!ClientScript.IsClientScriptBlockRegistered(GetType(), "CreateResetScrollPosition"))
+            {
+                // Create the ResetScrollPosition() function
+                ClientScript.RegisterClientScriptBlock(GetType(), "CreateResetScrollPosition",
+                        "function ResetScrollPosition() {\r\n" +
+                        " var scrollX = document.getElementById('__SCROLLPOSITIONX');\r\n" +
+                        " var scrollY = document.getElementById('__SCROLLPOSITIONY');\r\n" +
+                        " if (scrollX && scrollY) {\r\n" +
+                        "    scrollX.value = 0;\r\n" +
+                        "    scrollY.value = 0;\r\n" +
+                        " }\r\n" +
+                        "}", true);
+
+                // Add the call to the ResetScrollPosition() function
+                ClientScript.RegisterStartupScript(GetType(), "CallResetScrollPosition", "ResetScrollPosition();", true);
+            }
         }
     }
 }

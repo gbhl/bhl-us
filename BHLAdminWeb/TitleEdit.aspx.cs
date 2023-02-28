@@ -1789,7 +1789,7 @@ namespace MOBOT.BHL.AdminWeb
                         {
                             errorControl.AddErrorText("Cannot delete previously saved items for which this is the primary title.");
                             errorControl.Visible = true;
-                            Page.MaintainScrollPositionOnPostBack = false;
+                            ResetScrollPosition();
                         }
                         else
                         {
@@ -2062,7 +2062,7 @@ namespace MOBOT.BHL.AdminWeb
 			}
 
             litMessage.Text = "<span class='liveData'>Title Saved.</span>";
-            Page.MaintainScrollPositionOnPostBack = false;
+            ResetScrollPosition();
 		}
 
 		#endregion
@@ -2206,9 +2206,28 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             errorControl.Visible = flag;
-            Page.MaintainScrollPositionOnPostBack = !flag;
+            if (!flag) ResetScrollPosition();
 
             return !flag;
         }
-	}
+
+        private void ResetScrollPosition()
+        {
+            if (!ClientScript.IsClientScriptBlockRegistered(GetType(), "CreateResetScrollPosition")) {
+                // Create the ResetScrollPosition() function
+                ClientScript.RegisterClientScriptBlock(GetType(), "CreateResetScrollPosition",
+                        "function ResetScrollPosition() {\r\n" +
+                        " var scrollX = document.getElementById('__SCROLLPOSITIONX');\r\n" +
+                        " var scrollY = document.getElementById('__SCROLLPOSITIONY');\r\n" +
+                        " if (scrollX && scrollY) {\r\n" +
+                        "    scrollX.value = 0;\r\n" +
+                        "    scrollY.value = 0;\r\n" +
+                        " }\r\n" +
+                        "}", true);
+
+                // Add the call to the ResetScrollPosition() function
+                ClientScript.RegisterStartupScript(GetType(), "CallResetScrollPosition", "ResetScrollPosition();", true);
+            }
+        }
+    }
 }

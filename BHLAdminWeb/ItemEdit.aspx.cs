@@ -535,7 +535,7 @@ namespace MOBOT.BHL.AdminWeb
             }
 
 			errorControl.Visible = flag;
-			Page.MaintainScrollPositionOnPostBack = !flag;
+            if (!flag) ResetScrollPosition();
 
 			return !flag;
 		}
@@ -1452,8 +1452,7 @@ namespace MOBOT.BHL.AdminWeb
 			}
 
             litMessage.Text = "<span class='liveData'>Item Saved.</span>";
-            Page.MaintainScrollPositionOnPostBack = false;
-            //Response.Redirect("/");
+            ResetScrollPosition();
 		}
 
         protected void PaginatorButton_Click(object sender, EventArgs e)
@@ -1503,5 +1502,25 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         #endregion
+
+        private void ResetScrollPosition()
+        {
+            if (!ClientScript.IsClientScriptBlockRegistered(GetType(), "CreateResetScrollPosition"))
+            {
+                // Create the ResetScrollPosition() function
+                ClientScript.RegisterClientScriptBlock(GetType(), "CreateResetScrollPosition",
+                        "function ResetScrollPosition() {\r\n" +
+                        " var scrollX = document.getElementById('__SCROLLPOSITIONX');\r\n" +
+                        " var scrollY = document.getElementById('__SCROLLPOSITIONY');\r\n" +
+                        " if (scrollX && scrollY) {\r\n" +
+                        "    scrollX.value = 0;\r\n" +
+                        "    scrollY.value = 0;\r\n" +
+                        " }\r\n" +
+                        "}", true);
+
+                // Add the call to the ResetScrollPosition() function
+                ClientScript.RegisterStartupScript(GetType(), "CallResetScrollPosition", "ResetScrollPosition();", true);
+            }
+        }
     }
 }
