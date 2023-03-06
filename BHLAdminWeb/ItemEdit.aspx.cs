@@ -2,6 +2,7 @@ using BHL.SiteServiceREST.v1.Client;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Utility;
+using MOBOT.BHLImport.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -47,7 +48,7 @@ namespace MOBOT.BHL.AdminWeb
 
                     // Get details for "selectedTitleId" from database
                     BHLProvider provider = new BHLProvider();
-                    Title title = provider.TitleSelect(Convert.ToInt32(selectedTitleId));
+                    DataObjects.Title title = provider.TitleSelect(Convert.ToInt32(selectedTitleId));
                     itemTitle.TitleID = title.TitleID;
                     itemTitle.ShortTitle = title.ShortTitle;
                     itemTitle.IsPrimary = 0;
@@ -364,7 +365,7 @@ namespace MOBOT.BHL.AdminWeb
             if (book != null)
             {
                 // Look up flickr status of the item
-                Item flickrItem = bp.ItemInFlickrByItemID(book.BookID);
+                DataObjects.Item flickrItem = bp.ItemInFlickrByItemID(book.BookID);
                 book.HasFlickrImages = (flickrItem != null) ? flickrItem.HasFlickrImages : false;
             }
 
@@ -485,10 +486,16 @@ namespace MOBOT.BHL.AdminWeb
             }
 
 			// Check that all edits were completed
+            if ( titleList.EditIndex != -1)
+            {
+                flag = true;
+                errorControl.AddErrorText("Titles has an edit pending");
+            }    
+
 			if ( pageList.EditIndex != -1 )
 			{
-			  flag = true;
-			  errorControl.AddErrorText( "Items has an edit pending" );
+			    flag = true;
+			    errorControl.AddErrorText( "Items has an edit pending" );
 			}
 
             if (collectionsList.EditIndex != -1)
@@ -501,6 +508,18 @@ namespace MOBOT.BHL.AdminWeb
             {
                 flag = true;
                 errorControl.AddErrorText("Segments has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+            }
+
+            foreach (ItemLanguage il in book.ItemLanguages)
+            {
+                if (!il.IsDeleted)
+                {
+                    if (string.IsNullOrWhiteSpace(il.LanguageCode))
+                    {
+                        flag = true;
+                        errorControl.AddErrorText("Languages cannot be blank.");
+                    }
+                }
             }
 
             bool br = false;
@@ -535,7 +554,7 @@ namespace MOBOT.BHL.AdminWeb
             }
 
 			errorControl.Visible = flag;
-            if (!flag) ResetScrollPosition();
+            if (flag) ResetScrollPosition();
 
 			return !flag;
 		}
@@ -846,6 +865,7 @@ namespace MOBOT.BHL.AdminWeb
             item.ItemLanguages.Add(il);
             languagesList.EditIndex = languagesList.Rows.Count;
             bindLanguageData();
+            languagesList.Rows[languagesList.EditIndex].FindControl("cancelLanguageButton").Visible = false;
         }
 
         protected void languagesList_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -913,6 +933,7 @@ namespace MOBOT.BHL.AdminWeb
             item.ItemCollections.Add(ic);
             collectionsList.EditIndex = collectionsList.Rows.Count;
             bindCollectionData();
+            collectionsList.Rows[collectionsList.EditIndex].FindControl("cancelCollectionButton").Visible = false;
         }
 
         protected void collectionsList_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -1474,7 +1495,7 @@ namespace MOBOT.BHL.AdminWeb
         #region TitleItem
 
         [Serializable]
-        private class ItemTitle : Title
+        private class ItemTitle : DataObjects.Title
         {
             private int _titleID;
 

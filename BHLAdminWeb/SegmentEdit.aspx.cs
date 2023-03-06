@@ -2,6 +2,7 @@
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Utility;
 using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHLImport.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -72,7 +73,7 @@ namespace MOBOT.BHL.AdminWeb
                     // Get the description of the newly selected item
                     Book book = provider.BookSelectByBarcodeOrItemID(Convert.ToInt32(selectedItemId), null);
                     List<Institution> institutions = provider.InstitutionSelectByItemIDAndRole(Convert.ToInt32(book.ItemID), InstitutionRole.Contributor);
-                    Title title = provider.TitleSelectAuto((int)book.PrimaryTitleID);
+                    DataObjects.Title title = provider.TitleSelectAuto((int)book.PrimaryTitleID);
 
                     string oldBookID = itemIDLabel.Text;
                     itemIDLabel.Text = selectedItemId;
@@ -876,6 +877,7 @@ namespace MOBOT.BHL.AdminWeb
             segment.KeywordList.Add(segmentKeyword);
             keywordsList.EditIndex = keywordsList.Rows.Count;
             bindKeywordData();
+            keywordsList.Rows[keywordsList.EditIndex].FindControl("cancelKeywordCreatorButton").Visible = false;
         }
 
         protected void keywordsList_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -951,6 +953,7 @@ namespace MOBOT.BHL.AdminWeb
             segment.IdentifierList.Add(si);
             identifiersList.EditIndex = identifiersList.Rows.Count;
             bindSegmentIdentifierData();
+            identifiersList.Rows[identifiersList.EditIndex].FindControl("cancelSegmentIdentifierButton").Visible = false;
         }
 
         protected void identifiersList_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -1290,7 +1293,7 @@ namespace MOBOT.BHL.AdminWeb
                 // Update the Item information
                 if (segment.Item == null)
                 {
-                    segment.Item = new Item
+                    segment.Item = new DataObjects.Item
                     {
                         ItemTypeID = 20,    // 10 = Book, 20 = Segment
                         ItemStatusID = segment.SegmentStatusID,
@@ -1427,16 +1430,22 @@ namespace MOBOT.BHL.AdminWeb
                 errorControl.AddErrorText("Authors has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
+            if (keywordsList.EditIndex != -1)
+            {
+                flag = true;
+                errorControl.AddErrorText("Keywords has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+            }
+
             if (identifiersList.EditIndex != -1)
             {
                 flag = true;
                 errorControl.AddErrorText("Identifiers has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
-            if (keywordsList.EditIndex != -1)
+            if (relatedSegmentsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Keywords has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Related Segments has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             if (pagesList.EditIndex != -1)
@@ -1605,21 +1614,51 @@ namespace MOBOT.BHL.AdminWeb
                 ix++;
             }
 
-            // Validate identifiers
-            IdentifierValidationResult identifierValidationResult = new BHLProvider().ValidateIdentifiers(segment.IdentifierList);
-            if (!identifierValidationResult.IsValid)
+            // Validate keywords
+            foreach (ItemKeyword ik in segment.KeywordList)
             {
-                flag = true;
-                foreach (string message in identifierValidationResult.Messages) errorControl.AddErrorText(message);
+                if (!ik.IsDeleted)
+                {
+                    if (string.IsNullOrWhiteSpace(ik.Keyword))
+                    {
+                        flag = true;
+                        errorControl.AddErrorText("Keywords cannot be blank");
+                    }
+                }
             }
-            if (identifierValidationResult.IncludesNewBHLDOI)
+
+            // Validate identifiers
+            bool blankID = false;
+            foreach (ItemIdentifier ii in segment.IdentifierList)
             {
-                flag = true;
-                errorControl.AddErrorText("A BHL-created DOI can only be added by submitting the Segment metadata to a DOI registrar (such as Crossref)");
+                if (!ii.IsDeleted)
+                {
+                    if (ii.IdentifierID <= 0 || string.IsNullOrWhiteSpace(ii.IdentifierValue))
+                    {
+                        blankID = true;
+                        flag = true;
+                        errorControl.AddErrorText("Identifiers cannot be blank");
+                    }
+                }
+            }
+
+            if (!blankID)
+            {
+                IdentifierValidationResult identifierValidationResult = new BHLProvider().ValidateIdentifiers(segment.IdentifierList);
+                if (!identifierValidationResult.IsValid)
+                {
+                    flag = true;
+                    foreach (string message in identifierValidationResult.Messages) errorControl.AddErrorText(message);
+                }
+                if (identifierValidationResult.IncludesNewBHLDOI)
+                {
+                    flag = true;
+                    errorControl.AddErrorText("A BHL-created DOI can only be added by submitting the Segment metadata to a DOI registrar (such as Crossref)");
+                }
             }
 
             errorControl.Visible = flag;
-            if (!flag) ResetScrollPosition();
+            if (flag) ResetScrollPosition();
 
             return !flag;
         }

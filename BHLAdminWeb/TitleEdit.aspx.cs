@@ -1189,6 +1189,7 @@ namespace MOBOT.BHL.AdminWeb
             title.TitleKeywords.Add(titleKeyword);
             subjectsList.EditIndex = subjectsList.Rows.Count;
             bindSubjectData();
+            subjectsList.Rows[subjectsList.EditIndex].FindControl("cancelSubjectCreatorButton").Visible = false;
         }
 
         protected void subjectsList_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -1329,6 +1330,7 @@ namespace MOBOT.BHL.AdminWeb
             title.TitleExternalResources.Add(externalResource);
             resourcesList.EditIndex = resourcesList.Rows.Count;
             bindExternalResourceData();
+            resourcesList.Rows[resourcesList.EditIndex].FindControl("cancelResourceEditButton").Visible = false;
         }
 
         #endregion
@@ -1444,6 +1446,7 @@ namespace MOBOT.BHL.AdminWeb
             title.TitleNotes.Add(titleNote);
             notesList.EditIndex = notesList.Rows.Count;
             bindNotesData();
+            notesList.Rows[notesList.EditIndex].FindControl("cancelTitleNoteButton").Visible = false;
         }
 
         #endregion TitleNote event handlers
@@ -1509,6 +1512,7 @@ namespace MOBOT.BHL.AdminWeb
             title.TitleVariants.Add(tv);
             variantsList.EditIndex = variantsList.Rows.Count;
             bindTitleVariantData();
+            variantsList.Rows[variantsList.EditIndex].FindControl("cancelVariantButton").Visible = false;
         }
 
         protected void variantsList_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -1581,6 +1585,7 @@ namespace MOBOT.BHL.AdminWeb
             title.TitleIdentifiers.Add(ti);
             identifiersList.EditIndex = identifiersList.Rows.Count;
             bindTitleIdentifierData();
+            identifiersList.Rows[identifiersList.EditIndex].FindControl("cancelTitleIdentifierButton").Visible = false;
         }
 
         protected void identifiersList_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -1676,6 +1681,7 @@ namespace MOBOT.BHL.AdminWeb
             title.TitleLanguages.Add(tl);
             languagesList.EditIndex = languagesList.Rows.Count;
             bindLanguageData();
+            languagesList.Rows[languagesList.EditIndex].FindControl("cancelLanguageButton").Visible = false;
         }
 
         protected void languagesList_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -1743,7 +1749,8 @@ namespace MOBOT.BHL.AdminWeb
 			title.TitleCollections.Add( tc );
 			collectionsList.EditIndex = collectionsList.Rows.Count;
 			bindCollectionData();
-		}
+            collectionsList.Rows[collectionsList.EditIndex].FindControl("cancelCollectionButton").Visible = false;
+        }
 
 		protected void collectionsList_RowCommand( object sender, GridViewCommandEventArgs e )
 		{
@@ -2087,7 +2094,13 @@ namespace MOBOT.BHL.AdminWeb
             if (resourcesList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("External Resources has an edit pending.  Click \\\"Update\\\" to accept the change or \\\"Cancel\\\" to reject it.\"");
+                errorControl.AddErrorText("External Resources has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.\"");
+            }
+
+            if (notesList.EditIndex != -1)
+            {
+                flag = true;
+                errorControl.AddErrorText("Notes has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.\"");
             }
 
             if (identifiersList.EditIndex != -1)
@@ -2161,6 +2174,66 @@ namespace MOBOT.BHL.AdminWeb
                 }
             }
 
+            foreach(TitleKeyword tk in title.TitleKeywords)
+            {
+                if (!tk.IsDeleted)
+                {
+                    if (string.IsNullOrWhiteSpace(tk.Keyword))
+                    {
+                        flag = true;
+                        errorControl.AddErrorText("Keywords cannot be blank");
+                    }
+                }
+            }
+
+            foreach(TitleExternalResource ter in title.TitleExternalResources)
+            {
+                if (!ter.IsDeleted)
+                {
+                    if (ter.TitleExternalResourceID <= 0 || string.IsNullOrWhiteSpace(ter.UrlText))
+                    {
+                        flag = true;
+                        errorControl.AddErrorText("External Resources must have a Type and Text.");
+                    }
+                }
+            }
+
+            foreach(TitleNote tn in title.TitleNotes)
+            {
+                if (!tn.IsDeleted)
+                {
+                    if (tn.NoteTypeID <= 0 || string.IsNullOrWhiteSpace(tn.NoteText))
+                    {
+                        flag = true;
+                        errorControl.AddErrorText("Notes must have a Type and Text.");
+                    }
+                }
+            }
+
+            foreach(TitleLanguage tl in title.TitleLanguages)
+            {
+                if (!tl.IsDeleted)
+                {
+                    if (string.IsNullOrWhiteSpace(tl.LanguageCode))
+                    {
+                        flag = true;
+                        errorControl.AddErrorText("Languages cannot be blank.");
+                    }
+                }
+            }
+
+            foreach(TitleVariant tv in title.TitleVariants)
+            {
+                if (!tv.IsDeleted)
+                {
+                    if (tv.TitleVariantTypeID <= 0 || string.IsNullOrWhiteSpace(tv.Title))
+                    {
+                        flag = true;
+                        errorControl.AddErrorText("Variants must have a Type and Title.");
+                    }
+                }
+            }
+
             bool br = false;
             int ix = 0;
             foreach (TitleCollection tc in title.TitleCollections)
@@ -2193,20 +2266,37 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             // Validate identifiers
-            IdentifierValidationResult identifierValidationResult = new BHLProvider().ValidateIdentifiers(title.TitleIdentifiers);
-            if (!identifierValidationResult.IsValid)
+            bool blankID = false;
+            foreach (Title_Identifier ti in title.TitleIdentifiers)
             {
-                flag = true;
-                foreach (string message in identifierValidationResult.Messages) errorControl.AddErrorText(message);
+                if (!ti.IsDeleted)
+                {
+                    if (ti.IdentifierID <= 0 || string.IsNullOrWhiteSpace(ti.IdentifierValue))
+                    {
+                        blankID = true;
+                        flag = true;
+                        errorControl.AddErrorText("Identifiers cannot be blank");
+                    }
+                }
             }
-            if (identifierValidationResult.IncludesNewBHLDOI)
+
+            if (!blankID)
             {
-                flag = true;
-                errorControl.AddErrorText("A BHL-created DOI can only be added by submitting the Title metadata to a DOI registrar (such as Crossref)");
+                IdentifierValidationResult identifierValidationResult = new BHLProvider().ValidateIdentifiers(title.TitleIdentifiers);
+                if (!identifierValidationResult.IsValid)
+                {
+                    flag = true;
+                    foreach (string message in identifierValidationResult.Messages) errorControl.AddErrorText(message);
+                }
+                if (identifierValidationResult.IncludesNewBHLDOI)
+                {
+                    flag = true;
+                    errorControl.AddErrorText("A BHL-created DOI can only be added by submitting the Title metadata to a DOI registrar (such as Crossref)");
+                }
             }
 
             errorControl.Visible = flag;
-            if (!flag) ResetScrollPosition();
+            if (flag) ResetScrollPosition();
 
             return !flag;
         }
