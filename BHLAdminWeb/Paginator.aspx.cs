@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -565,18 +566,27 @@ namespace MOBOT.BHL.AdminWeb
 		protected void assignYearButton_Click( object sender, EventArgs e )
 		{
 			bool flag = false;
-			List<int> pages = getSelectedPageIds();
-			if ( pages.Count == 0 )
+
+			// Validate four-digit years starting with 0, 1, or 2
+            Regex yearRegex = new Regex("^[012]\\d{3}$");
+            string year = DataCleaner.CleanPageYear(yearTextBox.Text.Trim());
+
+            List<int> pages = getSelectedPageIds();
+            if ( pages.Count == 0 )
 			{
 				flag = true;
 				errorControl.AddErrorText( "You must select at least one page to update." );
 			}
-			else
+			if (!string.IsNullOrWhiteSpace(year) && (!yearRegex.IsMatch(year)))
+			{
+				flag = true;
+				errorControl.AddErrorText("Only four-digit years can be assigned to pages.");
+			}
+			if (!flag)
 			{
                 int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
                 int[] arrPages = new int[ pages.Count ];
 				pages.CopyTo( arrPages );
-                string year = DataCleaner.CleanPageYear(yearTextBox.Text.Trim());
                 bp.PageUpdateYear( arrPages, year, userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
 
@@ -636,18 +646,27 @@ namespace MOBOT.BHL.AdminWeb
 		protected void assignYearAndVolumeButton_Click( object sender, EventArgs e )
 		{
 			bool flag = false;
-			List<int> pages = getSelectedPageIds();
+
+            // Validate four-digit years starting with 0, 1, or 2
+            Regex yearRegex = new Regex("^[012]\\d{3}$");
+            string year = DataCleaner.CleanPageYear(yearTextBox.Text.Trim());
+
+            List<int> pages = getSelectedPageIds();
 			if ( pages.Count == 0 )
 			{
 				flag = true;
 				errorControl.AddErrorText( "You must select at least one page to update." );
 			}
-			else
+            if (!string.IsNullOrWhiteSpace(year) && (!yearRegex.IsMatch(year)))
+            {
+                flag = true;
+                errorControl.AddErrorText("Only four-digit years can be assigned to pages.");
+            }
+            if (!flag)
 			{
                 int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
                 int[] arrPages = new int[ pages.Count ];
 				pages.CopyTo( arrPages );
-                string year = DataCleaner.CleanPageYear(yearTextBox.Text.Trim());
                 bp.PageUpdateYear( arrPages, year, userId );
 				bp.PageUpdateVolume( arrPages, volumeTextBox.Text.Trim(), userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
