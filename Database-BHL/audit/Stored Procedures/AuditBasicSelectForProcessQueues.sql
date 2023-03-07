@@ -493,6 +493,28 @@ AND		s.SegmentStatusID IN (30, 40)
 UNION
 SELECT	AuditBasicID, ab.Operation, EntityName, 'segment', s.SegmentID, NULL, 'Search' AS [Queue], AuditDate
 FROM	audit.AuditBasic ab WITH (NOLOCK)
+		INNER JOIN dbo.Title t WITH (NOLOCK) ON ab.EntityKey1 = t.TitleID
+		INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON t.TitleID = it.TitleID
+		INNER JOIN dbo.Item i WITH (NOLOCK) ON it.ItemID = i.ItemID
+		INNER JOIN dbo.ItemRelationship ir WITH (NOLOCK) ON i.ItemID = ir.ParentID
+		INNER JOIN dbo.vwSegment s ON ir.ChildID = s.ItemID
+WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
+AND		EntityName = 'dbo.Title'
+AND		s.SegmentStatusID IN (30, 40)
+UNION
+SELECT	AuditBasicID, ab.Operation, EntityName, 'segment', s.SegmentID, NULL, 'Search' AS [Queue], AuditDate
+FROM	audit.AuditBasic ab WITH (NOLOCK)
+		INNER JOIN dbo.Title t WITH (NOLOCK) ON ab.EntityKey1 = t.MaterialTypeID
+		INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON t.TitleID = it.TitleID
+		INNER JOIN dbo.Item i WITH (NOLOCK) ON it.ItemID = i.ItemiD
+		INNER JOIN dbo.ItemRelationship ir WITH (NOLOCK) ON i.ItemID = ir.ParentID
+		INNER JOIN dbo.vwSegment s ON ir.ChildID = s.ItemID
+WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
+AND		EntityName = 'dbo.MaterialType'
+AND		s.SegmentStatusID IN (30, 40)
+UNION
+SELECT	AuditBasicID, ab.Operation, EntityName, 'segment', s.SegmentID, NULL, 'Search' AS [Queue], AuditDate
+FROM	audit.AuditBasic ab WITH (NOLOCK)
 		INNER JOIN dbo.ItemInstitution si WITH (NOLOCK) ON ab.EntityKey1 = si.ItemInstitutionID
 		INNER JOIN dbo.vwSegment s ON si.ItemID = s.ItemID
 WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
