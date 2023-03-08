@@ -2182,6 +2182,7 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         flag = true;
                         errorControl.AddErrorText("Keywords cannot be blank");
+                        break;
                     }
                 }
             }
@@ -2190,10 +2191,11 @@ namespace MOBOT.BHL.AdminWeb
             {
                 if (!ter.IsDeleted)
                 {
-                    if (ter.TitleExternalResourceID <= 0 || string.IsNullOrWhiteSpace(ter.UrlText))
+                    if (ter.TitleExternalResourceTypeID <= 0 || string.IsNullOrWhiteSpace(ter.UrlText))
                     {
                         flag = true;
                         errorControl.AddErrorText("External Resources must have a Type and Text.");
+                        break;
                     }
                 }
             }
@@ -2206,6 +2208,7 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         flag = true;
                         errorControl.AddErrorText("Notes must have a Type and Text.");
+                        break;
                     }
                 }
             }
@@ -2218,6 +2221,7 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         flag = true;
                         errorControl.AddErrorText("Languages cannot be blank.");
+                        break;
                     }
                 }
             }
@@ -2230,6 +2234,7 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         flag = true;
                         errorControl.AddErrorText("Variants must have a Type and Title.");
+                        break;
                     }
                 }
             }

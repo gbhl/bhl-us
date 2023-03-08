@@ -1623,6 +1623,7 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         flag = true;
                         errorControl.AddErrorText("Keywords cannot be blank");
+                        break;
                     }
                 }
             }
@@ -1638,6 +1639,7 @@ namespace MOBOT.BHL.AdminWeb
                         blankID = true;
                         flag = true;
                         errorControl.AddErrorText("Identifiers cannot be blank");
+                        break;
                     }
                 }
             }

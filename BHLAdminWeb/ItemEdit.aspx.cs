@@ -518,6 +518,7 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         flag = true;
                         errorControl.AddErrorText("Languages cannot be blank.");
+                        break;
                     }
                 }
             }
