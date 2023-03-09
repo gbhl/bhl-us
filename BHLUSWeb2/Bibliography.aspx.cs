@@ -21,13 +21,14 @@ namespace MOBOT.BHL.Web2
         protected List<TitleKeyword> TitleKeywords { get; set; }
         protected IList<Title_Identifier> TitleIdentifiers { get; set; }
         protected IList<TitleNote> TitleNotes { get; set; }
+        protected IList<TitleExternalResource> TitleExternalResources { get; set; }
         protected IList<Author> Authors { get; set; }
         protected IList<Author> AdditionalAuthors { get; set; }
         protected IList<Author> AuthorsDetail { get; set; }
         protected IList<Author> AdditionalAuthorsDetail { get; set; }
         protected IList<BibliographyItem> BibliographyItems { get; set; }
         protected IList<Collection> Collections { get; set; }
-        protected IList<Institution> Institutions { get; set; }
+        //protected IList<Institution> Institutions { get; set; }
 
         public class BibliographyItem
         {
@@ -120,8 +121,9 @@ namespace MOBOT.BHL.Web2
             TitleVariants = bhlProvider.TitleVariantSelectByTitleID(titleId);
             TitleAssociations = bhlProvider.TitleAssociationSelectByTitleId(titleId, true);
             TitleNotes = bhlProvider.TitleNoteSelectByTitleID(titleId);
+            TitleExternalResources = bhlProvider.TitleExternalResourceSelectByTitleID(titleId);
             Collections = bhlProvider.CollectionSelectAllForTitle(titleId);
-            Institutions = bhlProvider.InstitutionSelectByTitleID(titleId);
+            //Institutions = bhlProvider.InstitutionSelectByTitleID(titleId);
             if (!string.IsNullOrEmpty(BhlTitle.LanguageCode)) LanguageName = bhlProvider.LanguageSelectAuto(BhlTitle.LanguageCode).LanguageName;
 
             BibliographicLevel bibliographicLevel = bhlProvider.BibliographicLevelSelect(BhlTitle.BibliographicLevelID ?? 0);

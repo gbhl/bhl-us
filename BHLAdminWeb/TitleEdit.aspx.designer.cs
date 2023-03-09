@@ -267,24 +267,6 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.TextBox PubFrequencyTextBox;
 
         /// <summary>
-        /// ddlExtContent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlExtContent;
-
-        /// <summary>
-        /// RepositoryUrlTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox RepositoryUrlTextBox;
-
-        /// <summary>
         /// notesTextBox control.
         /// </summary>
         /// <remarks>
@@ -319,6 +301,24 @@ namespace MOBOT.BHL.AdminWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button addSubjectButton;
+
+        /// <summary>
+        /// resourcesList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView resourcesList;
+
+        /// <summary>
+        /// addResourceButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button addResourceButton;
 
         /// <summary>
         /// notesList control.

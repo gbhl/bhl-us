@@ -2,6 +2,7 @@ using BHL.SiteServiceREST.v1.Client;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Utility;
+using MOBOT.BHLImport.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -47,7 +48,7 @@ namespace MOBOT.BHL.AdminWeb
 
                     // Get details for "selectedTitleId" from database
                     BHLProvider provider = new BHLProvider();
-                    Title title = provider.TitleSelect(Convert.ToInt32(selectedTitleId));
+                    DataObjects.Title title = provider.TitleSelect(Convert.ToInt32(selectedTitleId));
                     itemTitle.TitleID = title.TitleID;
                     itemTitle.ShortTitle = title.ShortTitle;
                     itemTitle.IsPrimary = 0;
@@ -364,7 +365,7 @@ namespace MOBOT.BHL.AdminWeb
             if (book != null)
             {
                 // Look up flickr status of the item
-                Item flickrItem = bp.ItemInFlickrByItemID(book.BookID);
+                DataObjects.Item flickrItem = bp.ItemInFlickrByItemID(book.BookID);
                 book.HasFlickrImages = (flickrItem != null) ? flickrItem.HasFlickrImages : false;
             }
 
@@ -485,22 +486,41 @@ namespace MOBOT.BHL.AdminWeb
             }
 
 			// Check that all edits were completed
-			if ( pageList.EditIndex != -1 )
-			{
-			  flag = true;
-			  errorControl.AddErrorText( "Items has an edit pending" );
-			}
+            if ( titleList.EditIndex != -1)
+            {
+                flag = true;
+                errorControl.AddErrorText("Titles has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
+            }
+
+            if (languagesList.EditIndex != -1)
+            {
+                flag = true;
+                errorControl.AddErrorText("Languages has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
+            }
 
             if (collectionsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Collections has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Collections has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (segmentsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Segments has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Segments has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
+            }
+
+            foreach (ItemLanguage il in book.ItemLanguages)
+            {
+                if (!il.IsDeleted)
+                {
+                    if (string.IsNullOrWhiteSpace(il.LanguageCode))
+                    {
+                        flag = true;
+                        errorControl.AddErrorText("Languages cannot be blank.");
+                        break;
+                    }
+                }
             }
 
             bool br = false;
@@ -535,7 +555,7 @@ namespace MOBOT.BHL.AdminWeb
             }
 
 			errorControl.Visible = flag;
-			Page.MaintainScrollPositionOnPostBack = !flag;
+            if (flag) ResetScrollPosition();
 
 			return !flag;
 		}
@@ -772,6 +792,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                titleList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 int selectedTitle = (int)titleList.DataKeys[rowNum].Values[0];
                 List<DataObjects.ItemTitle> itemTitles = (List<DataObjects.ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
@@ -845,12 +866,14 @@ namespace MOBOT.BHL.AdminWeb
             item.ItemLanguages.Add(il);
             languagesList.EditIndex = languagesList.Rows.Count;
             bindLanguageData();
+            languagesList.Rows[languagesList.EditIndex].FindControl("cancelLanguageButton").Visible = false;
         }
 
         protected void languagesList_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                languagesList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Book item = (Book)Session["Item" + itemIdTextBox.Text];
 
@@ -911,12 +934,14 @@ namespace MOBOT.BHL.AdminWeb
             item.ItemCollections.Add(ic);
             collectionsList.EditIndex = collectionsList.Rows.Count;
             bindCollectionData();
+            collectionsList.Rows[collectionsList.EditIndex].FindControl("cancelCollectionButton").Visible = false;
         }
 
         protected void collectionsList_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                collectionsList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Book item = (Book)Session["Item" + itemIdTextBox.Text];
 
@@ -1015,6 +1040,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                segmentsList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Book item = (Book)Session["Item" + itemIdTextBox.Text];
 
@@ -1045,92 +1071,14 @@ namespace MOBOT.BHL.AdminWeb
 
         protected void pageList_RowEditing( object sender, GridViewEditEventArgs e )
 		{
-			pageList.EditIndex = e.NewEditIndex;
-			bindPageData();
 		}
 
 		protected void pageList_RowUpdating( object sender, GridViewUpdateEventArgs e )
 		{
-			GridViewRow row = pageList.Rows[ e.RowIndex ];
-
-			if ( row != null )
-			{
-				TextBox textBox = row.FindControl( "sequenceOrderTextBox" ) as TextBox;
-				if ( textBox != null )
-				{
-                    Book item = (Book)Session["Item" + itemIdTextBox.Text];
-					string seqOrderString = textBox.Text.Trim();
-
-					int seqOrder = 0;
-					int.TryParse( seqOrderString, out seqOrder );
-					string pageIdString = row.Cells[ 1 ].Text;
-					int pageId = 0;
-					int.TryParse( pageIdString, out pageId );
-
-					if ( seqOrder > 0 && pageId > 0 )
-					{
-						// Find current item sequence
-						int? curSeqOrder = 0;
-						foreach ( Paige page in item.Pages )
-						{
-							if ( page.PageID == pageId && page.SequenceOrder.HasValue )
-							{
-								curSeqOrder = page.SequenceOrder.Value;
-								break;
-							}
-						}
-
-						// Find item whose item sequence will be overwritten
-						if ( curSeqOrder > 0 )
-						{
-							foreach ( Paige page in item.Pages )
-							{
-								if ( page.SequenceOrder == seqOrder )
-								{
-									// Change it to the changing item's item sequence
-									page.SequenceOrder = curSeqOrder;
-									break;
-								}
-							}
-						}
-						else // move all item sequences down by one
-						{
-							int id = pageId;
-							int seqOrdert = seqOrder;
-							foreach ( Paige page in item.Pages )
-							{
-								if ( page.SequenceOrder == seqOrdert && page.PageID != id )
-								{
-									if ( page.SequenceOrder.HasValue )
-									{
-										page.SequenceOrder = (int?)( page.SequenceOrder.Value + 1 );
-										seqOrdert++;
-									}
-								}
-								id = page.PageID;
-							}
-						}
-
-						foreach ( Paige page in item.Pages )
-						{
-							if ( page.PageID == pageId )
-							{
-								page.SequenceOrder = seqOrder;
-								break;
-							}
-						}
-					}
-				}
-			}
-
-			pageList.EditIndex = -1;
-			bindPageData();
 		}
 
 		protected void pageList_RowCancelingEdit( object sender, GridViewCancelEditEventArgs e )
 		{
-			pageList.EditIndex = -1;
-			bindPageData();
 		}
 
 		protected void pageList_Sorting( object sender, GridViewSortEventArgs e )
@@ -1448,8 +1396,7 @@ namespace MOBOT.BHL.AdminWeb
 			}
 
             litMessage.Text = "<span class='liveData'>Item Saved.</span>";
-            Page.MaintainScrollPositionOnPostBack = false;
-            //Response.Redirect("/");
+            ResetScrollPosition();
 		}
 
         protected void PaginatorButton_Click(object sender, EventArgs e)
@@ -1471,7 +1418,7 @@ namespace MOBOT.BHL.AdminWeb
         #region TitleItem
 
         [Serializable]
-        private class ItemTitle : Title
+        private class ItemTitle : DataObjects.Title
         {
             private int _titleID;
 
@@ -1499,5 +1446,25 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         #endregion
+
+        private void ResetScrollPosition()
+        {
+            if (!ClientScript.IsClientScriptBlockRegistered(GetType(), "CreateResetScrollPosition"))
+            {
+                // Create the ResetScrollPosition() function
+                ClientScript.RegisterClientScriptBlock(GetType(), "CreateResetScrollPosition",
+                        "function ResetScrollPosition() {\r\n" +
+                        " var scrollX = document.getElementById('__SCROLLPOSITIONX');\r\n" +
+                        " var scrollY = document.getElementById('__SCROLLPOSITIONY');\r\n" +
+                        " if (scrollX && scrollY) {\r\n" +
+                        "    scrollX.value = 0;\r\n" +
+                        "    scrollY.value = 0;\r\n" +
+                        " }\r\n" +
+                        "}", true);
+
+                // Add the call to the ResetScrollPosition() function
+                ClientScript.RegisterStartupScript(GetType(), "CallResetScrollPosition", "ResetScrollPosition();", true);
+            }
+        }
     }
 }

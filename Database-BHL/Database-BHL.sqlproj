@@ -1179,6 +1179,8 @@
     <None Include="dbo\Functions\fnGetLCCNValue.sql" />
     <None Include="dbo\Stored Procedures\AuthorSelectByAuthorID.sql" />
     <None Include="dbo\Stored Procedures\ApiTitleAssociationSelectByTitleID.sql" />
+    <None Include="dbo\Stored Procedures\TitleExternalResourceSelectByTitleID.sql" />
+    <None Include="dbo\Stored Procedures\TitleExternalResourceTypeSelectAll.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1563,5 +1565,12 @@
     <Build Include="dbo\Stored Procedures\DOIInsert.sql" />
     <Build Include="dbo\Stored Procedures\DOIUpdate.sql" />
     <Build Include="dbo\Synonyms\BHLImportDOIHarvestLog.sql" />
+    <None Include="dbo\Stored Procedures\TitleExternalResourceInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleExternalResourceUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleExternalResourceDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleExternalResourceSelectAuto.sql" />
+    <None Include="dbo\Tables\TitleExternalResourceType.sql" />
+    <None Include="dbo\Tables\TitleExternalResource.sql" />
+    <None Include="Data\dbo.TitleExternalResourceType.Table.sql" />
   </ItemGroup>
 </Project>

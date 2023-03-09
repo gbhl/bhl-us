@@ -2,6 +2,7 @@
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Utility;
 using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHLImport.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -34,7 +35,6 @@ namespace MOBOT.BHL.AdminWeb
             litMessage.Text = "";
             litWarning.Text = "";
             errorControl.Visible = false;
-            Page.MaintainScrollPositionOnPostBack = true;
 
             if (!IsPostBack)
             {
@@ -73,7 +73,7 @@ namespace MOBOT.BHL.AdminWeb
                     // Get the description of the newly selected item
                     Book book = provider.BookSelectByBarcodeOrItemID(Convert.ToInt32(selectedItemId), null);
                     List<Institution> institutions = provider.InstitutionSelectByItemIDAndRole(Convert.ToInt32(book.ItemID), InstitutionRole.Contributor);
-                    Title title = provider.TitleSelectAuto((int)book.PrimaryTitleID);
+                    DataObjects.Title title = provider.TitleSelectAuto((int)book.PrimaryTitleID);
 
                     string oldBookID = itemIDLabel.Text;
                     itemIDLabel.Text = selectedItemId;
@@ -814,6 +814,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                authorsList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
@@ -876,12 +877,14 @@ namespace MOBOT.BHL.AdminWeb
             segment.KeywordList.Add(segmentKeyword);
             keywordsList.EditIndex = keywordsList.Rows.Count;
             bindKeywordData();
+            keywordsList.Rows[keywordsList.EditIndex].FindControl("cancelKeywordCreatorButton").Visible = false;
         }
 
         protected void keywordsList_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                keywordsList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
@@ -950,12 +953,14 @@ namespace MOBOT.BHL.AdminWeb
             segment.IdentifierList.Add(si);
             identifiersList.EditIndex = identifiersList.Rows.Count;
             bindSegmentIdentifierData();
+            identifiersList.Rows[identifiersList.EditIndex].FindControl("cancelSegmentIdentifierButton").Visible = false;
         }
 
         protected void identifiersList_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                identifiersList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
@@ -1055,6 +1060,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                pagesList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
@@ -1199,6 +1205,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                relatedSegmentsList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
@@ -1286,7 +1293,7 @@ namespace MOBOT.BHL.AdminWeb
                 // Update the Item information
                 if (segment.Item == null)
                 {
-                    segment.Item = new Item
+                    segment.Item = new DataObjects.Item
                     {
                         ItemTypeID = 20,    // 10 = Book, 20 = Segment
                         ItemStatusID = segment.SegmentStatusID,
@@ -1406,7 +1413,7 @@ namespace MOBOT.BHL.AdminWeb
                 foreach(string warning in _warnings) warningMessage += "<br/>" + warning;
                 litWarning.Text = string.Format("<span class='liveData'>{0}</span>", warningMessage);
             }
-            Page.MaintainScrollPositionOnPostBack = false;
+            ResetScrollPosition();
         }
 
         #endregion Event Handlers
@@ -1420,25 +1427,31 @@ namespace MOBOT.BHL.AdminWeb
             if (authorsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Authors has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
-            }
-
-            if (identifiersList.EditIndex != -1)
-            {
-                flag = true;
-                errorControl.AddErrorText("Identifiers has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Authors has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (keywordsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Keywords has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Keywords has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
+            }
+
+            if (identifiersList.EditIndex != -1)
+            {
+                flag = true;
+                errorControl.AddErrorText("Identifiers has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
+            }
+
+            if (relatedSegmentsList.EditIndex != -1)
+            {
+                flag = true;
+                errorControl.AddErrorText("Related Segments has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (pagesList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Pages has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Pages has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             // If a "replaced by" identifer was specified, make sure that it is a valid id
@@ -1601,23 +1614,75 @@ namespace MOBOT.BHL.AdminWeb
                 ix++;
             }
 
-            // Validate identifiers
-            IdentifierValidationResult identifierValidationResult = new BHLProvider().ValidateIdentifiers(segment.IdentifierList);
-            if (!identifierValidationResult.IsValid)
+            // Validate keywords
+            foreach (ItemKeyword ik in segment.KeywordList)
             {
-                flag = true;
-                foreach (string message in identifierValidationResult.Messages) errorControl.AddErrorText(message);
+                if (!ik.IsDeleted)
+                {
+                    if (string.IsNullOrWhiteSpace(ik.Keyword))
+                    {
+                        flag = true;
+                        errorControl.AddErrorText("Keywords cannot be blank");
+                        break;
+                    }
+                }
             }
-            if (identifierValidationResult.IncludesNewBHLDOI)
+
+            // Validate identifiers
+            bool blankID = false;
+            foreach (ItemIdentifier ii in segment.IdentifierList)
             {
-                flag = true;
-                errorControl.AddErrorText("A BHL-created DOI can only be added by submitting the Segment metadata to a DOI registrar (such as Crossref)");
+                if (!ii.IsDeleted)
+                {
+                    if (ii.IdentifierID <= 0 || string.IsNullOrWhiteSpace(ii.IdentifierValue))
+                    {
+                        blankID = true;
+                        flag = true;
+                        errorControl.AddErrorText("Identifiers cannot be blank");
+                        break;
+                    }
+                }
+            }
+
+            if (!blankID)
+            {
+                IdentifierValidationResult identifierValidationResult = new BHLProvider().ValidateIdentifiers(segment.IdentifierList);
+                if (!identifierValidationResult.IsValid)
+                {
+                    flag = true;
+                    foreach (string message in identifierValidationResult.Messages) errorControl.AddErrorText(message);
+                }
+                if (identifierValidationResult.IncludesNewBHLDOI)
+                {
+                    flag = true;
+                    errorControl.AddErrorText("A BHL-created DOI can only be added by submitting the Segment metadata to a DOI registrar (such as Crossref)");
+                }
             }
 
             errorControl.Visible = flag;
-            Page.MaintainScrollPositionOnPostBack = !flag;
+            if (flag) ResetScrollPosition();
 
             return !flag;
+        }
+
+        private void ResetScrollPosition()
+        {
+            if (!ClientScript.IsClientScriptBlockRegistered(GetType(), "CreateResetScrollPosition"))
+            {
+                // Create the ResetScrollPosition() function
+                ClientScript.RegisterClientScriptBlock(GetType(), "CreateResetScrollPosition",
+                        "function ResetScrollPosition() {\r\n" +
+                        " var scrollX = document.getElementById('__SCROLLPOSITIONX');\r\n" +
+                        " var scrollY = document.getElementById('__SCROLLPOSITIONY');\r\n" +
+                        " if (scrollX && scrollY) {\r\n" +
+                        "    scrollX.value = 0;\r\n" +
+                        "    scrollY.value = 0;\r\n" +
+                        " }\r\n" +
+                        "}", true);
+
+                // Add the call to the ResetScrollPosition() function
+                ClientScript.RegisterStartupScript(GetType(), "CallResetScrollPosition", "ResetScrollPosition();", true);
+            }
         }
     }
 }

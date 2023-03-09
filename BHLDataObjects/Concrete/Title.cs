@@ -20,6 +20,7 @@ namespace MOBOT.BHL.DataObjects
 		private List<Book> _books = new List<Book>();
         private List<ItemTitle> _itemTitles = new List<ItemTitle>();
         private List<TitleKeyword> _titleKeywords = new List<TitleKeyword>();
+        private List<TitleExternalResource> _titleExternalResources = new List<TitleExternalResource>();
         private List<TitleAssociation> _titleAssociations = new List<TitleAssociation>();
         private List<TitleVariant> _titleVariants = new List<TitleVariant>();
         private List<TitleLanguage> _titleLanguages = new List<TitleLanguage>();
@@ -64,6 +65,12 @@ namespace MOBOT.BHL.DataObjects
         {
             get { return _titleKeywords; }
             set { _titleKeywords = value; }
+        }
+
+        public List<TitleExternalResource> TitleExternalResources
+        {
+            get { return _titleExternalResources; }
+            set { _titleExternalResources = value; }
         }
 
         public List<TitleAssociation> TitleAssociations
