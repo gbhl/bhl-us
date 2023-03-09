@@ -1427,31 +1427,31 @@ namespace MOBOT.BHL.AdminWeb
             if (authorsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Authors has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Authors has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (keywordsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Keywords has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Keywords has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (identifiersList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Identifiers has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Identifiers has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (relatedSegmentsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Related Segments has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Related Segments has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (pagesList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Pages has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Pages has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             // If a "replaced by" identifer was specified, make sure that it is a valid id

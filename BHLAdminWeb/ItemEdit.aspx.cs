@@ -489,25 +489,25 @@ namespace MOBOT.BHL.AdminWeb
             if ( titleList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Titles has an edit pending");
-            }    
+                errorControl.AddErrorText("Titles has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
+            }
 
-			if ( pageList.EditIndex != -1 )
-			{
-			    flag = true;
-			    errorControl.AddErrorText( "Items has an edit pending" );
-			}
+            if (languagesList.EditIndex != -1)
+            {
+                flag = true;
+                errorControl.AddErrorText("Languages has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
+            }
 
             if (collectionsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Collections has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Collections has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (segmentsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Segments has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Segments has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             foreach (ItemLanguage il in book.ItemLanguages)
@@ -1071,92 +1071,14 @@ namespace MOBOT.BHL.AdminWeb
 
         protected void pageList_RowEditing( object sender, GridViewEditEventArgs e )
 		{
-			pageList.EditIndex = e.NewEditIndex;
-			bindPageData();
 		}
 
 		protected void pageList_RowUpdating( object sender, GridViewUpdateEventArgs e )
 		{
-			GridViewRow row = pageList.Rows[ e.RowIndex ];
-
-			if ( row != null )
-			{
-				TextBox textBox = row.FindControl( "sequenceOrderTextBox" ) as TextBox;
-				if ( textBox != null )
-				{
-                    Book item = (Book)Session["Item" + itemIdTextBox.Text];
-					string seqOrderString = textBox.Text.Trim();
-
-					int seqOrder = 0;
-					int.TryParse( seqOrderString, out seqOrder );
-					string pageIdString = row.Cells[ 1 ].Text;
-					int pageId = 0;
-					int.TryParse( pageIdString, out pageId );
-
-					if ( seqOrder > 0 && pageId > 0 )
-					{
-						// Find current item sequence
-						int? curSeqOrder = 0;
-						foreach ( Paige page in item.Pages )
-						{
-							if ( page.PageID == pageId && page.SequenceOrder.HasValue )
-							{
-								curSeqOrder = page.SequenceOrder.Value;
-								break;
-							}
-						}
-
-						// Find item whose item sequence will be overwritten
-						if ( curSeqOrder > 0 )
-						{
-							foreach ( Paige page in item.Pages )
-							{
-								if ( page.SequenceOrder == seqOrder )
-								{
-									// Change it to the changing item's item sequence
-									page.SequenceOrder = curSeqOrder;
-									break;
-								}
-							}
-						}
-						else // move all item sequences down by one
-						{
-							int id = pageId;
-							int seqOrdert = seqOrder;
-							foreach ( Paige page in item.Pages )
-							{
-								if ( page.SequenceOrder == seqOrdert && page.PageID != id )
-								{
-									if ( page.SequenceOrder.HasValue )
-									{
-										page.SequenceOrder = (int?)( page.SequenceOrder.Value + 1 );
-										seqOrdert++;
-									}
-								}
-								id = page.PageID;
-							}
-						}
-
-						foreach ( Paige page in item.Pages )
-						{
-							if ( page.PageID == pageId )
-							{
-								page.SequenceOrder = seqOrder;
-								break;
-							}
-						}
-					}
-				}
-			}
-
-			pageList.EditIndex = -1;
-			bindPageData();
 		}
 
 		protected void pageList_RowCancelingEdit( object sender, GridViewCancelEditEventArgs e )
 		{
-			pageList.EditIndex = -1;
-			bindPageData();
 		}
 
 		protected void pageList_Sorting( object sender, GridViewSortEventArgs e )

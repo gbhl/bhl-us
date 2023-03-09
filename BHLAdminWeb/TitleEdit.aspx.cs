@@ -2082,49 +2082,55 @@ namespace MOBOT.BHL.AdminWeb
             if (creatorsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Creators has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Creators has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (subjectsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Subjects has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Subjects has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (resourcesList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("External Resources has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.\"");
+                errorControl.AddErrorText("External Resources has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (notesList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Notes has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.\"");
+                errorControl.AddErrorText("Notes has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (identifiersList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Identifiers has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Identifiers has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
+            }
+
+            if (languagesList.EditIndex != -1)
+            {
+                flag = true;
+                errorControl.AddErrorText("Languages has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (variantsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Variants has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Variants has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (collectionsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Collections has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Collections has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (itemsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Items has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Items has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             // If a "replaced by" identifer was specified, make sure that it is a valid id
