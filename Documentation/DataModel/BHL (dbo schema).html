@@ -359,7 +359,10 @@
 <a href="#TitleCollection">TitleCollection</a>
 </li>
 <li>
-<a href="#TitleInstitution">TitleInstitution</a>
+<a href="#TitleExternalResource">TitleExternalResource</a>
+</li>
+<li>
+<a href="#TitleExternalResourceType">TitleExternalResourceType</a>
 </li>
 <li>
 <a href="#TitleKeyword">TitleKeyword</a>
@@ -1635,8 +1638,6 @@
 <p class="subTitle">Referenced By</p>
 <ul>
 <li>
-<a href="#TitleInstitution">TitleInstitution</a> referencing (InstitutionCode)</li>
-<li>
 <a href="#ItemInstitution">ItemInstitution</a> referencing (InstitutionCode)</li>
 <li>
 <a href="#InstitutionGroupInstitution">InstitutionGroupInstitution</a> referencing (InstitutionCode)</li>
@@ -1764,8 +1765,6 @@
 <div class="references">
 <p class="subTitle">Referenced By</p>
 <ul>
-<li>
-<a href="#TitleInstitution">TitleInstitution</a> referencing (InstitutionRoleID)</li>
 <li>
 <a href="#ItemInstitution">ItemInstitution</a> referencing (InstitutionRoleID)</li>
 </ul>
@@ -4488,8 +4487,6 @@
 <li>
 <a href="#TitleAssociation">TitleAssociation</a> referencing (TitleID)</li>
 <li>
-<a href="#TitleInstitution">TitleInstitution</a> referencing (TitleID)</li>
-<li>
 <a href="#Title_Identifier">Title_Identifier</a> referencing (TitleID)</li>
 <li>
 <a href="#TitleAuthor">TitleAuthor</a> referencing (TitleID)</li>
@@ -4505,6 +4502,8 @@
 <a href="#TitleLanguage">TitleLanguage</a> referencing (TitleID)</li>
 <li>
 <a href="#ItemTitle">ItemTitle</a> referencing (TitleID)</li>
+<li>
+<a href="#TitleExternalResource">TitleExternalResource</a> referencing (TitleID)</li>
 </ul>
 </div>
 </div>
@@ -4831,10 +4830,10 @@
 </div>
 </div>
 <div class="tableNameHeading">
-<h1>TitleInstitution<a name="TitleInstitution"></a>
+<h1>TitleExternalResource<a name="TitleExternalResource"></a>
 </h1>
 <h2>
-      (Physical Name: TitleInstitution)
+      (Physical Name: TitleExternalResource)
       </h2>
 </div>
 <div class="table">
@@ -4843,7 +4842,7 @@
 <td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">TitleInstitutionID (PK)</td><td class="tdTableDefinition">TitleInstitutionID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">TitleExternalResourceID (PK)</td><td class="tdTableDefinition">TitleExternalResourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">TitleID
@@ -4851,17 +4850,18 @@
               </td><td class="tdTableDefinition">TitleID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">InstitutionCode
-                &nbsp;(<a href="#Institution">FK</a>)
-              </td><td class="tdTableDefinition">InstitutionCode</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">TitleExternalResourceTypeID
+                &nbsp;(<a href="#TitleExternalResourceType">FK</a>)
+              </td><td class="tdTableDefinition">TitleExternalResourceTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">InstitutionRoleID
-                &nbsp;(<a href="#InstitutionRole">FK</a>)
-              </td><td class="tdTableDefinition">InstitutionRoleID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">UrlText</td><td class="tdTableDefinition">UrlText</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">Url</td><td class="tdTableDefinition">Url</td><td class="tdTableDefinition">NVARCHAR(500)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">Url</td><td class="tdTableDefinition">Url</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SMALLINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
@@ -4882,9 +4882,49 @@
 <li>
 <a href="#Title">Title</a> through (TitleID)</li>
 <li>
-<a href="#InstitutionRole">InstitutionRole</a> through (InstitutionRoleID)</li>
+<a href="#TitleExternalResourceType">TitleExternalResourceType</a> through (TitleExternalResourceTypeID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>TitleExternalResourceType<a name="TitleExternalResourceType"></a>
+</h1>
+<h2>
+      (Physical Name: TitleExternalResourceType)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">TitleExternalResourceTypeID (PK)</td><td class="tdTableDefinition">TitleExternalResourceTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ExternalResourceTypeName</td><td class="tdTableDefinition">ExternalResourceTypeName</td><td class="tdTableDefinition">VARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ExternalResourceTypeLabel</td><td class="tdTableDefinition">ExternalResourceTypeLabel</td><td class="tdTableDefinition">VARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">Referenced By</p>
+<ul>
 <li>
-<a href="#Institution">Institution</a> through (InstitutionCode)</li>
+<a href="#TitleExternalResource">TitleExternalResource</a> referencing (TitleExternalResourceTypeID)</li>
 </ul>
 </div>
 </div>
