@@ -1,6 +1,7 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHLImport.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -296,12 +297,14 @@ namespace MOBOT.BHL.AdminWeb
             author.AuthorNames.Add(authorName);
             namesList.EditIndex = namesList.Rows.Count;
             bindAuthorNameData();
+            namesList.Rows[namesList.EditIndex].FindControl("cancelAuthorNameButton").Visible = false;
         }
 
         protected void namesList_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                namesList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Author author = (Author)Session["Author" + lblID.Text];
 
@@ -372,12 +375,14 @@ namespace MOBOT.BHL.AdminWeb
             author.AuthorIdentifiers.Add(ai);
             identifiersList.EditIndex = identifiersList.Rows.Count;
             bindAuthorIdentifierData();
+            identifiersList.Rows[identifiersList.EditIndex].FindControl("cancelAuthorIdentifierButton").Visible = false;
         }
 
         protected void identifiersList_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
+                identifiersList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Author author = (Author)Session["Author" + lblID.Text];
 
@@ -437,7 +442,7 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             litMessage.Text = "<span class='liveData'>Author Saved.</span>";
-            Page.MaintainScrollPositionOnPostBack = false;
+            ResetScrollPosition();
         }
 
         #endregion Event Handlers
@@ -450,13 +455,13 @@ namespace MOBOT.BHL.AdminWeb
             if (namesList.EditIndex != -1)
             {
                 isValid = false;
-                errorControl.AddErrorText("Names has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Names has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (identifiersList.EditIndex != -1)
             {
                 isValid = false;
-                errorControl.AddErrorText("Identifiers has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
+                errorControl.AddErrorText("Identifiers has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             // Make sure that at least one name has been entered, and that only one preferred name has been identified
@@ -550,11 +555,28 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             // Validate identifiers
-            IdentifierValidationResult identifierValidationResult = new BHLProvider().ValidateIdentifiers(author.AuthorIdentifiers);
-            if (!identifierValidationResult.IsValid)
+            bool blankID = false;
+            foreach (AuthorIdentifier ai in author.AuthorIdentifiers)
             {
-                isValid = false;
-                foreach (string message in identifierValidationResult.Messages) errorControl.AddErrorText(message);
+                if (!ai.IsDeleted)
+                {
+                    if (ai.IdentifierID <= 0 || string.IsNullOrWhiteSpace(ai.IdentifierValue))
+                    {
+                        blankID = true;
+                        isValid = false;
+                        errorControl.AddErrorText("Identifiers cannot be blank");
+                    }
+                }
+            }
+
+            if (!blankID)
+            {
+                IdentifierValidationResult identifierValidationResult = new BHLProvider().ValidateIdentifiers(author.AuthorIdentifiers);
+                if (!identifierValidationResult.IsValid)
+                {
+                    isValid = false;
+                    foreach (string message in identifierValidationResult.Messages) errorControl.AddErrorText(message);
+                }
             }
 
             errorControl.Visible = !isValid;
@@ -562,5 +584,24 @@ namespace MOBOT.BHL.AdminWeb
             return isValid;
         }
 
+        private void ResetScrollPosition()
+        {
+            if (!ClientScript.IsClientScriptBlockRegistered(GetType(), "CreateResetScrollPosition"))
+            {
+                // Create the ResetScrollPosition() function
+                ClientScript.RegisterClientScriptBlock(GetType(), "CreateResetScrollPosition",
+                        "function ResetScrollPosition() {\r\n" +
+                        " var scrollX = document.getElementById('__SCROLLPOSITIONX');\r\n" +
+                        " var scrollY = document.getElementById('__SCROLLPOSITIONY');\r\n" +
+                        " if (scrollX && scrollY) {\r\n" +
+                        "    scrollX.value = 0;\r\n" +
+                        "    scrollY.value = 0;\r\n" +
+                        " }\r\n" +
+                        "}", true);
+
+                // Add the call to the ResetScrollPosition() function
+                ClientScript.RegisterStartupScript(GetType(), "CallResetScrollPosition", "ResetScrollPosition();", true);
+            }
+        }
     }
 }
