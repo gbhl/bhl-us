@@ -69,6 +69,14 @@ namespace MOBOT.BHL.DataObjects
             set { _itemStatusID = value; }
         }
 
+        private bool _titlePublishReady = true;
+
+        public bool TitlePublishReady
+        {
+            get { return _titlePublishReady; }
+            set { _titlePublishReady = value; }
+        }
+
         private bool _hasFlickrImages = false;
 
         public bool HasFlickrImages
@@ -120,6 +128,11 @@ namespace MOBOT.BHL.DataObjects
                     case "ItemStatusID":
                         {
                             _itemStatusID = Utility.ZeroIfNull(column.Value);
+                            break;
+                        }
+                    case "PublishReady":
+                        {
+                            _titlePublishReady = (bool)column.Value;
                             break;
                         }
                     case "HasFlickrImages":

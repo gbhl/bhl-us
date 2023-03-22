@@ -78,8 +78,9 @@ SET @SQL =
 			ROW_NUMBER() OVER(' + @OrderByClause + ') AS RowNum,
 			T.MARCBibID,
 			T.TitleID,
-			T.SortTitle
-			FROM (SELECT DISTINCT T.MARCBibID, T.TitleID, T.SortTitle
+			T.SortTitle,
+			T.PublishReady
+			FROM (SELECT DISTINCT T.MARCBibID, T.TitleID, T.SortTitle, T.PublishReady
 				FROM dbo.Title T
 					LEFT JOIN dbo.ItemTitle IT ON T.TitleID = IT.TitleID
 					LEFT JOIN dbo.Item I ON IT.ItemID = I.ItemID

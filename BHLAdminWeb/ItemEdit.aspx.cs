@@ -19,7 +19,7 @@ namespace MOBOT.BHL.AdminWeb
 		private PageComparer.CompareEnum _sortColumn = PageComparer.CompareEnum.SequenceOrder;
 		private SortOrder _sortOrder = SortOrder.Ascending;
 
-		protected void Page_Load( object sender, EventArgs e )
+        protected void Page_Load( object sender, EventArgs e )
 		{
             ClientScript.RegisterClientScriptBlock(this.GetType(), "scptSelectTitle", "<script language='javascript'>function selectTitle(titleId) { document.getElementById('" + selectedTitle.ClientID + "').value=titleId; overlay(); __doPostBack('',''); }</script>");
             ClientScript.RegisterClientScriptBlock(this.GetType(), "scptSelectSegment", "<script language='javascript'>function selectSegment(segmentId) { document.getElementById('" + selectedSegment.ClientID + "').value=segmentId; overlay(); __doPostBack('',''); }</script>");
@@ -115,7 +115,8 @@ namespace MOBOT.BHL.AdminWeb
 
             litMessage.Text = "";
             errorControl.Visible = false;
-			Page.MaintainScrollPositionOnPostBack = true;
+            inactiveTitleWarning.Visible = false;
+            Page.MaintainScrollPositionOnPostBack = true;
 
 			Page.SetFocus( itemIdTextBox );
 		}
@@ -220,6 +221,7 @@ namespace MOBOT.BHL.AdminWeb
                     itemTitle.TitleID = it.TitleID;
                     itemTitle.ShortTitle = it.ShortTitle;
                     itemTitle.IsPrimary = (short)(book.PrimaryTitleID == it.TitleID ? 1 : 0);
+                    itemTitle.TitlePublishReady = it.TitlePublishReady;
                     itemTitles.Add(itemTitle);
                 }
                 Session["ItemTitleList" + itemIdTextBox.Text] = itemTitles;
@@ -765,7 +767,7 @@ namespace MOBOT.BHL.AdminWeb
                     List<DataObjects.ItemTitle> itemTitles = (List<DataObjects.ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
                     bool isPrimary = checkBox.Checked;
 
-                    String titleIdString = row.Cells[1].Text;
+                    String titleIdString = row.Cells[2].Text;
                     int titleId = 0;
                     int.TryParse(titleIdString, out titleId);
 
@@ -781,6 +783,29 @@ namespace MOBOT.BHL.AdminWeb
                             }
                         }
                     }
+
+                    // If the Primary title is not published, show a warning message
+                    bool inactiveTitle = true;
+                    int numTitles = 0;
+                    int numPrimary = 0;
+                    foreach (DataObjects.ItemTitle itemTitle in itemTitles)
+                    {
+                        if (!itemTitle.IsDeleted)
+                        {
+                            numTitles++;
+                            if (itemTitle.IsPrimary == 1)
+                            {
+                                numPrimary++;
+                                if (itemTitle.TitlePublishReady)
+                                {
+                                    inactiveTitle = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (numTitles == 0 || numPrimary == 0) inactiveTitle = false;
+                    inactiveTitleWarning.Visible = inactiveTitle;
                 }
             }
 

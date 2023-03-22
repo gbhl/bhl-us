@@ -64,10 +64,17 @@
             a.setAttribute("href", "#");
             a.onclick = new Function("selectTitle('" + titles[i].TitleID + "')");
             a.appendChild(document.createTextNode(titles[i].SortTitle));
-            td3.appendChild(a);
+			td3.appendChild(a);
+			var td4 = document.createElement("td");
+            var checkbox = document.createElement('input');
+            checkbox.type = "checkbox";
+			checkbox.checked = titles[i].PublishReady;
+			checkbox.disabled = true;
+			td4.appendChild(checkbox);
             row.appendChild(td1);
             row.appendChild(td2);
-            row.appendChild(td3);
+			row.appendChild(td3);
+			row.appendChild(td4);
             tbody.appendChild(row);
         }
 
@@ -517,13 +524,14 @@
 				OnRowEditing="titleList_RowEditing" OnRowUpdating="titleList_RowUpdating" DataKeyNames="TitleID">
 				<Columns>
 					<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
+					<asp:CheckboxField DataField="TitlePublishReady" HeaderText="Published" ItemStyle-Width="60px" ReadOnly="true" />
 				    <asp:BoundField DataField="TitleID" HeaderText="Title ID" ItemStyle-Width="60px" ReadOnly="true" />
 				    <asp:HyperLinkField HeaderText="Title" DataNavigateUrlFields="TitleID" DataNavigateUrlFormatString="/TitleEdit.aspx?id={0}" 
 						ItemStyle-Width="360px" DataTextField="ShortTitle" NavigateUrl="/TitleEdit.aspx" />
 
 					<asp:TemplateField HeaderText="Primary" ItemStyle-Width="70px">
 						<ItemTemplate>
-						    <asp:CheckBox ID="isPrimaryCheckBox" Enabled=false Checked='<%# Eval("IsPrimary").ToString() == "1" %>' runat="server" />
+						    <asp:CheckBox ID="isPrimaryCheckBox" Enabled="false" Checked='<%# Eval("IsPrimary").ToString() == "1" %>' runat="server" />
 						</ItemTemplate>
 						<EditItemTemplate>
 						    <asp:CheckBox ID="isPrimaryCheckBoxEdit" Checked='<%# Eval("IsPrimary").ToString() == "1" %>' runat="server" />
@@ -542,6 +550,10 @@
 				</Columns>
 				<HeaderStyle HorizontalAlign="Left" CssClass="SearchResultsHeader" />
 			</asp:GridView>
+			<div id="inactiveTitleWarning" clientidmode="Static" runat="server" style="color:#ed7600;">
+                INACTIVE PRIMARY TITLE WARNING:  The designated Primary title is not published.<br />
+                Edit the title and set it to Published or choose a new Primary title for this item.
+            </div>
 			<input type="button" onclick="overlay();document.getElementById('srchTitleID').focus();" id="btnAddTitle" value="Add Title" />
 		</fieldset>
 		<br />
@@ -726,6 +738,7 @@
 	                            <th scope="col">Title&nbsp;ID</th>
 	                            <th scope="col">MARC Bib ID</th>
 	                            <th scope="col">Title</th>
+								<th scope="col">Published</th>
 	                        </tr>
 	                      </tbody>
 	                    </table>
