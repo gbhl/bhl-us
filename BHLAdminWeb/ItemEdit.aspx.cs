@@ -51,6 +51,7 @@ namespace MOBOT.BHL.AdminWeb
                     DataObjects.Title title = provider.TitleSelect(Convert.ToInt32(selectedTitleId));
                     itemTitle.TitleID = title.TitleID;
                     itemTitle.ShortTitle = title.ShortTitle;
+                    itemTitle.TitlePublishReady = title.PublishReady;
                     itemTitle.IsPrimary = 0;
                     itemTitles.Add(itemTitle);
                     Session["ItemTitleList" + itemIdTextBox.Text] = itemTitles;
