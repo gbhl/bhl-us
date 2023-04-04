@@ -295,9 +295,13 @@ namespace MOBOT.BHL.BHLDOIService
                     // Generate a batch identifier
                     depositData.BatchID = this.GenerateDOIBatchID(depositData.EntityID);
 
-                    // Prepare the first (monograph) query
+                    // Prepare the first (monograph/journal) query
                     string queryTemplate = this.GetQueryTemplate(depositData);
-                    string doiQuery = this.GenerateDOIQuery(DOIDepositData.PublicationTypeValue.Monograph, depositData, queryTemplate);
+                    string doiQuery;
+                    if (depositData.PublicationType == DOIDepositData.PublicationTypeValue.Journal)
+                        doiQuery = this.GenerateDOIQuery(DOIDepositData.PublicationTypeValue.Journal, depositData, queryTemplate);
+                    else
+                        doiQuery = this.GenerateDOIQuery(DOIDepositData.PublicationTypeValue.Monograph, depositData, queryTemplate);
 
                     // Send the query
                     string queryResponse = this.SubmitQuery(doiQuery);
