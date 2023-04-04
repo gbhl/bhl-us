@@ -141,6 +141,7 @@
             <nav> 
                 <div class="column-wrap" style="text-align:center">
                     <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageCopyright"] %>">Copyright and Reuse</a> |
+                    <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageDataDisclaimer"] %>">Data Disclaimer</a> |
                     <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageDeveloper"] %>">Developer and Data Tools</a> |
 		            <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageMembers"] %>">Partners</a> |
                     <a href="http://si.edu/Privacy">Privacy</a> |
