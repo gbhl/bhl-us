@@ -49,7 +49,7 @@ namespace MOBOT.BHL.DOIDeposit
                     deposit = new DOIMonographXmlQuery(data);
                     break;
                 case DOIQueryType.Journal:
-                    throw new NotImplementedException();
+                    deposit = new DOIJournalXmlQuery(data);
                     break;
                 case DOIQueryType.Article:
                     deposit = new DOIArticleXmlQuery(data);

@@ -87,158 +87,138 @@ namespace MOBOT.BHL.BHLDOIService
                 {
                     DOIDepositData depositData = this.GetDepositData(entityTypeId, (int)doi.EntityID, doi.DoiName);
 
-                    if (depositData.PublicationType == DOIDepositData.PublicationTypeValue.Journal)
-                    {
-                        // DOI assignment to serials is not supported.  Set DOI status to error and skip to the next DOI.
-                        string logMessage = string.Format("Error processing {0} {1}: {2}",
-                            this.GetEntityTypeName(entityTypeId), doi.EntityID, "DOI assignment to serials is not supported");
-                        log.Error(logMessage);
-                        errorMessages.Add(logMessage);
+                    ExistingDOICheckResult result = ExistingDOICheck(depositData, (int)doi.DoiStatusID);
 
-                        restClient.UpdateDoiStatus((int)doi.Doiid,
-                            new DoiModel
+                    switch (result.ResultValue)
+                    {
+                        case DOICheckResult.NotFound:
+                        case DOICheckResult.Update:
+
+                            // Add the DOI name, if one has not already been assigned
+                            if (string.IsNullOrWhiteSpace(doi.DoiName))
                             {
-                                Doistatusid = configParms.DoiStatusError,
-                                Message = "ERROR: " + logMessage,
-                                Isvalid = null,
-                                Userid = null
-                            });
-                    }
-                    else
-                    {
-                        ExistingDOICheckResult result = ExistingDOICheck(depositData, (int)doi.DoiStatusID);
-
-                        switch (result.ResultValue)
-                        {
-                            case DOICheckResult.NotFound:
-                            case DOICheckResult.Update:
-
-                                // Add the DOI name, if one has not already been assigned
-                                if (string.IsNullOrWhiteSpace(doi.DoiName))
-                                {
-                                    string doiName = this.GenerateDOIName(configParms.DoiPrefix, entityTypeId, (int)doi.EntityID);
-                                    restClient.UpdateDoiName((int)doi.Doiid,
-                                        new DoiModel
-                                        {
-                                            Doistatusid = doi.DoiStatusID,
-                                            Doiname = doiName,
-                                            Userid = null
-                                        });
-                                    doi.DoiName = doiName;
-                                }
-
-                                // Generate a batch identifier for this DOI
-                                string doiBatchID = this.GenerateDOIBatchID((int)doi.Doiid);
-                                restClient.UpdateDoiBatchID((int)doi.Doiid,
+                                string doiName = this.GenerateDOIName(configParms.DoiPrefix, entityTypeId, (int)doi.EntityID);
+                                restClient.UpdateDoiName((int)doi.Doiid,
                                     new DoiModel
                                     {
                                         Doistatusid = doi.DoiStatusID,
-                                        Doibatchid = doiBatchID,
+                                        Doiname = doiName,
                                         Userid = null
                                     });
-                                doi.DoiBatchID = doiBatchID;
+                                doi.DoiName = doiName;
+                            }
 
-                                // Create a CrossRef deposit record for this DOI
-                                depositData.BatchID = doi.DoiBatchID;
-                                depositData.DoiName = doi.DoiName;
-                                string depositTemplate = this.GetDepositTemplate(depositData);
-                                string doiDeposit = this.GenerateDOIDepositRecord(depositData, depositTemplate);
-                                File.WriteAllText(configParms.DepositFolder + string.Format(configParms.DepositFileFormat, doiBatchID), doiDeposit);
-
-                                try
+                            // Generate a batch identifier for this DOI
+                            string doiBatchID = this.GenerateDOIBatchID((int)doi.Doiid);
+                            restClient.UpdateDoiBatchID((int)doi.Doiid,
+                                new DoiModel
                                 {
-                                    // Submit the new DOI to CrossRef and update the DOI status to "Submitted"
-                                    this.SubmitDOI(doiDeposit, string.Format(configParms.DepositFileFormat, doiBatchID));
-                                    restClient.UpdateDoiStatus((int)doi.Doiid,
-                                        new DoiModel
-                                        {
-                                            Doistatusid = configParms.DoiStatusSubmitted,
-                                            Message = String.Empty,
-                                            Isvalid = null,
-                                            Userid = null
-                                        });
-                                    if (depositData.IsUpdate)
-                                        submittedDOIUpdates.Add(doi.DoiName);
-                                    else
-                                        submittedDOIAdds.Add(doi.DoiName);
-                                }
-                                catch (Exception ex)
-                                {
-                                    // Set DOI error status and record the error
-                                    log.Error("Exception submitting DOI " + doi.DoiName, ex);
-                                    errorMessages.Add("Exception submitting DOI " + doi.DoiName + ": " + ex.Message);
-                                    restClient.UpdateDoiStatus((int)doi.Doiid,
-                                        new DoiModel
-                                        {
-                                            Doistatusid = configParms.DoiStatusError,
-                                            Message = "ERROR (SUBMIT): " + ex.Message,
-                                            Isvalid = null,
-                                            Userid = null
-                                        });
-                                }
-
-                                this.LogMessage("DOI " + doi.DoiName + " processed");
-
-                                break;
-                            case DOICheckResult.Found:
-                                // Add the external DOI to the database
-                                restClient.AddDoi(new DoiModel
-                                {
-                                    Entitytypeid = entityTypeId,
-                                    Entityid = doi.EntityID,
-                                    Doistatusid = configParms.DoiStatusExternal,
-                                    Doiname = result.DoiList.First(),
-                                    Isvalid = 1,
-                                    Doibatchid = string.Empty,
-                                    Message = string.Empty,
-                                    Userid = 1,
-                                    Excludebhldoi = 1
+                                    Doistatusid = doi.DoiStatusID,
+                                    Doibatchid = doiBatchID,
+                                    Userid = null
                                 });
-                                foundDOIs.Add(result.DoiList.First());
+                            doi.DoiBatchID = doiBatchID;
 
-                                this.LogMessage("DOI " + result.DoiList.First() + " added");
+                            // Create a CrossRef deposit record for this DOI
+                            depositData.BatchID = doi.DoiBatchID;
+                            depositData.DoiName = doi.DoiName;
+                            string depositTemplate = this.GetDepositTemplate(depositData);
+                            string doiDeposit = this.GenerateDOIDepositRecord(depositData, depositTemplate);
+                            File.WriteAllText(configParms.DepositFolder + string.Format(configParms.DepositFileFormat, doiBatchID), doiDeposit);
 
-                                break;
-                            case DOICheckResult.Unknown:
-                                // Log the unresolvable entities.  The appropriate external DOI will need to be
-                                // manually assigned.
-                                // Once we determine how commonly these occur, a more robust logging mechanism
-                                // may be needed.
-                                unresolvedEntities.Add(string.Format("{0}\t{1}", entityTypeId.ToString(), doi.EntityID.ToString()));
-
-                                string unresolvableMessage = string.Format("Entity {0}, Type {1} cound not be resolved", doi.EntityID.ToString(), doi.DoiEntityTypeID.ToString());
-                                this.LogMessage(unresolvableMessage);
-
-                                foreach (string doiName in result.DoiList)
-                                {
-                                    string possibleDOIMessage = string.Format("\r\nEntity {0}, Type {1} - possible DOI: {2}", doi.EntityID.ToString(), doi.DoiEntityTypeID.ToString(), doiName);
-                                    unresolvableMessage += possibleDOIMessage;
-                                    this.LogMessage(possibleDOIMessage);
-                                }
-
-                                // Set queue item status to Error, since it cannot be resolved
+                            try
+                            {
+                                // Submit the new DOI to CrossRef and update the DOI status to "Submitted"
+                                this.SubmitDOI(doiDeposit, string.Format(configParms.DepositFileFormat, doiBatchID));
+                                restClient.UpdateDoiStatus((int)doi.Doiid,
+                                    new DoiModel
+                                    {
+                                        Doistatusid = configParms.DoiStatusSubmitted,
+                                        Message = String.Empty,
+                                        Isvalid = null,
+                                        Userid = null
+                                    });
+                                if (depositData.IsUpdate)
+                                    submittedDOIUpdates.Add(doi.DoiName);
+                                else
+                                    submittedDOIAdds.Add(doi.DoiName);
+                            }
+                            catch (Exception ex)
+                            {
+                                // Set DOI error status and record the error
+                                log.Error("Exception submitting DOI " + doi.DoiName, ex);
+                                errorMessages.Add("Exception submitting DOI " + doi.DoiName + ": " + ex.Message);
                                 restClient.UpdateDoiStatus((int)doi.Doiid,
                                     new DoiModel
                                     {
                                         Doistatusid = configParms.DoiStatusError,
-                                        Message = "UNRESOLVABLE: " + unresolvableMessage,
+                                        Message = "ERROR (SUBMIT): " + ex.Message,
                                         Isvalid = null,
                                         Userid = null
                                     });
+                            }
 
-                                break;
-                            case DOICheckResult.Error:
-                                // Report any error messages returned from CrossRef.  Otherwise, do nothing.
-                                // Will get picked up and re-tried the next time this process is run.
-                                if (!string.IsNullOrWhiteSpace(result.Message))
+                            this.LogMessage("DOI " + doi.DoiName + " processed");
+
+                            break;
+                        case DOICheckResult.Found:
+                            // Add the external DOI to the database
+                            restClient.AddDoi(new DoiModel
+                            {
+                                Entitytypeid = entityTypeId,
+                                Entityid = doi.EntityID,
+                                Doistatusid = configParms.DoiStatusExternal,
+                                Doiname = result.DoiList.First(),
+                                Isvalid = 1,
+                                Doibatchid = string.Empty,
+                                Message = string.Empty,
+                                Userid = 1,
+                                Excludebhldoi = 1
+                            });
+                            foundDOIs.Add(result.DoiList.First());
+
+                            this.LogMessage("DOI " + result.DoiList.First() + " added");
+
+                            break;
+                        case DOICheckResult.Unknown:
+                            // Log the unresolvable entities.  The appropriate external DOI will need to be
+                            // manually assigned.
+                            // Once we determine how commonly these occur, a more robust logging mechanism
+                            // may be needed.
+                            unresolvedEntities.Add(string.Format("{0}\t{1}", entityTypeId.ToString(), doi.EntityID.ToString()));
+
+                            string unresolvableMessage = string.Format("Entity {0}, Type {1} cound not be resolved", doi.EntityID.ToString(), doi.DoiEntityTypeID.ToString());
+                            this.LogMessage(unresolvableMessage);
+
+                            foreach (string doiName in result.DoiList)
+                            {
+                                string possibleDOIMessage = string.Format("\r\nEntity {0}, Type {1} - possible DOI: {2}", doi.EntityID.ToString(), doi.DoiEntityTypeID.ToString(), doiName);
+                                unresolvableMessage += possibleDOIMessage;
+                                this.LogMessage(possibleDOIMessage);
+                            }
+
+                            // Set queue item status to Error, since it cannot be resolved
+                            restClient.UpdateDoiStatus((int)doi.Doiid,
+                                new DoiModel
                                 {
-                                    string logMessage = string.Format("Error processing {0} {1}: {2}",
-                                        this.GetEntityTypeName(entityTypeId), doi.EntityID, result.Message);
-                                    log.Error(logMessage);
-                                    errorMessages.Add(logMessage);
-                                }
-                                break;
-                        }
+                                    Doistatusid = configParms.DoiStatusError,
+                                    Message = "UNRESOLVABLE: " + unresolvableMessage,
+                                    Isvalid = null,
+                                    Userid = null
+                                });
+
+                            break;
+                        case DOICheckResult.Error:
+                            // Report any error messages returned from CrossRef.  Otherwise, do nothing.
+                            // Will get picked up and re-tried the next time this process is run.
+                            if (!string.IsNullOrWhiteSpace(result.Message))
+                            {
+                                string logMessage = string.Format("Error processing {0} {1}: {2}",
+                                    this.GetEntityTypeName(entityTypeId), doi.EntityID, result.Message);
+                                log.Error(logMessage);
+                                errorMessages.Add(logMessage);
+                            }
+                            break;
                     }
                 }
             }
@@ -309,9 +289,12 @@ namespace MOBOT.BHL.BHLDOIService
                     // Process the response
                     result = this.ProcessQueryResult(queryResponse, result);
 
-                    // Only submit an Article query if no error has occurred and the
-                    // data required for an article query is available
-                    if (result.ResultValue != DOICheckResult.Error && depositData.Issn.Count > 0)
+                    // Only submit an Article query if no error has occurred, the data
+                    // required for an article query is available, and the original
+                    // query was not looking for a journal
+                    if (result.ResultValue != DOICheckResult.Error && 
+                        depositData.Issn.Count > 0 &&
+                        depositData.PublicationType != DOIDepositData.PublicationTypeValue.Journal)
                     {
                         // Prepare, send, and process the second query
                         queryTemplate = this.GetQueryTemplate(depositData);
@@ -875,7 +858,10 @@ namespace MOBOT.BHL.BHLDOIService
             // Check the query result
             if (restResponse.ResponseStatus != ResponseStatus.Completed)
             {
-                throw new Exception("Error querying for DOI: " + restResponse.ErrorMessage);
+                throw new Exception("Error querying for DOI: " + 
+                    (restResponse.ErrorMessage == null 
+                        ? restResponse.ErrorException == null ? "Unknown Error" : (restResponse.ErrorException.Message ?? "Unknown Error")
+                        : restResponse.ErrorMessage));
             }
             if (restResponse.StatusCode != HttpStatusCode.OK)
             {
