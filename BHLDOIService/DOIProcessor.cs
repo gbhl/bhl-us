@@ -848,7 +848,10 @@ namespace MOBOT.BHL.BHLDOIService
             RestSharp.RestClient restClient = new RestSharp.RestClient(configParms.CrossrefXmlQueryUrlBase);
             RestRequest request = new RestRequest(
                 String.Format(configParms.CrossrefXmlQueryFormat,
-                configParms.CrossrefLogin, configParms.CrossrefPassword, query),
+                    configParms.CrossrefLogin, 
+                    configParms.CrossrefPassword,
+                    Encoding.UTF8.GetString(Encoding.Default.GetBytes(query))
+                    ),
                 Method.Get);
 
             // Submit the query

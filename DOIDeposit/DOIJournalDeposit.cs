@@ -85,13 +85,10 @@ namespace MOBOT.BHL.DOIDeposit
             {
                 content.AppendLine("<coden>" + HttpUtility.HtmlEncode(Data.Coden) + "</coden>");
             }
-            if (Data.Issn.Count == 0 && !string.IsNullOrWhiteSpace(Data.TitleDOIName))
-            {
-                content.AppendLine("<doi_data>");
-                content.AppendLine("<doi>" + HttpUtility.HtmlEncode(Data.TitleDOIName) + "</doi>");
-                content.AppendLine("<resource>" + HttpUtility.HtmlEncode(Data.TitleDOIResource) + "</resource>");
-                content.AppendLine("</doi_data>");
-            }
+            content.AppendLine("<doi_data>");
+            content.AppendLine("<doi>" + HttpUtility.HtmlEncode(Data.DoiName) + "</doi>");
+            content.AppendLine("<resource>" + HttpUtility.HtmlEncode(Data.DoiResource) + "</resource>");
+            content.AppendLine("</doi_data>");
             content.AppendLine("</journal_metadata>");
 
             // Insert the journal metadata into the template and return the result

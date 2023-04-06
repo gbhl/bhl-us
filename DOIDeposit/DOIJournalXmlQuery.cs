@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Web;
+using System.Xml.Linq;
 
 namespace MOBOT.BHL.DOIDeposit
 {
@@ -64,12 +65,12 @@ namespace MOBOT.BHL.DOIDeposit
             // Build the query_metadata content
 
             // Only one ISSN is allowed per query, so if there are mulitple just use the first one
-            if (Data.Issn.Count > 0) content.Append("<issn match=\"optional\">" + XmlEncode(Data.Issn[0].Value) + "</issn>");
+            if (Data.Issn.Count > 0) content.AppendLine("<issn match=\"optional\">" + XmlEncode(Data.Issn[0].Value) + "</issn>");
 
             string title = Data.Title;
             if (!string.IsNullOrEmpty(title))
             {
-                content.Append("<journal_title match=\"optional fuzzy\">" + XmlEncode(title.Replace(':', ' ').Substring(0, (title.Length > 256 ? 256 : title.Length))) + "</journal_title>");
+                content.AppendLine("<journal_title match=\"optional fuzzy\">" + XmlEncode(title.Replace(':', ' ').Substring(0, (title.Length > 256 ? 256 : title.Length))) + "</journal_title>");
             }
 
             if (Data.Contributors.Count() > 0)
@@ -91,17 +92,31 @@ namespace MOBOT.BHL.DOIDeposit
                     authorName = contributor.PersonName;
                 }
 
-                content.Append("<author match=\"fuzzy\" search-all-authors=\"true\">" + XmlEncode(authorName) + "</author>");
+                content.AppendLine("<author match=\"fuzzy\" search-all-authors=\"true\">" + XmlEncode(authorName) + "</author>");
             }
 
             // Insert the query metadata into the template and return the result
             return template.Replace("{query_content}", HttpUtility.UrlEncode(content.ToString()));
         }
 
+        /*
         private string XmlEncode(string content)
         {
             content = content.Replace("&", "&amp;").Replace("\"", "&quot;").Replace("'", "&apos;");
             return content;
+        }
+        */
+
+        public static string XmlEncode(string text, bool isAttribute = false)
+        {
+            if (string.IsNullOrEmpty(text))
+                return text;
+
+            if (!isAttribute)
+                return new XElement("t", text).LastNode.ToString();
+
+            return new XAttribute("__n", text)
+                                   .ToString().Substring(5).TrimEnd('\"');
         }
     }
 }
