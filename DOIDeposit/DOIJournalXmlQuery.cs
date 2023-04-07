@@ -92,31 +92,20 @@ namespace MOBOT.BHL.DOIDeposit
                     authorName = contributor.PersonName;
                 }
 
-                content.AppendLine("<author match=\"fuzzy\" search-all-authors=\"true\">" + XmlEncode(authorName) + "</author>");
+                content.AppendLine("<author match=\"optional fuzzy\" search-all-authors=\"true\">" + XmlEncode(authorName) + "</author>");
             }
 
             // Insert the query metadata into the template and return the result
             return template.Replace("{query_content}", HttpUtility.UrlEncode(content.ToString()));
         }
 
-        /*
-        private string XmlEncode(string content)
-        {
-            content = content.Replace("&", "&amp;").Replace("\"", "&quot;").Replace("'", "&apos;");
-            return content;
-        }
-        */
-
         public static string XmlEncode(string text, bool isAttribute = false)
         {
-            if (string.IsNullOrEmpty(text))
-                return text;
+            if (string.IsNullOrEmpty(text)) return text;
 
-            if (!isAttribute)
-                return new XElement("t", text).LastNode.ToString();
+            if (!isAttribute) return new XElement("t", text).LastNode.ToString();
 
-            return new XAttribute("__n", text)
-                                   .ToString().Substring(5).TrimEnd('\"');
+            return new XAttribute("__n", text).ToString().Substring(5).TrimEnd('\"');
         }
     }
 }

@@ -338,6 +338,7 @@ namespace MOBOT.BHL.BHLDOIService
             NotFound,
             Update,
             Unknown,
+            Malformed,
             Error
         }
 
@@ -961,7 +962,7 @@ namespace MOBOT.BHL.BHLDOIService
                         // ResultValue will be assigned after DOIs are collected from the query result
                         break;
                     case "malformed":
-                        result.ResultValue = DOICheckResult.Error;
+                        result.ResultValue = DOICheckResult.Malformed;
                         break;
                     default:
                         throw new Exception("Error response received in query result: " + status);
@@ -983,6 +984,15 @@ namespace MOBOT.BHL.BHLDOIService
                         {
                             if (!string.IsNullOrWhiteSpace(result.Message)) result.Message += "\n";
                             result.Message = "Query result - " + msgElement.Value;
+                            break;
+                        }
+                    }
+                    else if (result.ResultValue == DOICheckResult.Malformed)
+                    {
+                        XElement msgElement = queryElement.Element(ns + "msg");
+                        if (msgElement != null)
+                        {
+                            LogMessage("WARNING - Malformed query: " + msgElement.Value);
                             break;
                         }
                     }
