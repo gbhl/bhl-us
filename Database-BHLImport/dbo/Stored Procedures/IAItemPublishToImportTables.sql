@@ -715,7 +715,7 @@ BEGIN TRY
 	AND		m.DCElementValue <> ''
 			
 	UPDATE	#tmpTitle
-	SET		MARCBibID = IAIdentifier
+	SET		MARCBibID = LEFT(REPLACE(IAIdentifier, '-', ''), 50)
 	WHERE	MARCBibID = ''
 
 	-- =======================================================================
