@@ -1181,6 +1181,7 @@
     <None Include="dbo\Stored Procedures\ApiTitleAssociationSelectByTitleID.sql" />
     <None Include="dbo\Stored Procedures\TitleExternalResourceSelectByTitleID.sql" />
     <None Include="dbo\Stored Procedures\TitleExternalResourceTypeSelectAll.sql" />
+    <None Include="dbo\Types\IdentifierTableType.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

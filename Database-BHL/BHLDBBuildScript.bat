@@ -289,6 +289,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Views\vwTropicosNames.sql"
 REM --------------------------------------
 REM  Build Types
 REM --------------------------------------
+sqlcmd -E -S %1 -d %2 -i "dbo\Types\IdentifierTableType.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Types\IDListInt.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Types\InstitutionCodeTable.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Types\SearchIDTable.sql"

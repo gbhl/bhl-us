@@ -40,8 +40,17 @@ namespace MOBOT.BHL.Server
             string nameString, string resolvedNameString, string canonicalNameString, string identifierList, 
             string sourceName, short isFirstOccurrence, int userId)
         {
+            // Convert the identifier list from a delimited string to a list of key-value pairs
+            List<(string Name, string Value)> identifiers = new List<(string Name, string Value)>();
+            string[] identifierArray = identifierList.Split('^');
+            foreach(string identifier in identifierArray)
+            {
+                string[] identifierKV = identifier.Split('|');
+                if (identifierKV.Length == 2) identifiers.Add((identifierKV[0], identifierKV[1]));
+            }
+
             return new NamePageDAL().NamePageInsert(sqlConnection, sqlTransaction, 
-                PageID, nameString, resolvedNameString, canonicalNameString, identifierList, sourceName, isFirstOccurrence, userId);
+                PageID, nameString, resolvedNameString, canonicalNameString, identifiers, sourceName, isFirstOccurrence, userId);
         }
 
         public void NamePageUpdate(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int namePageID, 
