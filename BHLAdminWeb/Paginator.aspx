@@ -63,17 +63,12 @@
                                                 <asp:Literal ID="Year" runat="server" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Volume" ItemStyle-HorizontalAlign="center">
+                                        <asp:TemplateField HeaderText="Level 1" ItemStyle-HorizontalAlign="center">
                                             <ItemTemplate>
                                                 <asp:Literal ID="Volume" runat="server" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Piece" ItemStyle-HorizontalAlign="center" >
-                                            <ItemTemplate>
-                                                <asp:Literal ID="IssuePrefix" runat="server" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="" ItemStyle-HorizontalAlign="center">
+                                        <asp:TemplateField HeaderText="Level 2" ItemStyle-HorizontalAlign="center">
                                             <ItemTemplate>
                                                 <asp:Literal ID="Issue" runat="server" />
                                             </ItemTemplate>
@@ -141,12 +136,12 @@
 									</td>
 									<td>
 										<asp:Button ID="assignYearButton" runat="server" Font-Size="12px" Text="Assign" Enabled="false" OnClick="assignYearButton_Click" />
-										<asp:Button ID="assignYearAndVolumeButton" runat="server" Font-Size="12px" Text="Assign Year & Volume" Width="150px" Enabled="false" OnClick="assignYearAndVolumeButton_Click" />
+										<asp:Button ID="assignYearAndVolumeButton" runat="server" Font-Size="12px" Text="Assign Year & Level 1" Width="150px" Enabled="false" OnClick="assignYearAndVolumeButton_Click" />
 									</td>
 								</tr>
 								<tr>
 									<td align="right" style="padding-right: 5px">
-										Volume
+										Level 1
 									</td>
 									<td style="padding-right: 5px">
 										<asp:TextBox ID="volumeTextBox" CssClass="TextBox" Style="background-color:White; height:13px" runat="server"></asp:TextBox>
@@ -157,17 +152,10 @@
 								</tr>
 								<tr>
 									<td align="right" style="padding-right: 5px">
-										Piece
+										Level 2
 									</td>
 									<td style="padding-right: 5px">
-										<asp:DropDownList ID="issuePrefixCombo" CssClass="TextBox" Style="background-color:White; height:20px" runat="server">
-										    <asp:ListItem Selected="True"></asp:ListItem>
-											<asp:ListItem>Issue</asp:ListItem>
-											<asp:ListItem>No.</asp:ListItem>
-											<asp:ListItem>Part</asp:ListItem>
-                                            <asp:ListItem>Suppl.</asp:ListItem>
-										</asp:DropDownList>
-										<asp:TextBox ID="issueTextBox" runat="server" CssClass="TextBox" Style="background-color:White; height:13px" Width="90px"></asp:TextBox>
+										<asp:TextBox ID="issueTextBox" runat="server" CssClass="TextBox" Style="background-color:White; height:13px"></asp:TextBox>
 									</td>
 									<td>
 										<asp:Button ID="assignIssueButton" runat="server" Font-Size="12px" Text="Assign" Enabled="false" OnClick="assignIssueButton_Click" />
