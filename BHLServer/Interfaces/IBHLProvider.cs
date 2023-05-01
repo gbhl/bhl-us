@@ -25,6 +25,7 @@ namespace MOBOT.BHL.Server
         List<NameFinderResponse> GetNamesFromOcr(string nameFinderService, int pageID, bool usePreferredNameResults, int maxReadAttempts);
         bool ItemCheckForOcrText(int itemID, string ocrTextPath);
         bool PageCheckForOcrText(int pageID);
+        bool PageCheckForEmptyOcr(int PageID);
         List<PageFlickr> PageFlickrSelectRandom(int numberToReturn);
         List<PageSummaryView> PDFPageSummaryViewSelectByPdfID(int pdfId);
         Vault VaultSelect(int vaultID);

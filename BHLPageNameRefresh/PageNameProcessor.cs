@@ -256,17 +256,20 @@ namespace MOBOT.BHL.PageNameRefresh
                         if (ocrRestClient.PageOcrExists((int)page.PageID))
                         {
                             LogMessage("Getting Page Names from UBIO for page: " + page.FileNamePrefix, null);
-                            ICollection<NameFinderResponse> pageNames = ocrRestClient.GetNamesFromPageOcr((int)page.PageID);
-                            //BHLWS.FindItItem[] pageNames = this.ClonePageNameList(ubioPageNames);
-                            LogMessage("Updating Page Names for page " + page.FileNamePrefix + " with " + pageNames.Count + " Page Names from '" + configParms.NameServiceSourceName + "'.", null);
-                            ICollection<int> updateStats = pageRestClient.UpdatePageNames((int)page.PageID, new PageNameModel
+                            if (!ocrRestClient.PageEmptyOcr((int)page.PageID))
                             {
-                                Nameinfo = pageNames,
-                                Sourcename = configParms.NameServiceSourceName
-                            });
+                                ICollection<NameFinderResponse> pageNames = ocrRestClient.GetNamesFromPageOcr((int)page.PageID);
+                                //BHLWS.FindItItem[] pageNames = this.ClonePageNameList(ubioPageNames);
+                                LogMessage("Updating Page Names for page " + page.FileNamePrefix + " with " + pageNames.Count + " Page Names from '" + configParms.NameServiceSourceName + "'.", null);
+                                ICollection<int> updateStats = pageRestClient.UpdatePageNames((int)page.PageID, new PageNameModel
+                                {
+                                    Nameinfo = pageNames,
+                                    Sourcename = configParms.NameServiceSourceName
+                                });
+                                processedPageNames.Add(updateStats);
+                            }
                             pageRestClient.UpdatePageLastPageNameLookupDate((int)page.PageID);
                             processedPages.Add(page.FileNamePrefix);
-                            processedPageNames.Add(updateStats);
                             LogMessage("Processing complete for page: " + page.FileNamePrefix, null);
                         }
                         else

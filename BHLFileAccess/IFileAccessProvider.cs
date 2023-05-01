@@ -11,6 +11,7 @@ namespace MOBOT.FileAccess
         string Echo(string toEcho);
         void SaveFile(byte[] buffer, string path);
         bool FileExists(string path);
+        long GetFileSizeInB(string path);
         long GetFileSizeInKB(string path);
         long GetFileSizeInMB(string path);
         string GetFileText(string path);

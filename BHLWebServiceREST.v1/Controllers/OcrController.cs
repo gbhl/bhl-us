@@ -43,5 +43,12 @@ namespace BHL.WebServiceREST.v1.Controllers
             
             return Ok(_bhlProvider.PageCheckForOcrText(pageID));
         }
+
+        [HttpGet("Pages/{pageID}/Empty", Name = "PageOcrEmpty")]
+        [ProducesResponseType(200, Type = typeof(bool))]
+        public IActionResult PageCheckForEmptyOcr(int pageID)
+        {
+            return Ok(_bhlProvider.PageCheckForEmptyOcr(pageID));
+        }
     }
 }

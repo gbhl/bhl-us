@@ -29,6 +29,17 @@ namespace MOBOT.FileAccess
             return File.Exists(path);
         }
 
+        public long GetFileSizeInB(string path)
+        {
+            if (FileExists(path))
+            {
+                FileInfo fileInfo = new FileInfo(path);
+                return fileInfo.Length;
+            }
+            else
+                return 0;
+        }
+
         public long GetFileSizeInKB(string path)
         {
             if (FileExists(path))

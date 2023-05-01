@@ -552,9 +552,8 @@ namespace MOBOT.BHL.Server
             string toolPath = AppDomain.CurrentDomain.BaseDirectory + "bin\\gnfinder.exe";
             if (this.GetFileAccessProvider().FileExists(toolPath))
             {
-                PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId(pageID);
-                if (ps == null) ps = new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
-                string filepath = ps.OcrTextLocation;
+                Page p = new BHLProvider().PageSelectOcrPathForPageID(pageID);
+                string filepath = string.Format(ConfigurationManager.AppSettings["OCRTextLocation"], p.OcrFolderShare, p.FileRootFolder, p.BarCode, p.FileNamePrefix);
 
                 if (this.GetFileAccessProvider().FileExists(filepath))
                 {

@@ -3,6 +3,8 @@ using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Transactions;
 
 namespace MOBOT.BHL.Server
 {
@@ -235,13 +237,32 @@ namespace MOBOT.BHL.Server
 		{
 			try
 			{
-				PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId( pageID );
-				if (ps == null) ps = new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
-				return this.GetFileAccessProvider().FileExists(ps.OcrTextLocation);
+				Page p = new BHLProvider().PageSelectOcrPathForPageID(pageID);
+                string ocrTextLocation = string.Format(ConfigurationManager.AppSettings["OCRTextLocation"], p.OcrFolderShare, p.FileRootFolder, p.BarCode, p.FileNamePrefix);
+                return this.GetFileAccessProvider().FileExists(ocrTextLocation);
 			}
 			catch ( Exception ex )
 			{
-				throw new Exception( "Error checking for OCR file for page " + pageID + ":  " + ex.Message );
+				throw new Exception("Error checking for OCR file for page " + pageID + ": " + ex.Message);
+			}
+		}
+
+		/// <summary>
+		/// Check for empty OCR for the specified page
+		/// </summary>
+		/// <param name="itemID"></param>
+		/// <returns></returns>
+		public bool PageCheckForEmptyOcr(int pageID)
+		{
+			try
+			{
+                Page p = new BHLProvider().PageSelectOcrPathForPageID(pageID);
+                string ocrTextLocation = string.Format(ConfigurationManager.AppSettings["OCRTextLocation"], p.OcrFolderShare, p.FileRootFolder, p.BarCode, p.FileNamePrefix);
+                return (this.GetFileAccessProvider().GetFileSizeInB(ocrTextLocation) == 0);
+            }
+            catch (Exception ex)
+			{
+				throw new Exception("Error checking for empty OCR for page " + pageID + ": " + ex.Message);
 			}
 		}
 

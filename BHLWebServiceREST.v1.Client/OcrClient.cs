@@ -62,5 +62,23 @@ namespace BHL.WebServiceREST.v1.Client
                 return restClient.PageOcrExists(pageID);
             }
         }
+
+        public async Task<bool> PageEmptyOcrAsync(int pageID)
+        {
+            using (var httpClient = GetHttpClient())
+            {
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                return (await restClient.PageOcrEmptyAsync(pageID).ConfigureAwait(false));
+            }
+        }
+
+        public bool PageEmptyOcr(int pageID)
+        {
+            using (var httpClient = GetHttpClient())
+            {
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                return restClient.PageOcrEmpty(pageID);
+            }
+        }
     }
 }
