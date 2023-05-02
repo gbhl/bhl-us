@@ -231,7 +231,13 @@ namespace MOBOT.BHL.DataObjects
 
                     // Build the year/volume/issue display string
                     if (volume != string.Empty) volumeInfo = volume;
-                    if (issue != string.Empty) volumeInfo += "(" + issue + ")";
+                    if (issue != string.Empty)
+                    {
+                        if (volumeInfo == string.Empty)
+                            volumeInfo = issue;
+                        else
+                            volumeInfo += "(" + issue + ")";
+                    }
                     if (year != string.Empty)
                     {
                         if (volumeInfo == string.Empty)
