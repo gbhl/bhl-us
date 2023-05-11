@@ -78,7 +78,7 @@
                 <ul>
                     <li>Uncorrected OCR - Machine-generated text. May include inconsistencies with the content of the original page.</li>
                     <li>Error-corrected OCR - Machine-generated, machine-corrected text.  Better quality than Uncorrected OCR, but may still include inconsistencies with the content of the original page.</li>
-                    <li>Manual Transcription - Human-created and reviewed text.</li>
+                    <li>Manual Transcription - Human-created and reviewed text.  For issues concerning manual transcription text, please contact the original holding institution.</li>
                 </ul>
                 -->
                 <table style="margin: 0px 15px 15px 15px;">
@@ -103,7 +103,7 @@
                             Manual Transcription
                         </td>
                         <td style="padding-bottom:10px;">
-                            Human-created and reviewed text.
+                            Human-created and reviewed text.  For issues concerning manual transcription text, please contact the original holding institution.
                         </td>
                     </tr>
                 </table>
