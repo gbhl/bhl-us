@@ -199,7 +199,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 string pageDescription = string.Empty;
                 string pageIndicators = string.Empty;
                 string pageTypes = string.Empty;
-                foreach(string indicator in ((PageHit)page).pageIndicators)
+                foreach(string indicator in ((PageHit)page).PageIndicators)
                 {
                     if (!string.IsNullOrWhiteSpace(pageIndicators)) pageIndicators += ",";
                     pageIndicators += indicator;

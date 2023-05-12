@@ -1807,8 +1807,8 @@ namespace MOBOT.BHL.API.BHLApi
                         page.PageTypes.Add(new PageType { PageTypeName = pageType });
                     }
 
-                    if (hit.pageIndicators.Count > 0) page.PageNumbers = new List<PageNumber>();
-                    foreach (string pageIndicator in hit.pageIndicators)
+                    if (hit.PageIndicators.Count > 0) page.PageNumbers = new List<PageNumber>();
+                    foreach (string pageIndicator in hit.PageIndicators)
                     {
                         page.PageNumbers.Add(new PageNumber { Number = pageIndicator });
                     }

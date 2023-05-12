@@ -178,33 +178,35 @@ namespace BHL.Search.Elastic
                 }
 
                 // Fields to be searched
-                List<Field> fields = new List<Field>();
-                fields.Add(new Field("_all"));
-                // Add fields to be boosted
-                fields.Add(new Field(ESField.TITLE + "^15"));
-                fields.Add(new Field(ESField.TITLE_ABBR + "^10"));
-                fields.Add(new Field(ESField.ISSN + "^15"));
-                fields.Add(new Field(ESField.ISBN + "^15"));
-                fields.Add(new Field(ESField.OCLC + "^15"));
-                fields.Add(new Field(ESField.DOI + "^15"));
-                fields.Add(new Field(ESField.TRANSLATEDTITLE + "^15"));
-                fields.Add(new Field(ESField.TRANSLATEDTITLE_ABBR + "^10"));
-                fields.Add(new Field(ESField.UNIFORMTITLE + "^15"));
-                fields.Add(new Field(ESField.UNIFORMTITLE_ABBR + "^10"));
-                fields.Add(new Field(ESField.VARIANTS + "^15"));
-                fields.Add(new Field(ESField.VARIANTS_ABBR + "^10"));
-                fields.Add(new Field(ESField.ASSOCIATIONS + "^5"));
-                fields.Add(new Field(ESField.ASSOCIATIONS_ABBR + "^3"));
-                //fields.Add(new Field(ESField.COLLECTIONS + "^5"));
-                fields.Add(new Field(ESField.CONTAINER + "^5"));
-                fields.Add(new Field(ESField.CONTAINER_ABBR + "^3"));
-                fields.Add(new Field(ESField.CONTRIBUTORS + "^5"));
-                fields.Add(new Field(ESField.KEYWORDS + "^5"));
-                fields.Add(new Field(ESField.PUBLICATIONPLACE + "^5"));
-                fields.Add(new Field(ESField.PUBLISHER + "^5"));
-                fields.Add(new Field(ESField.SEARCHAUTHORS + "^5"));
-                fields.Add(new Field(ESField.NOTES));
-                fields.Add(new Field(ESField.TEXT));
+                List<Field> fields = new List<Field>
+                {
+                    new Field("_all"),
+                    // Add fields to be boosted
+                    new Field(ESField.TITLE + "^15"),
+                    new Field(ESField.TITLE_ABBR + "^10"),
+                    new Field(ESField.ISSN + "^15"),
+                    new Field(ESField.ISBN + "^15"),
+                    new Field(ESField.OCLC + "^15"),
+                    new Field(ESField.DOI + "^15"),
+                    new Field(ESField.TRANSLATEDTITLE + "^15"),
+                    new Field(ESField.TRANSLATEDTITLE_ABBR + "^10"),
+                    new Field(ESField.UNIFORMTITLE + "^15"),
+                    new Field(ESField.UNIFORMTITLE_ABBR + "^10"),
+                    new Field(ESField.VARIANTS + "^15"),
+                    new Field(ESField.VARIANTS_ABBR + "^10"),
+                    new Field(ESField.ASSOCIATIONS + "^5"),
+                    new Field(ESField.ASSOCIATIONS_ABBR + "^3"),
+                    //fields.Add(new Field(ESField.COLLECTIONS + "^5"));
+                    new Field(ESField.CONTAINER + "^5"),
+                    new Field(ESField.CONTAINER_ABBR + "^3"),
+                    new Field(ESField.CONTRIBUTORS + "^5"),
+                    new Field(ESField.KEYWORDS + "^5"),
+                    new Field(ESField.PUBLICATIONPLACE + "^5"),
+                    new Field(ESField.PUBLISHER + "^5"),
+                    new Field(ESField.SEARCHAUTHORS + "^5"),
+                    new Field(ESField.NOTES),
+                    new Field(ESField.TEXT)
+                };
 
                 // Construct the query.
                 searchDesc.Query(b => b
@@ -238,8 +240,10 @@ namespace BHL.Search.Elastic
                 // Set the fields to use when determining alternate search suggestions
                 if (_suggest)
                 {
-                    List<Tuple<string, string>> suggestFields = new List<Tuple<string, string>>();
-                    suggestFields.Add(new Tuple<string, string>(ESField.ALL, CleanSuggestString(suggestQuery)));
+                    List<Tuple<string, string>> suggestFields = new List<Tuple<string, string>>
+                    {
+                        new Tuple<string, string>(ESField.ALL, CleanSuggestString(suggestQuery))
+                    };
                     SetSuggestFields(searchDesc, suggestFields);
                 }
 
@@ -265,15 +269,15 @@ namespace BHL.Search.Elastic
             ISearchResponse<dynamic> results = null;
             if (limits != null && limits.Count == 0) limits = null;
 
-            if (!string.IsNullOrWhiteSpace(title.searchValue) ||
-                !string.IsNullOrWhiteSpace(author.searchValue) ||
+            if (!string.IsNullOrWhiteSpace(title.SearchValue) ||
+                !string.IsNullOrWhiteSpace(author.SearchValue) ||
                 !string.IsNullOrWhiteSpace(volume) ||
                 !string.IsNullOrWhiteSpace(year) ||
-                !string.IsNullOrWhiteSpace(keyword.searchValue) ||
+                !string.IsNullOrWhiteSpace(keyword.SearchValue) ||
                 !string.IsNullOrWhiteSpace(language) ||
                 !string.IsNullOrWhiteSpace(collection) ||
-                !string.IsNullOrWhiteSpace(notes.searchValue) ||
-                !string.IsNullOrWhiteSpace(text.searchValue))
+                !string.IsNullOrWhiteSpace(notes.SearchValue) ||
+                !string.IsNullOrWhiteSpace(text.SearchValue))
             {
                 // Initialize the query object
                 SearchDescriptor<dynamic> searchDesc = InitializeQuery();
@@ -282,92 +286,92 @@ namespace BHL.Search.Elastic
                 // Boolean query instead of a Query_String query.
                 List<QueryContainer> mustQueries = new List<QueryContainer>();
                 List<QueryContainer> shouldQueries = new List<QueryContainer>();
-                if (!string.IsNullOrWhiteSpace(title.searchValue))
+                if (!string.IsNullOrWhiteSpace(title.SearchValue))
                 {
                     if (title.ParamOperator == SearchStringParamOperator.Phrase)
                     {
-                        shouldQueries.Add(new MatchPhraseQuery { Field = ESField.TITLE, Query = CleanQuery(title.searchValue), Boost = 10 });
-                        shouldQueries.Add(new MatchPhraseQuery { Field = ESField.ASSOCIATIONS, Query = CleanQuery(title.searchValue) });
-                        shouldQueries.Add(new MatchPhraseQuery { Field = ESField.TRANSLATEDTITLE, Query = CleanQuery(title.searchValue), Boost = 10 });
-                        shouldQueries.Add(new MatchPhraseQuery { Field = ESField.UNIFORMTITLE, Query = CleanQuery(title.searchValue), Boost = 10 });
-                        shouldQueries.Add(new MatchPhraseQuery { Field = ESField.VARIANTS, Query = CleanQuery(title.searchValue), Boost = 10 });
+                        shouldQueries.Add(new MatchPhraseQuery { Field = ESField.TITLE, Query = CleanQuery(title.SearchValue), Boost = 10 });
+                        shouldQueries.Add(new MatchPhraseQuery { Field = ESField.ASSOCIATIONS, Query = CleanQuery(title.SearchValue) });
+                        shouldQueries.Add(new MatchPhraseQuery { Field = ESField.TRANSLATEDTITLE, Query = CleanQuery(title.SearchValue), Boost = 10 });
+                        shouldQueries.Add(new MatchPhraseQuery { Field = ESField.UNIFORMTITLE, Query = CleanQuery(title.SearchValue), Boost = 10 });
+                        shouldQueries.Add(new MatchPhraseQuery { Field = ESField.VARIANTS, Query = CleanQuery(title.SearchValue), Boost = 10 });
                     }
                     else
                     {
                         Nest.Operator matchOperator = Operator.And;
                         if (title.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
-                        shouldQueries.Add(new MatchQuery { Field = ESField.TITLE, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.TITLE_ABBR, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 5, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS_ABBR, Analyzer = "default", Query = CleanQuery(title.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE_ABBR, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE_ABBR, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS_ABBR, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.TITLE, Analyzer = "default", Query = CleanQuery(title.SearchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.TITLE_ABBR, Analyzer = "default", Query = CleanQuery(title.SearchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS, Analyzer = "default", Query = CleanQuery(title.SearchValue), Boost = 5, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS_ABBR, Analyzer = "default", Query = CleanQuery(title.SearchValue), Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Analyzer = "default", Query = CleanQuery(title.SearchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE_ABBR, Analyzer = "default", Query = CleanQuery(title.SearchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Analyzer = "default", Query = CleanQuery(title.SearchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE_ABBR, Analyzer = "default", Query = CleanQuery(title.SearchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Analyzer = "default", Query = CleanQuery(title.SearchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS_ABBR, Analyzer = "default", Query = CleanQuery(title.SearchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
                     }
                 }
 
-                if (!string.IsNullOrWhiteSpace(author.searchValue))
+                if (!string.IsNullOrWhiteSpace(author.SearchValue))
                 {
                     if (author.ParamOperator == SearchStringParamOperator.Phrase)
                     {
-                        mustQueries.Add(new MatchPhraseQuery { Field = ESField.SEARCHAUTHORS, Query = CleanQuery(author.searchValue) });
+                        mustQueries.Add(new MatchPhraseQuery { Field = ESField.SEARCHAUTHORS, Query = CleanQuery(author.SearchValue) });
                     }
                     else
                     {
                         Nest.Operator matchOperator = Operator.And;
                         if (author.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
-                        mustQueries.Add(new MatchQuery { Field = ESField.SEARCHAUTHORS, Query = CleanQuery(author.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        mustQueries.Add(new MatchQuery { Field = ESField.SEARCHAUTHORS, Query = CleanQuery(author.SearchValue), Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
                     }
                 }
 
                 if (!string.IsNullOrWhiteSpace(volume)) mustQueries.Add(new MatchQuery { Field = ESField.VOLUME, Query = CleanQuery(volume) });
                 if (!string.IsNullOrWhiteSpace(year)) mustQueries.Add(new MatchQuery { Field = ESField.DATES, Query = CleanQuery(year) });
 
-                if (!string.IsNullOrWhiteSpace(keyword.searchValue))
+                if (!string.IsNullOrWhiteSpace(keyword.SearchValue))
                 {
                     if (keyword.ParamOperator == SearchStringParamOperator.Phrase)
                     {
-                        mustQueries.Add(new MatchPhraseQuery { Field = ESField.KEYWORDS, Query = CleanQuery(keyword.searchValue) });
+                        mustQueries.Add(new MatchPhraseQuery { Field = ESField.KEYWORDS, Query = CleanQuery(keyword.SearchValue) });
                     }
                     else
                     {
                         Nest.Operator matchOperator = Operator.And;
                         if (keyword.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
-                        mustQueries.Add(new MatchQuery { Field = ESField.KEYWORDS, Query = CleanQuery(keyword.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        mustQueries.Add(new MatchQuery { Field = ESField.KEYWORDS, Query = CleanQuery(keyword.SearchValue), Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
                     }
                 }
 
                 if (!string.IsNullOrWhiteSpace(language)) mustQueries.Add(new MatchQuery { Field = ESField.LANGUAGE, Query = language });
                 if (!string.IsNullOrWhiteSpace(collection)) mustQueries.Add(new MatchQuery { Field = ESField.COLLECTIONS, Query = collection });
 
-                if (!string.IsNullOrWhiteSpace(notes.searchValue))
+                if (!string.IsNullOrWhiteSpace(notes.SearchValue))
                 {
                     if (notes.ParamOperator == SearchStringParamOperator.Phrase)
                     {
-                        mustQueries.Add(new MatchPhraseQuery { Field = ESField.NOTES, Query = CleanQuery(notes.searchValue) });
+                        mustQueries.Add(new MatchPhraseQuery { Field = ESField.NOTES, Query = CleanQuery(notes.SearchValue) });
                     }
                     else
                     {
                         Nest.Operator matchOperator = Operator.And;
                         if (notes.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
-                        mustQueries.Add(new MatchQuery { Field = ESField.NOTES, Query = CleanQuery(notes.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        mustQueries.Add(new MatchQuery { Field = ESField.NOTES, Query = CleanQuery(notes.SearchValue), Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
                     }
                 }
 
-                if (!string.IsNullOrWhiteSpace(text.searchValue))
+                if (!string.IsNullOrWhiteSpace(text.SearchValue))
                 {
                     if (text.ParamOperator == SearchStringParamOperator.Phrase)
                     {
-                        mustQueries.Add(new MatchPhraseQuery { Field = ESField.TEXT, Query = CleanQuery(text.searchValue) });
+                        mustQueries.Add(new MatchPhraseQuery { Field = ESField.TEXT, Query = CleanQuery(text.SearchValue) });
                     }
                     else
                     {
                         Nest.Operator matchOperator = Operator.And;
                         if (text.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
-                        mustQueries.Add(new MatchQuery { Field = ESField.TEXT, Query = CleanQuery(text.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        mustQueries.Add(new MatchQuery { Field = ESField.TEXT, Query = CleanQuery(text.SearchValue), Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
                     }
                 }
 
@@ -394,15 +398,15 @@ namespace BHL.Search.Elastic
                 SetHighlightFields(searchDesc);
 
                 List<Tuple<string, string>> args = new List<Tuple<string, string>>();
-                if (!string.IsNullOrWhiteSpace(title.searchValue)) args.Add(new Tuple<string, string>(ESField.TITLE, title.searchValue));
-                if (!string.IsNullOrWhiteSpace(author.searchValue)) args.Add(new Tuple<string, string>(ESField.SEARCHAUTHORS, author.searchValue));
+                if (!string.IsNullOrWhiteSpace(title.SearchValue)) args.Add(new Tuple<string, string>(ESField.TITLE, title.SearchValue));
+                if (!string.IsNullOrWhiteSpace(author.SearchValue)) args.Add(new Tuple<string, string>(ESField.SEARCHAUTHORS, author.SearchValue));
                 if (!string.IsNullOrWhiteSpace(volume)) args.Add(new Tuple<string, string>(ESField.VOLUME, volume));
                 if (!string.IsNullOrWhiteSpace(year)) args.Add(new Tuple<string, string>(ESField.DATES, year));
-                if (!string.IsNullOrWhiteSpace(keyword.searchValue)) args.Add(new Tuple<string, string>(ESField.KEYWORDS, keyword.searchValue));
+                if (!string.IsNullOrWhiteSpace(keyword.SearchValue)) args.Add(new Tuple<string, string>(ESField.KEYWORDS, keyword.SearchValue));
                 if (!string.IsNullOrWhiteSpace(language)) args.Add(new Tuple<string, string>(ESField.LANGUAGE, language));
                 if (!string.IsNullOrWhiteSpace(collection)) args.Add(new Tuple<string, string>(ESField.COLLECTIONS, collection));
-                if (!string.IsNullOrWhiteSpace(notes.searchValue)) args.Add(new Tuple<string, string>(ESField.NOTES, notes.searchValue));
-                if (!string.IsNullOrWhiteSpace(text.searchValue)) args.Add(new Tuple<string, string>(ESField.TEXT, text.searchValue));
+                if (!string.IsNullOrWhiteSpace(notes.SearchValue)) args.Add(new Tuple<string, string>(ESField.NOTES, notes.SearchValue));
+                if (!string.IsNullOrWhiteSpace(text.SearchValue)) args.Add(new Tuple<string, string>(ESField.TEXT, text.SearchValue));
 
                 // Set the fields to use when determining alternate search suggestions
                 if (_suggest)
@@ -517,8 +521,10 @@ namespace BHL.Search.Elastic
                 // Set the fields to use when determining alternate search suggestions
                 if (_suggest)
                 {
-                    List<Tuple<string, string>> suggestFields = new List<Tuple<string, string>>();
-                    suggestFields.Add(new Tuple<string, string>(ESField.ALL, CleanSuggestString(suggestQuery)));
+                    List<Tuple<string, string>> suggestFields = new List<Tuple<string, string>>
+                    {
+                        new Tuple<string, string>(ESField.ALL, CleanSuggestString(suggestQuery))
+                    };
                     SetSuggestFields(searchDesc, suggestFields);
                 }
 
@@ -792,8 +798,7 @@ namespace BHL.Search.Elastic
         /// <returns></returns>
         private string CleanSuggestString(string query)
         {
-            string cleanSuggestQuery = string.Empty;
-            cleanSuggestQuery = query.Replace(" AND ", " ").Replace(" OR ", " ").Replace(" NOT ", " ");
+            string cleanSuggestQuery = query.Replace(" AND ", " ").Replace(" OR ", " ").Replace(" NOT ", " ");
             return cleanSuggestQuery;
         }
 
@@ -885,9 +890,11 @@ namespace BHL.Search.Elastic
         /// <returns></returns>
         private SearchResult GetSearchResult(ISearchResponse<dynamic> results)
         {
-            SearchResult result = new SearchResult();
-            result.PageSize = this._numResults;
-            result.StartPage = this._startPage;
+            SearchResult result = new SearchResult
+            {
+                PageSize = this._numResults,
+                StartPage = this._startPage
+            };
 
             if (results != null)
             {
@@ -976,7 +983,7 @@ namespace BHL.Search.Elastic
                 foreach (var agg in results.Aggregations)
                 {
                     BucketAggregate aggBucket = (BucketAggregate)agg.Value;
-                    foreach (KeyedBucket<object> bucket in aggBucket.Items)
+                    foreach (KeyedBucket<object> bucket in aggBucket.Items.Cast<KeyedBucket<object>>())
                     {
                         string facetCategory = agg.Key;
                         SearchField facetCategoryEnum = GetSearchFieldEnum(facetCategory);
@@ -987,8 +994,10 @@ namespace BHL.Search.Elastic
                         }
                         else
                         {
-                            Dictionary<string, long?> facetValue = new Dictionary<string, long?>();
-                            facetValue.Add(bucket.Key.ToString(), bucket.DocCount);
+                            Dictionary<string, long?> facetValue = new Dictionary<string, long?>
+                            {
+                                { bucket.Key.ToString(), bucket.DocCount }
+                            };
                             result.Facets.Add(facetCategoryEnum, facetValue);
                         }
                     }
@@ -1059,7 +1068,7 @@ namespace BHL.Search.Elastic
                 oHit = new AuthorHit();
                 oHit.PrimaryAuthorName = (string)((Dictionary<string, object>)hit.Source)["primaryAuthorName"];
                 List<object> names = (List<object>)((Dictionary<string, object>)hit.Source)["authorNames"];
-                foreach (string name in names) oHit.AuthorNames.Add(name);
+                foreach (string name in names.Cast<string>()) oHit.AuthorNames.Add(name);
             }
             if (typeof(T).ToString().Contains("KeywordHit"))
             {
@@ -1080,9 +1089,9 @@ namespace BHL.Search.Elastic
                 oHit.PageId = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["pageId"]);
                 oHit.Text = (string)GetHitValue(hit.Source, "text");
                 List<object> indicators = (List<object>)((Dictionary<string, object>)hit.Source)["pageIndicators"];
-                foreach (string indicator in indicators) oHit.pageIndicators.Add(indicator);
+                foreach (string indicator in indicators.Cast<string>()) oHit.pageIndicators.Add(indicator);
                 List<object> types = (List<object>)((Dictionary<string, object>)hit.Source)["pageTypes"];
-                foreach (string type in types) oHit.PageTypes.Add(type);
+                foreach (string type in types.Cast<string>()) oHit.PageTypes.Add(type);
             }
             if (typeof(T).ToString().Contains("ItemHit"))
             {
@@ -1143,7 +1152,7 @@ namespace BHL.Search.Elastic
             List<T> values = new List<T>();
             if (hit.ContainsKey(fieldName))
             {
-                foreach (T value in (List<object>)hit[fieldName]) values.Add(value);
+                foreach (T value in ((List<object>)hit[fieldName]).Select(v => (T)v)) values.Add(value);
             }
             return values;
         }
@@ -1164,7 +1173,7 @@ namespace BHL.Search.Elastic
                 {
                     // Replace "_abbr" field names with the name of the "parent" field.  For example, replace "title_abbr"
                     // with "title".
-                    string highlightField = string.Empty;
+                    string highlightField;
                     switch(highlight.Key)
                     {
                         case ESField.ASSOCIATIONS_ABBR:
@@ -1214,9 +1223,11 @@ namespace BHL.Search.Elastic
         /// </summary>
         public void CheckServerStatus()
         {
-            ClusterHealthRequest healthRequest = new ClusterHealthRequest();
-            healthRequest.Timeout = new Time("30s");
-            healthRequest.WaitForStatus = Elasticsearch.Net.WaitForStatus.Yellow;
+            ClusterHealthRequest healthRequest = new ClusterHealthRequest
+            {
+                Timeout = new Time("30s"),
+                WaitForStatus = Elasticsearch.Net.WaitForStatus.Yellow
+            };
             var healthResponse = _es.Cluster.Health(healthRequest);
             if (!healthResponse.IsValid) ProcessError(healthResponse);
         }
@@ -1228,7 +1239,7 @@ namespace BHL.Search.Elastic
         /// <returns></returns>
         private SearchField GetSearchFieldEnum(string field)
         {
-            SearchField searchField = SearchField.All;
+            SearchField searchField;
 
             switch (field)
             {
@@ -1431,7 +1442,7 @@ namespace BHL.Search.Elastic
             {
 
                 BucketAggregate aggBucket = (BucketAggregate)agg.Value;
-                foreach (KeyedBucket<object> bucket in aggBucket.Items)
+                foreach (KeyedBucket<object> bucket in aggBucket.Items.Cast<KeyedBucket<object>>())
                 {
                     Console.WriteLine(string.Format("Facet {0}: {1} ({2})", agg.Key, bucket.Key, bucket.DocCount.ToString()));
                 }

@@ -6,7 +6,7 @@ namespace BHL.Search.SQL
 {
     public class Search : ISearch
     {
-        private string _connectionString = string.Empty;
+        private readonly string _connectionString = string.Empty;
 
         public Search()
         {
@@ -27,12 +27,12 @@ namespace BHL.Search.SQL
 
         public bool IsOnline()
         {
-            bool online = true;
+            bool online;
             try
             {
                 online = new DataAccess(_connectionString).IsOnline();
             }
-            catch (Exception ex)
+            catch
             {
                 // TODO: Consider logging the exception here
                 online = false;
@@ -47,9 +47,10 @@ namespace BHL.Search.SQL
 
         public ISearchResult SearchAuthor(string name)
         {
-            SearchResult result = new SearchResult();
-            long totalHits = 0;
-            result.Authors = new DataAccess(_connectionString).SearchAuthor(name, out totalHits, StartPage, NumResults);
+            SearchResult result = new SearchResult
+            {
+                Authors = new DataAccess(_connectionString).SearchAuthor(name, out long totalHits, StartPage, NumResults)
+            };
             GetSearchResultStats(result, totalHits);
             result.Query.Add(new Tuple<SearchField, string>(SearchField.All, name));
             return result;
@@ -72,23 +73,23 @@ namespace BHL.Search.SQL
             SearchStringParam keyword, Tuple<string, string> language, Tuple<string, string> collection, 
             SearchStringParam notes, SearchStringParam text, List<Tuple<SearchField, string>> limits = null)
         {
-            SearchResult result = new SearchResult();
-
-            long totalHits = 0;
-            result.Items = new DataAccess(_connectionString).SearchItem(title.searchValue, author.searchValue, volume, 
-                year, keyword.searchValue, (language != null ? language.Item1 : null), 
-                (collection != null ? collection.Item1 : null), notes.searchValue, out totalHits, StartPage, NumResults);
+            SearchResult result = new SearchResult
+            {
+                Items = new DataAccess(_connectionString).SearchItem(title.SearchValue, author.SearchValue, volume,
+                    year, keyword.SearchValue, (language?.Item1),
+                    (collection?.Item1), notes.SearchValue, out long totalHits, StartPage, NumResults)
+            };
             GetSearchResultStats(result, totalHits);
 
-            if (!string.IsNullOrWhiteSpace(title.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title.searchValue));
-            if (!string.IsNullOrWhiteSpace(author.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.AuthorNames, author.searchValue));
+            if (!string.IsNullOrWhiteSpace(title.SearchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title.SearchValue));
+            if (!string.IsNullOrWhiteSpace(author.SearchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.AuthorNames, author.SearchValue));
             if (!string.IsNullOrWhiteSpace(volume)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Volume, volume));
             if (!string.IsNullOrWhiteSpace(year)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Dates, year));
-            if (!string.IsNullOrWhiteSpace(keyword.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword.searchValue));
+            if (!string.IsNullOrWhiteSpace(keyword.SearchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword.SearchValue));
             if (language != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Language, language.Item1));
             if (collection != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Collections, collection.Item1));
-            if (!string.IsNullOrWhiteSpace(notes.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Notes, notes.searchValue));
-            if (!string.IsNullOrWhiteSpace(text.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Text, text.searchValue));
+            if (!string.IsNullOrWhiteSpace(notes.SearchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Notes, notes.SearchValue));
+            if (!string.IsNullOrWhiteSpace(text.SearchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Text, text.SearchValue));
             result.QueryLimits = limits;
             return result;
         }
@@ -100,10 +101,10 @@ namespace BHL.Search.SQL
 
         public ISearchResult SearchItem(string searchTerm, List<Tuple<SearchField, string>> limits = null)
         {
-            SearchResult result = new SearchResult();
-
-            long totalHits = 0;
-            result.Items = new DataAccess(_connectionString).SearchItem(searchTerm, out totalHits, StartPage, NumResults);
+            SearchResult result = new SearchResult
+            {
+                Items = new DataAccess(_connectionString).SearchItem(searchTerm, out long totalHits, StartPage, NumResults)
+            };
             GetSearchResultStats(result, totalHits);
 
             result.Query.Add(new Tuple<SearchField, string>(SearchField.All, searchTerm));
@@ -113,9 +114,10 @@ namespace BHL.Search.SQL
 
         public ISearchResult SearchKeyword(string keyword)
         {
-            SearchResult result = new SearchResult();
-            long totalHits = 0;
-            result.Keywords = new DataAccess(_connectionString).SearchKeyword(keyword, out totalHits, StartPage, NumResults);
+            SearchResult result = new SearchResult
+            {
+                Keywords = new DataAccess(_connectionString).SearchKeyword(keyword, out long totalHits, StartPage, NumResults)
+            };
             GetSearchResultStats(result, totalHits);
             result.Query.Add(new Tuple<SearchField, string>(SearchField.All, keyword));
             return result;
@@ -123,9 +125,10 @@ namespace BHL.Search.SQL
 
         public ISearchResult SearchName(string name)
         {
-            SearchResult result = new SearchResult();
-            long totalHits = 0;
-            result.Names = new DataAccess(_connectionString).SearchName(name, out totalHits, StartPage, NumResults);
+            SearchResult result = new SearchResult
+            {
+                Names = new DataAccess(_connectionString).SearchName(name, out long totalHits, StartPage, NumResults)
+            };
             GetSearchResultStats(result, totalHits);
             result.Query.Add(new Tuple<SearchField, string>(SearchField.All, name));
             return result;

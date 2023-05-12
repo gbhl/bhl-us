@@ -14,7 +14,7 @@ namespace BHL.Search.SQL
         // https://sqlperformance.com/2015/01/t-sql-queries/pagination-with-offset-fetch
 
 
-        private string _connectionString = string.Empty;
+        private readonly string _connectionString = string.Empty;
 
         public DataAccess(string connectionString)
         {
@@ -69,10 +69,8 @@ namespace BHL.Search.SQL
                 using (SqlCommand sqlCommand = new SqlCommand())
                 {
 
-                    int yearNum = 0;
-                    Int32.TryParse(year, out yearNum);
-                    int collectionNum = 0;
-                    Int32.TryParse(collectionID, out collectionNum);
+                    Int32.TryParse(year, out int yearNum);
+                    Int32.TryParse(collectionID, out int collectionNum);
 
                     sqlCommand.Connection = sqlConnection;
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;

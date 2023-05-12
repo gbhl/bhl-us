@@ -30,7 +30,7 @@ namespace BHL.Search
                         break;
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     // TODO: Log the error 
                     // and try the next provider

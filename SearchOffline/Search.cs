@@ -42,15 +42,15 @@ namespace BHL.Search.Offline
             SearchStringParam notes, SearchStringParam text, List<Tuple<SearchField, string>> limits = null)
         {
             SearchResult result = GetOfflineSearchResult();
-            if (!string.IsNullOrWhiteSpace(title.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title.searchValue));
-            if (!string.IsNullOrWhiteSpace(author.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.AuthorNames, author.searchValue));
+            if (!string.IsNullOrWhiteSpace(title.SearchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title.SearchValue));
+            if (!string.IsNullOrWhiteSpace(author.SearchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.AuthorNames, author.SearchValue));
             if (!string.IsNullOrWhiteSpace(volume)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Volume, volume));
             if (!string.IsNullOrWhiteSpace(year)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Dates, year));
-            if (!string.IsNullOrWhiteSpace(keyword.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword.searchValue));
+            if (!string.IsNullOrWhiteSpace(keyword.SearchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword.SearchValue));
             if (language != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Language, language.Item2));
             if (collection != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Collections, collection.Item2));
-            if (!string.IsNullOrWhiteSpace(notes.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Notes, notes.searchValue));
-            if (!string.IsNullOrWhiteSpace(text.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Text, text.searchValue));
+            if (!string.IsNullOrWhiteSpace(notes.SearchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Notes, notes.SearchValue));
+            if (!string.IsNullOrWhiteSpace(text.SearchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Text, text.SearchValue));
             result.QueryLimits = limits;
             return result;
         }
@@ -96,11 +96,13 @@ namespace BHL.Search.Offline
 
         private SearchResult GetOfflineSearchResult()
         {
-            SearchResult result = new SearchResult();
-            result.PageSize = this.NumResults;
-            result.StartPage = this.StartPage;
-            result.IsValid = false;
-            result.ErrorMessage = "Search services are offline.";
+            SearchResult result = new SearchResult
+            {
+                PageSize = this.NumResults,
+                StartPage = this.StartPage,
+                IsValid = false,
+                ErrorMessage = "Search services are offline."
+            };
             return result;
         }
     }
