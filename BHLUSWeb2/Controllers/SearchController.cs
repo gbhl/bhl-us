@@ -46,7 +46,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     else lang = lang.Substring(1, lang.Length - 2);
                 }
 
-                string languageCode = string.Empty;
+                string languageCode;
                 string languageName = string.Empty;
                 if (!lang.Contains(","))
                 {
@@ -90,8 +90,7 @@ namespace MOBOT.BHL.Web2.Controllers
             model.Params.NotesInclude = (ntinc ?? string.Empty).Trim().ToUpper();
             model.Params.Text = txt ?? string.Empty;
             model.Params.TextInclude = (txinc ?? string.Empty).Trim().ToUpper();
-            int startPage;
-            if (!Int32.TryParse(ppage ?? "1", out startPage)) startPage = 1;
+            if (!Int32.TryParse(ppage ?? "1", out int startPage)) startPage = 1;
             model.ItemPage = startPage;
             if (!Int32.TryParse(apage ?? "1", out startPage)) startPage = 1;
             model.AuthorPage = startPage;
@@ -196,7 +195,7 @@ namespace MOBOT.BHL.Web2.Controllers
         {
             foreach(IHit page in pages)
             {
-                string pageDescription = string.Empty;
+                string pageDescription;
                 string pageIndicators = string.Empty;
                 string pageTypes = string.Empty;
                 foreach(string indicator in ((PageHit)page).PageIndicators)

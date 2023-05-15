@@ -36,7 +36,7 @@ namespace MOBOT.BHL.Web2
             {
                 // Initial populate of controls 
                 BHLProvider provider = new BHLProvider();
-                List<Language> languages = null;
+                List<Language> languages;
 
                 // Cache the results of the languages query
                 String cacheKey = "LanguagesWithPubItems";
@@ -54,7 +54,7 @@ namespace MOBOT.BHL.Web2
                         System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
                 }
 
-                List<Collection> collections = null;
+                List<Collection> collections;
 
                 // Cache the results of the collections query
                 cacheKey = "CollectionListActive";
@@ -134,7 +134,7 @@ namespace MOBOT.BHL.Web2
 
         protected void btnSearchAuthor_Click(object sender, EventArgs e)
         {
-            string authorName = string.Empty;
+            string authorName;
 
             // Build the search string
             if (!string.IsNullOrEmpty(txtAuthorLastName.Text))

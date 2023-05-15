@@ -72,8 +72,6 @@ namespace MOBOT.BHL.Web2
             string segmentMax = "0";
 
             string returnPage = string.Empty;
-            int searchCollectionInt;
-            int searchYearInt;
 
             // Get all of the possible search arguments
             if (Request["SearchTerm"] != null) searchTerm = Request["SearchTerm"].ToString();
@@ -111,18 +109,18 @@ namespace MOBOT.BHL.Web2
             // Make sure we have valid search terms
             if ((searchTerm != string.Empty || searchLastName != string.Empty ||
                     searchCollection != string.Empty || searchAnnotation != string.Empty) &&
-                (Int32.TryParse((searchYear == string.Empty ? "0" : searchYear), out searchYearInt) &&
-                Int32.TryParse((searchCollection == string.Empty ? "0" : searchCollection), out searchCollectionInt)))
+                (Int32.TryParse((searchYear == string.Empty ? "0" : searchYear), out _) &&
+                Int32.TryParse((searchCollection == string.Empty ? "0" : searchCollection), out _)))
             {
                 string searchCriteria = GetSearchCriteriaLabel(searchCat, searchTerm, searchLang, searchLastName, searchVolume,
-                    searchEdition, searchYear, searchSubject, searchCollection, searchIssue, searchStartPage, searchAnnotation, searchContainerTitle);
+                    searchEdition, searchYear, searchSubject, searchCollection, searchAnnotation, searchContainerTitle);
 
                 Page.Title = String.Format(ConfigurationManager.AppSettings["PageTitle"], "Search Results");
 
                 navbar.searchTerm = searchTerm;
                 uiSearchTerm = searchCriteria;
                 PerformSearch(searchCat, searchTerm, searchLang, searchLastName, searchVolume, searchEdition, searchYear,
-                    searchSubject, searchCollection, searchIssue, searchStartPage, searchAnnotation, titleMax, authorMax,
+                    searchSubject, searchCollection, searchIssue, searchAnnotation, titleMax, authorMax,
                     nameMax, subjectMax, annotationMax, annotationConceptMax, annotationSubjectMax, segmentMax, searchSort,
                     returnPage, searchContainerTitle, searchSeries);
             }
@@ -147,7 +145,7 @@ namespace MOBOT.BHL.Web2
         /// <returns></returns>
         private string GetSearchCriteriaLabel(string searchCat, string searchTerm, string searchLang, string searchLastName,
             string searchVolume, string searchEdition, string searchYear, string searchSubject, string searchCollection,
-            string searchIssue, string searchStartPage, string searchAnnotation, string searchContainerTitle)
+            string searchAnnotation, string searchContainerTitle)
         {
             StringBuilder searchCriteria = new StringBuilder();
 
@@ -230,7 +228,7 @@ namespace MOBOT.BHL.Web2
         /// <param name="returnPage"></param>
         private void PerformSearch(string searchCat, string searchTerm, string searchLang,
             string searchLastName, string searchVolume, string searchEdition, string searchYear,
-            string searchSubject, string searchCollection, string searchIssue, string searchStartPage,
+            string searchSubject, string searchCollection, string searchIssue, 
             string searchAnnotation, string titleMax, string authorMax, string nameMax, string subjectMax, 
             string annotationMax, string annotationConceptMax, string annotationSubjectMax, string segmentMax, 
             string searchSort, string returnPage, string searchContainerTitle, string searchSeries)
@@ -322,14 +320,11 @@ namespace MOBOT.BHL.Web2
             int authorReturnCount = (authorMax == "1" ? maxExpandedResults : maxDefaultResults);
             int nameReturnCount = (nameMax == "1" ? maxExpandedResults : maxDefaultResults);
             int subjectReturnCount = (subjectMax == "1" ? maxExpandedResults : maxDefaultResults);
-            int annotationReturnCount = (annotationMax == "1" ? maxExpandedResults : maxDefaultResults);
-            int annotationConceptReturnCount = (annotationConceptMax == "1" ? maxExpandedResults : maxDefaultResults);
-            int annotationSubjectReturnCount = (annotationSubjectMax == "1" ? maxExpandedResults : maxDefaultResults);
             int segmentReturnCount = (segmentMax == "1" ? maxExpandedResults : maxDefaultResults);
 
             if (authors.Visible)
             {
-                List<Author> authorsList = null;
+                List<Author> authorsList;
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]))
                 {
                     authorsList = bhlProvider.SearchAuthor(searchTerm, authorReturnCount);
@@ -359,11 +354,9 @@ namespace MOBOT.BHL.Web2
             }
             if (titles.Visible)
             {
-                int? searchYearInt = null;
-                int? searchCollectionInt = null;
                 int canContainItems = 0;
-                searchYearInt = (searchYear == string.Empty ? null : (int?)Convert.ToInt32(searchYear));
-                searchCollectionInt = (searchCollection == string.Empty ? null : (int?)Convert.ToInt32(searchCollection));
+                int? searchYearInt = (searchYear == string.Empty ? null : (int?)Convert.ToInt32(searchYear));
+                int? searchCollectionInt = (searchCollection == string.Empty ? null : (int?)Convert.ToInt32(searchCollection));
 
                 // If a collection is being search, check whether it can contain items
                 if (searchCollectionInt != null)
@@ -372,7 +365,7 @@ namespace MOBOT.BHL.Web2
                     if (collection != null) canContainItems = collection.CanContainItems;
                 }
 
-                List<SearchBookResult> books = null;
+                List<SearchBookResult> books;
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]))
                 {
                     if (searchCat.Length > 0)
@@ -459,7 +452,7 @@ namespace MOBOT.BHL.Web2
             }
             if (subjects.Visible)
             {
-                List<TitleKeyword> keywords = null;
+                List<TitleKeyword> keywords;
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]))
                 {
                     keywords = bhlProvider.SearchTitleKeyword(searchTerm, searchLang, subjectReturnCount);
@@ -494,12 +487,9 @@ namespace MOBOT.BHL.Web2
 
             if (sections.Visible)
             {
-                int? searchYearInt = null;
-                int? searchCollectionInt = null;
-                searchYearInt = (searchYear == string.Empty ? null : (int?)Convert.ToInt32(searchYear));
-                searchCollectionInt = (searchCollection == string.Empty ? null : (int?)Convert.ToInt32(searchCollection));
+                int? searchYearInt = (searchYear == string.Empty ? null : (int?)Convert.ToInt32(searchYear));
                 //do section search
-                List<Segment> segments = null;
+                List<Segment> segments;
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]))
                 {
                     if (searchCat.Length > 0)
@@ -554,10 +544,8 @@ namespace MOBOT.BHL.Web2
 
             if (annotations.Visible)
             {
-                int? searchYearInt = null;
-                int? searchCollectionInt = null;
-                searchYearInt = (searchYear == string.Empty ? null : (int?)Convert.ToInt32(searchYear));
-                searchCollectionInt = (searchCollection == string.Empty ? null : (int?)Convert.ToInt32(searchCollection));
+                int? searchYearInt = (searchYear == string.Empty ? null : (int?)Convert.ToInt32(searchYear));
+                int? searchCollectionInt = (searchCollection == string.Empty ? null : (int?)Convert.ToInt32(searchCollection));
 
                 List<SearchAnnotationResult> annotationsList = bhlProvider.SearchAnnotation(searchAnnotation, searchTerm,
                     searchLastName, searchVolume, searchEdition, searchYearInt, searchCollectionInt, 1, 10000);
