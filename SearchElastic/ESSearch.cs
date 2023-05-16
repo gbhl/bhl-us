@@ -1089,7 +1089,7 @@ namespace BHL.Search.Elastic
                 oHit.PageId = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["pageId"]);
                 oHit.Text = (string)GetHitValue(hit.Source, "text");
                 List<object> indicators = (List<object>)((Dictionary<string, object>)hit.Source)["pageIndicators"];
-                foreach (string indicator in indicators.Cast<string>()) oHit.pageIndicators.Add(indicator);
+                foreach (string indicator in indicators.Cast<string>()) oHit.PageIndicators.Add(indicator);
                 List<object> types = (List<object>)((Dictionary<string, object>)hit.Source)["pageTypes"];
                 foreach (string type in types.Cast<string>()) oHit.PageTypes.Add(type);
             }
