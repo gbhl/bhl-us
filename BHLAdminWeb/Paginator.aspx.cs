@@ -159,7 +159,6 @@ namespace MOBOT.BHL.AdminWeb
 			yearTextBox.Text = "";
 			volumeTextBox.Text = "";
 			issueTextBox.Text = "";
-			issuePrefixCombo.SelectedIndex = 0;
 			pageTypeCombo.SelectedIndex = 0;
 		}
 
@@ -478,9 +477,6 @@ namespace MOBOT.BHL.AdminWeb
                 Literal volume = (Literal)e.Row.FindControl("Volume");
                 volume.Text = (page.Volume ?? "");
 
-                Literal issuePrefix = (Literal)e.Row.FindControl("IssuePrefix");
-                issuePrefix.Text = (page.IssuePrefix ?? "");
-
                 Literal issue = (Literal)e.Row.FindControl("Issue");
                 issue.Text = (page.Issue ?? "");
 
@@ -704,7 +700,7 @@ namespace MOBOT.BHL.AdminWeb
                 int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
                 int[] arrPages = new int[pages.Count];
 				pages.CopyTo( arrPages );
-				bp.PageUpdateIssue( arrPages, issuePrefixCombo.SelectedItem.Text, issueTextBox.Text.Trim(), userId );
+				bp.PageUpdateIssue( arrPages, string.Empty, issueTextBox.Text.Trim(), userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
 
                 // By manually filling the cells in the datagrid (instead of just
@@ -715,7 +711,6 @@ namespace MOBOT.BHL.AdminWeb
                     CheckBox cb = (CheckBox)gvr.FindControl("pageCheckBox");
                     if (cb.Checked)
                     {
-                        ((Literal)gvr.FindControl("IssuePrefix")).Text = issuePrefixCombo.SelectedItem.Text;
                         ((Literal)gvr.FindControl("Issue")).Text = issueTextBox.Text.Trim();
                     }
                 }

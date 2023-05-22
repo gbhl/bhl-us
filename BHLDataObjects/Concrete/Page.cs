@@ -1,4 +1,5 @@
 ﻿using System;
+using CsvHelper.Configuration;
 using CustomDataAccess;
 
 
@@ -220,22 +221,30 @@ namespace MOBOT.BHL.DataObjects
                 string pageNums = this.IndicatedPages;
 
                 string pageTypes = this.PageTypes;
-                //pageTypes = pageTypes.Replace("Text, ", "");
-                //pageTypes = pageTypes.Replace(", Text", "");
 
                 if (pageTypes.Contains("Issue Start"))
                 {
                     // Get the volume and issue strings
-                    string year = (this.Year ?? string.Empty);
-                    string volume = ((this.Volume ?? string.Empty) == string.Empty) ? string.Empty : "v." + this.Volume;
-                    string issue = ((this.IssuePrefix ?? string.Empty) + " " + (this.Issue ?? string.Empty)).Trim();
+                    string year = (this.Year ?? string.Empty).Trim();
+                    string volume = string.IsNullOrWhiteSpace(this.Volume) ? string.Empty : this.Volume.Trim();
+                    string issue = (this.Issue ?? string.Empty).Trim();
 
                     // Build the year/volume/issue display string
-                    System.Collections.Generic.List<string> displayElements = new System.Collections.Generic.List<string>();
-                    if (year != string.Empty) displayElements.Add(year);
-                    if (volume != string.Empty) displayElements.Add(volume);
-                    if (issue != string.Empty) displayElements.Add(issue);
-                    volumeInfo = string.Join(", ", displayElements.ToArray());
+                    if (volume != string.Empty) volumeInfo = volume;
+                    if (issue != string.Empty)
+                    {
+                        if (volumeInfo == string.Empty)
+                            volumeInfo = issue;
+                        else
+                            volumeInfo += "(" + issue + ")";
+                    }
+                    if (year != string.Empty)
+                    {
+                        if (volumeInfo == string.Empty)
+                            volumeInfo = year;
+                        else
+                            volumeInfo = (volumeInfo + ", " + year);
+                    }
                 }
 
                 if (!string.IsNullOrWhiteSpace(pageTypes) && !string.IsNullOrWhiteSpace(pageNums)) pageTypes = "(" + pageTypes + ")";
