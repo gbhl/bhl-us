@@ -39,7 +39,7 @@ namespace BHL.Search
             set { _pageDescription = value; }
         }
 
-        public List<string> pageIndicators
+        public List<string> PageIndicators
         {
             get { return _pageIndicators; }
             set { _pageIndicators = value;  }

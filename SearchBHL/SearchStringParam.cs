@@ -2,18 +2,18 @@
 {
     public class SearchStringParam
     {
-        public string searchValue { get; set; }
+        public string SearchValue { get; set; }
         public SearchStringParamOperator ParamOperator { get; set; }
 
         public SearchStringParam()
         {
-            searchValue = string.Empty;
+            SearchValue = string.Empty;
             ParamOperator = SearchStringParamOperator.And;
         }
 
         public SearchStringParam(string value, SearchStringParamOperator op)
         {
-            searchValue = value;
+            SearchValue = value;
             ParamOperator = op;
         }
     }

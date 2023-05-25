@@ -57,7 +57,7 @@ namespace BHL.Search.Elastic
             get { return _sortField; }
             set {
                 _sortField = value;
-                _esSortField = GetSortField(_sortField);
+                _esSortField = GetSortField();
             }
         }
 
@@ -76,7 +76,7 @@ namespace BHL.Search.Elastic
             {
                 _esSearch.CheckServerStatus();
             }
-            catch (Exception ex)
+            catch
             {
                 // TODO: Consider logging the exception here
                 online = false;
@@ -107,6 +107,7 @@ namespace BHL.Search.Elastic
                 new Tuple<string, ESFacetSortOrder>(ESField.MATERIALTYPE, ESFacetSortOrder.TERM),
                 new Tuple<string, ESFacetSortOrder>(ESField.FACETAUTHORS, ESFacetSortOrder.COUNT),
                 new Tuple<string, ESFacetSortOrder>(ESField.DATERANGES, ESFacetSortOrder.TERM),
+                new Tuple<string, ESFacetSortOrder>(ESField.CONTRIBUTORS_RAW, ESFacetSortOrder.COUNT),
                 new Tuple<string, ESFacetSortOrder>(ESField.KEYWORDS_RAW, ESFacetSortOrder.COUNT),
                 new Tuple<string, ESFacetSortOrder>(ESField.LANGUAGE, ESFacetSortOrder.COUNT) };
             List<string> highlightFields = new List<string> { ESField.ASSOCIATIONS, ESField.ASSOCIATIONS_ABBR,
@@ -146,12 +147,13 @@ namespace BHL.Search.Elastic
                 new Tuple<string, ESFacetSortOrder>(ESField.MATERIALTYPE, ESFacetSortOrder.TERM),
                 new Tuple<string, ESFacetSortOrder>(ESField.FACETAUTHORS, ESFacetSortOrder.COUNT),
                 new Tuple<string, ESFacetSortOrder>(ESField.DATERANGES, ESFacetSortOrder.TERM),
+                new Tuple<string, ESFacetSortOrder>(ESField.CONTRIBUTORS_RAW, ESFacetSortOrder.COUNT),
                 new Tuple<string, ESFacetSortOrder>(ESField.KEYWORDS_RAW, ESFacetSortOrder.COUNT),
                 new Tuple<string, ESFacetSortOrder>(ESField.LANGUAGE, ESFacetSortOrder.COUNT) };
 
             // Highlight only the queried fields
             List<string> highlightFields = new List<string>();
-            if (!string.IsNullOrWhiteSpace(title.searchValue)) {
+            if (!string.IsNullOrWhiteSpace(title.SearchValue)) {
                 highlightFields.Add(ESField.ASSOCIATIONS);
                 highlightFields.Add(ESField.ASSOCIATIONS_ABBR);
                 highlightFields.Add(ESField.TITLE);
@@ -163,32 +165,32 @@ namespace BHL.Search.Elastic
                 highlightFields.Add(ESField.VARIANTS);
                 highlightFields.Add(ESField.VARIANTS_ABBR);
             }
-            if (!string.IsNullOrWhiteSpace(author.searchValue)) highlightFields.Add(ESField.SEARCHAUTHORS);
-            if (!string.IsNullOrWhiteSpace(keyword.searchValue)) highlightFields.Add(ESField.KEYWORDS);
+            if (!string.IsNullOrWhiteSpace(author.SearchValue)) highlightFields.Add(ESField.SEARCHAUTHORS);
+            if (!string.IsNullOrWhiteSpace(keyword.SearchValue)) highlightFields.Add(ESField.KEYWORDS);
             if (collection != null) highlightFields.Add(ESField.COLLECTIONS);
-            if (!string.IsNullOrWhiteSpace(notes.searchValue)) highlightFields.Add(ESField.NOTES);
-            if (!string.IsNullOrWhiteSpace(text.searchValue)) highlightFields.Add(ESField.TEXT);
+            if (!string.IsNullOrWhiteSpace(notes.SearchValue)) highlightFields.Add(ESField.NOTES);
+            if (!string.IsNullOrWhiteSpace(text.SearchValue)) highlightFields.Add(ESField.TEXT);
 
             // Perform the search.  Use the CATALOG index unless a value is specified for the "text"
             // or "year" parameters.  In that case, use the ITEMS index to perform a full-text search 
             // (text) or to find the specific volume (year).
             ConfigureSearch(
-                (string.IsNullOrWhiteSpace(text.searchValue) && string.IsNullOrWhiteSpace(year) ? ESIndex.CATALOG : ESIndex.ITEMS), 
+                (string.IsNullOrWhiteSpace(text.SearchValue) && string.IsNullOrWhiteSpace(year) ? ESIndex.CATALOG : ESIndex.ITEMS), 
                 returnFields, facetFields, highlightFields);
             ISearchResult result = _esSearch.SearchCatalog(title, author, volume, year, keyword, 
-                (language != null ? language.Item2 : null), 
-                (collection != null ? collection.Item2 : null), notes, text, searchLimits);
+                (language?.Item2), 
+                (collection?.Item2), notes, text, searchLimits);
 
             // Add the query parameters to the result
-            if (!string.IsNullOrWhiteSpace(title.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title.searchValue));
-            if (!string.IsNullOrWhiteSpace(author.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.AuthorNames, author.searchValue));
+            if (!string.IsNullOrWhiteSpace(title.SearchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title.SearchValue));
+            if (!string.IsNullOrWhiteSpace(author.SearchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.AuthorNames, author.SearchValue));
             if (!string.IsNullOrWhiteSpace(volume)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Volume, volume));
             if (!string.IsNullOrWhiteSpace(year)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Dates, year));
-            if (!string.IsNullOrWhiteSpace(keyword.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword.searchValue));
+            if (!string.IsNullOrWhiteSpace(keyword.SearchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword.SearchValue));
             if (language != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Language, language.Item2));
             if (collection != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Collections, collection.Item2));
-            if (!string.IsNullOrWhiteSpace(notes.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Notes, notes.searchValue));
-            if (!string.IsNullOrWhiteSpace(text.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Text, text.searchValue));
+            if (!string.IsNullOrWhiteSpace(notes.SearchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Notes, notes.SearchValue));
+            if (!string.IsNullOrWhiteSpace(text.SearchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Text, text.SearchValue));
             result.QueryLimits = limits;
 
             return result;
@@ -211,6 +213,7 @@ namespace BHL.Search.Elastic
                 new Tuple<string, ESFacetSortOrder>(ESField.MATERIALTYPE, ESFacetSortOrder.TERM),
                 new Tuple<string, ESFacetSortOrder>(ESField.FACETAUTHORS, ESFacetSortOrder.COUNT),
                 new Tuple<string, ESFacetSortOrder>(ESField.DATERANGES, ESFacetSortOrder.TERM),
+                new Tuple<string, ESFacetSortOrder>(ESField.CONTRIBUTORS_RAW, ESFacetSortOrder.COUNT),
                 new Tuple<string, ESFacetSortOrder>(ESField.KEYWORDS_RAW, ESFacetSortOrder.COUNT),
                 new Tuple<string, ESFacetSortOrder>(ESField.LANGUAGE, ESFacetSortOrder.COUNT) };
             List<string> highlightFields = new List<string> { ESField.ASSOCIATIONS, ESField.ASSOCIATIONS_ABBR,
@@ -247,6 +250,7 @@ namespace BHL.Search.Elastic
                 new Tuple<string, ESFacetSortOrder>(ESField.MATERIALTYPE, ESFacetSortOrder.TERM),
                 new Tuple<string, ESFacetSortOrder>(ESField.FACETAUTHORS, ESFacetSortOrder.COUNT),
                 new Tuple<string, ESFacetSortOrder>(ESField.DATERANGES, ESFacetSortOrder.TERM),
+                new Tuple<string, ESFacetSortOrder>(ESField.CONTRIBUTORS_RAW, ESFacetSortOrder.COUNT),
                 new Tuple<string, ESFacetSortOrder>(ESField.KEYWORDS_RAW, ESFacetSortOrder.COUNT),
                 new Tuple<string, ESFacetSortOrder>(ESField.LANGUAGE, ESFacetSortOrder.COUNT) };
             List<string> highlightFields = new List<string> { ESField.ASSOCIATIONS, ESField.ASSOCIATIONS_ABBR,
@@ -354,11 +358,10 @@ namespace BHL.Search.Elastic
         /// <summary>
         /// Convert the SortField enum to the appropriate ElasticSearch field name
         /// </summary>
-        /// <param name="sortField"></param>
         /// <returns></returns>
-        private string GetSortField(SortField sortField)
+        private string GetSortField()
         {
-            string field = ESSortField.SCORE;
+            string field;
 
             switch(_sortField)
             {
@@ -398,7 +401,7 @@ namespace BHL.Search.Elastic
 
             foreach(Tuple<SearchField, string> limit in limits)
             {
-                string fieldName = string.Empty;
+                string fieldName;
                 string fieldValue = limit.Item2;
 
                 switch (limit.Item1)

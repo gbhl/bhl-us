@@ -18,8 +18,6 @@ namespace MOBOT.BHL.Web2.Services
 
         public void ProcessRequest(HttpContext context)
         {
-            string response = String.Empty;
-
             string searchTerm = string.Empty;
             string searchCat = string.Empty;
             string searchContainerTitle = string.Empty;
@@ -30,12 +28,7 @@ namespace MOBOT.BHL.Web2.Services
             string searchYear = string.Empty;
             string searchSubject = string.Empty;
             string searchCollection = string.Empty;
-            string searchIssue = string.Empty;
-            string searchStartPage = string.Empty;
-            string searchArticleTitle = string.Empty;
             string downloadType = string.Empty;
-            int searchCollectionInt;
-            int searchYearInt;
 
             // Get all of the possible arguements
             if (context.Request["SearchTerm"] != null) searchTerm = context.Request["SearchTerm"].ToString();
@@ -48,9 +41,6 @@ namespace MOBOT.BHL.Web2.Services
             if (context.Request["yr"] != null) searchYear = context.Request["yr"].ToString();
             if (context.Request["subj"] != null) searchSubject = context.Request["subj"].ToString();
             if (context.Request["col"] != null) searchCollection = context.Request["col"].ToString();
-            if (context.Request["iss"] != null) searchIssue = context.Request["iss"].ToString();
-            if (context.Request["spage"] != null) searchStartPage = context.Request["spage"].ToString();
-            if (context.Request["atitle"] != null) searchArticleTitle = context.Request["atitle"].ToString();
             if (context.Request["dltype"] != null) downloadType = context.Request["dltype"].ToString();
 
             switch (downloadType)
@@ -58,17 +48,17 @@ namespace MOBOT.BHL.Web2.Services
                 case "T":
                     // Make sure we have valid search terms
                     if ((searchTerm != string.Empty || searchLastName != string.Empty || searchCollection != string.Empty) &&
-                        (Int32.TryParse((searchYear == string.Empty ? "0" : searchYear), out searchYearInt) &&
-                        Int32.TryParse((searchCollection == string.Empty ? "0" : searchCollection), out searchCollectionInt)))
+                        (Int32.TryParse((searchYear == string.Empty ? "0" : searchYear), out int searchYearInt) &&
+                        Int32.TryParse((searchCollection == string.Empty ? "0" : searchCollection), out int searchCollectionInt)))
                     {
                         PerformTitleDownload(context, searchCat, searchTerm, searchLang, searchLastName, searchVolume, searchEdition,
-                            searchYearInt, searchSubject, searchCollectionInt, searchIssue, searchStartPage, searchArticleTitle);
+                            searchYearInt, searchSubject, searchCollectionInt);
                     }
                     break;
                 case "S":
                     // Make sure we have valid search terms
                     if ((searchTerm != string.Empty || searchLastName != string.Empty || searchContainerTitle != string.Empty) &&
-                        (Int32.TryParse((searchYear == string.Empty ? "0" : searchYear), out searchYearInt)))
+                        (Int32.TryParse((searchYear == string.Empty ? "0" : searchYear), out _)))
                     {
                         PerformSegmentDownload(context, searchCat, searchTerm, searchContainerTitle, searchLastName, searchYear);
                     }
@@ -89,15 +79,12 @@ namespace MOBOT.BHL.Web2.Services
         /// <param name="searchYear"></param>
         /// <param name="searchSubject"></param>
         /// <param name="searchCollection"></param>
-        /// <param name="searchIssue"></param>
-        /// <param name="searchStartPage"></param>
-        /// <param name="searchArticleTitle"></param>
         /// <param name="downloadType"></param>
         private void PerformTitleDownload(HttpContext context, string searchCat, string searchTerm, string searchLang, 
             string searchLastName, string searchVolume, string searchEdition, int searchYear, string searchSubject, 
-            int searchCollection, string searchIssue, string searchStartPage, string searchArticleTitle)
+            int searchCollection)
         {
-            List<SearchBookResult> searchResult = null;
+            List<SearchBookResult> searchResult;
 
             try
             {
@@ -152,20 +139,13 @@ namespace MOBOT.BHL.Web2.Services
         /// <param name="context"></param>
         /// <param name="searchCat"></param>
         /// <param name="searchTerm"></param>
-        /// <param name="searchLang"></param>
         /// <param name="searchLastName"></param>
-        /// <param name="searchVolume"></param>
-        /// <param name="searchEdition"></param>
+        /// <param name="searchContainerTitle"></param>
         /// <param name="searchYear"></param>
-        /// <param name="searchSubject"></param>
-        /// <param name="searchCollection"></param>
-        /// <param name="searchIssue"></param>
-        /// <param name="searchStartPage"></param>
-        /// <param name="searchArticleTitle"></param>
         private void PerformSegmentDownload(HttpContext context, string searchCat, string searchTerm, string searchContainerTitle,
             string searchLastName, string searchYear)
         {
-            List<Segment> searchResult = null;
+            List<Segment> searchResult;
 
             try
             {
