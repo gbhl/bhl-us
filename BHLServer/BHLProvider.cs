@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Web;
 using System.Xml.Linq;
 
 namespace MOBOT.BHL.Server
@@ -140,7 +141,7 @@ namespace MOBOT.BHL.Server
         /// <returns>Array of NameFinderResponse objects.</returns>
         public List<NameFinderResponse> GetNamesFromOcr(string resolverName, int pageID, bool usePreferredResults, int maxReadAttempts)
         {
-            List<NameFinderResponse> nameFinderResponses = new List<NameFinderResponse>();
+            List<NameFinderResponse> nameFinderResponses;
 
             switch (resolverName)
             {
@@ -169,10 +170,7 @@ namespace MOBOT.BHL.Server
         /// <returns></returns>
         private List<NameFinderResponse> GetNamesFromOcrTaxonFinder(int pageID, bool usePreferredResults, int maxReadAttempts)
         {
-            string webServiceUrl = string.Empty;
-
-            PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId(pageID);
-            if (ps == null) ps = new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
+            PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId(pageID) ?? new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
             string filepath = ps.OcrTextLocation;
 
             // Get the OCR text
@@ -203,10 +201,10 @@ namespace MOBOT.BHL.Server
                 }
 
                 // Get the name finding service url and POST body
-                // Data source identifiers listed at http://resolver.globalnames.org/data_sources
+                // Data source identifiers listed at https://verifier.globalnames.org/data_sources
                 // Use preferred data sources of NameBank (ID: 169) and EOL (ID: 12).
                 // The GET url for the service is: http://gnrd.globalnames.org/name_finder.json?text={0}&all_data_sources=true&best_match_only=true&preferred_data_sources=12|169
-                webServiceUrl = ConfigurationManager.AppSettings["GNRDTaxonFinderBaseAddress"];
+                string webServiceUrl = ConfigurationManager.AppSettings["GNRDTaxonFinderBaseAddress"];
                 ocrText = string.Format(ConfigurationManager.AppSettings["GNRDTaxonFinderRequestContent"], System.Web.HttpUtility.UrlEncode(ocrText));
 
                 try
@@ -321,11 +319,13 @@ namespace MOBOT.BHL.Server
                                 }
 
                                 // Add the data from the JSON response to our list of names to return 
-                                NameFinderResponse nameFinderResponse = new NameFinderResponse();
-                                nameFinderResponse.Name = nameString;
-                                nameFinderResponse.NameResolved = nameResolvedString;
-                                nameFinderResponse.CanonicalName = canonicalName;
-                                nameFinderResponse.Identifiers = identifiers;
+                                NameFinderResponse nameFinderResponse = new NameFinderResponse
+                                {
+                                    Name = nameString,
+                                    NameResolved = nameResolvedString,
+                                    CanonicalName = canonicalName,
+                                    Identifiers = identifiers
+                                };
                                 nameResponseList.Add(nameFinderResponse);
                             }
                         }
@@ -355,10 +355,7 @@ namespace MOBOT.BHL.Server
         /// <returns></returns>
         private List<NameFinderResponse> GetNamesFromOcrGNFinderService(int pageID, bool usePreferredResults, int maxReadAttempts)
         {
-            string webServiceUrl = string.Empty;
-
-            PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId(pageID);
-            if (ps == null) ps = new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
+            PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId(pageID) ?? new BHLProvider().PageSummarySegmentSelectByPageID(pageID);
             string filepath = ps.OcrTextLocation;
 
             // Get the OCR text
@@ -389,10 +386,10 @@ namespace MOBOT.BHL.Server
                 }
 
                 // Get the name finding service url and POST body
-                // Data source identifiers listed at http://resolver.globalnames.org/data_sources
+                // Data source identifiers listed at https://verifier.globalnames.org/data_sources
                 // Use preferred data sources of NameBank (ID: 169) and EOL (ID: 12).
                 // The GET url for the service is: http://gnrd.globalnames.org/name_finder.json?text={0}&all_data_sources=true&best_match_only=true&preferred_data_sources=12|169
-                webServiceUrl = ConfigurationManager.AppSettings["GNRDGNFinderBaseAddress"];
+                string webServiceUrl = ConfigurationManager.AppSettings["GNRDGNFinderBaseAddress"];
                 ocrText = string.Format(ConfigurationManager.AppSettings["GNRDGNFinderRequestContent"], System.Web.HttpUtility.UrlEncode(ocrText));
 
                 try
@@ -513,11 +510,13 @@ namespace MOBOT.BHL.Server
                                 }
 
                                 // Add the data from the JSON response to our list of names to return 
-                                NameFinderResponse nameFinderResponse = new NameFinderResponse();
-                                nameFinderResponse.Name = nameString;
-                                nameFinderResponse.NameResolved = nameResolvedString;
-                                nameFinderResponse.CanonicalName = canonicalName;
-                                nameFinderResponse.Identifiers = identifiers;
+                                NameFinderResponse nameFinderResponse = new NameFinderResponse
+                                {
+                                    Name = nameString,
+                                    NameResolved = nameResolvedString,
+                                    CanonicalName = canonicalName,
+                                    Identifiers = identifiers
+                                };
                                 nameResponseList.Add(nameFinderResponse);
                             }
                         }
@@ -648,13 +647,15 @@ namespace MOBOT.BHL.Server
 
                                     if (keepName)
                                     {
-                                        NameFinderResponse nameFinderResponse = new NameFinderResponse();
-                                        nameFinderResponse.Name = nameString;
-                                        nameFinderResponse.NameResolved = nameResolvedString;
-                                        nameFinderResponse.CanonicalName = canonicalName;
-                                        nameFinderResponse.MatchType = matchType;
-                                        nameFinderResponse.Curation = curation;
-                                        nameFinderResponse.Identifiers = identifiers;
+                                        NameFinderResponse nameFinderResponse = new NameFinderResponse
+                                        {
+                                            Name = nameString,
+                                            NameResolved = nameResolvedString,
+                                            CanonicalName = canonicalName,
+                                            MatchType = matchType,
+                                            Curation = curation,
+                                            Identifiers = identifiers
+                                        };
                                         nameResponseList.Add(nameFinderResponse);
                                     }
                                 }
@@ -692,7 +693,7 @@ namespace MOBOT.BHL.Server
             {
                 int dataSourceID = (int)nameDetail[dataSourceIdField];
 
-                // Full list of data sources at http://resolver.globalnames.org/data_sources
+                // Full list of data sources at https://verifier.globalnames.org/data_sources
                 Identifier id = this.IdentifierSelectByGNFinderDataSource(dataSourceID);
                 if (id != null) identifier = id.IdentifierName + "|" + identifierValue;
             }
@@ -708,9 +709,9 @@ namespace MOBOT.BHL.Server
         /// </example>
         /// <param name="name"></param>
         /// <returns></returns>
-        public List<GNResolverResponse> GetNameDetailFromGNResolver(string name)
+        public List<GNVerifierResponse> GetNameDetailFromGNResolver(string name)
         {
-            List<GNResolverResponse> nameDetails = new List<GNResolverResponse>();
+            List<GNVerifierResponse> nameDetails = new List<GNVerifierResponse>();
 
             // Get the name finding service url
             string webServiceUrl = string.Format("http://resolver.globalnames.org/name_resolvers.json?names={0}", name);
@@ -780,21 +781,23 @@ namespace MOBOT.BHL.Server
                                 string url = (string)(result["url"] ?? string.Empty);
                                 double score = (double)(result["score"] ?? "0");
 
-                                GNResolverResponse nameDetail = new GNResolverResponse();
-                                nameDetail.DataSourceID = dataSourceID;
-                                nameDetail.DataSourceTitle = dataSourceTitle;
-                                nameDetail.GniUUID = gniUUID;
-                                nameDetail.NameString = nameString;
-                                nameDetail.CanonicalForm = canonicalForm;
-                                nameDetail.ClassificationPath = classificationPath;
-                                nameDetail.ClassificationPathRanks = classificationPathRanks;
-                                nameDetail.ClassificationPathIDs = classificationPathIDs;
-                                nameDetail.TaxonID = taxonID;
-                                nameDetail.LocalID = localID;
-                                nameDetail.GlobalID = globalID;
-                                nameDetail.Url = url;
-                                nameDetail.MatchType = matchType;
-                                nameDetail.Score = score;
+                                GNVerifierResponse nameDetail = new GNVerifierResponse
+                                {
+                                    DataSourceID = dataSourceID,
+                                    DataSourceTitle = dataSourceTitle,
+                                    GniUUID = gniUUID,
+                                    NameString = nameString,
+                                    CanonicalForm = canonicalForm,
+                                    ClassificationPath = classificationPath,
+                                    ClassificationPathRanks = classificationPathRanks,
+                                    ClassificationPathIDs = classificationPathIDs,
+                                    TaxonID = taxonID,
+                                    LocalID = localID,
+                                    GlobalID = globalID,
+                                    Url = url,
+                                    MatchType = matchType,
+                                    Score = score
+                                };
                                 nameDetails.Add(nameDetail);
                             }
                         }
@@ -816,7 +819,7 @@ namespace MOBOT.BHL.Server
             {
                 List<NameSourceGNFinder> nameSources = new BHLProvider().NameSourceGNFinderSelectAll();
 
-                foreach(GNResolverResponse nameDetail in nameDetails)
+                foreach(GNVerifierResponse nameDetail in nameDetails)
                 {
                     NameSourceGNFinder nameSource = nameSources.Find(delegate(NameSourceGNFinder x) { return x.DataSourceID == nameDetail.DataSourceID; });
                     if (nameSource != null)
@@ -847,7 +850,7 @@ namespace MOBOT.BHL.Server
 
             // For each name string, accumulate every result for that string and add it to the final 
             // ordered result set.
-            List<GNResolverResponse> displayNames = new List<GNResolverResponse>();
+            List<GNVerifierResponse> displayNames = new List<GNVerifierResponse>();
             foreach (var nameString in distinctSources)
             {
                 var sourceNames = from n in nameDetails
@@ -855,7 +858,206 @@ namespace MOBOT.BHL.Server
                                   orderby n.MatchType, n.DataSourceTitle, n.Score
                                   select n;
 
-                foreach (GNResolverResponse nameDetail in sourceNames)
+                foreach (GNVerifierResponse nameDetail in sourceNames)
+                {
+                    displayNames.Add(nameDetail);
+                }
+            }
+
+            return displayNames;
+        }
+
+        /// <summary>
+        /// Get details about the specified name from the Global Names verifier service.
+        /// </summary>
+        /// <example>
+        ///     https://verifier.globalnames.org/api/v1/verifications
+        ///     with request body
+        ///         {
+        ///             "nameStrings": [ "Strix varia" ],
+        ///             "withAllMatches":true
+        ///         }
+        /// </example>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public List<GNVerifierResponse> GetNameDetailFromGNVerifier(string name)
+        {
+            List<GNVerifierResponse> nameDetails = new List<GNVerifierResponse>();
+
+            try
+            {
+                JObject jsonResponse = null;
+                string cacheKey = string.Format("NameSource-{0}", name);
+
+                string json = ApplicationCacheGet(cacheKey);
+                if (json == null)
+                {
+                    HttpWebRequest req = (HttpWebRequest)WebRequest.Create("https://verifier.globalnames.org/api/v1/verifications");
+                    req.Method = "POST";
+                    req.Timeout = 60000;
+                    req.ContentType = "application/json";
+
+                    // Set the request body
+                    byte[] body = new ASCIIEncoding().GetBytes("{ \"nameStrings\": [ \"" + name + "\" ], \"withAllMatches\":true }");
+                    req.ContentLength = body.Length;
+                    Stream reqStream = req.GetRequestStream();
+                    reqStream.Write(body, 0, body.Length);
+                    reqStream.Close();
+
+                    using (HttpWebResponse resp = (HttpWebResponse)req.GetResponse())
+                    {
+                        using (StreamReader reader = new StreamReader(resp.GetResponseStream()))
+                        {
+                            jsonResponse = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+                        }
+                    }
+
+                    ApplicationCacheAdd(cacheKey, jsonResponse.ToString(), expiration: DateTime.Now.AddDays(7));
+                    req = null;
+                }
+                else
+                {
+                    jsonResponse = JObject.Parse(json);
+                }
+
+                // Did the service successfully evaluate the name?
+                try
+                {
+                    JToken names = jsonResponse["names"];
+
+                    // Read the name details from the JSON response
+                    if (names != null)
+                    {
+                        string aggMatchType = (string)names[0]["matchType"];
+
+                        if (aggMatchType != "NoMatch")
+                        {
+
+                            JArray results = (JArray)names[0]["results"];
+                            foreach (JToken result in results)
+                            {
+                                string matchType = (string)(result["matchType"] ?? "NoMatch");
+                                string curation = (string)(result["curation"] ?? "NotCurated");
+
+                                // Possible matchType values
+                                //  Exact - exact string match
+                                //  Fuzzy - fuzzy match
+                                //  NoMatch - no match
+                                //
+                                // Possible curation values
+                                //  Curated
+                                //  AutoCurated
+                                //  NotCurated
+                                if (matchType != "NoMatch" && curation != "NotCurated")  // Don't use questionable matches
+                                {
+                                    int dataSourceID = (int)(result["dataSourceId"] ?? "0");
+                                    string dataSourceTitle = (string)(result["dataSourceTitleShort"] ?? string.Empty);
+                                    string gniUUID = (string)(result["currentNameId"] ?? string.Empty);
+                                    string nameString = (string)(result["currentName"] ?? string.Empty);
+                                    string canonicalForm = (string)(result["currentCanonicalFull"] ?? string.Empty);
+                                    string classificationPath = (string)(result["classificationPath"] ?? string.Empty);
+                                    string classificationPathRanks = (string)(result["classificationRanks"] ?? string.Empty);
+                                    string classificationPathIDs = (string)(result["classificationIds"] ?? string.Empty);
+                                    //string taxonID = (string)(result["taxon_id"] ?? string.Empty);
+                                    string localID = (string)(result["recordId"] ?? string.Empty);
+                                    //string globalID = (string)(result["global_id"] ?? string.Empty);
+                                    string url = (string)(result["outlink"] ?? string.Empty);
+                                    double score = 0;
+                                    JToken scoreDetails = result["scoreDetails"];
+                                    if (scoreDetails != null)
+                                    {
+                                        double acceptedNameScore = (double)(scoreDetails["acceptedNameScore"] ?? "0");
+                                        double authorMatchScore = (double)(scoreDetails["authorMatchScore"] ?? "0");
+                                        double cardinalityScore = (double)(scoreDetails["cardinalityScore"] ?? "0");
+                                        double curatedDataScore = (double)(scoreDetails["curatedDataScore"] ?? "0");
+                                        double fuzzyLessScore = (double)(scoreDetails["fuzzyLessScore"] ?? "0");
+                                        double infraSpecificRankScore = (double)(scoreDetails["infraSpecificRankScore"] ?? "0");
+                                        double parsingQualityScore = (double)(scoreDetails["parsingQualityScore"] ?? "0");
+                                        score = acceptedNameScore + authorMatchScore + cardinalityScore + curatedDataScore + 
+                                            fuzzyLessScore + infraSpecificRankScore + parsingQualityScore;
+                                    }
+                                    if (!Enum.TryParse(matchType, out GNVerifierMatchType match)) match = GNVerifierMatchType.NoMatch;
+
+                                    GNVerifierResponse nameDetail = new GNVerifierResponse
+                                    {
+                                        DataSourceID = dataSourceID,
+                                        DataSourceTitle = dataSourceTitle,
+                                        GniUUID = gniUUID,
+                                        NameString = nameString,
+                                        CanonicalForm = canonicalForm,
+                                        ClassificationPath = classificationPath,
+                                        ClassificationPathRanks = classificationPathRanks,
+                                        ClassificationPathIDs = classificationPathIDs,
+                                        //TaxonID = taxonID,
+                                        LocalID = localID,
+                                        //GlobalID = globalID,
+                                        Url = url,
+                                        MatchType = (int)match,
+                                        Score = score
+                                    };
+
+                                    nameDetails.Add(nameDetail);
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Service failed.  Throw an error.
+                    throw new Exception("Invalid response received from GNI verifier service.", ex);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+
+            // Update name details with name source metadata from database
+            if (nameDetails.Count > 0)
+            {
+                List<NameSourceGNFinder> nameSources = new BHLProvider().NameSourceGNFinderSelectAll();
+
+                foreach (GNVerifierResponse nameDetail in nameDetails)
+                {
+                    NameSourceGNFinder nameSource = nameSources.Find(delegate (NameSourceGNFinder x) { return x.DataSourceID == nameDetail.DataSourceID; });
+                    if (nameSource != null)
+                    {
+                        nameDetail.DataSourceTitle = nameSource.GNDataSourceLabel;
+                        if (string.IsNullOrWhiteSpace(nameDetail.Url))
+                        {
+                            if (!string.IsNullOrWhiteSpace(nameSource.GNDataSourceURLFormat))
+                            {
+                                nameDetail.Url = string.Format(nameSource.GNDataSourceURLFormat, nameDetail.LocalID);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Format the Global Names response
+
+            // Get the distinct name strings in the response, along with the 'best' match type for each
+            // name.  Match type is a value from 1 to 6, with 1 being the best (most definite) match,
+            // and 6 being the worst (most questionable) match.  Order the list by match type and by
+            // name string.
+            var distinctSources = from n in nameDetails
+                                  group n by n.NameString into g
+                                  let MatchType = g.Min(n => n.MatchType)
+                                  orderby g.Key
+                                  select new { NameString = g.Key, MatchType };
+
+            // For each name string, accumulate every result for that string and add it to the final 
+            // ordered result set.
+            List<GNVerifierResponse> displayNames = new List<GNVerifierResponse>();
+            foreach (var nameString in distinctSources)
+            {
+                var sourceNames = from n in nameDetails
+                                  where n.NameString == nameString.NameString
+                                  orderby n.MatchType, n.DataSourceTitle, n.Score
+                                  select n;
+
+                foreach (GNVerifierResponse nameDetail in sourceNames)
                 {
                     displayNames.Add(nameDetail);
                 }
@@ -1030,10 +1232,9 @@ namespace MOBOT.BHL.Server
         public string MarcGetFileContents(int id, string type)
         {
             string fileContents = string.Empty;
-            string filepath = string.Empty;
 
             IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider();
-            filepath = this.MarcFileExists(id, type);
+            string filepath = this.MarcFileExists(id, type);
             if (!string.IsNullOrWhiteSpace(filepath))
             {
                 fileContents = fileAccessProvider.GetFileText(filepath);
@@ -1099,10 +1300,9 @@ namespace MOBOT.BHL.Server
         public string ScandataGetFileContents(ItemType itemType, int id)
         {
             string fileContents = string.Empty;
-            string filepath = string.Empty;
 
             IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider();
-            filepath = this.ScandataFileExists(itemType, id);
+            string filepath = this.ScandataFileExists(itemType, id);
             if (!string.IsNullOrWhiteSpace(filepath))
             {
                 fileContents = fileAccessProvider.GetFileText(filepath);

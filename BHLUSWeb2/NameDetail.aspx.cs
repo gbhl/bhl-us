@@ -1,4 +1,5 @@
 ﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -24,14 +25,15 @@ namespace MOBOT.BHL.Web2
             if (!string.IsNullOrWhiteSpace(NameClean))
             {
                 // Call the Global Names service to get the details about the name
-                List<GNResolverResponse> nameDetails = null;
+                List<GNVerifierResponse> nameDetails = null;
                 string errorMessage = string.Empty;
                 try
                 {
                     nameDetails = GetNameDetail(NameClean);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    ExceptionUtility.LogException(ex, "NameDetail.Page_Load");
                     errorMessage = "No response received from the <a target=\"_blank\"  rel=\"noopener noreferrer\" href=\"http://resolver.globalnames.org\">Global Names Index</a>.  Please try again later.";
                 }
 
@@ -51,7 +53,7 @@ namespace MOBOT.BHL.Web2
 
                     // For each data source, accumulate every result for that source and add it to the final 
                     // ordered result set.
-                    List<GNResolverResponse> displayNames = new List<GNResolverResponse>();
+                    List<GNVerifierResponse> displayNames = new List<GNVerifierResponse>();
                     foreach (var dataSourceTitle in distinctSources)
                     {
                         var sourceNames = from n in nameDetails
@@ -59,7 +61,7 @@ namespace MOBOT.BHL.Web2
                                           orderby n.MatchType, n.Score
                                           select n;
 
-                        foreach (GNResolverResponse nameDetail in sourceNames)
+                        foreach (GNVerifierResponse nameDetail in sourceNames)
                         {
                             displayNames.Add(nameDetail);
                         }
@@ -69,7 +71,7 @@ namespace MOBOT.BHL.Web2
                     System.Text.StringBuilder sb = new System.Text.StringBuilder();
                     sb.Append("<ol>");
                     string currentSourceName = string.Empty;
-                    foreach (GNResolverResponse nameDetail in displayNames)
+                    foreach (GNVerifierResponse nameDetail in displayNames)
                     {
                         sb.Append("<li class=\"titlelisting\">");
 
@@ -160,17 +162,17 @@ namespace MOBOT.BHL.Web2
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        private List<GNResolverResponse> GetNameDetail(string name)
+        private List<GNVerifierResponse> GetNameDetail(string name)
         {
-
-            List<GNResolverResponse> nameDetails = null;
+            /*
+            List<GNVerifierResponse> nameDetails;
 
             string cacheKey = "NameDetail" + name;
 
             if (Cache[cacheKey] != null)
             {
                 // Use cached version
-                nameDetails = (List<GNResolverResponse>)Cache[cacheKey];
+                nameDetails = (List<GNVerifierResponse>)Cache[cacheKey];
             }
             else
             {
@@ -185,6 +187,8 @@ namespace MOBOT.BHL.Web2
                     System.Web.Caching.CacheItemPriority.Normal,
                     null);
             }
+            */
+            List<GNVerifierResponse> nameDetails = bhlProvider.GetNameDetailFromGNVerifier(name);
 
             return nameDetails;
         }

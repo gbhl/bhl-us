@@ -1,10 +1,8 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MOBOT.BHL.DataObjects;
-using System.Collections.Generic;
 using MOBOT.BHL.DataObjects.Enum;
+using MOBOT.BHL.Server;
+using System.Collections.Generic;
 
 namespace BHLServerTest
 {
@@ -149,8 +147,18 @@ namespace BHLServerTest
         {
             BHLProvider target = new BHLProvider();
             string name = "Zea mays";
-            List<GNResolverResponse> actual = null;
+            List<GNVerifierResponse> actual = null;
             actual = target.GetNameDetailFromGNResolver(name);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod]
+        public void GetNameDetailFromGNVerifierTest()
+        {
+            BHLProvider target = new BHLProvider();
+            string name = "Zea mays";
+            List<GNVerifierResponse> actual = null;
+            actual = target.GetNameDetailFromGNVerifier(name);
             Assert.IsTrue(actual.Count > 0);
         }
 

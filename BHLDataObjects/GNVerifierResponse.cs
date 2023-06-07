@@ -5,9 +5,9 @@ using CustomDataAccess;
 namespace MOBOT.BHL.DataObjects
 {
     [Serializable]
-    public class GNResolverResponse
+    public class GNVerifierResponse
     {
-        public GNResolverResponse()
+        public GNVerifierResponse()
         {
         }
 
@@ -25,7 +25,7 @@ namespace MOBOT.BHL.DataObjects
         private string _currentTaxonID = string.Empty;
         private string _currentNameString = string.Empty;
         private string _url = string.Empty;
-        private int _matchType = 0;
+        private int _matchType = 1;
         private double _score = 0;
 
         public int DataSourceID
@@ -123,6 +123,12 @@ namespace MOBOT.BHL.DataObjects
             get { return _score; }
             set { _score = value; }
         }
+    }
 
+    public enum GNVerifierMatchType
+    {
+        Exact = 1,
+        Fuzzy = 3,
+        NoMatch = 6
     }
 }
