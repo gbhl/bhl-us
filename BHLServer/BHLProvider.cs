@@ -958,9 +958,7 @@ namespace MOBOT.BHL.Server
                                     string classificationPath = (string)(result["classificationPath"] ?? string.Empty);
                                     string classificationPathRanks = (string)(result["classificationRanks"] ?? string.Empty);
                                     string classificationPathIDs = (string)(result["classificationIds"] ?? string.Empty);
-                                    //string taxonID = (string)(result["taxon_id"] ?? string.Empty);
                                     string localID = (string)(result["recordId"] ?? string.Empty);
-                                    //string globalID = (string)(result["global_id"] ?? string.Empty);
                                     string url = (string)(result["outlink"] ?? string.Empty);
                                     double score = 0;
                                     JToken scoreDetails = result["scoreDetails"];
@@ -988,9 +986,7 @@ namespace MOBOT.BHL.Server
                                         ClassificationPath = classificationPath,
                                         ClassificationPathRanks = classificationPathRanks,
                                         ClassificationPathIDs = classificationPathIDs,
-                                        //TaxonID = taxonID,
                                         LocalID = localID,
-                                        //GlobalID = globalID,
                                         Url = url,
                                         MatchType = (int)match,
                                         Score = score

@@ -98,15 +98,17 @@ function populateNameSourcesList(data, resolvedName, nameSourceList) {
         }
 
         var nameSource;
+        var nameSourceDisplay = element.DataSourceTitle;
+        if (element.LocalID.length > 0) nameSourceDisplay += " [" + element.LocalID + "]";
         if (element.Url.length > 0) {
             nameSource = document.createElement('a');
             nameSource.setAttribute('href', element.Url);
             nameSource.setAttribute('target', '_blank');
             nameSource.setAttribute('rel', 'noopener noreferrer');
-            nameSource.innerText = element.DataSourceTitle; // + ' (' + element.NameString + ')';
+            nameSource.innerText = nameSourceDisplay;
         }
         else {
-            nameSource = document.createTextNode(element.DataSourceTitle);// + ' (' + element.NameString + ')');
+            nameSource = document.createTextNode(nameSourceDisplay);
         }
 
         formSources.push(nameSource);

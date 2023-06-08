@@ -164,30 +164,6 @@ namespace MOBOT.BHL.Web2
         /// <returns></returns>
         private List<GNVerifierResponse> GetNameDetail(string name)
         {
-            /*
-            List<GNVerifierResponse> nameDetails;
-
-            string cacheKey = "NameDetail" + name;
-
-            if (Cache[cacheKey] != null)
-            {
-                // Use cached version
-                nameDetails = (List<GNVerifierResponse>)Cache[cacheKey];
-            }
-            else
-            {
-                // Refresh cache
-                nameDetails = bhlProvider.GetNameDetailFromGNResolver(name);
-
-                Cache.Add(cacheKey,
-                    nameDetails,
-                    null,
-                    DateTime.Now.AddMinutes(Convert.ToDouble(ConfigurationManager.AppSettings["NameDetailCacheTime"])),
-                    System.Web.Caching.Cache.NoSlidingExpiration,
-                    System.Web.Caching.CacheItemPriority.Normal,
-                    null);
-            }
-            */
             List<GNVerifierResponse> nameDetails = bhlProvider.GetNameDetailFromGNVerifier(name);
 
             return nameDetails;
