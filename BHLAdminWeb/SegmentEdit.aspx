@@ -421,11 +421,11 @@
 	<table cellpadding="4" width="100%">
 		<tr>
 			<td style="white-space: nowrap" align="right" class="dataHeader">Segment ID:</td>
-			<td style="white-space: nowrap" colspan="2" valign="middle" width="100%"><asp:Label ID="idLabel" runat="server" ForeColor="blue" /></td>
+			<td style="white-space: nowrap; width:100px" colspan="2" valign="middle"><asp:Label ID="idLabel" runat="server" ForeColor="blue" /></td>
 		</tr>
         <tr>
             <td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Item ID:</td>
-			<td style="white-space: nowrap" colspan="2" valign="middle" width="100%">
+			<td style="white-space: nowrap; width:100px" colspan="2" valign="middle">
                 <asp:Label ID="itemIDLabel" ClientIDMode="Static" runat="server" />&nbsp;
                 <asp:Label ID="itemDescLabel" Text="Not Selected" style="font-style:italic" runat="server" /><br />
                 <input type="button" onclick="overlay();document.getElementById('srchTitleID').focus();" id="btnAddItem" value="Select Item" />
@@ -434,7 +434,7 @@
         </tr>
 		<tr>
 			<td style="white-space: nowrap" align="right" class="dataHeader">Source ID (IA ID):</td>
-			<td style="white-space: nowrap" colspan="2" valign="middle" width="100%"><asp:Label ID="sourceIdLabel" runat="server" ForeColor="blue" /></td>
+			<td style="white-space: nowrap; width:100px" colspan="2" valign="middle"><asp:Label ID="sourceIdLabel" runat="server" ForeColor="blue" /></td>
 		</tr>
 		<tr>
 			<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Status:</td>
@@ -518,9 +518,17 @@
     <fieldset>
         <legend class="dataHeader">Publication Details</legend>
         <table cellpadding="4" width="100%">
+            <tr>
+                <td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Title:</td>
+                <td>
+					<asp:DropDownList ID="ddlPreferredContainerTitleID" runat="server" style="width:75%"></asp:DropDownList>
+                </td>
+            </tr>
 			<tr>
-				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Title:</td>
-				<td colspan="4" style="width: 100%"><asp:TextBox ID="containerTitleTextBox" runat="server" MaxLength="2000" Width="100%"></asp:TextBox></td>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader"></td>
+				<td colspan="4" style="width: 100%">
+					<asp:TextBox ID="containerTitleTextBox" runat="server" MaxLength="2000" Width="100%"></asp:TextBox><br />This is the Publication title displayed on the Part bibliography page, in exports, and in API output.<ul  style="margin:1px"><li  style="padding:1px">If the Segment is associated with an Item, choose the title to display from the dropdown list or simply accept the default.</li><li style="padding:1px">If there is no associated Item, type the Title into the text box.</li></ul>
+				</td>
 			</tr>
 			<tr>
                 <td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Publication Details:</td>
@@ -561,8 +569,8 @@
 		<legend class="dataHeader">Segment Authors</legend>
 		<asp:GridView ID="authorsList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 			AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
-			Width="800px" CssClass="boxTable" OnRowCancelingEdit="authorsList_RowCancelingEdit" OnRowEditing="authorsList_RowEditing"
-			OnRowUpdating="authorsList_RowUpdating" OnRowCommand="authorsList_RowCommand" DataKeyNames="ItemAuthorID,AuthorID">
+			Width="800px" CssClass="boxTable" OnRowCancelingEdit="AuthorsList_RowCancelingEdit" OnRowEditing="AuthorsList_RowEditing"
+			OnRowUpdating="AuthorsList_RowUpdating" OnRowCommand="AuthorsList_RowCommand" DataKeyNames="ItemAuthorID,AuthorID">
 			<Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 				<asp:BoundField DataField="AuthorID" HeaderText="Author ID" ItemStyle-Width="60px" ReadOnly="true" />
@@ -599,8 +607,8 @@
 		<legend class="dataHeader">Segment Keywords</legend>
 		<asp:GridView ID="keywordsList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 		AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
-			Width="800px" CssClass="boxTable" OnRowCancelingEdit="keywordsList_RowCancelingEdit" OnRowEditing="keywordsList_RowEditing"
-			OnRowUpdating="keywordsList_RowUpdating" OnRowCommand="keywordsList_RowCommand" DataKeyNames="ItemKeywordID, KeywordID, Keyword">
+			Width="800px" CssClass="boxTable" OnRowCancelingEdit="KeywordsList_RowCancelingEdit" OnRowEditing="KeywordsList_RowEditing"
+			OnRowUpdating="KeywordsList_RowUpdating" OnRowCommand="KeywordsList_RowCommand" DataKeyNames="ItemKeywordID, KeywordID, Keyword">
 			<Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 				<asp:TemplateField HeaderText="Subject" ItemStyle-Width="220px" HeaderStyle-HorizontalAlign="Left">
@@ -621,15 +629,15 @@
 			<HeaderStyle HorizontalAlign="Left" CssClass="SearchResultsHeader" />
 		</asp:GridView>
 		<br />
-		<asp:Button ID="addKeywordButton" runat="server" Text="Add Keyword" OnClick="addKeywordButton_Click" />
+		<asp:Button ID="addKeywordButton" runat="server" Text="Add Keyword" OnClick="AddKeywordButton_Click" />
 	</fieldset>
 	<br />
 	<fieldset>
 		<legend class="dataHeader">Identifiers</legend>
 		<asp:GridView ID="identifiersList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 		AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
-			Width="800px" CssClass="boxTable" OnRowCancelingEdit="identifiersList_RowCancelingEdit" OnRowEditing="identifiersList_RowEditing"
-			OnRowUpdating="identifiersList_RowUpdating" OnRowCommand="identifiersList_RowCommand" DataKeyNames="ItemIdentifierID, IdentifierID, IdentifierValue">
+			Width="800px" CssClass="boxTable" OnRowCancelingEdit="IdentifiersList_RowCancelingEdit" OnRowEditing="IdentifiersList_RowEditing"
+			OnRowUpdating="IdentifiersList_RowUpdating" OnRowCommand="IdentifiersList_RowCommand" DataKeyNames="ItemIdentifierID, IdentifierID, IdentifierValue">
 			<Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 				<asp:TemplateField HeaderText="Identifier" ItemStyle-Width="400px" HeaderStyle-HorizontalAlign="Left">
@@ -662,7 +670,7 @@
 			<HeaderStyle HorizontalAlign="Left" CssClass="SearchResultsHeader" />
 		</asp:GridView>
 		<br />
-		<asp:Button ID="addSegmentIdentifierButton" runat="server" Text="Add Segment Identifier" OnClick="addSegmentIdentifierButton_Click" />
+		<asp:Button ID="addSegmentIdentifierButton" runat="server" Text="Add Segment Identifier" OnClick="AddSegmentIdentifierButton_Click" />
 	</fieldset>
 	<br />
     <fieldset>
@@ -672,12 +680,12 @@
         1) Three segments that describe the same article.<br />
         2) Two segments that describe a treatment (segment #1) which is part of an article (segment #2).<br />
         <asp:Literal ID="litPrimaryMsg" runat="server" Visible="false"><br />If one or more related segments describe the same thing as the segment being edited, use the appropropriate "Primary" checkbox to indicate the canonical segment.<br /><br /></asp:Literal>
-        <asp:CheckBox ID="chkPrimary" runat="server" Text="Make segment above the Primary segment in the group" Visible="false" AutoPostBack="true"  OnCheckedChanged="chkPrimary_Click "/>
+        <asp:CheckBox ID="chkPrimary" runat="server" Text="Make segment above the Primary segment in the group" Visible="false" AutoPostBack="true"  OnCheckedChanged="PrimaryCheckbox_Click"/>
         </p>
 		<asp:GridView ID="relatedSegmentsList" ClientIDMode="Static" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
-			AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white" OnRowDataBound="relatedSegmentsList_RowDataBound"
-			Width="800px" CssClass="boxTable" OnRowCancelingEdit="relatedSegmentsList_RowCancelingEdit" OnRowEditing="relatedSegmentsList_RowEditing"
-			OnRowUpdating="relatedSegmentsList_RowUpdating" OnRowCommand="relatedSegmentsList_RowCommand" DataKeyNames="SegmentID">
+			AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white" OnRowDataBound="RelatedSegmentsList_RowDataBound"
+			Width="800px" CssClass="boxTable" OnRowCancelingEdit="RelatedSegmentsList_RowCancelingEdit" OnRowEditing="RelatedSegmentsList_RowEditing"
+			OnRowUpdating="RelatedSegmentsList_RowUpdating" OnRowCommand="RelatedSegmentsList_RowCommand" DataKeyNames="SegmentID">
             <Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" ItemStyle-VerticalAlign="Top" />
 				<asp:BoundField DataField="SegmentID" HeaderText="ID" ItemStyle-Width="35px" ReadOnly="true" HeaderStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top"/>
@@ -740,11 +748,11 @@
 		<legend class="dataHeader">Pages</legend>
         <br />
 		<input type="button" runat="server" onclick="pageSearch();overlayPageSelect();" id="btnAddPage" value="Add Page" visible="true" />
-		<asp:Button ID="btnPaginator" runat="server" Text="Paginate This Segment" onclick="btnPaginator_Click" Visible="false" />
+		<asp:Button ID="btnPaginator" runat="server" Text="Paginate This Segment" onclick="PaginatorButton_Click" Visible="false" />
 		<asp:GridView ID="pagesList" ClientIDMode="Static" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 			AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
-			Width="800px" CssClass="boxTable" OnRowCancelingEdit="pagesList_RowCancelingEdit" OnRowEditing="pagesList_RowEditing"
-			OnRowUpdating="pagesList_RowUpdating" OnRowCommand="pagesList_RowCommand" DataKeyNames="ItemPageID, PageID">
+			Width="800px" CssClass="boxTable" OnRowCancelingEdit="PagesList_RowCancelingEdit" OnRowEditing="PagesList_RowEditing"
+			OnRowUpdating="PagesList_RowUpdating" OnRowCommand="PagesList_RowCommand" DataKeyNames="ItemPageID, PageID">
 			<Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 				<asp:TemplateField HeaderText="Page ID" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Left">
@@ -787,7 +795,7 @@
 		<br />
 	</fieldset>
 	<br />
-	<asp:Button ID="saveButton" runat="server" OnClick="saveButton_Click" Text="Save" />
+	<asp:Button ID="saveButton" runat="server" OnClick="SaveButton_Click" Text="Save" />
 	<div style="float:right;"><mobot:EditHistoryControl runat="server" id="editHistoryControl" /></div>
 </div>
 <div id="overlayauthor" class="overlay">
@@ -823,7 +831,7 @@
 	        <tr>
 	            <td colspan="5" align="left">
 					<span id="divSearchType" runat="server" style="margin-bottom:10px; display:block;">
-						<b>Search For:</b> <input type="radio" runat="server" clientidmode="Static" id="rdoSearchTypeTitle" class="titleSearchType" name="rdoSearchType" value="Title" checked />
+						<b>Search For:</b> <input type="radio" runat="server" clientidmode="Static" id="rdoSearchTypeTitle" class="titleSearchType" name="rdoSearchType" value="Title" checked="true" />
 						<label for="rdoSearchTypeTitle">Title containing the desired items</label>&nbsp;
 						<input type="radio" runat="server" clientidmode="Static" id="rdoSearchTypeItem" class="titleSearchType" name="rdoSearchType" value="Item" />
 						<label for="rdoSearchTypeItem">Item</label>
@@ -922,7 +930,7 @@
         <table cellpadding="3" class="SearchText">
 	        <tr>
 	            <td colspan="6" align="left">
-	                <b>Enter an ID or Title and click "Search" to find segments you would like to add, <del>or click "Suggest" to automatically find segments that may be related.</del></b>
+	                <b>Enter an ID or Title and click "Search" to find segments you would like to add.</b>
 	            </td>
 	        </tr>
 	        <tr>
@@ -931,7 +939,7 @@
 	            <td style="white-space: nowrap">Title:</td>
 	            <td><input id="srchRelatedSegmentTitle" type="text" class="SearchText" onkeydown="keyDownHandler(event, btnRelatedSegmentSearch);" /></td>
 	            <td><input id="btnRelatedSegmentSearch" type="button" onclick="relatedSegmentSearch(document.getElementById('srchRelatedSegmentID').value, document.getElementById('srchRelatedSegmentTitle').value);" value="Search" class="SearchText" /></td>
-                <td><input id="btnSuggestRelatedSegments" type="button" class="SearchText" value="Suggest" disabled="true" /></td>
+                <td></td>
 	        </tr>
 	        <tr>
 	            <td colspan="6">

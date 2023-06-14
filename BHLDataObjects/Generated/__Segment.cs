@@ -1,5 +1,5 @@
 
-// Generated 4/27/2021 1:21:19 PM
+// Generated 6/13/2023 4:35:22 PM
 // Do not modify the contents of this code file.
 // This abstract class __Segment is based upon dbo.Segment.
 
@@ -93,6 +93,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="pageProgression"></param>
+		/// <param name="preferredContainerTitleID"></param>
 		public __Segment(int segmentID, 
 			int itemID, 
 			int? redirectSegmentID, 
@@ -140,7 +141,8 @@ namespace MOBOT.BHL.DataObjects
 			DateTime lastModifiedDate, 
 			int? creationUserID, 
 			int? lastModifiedUserID, 
-			string pageProgression) : this()
+			string pageProgression, 
+			int? preferredContainerTitleID) : this()
 		{
 			_SegmentID = segmentID;
 			ItemID = itemID;
@@ -190,6 +192,7 @@ namespace MOBOT.BHL.DataObjects
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
 			PageProgression = pageProgression;
+			PreferredContainerTitleID = preferredContainerTitleID;
 		}
 		
 		#endregion Constructors
@@ -454,6 +457,11 @@ namespace MOBOT.BHL.DataObjects
 					case "PageProgression" :
 					{
 						_PageProgression = (string)column.Value;
+						break;
+					}
+					case "PreferredContainerTitleID" :
+					{
+						_PreferredContainerTitleID = (int?)column.Value;
 						break;
 					}
 								}
@@ -1793,6 +1801,33 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion PageProgression
+		
+		#region PreferredContainerTitleID
+		
+		private int? _PreferredContainerTitleID = null;
+		
+		/// <summary>
+		/// Column: PreferredContainerTitleID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("PreferredContainerTitleID", DbTargetType=SqlDbType.Int, Ordinal=49, NumericPrecision=10, IsNullable=true)]
+		public int? PreferredContainerTitleID
+		{
+			get
+			{
+				return _PreferredContainerTitleID;
+			}
+			set
+			{
+				if (_PreferredContainerTitleID != value)
+				{
+					_PreferredContainerTitleID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion PreferredContainerTitleID
 			
 		#endregion Properties
 
@@ -1884,7 +1919,8 @@ namespace MOBOT.BHL.DataObjects
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
 					o.LastModifiedUserID == LastModifiedUserID &&
-					GetComparisonString(o.PageProgression) == GetComparisonString(PageProgression) 
+					GetComparisonString(o.PageProgression) == GetComparisonString(PageProgression) &&
+					o.PreferredContainerTitleID == PreferredContainerTitleID 
 				)
 				{
 					o = null;
@@ -2031,7 +2067,8 @@ namespace MOBOT.BHL.DataObjects
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
 			public const string LastModifiedUserID = "LastModifiedUserID";	
-			public const string PageProgression = "PageProgression";
+			public const string PageProgression = "PageProgression";	
+			public const string PreferredContainerTitleID = "PreferredContainerTitleID";
 		}
 				
 		#endregion SortColumn

@@ -1,3 +1,13 @@
+
+IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[SegmentUpdateAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[SegmentUpdateAuto]
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+
 CREATE PROCEDURE dbo.SegmentUpdateAuto
 
 @SegmentID INT,
@@ -44,7 +54,8 @@ CREATE PROCEDURE dbo.SegmentUpdateAuto
 @PaginationCompleteUserID INT,
 @LastPageNameLookupDate DATETIME,
 @LastModifiedUserID INT,
-@PageProgression NVARCHAR(10)
+@PageProgression NVARCHAR(10),
+@PreferredContainerTitleID INT
 
 AS 
 
@@ -96,7 +107,8 @@ SET
 	[LastPageNameLookupDate] = @LastPageNameLookupDate,
 	[LastModifiedDate] = getdate(),
 	[LastModifiedUserID] = @LastModifiedUserID,
-	[PageProgression] = @PageProgression
+	[PageProgression] = @PageProgression,
+	[PreferredContainerTitleID] = @PreferredContainerTitleID
 WHERE
 	[SegmentID] = @SegmentID
 		
@@ -155,7 +167,8 @@ ELSE BEGIN
 		[LastModifiedDate],
 		[CreationUserID],
 		[LastModifiedUserID],
-		[PageProgression]
+		[PageProgression],
+		[PreferredContainerTitleID]
 	FROM [dbo].[Segment]
 	WHERE
 		[SegmentID] = @SegmentID
@@ -163,3 +176,9 @@ ELSE BEGIN
 	RETURN -- update successful
 END
 GO
+ 
+SET QUOTED_IDENTIFIER OFF
+GO
+SET ANSI_NULLS ON
+GO
+
