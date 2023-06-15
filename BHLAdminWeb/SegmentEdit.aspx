@@ -527,7 +527,7 @@
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader"></td>
 				<td colspan="4" style="width: 100%">
-					<asp:TextBox ID="containerTitleTextBox" runat="server" MaxLength="2000" Width="100%"></asp:TextBox><br />This is the Publication title displayed on the Part bibliography page, in exports, and in API output.<ul  style="margin:1px"><li  style="padding:1px">If the Segment is associated with an Item, choose the title to display from the dropdown list or simply accept the default.</li><li style="padding:1px">If there is no associated Item, type the Title into the text box.</li></ul>
+					<asp:TextBox ID="containerTitleTextBox" runat="server" MaxLength="2000" Width="75%"></asp:TextBox><br />This is the Journal/Publication Title displayed on the Part bibliography page, in exports, and in API output.<ul  style="margin:1px"><li  style="padding:1px">If this Segment is associated with an Item, choose the title to display from the dropdown list or simply accept the default.</li><li style="padding:1px">If there is no Item associated with this Segment, type the Title into the text box.</li></ul>
 				</td>
 			</tr>
 			<tr>
