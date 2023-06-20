@@ -948,7 +948,11 @@ namespace MOBOT.BHL.Server
                                 //  Curated
                                 //  AutoCurated
                                 //  NotCurated
-                                if (matchType != "NoMatch" && curation != "NotCurated")  // Don't use questionable matches
+                                //
+                                // NOTE about curation:  The 'curation' field is more for automatic processing,
+                                // and it is often on a 'safe' side, and excludes some outdated resources, that
+                                // are almost definitely... curated.
+                                if (matchType != "NoMatch")  // Don't use questionable matches
                                 {
                                     int dataSourceID = (int)(result["dataSourceId"] ?? "0");
                                     string dataSourceTitle = (string)(result["dataSourceTitleShort"] ?? string.Empty);
