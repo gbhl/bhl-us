@@ -1436,15 +1436,15 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             // Set the book, journal, and article titles
-            if (!string.IsNullOrWhiteSpace(articleTitle))
-            {
+            //if (!string.IsNullOrWhiteSpace(articleTitle))
+            //{
                 citation.Title = articleTitle;
                 citation.JournalTitle = bookJournalTitle;
-            }
-            else
-            {
-                citation.Title = bookJournalTitle;
-            }
+            //}
+            //else
+            //{
+            //    citation.Title = bookJournalTitle;
+            //}
 
             // Save the citation to the database
             new BHLProvider().ImportRecordSave(citation, userId);

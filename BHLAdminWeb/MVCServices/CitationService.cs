@@ -282,7 +282,14 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARTICLETITLE.name.ToString(), Models.CitationImportModel.MappedColumn.ARTICLETITLE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.AUTHORNAMES.name.ToString(), Models.CitationImportModel.MappedColumn.AUTHORNAMES.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.BIOSTOR.name.ToString(), Models.CitationImportModel.MappedColumn.BIOSTOR.name);
-            mappedColumns.Add(Models.CitationImportModel.MappedColumn.BOOKJOURNALTITLE.name.ToString(), Models.CitationImportModel.MappedColumn.BOOKJOURNALTITLE.name);
+
+            // In order to allow "Book/Journal Title" (i.e. Segment.ContainerTitle) to be updated in bulk, there
+            // would need to be rules in place to allow this only for segments that point to externally-hosted 
+            // content.  For BHL-hosted content, this field is never used, so updating it makes no sense.
+            // For now (July 11, 2023), bulk updates of this column will be disabled.
+
+            //mappedColumns.Add(Models.CitationImportModel.MappedColumn.BOOKJOURNALTITLE.name.ToString(), Models.CitationImportModel.MappedColumn.BOOKJOURNALTITLE.name);
+
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.CONTRIBUTORS.name.ToString(), Models.CitationImportModel.MappedColumn.CONTRIBUTORS.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.COPYRIGHTSTATUS.name.ToString(), Models.CitationImportModel.MappedColumn.COPYRIGHTSTATUS.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.DOWNLOADURL.name.ToString(), Models.CitationImportModel.MappedColumn.DOWNLOADURL.name);
