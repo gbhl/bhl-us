@@ -334,7 +334,7 @@ namespace MOBOT.BHL.AdminWeb
                 // If necesssary, populate the preferred container id dropdown
                 if (ddlPreferredContainerTitleID.Items.Count == 0)
                 {
-                    ddlPreferredContainerTitleID.Items.Add(new ListItem("(use Primary Title of associated Item)", ""));
+                    ddlPreferredContainerTitleID.Items.Add(new ListItem("(Primary Title of associated Item)", ""));
                     List<ItemTitle> titles = new BHLProvider().ItemTitleSelectByItem((int)bookID);
                     foreach (ItemTitle title in titles)
                     {
@@ -359,13 +359,13 @@ namespace MOBOT.BHL.AdminWeb
                     ddlPreferredContainerTitleID.SelectedIndex = 0;
                 }
 
-                containerTitleTextBox.Enabled = false;
-                ddlPreferredContainerTitleID.Enabled = true;
+                containerTitleTextBox.Visible = false;
+                ddlPreferredContainerTitleID.Visible= true;
             }
             else
             {
-                containerTitleTextBox.Enabled = true;
-                ddlPreferredContainerTitleID.Enabled = false;
+                containerTitleTextBox.Visible = true;
+                ddlPreferredContainerTitleID.Visible = false;
             }
         }
 

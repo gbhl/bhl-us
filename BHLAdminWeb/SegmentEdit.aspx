@@ -522,14 +522,9 @@
                 <td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Title:</td>
                 <td>
 					<asp:DropDownList ID="ddlPreferredContainerTitleID" runat="server" style="width:75%"></asp:DropDownList>
+					<asp:TextBox ID="containerTitleTextBox" runat="server" MaxLength="2000" Width="75%"></asp:TextBox>
                 </td>
             </tr>
-			<tr>
-				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader"></td>
-				<td colspan="4" style="width: 100%">
-					<asp:TextBox ID="containerTitleTextBox" runat="server" MaxLength="2000" Width="75%"></asp:TextBox><br />This is the Journal/Publication Title displayed on the Part landing page, in exports, and in API output.<ul  style="margin:1px"><li  style="padding:1px">If this Segment is associated with an Item, choose the title to display from the dropdown list or simply accept the default.</li><li style="padding:1px">If there is no Item associated with this Segment, e.g. for externally hosted content, type the Title into the text box.</li></ul>
-				</td>
-			</tr>
 			<tr>
                 <td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Publication Details:</td>
             	<td colspan="4" style="width: 100%"><asp:TextBox ID="publicationDetailsTextBox" runat="server" MaxLength="400" Width="100%"></asp:TextBox></td>
