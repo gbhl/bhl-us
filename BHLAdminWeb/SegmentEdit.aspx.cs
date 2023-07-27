@@ -1229,191 +1229,194 @@ namespace MOBOT.BHL.AdminWeb
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
             int? userId = null;
 
-            if (validate(segment))
+            try
             {
-                BHLProvider bp = new BHLProvider();
-
-                // Set the id of the editing user
-                userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
-
-                // Build PublicationDetails and PageRange (if necessary)
-                if (publicationDetailsTextBox.Text.Trim() == string.Empty)
+                if (validate(segment))
                 {
-                    if (publisherPlaceTextBox.Text.Trim() == string.Empty)
-                        publicationDetailsTextBox.Text = publisherNameTextBox.Text.Trim();
-                    else
-                        publicationDetailsTextBox.Text = (publisherPlaceTextBox.Text.Trim() + ": " + publisherNameTextBox.Text.Trim()).Trim();
-                }
+                    BHLProvider bp = new BHLProvider();
 
-                if (pageRangeTextBox.Text.Trim() == string.Empty)
-                {
-                    if (startPageTextBox.Text.Trim() != string.Empty)
+                    // Set the id of the editing user
+                    userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+
+                    // Build PublicationDetails and PageRange (if necessary)
+                    if (publicationDetailsTextBox.Text.Trim() == string.Empty)
                     {
-                        pageRangeTextBox.Text = startPageTextBox.Text.Trim();
-                        if (endPageTextBox.Text.Trim() != string.Empty) pageRangeTextBox.Text += "--" + endPageTextBox.Text.Trim();
+                        if (publisherPlaceTextBox.Text.Trim() == string.Empty)
+                            publicationDetailsTextBox.Text = publisherNameTextBox.Text.Trim();
+                        else
+                            publicationDetailsTextBox.Text = (publisherPlaceTextBox.Text.Trim() + ": " + publisherNameTextBox.Text.Trim()).Trim();
                     }
-                }
 
-                // Gather up data on form
-                bool isItemChanged = (segment.BookID ?? 0) != (itemIDLabel.Text == "" ? 0 : Convert.ToInt32(itemIDLabel.Text));
-                segment.BookID = (itemIDLabel.Text == "" ? (int?)null : Convert.ToInt32(itemIDLabel.Text));
-                segment.RedirectSegmentID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
-                segment.SegmentStatusID = Convert.ToInt32(ddlSegmentStatus.SelectedValue);
-                segment.SegmentGenreID = Convert.ToInt32(ddlSegmentGenre.SelectedValue);
-                string contributorCode = (ddlContributor.SelectedValue.Length == 0 ? null : ddlContributor.SelectedValue);
-                segment.Title = titleTextBox.Text.Trim();
-                segment.SortTitle = sortTitleTextBox.Text.Trim();
-                segment.TranslatedTitle = translatedTitleTextBox.Text.Trim();
-                segment.ContainerTitle = containerTitleTextBox.Text.Trim();
-                segment.PublicationDetails = publicationDetailsTextBox.Text.Trim();
-                segment.PublisherPlace = publisherPlaceTextBox.Text.Trim();
-                segment.PublisherName = publisherNameTextBox.Text.Trim();
-                segment.Volume = volumeTextBox.Text.Trim();
-                segment.Series = seriesTextBox.Text.Trim();
-                segment.Issue = issueTextBox.Text.Trim();
-                segment.Date = dateTextBox.Text.Trim();
-                segment.PageRange = pageRangeTextBox.Text.Trim();
-                segment.StartPageNumber = startPageTextBox.Text.Trim();
-                segment.EndPageNumber = endPageTextBox.Text.Trim();
-                segment.StartPageID = bhlStartPageIDTextBox.Text == "" ? (int?)null : Convert.ToInt32(bhlStartPageIDTextBox.Text);
-                segment.LanguageCode = (ddlLanguage.SelectedValue.Length == 0 ? null : ddlLanguage.SelectedValue);
-                segment.Url = urlTextBox.Text.Trim();
-                segment.DownloadUrl = downloadUrlTextBox.Text.Trim();
-                segment.RightsStatus = rightsStatusTextBox.Text.Trim();
-                segment.RightsStatement = rightsStatementTextBox.Text.Trim();
-                segment.LicenseName = licenseNameTextBox.Text.Trim();
-                segment.LicenseUrl = licenseUrlTextBox.Text.Trim();
-                segment.Notes = notesTextBox.Text.Trim();
-                segment.Summary = summaryTextBox.Text.Trim();
-                segment.IsPrimary = (short)(chkPrimary.Checked ? 1 : 0);
-                segment.IsNew = (segment.SegmentID == 0);
-
-                //----------------------------------------
-
-                // Update the Item information
-                if (segment.Item == null)
-                {
-                    segment.Item = new DataObjects.Item
+                    if (pageRangeTextBox.Text.Trim() == string.Empty)
                     {
-                        ItemTypeID = 20,    // 10 = Book, 20 = Segment
-                        ItemStatusID = segment.SegmentStatusID,
-                        IsNew = true
-                    };
-                }
-                bool updated = false;
-                if (segment.SegmentStatusID != segment.Item.ItemStatusID) { segment.Item.ItemStatusID = segment.SegmentStatusID; updated = true; }
-                if (segment.Notes.CompareTo(segment.Item.Note) != 0) { segment.Item.Note = segment.Notes; updated = true; }
-                if (updated) segment.Item.LastModifiedDate = DateTime.Now;
-
-                //----------------------------------------
-
-                // Update the ItemRelationship records if the Item has changed
-                if (isItemChanged)
-                {
-                    Book book = null;
-                    if (segment.BookID != null) book = bp.BookSelectAuto((int)segment.BookID);
-
-                    bool existing = false;
-                    foreach(ItemRelationship ir in segment.RelationshipList)
-                    {
-                        if (ir.IsChild == 1 && !ir.IsDeleted)
+                        if (startPageTextBox.Text.Trim() != string.Empty)
                         {
-                            existing = true;
-                            if (segment.BookID == null)
-                                ir.IsDeleted = true;
-                            else
-                                ir.ParentID = book.ItemID;
+                            pageRangeTextBox.Text = startPageTextBox.Text.Trim();
+                            if (endPageTextBox.Text.Trim() != string.Empty) pageRangeTextBox.Text += "--" + endPageTextBox.Text.Trim();
                         }
                     }
 
-                    if (!existing && book != null)
+                    // Gather up data on form
+                    bool isItemChanged = (segment.BookID ?? 0) != (itemIDLabel.Text == "" ? 0 : Convert.ToInt32(itemIDLabel.Text));
+                    segment.BookID = (itemIDLabel.Text == "" ? (int?)null : Convert.ToInt32(itemIDLabel.Text));
+                    segment.RedirectSegmentID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
+                    segment.SegmentStatusID = Convert.ToInt32(ddlSegmentStatus.SelectedValue);
+                    segment.SegmentGenreID = Convert.ToInt32(ddlSegmentGenre.SelectedValue);
+                    string contributorCode = (ddlContributor.SelectedValue.Length == 0 ? null : ddlContributor.SelectedValue);
+                    segment.Title = titleTextBox.Text.Trim();
+                    segment.SortTitle = sortTitleTextBox.Text.Trim();
+                    segment.TranslatedTitle = translatedTitleTextBox.Text.Trim();
+                    segment.ContainerTitle = containerTitleTextBox.Text.Trim();
+                    segment.PublicationDetails = publicationDetailsTextBox.Text.Trim();
+                    segment.PublisherPlace = publisherPlaceTextBox.Text.Trim();
+                    segment.PublisherName = publisherNameTextBox.Text.Trim();
+                    segment.Volume = volumeTextBox.Text.Trim();
+                    segment.Series = seriesTextBox.Text.Trim();
+                    segment.Issue = issueTextBox.Text.Trim();
+                    segment.Date = dateTextBox.Text.Trim();
+                    segment.PageRange = pageRangeTextBox.Text.Trim();
+                    segment.StartPageNumber = startPageTextBox.Text.Trim();
+                    segment.EndPageNumber = endPageTextBox.Text.Trim();
+                    segment.StartPageID = bhlStartPageIDTextBox.Text == "" ? (int?)null : Convert.ToInt32(bhlStartPageIDTextBox.Text);
+                    segment.LanguageCode = (ddlLanguage.SelectedValue.Length == 0 ? null : ddlLanguage.SelectedValue);
+                    segment.Url = urlTextBox.Text.Trim();
+                    segment.DownloadUrl = downloadUrlTextBox.Text.Trim();
+                    segment.RightsStatus = rightsStatusTextBox.Text.Trim();
+                    segment.RightsStatement = rightsStatementTextBox.Text.Trim();
+                    segment.LicenseName = licenseNameTextBox.Text.Trim();
+                    segment.LicenseUrl = licenseUrlTextBox.Text.Trim();
+                    segment.Notes = notesTextBox.Text.Trim();
+                    segment.Summary = summaryTextBox.Text.Trim();
+                    segment.IsPrimary = (short)(chkPrimary.Checked ? 1 : 0);
+                    segment.IsNew = (segment.SegmentID == 0);
+
+                    //----------------------------------------
+
+                    // Update the Item information
+                    if (segment.Item == null)
                     {
-                        int maxSeq = (from x in segment.RelationshipList where !(x.IsDeleted) select x.SequenceOrder).DefaultIfEmpty(0).Max();
-                        segment.RelationshipList.Add(
-                            new ItemRelationship
+                        segment.Item = new DataObjects.Item
+                        {
+                            ItemTypeID = 20,    // 10 = Book, 20 = Segment
+                            ItemStatusID = segment.SegmentStatusID,
+                            IsNew = true
+                        };
+                    }
+                    bool updated = false;
+                    if (segment.SegmentStatusID != segment.Item.ItemStatusID) { segment.Item.ItemStatusID = segment.SegmentStatusID; updated = true; }
+                    if (segment.Notes.CompareTo(segment.Item.Note) != 0) { segment.Item.Note = segment.Notes; updated = true; }
+                    if (updated) segment.Item.LastModifiedDate = DateTime.Now;
+
+                    //----------------------------------------
+
+                    // Update the ItemRelationship records if the Item has changed
+                    if (isItemChanged)
+                    {
+                        Book book = null;
+                        if (segment.BookID != null) book = bp.BookSelectAuto((int)segment.BookID);
+
+                        bool existing = false;
+                        foreach (ItemRelationship ir in segment.RelationshipList)
+                        {
+                            if (ir.IsChild == 1 && !ir.IsDeleted)
                             {
-                                ParentID = book.ItemID,
-                                ChildID = segment.ItemID,
-                                SequenceOrder = maxSeq + 1,
-                                IsNew = true
-                            });
+                                existing = true;
+                                if (segment.BookID == null)
+                                    ir.IsDeleted = true;
+                                else
+                                    ir.ParentID = book.ItemID;
+                            }
+                        }
+
+                        if (!existing && book != null)
+                        {
+                            int maxSeq = (from x in segment.RelationshipList where !(x.IsDeleted) select x.SequenceOrder).DefaultIfEmpty(0).Max();
+                            segment.RelationshipList.Add(
+                                new ItemRelationship
+                                {
+                                    ParentID = book.ItemID,
+                                    ChildID = segment.ItemID,
+                                    SequenceOrder = maxSeq + 1,
+                                    IsNew = true
+                                });
+                        }
                     }
-                }
 
-                //----------------------------------------
+                    //----------------------------------------
 
-                // Mark for deletion any contributors that have been removed
-                bool contributorExists = false;
-                bool contributor2Exists = false;
-                foreach (Institution institution in segment.ContributorList)
-                {
-                    if (institution.InstitutionCode != ddlContributor.SelectedValue &&
-                        institution.InstitutionCode != ddlContributor2.SelectedValue)
+                    // Mark for deletion any contributors that have been removed
+                    bool contributorExists = false;
+                    bool contributor2Exists = false;
+                    foreach (Institution institution in segment.ContributorList)
                     {
-                        institution.IsDeleted = true;
+                        if (institution.InstitutionCode != ddlContributor.SelectedValue &&
+                            institution.InstitutionCode != ddlContributor2.SelectedValue)
+                        {
+                            institution.IsDeleted = true;
+                        }
+                        else
+                        {
+                            if (institution.InstitutionCode == ddlContributor.SelectedValue) contributorExists = true;
+                            if (institution.InstitutionCode == ddlContributor2.SelectedValue) contributor2Exists = true;
+                        }
                     }
-                    else
+
+                    // Add new contributors
+                    if (!contributorExists && ddlContributor.SelectedValue != string.Empty)
                     {
-                        if (institution.InstitutionCode == ddlContributor.SelectedValue) contributorExists = true;
-                        if (institution.InstitutionCode == ddlContributor2.SelectedValue) contributor2Exists = true;
+                        Institution newContributor = new Institution();
+                        newContributor.InstitutionCode = ddlContributor.SelectedValue;
+                        newContributor.InstitutionRoleName = InstitutionRole.Contributor;
+                        newContributor.IsNew = true;
+                        segment.ContributorList.Add(newContributor);
                     }
+
+                    if (!contributor2Exists && ddlContributor2.SelectedValue != string.Empty &&
+                        ddlContributor.SelectedValue != ddlContributor2.SelectedValue)
+                    {
+                        Institution newContributor = new Institution();
+                        newContributor.InstitutionCode = ddlContributor2.SelectedValue;
+                        newContributor.InstitutionRoleName = InstitutionRole.Contributor;
+                        newContributor.IsNew = true;
+                        segment.ContributorList.Add(newContributor);
+                    }
+
+                    //----------------------------------------
+
+                    // Forces deletes to happen first
+                    segment.ContributorList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                    segment.IdentifierList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                    segment.AuthorList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                    segment.KeywordList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                    segment.PageList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+
+                    // If the ItemID has been modified, then reset the sequenceorder.  If other segments exist on the selected
+                    // Item, make this segment the last one (with the highest sequence number).
+                    if (isItemChanged)
+                    {
+                        segment.SequenceOrder = (short)((segment.BookID == null) ? 1 : (bp.SegmentSelectByBookID((int)segment.BookID).Count + 1));
+                    }
+
+                    // Don't catch errors... allow global error handler to take over
+                    int segmentID = bp.SegmentSave(segment, (int)userId);
+
+                    // After a successful save operation, reload the title
+                    fillUI(segmentID);
+
+                    litMessage.Text = "<span class='liveData'>Segment Saved.</span>";
+                    if (_warnings.Count > 0)
+                    {
+                        string warningMessage = string.Empty;
+                        foreach (string warning in _warnings) warningMessage += "<br/>" + warning;
+                        litWarning.Text = string.Format("<span class='liveData'>{0}</span>", warningMessage);
+                    }
+                    ResetScrollPosition();
                 }
-
-                // Add new contributors
-                if (!contributorExists && ddlContributor.SelectedValue != string.Empty)
-                {
-                    Institution newContributor = new Institution();
-                    newContributor.InstitutionCode = ddlContributor.SelectedValue;
-                    newContributor.InstitutionRoleName = InstitutionRole.Contributor;
-                    newContributor.IsNew = true;
-                    segment.ContributorList.Add(newContributor);
-                }
-
-                if (!contributor2Exists && ddlContributor2.SelectedValue != string.Empty && 
-                    ddlContributor.SelectedValue != ddlContributor2.SelectedValue)
-                {
-                    Institution newContributor = new Institution();
-                    newContributor.InstitutionCode = ddlContributor2.SelectedValue;
-                    newContributor.InstitutionRoleName = InstitutionRole.Contributor;
-                    newContributor.IsNew = true;
-                    segment.ContributorList.Add(newContributor);
-                }
-
-                //----------------------------------------
-
-                // Forces deletes to happen first
-                segment.ContributorList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
-                segment.IdentifierList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
-                segment.AuthorList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
-                segment.KeywordList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
-                segment.PageList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
-
-                // If the ItemID has been modified, then reset the sequenceorder.  If other segments exist on the selected
-                // Item, make this segment the last one (with the highest sequence number).
-                if (isItemChanged)
-                {
-                    segment.SequenceOrder = (short)((segment.BookID == null) ? 1 : (bp.SegmentSelectByBookID((int)segment.BookID).Count + 1));
-                }
-
-                // Don't catch errors... allow global error handler to take over
-                int segmentID = bp.SegmentSave(segment, (int)userId);
-
-                // After a successful save operation, reload the title
-                fillUI(segmentID);
             }
-            else
+            finally
             {
-                return;
+                saveButton.Enabled = true;
             }
-
-            litMessage.Text = "<span class='liveData'>Segment Saved.</span>";
-            if (_warnings.Count > 0)
-            {
-                string warningMessage = string.Empty;
-                foreach(string warning in _warnings) warningMessage += "<br/>" + warning;
-                litWarning.Text = string.Format("<span class='liveData'>{0}</span>", warningMessage);
-            }
-            ResetScrollPosition();
         }
 
         #endregion Event Handlers

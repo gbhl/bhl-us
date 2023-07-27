@@ -206,7 +206,7 @@
 			<asp:Button ID="addAuthorIdentifierButton" runat="server" Text="Add Author Identifier" OnClick="addAuthorIdentifierButton_Click" />
 		</fieldset>
 		<br />
-		<asp:Button ID="saveButton" runat="server" OnClick="saveButton_Click" Text="Save" />
+		<asp:Button ID="saveButton" runat="server" OnClick="saveButton_Click" Text="Save" OnClientClick="this.disabled=true;" UseSubmitBehavior="false" />
 		<div style="float:right;"><mobot:EditHistoryControl runat="server" id="editHistoryControl" /></div>
 	</div>
     <script type="text/javascript">

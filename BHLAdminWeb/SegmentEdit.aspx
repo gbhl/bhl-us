@@ -787,7 +787,7 @@
 		<br />
 	</fieldset>
 	<br />
-	<asp:Button ID="saveButton" runat="server" OnClick="saveButton_Click" Text="Save" />
+	<asp:Button ID="saveButton" runat="server" OnClick="saveButton_Click" Text="Save" OnClientClick="this.disabled=true;" UseSubmitBehavior="false" />
 	<div style="float:right;"><mobot:EditHistoryControl runat="server" id="editHistoryControl" /></div>
 </div>
 <div id="overlayauthor" class="overlay">

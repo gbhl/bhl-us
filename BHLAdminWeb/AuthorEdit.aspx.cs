@@ -403,46 +403,49 @@ namespace MOBOT.BHL.AdminWeb
             Author author = (Author)Session["Author" + lblID.Text];
             int? userId = null;
 
-            if (validate(author))
+            try
             {
-                // Set the id of the editing user
-                var user = Helper.GetCurrentUserDetail(new HttpRequestWrapper(Request));
-                userId = user.Id;
+                if (validate(author))
+                {
+                    // Set the id of the editing user
+                    var user = Helper.GetCurrentUserDetail(new HttpRequestWrapper(Request));
+                    userId = user.Id;
 
-                // Gather up data on form
-                author.IsActive = (short)(chkIsActive.Checked ? 1 : 0);
-                author.RedirectAuthorID = (txtReplacedBy.Text.Trim().Length == 0 || author.IsActive == 1 ? (int?)null : Convert.ToInt32(txtReplacedBy.Text));
-                author.AuthorTypeID = Convert.ToInt32(ddlAuthorType.SelectedValue.Length == 0 ? null : ddlAuthorType.SelectedValue);
-                author.StartDate = txtStartDate.Text;
-                author.EndDate = txtEndDate.Text;
-                author.Numeration = txtNumeration.Text;
-                author.Title = txtTitle.Text;
-                author.Unit = txtUnit.Text;
-                author.Location = txtLocation.Text;
-                author.Note = txtNote.Text;
-                author.IsNew = (author.AuthorID == 0);
+                    // Gather up data on form
+                    author.IsActive = (short)(chkIsActive.Checked ? 1 : 0);
+                    author.RedirectAuthorID = (txtReplacedBy.Text.Trim().Length == 0 || author.IsActive == 1 ? (int?)null : Convert.ToInt32(txtReplacedBy.Text));
+                    author.AuthorTypeID = Convert.ToInt32(ddlAuthorType.SelectedValue.Length == 0 ? null : ddlAuthorType.SelectedValue);
+                    author.StartDate = txtStartDate.Text;
+                    author.EndDate = txtEndDate.Text;
+                    author.Numeration = txtNumeration.Text;
+                    author.Title = txtTitle.Text;
+                    author.Unit = txtUnit.Text;
+                    author.Location = txtLocation.Text;
+                    author.Note = txtNote.Text;
+                    author.IsNew = (author.AuthorID == 0);
 
-                // Forces deletes to happen first
-                //author.AuthorNames.Sort(SortOrder.Descending, "IsDeleted");
-                //author.AuthorIdentifiers.Sort(SortOrder.Descending, "IsDeleted");
-                author.AuthorNames.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
-                author.AuthorIdentifiers.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                    // Forces deletes to happen first
+                    //author.AuthorNames.Sort(SortOrder.Descending, "IsDeleted");
+                    //author.AuthorIdentifiers.Sort(SortOrder.Descending, "IsDeleted");
+                    author.AuthorNames.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                    author.AuthorIdentifiers.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
 
-                BHLProvider bp = new BHLProvider();
-                // Don't catch errors... allow global error handler to take over
-                int authorID = bp.SaveAuthor(author, (int)userId, 
-                    string.Format("{0} {1} ({2})", user.FirstName, user.LastName, user.Email));
+                    BHLProvider bp = new BHLProvider();
+                    // Don't catch errors... allow global error handler to take over
+                    int authorID = bp.SaveAuthor(author, (int)userId,
+                        string.Format("{0} {1} ({2})", user.FirstName, user.LastName, user.Email));
 
-                // After a successful save operation, reload the title
-                fillUI(authorID);
+                    // After a successful save operation, reload the title
+                    fillUI(authorID);
+
+                    litMessage.Text = "<span class='liveData'>Author Saved.</span>";
+                    ResetScrollPosition();
+                }
             }
-            else
+            finally
             {
-                return;
+                saveButton.Enabled = true;
             }
-
-            litMessage.Text = "<span class='liveData'>Author Saved.</span>";
-            ResetScrollPosition();
         }
 
         #endregion Event Handlers
