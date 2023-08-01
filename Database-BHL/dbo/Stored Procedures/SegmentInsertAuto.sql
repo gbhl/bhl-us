@@ -1,3 +1,13 @@
+
+IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[SegmentInsertAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[SegmentInsertAuto]
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+
 CREATE PROCEDURE dbo.SegmentInsertAuto
 
 @SegmentID INT OUTPUT,
@@ -45,7 +55,8 @@ CREATE PROCEDURE dbo.SegmentInsertAuto
 @LastPageNameLookupDate DATETIME = null,
 @CreationUserID INT = null,
 @LastModifiedUserID INT = null,
-@PageProgression NVARCHAR(10)
+@PageProgression NVARCHAR(10),
+@PreferredContainerTitleID INT = null
 
 AS 
 
@@ -98,7 +109,8 @@ INSERT INTO [dbo].[Segment]
 	[LastModifiedDate],
 	[CreationUserID],
 	[LastModifiedUserID],
-	[PageProgression] )
+	[PageProgression],
+	[PreferredContainerTitleID] )
 VALUES
 ( 	@ItemID,
 	@RedirectSegmentID,
@@ -146,7 +158,8 @@ VALUES
 	getdate(),
 	@CreationUserID,
 	@LastModifiedUserID,
-	@PageProgression )
+	@PageProgression,
+	@PreferredContainerTitleID )
 
 SET @SegmentID = Scope_Identity()
 
@@ -205,7 +218,8 @@ ELSE BEGIN
 		[LastModifiedDate],
 		[CreationUserID],
 		[LastModifiedUserID],
-		[PageProgression]	
+		[PageProgression],
+		[PreferredContainerTitleID]	
 	FROM [dbo].[Segment]
 	WHERE
 		[SegmentID] = @SegmentID
@@ -213,3 +227,9 @@ ELSE BEGIN
 	RETURN -- insert successful
 END
 GO
+ 
+SET QUOTED_IDENTIFIER OFF
+GO
+SET ANSI_NULLS ON
+GO
+

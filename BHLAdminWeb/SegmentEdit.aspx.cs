@@ -10,7 +10,6 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using SortOrder = CustomDataAccess.SortOrder;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -39,11 +38,10 @@ namespace MOBOT.BHL.AdminWeb
             if (!IsPostBack)
             {
                 string idString = Request.QueryString["id"];
-                int id = 0;
-                if (idString != null && int.TryParse(idString, out id))
+                if (idString != null && int.TryParse(idString, out int id))
                 {
-                    fillCombos();
-                    fillUI(id);
+                    FillCombos();
+                    FillUI(id);
                 }
                 else
                 {
@@ -62,10 +60,12 @@ namespace MOBOT.BHL.AdminWeb
                     if (!string.IsNullOrWhiteSpace(itemIDLabel.Text))
                     {
                         // Item has been removed
-                        removeItem(idLabel.Text, itemIDLabel.Text);
+                        RemoveItem(idLabel.Text, itemIDLabel.Text);
                         itemIDLabel.Text = "";
                         itemDescLabel.Text = "Not Selected";
-                        fillItemDetails("", "", "", "");
+                        FillItemDetails("", "", "", "");
+                        ddlPreferredContainerTitleID.Items.Clear();
+                        FillPreferredContainerDD(null, null);
                     }
                 }
                 else if (itemIDLabel.Text != selectedItemId)
@@ -80,21 +80,24 @@ namespace MOBOT.BHL.AdminWeb
                     itemDescLabel.Text = title.ShortTitle + " " + book.Volume;
 
                     // Use Title/Item metadata to set the journal details for this segment
+                    ddlPreferredContainerTitleID.Items.Clear();
+
                     if (institutions.Count > 0) ddlContributor.SelectedValue = institutions[0].InstitutionCode;
+                    FillPreferredContainerDD(Convert.ToInt32(selectedItemId), null);
                     containerTitleTextBox.Text = title.FullTitle ?? string.Empty;
                     publicationDetailsTextBox.Text = title.PublicationDetails ?? string.Empty;
                     publisherNameTextBox.Text = title.Datafield_260_b ?? string.Empty;
                     publisherPlaceTextBox.Text = title.Datafield_260_a ?? string.Empty;
                     ddlLanguage.SelectedValue = book.LanguageCode ?? string.Empty;
 
-                    fillItemDetails((book.Volume ?? string.Empty),
+                    FillItemDetails((book.Volume ?? string.Empty),
                         string.Join("-", (new string[] { book.StartIssue ?? string.Empty, book.EndIssue ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s))),
                         string.Join("-", (new string[] { book.StartSeries ?? string.Empty, book.EndSeries ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s))),
                         string.Join("-", (new string[] { book.StartYear ?? string.Empty, book.EndYear ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s))));
 
                     // Update the list of segments associated with this item
                     Segment segment = (Segment)Session["Segment" + idLabel.Text];
-                    if (!string.IsNullOrWhiteSpace(oldBookID)) removeItem(idLabel.Text, oldBookID);
+                    if (!string.IsNullOrWhiteSpace(oldBookID)) RemoveItem(idLabel.Text, oldBookID);
                     segment.RelationshipList.AddRange(provider.ItemRelationshipSelectByItemID(book.ItemID));
                     Session["Segment" + segment.SegmentID.ToString()] = segment;
                 }
@@ -138,7 +141,7 @@ namespace MOBOT.BHL.AdminWeb
 
                     Session["Segment" + segment.SegmentID.ToString()] = segment;
                     this.selectedAuthor.Value = "";
-                    this.bindSegmentAuthorData();
+                    this.BindSegmentAuthorData();
                 }
 
                 // Check for newly added related segments
@@ -189,7 +192,7 @@ namespace MOBOT.BHL.AdminWeb
 
                     Session["Segment" + segment.SegmentID.ToString()] = segment;
                     this.selectedRelatedSegments.Value = "";
-                    this.bindRelatedSegmentData();
+                    this.BindRelatedSegmentData();
                 }
 
                 // Check for newly added pages
@@ -231,7 +234,7 @@ namespace MOBOT.BHL.AdminWeb
                             string types = string.Empty;
                             string numbers = string.Empty;
                             int? pageSequenceOrder = null;
-                            foreach (MOBOT.BHL.DataObjects.Page page in pages)
+                            foreach (DataObjects.Page page in pages)
                             {
                                 if (page.PageID == Convert.ToInt32(selectedPageId))
                                 {
@@ -270,7 +273,7 @@ namespace MOBOT.BHL.AdminWeb
 
                     Session["Segment" + segment.SegmentID.ToString()] = segment;
                     this.selectedPage.Value = "";
-                    this.bindSegmentPageData();
+                    this.BindSegmentPageData();
                 }
             }
 
@@ -284,7 +287,7 @@ namespace MOBOT.BHL.AdminWeb
 
         #region Fill methods
 
-        private void fillCombos()
+        private void FillCombos()
         {
             BHLProvider bp = new BHLProvider();
 
@@ -298,9 +301,11 @@ namespace MOBOT.BHL.AdminWeb
 
             List<Institution> institutions = bp.InstituationSelectAll();
 
-            Institution emptyInstitution = new Institution();
-            emptyInstitution.InstitutionCode = string.Empty;
-            emptyInstitution.InstitutionName = string.Empty;
+            Institution emptyInstitution = new Institution
+            {
+                InstitutionCode = string.Empty,
+                InstitutionName = string.Empty
+            };
             institutions.Insert(0, emptyInstitution);
 
             ddlContributor.DataSource = institutions;
@@ -311,28 +316,74 @@ namespace MOBOT.BHL.AdminWeb
 
             List<Language> languages = bp.LanguageSelectAll();
 
-            Language emptyLanguage = new Language();
-            emptyLanguage.LanguageCode = string.Empty;
-            emptyLanguage.LanguageName = string.Empty;
+            Language emptyLanguage = new Language
+            {
+                LanguageCode = string.Empty,
+                LanguageName = string.Empty
+            };
             languages.Insert(0, emptyLanguage);
 
             ddlLanguage.DataSource = languages;
             ddlLanguage.DataBind();
         }
 
-        private void fillUI(int id)
+        private void FillPreferredContainerDD(int? bookID, int? preferredContainerTitleID)
+        {
+            if (bookID != null)
+            {
+                // If necesssary, populate the preferred container id dropdown
+                if (ddlPreferredContainerTitleID.Items.Count == 0)
+                {
+                    ddlPreferredContainerTitleID.Items.Add(new ListItem("(Primary Title of associated Item)", ""));
+                    List<ItemTitle> titles = new BHLProvider().ItemTitleSelectByItem((int)bookID);
+                    foreach (ItemTitle title in titles)
+                    {
+                        if (title.TitlePublishReady)
+                        {
+                            ListItem li = new ListItem(
+                                string.Format("{0} - {1}{2}", title.TitleID.ToString(), title.ShortTitle, title.IsPrimary == 1 ? " [PRIMARY]" : ""),
+                                title.TitleID.ToString()
+                                );
+                            ddlPreferredContainerTitleID.Items.Add(li);
+                        }
+                    }
+                }
+
+                ddlPreferredContainerTitleID.SelectedValue = "";
+                if (preferredContainerTitleID != null)
+                {
+                    ddlPreferredContainerTitleID.SelectedValue = preferredContainerTitleID.ToString();
+                }
+                else
+                {
+                    ddlPreferredContainerTitleID.SelectedIndex = 0;
+                }
+
+                containerTitleTextBox.Visible = false;
+                ddlPreferredContainerTitleID.Visible= true;
+            }
+            else
+            {
+                containerTitleTextBox.Visible = true;
+                ddlPreferredContainerTitleID.Visible = false;
+            }
+        }
+
+        private void FillUI(int id)
         {
             BHLProvider bp = new BHLProvider();
 
             idLabel.Text = id.ToString();
 
             // Look up segment
-            Segment segment = null;
+            Segment segment;
             if (id == 0)
             {
                 // Create new segment
-                segment = new Segment();
-                segment.SequenceOrder = 1;
+                segment = new Segment
+                {
+                    SequenceOrder = 1
+                };
                 ddlSegmentStatus.SelectedValue = "30";  // New
             }
             else
@@ -351,7 +402,7 @@ namespace MOBOT.BHL.AdminWeb
 
                 Session["Segment" + segment.SegmentID.ToString()] = segment;
 
-                if (segment.ItemID != null)
+                if (segment.BookID != null)
                 {
                     selectedItem.Value = segment.BookID.ToString();
                     itemIDLabel.Text = segment.BookID.ToString();
@@ -362,6 +413,7 @@ namespace MOBOT.BHL.AdminWeb
                 titleTextBox.Text = segment.Title;
                 sortTitleTextBox.Text = segment.SortTitle;
                 translatedTitleTextBox.Text = segment.TranslatedTitle;
+                FillPreferredContainerDD(segment.BookID, segment.PreferredContainerTitleID);
                 containerTitleTextBox.Text = segment.ContainerTitle;
                 publicationDetailsTextBox.Text = segment.PublicationDetails;
                 publisherPlaceTextBox.Text = segment.PublisherPlace;
@@ -372,7 +424,7 @@ namespace MOBOT.BHL.AdminWeb
                 seriesTextBox.Text = segment.Series;
                 issueTextBox.Text = segment.Issue;
                 dateTextBox.Text = segment.Date;
-                fillItemDetails(segment.ItemVolume, segment.ItemIssue, segment.ItemSeries, segment.ItemYear);
+                FillItemDetails(segment.ItemVolume, segment.ItemIssue, segment.ItemSeries, segment.ItemYear);
                 pageRangeTextBox.Text = segment.PageRange;
                 startPageTextBox.Text = segment.StartPageNumber;
                 endPageTextBox.Text = segment.EndPageNumber;
@@ -441,7 +493,7 @@ namespace MOBOT.BHL.AdminWeb
             }
         }
 
-        private void fillItemDetails(string volume, string issue, string series, string date)
+        private void FillItemDetails(string volume, string issue, string series, string date)
         {
             litVolume.Text = string.Format("Item Volume: {0}", volume);
             litIssue.Text = string.Format("Item Issue: {0}", issue);
@@ -456,7 +508,7 @@ namespace MOBOT.BHL.AdminWeb
         /// </summary>
         /// <param name="segmentID"></param>
         /// <param name="bookID"></param>
-        protected void removeItem(string segmentID, string bookID)
+        protected void RemoveItem(string segmentID, string bookID)
         {
             Segment segment = (Segment)Session["Segment" + segmentID];
             foreach (ItemRelationship relationship in segment.RelationshipList)
@@ -468,7 +520,7 @@ namespace MOBOT.BHL.AdminWeb
             if (string.IsNullOrWhiteSpace(segment.BarCode))
             {
                 foreach (ItemPage page in segment.PageList) page.IsDeleted = true;
-                bindSegmentPageData();
+                BindSegmentPageData();
             }
 
             Session["Segment" + segment.SegmentID.ToString()] = segment;
@@ -476,7 +528,7 @@ namespace MOBOT.BHL.AdminWeb
 
         #region SegmentAuthor methods
 
-        private void bindSegmentAuthorData()
+        private void BindSegmentAuthorData()
         {
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
@@ -496,8 +548,7 @@ namespace MOBOT.BHL.AdminWeb
             authorsList.DataBind();
         }
 
-        private ItemAuthor findSegmentAuthor(List<ItemAuthor> segmentAuthors, int segmentAuthorId,
-            int authorId)
+        private ItemAuthor FindSegmentAuthor(List<ItemAuthor> segmentAuthors, int segmentAuthorId, int authorId)
         {
             foreach (ItemAuthor ia in segmentAuthors)
             {
@@ -522,7 +573,7 @@ namespace MOBOT.BHL.AdminWeb
 
         #region SegmentKeyword methods
 
-        private void bindKeywordData()
+        private void BindKeywordData()
         {
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
@@ -540,7 +591,7 @@ namespace MOBOT.BHL.AdminWeb
             keywordsList.DataBind();
         }
 
-        private ItemKeyword findSegmentKeyword(List<ItemKeyword> segmentKeywords,
+        private ItemKeyword FindSegmentKeyword(List<ItemKeyword> segmentKeywords,
             int segmentKeywordId, int keywordID, string keyword)
         {
             foreach (ItemKeyword ik in segmentKeywords)
@@ -564,7 +615,7 @@ namespace MOBOT.BHL.AdminWeb
 
         #region SegmentIdentifier methods
 
-        private void bindSegmentIdentifierData()
+        private void BindSegmentIdentifierData()
         {
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
@@ -612,7 +663,7 @@ namespace MOBOT.BHL.AdminWeb
             return 0;
         }
 
-        private ItemIdentifier findSegmentIdentifier(List<ItemIdentifier> segmentIdentifiers,
+        private ItemIdentifier FindSegmentIdentifier(List<ItemIdentifier> segmentIdentifiers,
             int itemIdentifierId, int identifierID, string identifierValue)
         {
             foreach (ItemIdentifier ii in segmentIdentifiers)
@@ -636,7 +687,7 @@ namespace MOBOT.BHL.AdminWeb
 
         #region SegmentPage methods
 
-        private void bindSegmentPageData()
+        private void BindSegmentPageData()
         {
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
@@ -644,10 +695,7 @@ namespace MOBOT.BHL.AdminWeb
             List<ItemPage> segmentPages = new List<ItemPage>();
             foreach (ItemPage ip in segment.PageList)
             {
-                if (ip.IsDeleted == false)
-                {
-                    segmentPages.Add(ip);
-                }
+                if (ip.IsDeleted == false) segmentPages.Add(ip);
             }
 
             ItemPageSequenceComparer comp = new ItemPageSequenceComparer();
@@ -656,8 +704,7 @@ namespace MOBOT.BHL.AdminWeb
             pagesList.DataBind();
         }
 
-        private ItemPage findSegmentPage(List<ItemPage> segmentPages, int itemPageId,
-            int pageId)
+        private ItemPage FindSegmentPage(List<ItemPage> segmentPages, int itemPageId, int pageId)
         {
             foreach (ItemPage ip in segmentPages)
             {
@@ -682,7 +729,7 @@ namespace MOBOT.BHL.AdminWeb
 
         #region RelatedSegment methods
 
-        private void bindRelatedSegmentData()
+        private void BindRelatedSegmentData()
         {
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
@@ -709,7 +756,7 @@ namespace MOBOT.BHL.AdminWeb
             relatedSegmentsList.DataBind();
         }
 
-        private Segment findRelatedSegment(List<Segment> relatedSegments, int segmentId)
+        private Segment FindRelatedSegment(List<Segment> relatedSegments, int segmentId)
         {
             foreach (Segment s in relatedSegments)
             {
@@ -732,32 +779,30 @@ namespace MOBOT.BHL.AdminWeb
 
         #region Author event handlers
 
-        protected void authorsList_RowEditing(object sender, GridViewEditEventArgs e)
+        protected void AuthorsList_RowEditing(object sender, GridViewEditEventArgs e)
         {
             authorsList.EditIndex = e.NewEditIndex;
-            bindSegmentAuthorData();
+            BindSegmentAuthorData();
         }
 
-        protected void authorsList_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        protected void AuthorsList_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = authorsList.Rows[e.RowIndex];
 
             if (row != null)
             {
-                TextBox sequenceTextBox = row.FindControl("authorSequenceTextBox") as TextBox;
-                if (sequenceTextBox != null)
+                if (row.FindControl("authorSequenceTextBox") is TextBox sequenceTextBox)
                 {
                     Segment segment = (Segment)Session["Segment" + idLabel.Text];
                     int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
                     string newSeqString = sequenceTextBox.Text.Trim();
-                    short newSeq = 0;
-                    short.TryParse(newSeqString, out newSeq);
+                    short.TryParse(newSeqString, out short newSeq);
 
                     if (newSeq > 0)
                     {
                         // Find item being changed
-                        ItemAuthor changedAuthor = findSegmentAuthor(segment.AuthorList,
+                        ItemAuthor changedAuthor = FindSegmentAuthor(segment.AuthorList,
                             (int)authorsList.DataKeys[e.RowIndex].Values[0],
                             (int)authorsList.DataKeys[e.RowIndex].Values[1]);
 
@@ -801,16 +846,16 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             authorsList.EditIndex = -1;
-            bindSegmentAuthorData();
+            BindSegmentAuthorData();
         }
 
-        protected void authorsList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        protected void AuthorsList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             authorsList.EditIndex = -1;
-            bindSegmentAuthorData();
+            BindSegmentAuthorData();
         }
 
-        protected void authorsList_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void AuthorsList_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
@@ -818,12 +863,12 @@ namespace MOBOT.BHL.AdminWeb
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
-                ItemAuthor segmentAuthor = findSegmentAuthor(segment.AuthorList,
+                ItemAuthor segmentAuthor = FindSegmentAuthor(segment.AuthorList,
                     (int)authorsList.DataKeys[rowNum].Values[0],
                     (int)authorsList.DataKeys[rowNum].Values[1]);
 
                 segmentAuthor.IsDeleted = true;
-                bindSegmentAuthorData();
+                BindSegmentAuthorData();
             }
         }
 
@@ -831,25 +876,24 @@ namespace MOBOT.BHL.AdminWeb
 
         #region SegmentKeyword event handlers
 
-        protected void keywordsList_RowEditing(object sender, GridViewEditEventArgs e)
+        protected void KeywordsList_RowEditing(object sender, GridViewEditEventArgs e)
         {
             keywordsList.EditIndex = e.NewEditIndex;
-            bindKeywordData();
+            BindKeywordData();
         }
 
-        protected void keywordsList_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        protected void KeywordsList_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = keywordsList.Rows[e.RowIndex];
 
             if (row != null)
             {
-                TextBox txtKeyword = row.FindControl("txtKeyword") as TextBox;
-                if (txtKeyword != null)
+                if (row.FindControl("txtKeyword") is TextBox txtKeyword)
                 {
                     Segment segment = (Segment)Session["Segment" + idLabel.Text];
-                    String keyword = txtKeyword.Text;
+                    string keyword = txtKeyword.Text;
 
-                    ItemKeyword segmentKeyword = findSegmentKeyword(segment.KeywordList,
+                    ItemKeyword segmentKeyword = FindSegmentKeyword(segment.KeywordList,
                         (int)keywordsList.DataKeys[e.RowIndex].Values[0],
                         (int)keywordsList.DataKeys[e.RowIndex].Values[1],
                         keywordsList.DataKeys[e.RowIndex].Values[2].ToString());
@@ -860,27 +904,29 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             keywordsList.EditIndex = -1;
-            bindKeywordData();
+            BindKeywordData();
         }
 
-        protected void keywordsList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        protected void KeywordsList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             keywordsList.EditIndex = -1;
-            bindKeywordData();
+            BindKeywordData();
         }
 
-        protected void addKeywordButton_Click(object sender, EventArgs e)
+        protected void AddKeywordButton_Click(object sender, EventArgs e)
         {
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
-            ItemKeyword segmentKeyword = new ItemKeyword();
-            segmentKeyword.ItemID = segment.ItemID;
+            ItemKeyword segmentKeyword = new ItemKeyword
+            {
+                ItemID = segment.ItemID
+            };
             segment.KeywordList.Add(segmentKeyword);
             keywordsList.EditIndex = keywordsList.Rows.Count;
-            bindKeywordData();
+            BindKeywordData();
             keywordsList.Rows[keywordsList.EditIndex].FindControl("cancelKeywordCreatorButton").Visible = false;
         }
 
-        protected void keywordsList_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void KeywordsList_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
@@ -888,13 +934,13 @@ namespace MOBOT.BHL.AdminWeb
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
-                ItemKeyword segmentKeyword = findSegmentKeyword(segment.KeywordList,
+                ItemKeyword segmentKeyword = FindSegmentKeyword(segment.KeywordList,
                     (int)keywordsList.DataKeys[rowNum].Values[0],
                     (int)keywordsList.DataKeys[rowNum].Values[1],
                     keywordsList.DataKeys[rowNum].Values[2].ToString());
 
                 segmentKeyword.IsDeleted = true;
-                bindKeywordData();
+                BindKeywordData();
             }
         }
 
@@ -902,28 +948,26 @@ namespace MOBOT.BHL.AdminWeb
 
         #region SegmentIdentifier event handlers
 
-        protected void identifiersList_RowEditing(object sender, GridViewEditEventArgs e)
+        protected void IdentifiersList_RowEditing(object sender, GridViewEditEventArgs e)
         {
             identifiersList.EditIndex = e.NewEditIndex;
-            bindSegmentIdentifierData();
+            BindSegmentIdentifierData();
         }
 
-        protected void identifiersList_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        protected void IdentifiersList_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = identifiersList.Rows[e.RowIndex];
 
             if (row != null)
             {
-                DropDownList ddlIdentifierName = row.FindControl("ddlIdentifierName") as DropDownList;
-                TextBox txtIdentifierValue = row.FindControl("txtIdentifierValue") as TextBox;
-                CheckBox cbIsContainerIdentifier = row.FindControl("isContainerIdentifierCheckBoxEdit") as CheckBox;
-                if (ddlIdentifierName != null && txtIdentifierValue != null)
+                if (row.FindControl("ddlIdentifierName") is DropDownList ddlIdentifierName && 
+                    row.FindControl("txtIdentifierValue") is TextBox txtIdentifierValue)
                 {
                     Segment segment = (Segment)Session["Segment" + idLabel.Text];
                     int identifierId = int.Parse(ddlIdentifierName.SelectedValue);
                     String identifierValue = txtIdentifierValue.Text;
 
-                    ItemIdentifier segmentIdentifier = findSegmentIdentifier(segment.IdentifierList,
+                    ItemIdentifier segmentIdentifier = FindSegmentIdentifier(segment.IdentifierList,
                         (int)identifiersList.DataKeys[e.RowIndex].Values[0],
                         (int)identifiersList.DataKeys[e.RowIndex].Values[1],
                         identifiersList.DataKeys[e.RowIndex].Values[2].ToString());
@@ -936,27 +980,29 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             identifiersList.EditIndex = -1;
-            bindSegmentIdentifierData();
+            BindSegmentIdentifierData();
         }
 
-        protected void identifiersList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        protected void IdentifiersList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             identifiersList.EditIndex = -1;
-            bindSegmentIdentifierData();
+            BindSegmentIdentifierData();
         }
 
-        protected void addSegmentIdentifierButton_Click(object sender, EventArgs e)
+        protected void AddSegmentIdentifierButton_Click(object sender, EventArgs e)
         {
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
-            ItemIdentifier si = new ItemIdentifier();
-            si.ItemID = segment.ItemID;
+            ItemIdentifier si = new ItemIdentifier
+            {
+                ItemID = segment.ItemID
+            };
             segment.IdentifierList.Add(si);
             identifiersList.EditIndex = identifiersList.Rows.Count;
-            bindSegmentIdentifierData();
+            BindSegmentIdentifierData();
             identifiersList.Rows[identifiersList.EditIndex].FindControl("cancelSegmentIdentifierButton").Visible = false;
         }
 
-        protected void identifiersList_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void IdentifiersList_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
@@ -964,13 +1010,13 @@ namespace MOBOT.BHL.AdminWeb
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
-                ItemIdentifier segmentIdentifier = findSegmentIdentifier(segment.IdentifierList,
+                ItemIdentifier segmentIdentifier = FindSegmentIdentifier(segment.IdentifierList,
                     (int)identifiersList.DataKeys[rowNum].Values[0],
                     (int)identifiersList.DataKeys[rowNum].Values[1],
                     identifiersList.DataKeys[rowNum].Values[2].ToString());
 
                 segmentIdentifier.IsDeleted = true;
-                bindSegmentIdentifierData();
+                BindSegmentIdentifierData();
             }
         }
 
@@ -978,32 +1024,30 @@ namespace MOBOT.BHL.AdminWeb
 
         #region SegmentPage event handlers
 
-        protected void pagesList_RowEditing(object sender, GridViewEditEventArgs e)
+        protected void PagesList_RowEditing(object sender, GridViewEditEventArgs e)
         {
             pagesList.EditIndex = e.NewEditIndex;
-            bindSegmentPageData();
+            BindSegmentPageData();
         }
 
-        protected void pagesList_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        protected void PagesList_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = pagesList.Rows[e.RowIndex];
 
             if (row != null)
             {
-                TextBox sequenceTextBox = row.FindControl("pageSequenceTextBox") as TextBox;
-                if (sequenceTextBox != null)
+                if (row.FindControl("pageSequenceTextBox") is TextBox sequenceTextBox)
                 {
                     Segment segment = (Segment)Session["Segment" + idLabel.Text];
                     int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
                     string newSeqString = sequenceTextBox.Text.Trim();
-                    short newSeq = 0;
-                    short.TryParse(newSeqString, out newSeq);
+                    short.TryParse(newSeqString, out short newSeq);
 
                     if (newSeq > 0)
                     {
                         // Find item being changed
-                        ItemPage changedPage = findSegmentPage(segment.PageList,
+                        ItemPage changedPage = FindSegmentPage(segment.PageList,
                             (int)pagesList.DataKeys[e.RowIndex].Values[0],
                             (int)pagesList.DataKeys[e.RowIndex].Values[1]);
 
@@ -1047,16 +1091,16 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             pagesList.EditIndex = -1;
-            bindSegmentPageData();
+            BindSegmentPageData();
         }
 
-        protected void pagesList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        protected void PagesList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             pagesList.EditIndex = -1;
-            bindSegmentPageData();
+            BindSegmentPageData();
         }
 
-        protected void pagesList_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void PagesList_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
@@ -1064,12 +1108,12 @@ namespace MOBOT.BHL.AdminWeb
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
-                ItemPage segmentPage = findSegmentPage(segment.PageList,
+                ItemPage segmentPage = FindSegmentPage(segment.PageList,
                     (int)pagesList.DataKeys[rowNum].Values[0],
                     (int)pagesList.DataKeys[rowNum].Values[1]);
 
                 segmentPage.IsDeleted = true;
-                bindSegmentPageData();
+                BindSegmentPageData();
             }
         }
 
@@ -1077,7 +1121,7 @@ namespace MOBOT.BHL.AdminWeb
 
         #region chkPrimary event handlers
 
-        protected void chkPrimary_Click(object sender, EventArgs e)
+        protected void PrimaryCheckbox_Click(object sender, EventArgs e)
         {
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
@@ -1085,36 +1129,31 @@ namespace MOBOT.BHL.AdminWeb
             CheckBox checkbox = (CheckBox)sender;
             if (checkbox.Checked)
             {
-                List<Segment> relatedSegments = new List<Segment>();
-                foreach (Segment s in segment.RelatedSegmentList)
-                {
-                    s.IsPrimary = 0;
-                }
+                foreach (Segment s in segment.RelatedSegmentList) s.IsPrimary = 0;
             }
 
-            bindRelatedSegmentData();
+            BindRelatedSegmentData();
         }
 
         #endregion chkPrimary event handlers
 
         #region RelatedSegment event handlers
 
-        protected void relatedSegmentsList_RowEditing(object sender, GridViewEditEventArgs e)
+        protected void RelatedSegmentsList_RowEditing(object sender, GridViewEditEventArgs e)
         {
             relatedSegmentsList.EditIndex = e.NewEditIndex;
-            bindRelatedSegmentData();
+            BindRelatedSegmentData();
         }
 
-        protected void relatedSegmentsList_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void RelatedSegmentsList_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
-                DropDownList dropDownList = e.Row.FindControl("ddlClusterType") as DropDownList;
-                if (dropDownList != null)
+                if (e.Row.FindControl("ddlClusterType") is DropDownList dropDownList)
                 {
-                    Segment currentSegment = findRelatedSegment(segment.RelatedSegmentList,
+                    Segment currentSegment = FindRelatedSegment(segment.RelatedSegmentList,
                         (int)relatedSegmentsList.DataKeys[e.Row.RowIndex].Values[0]);
 
                     dropDownList.SelectedValue = currentSegment.SegmentClusterTypeId.ToString();
@@ -1122,7 +1161,7 @@ namespace MOBOT.BHL.AdminWeb
             }
         }
 
-        protected void relatedSegmentsList_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        protected void RelatedSegmentsList_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = relatedSegmentsList.Rows[e.RowIndex];
 
@@ -1130,10 +1169,9 @@ namespace MOBOT.BHL.AdminWeb
             {
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
-                DropDownList dropDownList = row.FindControl("ddlClusterType") as DropDownList;
-                if (dropDownList != null)
+                if (row.FindControl("ddlClusterType") is DropDownList dropDownList)
                 {
-                    Segment currentSegment = findRelatedSegment(segment.RelatedSegmentList,
+                    Segment currentSegment = FindRelatedSegment(segment.RelatedSegmentList,
                         (int)relatedSegmentsList.DataKeys[e.RowIndex].Values[0]);
 
                     if (currentSegment.SegmentClusterTypeId != Convert.ToInt32(dropDownList.SelectedValue))
@@ -1144,16 +1182,14 @@ namespace MOBOT.BHL.AdminWeb
                     }
                 }
 
-                CheckBox checkBox = row.FindControl("isPrimaryCheckBoxEdit") as CheckBox;
-                if (checkBox != null)
+                if (row.FindControl("isPrimaryCheckBoxEdit") is CheckBox checkBox)
                 {
                     List<Segment> relatedSegments = segment.RelatedSegmentList;
                     
                     short isPrimary = (short)(checkBox.Checked ? 1 : 0);
 
                     String segmentIdString = row.Cells[1].Text;
-                    int segmentId = 0;
-                    int.TryParse(segmentIdString, out segmentId);
+                    int.TryParse(segmentIdString, out int segmentId);
 
                     if (segmentId > 0)
                     {
@@ -1192,16 +1228,16 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             relatedSegmentsList.EditIndex = -1;
-            bindRelatedSegmentData();
+            BindRelatedSegmentData();
         }
 
-        protected void relatedSegmentsList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        protected void RelatedSegmentsList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             relatedSegmentsList.EditIndex = -1;
-            bindRelatedSegmentData();
+            BindRelatedSegmentData();
         }
 
-        protected void relatedSegmentsList_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void RelatedSegmentsList_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
@@ -1209,29 +1245,29 @@ namespace MOBOT.BHL.AdminWeb
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
-                Segment currentSegment = findRelatedSegment(segment.RelatedSegmentList,
+                Segment currentSegment = FindRelatedSegment(segment.RelatedSegmentList,
                     (int)relatedSegmentsList.DataKeys[rowNum].Values[0]);
 
                 currentSegment.IsDeleted = true;
-                bindRelatedSegmentData();
+                BindRelatedSegmentData();
             }
         }
 
         #endregion RelatedSegment event handlers
 
-        protected void btnPaginator_Click(object sender, EventArgs e)
+        protected void PaginatorButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Paginator.aspx?SegmentID=" + idLabel.Text);
         }
 
-        protected void saveButton_Click(object sender, EventArgs e)
+        protected void SaveButton_Click(object sender, EventArgs e)
         {
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
             int? userId = null;
 
             try
             {
-                if (validate(segment))
+                if (Validate(segment))
                 {
                     BHLProvider bp = new BHLProvider();
 
@@ -1266,6 +1302,7 @@ namespace MOBOT.BHL.AdminWeb
                     segment.Title = titleTextBox.Text.Trim();
                     segment.SortTitle = sortTitleTextBox.Text.Trim();
                     segment.TranslatedTitle = translatedTitleTextBox.Text.Trim();
+                	segment.PreferredContainerTitleID = ddlPreferredContainerTitleID.SelectedValue == "" ? (int?)null : int.Parse(ddlPreferredContainerTitleID.SelectedValue);
                     segment.ContainerTitle = containerTitleTextBox.Text.Trim();
                     segment.PublicationDetails = publicationDetailsTextBox.Text.Trim();
                     segment.PublisherPlace = publisherPlaceTextBox.Text.Trim();
@@ -1364,20 +1401,24 @@ namespace MOBOT.BHL.AdminWeb
                     // Add new contributors
                     if (!contributorExists && ddlContributor.SelectedValue != string.Empty)
                     {
-                        Institution newContributor = new Institution();
-                        newContributor.InstitutionCode = ddlContributor.SelectedValue;
-                        newContributor.InstitutionRoleName = InstitutionRole.Contributor;
-                        newContributor.IsNew = true;
+                    Institution newContributor = new Institution
+                    {
+                        InstitutionCode = ddlContributor.SelectedValue,
+                        InstitutionRoleName = InstitutionRole.Contributor,
+                        IsNew = true
+                    };
                         segment.ContributorList.Add(newContributor);
                     }
 
                     if (!contributor2Exists && ddlContributor2.SelectedValue != string.Empty &&
                         ddlContributor.SelectedValue != ddlContributor2.SelectedValue)
                     {
-                        Institution newContributor = new Institution();
-                        newContributor.InstitutionCode = ddlContributor2.SelectedValue;
-                        newContributor.InstitutionRoleName = InstitutionRole.Contributor;
-                        newContributor.IsNew = true;
+                    Institution newContributor = new Institution
+                    {
+                        InstitutionCode = ddlContributor2.SelectedValue,
+                        InstitutionRoleName = InstitutionRole.Contributor,
+                        IsNew = true
+                    };
                         segment.ContributorList.Add(newContributor);
                     }
 
@@ -1401,7 +1442,7 @@ namespace MOBOT.BHL.AdminWeb
                     int segmentID = bp.SegmentSave(segment, (int)userId);
 
                     // After a successful save operation, reload the title
-                    fillUI(segmentID);
+                    FillUI(segmentID);
 
                     litMessage.Text = "<span class='liveData'>Segment Saved.</span>";
                     if (_warnings.Count > 0)
@@ -1421,7 +1462,7 @@ namespace MOBOT.BHL.AdminWeb
 
         #endregion Event Handlers
 
-        private bool validate(Segment segment)
+        private bool Validate(Segment segment)
         {
             bool flag = false;
             _warnings.Clear();
@@ -1460,8 +1501,7 @@ namespace MOBOT.BHL.AdminWeb
             // If a "replaced by" identifer was specified, make sure that it is a valid id
             if (replacedByTextBox.Text.Trim().Length > 0)
             {
-                int segmentID;
-                if (Int32.TryParse(replacedByTextBox.Text, out segmentID))
+                if (Int32.TryParse(replacedByTextBox.Text, out int segmentID))
                 {
                     // Look up the specified ID to ensure that it exists
                     if (new BHLProvider().SegmentSelectAuto(segmentID) == null)
@@ -1481,8 +1521,7 @@ namespace MOBOT.BHL.AdminWeb
             // If a BHL Page identifier was specified, make sure that it is a valid id
             if (bhlStartPageIDTextBox.Text.Trim().Length > 0)
             {
-                int pageID;
-                if (Int32.TryParse(bhlStartPageIDTextBox.Text, out pageID))
+                if (Int32.TryParse(bhlStartPageIDTextBox.Text, out int pageID))
                 {
                     // Look up the specified ID to ensure that it exists
                     if (new BHLProvider().PageSelectAuto(pageID) == null)

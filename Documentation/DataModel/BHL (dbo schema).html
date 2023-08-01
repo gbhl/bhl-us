@@ -3335,8 +3335,6 @@
 <a href="#IndicatedPage">IndicatedPage</a> referencing (PageID)</li>
 <li>
 <a href="#ItemPage">ItemPage</a> referencing (PageID)</li>
-<li>
-<a href="#Segment">Segment</a> referencing (PageID)</li>
 </ul>
 </div>
 </div>
@@ -4128,9 +4126,10 @@
 <td class="tdTableDefinition">LastPageNameLookupDate</td><td class="tdTableDefinition">LastPageNameLookupDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">PageID
-                &nbsp;(<a href="#Page">FK</a>)
-              </td><td class="tdTableDefinition">PageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">PageProgression</td><td class="tdTableDefinition">PageProgression</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PreferredContainerTitleID</td><td class="tdTableDefinition">PreferredContainerTitleID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 </table>
 <div class="references">
@@ -4140,8 +4139,6 @@
 <a href="#Language">Language</a> through (LanguageCode)</li>
 <li>
 <a href="#PaginationStatus">PaginationStatus</a> through (PaginationStatusID)</li>
-<li>
-<a href="#Page">Page</a> through (PageID)</li>
 <li>
 <a href="#SegmentGenre">SegmentGenre</a> through (SegmentGenreID)</li>
 <li>

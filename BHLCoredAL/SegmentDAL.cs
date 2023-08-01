@@ -85,20 +85,29 @@ namespace MOBOT.BHL.DAL
                     segment.ItemIssue = string.Join("-", (new string[] { book.StartIssue ?? string.Empty, book.EndIssue ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s)));
                     segment.ItemYear = string.Join("-", (new string[] { book.StartYear ?? string.Empty, book.EndYear ?? string.Empty }).Where(s => !string.IsNullOrEmpty(s)));
 
-                    List<ItemTitle> itemTitles = new ItemTitleDAL().ItemTitleSelectByItem(connection, transaction, (int)segment.BookID);
-                    foreach (ItemTitle itemTitle in itemTitles)
+                    int? containerTitleID = segment.PreferredContainerTitleID;
+                    if (containerTitleID == null)
                     {
-                        if (itemTitle.IsPrimary == 1)
+                        List<ItemTitle> itemTitles = new ItemTitleDAL().ItemTitleSelectByItem(connection, transaction, (int)segment.BookID);
+                        foreach (ItemTitle itemTitle in itemTitles)
                         {
-                            Title title = new TitleDAL().TitleSelectAuto(connection, transaction, itemTitle.TitleID);
-                            segment.TitleId = title.TitleID;
-                            segment.TitleFullTitle = title.FullTitle;
-                            segment.TitleShortTitle = title.ShortTitle;
-                            segment.TitlePublicationPlace = title.Datafield_260_a;
-                            segment.TitlePublisherName = title.Datafield_260_b;
-                            segment.TitlePublicationDate = (title.StartYear == null ? "" : title.StartYear.ToString());
-                            break;
+                            if (itemTitle.IsPrimary == 1)
+                            {
+                                containerTitleID = itemTitle.TitleID;
+                                break;
+                            }
                         }
+                    }
+
+                    if (containerTitleID != null)
+                    {
+                        Title title = new TitleDAL().TitleSelectAuto(connection, transaction, (int)containerTitleID);
+                        segment.TitleId = title.TitleID;
+                        segment.TitleFullTitle = title.FullTitle;
+                        segment.TitleShortTitle = title.ShortTitle;
+                        segment.TitlePublicationPlace = title.Datafield_260_a;
+                        segment.TitlePublisherName = title.Datafield_260_b;
+                        segment.TitlePublicationDate = (title.StartYear == null ? "" : title.StartYear.ToString());
                     }
                 }
 

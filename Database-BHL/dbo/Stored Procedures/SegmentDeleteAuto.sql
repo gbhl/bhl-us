@@ -10,7 +10,7 @@ GO
 
 -- Delete Procedure for dbo.Segment
 -- Do not modify the contents of this procedure.
--- Generated 6/2/2016 9:32:37 AM
+-- Generated 6/13/2023 4:35:22 PM
 
 CREATE PROCEDURE dbo.SegmentDeleteAuto
 
