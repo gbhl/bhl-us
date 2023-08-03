@@ -21,31 +21,33 @@ namespace MOBOT.BHLImport.Server
 
             if (savedPage == null)
             {
-                Page newPage = new Page();
-                newPage.ImportStatusID = 10;
-                newPage.ImportSourceID = importSourceID;
-                newPage.BarCode = barCode;
-                newPage.FileNamePrefix = fileNamePrefix;
-                newPage.SequenceOrder = sequenceOrder;
-                newPage.PageDescription = pageDescription;
-                newPage.Illustration = illustration;
-                newPage.Note = note;
-                newPage.FileSize_Temp = fileSize_temp;
-                newPage.FileExtension = fileExtension;
-                newPage.Active = active;
-                newPage.Year = year;
-                newPage.Series = series;
-                newPage.Volume = volume;
-                newPage.Issue = issue;
-                newPage.ExternalURL = externalUrl;
-                newPage.IssuePrefix = issuePrefix;
-                newPage.LastPageNameLookupDate = lastPageNameLookupDate;
-                newPage.PaginationUserID = paginationUserID;
-                newPage.PaginationDate = paginationDate;
-                newPage.ExternalCreationDate = externalCreationDate;
-                newPage.ExternalLastModifiedDate = externalLastModifiedDate;
-                newPage.ExternalCreationUser = externalCreationUser;
-                newPage.ExternalLastModifiedUser = externalLastModifiedUser;
+                Page newPage = new Page
+                {
+                    ImportStatusID = 10,
+                    ImportSourceID = importSourceID,
+                    BarCode = barCode,
+                    FileNamePrefix = fileNamePrefix,
+                    SequenceOrder = sequenceOrder,
+                    PageDescription = pageDescription,
+                    Illustration = illustration,
+                    Note = note,
+                    FileSize_Temp = fileSize_temp,
+                    FileExtension = fileExtension,
+                    Active = active,
+                    Year = year,
+                    Series = series,
+                    Volume = volume,
+                    Issue = issue,
+                    ExternalURL = externalUrl,
+                    IssuePrefix = issuePrefix,
+                    LastPageNameLookupDate = lastPageNameLookupDate,
+                    PaginationUserID = paginationUserID,
+                    PaginationDate = paginationDate,
+                    ExternalCreationDate = externalCreationDate,
+                    ExternalLastModifiedDate = externalLastModifiedDate,
+                    ExternalCreationUser = externalCreationUser,
+                    ExternalLastModifiedUser = externalLastModifiedUser
+                };
 
                 savedPage = dal.PageInsertAuto(null, null, newPage);
             }

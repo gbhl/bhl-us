@@ -13,13 +13,8 @@ namespace MOBOT.BHLImport.Server
         public IAItemIdentifier SaveIAItemIdentifier(int itemID, string idDescription, string idValue)
         {
             IAItemIdentifierDAL dal = new IAItemIdentifierDAL();
-            IAItemIdentifier savedItemIdentifier = dal.IAItemIdentifierSelect(null, null, 
-                itemID, idDescription, idValue);
-
-            if (savedItemIdentifier == null)
-            {
-                savedItemIdentifier = dal.IAItemIdentifierInsertAuto(null, null, itemID, idDescription, idValue);
-            }
+            IAItemIdentifier savedItemIdentifier = dal.IAItemIdentifierSelect(null, null, itemID, idDescription, idValue) ?? 
+                dal.IAItemIdentifierInsertAuto(null, null, itemID, idDescription, idValue);
             return savedItemIdentifier;
         }
     }

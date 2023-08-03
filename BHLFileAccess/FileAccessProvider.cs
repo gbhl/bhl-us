@@ -77,8 +77,7 @@ namespace MOBOT.FileAccess
                 }
                 finally
                 {
-                    if (tr != null)
-                        tr.Close();
+                    tr?.Close();
                 }
 
             }

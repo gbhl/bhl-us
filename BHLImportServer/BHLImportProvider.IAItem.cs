@@ -24,11 +24,13 @@ namespace MOBOT.BHLImport.Server
 
             if (savedItem == null)
             {
-                IAItem newItem = new IAItem();
-                newItem.IAIdentifier = iaIdentifier;
-                newItem.ItemStatusID = ITEMSTATUS_NEW;
-                newItem.LocalFileFolder = localFileFolder;
-                newItem.IADateStamp = dateStamp;
+                IAItem newItem = new IAItem
+                {
+                    IAIdentifier = iaIdentifier,
+                    ItemStatusID = ITEMSTATUS_NEW,
+                    LocalFileFolder = localFileFolder,
+                    IADateStamp = dateStamp
+                };
                 savedItem = dal.IAItemInsertAuto(null, null, newItem);
             }
             else
@@ -85,12 +87,14 @@ namespace MOBOT.BHLImport.Server
             int statusID, string procedure, string message)
         {
             // Simple error logging, so skipping the use of a transaction here.
-            IAItemError itemError = new IAItemError();
-            itemError.ItemID = itemID;
-            itemError.ErrorDate = DateTime.Now;
-            itemError.Procedure = procedure;
-            itemError.Message = message;
-            itemError.IsNew = true;
+            IAItemError itemError = new IAItemError
+            {
+                ItemID = itemID,
+                ErrorDate = DateTime.Now,
+                Procedure = procedure,
+                Message = message,
+                IsNew = true
+            };
             new IAItemErrorDAL().IAItemErrorInsertAuto(null, null, itemError);
 
             IAItemDAL itemDAL = new IAItemDAL();
@@ -290,9 +294,9 @@ namespace MOBOT.BHLImport.Server
         {
             string[] results = new string[2];
             string returnValue = "true";
-            string returnMessage = string.Empty;
+            string returnMessage;
             IAItemDAL itemDAL = new IAItemDAL();
-            IAItem item = null;
+            IAItem item;
 
             try
             {
@@ -301,10 +305,12 @@ namespace MOBOT.BHLImport.Server
                 if (item == null)
                 {
                     // Add new item
-                    item = new IAItem();
-                    item.IAIdentifier = iaIdentifier;
-                    item.ItemStatusID = ITEMSTATUS_NEW;
-                    item.LocalFileFolder = localFileFolder;
+                    item = new IAItem
+                    {
+                        IAIdentifier = iaIdentifier,
+                        ItemStatusID = ITEMSTATUS_NEW,
+                        LocalFileFolder = localFileFolder
+                    };
                     item = itemDAL.IAItemInsertAuto(null, null, item);
                     returnMessage = "'" + iaIdentifier + "' has been queued for download.";
                 }

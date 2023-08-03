@@ -17,30 +17,30 @@ namespace BHLFlickrTagHarvest
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private ConfigParms configParms = new ConfigParms();
-        private List<string> pagesProcessed = new List<string>();
-        private List<(string PageID, string PhotoID)> photosNotFound = new List<(string PageID, string PhotoID)>();
-        private List<string> tagsAdded = new List<string>();
-        private List<string> tagsUpdated = new List<string>();
-        private List<string> tagsRemoved = new List<string>();
-        private List<string> notesAdded = new List<string>();
-        private List<string> notesUpdated = new List<string>();
-        private List<string> notesRemoved = new List<string>();
-        private List<string> errorMessages = new List<string>();
+        private ConfigParms configParms = new();
+        private List<string> pagesProcessed = new();
+        private List<(string PageID, string PhotoID)> photosNotFound = new();
+        private List<string> tagsAdded = new();
+        private List<string> tagsUpdated = new();
+        private List<string> tagsRemoved = new();
+        private List<string> notesAdded = new();
+        private List<string> notesUpdated = new();
+        private List<string> notesRemoved = new();
+        private List<string> errorMessages = new();
 
         public void Process()
         {
-            this.LogMessage("BHLFlickrTagHarvest Processing Started");
+            LogMessage("BHLFlickrTagHarvest Processing Started");
 
             // Load the app settings from the configuration file
             configParms.LoadAppConfig();
 
             // Read additional app settings from the command line
             // Note: Command line arguments override configuration file settings
-            if (!this.ReadCommandLineArguments()) return;
+            if (!ReadCommandLineArguments()) return;
 
             // validate config values
-            if (!this.ValidateConfiguration()) return;
+            if (!ValidateConfiguration()) return;
 
             // Read the pages with flickr images and get the flickr tags and notes for each
             this.HarvestData();
@@ -48,7 +48,7 @@ namespace BHLFlickrTagHarvest
             // Report the results of item/page processing
             this.ProcessResults();
 
-            this.LogMessage("BHLFlickrTagHarvest Processing Complete");
+            LogMessage("BHLFlickrTagHarvest Processing Complete");
         }
 
         private void HarvestData()
@@ -83,7 +83,7 @@ namespace BHLFlickrTagHarvest
 
         private void HarvestPage(MOBOT.BHL.DataObjects.PageFlickr page)
         {
-            BHLImportProvider bhlImportService = new BHLImportProvider();
+            BHLImportProvider bhlImportService = new();
             string photoID = string.Empty;
 
             try
@@ -93,7 +93,7 @@ namespace BHLFlickrTagHarvest
                 photoID = flickrUrlParts[5];
                 PhotoInfo photoInfo = this.GetFlickrPhotoInfo(photoID);
                 List<PageFlickrTag> flickrTags = this.GetFlickrTags(page.PageID, photoID, photoInfo);
-                List<PageFlickrNote> flickrNotes = this.GetFlickrNotes(page.PageID, photoID, photoInfo);
+                List<PageFlickrNote> flickrNotes = GetFlickrNotes(page.PageID, photoID, photoInfo);
 
                 // Get the tags and notes from the database for the current page
                 List<PageFlickrTag> bhlTags = bhlImportService.PageFlickrTagSelectForPageID(page.PageID);
@@ -135,8 +135,10 @@ namespace BHLFlickrTagHarvest
         private PhotoInfo GetFlickrPhotoInfo(string photoID)
         {
             Flickr.CacheDisabled = true;
-            Flickr flickr = new Flickr();
-            flickr.ApiKey = configParms.FlickrApiKey;
+            Flickr flickr = new()
+            {
+                ApiKey = configParms.FlickrApiKey
+            };
             PhotoInfo photoInfo = null;
 
             // Try getting info up to three times per photo before giving up
@@ -179,7 +181,7 @@ namespace BHLFlickrTagHarvest
         /// <returns></returns>
         private List<PageFlickrTag> GetFlickrTags(int pageID, string photoID, PhotoInfo photoInfo)
         {
-            List<PageFlickrTag> flickrTags = new List<PageFlickrTag>();
+            List<PageFlickrTag> flickrTags = new();
 
             foreach (PhotoInfoTag tag in photoInfo.Tags)
             {
@@ -192,14 +194,15 @@ namespace BHLFlickrTagHarvest
                 }
                 else
                 {
-                    PageFlickrTag flickrTag = new PageFlickrTag();
-
-                    flickrTag.PageID = pageID;
-                    flickrTag.PhotoID = photoID;
-                    flickrTag.IsMachineTag = (short)(tag.IsMachineTag ? 1 : 0);
-                    flickrTag.TagValue = tag.Raw;
-                    flickrTag.FlickrAuthorID = tag.AuthorId;
-                    flickrTag.FlickrAuthorName = tag.AuthorName;
+                    PageFlickrTag flickrTag = new()
+                    {
+                        PageID = pageID,
+                        PhotoID = photoID,
+                        IsMachineTag = (short)(tag.IsMachineTag ? 1 : 0),
+                        TagValue = tag.Raw,
+                        FlickrAuthorID = tag.AuthorId,
+                        FlickrAuthorName = tag.AuthorName
+                    };
 
                     flickrTags.Add(flickrTag);
                 }
@@ -215,29 +218,30 @@ namespace BHLFlickrTagHarvest
         /// <param name="photoID"></param>
         /// <param name="photoInfo"></param>
         /// <returns></returns>
-        private List<PageFlickrNote> GetFlickrNotes(int pageID, string photoID, PhotoInfo photoInfo)
+        private static List<PageFlickrNote> GetFlickrNotes(int pageID, string photoID, PhotoInfo photoInfo)
         {
-            List<PageFlickrNote> flickrNotes = new List<PageFlickrNote>();
+            List<PageFlickrNote> flickrNotes = new();
 
             foreach (PhotoInfoNote note in photoInfo.Notes)
             {
                 // Include all notes, including those entered by the BioDivLibrary user.
                 // There are no auto-added notes from BioDivLibrary, so no reason to
                 // exclude anything.
-                PageFlickrNote flickrNote = new PageFlickrNote();
-
-                flickrNote.PageID = pageID;
-                flickrNote.PhotoID = photoID;
-                flickrNote.FlickrNoteID = note.NoteId;
-                flickrNote.FlickrAuthorID = note.AuthorId;
-                flickrNote.FlickrAuthorName = note.AuthorName;
-                flickrNote.FlickrAuthorRealName = note.AuthorRealName;
-                flickrNote.AuthorIsPro = (short)((note.AuthorIsPro ?? false) ? 1 : 0);
-                flickrNote.XCoord = note.XPosition;
-                flickrNote.YCoord = note.YPosition;
-                flickrNote.Width = note.Width;
-                flickrNote.Height = note.Height;
-                flickrNote.NoteValue = note.NoteText;
+                PageFlickrNote flickrNote = new()
+                {
+                    PageID = pageID,
+                    PhotoID = photoID,
+                    FlickrNoteID = note.NoteId,
+                    FlickrAuthorID = note.AuthorId,
+                    FlickrAuthorName = note.AuthorName,
+                    FlickrAuthorRealName = note.AuthorRealName,
+                    AuthorIsPro = (short)((note.AuthorIsPro ?? false) ? 1 : 0),
+                    XCoord = note.XPosition,
+                    YCoord = note.YPosition,
+                    Width = note.Width,
+                    Height = note.Height,
+                    NoteValue = note.NoteText
+                };
 
                 flickrNotes.Add(flickrNote);
             }
@@ -254,7 +258,7 @@ namespace BHLFlickrTagHarvest
         /// <returns></returns>
         private List<PageFlickrTag> CompareTags(List<PageFlickrTag> bhlTags, List<PageFlickrTag> flickrTags)
         {
-            List<PageFlickrTag> updateTags = new List<PageFlickrTag>();
+            List<PageFlickrTag> updateTags = new();
             DateTime updateDate = DateTime.Now;
 
             // Add and update tags
@@ -334,7 +338,7 @@ namespace BHLFlickrTagHarvest
         /// <returns></returns>
         private List<PageFlickrNote> CompareNotes(List<PageFlickrNote> bhlNotes, List<PageFlickrNote> flickrNotes)
         {
-            List<PageFlickrNote> updateNotes = new List<PageFlickrNote>();
+            List<PageFlickrNote> updateNotes = new();
             DateTime updateDate = DateTime.Now;
 
             // Add and update tags
@@ -432,19 +436,19 @@ namespace BHLFlickrTagHarvest
                     notesRemoved.Count > 0 || photosNotFound.Count > 0 || 
                     errorMessages.Count > 0)
                 {
-                    this.LogMessage("Sending Email....");
+                    LogMessage("Sending Email....");
                     string message = this.GetEmailBody();
-                    this.LogMessage(message);
+                    LogMessage(message);
                     this.SendEmail(message);
                 }
                 else
                 {
-                    this.LogMessage("No pages processed.  Email not sent.");
+                    LogMessage("No pages processed.  Email not sent.");
                 }
             }
             catch (Exception ex)
             {
-                this.LogMessage("Exception sending email.", ex);
+                LogMessage("Exception sending email.", ex);
                 return;
             }
         }
@@ -458,7 +462,7 @@ namespace BHLFlickrTagHarvest
         /// in an instance of the ConfigParms class.
         /// </summary>
         /// <returns>True if the arguments were in a valid format, false otherwise</returns>
-        private bool ReadCommandLineArguments()
+        private static bool ReadCommandLineArguments()
         {
             return true;
         }
@@ -467,7 +471,7 @@ namespace BHLFlickrTagHarvest
         /// Verify that the config file and command line arguments are valid
         /// </summary>
         /// <returns>True if arguments valid, false otherwise</returns>
-        private bool ValidateConfiguration()
+        private static bool ValidateConfiguration()
         {
             return true;
         }
@@ -478,7 +482,7 @@ namespace BHLFlickrTagHarvest
         /// <returns>Body of email message to be sent</returns>
         private string GetEmailBody()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             const string endOfLine = "\r\n";
 
             string thisComputer = Environment.MachineName;
@@ -515,9 +519,9 @@ namespace BHLFlickrTagHarvest
             if (this.photosNotFound.Count > 0)
             {
                 sb.Append(endOfLine + this.photosNotFound.Count.ToString() + " Photos not found at Flickr" + endOfLine);
-                foreach((string PageID, string PhotoID) photo in photosNotFound)
+                foreach((string PageID, string PhotoID) in photosNotFound)
                 {
-                    sb.Append(endOfLine + "Flickr Photo ID " + photo.PhotoID + " (associated with BHL Page ID " + photo.PageID + ") not found" + endOfLine);
+                    sb.Append(endOfLine + "Flickr Photo ID " + PhotoID + " (associated with BHL Page ID " + PageID + ") not found" + endOfLine);
                 }
             }
             if (this.errorMessages.Count > 0)
@@ -540,19 +544,21 @@ namespace BHLFlickrTagHarvest
         {
             try
             {
-                MailRequestModel mailRequest = new MailRequestModel();
-                mailRequest.Subject = string.Format(
-                    "BHLFlickrTagHarvest: Flickr Harvesting on {0} completed {1}.",
-                    Environment.MachineName,
-                    (errorMessages.Count == 0 ? "successfully" : "with errors"));
-                mailRequest.Body = message;
-                mailRequest.From = configParms.EmailFromAddress;
+                MailRequestModel mailRequest = new()
+                {
+                    Subject = string.Format(
+                        "BHLFlickrTagHarvest: Flickr Harvesting on {0} completed {1}.",
+                        Environment.MachineName,
+                        (errorMessages.Count == 0 ? "successfully" : "with errors")),
+                    Body = message,
+                    From = configParms.EmailFromAddress
+                };
 
-                List<string> recipients = new List<string>();
+                List<string> recipients = new();
                 foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
                 mailRequest.To = recipients;
 
-                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                EmailClient restClient = new(configParms.BHLWSEndpoint);
                 restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
@@ -561,14 +567,14 @@ namespace BHLFlickrTagHarvest
             }
         }
 
-        private void LogMessage(string message)
+        private static void LogMessage(string message)
         {
             // logger automatically adds date/time
             if (log.IsInfoEnabled) log.Info(message);
             Console.Write(message + "\r\n");
         }
 
-        private void LogMessage(string message, Exception ex)
+        private static void LogMessage(string message, Exception ex)
         {
             log.Error(message, ex);
             Console.Write(string.Format("{0}: {1}\r\n", message, ex.Message));

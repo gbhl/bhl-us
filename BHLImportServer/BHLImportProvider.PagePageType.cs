@@ -18,18 +18,20 @@ namespace MOBOT.BHLImport.Server
 
             if (savedPage_PageType == null)
             {
-                Page_PageType newPage_PageType = new Page_PageType();
-                newPage_PageType.ImportStatusID = 10;
-                newPage_PageType.ImportSourceID = importSourceID;
-                newPage_PageType.BarCode = barCode;
-                newPage_PageType.FileNamePrefix = fileNamePrefix;
-                newPage_PageType.SequenceOrder = sequenceOrder;
-                newPage_PageType.PageTypeID = pageTypeID;
-                newPage_PageType.Verified = verified;
-                newPage_PageType.ExternalCreationDate = externalCreationDate;
-                newPage_PageType.ExternalLastModifiedDate = externalLastModifiedDate;
-                newPage_PageType.ExternalCreationUser = externalCreationUser;
-                newPage_PageType.ExternalLastModifiedUser = externalLastModifiedUser;
+                Page_PageType newPage_PageType = new Page_PageType
+                {
+                    ImportStatusID = 10,
+                    ImportSourceID = importSourceID,
+                    BarCode = barCode,
+                    FileNamePrefix = fileNamePrefix,
+                    SequenceOrder = sequenceOrder,
+                    PageTypeID = pageTypeID,
+                    Verified = verified,
+                    ExternalCreationDate = externalCreationDate,
+                    ExternalLastModifiedDate = externalLastModifiedDate,
+                    ExternalCreationUser = externalCreationUser,
+                    ExternalLastModifiedUser = externalLastModifiedUser
+                };
 
                 savedPage_PageType = dal.Page_PageTypeInsertAuto(null, null, newPage_PageType);
             }

@@ -29,7 +29,6 @@ namespace MOBOT.BHLImport.Server
             string[] results = new string[2];
             string returnValue = "true";
             string returnMessage = string.Empty;
-            string returnIdentifier = string.Empty;
 
             try
             {

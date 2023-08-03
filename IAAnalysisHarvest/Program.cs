@@ -13,20 +13,20 @@ namespace IAAnalysisHarvest
         // i.e. you can copy the code directly into another class without
         // needing to edit the code.
 
-        static void Main(string[] args)
+        static void Main()
         {
-            if (isAlreadyRunning())
+            if (IsAlreadyRunning())
             {
                 log.Error("IAAnalysisHarvest is already running");
             }
             else
             {
-                HarvestProcessor processor = new HarvestProcessor();
+                HarvestProcessor processor = new();
                 processor.Process();
             }
         }
 
-        private static bool isAlreadyRunning()
+        private static bool IsAlreadyRunning()
         {
             Process thisProcess = Process.GetCurrentProcess();
             Process[] allProcesses = Process.GetProcessesByName(thisProcess.ProcessName);

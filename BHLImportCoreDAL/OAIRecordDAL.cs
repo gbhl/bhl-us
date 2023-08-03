@@ -13,7 +13,6 @@ namespace MOBOT.BHLImport.DAL
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command =
                 CustomSqlHelper.CreateCommand("OAIRecordDeleteForOAIRecordID", connection, sqlTransaction,
@@ -28,7 +27,6 @@ namespace MOBOT.BHLImport.DAL
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command =
                 CustomSqlHelper.CreateCommand("OAIRecordDeleteForHarvestLogID", connection, sqlTransaction,

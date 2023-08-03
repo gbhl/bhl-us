@@ -24,24 +24,26 @@ namespace MOBOT.BHLImport.Server
 
             if (savedCreator == null)
             {
-                Creator newCreator = new Creator();
-                newCreator.ImportStatusID = 10;
-                newCreator.ImportSourceID = importSourceID;
-                newCreator.CreatorName = creatorName;
-                newCreator.FirstNameFirst = firstNameFirst;
-                newCreator.SimpleName = simpleName;
-                newCreator.DOB = dob;
-                newCreator.DOD = dod;
-                newCreator.Biography = biography;
-                newCreator.CreatorNote = creatorNote;
-                newCreator.MARCDataFieldTag = marcDataFieldTag;
-                newCreator.MARCCreator_a = marcCreator_a;
-                newCreator.MARCCreator_b = marcCreator_b;
-                newCreator.MARCCreator_c = marcCreator_c;
-                newCreator.MARCCreator_d = marcCreator_d;
-                newCreator.MARCCreator_Full = marcCreator_full;
-                newCreator.ExternalCreationDate = externalCreationDate;
-                newCreator.ExternalLastModifiedDate = externalLastModifiedDate;
+                Creator newCreator = new Creator
+                {
+                    ImportStatusID = 10,
+                    ImportSourceID = importSourceID,
+                    CreatorName = creatorName,
+                    FirstNameFirst = firstNameFirst,
+                    SimpleName = simpleName,
+                    DOB = dob,
+                    DOD = dod,
+                    Biography = biography,
+                    CreatorNote = creatorNote,
+                    MARCDataFieldTag = marcDataFieldTag,
+                    MARCCreator_a = marcCreator_a,
+                    MARCCreator_b = marcCreator_b,
+                    MARCCreator_c = marcCreator_c,
+                    MARCCreator_d = marcCreator_d,
+                    MARCCreator_Full = marcCreator_full,
+                    ExternalCreationDate = externalCreationDate,
+                    ExternalLastModifiedDate = externalLastModifiedDate
+                };
                 savedCreator = dal.CreatorInsertAuto(null, null, newCreator);
             }
             else

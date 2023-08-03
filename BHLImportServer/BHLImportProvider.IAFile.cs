@@ -14,12 +14,14 @@ namespace MOBOT.BHLImport.Server
 
             if (savedFile == null)
             {
-                IAFile newFile = new IAFile();
-                newFile.ItemID = itemID;
-                newFile.RemoteFileName = remoteFileName;
-                newFile.Source = source;
-                newFile.Format = format;
-                newFile.Original = original;
+                IAFile newFile = new IAFile
+                {
+                    ItemID = itemID,
+                    RemoteFileName = remoteFileName,
+                    Source = source,
+                    Format = format,
+                    Original = original
+                };
                 savedFile = dal.IAFileInsertAuto(null, null, newFile);
             }
             else

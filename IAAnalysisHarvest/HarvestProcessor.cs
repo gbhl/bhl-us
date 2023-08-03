@@ -19,13 +19,13 @@ namespace IAAnalysisHarvest
         // i.e. you can copy the code directly into another class without
         // needing to edit the code.
 
-        private ConfigParms configParms = new ConfigParms();
-        private List<string> retrievedIds = new List<string>();
-        private List<string> harvestedXml = new List<string>();
-        private List<string> errorMessages = new List<string>();
+        private ConfigParms configParms = new();
+        private List<string> retrievedIds = new();
+        private List<string> harvestedXml = new();
+        private List<string> errorMessages = new();
 
         // Create an HarvestProvider for use in this class
-        IAAnalysisProvider provider = new IAAnalysisProvider();
+        IAAnalysisProvider provider = new();
 
         public void Process()
         {
@@ -37,7 +37,7 @@ namespace IAAnalysisHarvest
             if (!this.ReadCommandLineArguments()) return;
 
             // validate config values
-            if (!this.ValidateConfiguration()) return;
+            if (!ValidateConfiguration()) return;
 
             // Do processing
             if (configParms.DownloadIDs) this.GetItems();
@@ -46,7 +46,7 @@ namespace IAAnalysisHarvest
             // Report the results of processing
             this.ProcessResults();
 
-            this.LogMessage("IAAnalysisHarvest Processing Complete");
+            LogMessage("IAAnalysisHarvest Processing Complete");
         }
 
         #region Get basic Item information
@@ -55,7 +55,7 @@ namespace IAAnalysisHarvest
         {
             try
             {
-                this.LogMessage("Downloading Items");
+                LogMessage("Downloading Items");
 
                 // Get the identifiers of newly added/updated items from IA
                 DateTime startDate;
@@ -81,7 +81,7 @@ namespace IAAnalysisHarvest
 
                 while(startDate.CompareTo(DateTime.Now) < 0)
                 {
-                    this.LogMessage("Downloading items modified between " + startDate.ToString("MM/dd/yyyy") + " and " + endDate.ToString("MM/dd/yyyy") + ".");
+                    LogMessage("Downloading items modified between " + startDate.ToString("MM/dd/yyyy") + " and " + endDate.ToString("MM/dd/yyyy") + ".");
                     String url = String.Format(configParms.SearchListIdentifiersUrl, startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"));
                     XmlDocument xml = provider.GetIAXmlData(url);
 
@@ -117,8 +117,8 @@ namespace IAAnalysisHarvest
         {
             try
             {
-                this.LogMessage("Harvesting XML information");
-                this.LogMessage("Harvesting Items");
+                LogMessage("Harvesting XML information");
+                LogMessage("Harvesting Items");
 
                 // Download the XML files for each item and parse the data into the database
                 List<MOBOT.IAAnalysis.DataObjects.Item> items = provider.ItemSelectForXMLDownload();
@@ -169,7 +169,7 @@ namespace IAAnalysisHarvest
         {
             String returnCode = "OK";
 
-            this.LogMessage("Harvesting metadata for " + identifier);
+            LogMessage("Harvesting metadata for " + identifier);
 
             // Read the XML file from IA
             XmlDocument xml = null;
@@ -180,10 +180,9 @@ namespace IAAnalysisHarvest
             catch (System.Net.WebException wex)
             {
                 // Capture the Http error code
-                System.Net.HttpWebResponse errResp = wex.Response as System.Net.HttpWebResponse;
-                if (errResp == null)
+                if (wex.Response is not System.Net.HttpWebResponse errResp)
                 {
-                    returnCode = (wex.Status == null) ? "ERR:" + wex.Message : wex.Status.ToString();
+                    returnCode = wex.Status.ToString();
                 }
                 else
                 {
@@ -232,7 +231,7 @@ namespace IAAnalysisHarvest
                     int endStateTag = curation.ToLower().IndexOf("[/state]");
                     if ((startStateTag > -1) && ((startStateTag + 7) < endStateTag))
                     {
-                        curationState = curation.Substring(startStateTag + 7, endStateTag - (startStateTag + 7)).ToLower();
+                        curationState = curation[(startStateTag + 7)..endStateTag].ToLower();
                     }
                 }
 
@@ -268,11 +267,10 @@ namespace IAAnalysisHarvest
             return returnCode;
         }
 
-        private DateTime? DateParse(String dateString)
+        private static DateTime? DateParse(String dateString)
         {
-            DateTime parsedDate;
             DateTime? returnDate = null;
-            if (DateTime.TryParse(dateString, out parsedDate))
+            if (DateTime.TryParse(dateString, out DateTime parsedDate))
             {
                 returnDate = parsedDate;
             }
@@ -283,7 +281,7 @@ namespace IAAnalysisHarvest
         {
             String returnCode = "OK";
 
-            this.LogMessage("Harvesting MARC data for " + identifier);
+            LogMessage("Harvesting MARC data for " + identifier);
 
             // Read the XML file from IA
             XmlDocument xml = null;
@@ -294,10 +292,9 @@ namespace IAAnalysisHarvest
             catch (System.Net.WebException wex)
             {
                 // Capture the Http error code
-                System.Net.HttpWebResponse errResp = wex.Response as System.Net.HttpWebResponse;
-                if (errResp == null)
+                if (wex.Response is not System.Net.HttpWebResponse errResp)
                 {
-                    returnCode = (wex.Status == null) ? "ERR:" + wex.Message : wex.Status.ToString();
+                    returnCode = wex.Status.ToString();
                 }
                 else
                 {
@@ -307,7 +304,7 @@ namespace IAAnalysisHarvest
 
             if (xml != null)
             {
-                XmlNamespaceManager nsmgr = new XmlNamespaceManager(xml.NameTable);
+                XmlNamespaceManager nsmgr = new(xml.NameTable);
                 nsmgr.AddNamespace("ns", "http://www.loc.gov/MARC21/slim");
 
                 // Insert or update the root Marc information
@@ -365,14 +362,14 @@ namespace IAAnalysisHarvest
                 if (retrievedIds.Count > 0 || harvestedXml.Count > 0 ||
                     errorMessages.Count > 0)
                 {
-                    this.LogMessage("Sending Email....");
+                    LogMessage("Sending Email....");
                     string message = this.GetEmailBody();
-                    this.LogMessage(message);
+                    LogMessage(message);
                     this.SendEmail(message);
                 }
                 else
                 {
-                    this.LogMessage("No items or pages processed.  Email not sent.");
+                    LogMessage("No items or pages processed.  Email not sent.");
                 }
             }
             catch (Exception ex)
@@ -402,7 +399,7 @@ namespace IAAnalysisHarvest
                 string[] split = args[x].Split(':');
                 if (split.Length != 2)
                 {
-                    this.LogMessage("Invalid command line format.  Format is IAAnalysisHarvest.exe [/DOWNLOADID:truefalse] [/GETXML:truefalse]");
+                    LogMessage("Invalid command line format.  Format is IAAnalysisHarvest.exe [/DOWNLOADID:truefalse] [/GETXML:truefalse]");
                     return false;
                 }
 
@@ -417,7 +414,7 @@ namespace IAAnalysisHarvest
         /// Verify that the config file and command line arguments are valid
         /// </summary>
         /// <returns>True if arguments valid, false otherwise</returns>
-        private bool ValidateConfiguration()
+        private static bool ValidateConfiguration()
         {
             return true;
         }
@@ -428,7 +425,7 @@ namespace IAAnalysisHarvest
         /// <returns>Body of email message to be sent</returns>
         private string GetEmailBody()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             const string endOfLine = "\r\n";
 
             string thisComputer = Environment.MachineName;
@@ -462,19 +459,21 @@ namespace IAAnalysisHarvest
         {
             try
             {
-                MailRequestModel mailRequest = new MailRequestModel();
-                mailRequest.Subject = string.Format(
-                    "IAAnalysisHarvest: IA Analysis Harvesting on {0} completed {1}.",
-                    Environment.MachineName,
-                    (errorMessages.Count == 0 ? "successfully" : "with errors"));
-                mailRequest.Body = message;
-                mailRequest.From = configParms.EmailFromAddress;
+                MailRequestModel mailRequest = new()
+                {
+                    Subject = string.Format(
+                        "IAAnalysisHarvest: IA Analysis Harvesting on {0} completed {1}.",
+                        Environment.MachineName,
+                        (errorMessages.Count == 0 ? "successfully" : "with errors")),
+                    Body = message,
+                    From = configParms.EmailFromAddress
+                };
 
-                List<string> recipients = new List<string>();
+                List<string> recipients = new();
                 foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
                 mailRequest.To = recipients;
 
-                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                EmailClient restClient = new(configParms.BHLWSEndpoint);
                 restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
@@ -483,7 +482,7 @@ namespace IAAnalysisHarvest
             }
         }
 
-        private void LogMessage(string message)
+        private static void LogMessage(string message)
         {
             // logger automatically adds date/time
             if (log.IsInfoEnabled) log.Info(message);

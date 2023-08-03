@@ -17,7 +17,7 @@ namespace MOBOT.BHLImport.Server
 
             foreach (PageFlickrNote note in notes)
             {
-                if (note.PageFlickrNoteID == default(int))
+                if (note.PageFlickrNoteID == default)
                 {
                     dal.PageFlickrNoteInsertAuto(null, null, note);
                 }

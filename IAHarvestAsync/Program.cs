@@ -18,15 +18,15 @@ namespace IAHarvestAsync
         // Create a logger
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private static ConfigParms configParms = new ConfigParms();
-        private static List<string> retrievedIds = new List<string>();
-        private static List<string> processedItems = new List<string>();
-        private static List<string> errorMessages = new List<string>();
+        private static ConfigParms configParms = new();
+        private static List<string> retrievedIds = new();
+        private static List<string> processedItems = new();
+        private static List<string> errorMessages = new();
 
         // Create an IAHarvestProvider for use in this class
-        static BHLImportProvider provider = new BHLImportProvider();
+        static BHLImportProvider provider = new();
 
-        static void Main(string[] args)
+        static void Main()
         {
             configParms.LoadAppConfig();
             if (configParms.DownloadAll)
@@ -136,7 +136,7 @@ namespace IAHarvestAsync
 
                         string arguments = string.Format("/ITEM:{0} /DOWNLOAD:{1} /UPLOAD:{2} /QUIET:{3}", 
                             item.IAIdentifier, configParms.Download, configParms.Upload, configParms.Quiet);
-                        ProcessStartInfo startInfo = new ProcessStartInfo { FileName = configParms.IAHarvestExecutable, Arguments = arguments };
+                        ProcessStartInfo startInfo = new() { FileName = configParms.IAHarvestExecutable, Arguments = arguments };
                         Process.Start(startInfo);
 
                         processedItems.Add(item.IAIdentifier);
@@ -184,7 +184,7 @@ namespace IAHarvestAsync
         /// <returns>Body of email message to be sent</returns>
         private static string GetEmailBody()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             const string endOfLine = "\r\n";
 
             sb.Append("IAHarvestAsync: IA Harvesting on " + Environment.MachineName + " complete." + endOfLine);
@@ -207,16 +207,18 @@ namespace IAHarvestAsync
         {
             try
             {
-                MailRequestModel mailRequest = new MailRequestModel();
-                mailRequest.Subject = string.Format("IAHarvestAsync: IA Harvesting on {0} completed with {1} errors.", Environment.MachineName, errorMessages.Count.ToString());
-                mailRequest.Body = message;
-                mailRequest.From = configParms.EmailFromAddress;
+                MailRequestModel mailRequest = new()
+                {
+                    Subject = string.Format("IAHarvestAsync: IA Harvesting on {0} completed with {1} errors.", Environment.MachineName, errorMessages.Count.ToString()),
+                    Body = message,
+                    From = configParms.EmailFromAddress
+                };
 
-                List<string> recipients = new List<string>();
+                List<string> recipients = new();
                 foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
                 mailRequest.To = recipients;
 
-                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                EmailClient restClient = new(configParms.BHLWSEndpoint);
                 restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)

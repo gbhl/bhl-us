@@ -18,20 +18,22 @@ namespace MOBOT.BHLImport.Server
             int indicatedPage, int pagePageType, int pageName)
         {
             BotanicusHarvestLogDAL dal = new BotanicusHarvestLogDAL();
-            BotanicusHarvestLog newLog = new BotanicusHarvestLog();
-            newLog.HarvestStartDate = harvestStartDate;
-            newLog.HarvestEndDate = harvestEndDate;
-            newLog.AutomaticHarvest = automaticHarvest;
-            newLog.SuccessfulHarvest = successfulHarvest;
-            newLog.Title = title;
-            newLog.TitleTag = titleTag;
-            newLog.TitleCreator = titleCreator;
-            newLog.Creator = creator;
-            newLog.Item = item;
-            newLog.Page = page;
-            newLog.IndicatedPage = indicatedPage;
-            newLog.PagePageType = pagePageType;
-            newLog.PageName = pageName;
+            BotanicusHarvestLog newLog = new BotanicusHarvestLog
+            {
+                HarvestStartDate = harvestStartDate,
+                HarvestEndDate = harvestEndDate,
+                AutomaticHarvest = automaticHarvest,
+                SuccessfulHarvest = successfulHarvest,
+                Title = title,
+                TitleTag = titleTag,
+                TitleCreator = titleCreator,
+                Creator = creator,
+                Item = item,
+                Page = page,
+                IndicatedPage = indicatedPage,
+                PagePageType = pagePageType,
+                PageName = pageName
+            };
             BotanicusHarvestLog savedLog = dal.BotanicusHarvestLogInsertAuto(null, null, newLog);
             return savedLog;
         }

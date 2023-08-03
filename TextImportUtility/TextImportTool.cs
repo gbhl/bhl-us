@@ -12,7 +12,7 @@ namespace BHL.TextImportUtility
     {
         public string GetFileFormat(string savedFileName)
         {
-            string fileFormat = "";
+            string fileFormat;
             string fileContent = File.ReadAllText(savedFileName);
 
             if (fileContent.Contains("<div class=\"page-content\">"))
@@ -67,11 +67,10 @@ namespace BHL.TextImportUtility
 
         public string GetText(string fileName, string seqNo, string fileFormat = "")
         {
-            int sequence;
-            string fileText = string.Empty;
+            string fileText;
             Dictionary<int, string> fileContents = new Dictionary<int, string>();
 
-            if (!Int32.TryParse(seqNo, out sequence)) throw new Exception(string.Format("Invalid sequence number: {0}", seqNo));
+            if (!Int32.TryParse(seqNo, out int sequence)) throw new Exception(string.Format("Invalid sequence number: {0}", seqNo));
 
             if (fileFormat == "") fileFormat = GetFileFormat(fileName);
 
@@ -101,11 +100,9 @@ namespace BHL.TextImportUtility
 
         public bool TextAvailable(string fileName, string seqNo, string fileFormat = "")
         {
-            int sequence;
-            string fileText = string.Empty;
             Dictionary<int, string> fileContents = new Dictionary<int, string>();
 
-            if (!Int32.TryParse(seqNo, out sequence)) throw new Exception(string.Format("Invalid sequence number: {0}", seqNo));
+            if (!Int32.TryParse(seqNo, out int sequence)) throw new Exception(string.Format("Invalid sequence number: {0}", seqNo));
 
             if (fileFormat == "") fileFormat = GetFileFormat(fileName);
 

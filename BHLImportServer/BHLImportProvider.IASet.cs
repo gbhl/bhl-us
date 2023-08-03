@@ -36,9 +36,11 @@ namespace MOBOT.BHLImport.Server
             if (savedSet == null)
             {
                 // Add the new set
-                IASet newSet = new IASet();
-                newSet.SetSpecification = setSpecification;
-                newSet.DownloadAll = false;
+                IASet newSet = new IASet
+                {
+                    SetSpecification = setSpecification,
+                    DownloadAll = false
+                };
                 savedSet = dal.IASetInsertAuto(null, null, newSet);
             }
             return savedSet;

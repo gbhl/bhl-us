@@ -18,20 +18,22 @@ namespace MOBOT.BHLImport.Server
 
             if (savedPageName == null)
             {
-                PageName newPageName = new PageName();
-                newPageName.ImportStatusID = 10;
-                newPageName.ImportSourceID = importSourceID;
-                newPageName.BarCode = barCode;
-                newPageName.FileNamePrefix = fileNamePrefix;
-                newPageName.SequenceOrder = sequenceOrder;
-                newPageName.NameFound = nameFound;
-                newPageName.Source = source;
-                newPageName.NameConfirmed = nameConfirmed;
-                newPageName.NameBankID = nameBankID;
-                newPageName.Active = active;
-                newPageName.IsCommonName = isCommonName;
-                newPageName.ExternalCreateDate = externalCreateDate;
-                newPageName.ExternalLastUpdateDate = externalLastUpdateDate;
+                PageName newPageName = new PageName
+                {
+                    ImportStatusID = 10,
+                    ImportSourceID = importSourceID,
+                    BarCode = barCode,
+                    FileNamePrefix = fileNamePrefix,
+                    SequenceOrder = sequenceOrder,
+                    NameFound = nameFound,
+                    Source = source,
+                    NameConfirmed = nameConfirmed,
+                    NameBankID = nameBankID,
+                    Active = active,
+                    IsCommonName = isCommonName,
+                    ExternalCreateDate = externalCreateDate,
+                    ExternalLastUpdateDate = externalLastUpdateDate
+                };
 
                 savedPageName = dal.PageNameInsertAuto(null, null, newPageName);
             }

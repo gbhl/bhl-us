@@ -28,11 +28,13 @@ namespace MOBOT.BHLImport.DAL
                 List<Stats> listOfStats = new List<Stats>();
                 foreach (CustomDataRow row in list)
                 {
-                    Stats stats = new Stats();
-                    stats.Source = row["Source"].Value.ToString();
-                    stats.Status = row["Status"].Value.ToString();
-                    stats.Type = row["Type"].Value.ToString();
-                    stats.NumberOfItems = (int)row["Number Of Items"].Value;
+                    Stats stats = new Stats
+                    {
+                        Source = row["Source"].Value.ToString(),
+                        Status = row["Status"].Value.ToString(),
+                        Type = row["Type"].Value.ToString(),
+                        NumberOfItems = (int)row["Number Of Items"].Value
+                    };
                     listOfStats.Add(stats);
                 }
 
@@ -52,8 +54,10 @@ namespace MOBOT.BHLImport.DAL
                 CustomSqlHelper.CreateInputParameter("AgeInDays", SqlDbType.Int, null, false, ageInDays)))
             {
                 List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
-                Stats stats = new Stats();
-                stats.NumberOfItems = (int)list[0]["Number Of Items"].Value;
+                Stats stats = new Stats
+                {
+                    NumberOfItems = (int)list[0]["Number Of Items"].Value
+                };
                 return stats;
             }
         }
@@ -71,11 +75,13 @@ namespace MOBOT.BHLImport.DAL
                 List<Stats> listOfStats = new List<Stats>();
                 foreach (CustomDataRow row in list)
                 {
-                    Stats stats = new Stats();
-                    stats.ItemStatusID = (int)row["ItemStatusID"].Value;
-                    stats.Status = row["Status"].Value.ToString();
-                    stats.Description = row["Description"].Value.ToString();
-                    stats.NumberOfItems = (int)row["Number Of Items"].Value;
+                    Stats stats = new Stats
+                    {
+                        ItemStatusID = (int)row["ItemStatusID"].Value,
+                        Status = row["Status"].Value.ToString(),
+                        Description = row["Description"].Value.ToString(),
+                        NumberOfItems = (int)row["Number Of Items"].Value
+                    };
                     listOfStats.Add(stats);
                 }
 
@@ -98,9 +104,11 @@ namespace MOBOT.BHLImport.DAL
                 List<Stats> listOfStats = new List<Stats>();
                 foreach (CustomDataRow row in list)
                 {
-                    Stats stats = new Stats();
-                    stats.AgeInDays = (int)row["Age In Days"].Value;
-                    stats.NumberOfItems = (int)row["Number Of Items"].Value;
+                    Stats stats = new Stats
+                    {
+                        AgeInDays = (int)row["Age In Days"].Value,
+                        NumberOfItems = (int)row["Number Of Items"].Value
+                    };
                     listOfStats.Add(stats);
                 }
 
@@ -121,11 +129,13 @@ namespace MOBOT.BHLImport.DAL
                 List<Stats> listOfStats = new List<Stats>();
                 foreach (CustomDataRow row in list)
                 {
-                    Stats stats = new Stats();
-                    stats.ItemStatusID = (int)row["ItemStatusID"].Value;
-                    stats.Status = row["Status"].Value.ToString();
-                    stats.Description = row["Description"].Value.ToString();
-                    stats.NumberOfItems = (int)row["Number Of Items"].Value;
+                    Stats stats = new Stats
+                    {
+                        ItemStatusID = (int)row["ItemStatusID"].Value,
+                        Status = row["Status"].Value.ToString(),
+                        Description = row["Description"].Value.ToString(),
+                        NumberOfItems = (int)row["Number Of Items"].Value
+                    };
                     listOfStats.Add(stats);
                 }
 

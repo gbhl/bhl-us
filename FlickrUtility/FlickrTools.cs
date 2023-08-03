@@ -87,17 +87,19 @@ namespace FlickrUtility
             {
                 //if (rotation > 0)
                 //{
-                    // optional - rotate image
-                    var settings = new ResizeSettings();
-                    settings.Rotate = rotation;
-                    settings.Format = "jpg";
-                    settings.Quality = int.Parse(ConfigurationManager.AppSettings["FlickrImageQuality"]);
+                // optional - rotate image
+                var settings = new ResizeSettings
+                {
+                    Rotate = rotation,
+                    Format = "jpg",
+                    Quality = int.Parse(ConfigurationManager.AppSettings["FlickrImageQuality"]),
 
-                    settings.MaxHeight = int.Parse(ConfigurationManager.AppSettings["FlickrMaxHeight"]);
-                    settings.MaxWidth = int.Parse(ConfigurationManager.AppSettings["FlickrMaxWidth"]);
+                    MaxHeight = int.Parse(ConfigurationManager.AppSettings["FlickrMaxHeight"]),
+                    MaxWidth = int.Parse(ConfigurationManager.AppSettings["FlickrMaxWidth"])
+                };
 
-                    // rotating image
-                    ImageBuilder.Current.Build(inStream, outStream, settings);                
+                // rotating image
+                ImageBuilder.Current.Build(inStream, outStream, settings);                
                 //}
 
                 // add metadata to image file

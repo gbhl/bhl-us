@@ -4,9 +4,9 @@ namespace IAHarvest
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            IAHarvestProcessor processor = new IAHarvestProcessor();
+            IAHarvestProcessor processor = new();
             processor.Process();
         }
     }

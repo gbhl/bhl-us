@@ -9,9 +9,11 @@ namespace MOBOT.IAAnalysis.Server
     {
         public ItemCollection ItemCollectionInsertAuto(int itemID, int collectionID)
         {
-            ItemCollection newItemCollection = new ItemCollection();
-            newItemCollection.ItemID = itemID;
-            newItemCollection.CollectionID = collectionID;
+            ItemCollection newItemCollection = new ItemCollection
+            {
+                ItemID = itemID,
+                CollectionID = collectionID
+            };
             return (new ItemCollectionDAL().ItemCollectionInsertAuto(null, null, newItemCollection));
         }
 
@@ -25,12 +27,7 @@ namespace MOBOT.IAAnalysis.Server
         public ItemCollection SaveItemCollection(int itemID, int collectionID)
         {
             ItemCollectionDAL dal = new ItemCollectionDAL();
-            ItemCollection savedItemCollection = dal.ItemCollectionSelectAuto(null, null, itemID, collectionID);
-
-            if (savedItemCollection == null)
-            {
-                savedItemCollection = this.ItemCollectionInsertAuto(itemID, collectionID);
-            }
+            ItemCollection savedItemCollection = dal.ItemCollectionSelectAuto(null, null, itemID, collectionID) ?? this.ItemCollectionInsertAuto(itemID, collectionID);
             return savedItemCollection;
         }
 

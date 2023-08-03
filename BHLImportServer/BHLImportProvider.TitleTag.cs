@@ -16,15 +16,17 @@ namespace MOBOT.BHLImport.Server
 
             if (savedTitleTag == null)
             {
-                TitleTag newTitleTag = new TitleTag();
-                newTitleTag.ImportKey = marcBibID;
-                newTitleTag.ImportStatusID = 10;
-                newTitleTag.ImportSourceID = importSourceID;
-                newTitleTag.TagText = tagText;
-                newTitleTag.MarcDataFieldTag = marcDataFieldTag;
-                newTitleTag.MarcSubFieldCode = marcSubFieldCode;
-                newTitleTag.ExternalCreationDate = externalCreationDate;
-                newTitleTag.ExternalLastModifiedDate = externalLastModifiedDate;
+                TitleTag newTitleTag = new TitleTag
+                {
+                    ImportKey = marcBibID,
+                    ImportStatusID = 10,
+                    ImportSourceID = importSourceID,
+                    TagText = tagText,
+                    MarcDataFieldTag = marcDataFieldTag,
+                    MarcSubFieldCode = marcSubFieldCode,
+                    ExternalCreationDate = externalCreationDate,
+                    ExternalLastModifiedDate = externalLastModifiedDate
+                };
                 savedTitleTag = dal.TitleTagInsertAuto(null, null, newTitleTag);
             }
             else

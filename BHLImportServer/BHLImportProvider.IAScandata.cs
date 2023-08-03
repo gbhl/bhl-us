@@ -18,15 +18,17 @@ namespace MOBOT.BHLImport.Server
 
             if (savedScandata == null)
             {
-                IAScandata newScandata = new IAScandata();
-                newScandata.ItemID = itemID;
-                newScandata.Sequence = sequence;
-                newScandata.PageType = pageType;
-                newScandata.PageNumber = pageNumber;
-                newScandata.Year = year;
-                newScandata.Volume = volume;
-                newScandata.Issue = issue;
-                newScandata.IssuePrefix = issuePrefix;
+                IAScandata newScandata = new IAScandata
+                {
+                    ItemID = itemID,
+                    Sequence = sequence,
+                    PageType = pageType,
+                    PageNumber = pageNumber,
+                    Year = year,
+                    Volume = volume,
+                    Issue = issue,
+                    IssuePrefix = issuePrefix
+                };
                 savedScandata = dal.IAScandataInsertAuto(null, null, newScandata);
             }
             else
@@ -57,9 +59,11 @@ namespace MOBOT.BHLImport.Server
 
             if (savedAltPageType == null)
             {
-                IAScandataAltPageType newAltPageType = new IAScandataAltPageType();
-                newAltPageType.ScandataID = scandataID;
-                newAltPageType.PageType = pageType;
+                IAScandataAltPageType newAltPageType = new IAScandataAltPageType
+                {
+                    ScandataID = scandataID,
+                    PageType = pageType
+                };
                 savedAltPageType = dal.IAScandataAltPageTypeInsertAuto(null, null, newAltPageType);
             }
             else
@@ -77,12 +81,14 @@ namespace MOBOT.BHLImport.Server
 
             if (savedAltPageNumber == null)
             {
-                IAScandataAltPageNumber newAltPageNumber = new IAScandataAltPageNumber();
-                newAltPageNumber.ScandataID = scandataID;
-                newAltPageNumber.Sequence = sequence;
-                newAltPageNumber.PagePrefix = pagePrefix;
-                newAltPageNumber.PageNumber = pageNumber;
-                newAltPageNumber.Implied = implied;
+                IAScandataAltPageNumber newAltPageNumber = new IAScandataAltPageNumber
+                {
+                    ScandataID = scandataID,
+                    Sequence = sequence,
+                    PagePrefix = pagePrefix,
+                    PageNumber = pageNumber,
+                    Implied = implied
+                };
                 savedAltPageNumber = dal.IAScandataAltPageNumberInsertAuto(null, null, newAltPageNumber);
             }
             else

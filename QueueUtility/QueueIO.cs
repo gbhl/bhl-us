@@ -157,10 +157,7 @@ namespace BHL.QueueUtility
                     catch (Exception ex)
                     {
                         // Log message processing error
-                        if (_logger != null)
-                        {
-                            _logger.Error(ex, "Error processing the Search Index Queue message '{Message}'", message);
-                        }
+                        _logger?.Error(ex, "Error processing the Search Index Queue message '{Message}'", message);
                     }
 
                     if (processed)

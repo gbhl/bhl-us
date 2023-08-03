@@ -13,18 +13,20 @@ namespace MOBOT.BHLImport.Server
 
             if (savedSegment == null)
             {
-                IASegment newIASegment = new IASegment();
-                newIASegment.ItemID = itemID;
-                newIASegment.Sequence = sequence;
-                newIASegment.Title = title;
-                newIASegment.Volume = volume;
-                newIASegment.Issue= issue;
-                newIASegment.Series = series;
-                newIASegment.Date = date;
-                newIASegment.LanguageCode = language;
-                newIASegment.BHLSegmentGenreID = genreId;
-                newIASegment.BHLSegmentGenreName = genreName;
-                newIASegment.DOI = doi;
+                IASegment newIASegment = new IASegment
+                {
+                    ItemID = itemID,
+                    Sequence = sequence,
+                    Title = title,
+                    Volume = volume,
+                    Issue = issue,
+                    Series = series,
+                    Date = date,
+                    LanguageCode = language,
+                    BHLSegmentGenreID = genreId,
+                    BHLSegmentGenreName = genreName,
+                    DOI = doi
+                };
                 savedSegment = dal.IASegmentInsertAuto(null, null, newIASegment);
             }
             else
@@ -53,17 +55,19 @@ namespace MOBOT.BHLImport.Server
 
             if (savedSegmentAuthor == null)
             {
-                IASegmentAuthor newIASegmentAuthor = new IASegmentAuthor();
-                newIASegmentAuthor.SegmentID = segmentID;
-                newIASegmentAuthor.Sequence = sequence;
-                newIASegmentAuthor.BHLAuthorID = authorId;
-                newIASegmentAuthor.FullName = fullName;
-                newIASegmentAuthor.LastName = lastName;
-                newIASegmentAuthor.FirstName = firstName;
-                newIASegmentAuthor.StartDate = startDate;
-                newIASegmentAuthor.EndDate = endDate;
-                newIASegmentAuthor.BHLIdentifierID = identifierId;
-                newIASegmentAuthor.IdentifierValue = identifierValue;
+                IASegmentAuthor newIASegmentAuthor = new IASegmentAuthor
+                {
+                    SegmentID = segmentID,
+                    Sequence = sequence,
+                    BHLAuthorID = authorId,
+                    FullName = fullName,
+                    LastName = lastName,
+                    FirstName = firstName,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    BHLIdentifierID = identifierId,
+                    IdentifierValue = identifierValue
+                };
                 savedSegmentAuthor = dal.IASegmentAuthorInsertAuto(null, null, newIASegmentAuthor);
             }
             else
@@ -90,9 +94,11 @@ namespace MOBOT.BHLImport.Server
 
             if (savedSegmentPage == null)
             {
-                IASegmentPage newIASegmentPage = new IASegmentPage();
-                newIASegmentPage.SegmentID = segmentID;
-                newIASegmentPage.PageSequence = pageSequence;
+                IASegmentPage newIASegmentPage = new IASegmentPage
+                {
+                    SegmentID = segmentID,
+                    PageSequence = pageSequence
+                };
                 savedSegmentPage = dal.IASegmentPageInsertAuto(null, null, newIASegmentPage);
             }
             else

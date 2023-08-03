@@ -20,9 +20,11 @@ namespace MOBOT.BHLImport.Server
 
             if (savedMarc == null)
             {
-                IAMarc newMarc = new IAMarc();
-                newMarc.ItemID = itemID;
-                newMarc.Leader = leader;
+                IAMarc newMarc = new IAMarc
+                {
+                    ItemID = itemID,
+                    Leader = leader
+                };
                 savedMarc = dal.IAMarcInsertAuto(null, null, newMarc);
             }
             else

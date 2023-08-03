@@ -1285,7 +1285,7 @@ namespace BHLUtilityTest
 
         #region ParseVolumeStringTest supporting methods
 
-        private void RunParseVolumeStringTest(string volumeString, string startVolume,
+        private static void RunParseVolumeStringTest(string volumeString, string startVolume,
             string endVolume, string startYear, string endYear, string startSeries,
             string endSeries, string startPart, string endPart, string startNumber,
             string endNumber, string startIssue, string endIssue)
@@ -1303,7 +1303,7 @@ namespace BHLUtilityTest
             Assert.AreEqual(expected, actual);
         }
 
-        private void RunParseYearStringTest(string year, string startYear, string endYear)
+        private static void RunParseYearStringTest(string year, string startYear, string endYear)
         {
             YearData y = DataCleaner.ParseYearString(year);
 
@@ -1313,7 +1313,7 @@ namespace BHLUtilityTest
             Assert.AreEqual(expected, actual);
         }
 
-        private string ConvertVolumeDataToString(string volumeString, string startVolume,
+        private static string ConvertVolumeDataToString(string volumeString, string startVolume,
             string endVolume, string startYear, string endYear, string startSeries,
             string endSeries, string startPart, string endPart, string startNumber,
             string endNumber, string startIssue, string endIssue)
@@ -1337,7 +1337,7 @@ namespace BHLUtilityTest
                 endIssue);
         }
 
-        private string ConvertYearDataToString(string year, string startYear, string endYear)
+        private static string ConvertYearDataToString(string year, string startYear, string endYear)
         {
             return string.Format(
                 "Year: {0}\n" +

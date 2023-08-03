@@ -19,20 +19,22 @@ namespace MOBOT.BHLImport.Server
 
             if (savedTitleAssociation_TitleIdentifier == null)
             {
-                TitleAssociation_TitleIdentifier newTitleAssociation_TitleIdentifier = new TitleAssociation_TitleIdentifier();
-                newTitleAssociation_TitleIdentifier.ImportStatusID = 10;
-                newTitleAssociation_TitleIdentifier.ImportSourceID = importSourceID;
-                newTitleAssociation_TitleIdentifier.ImportKey = marcBibID;
-                newTitleAssociation_TitleIdentifier.MARCTag = marcTag;
-                newTitleAssociation_TitleIdentifier.MARCIndicator2 = marcIndicator2;
-                newTitleAssociation_TitleIdentifier.Title = title;
-                newTitleAssociation_TitleIdentifier.Section = section;
-                newTitleAssociation_TitleIdentifier.Volume = volume;
-                newTitleAssociation_TitleIdentifier.Heading = heading;
-                newTitleAssociation_TitleIdentifier.Publication = publication;
-                newTitleAssociation_TitleIdentifier.Relationship = relationship;
-                newTitleAssociation_TitleIdentifier.IdentifierName = identifierName;
-                newTitleAssociation_TitleIdentifier.IdentifierValue = identifierValue;
+                TitleAssociation_TitleIdentifier newTitleAssociation_TitleIdentifier = new TitleAssociation_TitleIdentifier
+                {
+                    ImportStatusID = 10,
+                    ImportSourceID = importSourceID,
+                    ImportKey = marcBibID,
+                    MARCTag = marcTag,
+                    MARCIndicator2 = marcIndicator2,
+                    Title = title,
+                    Section = section,
+                    Volume = volume,
+                    Heading = heading,
+                    Publication = publication,
+                    Relationship = relationship,
+                    IdentifierName = identifierName,
+                    IdentifierValue = identifierValue
+                };
                 savedTitleAssociation_TitleIdentifier = dal.TitleAssociation_TitleIdentifierInsertAuto(null, null, newTitleAssociation_TitleIdentifier);
             }
 

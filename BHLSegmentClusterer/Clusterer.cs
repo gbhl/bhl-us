@@ -9,9 +9,9 @@ namespace MOBOT.BHL.SegmentClusterer
 {
     public class Clusterer
     {
-        BHLProvider provider = null;
-        int _segmentStatusNew = 30;
-        int _segmentStatusPublished = 40;
+        readonly BHLProvider provider = null;
+        readonly int _segmentStatusNew = 30;
+        readonly int _segmentStatusPublished = 40;
 
         public Clusterer()
         {

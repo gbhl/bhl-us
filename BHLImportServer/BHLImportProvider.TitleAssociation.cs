@@ -19,19 +19,21 @@ namespace MOBOT.BHLImport.Server
 
             if (savedTitleAssociation == null)
             {
-                TitleAssociation newTitleAssociation = new TitleAssociation();
-                newTitleAssociation.ImportStatusID = 10;
-                newTitleAssociation.ImportSourceID = importSourceID;
-                newTitleAssociation.ImportKey = marcBibID;
-                newTitleAssociation.MARCTag = marcTag;
-                newTitleAssociation.MARCIndicator2 = marcIndicator2;
-                newTitleAssociation.Title = title;
-                newTitleAssociation.Section = section;
-                newTitleAssociation.Volume = volume;
-                newTitleAssociation.Heading = heading;
-                newTitleAssociation.Publication = publication;
-                newTitleAssociation.Relationship = relationship;
-                newTitleAssociation.Active = active;
+                TitleAssociation newTitleAssociation = new TitleAssociation
+                {
+                    ImportStatusID = 10,
+                    ImportSourceID = importSourceID,
+                    ImportKey = marcBibID,
+                    MARCTag = marcTag,
+                    MARCIndicator2 = marcIndicator2,
+                    Title = title,
+                    Section = section,
+                    Volume = volume,
+                    Heading = heading,
+                    Publication = publication,
+                    Relationship = relationship,
+                    Active = active
+                };
                 savedTitleAssociation = dal.TitleAssociationInsertAuto(null, null, newTitleAssociation);
             }
 

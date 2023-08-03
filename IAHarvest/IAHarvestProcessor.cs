@@ -19,11 +19,11 @@ namespace IAHarvest
         // i.e. you can copy the code directly into another class without
         // needing to edit the code.
 
-        private ConfigParms configParms = new ConfigParms();
-        private List<string> retrievedIds = new List<string>();
-        private List<string> harvestedXml = new List<string>();
-        private List<string> publishedItems = new List<string>();
-        private List<string> errorMessages = new List<string>();
+        private ConfigParms configParms = new();
+        private List<string> retrievedIds = new();
+        private List<string> harvestedXml = new();
+        private List<string> publishedItems = new();
+        private List<string> errorMessages = new();
 
         private const string MODE_SETS = "SETS";
         private const string MODE_ITEM = "ITEM";
@@ -63,7 +63,7 @@ namespace IAHarvest
         private const int ITEMSTATUS_ERROR = 99;
 
         // Create an IAHarvestProvider for use in this class
-        BHLImportProvider provider = new BHLImportProvider();
+        BHLImportProvider provider = new();
 
         public void Process()
         {
@@ -101,7 +101,7 @@ namespace IAHarvest
             // Report the results of item/page processing
             this.ProcessResults();
 
-            this.LogMessage("IAHarvest Processing Complete");
+            LogMessage("IAHarvest Processing Complete");
         }
 
         #region Get basic Item and Set information
@@ -114,7 +114,7 @@ namespace IAHarvest
         {
             try
             {
-                this.LogMessage("Processing SETS");
+                LogMessage("Processing SETS");
 
                 List<IASet> sets = provider.IASetSelectForDownload();
                 foreach (IASet set in sets)
@@ -159,7 +159,7 @@ namespace IAHarvest
         {
             try
             {
-                this.LogMessage("Getting IAAnalysis items");
+                LogMessage("Getting IAAnalysis items");
                 provider.IAItemInsertFromIAAnalysis(configParms.LocalFileFolder);
             }
             catch (Exception ex)
@@ -176,7 +176,7 @@ namespace IAHarvest
         {
             try
             {
-                this.LogMessage("Processing item: " + itemIdentifier);
+                LogMessage("Processing item: " + itemIdentifier);
 
                 String url = String.Empty;
                 if (configParms.Mode == MODE_SETS)
@@ -234,7 +234,7 @@ namespace IAHarvest
         {
             try
             {
-                this.LogMessage("Harvesting XML information");
+                LogMessage("Harvesting XML information");
 
                 // Download the XML files for each item and parse the data into the database
                 List<IAItem> items = provider.IAItemSelectForXMLDownload(configParms.Mode == MODE_ITEM ? configParms.Item : "");
@@ -288,7 +288,7 @@ namespace IAHarvest
                             //provider.IAItemUpdateItemStatusSetError(item.ItemID, ITEMSTATUS_XMLERROR, "HarvestXMLInformation",
                             //    ex.Message.Substring(0, ((ex.Message.Length > 4000) ? 4000 : ex.Message.Length)));
                             provider.IAItemUpdateItemStatusSetError(item.ItemID, item.ItemStatusID, "HarvestXMLInformation",
-                                ex.Message.Substring(0, ((ex.Message.Length > 4000) ? 4000 : ex.Message.Length)));
+                                ex.Message[..((ex.Message.Length > 4000) ? 4000 : ex.Message.Length)]);
                         }
                         // don't rethrow; we want to continue processing
                     }
@@ -303,7 +303,7 @@ namespace IAHarvest
 
         private void HarvestFileList(IAItem item)
         {
-            this.LogMessage("Harvesting the file list for " + item.IAIdentifier);
+            LogMessage("Harvesting the file list for " + item.IAIdentifier);
 
             // Download the _FILES.XML file for this identifier
             //
@@ -354,7 +354,7 @@ namespace IAHarvest
             foreach (IAFile itemFile in itemFiles)
             {
                 // Ignore the scandata.xml file (which will not appear in FILES.XML)
-                if (!this.IsInIAList(itemFile.RemoteFileName, externalFileNames) &&
+                if (!IsInIAList(itemFile.RemoteFileName, externalFileNames) &&
                     (itemFile.RemoteFileName != configParms.ScandataFile))
                 {
                     provider.IAFileDeleteAuto(itemFile.FileID);
@@ -373,7 +373,7 @@ namespace IAHarvest
         /// <param name="fileName">Filename for which to search</param>
         /// <param name="externalFileNames">List in which to search</param>
         /// <returns>True if found, false otherwise</returns>
-        private bool IsInIAList(string fileName, String[] externalFileNames)
+        private static bool IsInIAList(string fileName, String[] externalFileNames)
         {
             bool inList = false;
             foreach (string externalFileName in externalFileNames)
@@ -394,7 +394,7 @@ namespace IAHarvest
         /// <param name="fileList"></param>
         /// <param name="fileExtension"></param>
         /// <returns></returns>
-        private IAFile GetFile(List<IAFile> fileList, string fileExtension)
+        private static IAFile GetFile(List<IAFile> fileList, string fileExtension)
         {
             IAFile file = null;
 
@@ -412,7 +412,7 @@ namespace IAHarvest
 
         private void DownloadFiles(IAItem item)
         {
-            this.LogMessage("Downloading files for " + item.IAIdentifier);
+            LogMessage("Downloading files for " + item.IAIdentifier);
 
             List<IAFile> files = provider.IAFileSelectForDownload(item.ItemID);
             foreach (IAFile file in files)
@@ -435,22 +435,20 @@ namespace IAHarvest
                         fileName = item.LocalFileFolder + item.IAIdentifier + "\\" + file.RemoteFileName;
                     }
 
-                    using (System.IO.FileStream fileStream = System.IO.File.Open(fileName, System.IO.FileMode.Create))
+                    using System.IO.FileStream fileStream = System.IO.File.Open(fileName, System.IO.FileMode.Create);
+                    using (System.IO.BinaryWriter writer = new(fileStream, Encoding.UTF7))
                     {
-                        using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(fileStream, Encoding.UTF7))
+                        byte[] buffer = new byte[2048];
+                        int count = stream.Read(buffer, 0, buffer.Length);
+                        while (count != 0)
                         {
-                            byte[] buffer = new byte[2048];
-                            int count = stream.Read(buffer, 0, buffer.Length);
-                            while (count != 0)
-                            {
-                                writer.Write(buffer, 0, count);
-                                writer.Flush();
-                                count = stream.Read(buffer, 0, buffer.Length);
-                            }
-                            writer.Close();
+                            writer.Write(buffer, 0, count);
+                            writer.Flush();
+                            count = stream.Read(buffer, 0, buffer.Length);
                         }
-                        stream.Close();
+                        writer.Close();
                     }
+                    stream.Close();
                 }
 
                 // Get the remote file last modified date
@@ -460,15 +458,13 @@ namespace IAHarvest
 
         private void DownloadScandata(IAItem item)
         {
-            this.LogMessage("Downloading scandata for " + item.IAIdentifier);
+            LogMessage("Downloading scandata for " + item.IAIdentifier);
 
             // If the file does not exist locally (only get this it it doesn't already exist)
             String localFileName = item.LocalFileFolder + item.IAIdentifier + "\\" + item.IAIdentifier + configParms.ScandataExtension;
             if (!System.IO.File.Exists(localFileName))
             {
-                String host = String.Empty;
-                String dir = String.Empty;
-                this.GetPhysicalFileLocation(item.IAIdentifier, out host, out dir);
+                this.GetPhysicalFileLocation(item.IAIdentifier, out string host, out string dir);
 
                 try
                 {
@@ -496,22 +492,20 @@ namespace IAHarvest
                                 fileName = item.LocalFileFolder + item.IAIdentifier + "\\" + item.IAIdentifier + configParms.ScandataExtension;
                             }
 
-                            using (System.IO.FileStream fileStream = System.IO.File.Open(fileName, System.IO.FileMode.Create))
+                            using System.IO.FileStream fileStream = System.IO.File.Open(fileName, System.IO.FileMode.Create);
+                            using (System.IO.BinaryWriter writer = new(fileStream, Encoding.UTF7))
                             {
-                                using (System.IO.BinaryWriter writer = new System.IO.BinaryWriter(fileStream, Encoding.UTF7))
+                                byte[] buffer = new byte[2048];
+                                int count = stream.Read(buffer, 0, buffer.Length);
+                                while (count != 0)
                                 {
-                                    byte[] buffer = new byte[2048];
-                                    int count = stream.Read(buffer, 0, buffer.Length);
-                                    while (count != 0)
-                                    {
-                                        writer.Write(buffer, 0, count);
-                                        writer.Flush();
-                                        count = stream.Read(buffer, 0, buffer.Length);
-                                    }
-                                    writer.Close();
+                                    writer.Write(buffer, 0, count);
+                                    writer.Flush();
+                                    count = stream.Read(buffer, 0, buffer.Length);
                                 }
-                                stream.Close();
+                                writer.Close();
                             }
+                            stream.Close();
                         }
 
                         // Save the remote file information (use the current date/time as the last modified date)
@@ -519,7 +513,7 @@ namespace IAHarvest
                         provider.SaveIAFileWithDownloadInfo(newFile.FileID, item.IAIdentifier + configParms.ScandataExtension, DateTime.Now);
                     }
                 }
-                catch (System.Net.WebException wex)
+                catch (System.Net.WebException)
                 {
                     // Do nothing... apparently the file we're looking for doesn't exist
                 }
@@ -528,7 +522,7 @@ namespace IAHarvest
 
         private void HarvestDCMetadata(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
         {
-            this.LogMessage("Harvesting Dublin Core metadata for " + iaIdentifier);
+            LogMessage("Harvesting Dublin Core metadata for " + iaIdentifier);
 
             // If the file exists
             if (file != null)
@@ -542,7 +536,7 @@ namespace IAHarvest
 
                     // Open the file and parse the data within it
                     String localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
-                    XmlDocument xml = new XmlDocument();
+                    XmlDocument xml = new();
                     xml.Load(localFileName);
 
                     this.ReadAndSaveDCElements(itemID, xml, "dc/*", DC_SOURCE_DC);
@@ -557,7 +551,7 @@ namespace IAHarvest
 
         private void HarvestMetadata(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
         {
-            this.LogMessage("Harvesting metadata for " + iaIdentifier);
+            LogMessage("Harvesting metadata for " + iaIdentifier);
 
             // If the file exists
             if (file != null)
@@ -571,7 +565,7 @@ namespace IAHarvest
 
                     // Open the file and parse the data within it
                     String localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
-                    XmlDocument xml = new XmlDocument();
+                    XmlDocument xml = new();
                     xml.Load(localFileName);
 
                     // Read the Dublin Core elements
@@ -603,7 +597,7 @@ namespace IAHarvest
                     String note = String.Empty;
                     String scanOperator = String.Empty;
                     String scanDate = String.Empty;
-                    String curation = String.Empty;
+                    String curation;
                     String externalStatus = String.Empty;
                     String titleID = String.Empty;
                     String year = String.Empty;
@@ -653,7 +647,7 @@ namespace IAHarvest
                         int endStateTag = curation.ToLower().IndexOf("[/state]");
                         if ((startStateTag > -1) && ((startStateTag + 7) < endStateTag))
                         {
-                            externalStatus = curation.Substring(startStateTag + 7, endStateTag - (startStateTag + 7)).ToLower();
+                            externalStatus = curation[(startStateTag + 7)..endStateTag].ToLower();
                         }
                     }
                     element = xml.SelectSingleNode("metadata/title_id");
@@ -750,7 +744,7 @@ namespace IAHarvest
             // adding a namespace to the search
             if (elements.Count == 0)
             {
-                XmlNamespaceManager nsmgr = new XmlNamespaceManager(xml.NameTable);
+                XmlNamespaceManager nsmgr = new(xml.NameTable);
                 nsmgr.AddNamespace("oai_dc", "http://www.openarchives.org/OAI/2.0/oai_dc/");
                 String nsPrefix = "//oai_dc:";
                 elements = xml.SelectNodes(nsPrefix + xPath, nsmgr);
@@ -775,7 +769,7 @@ namespace IAHarvest
 
         private void HarvestMetadataSourceData(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
         {
-            this.LogMessage("Harvesting metadata source information for " + iaIdentifier);
+            LogMessage("Harvesting metadata source information for " + iaIdentifier);
 
             // If the file exists
             if (file != null)
@@ -785,7 +779,7 @@ namespace IAHarvest
                 {
                     // Open the file and parse the data within it
                     String localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
-                    XmlDocument xml = new XmlDocument();
+                    XmlDocument xml = new();
                     xml.Load(localFileName);
 
                     String sponsorName = String.Empty;
@@ -806,7 +800,7 @@ namespace IAHarvest
 
         private void HarvestMarcData(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate, bool loadWithoutMarc)
         {
-            this.LogMessage("Harvesting MARC data for " + iaIdentifier);
+            LogMessage("Harvesting MARC data for " + iaIdentifier);
 
             // If the file exists
             if (file != null)
@@ -816,16 +810,15 @@ namespace IAHarvest
                 {
                     // Open the file and parse the data within it
                     String localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
-                    XmlDocument xml = new XmlDocument();
+                    XmlDocument xml = new();
                     xml.Load(localFileName);
 
-                    XmlNamespaceManager nsmgr = new XmlNamespaceManager(xml.NameTable);
+                    XmlNamespaceManager nsmgr = new(xml.NameTable);
                     nsmgr.AddNamespace("marc", "http://www.loc.gov/MARC21/slim");
 
                     // Insert or update the root Marc information
                     String leader = String.Empty;
-                    XmlNode marcNode = xml.SelectSingleNode("//marc:record/marc:leader", nsmgr);
-                    if (marcNode == null) marcNode = xml.SelectSingleNode("//marc:record/leader", nsmgr);
+                    XmlNode marcNode = xml.SelectSingleNode("//marc:record/marc:leader", nsmgr) ?? xml.SelectSingleNode("//marc:record/leader", nsmgr);
                     if (marcNode != null) leader = marcNode.InnerText;
                     IAMarc marc = provider.SaveIAMarc(itemID, leader);
 
@@ -877,7 +870,7 @@ namespace IAHarvest
 
         private void HarvestDJVUData(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
         {
-            this.LogMessage("Harvesting pages from DJVU data for " + iaIdentifier);
+            LogMessage("Harvesting pages from DJVU data for " + iaIdentifier);
 
             // If the file exists
             if (file != null)
@@ -913,7 +906,7 @@ namespace IAHarvest
 
                     // Read the DJVU.XML file line-by-line, extracting the pages as we go
                     String localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
-                    using (System.IO.StreamReader reader = new System.IO.StreamReader(localFileName))
+                    using (System.IO.StreamReader reader = new(localFileName))
                     {
                         String line;
                         String pageText = String.Empty;
@@ -926,21 +919,20 @@ namespace IAHarvest
                                 if (line.IndexOf("<MAP") != -1)
                                 {
                                     // Found the end of a page, so use the XSL transform to extract the text
-                                    XmlDocument xml = new XmlDocument();
+                                    XmlDocument xml = new();
                                     xml.Load(new System.IO.StringReader(pageText));
-
-                                    // Get the filename and counter value from the DJVU xml if we can
-                                    String textFileName = String.Empty;
                                     int? pageCounter = (int?)counter;
                                     XmlNode pageNode = xml.SelectSingleNode("OBJECT/PARAM[@name = 'PAGE']");
+
+                                    // Get the filename and counter value from the DJVU xml if we can
+                                    string textFileName;
                                     if (pageNode != null)
                                     {
                                         // filename
                                         textFileName = pageNode.Attributes["value"].Value.Replace(".djvu", ".txt");
                                         // sequence number
                                         string sequence = textFileName.Substring(textFileName.LastIndexOf('_') + 1, 4);
-                                        int sequenceInt;
-                                        if (Int32.TryParse(sequence, out sequenceInt)) pageCounter = (int?)sequenceInt;
+                                        if (Int32.TryParse(sequence, out int sequenceInt)) pageCounter = (int?)sequenceInt;
                                     }
                                     else
                                     {
@@ -955,7 +947,7 @@ namespace IAHarvest
                                         //output = new System.IO.StreamWriter(localFileFolder + iaIdentifier + "\\" + iaIdentifier + "\\" + textFileName);
                                         //xslTransform.Transform(xml, null, output, resolver);
 
-                                        StringBuilder text = new StringBuilder();
+                                        StringBuilder text = new();
 
                                         System.Xml.Linq.XDocument ocrXml = System.Xml.Linq.XDocument.Parse(pageText);
 
@@ -1094,7 +1086,7 @@ namespace IAHarvest
 
         private void HarvestScandata(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
         {
-            this.LogMessage("Harvesting scandata information for " + iaIdentifier);
+            LogMessage("Harvesting scandata information for " + iaIdentifier);
 
             // If the file exists
             if (file != null)
@@ -1106,10 +1098,9 @@ namespace IAHarvest
                 {
                     // Open the file and parse the data within it
                     String localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
-                    XmlDocument xml = new XmlDocument();
+                    XmlDocument xml = new();
                     xml.Load(localFileName);
 
-                    bool includePage = false;
                     String nsPrefix = String.Empty;
                     XmlNamespaceManager nsmgr = null;
                     XmlNodeList pages = xml.SelectNodes("book/pageData/page");
@@ -1131,7 +1122,7 @@ namespace IAHarvest
                     {
                         // The only scandata we need to save is pages that have an addToAccessFormats 
                         // element with a value of "true".
-                        includePage = false;
+                        bool includePage = false;
                         XmlNode addToAccessFormatsNode = page.SelectSingleNode(nsPrefix + "addToAccessFormats", nsmgr);
                         if (addToAccessFormatsNode != null) includePage = Convert.ToBoolean(addToAccessFormatsNode.InnerText);
 
@@ -1181,7 +1172,7 @@ namespace IAHarvest
                                 string altPageNumberValue = altPageNumber.InnerText;
                                 string altPageNumberPrefix = (altPageNumber.Attributes["prefix"] != null ? altPageNumber.Attributes["prefix"].Value : string.Empty);
                                 string altPageNumberImplied = (altPageNumber.Attributes["implied"] != null ? altPageNumber.Attributes["implied"].Value : string.Empty);
-                                provider.SaveIAScandataAltPageNumber(scandata.ScandataID, altPageNumSequence, altPageNumberPrefix, altPageNumberValue, (altPageNumberImplied == "1" ? true : false));
+                                provider.SaveIAScandataAltPageNumber(scandata.ScandataID, altPageNumSequence, altPageNumberPrefix, altPageNumberValue, (altPageNumberImplied == "1"));
                                 altPageNumSequence++;
                             }
                         }
@@ -1306,7 +1297,7 @@ namespace IAHarvest
         {
             try
             {
-                this.LogMessage("Publishing information to import tables");
+                LogMessage("Publishing information to import tables");
 
                 // Get the items that are ready to be published
                 List<IAItem> items = provider.IAItemSelectForPublishToImportTables(configParms.Mode == MODE_ITEM ? configParms.Item : "");
@@ -1432,16 +1423,16 @@ namespace IAHarvest
                 // Report the process results
                 if (retrievedIds.Count > 0 || harvestedXml.Count > 0 || publishedItems.Count > 0 || errorMessages.Count > 0)
                 {
-                    this.LogMessage("Sending Email....");
+                    LogMessage("Sending Email....");
                     string message = this.GetEmailBody();
-                    this.LogMessage(message);
+                    LogMessage(message);
 
                     // Send email if not in Quiet mode or if errors occurred
                     if (!configParms.Quiet || errorMessages.Count > 0) this.SendEmail(message);
                 }
                 else
                 {
-                    this.LogMessage("No items or pages processed.  Email not sent.");
+                    LogMessage("No items or pages processed.  Email not sent.");
                 }
             }
             catch (Exception ex)
@@ -1471,7 +1462,7 @@ namespace IAHarvest
                 string[] split = args[x].Split(':');
                 if (split.Length != 2)
                 { 
-                    this.LogMessage("Invalid command line format.  Format is IAHarvest.exe [/ITEM:itemid] [/STARTDATE:YYYY/MM/DD] [/ENDDATE:YYYY/MM/DD] [/DOWNLOAD:truefalse] [/UPLOAD:truefalse]");
+                    LogMessage("Invalid command line format.  Format is IAHarvest.exe [/ITEM:itemid] [/STARTDATE:YYYY/MM/DD] [/ENDDATE:YYYY/MM/DD] [/DOWNLOAD:truefalse] [/UPLOAD:truefalse]");
                     return false;
                 }
 
@@ -1498,7 +1489,7 @@ namespace IAHarvest
         {
             if (configParms.Mode == MODE_ITEM && configParms.Item == string.Empty)
             {
-                this.LogMessage("Item not set correctly.  When Mode is \"ITEM\", Item must contain a valid value.  Check configuration file.");
+                LogMessage("Item not set correctly.  When Mode is \"ITEM\", Item must contain a valid value.  Check configuration file.");
                 return false;
             }
 
@@ -1511,7 +1502,7 @@ namespace IAHarvest
         /// <returns>Body of email message to be sent</returns>
         private string GetEmailBody()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             const string endOfLine = "\r\n";
 
             string thisComputer = Environment.MachineName;
@@ -1549,19 +1540,21 @@ namespace IAHarvest
         {
             try
             {
-                MailRequestModel mailRequest = new MailRequestModel();
-                mailRequest.Subject = string.Format(
+                MailRequestModel mailRequest = new()
+                {
+                    Subject = string.Format(
                     "IAHarvest: IA Harvesting on {0} completed {1}.",
                     Environment.MachineName,
-                    (errorMessages.Count == 0 ? "successfully" : "with errors"));
-                mailRequest.Body = message;
-                mailRequest.From = configParms.EmailFromAddress;
+                    (errorMessages.Count == 0 ? "successfully" : "with errors")),
+                    Body = message,
+                    From = configParms.EmailFromAddress
+                };
 
-                List<string> recipients = new List<string>();
+                List<string> recipients = new();
                 foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
                 mailRequest.To = recipients;
 
-                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                EmailClient restClient = new(configParms.BHLWSEndpoint);
                 restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
@@ -1570,7 +1563,7 @@ namespace IAHarvest
             }
         }
 
-        private void LogMessage(string message)
+        private static void LogMessage(string message)
         {
             // logger automatically adds date/time
             if (log.IsInfoEnabled) log.Info(message);

@@ -30,7 +30,7 @@ namespace MOBOT.BHLImport.Server
             }
             finally
             {
-                if (reader != null) reader.Dispose();
+                reader?.Dispose();
             }
         }
 
@@ -41,8 +41,7 @@ namespace MOBOT.BHLImport.Server
         /// <returns></returns>
         public XmlDocument GetIAXmlData(string url)
         {
-            DateTime? lastModified = null;
-            return this.GetIAXmlData(url, null, out lastModified);
+            return this.GetIAXmlData(url, null, out _);
         }
 
         /// <summary>
@@ -72,7 +71,7 @@ namespace MOBOT.BHLImport.Server
             }
             finally
             {
-                if (reader != null) reader.Dispose();
+                reader?.Dispose();
             }
         }
 
@@ -83,8 +82,7 @@ namespace MOBOT.BHLImport.Server
         /// <returns></returns>
         public BinaryReader GetIARawData(string url)
         {
-            DateTime? lastModified = null;
-            return this.GetIARawData(url, null, out lastModified);
+            return this.GetIARawData(url, null, out _);
         }
 
         /// <summary>
@@ -116,8 +114,7 @@ namespace MOBOT.BHLImport.Server
 
         private HttpWebResponse HttpGet(string url)
         {
-            DateTime? lastModified = null;
-            return this.HttpGet(url, null, out lastModified);
+            return this.HttpGet(url, null, out _);
 
             //StreamReader reader = new StreamReader((System.IO.Stream)resp.GetResponseStream());
             //StringBuilder sb = new StringBuilder(reader.ReadToEnd());

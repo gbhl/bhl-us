@@ -14,11 +14,13 @@ namespace MOBOT.BHLImport.Server
 
             if (savedDCMetadata == null)
             {
-                IADCMetadata newDCMetadata = new IADCMetadata();
-                newDCMetadata.ItemID = itemID;
-                newDCMetadata.DCElementName = elementName;
-                newDCMetadata.DCElementValue = elementValue;
-                newDCMetadata.Source = source;
+                IADCMetadata newDCMetadata = new IADCMetadata
+                {
+                    ItemID = itemID,
+                    DCElementName = elementName,
+                    DCElementValue = elementValue,
+                    Source = source
+                };
                 savedDCMetadata = dal.IADCMetadataInsertAuto(null, null, newDCMetadata);
             }
             else

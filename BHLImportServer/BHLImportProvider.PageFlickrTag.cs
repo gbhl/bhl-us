@@ -17,7 +17,7 @@ namespace MOBOT.BHLImport.Server
 
             foreach (PageFlickrTag tag in tags)
             {
-                if (tag.PageFlickrTagID == default(int))
+                if (tag.PageFlickrTagID == default)
                 {
                     dal.PageFlickrTagInsertAuto(null, null, tag);
                 }

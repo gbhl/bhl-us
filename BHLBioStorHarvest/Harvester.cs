@@ -78,7 +78,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                         if (noErrors) noErrors = HarvestItems();  // Harvest the data from BioStor
                         if (noErrors) noErrors = PreprocessData();    // Prepare the data for production
                         if (noErrors && !configParms.NoPublish) noErrors = PublishToProduction();   // Publish data to production
-                        if (noErrors && !configParms.NoCluster) noErrors = ClusterSegments(); // Cluster the new segments
+                        if (noErrors && !configParms.NoCluster) ClusterSegments(); // Cluster the new segments
                         break;
                     case MODE_ITEM:
                         try
@@ -141,8 +141,10 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         {
             bool isHarvested = false;
 
-            WebClient webClient = new WebClient();
-            webClient.Encoding = Encoding.UTF8;
+            WebClient webClient = new WebClient
+            {
+                Encoding = Encoding.UTF8
+            };
             string itemArticlesUrl = string.Format(configParms.BioStorItemArticlesUrl, bhlItemID.ToString());
 
             try
@@ -161,7 +163,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                 {
                     // Create segments for each article.
                     short sequenceOrder = 0;
-                    foreach (JObject article in articles)
+                    foreach (JObject article in articles.Cast<JObject>())
                     {
                         sequenceOrder++;
                         EFModel.BSSegment segment = GetSegment(bhlItemID, sequenceOrder, article);
@@ -213,56 +215,57 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         private EFModel.BSSegment GetSegment(int itemID, short sequenceOrder, JObject article)
         {
             // Create a new segment.
-            EFModel.BSSegment segment = new EFModel.BSSegment();
-            segment.ItemID = itemID;
-            segment.SequenceOrder = sequenceOrder;
-            segment.SegmentStatusID = configParms.SegmentStatusHarvestedID;
+            EFModel.BSSegment segment = new EFModel.BSSegment
+            {
+                ItemID = itemID,
+                SequenceOrder = sequenceOrder,
+                SegmentStatusID = configParms.SegmentStatusHarvestedID,
 
-            segment.Genre = ((string)article["genre"]) ?? string.Empty;
-            segment.BioStorReferenceID = ((string)article["reference_id"]) ?? string.Empty;
-            segment.Title = ((string)article["title"]) ?? string.Empty;
-            segment.ContainerTitle = ((string)article["secondary_title"]) ?? string.Empty;
-            segment.PublisherName = ((string)article["publisher"]) ?? string.Empty;
-            segment.PublisherPlace = ((string)article["publoc"]) ?? string.Empty;
-            segment.Volume = ((string)article["volume"]) ?? string.Empty;
-            segment.Issue = ((string)article["issue"]) ?? string.Empty;
-            segment.Series = ((string)article["series"]) ?? string.Empty;
-            segment.Year = ((string)article["year"]) ?? string.Empty;
-            segment.Date = ((string)article["date"]) ?? string.Empty;
-            segment.StartPageNumber = ((string)article["spage"]) ?? string.Empty;
-            segment.EndPageNumber = ((string)article["epage"]) ?? string.Empty;
-            segment.ISSN = ((string)article["issn"]) ?? string.Empty;
-            segment.DOI = this.GetDOI(article);
-            segment.OCLC = ((string)article["oclc"]) ?? string.Empty;
-            segment.JSTOR = ((string)article["jstor"]) ?? string.Empty;
-            segment.ContributorName = ((string)article["contributor"]) ?? string.Empty;
+                Genre = ((string)article["genre"]) ?? string.Empty,
+                BioStorReferenceID = ((string)article["reference_id"]) ?? string.Empty,
+                Title = ((string)article["title"]) ?? string.Empty,
+                ContainerTitle = ((string)article["secondary_title"]) ?? string.Empty,
+                PublisherName = ((string)article["publisher"]) ?? string.Empty,
+                PublisherPlace = ((string)article["publoc"]) ?? string.Empty,
+                Volume = ((string)article["volume"]) ?? string.Empty,
+                Issue = ((string)article["issue"]) ?? string.Empty,
+                Series = ((string)article["series"]) ?? string.Empty,
+                Year = ((string)article["year"]) ?? string.Empty,
+                Date = ((string)article["date"]) ?? string.Empty,
+                StartPageNumber = ((string)article["spage"]) ?? string.Empty,
+                EndPageNumber = ((string)article["epage"]) ?? string.Empty,
+                ISSN = ((string)article["issn"]) ?? string.Empty,
+                DOI = this.GetDOI(article),
+                OCLC = ((string)article["oclc"]) ?? string.Empty,
+                JSTOR = ((string)article["jstor"]) ?? string.Empty,
+                ContributorName = ((string)article["contributor"]) ?? string.Empty
+            };
 
             // Strip tabs, newlines, and carriage returns from title strings
             segment.Title = segment.Title.Replace("\t", " ").Replace("\n\r", " ").Replace("\r\n", " ").Replace("\r", " ").Replace("\n", " ");
             segment.ContainerTitle = segment.ContainerTitle.Replace("\t", " ").Replace("\n\r", " ").Replace("\r\n", " ").Replace("\r", " ").Replace("\n", " ");
 
             string startPageIDString = ((string)article["PageID"]) ?? string.Empty;
-            int startPageID;
-            if (Int32.TryParse(startPageIDString, out startPageID)) segment.StartPageID = startPageID;
+            if (Int32.TryParse(startPageIDString, out int startPageID)) segment.StartPageID = startPageID;
 
             string created = ((string)article["created"]) ?? string.Empty;
-            DateTime contributorCreationDate;
-            segment.ContributorCreationDate = DateTime.TryParse(created, out contributorCreationDate) ? (DateTime?)contributorCreationDate : null;
+            segment.ContributorCreationDate = DateTime.TryParse(created, out DateTime contributorCreationDate) ? (DateTime?)contributorCreationDate : null;
 
             string updated = ((string)article["update"]) ?? string.Empty;
-            DateTime contributorLastModifiedDate;
-            segment.ContributorLastModifiedDate = DateTime.TryParse(updated, out contributorLastModifiedDate) ? (DateTime?)contributorLastModifiedDate : null;
+            segment.ContributorLastModifiedDate = DateTime.TryParse(updated, out DateTime contributorLastModifiedDate) ? (DateTime?)contributorLastModifiedDate : null;
 
             // Get the pages for the article
             JArray pages = (JArray)article["bhl_pages"];
             if (pages != null)
             {
                 short pageSequenceOrder = 1;
-                foreach (int page in pages)
+                foreach (int page in pages.Select(v => (int)v))
                 {
-                    EFModel.BSSegmentPage segmentPage = new EFModel.BSSegmentPage();
-                    segmentPage.BHLPageID = Convert.ToInt32(page);
-                    segmentPage.SequenceOrder = pageSequenceOrder;
+                    EFModel.BSSegmentPage segmentPage = new EFModel.BSSegmentPage
+                    {
+                        BHLPageID = Convert.ToInt32(page),
+                        SequenceOrder = pageSequenceOrder
+                    };
                     pageSequenceOrder++;
                     segment.BSSegmentPages.Add(segmentPage);
                 }
@@ -277,7 +280,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
 
             // Get the authors for the article
             JArray authors = (JArray)article["authors"];
-            foreach (JObject author in authors)
+            foreach (JObject author in authors.Cast<JObject>())
             {
                 string lastName = ((string)author["lastname"]) ?? string.Empty;
                 string firstName = ((string)author["forename"]) ?? string.Empty;
@@ -293,11 +296,13 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                     if (duplicate == default(EFModel.BSSegmentAuthor))
                     {
                         // Get the author info
-                        EFModel.BSSegmentAuthor segmentAuthor = new EFModel.BSSegmentAuthor();
-                        segmentAuthor.ImportSourceID = configParms.ImportSourceID;
-                        segmentAuthor.BioStorID = ((string)author["id"]) ?? string.Empty;
-                        segmentAuthor.LastName = lastName.Trim();
-                        segmentAuthor.FirstName = firstName.Trim();
+                        EFModel.BSSegmentAuthor segmentAuthor = new EFModel.BSSegmentAuthor
+                        {
+                            ImportSourceID = configParms.ImportSourceID,
+                            BioStorID = ((string)author["id"]) ?? string.Empty,
+                            LastName = lastName.Trim(),
+                            FirstName = firstName.Trim()
+                        };
                         segmentAuthors.Add(segmentAuthor);
                     }
                 }
@@ -355,10 +360,9 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                 JArray items = (JArray)jsonObject["items"];
                 if (items != null)
                 {
-                    foreach (string itemId in items)
+                    foreach (string itemId in items.Select(v => (string)v))
                     {
-                        int idInt;
-                        if (Int32.TryParse(itemId, out idInt))
+                        if (Int32.TryParse(itemId, out int idInt))
                         {
                             InsertItem(idInt);
                             itemsDownloaded.Add(itemId);
@@ -401,8 +405,10 @@ namespace MOBOT.BHL.BHLBioStorHarvest
 
         private int InsertItem(int itemID)
         {
-            EFModel.BSItem item = new EFModel.BSItem();
-            item.BHLItemID = itemID;
+            EFModel.BSItem item = new EFModel.BSItem
+            {
+                BHLItemID = itemID
+            };
             return provider.AddItem(item);
         }
 
@@ -475,7 +481,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                     itemID = item.ItemID;
 
                     // Get the VIAF identifiers for the authors
-                    this.GetVIAFIdentifiers(itemID);
+                    //this.GetVIAFIdentifiers(itemID);
                     provider.SetItemPreprocessed(itemID);
 
                     // Log the items for which authors were resolved
@@ -493,6 +499,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             return processSuccess;
         }
 
+        /*
         private void GetVIAFIdentifiers(int itemID)
         {
             List<EFModel.BSSegment> segments = provider.SelectSegmentsForItem(itemID);
@@ -510,6 +517,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                 articlesPreprocessed.Add(segment.SegmentID.ToString());
             }
         }
+        */
 
         #endregion Preprocessing
 
@@ -827,10 +835,12 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         {
             try
             {
-                MailRequestModel mailRequest = new MailRequestModel();
-                mailRequest.Subject = subject;
-                mailRequest.Body = message;
-                mailRequest.From = fromAddress;
+                MailRequestModel mailRequest = new MailRequestModel
+                {
+                    Subject = subject,
+                    Body = message,
+                    From = fromAddress
+                };
 
                 List<string> recipients = new List<string>();
                 foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);

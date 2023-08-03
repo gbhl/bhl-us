@@ -20,9 +20,9 @@ namespace BHLOAIHarvester
         // i.e. you can copy the code directly into another class without
         // needing to edit the code.
 
-        private ConfigParms configParms = new ConfigParms();
-        private Dictionary<string, List<string>> itemsHarvested = new Dictionary<string, List<string>>();
-        private List<string> errorMessages = new List<string>();
+        private ConfigParms configParms = new();
+        private Dictionary<string, List<string>> itemsHarvested = new();
+        private List<string> errorMessages = new();
 
         public void Harvest()
         {
@@ -53,7 +53,7 @@ namespace BHLOAIHarvester
                 // only select the active sets.
                 List<vwOAIHarvestSet> sets = new BHLImportProvider().OAIHarvestSetSelectAll(string.IsNullOrWhiteSpace(configParms.HarvestSetID));
 
-                Dictionary<string, string> formats = new Dictionary<string, string>();
+                Dictionary<string, string> formats = new();
                 foreach (vwOAIHarvestSet set in sets)
                 {
                     // If a particular set was specified for harvesting, only process that set.  Otherwise do them all.
@@ -85,8 +85,7 @@ namespace BHLOAIHarvester
 
             try
             {
-                OAI2Harvester harvester = new OAI2Harvester(set.BaseUrl,
-                    "BHL OAI Harvester", "biodiversitylibrary@gmail.com", formats);
+                OAI2Harvester harvester = new(set.BaseUrl, "BHL OAI Harvester", "biodiversitylibrary@gmail.com", formats);
 
                 string resumptionToken = string.Empty;
                 DateTime resumptionExpiration = DateTime.Now.ToUniversalTime().AddHours(1);
@@ -121,7 +120,7 @@ namespace BHLOAIHarvester
                     responseMessage = oaiResults.ResponseMessage;
                     if (responseMessage == "ok")
                     {
-                        BHLImportProvider provider = new BHLImportProvider();
+                        BHLImportProvider provider = new();
                         foreach (MOBOT.BHL.OAI2.OAIRecord oaiRecord in (List<MOBOT.BHL.OAI2.OAIRecord>)oaiResults.Content)
                         {
                             // Convert the OAI metadata to a DAL data object
@@ -153,7 +152,7 @@ namespace BHLOAIHarvester
                 // Clear out just-harvested records
                 try
                 {
-                    BHLImportProvider provider = new BHLImportProvider();
+                    BHLImportProvider provider = new();
                     if (harvestLogID > 0)
                     {
                         provider.OAIRecordDeleteForHarvestLogID(harvestLogID);
@@ -197,55 +196,60 @@ namespace BHLOAIHarvester
         /// </summary>
         /// <param name="oaiRecord"></param>
         /// <returns></returns>
-        public MOBOT.BHLImport.DataObjects.OAIRecord ConvertToOAIDataObject(MOBOT.BHL.OAI2.OAIRecord oaiRecord)
+        public static MOBOT.BHLImport.DataObjects.OAIRecord ConvertToOAIDataObject(MOBOT.BHL.OAI2.OAIRecord oaiRecord)
         {
-            MOBOT.BHLImport.DataObjects.OAIRecord oaiDataRecord = new MOBOT.BHLImport.DataObjects.OAIRecord();
-
-            oaiDataRecord.OAIIdentifier = oaiRecord.OaiIdentifier;
-            oaiDataRecord.OAIDateStamp = oaiRecord.OaiDateStamp;
-            oaiDataRecord.OAIStatus = oaiRecord.OaiStatus;
-            oaiDataRecord.RecordType = oaiRecord.Type.ToString();
-            oaiDataRecord.Title = oaiRecord.Title;
-            oaiDataRecord.ContainerTitle = oaiRecord.JournalTitle;
-            oaiDataRecord.Volume = oaiRecord.JournalVolume;
-            oaiDataRecord.Issue = oaiRecord.JournalIssue;
-            oaiDataRecord.Edition = oaiRecord.Edition;
-            oaiDataRecord.StartPage = oaiRecord.ArticleStartPage;
-            oaiDataRecord.EndPage = oaiRecord.ArticleEndPage;
-            oaiDataRecord.Date = oaiRecord.Date;
-            oaiDataRecord.Language = oaiRecord.Languages.Count > 0 ? oaiRecord.Languages[0].Name : string.Empty;
-            oaiDataRecord.Publisher = string.IsNullOrWhiteSpace(oaiRecord.Publisher) && 
-                                        !string.IsNullOrWhiteSpace(oaiRecord.PublicationDetails) ? 
-                                        oaiRecord.PublicationDetails : oaiRecord.Publisher;
-            oaiDataRecord.PublicationPlace = oaiRecord.PublicationPlace;
-            oaiDataRecord.PublicationDate = oaiRecord.PublicationDates;
-            oaiDataRecord.CallNumber = oaiRecord.CallNumber;
-            oaiDataRecord.Issn = oaiRecord.Issn;
-            oaiDataRecord.Isbn = oaiRecord.Isbn;
-            oaiDataRecord.Lccn = oaiRecord.Llc;
-            oaiDataRecord.Doi = oaiRecord.Doi;
-            oaiDataRecord.Url = oaiRecord.Url;
+            MOBOT.BHLImport.DataObjects.OAIRecord oaiDataRecord = new()
+            {
+                OAIIdentifier = oaiRecord.OaiIdentifier,
+                OAIDateStamp = oaiRecord.OaiDateStamp,
+                OAIStatus = oaiRecord.OaiStatus,
+                RecordType = oaiRecord.Type.ToString(),
+                Title = oaiRecord.Title,
+                ContainerTitle = oaiRecord.JournalTitle,
+                Volume = oaiRecord.JournalVolume,
+                Issue = oaiRecord.JournalIssue,
+                Edition = oaiRecord.Edition,
+                StartPage = oaiRecord.ArticleStartPage,
+                EndPage = oaiRecord.ArticleEndPage,
+                Date = oaiRecord.Date,
+                Language = oaiRecord.Languages.Count > 0 ? oaiRecord.Languages[0].Name : string.Empty,
+                Publisher = string.IsNullOrWhiteSpace(oaiRecord.Publisher) &&
+                                        !string.IsNullOrWhiteSpace(oaiRecord.PublicationDetails) ?
+                                        oaiRecord.PublicationDetails : oaiRecord.Publisher,
+                PublicationPlace = oaiRecord.PublicationPlace,
+                PublicationDate = oaiRecord.PublicationDates,
+                CallNumber = oaiRecord.CallNumber,
+                Issn = oaiRecord.Issn,
+                Isbn = oaiRecord.Isbn,
+                Lccn = oaiRecord.Llc,
+                Doi = oaiRecord.Doi,
+                Url = oaiRecord.Url
+            };
             if (oaiRecord.Contributors.Count > 0) oaiDataRecord.Contributor = oaiRecord.Contributors[0];
 
             foreach (KeyValuePair<string, MOBOT.BHL.OAI2.OAIRecord> relatedTitle in oaiRecord.RelatedTitles)
             {
-                OAIRecordRelatedTitle oaiRecordRelatedTitle = new OAIRecordRelatedTitle();
-                oaiRecordRelatedTitle.TitleType = relatedTitle.Key;
-                oaiRecordRelatedTitle.Title = relatedTitle.Value.Title ?? string.Empty;
+                OAIRecordRelatedTitle oaiRecordRelatedTitle = new()
+                {
+                    TitleType = relatedTitle.Key,
+                    Title = relatedTitle.Value.Title ?? string.Empty
+                };
                 oaiDataRecord.RelatedTitles.Add(oaiRecordRelatedTitle);
             }
 
             foreach (KeyValuePair<string, MOBOT.BHL.OAI2.OAIRecord.Creator> creator in oaiRecord.Creators)
             {
-                OAIRecordCreator oaiRecordCreator = new OAIRecordCreator();
-                oaiRecordCreator.CreatorType = creator.Key;
-                oaiRecordCreator.FullName = creator.Value.FullName ?? string.Empty;
-                oaiRecordCreator.Dates = creator.Value.Dates ?? string.Empty;
+                OAIRecordCreator oaiRecordCreator = new()
+                {
+                    CreatorType = creator.Key,
+                    FullName = creator.Value.FullName ?? string.Empty,
+                    Dates = creator.Value.Dates ?? string.Empty
+                };
 
                 // Parse the start and end dates
                 if (oaiRecordCreator.Dates != string.Empty)
                 {
-                    Regex regex = new Regex("[0-9]{4}", RegexOptions.IgnoreCase);
+                    Regex regex = new("[0-9]{4}", RegexOptions.IgnoreCase);
                     MatchCollection matches = regex.Matches(creator.Value.Dates);
                     if (matches.Count > 0 && matches.Count <= 2) oaiRecordCreator.StartDate = matches[0].Value;
                     if (matches.Count == 2) oaiRecordCreator.EndDate = matches[1].Value;
@@ -253,9 +257,11 @@ namespace BHLOAIHarvester
 
                 foreach (MOBOT.BHL.OAI2.OAIRecord.Identifier identifier in creator.Value.Identifiers)
                 {
-                    OAIRecordCreatorIdentifier oaiRecordCreatorIdentifier = new OAIRecordCreatorIdentifier();
-                    oaiRecordCreatorIdentifier.IdentifierType = identifier.IdentifierType;
-                    oaiRecordCreatorIdentifier.IdentifierValue = identifier.IdentifierValue;
+                    OAIRecordCreatorIdentifier oaiRecordCreatorIdentifier = new()
+                    {
+                        IdentifierType = identifier.IdentifierType,
+                        IdentifierValue = identifier.IdentifierValue
+                    };
                     oaiRecordCreator.Identifiers.Add(oaiRecordCreatorIdentifier);
                 }
 
@@ -264,22 +270,28 @@ namespace BHLOAIHarvester
 
             foreach (KeyValuePair<string, string> subject in oaiRecord.Subjects)
             {
-                OAIRecordSubject oaiRecordSubject = new OAIRecordSubject();
-                oaiRecordSubject.Keyword = subject.Value ?? string.Empty;
+                OAIRecordSubject oaiRecordSubject = new()
+                {
+                    Keyword = subject.Value ?? string.Empty
+                };
                 oaiDataRecord.Subjects.Add(oaiRecordSubject);
             }
 
             foreach (string dcType in oaiRecord.Types)
             {
-                OAIRecordDCType oaiRecordDCType = new OAIRecordDCType();
-                oaiRecordDCType.DCType = dcType ?? string.Empty;
+                OAIRecordDCType oaiRecordDCType = new()
+                {
+                    DCType = dcType ?? string.Empty
+                };
                 oaiDataRecord.DcTypes.Add(oaiRecordDCType);
             }
 
             foreach (string right in oaiRecord.Rights)
             {
-                OAIRecordRight oaiRecordRight = new OAIRecordRight();
-                oaiRecordRight.Right = right ?? string.Empty;
+                OAIRecordRight oaiRecordRight = new()
+                {
+                    Right = right ?? string.Empty
+                };
                 oaiDataRecord.Rights.Add(oaiRecordRight);
             }
 
@@ -322,8 +334,6 @@ namespace BHLOAIHarvester
         /// <returns>True if arguments valid, false otherwise</returns>
         private bool ValidateConfiguration()
         {
-            DateTime tempDate;
-
             if (string.IsNullOrWhiteSpace(configParms.HarvestSetID) &&
                 (!string.IsNullOrWhiteSpace(configParms.FromDate) ||
                  !string.IsNullOrWhiteSpace(configParms.UntilDate)))
@@ -334,8 +344,7 @@ namespace BHLOAIHarvester
 
             if (!string.IsNullOrWhiteSpace(configParms.HarvestSetID))
             {
-                int tempHarvestSetID;
-                if (!(Int32.TryParse(configParms.HarvestSetID, out tempHarvestSetID)))
+                if (!Int32.TryParse(configParms.HarvestSetID, out _))
                 {
                     this.LogMessage("Invalid HarvestSet.  Specify the integer identifier for the HarvestSet (from the OAIHarvestSet database table).");
                     return false;
@@ -344,7 +353,7 @@ namespace BHLOAIHarvester
 
             if (!string.IsNullOrWhiteSpace(configParms.FromDate))
             {
-                if (!(DateTime.TryParse(configParms.FromDate, out tempDate)))
+                if (!DateTime.TryParse(configParms.FromDate, out _))
                 {
                     this.LogMessage("Invalid From Date format.  Use YYYY-MM-DD.");
                     return false;
@@ -353,7 +362,7 @@ namespace BHLOAIHarvester
 
             if (!string.IsNullOrWhiteSpace(configParms.UntilDate))
             {
-                if (!(DateTime.TryParse(configParms.UntilDate, out tempDate)))
+                if (!DateTime.TryParse(configParms.UntilDate, out _))
                 {
                     this.LogMessage("Invalid Until Date format.  Use YYYY-MM-DD.");
                     return false;
@@ -424,8 +433,10 @@ namespace BHLOAIHarvester
             }
             else
             {
-                List<string> insertedList = new List<string>();
-                insertedList.Add(addedRecordInfo);
+                List<string> insertedList = new()
+                {
+                    addedRecordInfo
+                };
                 itemsHarvested.Add(harvestSetName, insertedList);
             }
         }
@@ -506,7 +517,7 @@ namespace BHLOAIHarvester
         /// <returns>Body of email message to be sent</returns>
         private String GetCompletionEmailBody()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             const string endOfLine = "\r\n";
 
             string thisComputer = Environment.MachineName;
@@ -543,23 +554,25 @@ namespace BHLOAIHarvester
         {
             try
             {
-                MailRequestModel mailRequest = new MailRequestModel();
-                mailRequest.Subject = subject;
-                mailRequest.Body = message;
-                mailRequest.From = fromAddress;
+                MailRequestModel mailRequest = new()
+                {
+                    Subject = subject,
+                    Body = message,
+                    From = fromAddress
+                };
 
-                List<string> recipients = new List<string>();
+                List<string> recipients = new();
                 foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
                 mailRequest.To = recipients;
 
                 if (ccAddresses != String.Empty)
                 {
-                    List<string> ccs = new List<string>();
+                    List<string> ccs = new();
                     foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
                     mailRequest.Cc = ccs;
                 }
 
-                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                EmailClient restClient = new(configParms.BHLWSEndpoint);
                 restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)

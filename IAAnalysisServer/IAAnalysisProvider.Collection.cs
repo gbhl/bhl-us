@@ -14,8 +14,10 @@ namespace MOBOT.IAAnalysis.Server
             if (savedCollection == null)
             {
                 // Add the new set
-                Collection newCollection = new Collection();
-                newCollection.CollectionName = collectionName;
+                Collection newCollection = new Collection
+                {
+                    CollectionName = collectionName
+                };
                 savedCollection = dal.CollectionInsertAuto(null, null, newCollection);
             }
             return savedCollection;

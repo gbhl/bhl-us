@@ -23,38 +23,40 @@ namespace MOBOT.BHLImport.Server
 
             if (savedItem == null)
             {
-                Item newItem = new Item();
-                newItem.ImportKey = marcBibID;
-                newItem.ImportStatusID = 10;
-                newItem.ImportSourceID = importSourceID;
-                newItem.BarCode = barCode;
-                newItem.MARCBibID = marcBibID;
-                newItem.ItemSequence = itemSequence;
-                newItem.MARCItemID = marcItemID;
-                newItem.CallNumber = callNumber;
-                newItem.Volume = volume;
-                newItem.InstitutionCode = institutionCode;
-                newItem.LanguageCode = languageCode;
-                newItem.Sponsor = sponsor;
-                newItem.ItemDescription = itemDescription;
-                newItem.ScannedBy = scannedBy;
-                newItem.PDFSize = pdfSize;
-                newItem.VaultID = vaultID;
-                newItem.NumberOfFiles = numberOfFiles;
-                newItem.Note = note;
-                newItem.ItemStatusID = itemStatusID;
-                newItem.ScanningUser = scanningUser;
-                newItem.ScanningDate = scanningDate;
-                newItem.PaginationCompleteUserID = paginationCompleteUserID;
-                newItem.PaginationCompleteDate = paginationCompleteDate;
-                newItem.PaginationStatusID = paginationStatusID;
-                newItem.PaginationStatusUserID = paginationStatusUserID;
-                newItem.PaginationStatusDate = paginationStatusDate;
-                newItem.LastPageNameLookupDate = lastPageNameLookupDate;
-                newItem.ExternalCreationDate = externalCreationDate;
-                newItem.ExternalLastModifiedDate = externalLastModifiedDate;
-                newItem.ExternalCreationUser = externalCreationUser;
-                newItem.ExternalLastModifiedUser = externalLastModifiedUser;
+                Item newItem = new Item
+                {
+                    ImportKey = marcBibID,
+                    ImportStatusID = 10,
+                    ImportSourceID = importSourceID,
+                    BarCode = barCode,
+                    MARCBibID = marcBibID,
+                    ItemSequence = itemSequence,
+                    MARCItemID = marcItemID,
+                    CallNumber = callNumber,
+                    Volume = volume,
+                    InstitutionCode = institutionCode,
+                    LanguageCode = languageCode,
+                    Sponsor = sponsor,
+                    ItemDescription = itemDescription,
+                    ScannedBy = scannedBy,
+                    PDFSize = pdfSize,
+                    VaultID = vaultID,
+                    NumberOfFiles = numberOfFiles,
+                    Note = note,
+                    ItemStatusID = itemStatusID,
+                    ScanningUser = scanningUser,
+                    ScanningDate = scanningDate,
+                    PaginationCompleteUserID = paginationCompleteUserID,
+                    PaginationCompleteDate = paginationCompleteDate,
+                    PaginationStatusID = paginationStatusID,
+                    PaginationStatusUserID = paginationStatusUserID,
+                    PaginationStatusDate = paginationStatusDate,
+                    LastPageNameLookupDate = lastPageNameLookupDate,
+                    ExternalCreationDate = externalCreationDate,
+                    ExternalLastModifiedDate = externalLastModifiedDate,
+                    ExternalCreationUser = externalCreationUser,
+                    ExternalLastModifiedUser = externalLastModifiedUser
+                };
 
                 savedItem = dal.ItemInsertAuto(null, null, newItem);
             }

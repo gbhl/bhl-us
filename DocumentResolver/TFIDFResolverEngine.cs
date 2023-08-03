@@ -8,7 +8,7 @@ namespace MOBOT.BHL.DocumentResolver
 {
     public class TFIDFResolverEngine : ResolverEngineBase
     {
-        private double _matchThreshold = 0.9999;
+        private readonly double _matchThreshold = 0.9999;
 
         public override List<ResolutionResult> Resolve(string document, bool useWordStemmer = false)
         {
@@ -40,10 +40,12 @@ namespace MOBOT.BHL.DocumentResolver
                         if (similarity > 0)
                         {
                             // At least something matched
-                            ResolutionResult result = new ResolutionResult();
-                            result.Key = kvp.Key;
-                            result.Document = kvp.Value;
-                            result.Score = similarity;
+                            ResolutionResult result = new ResolutionResult
+                            {
+                                Key = kvp.Key,
+                                Document = kvp.Value,
+                                Score = similarity
+                            };
                             results.Add(result);
                         }
                     }

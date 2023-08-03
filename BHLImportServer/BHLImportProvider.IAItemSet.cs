@@ -14,9 +14,11 @@ namespace MOBOT.BHLImport.Server
 
         public IAItemSet IAItemSetInsertAuto(int itemID, int setID)
         {
-            IAItemSet newItemSet = new IAItemSet();
-            newItemSet.ItemID = itemID;
-            newItemSet.SetID = setID;
+            IAItemSet newItemSet = new IAItemSet
+            {
+                ItemID = itemID,
+                SetID = setID
+            };
             return (new IAItemSetDAL().IAItemSetInsertAuto(null, null, newItemSet));
         }
 
@@ -30,12 +32,7 @@ namespace MOBOT.BHLImport.Server
         public IAItemSet SaveIAItemSet(int itemID, int setID)
         {
             IAItemSetDAL dal = new IAItemSetDAL();
-            IAItemSet savedItemSet = dal.IAItemSetSelectAuto(null, null, itemID, setID);
-
-            if (savedItemSet == null)
-            {
-                savedItemSet = this.IAItemSetInsertAuto(itemID, setID);
-            }
+            IAItemSet savedItemSet = dal.IAItemSetSelectAuto(null, null, itemID, setID) ?? this.IAItemSetInsertAuto(itemID, setID);
             return savedItemSet;
         }
 

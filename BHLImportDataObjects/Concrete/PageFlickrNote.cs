@@ -15,7 +15,7 @@ namespace MOBOT.BHLImport.DataObjects
         // Overriding the default generated definition of this field, because we need to be able to 
         // pass it to a Web Service.  (See the base class for more information about why this does
         // not work with the default implementation.)
-        private int _PageFlickrNoteID = default(int);
+        private int _PageFlickrNoteID = default;
 
         [ColumnDefinition("PageFlickrNoteID", DbTargetType = SqlDbType.Int, Ordinal = 1, NumericPrecision = 10, IsAutoKey = true, IsInPrimaryKey = true)]
         public new int PageFlickrNoteID

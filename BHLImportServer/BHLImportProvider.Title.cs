@@ -22,34 +22,36 @@ namespace MOBOT.BHLImport.Server
 
             if (savedTitle == null)
             {
-                Title newTitle = new Title();
-                newTitle.ImportKey = marcBibID;
-                newTitle.ImportStatusID = 10;
-                newTitle.ImportSourceID = importSourceID;
-                newTitle.MARCBibID = marcBibID;
-                newTitle.MARCLeader = marcLeader;
-                newTitle.FullTitle = fullTitle;
-                newTitle.ShortTitle = shortTitle;
-                newTitle.UniformTitle = uniformTitle;
-                newTitle.SortTitle = sortTitle;
-                newTitle.CallNumber = callNumber;
-                newTitle.PublicationDetails = publicationDetails;
-                newTitle.StartYear = startYear;
-                newTitle.EndYear = endYear;
-                newTitle.Datafield_260_a = datafield_260_a;
-                newTitle.Datafield_260_b = datafield_260_b;
-                newTitle.Datafield_260_c = datafield_260_c;
-                newTitle.InstitutionCode = institutionCode;
-                newTitle.LanguageCode = languageCode;
-                newTitle.TitleDescription = titleDescription;
-                newTitle.TL2Author = tl2Author;
-                newTitle.PublishReady = publishReady;
-                newTitle.RareBooks = rareBooks;
-                newTitle.Note = note;
-                newTitle.ExternalCreationDate = externalCreationDate;
-                newTitle.ExternalLastModifiedDate = externalLastModifiedDate;
-                newTitle.ExternalCreationUser = externalCreationUser;
-                newTitle.ExternalLastModifiedUser = externalLastModifiedUser;
+                Title newTitle = new Title
+                {
+                    ImportKey = marcBibID,
+                    ImportStatusID = 10,
+                    ImportSourceID = importSourceID,
+                    MARCBibID = marcBibID,
+                    MARCLeader = marcLeader,
+                    FullTitle = fullTitle,
+                    ShortTitle = shortTitle,
+                    UniformTitle = uniformTitle,
+                    SortTitle = sortTitle,
+                    CallNumber = callNumber,
+                    PublicationDetails = publicationDetails,
+                    StartYear = startYear,
+                    EndYear = endYear,
+                    Datafield_260_a = datafield_260_a,
+                    Datafield_260_b = datafield_260_b,
+                    Datafield_260_c = datafield_260_c,
+                    InstitutionCode = institutionCode,
+                    LanguageCode = languageCode,
+                    TitleDescription = titleDescription,
+                    TL2Author = tl2Author,
+                    PublishReady = publishReady,
+                    RareBooks = rareBooks,
+                    Note = note,
+                    ExternalCreationDate = externalCreationDate,
+                    ExternalLastModifiedDate = externalLastModifiedDate,
+                    ExternalCreationUser = externalCreationUser,
+                    ExternalLastModifiedUser = externalLastModifiedUser
+                };
                 savedTitle = dal.TitleInsertAuto(null, null, newTitle);
             }
             else

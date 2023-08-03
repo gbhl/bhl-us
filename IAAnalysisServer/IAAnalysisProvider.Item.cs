@@ -19,9 +19,11 @@ namespace MOBOT.IAAnalysis.Server
 
             if (savedItem == null)
             {
-                Item newItem = new Item();
-                newItem.Identifier = identifier;
-                newItem.ItemStatusID = ITEMSTATUS_NEW;
+                Item newItem = new Item
+                {
+                    Identifier = identifier,
+                    ItemStatusID = ITEMSTATUS_NEW
+                };
                 savedItem = dal.ItemInsertAuto(null, null, newItem);
             }
 

@@ -18,20 +18,22 @@ namespace MOBOT.BHLImport.Server
 
             if (savedIndicatedPage == null)
             {
-                IndicatedPage newIndicatedPage = new IndicatedPage();
-                newIndicatedPage.ImportStatusID = 10;
-                newIndicatedPage.ImportSourceID = importSourceID;
-                newIndicatedPage.BarCode = barCode;
-                newIndicatedPage.FileNamePrefix = fileNamePrefix;
-                newIndicatedPage.SequenceOrder = sequenceOrder;
-                newIndicatedPage.Sequence = sequence;
-                newIndicatedPage.PagePrefix = pagePrefix;
-                newIndicatedPage.PageNumber = pageNumber;
-                newIndicatedPage.Implied = implied;
-                newIndicatedPage.ExternalCreationDate = externalCreationDate;
-                newIndicatedPage.ExternalLastModifiedDate = externalLastModifiedDate;
-                newIndicatedPage.ExternalCreationUser = externalCreationUser;
-                newIndicatedPage.ExternalLastModifiedUser = externalLastModifiedUser;
+                IndicatedPage newIndicatedPage = new IndicatedPage
+                {
+                    ImportStatusID = 10,
+                    ImportSourceID = importSourceID,
+                    BarCode = barCode,
+                    FileNamePrefix = fileNamePrefix,
+                    SequenceOrder = sequenceOrder,
+                    Sequence = sequence,
+                    PagePrefix = pagePrefix,
+                    PageNumber = pageNumber,
+                    Implied = implied,
+                    ExternalCreationDate = externalCreationDate,
+                    ExternalLastModifiedDate = externalLastModifiedDate,
+                    ExternalCreationUser = externalCreationUser,
+                    ExternalLastModifiedUser = externalLastModifiedUser
+                };
 
                 savedIndicatedPage = dal.IndicatedPageInsertAuto(null, null, newIndicatedPage);
             }

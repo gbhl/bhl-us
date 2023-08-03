@@ -13,20 +13,20 @@ namespace BHLOAIHarvester
         // i.e. you can copy the code directly into another class without
         // needing to edit the code.
 
-        static void Main(string[] args)
+        static void Main()
         {
-            if (isAlreadyRunning())
+            if (IsAlreadyRunning())
             {
                 log.Error("BHLOAIHarvester is already running");
             }
             else
             {
-                HarvestProcessor harvester = new HarvestProcessor();
+                HarvestProcessor harvester = new();
                 harvester.Harvest();
             }
         }
 
-        private static bool isAlreadyRunning()
+        private static bool IsAlreadyRunning()
         {
             Process thisProcess = Process.GetCurrentProcess();
             Process[] allProcesses = Process.GetProcessesByName(thisProcess.ProcessName);

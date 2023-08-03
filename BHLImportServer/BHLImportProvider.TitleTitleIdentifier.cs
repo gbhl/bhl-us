@@ -17,14 +17,16 @@ namespace MOBOT.BHLImport.Server
 
             if (savedTitleTitleIdentifier == null)
             {
-                Title_TitleIdentifier newTitleTitleIdentifier = new Title_TitleIdentifier();
-                newTitleTitleIdentifier.ImportStatusID = 10;
-                newTitleTitleIdentifier.ImportSourceID = importSourceID;
-                newTitleTitleIdentifier.ImportKey = marcBibID;
-                newTitleTitleIdentifier.IdentifierName = identifierName;
-                newTitleTitleIdentifier.IdentifierValue = identifierValue;
-                newTitleTitleIdentifier.ExternalCreationDate = externalCreationDate;
-                newTitleTitleIdentifier.ExternalLastModifiedDate = externalLastModifiedDate;
+                Title_TitleIdentifier newTitleTitleIdentifier = new Title_TitleIdentifier
+                {
+                    ImportStatusID = 10,
+                    ImportSourceID = importSourceID,
+                    ImportKey = marcBibID,
+                    IdentifierName = identifierName,
+                    IdentifierValue = identifierValue,
+                    ExternalCreationDate = externalCreationDate,
+                    ExternalLastModifiedDate = externalLastModifiedDate
+                };
                 savedTitleTitleIdentifier = dal.Title_TitleIdentifierInsertAuto(null, null, newTitleTitleIdentifier);
             }
 
