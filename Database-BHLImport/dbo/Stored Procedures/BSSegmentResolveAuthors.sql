@@ -46,12 +46,12 @@ FROM	dbo.BSSegment s
 		INNER JOIN dbo.BSSegmentAuthor sa ON s.SegmentID = sa.SegmentID
 		-- Only segments contributed by BioStor
 		INNER JOIN dbo.ImportSource src ON sa.ImportSourceID = src.ImportSourceID AND src.Source = 'BioStor'
-		INNER JOIN dbo.BHLAuthorName an 
+		INNER JOIN dbo.BHLvwAuthorName an 
 			ON (
-				dbo.fnRemoveNonAlphaNumericCharacters(sa.LastName) = dbo.fnRemoveNonAlphaNumericCharacters(an.LastName) AND 
-				dbo.fnRemoveNonAlphaNumericCharacters(sa.FirstName) = dbo.fnRemoveNonAlphaNumericCharacters(an.FirstName)
+				dbo.fnRemoveNonAlphaNumericCharacters(sa.LastName) = an.LastNameToken AND 
+				dbo.fnRemoveNonAlphaNumericCharacters(sa.FirstName) = an.FirstNameToken
 				)
-			OR dbo.fnRemoveNonAlphaNumericCharacters(an.FullName) = dbo.fnRemoveNonAlphaNumericCharacters(sa.LastName + sa.FirstName)
+			OR an.FullNameToken = dbo.fnRemoveNonAlphaNumericCharacters(sa.LastName + sa.FirstName)
 WHERE	s.SegmentID = @SegmentID
 AND		sa.BHLAuthorID IS NULL	-- only authors not already resolved
 

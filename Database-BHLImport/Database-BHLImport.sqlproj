@@ -459,6 +459,7 @@
     <None Include="dbo\Stored Procedures\OAIRecordCreatorIdentifierUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\OAIRecordCreatorIdentifierDeleteAuto.sql" />
     <None Include="dbo\Synonyms\BHLfnGetLCCNValue.sql" />
+    <None Include="dbo\Synonyms\BHLvwAuthorName.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />

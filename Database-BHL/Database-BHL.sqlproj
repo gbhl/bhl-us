@@ -1182,6 +1182,7 @@
     <None Include="dbo\Stored Procedures\TitleExternalResourceSelectByTitleID.sql" />
     <None Include="dbo\Stored Procedures\TitleExternalResourceTypeSelectAll.sql" />
     <None Include="dbo\Types\IdentifierTableType.sql" />
+    <None Include="dbo\Views\vwAuthorName.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

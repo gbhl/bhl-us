@@ -150,24 +150,51 @@ SET		FullName = RTRIM(REPLACE(FullName, '[from old catalog]', '')),
 -- =======================================================================
 -- Add new author and authorname records, if necessary
 BEGIN TRY
+
+	-- Get existing authors with matching types/names
+	SELECT	a.AuthorID,
+			a.FullName,
+			a.FullNameToken,
+			a.FullerForm,
+			a.AuthorTypeID,
+			a.StartDate,
+			a.EndDate,
+			a.Numeration,
+			a.Title,
+			a.Unit,
+			a.Location
+	INTO	#tmpNameMatch
+	FROM	#tmpAuthor t INNER JOIN vwAuthorName a
+				ON t.AuthorTypeID = a.AuthorTypeID
+				AND dbo.fnRemoveNonAlphaNumericCharacters(t.FullName) = a.FullNameToken
+	GROUP BY
+			a.AuthorID,
+			a.FullName,
+			a.FullNameToken,
+			a.FullerForm,
+			a.AuthorTypeID,
+			a.StartDate,
+			a.EndDate,
+			a.Numeration,
+			a.Title,
+			a.Unit,
+			a.Location
+
 	-- Get the new authors
 	DECLARE curNew CURSOR
 	FOR 	
-	SELECT DISTINCT
-			t.FullName,
+	SELECT 	t.FullName,
 			t.AuthorTypeID,
 			ISNULL(t.StartDate, ''),
 			ISNULL(t.EndDate, ''),
 			ISNULL(t.MARCCreator_b, ''),
 			ISNULL(t.MARCCreator_c, ''),
 			ISNULL(t.MARCCreator_q, '')
-	FROM	#tmpAuthor t LEFT JOIN (SELECT a.AuthorID, AuthorTypeID, StartDate, EndDate, FullName,
-											a.Numeration, a.Title, a.Unit, a.Location, n.FullerForm
-									FROM dbo.Author a INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID) a
+	FROM	#tmpAuthor t LEFT JOIN #tmpNameMatch a
 				ON t.AuthorTypeID = a.AuthorTypeID
 				AND ISNULL(dbo.fnRemoveNonNumericCharacters(t.StartDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.StartDate), '')
 				AND ISNULL(dbo.fnRemoveNonNumericCharacters(t.EndDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.EndDate), '')
-				AND dbo.fnRemoveNonAlphaNumericCharacters(t.FullName) = dbo.fnRemoveNonAlphaNumericCharacters(a.FullName) 
+				AND dbo.fnRemoveNonAlphaNumericCharacters(t.FullName) = a.FullNameToken
 				AND	(  -- If b is blank, match records with blank Numeration/Unit values
 					(ISNULL(t.MARCCreator_b, '') = '' AND ISNULL(a.Numeration, '') = '' AND ISNULL(a.Unit, '') = '') 
 					OR  -- If b is not blank, find records with matching Numeration/Unit values
@@ -226,6 +253,8 @@ BEGIN TRY
 
 	CLOSE curNew
 	DEALLOCATE curNew
+
+	DROP TABLE #tmpNameMatch
 END TRY
 BEGIN CATCH
 	-- Record the error
@@ -236,15 +265,43 @@ END CATCH
 
 -- =======================================================================
 -- Add the production author IDs to the temp table
+
+-- Get existing authors with matching types/names
+SELECT	a.AuthorID,
+		a.FullName,
+		a.FullNameToken,
+		a.FullerForm,
+		a.AuthorTypeID,
+		a.StartDate,
+		a.EndDate,
+		a.Numeration,
+		a.Title,
+		a.Unit,
+		a.Location
+INTO	#tmpNameMatch2
+FROM	#tmpAuthor t INNER JOIN vwAuthorName a
+			ON t.AuthorTypeID = a.AuthorTypeID
+			AND dbo.fnRemoveNonAlphaNumericCharacters(t.FullName) = a.FullNameToken
+GROUP BY
+		a.AuthorID,
+		a.FullName,
+		a.FullNameToken,
+		a.FullerForm,
+		a.AuthorTypeID,
+		a.StartDate,
+		a.EndDate,
+		a.Numeration,
+		a.Title,
+		a.Unit,
+		a.Location
+
 UPDATE	#tmpAuthor
 SET		AuthorID = a.AuthorID
-FROM	#tmpAuthor t INNER JOIN (SELECT a.AuthorID, AuthorTypeID, StartDate, EndDate, FullName,
-										a.Numeration, a.Title, a.Unit, a.Location, n.FullerForm
-								FROM dbo.Author a INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID) a
+FROM	#tmpAuthor t INNER JOIN #tmpNameMatch2 a
 			ON t.AuthorTypeID = a.AuthorTypeID
 			AND ISNULL(dbo.fnRemoveNonNumericCharacters(t.StartDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.StartDate), '')
 			AND ISNULL(dbo.fnRemoveNonNumericCharacters(t.EndDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.EndDate), '')
-			AND dbo.fnRemoveNonAlphaNumericCharacters(t.FullName) = dbo.fnRemoveNonAlphaNumericCharacters(a.FullName) 
+			AND dbo.fnRemoveNonAlphaNumericCharacters(t.FullName) = a.FullNameToken
 			AND	(  -- If b is blank, match records with blank Numeration/Unit values
 				(ISNULL(t.MARCCreator_b, '') = '' AND ISNULL(a.Numeration, '') = '' AND ISNULL(a.Unit, '') = '') 
 				OR  -- If b is not blank, find records with matching Numeration/Unit values

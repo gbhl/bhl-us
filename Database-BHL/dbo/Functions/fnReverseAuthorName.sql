@@ -1,5 +1,6 @@
-﻿CREATE FUNCTION [dbo].[fnReverseAuthorName] (@FullName nvarchar(300))
+﻿CREATE FUNCTION dbo.fnReverseAuthorName (@FullName nvarchar(300))
 RETURNS nvarchar(300)
+WITH SCHEMABINDING
 AS
 BEGIN
 	DECLARE @FullNameReversed nvarchar(300)
@@ -33,4 +34,3 @@ BEGIN
 
 	RETURN LTRIM(RTRIM(@FullNameReversed))
 END
-
