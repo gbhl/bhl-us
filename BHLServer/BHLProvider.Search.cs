@@ -75,16 +75,6 @@ namespace MOBOT.BHL.Server
         }
 
         /// <summary>
-        /// Select Titles for a particular LanguageCode.
-        /// </summary>
-        /// <param name="languageCode"></param>
-        /// <returns>List of SearchBookResults.</returns>
-        public List<SearchBookResult> TitleSelectByLanguage(string languageCode)
-        {
-            return (new SearchDAL().TitleSelectByLanguage(null, null, languageCode));
-        }
-
-        /// <summary>
         /// Select Titles for a particular date range
         /// </summary>
         /// <returns>List of SearchBookResults.</returns>

@@ -29,16 +29,6 @@ AND		s.SegmentStatusID IN (30, 40)
 AND		t.TitleID = @TitleID
 ORDER BY s.SegmentID, ip.SequenceOrder
 
-/*
--- Start pages of segments
-SELECT	p.SegmentID, MIN(p.PageID) AS StartPageID
-INTO	#Start
-FROM	#Pages p
-		INNER JOIN (SELECT SegmentID, MIN(SequenceOrder) AS Start FROM #Pages GROUP BY SegmentID) x
-			ON p.SegmentID = x.SegmentID AND p.SequenceOrder = x.Start
-GROUP BY p.SegmentID
-*/
-
 -- End pages of segments (last page of first contiguous set of pages).  Use LEAD() windowing function to detect breaks in SequenceOrder values.
 SELECT	p.SegmentID, PageID AS EndPageID
 INTO	#End
@@ -82,15 +72,6 @@ SELECT DISTINCT
 INTO	#AddlBySeg
 FROM	#Addl a2
 
-/*
--- Get final list of segments with start, end, and additional Page IDs
-SELECT	s.SegmentID, s.StartPageID, e.EndPageID, a.AdditionalPages
-INTO	#SegmentPages
-FROM	#Start s
-		LEFT JOIN #End e ON s.SegmentID = e.SegmentID
-		LEFT JOIN #AddlBySeg a ON s.SegmentID = a.SegmentID
-*/
-
 -- Get final list of segments with end and additional Page IDs
 SELECT	e.SegmentID, e.EndPageID, a.AdditionalPages
 INTO	#SegmentPages
@@ -119,23 +100,12 @@ SELECT	s.SegmentID,
 		s.Series, 
 		s.Date, 
 		l.LanguageName,
-		dbo.fnAuthorIDStringForSegment(s.SegmentID) AS AuthorIDs,
-		dbo.fnCOinSAuthorStringForSegment(s.SegmentID) AS Authors,
+		dbo.fnAuthorInfoForSegment(s.SegmentID, '$$$') AS Authors,
 		dbo.fnInstitutionCodesForItem(s.ItemID, @ContributorRoleID) AS ContributorCodes,
 		s.StartPageNumber,
 		s.EndPageNumber,
 		s.StartPageID,
 		sp.EndPageID,
-		/*
-		(	SELECT	PageID 
-			FROM	dbo.ItemPage ip
-					INNER JOIN (	SELECT	ItemID, MAX(SequenceOrder) AS MaxSeq 
-									FROM	dbo.ItemPage 
-									WHERE	ItemID = s.ItemID 
-									GROUP BY ItemID	) x 
-					ON ip.ItemID = x.ItemID AND ip.SequenceOrder = x.MaxSeq
-		) AS EndPageID,
-		*/
 		sp.AdditionalPages,
 		ii.IdentifierValue AS DOIName
 FROM	dbo.Title t

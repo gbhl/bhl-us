@@ -374,17 +374,6 @@ namespace BHLCoreDALTest
         }
 
         [TestMethod]
-        public void TitleSelectByLanguageTest()
-        {
-            SearchDAL target = new SearchDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            string languageCode = "ENG";
-            List<SearchBookResult> actual = target.TitleSelectByLanguage(sqlConnection, sqlTransaction, languageCode);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        [TestMethod]
         public void TitleSelectByNameLikeTest()
         {
             SearchDAL target = new SearchDAL();

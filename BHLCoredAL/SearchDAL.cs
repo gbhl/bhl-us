@@ -228,31 +228,6 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        /// <summary>
-        /// Select all values from Title that are related to the specified language.
-        /// </summary>
-        /// <param name="sqlConnection">Sql connection or null.</param>
-        /// <param name="sqlTransaction">Sql transaction or null.</param>
-        /// <param name="languageCode">ID of the language for which to retrieve titles</param>
-        /// <returns>List of objects of type SearchBookResult.</returns>
-        public List<SearchBookResult> TitleSelectByLanguage(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction,
-                        String languageCode)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByLanguage", connection, transaction,
-                     CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, false, languageCode)))
-            {
-                using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
-                {
-                    List<SearchBookResult> list = helper.ExecuteReader(command);
-                    return list;
-                }
-            }
-        }
-
         public List<SearchBookResult> TitleSelectByKeyword(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string keyword)
         {

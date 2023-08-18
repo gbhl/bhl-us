@@ -21,7 +21,12 @@ ELSE
 			CASE WHEN b.StartYear IS NULL THEN ISNULL(t.Datafield_260_c, '') ELSE b.StartYear END AS [Year],
 			ISNULL(b.Volume, '') AS Volume , ISNULL(b.CopyrightStatus, '') AS CopyrightStatus,
 			c.Authors,
-			dbo.fnCOinSGetPageCountForItem(b.BookID) AS Pages,
+			(	SELECT	COUNT(pg.PageID)
+				FROM	dbo.Page pg
+						INNER JOIN dbo.ItemPage ipg ON pg.PageID = ipg.PageID
+						INNER JOIN dbo.Book bk ON ipg.ItemID = bk.ItemID
+				WHERE	bk.BookID = b.BookID
+			) AS Pages,
 			c.Subjects AS Keywords
 	FROM	dbo.Title t  WITH (NOLOCK)
 			INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON t.TitleID = it.TitleID AND it.IsPrimary = 1

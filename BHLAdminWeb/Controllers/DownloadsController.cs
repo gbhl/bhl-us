@@ -3,6 +3,7 @@ using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 
@@ -47,9 +48,22 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 foreach (DataObjects.Institution contributor in segment.ContributorList) contributorList.Add(contributor.InstitutionCode);
                 if (contributorList.Count > 0) contributors = string.Join(";", contributorList);
 
+                List<string> authorIDs = new List<string>();
+                List<string> authors = new List<string>();
+                string[] authorList= segment.Authors.Split(new char[] { '$', '$', '$' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach(string auth in authorList)
+                {
+                    string[] a = auth.Split('|');
+                    if (a.Length == 2)
+                    {
+                        authorIDs.Add(a[0].Trim());
+                        authors.Add(a[1].Trim());
+                    }
+                }
+
                 sb.AppendLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}\t{16}\t{17}",
                     segment.SegmentID.ToString(), segment.Title, segment.TranslatedTitle, segment.BookID, segment.Volume, segment.Issue, segment.Series, segment.Date, 
-                    segment.LanguageName, segment.AuthorIDs, segment.Authors.Replace('|', ';'), segment.StartPageNumber, segment.EndPageNumber, segment.StartPageID, segment.EndPageID,
+                    segment.LanguageName, string.Join(";", authorIDs), string.Join(";", authors), segment.StartPageNumber, segment.EndPageNumber, segment.StartPageID, segment.EndPageID,
                     segment.AdditionalPages, segment.DOIName, contributors));
             }
 

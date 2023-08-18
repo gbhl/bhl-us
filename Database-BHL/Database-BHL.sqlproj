@@ -634,7 +634,6 @@
     <None Include="annotation\Stored Procedures\AnnotatedTitleUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\PageFlickrSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\IndicatedPageDeleteAuto.sql" />
-    <None Include="dbo\Stored Procedures\TitleSelectByLanguage.sql" />
     <None Include="dbo\Stored Procedures\TitleCountByCollection.sql" />
     <None Include="dbo\Stored Procedures\ApiSegmentSelectByItemID.sql" />
     <None Include="annotation\Stored Procedures\AnnotationMarkSelectAuto.sql" />
@@ -856,7 +855,6 @@
     <None Include="dbo\Functions\fnGeographicKeywordStringForTitle.sql" />
     <None Include="dbo\Stored Procedures\PageDetailInsertUpdate.sql" />
     <None Include="dbo\Stored Procedures\PageIllustrationInsert.sql" />
-    <None Include="dbo\Stored Procedures\PageDetailSelectForClassifierExport.sql" />
     <None Include="dbo\Stored Procedures\PageDetailUpdateStatus.sql" />
     <None Include="import\Tables\ImportFileStatus.sql" />
     <None Include="Security\Schemas\import.sql" />

@@ -199,11 +199,20 @@ FROM	#kbart kb
 
 -- Get first authornames
 UPDATE	#kbart
-SET		first_author_temp = dbo.fnCOinSGetFirstAuthorNameForTitle(title_id, '100')
+SET		first_author_temp = (
+			SELECT TOP 1 CASE WHEN r.MARCDataFieldTag IN ('100', '700') THEN n.FullName ELSE '' END
+			FROM	dbo.TitleAuthor ta INNER JOIN dbo.Author a ON ta.AuthorID = a.AuthorID
+					INNER JOIN dbo.AuthorRole r ON ta.AuthorRoleID = r.AuthorRoleID
+					INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID
+			WHERE	ta.TitleID = title_id
+			AND		a.IsActive = 1
+			AND		n.IsPreferredName = 1
+			ORDER BY ta.SequenceOrder, r.MarcDataFieldTag, n.FullName
+			)
 WHERE	publication_type = 'monograph'
 
 UPDATE	#kbart
-SET		first_author = SUBSTRING(CASE WHEN CHARINDEX(',', first_author_temp) > 0 THEN LEFT(first_author_temp, CHARINDEX(',', first_author_temp) - 1) ELSE first_author_temp END, 1, 50)
+SET		first_author = ISNULL(SUBSTRING(CASE WHEN CHARINDEX(',', first_author_temp) > 0 THEN LEFT(first_author_temp, CHARINDEX(',', first_author_temp) - 1) ELSE first_author_temp END, 1, 50), '')
 WHERE	publication_type = 'monograph'
 
 -- Final result set
