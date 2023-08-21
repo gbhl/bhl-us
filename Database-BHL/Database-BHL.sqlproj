@@ -1181,6 +1181,7 @@
     <None Include="dbo\Stored Procedures\TitleExternalResourceTypeSelectAll.sql" />
     <None Include="dbo\Types\IdentifierTableType.sql" />
     <None Include="dbo\Views\vwAuthorName.sql" />
+    <None Include="dbo\Stored Procedures\SegmentSelectByPageID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

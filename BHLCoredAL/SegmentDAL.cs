@@ -329,6 +329,30 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public Segment SegmentSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+            CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByPageID", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    List<Segment> list = helper.ExecuteReader(command);
+                    if (list.Count > 0)
+                    {
+                        return list[0];
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Select the segments associated with the specified title
         /// </summary>

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.BookSelectByPageID
+﻿CREATE PROCEDURE [dbo].[SegmentSelectByPageID]
 
 @PageID int
 
@@ -9,15 +9,14 @@ SET NOCOUNT ON
 BEGIN
 
 SELECT DISTINCT
-		b.BookID,
-		b.RedirectBookID,
-		b.ItemID,
-		b.IsVirtual,
+		s.SegmentID,
+		s.RedirectSegmentID,
+		s.ItemID,
 		i.ItemStatusID
 FROM	dbo.Page p
 		INNER JOIN dbo.ItemPage ip ON p.PageID = ip.PageID
 		INNER JOIN dbo.Item i ON ip.ItemID = i.ItemID
-		INNER JOIN dbo.Book b ON i.ItemID = b.ItemID
+		INNER JOIN dbo.Segment s ON i.ItemID = s.ItemID
 WHERE	p.PageID = @PageID
 
 END 

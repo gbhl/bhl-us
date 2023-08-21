@@ -534,25 +534,48 @@ Append("</a>").
 
             if (int.TryParse(pageID, out int pageid))
             {
+                Page page = bhlProvider.PageSelectAuto(pageid);
+                if (page == null) Response.Redirect("~/pagenotfound");  // Page ID does not exist
+
                 DataObjects.Book book = bhlProvider.BookSelectByPageID(pageid);
 
                 // Get the data for book/segment.  If book/segment has been replaced, redirect to the target book/segment.  That will
                 // not find the correct page, but at least puts the user in the correct book/segment... better than "not found".
                 if (book != null)
                 {
+                    if (!page.Active)   // Page ID exists, but is inactive
+                    {
+                        if (book.RedirectBookID != null)
+                            Response.Redirect("~/item/" + book.RedirectBookID); // Follow container item redirect
+                        else
+                            Response.Redirect("~/item/" + book.BookID);     // Show container item
+                    }
+
                     PublicationDetail.Type = ItemType.Book;
                     psv = bhlProvider.PageSummarySelectByPageId(pageid, true);
                     if (psv!= null)
                     {
+                        // Page active, but container item redirected
                         if (psv.RedirectBookID != null) Response.Redirect("~/item/" + psv.RedirectBookID);
                     }
                 }
                 else
                 {
+                    Segment segment = bhlProvider.SegmentSelectByPageID(pageid);
+
+                    if (!page.Active)   // Page ID exists, but is inactive
+                    {
+                        if (segment.RedirectSegmentID != null)
+                            Response.Redirect("~/segment/" + segment.RedirectSegmentID); // Follow container item redirect
+                        else
+                            Response.Redirect("~/segment/" + segment.SegmentID);     // Show container item
+                    }
+
                     PublicationDetail.Type = ItemType.Segment;
                     psv = bhlProvider.PageSummarySegmentSelectByPageID(pageid);
                     if (psv != null)
                     {
+                        // Page active, but container item redirected
                         if (psv.RedirectBookID != null) Response.Redirect("~/segment/" + psv.RedirectBookID);
                     }
                 }
