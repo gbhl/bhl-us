@@ -474,7 +474,7 @@ namespace MOBOT.BHL.AdminWeb
                 if (Int32.TryParse(replacedByTextBox.Text, out itemID))
                 {
                     // Look up the specified ID to ensure that it exists
-                    if (new BHLProvider().ItemSelectAuto(itemID) == null)
+                    if (new BHLProvider().BookSelectAuto(itemID) == null)
                     {
                         flag = true;
                         errorControl.AddErrorText("Make sure the 'Replaced By' identifier is a valid Item ID.");
