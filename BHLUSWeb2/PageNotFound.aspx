@@ -7,7 +7,7 @@
 <div id="message" class="column-wrap">
     <section>
         <h1>Page not found</h1>
-        <p>We're sorry, but the page you requested does not exist....Yet.</p>
+        <p>We're sorry, but we were not able to find the page that you requested. Please use the browsing options above to locate the page you want to view.</p>
         <span class="arrow message"></span>
     </section>
     <aside>
