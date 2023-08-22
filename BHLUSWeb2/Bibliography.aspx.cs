@@ -19,7 +19,7 @@ namespace MOBOT.BHL.Web2
         protected IList<TitleVariant> TitleVariants { get; set; }
         protected IList<TitleAssociation> TitleAssociations { get; set; }
         protected List<TitleKeyword> TitleKeywords { get; set; }
-        protected IList<Title_Identifier> TitleIdentifiers { get; set; }
+        protected List<Title_Identifier> TitleIdentifiers { get; set; }
         protected IList<TitleNote> TitleNotes { get; set; }
         protected IList<TitleExternalResource> TitleExternalResources { get; set; }
         protected IList<Author> Authors { get; set; }
@@ -47,8 +47,7 @@ namespace MOBOT.BHL.Web2
         protected void Page_Load(object sender, EventArgs e)
         {
             // Parse TitleID
-            int titleId;
-            if (!int.TryParse((string)RouteData.Values["titleid"], out titleId))
+            if (!int.TryParse((string)RouteData.Values["titleid"], out int titleId))
             {
                 Response.Redirect("~/titlenotfound");
             }
@@ -93,15 +92,13 @@ namespace MOBOT.BHL.Web2
                 Barcode = Books[0].BarCode;
             }
 
-            // Set the title for the COinS
-            COinS.TitleID = titleId;
-
             // Assign Authors
             Authors = new List<Author>();
             AuthorsDetail = new List<Author>();
             AdditionalAuthors = new List<Author>();
             AdditionalAuthorsDetail = new List<Author>();
-            foreach (Author author in bhlProvider.AuthorSelectByTitleId(titleId))
+            List<Author> authorList = bhlProvider.AuthorSelectByTitleId(titleId);
+            foreach (Author author in authorList)
             {
                 if (author.AuthorRoleID >= 1 && author.AuthorRoleID <= 3)
                 {
@@ -141,8 +138,10 @@ namespace MOBOT.BHL.Web2
                 if (string.IsNullOrWhiteSpace(book.Volume)) book.Volume = "Volume details";
 
                 string externalUrl = (book.FirstPageID == null) ? "" : string.Format("/pagethumb/{0},100,100", book.FirstPageID.ToString());
-                BibliographyItem bibliographyItem = new BibliographyItem(book, externalUrl);
-                bibliographyItem.institutions = bhlProvider.InstitutionSelectByItemID((int)book.ItemID);
+                BibliographyItem bibliographyItem = new BibliographyItem(book, externalUrl)
+                {
+                    institutions = bhlProvider.InstitutionSelectByItemID((int)book.ItemID)
+                };
 
                 BibliographyItems.Add(bibliographyItem);
             }
@@ -188,6 +187,19 @@ namespace MOBOT.BHL.Web2
                     TitleIdentifiers.Remove(titleIdentifier);
                 }
             }
+
+            // Set the data for the COinS output
+            COinS.TitleID = titleId;
+            COinS.TitleIdentifiers = TitleIdentifiers;
+            COinS.TitleKeywords = TitleKeywords;
+            COinS.Authors = authorList;
+            COinS.MarcLeader = BhlTitle.MARCLeader;
+            COinS.Title = BhlTitle.FullTitle;
+            COinS.Publisher = BhlTitle.Datafield_260_b;
+            COinS.PublisherPlace = BhlTitle.Datafield_260_a;
+            COinS.Edition = BhlTitle.EditionStatement;
+            COinS.Language = BhlTitle.LanguageCode;
+            COinS.Date = BhlTitle.StartYear.ToString();
         }
 
         private bool ListContainsAuthor(IList<Author> list, int authorID, string relationship)

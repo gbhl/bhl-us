@@ -1,18 +1,37 @@
-﻿using MOBOT.BHL.Server;
+﻿using MOBOT.BHL.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
 using System.Web.UI;
-using Data = MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.Web2
 {
     public partial class COinSControl : UserControl
     {
-        public int TitleID { get; set; }
-        public int ItemID { get; set; }
-        public int SegmentID { get; set; }
+        public int TitleID { get; set; } = 0;
+        public int ItemID { get; set; } = 0;
+        public int SegmentID { get; set; } = 0;
+        public List<Title_Identifier> TitleIdentifiers { get; set; } = new List<Title_Identifier>();
+        public List<ItemIdentifier> ItemIdentifiers { get; set; } = new List<ItemIdentifier>();
+        public List<TitleKeyword> TitleKeywords { get; set; } = new List<TitleKeyword>();
+        public List<ItemKeyword> ItemKeywords { get; set; } = new List<ItemKeyword>();
+        public List<Author> Authors { get; set; }
+        public string Genre { get; set; }
+        public string MarcLeader { get; set; }
+        public string Title { get; set; }
+        public string ArticleTitle { get; set; }
+        public string Volume { get; set; }
+        public string Issue { get; set; }
+        public string Publisher { get; set; }
+        public string PublisherPlace { get; set; }
+        public string Edition { get; set; }
+        public string Language { get; set; }
+        public string Date { get; set; }
+        public string StartPageNumber { get; set; }
+        public string EndPageNumber { get; set; }
+        public string PageRange { get; set; }
+        public int? PageCount { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -20,11 +39,11 @@ namespace MOBOT.BHL.Web2
             {
                 string coinsOutput = string.Empty;
 
-                if ((this.TitleID != 0) || (this.ItemID != 0)) coinsOutput = this.GetCOinSForItem(this.TitleID, this.ItemID);
-                if (this.SegmentID != 0) coinsOutput = this.GetCOinSForSegment(this.SegmentID);
+                if ((TitleID != 0) || (ItemID != 0)) coinsOutput = GetCOinSForItem();
+                if (SegmentID != 0) coinsOutput = GetCOinSForSegment();
 
                 // Render the COinS to the control
-                this.Controls.Add(new LiteralControl("<span class=\"Z3988\" title=\"" + coinsOutput + "\"></span>"));
+                Controls.Add(new LiteralControl("<span class=\"Z3988\" title=\"" + coinsOutput + "\"></span>"));
             }
         }
 
@@ -32,138 +51,104 @@ namespace MOBOT.BHL.Web2
         /// Get the COinS string for the specified title/item
         /// </summary>
         /// <returns></returns>
-        private string GetCOinSForItem(int titleId, int itemId)
+        private string GetCOinSForItem()
         {
-            BHLProvider provider = new BHLProvider();
-            Data.ItemCOinSView coins = null;
             StringBuilder output = new StringBuilder();
 
-            // Get the data
-            if (titleId != 0)
-            {
-                coins = provider.ItemCOinSSelectByTitleId(titleId);
-                List<Data.Title_Identifier> doi = provider.DOISelectValidForTitle(titleId);
-                if (doi != null && coins != null)
-                {
-                    if (doi.Count > 0) coins.Doi = doi[0].IdentifierValue;
-                }
-            }
-            else
-            {
-                coins = provider.ItemCOinSSelectByItemId(itemId);
-            }
+            // Build the COinS
+            output.Append("ctx_ver=Z39.88-2004");
 
-            if (coins != null)
+            // Add identifiers
+            string doi = GetIdentifierValue(IdentifierTarget.Title, "DOI");
+            if (doi != string.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("info:doi/" + doi));
+            string oclc = GetIdentifierValue(IdentifierTarget.Title, "OCLC");
+            if (oclc != string.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("info:oclcnum/" + oclc));
+            string issn = GetIdentifierValue(IdentifierTarget.Title, "ISSN");
+            if (issn != string.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISSN:" + issn));
+            string eissn = GetIdentifierValue(IdentifierTarget.Title, "eISSN");
+            if (eissn != string.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISSN:" + eissn));
+            string isbn = GetIdentifierValue(IdentifierTarget.Title, "ISBN");
+            if (isbn != string.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISBN:" + isbn));
+            string lccn = GetIdentifierValue(IdentifierTarget.Title, "DLC");
+            if (lccn != string.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("info:lccn/" + lccn));
+            if (TitleID != 0) output.Append("&amp;rft_id=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["BibPageUrl"], TitleID)));
+            if (ItemID != 0) output.Append("&amp;rft_id=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["ItemPageUrl"], ItemID)));
+
+            // Add format-specific attributes
+            switch (GetGenre())
             {
-                // Build the COinS
-                output.Append("ctx_ver=Z39.88-2004");
-
-                // Add identifiers
-                if (coins.Doi != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("info:doi/" + coins.Doi));
-                if (coins.Oclc != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("info:oclcnum/" + coins.Oclc));
-                if (coins.Rft_issn != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISSN:" + coins.Rft_issn));
-                if (coins.Rft_eissn != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISSN:" + coins.Rft_eissn));
-                if (coins.Rft_isbn != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISBN:" + coins.Rft_isbn));
-                if (coins.Lccn != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("info:lccn/" + coins.Lccn));
-                if (titleId != 0) output.Append("&amp;rft_id=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["BibPageUrl"], titleId)));
-                if (itemId != 0) output.Append("&amp;rft_id=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["ItemPageUrl"], itemId)));
-
-                // Add format-specific attributes
-                switch (coins.Rft_genre)
-                {
-                    // Journal COinS do not work with Mendeley or Zotero unless they represent journal articles.
-                    // Per discussion with BHL technical director, decided to represent full journal volumes as books.
-                    case "book":    // book
-                    case "journal":     // journal
+                // Journal COinS do not work with Mendeley or Zotero unless they represent journal articles.
+                // Per discussion with BHL technical director, decided to represent full journal volumes as books.
+                case "book":    // book
+                case "journal":     // journal
+                    {
                         output.Append("&amp;rft_val_fmt=" + Server.UrlEncode("info:ofi/fmt:kev:mtx:book"));
                         output.Append("&amp;rft.genre=book");
-                        if (coins.Rft_title != String.Empty) output.Append("&amp;rft.btitle=" + Server.UrlEncode(coins.Rft_title));
+                        if (!string.IsNullOrWhiteSpace(Title)) output.Append("&amp;rft.btitle=" + Server.UrlEncode(Title));
 
                         // Rft_stitle, Rft_volume, and Rft_coden were added for journals, even 
                         // though they don't technically make sense for book COinS
-                        if (coins.Rft_stitle != String.Empty) output.Append("&amp;rft.stitle=" + Server.UrlEncode(coins.Rft_stitle));
-                        if (coins.Rft_volume != String.Empty && this.ItemID != 0) output.Append("&amp;rft.volume=" + Server.UrlEncode(coins.Rft_volume));
-                        if (coins.Rft_coden != String.Empty) output.Append("&amp;rft.coden=" + Server.UrlEncode(coins.Rft_coden));
+                        string stitle = GetIdentifierValue(IdentifierTarget.Title, "Abbreviation");
+                        if (stitle != string.Empty) output.Append("&amp;rft.stitle=" + Server.UrlEncode(stitle));
+                        if (!string.IsNullOrWhiteSpace(Volume) && ItemID != 0) output.Append("&amp;rft.volume=" + Server.UrlEncode(Volume));
+                        string coden = GetIdentifierValue(IdentifierTarget.Title, "CODEN");
+                        if (coden != string.Empty) output.Append("&amp;rft.coden=" + Server.UrlEncode(coden));
 
-                        if (coins.Rft_place != String.Empty) output.Append("&amp;rft.place=" + Server.UrlEncode(coins.Rft_place));
-                        if (coins.Rft_pub != String.Empty) output.Append("&amp;rft.pub=" + Server.UrlEncode(coins.Rft_pub));
-                        if (coins.Rft_edition != String.Empty) output.Append("&amp;rft.edition=" + Server.UrlEncode(coins.Rft_edition));
+                        if (!string.IsNullOrWhiteSpace(PublisherPlace)) output.Append("&amp;rft.place=" + Server.UrlEncode(PublisherPlace));
+                        if (!string.IsNullOrWhiteSpace(Publisher)) output.Append("&amp;rft.pub=" + Server.UrlEncode(Publisher));
+                        if (!string.IsNullOrWhiteSpace(Edition)) output.Append("&amp;rft.edition=" + Server.UrlEncode(Edition));
 
-                        if (coins.Rft_issn != String.Empty) output.Append("&amp;rft.issn=" + Server.UrlEncode(coins.Rft_issn));
-                        if (coins.Rft_eissn != String.Empty) output.Append("&amp;rft.eissn=" + Server.UrlEncode(coins.Rft_eissn));
-                        if (coins.Rft_isbn != String.Empty) output.Append("&amp;rft.isbn=" + Server.UrlEncode(coins.Rft_isbn));
-                        if (coins.Rft_aufirst != String.Empty) output.Append("&amp;rft.aufirst=" + Server.UrlEncode(coins.Rft_aufirst));
-                        if (coins.Rft_aulast != String.Empty) output.Append("&amp;rft.aulast=" + Server.UrlEncode(coins.Rft_aulast));
-                        if (coins.Rft_aucorp != String.Empty) output.Append("&amp;rft.aucorp=" + Server.UrlEncode(coins.Rft_aucorp));
-                        if (coins.Rft_au_BOOK != String.Empty)
+                        if (issn != string.Empty) output.Append("&amp;rft.issn=" + Server.UrlEncode(issn));
+                        if (eissn != string.Empty) output.Append("&amp;rft.eissn=" + Server.UrlEncode(eissn));
+                        if (isbn != string.Empty) output.Append("&amp;rft.isbn=" + Server.UrlEncode(isbn));
+                        bool isFirst = true;
+                        foreach (Author author in Authors)
                         {
-                            String[] authors = coins.Rft_au_BOOK.Split('|');
-                            foreach (String author in authors)
+                            if (isFirst)
                             {
-                                if (author != String.Empty) output.Append("&amp;rft.au=" + Server.UrlEncode(author));
+                                string firstName = GetAuthorFirstName(author);
+                                if (firstName != string.Empty) output.Append("&amp;rft.aufirst=" + Server.UrlEncode(firstName));
+                                string lastName = GetAuthorLastName(author);
+                                if (lastName != string.Empty) output.Append("&amp;rft.aulast=" + Server.UrlEncode(lastName));
+                                string corpName = GetAuthorCorpName(author);
+                                if (corpName != string.Empty) output.Append("&amp;rft.aucorp=" + Server.UrlEncode(corpName));
+                                isFirst = false;
                             }
+                            output.Append("&amp;rft.au=" + Server.UrlEncode(author.FullName));
                         }
-                        if ((coins.Rft_tpages ?? 0) != 0)
+                        if ((PageCount ?? 0) != 0)
                         {
-                            output.Append("&amp;rft.pages=1-" + coins.Rft_tpages.ToString());
-                            output.Append("&amp;rft.tpages=" + coins.Rft_tpages.ToString());
+                            output.Append("&amp;rft.pages=1-" + PageCount.ToString());
+                            output.Append("&amp;rft.tpages=" + PageCount.ToString());
                         }
 
                         break;
-                    default:    // dublin core
+                    }
+                default:    // dublin core
+                    {
                         output.Append("&amp;rft_val_fmt=" + Server.UrlEncode("info:ofi/fmt:kev:mtx:dc"));
                         output.Append("&amp;rft.source=" + Server.UrlEncode("Biodiversity Heritage Library"));
                         output.Append("&amp;rft.rights=" + Server.UrlEncode("Creative Commons Attribution 3.0"));
-                        if (this.TitleID != 0) output.Append("&amp;rtf.identifier=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["BibPageUrl"], TitleID)));
-                        if (this.ItemID != 0) output.Append("&amp;rft.identifier=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["ItemPageUrl"], ItemID)));
-                        if (coins.Rft_title != String.Empty) output.Append("&amp;rft.title=" + Server.UrlEncode(coins.Rft_title));
-                        if (coins.Rft_language != String.Empty) output.Append("&amp;rft.language=" + Server.UrlEncode(coins.Rft_language));
-                        if (coins.Rft_au_DC != String.Empty)
+                        if (TitleID != 0) output.Append("&amp;rft.identifier=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["BibPageUrl"], TitleID)));
+                        if (ItemID != 0) output.Append("&amp;rft.identifier=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["ItemPageUrl"], ItemID)));
+                        if (Title != string.Empty) output.Append("&amp;rft.title=" + Server.UrlEncode(Title));
+                        if (Language != string.Empty) output.Append("&amp;rft.language=" + Server.UrlEncode(Language));
+                        foreach (Author author in Authors)
                         {
-                            String[] authors = coins.Rft_au_DC.Split('|');
-                            foreach (String author in authors)
-                            {
-                                if (author != String.Empty) output.Append("&amp;rft.creator=" + Server.UrlEncode(author));
-                            }
+                            output.Append("&amp;rft.creator=" + Server.UrlEncode(author.FullName));
                         }
-                        if (coins.Rft_publisher != String.Empty) output.Append("&amp;rft.publisher=" + Server.UrlEncode(coins.Rft_publisher));
-                        if (titleId != 0)
+                        if (!string.IsNullOrWhiteSpace(Publisher)) output.Append("&amp;rft.publisher=" + Server.UrlEncode(Publisher));
+                        foreach (TitleKeyword keyword in TitleKeywords)
                         {
-                            if (coins.Rft_contributor_TITLE != String.Empty)
-                            {
-                                if (coins.Rft_contributor_TITLE.Split('|').Length == 1)
-                                    output.Append("&amp;rft.contributor=" + Server.UrlEncode(coins.Rft_contributor_TITLE));
-                                else
-                                    output.Append("&amp;rft.contributor = Multiple institutions");
-                            }
-                        }
-                        else if (itemId != 0)
-                        {
-                            if (coins.Rft_contributor_ITEM != String.Empty) output.Append("&amp;rft.contributor=" + Server.UrlEncode(coins.Rft_contributor_ITEM));
-                        }
-
-                        if (coins.Rft_subject != String.Empty)
-                        {
-                            String[] subjects = coins.Rft_subject.Split('|');
-                            foreach (String subject in subjects)
-                            {
-                                if (subject != String.Empty) output.Append("&amp;rft.subject=" + Server.UrlEncode(subject));
-                            }
+                            output.Append("&amp;rft.subject=" + Server.UrlEncode(keyword.Keyword));
                         }
 
                         break;
-                }
-
-                // Add additional elements common to all formats
-                if (titleId != 0)
-                {
-                    if (coins.Rft_date_TITLE != String.Empty) output.Append("&amp;rft.date=" + Server.UrlEncode(coins.Rft_date_TITLE.ToString()));
-                }
-                else if (itemId != 0)
-                {
-                    if (coins.Rft_date_ITEM != String.Empty) output.Append("&amp;rft.date=" + Server.UrlEncode(coins.Rft_date_ITEM.ToString()));
-                }
+                    }
             }
+
+            // Add additional elements common to all formats
+            if (Date != string.Empty) output.Append("&amp;rft.date=" + Server.UrlEncode(Date));
 
             return output.ToString();
         }
@@ -172,105 +157,172 @@ namespace MOBOT.BHL.Web2
         /// Get the COinS string for the specified segment
         /// </summary>
         /// <returns></returns>
-        private string GetCOinSForSegment(int segmentId)
+        private string GetCOinSForSegment()
         {
-            BHLProvider provider = new BHLProvider();
-            Data.SegmentCOinSView coins = null;
             StringBuilder output = new StringBuilder();
 
-            // Get the data
-            coins = provider.SegmentCOinSSelectBySegmentId(segmentId);
-            List<Data.ItemIdentifier> doi = provider.DOISelectValidForSegment(segmentId);
-            if (doi != null && coins != null) 
+            // Build the COinS
+            output.Append("ctx_ver=Z39.88-2004");
+
+            // Add identifiers
+            string doi = GetIdentifierValue(IdentifierTarget.Segment, "DOI");
+            if (doi != string.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("info:doi/" + doi));
+            string issn = GetIdentifierValue(IdentifierTarget.Title, "ISSN");
+            if (issn != string.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISSN:" + issn));
+            string eissn = GetIdentifierValue(IdentifierTarget.Title, "eISSN");
+            if (eissn != string.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISSN:" + eissn));
+            output.Append("&amp;rft_id=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["PartPageUrl"], SegmentID)));
+
+            // Add format-specific attributes
+            switch (GetGenre())
             {
-                if (doi.Count > 0) coins.Doi = doi[0].IdentifierValue;
-            }
-
-            if (coins != null)
-            {
-                // Build the COinS
-                output.Append("ctx_ver=Z39.88-2004");
-
-                // Add identifiers
-                if (coins.Doi != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("info:doi/" + coins.Doi));
-                if (coins.Rft_issn != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISSN:" + coins.Rft_issn));
-                if (coins.Rft_eissn != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISSN:" + coins.Rft_eissn));
-                if (coins.Rft_isbn != String.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISBN:" + coins.Rft_isbn));
-                output.Append("&amp;rft_id=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["PartPageUrl"], segmentId)));
-
-                // Add format-specific attributes
-                switch (coins.Rft_genre)
-                {
-                    case "article":
-                    case "issue":
-                    case "proceeding":
-                    case "conference":
-                    case "preprint":
-                    case "unknown":
+                case "article":
+                case "issue":
+                case "proceeding":
+                case "conference":
+                case "preprint":
+                case "unknown":
+                    {
                         output.Append("&amp;rft_val_fmt=" + Server.UrlEncode("info:ofi/fmt:kev:mtx:journal"));
-                        output.Append("&amp;rft.genre=" + Server.UrlEncode(coins.Rft_genre));
-                        if (coins.Rft_atitle != String.Empty) output.Append("&amp;rft.atitle=" + Server.UrlEncode(coins.Rft_atitle));
-                        if (coins.Rft_jtitle != String.Empty) output.Append("&amp;rft.jtitle=" + Server.UrlEncode(coins.Rft_jtitle));
-                        if (coins.Rft_volume != String.Empty) output.Append("&amp;rft.volume=" + Server.UrlEncode(coins.Rft_volume));
-                        if (coins.Rft_issue != String.Empty) output.Append("&amp;rft.issue=" + Server.UrlEncode(coins.Rft_issue));
-                        if (coins.Rft_spage != String.Empty) output.Append("&amp;rft.spage=" + Server.UrlEncode(coins.Rft_spage));
-                        if (coins.Rft_epage != String.Empty) output.Append("&amp;rft.epage=" + Server.UrlEncode(coins.Rft_epage));
-                        if (coins.Rft_pages != String.Empty) output.Append("&amp;rft.pages=" + Server.UrlEncode(coins.Rft_pages));
-                        if (coins.Rft_coden != String.Empty) output.Append("&amp;rft.coden=" + Server.UrlEncode(coins.Rft_coden));
-                        if (coins.Rft_issn != String.Empty) output.Append("&amp;rft.issn=" + Server.UrlEncode(coins.Rft_issn));
-                        if (coins.Rft_eissn != String.Empty) output.Append("&amp;rft.eissn=" + Server.UrlEncode(coins.Rft_eissn));
-                        if (coins.Rft_isbn != String.Empty) output.Append("&amp;rft.isbn=" + Server.UrlEncode(coins.Rft_isbn));
-                        if (coins.Rft_aufirst != String.Empty) output.Append("&amp;rft.aufirst=" + Server.UrlEncode(coins.Rft_aufirst));
-                        if (coins.Rft_aulast != String.Empty) output.Append("&amp;rft.aulast=" + Server.UrlEncode(coins.Rft_aulast));
-                        if (coins.Rft_au != String.Empty)
+                        output.Append("&amp;rft.genre=" + Server.UrlEncode(GetGenre()));
+                        if (!string.IsNullOrWhiteSpace(ArticleTitle)) output.Append("&amp;rft.atitle=" + Server.UrlEncode(ArticleTitle));
+                        if (!string.IsNullOrWhiteSpace(Title)) output.Append("&amp;rft.jtitle=" + Server.UrlEncode(Title));
+                        if (!string.IsNullOrWhiteSpace(Volume)) output.Append("&amp;rft.volume=" + Server.UrlEncode(Volume));
+                        if (!string.IsNullOrWhiteSpace(Issue)) output.Append("&amp;rft.issue=" + Server.UrlEncode(Issue));
+                        if (!string.IsNullOrWhiteSpace(StartPageNumber)) output.Append("&amp;rft.spage=" + Server.UrlEncode(StartPageNumber));
+                        if (!string.IsNullOrWhiteSpace(EndPageNumber)) output.Append("&amp;rft.epage=" + Server.UrlEncode(EndPageNumber));
+                        if (!string.IsNullOrWhiteSpace(PageRange)) output.Append("&amp;rft.pages=" + Server.UrlEncode(PageRange));
+                        if (issn != string.Empty) output.Append("&amp;rft.issn=" + Server.UrlEncode(issn));
+                        if (eissn != string.Empty) output.Append("&amp;rft.eissn=" + Server.UrlEncode(eissn));
+                        bool isFirst = true;
+                        foreach(Author author in Authors)
                         {
-                            String[] authors = coins.Rft_au.Split('|');
-                            foreach (String author in authors)
+                            if (isFirst)
                             {
-                                if (author != String.Empty) output.Append("&amp;rft.au=" + Server.UrlEncode(author));
+                                string firstName = GetAuthorFirstName(author);
+                                if (firstName != string.Empty) output.Append("&amp;rft.aufirst=" + Server.UrlEncode(firstName));
+                                string lastName = GetAuthorLastName(author);
+                                if (lastName != string.Empty) output.Append("&amp;rft.aulast=" + Server.UrlEncode(lastName));
+                                isFirst = false;
                             }
+                            output.Append("&amp;rft.au=" + Server.UrlEncode(author.FullName));
                         }
 
                         break;
-                    default:    // dublin core
+                    }
+                default:    // dublin core
+                    {
                         output.Append("&amp;rft_val_fmt=" + Server.UrlEncode("info:ofi/fmt:kev:mtx:dc"));
                         output.Append("&amp;rft.source=" + Server.UrlEncode("Biodiversity Heritage Library"));
                         output.Append("&amp;rft.rights=" + Server.UrlEncode("Creative Commons Attribution 3.0"));
-                        output.Append("&amp;rtf.identifier=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["PartPageUrl"], segmentId)));
-                        if (coins.Rft_atitle != String.Empty) output.Append("&amp;rft.title=" + Server.UrlEncode(coins.Rft_atitle));
-                        if (coins.Rft_language != String.Empty) output.Append("&amp;rft.language=" + Server.UrlEncode(coins.Rft_language));
-                        if (coins.Rft_au != String.Empty)
+                        output.Append("&amp;rtf.identifier=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["PartPageUrl"], SegmentID)));
+                        if (!string.IsNullOrWhiteSpace(ArticleTitle)) output.Append("&amp;rft.title=" + Server.UrlEncode(ArticleTitle));
+                        if (!string.IsNullOrWhiteSpace(Language)) output.Append("&amp;rft.language=" + Server.UrlEncode(Language));
+                        foreach(Author author in Authors)
                         {
-                            String[] authors = coins.Rft_au.Split('|');
-                            foreach (String author in authors)
-                            {
-                                if (author != String.Empty) output.Append("&amp;rft.creator=" + Server.UrlEncode(author));
-                            }
+                            output.Append("&amp;rft.creator=" + Server.UrlEncode(author.FullName));
                         }
-                        if (coins.Rft_contributor != String.Empty)
-                        {
-                            if (coins.Rft_contributor.Split('|').Length == 1)
-                                output.Append("&amp;rft.contributor=" + Server.UrlEncode(coins.Rft_contributor));
-                            else
-                                output.Append("&amp;rft.contributor = Multiple institutions");
-                        }
-                        if (coins.Rft_subject != String.Empty)
-                        {
-                            String[] subjects = coins.Rft_subject.Split('|');
-                            foreach (String subject in subjects)
-                            {
-                                if (subject != String.Empty) output.Append("&amp;rft.subject=" + Server.UrlEncode(subject));
-                            }
+                        foreach(ItemKeyword keyword in ItemKeywords)
+                        { 
+                            output.Append("&amp;rft.subject=" + Server.UrlEncode(keyword.Keyword));
                         }
 
                         break;
-                }
-
-                // Add additional elements common to all formats
-                if (coins.Rft_date != String.Empty) output.Append("&amp;rft.date=" + Server.UrlEncode(coins.Rft_date.ToString()));
+                    }
             }
 
+            // Add additional elements common to all formats
+            if (Date != string.Empty) output.Append("&amp;rft.date=" + Server.UrlEncode(Date));
+
             return output.ToString();
+        }
+
+        private string GetGenre()
+        {
+            string genre = "unknown";
+            if (!string.IsNullOrWhiteSpace(Genre))
+            {
+                genre = Genre;
+            }
+            else
+            {
+                switch (MarcLeader.Substring(7, 1))
+                {
+                    case "s":
+                    case "b":
+                        genre = "journal"; break;
+                    case "a":
+                    case "m":
+                        genre = "book"; break;
+                }
+            }
+            return genre;
+        }
+
+        private string GetAuthorFirstName(Author author)
+        {
+            string firstName = string.Empty;
+            if (author.AuthorRoleID <= 1) 
+            {
+                if (author.FullName.Contains(",")) firstName = author.FullName.Split(',')[1];
+            }
+            return firstName;
+        }
+
+        private string GetAuthorLastName(Author author)
+        {
+            string lastName = string.Empty;
+            if (author.AuthorRoleID <= 1)
+            {
+                if (author.FullName.Contains(","))
+                    lastName = author.FullName.Split(',')[0];
+                else
+                    lastName = author.FullName;
+            }
+            return lastName;
+        }
+
+        private string GetAuthorCorpName(Author author)
+        {
+            string name = string.Empty;
+            if (author.AuthorRoleID > 1) name = author.FullName;
+            return name;
+        }
+
+        private string GetIdentifierValue(IdentifierTarget idTarget, string identifierName)
+        {
+            string identifierValue = string.Empty;
+
+            if (idTarget == IdentifierTarget.Title)
+            {
+                foreach (Title_Identifier titleIdentifier in TitleIdentifiers)
+                {
+                    if (titleIdentifier.IdentifierName == identifierName)
+                    {
+                        identifierValue = titleIdentifier.IdentifierValue;
+                        break;
+                    }
+                }
+            }
+            else if (idTarget == IdentifierTarget.Segment)
+            {
+                foreach (ItemIdentifier itemIdentifier in ItemIdentifiers)
+                {
+                    if (itemIdentifier.IdentifierName == identifierName)
+                    {
+                        identifierValue = itemIdentifier.IdentifierValue;
+                        break;
+                    }
+                }
+            }
+
+            return identifierValue;
+        }
+
+        private enum IdentifierTarget
+        {
+            Title,
+            Segment
         }
     }
 }
