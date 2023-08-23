@@ -1,4 +1,6 @@
-﻿using MOBOT.BHL.DataObjects;
+﻿using BHL.Search;
+using MOBOT.BHL.API.BHLApiDataObjects2;
+using MOBOT.BHL.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -71,8 +73,22 @@ namespace MOBOT.BHL.Web2
                     this.Page.Header.Controls.Add(htmlMetaTag);
                 }
 
+                // Set the data for the COinS output
                 COinS.SegmentID = SegmentID;
-                
+                COinS.ItemIdentifiers = BhlSegment.IdentifierList;
+                COinS.ItemKeywords = BhlSegment.KeywordList;
+                COinS.ItemAuthors = BhlSegment.AuthorList;
+                COinS.Genre = BhlSegment.GenreName;
+                COinS.ArticleTitle = BhlSegment.Title;
+                COinS.Title = BhlSegment.ContainerTitle;
+                COinS.Volume = BhlSegment.Volume;
+                COinS.Issue = BhlSegment.Issue;
+                COinS.StartPageNumber = BhlSegment.StartPageNumber;
+                COinS.EndPageNumber = BhlSegment.EndPageNumber;
+                COinS.PageRange = BhlSegment.PageRange;
+                COinS.Language = BhlSegment.LanguageCode;
+                COinS.Date = BhlSegment.Date;
+
                 // Set the Schema.org itemtype
                 switch (BhlSegment.GenreName)
                 {

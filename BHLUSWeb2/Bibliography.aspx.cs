@@ -192,7 +192,7 @@ namespace MOBOT.BHL.Web2
             COinS.TitleID = titleId;
             COinS.TitleIdentifiers = TitleIdentifiers;
             COinS.TitleKeywords = TitleKeywords;
-            COinS.Authors = authorList;
+            COinS.TitleAuthors = authorList;
             COinS.MarcLeader = BhlTitle.MARCLeader;
             COinS.Title = BhlTitle.FullTitle;
             COinS.Publisher = BhlTitle.Datafield_260_b;

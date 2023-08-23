@@ -189,7 +189,6 @@
     <None Include="dbo\Tables\TropicosNames.sql" />
     <None Include="dbo\Tables\DOI.sql" />
     <None Include="dbo\Tables\MarcDataField.sql" />
-    <None Include="dbo\Views\SegmentCOinSView.sql" />
     <None Include="annotation\Views\vwAnnotationConcept.sql" />
     <None Include="dbo\Views\vwMarcControl.sql" />
     <None Include="dbo\Views\vwTropicosNames.sql" />
@@ -197,12 +196,10 @@
     <None Include="annotation\Views\vwAnnotation.sql" />
     <None Include="dbo\Views\TitleAuthorView.sql" />
     <None Include="dbo\Views\vwMarcDataField.sql" />
-    <None Include="dbo\Views\ItemCOinSView.sql" />
     <None Include="dbo\Views\PageSummaryView.sql" />
     <None Include="Storage\BHLSearchCatalog.sql" />
     <None Include="FullTextIndexes.sql" />
     <None Include="Storage\ftfg_BHLSearchCatalog.sql" />
-    <None Include="dbo\Functions\fnCOinSGetFirstAuthorNameForSegment.sql" />
     <None Include="dbo\Functions\fnKeywordStringForTitle.sql" />
     <None Include="dbo\Functions\fnAuthorStringForTitle.sql" />
     <None Include="dbo\Functions\fnGetFullTextSearchString.sql" />
@@ -213,8 +210,6 @@
     <None Include="dbo\Functions\fnCollectionStringForTitleAndItem.sql" />
     <None Include="dbo\Functions\fnFilterString.sql" />
     <None Include="dbo\Functions\fnAssociationStringForTitle.sql" />
-    <None Include="dbo\Functions\fnCOinSAuthorStringForTitle.sql" />
-    <None Include="dbo\Functions\fnCOinSGetFirstAuthorNameForTitle.sql" />
     <None Include="dbo\Functions\fnGetPageCountForSegment.sql" />
     <None Include="dbo\Functions\fnContainsSuspectCharacter.sql" />
     <None Include="dbo\Functions\fnContainsDiacritic.sql" />
@@ -222,9 +217,7 @@
     <None Include="dbo\Functions\fnAuthorStringForSegment.sql" />
     <None Include="dbo\Functions\fnKeywordStringForSegment.sql" />
     <None Include="dbo\Functions\fnVariantStringForTitle.sql" />
-    <None Include="dbo\Functions\fnCOinSGetPageCountForItem.sql" />
     <None Include="dbo\Functions\fnGetIdentifierForSegment.sql" />
-    <None Include="dbo\Functions\fnCOinSAuthorStringForSegment.sql" />
     <None Include="dbo\Functions\fn_Split.sql" />
     <None Include="dbo\Functions\fnSplitLanguage.sql" />
     <None Include="dbo\Stored Procedures\TitleVariantDeleteAuto.sql" />
@@ -235,7 +228,6 @@
     <None Include="dbo\Stored Procedures\TitleVariantSelectByTitleID.sql" />
     <None Include="annotation\Stored Procedures\AnnotationSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\NamePageSelectByPageIDAndSource.sql" />
-    <None Include="dbo\Stored Procedures\SegmentCOinSSelectBySegmentID.sql" />
     <None Include="annotation\Stored Procedures\AnnotationSubjectUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\NameResolvedSearchForPagesDownload.sql" />
     <None Include="annotation\Stored Procedures\AnnotatedItemSelectAuto.sql" />
@@ -440,13 +432,11 @@
     <None Include="dbo\Stored Procedures\AuthorIdentifierUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\MarcSelectFullDetailsForMarcID.sql" />
     <None Include="dbo\Stored Procedures\TitleKeywordSelectAuto.sql" />
-    <None Include="dbo\Stored Procedures\ItemCOinSSelectByItemID.sql" />
     <None Include="annotation\Stored Procedures\AnnotatedPageTypeSelectByPageID.sql" />
     <None Include="dbo\Stored Procedures\SegmentClusterInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\AuthorInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\MarcSelectAssociationIdsByMarcDataFieldID.sql" />
     <None Include="dbo\Stored Procedures\TitleKeywordSelectByTitleID.sql" />
-    <None Include="dbo\Stored Procedures\ItemCOinSSelectByTitleID.sql" />
     <None Include="annotation\Stored Procedures\AnnotationPolygonDeleteByAnnotationID.sql" />
     <None Include="dbo\Stored Procedures\AuthorNameDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\MarcSelectTitleLanguagesByMarcID.sql" />

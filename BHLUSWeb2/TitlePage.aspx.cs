@@ -73,12 +73,6 @@ namespace MOBOT.BHL.Web2
 
                 Page.Title = string.Format(ConfigurationManager.AppSettings["PageTitle"], (String.IsNullOrEmpty(PublicationDetail.Volume) ? String.Empty : PublicationDetail.Volume + " - ") + PublicationDetail.ShortTitle);
 
-                // Set the appropriate ID for the COinS
-                if (PublicationDetail.Type == ItemType.Book)
-                    COinS.ItemID = PublicationDetail.ID;
-                else if (PublicationDetail.Type == ItemType.Segment)
-                    COinS.SegmentID = PublicationDetail.ID;
-
                 // Set Volume drop down list
                 List<DataObjects.Book> books = bhlProvider
                     .BookSelectByTitleId(PublicationDetail.TitleID)
@@ -707,7 +701,8 @@ Append("</a>").
                 publicationDetail.CopyrightStatus = book.CopyrightStatus;
 
                 // Get Authors
-                foreach (Author author in bhlProvider.AuthorSelectByTitleId(publicationDetail.TitleID))
+                List<Author> authorList = bhlProvider.AuthorSelectByTitleId(publicationDetail.TitleID);
+                foreach (Author author in authorList)
                 {
                     if (author.AuthorRoleID >= 1 && author.AuthorRoleID <= 3)
                     {
@@ -722,6 +717,15 @@ Append("</a>").
 
                 // Get the list of related Segments
                 PublicationDetail.Children = bhlProvider.SegmentSelectByBookID(PublicationDetail.ID);
+
+                // Set the data for the COinS output
+                COinS.ItemID = PublicationDetail.ID;
+                COinS.TitleAuthors = authorList;
+                //COinS.TitleKeywords = bhlProvider.TitleKeywordSelectByTitleID(pageSummary.TitleID);
+                COinS.Title = pageSummary.FullTitle;
+                COinS.Volume = pageSummary.Volume;
+                COinS.PageCount = bhlProvider.PageSelectCountByItemID(publicationDetail.ID);
+                COinS.Date = book.StartYear;
             }
             else if (publicationDetail.Type == ItemType.Segment)
             {
@@ -737,7 +741,8 @@ Append("</a>").
                 publicationDetail.CopyrightStatus = segment.RightsStatus;
 
                 // Get Authors
-                foreach (ItemAuthor author in bhlProvider.SegmentAuthorSelectBySegmentID(publicationDetail.ID))
+                List<ItemAuthor> authorList = bhlProvider.SegmentAuthorSelectBySegmentID(publicationDetail.ID);
+                foreach (ItemAuthor author in authorList)
                 {
                     publicationDetail.Authors.Add(new Author()
                     {
@@ -755,6 +760,21 @@ Append("</a>").
 
                 // Get the list of related Segments
                 PublicationDetail.Children = bhlProvider.SegmentSelectSiblingSegmentsBySegmentID(publicationDetail.ID);
+
+                // Set the data for the COinS output
+                COinS.SegmentID = PublicationDetail.ID;
+                COinS.ItemAuthors = authorList;
+                //COinS.ItemKeywords = bhlProvider.SegmentKeywordSelectBySegmentID(publicationDetail.ID);
+                COinS.Genre = segment.GenreName;
+                COinS.ArticleTitle = segment.Title;
+                COinS.Title = segment.ContainerTitle;
+                COinS.Volume = segment.Volume;
+                COinS.Issue = segment.Issue;
+                COinS.StartPageNumber = segment.StartPageNumber;
+                COinS.EndPageNumber = segment.EndPageNumber;
+                COinS.PageRange = segment.PageRange;
+                COinS.Language = segment.LanguageCode;
+                COinS.Date = segment.Date;
             }
 
             // Used to set up the bibliogaphy link
@@ -767,6 +787,17 @@ Append("</a>").
                 if (publicationDetail.Type == ItemType.Book) publicationDetail.PublicationDetails = title.PublicationDetails;
                 BibliographicLevel bibliographicLevel = bhlProvider.BibliographicLevelSelect(title.BibliographicLevelID ?? 0);
                 publicationDetail.TitleGenre = (bibliographicLevel == null) ? string.Empty : bibliographicLevel.BibliographicLevelLabel;
+
+                // Set the data for the COinS output
+                if (publicationDetail.Type == ItemType.Book)
+                {
+                    COinS.MarcLeader = title.MARCLeader;
+                    COinS.Publisher = title.Datafield_260_b;
+                    COinS.PublisherPlace = title.Datafield_260_a;
+                    COinS.Edition = title.EditionStatement;
+                    COinS.Language = title.LanguageCode;
+                    if (string.IsNullOrWhiteSpace(COinS.Date)) COinS.Date = title.StartYear.ToString();
+                }
             }
 
             // Get institutions
@@ -803,13 +834,18 @@ Append("</a>").
 
             if (publicationDetail.Type == ItemType.Book)
             {
-                List<Title_Identifier> dois = bhlProvider.Title_IdentifierSelectByNameAndID("DOI", publicationDetail.TitleID);
-                if (dois.Count > 0) doiName = dois[0].IdentifierValueDisplay;
+                List<Title_Identifier> identifierList = bhlProvider.Title_IdentifierSelectByTitleID(publicationDetail.TitleID);
+                foreach (Title_Identifier identifier in identifierList)
+                {
+                    if (identifier.IdentifierName == "DOI") { doiName = identifier.IdentifierValueDisplay; break; }
+                }
+                COinS.TitleIdentifiers = identifierList;
             }
             else if (publicationDetail.Type == ItemType.Segment)
             {
                 List<ItemIdentifier> dois = bhlProvider.ItemIdentifierSelectByNameAndID("DOI", publicationDetail.ID);
                 if (dois.Count > 0) doiName = dois[0].IdentifierValueDisplay;
+                COinS.ItemIdentifiers = dois;
             }
 
             return doiName;

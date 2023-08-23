@@ -16,7 +16,8 @@ namespace MOBOT.BHL.Web2
         public List<ItemIdentifier> ItemIdentifiers { get; set; } = new List<ItemIdentifier>();
         public List<TitleKeyword> TitleKeywords { get; set; } = new List<TitleKeyword>();
         public List<ItemKeyword> ItemKeywords { get; set; } = new List<ItemKeyword>();
-        public List<Author> Authors { get; set; }
+        public List<Author> TitleAuthors { get; set; }
+        public List<ItemAuthor> ItemAuthors { get; set; }
         public string Genre { get; set; }
         public string MarcLeader { get; set; }
         public string Title { get; set; }
@@ -102,15 +103,15 @@ namespace MOBOT.BHL.Web2
                         if (eissn != string.Empty) output.Append("&amp;rft.eissn=" + Server.UrlEncode(eissn));
                         if (isbn != string.Empty) output.Append("&amp;rft.isbn=" + Server.UrlEncode(isbn));
                         bool isFirst = true;
-                        foreach (Author author in Authors)
+                        foreach (Author author in TitleAuthors)
                         {
                             if (isFirst)
                             {
-                                string firstName = GetAuthorFirstName(author);
+                                string firstName = GetAuthorFirstName(author.FullName, author.AuthorRoleID);
                                 if (firstName != string.Empty) output.Append("&amp;rft.aufirst=" + Server.UrlEncode(firstName));
-                                string lastName = GetAuthorLastName(author);
+                                string lastName = GetAuthorLastName(author.FullName, author.AuthorRoleID);
                                 if (lastName != string.Empty) output.Append("&amp;rft.aulast=" + Server.UrlEncode(lastName));
-                                string corpName = GetAuthorCorpName(author);
+                                string corpName = GetAuthorCorpName(author.FullName, author.AuthorRoleID);
                                 if (corpName != string.Empty) output.Append("&amp;rft.aucorp=" + Server.UrlEncode(corpName));
                                 isFirst = false;
                             }
@@ -133,7 +134,7 @@ namespace MOBOT.BHL.Web2
                         if (ItemID != 0) output.Append("&amp;rft.identifier=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["ItemPageUrl"], ItemID)));
                         if (Title != string.Empty) output.Append("&amp;rft.title=" + Server.UrlEncode(Title));
                         if (Language != string.Empty) output.Append("&amp;rft.language=" + Server.UrlEncode(Language));
-                        foreach (Author author in Authors)
+                        foreach (Author author in TitleAuthors)
                         {
                             output.Append("&amp;rft.creator=" + Server.UrlEncode(author.FullName));
                         }
@@ -195,13 +196,13 @@ namespace MOBOT.BHL.Web2
                         if (issn != string.Empty) output.Append("&amp;rft.issn=" + Server.UrlEncode(issn));
                         if (eissn != string.Empty) output.Append("&amp;rft.eissn=" + Server.UrlEncode(eissn));
                         bool isFirst = true;
-                        foreach(Author author in Authors)
+                        foreach(ItemAuthor author in ItemAuthors)
                         {
                             if (isFirst)
                             {
-                                string firstName = GetAuthorFirstName(author);
+                                string firstName = GetAuthorFirstName(author.FullName);
                                 if (firstName != string.Empty) output.Append("&amp;rft.aufirst=" + Server.UrlEncode(firstName));
-                                string lastName = GetAuthorLastName(author);
+                                string lastName = GetAuthorLastName(author.FullName);
                                 if (lastName != string.Empty) output.Append("&amp;rft.aulast=" + Server.UrlEncode(lastName));
                                 isFirst = false;
                             }
@@ -215,10 +216,10 @@ namespace MOBOT.BHL.Web2
                         output.Append("&amp;rft_val_fmt=" + Server.UrlEncode("info:ofi/fmt:kev:mtx:dc"));
                         output.Append("&amp;rft.source=" + Server.UrlEncode("Biodiversity Heritage Library"));
                         output.Append("&amp;rft.rights=" + Server.UrlEncode("Creative Commons Attribution 3.0"));
-                        output.Append("&amp;rtf.identifier=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["PartPageUrl"], SegmentID)));
+                        output.Append("&amp;rft.identifier=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["PartPageUrl"], SegmentID)));
                         if (!string.IsNullOrWhiteSpace(ArticleTitle)) output.Append("&amp;rft.title=" + Server.UrlEncode(ArticleTitle));
                         if (!string.IsNullOrWhiteSpace(Language)) output.Append("&amp;rft.language=" + Server.UrlEncode(Language));
-                        foreach(Author author in Authors)
+                        foreach(ItemAuthor author in ItemAuthors)
                         {
                             output.Append("&amp;rft.creator=" + Server.UrlEncode(author.FullName));
                         }
@@ -256,36 +257,36 @@ namespace MOBOT.BHL.Web2
                         genre = "book"; break;
                 }
             }
-            return genre;
+            return genre.ToLower();
         }
 
-        private string GetAuthorFirstName(Author author)
+        private string GetAuthorFirstName(string fullName, int authorRoleID = 0)
         {
             string firstName = string.Empty;
-            if (author.AuthorRoleID <= 1) 
+            if (authorRoleID <= 1) 
             {
-                if (author.FullName.Contains(",")) firstName = author.FullName.Split(',')[1];
+                if (fullName.Contains(",")) firstName = fullName.Split(',')[1];
             }
             return firstName;
         }
 
-        private string GetAuthorLastName(Author author)
+        private string GetAuthorLastName(string fullName, int authorRoleID = 0)
         {
             string lastName = string.Empty;
-            if (author.AuthorRoleID <= 1)
+            if (authorRoleID <= 1)
             {
-                if (author.FullName.Contains(","))
-                    lastName = author.FullName.Split(',')[0];
+                if (fullName.Contains(","))
+                    lastName = fullName.Split(',')[0];
                 else
-                    lastName = author.FullName;
+                    lastName = fullName;
             }
             return lastName;
         }
 
-        private string GetAuthorCorpName(Author author)
+        private string GetAuthorCorpName(string fullName, int authorRoleID = 0)
         {
             string name = string.Empty;
-            if (author.AuthorRoleID > 1) name = author.FullName;
+            if (authorRoleID > 1) name = fullName;
             return name;
         }
 

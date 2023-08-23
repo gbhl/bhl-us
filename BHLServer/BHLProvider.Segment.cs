@@ -312,5 +312,10 @@ namespace MOBOT.BHL.Server
         {
             return new SegmentDAL().SegmentSelectPagination(null, null, segmentID);
         }
+
+        public List<ItemKeyword> SegmentKeywordSelectBySegmentID(int segmentID)
+        {
+            return new ItemKeywordDAL().ItemKeywordSelectBySegmentID(null, null, segmentID);
+        }
     }
 }
