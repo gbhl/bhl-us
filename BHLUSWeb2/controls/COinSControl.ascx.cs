@@ -245,7 +245,7 @@ namespace MOBOT.BHL.Web2
             {
                 genre = Genre;
             }
-            else
+            else if (MarcLeader != null)
             {
                 switch (MarcLeader.Substring(7, 1))
                 {
