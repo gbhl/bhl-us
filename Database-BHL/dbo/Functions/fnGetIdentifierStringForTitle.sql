@@ -15,6 +15,7 @@ BEGIN
 			FROM	dbo.Title_Identifier ti INNER JOIN dbo.Identifier i
 						ON ti.IdentifierID = i.IdentifierID
 						AND i.IdentifierType = @IdentifierType
+						AND i.Display = 1
 			WHERE	ti.TitleID = @TitleID
 			) X
 	ORDER BY IdentifierValue ASC
