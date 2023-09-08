@@ -35,7 +35,7 @@ namespace BHL.TextImportUtility
             }
             else
             {
-                throw new Exception(string.Format("Unknown file format for {0}", savedFileName));
+                fileFormat = string.Empty;  // unknown
             }
 
             return fileFormat;

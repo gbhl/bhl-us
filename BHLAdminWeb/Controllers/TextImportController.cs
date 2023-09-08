@@ -182,7 +182,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             try
             {
                 ServicePointManager.ServerCertificateValidationCallback += sslFailureCallback;
-                pageText = new System.Net.WebClient().DownloadString(textLink).Replace("\n", "<br/>");
+                pageText = HttpUtility.HtmlEncode(new WebClient().DownloadString(textLink)).Replace("\n", "<br/>");
             }
             finally
             {
@@ -197,7 +197,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [HttpGet]
         public ActionResult GetNewPageText(string fileName, string seqNo)
         {
-            string pageText = new TextImportTool().GetText(Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], fileName), seqNo).Replace("\n", "<br/>");
+            string pageText = HttpUtility.HtmlEncode(new TextImportTool().GetText(Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], fileName), seqNo)).Replace("\n", "<br/>");
             return Content(pageText);
         }
     }
