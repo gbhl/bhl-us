@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Net.Mail;
+using System.Net.Http;
 using System.Text;
 
 namespace MOBOT.BHL.BHLOcrRefresh
@@ -18,8 +18,8 @@ namespace MOBOT.BHL.BHLOcrRefresh
         // i.e. you can copy the code directly into another class without
         // needing to edit the code.
 
-        private ConfigParms configParms = new ConfigParms();
-        private List<string> errorMessages = new List<string>();
+        private ConfigParms configParms = new();
+        private List<string> errorMessages = new();
 
         public object ItemsClientclient { get; private set; }
 
@@ -30,37 +30,37 @@ namespace MOBOT.BHL.BHLOcrRefresh
 
             // Read additional app settings from the command line
             // Note: Command line arguments override configuration file settings
-            if (!this.ReadCommandLineArguments()) return;
+            if (!ReadCommandLineArguments()) return;
 
             // validate config values
-            if (!this.ValidateConfiguration()) return;
+            if (!ValidateConfiguration()) return;
 
             string itemID = string.Empty;
             try
             {
-                itemID = this.GetNextJobId();
+                itemID = GetNextJobId();
                 while (!string.IsNullOrWhiteSpace(itemID))
                 {
-                    string status = this.GetOcrForItem(itemID);
+                    string status = GetOcrForItem(itemID);
                     new ItemsClient(configParms.BHLWSEndpoint).DeleteItemNames(Convert.ToInt32(itemID)); // Clear names and reset last name lookup date
                     new PageTextLogsClient(configParms.BHLWSEndpoint).InsertPageTextLog(new PageTextLogModel {
                         Itemid = Convert.ToInt32(itemID),
                         Textsource = "OCR", 
                         Userid = 1
                     }); // Log the new source of the page text
-                    this.LogMessage(status);
-                    this.MarkJobComplete(itemID, status);
-                    itemID = this.GetNextJobId();
+                    LogMessage(status);
+                    MarkJobComplete(itemID, status);
+                    itemID = GetNextJobId();
                 }
             }
             catch(Exception ex)
             {
                 LogMessage("Error processing Ocr job", ex);
-                if (!string.IsNullOrWhiteSpace(itemID)) this.MarkJobError(itemID, ex.Message + "\n\r" + ex.StackTrace);
+                if (!string.IsNullOrWhiteSpace(itemID)) MarkJobError(itemID, ex.Message + "\n\r" + ex.StackTrace);
             }
 
             // Report the results of pdf generation
-            this.ProcessResults();
+            ProcessResults();
         }
 
         #region Job File Methods
@@ -126,23 +126,23 @@ namespace MOBOT.BHL.BHLOcrRefresh
 
             try
             {
-                string barcode = this.GetBarcodeForItem(itemID);
+                string barcode = GetBarcodeForItem(itemID);
 
                 // Create a temp directory for processing this item
                 tempFolder = string.Format("{0}{1}", configParms.OcrJobTempPath, barcode);
                 if (!Directory.Exists(tempFolder)) Directory.CreateDirectory(tempFolder);
 
                 // Get the DJVU from IA
-                string djvu = this.GetDJVU(itemID);
+                string djvu = GetDJVU(itemID);
 
                 // Convert the DJVU into XML files (one per page)
-                this.ConvertDjvuToXml(djvu, tempFolder, barcode);
+                ConvertDjvuToXml(djvu, tempFolder, barcode);
 
                 // Convert the OCR XML files to plain text
-                this.TransformXmlToText(tempFolder);
+                TransformXmlToText(tempFolder);
 
                 // Move the OCR files to their final destination
-                status = this.MoveOcrToProduction(itemID, barcode, tempFolder);
+                status = MoveOcrToProduction(itemID, barcode, tempFolder);
             }
             finally
             {
@@ -177,7 +177,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
             }
             catch (Exception e)
             {
-                this.LogMessage("Error getting barcode for item " + itemID, e);
+                LogMessage("Error getting barcode for item " + itemID, e);
             }
 
 
@@ -198,27 +198,23 @@ namespace MOBOT.BHL.BHLOcrRefresh
             {
                 Item item = new ItemsClient(configParms.BHLWSEndpoint).GetItemFilenames(Convert.ToInt32(itemID));
 
-                String iaUrl = string.Format("https://www.archive.org/download/{0}/{1}", item.BarCode, item.DjvuFilename);
+                string iaUrl = string.Format("https://www.archive.org/download/{0}/{1}", item.BarCode, item.DjvuFilename);
 
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(iaUrl);
                 req.Method = "GET";
                 req.Timeout = 15000;
                 HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
-                reader = new StreamReader((System.IO.Stream)resp.GetResponseStream());
+                reader = new StreamReader(resp.GetResponseStream());
 
                 djvu = reader.ReadToEnd();
             }
             catch (Exception e)
             {
-                this.LogMessage("Error getting DJVU for item " + itemID, e);
+                LogMessage("Error getting DJVU for item " + itemID, e);
             }
             finally
             {
-                if (reader != null)
-                {
-                    reader.Dispose();
-                    reader = null;
-                }
+                reader?.Dispose();
             }
 
             return djvu;
@@ -234,7 +230,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
         {
             try
             {
-                StringBuilder sb = new StringBuilder(djvu);
+                StringBuilder sb = new(djvu);
 
                 // Shred the response into multiple "pages" (files) within the new directory
                 int startPosition = sb.ToString().IndexOf("<OBJECT");
@@ -244,10 +240,10 @@ namespace MOBOT.BHL.BHLOcrRefresh
                 {
                     sb.Remove(0, startPosition);
                     endPosition = sb.ToString().IndexOf("<MAP");
-                    String pageText = sb.ToString().Substring(0, endPosition);
+                    string pageText = sb.ToString().Substring(0, endPosition);
                     sb.Remove(0, endPosition);
 
-                    String pageFile = string.Format("{0}\\{1}_{2}.xml", tempFolder, barcode, Convert.ToString(counter).PadLeft(4, '0'));
+                    string pageFile = string.Format("{0}\\{1}_{2}.xml", tempFolder, barcode, Convert.ToString(counter).PadLeft(4, '0'));
                     if (File.Exists(pageFile)) File.Delete(pageFile);
                     File.WriteAllText(pageFile, pageText);
 
@@ -257,7 +253,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
             }
             catch (Exception e)
             {
-                this.LogMessage("Error converting DJVU to XML for " + barcode, e);
+                LogMessage("Error converting DJVU to XML for " + barcode, e);
             }
         }
 
@@ -270,12 +266,12 @@ namespace MOBOT.BHL.BHLOcrRefresh
         {
             try
             {
-                String[] xmlFiles = Directory.GetFiles(tempFolder, "*.xml");
+                string[] xmlFiles = Directory.GetFiles(tempFolder, "*.xml");
                 foreach (string xmlFile in xmlFiles)
                 {
                     if (File.Exists(xmlFile + ".txt")) File.Delete(xmlFile + ".txt");
 
-                    StringBuilder pageText = new StringBuilder();
+                    StringBuilder pageText = new();
 
                     string ocr = File.ReadAllText(xmlFile);
                     System.Xml.Linq.XDocument ocrXml = System.Xml.Linq.XDocument.Parse(ocr);
@@ -294,7 +290,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
             }
             catch (Exception e)
             {
-                this.LogMessage("Error transforming XML to text", e);
+                LogMessage("Error transforming XML to text", e);
             }
 
         }
@@ -308,9 +304,9 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// <returns></returns>
         private string MoveOcrToProduction(string itemID, string barcode, string tempFolder)
         {
-            string status = string.Empty;
+            string status;
 
-            string path = this.GetFilePath(itemID, barcode);
+            string path = GetFilePath(itemID, barcode);
             if (!string.IsNullOrWhiteSpace(path))
             {
                 string[] files = Directory.GetFiles(tempFolder);
@@ -336,7 +332,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// <returns></returns>
         private string GetFilePath(string itemID, string barcode)
         {
-            string path = string.Empty;
+            string path;
 
             Item item = new ItemsClient(configParms.BHLWSEndpoint).GetItem(Convert.ToInt32(itemID));
             Vault vault = new VaultsClient(configParms.BHLWSEndpoint).GetVault((int)item.VaultID);
@@ -352,11 +348,11 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// in an instance of the ConfigParms class.
         /// </summary>
         /// <returns>True if the arguments were in a valid format, false otherwise</returns>
-        private bool ReadCommandLineArguments()
+        private static bool ReadCommandLineArguments()
         {
             bool returnValue = true;
 
-            string[] args = System.Environment.GetCommandLineArgs();
+            string[] args = Environment.GetCommandLineArgs();
             for (int x = 0; x < args.Length; x++)
             {
                 // Read any command line arguments here
@@ -372,11 +368,8 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// Verify that the config file and command line arguments are valid
         /// </summary>
         /// <returns>True if arguments valid, false otherwise</returns>
-        private bool ValidateConfiguration()
+        private static bool ValidateConfiguration()
         {
-
-
-
             return true;
         }
 
@@ -397,10 +390,10 @@ namespace MOBOT.BHL.BHLOcrRefresh
                 {
                     string thisComputer = Environment.MachineName;
                     string subject = "BHLOcrRefresh: Process on " + thisComputer + " completed with errors.";
-                    this.LogMessage("Sending Email....");
-                    string message = this.GetCompletionEmailBody();
-                    this.LogMessage(message);
-                    this.SendEmail(subject, message, configParms.EmailFromAddress, configParms.EmailToAddress, "");
+                    LogMessage("Sending Email....");
+                    string message = GetCompletionEmailBody();
+                    LogMessage(message);
+                    SendEmail(subject, message, configParms.EmailFromAddress, configParms.EmailToAddress, "");
                 }
             }
             catch (Exception ex)
@@ -413,17 +406,17 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// Constructs the body of an email message to be sent
         /// </summary>
         /// <returns>Body of email message to be sent</returns>
-        private String GetCompletionEmailBody()
+        private string GetCompletionEmailBody()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             const string endOfLine = "\r\n";
 
             string thisComputer = Environment.MachineName;
 
             sb.Append("BHLOcrRefresh: Process on " + thisComputer + " complete." + endOfLine);
-            if (this.errorMessages.Count > 0)
+            if (errorMessages.Count > 0)
             {
-                sb.Append(endOfLine + this.errorMessages.Count.ToString() + " Errors Occurred" + endOfLine + "See the log file for details" + endOfLine);
+                sb.Append(endOfLine + errorMessages.Count.ToString() + " Errors Occurred" + endOfLine + "See the log file for details" + endOfLine);
                 foreach (string message in errorMessages)
                 {
                     sb.Append(message + endOfLine);
@@ -437,30 +430,31 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// Send the specified email message 
         /// </summary>
         /// <param name="message">Body of the message to be sent</param>
-        private void SendEmail(String subject, String message, String fromAddress,
-            String toAddress, String ccAddresses)
+        private void SendEmail(string subject, string message, string fromAddress, string toAddress, string ccAddresses)
         {
-            MailRequestModel mailRequest = new MailRequestModel();
-            mailRequest.Subject = subject;
-            mailRequest.Body = message;
-            mailRequest.From = fromAddress;
+            MailRequestModel mailRequest = new()
+            {
+                Subject = subject,
+                Body = message,
+                From = fromAddress
+            };
 
-            List<string> recipients = new List<string>();
+            List<string> recipients = new();
             foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
             mailRequest.To = recipients;
 
-            if (ccAddresses != String.Empty)
+            if (ccAddresses != string.Empty)
             {
-                List<string> ccs = new List<string>();
+                List<string> ccs = new();
                 foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
                 mailRequest.Cc = ccs;
             }
 
-            EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+            EmailClient restClient = new(configParms.BHLWSEndpoint);
             restClient.SendEmail(mailRequest);
         }
 
-        private void LogMessage(string message)
+        private static void LogMessage(string message)
         {
             if (log.IsInfoEnabled) log.Info(message);
             Console.Write(message + "\r\n");
