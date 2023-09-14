@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Net.Http;
 using System.Text;
+using System.Xml;
 
 namespace MOBOT.BHL.BHLOcrRefresh
 {
@@ -133,13 +133,10 @@ namespace MOBOT.BHL.BHLOcrRefresh
                 if (!Directory.Exists(tempFolder)) Directory.CreateDirectory(tempFolder);
 
                 // Get the DJVU from IA
-                string djvu = GetDJVU(itemID);
+                Stream djvu = GetDJVU(itemID);
 
-                // Convert the DJVU into XML files (one per page)
-                ConvertDjvuToXml(djvu, tempFolder, barcode);
-
-                // Convert the OCR XML files to plain text
-                TransformXmlToText(tempFolder);
+                // Convert the DJVU into TXT files (one per page)
+                ConvertDjvuToText(djvu, tempFolder, barcode, itemID);
 
                 // Move the OCR files to their final destination
                 status = MoveOcrToProduction(itemID, barcode, tempFolder);
@@ -178,6 +175,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
             catch (Exception e)
             {
                 LogMessage("Error getting barcode for item " + itemID, e);
+                if (!string.IsNullOrWhiteSpace(itemID)) MarkJobError(itemID, e.Message + "\n\r" + e.StackTrace);
             }
 
 
@@ -189,10 +187,10 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// </summary>
         /// <param name="barcode"></param>
         /// <returns></returns>
-        private string GetDJVU(string itemID)
+        private Stream GetDJVU(string itemID)
         {
             StreamReader reader = null;
-            string djvu = string.Empty;
+            Stream djvu = Stream.Null;
 
             try
             {
@@ -204,13 +202,12 @@ namespace MOBOT.BHL.BHLOcrRefresh
                 req.Method = "GET";
                 req.Timeout = 15000;
                 HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
-                reader = new StreamReader(resp.GetResponseStream());
-
-                djvu = reader.ReadToEnd();
+                djvu = resp.GetResponseStream();
             }
             catch (Exception e)
             {
                 LogMessage("Error getting DJVU for item " + itemID, e);
+                if (!string.IsNullOrWhiteSpace(itemID)) MarkJobError(itemID, e.Message + "\n\r" + e.StackTrace);
             }
             finally
             {
@@ -221,78 +218,45 @@ namespace MOBOT.BHL.BHLOcrRefresh
         }
 
         /// <summary>
-        /// Convert the specified DJVU string to individual XML files (one per page)
+        /// Convert the specified DJVU stream to individual TXT files (one per page)
         /// </summary>
         /// <param name="djvu"></param>
         /// <param name="tempFolder"></param>
         /// <param name="barcode"></param>
-        private void ConvertDjvuToXml(string djvu, string tempFolder, string barcode)
+        private void ConvertDjvuToText(Stream djvu, string tempFolder, string barcode, string itemID)
         {
             try
             {
-                StringBuilder sb = new(djvu);
-
-                // Shred the response into multiple "pages" (files) within the new directory
-                int startPosition = sb.ToString().IndexOf("<OBJECT");
-                int endPosition = sb.Length - 1;
+                StringBuilder pageText = new StringBuilder();
+                XmlReaderSettings settings = new() { Async = true, DtdProcessing = DtdProcessing.Parse };
                 int counter = 1;
-                while (startPosition != -1)
+                using (XmlReader reader = XmlReader.Create(djvu, settings))
                 {
-                    sb.Remove(0, startPosition);
-                    endPosition = sb.ToString().IndexOf("<MAP");
-                    string pageText = sb.ToString().Substring(0, endPosition);
-                    sb.Remove(0, endPosition);
-
-                    string pageFile = string.Format("{0}\\{1}_{2}.xml", tempFolder, barcode, Convert.ToString(counter).PadLeft(4, '0'));
-                    if (File.Exists(pageFile)) File.Delete(pageFile);
-                    File.WriteAllText(pageFile, pageText);
-
-                    startPosition = sb.ToString().IndexOf("<OBJECT");
-                    counter++;
-                }
-            }
-            catch (Exception e)
-            {
-                LogMessage("Error converting DJVU to XML for " + barcode, e);
-            }
-        }
-
-        /// <summary>
-        /// Read the XML files in the new directory, apply an XSL transform to them,
-        /// and write them back into TXT files
-        /// </summary>
-        /// <param name="tempFolder"></param>
-        private void TransformXmlToText(string tempFolder)
-        {
-            try
-            {
-                string[] xmlFiles = Directory.GetFiles(tempFolder, "*.xml");
-                foreach (string xmlFile in xmlFiles)
-                {
-                    if (File.Exists(xmlFile + ".txt")) File.Delete(xmlFile + ".txt");
-
-                    StringBuilder pageText = new();
-
-                    string ocr = File.ReadAllText(xmlFile);
-                    System.Xml.Linq.XDocument ocrXml = System.Xml.Linq.XDocument.Parse(ocr);
-
-                    IEnumerable<System.Xml.Linq.XElement> lines = ocrXml.Root.Descendants("LINE");
-                    foreach (System.Xml.Linq.XElement line in lines)
+                    bool wordStarted = false;
+                    while (reader.Read())
                     {
-                        IEnumerable<System.Xml.Linq.XElement> words = line.Descendants("WORD");
-                        foreach (System.Xml.Linq.XElement word in words) pageText.Append(word.Value + " ");
-                        pageText.AppendLine();
+                        if (reader.NodeType == XmlNodeType.Element && reader.Name == "OBJECT") pageText.Clear();
+                        if (reader.NodeType == XmlNodeType.Element && reader.Name == "WORD") wordStarted = true;
+                        if (reader.NodeType == XmlNodeType.Text && wordStarted) pageText.Append(reader.Value + " ");
+                        if (reader.NodeType == XmlNodeType.EndElement)
+                        {
+                            if (reader.Name == "WORD") wordStarted = false;
+                            if (reader.Name == "LINE") pageText.AppendLine();
+                            if (reader.Name == "PARAGRAPH") pageText.AppendLine();
+                            if (reader.Name == "OBJECT")
+                            {
+                                File.WriteAllText(string.Format("{0}\\{1}_{2}.txt", tempFolder, barcode, Convert.ToString(counter).PadLeft(4, '0')), pageText.ToString());
+                                counter++;
+                            }
+                        }
                     }
-
-                    File.WriteAllText(xmlFile.Replace(".xml", ".txt"), pageText.ToString());
-                    File.Delete(xmlFile);
                 }
             }
             catch (Exception e)
             {
-                LogMessage("Error transforming XML to text", e);
+                LogMessage("Error converting DJVU to TXT for " + barcode, e);
+                if (!string.IsNullOrWhiteSpace(itemID)) MarkJobError(itemID, e.Message + "\n\r" + e.StackTrace);
             }
-
         }
 
         /// <summary>
