@@ -41,15 +41,24 @@ namespace MOBOT.BHL.BHLOcrRefresh
                 itemID = GetNextJobId();
                 while (!string.IsNullOrWhiteSpace(itemID))
                 {
-                    string status = GetOcrForItem(itemID);
-                    new ItemsClient(configParms.BHLWSEndpoint).DeleteItemNames(Convert.ToInt32(itemID)); // Clear names and reset last name lookup date
-                    new PageTextLogsClient(configParms.BHLWSEndpoint).InsertPageTextLog(new PageTextLogModel {
-                        Itemid = Convert.ToInt32(itemID),
-                        Textsource = "OCR", 
-                        Userid = 1
-                    }); // Log the new source of the page text
-                    LogMessage(status);
-                    MarkJobComplete(itemID, status);
+                    try
+                    {
+                        string status = GetOcrForItem(itemID);
+                        new ItemsClient(configParms.BHLWSEndpoint).DeleteItemNames(Convert.ToInt32(itemID)); // Clear names and reset last name lookup date
+                        new PageTextLogsClient(configParms.BHLWSEndpoint).InsertPageTextLog(new PageTextLogModel
+                        {
+                            Itemid = Convert.ToInt32(itemID),
+                            Textsource = "OCR",
+                            Userid = 1
+                        }); // Log the new source of the page text
+                        LogMessage(status);
+                        MarkJobComplete(itemID, status);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogMessage("Error processing Ocr job", ex);
+                        if (!string.IsNullOrWhiteSpace(itemID)) MarkJobError(itemID, ex.Message + "\n\r" + ex.StackTrace);
+                    }
                     itemID = GetNextJobId();
                 }
             }
@@ -73,8 +82,12 @@ namespace MOBOT.BHL.BHLOcrRefresh
             string[] jobs = Directory.GetFiles(configParms.OcrJobNewPath);
             if (jobs.Length > 0)
             {
-                jobId = new FileInfo(jobs[0]).Name;
-                string newPath = jobs[0];
+                // Randomly pick the next job to process.
+                // This should help avoid collisions when multiple instances of this process are running.
+                int jobIndex = new Random().Next(jobs.Length);
+
+                jobId = new FileInfo(jobs[jobIndex]).Name;
+                string newPath = jobs[jobIndex];
                 string processingPath = string.Format("{0}{1}", configParms.OcrJobProcessingPath, jobId);
 
                 if (!File.Exists(processingPath))
@@ -89,7 +102,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
                 }
 
                 // Remove the "new" job file
-                File.Delete(newPath);
+                if (File.Exists(newPath)) File.Delete(newPath);
             }
 
             return jobId;
@@ -103,7 +116,8 @@ namespace MOBOT.BHL.BHLOcrRefresh
         private void MarkJobComplete(string jobId, string status)
         {
             File.WriteAllText(string.Format("{0}{1}", configParms.OcrJobCompletePath, jobId), status);
-            File.Delete(string.Format("{0}{1}", configParms.OcrJobProcessingPath, jobId));
+            string processingFile = string.Format("{0}{1}", configParms.OcrJobProcessingPath, jobId);
+            if (File.Exists(processingFile)) File.Delete(processingFile);
         }
 
         /// <summary>
@@ -114,7 +128,8 @@ namespace MOBOT.BHL.BHLOcrRefresh
         private void MarkJobError(string jobId, string error)
         {
             File.WriteAllText(string.Format("{0}{1}", configParms.OcrJobErrorPath, jobId), error);
-            File.Delete(string.Format("{0}{1}", configParms.OcrJobProcessingPath, jobId));
+            string processingFile = string.Format("{0}{1}", configParms.OcrJobProcessingPath, jobId);
+            if (File.Exists(processingFile)) File.Delete(processingFile);
         }
 
         #endregion Job File Methods
