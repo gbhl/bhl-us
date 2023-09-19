@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace BHL.TextImportUtility
 {
@@ -49,16 +50,16 @@ namespace BHL.TextImportUtility
             switch (fileFormat)
             {
                 case "ftp":
-                    fileContents = ParseFTP(fileName);
+                    fileContents = ParseFTP(fileName, false);
                     break;
                 case "dv":
-                    fileContents = ParseDV(fileName);
+                    fileContents = ParseDV(fileName, false);
                     break;
                 case "stc":
-                    fileContents = ParseSTC(fileName);
+                    fileContents = ParseSTC(fileName, false);
                     break;
                 case "bhlcsv":
-                    fileContents = ParseBHLCSV(fileName);
+                    fileContents = ParseBHLCSV(fileName, false);
                     break;
             }
 
@@ -77,16 +78,16 @@ namespace BHL.TextImportUtility
             switch (fileFormat)
             {
                 case "ftp":
-                    fileContents = ParseFTP(fileName);
+                    fileContents = ParseFTP(fileName, true);
                     break;
                 case "dv":
-                    fileContents = ParseDV(fileName);
+                    fileContents = ParseDV(fileName, true);
                     break;
                 case "stc":
-                    fileContents = ParseSTC(fileName);
+                    fileContents = ParseSTC(fileName, true);
                     break;
                 case "bhlcsv":
-                    fileContents = ParseBHLCSV(fileName);
+                    fileContents = ParseBHLCSV(fileName, true);
                     break;
             }
 
@@ -109,16 +110,16 @@ namespace BHL.TextImportUtility
             switch (fileFormat)
             {
                 case "ftp":
-                    fileContents = ParseFTP(fileName);
+                    fileContents = ParseFTP(fileName, false);
                     break;
                 case "dv":
-                    fileContents = ParseDV(fileName);
+                    fileContents = ParseDV(fileName, false);
                     break;
                 case "stc":
-                    fileContents = ParseSTC(fileName);
+                    fileContents = ParseSTC(fileName, false);
                     break;
                 case "bhlcsv":
-                    fileContents = ParseBHLCSV(fileName);
+                    fileContents = ParseBHLCSV(fileName, false);
                     break;
             }
 
@@ -130,7 +131,7 @@ namespace BHL.TextImportUtility
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        private Dictionary<int, string> ParseFTP(string fileName)
+        private Dictionary<int, string> ParseFTP(string fileName, bool clean)
         {
             Dictionary<int, string> contents = new Dictionary<int, string>();
 
@@ -143,7 +144,11 @@ namespace BHL.TextImportUtility
                 int pageEnd = fileContents.IndexOf("</div>", pageStart);
 
                 string pageText = fileContents.Substring(pageStart, pageEnd - pageStart);
-                contents.Add(sequenceNumber++, pageText.Replace("<br>", "").Replace("<br/>", "").Replace("<p>", "").Replace("</p>", "").Replace("&amp;", "&"));
+
+                pageText = pageText.Replace("<br>", "").Replace("<br/>", "").Replace("<p>", "").Replace("</p>", "").Replace("&amp;", "&");
+                if (clean) pageText = NormalizeMarkup(pageText);
+
+                contents.Add(sequenceNumber++, pageText);
                 fileContents = fileContents.Substring(pageEnd + "</div>".Length);
             }
 
@@ -155,7 +160,7 @@ namespace BHL.TextImportUtility
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        private Dictionary<int, string> ParseDV(string fileName)
+        private Dictionary<int, string> ParseDV(string fileName, bool clean)
         {
             Dictionary<int, string> contents = new Dictionary<int, string>();
 
@@ -191,7 +196,9 @@ namespace BHL.TextImportUtility
 
                 foreach (var record in records)
                 {
-                    contents.Add(record.sequenceNumber, record.occurrenceRemarks.Replace("\\n", "\n"));
+                    string pageText = record.occurrenceRemarks.Replace("\\n", "\n");
+                    if (clean) pageText = NormalizeMarkup(pageText);
+                    contents.Add(record.sequenceNumber, pageText);
                 }
             }
 
@@ -203,7 +210,7 @@ namespace BHL.TextImportUtility
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        private Dictionary<int, string> ParseSTC(string fileName)
+        private Dictionary<int, string> ParseSTC(string fileName, bool clean)
         {
             Dictionary<int, string> contents = new Dictionary<int, string>();
 
@@ -226,7 +233,9 @@ namespace BHL.TextImportUtility
                 int sequenceNumber = 1;
                 foreach (var record in records)
                 {
-                    contents.Add(sequenceNumber++, record.tl1_text);
+                    string pageText = record.tl1_text;
+                    if (clean) pageText = NormalizeMarkup(pageText);
+                    contents.Add(sequenceNumber++, pageText);
                 }
             }
 
@@ -238,7 +247,7 @@ namespace BHL.TextImportUtility
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        private Dictionary<int, string> ParseBHLCSV(string fileName)
+        private Dictionary<int, string> ParseBHLCSV(string fileName, bool clean)
         {
             Dictionary<int, string> contents = new Dictionary<int, string>();
 
@@ -295,11 +304,170 @@ namespace BHL.TextImportUtility
                         sequenceOrder = Convert.ToInt32(record.SequenceNumber);
                     }
 
-                    if (sequenceOrder != null) contents.Add((int)sequenceOrder, record.Text);
+                    if (sequenceOrder != null)
+                    {
+                        string pageText = record.Text;
+                        if (clean) pageText = NormalizeMarkup(pageText);
+                        contents.Add((int)sequenceOrder, pageText);
+                    }
                 }
             }
 
             return contents;
+        }
+
+        /// <summary>
+        /// Replace supported HTML markup in the specified string with BHL-approved markup, and remove any unsupported markup
+        /// </summary>
+        /// <param name="fileContents"></param>
+        /// <returns></returns>
+        private string NormalizeMarkup(string fileContents)
+        {
+            /*
+            Additions 
+                Replace 
+                    <add>some text</add>
+                    <span class="addition">some text</span>
+                with 
+                    [some text]
+            */
+            fileContents = fileContents.Replace("<add>", "[").Replace("</add>", "]");
+            fileContents = ReplaceMarkup(fileContents, "<\\s*span[^>]*class=[\"']addition[\"'][^>]*>([\\S\\s]*?)<\\s*\\/\\s*span>", @"[$1]");
+
+            /*
+            Footnotes
+                Replace 
+                    <footnote>some text</footnote>
+                    <span class="footnote-body">some text</span>
+                with 
+                    [[footnote]]some text[[/footnote]]
+            */
+            fileContents = fileContents.Replace("<footnote>", "[[footnote]]").Replace("</footnote>", "[[/footnote]]");
+            fileContents = ReplaceMarkup(fileContents, "<\\s*span[^>]*class=[\"']footnote-body[\"'][^>]*>([\\S\\s]*?)<\\s*\\/\\s*span>", @"[[footnote]]$1[[/footnote]]");
+
+            /*
+            Illegible/Unclear text
+                Replace 
+                    <unclear>some text</unclear>
+                    <span class="unclear">some text</span>
+                with 
+                    [[unclear]]some text[[/unclear]]
+            */
+            fileContents = fileContents.Replace("<unclear>", "[[unclear]]").Replace("</unclear>", "[[/unclear]]");
+            fileContents = ReplaceMarkup(fileContents, "<\\s*span[^>]*class=[\"']unclear[\"'][^>]*>([\\S\\s]*?)<\\s*\\/\\s*span>", @"[[unclear]]$1[[/unclear]]");
+
+            /*
+            Images
+                Replace 
+                    <figure>some text</figure>
+                    <span>some text{Figure}</span>
+                    <img alt="some text"/>                
+                    <img/>
+                with 
+                    [[illustration]]some text[[/illustration]]
+                    [[illustration]][[/illustration]]
+            */
+            fileContents = fileContents.Replace("<figure>", "[[illustration]]").Replace("</figure>", "[[/illustration]]");
+            fileContents = ReplaceMarkup(fileContents, "<\\s*span[\\S\\s]*?>([\\S\\s]*?){[Ff]igure}<\\s*\\/\\s*span>", "[[illustration]]$1[[/illustration]]");
+
+            Regex regex = new Regex("<\\s*img[^>]*[\\/]?[^>]*>", RegexOptions.Multiline);
+            MatchCollection imgMatches = regex.Matches(fileContents);
+            foreach (Match imgMatch in imgMatches)
+            {
+                string altText = string.Empty;
+                string img = imgMatch.ToString();
+                regex = new Regex("(?:alt=)[\"'](.*?)[\"']", RegexOptions.Multiline);
+                Match altTextMatch = regex.Match(img);
+                if (altTextMatch != null) altText = altTextMatch.Groups[1].Value;
+                string replacement = string.Format("[[illustration]]{0}[[/illustration]]", altText);
+                fileContents = fileContents.Replace(img, replacement);
+            }
+
+            /*
+            Marginalia
+                Replace 
+                    <margin>some text</margin>
+                    <span class="marginalia">some text</span>
+                with 
+                    [[margin]]some text[[/margin]]
+            */
+            fileContents = fileContents.Replace("<margin>", "[[margin]]").Replace("</margin>", "[[/margin]]");
+            fileContents = ReplaceMarkup(fileContents, "<\\s*span[^>]*class=[\"']marginalia[\"'][^>]*>([\\S\\s]*?)<\\s*\\/\\s*span>", @"[[margin]]$1[[/margin]]");
+
+            /*
+            Missing text
+                Replace 
+                    <gap>some text</gap>
+                    <span class="gap">some text</span>
+                with 
+                    [[loss]]some text[[/loss]]
+            */
+            fileContents = fileContents.Replace("<gap>", "[[loss]]").Replace("</gap>", "[[/loss]]");
+            fileContents = ReplaceMarkup(fileContents, "<\\s*span[^>]*class=[\"']gap[\"'][^>]*>([\\S\\s]*?)<\\s*\\/\\s*span>", @"[[loss]]$1[[/loss]]");
+
+            /*
+            Strikethrough
+                Replace 
+                    <strike>some text</strike>
+                    <s>some text</s>
+                with 
+                    [[strike]]some text[[/strike]]
+            */
+            fileContents = fileContents.Replace("<strike>", "[[strike]]").Replace("</strike>", "[[/strike]]");
+            fileContents = fileContents.Replace("<s>", "[[strike]]").Replace("</s>", "[[/strike]]");
+
+            /*
+            Underline
+                Replace 
+                    <u>some text</u>
+                with 
+                    [[underline]]some text[[/underline]]
+            */
+            fileContents = fileContents.Replace("<u>", "[[underline]]").Replace("</u>", "[[/underline]]");
+
+            /*
+            Tables
+                Replace
+                    <table>
+                        <thead>
+                            <tr><th>Head 1</th><th>Head 2</th><th>Head 3</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Row 1 Cell 1</td><td>Row 1 Cell 2</td><td>Row 1 Cell 3</td></tr>
+                            <tr><td>Row 2 Cell 1</td><td>Row 2 Cell 2</td><td>Row 2 Cell 3</td></tr>
+                        </tbody>
+                    </table>
+                with
+                    Head 1 | Head 2 | Head 3
+                    ----------------------------------------
+                    Row 1 Cell 1 | Row 1 Cell 2 | Row 1 Cell 3
+                    Row 2 Cell 1 | Row 2 Cell 2 | Row 2 Cell 3
+            */
+            fileContents = fileContents.Replace("<th/>", "<th></th>");
+            fileContents = fileContents.Replace("<td/>", "<td></td>");
+            fileContents = ReplaceMarkup(fileContents, "<\\/t[d|h]>\\S*\\s*<t[d|h][^>]*>", @" | ");  // Convert cell divisions to |
+            fileContents = fileContents.Replace("</tr>", "\r\n");  // Convert table row endings to CRLF
+            fileContents = fileContents.Replace("</thead>", "\r\n----------------------------------------\r\n");
+
+            // Remove all remaining HTML elements
+            fileContents = Regex.Replace(fileContents, "<.*?>", string.Empty);
+
+            // Return the cleaned file contents
+            return fileContents;
+        }
+
+        /// <summary>
+        /// Perform the specified Regex replacement
+        /// </summary>
+        /// <param name="fileContents"></param>
+        /// <param name="pattern"></param>
+        /// <param name="substitution"></param>
+        /// <returns></returns>
+        private static string ReplaceMarkup(string fileContents, string pattern, string substitution)
+        {
+            RegexOptions options = RegexOptions.Multiline;
+            Regex regex = new Regex(pattern, options);
+            return regex.Replace(fileContents, substitution);
         }
 
         /// <summary>
