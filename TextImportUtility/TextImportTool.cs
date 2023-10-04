@@ -395,6 +395,17 @@ namespace BHL.TextImportUtility
             fileContents = ReplaceMarkup(fileContents, "<\\s*span[^>]*class=[\"']marginalia[\"'][^>]*>([\\S\\s]*?)<\\s*\\/\\s*span>", @"[[margin]]$1[[/margin]]");
 
             /*
+            Annotation
+                Replace 
+                    <annotation>some text</annotation>
+                    <span class="annotation">some text</span>
+                with 
+                    [[annotation]]some text[[/annotation]]
+            */
+            fileContents = fileContents.Replace("<annotation>", "[[annotation]]").Replace("</annotation>", "[[/annotation]]");
+            fileContents = ReplaceMarkup(fileContents, "<\\s*span[^>]*class=[\"']annotation[\"'][^>]*>([\\S\\s]*?)<\\s*\\/\\s*span>", @"[[annotation]]$1[[/annotation]]");
+
+            /*
             Missing text
                 Replace 
                     <gap>some text</gap>
