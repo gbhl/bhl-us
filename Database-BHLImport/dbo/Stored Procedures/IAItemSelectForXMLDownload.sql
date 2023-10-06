@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[IAItemSelectForXMLDownload]
+CREATE PROCEDURE [dbo].[IAItemSelectForXMLDownload]
 
 @IAIdentifier NVARCHAR(200) = ''
 
@@ -43,6 +43,7 @@ AND	[ItemStatusID] <> 82	-- ignore 'MARC Missing - On Hold' items
 AND	[ItemStatusID] <> 99	-- ignore items in error
 AND [ItemStatusID] <> 98	-- ignore items in error
 AND [ItemStatusID] <> 97	-- ignore items in error
+AND [ItemStatusID] <> 95	-- ignore items in error
 AND [ItemStatusID] <> 90	-- ignore items in error
 ORDER BY 
 	CASE WHEN [ItemStatusID] = 40 THEN 1 ELSE 0 END,	-- process all non-Complete items first
@@ -58,3 +59,5 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
+
+GO
