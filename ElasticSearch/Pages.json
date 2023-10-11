@@ -11,6 +11,18 @@
 				"default": {
 					"tokenizer": "icu_tokenizer",
 					"filter":  [ "lowercase", "icu_folding" ]
+				},
+				"remove_markup": {
+					"tokenizer": "icu_tokenizer",
+					"filter": [ "lowercase", "icu_folding" ],
+					"char_filter": [ "replace_markup_char_filter" ]
+				}
+			},
+			"char_filter": {
+				"replace_markup_char_filter": {
+					"type": "pattern_replace",
+					"pattern": "\\[\\[.*?\\]\\]",
+					"replacement": ""
 				}
 			}
 		}
@@ -53,7 +65,7 @@
 			},
 			"text" : {
 				"type" : "text",
-				"analyzer" : "default",
+				"analyzer" : "remove_markup",
 				"copy_to" : "_all"
 			},
 			"textPath" : {
