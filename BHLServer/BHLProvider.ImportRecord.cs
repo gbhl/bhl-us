@@ -721,7 +721,7 @@ namespace MOBOT.BHL.Server
 
         private ImportRecordErrorLog GetNewImportRecordWarning(string message)
         {
-            return GetNewImportRecordErrorLog(message, "Warning");
+            return GetNewImportRecordErrorLog(message + " To import this segment, change the status to OK.", "Warning");
         }
 
         private ImportRecordErrorLog GetNewImportRecordErrorLog(string message, string severity)
