@@ -304,7 +304,7 @@
         </tr>
 		<tr>
 			<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
-				Full Title (MARC 245a,b,c):
+				Full Title (MARC 245a,b):
 			</td>
 			<td colspan="4" style="width: 100%">
 				<asp:TextBox ID="fullTitleTextBox" runat="server" MaxLength="8000" Width="100%" TextMode="MultiLine" Height="50px"></asp:TextBox>
