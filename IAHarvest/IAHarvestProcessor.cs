@@ -4,6 +4,7 @@ using MOBOT.BHLImport.DataObjects;
 using MOBOT.BHLImport.Server;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Mail;
 using System.Text;
 using System.Xml;
@@ -478,7 +479,7 @@ namespace IAHarvest
                         zipstream.Close();
 
                         // Download and save the xml file
-                        System.IO.BinaryReader stream = provider.GetIARawData(String.Format(configParms.ScandataDownloadUrl, host, dir));
+                        BinaryReader stream = provider.GetIARawData(String.Format(configParms.ScandataDownloadUrl, host, dir));
                         if (stream != null)
                         {
                             // Save the file to a local folder
@@ -492,8 +493,8 @@ namespace IAHarvest
                                 fileName = item.LocalFileFolder + item.IAIdentifier + "\\" + item.IAIdentifier + configParms.ScandataExtension;
                             }
 
-                            using System.IO.FileStream fileStream = System.IO.File.Open(fileName, System.IO.FileMode.Create);
-                            using (System.IO.BinaryWriter writer = new(fileStream, Encoding.UTF7))
+                            using FileStream fileStream = File.Open(fileName, FileMode.Create);
+                            using (BinaryWriter writer = new(fileStream, Encoding.UTF7))
                             {
                                 byte[] buffer = new byte[2048];
                                 int count = stream.Read(buffer, 0, buffer.Length);
@@ -876,15 +877,15 @@ namespace IAHarvest
             if (file != null)
             {
                 // If the file has changed since we last harvested
-                if (DateTime.Compare((DateTime)file.RemoteFileLastModifiedDate, (DateTime)(lastXmlDataHarvestDate ?? DateTime.Parse("1/1/1980"))) > 0)
+                if (DateTime.Compare((DateTime)file.RemoteFileLastModifiedDate, lastXmlDataHarvestDate ?? DateTime.Parse("1/1/1980")) > 0)
                 {
                     // Prepare the file system for the page files
-                    if (System.IO.Directory.Exists(localFileFolder + iaIdentifier + "\\" + iaIdentifier))
+                    if (Directory.Exists(localFileFolder + iaIdentifier + "\\" + iaIdentifier))
                     {
                         // Remove any existing files
-                        foreach (string fileName in System.IO.Directory.GetFiles(localFileFolder + iaIdentifier + "\\" + iaIdentifier))
+                        foreach (string fileName in Directory.GetFiles(localFileFolder + iaIdentifier + "\\" + iaIdentifier))
                         {
-                            System.IO.File.Delete(fileName);
+                            File.Delete(fileName);
                         }
 
                         // Delete any page entries from the database
@@ -893,122 +894,55 @@ namespace IAHarvest
                     else
                     {
                         // Create folder
-                        System.IO.Directory.CreateDirectory(localFileFolder + iaIdentifier + "\\" + iaIdentifier);
+                        Directory.CreateDirectory(localFileFolder + iaIdentifier + "\\" + iaIdentifier);
                     }
 
-                    /*
-                    // Set up the XSL resolver that we'll use to extract the text from the xml
-                    XmlUrlResolver resolver = new XmlUrlResolver();
-                    resolver.Credentials = System.Net.CredentialCache.DefaultCredentials;
-                    System.Xml.Xsl.XslTransform xslTransform = new System.Xml.Xsl.XslTransform();
-                    xslTransform.Load("djvu2text.xslt", resolver);
-                     */
-
-                    // Read the DJVU.XML file line-by-line, extracting the pages as we go
-                    String localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
-                    using (System.IO.StreamReader reader = new(localFileName))
+                    try
                     {
-                        String line;
-                        String pageText = String.Empty;
+                        StringBuilder pageText = new();
+                        XmlReaderSettings settings = new() { Async = true, DtdProcessing = DtdProcessing.Parse };
                         int counter = 1;
-                        bool inPage = false;
-                        while ((line = reader.ReadLine()) != null)
+                        string localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
+                        using (XmlReader reader = XmlReader.Create(new StreamReader(localFileName), settings))
                         {
-                            if (inPage)
+                            bool wordStarted = false;
+                            while (reader.Read())
                             {
-                                if (line.IndexOf("<MAP") != -1)
+                                if (reader.NodeType == XmlNodeType.Element && reader.Name == "OBJECT") pageText.Clear();
+                                if (reader.NodeType == XmlNodeType.Element && reader.Name == "WORD") wordStarted = true;
+                                if (reader.NodeType == XmlNodeType.Text && wordStarted) pageText.Append(reader.Value + " ");
+                                if (reader.NodeType == XmlNodeType.EndElement)
                                 {
-                                    // Found the end of a page, so use the XSL transform to extract the text
-                                    XmlDocument xml = new();
-                                    xml.Load(new System.IO.StringReader(pageText));
-                                    int? pageCounter = (int?)counter;
-                                    XmlNode pageNode = xml.SelectSingleNode("OBJECT/PARAM[@name = 'PAGE']");
-
-                                    // Get the filename and counter value from the DJVU xml if we can
-                                    string textFileName;
-                                    if (pageNode != null)
+                                    if (reader.Name == "WORD") wordStarted = false;
+                                    if (reader.Name == "LINE") pageText.AppendLine();
+                                    if (reader.Name == "PARAGRAPH") pageText.AppendLine();
+                                    if (reader.Name == "OBJECT")
                                     {
-                                        // filename
-                                        textFileName = pageNode.Attributes["value"].Value.Replace(".djvu", ".txt");
-                                        // sequence number
-                                        string sequence = textFileName.Substring(textFileName.LastIndexOf('_') + 1, 4);
-                                        if (Int32.TryParse(sequence, out int sequenceInt)) pageCounter = (int?)sequenceInt;
+                                        File.WriteAllText(string.Format("{0}{1}\\{1}\\{1}_{2}.txt", localFileFolder, iaIdentifier, Convert.ToString(counter).PadLeft(4, '0')), pageText.ToString());
+
+                                        counter++;
                                     }
-                                    else
-                                    {
-                                        // Can't find the values in the XML, so build our own filename
-                                        textFileName = iaIdentifier + "_" + Convert.ToString(counter).PadLeft(4, '0') + ".txt";
-                                    }
-
-                                    System.IO.StreamWriter output = null;
-                                    try
-                                    {
-                                        // Create the text file for the page
-                                        //output = new System.IO.StreamWriter(localFileFolder + iaIdentifier + "\\" + iaIdentifier + "\\" + textFileName);
-                                        //xslTransform.Transform(xml, null, output, resolver);
-
-                                        StringBuilder text = new();
-
-                                        System.Xml.Linq.XDocument ocrXml = System.Xml.Linq.XDocument.Parse(pageText);
-
-                                        IEnumerable<System.Xml.Linq.XElement> xmlLines = ocrXml.Root.Descendants("LINE");
-                                        foreach (System.Xml.Linq.XElement xmlLine in xmlLines)
-                                        {
-                                            IEnumerable<System.Xml.Linq.XElement> words = xmlLine.Descendants("WORD");
-                                            foreach (System.Xml.Linq.XElement word in words) text.Append(word.Value + " ");
-                                            text.AppendLine();
-                                        }
-
-                                        System.IO.File.WriteAllText(localFileFolder + iaIdentifier + "\\" + iaIdentifier + "\\" + textFileName, text.ToString());
-
-                                        // Get the external Url for the page
-                                        String externalUrl = this.GetPageExternalUrl(itemID, iaIdentifier, pageCounter);
-
-                                        // Write a record to the database for this page
-                                        provider.IAPageInsertAuto(itemID, textFileName, pageCounter, externalUrl);
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        // Problem transforming the XML; record the error and go to the next page
-                                        log.Error("Error processing " + textFileName, ex);
-                                        this.errorMessages.Add("Error processing " + textFileName + ": " + ex.Message);
-                                    }
-                                    finally
-                                    {
-                                        if (output != null)
-                                        {
-                                            output.Flush();
-                                            output.Close();
-                                            output.Dispose();
-                                        }
-                                    }
-
-                                    pageText = String.Empty;
-                                    inPage = false;
-                                    counter++;
                                 }
                             }
-                            else
-                            {
-                                // Found the start of a page
-                                if (line.IndexOf("<OBJECT") != -1) inPage = true;
-                            }
-
-                            // Build the page text
-                            if (inPage) pageText += line;
                         }
+                    }
+                    catch (Exception e)
+                    {
+                        // Problem transforming the DJVU to TXT
+                        log.Error("Error  converting DJVU to TXT for " + iaIdentifier, e);
+                        this.errorMessages.Add("Error  converting DJVU to TXT for " + iaIdentifier + ": " + e.Message);
                     }
                 }
             }
             else
             {
                 // No local file, so remove anything in the database and any existing page files
-                if (System.IO.Directory.Exists(localFileFolder + iaIdentifier + "\\" + iaIdentifier))
+                if (Directory.Exists(localFileFolder + iaIdentifier + "\\" + iaIdentifier))
                 {
                     // Remove any existing files
-                    foreach (string fileName in System.IO.Directory.GetFiles(localFileFolder + iaIdentifier + "\\" + iaIdentifier))
+                    foreach (string fileName in Directory.GetFiles(localFileFolder + iaIdentifier + "\\" + iaIdentifier))
                     {
-                        System.IO.File.Delete(fileName);
+                        File.Delete(fileName);
                     }
                 }
 
@@ -1049,6 +983,7 @@ namespace IAHarvest
             }
         }
 
+        /*
         /// <summary>
         /// Build the External Url for a page
         /// </summary>
@@ -1083,6 +1018,7 @@ namespace IAHarvest
 
             return externalUrl;
         }
+        */
 
         private void HarvestScandata(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
         {
