@@ -920,6 +920,11 @@ namespace IAHarvest
                                     {
                                         File.WriteAllText(string.Format("{0}{1}\\{1}\\{1}_{2}.txt", localFileFolder, iaIdentifier, Convert.ToString(counter).PadLeft(4, '0')), pageText.ToString());
 
+                                        // Write a record to the database for this page
+                                        string externalUrl = this.GetPageExternalUrl(itemID, iaIdentifier, counter);
+                                        string textFileName = string.Format("{0}_{1}.txt", iaIdentifier, Convert.ToString(counter).PadLeft(4, '0'));
+                                        provider.IAPageInsertAuto(itemID, textFileName, counter, externalUrl);
+
                                         counter++;
                                     }
                                 }
@@ -983,7 +988,6 @@ namespace IAHarvest
             }
         }
 
-        /*
         /// <summary>
         /// Build the External Url for a page
         /// </summary>
@@ -991,12 +995,12 @@ namespace IAHarvest
         /// <param name="iaIdentifier"></param>
         /// <param name="sequence"></param>
         /// <returns></returns>
-        private String GetPageExternalUrl(int itemID, string iaIdentifier, int? sequence)
+        private string GetPageExternalUrl(int itemID, string iaIdentifier, int? sequence)
         {
-            String externalUrl = String.Empty;
+            string externalUrl = string.Empty;
 
             if (sequence == null) return externalUrl;
-            String sequenceString = sequence.ToString().PadLeft(4, '0');
+            string sequenceString = sequence.ToString().PadLeft(4, '0');
 
             try
             {
@@ -1005,12 +1009,12 @@ namespace IAHarvest
                 if (file != null)
                 {
                     // Format the external url for the page
-                    externalUrl = String.Format(configParms.PageExternalUrl, iaIdentifier, file.RemoteFileName, sequenceString);
+                    externalUrl = string.Format(configParms.PageExternalUrl, iaIdentifier, file.RemoteFileName, sequenceString);
                 }
             }
             catch (Exception ex)
             {
-                externalUrl = String.Empty;
+                externalUrl = string.Empty;
                 log.Error("Exception getting External Url for " + iaIdentifier + "_" + sequenceString, ex);
                 errorMessages.Add("Exception getting External Url for " + iaIdentifier + "_" + sequenceString + "  " + ex.Message);
                 // don't rethrow; we want to continue processing
@@ -1018,7 +1022,6 @@ namespace IAHarvest
 
             return externalUrl;
         }
-        */
 
         private void HarvestScandata(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
         {
