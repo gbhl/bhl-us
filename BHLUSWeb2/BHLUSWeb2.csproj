@@ -570,7 +570,6 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="services\Name\NameService.asmx" />
-    <Content Include="services\PageSummaryService.asmx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="TitleNotFound.aspx" />
@@ -980,10 +979,6 @@
     </Compile>
     <Compile Include="services\PageSummaryService.ashx.cs">
       <DependentUpon>PageSummaryService.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="services\PageSummaryService.asmx.cs">
-      <DependentUpon>PageSummaryService.asmx</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="services\SearchDownloadService.ashx.cs">
       <DependentUpon>SearchDownloadService.ashx</DependentUpon>

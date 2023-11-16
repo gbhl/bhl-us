@@ -83,7 +83,6 @@
 
     <!-- ###################################################################### -->
 
-    <add key="DoRemoteNameLookup" value="false"/>
     <add key="ShowAnnotations" value="true"/>
     <add key="EnableFullTextSearch" value="true"/>
     <add key="LogExceptions" value="true"/>
@@ -113,9 +112,6 @@
 
     <!-- Valid values for NameFinderService are "TaxonFinder", "GNFinder", and "GNFinderLocal" -->
     <add key="NameFinderService" value="TaxonFinder"/>
-
-    <!-- Source name of the name service.  Should match the values in the SourceName field in the NameSource table. -->
-    <add key="NameServiceSourceName" value="Global Names (GNRD TaxonFinder)"/>
 
     <!-- Base address of GNRD TaxonFinder name service -->
     <add key="GNRDTaxonFinderBaseAddress" value="http://gnrd.globalnames.org/name_finder.json" />
@@ -167,8 +163,6 @@
     <add key="IADownloadLink" value="https://www.archive.org/download/{0}/{1}" />
     <add key="IADownloadScandataLink" value="https://www.archive.org/download/{0}/scandata.zip/scandata.xml"/>
     <!-- begin attribution div properties -->
-    <!-- Maximum age in days of Page Names before they are refreshed -->
-    <add key="MaximumPageNameAge" value="45"/>
     <!-- Maximum time in minutes that the list of languages is cached -->
     <add key="LanguageListQueryCacheTime" value="1440"/>
     <!-- Maximum time in minutes that the list of collections is cached -->
