@@ -2187,7 +2187,7 @@ namespace MOBOT.BHL.AdminWeb
                     if (string.IsNullOrWhiteSpace(tk.Keyword))
                     {
                         flag = true;
-                        errorControl.AddErrorText("Keywords cannot be blank");
+                        errorControl.AddErrorText("Subjects cannot be blank");
                         break;
                     }
                 }
