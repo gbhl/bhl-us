@@ -14,13 +14,17 @@
   </Target>
 
   <ItemGroup>
+    <None Remove="app.config.template" />
     <None Remove="gnfinder.exe" />
+    <None Remove="web.config.template" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="app.config.template" />
     <Content Include="gnfinder.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="web.config.template" />
   </ItemGroup>
 
   <ItemGroup>

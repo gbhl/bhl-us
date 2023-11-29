@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+
+  <!-- To customize the asp.net core module uncomment and edit the following section. 
+  For more info see https://go.microsoft.com/fwlink/?linkid=838655 -->
+  <!--
+  <system.webServer>
+    <handlers>
+      <remove name="aspNetCore"/>
+      <add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModule" resourceType="Unspecified"/>
+    </handlers>
+    <aspNetCore processPath="%LAUNCHER_PATH%" arguments="%LAUNCHER_ARGS%" stdoutLogEnabled="false" stdoutLogFile=".\logs\stdout" />
+  </system.webServer>
+  -->
+  <location path="." inheritInChildApplications="false">
+    <system.webServer>
+      <handlers>
+        <add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModuleV2" resourceType="Unspecified" />
+      </handlers>
+      <aspNetCore processPath=".\BHL.WebServiceREST.v1.exe" stdoutLogEnabled="false" stdoutLogFile=".\logs\stdout" hostingModel="inprocess" />
+    </system.webServer>
+  </location>
+  <connectionStrings>
+    <remove name="BHL"/>
+    <add name="BHL" connectionString="DATABASE CONNECTION STRING"/>
+  </connectionStrings>
+  <appSettings>
+    <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
+    <add key="MARCXmlLocation" value="{0}\{1}\{2}_marc.xml"/>
+    <add key="ScandataXmlLocation" value="{0}\{1}\{2}_scandata.xml"/>
+    <add key="SMTPHost" value="smtp.si.edu"/>
+    <add key="DBCommandTimeout" value="1800"/>
+    <add key="DebugValue" value="debug"/>
+    <add key="ConfigNameCurrentIAVault" value="CurrentIAVaultID"/>
+    <!-- DOI file locations -->
+    <add key="DOIDepositFileLocation" value="DRIVE:\FOLDER\deposit\{0}.xml"/>
+    <add key="DOISubmitLogFileLocation" value="DRIVE:\FOLDER\submitlog\{0}.log.xml"/>
+    <!-- OCR Job file locations -->
+    <add key="OCRJobNewPath" value="DRIVE:\FOLDER\ocrjob\new\"/>
+    <!-- Valid values for NameFinderService are "TaxonFinder", "GNFinder", and "GNFinderLocal" -->
+    <add key="NameFinderService" value="GNFinderLocal"/>
+    <!-- Source name of the name service.  Should match the values in the SourceName field in the NameSource table. -->
+    <add key="NameServiceSourceName" value="Global Names (GNRD GNFinder)"/>
+    <!-- Base address of GNRD TaxonFinder name service -->
+    <add key="GNRDTaxonFinderBaseAddress" value="http://gnrdbhl.globalnames.org/name_finder.json"/>
+    <!-- Payload for GNRD TaxonFinder name service request -->
+    <add key="GNRDTaxonFinderRequestContent" value="text={0}&amp;all_data_sources=true&amp;best_match_only=true&amp;preferred_data_sources=12|169"/>
+    <!-- Base address of GNRD GNFinder name service -->
+    <add key="GNRDGNFinderBaseAddress" value="http://gnrd.globalnames.org/name_finder.json"/>
+    <!-- Payload for GNRD GNFinder name service request -->
+    <!-- Data Sources
+        1 = Catalogue of Life
+        2 = Wikispecies
+        3 = ITIS
+        5 = Index Fungorum
+        7 = Union 4
+        8 = Interim Reg. of Marine/Nonmarine Genera
+        9 = WoRMS
+       11 = GBIF Taxonomic Backbone
+       12 = EOL
+      167 = The International Plant Names Index
+      168 = Index to Organism Names
+      169 = NameBank
+    -->
+    <add key="GNRDGNFinderRequestContent" value="text={0}&amp;preferred_data_sources=1|2|3|5|7|8|9|11|12|167|168|169"/>
+    <!-- Only applies to the GNRD name finding services.  True to favor results from the "favored" name source. -->
+    <add key="UsePreferredNameResults" value="true"/>
+    <!-- Only applies to the GNRD name finding service.  Maximum number of times to try to get a response (1.5 seconds between attempts).-->
+    <add key="MaxReadAttempts" value="60"/>
+  </appSettings>
+</configuration>
