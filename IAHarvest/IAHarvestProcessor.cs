@@ -323,7 +323,7 @@ namespace IAHarvest
             }
             else
             {
-                System.IO.Directory.CreateDirectory(item.LocalFileFolder + item.IAIdentifier);
+                Directory.CreateDirectory(item.LocalFileFolder + item.IAIdentifier);
                 xml.Save(item.LocalFileFolder + item.IAIdentifier + "\\" + item.IAIdentifier + configParms.FilesExtension);
             }
 
@@ -421,12 +421,12 @@ namespace IAHarvest
                 DateTime? remoteFileLastModifiedDate = DateTime.Parse("1/1/1980");
 
                 // Download and save the file
-                System.IO.BinaryReader stream = provider.GetIARawData(String.Format(configParms.FileDownloadUrl, item.IAIdentifier, file.RemoteFileName), 
+                BinaryReader stream = provider.GetIARawData(String.Format(configParms.FileDownloadUrl, item.IAIdentifier, file.RemoteFileName), 
                     file.RemoteFileLastModifiedDate, out remoteFileLastModifiedDate);
                 if (stream != null)
                 {
                     // Save the file to a local folder
-                    String fileName = String.Empty;
+                    string fileName = string.Empty;
                     if (item.ItemStatusID == ITEMSTATUS_COMPLETE)    // item files already moved to production location
                     {
                         fileName = item.LocalFileFolder + item.MARCBibID + "\\" + file.RemoteFileName;
@@ -436,20 +436,22 @@ namespace IAHarvest
                         fileName = item.LocalFileFolder + item.IAIdentifier + "\\" + file.RemoteFileName;
                     }
 
-                    using System.IO.FileStream fileStream = System.IO.File.Open(fileName, System.IO.FileMode.Create);
-                    using (System.IO.BinaryWriter writer = new(fileStream, Encoding.UTF7))
+                    using (FileStream fileStream = File.Open(fileName, FileMode.Create))
                     {
-                        byte[] buffer = new byte[2048];
-                        int count = stream.Read(buffer, 0, buffer.Length);
-                        while (count != 0)
+                        using (BinaryWriter writer = new(fileStream, Encoding.UTF8))
                         {
-                            writer.Write(buffer, 0, count);
-                            writer.Flush();
-                            count = stream.Read(buffer, 0, buffer.Length);
+                            byte[] buffer = new byte[2048];
+                            int count = stream.Read(buffer, 0, buffer.Length);
+                            while (count != 0)
+                            {
+                                writer.Write(buffer, 0, count);
+                                writer.Flush();
+                                count = stream.Read(buffer, 0, buffer.Length);
+                            }
+                            writer.Dispose();
                         }
-                        writer.Close();
+                        stream.Dispose();
                     }
-                    stream.Close();
                 }
 
                 // Get the remote file last modified date
@@ -462,8 +464,8 @@ namespace IAHarvest
             LogMessage("Downloading scandata for " + item.IAIdentifier);
 
             // If the file does not exist locally (only get this it it doesn't already exist)
-            String localFileName = item.LocalFileFolder + item.IAIdentifier + "\\" + item.IAIdentifier + configParms.ScandataExtension;
-            if (!System.IO.File.Exists(localFileName))
+            string localFileName = item.LocalFileFolder + item.IAIdentifier + "\\" + item.IAIdentifier + configParms.ScandataExtension;
+            if (!File.Exists(localFileName))
             {
                 this.GetPhysicalFileLocation(item.IAIdentifier, out string host, out string dir);
 
@@ -472,7 +474,7 @@ namespace IAHarvest
                     // Initiate a download of the scandata.zip file... if it fails, then we know
                     // the file isn't there.  If it succeeds, abort the download and initiate a
                     // request for the scandata.xml file within the ZIP.
-                    System.IO.BinaryReader zipstream = provider.GetIARawData(String.Format(configParms.FileDownloadUrl, item.IAIdentifier, "scandata.zip"));
+                    BinaryReader zipstream = provider.GetIARawData(String.Format(configParms.FileDownloadUrl, item.IAIdentifier, "scandata.zip"));
                     if (zipstream != null)
                     {
                         // Found the zip file
@@ -483,7 +485,7 @@ namespace IAHarvest
                         if (stream != null)
                         {
                             // Save the file to a local folder
-                            String fileName = String.Empty;
+                            string fileName = string.Empty;
                             if (item.ItemStatusID == ITEMSTATUS_COMPLETE)    // item files already moved to production location
                             {
                                 fileName = item.LocalFileFolder + item.MARCBibID + "\\" + item.IAIdentifier + configParms.ScandataExtension;
@@ -493,20 +495,22 @@ namespace IAHarvest
                                 fileName = item.LocalFileFolder + item.IAIdentifier + "\\" + item.IAIdentifier + configParms.ScandataExtension;
                             }
 
-                            using FileStream fileStream = File.Open(fileName, FileMode.Create);
-                            using (BinaryWriter writer = new(fileStream, Encoding.UTF7))
+                            using (FileStream fileStream = File.Open(fileName, FileMode.Create))
                             {
-                                byte[] buffer = new byte[2048];
-                                int count = stream.Read(buffer, 0, buffer.Length);
-                                while (count != 0)
+                                using (BinaryWriter writer = new(fileStream, Encoding.UTF8))
                                 {
-                                    writer.Write(buffer, 0, count);
-                                    writer.Flush();
-                                    count = stream.Read(buffer, 0, buffer.Length);
+                                    byte[] buffer = new byte[2048];
+                                    int count = stream.Read(buffer, 0, buffer.Length);
+                                    while (count != 0)
+                                    {
+                                        writer.Write(buffer, 0, count);
+                                        writer.Flush();
+                                        count = stream.Read(buffer, 0, buffer.Length);
+                                    }
+                                    writer.Dispose();
                                 }
-                                writer.Close();
+                                stream.Dispose();
                             }
-                            stream.Close();
                         }
 
                         // Save the remote file information (use the current date/time as the last modified date)
@@ -1304,28 +1308,28 @@ namespace IAHarvest
                 String newItemFolder = item.LocalFileFolder + marcBibID;
                 String newPageFolder = item.LocalFileFolder + marcBibID + "\\" + barCode;
 
-                if (System.IO.Directory.Exists(newItemFolder))
+                if (Directory.Exists(newItemFolder))
                 {
                     // Move the pages to the existing folder
-                    if (!System.IO.Directory.Exists(newPageFolder)) System.IO.Directory.Move(originalPageFolder, newPageFolder);
+                    if (!Directory.Exists(newPageFolder)) MoveFolder(originalPageFolder, newPageFolder);
 
                     // Move the files to the existing folder
-                    foreach (String file in System.IO.Directory.GetFiles(originalItemFolder))
+                    foreach (String file in Directory.GetFiles(originalItemFolder))
                     {
-                        String newFileName = newItemFolder + "\\" + (new System.IO.FileInfo(file).Name);
-                        if (!System.IO.File.Exists(newFileName)) System.IO.File.Move(file, newFileName);
+                        String newFileName = newItemFolder + "\\" + (new FileInfo(file).Name);
+                        if (!File.Exists(newFileName)) MoveFile(file, newFileName);
                     }
 
                     // Remove the original (temp) folder
-                    if (originalItemFolder != newItemFolder) System.IO.Directory.Delete(originalItemFolder, false);
+                    if (originalItemFolder != newItemFolder) Directory.Delete(originalItemFolder, false);
                 }
                 else
                 {
                     // No existing folder for this title, so just rename the temp folder
-                    System.IO.Directory.Move(originalItemFolder, newItemFolder);
+                    MoveFolder(originalItemFolder, newItemFolder);
 
                     // Also rename the page folder if necessary
-                    if (!System.IO.Directory.Exists(newPageFolder)) System.IO.Directory.Move(originalPageFolder, newPageFolder);
+                    if (!Directory.Exists(newPageFolder)) MoveFolder(originalPageFolder, newPageFolder);
                 }
 
                 return true;
@@ -1336,6 +1340,52 @@ namespace IAHarvest
                 errorMessages.Add("Error fixing file locations for " + item.IAIdentifier + "  " + ex.Message);
 
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Make three attempts to move the source folder to the target folder.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        private void MoveFolder(string source, string target)
+        {
+            int count = 1;
+            while (count <= 3)
+            {
+                try
+                {
+                    Directory.Move(source, target); break;
+                }
+                catch
+                {
+                    if (count == 3) throw;  // After three attempts, give up
+                }
+                System.Threading.Thread.Sleep(1000);    // Pause one second between attempts
+                count++;
+            }
+        }
+
+        /// <summary>
+        /// Make three attempts to move the source file to the target file.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        private void MoveFile(string source, string target)
+        {
+            int count = 1;
+            while (count <= 3)
+            {
+                try
+                {
+                    File.Move(source, target); break;
+                }
+                catch
+                {
+                    if (count == 3) throw;  // After three attempts, give up
+                }
+                System.Threading.Thread.Sleep(1000);    // Pause one second between attempts
+                count++;
             }
         }
 
