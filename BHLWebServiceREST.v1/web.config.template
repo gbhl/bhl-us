@@ -37,35 +37,5 @@
     <add key="DOISubmitLogFileLocation" value="DRIVE:\FOLDER\submitlog\{0}.log.xml"/>
     <!-- OCR Job file locations -->
     <add key="OCRJobNewPath" value="DRIVE:\FOLDER\ocrjob\new\"/>
-    <!-- Valid values for NameFinderService are "TaxonFinder", "GNFinder", and "GNFinderLocal" -->
-    <add key="NameFinderService" value="GNFinderLocal"/>
-    <!-- Source name of the name service.  Should match the values in the SourceName field in the NameSource table. -->
-    <add key="NameServiceSourceName" value="Global Names (GNRD GNFinder)"/>
-    <!-- Base address of GNRD TaxonFinder name service -->
-    <add key="GNRDTaxonFinderBaseAddress" value="http://gnrdbhl.globalnames.org/name_finder.json"/>
-    <!-- Payload for GNRD TaxonFinder name service request -->
-    <add key="GNRDTaxonFinderRequestContent" value="text={0}&amp;all_data_sources=true&amp;best_match_only=true&amp;preferred_data_sources=12|169"/>
-    <!-- Base address of GNRD GNFinder name service -->
-    <add key="GNRDGNFinderBaseAddress" value="http://gnrd.globalnames.org/name_finder.json"/>
-    <!-- Payload for GNRD GNFinder name service request -->
-    <!-- Data Sources
-        1 = Catalogue of Life
-        2 = Wikispecies
-        3 = ITIS
-        5 = Index Fungorum
-        7 = Union 4
-        8 = Interim Reg. of Marine/Nonmarine Genera
-        9 = WoRMS
-       11 = GBIF Taxonomic Backbone
-       12 = EOL
-      167 = The International Plant Names Index
-      168 = Index to Organism Names
-      169 = NameBank
-    -->
-    <add key="GNRDGNFinderRequestContent" value="text={0}&amp;preferred_data_sources=1|2|3|5|7|8|9|11|12|167|168|169"/>
-    <!-- Only applies to the GNRD name finding services.  True to favor results from the "favored" name source. -->
-    <add key="UsePreferredNameResults" value="true"/>
-    <!-- Only applies to the GNRD name finding service.  Maximum number of times to try to get a response (1.5 seconds between attempts).-->
-    <add key="MaxReadAttempts" value="60"/>
   </appSettings>
 </configuration>

@@ -22,7 +22,7 @@ namespace MOBOT.BHL.Server
         List<Book> BookSelectRecentlyChanged(string startDate);
         Item ItemSelectFilenames(ItemType itemType, int entityID);
         List<Page> PageMetadataSelectByItemID(int bookID);
-        List<NameFinderResponse> GetNamesFromOcr(string nameFinderService, int pageID, bool usePreferredNameResults, int maxReadAttempts);
+        List<NameFinderResponse> GetNamesFromOcr(int pageID);
         bool ItemCheckForOcrText(int itemID, string ocrTextPath);
         bool PageCheckForOcrText(int pageID);
         bool PageCheckForEmptyOcr(int PageID);

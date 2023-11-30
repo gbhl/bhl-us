@@ -13,7 +13,6 @@ namespace MOBOT.BHL.Web2.Controllers
         // GET: Service
         public ActionResult GetNameDataSources(string name)
         {
-            //List<GNVerifierResponse> nameSources = new BHLProvider().GetNameDetailFromGNResolver(name);
             List<GNVerifierResponse> nameSources = new BHLProvider().GetNameDetailFromGNVerifier(name);
 
             return Json(nameSources, JsonRequestBehavior.AllowGet);

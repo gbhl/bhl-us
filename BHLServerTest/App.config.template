@@ -2,10 +2,6 @@
 <configuration>
   <appSettings>
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
-    <add key="GNRDTaxonFinderBaseAddress" value="http://gnrd.globalnames.org/name_finder.json" />
-    <add key="GNRDTaxonFinderRequestContent" value="text={0}&amp;all_data_sources=true&amp;best_match_only=true&amp;preferred_data_sources=12|169" />
-    <add key="GNRDGNFinderBaseAddress" value="http://gnrd.globalnames.org/name_finder.json"/>
-    <add key="GNRDGNFinderRequestContent" value="text={0}&amp;preferred_data_sources=1|12|169"/>
   </appSettings>
   <connectionStrings>
     <remove name="BHL" />

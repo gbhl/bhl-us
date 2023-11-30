@@ -22,11 +22,7 @@ namespace BHL.WebServiceREST.v1.Controllers
         [ProducesResponseType(200, Type = typeof(List<NameFinderResponse>))]
         public IActionResult GetNamesFromPageOcr(int pageID)
         {
-            return Ok(_bhlProvider.GetNamesFromOcr(
-                System.Configuration.ConfigurationManager.AppSettings["NameFinderService"],
-                pageID,
-                System.Configuration.ConfigurationManager.AppSettings["UsePreferredNameResults"] == "true",
-                Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["MaxReadAttempts"])));
+            return Ok(_bhlProvider.GetNamesFromOcr(pageID));
         }
 
         [HttpGet("Items/{itemID}/Exists", Name = "ItemOcrExists")]

@@ -71,7 +71,7 @@ namespace BHLServerTest
         public void GetOcrTextTest()
         {
             BHLProvider target = new BHLProvider();
-            string actual = string.Empty;
+            string actual;
             actual = target.GetOcrText(1);
             Assert.AreEqual("Text unavailable for this page.", actual);
         }
@@ -81,7 +81,7 @@ namespace BHLServerTest
         {
             BHLProvider target = new BHLProvider();
             string fileLocation = @"OcrTestFile.txt";
-            string actual = string.Empty;
+            string actual;
             actual = target.GetTextUrl(fileLocation);
             Assert.AreEqual(fileLocation, actual);
         }
@@ -91,7 +91,7 @@ namespace BHLServerTest
         {
             BHLProvider target = new BHLProvider();
             string fileLocation = @"OcrTestFile2.txt";
-            string actual = string.Empty;
+            string actual;
             actual = target.GetTextUrl(fileLocation);
             Assert.AreEqual(string.Empty, actual);
         }
@@ -104,51 +104,26 @@ namespace BHLServerTest
             ItemType itemType = ItemType.Book;
             int itemid = 22010;
             List<BHLProvider.ViewerPage> actual = new List<BHLProvider.ViewerPage>();
-            BHLProvider.ViewerPage page = new BHLProvider.ViewerPage();
-            page.BarCode = "journalofmicrosc04post";
-            page.SequenceOrder = 1;
-            page.Height = 0;
-            page.Width = 0;
+            BHLProvider.ViewerPage page = new BHLProvider.ViewerPage
+            {
+                BarCode = "journalofmicrosc04post",
+                SequenceOrder = 1,
+                Height = 0,
+                Width = 0
+            };
             actual.Add(page);
             actual = target.PageGetImageDimensions(actual, itemType, itemid);
             Assert.IsTrue(actual[0].Height > 0);
         }
 
         [TestMethod]
-        public void GetNamesFromOcrTest1()
+        public void GetNamesFromOcrTest()
         {
             BHLProvider target = new BHLProvider();
 
-            string resolverName = "TaxonFinder";
             int pageID = 3001717;
-            bool usePreferredResults = true;
-            int maxReadAttempts = 5;
-            List<NameFinderResponse> actual = null;
-            actual = target.GetNamesFromOcr(resolverName, pageID, usePreferredResults, maxReadAttempts);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        [TestMethod]
-        public void GetNamesFromOcrTest2()
-        {
-            BHLProvider target = new BHLProvider();
-
-            string resolverName = "GNFinder";
-            int pageID = 3001717;
-            bool usePreferredResults = true;
-            int maxReadAttempts = 5;
-            List<NameFinderResponse> actual = null;
-            actual = target.GetNamesFromOcr(resolverName, pageID, usePreferredResults, maxReadAttempts);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        [TestMethod]
-        public void GetNameDetailFromGNResolverTest()
-        {
-            BHLProvider target = new BHLProvider();
-            string name = "Zea mays";
-            List<GNVerifierResponse> actual = null;
-            actual = target.GetNameDetailFromGNResolver(name);
+            List<NameFinderResponse> actual;
+            actual = target.GetNamesFromOcr(pageID);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -157,7 +132,7 @@ namespace BHLServerTest
         {
             BHLProvider target = new BHLProvider();
             string name = "Zea mays";
-            List<GNVerifierResponse> actual = null;
+            List<GNVerifierResponse> actual;
             actual = target.GetNameDetailFromGNVerifier(name);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -167,7 +142,7 @@ namespace BHLServerTest
         {
             BHLProvider target = new BHLProvider();
             int segmentID = 6450;
-            string actual = string.Empty;
+            string actual;
             actual = target.SegmentBibTeXGetCitationStringForSegmentID(segmentID, false);
             Assert.IsTrue(actual.Length > 0);
         }
@@ -177,7 +152,7 @@ namespace BHLServerTest
         {
             BHLProvider target = new BHLProvider();
             int titleID = 4000;
-            string actual = string.Empty;
+            string actual;
             actual = target.TitleBibTeXGetCitationStringForTitleID(titleID);
             Assert.IsTrue(actual.Length > 0);
         }
