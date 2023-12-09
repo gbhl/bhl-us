@@ -122,16 +122,7 @@
 <a href="#AnnotationKeywordTarget">AnnotationKeywordTarget</a>
 </li>
 <li>
-<a href="#AnnotationMark">AnnotationMark</a>
-</li>
-<li>
-<a href="#AnnotationMarkType">AnnotationMarkType</a>
-</li>
-<li>
 <a href="#AnnotationNote">AnnotationNote</a>
-</li>
-<li>
-<a href="#AnnotationPolygon">AnnotationPolygon</a>
 </li>
 <li>
 <a href="#AnnotationRelation">AnnotationRelation</a>
@@ -475,13 +466,9 @@
 <li>
 <a href="#AnnotationSubject">AnnotationSubject</a> referencing (AnnotationID)</li>
 <li>
-<a href="#AnnotationPolygon">AnnotationPolygon</a> referencing (AnnotationID)</li>
-<li>
 <a href="#PageAnnotation">PageAnnotation</a> referencing (AnnotationID)</li>
 <li>
 <a href="#Annotation_AnnotationConcept">Annotation_AnnotationConcept</a> referencing (AnnotationID)</li>
-<li>
-<a href="#AnnotationMark">AnnotationMark</a> referencing (AnnotationID)</li>
 </ul>
 </div>
 </div>
@@ -619,111 +606,6 @@
 </div>
 </div>
 <div class="tableNameHeading">
-<h1>AnnotationMark<a name="AnnotationMark"></a>
-</h1>
-<h2>
-      (Physical Name: AnnotationMark)
-      </h2>
-</div>
-<div class="table">
-<table class="tableDefinition" width="100%">
-<tr>
-<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">AnnotationMarkID (PK)</td><td class="tdTableDefinition">AnnotationMarkID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">AnnotationID
-                &nbsp;(<a href="#Annotation">FK</a>)
-              </td><td class="tdTableDefinition">AnnotationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">ExternalIdentifier</td><td class="tdTableDefinition">ExternalIdentifier</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SequenceNumber</td><td class="tdTableDefinition">SequenceNumber</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">Position</td><td class="tdTableDefinition">Position</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">AnnotationMarkTypeID
-                &nbsp;(<a href="#AnnotationMarkType">FK</a>)
-              </td><td class="tdTableDefinition">AnnotationMarkTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">Content</td><td class="tdTableDefinition">Content</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CorrectedContent</td><td class="tdTableDefinition">CorrectedContent</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">Comment</td><td class="tdTableDefinition">Comment</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">PolygonX1</td><td class="tdTableDefinition">PolygonX1</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">PolygonY1</td><td class="tdTableDefinition">PolygonY1</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">PolygonX2</td><td class="tdTableDefinition">PolygonX2</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">PolygonY2</td><td class="tdTableDefinition">PolygonY2</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-</table>
-<div class="references">
-<p class="subTitle">References</p>
-<ul>
-<li>
-<a href="#Annotation">Annotation</a> through (AnnotationID)</li>
-<li>
-<a href="#AnnotationMarkType">AnnotationMarkType</a> through (AnnotationMarkTypeID)</li>
-</ul>
-</div>
-</div>
-<div class="tableNameHeading">
-<h1>AnnotationMarkType<a name="AnnotationMarkType"></a>
-</h1>
-<h2>
-      (Physical Name: AnnotationMarkType)
-      </h2>
-</div>
-<div class="table">
-<table class="tableDefinition" width="100%">
-<tr>
-<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">AnnotationMarkTypeID (PK)</td><td class="tdTableDefinition">AnnotationMarkTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">AnnotationMarkTypeName</td><td class="tdTableDefinition">AnnotationMarkTypeName</td><td class="tdTableDefinition">NVARCHAR(30)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-</table>
-<div class="references">
-<p class="subTitle">Referenced By</p>
-<ul>
-<li>
-<a href="#AnnotationMark">AnnotationMark</a> referencing (AnnotationMarkTypeID)</li>
-</ul>
-</div>
-</div>
-<div class="tableNameHeading">
 <h1>AnnotationNote<a name="AnnotationNote"></a>
 </h1>
 <h2>
@@ -754,53 +636,6 @@
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">IsAlternate</td><td class="tdTableDefinition">IsAlternate</td><td class="tdTableDefinition">TINYINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-</table>
-<div class="references">
-<p class="subTitle">References</p>
-<ul>
-<li>
-<a href="#Annotation">Annotation</a> through (AnnotationID)</li>
-</ul>
-</div>
-</div>
-<div class="tableNameHeading">
-<h1>AnnotationPolygon<a name="AnnotationPolygon"></a>
-</h1>
-<h2>
-      (Physical Name: AnnotationPolygon)
-      </h2>
-</div>
-<div class="table">
-<table class="tableDefinition" width="100%">
-<tr>
-<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">AnnotationPolygonID (PK)</td><td class="tdTableDefinition">AnnotationPolygonID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">AnnotationID
-                &nbsp;(<a href="#Annotation">FK</a>)
-              </td><td class="tdTableDefinition">AnnotationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">PolygonX1</td><td class="tdTableDefinition">PolygonX1</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">PolygonY1</td><td class="tdTableDefinition">PolygonY1</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">PolygonX2</td><td class="tdTableDefinition">PolygonX2</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">PolygonY2</td><td class="tdTableDefinition">PolygonY2</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
