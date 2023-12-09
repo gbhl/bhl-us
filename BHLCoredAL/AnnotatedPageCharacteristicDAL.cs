@@ -13,30 +13,6 @@ namespace MOBOT.BHL.DAL
 {
     public partial class AnnotatedPageCharacteristicDAL
 	{
-        public bool AnnotatedPageCharacteristicDeleteByPageID(SqlConnection sqlConnection, 
-            SqlTransaction sqlTransaction, int annotatedPageID)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(
-                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("annotation.AnnotatedPageCharacteristicDeleteByPageID", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("AnnotatedPageID", SqlDbType.Int, null, false, annotatedPageID),
-                CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
-            {
-                int returnCode = CustomSqlHelper.ExecuteNonQuery(command, "ReturnCode");
-
-                if (returnCode == 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
         public AnnotatedPageCharacteristic AnnotatedPageCharacteristicSelectByPageID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,

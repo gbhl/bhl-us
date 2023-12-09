@@ -109,7 +109,6 @@
     <None Include="dbo\Tables\IAFile.sql" />
     <None Include="dbo\Tables\IndicatedPage.sql" />
     <None Include="dbo\Tables\IAScandata.sql" />
-    <None Include="dbo\Tables\BotanicusHarvestLog.sql" />
     <None Include="dbo\Tables\IAItemSet.sql" />
     <None Include="dbo\Tables\IAMarcControl.sql" />
     <None Include="dbo\Tables\TitleVariant.sql" />
@@ -126,12 +125,10 @@
     <None Include="dbo\Functions\vwSplitLanguage.sql" />
     <None Include="dbo\Stored Procedures\IAItemPublishToImportTables.sql" />
     <None Include="dbo\Stored Procedures\IAItemSelectForXMLDownload.sql" />
-    <None Include="dbo\Stored Procedures\BotanicusHarvestLogSelectRecent.sql" />
     <None Include="dbo\Stored Procedures\StatsSelectReadyForProductionBySource.sql" />
     <None Include="dbo\Stored Procedures\IAItemErrorSelectRecent.sql" />
     <None Include="dbo\Stored Procedures\StatsCountIAItemPendingApproval.sql" />
     <None Include="dbo\Stored Procedures\ImportLogSelectRecent.sql" />
-    <None Include="dbo\Stored Procedures\StatsSelectIAItemPendingApprovalGroupByAge.sql" />
     <None Include="dbo\Stored Procedures\ImportErrorSelectRecent.sql" />
     <None Include="dbo\Stored Procedures\IAItemSelectPendingApproval.sql" />
     <None Include="dbo\Stored Procedures\StatsSelectIAItemGroupByStatus.sql" />
@@ -190,7 +187,6 @@
     <None Include="dbo\Stored Procedures\IAPageSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\PageNameInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\IAPageInsertAuto.sql" />
-    <None Include="dbo\Stored Procedures\ItemFixProductionAssociatedTitles.sql" />
     <None Include="dbo\Stored Procedures\PageNameUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\IAPageUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\PageNameDeleteAuto.sql" />
@@ -225,7 +221,6 @@
     <None Include="dbo\Stored Procedures\TitleSelectNewByKeyAndSource.sql" />
     <None Include="dbo\Stored Procedures\ItemSelectNewByBarCodeAndSource.sql" />
     <None Include="dbo\Stored Procedures\IAMarcSelectByItem.sql" />
-    <None Include="dbo\Stored Procedures\Title_CreatorSelectNewByKeyCreatorAndSource.sql" />
     <None Include="dbo\Stored Procedures\PageSelectNewByKeyValuesAndSource.sql" />
     <None Include="dbo\Stored Procedures\IAMarcDataFieldDeleteByMarcID.sql" />
     <None Include="dbo\Stored Procedures\TitleTagSelectNewByKeyTagTextAndSource.sql" />
@@ -238,7 +233,6 @@
     <None Include="dbo\Stored Procedures\PageNameSelectNewByKeyValuesAndSource.sql" />
     <None Include="dbo\Stored Procedures\IAFileSelectForDownload.sql" />
     <None Include="dbo\Stored Procedures\IAScandataAltPageNumberSelectByScandataAndSequence.sql" />
-    <None Include="dbo\Stored Procedures\IAFileSelectByRemoteFileName.sql" />
     <None Include="dbo\Stored Procedures\IAScandataAltPageTypeDeleteByScandataID.sql" />
     <None Include="dbo\Stored Procedures\IAFileSelectByItem.sql" />
     <None Include="dbo\Stored Procedures\IAScandataAltPageNumberUpdateAuto.sql" />
@@ -277,15 +271,10 @@
     <None Include="dbo\Stored Procedures\IAItemSelectForPublishToImportTables.sql" />
     <None Include="dbo\Stored Procedures\TitleAssociationUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleAssociation_TitleIdentifierDeleteAuto.sql" />
-    <None Include="dbo\Stored Procedures\BotanicusHarvestLogSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleAssociationSelectAuto.sql" />
-    <None Include="dbo\Stored Procedures\BotanicusHarvestLogInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleAssociation_TitleIdentifierSelectByKey.sql" />
-    <None Include="dbo\Stored Procedures\BotanicusHarvestLogUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleAssociation_TitleIdentifierUpdateAuto.sql" />
-    <None Include="dbo\Stored Procedures\BotanicusHarvestLogDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleAssociation_TitleIdentifierInsertAuto.sql" />
-    <None Include="dbo\Stored Procedures\BotanicusHarvestLogSelectLatestEndDate.sql" />
     <None Include="dbo\Stored Procedures\TitleAssociationSelectByKey.sql" />
     <None Include="dbo\Stored Procedures\TitleAssociationInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleAssociation_TitleIdentifierSelectAuto.sql" />

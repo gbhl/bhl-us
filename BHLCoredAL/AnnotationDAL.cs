@@ -37,32 +37,6 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public Annotation AnnotationSelectByExternalIdentifer(
-            SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction,
-            String externalIdentifier,
-            int annotationSourceID)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("annotation.AnnotationSelectByExternalIdentifer",
-                connection, transaction,
-                CustomSqlHelper.CreateInputParameter("ExternalIdentifier", SqlDbType.NVarChar, 50, false, externalIdentifier),
-                CustomSqlHelper.CreateInputParameter("AnnotationSourceID", SqlDbType.Int, null, false, annotationSourceID)))
-            {
-                using (CustomSqlHelper<Annotation> helper = new CustomSqlHelper<Annotation>())
-                {
-                    List<Annotation> list = helper.ExecuteReader(command);
-                    if (list.Count > 0)
-                        return list[0];
-                    else
-                        return null;
-                }
-            }
-        }
-
-
         public List<CustomDataRow> AnnotationRelationSelectByAnnotationID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,

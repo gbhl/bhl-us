@@ -57,59 +57,24 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public bool AnnotationSubjectDeleteByAnnotationID(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, int annotationID)
+        public AnnotationSubject AnnotationSubjectSelect(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int annotationSubjectID)
         {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(
-                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("annotation.AnnotationSubjectDeleteByAnnotationID", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("AnnotationID", SqlDbType.Int, null, false, annotationID),
-                CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
-            {
-                int returnCode = CustomSqlHelper.ExecuteNonQuery(command, "ReturnCode");
-
-                if (returnCode == 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
-        public AnnotationSubject AnnotationSubjectInsertUnique(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, AnnotationSubject subject)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(
-                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("annotation.AnnotationSubjectInsertUnique", connection, transaction,
-                    CustomSqlHelper.CreateInputParameter("AnnotationID", SqlDbType.Int, null, false, subject.AnnotationID),
-                    CustomSqlHelper.CreateInputParameter("AnnotationSubjectCategoryID", SqlDbType.Int, null, true, subject.AnnotationSubjectCategoryID),
-                    CustomSqlHelper.CreateInputParameter("AnnotationKeywordTargetID", SqlDbType.Int, null, false, subject.AnnotationKeywordTargetID),
-                    CustomSqlHelper.CreateInputParameter("SubjectText", SqlDbType.NVarChar, 150, false, subject.SubjectText),
-                    CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("annotation.AnnotationSubjectSelect", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("AnnotationSubjectID", SqlDbType.Int, null, false, annotationSubjectID)))
             {
                 using (CustomSqlHelper<AnnotationSubject> helper = new CustomSqlHelper<AnnotationSubject>())
                 {
                     List<AnnotationSubject> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
-                    {
-                        AnnotationSubject o = list[0];
-                        list = null;
-                        return o;
-                    }
+                        return list[0];
                     else
-                    {
                         return null;
-                    }
                 }
             }
         }
+
     }
 }

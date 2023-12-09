@@ -14,19 +14,13 @@ namespace MOBOT.BHL.DAL
 {
 	public partial class AnnotationSubjectCategoryDAL
 	{
-        public AnnotationSubjectCategory AnnotationSubjectCategorySelectByCode(
-            SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction,
-            String categoryCode,
-            int annotationSourceID)
+        public AnnotationSubjectCategory AnnotationSubjectCategorySelect(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("annotation.AnnotationSubjectCategorySelectByCode", 
-                connection, transaction,
-                CustomSqlHelper.CreateInputParameter("SubjectCategoryCode", SqlDbType.NVarChar, 20, false, categoryCode),
-                CustomSqlHelper.CreateInputParameter("AnnotationSourceID", SqlDbType.Int, null, false, annotationSourceID)))
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("annotation.AnnotationSubjectCategorySelect",
+                connection, transaction, CustomSqlHelper.CreateInputParameter("AnnotationSubjectCategoryID", SqlDbType.Int, null, false, pageID)))
             {
                 using (CustomSqlHelper<AnnotationSubjectCategory> helper = new CustomSqlHelper<AnnotationSubjectCategory>())
                 {
@@ -38,6 +32,5 @@ namespace MOBOT.BHL.DAL
                 }
             }
         }
-
-	}
+    }
 }

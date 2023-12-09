@@ -14,40 +14,6 @@ namespace MOBOT.BHLImport.DAL
     public partial class IAFileDAL
 	{
         /// <summary>
-        /// Select the file with the specified RemoteFileName.
-        /// </summary>
-        /// <param name="sqlConnection">Sql connection or null.</param>
-        /// <param name="sqlTransaction">Sql transaction or null.</param>
-        /// <param name="remoteFileName">File name for which to look</param>
-        /// <returns>Object of type File.</returns>
-        public IAFile IAFileSelectByRemoteFileName(
-            SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction,
-            string remoteFileName)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("IAFileSelectByRemoteFileName", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("RemoteFileName", SqlDbType.NVarChar, 100, false, remoteFileName)))
-            {
-                using (CustomSqlHelper<IAFile> helper = new CustomSqlHelper<IAFile>())
-                {
-                    List<IAFile> list = helper.ExecuteReader(command);
-
-                    if (list.Count > 0)
-                    {
-                        return list[0];
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Select the file for the specified item with the specified RemoteFileName.
         /// </summary>
         /// <param name="sqlConnection">Sql connection or null.</param>

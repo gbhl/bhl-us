@@ -13,31 +13,6 @@ namespace MOBOT.BHL.Server
 
         #region AnnotatedPage methods
 
-        public AnnotatedPage AnnotatedPageSave(int annotatedItemId, string externalIdentifier,
-            int annotatedPageTypeID, string pageNumber)
-        {
-            AnnotatedPageDAL dal = new AnnotatedPageDAL();
-            AnnotatedPage page = dal.AnnotatedPageSelectByExternalIdentifer(null, null,
-                externalIdentifier, annotatedItemId);
-
-            if (page != null)
-            {
-                page.AnnotatedPageTypeID = annotatedPageTypeID;
-                page.PageNumber = pageNumber;
-                page = dal.AnnotatedPageUpdateAuto(null, null, page);
-            }
-            else
-            {
-                page = new AnnotatedPage();
-                page.ExternalIdentifier = externalIdentifier;
-                page.AnnotatedItemID = annotatedItemId;
-                page.AnnotatedPageTypeID = annotatedPageTypeID;
-                page.PageNumber = pageNumber;
-                page = dal.AnnotatedPageInsertAuto(null, null, page);
-            }
-            return page;
-        }
-
         public AnnotatedPage AnnotatedPageSelectByPageID(int pageID)
         {
             AnnotatedPageDAL dal = new AnnotatedPageDAL();
@@ -49,37 +24,20 @@ namespace MOBOT.BHL.Server
 
         #region AnnotatedPageCharacteristic methods
 
-        public bool AnnotatedPageCharacteristicDeleteByPageID(int annotatedPageId)
-        {
-            return new AnnotatedPageCharacteristicDAL().AnnotatedPageCharacteristicDeleteByPageID(
-                null, null, annotatedPageId);
-        }
-
         public AnnotatedPageCharacteristic AnnotatedPageCharacteristicByPageID(int annotatedPageId)
         {
             return new AnnotatedPageCharacteristicDAL().AnnotatedPageCharacteristicSelectByPageID(null, null, "BHL", annotatedPageId);
         }
 
-        public AnnotatedPageCharacteristic AnnotatedPageCharactersticSave(int annotatedPageId,
-            string characteristicDetail)
-        {
-            AnnotatedPageCharacteristic pageCharacteristic = new AnnotatedPageCharacteristic();
-            pageCharacteristic.AnnotatedPageID = annotatedPageId;
-            pageCharacteristic.CharacteristicDetail = characteristicDetail;
-            pageCharacteristic.CharacteristicDetailClean = _parseCharacteristicDetail(characteristicDetail);
-            return new AnnotatedPageCharacteristicDAL().AnnotatedPageCharacteristicInsertAuto(null, null,
-                pageCharacteristic);
-        }
-
         private static string _parseCharacteristicDetail(string characteristicDetail)
         {
             _formatEditionForPageCharacteristic(ref characteristicDetail);
-            _parseFeatureMarkupsForContent(ref characteristicDetail);
+            ParseFeatureMarkupsForContent(ref characteristicDetail);
             _parseTNotesForPageCharacteristic(ref characteristicDetail);
             _parseIconsForPageCharacteristic(ref characteristicDetail);
-            _tagItalics(ref characteristicDetail);
-            _tagEditorBrackets(ref characteristicDetail);
-            _parsePhysicalCharacteristics(ref characteristicDetail);
+            TagItalics(ref characteristicDetail);
+            TagEditorBrackets(ref characteristicDetail);
+            ParsePhysicalCharacteristics(ref characteristicDetail);
             return characteristicDetail;
         }
 
@@ -124,52 +82,9 @@ namespace MOBOT.BHL.Server
                 characteristicDetail = sb_end.ToString();
             }
 
-            //string[] patterns = { 
-            //                        "\\+([^=\\r\\n]*)",
-            //                        "=a([^=\\r\\n]*)",
-            //                        "=t([^=\\r\\n]*)",
-            //                        "=e([^=\\r\\n]*)",
-            //                        "=v([^=\\r\\n]*)",
-            //                        "=p([^=\\r\\n]*)",
-            //                        "=d([^=\\r\\n]*)",
-            //                        "=l([^=\\r\\n]*)",
-            //                        "=b([^=\\r\\n]*)",
-            //                        "=x([^=\\r\\n]*)",
-            //                    };
-
-            //foreach (string expression in patterns)
-            //{
-            //    System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(expression);
-            //    System.Text.RegularExpressions.Match match = regex.Match(characteristicDetail);
-            //    if (match.Groups.Count > 1)
-            //        Console.Write(match.Groups.Count);
-            //}
-
-            // Read the information from the line
-            //string pattern_book = @"(.*?)(\\n\S+)(.*)";
-            //string[] tokens_book = Regex.Split(characteristicDetail, pattern);
-            //string pattern_pubDetails = @"(.*?)(\\n\S+)(.*)";
-            //string[] tokens_pubDetails = Regex.Split(characteristicDetail, pattern);
-            //string pattern_book = @"(.*?)(\\n\S+)(.*)";
-            //string[] tokens_book = Regex.Split(characteristicDetail, pattern);
-            //string pattern_book = @"(.*?)(\\n\S+)(.*)";
-            //string[] tokens_book = Regex.Split(characteristicDetail, pattern);
-            //string pattern_book = @"(.*?)(\\n\S+)(.*)";
-            //string[] tokens_book = Regex.Split(characteristicDetail, pattern);
-
-            //string externalId = this.RegExGetValue(line, "\\+([^=\\r\\n]*)", 2);
-            //string author = this.RegExGetValue(line, "=a([^=\\r\\n]*)", 2);
-            //string title = this.RegExGetValue(line, "=t([^=\\r\\n]*)", 2);
-            //string edition = this.RegExGetValue(line, "=e([^=\\r\\n]*)", 2);
-            //string volume = this.RegExGetValue(line, "=v([^=\\r\\n]*)", 2);
-            //string pubDetails = this.RegExGetValue(line, "=p([^=\\r\\n]*)", 2);
-            //string date = this.RegExGetValue(line, "=d([^=\\r\\n]*)", 2);
-            //string location = this.RegExGetValue(line, "=l([^=\\r\\n]*)", 2);
-            //string isBeagleEra = this.RegExGetValue(line, "=b([^=\\r\\n]*)", 2);
-            //string inscription = this.RegExGetValue(line, "=x([^=\\r\\n]*)", 2);
-            _parseBook(ref characteristicDetail);
-            _parseVolume(ref characteristicDetail);
-            _parsePart(ref characteristicDetail);
+            ParseBook(ref characteristicDetail);
+            ParseVolume(ref characteristicDetail);
+            ParsePart(ref characteristicDetail);
         }      
 
         private static void _parseIconsForPageCharacteristic(ref string text)

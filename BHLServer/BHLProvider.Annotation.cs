@@ -13,11 +13,6 @@ namespace MOBOT.BHL.Server
     {
         #region Annotation methods
 
-        public Annotation AnnotationSelectAuto(int annotationId)
-        {
-            return new AnnotationDAL().AnnotationSelectAuto(null, null, annotationId);
-        }
-
         public List<Annotation> AnnotationsSelectByItemID(int itemID)
         {
             AnnotationDAL dal = new AnnotationDAL();
@@ -28,100 +23,6 @@ namespace MOBOT.BHL.Server
         {
             AnnotationDAL dal = new AnnotationDAL();
             return dal.AnnotationRelationSelectByAnnotationID(null, null, annotationID);
-        }
-
-        /// <summary>
-        /// Save or update an annotation and the associated PageAssociation
-        /// </summary>
-        /// <param name="annotationSourceID"></param>
-        /// <param name="externalIdentifier"></param>
-        /// <param name="sequenceNumber"></param>
-        /// <param name="comment"></param>
-        /// <param name="dataLoadEdit">Indicates if this save/update is coming from a bulk data load</param>
-        /// <returns>The saved/updated annotation</returns>
-        public Annotation AnnotationSave(int annotationSourceID, int annotatedPageId, string pageColumn,
-            string externalIdentifier, int sequenceNumber, string comment, bool dataLoadEdit)
-        {
-            AnnotationDAL dal = new AnnotationDAL();
-            Annotation annotation = dal.AnnotationSelectByExternalIdentifer(null, null,
-                externalIdentifier, annotationSourceID);
-
-            // Save/update the Association
-            if (annotation != null)
-            {
-                annotation.SequenceNumber = sequenceNumber;
-                // Don't update corrected text or comment info during bulk data loads
-                if (!dataLoadEdit) annotation.Comment = comment;
-                annotation = dal.AnnotationUpdateAuto(null, null, annotation);
-            }
-            else
-            {
-                annotation = new Annotation();
-                annotation.AnnotationSourceID = annotationSourceID;
-                annotation.ExternalIdentifier = externalIdentifier;
-                annotation.SequenceNumber = sequenceNumber;
-                annotation.Comment = comment;
-                annotation = dal.AnnotationInsertAuto(null, null, annotation);
-            }
-
-            // Save/update the PageAssociation
-            this.PageAnnotationSave(annotatedPageId, annotation.AnnotationID, pageColumn);
-
-            return annotation;
-        }
-
-        /// <summary>
-        /// Update the transcription details for an annotation
-        /// </summary>
-        /// <param name="externalIdentifier"></param>
-        /// <param name="textDescription"></param>
-        /// <param name="text"></param>
-        /// <param name="textCorrected"></param>
-        /// <param name="dataLoadEdit">Indicates if this save/update is coming from a bulk data load</param>
-        /// <returns></returns>
-        public Annotation AnnotationSaveText(int annotationSourceID, string externalIdentifier,
-            string textDescription, string text, string textCorrected, bool dataLoadEdit)
-        {
-            AnnotationDAL dal = new AnnotationDAL();
-            Annotation annotation = dal.AnnotationSelectByExternalIdentifer(null, null,
-                externalIdentifier, annotationSourceID);
-            
-            // Save/update the Association
-            if (annotation != null)
-            {
-                // Don't update corrected text or comment info during bulk data loads
-                annotation.AnnotationTextDescription = textDescription;
-                annotation.AnnotationText = 
-                annotation.AnnotationTextClean =            //init Clean & Display for parsing
-                annotation.AnnotationTextDisplay = text;
-                try
-                {
-                    string txtToClean = text, txtToDisplay = text;
-                    _parseAnnotationText(ref txtToDisplay, ref txtToClean);
-                    _formatCleanText(ref txtToClean);
-
-                    annotation.AnnotationTextClean = txtToClean;
-                    annotation.AnnotationTextDisplay = txtToDisplay;
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex.StackTrace);
-                }
-
-                // Don't update corrected text during bulk data loads
-                if (!dataLoadEdit) annotation.AnnotationTextCorrected = textCorrected;
-
-                try
-                {
-                    annotation = dal.AnnotationUpdateAuto(null, null, annotation);
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex.StackTrace);
-                }
-            }
-
-            return annotation;
         }
 
         #region Annotation Parse
@@ -136,15 +37,15 @@ namespace MOBOT.BHL.Server
         /// </summary>
         private static void _parseAnnotationText(ref string txtToDisplay, ref string txtToClean)
         {
-            _parseRelatedPages(ref txtToDisplay);
-            _formatEditionForAnnotation(ref txtToDisplay);
-            _tagTextualFeatureMarkupsForReference(ref txtToDisplay);
-            _tagWordBlock(ref txtToDisplay, ref txtToClean);
-            _parseTNoteReferences(ref txtToDisplay, ref txtToClean);
-            _parseMultiLines(ref txtToDisplay);
-            _parseIconsForAnnotation(ref txtToDisplay);
-            _parsePhysicalCharacteristics(ref txtToDisplay);
-            _yankFootNote(ref txtToDisplay);
+            ParseRelatedPages(ref txtToDisplay);
+            FormatEditionForAnnotation(ref txtToDisplay);
+            TagTextualFeatureMarkupsForReference(ref txtToDisplay);
+            TagWordBlock(ref txtToDisplay, ref txtToClean);
+            ParseTNoteReferences(ref txtToDisplay, ref txtToClean);
+            ParseMultiLines(ref txtToDisplay);
+            ParseIconsForAnnotation(ref txtToDisplay);
+            ParsePhysicalCharacteristics(ref txtToDisplay);
+            YankFootNote(ref txtToDisplay);
 
             // Hacks, hacks, and more hacks
 
@@ -168,34 +69,35 @@ namespace MOBOT.BHL.Server
         /// <summary>
         /// remove all unicode and html tags for Clean Text
         /// </summary>
-        private static void _formatCleanText(ref string txtClean)
+        private static void FormatCleanText(ref string txtClean)
         {
             txtClean = Regex.Replace(txtClean, @"&#?.+?;", " ");
             txtClean = Regex.Replace(txtClean, "<.+?>", " ");
         }
 
         #region format edition
-        private static void _formatEditionForAnnotation(ref string txtToDisplay)
-        {
-            _parseBook(ref txtToDisplay);
-            _parseVolume(ref txtToDisplay);
-            _parsePart(ref txtToDisplay);
-            _parseFrontSlipOrNote(ref txtToDisplay);
-            _parseRoman(ref txtToDisplay);
-            _parsePageCount(ref txtToDisplay);
-            _parseEndMatter(ref txtToDisplay);
-            _parseExtra(ref txtToDisplay);
-            _parseFinalEndSlipOrNote(ref txtToDisplay);
-            _parseAbstract(ref txtToDisplay);
-            _parseIndex(ref txtToDisplay);
-        }      
 
-		private static void _parseBook(ref string txtToDisplay)
+        private static void FormatEditionForAnnotation(ref string txtToDisplay)
+        {
+            ParseBook(ref txtToDisplay);
+            ParseVolume(ref txtToDisplay);
+            ParsePart(ref txtToDisplay);
+            ParseFrontSlipOrNote(ref txtToDisplay);
+            ParseRoman(ref txtToDisplay);
+            ParsePageCount(ref txtToDisplay);
+            ParseEndMatter(ref txtToDisplay);
+            ParseExtra(ref txtToDisplay);
+            ParseFinalEndSlipOrNote(ref txtToDisplay);
+            ParseAbstract(ref txtToDisplay);
+            ParseIndex(ref txtToDisplay);
+        }
+
+        private static void ParseBook(ref string txtToDisplay)
         {
             txtToDisplay = Regex.Replace(txtToDisplay, @"(#|\\)n\d{4}", " ");
         }
 
-        private static void _parseVolume(ref string txtToDisplay)
+        private static void ParseVolume(ref string txtToDisplay)
         {
             string pattern_volume = @"(.*?)(\.v)(\d{2})(\..*)";
             string[] tokens_volume = Regex.Split(txtToDisplay, pattern_volume);
@@ -221,12 +123,12 @@ namespace MOBOT.BHL.Server
             }
         }
 
-        private static void _parsePart(ref string txtToDisplay)
+        private static void ParsePart(ref string txtToDisplay)
         {
             txtToDisplay = Regex.Replace(txtToDisplay, @"\.p\d{2}", " ");
         }
 
-        private static void _parseFrontSlipOrNote(ref string txtToDisplay)
+        private static void ParseFrontSlipOrNote(ref string txtToDisplay)
         {
             string pattern_frontSlipOrNote = @"\\\\(.*?)(\.a)(0|1)(\d)(.*)";
             string[] tokens_frontSlipOrNote = Regex.Split(txtToDisplay, pattern_frontSlipOrNote);
@@ -239,7 +141,7 @@ namespace MOBOT.BHL.Server
 
                 if (int.Parse(tokens_frontSlipOrNote[3]) == 0)
                 {
-                    sb_frontSlipOrNote.Insert(0,'[');
+                    sb_frontSlipOrNote.Insert(0, '[');
                     sb_frontSlipOrNote.Append("only]");
                 }
                 else
@@ -258,7 +160,7 @@ namespace MOBOT.BHL.Server
             }
         }
 
-        private static void _parseRoman(ref string txtToDisplay)
+        private static void ParseRoman(ref string txtToDisplay)
         {
             //needs error checking
             string pattern_roman = @"\\\\(.*?)(\.b)(\d+)(r)(.*)";
@@ -275,22 +177,22 @@ namespace MOBOT.BHL.Server
             }
         }
 
-        private static void _parsePageCount(ref string txtToDisplay)
+        private static void ParsePageCount(ref string txtToDisplay)
         {
             txtToDisplay = Regex.Replace(txtToDisplay, @"\.c\d+", " ");
         }
 
-        private static void _parseEndMatter(ref string txtToDisplay)
+        private static void ParseEndMatter(ref string txtToDisplay)
         {
             txtToDisplay = Regex.Replace(txtToDisplay, @"\.d\d+", " ");
         }
 
-        private static void _parseExtra(ref string txtToDisplay)
+        private static void ParseExtra(ref string txtToDisplay)
         {
             txtToDisplay = Regex.Replace(txtToDisplay, @"\.e\d+", " ");
         }
 
-        private static void _parseFinalEndSlipOrNote(ref string txtToDisplay)
+        private static void ParseFinalEndSlipOrNote(ref string txtToDisplay)
         {
             string pattern_finalEndSlipOrNote = @"\\\\(.*?)(\.f)(0|1)(\d)(.*)";
             string[] tokens_finalEndSlipOrNote = Regex.Split(txtToDisplay, pattern_finalEndSlipOrNote);
@@ -321,87 +223,90 @@ namespace MOBOT.BHL.Server
             }
         }
 
-       private static void _parseAbstract(ref string txtToDisplay)
-       {
-           string pattern_abstract = @"\\\\(.*?)(\.g)(\d{4})(.*)";
-           string[] tokens_abstract = Regex.Split(txtToDisplay, pattern_abstract);
- 
-           while (tokens_abstract.Length > 1)
-           {
-               StringBuilder sb_abstract = new StringBuilder();
+        private static void ParseAbstract(ref string txtToDisplay)
+        {
+            string pattern_abstract = @"\\\\(.*?)(\.g)(\d{4})(.*)";
+            string[] tokens_abstract = Regex.Split(txtToDisplay, pattern_abstract);
 
-               if (tokens_abstract[2].Equals("0000"))
-                   sb_abstract.Append("[only abstract]");
-               else
+            while (tokens_abstract.Length > 1)
+            {
+                StringBuilder sb_abstract = new StringBuilder();
+
+                if (tokens_abstract[2].Equals("0000"))
+                    sb_abstract.Append("[only abstract]");
+                else
                     sb_abstract.Append("Abstract ").Append(tokens_abstract[2]);
 
-               txtToDisplay = sb_abstract.ToString();
+                txtToDisplay = sb_abstract.ToString();
 
-               tokens_abstract = Regex.Split(txtToDisplay, pattern_abstract);
-           }
-		}
+                tokens_abstract = Regex.Split(txtToDisplay, pattern_abstract);
+            }
+        }
 
-       private static void _parseIndex(ref string txtToDisplay)
-       {
-           string pattern_getTag = @"(^.*?)(:m\d{2}\.\w+)(.*$)";
-           string[] tokens_getTag = Regex.Split(txtToDisplay, pattern_getTag);
-
-           while (tokens_getTag.Length > 1)
-           {
-               string tag = tokens_getTag[2];
-               StringBuilder sb_tag = new StringBuilder();
-               sb_tag.Append("(.*?)(").Append(tag).Append(")(.*?)(").Append(tag).Append(")(.*)");
-               Regex rgxIndex = new Regex(sb_tag.ToString());
-               string[] tokens_index = rgxIndex.Split(txtToDisplay);
-
-               if (tokens_index.Length > 1)
-               {
-                   StringBuilder sb_index = new StringBuilder();
-                   sb_index.Append(tokens_index[1]).Append(" ").Append(tokens_index[3]).Append(" ").Append(tokens_index[5]);
-                   txtToDisplay = sb_index.ToString();
-                   tokens_getTag = Regex.Split(txtToDisplay, pattern_getTag);
-               }
-               else
-               {
-                   //only 1 instance of tag.  Delete, or keep?
-                   return;
-               }
-			}
-       }
-     
-        public static string _convert_to_roman(int num)
+        private static void ParseIndex(ref string txtToDisplay)
         {
-				if (num <= 0)
-					return "";
-				if (num >= 1000)
-					return "M" + _convert_to_roman(num - 1000);
-				else if (num >= 900)
-					return "CM" + _convert_to_roman(num - 900);
-				else if (num >= 500)
-					return "D" + _convert_to_roman(num - 500);
-				else if (num >= 100)
-					return "C" + _convert_to_roman(num - 100);
-				else if (num >= 90)
-					return "CX" + _convert_to_roman(num - 90);
-				else if (num >= 50)
-					return "L" + _convert_to_roman(num - 50);
-				else if (num >=10)
-					return "X" + _convert_to_roman(num - 10);
-				else if (num >= 9)
-					return "IX" + _convert_to_roman(num - 9);
-				else if (num >= 5)
-					return "V" + _convert_to_roman(num - 5);
-				else if (num >= 4)
-					return "IV" + _convert_to_roman(num - 4);
-				else 
-				   	return "I" + _convert_to_roman(num - 1);
-			}
+            string pattern_getTag = @"(^.*?)(:m\d{2}\.\w+)(.*$)";
+            string[] tokens_getTag = Regex.Split(txtToDisplay, pattern_getTag);
+
+            while (tokens_getTag.Length > 1)
+            {
+                string tag = tokens_getTag[2];
+                StringBuilder sb_tag = new StringBuilder();
+                sb_tag.Append("(.*?)(").Append(tag).Append(")(.*?)(").Append(tag).Append(")(.*)");
+                Regex rgxIndex = new Regex(sb_tag.ToString());
+                string[] tokens_index = rgxIndex.Split(txtToDisplay);
+
+                if (tokens_index.Length > 1)
+                {
+                    StringBuilder sb_index = new StringBuilder();
+                    sb_index.Append(tokens_index[1]).Append(" ").Append(tokens_index[3]).Append(" ").Append(tokens_index[5]);
+                    txtToDisplay = sb_index.ToString();
+                    tokens_getTag = Regex.Split(txtToDisplay, pattern_getTag);
+                }
+                else
+                {
+                    //only 1 instance of tag.  Delete, or keep?
+                    return;
+                }
+            }
+        }
+
+
+
+
+        public static string ConvertToRoman(int num)
+        {
+			if (num <= 0)
+				return "";
+			if (num >= 1000)
+				return "M" + ConvertToRoman(num - 1000);
+			else if (num >= 900)
+				return "CM" + ConvertToRoman(num - 900);
+			else if (num >= 500)
+				return "D" + ConvertToRoman(num - 500);
+			else if (num >= 100)
+				return "C" + ConvertToRoman(num - 100);
+			else if (num >= 90)
+				return "CX" + ConvertToRoman(num - 90);
+			else if (num >= 50)
+				return "L" + ConvertToRoman(num - 50);
+			else if (num >=10)
+				return "X" + ConvertToRoman(num - 10);
+			else if (num >= 9)
+				return "IX" + ConvertToRoman(num - 9);
+			else if (num >= 5)
+				return "V" + ConvertToRoman(num - 5);
+			else if (num >= 4)
+				return "IV" + ConvertToRoman(num - 4);
+			else 
+				return "I" + ConvertToRoman(num - 1);
+		}
         #endregion
         /// <summary>
         /// Denotes a range of lines delimited by unicode &#8212; 
         /// with optional &#8657; (to indicate lines from bottom)
         /// </summary>
-        private static void _parseMultiLines(ref string text)
+        private static void ParseMultiLines(ref string text)
         {
             string pattern = @"(^.*?)(\b)(\d+&#8212;\d+|\d+&#8212;&#8657;\d+)(\b.*)";
 			string[] tokens = Regex.Split(text, pattern);
@@ -415,7 +320,7 @@ namespace MOBOT.BHL.Server
                     Append(tokens[2].Length > 0 ? " from bottom" : "").
                     Append("</span>");                                   //close tag
 
-                _parseMultiLines(ref tokens[4]);                                        //recursively parse remainder of string
+                ParseMultiLines(ref tokens[4]);                                        //recursively parse remainder of string
                 sb.Append(tokens[4]);
 
                 text = sb.ToString(); 
@@ -433,7 +338,7 @@ namespace MOBOT.BHL.Server
         /// that _parseFeatureMarkups has already been called and formatted this out, but the regular
         /// expression is overloaded to account for the extra "$$" just in case.
         /// </summary>
-        private static void _tagWordBlock(ref string txtDisplay, ref string txtClean)
+        private static void TagWordBlock(ref string txtDisplay, ref string txtClean)
         {
             string pattern = @"(^.*?)(\$\s*)(\${0,2}.+?)(\$)(.*$)";
             //string pattern = @"(^.*?)(\$)(.*?)(\$)(.*$)";
@@ -444,7 +349,7 @@ namespace MOBOT.BHL.Server
                               sb_Clean = new StringBuilder(); 
 
                 // parse non-word block text for taglines
-                __parseNonWordBlock(ref tokens[1]);
+                ParseNonWordBlock(ref tokens[1]);
                 sb_Display.Append(tokens[1]);                
 
                 //wrap word block
@@ -459,7 +364,7 @@ namespace MOBOT.BHL.Server
                 if (tokens[5].Length > 0)
                 {
                     string stub = tokens[5];
-                    _tagWordBlock(ref tokens[5], ref stub);
+                    TagWordBlock(ref tokens[5], ref stub);
                     sb_Display.Append(tokens[5]);
                     sb_Clean.Append(stub);
                 }
@@ -469,24 +374,24 @@ namespace MOBOT.BHL.Server
             else
             {
                 // no word blocks; parse for taglines
-                __parseNonWordBlock(ref txtDisplay);             
+                ParseNonWordBlock(ref txtDisplay);             
                 txtClean = String.Empty;
             }
         }
 
-        private static void __parseNonWordBlock(ref string text)
+        private static void ParseNonWordBlock(ref string text)
         {
-            ___tagLinePosition(ref text);
-            ___tagCompositePosition(ref text);
-            ___tagScoredLines(ref text);
-            ___parseSingleLine(ref text);
-            ___parseLineBreaks(ref text);
+            TagLinePosition(ref text);
+            TagCompositePosition(ref text);
+            TagScoredLines(ref text);
+            ParseSingleLine(ref text);
+            ParseLineBreaks(ref text);
         }
 
         /// <summary>
         /// Lookup currently inlined, vs. database
         /// </summary>
-        private static void ___tagLinePosition(ref string text)
+        private static void TagLinePosition(ref string text)
         {
             Dictionary<string, string> _LINE_POSITION = new Dictionary<string, string>(){
                 {"a", "at"}, 
@@ -527,7 +432,7 @@ namespace MOBOT.BHL.Server
         /// do not omit the "line" term before the line number.
         /// </summary>
         /// <param name="text"></param>
-        private static void ___tagCompositePosition(ref string text)
+        private static void TagCompositePosition(ref string text)
         {
             string pattern = @"(^|.*)(at|bottom-margin|crossing-out|drawing|unmarked|top-margin|underline|annotation|mark resembling|apparently unintentional mark)(</span>&#8212;)(\d+)($|.*)";
             string[] tokens = Regex.Split(text, pattern);
@@ -564,7 +469,7 @@ namespace MOBOT.BHL.Server
             }
         }
 
-        private static void ___tagScoredLines(ref string text)
+        private static void TagScoredLines(ref string text)
         {
             Dictionary<string, string> _SCORE_TAGS = new Dictionary<string, string>(){
                 {"m\\+m\\+m", "multiple score"},
@@ -597,7 +502,7 @@ namespace MOBOT.BHL.Server
             }
         }
 
-        private static void ___parseLineBreaks(ref string text)
+        private static void ParseLineBreaks(ref string text)
         {
             text = Regex.Replace(text, @"\s+/\s+", "<br>");
         }
@@ -611,7 +516,7 @@ namespace MOBOT.BHL.Server
         ///                     "from_\n" (for Related Pages)
         /// 
         /// </summary>
-        private static void ___parseSingleLine(ref string text)
+        private static void ParseSingleLine(ref string text)
         {
             string pattern_lineTag = @"(^\s*|.*?/\s*@?)(&#8657;|@?\b)(\d+)(?!\d*&#8212;)(.*)";
             string[] tokens_lineTag = Regex.Split(text, pattern_lineTag);
@@ -626,13 +531,13 @@ namespace MOBOT.BHL.Server
                    Append("</span>");
 
                     //parse remainder
-                   ___parseSingleLine(ref tokens_lineTag[4]);
+                   ParseSingleLine(ref tokens_lineTag[4]);
                    sb.Append(tokens_lineTag[4]);
                    text = sb.ToString();
             }
         }
 
-        private static string ___parseLineBreaksAndSingleLine(string text)
+        private static string ParseLineBreaksAndSingleLine(string text)
         {
             string pattern_lineBreak = @"(^.*?\s+)(\/)(\s+.*$)",
                    pattern_lineTag = @"(^|.*?\s+)(\d+)(\s+.*)";
@@ -666,39 +571,28 @@ namespace MOBOT.BHL.Server
         /// the instance of "$$m1a|h1" needs to be deleted since it will be explained in the corresponding t-note.
         /// "\m1a" needs to be translated, however.
         /// </summary>
-        private static void _tagTextualFeatureMarkupsForReference(ref string txtDisplay)
+        private static void TagTextualFeatureMarkupsForReference(ref string txtDisplay)
         {
-            _parseFeatureMarkupsForReference(ref txtDisplay);
-            _parseFeatureMarkupsForContent(ref txtDisplay);
-            _parseTags(ref txtDisplay);
+            ParseFeatureMarkupsForReference(ref txtDisplay);
+            ParseFeatureMarkupsForContent(ref txtDisplay);
+            ParseTags(ref txtDisplay);
         }
 
-        /*
-        private static void _tagTextualFeatureMarkupsForContent(ref string txtDisplay)
+        private static void ParseTags(ref string txtDisplay)
         {
-            _parseFeatureMarkupsForContent(ref txtDisplay);
-            _parseTags(ref txtDisplay);
-        }
-        */
-
-        private static void _parseTags(ref string txtDisplay)
-        {
-            _tagEditorBrackets(ref txtDisplay);
-            _tagItalics(ref txtDisplay);
-            _tagFaint(ref txtDisplay);
-            _tagLineBreaks(ref txtDisplay);
-            _tag_paragraphs(ref txtDisplay);
-            _tag_underlined(ref txtDisplay);
-            _tag_doubleUnderlined(ref txtDisplay);
-            _tag_insertWithCaret(ref txtDisplay);
-            _tag_insertWithoutCaret(ref txtDisplay);
-            _tag_genderSign(ref txtDisplay, "male", "&#9794;");
-            _tag_genderSign(ref txtDisplay, "female", "&#9792;");
-            _tagSuperAndSubScripts(ref txtDisplay);
-            //_tag_superscript(ref txtDisplay);
-            //_tag_subscript(ref txtDisplay);
-            _tag_pinhole(ref txtDisplay);
-            _tag_horizontalSpace(ref txtDisplay);
+            TagEditorBrackets(ref txtDisplay);
+            TagItalics(ref txtDisplay);
+            TagFaint(ref txtDisplay);
+            TagLineBreaks(ref txtDisplay);
+            Tag_paragraphs(ref txtDisplay);
+            Tag_doubleUnderlined(ref txtDisplay);
+            Tag_insertWithCaret(ref txtDisplay);
+            Tag_insertWithoutCaret(ref txtDisplay);
+            Tag_genderSign(ref txtDisplay, "male", "&#9794;");
+            Tag_genderSign(ref txtDisplay, "female", "&#9792;");
+            TagSuperAndSubScripts(ref txtDisplay);
+            Tag_pinhole(ref txtDisplay);
+            Tag_horizontalSpace(ref txtDisplay);
         }
 
         /// <summary>
@@ -707,7 +601,7 @@ namespace MOBOT.BHL.Server
         /// 
         /// markup instances currently appear as "$$...|h*"
         /// </summary>
-        private static void _parseFeatureMarkupsForReference(ref string text)
+        private static void ParseFeatureMarkupsForReference(ref string text)
         {
             text = Regex.Replace(text, @"\$\$.+?\|h.", " ");
         }
@@ -715,7 +609,7 @@ namespace MOBOT.BHL.Server
         /// <summary>
         /// Used for both AnnotationNote and Page Characteristics
         /// </summary>
-        private static void _parseFeatureMarkupsForContent(ref string text)
+        private static void ParseFeatureMarkupsForContent(ref string text)
         {
             //first have to parse out "$$...|h*" tokens
             string pattern = @"(.*?)(\$\$)(.+?)(\|h.)(.*)";
@@ -738,7 +632,7 @@ namespace MOBOT.BHL.Server
             }
         }
 
-        private static void _tagEditorBrackets(ref string text)
+        private static void TagEditorBrackets(ref string text)
         {
             string pattern_editorBrackets = @"(.*?)(\\p8)(.+?)(\\p9)(.*)";
             string[] tokens_editorBrackets = Regex.Split(text, pattern_editorBrackets);
@@ -754,11 +648,10 @@ namespace MOBOT.BHL.Server
                                   Append(tokens_editorBrackets[5]);
 
                 text = sb_editorBrackets.ToString();
-                tokens_editorBrackets = Regex.Split(text, pattern_editorBrackets);
 			}
         }
 
-        private static void _tagItalics(ref string text)
+        private static void TagItalics(ref string text)
         {
             string pattern_italics = @"(.*?)(\\a)(.+?)(\\c)(.*)";
             string[] tokens_italics = Regex.Split(text, pattern_italics);
@@ -776,7 +669,7 @@ namespace MOBOT.BHL.Server
 			}
         }
 
-        private static void _tagFaint(ref string text)
+        private static void TagFaint(ref string text)
         {
             string pattern_faint = @"(.*?)(\\f)(.+?)(\\g)(.*)";
             string[] tokens_faint = Regex.Split(text, pattern_faint);
@@ -791,15 +684,15 @@ namespace MOBOT.BHL.Server
                            Append(tokens_faint[5]);
                 text = sb_faint.ToString();
                 tokens_faint = Regex.Split(text, pattern_faint);
-			}
+            }
         }
 
-        private static void _tagLineBreaks(ref string text)
+        private static void TagLineBreaks(ref string text)
         {
             string pattern_lineBreaks = @"(.*?)(\\b)(.*)";
             string[] tokens_lineBreaks = Regex.Split(text, pattern_lineBreaks);
 
-			while (tokens_lineBreaks.Length > 1)
+            while (tokens_lineBreaks.Length > 1)
             {
                 StringBuilder sb_lineBreaks = new StringBuilder();
                 sb_lineBreaks.Append(tokens_lineBreaks[1]).Append("<br>").Append(tokens_lineBreaks[3]);
@@ -807,9 +700,9 @@ namespace MOBOT.BHL.Server
                 text = sb_lineBreaks.ToString();
                 tokens_lineBreaks = Regex.Split(text, pattern_lineBreaks);
             }
-		}
+        }
 
-        private static void _tag_paragraphs(ref string text)
+        private static void Tag_paragraphs(ref string text)
         {
             string pattern_paragraphs = @"(.*?)(\\N)(.*)";
             string[] tokens_paragraphs = Regex.Split(text, pattern_paragraphs);
@@ -821,9 +714,9 @@ namespace MOBOT.BHL.Server
                 text = sb_paragraphs.ToString();
                 tokens_paragraphs = Regex.Split(text, pattern_paragraphs);
             }
-        }	
+        }
 
-        private static void _tag_underlined(ref string text)
+        private static void Tag_underlined(ref string text)
         {
             string pattern_underlined = @"(.*?)(\\u)(.+?)(\\v)(.*)";
             string[] tokens_underlined = Regex.Split(text, pattern_underlined);
@@ -841,8 +734,8 @@ namespace MOBOT.BHL.Server
                 tokens_underlined = Regex.Split(text, pattern_underlined);
             }
         }
-        
-        private static void _tag_doubleUnderlined(ref string text)
+
+        private static void Tag_doubleUnderlined(ref string text)
         {
             string pattern_dblUnderlined = @"(.*?)(\\U)(.+?)(\\V)(.*)";
             string[] tokens_dblUnderlined = Regex.Split(text, pattern_dblUnderlined);
@@ -858,12 +751,12 @@ namespace MOBOT.BHL.Server
 
                 text = sb_dblUnderlined.ToString();
                 tokens_dblUnderlined = Regex.Split(text, pattern_dblUnderlined);
-			}
+            }
         }
 
-        private static void _tag_insertWithCaret(ref string text)
-		{   
-			string pattern_iwc = @"(.*?)(\/\^)(.+?)(\|\^)(.*)";
+        private static void Tag_insertWithCaret(ref string text)
+        {
+            string pattern_iwc = @"(.*?)(\/\^)(.+?)(\|\^)(.*)";
             string[] tokens_iwc = Regex.Split(text, pattern_iwc);
 
             while (tokens_iwc.Length > 1)
@@ -876,10 +769,10 @@ namespace MOBOT.BHL.Server
                        Append(tokens_iwc[5]);
                 text = sb_iwc.ToString();
                 tokens_iwc = Regex.Split(text, pattern_iwc);
-			}
+            }
         }
 
-        private static void _tag_insertWithoutCaret(ref string text)
+        private static void Tag_insertWithoutCaret(ref string text)
         {
             string pattern_iwc = @"(.*?)(\/\/\^)(.+?)(\|\/\^)(.*)";
             string[] tokens_iwc = Regex.Split(text, pattern_iwc);
@@ -897,7 +790,7 @@ namespace MOBOT.BHL.Server
             }
         }
 
-        private static void _tag_genderSign(ref string text, string gender, string symbol)
+        private static void Tag_genderSign(ref string text, string gender, string symbol)
         {
             //should it be in database?
             Regex rgxGender = new Regex("(.*?)(\\\\\\[" + gender + "\\])(.*)");
@@ -910,7 +803,7 @@ namespace MOBOT.BHL.Server
         /// Since the patterns have the same delimiters, we have to determine which we encounter first
         /// to apply the appropriate formatting
         /// </summary>
-        private static void _tagSuperAndSubScripts(ref string text)
+        private static void TagSuperAndSubScripts(ref string text)
         {
             string pattern_superscript = @"(.*?)(\\\+)(.+?)(\\-)(.*)",
                    pattern_subscript = @"(.*?)(\\-)(.+?)(\\\+)(.*)";
@@ -931,7 +824,7 @@ namespace MOBOT.BHL.Server
                                    Append("</sup>");
 
                     //parse remainder
-                    _tagSuperAndSubScripts(ref tokens_superscript[5]);
+                    TagSuperAndSubScripts(ref tokens_superscript[5]);
 
                     sb_superscript.Append(tokens_superscript[5]);
                     text = sb_superscript.ToString();
@@ -950,7 +843,7 @@ namespace MOBOT.BHL.Server
                                  Append("</sub>");
 
                     //parse remainder
-                    _tagSuperAndSubScripts(ref tokens_subscript[5]);
+                    TagSuperAndSubScripts(ref tokens_subscript[5]);
 
                     sb_subscript.Append(tokens_subscript[5]);
                     text = sb_subscript.ToString();
@@ -959,23 +852,23 @@ namespace MOBOT.BHL.Server
             //else:  they're equal (-1), so no matches
         }
 
-        private static void _tag_pinhole(ref string text)
-		{
+        private static void Tag_pinhole(ref string text)
+        {
             Regex.Replace(text, @"\\!", "&nbsp;<b>&dagger;</b>&nbsp;");
         }
 
-        private static void _tag_horizontalSpace(ref string text)
+        private static void Tag_horizontalSpace(ref string text)
         {
             Regex.Replace(text, @"\[space\]", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-        }		
-            
+        }
+
         #endregion
 
         /// <summary>
         /// replaces icon tags with desired lookup
         /// Lookup is currently inlined, vs. database
         /// </summary>
-        private static void _parseIconsForAnnotation(ref string text)
+        private static void ParseIconsForAnnotation(ref string text)
         {
             foreach (KeyValuePair<string, string> kvp in BHLProvider.ICONS)
             {
@@ -992,7 +885,7 @@ namespace MOBOT.BHL.Server
         /// format tnote references.  Content it refers to is parsed in _parseTNoteContent
         /// superscripts references for Display, deletes entirely for Clean
         /// </summary>
-        private static void _parseTNoteReferences(ref string txtDisplay, ref string txtClean)
+        private static void ParseTNoteReferences(ref string txtDisplay, ref string txtClean)
         {
             //parse Display
             string reference_pattern = @"(.*?)(\\_)(t\d+)(\|_)(.*)";
@@ -1012,13 +905,13 @@ namespace MOBOT.BHL.Server
             //parse Clean
             txtClean = Regex.Replace(txtClean, @"\\_t\d+\|_", " ");
         }
-        
+
         /// <summary>
         /// The tnote reference-content formatting was previously done on the same line.
         /// Now, the references are created in Annotation, while the content referred to
         /// is formatted in AnnotationNote.
         /// </summary>
-        private static void _parseTNoteContent(ref string text)
+        private static void ParseTNoteContent(ref string text)
         {
             string content_pattern = @"(.*?)(\\_)(t\d+)(.+?)(\|_)(.*)";
             string[] content_tokens = Regex.Split(text, content_pattern);
@@ -1037,66 +930,8 @@ namespace MOBOT.BHL.Server
             }
         }
 
-        //private static void _parseTNotes(ref string text)
-        //{
-        //    foreach (KeyValuePair<string, string> kvp in BHLProvider.T_NOTES)
-        //    {
-        //        if (Regex.IsMatch(text, kvp.Key))
-        //        {
-        //            StringBuilder sb_tnote = new StringBuilder();
-        //            string hack = kvp.Key.Substring(0,kvp.Key.Length-1);
-        //            sb_tnote.Append(@"(.*?)(""\.").
-        //                     Append(kvp.Key).
-        //                     Append(@""")(.*?)(""_").
-        //                     Append(kvp.Key).Append("|_").Append(hack).
-        //                     Append(@""")(.*)");
-        //            string[] tokens_tnote = Regex.Split(text, sb_tnote.ToString());
 
-        //            if (tokens_tnote.Length > 1) //key found
-        //            {
-        //                StringBuilder sb_parsed = new StringBuilder();
-        //                sb_parsed.Append(tokens_tnote[1]).Append(tokens_tnote[3]);
-
-        //                //extract footnote
-        //                string pattern_footnote = @"(\\_)(\w+)(\|_)(.*)";
-        //                string[] intern_tokens = Regex.Split(tokens_tnote[5], pattern_footnote);
-        //                if (intern_tokens.Length > 1)
-        //                {
-        //                    StringBuilder sb_tnoteID = new StringBuilder();
-        //                    sb_tnoteID.Append("tnote_").Append(intern_tokens[2]);
-        //                    string tnote_ID = sb_tnoteID.ToString();
-        //                    int tref = int.Parse(intern_tokens[2].Substring(1));
-
-        //                    sb_parsed.Append("<span class=\"tnote-ref\" onmouseover=\"")           //ref to footnote
-        //                             .Append("on_tnote_mouseover('#")
-        //                             .Append(tnote_ID)
-        //                             .Append("')\" ")
-        //                             .Append("onmouseout=\"")
-        //                             .Append("on_tnote_mouseout('#")
-        //                             .Append(tnote_ID)
-        //                             .Append("')\" ")
-        //                             .Append("alt=\"")                                              //alt tag
-        //                             .Append(kvp.Value)
-        //                             .Append("\"><sup class=\"tnote\">t")
-        //                             .Append(tref)
-        //                             .Append("</sup></span> ")             
-        //                             .Append(intern_tokens[4])                                      //trailing content
-        //                             .Append("<div id=\"")                                          //footnote
-        //                             .Append(tnote_ID)
-        //                             .Append("\" class=\"tnote\">t")   
-        //                             .Append(tref)                                  
-        //                             .Append("-")
-        //                             .Append(kvp.Value)
-        //                             .Append("</div>");   
-        //                }
-
-        //                text = sb_parsed.ToString();
-        //            }
-        //        }
-        //    }
-        //}
-
-        private static void _parsePhysicalCharacteristics(ref string text)
+        private static void ParsePhysicalCharacteristics(ref string text)
         {
             Dictionary<string,string> _PHYSICAL_CHARACTERISTICS = new Dictionary<string,string>{
                  {@"\\Cl00p", "pale cream laid paper"}, 
@@ -1119,9 +954,9 @@ namespace MOBOT.BHL.Server
             }
         }
 
-        private static string _parseClassifiedTerms(string text)
+        private static string ParseClassifiedTerms(string text)
         {
-            Dictionary<string,string> _CLASSIFIED_TERMS = new Dictionary<string,string>(){
+            Dictionary<string, string> _CLASSIFIED_TERMS = new Dictionary<string, string>(){
                {@"\W+faz\W+", "named fauna"},
                {@"\W+flz\W+", "flora"},
                {@"\W+gez\W+", "geological features"},
@@ -1131,7 +966,7 @@ namespace MOBOT.BHL.Server
                {@"\W+znz\W+", "people and references"},
             };
 
-            foreach (KeyValuePair<string,string>kvp in _CLASSIFIED_TERMS)
+            foreach (KeyValuePair<string, string> kvp in _CLASSIFIED_TERMS)
             {
                 Regex.Replace(text, kvp.Key, kvp.Value);
             }
@@ -1139,7 +974,7 @@ namespace MOBOT.BHL.Server
             return text;
         }
 
-        private static void _yankFootNote(ref string text)
+        private static void YankFootNote(ref string text)
         {
             string pattern_extern = @"(.*)(\\_\S+)(.*)";
             string[] extern_tokens = Regex.Split(text, pattern_extern);
@@ -1171,7 +1006,7 @@ namespace MOBOT.BHL.Server
         /// Parses for related pages (example format "from_\n0283.v00.p00.f1000")
         /// This should be run before _formatEdition since it looks for a similar format
         /// </summary>
-        private static void _parseRelatedPages(ref string txtToDisplay)
+        private static void ParseRelatedPages(ref string txtToDisplay)
         {
             string pattern = @"(.*?)(from_\\)(\S+)(.*)";
 
@@ -1183,15 +1018,15 @@ namespace MOBOT.BHL.Server
 
                 //build related page content
                 sbPrp.Append(" from ");
-                sbPrp.Append(__buildPageLinkByExternalIdentifier(tokens[3]));
+                sbPrp.Append(BuildPageLinkByExternalIdentifier(tokens[3]));
                 sbPrp.Append(tokens[4]);
 
-                txtToDisplay = sbPrp.ToString(); 
+                txtToDisplay = sbPrp.ToString();
                 tokens = Regex.Split(txtToDisplay, pattern);
             }
         }
 
-        private static string __buildPageLinkByExternalIdentifier(string str)
+        private static string BuildPageLinkByExternalIdentifier(string str)
         {
             CustomDataRow row = new AnnotatedPageDAL().GetRelatedPageByExternalIdentifier(null, null, str);
             if (row != null)
@@ -1209,65 +1044,15 @@ namespace MOBOT.BHL.Server
         }
         #endregion
 
-        /// <summary>
-        /// Delete all supporting records (relation, note, subject, concept, mark) for the specified annotation
-        /// </summary>
-        /// <param name="annotationId"></param>
-        public void AnnotationClear(int annotationId)
-        {
-            // Since this is a data load, delete supporting records.  The data load will replace them.
-            this.AnnotationRelationDeleteByAnnotationID(annotationId);
-            this.AnnotationNoteDeleteByAnnotationID(annotationId);
-            this.Annotation_AnnotationConceptDeleteByAnnotationId(annotationId);
-            this.AnnotationSubjectDeleteByAnnotationId(annotationId);
-            this.AnnotationPolygonDeleteByAnnotationID(annotationId);
-        }
-
         #endregion Annotation methods
-        
-
-        #region AnnotationRelation methods
-
-        public AnnotationRelation AnnotationRelationSave(int annotationId, string relatedExternalIdentifier,
-            string note)
-        {
-            AnnotationRelation relation = new AnnotationRelation();
-            relation.AnnotationID = annotationId;
-            relation.RelatedExternalIdentifier = relatedExternalIdentifier;
-            relation.Note = note;
-            return new AnnotationRelationDAL().AnnotationRelationInsertAuto(null, null, relation);
-        }
-
-        public bool AnnotationRelationDeleteByAnnotationID(int annotationId)
-        {
-            return new AnnotationRelationDAL().AnnotationRelationDeleteByAnnotationID(
-                null, null, annotationId);
-        }
-
-        #endregion AnnotationRelation methods
 
         #region AnnotationNote methods
 
-        public AnnotationNote AnnotationNoteSave(int annotationId, string noteText, byte isAlternate)
+        private static void ParseAnnotationNote(ref string txtDisplay, ref string txtClean)
         {
-            AnnotationNote note = new AnnotationNote();
-            note.AnnotationID = annotationId;
-            note.NoteText = noteText;
-            note.IsAlternate = isAlternate;
-
-            string txtDisplay = noteText, txtClean = noteText;
-            _parseAnnotationNote(ref txtDisplay, ref txtClean);
-            note.NoteTextDisplay = txtDisplay;
-            note.NoteTextClean = txtClean;
-
-            return new AnnotationNoteDAL().AnnotationNoteInsertAuto(null, null, note);
-        }
-
-        private static void _parseAnnotationNote(ref string txtDisplay, ref string txtClean)
-        {
-            _removeRelatedPageReference(ref txtDisplay);
-            _tagTextualFeatureMarkupsForReference(ref txtDisplay);
-            _parseTNoteContent(ref txtDisplay);
+            RemoveRelatedPageReference(ref txtDisplay);
+            TagTextualFeatureMarkupsForReference(ref txtDisplay);
+            ParseTNoteContent(ref txtDisplay);
 
             // Hacks, hacks, and more hacks
 
@@ -1275,17 +1060,12 @@ namespace MOBOT.BHL.Server
             txtDisplay = txtDisplay.Replace("_", " ");
         }
 
-        private static void _removeRelatedPageReference(ref string text)
+        private static void RemoveRelatedPageReference(ref string text)
         {
             //example of what to remove:  "[from_\n0815.v00.p00.f1000]"
             text = Regex.Replace(text, @"\[?from_\\\S+\]?", String.Empty);
         }
 
-        public bool AnnotationNoteDeleteByAnnotationID(int annotationId)
-        {
-            return new AnnotationNoteDAL().AnnotationNoteDeleteByAnnotationID(
-                null, null, annotationId);
-        }
 
         public List<AnnotationNote> AnnotationNoteSelectByAnnotationID(int annotationID)
         {
@@ -1296,62 +1076,13 @@ namespace MOBOT.BHL.Server
 
         #region Annotation_AnnotationConcept methods
 
-        public Annotation_AnnotationConcept Annotation_AnnotationConceptSave(int annotationId, string conceptCode,
-            int keywordTargetId)
-        {
-            Annotation_AnnotationConceptDAL dal = new Annotation_AnnotationConceptDAL();
-            Annotation_AnnotationConcept concept = dal.Annotation_AnnotationConceptSelectAuto(null, null, 
-                annotationId, conceptCode, keywordTargetId);
-
-            if (concept == null)
-            {
-                concept = new Annotation_AnnotationConcept();
-                concept.AnnotationID = annotationId;
-                concept.AnnotationConceptCode = conceptCode;
-                concept.AnnotationKeywordTargetID = keywordTargetId;
-                concept = dal.Annotation_AnnotationConceptInsertAuto(null, null, concept);
-            }
-
-            return concept;
-        }
-
-        public bool Annotation_AnnotationConceptDeleteByAnnotationId(int annotationId)
-        {
-            return new Annotation_AnnotationConceptDAL().Annotation_AnnotationConceptDeleteByAnnotationID(
-                null, null, annotationId);
-        }
-
         #endregion Annotation_AnnotationConcept methods
 
         #region AnnotationSubject methods
 
-        public AnnotationSubjectCategory AnnotationSubjectCategorySelectAuto(int annotationSubjectCategoryID)
+        public AnnotationSubjectCategory AnnotationSubjectCategorySelect(int annotationSubjectCategoryID)
         {
-            return new AnnotationSubjectCategoryDAL().AnnotationSubjectCategorySelectAuto(null, null, annotationSubjectCategoryID);
-        }
-
-        public AnnotationSubject AnnotationSubjectSave(int annotationId, int sourceId, string categoryName, 
-            int keywordTargetId, string subjectText)
-        {
-            AnnotationSubjectCategory category = new AnnotationSubjectCategoryDAL().AnnotationSubjectCategorySelectByCode(
-                null, null, categoryName, sourceId);
-
-            AnnotationSubject subject = new AnnotationSubject();
-            subject.AnnotationID = annotationId;
-            subject.AnnotationSubjectCategoryID = category.AnnotationSubjectCategoryID;
-            subject.AnnotationKeywordTargetID = keywordTargetId;
-
-            // Replace italics indicators in the subject text.  If more formatting elements need to 
-            // be processed, move this to its own method.
-            subjectText = subjectText.Replace("\\a", "<i>").Replace("\\c", "</i>");
-
-            subject.SubjectText = subjectText;
-            return new AnnotationSubjectDAL().AnnotationSubjectInsertUnique(null, null, subject);
-        }
-
-        public bool AnnotationSubjectDeleteByAnnotationId(int annotationId)
-        {
-            return new AnnotationSubjectDAL().AnnotationSubjectDeleteByAnnotationID(null, null, annotationId);
+            return new AnnotationSubjectCategoryDAL().AnnotationSubjectCategorySelect(null, null, annotationSubjectCategoryID);
         }
 
         public List<CustomDataRow> AnnotationSubjectSelectByAnnotationID(int annotationId)
@@ -1369,9 +1100,9 @@ namespace MOBOT.BHL.Server
             return new AnnotationDAL().SearchPageForSubject(null, null, annotationSubjectCategoryID, subjectID);
         }
 
-        public AnnotationSubject AnnotationSubjectSelectAuto(int subjectID)
+        public AnnotationSubject AnnotationSubjectSelect(int subjectID)
         {
-            return new AnnotationSubjectDAL().AnnotationSubjectSelectAuto(null, null, subjectID);
+            return new AnnotationSubjectDAL().AnnotationSubjectSelect(null, null, subjectID);
         }
 
         public List<AnnotationSubject> AnnotationSubjectSelectBySubjectText(string subjectText, int annotationSourceID)
@@ -1382,11 +1113,6 @@ namespace MOBOT.BHL.Server
         #endregion AnnotationSubject methods
 
         #region AnnotationConcept methods
-
-        public AnnotationConcept AnnotationConceptSelectAuto(string annotationConceptCode)
-        {
-            return new AnnotationConceptDAL().AnnotationConceptSelectAuto(null, null, annotationConceptCode);
-        }
 
         public List<AnnotationConcept> AnnotationConceptSelectAll(int annotationSourceID)
         {
@@ -1409,15 +1135,5 @@ namespace MOBOT.BHL.Server
         }
 
         #endregion AnnotationConcept methods
-
-        #region AnnotationPolygon methods
-
-        public bool AnnotationPolygonDeleteByAnnotationID(int annotationId)
-        {
-            return new AnnotationPolygonDAL().AnnotationPolygonDeleteByAnnotationID(
-                null, null, annotationId);
-        }
-
-        #endregion AnnotationPolygon methods
     }
 }

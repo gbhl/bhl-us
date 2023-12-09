@@ -14,31 +14,6 @@ namespace MOBOT.BHL.DAL
 {
 	public partial class AnnotatedPageDAL
 	{
-        public AnnotatedPage AnnotatedPageSelectByExternalIdentifer(
-            SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction,
-            String externalIdentifier,
-            int annotatedItemID)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("annotation.AnnotatedPageSelectByExternalIdentifer",
-                connection, transaction,
-                CustomSqlHelper.CreateInputParameter("ExternalIdentifier", SqlDbType.NVarChar, 50, false, externalIdentifier),
-                CustomSqlHelper.CreateInputParameter("AnnotatedItemID", SqlDbType.Int, null, false, annotatedItemID)))
-            {
-                using (CustomSqlHelper<AnnotatedPage> helper = new CustomSqlHelper<AnnotatedPage>())
-                {
-                    List<AnnotatedPage> list = helper.ExecuteReader(command);
-                    if (list.Count > 0)
-                        return list[0];
-                    else
-                        return null;
-                }
-            }
-        }
-
         public AnnotatedPage AnnotatedPageSelectByPageID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,

@@ -77,15 +77,9 @@
     <None Include="dbo\Tables\MarcControl.sql" />
     <None Include="dbo\Tables\MarcDataField.sql" />
     <None Include="dbo\Tables\MarcSubField.sql" />
-    <None Include="dbo\Tables\ExportScanListAuthor.sql" />
-    <None Include="dbo\Tables\ExportScanListOCLC.sql" />
-    <None Include="dbo\Tables\SubjectSample.sql" />
     <None Include="dbo\Tables\RptByCategory.sql" />
     <None Include="dbo\Tables\RptBySubject.sql" />
     <None Include="dbo\Tables\RptCombined.sql" />
-    <None Include="dbo\Tables\ExportScanListDates.sql" />
-    <None Include="dbo\Tables\ExportScanListItem.sql" />
-    <None Include="dbo\Tables\SubjectExclusion.sql" />
     <None Include="dbo\Tables\Item.sql" />
     <None Include="dbo\Views\vwMarcControl.sql" />
     <None Include="dbo\Views\vwMarcDataField.sql" />
@@ -96,10 +90,8 @@
     <None Include="dbo\Stored Procedures\ItemInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\ItemUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\ItemDeleteAuto.sql" />
-    <None Include="dbo\Stored Procedures\GetNewSubjectSample.sql" />
     <None Include="dbo\Stored Procedures\ItemSelectForXMLDownload.sql" />
     <None Include="dbo\Stored Procedures\DoAnalysis.sql" />
-    <None Include="dbo\Stored Procedures\ExportScanList.sql" />
     <None Include="dbo\Stored Procedures\ItemCollectionSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\ItemCollectionInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\ItemCollectionUpdateAuto.sql" />

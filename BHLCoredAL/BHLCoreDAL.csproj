@@ -6,6 +6,11 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Generated\AuthorTypeDAL.Auto.cs" />
+    <Compile Remove="Generated\NameSourceDAL.Auto.cs" />
+    <Compile Remove="NameSourceDAL.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj">
       <Project>{65499E9E-4829-469E-8B5E-3F96012649AF}</Project>
       <Name>BHLDataObjects</Name>

@@ -34,8 +34,8 @@ namespace MOBOT.BHL.Web2
 
             if (conceptCode == string.Empty)
             {
-                AnnotationSubject sub = bhlProvider.AnnotationSubjectSelectAuto(subjectId);
-                AnnotationSubjectCategory subCat = bhlProvider.AnnotationSubjectCategorySelectAuto(annotationSubjectCategoryID);
+                AnnotationSubject sub = bhlProvider.AnnotationSubjectSelect(subjectId);
+                AnnotationSubjectCategory subCat = bhlProvider.AnnotationSubjectCategorySelect(annotationSubjectCategoryID);
                 if (sub != null && subCat != null) indexTerm = subCat.SubjectCategoryName + " - " + sub.SubjectText;
                 pages = bhlProvider.SearchPageForAnnotationSubject(annotationSubjectCategoryID, subjectId);
             }

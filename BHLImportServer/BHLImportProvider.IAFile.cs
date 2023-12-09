@@ -58,11 +58,6 @@ namespace MOBOT.BHLImport.Server
             return (new IAFileDAL().IAFileSelectByItemAndRemoteFileName(null, null, itemID, remoteFilename));
         }
 
-        public IAFile IAFileSelectByRemoteFileName(string remoteFilename)
-        {
-            return (new IAFileDAL().IAFileSelectByRemoteFileName(null, null, remoteFilename));
-        }
-
         public void IAFileDeleteAuto(int fileID)
         {
             new IAFileDAL().IAFileDeleteAuto(null, null, fileID);

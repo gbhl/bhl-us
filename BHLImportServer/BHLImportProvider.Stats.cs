@@ -21,11 +21,6 @@ namespace MOBOT.BHLImport.Server
             return (new StatsDAL().StatsSelectIAItemGroupByStatus(null, null));
         }
 
-        public List<Stats> StatsSelectIAItemPendingApprovalGroupByAge(int ageInDays)
-        {
-            return (new StatsDAL().StatsSelectIAItemPendingApprovalGroupByAge(null, null, ageInDays));
-        }
-
         public List<Stats> StatsSelectBSItemGroupByStatus()
         {
             return (new StatsDAL().StatsSelectBSItemGroupByStatus(null, null));
