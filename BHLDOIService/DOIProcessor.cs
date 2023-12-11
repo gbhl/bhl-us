@@ -457,7 +457,16 @@ namespace MOBOT.BHL.BHLDOIService
             Title title = restClient.GetTitleDetails(entityID);
 
             DOIDepositData data = new DOIDepositData();
-            data.Title = title.FullTitle;
+
+            // Append the PartNumber and PartName to the FullTitle and send to Crossref as the "Title" of the publication
+            string fullTitle = title.FullTitle;
+            string partNumber = title.PartNumber ?? string.Empty;
+            string partName = title.PartName ?? string.Empty;
+            fullTitle += ((partNumber != string.Empty) ? ". " + partNumber : string.Empty);
+            fullTitle += ((partNumber != string.Empty && partName != string.Empty) ? ", " + partName : string.Empty);
+            fullTitle += ((partNumber == string.Empty && partName != string.Empty) ? ". " + partName : string.Empty);
+
+            data.Title = fullTitle;
             data.PublisherName = title.Datafield_260_b;
             data.PublisherPlace = title.Datafield_260_a;
             data.PublicationDate = (title.StartYear == null ? "" : title.StartYear.ToString());
