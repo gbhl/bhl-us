@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MOBOT.BHLImport.Server;
+using System;
 using System.Configuration;
-using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
-using MOBOT.BHLImport.Server;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -25,7 +18,8 @@ namespace MOBOT.BHL.AdminWeb
             {
                 BHLImportProvider service = new BHLImportProvider();
 
-                string[] wsResult = service.IAItemQueueForDownload(txtIdentifier.Text, ConfigurationManager.AppSettings["LocalFileFolder"]);
+                int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+                string[] wsResult = service.IAItemQueueForDownload(txtIdentifier.Text, ConfigurationManager.AppSettings["LocalFileFolder"], userId);
                 lblError.Text = wsResult[1];
                 if (wsResult[0] == "true")
                     lblError.ForeColor = System.Drawing.Color.Black;

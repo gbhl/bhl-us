@@ -14,17 +14,15 @@
         <asp:GridView ID="gvPendingApproval" runat="server" AutoGenerateColumns=false>
         <Columns>
         <asp:BoundField DataField="IAIdentifier" HeaderText="IA Identifier" />
-        <asp:BoundField DataField="Sponsor" HeaderText="Sponsor" />
-        <asp:BoundField DataField="SponsorName" HeaderText="Sponsor Name" />
-        <asp:BoundField DataField="ScanningCenter" HeaderText="Scanning Center" />
-        <asp:BoundField DataField="CallNumber" HeaderText="Call Number" />
-        <asp:BoundField DataField="ImageCount" HeaderText="Image Count" />
         <asp:BoundField DataField="IdentifierAccessUrl" HeaderText="URL" />
+        <asp:BoundField DataField="HoldingInstitution" HeaderText="Holding Institution" />
+        <asp:BoundField DataField="ImageCount" HeaderText="Image Count" />
         <asp:BoundField DataField="Volume" HeaderText="Volume" />
-        <asp:BoundField DataField="Note" HeaderText="Note" />
-        <asp:BoundField DataField="ScanOperator" HeaderText="Scan Operator" />
-        <asp:BoundField DataField="ScanDate" HeaderText="Scan Date" />
+        <asp:BoundField DataField="Year" HeaderText="Year" />
         <asp:BoundField DataField="IAAddedDate" HeaderText="IA Added Date" />
+        <asp:BoundField DataField="ScanDate" HeaderText="Scan Date" />
+        <asp:BoundField DataField="CreatedDate" HeaderText="BHL Added Date" />
+        <asp:BoundField DataField="CreatedUser" HeaderText="BHL Added User" />
         </Columns>
         </asp:GridView>
     </div>

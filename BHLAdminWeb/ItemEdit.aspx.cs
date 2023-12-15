@@ -29,7 +29,8 @@ namespace MOBOT.BHL.AdminWeb
 			{
 				fillCombos();
 
-				string idString = Request.QueryString[ "id" ];
+				string idString = Request.QueryString["id"];
+                string sid = Request.QueryString["sid"];
 
                 int id = 0;
 				if ( idString != null && int.TryParse( idString, out id ) )
@@ -37,6 +38,11 @@ namespace MOBOT.BHL.AdminWeb
 					itemIdTextBox.Text = id.ToString();
 					search( id, null );
 				}
+                else if (sid != null)
+                {
+                    sourceIDTextBox.Text = sid;
+                    search(null, sid);
+                }
 			}
 			else
 			{

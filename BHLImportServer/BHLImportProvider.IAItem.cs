@@ -17,7 +17,7 @@ namespace MOBOT.BHLImport.Server
         private const int ITEMSTATUS_MARCMISSINGONHOLD = 82;
         private const int ITEMSTATUS_ERROR = 99;
 
-        public IAItem SaveIAItemID(string iaIdentifier, string localFileFolder, DateTime? dateStamp)
+        public IAItem SaveIAItemID(string iaIdentifier, string localFileFolder, DateTime? dateStamp, int userId = 1)
         {
             IAItemDAL dal = new IAItemDAL();
             IAItem savedItem = dal.IAItemSelectByIAIdentifier(null, null, iaIdentifier);
@@ -29,7 +29,9 @@ namespace MOBOT.BHLImport.Server
                     IAIdentifier = iaIdentifier,
                     ItemStatusID = ITEMSTATUS_NEW,
                     LocalFileFolder = localFileFolder,
-                    IADateStamp = dateStamp
+                    IADateStamp = dateStamp,
+                    CreatedUserID = userId,
+                    LastModifiedUserID = userId
                 };
                 savedItem = dal.IAItemInsertAuto(null, null, newItem);
             }
@@ -67,13 +69,15 @@ namespace MOBOT.BHLImport.Server
             return (new IAItemDAL().IAItemPublishToImportTables(null, null, itemID));
         }
 
-        public IAItem IAItemUpdateLastXMLDataHarvestDate(int itemID)
+        public IAItem IAItemUpdateLastXMLDataHarvestDate(int itemID, int userId = 1)
         {
             IAItemDAL dal = new IAItemDAL();
             IAItem savedItem = dal.IAItemSelectAuto(null, null, itemID);
             if (savedItem != null)
             {
                 savedItem.LastXMLDataHarvestDate = DateTime.Now;
+                savedItem.LastModifiedDate = DateTime.Now;
+                savedItem.LastModifiedUserID = userId;
                 savedItem = dal.IAItemUpdateAuto(null, null, savedItem);
             }
             else
@@ -84,7 +88,7 @@ namespace MOBOT.BHLImport.Server
         }
 
         public void IAItemUpdateItemStatusSetError(int itemID,
-            int statusID, string procedure, string message)
+            int statusID, string procedure, string message, int userId = 1)
         {
             // Simple error logging, so skipping the use of a transaction here.
             IAItemError itemError = new IAItemError
@@ -102,12 +106,14 @@ namespace MOBOT.BHLImport.Server
             if (item != null)
             {
                 item.ItemStatusID = statusID;
+                item.LastModifiedDate = DateTime.Now;
+                item.LastModifiedUserID = userId;
                 itemDAL.IAItemUpdateAuto(null, null, item);
             }
         }
 
         public IAItem IAItemUpdateItemStatusIDAfterDataHarvest(int itemID, 
-            bool allowUnapproved, int minDaysBeforeAllowUnapproved)
+            bool allowUnapproved, int minDaysBeforeAllowUnapproved, int userId = 1)
         {
             IAItemDAL dal = new IAItemDAL();
             IAItem savedItem = dal.IAItemSelectAuto(null, null, itemID);
@@ -133,6 +139,9 @@ namespace MOBOT.BHLImport.Server
                         savedItem.ItemStatusID = ITEMSTATUS_APPROVED;
                     else
                         savedItem.ItemStatusID = ITEMSTATUS_PENDINGAPPROVAL;
+
+                    savedItem.LastModifiedDate = DateTime.Now;
+                    savedItem.LastModifiedUserID = userId;
 
                     savedItem = dal.IAItemUpdateAuto(null, null, savedItem);
                 }
@@ -177,7 +186,7 @@ namespace MOBOT.BHLImport.Server
             string licenseUrl, string rights, string dueDiligence, string possibleCopyrightStatus,
             string copyrightRegion, string copyrightComment, string copyrightEvidence,
             string copyrightEvidenceOperator, string copyrightEvidenceDate, string scanningInstitution,
-            string rightsHolder, string itemDescription, string pageProgression)
+            string rightsHolder, string itemDescription, string pageProgression, int userId = 1)
         {
             // Standardize the format of the year value
             year = DataCleaner.CleanYear(year);
@@ -234,6 +243,8 @@ namespace MOBOT.BHLImport.Server
                 savedItem.EndSeries = volumeData.EndSeries;
                 savedItem.StartPart = volumeData.StartPart;
                 savedItem.EndPart = volumeData.EndPart;
+                savedItem.LastModifiedDate = DateTime.Now;
+                savedItem.LastModifiedUserID = userId;
                 savedItem = dal.IAItemUpdateAuto(null, null, savedItem);
             }
             else
@@ -249,7 +260,7 @@ namespace MOBOT.BHLImport.Server
         /// <param name="itemID"></param>
         /// <param name="sponsorName"></param>
         /// <returns></returns>
-        public IAItem IAItemUpdateMetadataSource(int itemID, string sponsorName, string zQuery)
+        public IAItem IAItemUpdateMetadataSource(int itemID, string sponsorName, string zQuery, int userId = 1)
         {
             IAItemDAL dal = new IAItemDAL();
             IAItem savedItem = dal.IAItemSelectAuto(null, null, itemID);
@@ -257,6 +268,8 @@ namespace MOBOT.BHLImport.Server
             {
                 savedItem.SponsorName = sponsorName;
                 savedItem.ZQuery = zQuery;
+                savedItem.LastModifiedDate = DateTime.Now;
+                savedItem.LastModifiedUserID = userId;
                 savedItem = dal.IAItemUpdateAuto(null, null, savedItem);
             }
             else
@@ -276,10 +289,10 @@ namespace MOBOT.BHLImport.Server
             new IAItemDAL().IAItemInsertFromIAAnalysis(null, null, localFileFolder);
         }
 
-        public List<IAItem> IAItemSelectByStatus(int itemStatusID, int numberOfRows, int pageNumber,
+        public List<IAItem> IAItemSelectByStatus(int itemStatusID, string iaId, int numberOfRows, int pageNumber,
             string sortColumn, string sortDirection)
         {
-            return new IAItemDAL().IAItemSelectByStatus(null, null, itemStatusID, numberOfRows, pageNumber, sortColumn, sortDirection);
+            return new IAItemDAL().IAItemSelectByStatus(null, null, itemStatusID, iaId, numberOfRows, pageNumber, sortColumn, sortDirection);
         }
 
         /// <summary>
@@ -288,9 +301,11 @@ namespace MOBOT.BHLImport.Server
         /// "Approved" or "Complete", it is NOT queued for download.
         /// </summary>
         /// <param name="iaIdentifier"></param>
+        /// <param name="localFileFolder"></param>
+        /// <param name="userId"></param>
         /// <returns>Array of two elements. First element contains "true" or "false".  Second element 
         /// contains message detailing the success or error.</returns>
-        public string[] IAItemQueueForDownload(string iaIdentifier, string localFileFolder)
+        public string[] IAItemQueueForDownload(string iaIdentifier, string localFileFolder, int userId)
         {
             string[] results = new string[2];
             string returnValue = "true";
@@ -309,7 +324,9 @@ namespace MOBOT.BHLImport.Server
                     {
                         IAIdentifier = iaIdentifier,
                         ItemStatusID = ITEMSTATUS_NEW,
-                        LocalFileFolder = localFileFolder
+                        LocalFileFolder = localFileFolder,
+                        CreatedUserID = userId,
+                        LastModifiedUserID = userId
                     };
                     item = itemDAL.IAItemInsertAuto(null, null, item);
                     returnMessage = "'" + iaIdentifier + "' has been queued for download.";
@@ -332,7 +349,7 @@ namespace MOBOT.BHLImport.Server
                             break;
                         default:
                             // Reset item for download
-                            itemDAL.IAItemResetForDownload(null, null, iaIdentifier);
+                            itemDAL.IAItemResetForDownload(null, null, iaIdentifier, userId);
                             returnMessage = "'" + iaIdentifier + "' has been queued for download.";
                             break;
                     }
@@ -360,7 +377,7 @@ namespace MOBOT.BHLImport.Server
         /// <returns>Array of three elements. First element contains "true" or "false".  Second element 
         /// contains message detailing the success or error.  Third element contains the IA Identifier
         /// for the updated item.</returns>
-        public string[] IAItemUpdateStatus(int itemId, int itemStatusId)
+        public string[] IAItemUpdateStatus(int itemId, int itemStatusId, int userId)
         {
             string[] results = new string[3];
             string returnValue = "true";
@@ -382,7 +399,7 @@ namespace MOBOT.BHLImport.Server
                     if (itemStatusId == ITEMSTATUS_NEW)
                     {
                         // Setting item for re-download
-                        itemDal.IAItemResetForDownload(null, null, item.IAIdentifier);
+                        itemDal.IAItemResetForDownload(null, null, item.IAIdentifier, userId);
                     }
                     else 
                     {
@@ -390,6 +407,8 @@ namespace MOBOT.BHLImport.Server
                         if (itemStatusId == ITEMSTATUS_MARCMISSINGAPPROVED) item.NoMARCOk = 1;
 
                         item.ItemStatusID = itemStatusId;
+                        item.LastModifiedDate = DateTime.Now;
+                        item.LastModifiedUserID = userId;
                         itemDal.IAItemUpdateAuto(null, null, item);
                     }
                 }

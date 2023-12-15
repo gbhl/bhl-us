@@ -1,5 +1,5 @@
 
-// Generated 4/27/2021 10:41:53 AM
+// Generated 12/13/2023 8:22:38 AM
 // Do not modify the contents of this code file.
 // This abstract class __IAItem is based upon dbo.IAItem.
 
@@ -101,6 +101,8 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="startPart"></param>
 		/// <param name="endPart"></param>
 		/// <param name="pageProgression"></param>
+		/// <param name="createdUserID"></param>
+		/// <param name="lastModifiedUserID"></param>
 		public __IAItem(int itemID, 
 			int itemStatusID, 
 			string iAIdentifierPrefix, 
@@ -156,7 +158,9 @@ namespace MOBOT.BHLImport.DataObjects
 			string endSeries, 
 			string startPart, 
 			string endPart, 
-			string pageProgression) : this()
+			string pageProgression, 
+			int createdUserID, 
+			int lastModifiedUserID) : this()
 		{
 			_ItemID = itemID;
 			ItemStatusID = itemStatusID;
@@ -214,6 +218,8 @@ namespace MOBOT.BHLImport.DataObjects
 			StartPart = startPart;
 			EndPart = endPart;
 			PageProgression = pageProgression;
+			CreatedUserID = createdUserID;
+			LastModifiedUserID = lastModifiedUserID;
 		}
 		
 		#endregion Constructors
@@ -518,6 +524,16 @@ namespace MOBOT.BHLImport.DataObjects
 					case "PageProgression" :
 					{
 						_PageProgression = (string)column.Value;
+						break;
+					}
+					case "CreatedUserID" :
+					{
+						_CreatedUserID = (int)column.Value;
+						break;
+					}
+					case "LastModifiedUserID" :
+					{
+						_LastModifiedUserID = (int)column.Value;
 						break;
 					}
 								}
@@ -2087,6 +2103,60 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion PageProgression
+		
+		#region CreatedUserID
+		
+		private int _CreatedUserID = default(int);
+		
+		/// <summary>
+		/// Column: CreatedUserID;
+		/// DBMS data type: int;
+		/// </summary>
+		[ColumnDefinition("CreatedUserID", DbTargetType=SqlDbType.Int, Ordinal=57, NumericPrecision=10)]
+		public int CreatedUserID
+		{
+			get
+			{
+				return _CreatedUserID;
+			}
+			set
+			{
+				if (_CreatedUserID != value)
+				{
+					_CreatedUserID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreatedUserID
+		
+		#region LastModifiedUserID
+		
+		private int _LastModifiedUserID = default(int);
+		
+		/// <summary>
+		/// Column: LastModifiedUserID;
+		/// DBMS data type: int;
+		/// </summary>
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=58, NumericPrecision=10)]
+		public int LastModifiedUserID
+		{
+			get
+			{
+				return _LastModifiedUserID;
+			}
+			set
+			{
+				if (_LastModifiedUserID != value)
+				{
+					_LastModifiedUserID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedUserID
 			
 		#endregion Properties
 
@@ -2186,7 +2256,9 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.EndSeries) == GetComparisonString(EndSeries) &&
 					GetComparisonString(o.StartPart) == GetComparisonString(StartPart) &&
 					GetComparisonString(o.EndPart) == GetComparisonString(EndPart) &&
-					GetComparisonString(o.PageProgression) == GetComparisonString(PageProgression) 
+					GetComparisonString(o.PageProgression) == GetComparisonString(PageProgression) &&
+					o.CreatedUserID == CreatedUserID &&
+					o.LastModifiedUserID == LastModifiedUserID 
 				)
 				{
 					o = null;
@@ -2341,7 +2413,9 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string EndSeries = "EndSeries";	
 			public const string StartPart = "StartPart";	
 			public const string EndPart = "EndPart";	
-			public const string PageProgression = "PageProgression";
+			public const string PageProgression = "PageProgression";	
+			public const string CreatedUserID = "CreatedUserID";	
+			public const string LastModifiedUserID = "LastModifiedUserID";
 		}
 				
 		#endregion SortColumn

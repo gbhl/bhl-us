@@ -210,20 +210,21 @@ namespace MOBOT.BHLImport.DAL
             }
         }
 
-        public void IAItemResetForDownload(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string iaIdentifier)
+        public void IAItemResetForDownload(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string iaIdentifier, int userId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("IAItemResetForDownload", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 200, false, iaIdentifier)))
+                CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 200, false, iaIdentifier),
+                CustomSqlHelper.CreateInputParameter("UserID", SqlDbType.Int, null, false, userId)))
             {
                 CustomSqlHelper.ExecuteScalar(command);
             }
         }
 
         public List<IAItem> IAItemSelectByStatus(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, int itemStatusId, int numberOfRows, int pageNumber,
+            SqlTransaction sqlTransaction, int itemStatusId, string iaId, int numberOfRows, int pageNumber,
             string sortColumn, string sortDirection)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -232,6 +233,7 @@ namespace MOBOT.BHLImport.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("IAItemSelectByStatus", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("ItemStatusID", SqlDbType.Int, null, false, itemStatusId),
+                CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 200, false, iaId),
                 CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numberOfRows),
                 CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNumber),
                 CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sortColumn),

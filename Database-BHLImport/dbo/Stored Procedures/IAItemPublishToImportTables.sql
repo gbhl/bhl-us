@@ -69,7 +69,7 @@ BEGIN TRY
 			DELETE FROM dbo.IAScandataAltPageType WHERE ScandataID IN (SELECT ScandataID FROM dbo.IAScandata WHERE ItemID = @ItemID)
 			DELETE FROM dbo.IAScandata WHERE ItemID = @ItemID
 			UPDATE dbo.IAFile SET RemoteFileLastModifiedDate = '1/1/1980' WHERE ItemID = @ItemID AND RemoteFileLastModifiedDate IS NOT NULL
-			UPDATE dbo.IAItem SET LastXMLDataHarvestDate = NULL WHERE ItemID = @ItemID
+			UPDATE dbo.IAItem SET LastXMLDataHarvestDate = NULL, LastModifiedDate = GETDATE() WHERE ItemID = @ItemID
 			COMMIT TRANSACTION
 		END TRY
 		BEGIN CATCH
@@ -2321,7 +2321,8 @@ BEGIN TRY
 		-- Update the statuses of the items just loaded into the import tables.
 		-- Also, save the identifiers with the original item information.
 		UPDATE	dbo.IAItem
-		SET		ShortTitle = t.ShortTitle
+		SET		ShortTitle = t.ShortTitle,
+				LastModifiedDate = GETDATE()
 		FROM	dbo.IAItem i INNER JOIN #tmpTitle t
 					ON i.ItemID = t.ItemID
 
@@ -2329,7 +2330,8 @@ BEGIN TRY
 		SET		ItemStatusID = 40,	-- Complete
 				LastProductionDate = GETDATE(),
 				MARCBibID = t.MARCBibID,
-				BarCode = t.BarCode
+				BarCode = t.BarCode,
+				LastModifiedDate = GETDATE()
 		FROM	dbo.IAItem i INNER JOIN #tmpItem t
 					ON i.ItemID = t.ItemID
 
@@ -2348,7 +2350,8 @@ BEGIN TRY
 
 		-- Mark the item as in error
 		UPDATE	dbo.IAItem
-		SET		ItemStatusID = 99	-- Error
+		SET		ItemStatusID = 99,	-- Error
+				LastModifiedDate = GETDATE()
 		WHERE	ItemID = @ItemID
 
 		SELECT 0 AS Result
@@ -2387,14 +2390,16 @@ BEGIN CATCH
 	BEGIN
 		-- Mark the item as new (so it will be reloaded)
 		UPDATE	dbo.IAItem
-		SET		ItemStatusID = 10	-- New
+		SET		ItemStatusID = 10,	-- New
+				LastModifiedDate = GETDATE()
 		WHERE	ItemID = @ItemID
 	END
 	ELSE
 	BEGIN
 		-- Mark the item as in error
 		UPDATE	dbo.IAItem
-		SET		ItemStatusID = 99	-- Error
+		SET		ItemStatusID = 99,	-- Error
+				LastModifiedDate = GETDATE()
 		WHERE	ItemID = @ItemID
 	END
 

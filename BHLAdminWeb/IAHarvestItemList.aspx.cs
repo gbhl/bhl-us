@@ -13,7 +13,9 @@ namespace MOBOT.BHL.AdminWeb
 {
     public partial class IAHarvestItemList : System.Web.UI.Page
     {
+        private string _MsgFormat = "<font color='red'>{0}</font>";
         protected string statusId = "0";
+        protected string iaId = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -46,6 +48,7 @@ namespace MOBOT.BHL.AdminWeb
                 List<IAItemStatus> statuses = service.IAItemStatusSelectAll();
 
                 ddlStatusView.Items.Add(new ListItem("", "0"));
+                ddlStatusView.Items.Add(new ListItem("(Any status)", "-1"));
                 foreach (IAItemStatus status in statuses)
                 {
                     ListItem li = new ListItem(status.Status, status.ItemStatusID.ToString());
@@ -66,9 +69,36 @@ namespace MOBOT.BHL.AdminWeb
             // Modify ddlStatusChange list to contain items that are valid for the displayed status
             SetStatusChangeItems(ddlStatusView.SelectedValue, ddlStatusView.Items);
 
-            litDisplayed.Text = (ddlStatusView.SelectedValue == ITEMSTATUS_NONESELECTED) ? string.Empty: "Items in <b>" + ddlStatusView.SelectedItem.Text + "</b> status.";
+            litDisplayed.Text = (ddlStatusView.SelectedValue == ITEMSTATUS_NONESELECTED) ? 
+                string.Empty : 
+                "Items in <b>" + ddlStatusView.SelectedItem.Text + "</b> status" + 
+                (string.IsNullOrWhiteSpace(txtIAIdentifier.Text) ?  "." : " and an IA Identifier that starts with <b>" + txtIAIdentifier.Text + "</b>.");
             statusId = ddlStatusView.SelectedValue;
+            iaId = txtIAIdentifier.Text;
             litUpdateResult.Text = string.Empty;
+        }
+
+        protected void btnDownload_Click(object sender, EventArgs e)
+        {
+            string msg = string.Empty;
+            if (this.Validate(out msg))
+            {
+                Response.Redirect("/services/dataharvestservice.ashx?dl=1&id=" + ddlStatusView.SelectedValue + "&iaid=" + txtIAIdentifier.Text);
+            }
+            else
+            {
+                litDisplayed.Text = string.Format(_MsgFormat, msg);
+            }
+        }
+
+        private bool Validate(out string msg)
+        {
+            msg = string.Empty;
+
+            bool valid = ddlStatusView.SelectedValue != "0";
+            if (!valid) msg = "Please select a status";
+
+            return valid;
         }
 
         /// <summary>
@@ -97,6 +127,8 @@ namespace MOBOT.BHL.AdminWeb
                 }
                 else
                 {
+                    int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+
                     for (int x = 0; x < ids.Length; x++)
                     {
                         if (ids[x] != "cb_list")    // ignore checkbox "cb_list"
@@ -104,7 +136,7 @@ namespace MOBOT.BHL.AdminWeb
                             string id = ids[x].Replace("jqg_list_", "");
                             // Call the web service to update the item
                             string[] wsResponse = service.IAItemUpdateStatus(
-                                Convert.ToInt32(id), Convert.ToInt32(ddlStatusChange.SelectedValue));
+                                Convert.ToInt32(id), Convert.ToInt32(ddlStatusChange.SelectedValue), userId);
 
                             // Check for any errors
                             if (wsResponse[0] != "true")
@@ -129,6 +161,7 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         private const string ITEMSTATUS_NONESELECTED = "0";
+        private const string ITEMSTATUS_ANY = "-1";
         private const string ITEMSTATUS_NEW = "10";
         private const string ITEMSTATUS_PENDINGAPPROVAL = "20";
         private const string ITEMSTATUS_APPROVED = "30";
@@ -195,6 +228,7 @@ namespace MOBOT.BHL.AdminWeb
                     ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(ITEMSTATUS_NEW).Text, ITEMSTATUS_NEW));
                     break;
                 case ITEMSTATUS_COMPLETE:
+                case ITEMSTATUS_ANY:
                     ddlStatusChange.Enabled = false;
                     btnChange.Enabled = false;
                     break;

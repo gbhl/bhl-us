@@ -109,6 +109,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Tables\OAIRecordSubject.sql"
 REM --------------------------------------
 REM  Add Synonyms
 REM --------------------------------------
+sqlcmd -E -S %1 -d %2 -i "dbo\Synonyms\BHLAspNetUsers.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Synonyms\BHLAuthor.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Synonyms\BHLAuthorIdentifier.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Synonyms\BHLAuthorName.sql"

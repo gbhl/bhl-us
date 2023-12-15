@@ -53,7 +53,9 @@ CREATE PROCEDURE dbo.IAItemUpdateAuto
 @EndSeries NVARCHAR(10),
 @StartPart NVARCHAR(10),
 @EndPart NVARCHAR(10),
-@PageProgression NVARCHAR(10)
+@PageProgression NVARCHAR(10),
+@CreatedUserID INT,
+@LastModifiedUserID INT
 
 AS 
 
@@ -114,7 +116,9 @@ SET
 	[EndSeries] = @EndSeries,
 	[StartPart] = @StartPart,
 	[EndPart] = @EndPart,
-	[PageProgression] = @PageProgression
+	[PageProgression] = @PageProgression,
+	[CreatedUserID] = @CreatedUserID,
+	[LastModifiedUserID] = @LastModifiedUserID
 WHERE
 	[ItemID] = @ItemID
 		
@@ -181,11 +185,14 @@ ELSE BEGIN
 		[EndSeries],
 		[StartPart],
 		[EndPart],
-		[PageProgression]
+		[PageProgression],
+		[CreatedUserID],
+		[LastModifiedUserID]
 	FROM [dbo].[IAItem]
 	WHERE
 		[ItemID] = @ItemID
 	
 	RETURN -- update successful
 END
+
 GO

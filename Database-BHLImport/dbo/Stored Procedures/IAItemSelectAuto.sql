@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[IAItemSelectAuto]
+CREATE PROCEDURE [dbo].[IAItemSelectAuto]
 
 @ItemID INT
 
@@ -62,7 +62,9 @@ SELECT
 	[EndSeries],
 	[StartPart],
 	[EndPart],
-	[PageProgression]
+	[PageProgression],
+	[CreatedUserID],
+	[LastModifiedUserID]
 FROM	
 	[dbo].[IAItem]
 WHERE	
@@ -77,3 +79,5 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
+
+GO

@@ -53,7 +53,9 @@ CREATE PROCEDURE dbo.IAItemInsertAuto
 @EndSeries NVARCHAR(10),
 @StartPart NVARCHAR(10),
 @EndPart NVARCHAR(10),
-@PageProgression NVARCHAR(10)
+@PageProgression NVARCHAR(10),
+@CreatedUserID INT,
+@LastModifiedUserID INT
 
 AS 
 
@@ -114,7 +116,9 @@ INSERT INTO [dbo].[IAItem]
 	[EndSeries],
 	[StartPart],
 	[EndPart],
-	[PageProgression] )
+	[PageProgression],
+	[CreatedUserID],
+	[LastModifiedUserID] )
 VALUES
 ( 	@ItemStatusID,
 	@IAIdentifierPrefix,
@@ -170,7 +174,9 @@ VALUES
 	@EndSeries,
 	@StartPart,
 	@EndPart,
-	@PageProgression )
+	@PageProgression,
+	@CreatedUserID,
+	@LastModifiedUserID )
 
 SET @ItemID = Scope_Identity()
 
@@ -237,7 +243,9 @@ ELSE BEGIN
 		[EndSeries],
 		[StartPart],
 		[EndPart],
-		[PageProgression]	
+		[PageProgression],
+		[CreatedUserID],
+		[LastModifiedUserID]	
 	FROM [dbo].[IAItem]
 	WHERE
 		[ItemID] = @ItemID
