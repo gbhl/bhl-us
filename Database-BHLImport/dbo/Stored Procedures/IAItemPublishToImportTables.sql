@@ -2146,14 +2146,14 @@ BEGIN TRY
 		SELECT	10, @ImportSourceID, dbo.BHLfnConvertToTitleCase(dbo.BHLfnAddAuthorNameSpaces(t.CreatorName)), 
 				t.DOB, t.DOD, t.MARCDataFieldTag, t.MARCCreator_a, t.MARCCreator_b, t.MARCCreator_c, 
 				t.MARCCreator_d, t.MARCCreator_q, t.MARCCreator_Full
-		FROM	#tmpCreator t LEFT JOIN dbo.Creator c
-					ON ISNULL(t.MARCCreator_a, '') = ISNULL(c.MARCCreator_a, '')
-					AND ISNULL(t.MARCCreator_b, '') = ISNULL(c.MARCCreator_b, '')
-					AND ISNULL(t.MARCCreator_c, '') = ISNULL(c.MARCCreator_c, '')
-					AND ISNULL(t.MARCCreator_d, '') = ISNULL(c.MARCCreator_d, '')
-					AND ISNULL(t.MARCCreator_q, '') = ISNULL(c.MARCCreator_q, '')
-		WHERE	c.CreatorID IS NULL
-		AND		t.MARCCreator_5 IS NULL
+		FROM	#tmpCreator t --LEFT JOIN dbo.Creator c
+					--ON ISNULL(t.MARCCreator_a, '') = ISNULL(c.MARCCreator_a, '')
+					--AND ISNULL(t.MARCCreator_b, '') = ISNULL(c.MARCCreator_b, '')
+					--AND ISNULL(t.MARCCreator_c, '') = ISNULL(c.MARCCreator_c, '')
+					--AND ISNULL(t.MARCCreator_d, '') = ISNULL(c.MARCCreator_d, '')
+					--AND ISNULL(t.MARCCreator_q, '') = ISNULL(c.MARCCreator_q, '')
+		WHERE	t.MARCCreator_5 IS NULL
+		--AND		c.CreatorID IS NULL
 
 		-- Insert new title_creator records into the import tables
 		INSERT INTO dbo.Title_Creator (CreatorName, MARCCreator_a, 
