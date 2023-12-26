@@ -333,21 +333,26 @@ namespace IAHarvest
             int counter = 0;
             foreach (XmlNode file in files)
             {
-                String externalFileName = (file.Attributes["name"] == null) ? String.Empty : file.Attributes["name"].Value;
-                String source = (file.Attributes["source"] == null) ? String.Empty : file.Attributes["source"].Value;
+                string externalFileName = (file.Attributes["name"] == null) ? string.Empty : file.Attributes["name"].Value;
+                string source = (file.Attributes["source"] == null) ? string.Empty : file.Attributes["source"].Value;
                 XmlNode formatNode = file.SelectSingleNode("format");
-                String format = (formatNode == null) ? String.Empty : formatNode.InnerText;
+                string format = (formatNode == null) ? string.Empty : formatNode.InnerText;
                 XmlNode originalNode = file.SelectSingleNode("original");
-                String original = (originalNode == null) ? String.Empty : originalNode.InnerText;
+                string original = (originalNode == null) ? string.Empty : originalNode.InnerText;
+                XmlNode oldVersionNode = file.SelectSingleNode("old_version");
+                string oldVersion = (oldVersionNode == null) ? string.Empty : oldVersionNode.InnerText.ToLower();
 
                 // 1/7/2008 - discovered that <FORMAT> element might be missing from XML files
                 // that we need to harvest... so if externalFileName ends in .XML and formatNode
                 // is null, substitute "Metadata" for the format value
                 if (formatNode == null && externalFileName.ToLower().EndsWith(".xml")) format = "Metadata";
 
-                // Save the file information (FileName, Source, Format, Original)
-                provider.SaveIAFile(item.ItemID, externalFileName, source, format, original);
-                externalFileNames[counter++] = externalFileName;
+                if (oldVersion != "true")   // Skip files flagged as "old versions"
+                {
+                    // Save the file information (FileName, Source, Format, Original)
+                    provider.SaveIAFile(item.ItemID, externalFileName, source, format, original);
+                    externalFileNames[counter++] = externalFileName;
+                }
             }
 
             // Delete local files and database entries that no longer exist in FILES.XML
@@ -362,7 +367,7 @@ namespace IAHarvest
 
                     if (item.ItemStatusID != ITEMSTATUS_COMPLETE)    // only delete physical file if not yet in "production" status
                     {
-                        if (itemFile.LocalFileName != String.Empty) System.IO.File.Delete(item.LocalFileFolder + item.IAIdentifier + "\\" + itemFile.LocalFileName);
+                        if (itemFile.LocalFileName != String.Empty) File.Delete(item.LocalFileFolder + item.IAIdentifier + "\\" + itemFile.LocalFileName);
                     }
                 }
             }
