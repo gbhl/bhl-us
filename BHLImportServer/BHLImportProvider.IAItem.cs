@@ -17,7 +17,7 @@ namespace MOBOT.BHLImport.Server
         private const int ITEMSTATUS_MARCMISSINGONHOLD = 82;
         private const int ITEMSTATUS_ERROR = 99;
 
-        public IAItem SaveIAItemID(string iaIdentifier, string localFileFolder, DateTime? dateStamp, int userId = 1)
+        public IAItem SaveIAItemID(string iaIdentifier, string localFileFolder, DateTime? dateStamp, bool noMarcOK, int userId = 1)
         {
             IAItemDAL dal = new IAItemDAL();
             IAItem savedItem = dal.IAItemSelectByIAIdentifier(null, null, iaIdentifier);
@@ -30,6 +30,7 @@ namespace MOBOT.BHLImport.Server
                     ItemStatusID = ITEMSTATUS_NEW,
                     LocalFileFolder = localFileFolder,
                     IADateStamp = dateStamp,
+                    NoMARCOk = (byte)(noMarcOK ? 1 : 0),
                     CreatedUserID = userId,
                     LastModifiedUserID = userId
                 };
@@ -186,7 +187,8 @@ namespace MOBOT.BHLImport.Server
             string licenseUrl, string rights, string dueDiligence, string possibleCopyrightStatus,
             string copyrightRegion, string copyrightComment, string copyrightEvidence,
             string copyrightEvidenceOperator, string copyrightEvidenceDate, string scanningInstitution,
-            string rightsHolder, string itemDescription, string pageProgression, int userId = 1)
+            string rightsHolder, string itemDescription, string pageProgression, string virtualVolume,
+            int? virtualTitleID, int userId = 1)
         {
             // Standardize the format of the year value
             year = DataCleaner.CleanYear(year);
@@ -243,6 +245,8 @@ namespace MOBOT.BHLImport.Server
                 savedItem.EndSeries = volumeData.EndSeries;
                 savedItem.StartPart = volumeData.StartPart;
                 savedItem.EndPart = volumeData.EndPart;
+                savedItem.VirtualTitleID = virtualTitleID;
+                savedItem.VirtualVolume = virtualVolume;
                 savedItem.LastModifiedDate = DateTime.Now;
                 savedItem.LastModifiedUserID = userId;
                 savedItem = dal.IAItemUpdateAuto(null, null, savedItem);

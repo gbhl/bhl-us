@@ -64,7 +64,9 @@ SELECT
 	[EndPart],
 	[PageProgression],
 	[CreatedUserID],
-	[LastModifiedUserID]
+	[LastModifiedUserID],
+	[VirtualVolume],
+	[VirtualTitleID]
 FROM	
 	[dbo].[IAItem]
 WHERE	

@@ -1,5 +1,5 @@
 
-// Generated 12/13/2023 8:22:38 AM
+// Generated 12/27/2023 2:22:07 PM
 // Do not modify the contents of this code file.
 // This abstract class __IAItem is based upon dbo.IAItem.
 
@@ -103,6 +103,8 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="pageProgression"></param>
 		/// <param name="createdUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="virtualVolume"></param>
+		/// <param name="virtualTitleID"></param>
 		public __IAItem(int itemID, 
 			int itemStatusID, 
 			string iAIdentifierPrefix, 
@@ -160,7 +162,9 @@ namespace MOBOT.BHLImport.DataObjects
 			string endPart, 
 			string pageProgression, 
 			int createdUserID, 
-			int lastModifiedUserID) : this()
+			int lastModifiedUserID, 
+			string virtualVolume, 
+			int? virtualTitleID) : this()
 		{
 			_ItemID = itemID;
 			ItemStatusID = itemStatusID;
@@ -220,6 +224,8 @@ namespace MOBOT.BHLImport.DataObjects
 			PageProgression = pageProgression;
 			CreatedUserID = createdUserID;
 			LastModifiedUserID = lastModifiedUserID;
+			VirtualVolume = virtualVolume;
+			VirtualTitleID = virtualTitleID;
 		}
 		
 		#endregion Constructors
@@ -534,6 +540,16 @@ namespace MOBOT.BHLImport.DataObjects
 					case "LastModifiedUserID" :
 					{
 						_LastModifiedUserID = (int)column.Value;
+						break;
+					}
+					case "VirtualVolume" :
+					{
+						_VirtualVolume = (string)column.Value;
+						break;
+					}
+					case "VirtualTitleID" :
+					{
+						_VirtualTitleID = (int?)column.Value;
 						break;
 					}
 								}
@@ -2157,6 +2173,61 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion LastModifiedUserID
+		
+		#region VirtualVolume
+		
+		private string _VirtualVolume = string.Empty;
+		
+		/// <summary>
+		/// Column: VirtualVolume;
+		/// DBMS data type: nvarchar(100);
+		/// </summary>
+		[ColumnDefinition("VirtualVolume", DbTargetType=SqlDbType.NVarChar, Ordinal=59, CharacterMaxLength=100)]
+		public string VirtualVolume
+		{
+			get
+			{
+				return _VirtualVolume;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 100);
+				if (_VirtualVolume != value)
+				{
+					_VirtualVolume = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion VirtualVolume
+		
+		#region VirtualTitleID
+		
+		private int? _VirtualTitleID = null;
+		
+		/// <summary>
+		/// Column: VirtualTitleID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("VirtualTitleID", DbTargetType=SqlDbType.Int, Ordinal=60, NumericPrecision=10, IsNullable=true)]
+		public int? VirtualTitleID
+		{
+			get
+			{
+				return _VirtualTitleID;
+			}
+			set
+			{
+				if (_VirtualTitleID != value)
+				{
+					_VirtualTitleID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion VirtualTitleID
 			
 		#endregion Properties
 
@@ -2258,7 +2329,9 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.EndPart) == GetComparisonString(EndPart) &&
 					GetComparisonString(o.PageProgression) == GetComparisonString(PageProgression) &&
 					o.CreatedUserID == CreatedUserID &&
-					o.LastModifiedUserID == LastModifiedUserID 
+					o.LastModifiedUserID == LastModifiedUserID &&
+					GetComparisonString(o.VirtualVolume) == GetComparisonString(VirtualVolume) &&
+					o.VirtualTitleID == VirtualTitleID 
 				)
 				{
 					o = null;
@@ -2415,7 +2488,9 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string EndPart = "EndPart";	
 			public const string PageProgression = "PageProgression";	
 			public const string CreatedUserID = "CreatedUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";
+			public const string LastModifiedUserID = "LastModifiedUserID";	
+			public const string VirtualVolume = "VirtualVolume";	
+			public const string VirtualTitleID = "VirtualTitleID";
 		}
 				
 		#endregion SortColumn

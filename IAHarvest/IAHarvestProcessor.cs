@@ -208,9 +208,11 @@ namespace IAHarvest
                     XmlNode id = identifier.SelectSingleNode("str[@name = 'identifier']");
                     XmlNode updateDates = identifier.SelectSingleNode("arr[@name = 'oai_updatedate']");
                     XmlNode updateDate = updateDates.LastChild;
+                    XmlNode virtualTitleID = identifier.SelectSingleNode("str[@name = 'bhl_virtual_titleid']");
+                    bool noMarcOK = (virtualTitleID == null ? false : Int32.TryParse(virtualTitleID.InnerText, out int result));
 
                     // Save the item identifier (and associate it with a set if necessary)
-                    IAItem item = provider.SaveIAItemID(id.InnerText, configParms.LocalFileFolder, Convert.ToDateTime(updateDate.InnerText));
+                    IAItem item = provider.SaveIAItemID(id.InnerText, configParms.LocalFileFolder, Convert.ToDateTime(updateDate.InnerText), noMarcOK);
                     if (setID != null) provider.SaveIAItemSet(item.ItemID, (int)setID);
                     retrievedIds.Add(identifier.InnerText);
                 }
@@ -596,35 +598,37 @@ namespace IAHarvest
                     this.ReadAndSaveDCElements(itemID, xml, "metadata/" + DC_ATTRIB_TYPE, DC_SOURCE_META);
 
                     // Read additional elements
-                    String sponsor = String.Empty;
-                    String sponsorDate = String.Empty;
-                    String scanningCenter = String.Empty;
-                    String callNumber = String.Empty;
+                    string sponsor = string.Empty;
+                    string sponsorDate = string.Empty;
+                    string scanningCenter = string.Empty;
+                    string callNumber = string.Empty;
                     int imageCount = 0;
-                    String identifierAccessUrl = String.Empty;
+                    string identifierAccessUrl = string.Empty;
                     DateTime? addedDate = null;
-                    String volume = String.Empty;
-                    String note = String.Empty;
-                    String scanOperator = String.Empty;
-                    String scanDate = String.Empty;
-                    String curation;
-                    String externalStatus = String.Empty;
-                    String titleID = String.Empty;
-                    String year = String.Empty;
-                    String identifierBib = String.Empty;
-                    String licenseUrl = String.Empty;
-                    String rights = String.Empty;
-                    String dueDiligence = String.Empty;
-                    String possibleCopyrightStatus = String.Empty;
-                    String copyrightRegion = String.Empty;
-                    String copyrightComment = String.Empty;
-                    String copyrightEvidence = String.Empty;
-                    String copyrightEvidenceOperator = String.Empty;
-                    String copyrightEvidenceDate = String.Empty;
-                    String scanningInstitution = String.Empty;
-                    String rightsHolder = String.Empty;
-                    String itemDescription = String.Empty;
+                    string volume = string.Empty;
+                    string note = string.Empty;
+                    string scanOperator = string.Empty;
+                    string scanDate = string.Empty;
+                    string curation;
+                    string externalStatus = string.Empty;
+                    string titleID = string.Empty;
+                    string year = string.Empty;
+                    string identifierBib = string.Empty;
+                    string licenseUrl = string.Empty;
+                    string rights = string.Empty;
+                    string dueDiligence = string.Empty;
+                    string possibleCopyrightStatus = string.Empty;
+                    string copyrightRegion = string.Empty;
+                    string copyrightComment = string.Empty;
+                    string copyrightEvidence = string.Empty;
+                    string copyrightEvidenceOperator = string.Empty;
+                    string copyrightEvidenceDate = string.Empty;
+                    string scanningInstitution = string.Empty;
+                    string rightsHolder = string.Empty;
+                    string itemDescription = string.Empty;
                     string pageProgression = string.Empty;
+                    string virtualVolume = string.Empty;
+                    int? virtualTitleID = null;
 
                     XmlNode element = xml.SelectSingleNode("metadata/sponsor");
                     if (element != null) sponsor = element.InnerText;
@@ -692,6 +696,13 @@ namespace IAHarvest
                     if (element != null) itemDescription = element.InnerText;
                     element = xml.SelectSingleNode("metadata/page-progression");
                     if (element != null) pageProgression = element.InnerText;
+                    element = xml.SelectSingleNode("metadata/bhl_virtual_volume");
+                    if (element != null) virtualVolume = element.InnerText;
+                    element = xml.SelectSingleNode("metadata/bhl_virtual_titleid");
+                    if (element != null)
+                    {
+                        if (Int32.TryParse(element.InnerText, out int vTitleID)) virtualTitleID = vTitleID;
+                    }
 
                     provider.IAItemUpdateMetadata(itemID, sponsor, sponsorDate, scanningCenter, 
                         callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator,
@@ -699,7 +710,7 @@ namespace IAHarvest
                         licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion,
                         copyrightComment, copyrightEvidence, copyrightEvidenceOperator,
                         copyrightEvidenceDate, scanningInstitution, rightsHolder, itemDescription,
-                        pageProgression);
+                        pageProgression, virtualVolume, virtualTitleID);
 
                     // Read the identifier information
                     provider.IAItemIdentifierDeleteByItem(itemID);  // Delete existing, as we're doing a full replace
@@ -734,7 +745,7 @@ namespace IAHarvest
                 provider.IADCMetadataDeleteForItemAndSource(itemID, DC_SOURCE_META);
                 provider.IAItemSetDeleteByItem(itemID);
                 provider.IAItemUpdateMetadata(itemID, "", "", "", "", 0, "", "", "", "", "", null, 
-                    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+                    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", null);
             }
         }
 
