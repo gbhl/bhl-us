@@ -198,9 +198,10 @@ namespace MOBOT.BHLImport.Server
                 throw new Exception(string.Format("Invalid Year format in metadata file: {0}", year));
             }
 
-            // Parse the year and volume into their component parts
+            // Parse the year and volume into their component parts.
+            // If a Virtual Volume value is provided, parse it.  Otherwise, use the "regular" volume value.
             YearData yearData = DataCleaner.ParseYearString(year);
-            VolumeData volumeData = DataCleaner.ParseVolumeString(volume);
+            VolumeData volumeData = DataCleaner.ParseVolumeString(string.IsNullOrWhiteSpace(virtualVolume) ? volume : virtualVolume);
 
             IAItemDAL dal = new IAItemDAL();
             IAItem savedItem = dal.IAItemSelectAuto(null, null, itemID);
