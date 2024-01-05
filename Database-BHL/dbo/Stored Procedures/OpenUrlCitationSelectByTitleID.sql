@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[OpenUrlCitationSelectByTitleID]
+﻿CREATE PROCEDURE [dbo].[OpenUrlCitationSelectByTitleID]
 
 @TitleID int
 
@@ -77,8 +76,8 @@ SELECT	DISTINCT
 		c.Authors,
 		c.Subjects,
 		'' AS StartPage
-FROM	dbo.Title t WITH (NOLOCK)
-		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID
+FROM	dbo.Title t
+		INNER JOIN dbo.SearchCatalog c ON t.TitleID = c.TitleID
 WHERE	t.PublishReady = 1
 AND		t.TitleID = @TitleID
 
@@ -87,3 +86,4 @@ SELECT * FROM #tmpOpenUrlCitation ORDER BY FullTitle, Volume, Date, StartPage
 
 END
 
+GO

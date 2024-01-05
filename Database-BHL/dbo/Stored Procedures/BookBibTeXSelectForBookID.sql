@@ -28,11 +28,11 @@ ELSE
 				WHERE	bk.BookID = b.BookID
 			) AS Pages,
 			c.Subjects AS Keywords
-	FROM	dbo.Title t  WITH (NOLOCK)
-			INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON t.TitleID = it.TitleID AND it.IsPrimary = 1
-			INNER JOIN dbo.Item i WITH (NOLOCK) ON it.ItemID = i.ItemID
-			INNER JOIN dbo.Book b WITH (NOLOCK) ON i.ItemID = b.ItemID
-			INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND b.BookID = c.ItemID
+	FROM	dbo.Title t
+			INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID AND it.IsPrimary = 1
+			INNER JOIN dbo.Item i ON it.ItemID = i.ItemID
+			INNER JOIN dbo.Book b ON i.ItemID = b.ItemID
+			INNER JOIN dbo.SearchCatalog c ON t.TitleID = c.TitleID AND b.BookID = c.ItemID
 	WHERE	t.PublishReady = 1
 	AND		i.ItemStatusID = 40
 	AND		b.BookID = @BookID

@@ -80,12 +80,12 @@ SELECT	RTRIM(t.FullTitle),
 		b.BookID,
 		it.ItemSequence
 FROM	dbo.Title t
-		LEFT JOIN dbo.BibliographicLevel bl WITH (NOLOCK) ON t.BibliographicLevelID = bl.BibliographicLevelID
+		LEFT JOIN dbo.BibliographicLevel bl ON t.BibliographicLevelID = bl.BibliographicLevelID
 		INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID
-		INNER JOIN dbo.Item i WITH (NOLOCK) ON it.ItemID = i.ItemID 
+		INNER JOIN dbo.Item i ON it.ItemID = i.ItemID 
 		INNER JOIN dbo.vwItemPrimaryTitle pt ON i.ItemID = pt.ItemID
-		INNER JOIN dbo.Book b WITH (NOLOCK) ON i.ItemID = b.ItemID
-		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND b.BookID = c.ItemID
+		INNER JOIN dbo.Book b ON i.ItemID = b.ItemID
+		INNER JOIN dbo.SearchCatalog c ON t.TitleID = c.TitleID AND b.BookID = c.ItemID
 WHERE	t.PublishReady = 1
 AND		i.ItemStatusID = 40
 AND		(c.HasLocalContent = 1 OR b.IsVirtual = 1)
@@ -145,8 +145,8 @@ WHERE	k.publication_type = 'serial'
 UPDATE	#kbart
 SET		preceeding_publication_title_id = CONVERT(nvarchar(10), a.AssociatedTitleID)
 FROM	#kbart k 
-		INNER JOIN dbo.TitleAssociation a WITH (NOLOCK) ON k.title_id = a.TitleID
-		INNER JOIN dbo.TitleAssociationType tat WITH (NOLOCK) ON a.TitleAssociationTypeID = tat.TitleAssociationTypeID
+		INNER JOIN dbo.TitleAssociation a ON k.title_id = a.TitleID
+		INNER JOIN dbo.TitleAssociationType tat ON a.TitleAssociationTypeID = tat.TitleAssociationTypeID
 WHERE	tat.MARCTag = '780'
 AND		a.AssociatedTitleID IS NOT NULL
 
@@ -169,7 +169,7 @@ FROM	#kbart kb
 			SELECT	k.title_id,
 					MIN(ti.IdentifierValue) as IdentifierValue
 			FROM	#kbart k
-					INNER JOIN dbo.Title_Identifier ti WITH (NOLOCK) ON k.title_id = ti.TitleID
+					INNER JOIN dbo.Title_Identifier ti ON k.title_id = ti.TitleID
 			WHERE	(ti.IdentifierID = @ISSNID
 			AND		LEN(RTRIM(REPLACE(REPLACE(ti.IdentifierValue, '-', ''), ':', ''))) = 8)
 			OR
@@ -191,7 +191,7 @@ FROM	#kbart kb
 			SELECT	k.title_id,
 					MIN(ti.IdentifierValue) as IdentifierValue
 			FROM	#kbart k
-					INNER JOIN dbo.Title_Identifier ti WITH (NOLOCK) ON k.title_id = ti.TitleID
+					INNER JOIN dbo.Title_Identifier ti ON k.title_id = ti.TitleID
 			WHERE	(ti.IdentifierID = @EISSNID
 			AND		LEN(RTRIM(REPLACE(REPLACE(ti.IdentifierValue, '-', ''), ':', ''))) = 8)
 			GROUP BY k.title_id
