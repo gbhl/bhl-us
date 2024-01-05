@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[OpenUrlCitationSelectByTitleDetail]
+﻿CREATE PROCEDURE [dbo].[OpenUrlCitationSelectByTitleDetail]
 
 @Title nvarchar(2000) = '',
 @AuthorLast nvarchar(150) = '',
@@ -91,13 +90,13 @@ BEGIN
 			c.Authors,
 			c.Subjects,
 			'' AS StartPage
-	FROM	dbo.Title t WITH (NOLOCK) LEFT JOIN dbo.TitleAuthor ta WITH (NOLOCK)
+	FROM	dbo.Title t LEFT JOIN dbo.TitleAuthor ta
 				ON t.TitleID = ta.TitleID
-			LEFT JOIN dbo.Author a WITH (NOLOCK)
+			LEFT JOIN dbo.Author a
 				ON ta.AuthorID = a.AuthorID
-			LEFT JOIN dbo.AuthorName n WITH (NOLOCK)
+			LEFT JOIN dbo.AuthorName n
 				ON a.AuthorID = n.AuthorID
-			INNER JOIN dbo.SearchCatalog c WITH (NOLOCK)
+			INNER JOIN dbo.SearchCatalog c
 				ON t.TitleID = c.TitleID
 	WHERE	t.PublishReady = 1
 	AND		a.IsActive = 1
@@ -113,6 +112,4 @@ SELECT DISTINCT * FROM #tmpOpenUrlCitation ORDER BY FullTitle, Volume, Date, Sta
 
 END
 
-
-
-
+GO

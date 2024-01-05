@@ -91,8 +91,8 @@ BEGIN
 			s.Authors,
 			s.Subjects,
 			'' AS StartPage
-	FROM	SearchCatalog s WITH (NOLOCK)
-			INNER JOIN dbo.Title t WITH (NOLOCK) ON s.TitleID = t.TitleID
+	FROM	SearchCatalog s
+			INNER JOIN dbo.Title t ON s.TitleID = t.TitleID
 	WHERE	t.PublishReady = 1
 	AND		(CONTAINS((s.FullTitle, s.UniformTitle), @SearchTitle) OR @SearchTitle = '"**"')
 	AND		(CONTAINS(s.SearchAuthors, @SearchAuthor) OR @SearchAuthor = '"**"')
@@ -103,3 +103,4 @@ END
 SELECT DISTINCT * FROM #tmpOpenUrlCitation ORDER BY FullTitle, SegmentTitle, Volume, Date, StartPage
 
 END
+GO

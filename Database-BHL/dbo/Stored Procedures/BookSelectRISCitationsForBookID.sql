@@ -37,16 +37,16 @@ SELECT	DISTINCT
 		ISNULL(l.LanguageName, '') AS [Language],
 		dbo.fnNoteStringForTitle(t.TitleID, '') AS Notes
 INTO	#RIS
-FROM	dbo.Title t WITH (NOLOCK)
-		INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON t.TitleID = it.TitleID AND it.IsPrimary = 1
-		INNER JOIN dbo.Item i WITH (NOLOCK) ON it.ItemID = i.ItemID
-		INNER JOIN dbo.Book b WITH (NOLOCK) ON i.ItemID = b.ItemID
-		LEFT JOIN dbo.BibliographicLevel bl WITH (NOLOCK) ON t.BibliographicLevelID = bl.BibliographicLevelID
-		LEFT JOIN dbo.Title_Identifier isbn WITH (NOLOCK) ON t.TitleID = isbn.TitleID AND isbn.IdentifierID = @ISBNID
-		LEFT JOIN dbo.Title_Identifier issn WITH (NOLOCK) ON t.TitleID = issn.TitleID AND issn.IdentifierID = @ISSNID
-		LEFT JOIN dbo.Title_Identifier eissn WITH (NOLOCK) ON t.TitleID = eissn.TitleID AND eissn.IdentifierID = @EISSNID
-		LEFT JOIN dbo.Language l WITH (NOLOCK) ON b.LanguageCode = l.LanguageCode
-		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND b.BookID = c.ItemID
+FROM	dbo.Title t
+		INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID AND it.IsPrimary = 1
+		INNER JOIN dbo.Item i ON it.ItemID = i.ItemID
+		INNER JOIN dbo.Book b ON i.ItemID = b.ItemID
+		LEFT JOIN dbo.BibliographicLevel bl ON t.BibliographicLevelID = bl.BibliographicLevelID
+		LEFT JOIN dbo.Title_Identifier isbn ON t.TitleID = isbn.TitleID AND isbn.IdentifierID = @ISBNID
+		LEFT JOIN dbo.Title_Identifier issn ON t.TitleID = issn.TitleID AND issn.IdentifierID = @ISSNID
+		LEFT JOIN dbo.Title_Identifier eissn ON t.TitleID = eissn.TitleID AND eissn.IdentifierID = @EISSNID
+		LEFT JOIN dbo.Language l ON b.LanguageCode = l.LanguageCode
+		INNER JOIN dbo.SearchCatalog c ON t.TitleID = c.TitleID AND b.BookID = c.ItemID
 WHERE	b.BookID = @BookID
 
 SELECT 	Genre,
