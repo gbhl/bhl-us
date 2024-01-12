@@ -606,6 +606,7 @@ namespace IAHarvest
                     string identifierAccessUrl = string.Empty;
                     DateTime? addedDate = null;
                     string volume = string.Empty;
+                    string issue = string.Empty;
                     string note = string.Empty;
                     string scanOperator = string.Empty;
                     string scanDate = string.Empty;
@@ -629,6 +630,8 @@ namespace IAHarvest
                     string pageProgression = string.Empty;
                     string virtualVolume = string.Empty;
                     int? virtualTitleID = null;
+                    string summary = string.Empty;
+                    string genre = string.Empty;
 
                     XmlNode element = xml.SelectSingleNode("metadata/sponsor");
                     if (element != null) sponsor = element.InnerText;
@@ -644,6 +647,8 @@ namespace IAHarvest
                     if (element != null) identifierAccessUrl = element.InnerText;
                     element = xml.SelectSingleNode("metadata/volume");
                     if (element != null) volume = element.InnerText;
+                    element = xml.SelectSingleNode("metadata/issue");
+                    if (element != null) issue = element.InnerText;
                     element = xml.SelectSingleNode("metadata/notes");
                     if (element != null) note = element.InnerText;
                     element = xml.SelectSingleNode("metadata/operator");
@@ -703,14 +708,18 @@ namespace IAHarvest
                     {
                         if (Int32.TryParse(element.InnerText, out int vTitleID)) virtualTitleID = vTitleID;
                     }
+                    element = xml.SelectSingleNode("metadata/abstract");
+                    if (element != null) summary = element.InnerText;
+                    element = xml.SelectSingleNode("metadata/genre");
+                    if (element != null) genre = element.InnerText;
 
                     provider.IAItemUpdateMetadata(itemID, sponsor, sponsorDate, scanningCenter, 
-                        callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator,
+                        callNumber, imageCount, identifierAccessUrl, volume, issue, note, scanOperator,
                         scanDate, addedDate, externalStatus, titleID, year, identifierBib,
                         licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion,
                         copyrightComment, copyrightEvidence, copyrightEvidenceOperator,
                         copyrightEvidenceDate, scanningInstitution, rightsHolder, itemDescription,
-                        pageProgression, virtualVolume, virtualTitleID);
+                        pageProgression, virtualVolume, virtualTitleID, summary, genre);
 
                     // Read the identifier information
                     provider.IAItemIdentifierDeleteByItem(itemID);  // Delete existing, as we're doing a full replace
@@ -744,8 +753,8 @@ namespace IAHarvest
                 // No local file, so remove anything in the database
                 provider.IADCMetadataDeleteForItemAndSource(itemID, DC_SOURCE_META);
                 provider.IAItemSetDeleteByItem(itemID);
-                provider.IAItemUpdateMetadata(itemID, "", "", "", "", 0, "", "", "", "", "", null, 
-                    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", null);
+                provider.IAItemUpdateMetadata(itemID, "", "", "", "", 0, "", "", "", "", "", "", null, 
+                    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", null, "", "");
             }
         }
 

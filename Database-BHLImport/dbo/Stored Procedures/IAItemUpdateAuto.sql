@@ -57,7 +57,10 @@ CREATE PROCEDURE dbo.IAItemUpdateAuto
 @CreatedUserID INT,
 @LastModifiedUserID INT,
 @VirtualVolume NVARCHAR(100),
-@VirtualTitleID INT
+@VirtualTitleID INT,
+@Summary NVARCHAR(MAX),
+@Genre NVARCHAR(50),
+@Issue NVARCHAR(100)
 
 AS 
 
@@ -122,7 +125,10 @@ SET
 	[CreatedUserID] = @CreatedUserID,
 	[LastModifiedUserID] = @LastModifiedUserID,
 	[VirtualVolume] = @VirtualVolume,
-	[VirtualTitleID] = @VirtualTitleID
+	[VirtualTitleID] = @VirtualTitleID,
+	[Summary] = @Summary,
+	[Genre] = @Genre,
+	[Issue] = @Issue
 WHERE
 	[ItemID] = @ItemID
 		
@@ -193,7 +199,10 @@ ELSE BEGIN
 		[CreatedUserID],
 		[LastModifiedUserID],
 		[VirtualVolume],
-		[VirtualTitleID]
+		[VirtualTitleID],
+		[Summary],
+		[Genre],
+		[Issue]
 	FROM [dbo].[IAItem]
 	WHERE
 		[ItemID] = @ItemID

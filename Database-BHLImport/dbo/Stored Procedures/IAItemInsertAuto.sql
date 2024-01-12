@@ -57,7 +57,10 @@ CREATE PROCEDURE dbo.IAItemInsertAuto
 @CreatedUserID INT,
 @LastModifiedUserID INT,
 @VirtualVolume NVARCHAR(100),
-@VirtualTitleID INT = null
+@VirtualTitleID INT = null,
+@Summary NVARCHAR(MAX),
+@Genre NVARCHAR(50),
+@Issue NVARCHAR(100)
 
 AS 
 
@@ -122,7 +125,10 @@ INSERT INTO [dbo].[IAItem]
 	[CreatedUserID],
 	[LastModifiedUserID],
 	[VirtualVolume],
-	[VirtualTitleID] )
+	[VirtualTitleID],
+	[Summary],
+	[Genre],
+	[Issue] )
 VALUES
 ( 	@ItemStatusID,
 	@IAIdentifierPrefix,
@@ -182,7 +188,10 @@ VALUES
 	@CreatedUserID,
 	@LastModifiedUserID,
 	@VirtualVolume,
-	@VirtualTitleID )
+	@VirtualTitleID,
+	@Summary,
+	@Genre,
+	@Issue )
 
 SET @ItemID = Scope_Identity()
 
@@ -253,7 +262,10 @@ ELSE BEGIN
 		[CreatedUserID],
 		[LastModifiedUserID],
 		[VirtualVolume],
-		[VirtualTitleID]	
+		[VirtualTitleID],
+		[Summary],
+		[Genre],
+		[Issue]	
 	FROM [dbo].[IAItem]
 	WHERE
 		[ItemID] = @ItemID

@@ -1,5 +1,5 @@
 
-// Generated 4/27/2021 1:08:33 PM
+// Generated 1/12/2024 4:45:58 PM
 // Do not modify the contents of this code file.
 // This abstract class __Item is based upon dbo.Item.
 
@@ -106,6 +106,14 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="startPart"></param>
 		/// <param name="endPart"></param>
 		/// <param name="pageProgression"></param>
+		/// <param name="virtualVolume"></param>
+		/// <param name="virtualTitleID"></param>
+		/// <param name="summary"></param>
+		/// <param name="segmentGenreID"></param>
+		/// <param name="publicationDetails"></param>
+		/// <param name="publisherName"></param>
+		/// <param name="issue"></param>
+		/// <param name="segmentDate"></param>
 		public __Item(int itemID, 
 			string importKey, 
 			int importStatusID, 
@@ -166,7 +174,15 @@ namespace MOBOT.BHLImport.DataObjects
 			string endSeries, 
 			string startPart, 
 			string endPart, 
-			string pageProgression) : this()
+			string pageProgression, 
+			string virtualVolume, 
+			int? virtualTitleID, 
+			string summary, 
+			int? segmentGenreID, 
+			string publicationDetails, 
+			string publisherName, 
+			string issue, 
+			string segmentDate) : this()
 		{
 			_ItemID = itemID;
 			ImportKey = importKey;
@@ -229,6 +245,14 @@ namespace MOBOT.BHLImport.DataObjects
 			StartPart = startPart;
 			EndPart = endPart;
 			PageProgression = pageProgression;
+			VirtualVolume = virtualVolume;
+			VirtualTitleID = virtualTitleID;
+			Summary = summary;
+			SegmentGenreID = segmentGenreID;
+			PublicationDetails = publicationDetails;
+			PublisherName = publisherName;
+			Issue = issue;
+			SegmentDate = segmentDate;
 		}
 		
 		#endregion Constructors
@@ -558,6 +582,46 @@ namespace MOBOT.BHLImport.DataObjects
 					case "PageProgression" :
 					{
 						_PageProgression = (string)column.Value;
+						break;
+					}
+					case "VirtualVolume" :
+					{
+						_VirtualVolume = (string)column.Value;
+						break;
+					}
+					case "VirtualTitleID" :
+					{
+						_VirtualTitleID = (int?)column.Value;
+						break;
+					}
+					case "Summary" :
+					{
+						_Summary = (string)column.Value;
+						break;
+					}
+					case "SegmentGenreID" :
+					{
+						_SegmentGenreID = (int?)column.Value;
+						break;
+					}
+					case "PublicationDetails" :
+					{
+						_PublicationDetails = (string)column.Value;
+						break;
+					}
+					case "PublisherName" :
+					{
+						_PublisherName = (string)column.Value;
+						break;
+					}
+					case "Issue" :
+					{
+						_Issue = (string)column.Value;
+						break;
+					}
+					case "SegmentDate" :
+					{
+						_SegmentDate = (string)column.Value;
 						break;
 					}
 								}
@@ -2255,6 +2319,228 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion PageProgression
+		
+		#region VirtualVolume
+		
+		private string _VirtualVolume = string.Empty;
+		
+		/// <summary>
+		/// Column: VirtualVolume;
+		/// DBMS data type: nvarchar(100);
+		/// </summary>
+		[ColumnDefinition("VirtualVolume", DbTargetType=SqlDbType.NVarChar, Ordinal=62, CharacterMaxLength=100)]
+		public string VirtualVolume
+		{
+			get
+			{
+				return _VirtualVolume;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 100);
+				if (_VirtualVolume != value)
+				{
+					_VirtualVolume = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion VirtualVolume
+		
+		#region VirtualTitleID
+		
+		private int? _VirtualTitleID = null;
+		
+		/// <summary>
+		/// Column: VirtualTitleID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("VirtualTitleID", DbTargetType=SqlDbType.Int, Ordinal=63, NumericPrecision=10, IsNullable=true)]
+		public int? VirtualTitleID
+		{
+			get
+			{
+				return _VirtualTitleID;
+			}
+			set
+			{
+				if (_VirtualTitleID != value)
+				{
+					_VirtualTitleID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion VirtualTitleID
+		
+		#region Summary
+		
+		private string _Summary = string.Empty;
+		
+		/// <summary>
+		/// Column: Summary;
+		/// DBMS data type: nvarchar(MAX);
+		/// </summary>
+		[ColumnDefinition("Summary", DbTargetType=SqlDbType.NVarChar, Ordinal=64, CharacterMaxLength=1073741823)]
+		public string Summary
+		{
+			get
+			{
+				return _Summary;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 1073741823);
+				if (_Summary != value)
+				{
+					_Summary = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Summary
+		
+		#region SegmentGenreID
+		
+		private int? _SegmentGenreID = null;
+		
+		/// <summary>
+		/// Column: SegmentGenreID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("SegmentGenreID", DbTargetType=SqlDbType.Int, Ordinal=65, NumericPrecision=10, IsNullable=true)]
+		public int? SegmentGenreID
+		{
+			get
+			{
+				return _SegmentGenreID;
+			}
+			set
+			{
+				if (_SegmentGenreID != value)
+				{
+					_SegmentGenreID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion SegmentGenreID
+		
+		#region PublicationDetails
+		
+		private string _PublicationDetails = string.Empty;
+		
+		/// <summary>
+		/// Column: PublicationDetails;
+		/// DBMS data type: nvarchar(400);
+		/// </summary>
+		[ColumnDefinition("PublicationDetails", DbTargetType=SqlDbType.NVarChar, Ordinal=66, CharacterMaxLength=400)]
+		public string PublicationDetails
+		{
+			get
+			{
+				return _PublicationDetails;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 400);
+				if (_PublicationDetails != value)
+				{
+					_PublicationDetails = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion PublicationDetails
+		
+		#region PublisherName
+		
+		private string _PublisherName = string.Empty;
+		
+		/// <summary>
+		/// Column: PublisherName;
+		/// DBMS data type: nvarchar(250);
+		/// </summary>
+		[ColumnDefinition("PublisherName", DbTargetType=SqlDbType.NVarChar, Ordinal=67, CharacterMaxLength=250)]
+		public string PublisherName
+		{
+			get
+			{
+				return _PublisherName;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 250);
+				if (_PublisherName != value)
+				{
+					_PublisherName = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion PublisherName
+		
+		#region Issue
+		
+		private string _Issue = string.Empty;
+		
+		/// <summary>
+		/// Column: Issue;
+		/// DBMS data type: nvarchar(100);
+		/// </summary>
+		[ColumnDefinition("Issue", DbTargetType=SqlDbType.NVarChar, Ordinal=68, CharacterMaxLength=100)]
+		public string Issue
+		{
+			get
+			{
+				return _Issue;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 100);
+				if (_Issue != value)
+				{
+					_Issue = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Issue
+		
+		#region SegmentDate
+		
+		private string _SegmentDate = string.Empty;
+		
+		/// <summary>
+		/// Column: SegmentDate;
+		/// DBMS data type: nvarchar(20);
+		/// </summary>
+		[ColumnDefinition("SegmentDate", DbTargetType=SqlDbType.NVarChar, Ordinal=69, CharacterMaxLength=20)]
+		public string SegmentDate
+		{
+			get
+			{
+				return _SegmentDate;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 20);
+				if (_SegmentDate != value)
+				{
+					_SegmentDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion SegmentDate
 			
 		#endregion Properties
 
@@ -2359,7 +2645,15 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.EndSeries) == GetComparisonString(EndSeries) &&
 					GetComparisonString(o.StartPart) == GetComparisonString(StartPart) &&
 					GetComparisonString(o.EndPart) == GetComparisonString(EndPart) &&
-					GetComparisonString(o.PageProgression) == GetComparisonString(PageProgression) 
+					GetComparisonString(o.PageProgression) == GetComparisonString(PageProgression) &&
+					GetComparisonString(o.VirtualVolume) == GetComparisonString(VirtualVolume) &&
+					o.VirtualTitleID == VirtualTitleID &&
+					GetComparisonString(o.Summary) == GetComparisonString(Summary) &&
+					o.SegmentGenreID == SegmentGenreID &&
+					GetComparisonString(o.PublicationDetails) == GetComparisonString(PublicationDetails) &&
+					GetComparisonString(o.PublisherName) == GetComparisonString(PublisherName) &&
+					GetComparisonString(o.Issue) == GetComparisonString(Issue) &&
+					GetComparisonString(o.SegmentDate) == GetComparisonString(SegmentDate) 
 				)
 				{
 					o = null;
@@ -2519,7 +2813,15 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string EndSeries = "EndSeries";	
 			public const string StartPart = "StartPart";	
 			public const string EndPart = "EndPart";	
-			public const string PageProgression = "PageProgression";
+			public const string PageProgression = "PageProgression";	
+			public const string VirtualVolume = "VirtualVolume";	
+			public const string VirtualTitleID = "VirtualTitleID";	
+			public const string Summary = "Summary";	
+			public const string SegmentGenreID = "SegmentGenreID";	
+			public const string PublicationDetails = "PublicationDetails";	
+			public const string PublisherName = "PublisherName";	
+			public const string Issue = "Issue";	
+			public const string SegmentDate = "SegmentDate";
 		}
 				
 		#endregion SortColumn

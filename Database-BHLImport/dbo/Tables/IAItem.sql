@@ -59,6 +59,9 @@
 	[LastModifiedUserID]        INT            CONSTRAINT [DF_IAItem_LastModifiedUserID] DEFAULT 1 NOT NULL,
 	[VirtualVolume]             NVARCHAR(100)  CONSTRAINT [DF_IAItem_VirtualVolume] DEFAULT '' NOT NULL,
 	[VirtualTitleID]            INT            NULL,
+	[Summary]                   NVARCHAR(max)  CONSTRAINT [DF_IAItem_Summary] DEFAULT '' NOT NULL,
+	[Genre]                     NVARCHAR(50)   CONSTRAINT [DF_IAItem_Genre] DEFAULT '' NOT NULL,
+	[Issue]                     NVARCHAR(100)  CONSTRAINT [DF_IAItem_Issue] DEFAULT '' NOT NULL,
     CONSTRAINT [PK_Item] PRIMARY KEY CLUSTERED ([ItemID] ASC),
     CONSTRAINT [FK_Item_ItemStatus] FOREIGN KEY ([ItemStatusID]) REFERENCES [dbo].[IAItemStatus] ([ItemStatusID])
 );

@@ -1,5 +1,5 @@
 
-// Generated 12/27/2023 2:22:07 PM
+// Generated 1/12/2024 1:10:08 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class IAItemDAL is based upon dbo.IAItem.
@@ -194,6 +194,9 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="virtualVolume"></param>
 		/// <param name="virtualTitleID"></param>
+		/// <param name="summary"></param>
+		/// <param name="genre"></param>
+		/// <param name="issue"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -254,9 +257,12 @@ namespace MOBOT.BHLImport.DAL
 			int createdUserID,
 			int lastModifiedUserID,
 			string virtualVolume,
-			int? virtualTitleID)
+			int? virtualTitleID,
+			string summary,
+			string genre,
+			string issue)
 		{
-			return IAItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemStatusID, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, mARCBibID, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, shortTitle, sponsorDate, titleID, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, localFileFolder, noMARCOk, scanningInstitution, rightsHolder, itemDescription, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, pageProgression, createdUserID, lastModifiedUserID, virtualVolume, virtualTitleID );
+			return IAItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemStatusID, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, mARCBibID, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, shortTitle, sponsorDate, titleID, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, localFileFolder, noMARCOk, scanningInstitution, rightsHolder, itemDescription, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, pageProgression, createdUserID, lastModifiedUserID, virtualVolume, virtualTitleID, summary, genre, issue );
 		}
 		
 		/// <summary>
@@ -322,6 +328,9 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="virtualVolume"></param>
 		/// <param name="virtualTitleID"></param>
+		/// <param name="summary"></param>
+		/// <param name="genre"></param>
+		/// <param name="issue"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -383,7 +392,10 @@ namespace MOBOT.BHLImport.DAL
 			int createdUserID,
 			int lastModifiedUserID,
 			string virtualVolume,
-			int? virtualTitleID)
+			int? virtualTitleID,
+			string summary,
+			string genre,
+			string issue)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -446,7 +458,10 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("CreatedUserID", SqlDbType.Int, null, false, createdUserID),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
 					CustomSqlHelper.CreateInputParameter("VirtualVolume", SqlDbType.NVarChar, 100, false, virtualVolume),
-					CustomSqlHelper.CreateInputParameter("VirtualTitleID", SqlDbType.Int, null, true, virtualTitleID), 
+					CustomSqlHelper.CreateInputParameter("VirtualTitleID", SqlDbType.Int, null, true, virtualTitleID),
+					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, 1073741823, false, summary),
+					CustomSqlHelper.CreateInputParameter("Genre", SqlDbType.NVarChar, 50, false, genre),
+					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
@@ -552,7 +567,10 @@ namespace MOBOT.BHLImport.DAL
 				value.CreatedUserID,
 				value.LastModifiedUserID,
 				value.VirtualVolume,
-				value.VirtualTitleID);
+				value.VirtualTitleID,
+				value.Summary,
+				value.Genre,
+				value.Issue);
 		}
 		
 		#endregion ===== INSERT =====
@@ -680,6 +698,9 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="virtualVolume"></param>
 		/// <param name="virtualTitleID"></param>
+		/// <param name="summary"></param>
+		/// <param name="genre"></param>
+		/// <param name="issue"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -741,9 +762,12 @@ namespace MOBOT.BHLImport.DAL
 			int createdUserID,
 			int lastModifiedUserID,
 			string virtualVolume,
-			int? virtualTitleID)
+			int? virtualTitleID,
+			string summary,
+			string genre,
+			string issue)
 		{
-			return IAItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, itemStatusID, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, mARCBibID, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, shortTitle, sponsorDate, titleID, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, localFileFolder, noMARCOk, scanningInstitution, rightsHolder, itemDescription, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, pageProgression, createdUserID, lastModifiedUserID, virtualVolume, virtualTitleID);
+			return IAItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, itemStatusID, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, mARCBibID, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, shortTitle, sponsorDate, titleID, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, localFileFolder, noMARCOk, scanningInstitution, rightsHolder, itemDescription, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, pageProgression, createdUserID, lastModifiedUserID, virtualVolume, virtualTitleID, summary, genre, issue);
 		}
 		
 		/// <summary>
@@ -810,6 +834,9 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="virtualVolume"></param>
 		/// <param name="virtualTitleID"></param>
+		/// <param name="summary"></param>
+		/// <param name="genre"></param>
+		/// <param name="issue"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -872,7 +899,10 @@ namespace MOBOT.BHLImport.DAL
 			int createdUserID,
 			int lastModifiedUserID,
 			string virtualVolume,
-			int? virtualTitleID)
+			int? virtualTitleID,
+			string summary,
+			string genre,
+			string issue)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -935,7 +965,10 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("CreatedUserID", SqlDbType.Int, null, false, createdUserID),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
 					CustomSqlHelper.CreateInputParameter("VirtualVolume", SqlDbType.NVarChar, 100, false, virtualVolume),
-					CustomSqlHelper.CreateInputParameter("VirtualTitleID", SqlDbType.Int, null, true, virtualTitleID), 
+					CustomSqlHelper.CreateInputParameter("VirtualTitleID", SqlDbType.Int, null, true, virtualTitleID),
+					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, 1073741823, false, summary),
+					CustomSqlHelper.CreateInputParameter("Genre", SqlDbType.NVarChar, 50, false, genre),
+					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
@@ -1042,7 +1075,10 @@ namespace MOBOT.BHLImport.DAL
 				value.CreatedUserID,
 				value.LastModifiedUserID,
 				value.VirtualVolume,
-				value.VirtualTitleID);
+				value.VirtualTitleID,
+				value.Summary,
+				value.Genre,
+				value.Issue);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -1143,7 +1179,10 @@ namespace MOBOT.BHLImport.DAL
 						value.CreatedUserID,
 						value.LastModifiedUserID,
 						value.VirtualVolume,
-						value.VirtualTitleID);
+						value.VirtualTitleID,
+						value.Summary,
+						value.Genre,
+						value.Issue);
 				
 				return new CustomDataAccessStatus<IAItem>(
 					CustomDataAccessContext.Insert, 
@@ -1226,7 +1265,10 @@ namespace MOBOT.BHLImport.DAL
 						value.CreatedUserID,
 						value.LastModifiedUserID,
 						value.VirtualVolume,
-						value.VirtualTitleID);
+						value.VirtualTitleID,
+						value.Summary,
+						value.Genre,
+						value.Issue);
 					
 				return new CustomDataAccessStatus<IAItem>(
 					CustomDataAccessContext.Update, 

@@ -66,7 +66,10 @@ SELECT
 	[CreatedUserID],
 	[LastModifiedUserID],
 	[VirtualVolume],
-	[VirtualTitleID]
+	[VirtualTitleID],
+	[Summary],
+	[Genre],
+	[Issue]
 FROM	
 	[dbo].[IAItem]
 WHERE	

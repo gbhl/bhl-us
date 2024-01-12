@@ -1,5 +1,5 @@
 
-// Generated 4/27/2021 1:08:33 PM
+// Generated 1/12/2024 4:45:58 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class ItemDAL is based upon dbo.Item.
@@ -195,6 +195,14 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="startPart"></param>
 		/// <param name="endPart"></param>
 		/// <param name="pageProgression"></param>
+		/// <param name="virtualVolume"></param>
+		/// <param name="virtualTitleID"></param>
+		/// <param name="summary"></param>
+		/// <param name="segmentGenreID"></param>
+		/// <param name="publicationDetails"></param>
+		/// <param name="publisherName"></param>
+		/// <param name="issue"></param>
+		/// <param name="segmentDate"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -256,9 +264,17 @@ namespace MOBOT.BHLImport.DAL
 			string endSeries,
 			string startPart,
 			string endPart,
-			string pageProgression)
+			string pageProgression,
+			string virtualVolume,
+			int? virtualTitleID,
+			string summary,
+			int? segmentGenreID,
+			string publicationDetails,
+			string publisherName,
+			string issue,
+			string segmentDate)
 		{
-			return ItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, scanningInstitutionCode, rightsHolderCode, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, pageProgression );
+			return ItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, scanningInstitutionCode, rightsHolderCode, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, pageProgression, virtualVolume, virtualTitleID, summary, segmentGenreID, publicationDetails, publisherName, issue, segmentDate );
 		}
 		
 		/// <summary>
@@ -325,6 +341,14 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="startPart"></param>
 		/// <param name="endPart"></param>
 		/// <param name="pageProgression"></param>
+		/// <param name="virtualVolume"></param>
+		/// <param name="virtualTitleID"></param>
+		/// <param name="summary"></param>
+		/// <param name="segmentGenreID"></param>
+		/// <param name="publicationDetails"></param>
+		/// <param name="publisherName"></param>
+		/// <param name="issue"></param>
+		/// <param name="segmentDate"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -387,7 +411,15 @@ namespace MOBOT.BHLImport.DAL
 			string endSeries,
 			string startPart,
 			string endPart,
-			string pageProgression)
+			string pageProgression,
+			string virtualVolume,
+			int? virtualTitleID,
+			string summary,
+			int? segmentGenreID,
+			string publicationDetails,
+			string publisherName,
+			string issue,
+			string segmentDate)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -451,7 +483,15 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("EndSeries", SqlDbType.NVarChar, 10, false, endSeries),
 					CustomSqlHelper.CreateInputParameter("StartPart", SqlDbType.NVarChar, 10, false, startPart),
 					CustomSqlHelper.CreateInputParameter("EndPart", SqlDbType.NVarChar, 10, false, endPart),
-					CustomSqlHelper.CreateInputParameter("PageProgression", SqlDbType.NVarChar, 10, false, pageProgression), 
+					CustomSqlHelper.CreateInputParameter("PageProgression", SqlDbType.NVarChar, 10, false, pageProgression),
+					CustomSqlHelper.CreateInputParameter("VirtualVolume", SqlDbType.NVarChar, 100, false, virtualVolume),
+					CustomSqlHelper.CreateInputParameter("VirtualTitleID", SqlDbType.Int, null, true, virtualTitleID),
+					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, 1073741823, false, summary),
+					CustomSqlHelper.CreateInputParameter("SegmentGenreID", SqlDbType.Int, null, true, segmentGenreID),
+					CustomSqlHelper.CreateInputParameter("PublicationDetails", SqlDbType.NVarChar, 400, false, publicationDetails),
+					CustomSqlHelper.CreateInputParameter("PublisherName", SqlDbType.NVarChar, 250, false, publisherName),
+					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue),
+					CustomSqlHelper.CreateInputParameter("SegmentDate", SqlDbType.NVarChar, 20, false, segmentDate), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
@@ -558,7 +598,15 @@ namespace MOBOT.BHLImport.DAL
 				value.EndSeries,
 				value.StartPart,
 				value.EndPart,
-				value.PageProgression);
+				value.PageProgression,
+				value.VirtualVolume,
+				value.VirtualTitleID,
+				value.Summary,
+				value.SegmentGenreID,
+				value.PublicationDetails,
+				value.PublisherName,
+				value.Issue,
+				value.SegmentDate);
 		}
 		
 		#endregion ===== INSERT =====
@@ -687,6 +735,14 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="startPart"></param>
 		/// <param name="endPart"></param>
 		/// <param name="pageProgression"></param>
+		/// <param name="virtualVolume"></param>
+		/// <param name="virtualTitleID"></param>
+		/// <param name="summary"></param>
+		/// <param name="segmentGenreID"></param>
+		/// <param name="publicationDetails"></param>
+		/// <param name="publisherName"></param>
+		/// <param name="issue"></param>
+		/// <param name="segmentDate"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -749,9 +805,17 @@ namespace MOBOT.BHLImport.DAL
 			string endSeries,
 			string startPart,
 			string endPart,
-			string pageProgression)
+			string pageProgression,
+			string virtualVolume,
+			int? virtualTitleID,
+			string summary,
+			int? segmentGenreID,
+			string publicationDetails,
+			string publisherName,
+			string issue,
+			string segmentDate)
 		{
-			return ItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, scanningInstitutionCode, rightsHolderCode, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, pageProgression);
+			return ItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, scanningInstitutionCode, rightsHolderCode, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, pageProgression, virtualVolume, virtualTitleID, summary, segmentGenreID, publicationDetails, publisherName, issue, segmentDate);
 		}
 		
 		/// <summary>
@@ -819,6 +883,14 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="startPart"></param>
 		/// <param name="endPart"></param>
 		/// <param name="pageProgression"></param>
+		/// <param name="virtualVolume"></param>
+		/// <param name="virtualTitleID"></param>
+		/// <param name="summary"></param>
+		/// <param name="segmentGenreID"></param>
+		/// <param name="publicationDetails"></param>
+		/// <param name="publisherName"></param>
+		/// <param name="issue"></param>
+		/// <param name="segmentDate"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -882,7 +954,15 @@ namespace MOBOT.BHLImport.DAL
 			string endSeries,
 			string startPart,
 			string endPart,
-			string pageProgression)
+			string pageProgression,
+			string virtualVolume,
+			int? virtualTitleID,
+			string summary,
+			int? segmentGenreID,
+			string publicationDetails,
+			string publisherName,
+			string issue,
+			string segmentDate)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -946,7 +1026,15 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("EndSeries", SqlDbType.NVarChar, 10, false, endSeries),
 					CustomSqlHelper.CreateInputParameter("StartPart", SqlDbType.NVarChar, 10, false, startPart),
 					CustomSqlHelper.CreateInputParameter("EndPart", SqlDbType.NVarChar, 10, false, endPart),
-					CustomSqlHelper.CreateInputParameter("PageProgression", SqlDbType.NVarChar, 10, false, pageProgression), 
+					CustomSqlHelper.CreateInputParameter("PageProgression", SqlDbType.NVarChar, 10, false, pageProgression),
+					CustomSqlHelper.CreateInputParameter("VirtualVolume", SqlDbType.NVarChar, 100, false, virtualVolume),
+					CustomSqlHelper.CreateInputParameter("VirtualTitleID", SqlDbType.Int, null, true, virtualTitleID),
+					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, 1073741823, false, summary),
+					CustomSqlHelper.CreateInputParameter("SegmentGenreID", SqlDbType.Int, null, true, segmentGenreID),
+					CustomSqlHelper.CreateInputParameter("PublicationDetails", SqlDbType.NVarChar, 400, false, publicationDetails),
+					CustomSqlHelper.CreateInputParameter("PublisherName", SqlDbType.NVarChar, 250, false, publisherName),
+					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue),
+					CustomSqlHelper.CreateInputParameter("SegmentDate", SqlDbType.NVarChar, 20, false, segmentDate), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
@@ -1054,7 +1142,15 @@ namespace MOBOT.BHLImport.DAL
 				value.EndSeries,
 				value.StartPart,
 				value.EndPart,
-				value.PageProgression);
+				value.PageProgression,
+				value.VirtualVolume,
+				value.VirtualTitleID,
+				value.Summary,
+				value.SegmentGenreID,
+				value.PublicationDetails,
+				value.PublisherName,
+				value.Issue,
+				value.SegmentDate);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -1156,7 +1252,15 @@ namespace MOBOT.BHLImport.DAL
 						value.EndSeries,
 						value.StartPart,
 						value.EndPart,
-						value.PageProgression);
+						value.PageProgression,
+						value.VirtualVolume,
+						value.VirtualTitleID,
+						value.Summary,
+						value.SegmentGenreID,
+						value.PublicationDetails,
+						value.PublisherName,
+						value.Issue,
+						value.SegmentDate);
 				
 				return new CustomDataAccessStatus<Item>(
 					CustomDataAccessContext.Insert, 
@@ -1240,7 +1344,15 @@ namespace MOBOT.BHLImport.DAL
 						value.EndSeries,
 						value.StartPart,
 						value.EndPart,
-						value.PageProgression);
+						value.PageProgression,
+						value.VirtualVolume,
+						value.VirtualTitleID,
+						value.Summary,
+						value.SegmentGenreID,
+						value.PublicationDetails,
+						value.PublisherName,
+						value.Issue,
+						value.SegmentDate);
 					
 				return new CustomDataAccessStatus<Item>(
 					CustomDataAccessContext.Update, 
