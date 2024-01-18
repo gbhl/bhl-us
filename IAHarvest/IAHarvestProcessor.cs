@@ -911,13 +911,21 @@ namespace IAHarvest
                         StringBuilder pageText = new();
                         XmlReaderSettings settings = new() { Async = true, DtdProcessing = DtdProcessing.Parse };
                         int counter = 1;
+                        int pageCounter = counter;
                         string localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
                         using (XmlReader reader = XmlReader.Create(new StreamReader(localFileName), settings))
                         {
                             bool wordStarted = false;
                             while (reader.Read())
                             {
-                                if (reader.NodeType == XmlNodeType.Element && reader.Name == "OBJECT") pageText.Clear();
+                                if (reader.NodeType == XmlNodeType.Element && reader.Name == "OBJECT")
+                                {
+                                    pageText.Clear();
+                                    // Read the page counter value from the "usemap" attribute of the OBJECT element
+                                    // Example:  <OBJECT ... type="image/x.djvu" usemap="musselbedsofthec00wils_0002.djvu" width="2861" height="4543">
+                                    string? useMap = reader.GetAttribute("usemap");
+                                    if (useMap != null) pageCounter = Convert.ToInt32(useMap.Substring(useMap.Replace(".djvu", "").Length - 4, 4));
+                                }
                                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "WORD") wordStarted = true;
                                 if (reader.NodeType == XmlNodeType.Text && wordStarted) pageText.Append(reader.Value + " ");
                                 if (reader.NodeType == XmlNodeType.EndElement)
@@ -927,14 +935,15 @@ namespace IAHarvest
                                     if (reader.Name == "PARAGRAPH") pageText.AppendLine();
                                     if (reader.Name == "OBJECT")
                                     {
-                                        File.WriteAllText(string.Format("{0}{1}\\{1}\\{1}_{2}.txt", localFileFolder, iaIdentifier, Convert.ToString(counter).PadLeft(4, '0')), pageText.ToString());
+                                        File.WriteAllText(string.Format("{0}{1}\\{1}\\{1}_{2}.txt", localFileFolder, iaIdentifier, Convert.ToString(pageCounter).PadLeft(4, '0')), pageText.ToString());
 
                                         // Write a record to the database for this page
-                                        string externalUrl = this.GetPageExternalUrl(itemID, iaIdentifier, counter);
-                                        string textFileName = string.Format("{0}_{1}.txt", iaIdentifier, Convert.ToString(counter).PadLeft(4, '0'));
-                                        provider.IAPageInsertAuto(itemID, textFileName, counter, externalUrl);
+                                        string externalUrl = this.GetPageExternalUrl(itemID, iaIdentifier, pageCounter);
+                                        string textFileName = string.Format("{0}_{1}.txt", iaIdentifier, Convert.ToString(pageCounter).PadLeft(4, '0'));
+                                        provider.IAPageInsertAuto(itemID, textFileName, pageCounter, externalUrl);
 
                                         counter++;
+                                        pageCounter = counter;
                                     }
                                 }
                             }
