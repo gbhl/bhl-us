@@ -7,8 +7,8 @@
 	[CreatorRoleTypeID] [int] NOT NULL,
 	[SequenceOrder] [smallint] NULL,
 	[ProductionDate] [datetime] NULL,
-	[CreatedDate] [datetime] NOT NULL,
-	[LastModifiedDate] [datetime] NOT NULL,
+	[CreatedDate] [datetime]  CONSTRAINT [DF_ItemCreator_CreatedDate] DEFAULT (getdate()) NOT NULL,
+	[LastModifiedDate] [datetime] CONSTRAINT [DF_ItemCreator_LastModifiedDate] DEFAULT (getdate()) NOT NULL,
 	CONSTRAINT [PK_ItemCreator] PRIMARY KEY CLUSTERED 
 	(
 		[ItemCreatorID] ASC
