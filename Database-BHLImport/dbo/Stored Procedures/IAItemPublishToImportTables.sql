@@ -1435,6 +1435,13 @@ BEGIN TRY
 		WHERE	ItemStatusID = 30	-- Approved
 		AND		ItemID = @ItemID
 
+		-- Get the MARCBibID from the production title record
+		UPDATE	#tmpItem
+		SET		MARCBibID = bt.MARCBibID
+		FROM	#tmpItem t
+				INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
+				INNER JOIN dbo.BHLTitle bt ON i.VirtualTitleID = bt.TitleID
+
 		-- Get the publisher metadata for a segment in a Virtual Item
 		UPDATE	#tmpItem
 		SET		PublicationDetails = m.DCElementValue
