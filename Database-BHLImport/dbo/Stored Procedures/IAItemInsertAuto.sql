@@ -60,7 +60,8 @@ CREATE PROCEDURE dbo.IAItemInsertAuto
 @VirtualTitleID INT = null,
 @Summary NVARCHAR(MAX),
 @Genre NVARCHAR(50),
-@Issue NVARCHAR(100)
+@Issue NVARCHAR(100),
+@PageRange NVARCHAR(50)
 
 AS 
 
@@ -128,7 +129,8 @@ INSERT INTO [dbo].[IAItem]
 	[VirtualTitleID],
 	[Summary],
 	[Genre],
-	[Issue] )
+	[Issue],
+	[PageRange] )
 VALUES
 ( 	@ItemStatusID,
 	@IAIdentifierPrefix,
@@ -191,7 +193,8 @@ VALUES
 	@VirtualTitleID,
 	@Summary,
 	@Genre,
-	@Issue )
+	@Issue,
+	@PageRange )
 
 SET @ItemID = Scope_Identity()
 
@@ -265,7 +268,8 @@ ELSE BEGIN
 		[VirtualTitleID],
 		[Summary],
 		[Genre],
-		[Issue]	
+		[Issue],
+		[PageRange]	
 	FROM [dbo].[IAItem]
 	WHERE
 		[ItemID] = @ItemID

@@ -282,7 +282,9 @@ BEGIN TRY
 		[VirtualTitleID] [int] NULL,
 		[VirtualVolumeSegmentDate] [nvarchar](20) NOT NULL DEFAULT(''),
 		[Summary] [nvarchar](max) NOT NULL DEFAULT(''),
-		[SegmentGenreID] int NULL
+		[SegmentGenreID] int NULL,
+		[StartPage] [nvarchar](20) NOT NULL DEFAULT(''),
+		[EndPage] [nvarchar](20) NOT NULL DEFAULT('')
 		)
 
 	CREATE TABLE #tmpItemLanguage(
@@ -1483,7 +1485,7 @@ BEGIN TRY
 		FROM	#tmpItem t INNER JOIN dbo.IADCMetadata m ON t.ItemID = m.ItemID AND m.DCElementName = 'contributor'
 				INNER JOIN dbo.IAScanCenterInstitution s ON m.DCElementValue = s.ScanningCenterCode
 	
-		UPDATE	#tmpTitle
+		UPDATE	#tmpItem
 		SET		InstitutionCode = i.InstitutionCode
 		FROM	#tmpItem t INNER JOIN dbo.IADCMetadata m ON t.ItemID = m.ItemID AND m.DCElementName = 'contributor'
 				INNER JOIN dbo.BHLInstitution i ON m.DCElementValue = i.InstitutionName COLLATE Latin1_general_CI_AI -- ignore diacritics for this comparison
@@ -1498,6 +1500,16 @@ BEGIN TRY
 				INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
 				INNER JOIN dbo.BHLSegmentGenre g1 ON i.Genre = g1.GenreName
 				INNER JOIN dbo.BHLSegmentGenre g2 ON 'Article' = g2.GenreName
+
+		-- Get the Start and End Page
+		DECLARE @PageRange nvarchar(50)
+		DECLARE @StartPage varchar(20)
+		DECLARE @EndPage varchar(20)
+		SELECT @PageRange = i.PageRange FROM #tmpItem t INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
+		SELECT @StartPage = LEFT(@PageRange, CASE WHEN CHARINDEX('-', @PageRange, 1) = 0 THEN LEN(@PageRange) ELSE CHARINDEX('-', @PageRange, 1)- 1 END)
+		SET @PageRange = REVERSE(@PageRange)
+		SELECT @EndPage = REVERSE(LEFT(@PageRange, CASE WHEN CHARINDEX('-', @PageRange, 1) = 0 THEN 0 ELSE CHARINDEX('-', @PageRange, 1)- 1 END))
+		UPDATE #tmpItem SET StartPage = @StartPage, EndPage = @EndPage
 	END
 	
 	-- Get the current vault ID to assign to the items
@@ -2223,7 +2235,7 @@ BEGIN TRY
 			ItemDescription, EndYear, StartVolume, EndVolume, StartIssue, EndIssue,
 			StartNumber, EndNumber, StartSeries, EndSeries, StartPart, EndPart, 
 			PageProgression, VirtualVolume, VirtualTitleID, Summary, SegmentGenreID,
-			PublicationDetails, PublisherName, SegmentDate)
+			PublicationDetails, PublisherName, SegmentDate, StartPage, EndPage)
 		SELECT	10, @ImportSourceID, t.MARCBibID, t.Sponsor, t.BarCode,
 				t.MaxExistingItemSequence + t.ItemSequence, t.MARCItemID, t.Volume, 
 				t.Issue, t.InstitutionCode, t.LanguageCode, t.VaultID, t.ItemStatusID, 
@@ -2235,7 +2247,7 @@ BEGIN TRY
 				StartVolume, EndVolume, StartIssue, EndIssue, StartNumber, EndNumber, 
 				StartSeries, EndSeries, StartPart, EndPart, PageProgression, VirtualVolume,
 				VirtualTitleID, Summary, SegmentGenreID, PublicationDetails, PublisherName,
-				VirtualVolumeSegmentDate
+				VirtualVolumeSegmentDate, StartPage, EndPage
 		FROM	#tmpItem t
 
 		-- =======================================================================

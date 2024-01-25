@@ -66,7 +66,9 @@ CREATE PROCEDURE dbo.ItemUpdateAuto
 @PublicationDetails NVARCHAR(400),
 @PublisherName NVARCHAR(250),
 @Issue NVARCHAR(100),
-@SegmentDate NVARCHAR(20)
+@SegmentDate NVARCHAR(20),
+@StartPage NVARCHAR(20),
+@EndPage NVARCHAR(20)
 
 AS 
 
@@ -140,7 +142,9 @@ SET
 	[PublicationDetails] = @PublicationDetails,
 	[PublisherName] = @PublisherName,
 	[Issue] = @Issue,
-	[SegmentDate] = @SegmentDate
+	[SegmentDate] = @SegmentDate,
+	[StartPage] = @StartPage,
+	[EndPage] = @EndPage
 WHERE
 	[ItemID] = @ItemID
 		
@@ -220,7 +224,9 @@ ELSE BEGIN
 		[PublicationDetails],
 		[PublisherName],
 		[Issue],
-		[SegmentDate]
+		[SegmentDate],
+		[StartPage],
+		[EndPage]
 	FROM [dbo].[Item]
 	WHERE
 		[ItemID] = @ItemID

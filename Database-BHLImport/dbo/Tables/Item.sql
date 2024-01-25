@@ -68,6 +68,8 @@
 	[PublisherName]             NVARCHAR(250)  CONSTRAINT [DF_Item_PublisherName] DEFAULT '' NOT NULL,
 	[Issue]                     NVARCHAR(100)  CONSTRAINT [DF_Item_Issue] DEFAULT '' NOT NULL,
 	[SegmentDate]               NVARCHAR(20)   CONSTRAINT [DF_Item_SegmentDate] DEFAULT '' NOT NULL,
+	[StartPage]                 NVARCHAR(20)   CONSTRAINT [DF_Item_StartPage] DEFAULT '' NOT NULL,
+	[EndPage]                   NVARCHAR(20)   CONSTRAINT [DF_Item_EndPage] DEFAULT '' NOT NULL,
     CONSTRAINT [aaaaaItem_PK] PRIMARY KEY CLUSTERED ([ItemID] ASC),
     CONSTRAINT [FK_Item_ImportSource] FOREIGN KEY ([ImportSourceID]) REFERENCES [dbo].[ImportSource] ([ImportSourceID]),
     CONSTRAINT [FK_Item_ImportStatus] FOREIGN KEY ([ImportStatusID]) REFERENCES [dbo].[ImportStatus] ([ImportStatusID])

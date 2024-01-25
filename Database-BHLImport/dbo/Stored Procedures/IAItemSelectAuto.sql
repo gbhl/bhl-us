@@ -69,7 +69,8 @@ SELECT
 	[VirtualTitleID],
 	[Summary],
 	[Genre],
-	[Issue]
+	[Issue],
+	[PageRange]
 FROM	
 	[dbo].[IAItem]
 WHERE	

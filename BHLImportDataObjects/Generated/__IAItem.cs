@@ -1,5 +1,5 @@
 
-// Generated 1/12/2024 1:10:08 PM
+// Generated 1/25/2024 2:02:16 PM
 // Do not modify the contents of this code file.
 // This abstract class __IAItem is based upon dbo.IAItem.
 
@@ -108,6 +108,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="summary"></param>
 		/// <param name="genre"></param>
 		/// <param name="issue"></param>
+		/// <param name="pageRange"></param>
 		public __IAItem(int itemID, 
 			int itemStatusID, 
 			string iAIdentifierPrefix, 
@@ -170,7 +171,8 @@ namespace MOBOT.BHLImport.DataObjects
 			int? virtualTitleID, 
 			string summary, 
 			string genre, 
-			string issue) : this()
+			string issue, 
+			string pageRange) : this()
 		{
 			_ItemID = itemID;
 			ItemStatusID = itemStatusID;
@@ -235,6 +237,7 @@ namespace MOBOT.BHLImport.DataObjects
 			Summary = summary;
 			Genre = genre;
 			Issue = issue;
+			PageRange = pageRange;
 		}
 		
 		#endregion Constructors
@@ -574,6 +577,11 @@ namespace MOBOT.BHLImport.DataObjects
 					case "Issue" :
 					{
 						_Issue = (string)column.Value;
+						break;
+					}
+					case "PageRange" :
+					{
+						_PageRange = (string)column.Value;
 						break;
 					}
 								}
@@ -2336,6 +2344,34 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion Issue
+		
+		#region PageRange
+		
+		private string _PageRange = string.Empty;
+		
+		/// <summary>
+		/// Column: PageRange;
+		/// DBMS data type: nvarchar(50);
+		/// </summary>
+		[ColumnDefinition("PageRange", DbTargetType=SqlDbType.NVarChar, Ordinal=64, CharacterMaxLength=50)]
+		public string PageRange
+		{
+			get
+			{
+				return _PageRange;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 50);
+				if (_PageRange != value)
+				{
+					_PageRange = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion PageRange
 			
 		#endregion Properties
 
@@ -2442,7 +2478,8 @@ namespace MOBOT.BHLImport.DataObjects
 					o.VirtualTitleID == VirtualTitleID &&
 					GetComparisonString(o.Summary) == GetComparisonString(Summary) &&
 					GetComparisonString(o.Genre) == GetComparisonString(Genre) &&
-					GetComparisonString(o.Issue) == GetComparisonString(Issue) 
+					GetComparisonString(o.Issue) == GetComparisonString(Issue) &&
+					GetComparisonString(o.PageRange) == GetComparisonString(PageRange) 
 				)
 				{
 					o = null;
@@ -2604,7 +2641,8 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string VirtualTitleID = "VirtualTitleID";	
 			public const string Summary = "Summary";	
 			public const string Genre = "Genre";	
-			public const string Issue = "Issue";
+			public const string Issue = "Issue";	
+			public const string PageRange = "PageRange";
 		}
 				
 		#endregion SortColumn

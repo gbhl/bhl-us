@@ -175,7 +175,7 @@ namespace MOBOT.BHLImport.Server
             string copyrightRegion, string copyrightComment, string copyrightEvidence,
             string copyrightEvidenceOperator, string copyrightEvidenceDate, string scanningInstitution,
             string rightsHolder, string itemDescription, string pageProgression, string virtualVolume,
-            int? virtualTitleID, string summary, string genre, int userId = 1)
+            int? virtualTitleID, string summary, string genre, string pageRange, int userId = 1)
         {
             // Standardize the format of the year value
             year = DataCleaner.CleanYear(year);
@@ -238,6 +238,7 @@ namespace MOBOT.BHLImport.Server
                 savedItem.VirtualVolume = virtualVolume;
                 savedItem.Summary = summary;
                 savedItem.Genre = genre;
+                savedItem.PageRange = pageRange;
                 savedItem.LastModifiedDate = DateTime.Now;
                 savedItem.LastModifiedUserID = userId;
                 savedItem = dal.IAItemUpdateAuto(null, null, savedItem);

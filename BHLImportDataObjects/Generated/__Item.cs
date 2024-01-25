@@ -1,5 +1,5 @@
 
-// Generated 1/12/2024 4:45:58 PM
+// Generated 1/25/2024 2:02:21 PM
 // Do not modify the contents of this code file.
 // This abstract class __Item is based upon dbo.Item.
 
@@ -114,6 +114,8 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="publisherName"></param>
 		/// <param name="issue"></param>
 		/// <param name="segmentDate"></param>
+		/// <param name="startPage"></param>
+		/// <param name="endPage"></param>
 		public __Item(int itemID, 
 			string importKey, 
 			int importStatusID, 
@@ -182,7 +184,9 @@ namespace MOBOT.BHLImport.DataObjects
 			string publicationDetails, 
 			string publisherName, 
 			string issue, 
-			string segmentDate) : this()
+			string segmentDate, 
+			string startPage, 
+			string endPage) : this()
 		{
 			_ItemID = itemID;
 			ImportKey = importKey;
@@ -253,6 +257,8 @@ namespace MOBOT.BHLImport.DataObjects
 			PublisherName = publisherName;
 			Issue = issue;
 			SegmentDate = segmentDate;
+			StartPage = startPage;
+			EndPage = endPage;
 		}
 		
 		#endregion Constructors
@@ -622,6 +628,16 @@ namespace MOBOT.BHLImport.DataObjects
 					case "SegmentDate" :
 					{
 						_SegmentDate = (string)column.Value;
+						break;
+					}
+					case "StartPage" :
+					{
+						_StartPage = (string)column.Value;
+						break;
+					}
+					case "EndPage" :
+					{
+						_EndPage = (string)column.Value;
 						break;
 					}
 								}
@@ -2541,6 +2557,62 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion SegmentDate
+		
+		#region StartPage
+		
+		private string _StartPage = string.Empty;
+		
+		/// <summary>
+		/// Column: StartPage;
+		/// DBMS data type: nvarchar(20);
+		/// </summary>
+		[ColumnDefinition("StartPage", DbTargetType=SqlDbType.NVarChar, Ordinal=70, CharacterMaxLength=20)]
+		public string StartPage
+		{
+			get
+			{
+				return _StartPage;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 20);
+				if (_StartPage != value)
+				{
+					_StartPage = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion StartPage
+		
+		#region EndPage
+		
+		private string _EndPage = string.Empty;
+		
+		/// <summary>
+		/// Column: EndPage;
+		/// DBMS data type: nvarchar(20);
+		/// </summary>
+		[ColumnDefinition("EndPage", DbTargetType=SqlDbType.NVarChar, Ordinal=71, CharacterMaxLength=20)]
+		public string EndPage
+		{
+			get
+			{
+				return _EndPage;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 20);
+				if (_EndPage != value)
+				{
+					_EndPage = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion EndPage
 			
 		#endregion Properties
 
@@ -2653,7 +2725,9 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.PublicationDetails) == GetComparisonString(PublicationDetails) &&
 					GetComparisonString(o.PublisherName) == GetComparisonString(PublisherName) &&
 					GetComparisonString(o.Issue) == GetComparisonString(Issue) &&
-					GetComparisonString(o.SegmentDate) == GetComparisonString(SegmentDate) 
+					GetComparisonString(o.SegmentDate) == GetComparisonString(SegmentDate) &&
+					GetComparisonString(o.StartPage) == GetComparisonString(StartPage) &&
+					GetComparisonString(o.EndPage) == GetComparisonString(EndPage) 
 				)
 				{
 					o = null;
@@ -2821,7 +2895,9 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string PublicationDetails = "PublicationDetails";	
 			public const string PublisherName = "PublisherName";	
 			public const string Issue = "Issue";	
-			public const string SegmentDate = "SegmentDate";
+			public const string SegmentDate = "SegmentDate";	
+			public const string StartPage = "StartPage";	
+			public const string EndPage = "EndPage";
 		}
 				
 		#endregion SortColumn

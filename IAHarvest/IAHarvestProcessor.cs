@@ -632,6 +632,7 @@ namespace IAHarvest
                     int? virtualTitleID = null;
                     string summary = string.Empty;
                     string genre = string.Empty;
+                    string pageRange = string.Empty;
 
                     XmlNode element = xml.SelectSingleNode("metadata/sponsor");
                     if (element != null) sponsor = element.InnerText;
@@ -712,6 +713,8 @@ namespace IAHarvest
                     if (element != null) summary = element.InnerText;
                     element = xml.SelectSingleNode("metadata/genre");
                     if (element != null) genre = element.InnerText;
+                    element = xml.SelectSingleNode("metadata/page_range");
+                    if (element != null) pageRange = element.InnerText;
 
                     provider.IAItemUpdateMetadata(itemID, sponsor, sponsorDate, scanningCenter, 
                         callNumber, imageCount, identifierAccessUrl, volume, issue, note, scanOperator,
@@ -719,7 +722,7 @@ namespace IAHarvest
                         licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion,
                         copyrightComment, copyrightEvidence, copyrightEvidenceOperator,
                         copyrightEvidenceDate, scanningInstitution, rightsHolder, itemDescription,
-                        pageProgression, virtualVolume, virtualTitleID, summary, genre);
+                        pageProgression, virtualVolume, virtualTitleID, summary, genre, pageRange);
 
                     // Read the identifier information
                     provider.IAItemIdentifierDeleteByItem(itemID);  // Delete existing, as we're doing a full replace
@@ -753,8 +756,8 @@ namespace IAHarvest
                 // No local file, so remove anything in the database
                 provider.IADCMetadataDeleteForItemAndSource(itemID, DC_SOURCE_META);
                 provider.IAItemSetDeleteByItem(itemID);
-                provider.IAItemUpdateMetadata(itemID, "", "", "", "", 0, "", "", "", "", "", "", null, 
-                    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", null, "", "");
+                provider.IAItemUpdateMetadata(itemID, "", "", "", "", 0, "", "", "", "", "", "", null, "",
+                    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", null, "", "", "");
             }
         }
 

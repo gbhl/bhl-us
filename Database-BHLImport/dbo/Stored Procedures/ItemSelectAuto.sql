@@ -75,7 +75,9 @@ SELECT
 	[PublicationDetails],
 	[PublisherName],
 	[Issue],
-	[SegmentDate]
+	[SegmentDate],
+	[StartPage],
+	[EndPage]
 FROM	
 	[dbo].[Item]
 WHERE	

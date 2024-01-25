@@ -60,7 +60,8 @@ CREATE PROCEDURE dbo.IAItemUpdateAuto
 @VirtualTitleID INT,
 @Summary NVARCHAR(MAX),
 @Genre NVARCHAR(50),
-@Issue NVARCHAR(100)
+@Issue NVARCHAR(100),
+@PageRange NVARCHAR(50)
 
 AS 
 
@@ -128,7 +129,8 @@ SET
 	[VirtualTitleID] = @VirtualTitleID,
 	[Summary] = @Summary,
 	[Genre] = @Genre,
-	[Issue] = @Issue
+	[Issue] = @Issue,
+	[PageRange] = @PageRange
 WHERE
 	[ItemID] = @ItemID
 		
@@ -202,7 +204,8 @@ ELSE BEGIN
 		[VirtualTitleID],
 		[Summary],
 		[Genre],
-		[Issue]
+		[Issue],
+		[PageRange]
 	FROM [dbo].[IAItem]
 	WHERE
 		[ItemID] = @ItemID
