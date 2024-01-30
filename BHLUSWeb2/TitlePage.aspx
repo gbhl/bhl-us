@@ -514,14 +514,6 @@
         pageToolBoxEvent = "tap";
     }
 
-    var addthis_share = { 
-        url: window.location.pathname,
-        title: $(document).find("title").text(),
-        templates: {
-            twitter: "{{title}} {{url}}"
-        }
-    }
-
     // actionMode: either standard reading mode or selecting pages to download
     // actionModeType.Read: default. 
     // actionModeType.Select: triggered when user selects option to download a set of pages.
@@ -1296,11 +1288,6 @@
             {
                 currentFlickrUrl.attr("href", pages[index].FlickrUrl);
                 flickrUrlSpan.toggle(true);
-            }
-
-            addthis_share = { 
-                url: "https://biodiversitylibrary.org/page/" + pages[index].PageID,
-                title: $(document).find("title").text()
             }
 
             var showOCRButton = $('#showOCRButton'); 

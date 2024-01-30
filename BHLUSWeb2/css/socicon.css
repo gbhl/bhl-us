@@ -1,0 +1,25 @@
+#socicons a {
+	margin: 0 0 0 0px !important;
+}
+.socicon {
+	margin-right:3px;
+}
+.socicon img {
+	margin-right:0px !important;
+}
+.socicon-fb:hover {
+	content:url("/images/socicon-fb-hover.png") / "Open Facebook";
+	cursor:pointer;
+}
+.socicon-flickr:hover {
+	content: url("/images/socicon-flickr-hover.png") / "Open Flickr";
+	cursor: pointer;
+}
+.socicon-twitter:hover {
+	content: url("/images/socicon-twitter-hover.png") / "Open Twitter";
+	cursor: pointer;
+}
+.socicon-insta:hover {
+	content: url("/images/socicon-insta-hover.png") / "Open Instagram";
+	cursor: pointer;
+}
