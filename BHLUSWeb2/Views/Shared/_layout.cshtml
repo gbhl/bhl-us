@@ -11,8 +11,8 @@
     <title>@ViewBag.Title</title>
     @RenderSection("CSS", required: false)
     <link rel="stylesheet" href="/css/style.css?v=26" />
+    <link rel="stylesheet" href="/css/socicon.css?v=1" media="all" />
     <script src="/js/libs/modernizr-1.6.min.js"></script>
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-540641666fd1b673"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=@System.Configuration.ConfigurationManager.AppSettings["GoogleAnalyticsTrackingID"]"></script>
     <script>
@@ -64,7 +64,8 @@
                     <div data-badge-popover="bottom" data-badge-type="donut" data-uri="" data-hide-no-mentions="true" data-no-score="true" data-template="biodiversitylibrary" class="altmetric-embed"></div>
                 </span>
                 <span id="headersocial">
-                    <div class="addthis_sharing_toolbox"></div>
+                    <span id="socicons"></span>
+                    <script type="text/javascript" src="/js/socicon.js?v=1"></script>
                 </span>
             </div>
         </header>
@@ -106,9 +107,6 @@
         <div class="column-wrap">
             <div class="social">
                 <div id="socialleft" class="socialcolumn">
-                    <h3>Stay Connected</h3>
-                    <p>Keep up to date with the latest news via these social media platforms</p>
-                    <div class="addthis_horizontal_follow_toolbox" style="margin-bottom:10px;padding-bottom:15px;border-bottom:1px solid #c9c9c9;"></div>
                     <div class="mailinglist">
                         <h3>Join Our Mailing List</h3>
                         <p>Sign up to receive the latest news, content highlights, and promotions</p>
