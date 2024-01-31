@@ -262,7 +262,8 @@ SELECT TOP (@NumRows)
 		,ISNULL(i.Volume, '') AS Volume
 		,i.Year
 		,i.ImageCount
-		,ISNULL(COALESCE(mm.DCElementValue, md.DCElementValue), '') AS HoldingInstitution
+		,ISNULL(mm.DCElementValue, '') AS HoldingInstitution
+		--,CONVERT(nvarchar(500), '') AS HoldingInstitution
 		,ISNULL(i.Sponsor, '') AS Sponsor
 		,ISNULL(i.ScanningInstitution, '') AS ScanningInstitution
 		,ISNULL(i.RightsHolder, '') AS RightsHolder
@@ -288,16 +289,53 @@ SELECT TOP (@NumRows)
 		,LTRIM(uc.FirstName + ' ' + uc.LastName) AS CreatedUser
 		,LTRIM(um.FirstName + ' ' + um.LastName) AS LastModifiedUser
 		,@TotalItems AS TotalItems
+		,RowNumber
+INTO	#Step3
 FROM	#Step2 t
 		INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
 		INNER JOIN dbo.IAItemStatus s ON i.ItemStatusID = s.ItemStatusID
-		LEFT JOIN dbo.IADCMetadata md ON i.ItemID = md.ItemID AND md.DCElementName = 'contributor' AND md.[Source] = 'DC'
-		LEFT JOIN dbo.IADCMetadata mm ON i.ItemID = mm.ItemID AND mm.DCElementName = 'contributor' AND mm.[Source] = 'META'
+		LEFT JOIN dbo.IADCMetadata mm ON t.ItemID = mm.ItemID AND mm.DCElementName = 'contributor' AND mm.[Source] = 'META'
 		LEFT JOIN dbo.BHLAspNetUsers uc ON i.CreatedUserID = uc.Id
 		LEFT JOIN dbo.BHLAspNetUsers um ON i.LastModifiedUserID = um.Id
 WHERE	RowNumber > (@PageNum - 1) * @NumRows
 ORDER BY 
 		RowNumber
+
+UPDATE	t
+SET		HoldingInstitution = ISNULL(md.DCElementValue, '')
+FROM	#Step3 t
+		INNER JOIN dbo.IADCMetadata md ON t.ItemID = md.ItemID AND md.DCElementName = 'contributor' AND md.[Source] = 'DC'
+WHERE	t.HoldingInstitution = ''
+
+SELECT	ItemID
+		,IAIdentifier
+		,ExternalStatus
+		,[Status]
+		,ShortTitle
+		,Volume
+		,Year
+		,ImageCount
+		,HoldingInstitution
+		,Sponsor
+		,ScanningInstitution
+		,RightsHolder
+		,Note
+		,LicenseUrl
+		,Rights
+		,DueDiligence
+		,PossibleCopyrightStatus
+		,IAAddedDate
+		,ScanDate
+		,IADateStamp
+		,LastXMLDataHarvestDate
+		,LastProductionDate
+		,CreatedDate
+		,LastModifiedDate
+		,CreatedUser
+		,LastModifiedUser
+		,TotalItems
+FROM	#Step3
+ORDER BY RowNumber
 
 IF @@ERROR <> 0
 BEGIN
