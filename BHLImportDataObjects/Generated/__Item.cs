@@ -1,5 +1,5 @@
 
-// Generated 1/25/2024 2:02:21 PM
+// Generated 2/16/2024 12:54:18 PM
 // Do not modify the contents of this code file.
 // This abstract class __Item is based upon dbo.Item.
 
@@ -116,6 +116,9 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="segmentDate"></param>
 		/// <param name="startPage"></param>
 		/// <param name="endPage"></param>
+		/// <param name="title"></param>
+		/// <param name="sortTitle"></param>
+		/// <param name="containerTitle"></param>
 		public __Item(int itemID, 
 			string importKey, 
 			int importStatusID, 
@@ -186,7 +189,10 @@ namespace MOBOT.BHLImport.DataObjects
 			string issue, 
 			string segmentDate, 
 			string startPage, 
-			string endPage) : this()
+			string endPage, 
+			string title, 
+			string sortTitle, 
+			string containerTitle) : this()
 		{
 			_ItemID = itemID;
 			ImportKey = importKey;
@@ -259,6 +265,9 @@ namespace MOBOT.BHLImport.DataObjects
 			SegmentDate = segmentDate;
 			StartPage = startPage;
 			EndPage = endPage;
+			Title = title;
+			SortTitle = sortTitle;
+			ContainerTitle = containerTitle;
 		}
 		
 		#endregion Constructors
@@ -638,6 +647,21 @@ namespace MOBOT.BHLImport.DataObjects
 					case "EndPage" :
 					{
 						_EndPage = (string)column.Value;
+						break;
+					}
+					case "Title" :
+					{
+						_Title = (string)column.Value;
+						break;
+					}
+					case "SortTitle" :
+					{
+						_SortTitle = (string)column.Value;
+						break;
+					}
+					case "ContainerTitle" :
+					{
+						_ContainerTitle = (string)column.Value;
 						break;
 					}
 								}
@@ -2613,6 +2637,90 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion EndPage
+		
+		#region Title
+		
+		private string _Title = string.Empty;
+		
+		/// <summary>
+		/// Column: Title;
+		/// DBMS data type: nvarchar(2000);
+		/// </summary>
+		[ColumnDefinition("Title", DbTargetType=SqlDbType.NVarChar, Ordinal=72, CharacterMaxLength=2000)]
+		public string Title
+		{
+			get
+			{
+				return _Title;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 2000);
+				if (_Title != value)
+				{
+					_Title = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Title
+		
+		#region SortTitle
+		
+		private string _SortTitle = string.Empty;
+		
+		/// <summary>
+		/// Column: SortTitle;
+		/// DBMS data type: nvarchar(2000);
+		/// </summary>
+		[ColumnDefinition("SortTitle", DbTargetType=SqlDbType.NVarChar, Ordinal=73, CharacterMaxLength=2000)]
+		public string SortTitle
+		{
+			get
+			{
+				return _SortTitle;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 2000);
+				if (_SortTitle != value)
+				{
+					_SortTitle = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion SortTitle
+		
+		#region ContainerTitle
+		
+		private string _ContainerTitle = string.Empty;
+		
+		/// <summary>
+		/// Column: ContainerTitle;
+		/// DBMS data type: nvarchar(2000);
+		/// </summary>
+		[ColumnDefinition("ContainerTitle", DbTargetType=SqlDbType.NVarChar, Ordinal=74, CharacterMaxLength=2000)]
+		public string ContainerTitle
+		{
+			get
+			{
+				return _ContainerTitle;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 2000);
+				if (_ContainerTitle != value)
+				{
+					_ContainerTitle = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ContainerTitle
 			
 		#endregion Properties
 
@@ -2727,7 +2835,10 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.Issue) == GetComparisonString(Issue) &&
 					GetComparisonString(o.SegmentDate) == GetComparisonString(SegmentDate) &&
 					GetComparisonString(o.StartPage) == GetComparisonString(StartPage) &&
-					GetComparisonString(o.EndPage) == GetComparisonString(EndPage) 
+					GetComparisonString(o.EndPage) == GetComparisonString(EndPage) &&
+					GetComparisonString(o.Title) == GetComparisonString(Title) &&
+					GetComparisonString(o.SortTitle) == GetComparisonString(SortTitle) &&
+					GetComparisonString(o.ContainerTitle) == GetComparisonString(ContainerTitle) 
 				)
 				{
 					o = null;
@@ -2897,7 +3008,10 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string Issue = "Issue";	
 			public const string SegmentDate = "SegmentDate";	
 			public const string StartPage = "StartPage";	
-			public const string EndPage = "EndPage";
+			public const string EndPage = "EndPage";	
+			public const string Title = "Title";	
+			public const string SortTitle = "SortTitle";	
+			public const string ContainerTitle = "ContainerTitle";
 		}
 				
 		#endregion SortColumn

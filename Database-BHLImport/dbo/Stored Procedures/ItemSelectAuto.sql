@@ -77,7 +77,10 @@ SELECT
 	[Issue],
 	[SegmentDate],
 	[StartPage],
-	[EndPage]
+	[EndPage],
+	[Title],
+	[SortTitle],
+	[ContainerTitle]
 FROM	
 	[dbo].[Item]
 WHERE	

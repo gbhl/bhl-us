@@ -70,6 +70,9 @@
 	[SegmentDate]               NVARCHAR(20)   CONSTRAINT [DF_Item_SegmentDate] DEFAULT '' NOT NULL,
 	[StartPage]                 NVARCHAR(20)   CONSTRAINT [DF_Item_StartPage] DEFAULT '' NOT NULL,
 	[EndPage]                   NVARCHAR(20)   CONSTRAINT [DF_Item_EndPage] DEFAULT '' NOT NULL,
+	[Title] 					NVARCHAR(2000) CONSTRAINT [DF_Item_Title] DEFAULT '' NOT NULL,
+	[SortTitle] 				NVARCHAR(2000) CONSTRAINT [DF_Item_SortTitle] DEFAULT '' NOT NULL,
+	[ContainerTitle]            NVARCHAR(2000) CONSTRAINT [DF_Item_ContainerTitle] DEFAULT '' NOT NULL,
     CONSTRAINT [aaaaaItem_PK] PRIMARY KEY CLUSTERED ([ItemID] ASC),
     CONSTRAINT [FK_Item_ImportSource] FOREIGN KEY ([ImportSourceID]) REFERENCES [dbo].[ImportSource] ([ImportSourceID]),
     CONSTRAINT [FK_Item_ImportStatus] FOREIGN KEY ([ImportStatusID]) REFERENCES [dbo].[ImportStatus] ([ImportStatusID])

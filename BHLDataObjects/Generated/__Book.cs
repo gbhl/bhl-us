@@ -1,5 +1,5 @@
 
-// Generated 4/27/2021 1:21:13 PM
+// Generated 2/16/2024 1:57:28 PM
 // Do not modify the contents of this code file.
 // This abstract class __Book is based upon dbo.Book.
 
@@ -91,6 +91,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="pageProgression"></param>
+		/// <param name="virtualVolumeKey"></param>
 		public __Book(int bookID, 
 			int itemID, 
 			int? redirectBookID, 
@@ -136,7 +137,8 @@ namespace MOBOT.BHL.DataObjects
 			DateTime? lastModifiedDate, 
 			int? creationUserID, 
 			int? lastModifiedUserID, 
-			string pageProgression) : this()
+			string pageProgression, 
+			string virtualVolumeKey) : this()
 		{
 			_BookID = bookID;
 			ItemID = itemID;
@@ -184,6 +186,7 @@ namespace MOBOT.BHL.DataObjects
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
 			PageProgression = pageProgression;
+			VirtualVolumeKey = virtualVolumeKey;
 		}
 		
 		#endregion Constructors
@@ -438,6 +441,11 @@ namespace MOBOT.BHL.DataObjects
 					case "PageProgression" :
 					{
 						_PageProgression = (string)column.Value;
+						break;
+					}
+					case "VirtualVolumeKey" :
+					{
+						_VirtualVolumeKey = (string)column.Value;
 						break;
 					}
 								}
@@ -1722,6 +1730,34 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion PageProgression
+		
+		#region VirtualVolumeKey
+		
+		private string _VirtualVolumeKey = string.Empty;
+		
+		/// <summary>
+		/// Column: VirtualVolumeKey;
+		/// DBMS data type: nvarchar(100);
+		/// </summary>
+		[ColumnDefinition("VirtualVolumeKey", DbTargetType=SqlDbType.NVarChar, Ordinal=47, CharacterMaxLength=100)]
+		public string VirtualVolumeKey
+		{
+			get
+			{
+				return _VirtualVolumeKey;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 100);
+				if (_VirtualVolumeKey != value)
+				{
+					_VirtualVolumeKey = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion VirtualVolumeKey
 			
 		#endregion Properties
 
@@ -1811,7 +1847,8 @@ namespace MOBOT.BHL.DataObjects
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
 					o.LastModifiedUserID == LastModifiedUserID &&
-					GetComparisonString(o.PageProgression) == GetComparisonString(PageProgression) 
+					GetComparisonString(o.PageProgression) == GetComparisonString(PageProgression) &&
+					GetComparisonString(o.VirtualVolumeKey) == GetComparisonString(VirtualVolumeKey) 
 				)
 				{
 					o = null;
@@ -1956,7 +1993,8 @@ namespace MOBOT.BHL.DataObjects
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
 			public const string LastModifiedUserID = "LastModifiedUserID";	
-			public const string PageProgression = "PageProgression";
+			public const string PageProgression = "PageProgression";	
+			public const string VirtualVolumeKey = "VirtualVolumeKey";
 		}
 				
 		#endregion SortColumn

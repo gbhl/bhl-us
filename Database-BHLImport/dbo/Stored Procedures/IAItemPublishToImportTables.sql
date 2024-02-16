@@ -1,4 +1,7 @@
-﻿CREATE PROCEDURE [dbo].[IAItemPublishToImportTables]
+﻿DROP PROCEDURE [dbo].[IAItemPublishToImportTables]
+GO
+
+CREATE PROCEDURE [dbo].[IAItemPublishToImportTables]
 
 @ItemID int
 
@@ -284,7 +287,10 @@ BEGIN TRY
 		[Summary] [nvarchar](max) NOT NULL DEFAULT(''),
 		[SegmentGenreID] int NULL,
 		[StartPage] [nvarchar](20) NOT NULL DEFAULT(''),
-		[EndPage] [nvarchar](20) NOT NULL DEFAULT('')
+		[EndPage] [nvarchar](20) NOT NULL DEFAULT(''),
+		[Title] [nvarchar](2000) NOT NULL DEFAULT(''),
+		[SortTitle] [nvarchar](2000) NOT NULL DEFAULT(''),
+		[ContainerTitle] [nvarchar](2000) NOT NULL DEFAULT('')
 		)
 
 	CREATE TABLE #tmpItemLanguage(
@@ -1432,7 +1438,7 @@ BEGIN TRY
 	IF NOT EXISTS(SELECT ItemID FROM #tmpItem)
 	BEGIN
 		INSERT	#tmpItem (ItemID, IAIdentifier, MARCBibID, MarcItemID, TitleID, BarCode, ItemSequence, ItemStatusID)
-		SELECT	ItemID, IAIdentifier, LEFT(REPLACE(IAIdentifier, '-', ''), 50), IAIdentifier, 0, IAIdentifier, 10000, 40
+		SELECT	ItemID, IAIdentifier, LEFT(REPLACE(IAIdentifier, '-', ''), 50), IAIdentifier, 0, IAIdentifier, 10000, 30
 		FROM	dbo.IAItem
 		WHERE	ItemStatusID = 30	-- Approved
 		AND		ItemID = @ItemID
@@ -1444,9 +1450,43 @@ BEGIN TRY
 				INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
 				INNER JOIN dbo.BHLTitle bt ON i.VirtualTitleID = bt.TitleID
 
+		-- Get the title for a segment in a Virtual Item
+		UPDATE	#tmpItem
+		SET		Title = m.DCElementValue
+		FROM	#tmpItem t INNER JOIN dbo.IADCMetadata m
+					ON t.ItemID = m.ItemID
+					AND m.DCElementName = 'title'
+		WHERE	m.DCElementValue <> ''
+
+		UPDATE	#tmpItem
+		SET		SortTitle = dbo.fnGetSortString(
+					CASE
+						WHEN LEFT(Title, 1) = '"' THEN LTRIM(RIGHT(Title, LEN(Title) - 1))
+						WHEN LEFT(Title, 1) = '''' THEN LTRIM(RIGHT(Title, LEN(Title) - 1))
+						WHEN LEFT(Title, 1) = '[' THEN LTRIM(RIGHT(Title, LEN(Title) - 1)) 
+						WHEN LEFT(Title, 1) = '(' THEN LTRIM(RIGHT(Title, LEN(Title) - 1))
+						WHEN LEFT(Title, 1) = '|' THEN LTRIM(RIGHT(Title, LEN(Title) - 1))
+						WHEN LOWER(LEFT(Title, 2)) = 'a ' AND Title <> 'a' THEN LTRIM(RIGHT(Title, LEN(Title) - 2)) 
+						WHEN LOWER(LEFT(Title, 3)) = 'an ' THEN LTRIM(RIGHT(Title, LEN(Title) - 3)) 
+						WHEN LOWER(LEFT(Title, 3)) = 'el ' THEN LTRIM(RIGHT(Title, LEN(Title) - 3)) 
+						WHEN LOWER(LEFT(Title, 3)) = 'il ' THEN LTRIM(RIGHT(Title, LEN(Title) - 3)) 
+						WHEN LOWER(LEFT(Title, 3)) = 'la ' THEN LTRIM(RIGHT(Title, LEN(Title) - 3)) 
+						WHEN LOWER(LEFT(Title, 3)) = 'le ' THEN LTRIM(RIGHT(Title, LEN(Title) - 3)) 
+						WHEN LOWER(LEFT(Title, 4)) = 'das ' THEN LTRIM(RIGHT(Title, LEN(Title) - 4)) 
+						WHEN LOWER(LEFT(Title, 4)) = 'der ' THEN LTRIM(RIGHT(Title, LEN(Title) - 4)) 
+						WHEN LOWER(LEFT(Title, 4)) = 'die ' THEN LTRIM(RIGHT(Title, LEN(Title) - 4)) 
+						WHEN LOWER(LEFT(Title, 4)) = 'ein ' THEN LTRIM(RIGHT(Title, LEN(Title) - 4)) 
+						WHEN LOWER(LEFT(Title, 4)) = 'las ' THEN LTRIM(RIGHT(Title, LEN(Title) - 4)) 
+						WHEN LOWER(LEFT(Title, 4)) = 'les ' THEN LTRIM(RIGHT(Title, LEN(Title) - 4)) 
+						WHEN LOWER(LEFT(Title, 4)) = 'los ' THEN LTRIM(RIGHT(Title, LEN(Title) - 4)) 
+						WHEN LOWER(LEFT(Title, 4)) = 'the ' THEN LTRIM(RIGHT(Title, LEN(Title) - 4)) 
+						ELSE Title
+					END 
+				)
+
 		-- Get the publisher metadata for a segment in a Virtual Item
 		UPDATE	#tmpItem
-		SET		PublicationDetails = m.DCElementValue
+		SET		ContainerTitle = m.DCElementValue
 		FROM	#tmpItem t INNER JOIN dbo.IADCMetadata m
 					ON t.ItemID = m.ItemID
 					AND m.DCElementName = 'source'
@@ -1458,6 +1498,10 @@ BEGIN TRY
 					ON t.ItemID = m.ItemID
 					AND m.DCElementName = 'publisher'
 		WHERE	m.DCElementValue <> ''
+
+		UPDATE	#tmpItem
+		SET		PublicationDetails = PublisherName + CASE WHEN ISNULL(i.[Year], '') <> '' THEN ', ' + i.[Year] ELSE '' END
+		FROM	#tmpItem t INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
 
 		-- Get the date value for a segment in a Virtual Item
 		UPDATE	#tmpItem
@@ -2235,7 +2279,8 @@ BEGIN TRY
 			ItemDescription, EndYear, StartVolume, EndVolume, StartIssue, EndIssue,
 			StartNumber, EndNumber, StartSeries, EndSeries, StartPart, EndPart, 
 			PageProgression, VirtualVolume, VirtualTitleID, Summary, SegmentGenreID,
-			PublicationDetails, PublisherName, SegmentDate, StartPage, EndPage)
+			PublicationDetails, PublisherName, SegmentDate, StartPage, EndPage,
+			Title, SortTitle, ContainerTitle)
 		SELECT	10, @ImportSourceID, t.MARCBibID, t.Sponsor, t.BarCode,
 				t.MaxExistingItemSequence + t.ItemSequence, t.MARCItemID, t.Volume, 
 				t.Issue, t.InstitutionCode, t.LanguageCode, t.VaultID, t.ItemStatusID, 
@@ -2247,7 +2292,7 @@ BEGIN TRY
 				StartVolume, EndVolume, StartIssue, EndIssue, StartNumber, EndNumber, 
 				StartSeries, EndSeries, StartPart, EndPart, PageProgression, VirtualVolume,
 				VirtualTitleID, Summary, SegmentGenreID, PublicationDetails, PublisherName,
-				VirtualVolumeSegmentDate, StartPage, EndPage
+				VirtualVolumeSegmentDate, StartPage, EndPage, Title, SortTitle, ContainerTitle
 		FROM	#tmpItem t
 
 		-- =======================================================================

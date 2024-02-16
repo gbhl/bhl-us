@@ -68,7 +68,10 @@ CREATE PROCEDURE dbo.ItemInsertAuto
 @Issue NVARCHAR(100),
 @SegmentDate NVARCHAR(20),
 @StartPage NVARCHAR(20),
-@EndPage NVARCHAR(20)
+@EndPage NVARCHAR(20),
+@Title NVARCHAR(2000),
+@SortTitle NVARCHAR(2000),
+@ContainerTitle NVARCHAR(2000)
 
 AS 
 
@@ -144,7 +147,10 @@ INSERT INTO [dbo].[Item]
 	[Issue],
 	[SegmentDate],
 	[StartPage],
-	[EndPage] )
+	[EndPage],
+	[Title],
+	[SortTitle],
+	[ContainerTitle] )
 VALUES
 ( 	@ImportKey,
 	@ImportStatusID,
@@ -215,7 +221,10 @@ VALUES
 	@Issue,
 	@SegmentDate,
 	@StartPage,
-	@EndPage )
+	@EndPage,
+	@Title,
+	@SortTitle,
+	@ContainerTitle )
 
 SET @ItemID = Scope_Identity()
 
@@ -297,7 +306,10 @@ ELSE BEGIN
 		[Issue],
 		[SegmentDate],
 		[StartPage],
-		[EndPage]	
+		[EndPage],
+		[Title],
+		[SortTitle],
+		[ContainerTitle]	
 	FROM [dbo].[Item]
 	WHERE
 		[ItemID] = @ItemID
