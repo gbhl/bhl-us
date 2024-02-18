@@ -49,7 +49,7 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			int bookID)
 		{
-			return BookSelectAuto(	sqlConnection, sqlTransaction, "BHLImport",	bookID );
+			return BookSelectAuto(	sqlConnection, sqlTransaction, "BHL",	bookID );
 		}
 			
 		/// <summary>
@@ -101,7 +101,7 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			int bookID)
 		{
-			return BookSelectAutoRaw( sqlConnection, sqlTransaction, "BHLImport", bookID );
+			return BookSelectAutoRaw( sqlConnection, sqlTransaction, "BHL", bookID );
 		}
 		
 		/// <summary>
@@ -230,7 +230,7 @@ namespace MOBOT.BHL.DAL
 			string pageProgression,
 			string virtualVolumeKey)
 		{
-			return BookInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, redirectBookID, thumbnailPageID, languageCode, barCode, mARCItemID, callNumber, volume, startYear, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, identifierBib, zQuery, sponsor, externalUrl, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, isVirtual, creationUserID, lastModifiedUserID, pageProgression, virtualVolumeKey );
+			return BookInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, redirectBookID, thumbnailPageID, languageCode, barCode, mARCItemID, callNumber, volume, startYear, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, identifierBib, zQuery, sponsor, externalUrl, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, isVirtual, creationUserID, lastModifiedUserID, pageProgression, virtualVolumeKey );
 		}
 		
 		/// <summary>
@@ -413,7 +413,7 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			Book value)
 		{
-			return BookInsertAuto(sqlConnection, sqlTransaction, "BHLImport", value);
+			return BookInsertAuto(sqlConnection, sqlTransaction, "BHL", value);
 		}
 		
 		/// <summary>
@@ -493,7 +493,7 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			int bookID)
 		{
-			return BookDeleteAuto( sqlConnection, sqlTransaction, "BHLImport", bookID );
+			return BookDeleteAuto( sqlConnection, sqlTransaction, "BHL", bookID );
 		}
 		
 		/// <summary>
@@ -637,7 +637,7 @@ namespace MOBOT.BHL.DAL
 			string pageProgression,
 			string virtualVolumeKey)
 		{
-			return BookUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", bookID, itemID, redirectBookID, thumbnailPageID, languageCode, barCode, mARCItemID, callNumber, volume, startYear, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, identifierBib, zQuery, sponsor, externalUrl, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, isVirtual, lastModifiedUserID, pageProgression, virtualVolumeKey);
+			return BookUpdateAuto( sqlConnection, sqlTransaction, "BHL", bookID, itemID, redirectBookID, thumbnailPageID, languageCode, barCode, mARCItemID, callNumber, volume, startYear, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, identifierBib, zQuery, sponsor, externalUrl, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, isVirtual, lastModifiedUserID, pageProgression, virtualVolumeKey);
 		}
 		
 		/// <summary>
@@ -819,7 +819,7 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			Book value)
 		{
-			return BookUpdateAuto(sqlConnection, sqlTransaction, "BHLImport", value );
+			return BookUpdateAuto(sqlConnection, sqlTransaction, "BHL", value );
 		}
 		
 		/// <summary>
@@ -901,7 +901,7 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			Book value , int userId )
 		{
-			return BookManageAuto( sqlConnection, sqlTransaction, "BHLImport", value , userId );
+			return BookManageAuto( sqlConnection, sqlTransaction, "BHL", value , userId );
 		}
 		
 		/// <summary>
