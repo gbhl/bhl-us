@@ -198,6 +198,7 @@ namespace MOBOT.BHL.AdminWeb
                 sourceLabel.Text = book.SourceName;
                 sourceIDLabel.Text = book.BarCode;
                 hidMarcItemID.Value = book.MARCItemID;
+                hidVirtualVolumeKey.Value = book.VirtualVolumeKey;
                 callNumberTextBox.Text = book.CallNumber;
                 volumeTextBox.Text = book.Volume;
                 itemDescriptionTextBox.Text = book.ItemDescription;
@@ -1232,6 +1233,7 @@ namespace MOBOT.BHL.AdminWeb
                 // Gather up data on form
                 book.RedirectBookID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
 				book.MARCItemID = hidMarcItemID.Value;
+                book.VirtualVolumeKey = hidVirtualVolumeKey.Value;
 				book.CallNumber = callNumberTextBox.Text.Trim();
 				book.Volume = volumeTextBox.Text.Trim();
 				book.LanguageCode = ( ddlLang.SelectedValue.Length == 0 ? null : ddlLang.SelectedValue );
