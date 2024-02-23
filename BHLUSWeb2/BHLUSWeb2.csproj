@@ -173,6 +173,7 @@
     <Content Include="api2\docs\SubjectSearch.xml" />
     <Content Include="api2\docs\TitleSearchSimple.xml" />
     <Content Include="api2\soap.asmx" />
+    <Content Include="css\cookieconsent.css" />
     <Content Include="css\nspop.css" />
     <Content Include="css\socicon.css" />
     <Content Include="Docs\api3.html" />
@@ -449,6 +450,8 @@
     <Content Include="images\view_page.gif" />
     <Content Include="ItemNotFound.aspx" />
     <Content Include="ItemPage.aspx" />
+    <Content Include="js\cookieconsent-config.js" />
+    <Content Include="js\cookieconsent.umd.js" />
     <Content Include="js\nspop.js" />
     <Content Include="Handlers\GetPartPdf.ashx" />
     <Content Include="Handlers\GetPartImages.ashx" />

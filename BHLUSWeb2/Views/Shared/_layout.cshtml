@@ -12,19 +12,40 @@
     @RenderSection("CSS", required: false)
     <link rel="stylesheet" href="/css/style.css?v=26" />
     <link rel="stylesheet" href="/css/socicon.css?v=1" media="all" />
+    <link rel="stylesheet" href="/css/cookieconsent.css" />
     <script src="/js/libs/modernizr-1.6.min.js"></script>
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=@System.Configuration.ConfigurationManager.AppSettings["GoogleAnalyticsTrackingID"]"></script>
-    <script>
+    <script type="text/plain" data-category="necessary">
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
+        gtag('consent', 'default', {
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            analytics_storage: 'denied',
+            functionality_storage: 'denied',
+            personalization_storage: 'denied',
+            wait_for_update: 500
+        });
+        gtag('set', 'ads_data_redaction', true);
+        gtag('set', 'url_passthrough', true);
         gtag('js', new Date());
-
         gtag('config', '@System.Configuration.ConfigurationManager.AppSettings["GoogleAnalyticsTrackingID"]');
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=@System.Configuration.ConfigurationManager.AppSettings["GoogleAnalyticsTrackingID"]"></script>
+    <script type="text/plain" data-category="analytics" data-service="ga">
+        gtag('consent', 'update', {
+            personalization_storage: 'granted',
+            functionality_storage: 'granted',
+            analytics_storage: 'granted'
+        });
+    </script>
+    <script type="text/plain" data-category="analytics" data-service="!ga">
+        CookieConsent.eraseCookies(['_gid', /^_ga/], '/', location.hostname);
     </script>
     <!-- START OF SmartSource Data Collector TAG v10.4.23 -->
     <!-- Copyright (c) 2018 Webtrends Inc.  All rights reserved. -->
-    <script>
+    <script type="text/plain" data-category="analytics" data-service="webtrends">
         window.webtrendsAsyncInit = function () {
             var dcs = new Webtrends.dcs().init({
                 dcsid: "dcsse0w37bdzpxzj2yuxm4sap_9g8y",
@@ -46,6 +67,7 @@
     @RenderSection("Javascript", required: false)
 </head>
 <body id="@ViewBag.BodyID">
+    <script type="module" src="/js/cookieconsent-config.js"></script>
     <noscript>
         <div id="noscript-warning">BHL works best with JavaScript enabled</div>
     </noscript>
@@ -154,6 +176,7 @@
                 <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageDeveloper"]">Developer and Data Tools</a> |
                 <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageMembers"]">Partners</a> |
                 <a href="http://si.edu/Privacy">Privacy</a> |
+                <a data-cc="show-preferencesModal" href="#">Cookies</a> |
                 <a href="http://si.edu/Termsofuse">Terms of Use</a>
             </div>
         </nav>
@@ -172,8 +195,8 @@
 
     <script src="/js/plugins.js?v=2"></script>
     <script src="/js/script.js?v=6"></script>
-    <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
+    <script type="text/plain" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js" data-category="analytics" data-service="altmetric"></script>
 
-    @RenderSection("scripts", required:false)
+    @RenderSection("scripts", required: false)
 </body>
 </html>
