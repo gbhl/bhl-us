@@ -261,6 +261,7 @@ namespace IAHarvest
                             this.HarvestDJVUData(GetFile(fileList, configParms.DjvuExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
                             this.HarvestScandata(GetFile(fileList, configParms.ScandataExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
                             this.HarvestMarcData(GetFile(fileList, configParms.MarcExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate, (item.NoMARCOk == 1));
+                            this.HarvestBHLCreatorData(GetFile(fileList, configParms.BHLCreatorExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
                         }
                         provider.IAItemUpdateLastXMLDataHarvestDate(item.ItemID);
                         provider.IAItemUpdateItemStatusIDAfterDataHarvest(item.ItemID,
@@ -898,6 +899,54 @@ namespace IAHarvest
                 // If we're not loading this item without a MARC file, throw an exception to indicate 
                 // the absence of a MARC file and halt processing of the item
                 if (!loadWithoutMarc) throw new MARCNotFoundException();
+            }
+        }
+
+        private void HarvestBHLCreatorData(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
+        {
+            LogMessage("Harvesting MARC data for " + iaIdentifier);
+
+            // If the file exists
+            if (file != null)
+            {
+                // If the file has changed since we last harvested
+                if (DateTime.Compare((DateTime)file.RemoteFileLastModifiedDate, (DateTime)(lastXmlDataHarvestDate ?? DateTime.Parse("1/1/1980"))) > 0)
+                {
+                    // Open the file and parse the data within it
+                    String localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
+                    XmlDocument xml = new();
+                    xml.Load(localFileName);
+
+                    // Delete any existing BHL Creator information
+                    provider.IABHLCreatorDeleteByItem(itemID);
+
+                    // Insert the new IA BHLCreator and identifier informatino
+                    XmlNodeList creators = xml.SelectNodes("//creators/creator");
+                    if (creators != null)
+                    {
+                        foreach (XmlNode creator in creators)
+                        {
+                            string name = (creator.SelectSingleNode("name") == null) ? string.Empty : creator.SelectSingleNode("name").InnerText;
+                            IABHLCreator bhlCreator = provider.IABHLCreatorInsertAuto(itemID, name);
+
+                            XmlNodeList identifiers = creator.SelectNodes("identifier");
+                            if (identifiers != null)
+                            {
+                                foreach (XmlNode identifier in identifiers)
+                                {
+                                    String type = (identifier.Attributes["type"] == null) ? string.Empty : identifier.Attributes["type"].Value;
+                                    String value = identifier.InnerText;
+                                    provider.IABHLCreatorIdentifierInsertAuto(bhlCreator.BHLCreatorID, type, value);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // No local file, so remove anything in the database
+                provider.IABHLCreatorDeleteByItem(itemID);
             }
         }
 
