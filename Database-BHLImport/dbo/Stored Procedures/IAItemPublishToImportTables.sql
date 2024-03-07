@@ -61,6 +61,8 @@ BEGIN TRY
 			BEGIN TRANSACTION
 			DELETE FROM dbo.IADCMetadata WHERE ItemID = @ItemID
 			DELETE FROM dbo.IAItemIdentifier WHERE ItemID = @ItemID
+			DELETE FROM dbo.IABHLCreatorIdentifier WHERE BHLCreatorID IN (SELECT BHLCreatorID FROM dbo.IABHLCreator WHERE ItemID = @ItemID)
+			DELETE FROM dbo.IABHLCreator WHERE ItemID = @ItemID
 			DELETE FROM dbo.IAMarcSubField WHERE MarcDataFieldID in (SELECT MarcDataFieldID FROM dbo.IAMarcDataField WHERE MARCID IN (SELECT MARCID FROM dbo.IAMarc WHERE ItemID = @ItemID))
 			DELETE FROM dbo.IAMarcDataField WHERE MarcID IN (SELECT MarcID FROM dbo.IAMarc WHERE ItemID = @ItemID)
 			DELETE FROM dbo.IAMarcControl WHERE MarcID IN (SELECT MarcID FROM dbo.IAMarc WHERE ItemID = @ItemID)
@@ -232,6 +234,13 @@ BEGIN TRY
 		[MARCCreator_5] [nvarchar](450) NULL,
 		[MARCCreator_Full] [nvarchar](450) NULL,
 		[SequenceOrder] [smallint] NULL
+		)
+
+	CREATE TABLE #tmpCreatorIdentifier (
+		[ItemID] [int] NOT NULL,
+		[SequenceOrder] [smallint] NULL,
+		[IdentifierID] [int] NOT NULL,
+		[IdentifierValue] [nvarchar](125) NULL
 		)
 
 	CREATE TABLE #tmpItem(
@@ -1739,27 +1748,67 @@ BEGIN TRY
 	-- =======================================================================
 	-- Get Creators from _META.XML
 
-	-- If we don't have a MARC record, then see if there are any creators in the metadata tables
+	-- If we don't have a MARC record, then see if there are any creators in other tables
 	IF NOT EXISTS (SELECT t.ItemID FROM #tmpTitle t INNER JOIN dbo.IAMarc m ON t.ItemID = m.ItemID)
 	BEGIN
-		INSERT INTO #tmpCreator (ItemID, TitleID, CreatorName,
-								CreatorRoleTypeID, MARCDataFieldID, MARCDataFieldTag, MARCCreator_a, SequenceOrder)
-		SELECT	ItemID,
-				0,
-				CreatorName,
-				0,
-				RowNum,
-				CASE WHEN RowNum = 1 THEN '100' ELSE '700' END,
-				CreatorName,
-				RowNum
-		FROM	(
-				SELECT	ROW_NUMBER() OVER (ORDER BY m.DCMetadataID) AS RowNum,
-						t.ItemID,
-						SUBSTRING(m.DCElementValue, 1, 255) AS CreatorName
-				FROM	#tmpItem t INNER JOIN dbo.IADCMetadata m
-							ON t.ItemID = m.ItemID
-							AND m.DCElementName = 'creator'
-				) X
+		IF EXISTS (SELECT c.BHLCreatorID FROM dbo.IABHLCreator c INNER JOIN #tmpItem i ON c.ItemID = i.ItemID)
+		BEGIN
+			-- IABHLCreator and IABHLCreatorIdentifier
+			INSERT INTO #tmpCreator (ItemID, TitleID, CreatorName, CreatorRoleTypeID, MARCDataFieldID, MARCDataFieldTag, MARCCreator_a, SequenceOrder)
+			SELECT	ItemID,
+					0,
+					CreatorName,
+					0,
+					RowNum,
+					CASE WHEN RowNum = 1 THEN '100' ELSE '700' END,
+					CreatorName,
+					RowNum
+			FROM	(
+					SELECT	ROW_NUMBER() OVER (ORDER BY c.BHLCreatorID) AS RowNum,
+							t.ItemID,
+							SUBSTRING(c.Name, 1, 255) AS CreatorName
+					FROM	#tmpItem t INNER JOIN dbo.IABHLCreator c ON t.ItemID = c.ItemID
+					) X
+
+			INSERT INTO #tmpCreatorIdentifier (ItemID, SequenceOrder, IdentifierID, IdentifierValue)
+			SELECT	ItemID,
+					RowNum,
+					IdentifierID,
+					Value
+			FROM	(
+					SELECT	ROW_NUMBER() OVER (ORDER BY c.BHLCreatorID) AS RowNum,
+							t.ItemID,
+							SUBSTRING(c.Name, 1, 255) AS CreatorName,
+							id.IdentifierID,
+							i.Value
+					FROM	#tmpItem t 
+							INNER JOIN dbo.IABHLCreator c ON t.ItemID = c.ItemID
+							LEFT JOIN dbo.IABHLCreatorIdentifier i ON c.BHLCreatorID = i.BHLCreatorID
+							LEFT JOIN dbo.BHLIdentifier id ON i.Type = id.IdentifierName
+					) X
+			WHERE	IdentifierID IS NOT NULL
+		END
+		ELSE
+		BEGIN
+			-- IADCMetadata
+			INSERT INTO #tmpCreator (ItemID, TitleID, CreatorName, CreatorRoleTypeID, MARCDataFieldID, MARCDataFieldTag, MARCCreator_a, SequenceOrder)
+			SELECT	ItemID,
+					0,
+					CreatorName,
+					0,
+					RowNum,
+					CASE WHEN RowNum = 1 THEN '100' ELSE '700' END,
+					CreatorName,
+					RowNum
+			FROM	(
+					SELECT	ROW_NUMBER() OVER (ORDER BY m.DCMetadataID) AS RowNum,
+							t.ItemID,
+							SUBSTRING(m.DCElementValue, 1, 255) AS CreatorName
+					FROM	#tmpItem t INNER JOIN dbo.IADCMetadata m
+								ON t.ItemID = m.ItemID
+								AND m.DCElementName = 'creator'
+					) X
+		END
 	END
 
 	-- =======================================================================
@@ -2231,6 +2280,7 @@ BEGIN TRY
 		-- =======================================================================
 
 		-- Insert new creators into the import tables
+		/*
 		INSERT INTO dbo.Creator (ImportStatusID, ImportSourceID, CreatorName, DOB, DOD, 
 			MARCDataFieldTag, MARCCreator_a, MARCCreator_b, MARCCreator_c, MARCCreator_d, 
 			MARCCreator_q, MARCCreator_Full)
@@ -2245,16 +2295,19 @@ BEGIN TRY
 					--AND ISNULL(t.MARCCreator_q, '') = ISNULL(c.MARCCreator_q, '')
 		WHERE	t.MARCCreator_5 IS NULL
 		--AND		c.CreatorID IS NULL
+		*/
 
 		-- Insert new title_creator records into the import tables
 		INSERT INTO dbo.Title_Creator (CreatorName, MARCCreator_a, 
 			MARCCreator_b, MARCCreator_c, MARCCreator_d, MARCCreator_e,
 			MARCCreator_q, MARCCreator_t, CreatorRoleTypeID, SequenceOrder,
-			ImportStatusID, ImportSourceID, ImportKey)
+			MARCDataFieldTag, DOB, DOD, ImportStatusID, ImportSourceID, 
+			ImportKey)
 		SELECT	dbo.BHLfnConvertToTitleCase(dbo.BHLfnAddAuthorNameSpaces(c.CreatorName)),
 				c.MARCCreator_a, c.MARCCreator_b, c.MARCCreator_c, c.MARCCreator_d, 
 				c.MARCCreator_e, c.MARCCreator_q, c.MARCCreator_t, c.CreatorRoleTypeID, 
-				c.SequenceOrder, 10, @ImportSourceID, CONVERT(nvarchar(50), c.ItemID)
+				c.SequenceOrder, c.MARCDataFieldTag, c.DOB, c.DOD, 10, @ImportSourceID, 
+				CONVERT(nvarchar(50), c.ItemID)
 		FROM	#tmpCreator c
 				INNER JOIN #tmpItem i ON c.ItemID = i.ItemID AND i.VirtualTitleID IS NULL
 		WHERE	c.MARCCreator_5 IS NULL
@@ -2332,6 +2385,12 @@ BEGIN TRY
 				c.CreatorRoleTypeID, c.SequenceOrder
 		FROM	#tmpCreator c
 				INNER JOIN #tmpItem i ON c.ItemID = i.ItemID AND i.VirtualTitleID IS NOT NULL
+
+		INSERT INTO dbo.ItemCreatorIdentifier (Barcode, ImportStatusID, ImportSourceID, 
+			SequenceOrder, IdentifierID, IdentifierValue)
+		SELECT	i.Barcode, 10, @ImportSourceID, cid.SequenceOrder, cid.IdentifierID, cid.IdentifierValue
+		FROM	#tmpCreatorIdentifier cid
+				INNER JOIN #tmpItem i ON cid.ItemID = i.ItemID AND i.VirtualTitleID IS NOT NULL
 
 		-- =======================================================================
 
@@ -2495,6 +2554,7 @@ BEGIN TRY
 	DROP TABLE #tmpTitleVariant
 	DROP TABLE #tmpTitleNote
 	DROP TABLE #tmpCreator
+	DROP TABLE #tmpCreatorIdentifier
 	DROP TABLE #tmpItem
 	DROP TABLE #tmpPage
 	DROP TABLE #tmpPage_PageType

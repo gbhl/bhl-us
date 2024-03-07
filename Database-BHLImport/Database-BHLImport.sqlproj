@@ -451,6 +451,7 @@
     <None Include="dbo\Tables\ItemKeyword.sql" />
     <None Include="dbo\Tables\ItemCreator.sql" />
     <None Include="dbo\Stored Procedures\IABHLCreatorDeleteByItem.sql" />
+    <None Include="dbo\Tables\ItemCreatorIdentifier.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />
