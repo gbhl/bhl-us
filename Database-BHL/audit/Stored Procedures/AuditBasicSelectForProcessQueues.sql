@@ -337,6 +337,7 @@ UNION
 SELECT	AuditBasicID, ab.Operation, EntityName, 'item', t.TitleID, b.BookID, 'Search' AS [Queue], AuditDate
 FROM	audit.AuditBasic ab WITH (NOLOCK)
 		INNER JOIN dbo.Title_Identifier tid WITH (NOLOCK) ON ab.EntityKey1 = tid.TitleIdentifierID
+		INNER JOIN dbo.Identifier id ON tid.IdentifierID = id.IdentifierID
 		INNER JOIN dbo.ItemTitle it WITH (NOLOCK) ON tid.TitleID = it.TitleID
 		INNER JOIN dbo.Item i WITH (NOLOCK) ON it.ItemID = i.ItemiD
 		INNER JOIN dbo.Book b WITH (NOLOCK) ON i.ItemID = b.ItemID
@@ -345,6 +346,8 @@ WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
 AND		EntityName = 'dbo.Title_Identifier'
 AND		i.ItemStatusID = 40
 AND		t.PublishReady = 1
+-- Only consider changes to identifier types that are indexed for search
+AND		id.IdentifierType IN ('ISBN', 'ISSN', 'OCLC', 'DOI')
 /*
 -- Removed because DOIs have been moved to the Identifier tables
 UNION
