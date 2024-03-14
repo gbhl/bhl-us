@@ -744,6 +744,17 @@ Append("</a>").
                 List<ItemAuthor> authorList = bhlProvider.SegmentAuthorSelectBySegmentID(publicationDetail.ID);
                 foreach (ItemAuthor author in authorList)
                 {
+                    Author itemAuthor = new Author(
+                        author.AuthorID, null, author.StartDate, author.EndDate, author.Numeration, author.Title,
+                        author.Unit, author.Location, string.Empty, 1, null, null, null, null, null
+                        )
+                    {
+                        FullName = author.FullName,
+                        FullerForm = author.FullerForm
+                    };
+                    publicationDetail.Authors.Add(itemAuthor);
+
+                    /*
                     publicationDetail.Authors.Add(new Author()
                     {
                         AuthorID = author.AuthorID,
@@ -756,6 +767,7 @@ Append("</a>").
                         StartDate = author.StartDate,
                         EndDate = author.EndDate
                     });
+                    */
                 }
 
                 // Get the list of related Segments

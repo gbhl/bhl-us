@@ -7,6 +7,29 @@ namespace MOBOT.BHL.DataObjects
 	[Serializable]
 	public class Author : __Author
 	{
+        public Author() : base()
+        {
+        }
+
+        public Author(int authorID,
+            int? authorTypeID,
+            string startDate,
+            string endDate,
+            string numeration,
+            string title,
+            string unit,
+            string location,
+            string note,
+            short isActive,
+            int? redirectAuthorID,
+            DateTime? creationDate,
+            DateTime? lastModifiedDate,
+            int? creationUserID,
+            int? lastModifiedUserID) : base(authorID, authorTypeID, startDate, endDate, numeration, title, unit, location,
+                note, isActive, redirectAuthorID, creationDate, lastModifiedDate, creationUserID, lastModifiedUserID)
+        {
+        }
+
         private string _authorTypeName = string.Empty;
 
         public string AuthorTypeName
