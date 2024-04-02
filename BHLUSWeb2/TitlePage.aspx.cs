@@ -85,7 +85,7 @@ namespace MOBOT.BHL.Web2
                     //if (PublicationDetail.ItemID == book.ItemID) CurrentBook = book;
                     if (string.IsNullOrWhiteSpace(book.Volume)) book.Volume = "Volume details";
 
-                    ddlVolumes.Items.Add(new ListItem(book.DisplayedShortVolume, book.IsVirtual.ToString() + "|" + book.BookID.ToString() + "|" + book.FirstSegmentID.ToString()));
+                    ddlVolumes.Items.Add(new ListItem(book.DisplayedShortVolume, book.IsVirtual.ToString() + "|" + book.BookID.ToString() + "|" + book.FirstSegmentStartPageID.ToString()));
 
                     if (book.IsVirtual == 1 && book.BookID == PublicationDetail.ContainerID) selectedIndex = bookIndex;
                     else if (book.IsVirtual == 0 && book.BookID == PublicationDetail.ID) selectedIndex = bookIndex;
@@ -261,7 +261,7 @@ namespace MOBOT.BHL.Web2
             }
             else if (type == ItemType.Segment)
             {
-                tags = bhlProvider.GetGoogleScholarMetadataForSegment(entityid, ConfigurationManager.AppSettings["SegmentPageUrl"]);
+                tags = bhlProvider.GetGoogleScholarMetadataForSegment(entityid, ConfigurationManager.AppSettings["PartPageUrl"]);
             }
 
             foreach (KeyValuePair<string, string> tag in tags)
@@ -560,9 +560,9 @@ Append("</a>").
                     if (!page.Active)   // Page ID exists, but is inactive
                     {
                         if (segment.RedirectSegmentID != null)
-                            Response.Redirect("~/segment/" + segment.RedirectSegmentID); // Follow container item redirect
+                            Response.Redirect("~/part/" + segment.RedirectSegmentID); // Follow container item redirect to landing page
                         else
-                            Response.Redirect("~/segment/" + segment.SegmentID);     // Show container item
+                            Response.Redirect("~/part/" + segment.SegmentID);     // Show container item landing page
                     }
 
                     PublicationDetail.Type = ItemType.Segment;
@@ -570,7 +570,7 @@ Append("</a>").
                     if (psv != null)
                     {
                         // Page active, but container item redirected
-                        if (psv.RedirectBookID != null) Response.Redirect("~/segment/" + psv.RedirectBookID);
+                        if (psv.RedirectBookID != null) Response.Redirect("~/part/" + psv.RedirectBookID);
                     }
                 }
             }
@@ -667,7 +667,7 @@ Append("</a>").
             else
             {
                 Segment segment = bhlProvider.SegmentSelectByBarCode(barcode);
-                if (segment != null) Response.Redirect("~/segment/" + segment.SegmentID);
+                if (segment != null) Response.Redirect("~/page/" + segment.StartPageID);
             }
 
             return psv;
@@ -739,6 +739,7 @@ Append("</a>").
                 publicationDetail.LicenseUrl = segment.LicenseUrl;
                 publicationDetail.Rights = segment.RightsStatement;
                 publicationDetail.CopyrightStatus = segment.RightsStatus;
+                publicationDetail.StartPageID = segment.StartPageID;
 
                 // Get Authors
                 List<ItemAuthor> authorList = bhlProvider.SegmentAuthorSelectBySegmentID(publicationDetail.ID);
@@ -872,6 +873,7 @@ Append("</a>").
             public int ItemID { get; set; }
             public int? ContainerID { get; set; }
             public int ContainerItemID { get; set; }
+            public int? StartPageID { get; set; }
             public int TitleCount { get; set; }
             public int TitleID { get; set; }
             public string TitleGenre { get; set; }

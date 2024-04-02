@@ -17,10 +17,9 @@
 			<li>
             <div style="display:inline-block; width:620px">
                 <div style="float:left">
-                    <%# (Eval("StartPageID") == null && Eval("URL").ToString() == string.Empty && BhlBook.IsVirtual == 0) ?  Eval("Title") : "" %>
-                    <%# (Eval("StartPageID") != null && Eval("URL").ToString() == string.Empty && BhlBook.IsVirtual == 0) ? "<a class=\"title\" href=\"/page/" + Eval("StartPageID").ToString() + "\" \\>" + Eval("Title").ToString() + "</a>" : "" %>
-                    <%# (Eval("StartPageID") == null && Eval("URL").ToString() != string.Empty && BhlBook.IsVirtual == 0) ? "<a target=\"_blank\" rel=\"noopener noreferrer\" class=\"title ExtLinkBrowse\" href=\"" + Eval("URL").ToString() + "\">" + Eval("Title").ToString() + "</a>" : "" %>
-                    <%# (BhlBook.IsVirtual == 1) ? "<a class=\"title\" href=\"/segment/" + Eval("SegmentID").ToString() + "\" \\>" + Eval("Title").ToString() + "</a>" : "" %>
+                    <%# (Eval("StartPageID") == null && Eval("URL").ToString() == string.Empty) ?  Eval("Title") : "" %>
+                    <%# (Eval("StartPageID") != null) ? "<a class=\"title\" href=\"/page/" + Eval("StartPageID").ToString() + "\" \\>" + Eval("Title").ToString() + "</a>" : "" %>
+                    <%# (Eval("StartPageID") == null && Eval("URL").ToString() != string.Empty) ? "<a target=\"_blank\" rel=\"noopener noreferrer\" class=\"title ExtLinkBrowse\" href=\"" + Eval("URL").ToString() + "\">" + Eval("Title").ToString() + "</a>" : "" %>
                 </div>
                 <div style="float:right">
                     <a class="titleviewbook" href="/part/<%# Eval("SegmentID")%>">View Metadata</a>
