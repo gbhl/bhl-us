@@ -64,7 +64,13 @@ SELECT
 	[EndPart],
 	[PageProgression],
 	[CreatedUserID],
-	[LastModifiedUserID]
+	[LastModifiedUserID],
+	[VirtualVolume],
+	[VirtualTitleID],
+	[Summary],
+	[Genre],
+	[Issue],
+	[PageRange]
 FROM	
 	[dbo].[IAItem]
 WHERE	

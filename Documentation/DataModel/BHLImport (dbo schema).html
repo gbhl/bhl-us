@@ -116,6 +116,12 @@
 <a href="#IAAnalysisHarvestLog">IAAnalysisHarvestLog</a>
 </li>
 <li>
+<a href="#IABHLCreator">IABHLCreator</a>
+</li>
+<li>
+<a href="#IABHLCreatorIdentifier">IABHLCreatorIdentifier</a>
+</li>
+<li>
 <a href="#IADCMetadata">IADCMetadata</a>
 </li>
 <li>
@@ -189,6 +195,18 @@
 </li>
 <li>
 <a href="#Item">Item</a>
+</li>
+<li>
+<a href="#ItemCreator">ItemCreator</a>
+</li>
+<li>
+<a href="#ItemCreatorIdentifier">ItemCreatorIdentifier</a>
+</li>
+<li>
+<a href="#ItemIdentifier">ItemIdentifier</a>
+</li>
+<li>
+<a href="#ItemKeyword">ItemKeyword</a>
 </li>
 <li>
 <a href="#ItemLanguage">ItemLanguage</a>
@@ -707,6 +725,90 @@
 <div class="references"></div>
 </div>
 <div class="tableNameHeading">
+<h1>IABHLCreator<a name="IABHLCreator"></a>
+</h1>
+<h2>
+      (Physical Name: IABHLCreator)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">BHLCreatorID (PK)</td><td class="tdTableDefinition">BHLCreatorID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemID
+                &nbsp;(<a href="#IAItem">FK</a>)
+              </td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Name</td><td class="tdTableDefinition">Name</td><td class="tdTableDefinition">NVARCHAR(300)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreatedDate</td><td class="tdTableDefinition">CreatedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#IAItem">IAItem</a> through (ItemID)</li>
+</ul>
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#IABHLCreatorIdentifier">IABHLCreatorIdentifier</a> referencing (BHLCreatorID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>IABHLCreatorIdentifier<a name="IABHLCreatorIdentifier"></a>
+</h1>
+<h2>
+      (Physical Name: IABHLCreatorIdentifier)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">BHLCreatorIdentifierID (PK)</td><td class="tdTableDefinition">BHLCreatorIdentifierID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">BHLCreatorID
+                &nbsp;(<a href="#IABHLCreator">FK</a>)
+              </td><td class="tdTableDefinition">BHLCreatorID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Type</td><td class="tdTableDefinition">Type</td><td class="tdTableDefinition">NVARCHAR(40)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Value</td><td class="tdTableDefinition">Value</td><td class="tdTableDefinition">NVARCHAR(125)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreatedDate</td><td class="tdTableDefinition">CreatedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#IABHLCreator">IABHLCreator</a> through (BHLCreatorID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
 <h1>IADCMetadata<a name="IADCMetadata"></a>
 </h1>
 <h2>
@@ -1013,6 +1115,30 @@
 <tr valign="top">
 <td class="tdTableDefinition">PageProgression</td><td class="tdTableDefinition">PageProgression</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreatedUserID</td><td class="tdTableDefinition">CreatedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">VirtualVolume</td><td class="tdTableDefinition">VirtualVolume</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">VirtualTitleID</td><td class="tdTableDefinition">VirtualTitleID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Summary</td><td class="tdTableDefinition">Summary</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Genre</td><td class="tdTableDefinition">Genre</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Issue</td><td class="tdTableDefinition">Issue</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PageRange</td><td class="tdTableDefinition">PageRange</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
 </table>
 <div class="references">
 <p class="subTitle">Referenced By</p>
@@ -1033,6 +1159,8 @@
 <a href="#IAScandata">IAScandata</a> referencing (ItemID)</li>
 <li>
 <a href="#IAMarc">IAMarc</a> referencing (ItemID)</li>
+<li>
+<a href="#IABHLCreator">IABHLCreator</a> referencing (ItemID)</li>
 </ul>
 </div>
 </div>
@@ -2194,6 +2322,45 @@
 <tr valign="top">
 <td class="tdTableDefinition">PageProgression</td><td class="tdTableDefinition">PageProgression</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
+<tr valign="top">
+<td class="tdTableDefinition">VirtualVolume</td><td class="tdTableDefinition">VirtualVolume</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">VirtualTitleID</td><td class="tdTableDefinition">VirtualTitleID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Summary</td><td class="tdTableDefinition">Summary</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SegmentGenreID</td><td class="tdTableDefinition">SegmentGenreID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PublicationDetails</td><td class="tdTableDefinition">PublicationDetails</td><td class="tdTableDefinition">NVARCHAR(400)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PublisherName</td><td class="tdTableDefinition">PublisherName</td><td class="tdTableDefinition">NVARCHAR(250)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Issue</td><td class="tdTableDefinition">Issue</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SegmentDate</td><td class="tdTableDefinition">SegmentDate</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">StartPage</td><td class="tdTableDefinition">StartPage</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">EndPage</td><td class="tdTableDefinition">EndPage</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Title</td><td class="tdTableDefinition">Title</td><td class="tdTableDefinition">NVARCHAR(2000)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SortTitle</td><td class="tdTableDefinition">SortTitle</td><td class="tdTableDefinition">NVARCHAR(2000)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ContainerTitle</td><td class="tdTableDefinition">ContainerTitle</td><td class="tdTableDefinition">NVARCHAR(2000)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
 </table>
 <div class="references">
 <p class="subTitle">References</p>
@@ -2204,6 +2371,177 @@
 <a href="#ImportStatus">ImportStatus</a> through (ImportStatusID)</li>
 </ul>
 </div>
+</div>
+<div class="tableNameHeading">
+<h1>ItemCreator<a name="ItemCreator"></a>
+</h1>
+<h2>
+      (Physical Name: ItemCreator)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemCreatorID (PK)</td><td class="tdTableDefinition">ItemCreatorID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">BarCode</td><td class="tdTableDefinition">BarCode</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ImportStatusID</td><td class="tdTableDefinition">ImportStatusID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ImportSourceID</td><td class="tdTableDefinition">ImportSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreatorName</td><td class="tdTableDefinition">CreatorName</td><td class="tdTableDefinition">NVARCHAR(255)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreatorRoleTypeID</td><td class="tdTableDefinition">CreatorRoleTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SMALLINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ProductionDate</td><td class="tdTableDefinition">ProductionDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreatedDate</td><td class="tdTableDefinition">CreatedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references"></div>
+</div>
+<div class="tableNameHeading">
+<h1>ItemCreatorIdentifier<a name="ItemCreatorIdentifier"></a>
+</h1>
+<h2>
+      (Physical Name: ItemCreatorIdentifier)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemCreatorIdentifierID (PK)</td><td class="tdTableDefinition">ItemCreatorIdentifierID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">BarCode</td><td class="tdTableDefinition">BarCode</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ImportStatusID</td><td class="tdTableDefinition">ImportStatusID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ImportSourceID</td><td class="tdTableDefinition">ImportSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SMALLINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IdentifierID</td><td class="tdTableDefinition">IdentifierID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IdentifierValue</td><td class="tdTableDefinition">IdentifierValue</td><td class="tdTableDefinition">NVARCHAR(125)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ProductionDate</td><td class="tdTableDefinition">ProductionDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreatedDate</td><td class="tdTableDefinition">CreatedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references"></div>
+</div>
+<div class="tableNameHeading">
+<h1>ItemIdentifier<a name="ItemIdentifier"></a>
+</h1>
+<h2>
+      (Physical Name: ItemIdentifier)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemIdentifierID (PK)</td><td class="tdTableDefinition">ItemIdentifierID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ImportStatusID</td><td class="tdTableDefinition">ImportStatusID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ImportSourceID</td><td class="tdTableDefinition">ImportSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">BarCode</td><td class="tdTableDefinition">BarCode</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IdentifierName</td><td class="tdTableDefinition">IdentifierName</td><td class="tdTableDefinition">NVARCHAR(40)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IdentifierValue</td><td class="tdTableDefinition">IdentifierValue</td><td class="tdTableDefinition">NVARCHAR(125)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ProductionDate</td><td class="tdTableDefinition">ProductionDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreatedDate</td><td class="tdTableDefinition">CreatedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references"></div>
+</div>
+<div class="tableNameHeading">
+<h1>ItemKeyword<a name="ItemKeyword"></a>
+</h1>
+<h2>
+      (Physical Name: ItemKeyword)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemKeywordID (PK)</td><td class="tdTableDefinition">ItemKeywordID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">BarCode</td><td class="tdTableDefinition">BarCode</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ImportStatusID</td><td class="tdTableDefinition">ImportStatusID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ImportSourceID</td><td class="tdTableDefinition">ImportSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Keyword</td><td class="tdTableDefinition">Keyword</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ProductionDate</td><td class="tdTableDefinition">ProductionDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreatedDate</td><td class="tdTableDefinition">CreatedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references"></div>
 </div>
 <div class="tableNameHeading">
 <h1>ItemLanguage<a name="ItemLanguage"></a>

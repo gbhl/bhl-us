@@ -135,7 +135,7 @@
                                 <% foreach (Segment segment in PublicationDetail.Children)
                                 { %>
                                     <li id="<%= segment.SegmentID %>">
-                                        <a class="viewSegLinkTitle" id="<%= segment.StartPageID %>" href="<%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? "#" : "/segment/" + segment.SegmentID.ToString() %>" style="text-decoration:none"><%= segment.Title %></a>
+                                        <a class="viewSegLinkTitle" id="<%= segment.StartPageID %>" href="<%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? "#" : "/page/" + segment.StartPageID.ToString() %>" style="text-decoration:none"><%= segment.Title %></a>
                                         <div class="segListVolPage">
                                             <%
                                             List<string> vs = new List<string>();
@@ -824,7 +824,7 @@
                 location.href = '/item/' + ids[1];  // BookID
             }
             else {
-                location.href = "/segment/" + ids[2];   // FirstSegmentID
+                location.href = "/page/" + ids[2];   // FirstSegmentID
             }
         });
 
@@ -1270,7 +1270,7 @@
             <%if (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) { %>
                 $(".altmetric-embed").attr("data-uri", "https://www.biodiversitylibrary.org/item/" + "<%: PublicationDetail.ID %>");
             <%} else if (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Segment) { %>
-                $(".altmetric-embed").attr("data-uri", "https://www.biodiversitylibrary.org/segment/" + "<%: PublicationDetail.ID %>");
+                $(".altmetric-embed").attr("data-uri", "https://www.biodiversitylibrary.org/page/" + "<%: PublicationDetail.StartPageID %>");
             <%}%>
             if (typeof _altmetric_embed_init === 'function') _altmetric_embed_init();
 

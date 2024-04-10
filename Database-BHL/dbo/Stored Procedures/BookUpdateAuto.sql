@@ -42,7 +42,8 @@ CREATE PROCEDURE dbo.BookUpdateAuto
 @LastPageNameLookupDate DATETIME,
 @IsVirtual TINYINT,
 @LastModifiedUserID INT,
-@PageProgression NVARCHAR(10)
+@PageProgression NVARCHAR(10),
+@VirtualVolumeKey NVARCHAR(100)
 
 AS 
 
@@ -92,7 +93,8 @@ SET
 	[IsVirtual] = @IsVirtual,
 	[LastModifiedDate] = getdate(),
 	[LastModifiedUserID] = @LastModifiedUserID,
-	[PageProgression] = @PageProgression
+	[PageProgression] = @PageProgression,
+	[VirtualVolumeKey] = @VirtualVolumeKey
 WHERE
 	[BookID] = @BookID
 		
@@ -149,7 +151,8 @@ ELSE BEGIN
 		[LastModifiedDate],
 		[CreationUserID],
 		[LastModifiedUserID],
-		[PageProgression]
+		[PageProgression],
+		[VirtualVolumeKey]
 	FROM [dbo].[Book]
 	WHERE
 		[BookID] = @BookID

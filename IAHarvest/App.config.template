@@ -52,8 +52,9 @@
 		<add key="MarcExtension" value="_marc.xml"/>
 		<add key="DjvuExtension" value="_djvu.xml"/>
 		<add key="ScandataExtension" value="_scandata.xml"/>
-		<add key="ScandataFile" value="scandata.xml"/>
-		<!-- ####################################################### -->
+    <add key="BHLCreatorExtension" value="_bhlcreators.xml" />
+    <add key="ScandataFile" value="scandata.xml"/>
+    <!-- ####################################################### -->
 
 		<add key="LocalFileFolder" value="C:\temp\bhl1\"/>
     <!-- BHLWS service endpoint -->

@@ -169,14 +169,9 @@
             <div class="body" style="border-bottom: 1px solid #C5CED3; padding: 20px 0 0;">
                 <div class="partlinks">
 
-                    <%if (IsVirtual == 1) { %>
-                        <a href="/segment/<%: BhlSegment.SegmentID %>">View <%: BhlSegment.GenreName%></a> <br />
-                    <%} else { 
-                        if ((BhlSegment.StartPageID != null) && BhlSegment.StartPageID > 0) { %>
-                            <a href="/page/<%: BhlSegment.StartPageID %>">View <%: BhlSegment.GenreName%></a> <br />
-                        <%}
-                    } %>
-
+                    <%if ((BhlSegment.StartPageID != null) && BhlSegment.StartPageID > 0) { %>
+                        <a href="/page/<%: BhlSegment.StartPageID %>">View <%: BhlSegment.GenreName%></a> <br />
+                    <%}%>
                     <% if (! string.IsNullOrEmpty(BhlSegment.Url))
                     { %>
                         <a target="_blank" rel="noopener noreferrer" href="<%: BhlSegment.Url %>">View <%: BhlSegment.GenreName%> (External Location)</a> <br />

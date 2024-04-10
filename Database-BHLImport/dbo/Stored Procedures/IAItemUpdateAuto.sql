@@ -55,7 +55,13 @@ CREATE PROCEDURE dbo.IAItemUpdateAuto
 @EndPart NVARCHAR(10),
 @PageProgression NVARCHAR(10),
 @CreatedUserID INT,
-@LastModifiedUserID INT
+@LastModifiedUserID INT,
+@VirtualVolume NVARCHAR(100),
+@VirtualTitleID INT,
+@Summary NVARCHAR(MAX),
+@Genre NVARCHAR(50),
+@Issue NVARCHAR(100),
+@PageRange NVARCHAR(50)
 
 AS 
 
@@ -118,7 +124,13 @@ SET
 	[EndPart] = @EndPart,
 	[PageProgression] = @PageProgression,
 	[CreatedUserID] = @CreatedUserID,
-	[LastModifiedUserID] = @LastModifiedUserID
+	[LastModifiedUserID] = @LastModifiedUserID,
+	[VirtualVolume] = @VirtualVolume,
+	[VirtualTitleID] = @VirtualTitleID,
+	[Summary] = @Summary,
+	[Genre] = @Genre,
+	[Issue] = @Issue,
+	[PageRange] = @PageRange
 WHERE
 	[ItemID] = @ItemID
 		
@@ -187,12 +199,17 @@ ELSE BEGIN
 		[EndPart],
 		[PageProgression],
 		[CreatedUserID],
-		[LastModifiedUserID]
+		[LastModifiedUserID],
+		[VirtualVolume],
+		[VirtualTitleID],
+		[Summary],
+		[Genre],
+		[Issue],
+		[PageRange]
 	FROM [dbo].[IAItem]
 	WHERE
 		[ItemID] = @ItemID
 	
 	RETURN -- update successful
 END
-
 GO

@@ -10,8 +10,7 @@
     <ProjectGuid>{a5e8067c-b53e-4c0d-a9f6-3480de693727}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
-    <RootPath>
-    </RootPath>
+    <RootPath />
     <RootNamespace>Database_BHLImport</RootNamespace>
     <AssemblyName>Database_BHLImport</AssemblyName>
     <ModelCollation>1033,CI</ModelCollation>
@@ -54,10 +53,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <!-- VS10 without SP1 will not have VisualStudioVersion set, so do that here -->
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <!-- Default to the v10.0 targets path if the targets file for the current VS version is not found -->
     <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
     <VisualStudioVersion Condition="'$(SSDTExists)' == ''">10.0</VisualStudioVersion>
   </PropertyGroup>
@@ -450,6 +447,11 @@
     <None Include="dbo\Synonyms\BHLfnGetLCCNValue.sql" />
     <None Include="dbo\Synonyms\BHLvwAuthorName.sql" />
     <None Include="dbo\Synonyms\BHLAspNetUsers.sql" />
+    <None Include="dbo\Tables\ItemIdentifier.sql" />
+    <None Include="dbo\Tables\ItemKeyword.sql" />
+    <None Include="dbo\Tables\ItemCreator.sql" />
+    <None Include="dbo\Stored Procedures\IABHLCreatorDeleteByItem.sql" />
+    <None Include="dbo\Tables\ItemCreatorIdentifier.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />
@@ -527,5 +529,17 @@
     <None Include="Data\dbo.OAIRepository.Table.sql" />
     <None Include="Data\dbo.OAIRepositoryFormat.Table.sql" />
     <None Include="Data\dbo.OAISet.Table.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Stored Procedures\IABHLCreatorDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IABHLCreatorIdentifierDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IABHLCreatorIdentifierInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IABHLCreatorIdentifierSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IABHLCreatorIdentifierUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IABHLCreatorInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IABHLCreatorSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IABHLCreatorUpdateAuto.sql" />
+    <None Include="dbo\Tables\IABHLCreator.sql" />
+    <None Include="dbo\Tables\IABHLCreatorIdentifier.sql" />
   </ItemGroup>
 </Project>

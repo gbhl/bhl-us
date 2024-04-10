@@ -719,6 +719,7 @@
 		<asp:Button ID="saveButton" runat="server" ClientIDMode="Static" OnClick="saveButton_Click" Text="Save" />
 		<div style="float:right;"><mobot:EditHistoryControl runat="server" id="editHistoryControl" /></div>
 		<asp:HiddenField ID="hidMarcItemID" runat="server" />
+		<asp:HiddenField ID="hidVirtualVolumeKey" runat="server" />
 	</div>
 	<div id="overlay" class="overlay">
 	    <div style="top:900px">

@@ -58,7 +58,20 @@ CREATE PROCEDURE dbo.ItemInsertAuto
 @EndSeries NVARCHAR(10),
 @StartPart NVARCHAR(10),
 @EndPart NVARCHAR(10),
-@PageProgression NVARCHAR(10)
+@PageProgression NVARCHAR(10),
+@VirtualVolume NVARCHAR(100),
+@VirtualTitleID INT = null,
+@Summary NVARCHAR(MAX),
+@SegmentGenreID INT = null,
+@PublicationDetails NVARCHAR(400),
+@PublisherName NVARCHAR(250),
+@Issue NVARCHAR(100),
+@SegmentDate NVARCHAR(20),
+@StartPage NVARCHAR(20),
+@EndPage NVARCHAR(20),
+@Title NVARCHAR(2000),
+@SortTitle NVARCHAR(2000),
+@ContainerTitle NVARCHAR(2000)
 
 AS 
 
@@ -124,7 +137,20 @@ INSERT INTO [dbo].[Item]
 	[EndSeries],
 	[StartPart],
 	[EndPart],
-	[PageProgression] )
+	[PageProgression],
+	[VirtualVolume],
+	[VirtualTitleID],
+	[Summary],
+	[SegmentGenreID],
+	[PublicationDetails],
+	[PublisherName],
+	[Issue],
+	[SegmentDate],
+	[StartPage],
+	[EndPage],
+	[Title],
+	[SortTitle],
+	[ContainerTitle] )
 VALUES
 ( 	@ImportKey,
 	@ImportStatusID,
@@ -185,7 +211,20 @@ VALUES
 	@EndSeries,
 	@StartPart,
 	@EndPart,
-	@PageProgression )
+	@PageProgression,
+	@VirtualVolume,
+	@VirtualTitleID,
+	@Summary,
+	@SegmentGenreID,
+	@PublicationDetails,
+	@PublisherName,
+	@Issue,
+	@SegmentDate,
+	@StartPage,
+	@EndPage,
+	@Title,
+	@SortTitle,
+	@ContainerTitle )
 
 SET @ItemID = Scope_Identity()
 
@@ -257,7 +296,20 @@ ELSE BEGIN
 		[EndSeries],
 		[StartPart],
 		[EndPart],
-		[PageProgression]	
+		[PageProgression],
+		[VirtualVolume],
+		[VirtualTitleID],
+		[Summary],
+		[SegmentGenreID],
+		[PublicationDetails],
+		[PublisherName],
+		[Issue],
+		[SegmentDate],
+		[StartPage],
+		[EndPage],
+		[Title],
+		[SortTitle],
+		[ContainerTitle]	
 	FROM [dbo].[Item]
 	WHERE
 		[ItemID] = @ItemID

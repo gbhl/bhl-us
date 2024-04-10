@@ -104,9 +104,11 @@ namespace IAHarvestAsync
                     XmlNode id = identifier.SelectSingleNode("str[@name = 'identifier']");
                     XmlNode updateDates = identifier.SelectSingleNode("arr[@name = 'oai_updatedate']");
                     XmlNode updateDate = updateDates.LastChild;
+                    XmlNode virtualTitleID = identifier.SelectSingleNode("str[@name = 'bhl_virtual_titleid']");
+                    bool noMarcOK = (virtualTitleID == null ? false : Int32.TryParse(virtualTitleID.InnerText, out int result));
 
                     // Save the item identifier (and associate it with a set if necessary)
-                    IAItem item = provider.SaveIAItemID(id.InnerText, configParms.LocalFileFolder, Convert.ToDateTime(updateDate.InnerText));
+                    IAItem item = provider.SaveIAItemID(id.InnerText, configParms.LocalFileFolder, Convert.ToDateTime(updateDate.InnerText), noMarcOK);
                     if (setID != null) provider.SaveIAItemSet(item.ItemID, (int)setID);
                     retrievedIds.Add(identifier.InnerText);
                 }

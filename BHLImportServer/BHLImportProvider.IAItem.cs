@@ -17,7 +17,7 @@ namespace MOBOT.BHLImport.Server
         private const int ITEMSTATUS_MARCMISSINGONHOLD = 82;
         private const int ITEMSTATUS_ERROR = 99;
 
-        public IAItem SaveIAItemID(string iaIdentifier, string localFileFolder, DateTime? dateStamp, int userId = 1)
+        public IAItem SaveIAItemID(string iaIdentifier, string localFileFolder, DateTime? dateStamp, bool noMarcOK, int userId = 1)
         {
             IAItemDAL dal = new IAItemDAL();
             IAItem savedItem = dal.IAItemSelectByIAIdentifier(null, null, iaIdentifier);
@@ -30,6 +30,7 @@ namespace MOBOT.BHLImport.Server
                     ItemStatusID = ITEMSTATUS_NEW,
                     LocalFileFolder = localFileFolder,
                     IADateStamp = dateStamp,
+                    NoMARCOk = (byte)(noMarcOK ? 1 : 0),
                     CreatedUserID = userId,
                     LastModifiedUserID = userId
                 };
@@ -166,27 +167,15 @@ namespace MOBOT.BHLImport.Server
         /// <summary>
         /// Update the item with metadata information.
         /// </summary>
-        /// <param name="itemID"></param>
-        /// <param name="sponsor"></param>
-        /// <param name="scanningCenter"></param>
-        /// <param name="callNumber"></param>
-        /// <param name="imageCount"></param>
-        /// <param name="identifierAccessUrl"></param>
-        /// <param name="volume"></param>
-        /// <param name="note"></param>
-        /// <param name="scanOperator"></param>
-        /// <param name="scanDate"></param>
-        /// <param name="addedDate"></param>
-        /// <param name="externalStatus"></param>
-        /// <returns></returns>
         public IAItem IAItemUpdateMetadata(int itemID, string sponsor, string sponsorDate, 
             string scanningCenter, string callNumber, int imageCount, string identifierAccessUrl, 
-            string volume, string note, string scanOperator, string scanDate, DateTime? addedDate,
-            string externalStatus, string titleID, string year, string identifierBib,
+            string volume, string issue, string note, string scanOperator, string scanDate, 
+            DateTime? addedDate, string externalStatus, string titleID, string year, string identifierBib,
             string licenseUrl, string rights, string dueDiligence, string possibleCopyrightStatus,
             string copyrightRegion, string copyrightComment, string copyrightEvidence,
             string copyrightEvidenceOperator, string copyrightEvidenceDate, string scanningInstitution,
-            string rightsHolder, string itemDescription, string pageProgression, int userId = 1)
+            string rightsHolder, string itemDescription, string pageProgression, string virtualVolume,
+            int? virtualTitleID, string summary, string genre, string pageRange, int userId = 1)
         {
             // Standardize the format of the year value
             year = DataCleaner.CleanYear(year);
@@ -196,9 +185,10 @@ namespace MOBOT.BHLImport.Server
                 throw new Exception(string.Format("Invalid Year format in metadata file: {0}", year));
             }
 
-            // Parse the year and volume into their component parts
+            // Parse the year and volume into their component parts.
+            // If a Virtual Volume value is provided, parse it.  Otherwise, use the "regular" volume value.
             YearData yearData = DataCleaner.ParseYearString(year);
-            VolumeData volumeData = DataCleaner.ParseVolumeString(volume);
+            VolumeData volumeData = DataCleaner.ParseVolumeString(string.IsNullOrWhiteSpace(virtualVolume) ? volume : virtualVolume);
 
             IAItemDAL dal = new IAItemDAL();
             IAItem savedItem = dal.IAItemSelectAuto(null, null, itemID);
@@ -211,6 +201,7 @@ namespace MOBOT.BHLImport.Server
                 savedItem.ImageCount = imageCount;
                 savedItem.IdentifierAccessUrl = identifierAccessUrl;
                 savedItem.Volume = volume;
+                savedItem.Issue = issue;
                 savedItem.Note = note;
                 savedItem.ScanOperator = scanOperator;
                 savedItem.ScanDate = scanDate;
@@ -243,6 +234,11 @@ namespace MOBOT.BHLImport.Server
                 savedItem.EndSeries = volumeData.EndSeries;
                 savedItem.StartPart = volumeData.StartPart;
                 savedItem.EndPart = volumeData.EndPart;
+                savedItem.VirtualTitleID = virtualTitleID;
+                savedItem.VirtualVolume = virtualVolume;
+                savedItem.Summary = summary;
+                savedItem.Genre = genre;
+                savedItem.PageRange = pageRange;
                 savedItem.LastModifiedDate = DateTime.Now;
                 savedItem.LastModifiedUserID = userId;
                 savedItem = dal.IAItemUpdateAuto(null, null, savedItem);

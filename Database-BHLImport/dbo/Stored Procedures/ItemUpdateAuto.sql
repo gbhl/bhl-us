@@ -58,7 +58,20 @@ CREATE PROCEDURE dbo.ItemUpdateAuto
 @EndSeries NVARCHAR(10),
 @StartPart NVARCHAR(10),
 @EndPart NVARCHAR(10),
-@PageProgression NVARCHAR(10)
+@PageProgression NVARCHAR(10),
+@VirtualVolume NVARCHAR(100),
+@VirtualTitleID INT,
+@Summary NVARCHAR(MAX),
+@SegmentGenreID INT,
+@PublicationDetails NVARCHAR(400),
+@PublisherName NVARCHAR(250),
+@Issue NVARCHAR(100),
+@SegmentDate NVARCHAR(20),
+@StartPage NVARCHAR(20),
+@EndPage NVARCHAR(20),
+@Title NVARCHAR(2000),
+@SortTitle NVARCHAR(2000),
+@ContainerTitle NVARCHAR(2000)
 
 AS 
 
@@ -124,7 +137,20 @@ SET
 	[EndSeries] = @EndSeries,
 	[StartPart] = @StartPart,
 	[EndPart] = @EndPart,
-	[PageProgression] = @PageProgression
+	[PageProgression] = @PageProgression,
+	[VirtualVolume] = @VirtualVolume,
+	[VirtualTitleID] = @VirtualTitleID,
+	[Summary] = @Summary,
+	[SegmentGenreID] = @SegmentGenreID,
+	[PublicationDetails] = @PublicationDetails,
+	[PublisherName] = @PublisherName,
+	[Issue] = @Issue,
+	[SegmentDate] = @SegmentDate,
+	[StartPage] = @StartPage,
+	[EndPage] = @EndPage,
+	[Title] = @Title,
+	[SortTitle] = @SortTitle,
+	[ContainerTitle] = @ContainerTitle
 WHERE
 	[ItemID] = @ItemID
 		
@@ -196,7 +222,20 @@ ELSE BEGIN
 		[EndSeries],
 		[StartPart],
 		[EndPart],
-		[PageProgression]
+		[PageProgression],
+		[VirtualVolume],
+		[VirtualTitleID],
+		[Summary],
+		[SegmentGenreID],
+		[PublicationDetails],
+		[PublisherName],
+		[Issue],
+		[SegmentDate],
+		[StartPage],
+		[EndPage],
+		[Title],
+		[SortTitle],
+		[ContainerTitle]
 	FROM [dbo].[Item]
 	WHERE
 		[ItemID] = @ItemID

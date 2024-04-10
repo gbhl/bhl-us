@@ -1,5 +1,5 @@
 
-// Generated 12/13/2023 8:22:38 AM
+// Generated 1/25/2024 2:02:16 PM
 // Do not modify the contents of this code file.
 // This abstract class __IAItem is based upon dbo.IAItem.
 
@@ -103,6 +103,12 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="pageProgression"></param>
 		/// <param name="createdUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="virtualVolume"></param>
+		/// <param name="virtualTitleID"></param>
+		/// <param name="summary"></param>
+		/// <param name="genre"></param>
+		/// <param name="issue"></param>
+		/// <param name="pageRange"></param>
 		public __IAItem(int itemID, 
 			int itemStatusID, 
 			string iAIdentifierPrefix, 
@@ -160,7 +166,13 @@ namespace MOBOT.BHLImport.DataObjects
 			string endPart, 
 			string pageProgression, 
 			int createdUserID, 
-			int lastModifiedUserID) : this()
+			int lastModifiedUserID, 
+			string virtualVolume, 
+			int? virtualTitleID, 
+			string summary, 
+			string genre, 
+			string issue, 
+			string pageRange) : this()
 		{
 			_ItemID = itemID;
 			ItemStatusID = itemStatusID;
@@ -220,6 +232,12 @@ namespace MOBOT.BHLImport.DataObjects
 			PageProgression = pageProgression;
 			CreatedUserID = createdUserID;
 			LastModifiedUserID = lastModifiedUserID;
+			VirtualVolume = virtualVolume;
+			VirtualTitleID = virtualTitleID;
+			Summary = summary;
+			Genre = genre;
+			Issue = issue;
+			PageRange = pageRange;
 		}
 		
 		#endregion Constructors
@@ -534,6 +552,36 @@ namespace MOBOT.BHLImport.DataObjects
 					case "LastModifiedUserID" :
 					{
 						_LastModifiedUserID = (int)column.Value;
+						break;
+					}
+					case "VirtualVolume" :
+					{
+						_VirtualVolume = (string)column.Value;
+						break;
+					}
+					case "VirtualTitleID" :
+					{
+						_VirtualTitleID = (int?)column.Value;
+						break;
+					}
+					case "Summary" :
+					{
+						_Summary = (string)column.Value;
+						break;
+					}
+					case "Genre" :
+					{
+						_Genre = (string)column.Value;
+						break;
+					}
+					case "Issue" :
+					{
+						_Issue = (string)column.Value;
+						break;
+					}
+					case "PageRange" :
+					{
+						_PageRange = (string)column.Value;
 						break;
 					}
 								}
@@ -2157,6 +2205,173 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion LastModifiedUserID
+		
+		#region VirtualVolume
+		
+		private string _VirtualVolume = string.Empty;
+		
+		/// <summary>
+		/// Column: VirtualVolume;
+		/// DBMS data type: nvarchar(100);
+		/// </summary>
+		[ColumnDefinition("VirtualVolume", DbTargetType=SqlDbType.NVarChar, Ordinal=59, CharacterMaxLength=100)]
+		public string VirtualVolume
+		{
+			get
+			{
+				return _VirtualVolume;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 100);
+				if (_VirtualVolume != value)
+				{
+					_VirtualVolume = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion VirtualVolume
+		
+		#region VirtualTitleID
+		
+		private int? _VirtualTitleID = null;
+		
+		/// <summary>
+		/// Column: VirtualTitleID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("VirtualTitleID", DbTargetType=SqlDbType.Int, Ordinal=60, NumericPrecision=10, IsNullable=true)]
+		public int? VirtualTitleID
+		{
+			get
+			{
+				return _VirtualTitleID;
+			}
+			set
+			{
+				if (_VirtualTitleID != value)
+				{
+					_VirtualTitleID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion VirtualTitleID
+		
+		#region Summary
+		
+		private string _Summary = string.Empty;
+		
+		/// <summary>
+		/// Column: Summary;
+		/// DBMS data type: nvarchar(MAX);
+		/// </summary>
+		[ColumnDefinition("Summary", DbTargetType=SqlDbType.NVarChar, Ordinal=61, CharacterMaxLength=1073741823)]
+		public string Summary
+		{
+			get
+			{
+				return _Summary;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 1073741823);
+				if (_Summary != value)
+				{
+					_Summary = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Summary
+		
+		#region Genre
+		
+		private string _Genre = string.Empty;
+		
+		/// <summary>
+		/// Column: Genre;
+		/// DBMS data type: nvarchar(50);
+		/// </summary>
+		[ColumnDefinition("Genre", DbTargetType=SqlDbType.NVarChar, Ordinal=62, CharacterMaxLength=50)]
+		public string Genre
+		{
+			get
+			{
+				return _Genre;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 50);
+				if (_Genre != value)
+				{
+					_Genre = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Genre
+		
+		#region Issue
+		
+		private string _Issue = string.Empty;
+		
+		/// <summary>
+		/// Column: Issue;
+		/// DBMS data type: nvarchar(100);
+		/// </summary>
+		[ColumnDefinition("Issue", DbTargetType=SqlDbType.NVarChar, Ordinal=63, CharacterMaxLength=100)]
+		public string Issue
+		{
+			get
+			{
+				return _Issue;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 100);
+				if (_Issue != value)
+				{
+					_Issue = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Issue
+		
+		#region PageRange
+		
+		private string _PageRange = string.Empty;
+		
+		/// <summary>
+		/// Column: PageRange;
+		/// DBMS data type: nvarchar(50);
+		/// </summary>
+		[ColumnDefinition("PageRange", DbTargetType=SqlDbType.NVarChar, Ordinal=64, CharacterMaxLength=50)]
+		public string PageRange
+		{
+			get
+			{
+				return _PageRange;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 50);
+				if (_PageRange != value)
+				{
+					_PageRange = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion PageRange
 			
 		#endregion Properties
 
@@ -2258,7 +2473,13 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.EndPart) == GetComparisonString(EndPart) &&
 					GetComparisonString(o.PageProgression) == GetComparisonString(PageProgression) &&
 					o.CreatedUserID == CreatedUserID &&
-					o.LastModifiedUserID == LastModifiedUserID 
+					o.LastModifiedUserID == LastModifiedUserID &&
+					GetComparisonString(o.VirtualVolume) == GetComparisonString(VirtualVolume) &&
+					o.VirtualTitleID == VirtualTitleID &&
+					GetComparisonString(o.Summary) == GetComparisonString(Summary) &&
+					GetComparisonString(o.Genre) == GetComparisonString(Genre) &&
+					GetComparisonString(o.Issue) == GetComparisonString(Issue) &&
+					GetComparisonString(o.PageRange) == GetComparisonString(PageRange) 
 				)
 				{
 					o = null;
@@ -2415,7 +2636,13 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string EndPart = "EndPart";	
 			public const string PageProgression = "PageProgression";	
 			public const string CreatedUserID = "CreatedUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";
+			public const string LastModifiedUserID = "LastModifiedUserID";	
+			public const string VirtualVolume = "VirtualVolume";	
+			public const string VirtualTitleID = "VirtualTitleID";	
+			public const string Summary = "Summary";	
+			public const string Genre = "Genre";	
+			public const string Issue = "Issue";	
+			public const string PageRange = "PageRange";
 		}
 				
 		#endregion SortColumn

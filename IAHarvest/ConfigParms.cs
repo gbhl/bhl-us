@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using System.Web;
 using System.Xml;
 
 namespace IAHarvest
@@ -340,6 +341,19 @@ namespace IAHarvest
             }
         }
 
+        private string _bhlCreatorExtension;
+        public string BHLCreatorExtension
+        {
+            get
+            {
+                return _bhlCreatorExtension;
+            }
+            set
+            {
+                _bhlCreatorExtension = value;
+            }
+        }
+
         private string _scandataFile;
         public string ScandataFile
         {
@@ -421,6 +435,7 @@ namespace IAHarvest
             MarcExtension = ConfigurationManager.AppSettings["MarcExtension"];
             DjvuExtension = ConfigurationManager.AppSettings["DjvuExtension"];
             ScandataExtension = ConfigurationManager.AppSettings["ScandataExtension"];
+            BHLCreatorExtension = ConfigurationManager.AppSettings["BHLCreatorExtension"];
             ScandataFile = ConfigurationManager.AppSettings["ScandataFile"];
             LocalFileFolder = ConfigurationManager.AppSettings["LocalFileFolder"];
             BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];

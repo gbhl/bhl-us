@@ -208,9 +208,11 @@ namespace IAHarvest
                     XmlNode id = identifier.SelectSingleNode("str[@name = 'identifier']");
                     XmlNode updateDates = identifier.SelectSingleNode("arr[@name = 'oai_updatedate']");
                     XmlNode updateDate = updateDates.LastChild;
+                    XmlNode virtualTitleID = identifier.SelectSingleNode("str[@name = 'bhl_virtual_titleid']");
+                    bool noMarcOK = (virtualTitleID == null ? false : Int32.TryParse(virtualTitleID.InnerText, out int result));
 
                     // Save the item identifier (and associate it with a set if necessary)
-                    IAItem item = provider.SaveIAItemID(id.InnerText, configParms.LocalFileFolder, Convert.ToDateTime(updateDate.InnerText));
+                    IAItem item = provider.SaveIAItemID(id.InnerText, configParms.LocalFileFolder, Convert.ToDateTime(updateDate.InnerText), noMarcOK);
                     if (setID != null) provider.SaveIAItemSet(item.ItemID, (int)setID);
                     retrievedIds.Add(identifier.InnerText);
                 }
@@ -259,6 +261,7 @@ namespace IAHarvest
                             this.HarvestDJVUData(GetFile(fileList, configParms.DjvuExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
                             this.HarvestScandata(GetFile(fileList, configParms.ScandataExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
                             this.HarvestMarcData(GetFile(fileList, configParms.MarcExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate, (item.NoMARCOk == 1));
+                            this.HarvestBHLCreatorData(GetFile(fileList, configParms.BHLCreatorExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
                         }
                         provider.IAItemUpdateLastXMLDataHarvestDate(item.ItemID);
                         provider.IAItemUpdateItemStatusIDAfterDataHarvest(item.ItemID,
@@ -596,35 +599,41 @@ namespace IAHarvest
                     this.ReadAndSaveDCElements(itemID, xml, "metadata/" + DC_ATTRIB_TYPE, DC_SOURCE_META);
 
                     // Read additional elements
-                    String sponsor = String.Empty;
-                    String sponsorDate = String.Empty;
-                    String scanningCenter = String.Empty;
-                    String callNumber = String.Empty;
+                    string sponsor = string.Empty;
+                    string sponsorDate = string.Empty;
+                    string scanningCenter = string.Empty;
+                    string callNumber = string.Empty;
                     int imageCount = 0;
-                    String identifierAccessUrl = String.Empty;
+                    string identifierAccessUrl = string.Empty;
                     DateTime? addedDate = null;
-                    String volume = String.Empty;
-                    String note = String.Empty;
-                    String scanOperator = String.Empty;
-                    String scanDate = String.Empty;
-                    String curation;
-                    String externalStatus = String.Empty;
-                    String titleID = String.Empty;
-                    String year = String.Empty;
-                    String identifierBib = String.Empty;
-                    String licenseUrl = String.Empty;
-                    String rights = String.Empty;
-                    String dueDiligence = String.Empty;
-                    String possibleCopyrightStatus = String.Empty;
-                    String copyrightRegion = String.Empty;
-                    String copyrightComment = String.Empty;
-                    String copyrightEvidence = String.Empty;
-                    String copyrightEvidenceOperator = String.Empty;
-                    String copyrightEvidenceDate = String.Empty;
-                    String scanningInstitution = String.Empty;
-                    String rightsHolder = String.Empty;
-                    String itemDescription = String.Empty;
+                    string volume = string.Empty;
+                    string issue = string.Empty;
+                    string note = string.Empty;
+                    string scanOperator = string.Empty;
+                    string scanDate = string.Empty;
+                    string curation;
+                    string externalStatus = string.Empty;
+                    string titleID = string.Empty;
+                    string year = string.Empty;
+                    string identifierBib = string.Empty;
+                    string licenseUrl = string.Empty;
+                    string rights = string.Empty;
+                    string dueDiligence = string.Empty;
+                    string possibleCopyrightStatus = string.Empty;
+                    string copyrightRegion = string.Empty;
+                    string copyrightComment = string.Empty;
+                    string copyrightEvidence = string.Empty;
+                    string copyrightEvidenceOperator = string.Empty;
+                    string copyrightEvidenceDate = string.Empty;
+                    string scanningInstitution = string.Empty;
+                    string rightsHolder = string.Empty;
+                    string itemDescription = string.Empty;
                     string pageProgression = string.Empty;
+                    string virtualVolume = string.Empty;
+                    int? virtualTitleID = null;
+                    string summary = string.Empty;
+                    string genre = string.Empty;
+                    string pageRange = string.Empty;
 
                     XmlNode element = xml.SelectSingleNode("metadata/sponsor");
                     if (element != null) sponsor = element.InnerText;
@@ -640,6 +649,8 @@ namespace IAHarvest
                     if (element != null) identifierAccessUrl = element.InnerText;
                     element = xml.SelectSingleNode("metadata/volume");
                     if (element != null) volume = element.InnerText;
+                    element = xml.SelectSingleNode("metadata/issue");
+                    if (element != null) issue = element.InnerText;
                     element = xml.SelectSingleNode("metadata/notes");
                     if (element != null) note = element.InnerText;
                     element = xml.SelectSingleNode("metadata/operator");
@@ -692,14 +703,27 @@ namespace IAHarvest
                     if (element != null) itemDescription = element.InnerText;
                     element = xml.SelectSingleNode("metadata/page-progression");
                     if (element != null) pageProgression = element.InnerText;
+                    element = xml.SelectSingleNode("metadata/bhl_virtual_volume");
+                    if (element != null) virtualVolume = element.InnerText;
+                    element = xml.SelectSingleNode("metadata/bhl_virtual_titleid");
+                    if (element != null)
+                    {
+                        if (Int32.TryParse(element.InnerText, out int vTitleID)) virtualTitleID = vTitleID;
+                    }
+                    element = xml.SelectSingleNode("metadata/abstract");
+                    if (element != null) summary = element.InnerText;
+                    element = xml.SelectSingleNode("metadata/genre");
+                    if (element != null) genre = element.InnerText;
+                    element = xml.SelectSingleNode("metadata/page_range");
+                    if (element != null) pageRange = element.InnerText;
 
                     provider.IAItemUpdateMetadata(itemID, sponsor, sponsorDate, scanningCenter, 
-                        callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator,
+                        callNumber, imageCount, identifierAccessUrl, volume, issue, note, scanOperator,
                         scanDate, addedDate, externalStatus, titleID, year, identifierBib,
                         licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion,
                         copyrightComment, copyrightEvidence, copyrightEvidenceOperator,
                         copyrightEvidenceDate, scanningInstitution, rightsHolder, itemDescription,
-                        pageProgression);
+                        pageProgression, virtualVolume, virtualTitleID, summary, genre, pageRange);
 
                     // Read the identifier information
                     provider.IAItemIdentifierDeleteByItem(itemID);  // Delete existing, as we're doing a full replace
@@ -733,8 +757,8 @@ namespace IAHarvest
                 // No local file, so remove anything in the database
                 provider.IADCMetadataDeleteForItemAndSource(itemID, DC_SOURCE_META);
                 provider.IAItemSetDeleteByItem(itemID);
-                provider.IAItemUpdateMetadata(itemID, "", "", "", "", 0, "", "", "", "", "", null, 
-                    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+                provider.IAItemUpdateMetadata(itemID, "", "", "", "", 0, "", "", "", "", "", "", null, "",
+                    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", null, "", "", "");
             }
         }
 
@@ -875,6 +899,54 @@ namespace IAHarvest
                 // If we're not loading this item without a MARC file, throw an exception to indicate 
                 // the absence of a MARC file and halt processing of the item
                 if (!loadWithoutMarc) throw new MARCNotFoundException();
+            }
+        }
+
+        private void HarvestBHLCreatorData(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
+        {
+            LogMessage("Harvesting MARC data for " + iaIdentifier);
+
+            // If the file exists
+            if (file != null)
+            {
+                // If the file has changed since we last harvested
+                if (DateTime.Compare((DateTime)file.RemoteFileLastModifiedDate, (DateTime)(lastXmlDataHarvestDate ?? DateTime.Parse("1/1/1980"))) > 0)
+                {
+                    // Open the file and parse the data within it
+                    String localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
+                    XmlDocument xml = new();
+                    xml.Load(localFileName);
+
+                    // Delete any existing BHL Creator information
+                    provider.IABHLCreatorDeleteByItem(itemID);
+
+                    // Insert the new IA BHLCreator and identifier informatino
+                    XmlNodeList creators = xml.SelectNodes("//creators/creator");
+                    if (creators != null)
+                    {
+                        foreach (XmlNode creator in creators)
+                        {
+                            string name = (creator.SelectSingleNode("name") == null) ? string.Empty : creator.SelectSingleNode("name").InnerText;
+                            IABHLCreator bhlCreator = provider.IABHLCreatorInsertAuto(itemID, name);
+
+                            XmlNodeList identifiers = creator.SelectNodes("identifier");
+                            if (identifiers != null)
+                            {
+                                foreach (XmlNode identifier in identifiers)
+                                {
+                                    String type = (identifier.Attributes["type"] == null) ? string.Empty : identifier.Attributes["type"].Value;
+                                    String value = identifier.InnerText;
+                                    provider.IABHLCreatorIdentifierInsertAuto(bhlCreator.BHLCreatorID, type, value);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // No local file, so remove anything in the database
+                provider.IABHLCreatorDeleteByItem(itemID);
             }
         }
 

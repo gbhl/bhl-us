@@ -67,7 +67,20 @@ SELECT
 	[EndSeries],
 	[StartPart],
 	[EndPart],
-	[PageProgression]
+	[PageProgression],
+	[VirtualVolume],
+	[VirtualTitleID],
+	[Summary],
+	[SegmentGenreID],
+	[PublicationDetails],
+	[PublisherName],
+	[Issue],
+	[SegmentDate],
+	[StartPage],
+	[EndPage],
+	[Title],
+	[SortTitle],
+	[ContainerTitle]
 FROM	
 	[dbo].[Item]
 WHERE	
@@ -82,3 +95,5 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
+
+GO

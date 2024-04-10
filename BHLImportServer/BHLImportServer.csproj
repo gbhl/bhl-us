@@ -7,6 +7,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="BHLImportProvider.Creator.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\BHLImportCoreDAL\BHLImportCoreDAL.csproj">
       <Project>{BBD99822-F1A3-43C1-A242-686F807DBE33}</Project>
       <Name>BHLImportCoreDAL</Name>
