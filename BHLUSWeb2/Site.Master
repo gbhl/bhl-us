@@ -48,8 +48,8 @@
 </head>
 
 <body id="<%= bodyID %>">
-    <script type="module" src="/js/cookieconsent-config.js"></script>
-    <script type="text/plain" data-category="necessary">
+    <script type="module" src="/js/cookieconsent-config.js?v=2"></script>
+    <script type="text/javascript" data-category="necessary">
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('consent', 'default', {

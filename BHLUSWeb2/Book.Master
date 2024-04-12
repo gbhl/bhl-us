@@ -47,7 +47,7 @@
 </head>
 
 <body id="book-master" class="book-master">
-    <script type="module" src="/js/cookieconsent-config.js"></script>
+    <script type="module" src="/js/cookieconsent-config.js?v=2"></script>
     <noscript>
         <div id="noscript-warning">BHL works best with JavaScript enabled</div>
     </noscript>
@@ -113,7 +113,7 @@
         <script type="text/plain" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js" data-category="analytics" data-service="altmetric"></script>
     </form>
 
-    <script type="text/plain" data-category="necessary">
+    <script type="text/javascript" data-category="necessary">
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('consent', 'default', {

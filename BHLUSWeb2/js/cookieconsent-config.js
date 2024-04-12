@@ -1,7 +1,7 @@
 import './cookieconsent.umd.js';
 
 CookieConsent.run({
-    disablePageInteraction: true,
+    disablePageInteraction: false,
     revision: 0,
     cookie: {
         expiresAfterDays: acceptType => { return acceptType === 'all' ? 365.25 : 182; }
