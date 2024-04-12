@@ -141,6 +141,8 @@ namespace MOBOT.BHL.AdminWeb.Services
                 record.Add("Rights", item.Rights);
                 record.Add("DueDiligence", item.DueDiligence);
                 record.Add("CopyrightStatus", item.PossibleCopyrightStatus);
+                record.Add("VirtualTitleID", item.VirtualTitleID);
+                record.Add("VirtualVolume", item.VirtualVolume);
                 record.Add("IACreated", item.IAAddedDate.ToString());
                 record.Add("IAScanned", item.ScanDate);
                 record.Add("IALastModified", item.IADateStamp.ToString());

@@ -272,6 +272,8 @@ SELECT TOP (@NumRows)
 		,ISNULL(i.Rights, '') AS Rights
 		,ISNULL(i.DueDiligence, '') AS DueDiligence
 		,ISNULL(i.PossibleCopyrightStatus, '') AS PossibleCopyrightStatus
+		,i.VirtualTitleID
+		,i.VirtualVolume
 		,i.IAAddedDate
 		,ISNULL(
 			CASE 
@@ -324,6 +326,8 @@ SELECT	ItemID
 		,Rights
 		,DueDiligence
 		,PossibleCopyrightStatus
+		,VirtualTitleID
+		,VirtualVolume
 		,IAAddedDate
 		,ScanDate
 		,IADateStamp
