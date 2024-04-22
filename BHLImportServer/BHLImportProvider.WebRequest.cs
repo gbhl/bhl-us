@@ -1,39 +1,14 @@
 using System;
-using System.Net;
-using System.Text;
 using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Xml;
-using System.Xml.Serialization;
-using MOBOT.BHLImport.DataObjects;
 
 namespace MOBOT.BHLImport.Server
 {
     public partial class BHLImportProvider
     {
-        public OAIPMHtype GetOAIData(string url)
-        {
-            StreamReader reader = null;
-
-            try
-            {
-                OAIPMHtype oai = null;
-                HttpWebResponse resp = this.HttpGet(url);
-
-                if (resp != null)
-                {
-                    reader = new StreamReader((System.IO.Stream)resp.GetResponseStream());
-
-                    XmlSerializer serializer = new XmlSerializer(typeof(OAIPMHtype));
-                    oai = (OAIPMHtype)serializer.Deserialize(reader);
-                }
-                return oai;
-            }
-            finally
-            {
-                reader?.Dispose();
-            }
-        }
-
         /// <summary>
         /// Return the data at the specified Url in an XML document
         /// </summary>
@@ -58,15 +33,16 @@ namespace MOBOT.BHLImport.Server
             try
             {
                 XmlDocument xml = null;
-                HttpWebResponse resp = this.HttpGet(url, modifiedSince, out lastModified);
+                (HttpResponseMessage resp, DateTime? lastMod) = Task.Run(() => HttpGetAsync(url, modifiedSince)).Result;
 
                 if (resp != null)
                 {
-                    reader = new StreamReader((System.IO.Stream)resp.GetResponseStream());
+                    reader = new StreamReader(resp.Content.ReadAsStreamAsync().Result);
 
                     xml = new XmlDocument();
                     xml.Load(reader);
                 }
+                lastModified = lastMod;
                 return xml;
             }
             finally
@@ -98,12 +74,13 @@ namespace MOBOT.BHLImport.Server
             BinaryReader reader = null;
             try
             {
-                HttpWebResponse resp = this.HttpGet(url, modifiedSince, out lastModified);
+                (HttpResponseMessage resp, DateTime ? lastMod) = Task.Run(() => HttpGetAsync(url, modifiedSince)).Result;
 
                 if (resp != null)
                 {
-                    reader = new BinaryReader(resp.GetResponseStream());
+                    reader = new BinaryReader(resp.Content.ReadAsStreamAsync().Result);
                 }
+                lastModified = lastMod;
                 return reader;
             }
             finally
@@ -112,39 +89,30 @@ namespace MOBOT.BHLImport.Server
             }
         }
 
-        private HttpWebResponse HttpGet(string url)
+        static async Task<(HttpResponseMessage, DateTime?)> HttpGetAsync(string url, DateTime? modifiedSince)
         {
-            return this.HttpGet(url, null, out _);
-
-            //StreamReader reader = new StreamReader((System.IO.Stream)resp.GetResponseStream());
-            //StringBuilder sb = new StringBuilder(reader.ReadToEnd());
-            //return sb.ToString();
-        }
-
-        private HttpWebResponse HttpGet(string url, DateTime? modifiedSince, out DateTime? lastModified)
-        {
-            try
+            using (HttpClient client = new HttpClient())
             {
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
-                req.Method = "GET";
-                req.Timeout = 1800000;    // 30 minutes
-                if (modifiedSince != null) req.IfModifiedSince = (DateTime)modifiedSince;
-                HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
-                lastModified = resp.LastModified;
-                return resp;
-            }
-            catch (WebException wex)
-            {
-                if (wex.Response != null)
+                client.Timeout = TimeSpan.FromMinutes(30);
+                if (modifiedSince != null)
+                    client.DefaultRequestHeaders.IfModifiedSince = (DateTimeOffset)modifiedSince;
+
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    HttpWebResponse errResp = wex.Response as HttpWebResponse;
-                    if (errResp.StatusCode == HttpStatusCode.NotModified)
-                    {
-                        lastModified = modifiedSince;
-                        return null;
-                    }
+                    DateTime? lastModified = (DateTime?)null;
+                    if (response.Content.Headers.LastModified != null) lastModified = response.Content.Headers.LastModified.Value.DateTime;
+                    return (response, lastModified);
                 }
-                throw;
+                else if (response.StatusCode == HttpStatusCode.NotModified)
+                {
+                    return (null, modifiedSince);
+                }
+                else
+                {
+                    throw new HttpRequestException($"Request '{url}' failed with status code {response.StatusCode}");
+                }
             }
         }
     }
