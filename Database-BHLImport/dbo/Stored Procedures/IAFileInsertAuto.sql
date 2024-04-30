@@ -1,15 +1,9 @@
-﻿
--- IAFileInsertAuto PROCEDURE
--- Generated 8/23/2010 3:08:23 PM
--- Do not modify the contents of this procedure.
--- Insert Procedure for IAFile
-
-CREATE PROCEDURE IAFileInsertAuto
+﻿CREATE PROCEDURE dbo.IAFileInsertAuto
 
 @FileID INT OUTPUT,
 @ItemID INT,
-@RemoteFileName NVARCHAR(100),
-@LocalFileName NVARCHAR(100),
+@RemoteFileName NVARCHAR(250),
+@LocalFileName NVARCHAR(250),
 @Source NVARCHAR(20),
 @Format NVARCHAR(50),
 @Original NVARCHAR(50),
@@ -20,8 +14,7 @@ AS
 SET NOCOUNT ON
 
 INSERT INTO [dbo].[IAFile]
-(
-	[ItemID],
+( 	[ItemID],
 	[RemoteFileName],
 	[LocalFileName],
 	[Source],
@@ -29,11 +22,9 @@ INSERT INTO [dbo].[IAFile]
 	[Original],
 	[RemoteFileLastModifiedDate],
 	[CreatedDate],
-	[LastModifiedDate]
-)
+	[LastModifiedDate] )
 VALUES
-(
-	@ItemID,
+( 	@ItemID,
 	@RemoteFileName,
 	@LocalFileName,
 	@Source,
@@ -41,20 +32,18 @@ VALUES
 	@Original,
 	@RemoteFileLastModifiedDate,
 	getdate(),
-	getdate()
-)
+	getdate() )
 
 SET @FileID = Scope_Identity()
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure IAFileInsertAuto. No information was inserted as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.IAFileInsertAuto. No information was inserted as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[FileID],
 		[ItemID],
 		[RemoteFileName],
@@ -65,12 +54,10 @@ ELSE BEGIN
 		[RemoteFileLastModifiedDate],
 		[CreatedDate],
 		[LastModifiedDate]	
-
 	FROM [dbo].[IAFile]
-	
 	WHERE
 		[FileID] = @FileID
 	
 	RETURN -- insert successful
 END
-
+GO

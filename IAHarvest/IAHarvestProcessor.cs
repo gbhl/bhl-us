@@ -5,6 +5,7 @@ using MOBOT.BHLImport.Server;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Net.Mail;
 using System.Text;
 using System.Xml;
@@ -526,7 +527,7 @@ namespace IAHarvest
                         provider.SaveIAFileWithDownloadInfo(newFile.FileID, item.IAIdentifier + configParms.ScandataExtension, DateTime.Now);
                     }
                 }
-                catch (System.Net.WebException)
+                catch (Exception)
                 {
                     // Do nothing... apparently the file we're looking for doesn't exist
                 }

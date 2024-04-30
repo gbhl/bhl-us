@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 2:13:50 PM
+// Generated 4/30/2024 11:58:02 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class IAFileDAL is based upon dbo.IAFile.
@@ -191,8 +191,8 @@ namespace MOBOT.BHLImport.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAFileInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("FileID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
-					CustomSqlHelper.CreateInputParameter("RemoteFileName", SqlDbType.NVarChar, 100, false, remoteFileName),
-					CustomSqlHelper.CreateInputParameter("LocalFileName", SqlDbType.NVarChar, 100, false, localFileName),
+					CustomSqlHelper.CreateInputParameter("RemoteFileName", SqlDbType.NVarChar, 250, false, remoteFileName),
+					CustomSqlHelper.CreateInputParameter("LocalFileName", SqlDbType.NVarChar, 250, false, localFileName),
 					CustomSqlHelper.CreateInputParameter("Source", SqlDbType.NVarChar, 20, false, source),
 					CustomSqlHelper.CreateInputParameter("Format", SqlDbType.NVarChar, 50, false, format),
 					CustomSqlHelper.CreateInputParameter("Original", SqlDbType.NVarChar, 50, false, original),
@@ -380,8 +380,8 @@ namespace MOBOT.BHLImport.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAFileUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("FileID", SqlDbType.Int, null, false, fileID),
 					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
-					CustomSqlHelper.CreateInputParameter("RemoteFileName", SqlDbType.NVarChar, 100, false, remoteFileName),
-					CustomSqlHelper.CreateInputParameter("LocalFileName", SqlDbType.NVarChar, 100, false, localFileName),
+					CustomSqlHelper.CreateInputParameter("RemoteFileName", SqlDbType.NVarChar, 250, false, remoteFileName),
+					CustomSqlHelper.CreateInputParameter("LocalFileName", SqlDbType.NVarChar, 250, false, localFileName),
 					CustomSqlHelper.CreateInputParameter("Source", SqlDbType.NVarChar, 20, false, source),
 					CustomSqlHelper.CreateInputParameter("Format", SqlDbType.NVarChar, 50, false, format),
 					CustomSqlHelper.CreateInputParameter("Original", SqlDbType.NVarChar, 50, false, original),

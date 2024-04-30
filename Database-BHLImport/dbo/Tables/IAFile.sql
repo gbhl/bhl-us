@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [dbo].[IAFile] (
     [FileID]                     INT            IDENTITY (1, 1) NOT NULL,
     [ItemID]                     INT            NOT NULL,
-    [RemoteFileName]             NVARCHAR (100) CONSTRAINT [DF_File_RemoteFileName] DEFAULT ('') NOT NULL,
-    [LocalFileName]              NVARCHAR (100) CONSTRAINT [DF_File_LocalFileName] DEFAULT ('') NOT NULL,
+    [RemoteFileName]             NVARCHAR (250) CONSTRAINT [DF_File_RemoteFileName] DEFAULT ('') NOT NULL,
+    [LocalFileName]              NVARCHAR (250) CONSTRAINT [DF_File_LocalFileName] DEFAULT ('') NOT NULL,
     [Source]                     NVARCHAR (20)  CONSTRAINT [DF_File_Source] DEFAULT ('') NOT NULL,
     [Format]                     NVARCHAR (50)  CONSTRAINT [DF_File_Format] DEFAULT ('') NOT NULL,
     [Original]                   NVARCHAR (50)  CONSTRAINT [DF_File_Original] DEFAULT ('') NOT NULL,

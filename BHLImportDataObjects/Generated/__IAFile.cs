@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 2:13:50 PM
+// Generated 4/30/2024 11:58:02 AM
 // Do not modify the contents of this code file.
 // This abstract class __IAFile is based upon dbo.IAFile.
 
@@ -223,9 +223,9 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: RemoteFileName;
-		/// DBMS data type: nvarchar(100);
+		/// DBMS data type: nvarchar(250);
 		/// </summary>
-		[ColumnDefinition("RemoteFileName", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=100)]
+		[ColumnDefinition("RemoteFileName", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=250)]
 		public string RemoteFileName
 		{
 			get
@@ -234,7 +234,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 100);
+				if (value != null) value = CalibrateValue(value, 250);
 				if (_RemoteFileName != value)
 				{
 					_RemoteFileName = value;
@@ -251,9 +251,9 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: LocalFileName;
-		/// DBMS data type: nvarchar(100);
+		/// DBMS data type: nvarchar(250);
 		/// </summary>
-		[ColumnDefinition("LocalFileName", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=100)]
+		[ColumnDefinition("LocalFileName", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=250)]
 		public string LocalFileName
 		{
 			get
@@ -262,7 +262,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 100);
+				if (value != null) value = CalibrateValue(value, 250);
 				if (_LocalFileName != value)
 				{
 					_LocalFileName = value;
