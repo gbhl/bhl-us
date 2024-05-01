@@ -81,7 +81,8 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
 
         public string GetFileFormat(string savedFileName)
         {
-            return new TextImportTool().GetFileFormat(savedFileName);
+            TextImportTool tiTool = new TextImportTool(savedFileName);
+            return tiTool.GetFileFormat();
         }
 
         public string GetFileFormatValue(string fileFormatKey)

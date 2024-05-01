@@ -156,15 +156,10 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             List<DataObjects.Page> dbPages = new TextImportFileModel().GetItemPages(itemID);
             List<DataObjects.Page> displayPages = new List<DataObjects.Page>();
 
+            TextImportTool tiTool = new TextImportTool(Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], fileName));
             foreach(DataObjects.Page page in dbPages)
             {
-                if (new TextImportTool().TextAvailable(
-                        Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], fileName), 
-                        page.SequenceOrder.ToString())
-                    )
-                {
-                    displayPages.Add(page);
-                }
+                if (tiTool.TextAvailable(page.SequenceOrder.ToString())) displayPages.Add(page);
             }
 
             return Json(displayPages, JsonRequestBehavior.AllowGet);
@@ -197,7 +192,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [HttpGet]
         public ActionResult GetNewPageText(string fileName, string seqNo)
         {
-            string pageText = HttpUtility.HtmlEncode(new TextImportTool().GetText(Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], fileName), seqNo)).Replace("\n", "<br/>");
+            TextImportTool tiTool = new TextImportTool(Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], fileName));
+            string pageText = HttpUtility.HtmlEncode(tiTool.GetText(seqNo)).Replace("\n", "<br/>");
             return Content(pageText);
         }
     }

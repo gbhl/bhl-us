@@ -84,7 +84,6 @@ namespace BHL.TextImportProcessor
                             foreach (TextImportBatchFile batchFile in batchFiles)
                             {
                                 string textImportFileLocalPath = string.Empty;
-                                TextImportTool importTool = new TextImportTool();
 
                                 try
                                 {
@@ -97,6 +96,7 @@ namespace BHL.TextImportProcessor
                                     // Get the text import file
                                     string textImportFilePath = string.Format("{0}{1}", configParms.TextImportFilePath, batchFile.Filename);
                                     textImportFileLocalPath = string.Format("{0}{1}", configParms.TextImportLocalFilePath, batchFile.Filename);
+                                    TextImportTool importTool = new TextImportTool(textImportFileLocalPath);
                                     WebClient wc = new WebClient();
                                     wc.Encoding = Encoding.UTF8;
 
@@ -129,14 +129,15 @@ namespace BHL.TextImportProcessor
                                     File.AppendAllText(textImportFileLocalPath, importFileContents, Encoding.UTF8);
 
                                     // Validate the file
-                                    int filePageCount = importTool.PageCount(textImportFileLocalPath);
+                                    int filePageCount = importTool.PageCount();
                                     if (filePageCount == 0) throw new Exception(string.Format("No pages found in {0}", batchFile.Filename));
 
-                                    string fileFormat = importTool.GetFileFormat(textImportFileLocalPath);
+                                    string fileFormat = importTool.GetFileFormat();
                                     if (fileFormat == _fileFormatBHL)
                                     {
                                         // Add sequence numbers to the file, if necessary.  Throws error if Page ID not part of in Item.
-                                        importTool.AddSequenceNumbers(textImportFileLocalPath);
+                                        importTool.AddSequenceNumbers();
+                                        importTool = new TextImportTool(textImportFileLocalPath);   // Reload file after the update
                                     }
                                     else if (filePageCount != pages.Count)
                                     {
@@ -147,10 +148,10 @@ namespace BHL.TextImportProcessor
                                     // Parse the transcriptions from the file
                                     foreach (MOBOT.BHL.DataObjects.PageSummaryView page in pages)
                                     {
-                                        if (importTool.TextAvailable(textImportFileLocalPath, page.SequenceOrder.ToString()))
+                                        if (importTool.TextAvailable(page.SequenceOrder.ToString()))
                                         {
                                             // Get the new text for the page from the text import file
-                                            string pageText = importTool.GetText(textImportFileLocalPath, page.SequenceOrder.ToString());
+                                            string pageText = importTool.GetText(page.SequenceOrder.ToString());
 
                                             // Write new text file to the correct item path.
                                             // Only write files to final destination if not in debug mode.

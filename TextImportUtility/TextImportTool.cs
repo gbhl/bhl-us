@@ -11,26 +11,34 @@ namespace BHL.TextImportUtility
 {
     public class TextImportTool
     {
-        public string GetFileFormat(string savedFileName)
+        string _fileName = string.Empty;
+        string _fileContent = string.Empty;
+
+        public TextImportTool(string fileName)
+        {
+            _fileName = fileName;
+            _fileContent = File.ReadAllText(fileName);
+        }
+
+        public string GetFileFormat()
         {
             string fileFormat;
-            string fileContent = File.ReadAllText(savedFileName);
 
-            if (fileContent.Contains("<div class=\"page-content\">"))
+            if (_fileContent.Contains("<div class=\"page-content\">"))
             {
                 fileFormat = "ftp";
             }
-            else if (fileContent.Contains("occurrenceRemarks"))
+            else if (_fileContent.Contains("occurrenceRemarks"))
             {
                 fileFormat = "dv";
             }
-            else if (fileContent.Contains("tl1_text"))
+            else if (_fileContent.Contains("tl1_text"))
             {
                 fileFormat = "stc";
             }
-            else if (fileContent.ToLower().Contains("pageid") && 
-                    fileContent.ToLower().Contains("sequencenumber") && 
-                    fileContent.ToLower().Contains("text"))
+            else if (_fileContent.ToLower().Contains("pageid") &&
+                    _fileContent.ToLower().Contains("sequencenumber") &&
+                    _fileContent.ToLower().Contains("text"))
             {
                 fileFormat = "bhlcsv";
             }
@@ -42,52 +50,52 @@ namespace BHL.TextImportUtility
             return fileFormat;
         }
 
-        public int PageCount(string fileName, string fileFormat = "")
+        public int PageCount(string fileFormat = "")
         {
             Dictionary<int, string> fileContents = new Dictionary<int, string>();
 
-            if (fileFormat == "") fileFormat = GetFileFormat(fileName);
+            if (fileFormat == "") fileFormat = GetFileFormat();
             switch (fileFormat)
             {
                 case "ftp":
-                    fileContents = ParseFTP(fileName, false);
+                    fileContents = ParseFTP(false, false);
                     break;
                 case "dv":
-                    fileContents = ParseDV(fileName, false);
+                    fileContents = ParseDV(false);
                     break;
                 case "stc":
-                    fileContents = ParseSTC(fileName, false);
+                    fileContents = ParseSTC(false);
                     break;
                 case "bhlcsv":
-                    fileContents = ParseBHLCSV(fileName, false);
+                    fileContents = ParseBHLCSV(false);
                     break;
             }
 
             return fileContents.Count;
         }
 
-        public string GetText(string fileName, string seqNo, string fileFormat = "")
+        public string GetText(string seqNo, string fileFormat = "")
         {
             string fileText;
             Dictionary<int, string> fileContents = new Dictionary<int, string>();
 
             if (!Int32.TryParse(seqNo, out int sequence)) throw new Exception(string.Format("Invalid sequence number: {0}", seqNo));
 
-            if (fileFormat == "") fileFormat = GetFileFormat(fileName);
+            if (fileFormat == "") fileFormat = GetFileFormat();
 
             switch (fileFormat)
             {
                 case "ftp":
-                    fileContents = ParseFTP(fileName, true);
+                    fileContents = ParseFTP(true, true);
                     break;
                 case "dv":
-                    fileContents = ParseDV(fileName, true);
+                    fileContents = ParseDV(true);
                     break;
                 case "stc":
-                    fileContents = ParseSTC(fileName, true);
+                    fileContents = ParseSTC(true);
                     break;
                 case "bhlcsv":
-                    fileContents = ParseBHLCSV(fileName, true);
+                    fileContents = ParseBHLCSV(true);
                     break;
             }
 
@@ -99,27 +107,27 @@ namespace BHL.TextImportUtility
             return fileText;
         }
 
-        public bool TextAvailable(string fileName, string seqNo, string fileFormat = "")
+        public bool TextAvailable(string seqNo, string fileFormat = "")
         {
             Dictionary<int, string> fileContents = new Dictionary<int, string>();
 
             if (!Int32.TryParse(seqNo, out int sequence)) throw new Exception(string.Format("Invalid sequence number: {0}", seqNo));
 
-            if (fileFormat == "") fileFormat = GetFileFormat(fileName);
+            if (fileFormat == "") fileFormat = GetFileFormat();
 
             switch (fileFormat)
             {
                 case "ftp":
-                    fileContents = ParseFTP(fileName, false);
+                    fileContents = ParseFTP(false, false);
                     break;
                 case "dv":
-                    fileContents = ParseDV(fileName, false);
+                    fileContents = ParseDV(false);
                     break;
                 case "stc":
-                    fileContents = ParseSTC(fileName, false);
+                    fileContents = ParseSTC(false);
                     break;
                 case "bhlcsv":
-                    fileContents = ParseBHLCSV(fileName, false);
+                    fileContents = ParseBHLCSV(false);
                     break;
             }
 
@@ -129,42 +137,70 @@ namespace BHL.TextImportUtility
         /// <summary>
         /// Parse the transcription contents from a From The Page output file
         /// </summary>
-        /// <param name="fileName"></param>
         /// <returns></returns>
-        private Dictionary<int, string> ParseFTP(string fileName, bool clean)
+        private Dictionary<int, string> ParseFTP(bool includeContent, bool clean)
         {
             Dictionary<int, string> contents = new Dictionary<int, string>();
 
-            string fileContents = File.ReadAllText(fileName);
+            string fileContents = _fileContent;
 
             int sequenceNumber = 1;
-            while (fileContents.IndexOf("<div class=\"page-content\">") >= 0)
+            string pattern = @"<div class=""page-content"">([\s\S]*?)</div>";
+            MatchCollection matches = Regex.Matches(fileContents, pattern);
+            foreach (Match match in matches)
             {
-                int pageStart = fileContents.IndexOf("<div class=\"page-content\">") + "<div class=\"page-content\">".Length;
-                int pageEnd = fileContents.IndexOf("</div>", pageStart);
-
-                string pageText = fileContents.Substring(pageStart, pageEnd - pageStart);
-
-                pageText = pageText.Replace("<br>", "").Replace("<br/>", "").Replace("<p>", "").Replace("</p>", "").Replace("&amp;", "&");
-                if (clean) pageText = NormalizeMarkup(pageText);
+                string pageText = string.Empty;
+                if (includeContent)
+                {
+                    pageText = match.Groups[1].Value;
+                    pageText = pageText.Replace("<br>", "").Replace("<br/>", "").Replace("<p>", "").Replace("</p>", "").Replace("&amp;", "&");
+                    if (clean) pageText = NormalizeMarkup(pageText);
+                }
 
                 contents.Add(sequenceNumber++, pageText);
-                fileContents = fileContents.Substring(pageEnd + "</div>".Length);
             }
 
             return contents;
+
+            /*
+            int sequenceNumber = 1;
+            string pageStartTag = "<div class=\"page-content\">";
+            string pageEndTag = "</div>";
+            int pageStartTagLength = pageStartTag.Length;
+            int pageEndTagLength = pageEndTag.Length;
+            while (fileContents.IndexOf(pageStartTag) >= 0)
+            {
+                int pageStart = fileContents.IndexOf(pageStartTag) + pageStartTagLength;
+                int pageEnd = fileContents.IndexOf(pageEndTag, pageStart);
+
+                string pageText = string.Empty;
+                if (includeContent)
+                {
+                    pageText = fileContents.Substring(pageStart, pageEnd - pageStart);
+                    pageText = pageText.Replace("<br>", "").Replace("<br/>", "").Replace("<p>", "").Replace("</p>", "").Replace("&amp;", "&");
+                    if (clean) pageText = NormalizeMarkup(pageText);
+                }
+
+                contents.Add(sequenceNumber++, pageText);
+                fileContents = fileContents.Substring(pageEnd + pageEndTagLength);
+            }
+
+            return contents;
+            */
         }
 
         /// <summary>
         /// Parse the transcription contents from a DigiVol output file
         /// </summary>
-        /// <param name="fileName"></param>
         /// <returns></returns>
-        private Dictionary<int, string> ParseDV(string fileName, bool clean)
+        private Dictionary<int, string> ParseDV(bool clean)
         {
             Dictionary<int, string> contents = new Dictionary<int, string>();
 
-            using (StreamReader reader = File.OpenText(fileName))
+            byte[] contentArray = System.Text.Encoding.UTF8.GetBytes(_fileContent);
+            MemoryStream contentStream = new MemoryStream(contentArray);
+
+            using (StreamReader reader = new StreamReader(contentStream))
             {
                 var config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
                 {
@@ -208,13 +244,15 @@ namespace BHL.TextImportUtility
         /// <summary>
         /// Parse the transcription contents from a Smithsonian Transcription Center output file
         /// </summary>
-        /// <param name="fileName"></param>
         /// <returns></returns>
-        private Dictionary<int, string> ParseSTC(string fileName, bool clean)
+        private Dictionary<int, string> ParseSTC(bool clean)
         {
             Dictionary<int, string> contents = new Dictionary<int, string>();
 
-            using (StreamReader reader = File.OpenText(fileName))
+            byte[] contentArray = System.Text.Encoding.UTF8.GetBytes(_fileContent);
+            MemoryStream contentStream = new MemoryStream(contentArray);
+
+            using (StreamReader reader = new StreamReader(contentStream))
             {
                 var config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
                 {
@@ -245,13 +283,15 @@ namespace BHL.TextImportUtility
         /// <summary>
         /// Parse the transcription contents from a file that uses the generic BHL CSV format
         /// </summary>
-        /// <param name="fileName"></param>
         /// <returns></returns>
-        private Dictionary<int, string> ParseBHLCSV(string fileName, bool clean)
+        private Dictionary<int, string> ParseBHLCSV(bool clean)
         {
             Dictionary<int, string> contents = new Dictionary<int, string>();
 
-            using (StreamReader reader = File.OpenText(fileName))
+            byte[] contentArray = System.Text.Encoding.UTF8.GetBytes(_fileContent);
+            MemoryStream contentStream = new MemoryStream(contentArray);
+
+            using (StreamReader reader = new StreamReader(contentStream))
             {
                 var config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
                 {
@@ -268,8 +308,8 @@ namespace BHL.TextImportUtility
                 var records = csv.GetRecords(dvRecord);
 
                 // Get the pages for the item from the database
-                string itemType = Path.GetFileNameWithoutExtension(fileName).Substring(15, 1);  // Get the item type indicator from the filename
-                string entityID = Path.GetFileNameWithoutExtension(fileName).Substring(17);   // ignore the info added to the filename
+                string itemType = Path.GetFileNameWithoutExtension(_fileName).Substring(15, 1);  // Get the item type indicator from the filename
+                string entityID = Path.GetFileNameWithoutExtension(_fileName).Substring(17);   // ignore the info added to the filename
                 int itemID;
                 if (itemType.ToUpper() == "S")
                 {
@@ -486,15 +526,15 @@ namespace BHL.TextImportUtility
         /// </summary>
         /// <remarks>Only applies to BHL CSV files.</remarks>
         /// <param name="fileName"></param>
-        public void AddSequenceNumbers(string fileName)
+        public void AddSequenceNumbers()
         {
             // Make sure this is a BHL CSV file.  If not, do nothing.
-            if (this.GetFileFormat(fileName) == "bhlcsv")
+            if (this.GetFileFormat() == "bhlcsv")
             {
                 // Parse the records in the file, and add Sequence Numbers
                 var writeRecords = new List<object>();
 
-                using (StreamReader reader = File.OpenText(fileName))
+                using (StreamReader reader = File.OpenText(_fileName))
                 {
                     var config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
                     {
@@ -511,8 +551,8 @@ namespace BHL.TextImportUtility
                     var readRecords = csv.GetRecords(dvRecord);
 
                     // Get the pages for the item from the database
-                    string itemType = Path.GetFileNameWithoutExtension(fileName).Substring(15, 1);  // Get the item type indicator from the filename
-                    string entityID = Path.GetFileNameWithoutExtension(fileName).Substring(17);   // ignore the info added to the filename
+                    string itemType = Path.GetFileNameWithoutExtension(_fileName).Substring(15, 1);  // Get the item type indicator from the filename
+                    string entityID = Path.GetFileNameWithoutExtension(_fileName).Substring(17);   // ignore the info added to the filename
                     int itemID;
                     if (itemType.ToUpper() == "S")
                     {
@@ -558,7 +598,7 @@ namespace BHL.TextImportUtility
                 }
 
                 // Write the updated records to the file
-                using (var writer = new StreamWriter(fileName))
+                using (var writer = new StreamWriter(_fileName))
                 using (var csv = new CsvWriter(writer, System.Globalization.CultureInfo.InvariantCulture))
                 {
                     csv.WriteRecords(writeRecords);
