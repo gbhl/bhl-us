@@ -1,6 +1,8 @@
 ﻿using BHL.Search;
 using MOBOT.BHL.API.BHLApiDataObjects2;
+using MOBOT.BHL.API.BHLApiDataObjects3;
 using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.DataObjects.Enum;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,6 +14,7 @@ namespace MOBOT.BHL.Web2
     {
 
         protected Segment BhlSegment { get; set; }
+        protected DataObjects.Institution RightsHolder { get; set; }
         protected int IsVirtual { get; set; } = 0;
         protected int HasLocalContent { get; set; } = 1;
         protected int SegmentID { get; set; }
@@ -62,6 +65,17 @@ namespace MOBOT.BHL.Web2
                 BhlSegment.IdentifierList = bhlProvider.ItemIdentifierSelectForDisplayBySegmentID(SegmentID);
                 InstitutionNameComparer comp = new InstitutionNameComparer();
                 BhlSegment.ContributorList.Sort(comp);
+
+                // Get the rights holder of the container item
+                if (BhlSegment.BookID != null)
+                {
+                    DataObjects.Book book = bhlProvider.BookSelectAuto((int)BhlSegment.BookID);
+                    List<DataObjects.Institution> institutions = bhlProvider.InstitutionSelectByItemID(book.ItemID);
+                    foreach(DataObjects.Institution institution in institutions)
+                    {
+                        if (institution.InstitutionRoleName == "Rights Holder") RightsHolder = institution;
+                    }
+                }
 
                 // Add Google Scholar metadata to the page headers
                 List<KeyValuePair<string, string>> tags = bhlProvider.GetGoogleScholarMetadataForSegment(SegmentID, ConfigurationManager.AppSettings["PartPageUrl"]);

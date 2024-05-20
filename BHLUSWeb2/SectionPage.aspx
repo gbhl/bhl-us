@@ -127,30 +127,6 @@
                     }%>
                 </p>
             <% } %>
-            <% if (!String.IsNullOrEmpty(BhlSegment.RightsStatus)) { %>
-            <div class="segmentdetails"><h3>Rights Status</h3> <p><%: BhlSegment.RightsStatus%></p></div> 
-            <% } %>
-            <% if (!String.IsNullOrEmpty(BhlSegment.RightsStatement)) { %>
-            <div class="segmentdetails"><h3>Rights Statement</h3> <p>
-                <%if (System.Text.RegularExpressions.Regex.IsMatch(BhlSegment.RightsStatement, "^(https?|ftp|file)://.+$")) {%>
-                    <a target="_blank" rel="noopener noreferrer" href="<%: BhlSegment.RightsStatement%>"><%: BhlSegment.RightsStatement%></a>
-                <% } else {%>
-                    <%: BhlSegment.RightsStatement%>
-                <% } %>
-            </p></div>
-            <% } %>
-            <% if (!String.IsNullOrEmpty(BhlSegment.LicenseName)) { %>
-            <div class="segmentdetails"><h3>Rights License Name</h3><p><%: BhlSegment.LicenseName%></p></div>
-            <% } %>
-            <% if (!String.IsNullOrEmpty(BhlSegment.LicenseUrl)) { %>
-            <div class="segmentdetails"><h3>Rights License URL</h3><p>
-                <%if (System.Text.RegularExpressions.Regex.IsMatch(BhlSegment.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
-                    <a target="_blank" rel="noopener noreferrer" href="<%: BhlSegment.LicenseUrl%>"><%: BhlSegment.LicenseUrl%></a>
-                <% } else {%>
-                    <%: BhlSegment.LicenseUrl%>
-                <% } %>
-            </p></div>
-            <% } %>
             <p>&nbsp;</p>
             <p>
                 <a class="button" href="/handlers/modsdownload.ashx?pid=<%: BhlSegment.SegmentID %>">Download MODS</a>
@@ -164,7 +140,7 @@
         <div class="partlink js-hide">
             <h4 class="title">
                     <!--<a class="expand no-js-hide" title="expand or collapse volume description">expand</a>-->
-                    <span class="text"><%: BhlSegment.GenreName%> links</span>
+                    <span class="text"><%: BhlSegment.GenreName%> access</span>
             </h4>
             <div class="body" style="border-bottom: 1px solid #C5CED3; padding: 20px 0 0;">
                 <div class="partlinks">
@@ -181,6 +157,48 @@
                     { %>
                         <a href="<%: BhlSegment.DownloadUrl %>">Download  <%: BhlSegment.GenreName%></a> <br />
                     <% } %>
+                </div>
+                <div class="volume"">
+                    <div class="copyright">
+                        <h5>Copyright &amp; Usage:</h5>
+                        <p>
+                            <% if (!String.IsNullOrEmpty(BhlSegment.LicenseName)) { %>
+                            Rights License Name: <%: BhlSegment.LicenseName%><br />
+                            <% } %>
+                            <% if (!String.IsNullOrEmpty(BhlSegment.LicenseUrl)) { %>
+                            Rights License URL:
+                                <%if (System.Text.RegularExpressions.Regex.IsMatch(BhlSegment.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
+                                    <a target="_blank" rel="noopener noreferrer" href="<%: BhlSegment.LicenseUrl%>"><%: BhlSegment.LicenseUrl%></a>
+                                <% } else {%>
+                                    <%: BhlSegment.LicenseUrl%>
+                                <% } %>
+                            <br />
+                            <% } %>
+                            <% if (!String.IsNullOrEmpty(BhlSegment.RightsStatus)) { %>
+                            Rights Status: <%: BhlSegment.RightsStatus%><br/> 
+                            <% } %>
+                            <% if (!String.IsNullOrEmpty(BhlSegment.RightsStatement)) { %>
+                            Rights Statement: 
+                                <%if (System.Text.RegularExpressions.Regex.IsMatch(BhlSegment.RightsStatement, "^(https?|ftp|file)://.+$")) {%>
+                                    <a target="_blank" rel="noopener noreferrer" href="<%: BhlSegment.RightsStatement%>"><%: BhlSegment.RightsStatement%></a>
+                                <% } else {%>
+                                    <%: BhlSegment.RightsStatement%>
+                                <% } %>
+                            <br />
+                            <% } %>
+                            <% if (RightsHolder != null) { %>
+                                Rights Holder:
+                                <%if (string.IsNullOrWhiteSpace(RightsHolder.InstitutionUrl)) { %>
+                                    <%: RightsHolder.InstitutionName%>
+                                <% }
+                                else
+                                { %>
+                                    <a rel="noopener noreferrer" target='_blank' href="<%: RightsHolder.InstitutionUrl %>"><%: RightsHolder.InstitutionName%></a>
+                                <% } %>
+                            <br />
+                            <% } %>
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="download">
