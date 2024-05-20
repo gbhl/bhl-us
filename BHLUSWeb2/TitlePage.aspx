@@ -220,14 +220,8 @@
                             <%} %>
                             <%foreach (Institution institution in PublicationDetail.Institutions)
                             {
-                                if (institution.InstitutionRoleName == "Holding Institution" || institution.InstitutionRoleName == "Rights Holder") { %>
-                                    <div class="header">
-                                        <%if (institution.InstitutionRoleName == "Holding Institution") { %>
-                                            Holding Institution
-                                        <%} else {%>
-                                            Rights Holder
-                                        <%} %>
-                                    </div>
+                                if (institution.InstitutionRoleName == "Holding Institution") { %>
+                                    <div class="header">Holding Institution</div>
                                     <div class="detail">
                                         <%if (string.IsNullOrWhiteSpace(institution.InstitutionUrl))
                                         { %>

@@ -823,19 +823,17 @@ Append("</a>").
         }
 
         // Get the institutions (Holding Institution, Rights Holder) to be displayed in the "Show Info" tab.  For segments that are part 
-        // of virtual items, these should be the institutions associated with the item, not the segment.
+        // of virtual items, these should include institutions associated with both the item and the segment.
         private List<Institution> GetPublicationInstitutions(Publication publicationDetail)
         {
-            List<Institution> institutions = new List<Institution>();
+            // Get the institutions directly associated with the publication
+            List<Institution> institutions = bhlProvider.InstitutionSelectByItemID(publicationDetail.ItemID);
 
-            if (publicationDetail.Type == ItemType.Book)
-            {
-                institutions = bhlProvider.InstitutionSelectByItemID(publicationDetail.ItemID);
-            }
-            else if (publicationDetail.Type == ItemType.Segment && publicationDetail.ContainerID != null)
+            // If this is a segment, then add institutions related to the container
+            if (publicationDetail.Type == ItemType.Segment && publicationDetail.ContainerID != null)
             {
                 DataObjects.Book book = bhlProvider.BookSelectAuto((int)publicationDetail.ContainerID);
-                institutions = bhlProvider.InstitutionSelectByItemID(book.ItemID);
+                institutions.AddRange(bhlProvider.InstitutionSelectByItemID(book.ItemID));
             }
 
             return institutions;
