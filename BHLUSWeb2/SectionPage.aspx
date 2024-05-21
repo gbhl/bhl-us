@@ -163,10 +163,10 @@
                         <h5>Copyright &amp; Usage:</h5>
                         <p>
                             <% if (!String.IsNullOrEmpty(BhlSegment.LicenseName)) { %>
-                            Rights License Name: <%: BhlSegment.LicenseName%><br />
+                            License Type Name: <%: BhlSegment.LicenseName%><br />
                             <% } %>
                             <% if (!String.IsNullOrEmpty(BhlSegment.LicenseUrl)) { %>
-                            Rights License URL:
+                            License Type URL:
                                 <%if (System.Text.RegularExpressions.Regex.IsMatch(BhlSegment.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
                                     <a target="_blank" rel="noopener noreferrer" href="<%: BhlSegment.LicenseUrl%>"><%: BhlSegment.LicenseUrl%></a>
                                 <% } else {%>
@@ -174,17 +174,17 @@
                                 <% } %>
                             <br />
                             <% } %>
-                            <% if (!String.IsNullOrEmpty(BhlSegment.RightsStatus)) { %>
-                            Rights Status: <%: BhlSegment.RightsStatus%><br/> 
-                            <% } %>
                             <% if (!String.IsNullOrEmpty(BhlSegment.RightsStatement)) { %>
-                            Rights Statement: 
+                            Rights: 
                                 <%if (System.Text.RegularExpressions.Regex.IsMatch(BhlSegment.RightsStatement, "^(https?|ftp|file)://.+$")) {%>
                                     <a target="_blank" rel="noopener noreferrer" href="<%: BhlSegment.RightsStatement%>"><%: BhlSegment.RightsStatement%></a>
                                 <% } else {%>
                                     <%: BhlSegment.RightsStatement%>
                                 <% } %>
                             <br />
+                            <% } %>
+                            <% if (!String.IsNullOrEmpty(BhlSegment.RightsStatus)) { %>
+                            Copyright Status: <%: BhlSegment.RightsStatus%><br/> 
                             <% } %>
                             <% if (RightsHolder != null) { %>
                                 Rights Holder:
