@@ -1,7 +1,4 @@
-﻿DROP PROCEDURE [dbo].[IAItemPublishToImportTables]
-GO
-
-CREATE PROCEDURE [dbo].[IAItemPublishToImportTables]
+﻿CREATE PROCEDURE [dbo].[IAItemPublishToImportTables]
 
 @ItemID int
 
@@ -1626,6 +1623,18 @@ BEGIN TRY
 			Summary = i.Summary
 	FROM	#tmpItem t INNER JOIN dbo.IAItem i
 				ON t.ItemID = i.ItemID
+
+	-- If an Item.StartYear value was not supplied, then use the Title.StartYear if...
+	--	1) The title is a Book/Monograph
+	--	2) The title has a StartYear but no EndYear
+	UPDATE	i
+	SET		[Year] = CONVERT(nvarchar(20), t.StartYear)
+	FROM	#tmpItem i
+			INNER JOIN #tmpTitle t on i.ItemID = t.ItemID
+			INNER JOIN dbo.BHLBibliographicLevel b ON SUBSTRING(t.Marcleader, 8, 1) = b.MARCCode AND b.BibliographicLevelLabel = 'Book'
+	WHERE	ISNULL(i.[Year], '') = ''
+	AND		t.StartYear IS NOT NULL
+	AND		t.EndYear IS NULL
 
 	-- Get the scanning institution code.  Look in the IASCanCenterInstitution
 	-- table first.  If no match is found there, then look in the Institution
