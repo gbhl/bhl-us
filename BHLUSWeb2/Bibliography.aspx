@@ -64,7 +64,9 @@
                                 <%: string.Join(", ", taTitle.ToArray()) %>
                             </a>
                         <% } else { %>
-                            <%: string.Join(", ", taTitle.ToArray()) %>
+                            <a href='/search?searchTerm="<%:ta.Title %>"&stype=C'>
+                                <%: string.Join(", ", taTitle.ToArray()) %>
+                            </a>
                         <% } %>							
                     </p>
                     <% } %>
