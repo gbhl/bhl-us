@@ -228,14 +228,21 @@ namespace MOBOT.BHL.BHLDOIService
 
                                 break;
                             case DOICheckResult.Error:
-                                // Report any error messages returned from CrossRef.  Otherwise, do nothing.
-                                // Will get picked up and re-tried the next time this process is run.
+                                // Set DOI error status and record the error
                                 if (!string.IsNullOrWhiteSpace(result.Message))
                                 {
                                     string logMessage = string.Format("Error processing {0} {1}: {2}",
                                         this.GetEntityTypeName(entityTypeId), doi.EntityID, result.Message);
                                     log.Error(logMessage);
                                     errorMessages.Add(logMessage);
+                                    restClient.UpdateDoiStatus((int)doi.Doiid,
+                                        new DoiModel
+                                        {
+                                            Doistatusid = configParms.DoiStatusError,
+                                            Message = "ERROR (SEARCH): " + logMessage,
+                                            Isvalid = null,
+                                            Userid = null
+                                        });
                                 }
                                 break;
                         }
