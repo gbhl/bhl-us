@@ -17,7 +17,7 @@
         <% foreach (Title title in TitleList) { %>
             <li>
                 <a href="/bibliography/<%= title.TitleID %>">
-				    <%= title.FullTitle %> <%= title.PartNumber %> <%= title.PartName %>
+				    <%= title.FullTitleExtended %>
 				</a>
 				<div>Publication info: <%= title.PublicationDetails %></div>
             </li>

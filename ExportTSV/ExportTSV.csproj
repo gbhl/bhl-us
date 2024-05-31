@@ -7,6 +7,7 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BHLUtility\BHLUtility.csproj" />
     <ProjectReference Include="..\ExportBase\ExportBase.csproj">
       <Project>{d8346831-da53-48c6-9a88-59ed4edc1a84}</Project>
       <Name>ExportBase</Name>

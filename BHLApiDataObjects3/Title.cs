@@ -96,6 +96,14 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             }
         }
 
+        public string FullTitleExtended
+        {
+            get
+            {
+                return BHL.Utility.DataCleaner.GetFullTitleExtended(this.FullTitle, this.PartNumber, this.PartName);
+            }
+        }
+
         private string _CallNumber = null;
         public string CallNumber
         {

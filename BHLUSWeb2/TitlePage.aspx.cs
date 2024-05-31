@@ -680,7 +680,7 @@ Append("</a>").
             publicationDetail.ItemID = pageSummary.ItemID;
             publicationDetail.TitleID = pageSummary.TitleID;
             publicationDetail.BarCode = pageSummary.BarCode;
-            publicationDetail.FullTitle = pageSummary.FullTitle;
+            publicationDetail.FullTitle = pageSummary.FullTitleExtended;
             publicationDetail.ShortTitle = pageSummary.ShortTitle;
             publicationDetail.Volume = pageSummary.Volume;
             publicationDetail.Sponsor = pageSummary.Sponsor;
@@ -722,7 +722,7 @@ Append("</a>").
                 COinS.ItemID = PublicationDetail.ID;
                 COinS.TitleAuthors = authorList;
                 //COinS.TitleKeywords = bhlProvider.TitleKeywordSelectByTitleID(pageSummary.TitleID);
-                COinS.Title = pageSummary.FullTitle;
+                COinS.Title = pageSummary.FullTitleExtended;
                 COinS.Volume = pageSummary.Volume;
                 COinS.PageCount = bhlProvider.PageSelectCountByItemID(publicationDetail.ID);
                 COinS.Date = book.StartYear;

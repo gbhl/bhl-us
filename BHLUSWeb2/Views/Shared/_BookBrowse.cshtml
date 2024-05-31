@@ -17,7 +17,7 @@
         {
             <div style="display:inline-block; width:620px">
                 <div style="float:left">
-                    <a target="@Html.Raw((book.ExternalUrl == string.Empty ? "_self\" class=\"title" : "_blank\" rel=\"noopener noreferrer\" class=\"title ExtLinkBrowse"))" href="/item/@book.ItemID">@book.FullTitle @book.PartNumber @book.PartName</a>
+                    <a target="@Html.Raw((book.ExternalUrl == string.Empty ? "_self\" class=\"title" : "_blank\" rel=\"noopener noreferrer\" class=\"title ExtLinkBrowse"))" href="/item/@book.ItemID">@book.FullTitleExtended</a>
                 </div>
                 <div style="float:right">
                     <a class="titleviewbook" href="/bibliography/@book.TitleID">View Metadata</a>
@@ -34,7 +34,7 @@
         }
         else
         {
-            <a class="title" style="width:540px" href="/bibliography/@book.TitleID">@book.FullTitle @book.PartNumber @book.PartName</a>
+            <a class="title" style="width:540px" href="/bibliography/@book.TitleID">@book.FullTitleExtended</a>
             <div class="titledetails" @(book.Authors == string.Empty ? "hidden" : "")>By: @book.Authors.ToString().Replace("|", " - ")</div>
             <div class="titledetails" @(book.EditionStatement == string.Empty ? "hidden" : "")>Edition: @book.EditionStatement </div>
             <div class="titledetails" @(book.PublicationDetails == string.Empty ? "hidden" : "")>Publication info: @book.PublicationDetails</div>

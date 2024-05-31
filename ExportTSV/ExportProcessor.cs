@@ -402,7 +402,10 @@ namespace BHL.Export.TSV
             string titleID = GetDBInt32(reader, "TitleID");
             string marcBibID = GetDBString(reader, "MARCBibID");
             string marcLeader = GetDBString(reader, "MARCLeader");
-            string fullTitle = GetDBString(reader, "FullTitle");
+            string fullTitle = MOBOT.BHL.Utility.DataCleaner.GetFullTitleExtended(
+                GetDBString(reader, "FullTitle"), 
+                GetDBString(reader, "PartNumber"), 
+                GetDBString(reader, "PartName"));
             string shortTitle = GetDBString(reader, "ShortTitle");
             string publicationDetails = GetDBString(reader, "PublicationDetails");
             string callNumber = GetDBString(reader, "CallNumber");

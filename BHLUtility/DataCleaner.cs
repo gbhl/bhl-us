@@ -1282,6 +1282,17 @@ namespace MOBOT.BHL.Utility
 
             return groups;
         }
+
+        public static string GetFullTitleExtended(string fullTitle, string partNumber, string partName)
+        {
+            string fullTitleExtended = fullTitle ?? string.Empty;
+            string number = partNumber ?? string.Empty;
+            string name = partName ?? string.Empty;
+            fullTitleExtended += ((number != string.Empty) ? ". " + number : string.Empty);
+            fullTitleExtended += ((number != string.Empty && name != string.Empty) ? ", " + name : string.Empty);
+            fullTitleExtended += ((number == string.Empty && name != string.Empty) ? ". " + name : string.Empty);
+            return fullTitleExtended.Trim();
+        }
     }
 
     /// <summary>

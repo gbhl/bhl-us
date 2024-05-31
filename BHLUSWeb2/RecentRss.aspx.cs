@@ -57,7 +57,7 @@ namespace MOBOT.BHL.Web2
                 string itemElement = string.IsNullOrWhiteSpace(book.ExternalUrl) ? "<item>" : "<item bhl:externalcontent=\"true\">";
 
                 WriteLine(itemElement);
-                WriteLine("<title>" + Server.HtmlEncode(book.FullTitle + " " + book.PartNumber + " " + book.PartName + " " + book.Volume) + " (added: " + DateTime.Parse(book.CreationDate.ToString()).ToString("MM/dd/yyyy") + ")</title>");
+                WriteLine("<title>" + Server.HtmlEncode(book.FullTitleExtended + " " + book.Volume) + " (added: " + DateTime.Parse(book.CreationDate.ToString()).ToString("MM/dd/yyyy") + ")</title>");
                 WriteLine("<link>https://www.biodiversitylibrary.org/item/" + book.ItemID.ToString() + "</link>");
                 WriteLine("<description>" + Server.HtmlEncode(description) + "</description>");
                 WriteLine("<pubDate>" + book.CreationDate.ToString() + "</pubDate>");

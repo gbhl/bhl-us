@@ -1342,7 +1342,7 @@ namespace MOBOT.BHL.API.BHLApi
                 pub.BHLType = BHLType.Title;
                 pub.TitleID = title.TitleID.ToString();
                 pub.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
-                pub.Title = (title.FullTitle + " " + (title.PartNumber ?? string.Empty) + " " + (title.PartName ?? string.Empty)).Trim();
+                pub.Title = title.FullTitleExtended;
                 pub.Genre = (string.IsNullOrWhiteSpace(title.Genre) ? null : title.Genre);
                 pub.MaterialType = (string.IsNullOrWhiteSpace(title.MaterialType) ? null : title.MaterialType);
                 pub.PublisherPlace = (string.IsNullOrWhiteSpace(title.PublisherPlace) ? null : title.PublisherPlace);
@@ -1447,7 +1447,7 @@ namespace MOBOT.BHL.API.BHLApi
                     pub.ItemID = i.ItemID.ToString();
                     pub.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + t.TitleID.ToString();
                     pub.ItemUrl = "https://www.biodiversitylibrary.org/item/" + i.ItemID.ToString();
-                    pub.Title = (t.FullTitle + " " + (t.PartNumber ?? string.Empty) + " " + (t.PartName ?? string.Empty)).Trim();
+                    pub.Title = t.FullTitleExtended;
                     pub.Genre = t.Genre;
                     pub.MaterialType = t.MaterialType;
                     pub.PublisherPlace = t.PublisherPlace;

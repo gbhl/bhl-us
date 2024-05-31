@@ -233,7 +233,7 @@
                             <ItemTemplate>
                                 <li>
                                     <span class="BlackHeading"><a href="/page/<%# Eval("PageID") %>" title="Page"> <%# Eval("AnnotationText") %></a></span>
-			                        <br /><%# Eval("FullTitle").ToString() + " " + Eval("PartNumber").ToString() + " " + Eval("PartName").ToString()%>
+			                        <br /><%# Eval("FullTitleExtended").ToString()%>
                                     <%# Eval("Authors") == string.Empty ? "" : "<br />By: " + Eval("Authors").ToString().Replace("|", " - ") %>
                                     <%# Eval("EditionStatement") == string.Empty ? "" : "<br />Edition: " + Eval("EditionStatement") %>
                                     <%# Eval("PublicationDetails") == string.Empty ? "" : "<br />Publication info: " + Eval("PublicationDetails") %>

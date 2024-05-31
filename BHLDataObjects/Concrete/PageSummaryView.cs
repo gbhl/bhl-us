@@ -46,6 +46,15 @@ namespace MOBOT.BHL.DataObjects
             set { _flickrUrl = value; }
         }
 
+        public string FullTitleExtended
+        {
+            get
+            {
+                // Append the PartNumber and PartName to the FullTitle, with proper formatting
+                return BHL.Utility.DataCleaner.GetFullTitleExtended(this.FullTitle, this.PartNumber, this.PartName);
+            }
+        }
+
         #endregion Properties
 
         public override void SetValues(CustomDataRow row)

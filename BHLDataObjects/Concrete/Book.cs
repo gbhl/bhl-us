@@ -164,6 +164,15 @@ namespace MOBOT.BHL.DataObjects
             set { _partName = value; }
         }
 
+        public string FullTitleExtended
+        {
+            get
+            {
+                // Append the PartNumber and PartName to the FullTitle, with proper formatting
+                return BHL.Utility.DataCleaner.GetFullTitleExtended(this.FullTitle, this.PartNumber, this.PartName);
+            }
+        }
+
         public int ItemStatusID
         {
             get { return this._itemStatusID; }

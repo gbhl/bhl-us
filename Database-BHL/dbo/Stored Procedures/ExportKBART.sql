@@ -58,7 +58,10 @@ INSERT INTO #kbart
 	ItemID,
 	ItemSequence
 	)
-SELECT	RTRIM(t.FullTitle),
+SELECT	RTRIM(t.FullTitle) +
+			RTRIM(CASE WHEN ISNULL(t.PartNumber, '') <> '' THEN '. ' + t.PartNumber ELSE '' END) +
+			RTRIM(CASE WHEN ISNULL(t.PartNumber, '') <> '' AND ISNULL(t.PartName, '') <> '' THEN ', ' + t.PartName ELSE '' END) +
+			RTRIM(CASE WHEN ISNULL(t.PartNumber, '') = '' AND ISNULL(t.PartName, '') <> '' THEN '. ' + t.PartName ELSE '' END),
 		@UrlRoot + CONVERT(varchar(10), t.TitleID),
 		t.TitleID,
 		CASE WHEN bl.MARCCode IN ('b','s') THEN 'Coverage information is for a single journal issue.' ELSE '' END,

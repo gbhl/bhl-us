@@ -24,7 +24,7 @@
             <uc:COinS ID="COinS" runat="server" />
             <div id="details" class="tab-body">
                 <h3>Title</h3>
-                <p><%: BhlTitle.FullTitle %> <%: BhlTitle.PartNumber %> <%: BhlTitle.PartName %></p>
+                <p><%: BhlTitle.FullTitleExtended %></p>
                 <% if (TitleVariants.Count > 0 || !string.IsNullOrWhiteSpace(BhlTitle.UniformTitle)) { %>
                     <h3>Title Variants</h3>
                     <% foreach (TitleVariant tv in TitleVariants) { %>
