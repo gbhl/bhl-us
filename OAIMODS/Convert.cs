@@ -1037,7 +1037,7 @@ namespace MOBOT.BHL.OAIMODS
 
             sb.Append("<relatedItem type=\"host\">\n");
 
-            sb.Append(this.GetTitleElement(_oaiRecord.JournalTitle, true));
+            sb.Append(this.GetTitleElement(_oaiRecord.JournalTitle, false));
             sb.Append(this.GetOriginInfoElement());
             sb.Append(this.GetClassificationElement(_oaiRecord));
             sb.Append(this.GetPartElement());

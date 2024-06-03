@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BHLUtility\BHLUtility.csproj" />
     <ProjectReference Include="..\QueueUtility\QueueUtility.csproj" />
   </ItemGroup>
 

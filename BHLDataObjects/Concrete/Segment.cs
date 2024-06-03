@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using CustomDataAccess;
 
 #endregion Using
@@ -58,6 +59,28 @@ namespace MOBOT.BHL.DataObjects
         {
             get { return _segmentClusterTypeLabel; }
             set { _segmentClusterTypeLabel = value; }
+        }
+
+        private string _containerTitlePartNumber;
+        public string ContainerTitlePartNumber
+        {
+            get { return _containerTitlePartNumber; }
+            set { _containerTitlePartNumber = value; }
+        }
+
+        private string _containerTitlePartName;
+        public string ContainerTitlePartName
+        {
+            get { return _containerTitlePartName; }
+            set { _containerTitlePartName = value; }
+        }
+
+        public string ContainerTitleExtended
+        {
+            get
+            {
+                return BHL.Utility.DataCleaner.GetFullTitleExtended(this.ContainerTitle, this.ContainerTitlePartNumber, this.ContainerTitlePartName);
+            }
         }
 
         private string _titleFullTitle = string.Empty;
@@ -365,6 +388,14 @@ namespace MOBOT.BHL.DataObjects
                 if (column.Name == "SegmentClusterTypeLabel")
                 {
                     _segmentClusterTypeLabel = Utility.EmptyIfNull(column.Value);
+                }
+                if (column.Name == "ContainerTitlePartNumber")
+                {
+                    _containerTitlePartNumber = Utility.EmptyIfNull(column.Value);
+                }
+                if (column.Name == "ContainerTitlePartName")
+                {
+                    _containerTitlePartName = Utility.EmptyIfNull(column.Value);
                 }
                 if (column.Name == "TitleShortTitle")
                 {

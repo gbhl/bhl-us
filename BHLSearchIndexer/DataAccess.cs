@@ -152,7 +152,7 @@ namespace BHL.SearchIndexer
                             string partNumber = reader.GetString(reader.GetOrdinal("PartNumber"));
                             string partName = reader.GetString(reader.GetOrdinal("PartName"));
                             string fullTitle = reader.GetString(reader.GetOrdinal("FullTitle"));
-                            item.title = (fullTitle + " " + partNumber + " " + partName).Trim();
+                            item.title = MOBOT.BHL.Utility.DataCleaner.GetFullTitleExtended(fullTitle, partNumber, partName);
                             item.uniformTitle = reader.GetString(reader.GetOrdinal("UniformTitle"));
                             item.sortTitle = reader.GetString(reader.GetOrdinal("SortTitle"));
                             string languageName = reader.GetString(reader.GetOrdinal("LanguageName"));
@@ -555,7 +555,11 @@ namespace BHL.SearchIndexer
                             segment.title = reader.GetString(reader.GetOrdinal("Title"));
                             segment.translatedTitle = reader.GetString(reader.GetOrdinal("TranslatedTitle"));
                             segment.sortTitle = reader.GetString(reader.GetOrdinal("SortTitle"));
-                            segment.container = reader.GetString(reader.GetOrdinal("ContainerTitle"));
+                            segment.container = MOBOT.BHL.Utility.DataCleaner.GetFullTitleExtended(
+                                reader.GetString(reader.GetOrdinal("ContainerTitle")),
+                                reader.GetString(reader.GetOrdinal("ContainerTitlePartNumber")),
+                                reader.GetString(reader.GetOrdinal("ContainerTitlePartName"))
+                                );
                             string languageName = reader.GetString(reader.GetOrdinal("LanguageName"));
                             if (!string.IsNullOrWhiteSpace(languageName)) segment.language = languageName;
                             string genre = reader.GetString(reader.GetOrdinal("GenreName"));

@@ -35,7 +35,7 @@ var result = ViewData["searchResult"] as List<MOBOT.BHL.DataObjects.Segment>;
             </div>
             <div class="titledetails" @(segment.Authors == string.Empty ? "hidden" : "")>By: @segment.Authors.ToString().Replace("|", " - ")</div>
             <div class="titledetails" @(segment.GenreName == string.Empty ? "hidden" : "")>Type: @segment.GenreName</div>
-            <div class="titledetails" @(segment.ContainerTitle == string.Empty ? "hidden" : "")>In: @segment.ContainerTitle</div>
+            <div class="titledetails" @(segment.ContainerTitleExtended == string.Empty ? "hidden" : "")>In: @segment.ContainerTitleExtended</div>
             <div class="titledetails" @(segment.Volume == string.Empty ? "hidden" : "")>Volume: @segment.Volume</div>
             <div class="titledetails" @(segment.Series == string.Empty ? "hidden" : "")>Series: @segment.Series</div>
             <div class="titledetails" @(segment.Issue == string.Empty ? "hidden" : "")>Issue: @segment.Issue</div>
@@ -49,7 +49,7 @@ var result = ViewData["searchResult"] as List<MOBOT.BHL.DataObjects.Segment>;
             <a href="/part/<%# Eval(" SegmentID")%>" title="Segment"><%# Eval("Title") %></a>
             <div class="titledetails" @(segment.Authors == string.Empty ? "hidden" : "")>By: @segment.Authors.ToString().Replace("|", " - ")</div>
             <div class="titledetails" @(segment.GenreName == string.Empty ? "hidden" : "")>Type: @segment.GenreName</div>
-            <div class="titledetails" @(segment.ContainerTitle == string.Empty ? "hidden" : "")>In: @segment.ContainerTitle</div>
+            <div class="titledetails" @(segment.ContainerTitleExtended == string.Empty ? "hidden" : "")>In: @segment.ContainerTitleExtended</div>
             <div class="titledetails" @(segment.Volume == string.Empty ? "hidden" : "")>Volume: @segment.Volume</div>
             <div class="titledetails" @(segment.Series == string.Empty ? "hidden" : "")>Series: @segment.Series</div>
             <div class="titledetails" @(segment.Issue == string.Empty ? "hidden" : "")>Issue: @segment.Issue</div>

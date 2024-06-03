@@ -933,6 +933,8 @@ namespace MOBOT.BHL.OAI2
                 if (!string.IsNullOrWhiteSpace(segment.RightsStatus)) this.Rights.Add(segment.RightsStatus);
                 if (!string.IsNullOrWhiteSpace(segment.LicenseUrl)) this.Rights.Add(segment.LicenseUrl);
                 this.JournalTitle = segment.ContainerTitle;
+                this.PartNumber = segment.ContainerTitlePartNumber;
+                this.PartName = segment.ContainerTitlePartName;
                 this.Publisher = segment.PublisherName;
                 this.PublicationPlace = segment.PublisherPlace;
                 this.Abstract = segment.Summary;

@@ -50,7 +50,7 @@
             <div class="segmentdetails"><h3>Date of Publication</h3> <p><%: BhlSegment.Date%></p></div>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.ContainerTitle)) { %>
-            <div class="segmentdetails"><h3>Original Publication</h3> <p><%: BhlSegment.ContainerTitle %></p></div>
+            <div class="segmentdetails"><h3>Original Publication</h3> <p><%: BhlSegment.ContainerTitleExtended %></p></div>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.Volume)) { %>
             <div class="segmentdetails"><h3>Volume</h3> <p><%: BhlSegment.Volume%></p></div>

@@ -75,6 +75,8 @@ SELECT	s.SegmentID,
 		s.SortTitle,
 		s.TranslatedTitle,
 		s.ContainerTitle,
+		s.ContainerTitlePartNumber,
+		s.ContainerTitlePartName,
 		s.PublicationDetails,
 		s.PublisherName,
 		s.PublisherPlace,
@@ -112,3 +114,5 @@ IF (@SortColumn = 'author') SELECT * FROM #Final ORDER BY Authors, SortTitle OPT
 IF (@SortColumn = 'year') SELECT * FROM #Final ORDER BY Date, SortTitle OPTION (RECOMPILE)
 
 END
+
+GO

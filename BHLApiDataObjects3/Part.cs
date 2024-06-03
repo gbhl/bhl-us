@@ -93,9 +93,24 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         private string _containerTitle = null;
         public string ContainerTitle
         {
-            get { return _containerTitle; }
-            set { _containerTitle = value; }
+            get
+            {
+                return BHL.Utility.DataCleaner.GetFullTitleExtended(
+                    this._containerTitle ?? string.Empty, 
+                    this._containerTitlePartNumber ?? string.Empty, 
+                    this._containerTitlePartName ?? string.Empty);
+            }
+            set
+            {
+                _containerTitle = value;
+                _containerTitlePartNumber = null;
+                _containerTitlePartName = null;
+            }
         }
+
+        private string _containerTitlePartNumber = null;
+
+        private string _containerTitlePartName = null;
 
         private string _publicationDetails = null;
         public string PublicationDetails
@@ -306,6 +321,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
 
         #endregion Properties
 
+        public void SetContainerTitle(string containerTitle, string partNumber = null, string partName = null)
+        {
+            _containerTitle = containerTitle;
+            _containerTitlePartNumber = partNumber;
+            _containerTitlePartName = partName;
+        }
+
         #region ISetValues Members
 
         public void SetValues(CustomDataRow row)
@@ -352,6 +374,16 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "ContainerTitle":
                         {
                             _containerTitle = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "ContainerTitlePartNumber":
+                        {
+                            _containerTitlePartNumber = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "ContainerTitlePartName":
+                        {
+                            _containerTitlePartName = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "PublicationDetails":
