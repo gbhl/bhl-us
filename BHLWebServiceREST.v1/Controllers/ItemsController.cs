@@ -83,6 +83,14 @@ namespace BHL.WebServiceREST.v1.Controllers
             return Ok();
         }
 
+        [HttpPut("{itemID}/NormalizeFileNames", Name = "NormalizeFileNames")]
+        [ProducesResponseType(200)]
+        public IActionResult ItemNormalizeFileNames(int itemID)
+        {
+            _bhlProvider.ItemNormalizeFileNamePrefix(itemID);
+            return Ok();
+        }
+
         [HttpPut("{itemID}", Name = "UpdateItemLastPageNameLookupDate")]
         [ProducesResponseType(200)]
         public IActionResult ItemUpdateLastPageNameLookupDate(int itemID)

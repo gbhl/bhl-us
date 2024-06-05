@@ -1066,6 +1066,7 @@
     <None Include="dbo\Stored Procedures\SegmentSelectByPageID.sql" />
     <None Include="annotation\Stored Procedures\AnnotationSubjectCategorySelect.sql" />
     <None Include="annotation\Stored Procedures\AnnotationSubjectSelect.sql" />
+    <None Include="dbo\Stored Procedures\ItemNormalizeFileNamePrefix.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

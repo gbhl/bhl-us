@@ -173,6 +173,26 @@ namespace BHL.WebServiceREST.v1.Client
             }
         }
 
+        public async Task NormalizeFileNamesAsync(int itemID)
+        {
+            using (var httpClient = GetHttpClient())
+            {
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                await restClient.NormalizeFileNamesAsync(itemID).ConfigureAwait(false);
+                return;
+            }
+        }
+
+        public void NormalizeFileNames(int itemID)
+        {
+            using (var httpClient = GetHttpClient())
+            {
+                BHLWS restClient = new BHLWS(_baseUrl, httpClient);
+                restClient.NormalizeFileNames(itemID);
+                return;
+            }
+        }
+
         public async Task UpdateItemLastPageNameLookupDateAsync(int itemID)
         {
             using (var httpClient = GetHttpClient())

@@ -217,6 +217,19 @@ namespace MOBOT.BHL.DAL
 
         #endregion
 
+        public void ItemNormalizeFileNamePrefix(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemNormalizeFileNamePrefix", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
+            {
+                CustomSqlHelper.ExecuteNonQuery(command);
+            }
+        }
+
         /// <summary>
         /// Update the LastPageNameLookupDate for the specified Item.
         /// </summary>

@@ -132,6 +132,12 @@ namespace MOBOT.BHL.Server
 			return dal.ItemUpdateLastPageNameLookupDate( null, null, itemID );
 		}
 
+        public void ItemNormalizeFileNamePrefix(int itemID )
+        {
+            ItemDAL dal = new ItemDAL();
+            dal.ItemNormalizeFileNamePrefix(null, null, itemID);
+        }
+
         /// <summary>
         /// Update the assigned iteminstitution of the specified item.
         /// </summary>

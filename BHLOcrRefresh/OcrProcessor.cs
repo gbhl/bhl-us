@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Xml;
 
@@ -155,6 +156,9 @@ namespace MOBOT.BHL.BHLOcrRefresh
 
                 // Move the OCR files to their final destination
                 status = MoveOcrToProduction(itemID, barcode, tempFolder);
+
+                // Normalize the file names in the database
+                NormalizeFileNames(itemID);
             }
             finally
             {
@@ -270,6 +274,19 @@ namespace MOBOT.BHL.BHLOcrRefresh
             catch (Exception e)
             {
                 LogMessage("Error converting DJVU to TXT for " + barcode, e);
+                if (!string.IsNullOrWhiteSpace(itemID)) MarkJobError(itemID, e.Message + "\n\r" + e.StackTrace);
+            }
+        }
+
+        private void NormalizeFileNames(string itemID)
+        {
+            try
+            {
+                new ItemsClient(configParms.BHLWSEndpoint).NormalizeFileNames(Convert.ToInt32(itemID));
+            }
+            catch (Exception e)
+            {
+                LogMessage("Error normalizing filenames for item " + itemID, e);
                 if (!string.IsNullOrWhiteSpace(itemID)) MarkJobError(itemID, e.Message + "\n\r" + e.StackTrace);
             }
         }

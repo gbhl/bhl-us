@@ -64,6 +64,7 @@ namespace MOBOT.BHL.Server
         List<Institution> InstitutionSelectByItemIDAndRole(int itemID, string role);
         string ItemGetNamesXMLByItemID(int itemID);
         void NamePageDeleteByItemID(int itemID);
+        void ItemNormalizeFileNamePrefix(int itemID);
         Item ItemUpdateLastPageNameLookupDate(int itemID);
         void PageTextLogInsertForItem(int itemID, string textSource, int userID);
         Segment SegmentSelectAuto(int segmentID);
