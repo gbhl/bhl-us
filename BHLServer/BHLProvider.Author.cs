@@ -55,6 +55,11 @@ namespace MOBOT.BHL.Server
             return new AuthorDAL().AuthorSelectWithSuspectCharacters(null, null, institutionCode, maxAge);
         }
 
+        public List<AuthorIdentifier> AuthorIdentifierSelectByAuthorID(int authorID)
+        {
+            return new AuthorIdentifierDAL().AuthorIdentifierSelectByAuthorID(null, null, authorID);
+        }
+
         public List<Author> AuthorResolve(string fullName, string lastName, string firstName,
             string startDate, string endDate, int? authorID)
         {

@@ -79,6 +79,13 @@ namespace MOBOT.BHL.OAI2
             set { _type = value; }
         }
 
+        string _recordIdentifier = string.Empty;
+        public string RecordIdentifier
+        {
+            get { return _recordIdentifier; }
+            set { _recordIdentifier = value; }
+        }
+
         String _marcTag = String.Empty;
 
         public String MarcTag
@@ -536,6 +543,7 @@ namespace MOBOT.BHL.OAI2
 
             if (book != null)
             {
+                this.RecordIdentifier = "item/" + book.BookID.ToString();
                 this.Descriptions.Add(book.Volume);
                 this.JournalVolume = book.Volume;
                 this.Date = book.StartYear;
@@ -667,6 +675,19 @@ namespace MOBOT.BHL.OAI2
                         OAIRecord.Creator creator = new OAIRecord.Creator(author.FullName, (string.IsNullOrEmpty(author.Numeration) ? author.Unit : author.Numeration), 
                             (string.IsNullOrEmpty(author.Title) ? author.Location : author.Title), author.Dates, author.Relationship, author.FullerForm, 
                             author.TitleOfWork, author.NameExtended);
+
+                        List<DataObjects.AuthorIdentifier> authorIdentifiers = provider.AuthorIdentifierSelectByAuthorID(author.AuthorID);
+                        foreach (DataObjects.AuthorIdentifier authorIdentifier in authorIdentifiers)
+                        {
+                            if (authorIdentifier.Display == 1)
+                            {
+                                OAIRecord.Identifier creatorIdentifier = new Identifier();
+                                creatorIdentifier.IdentifierType = authorIdentifier.IdentifierLabel.Replace(' ', '-').ToLower();
+                                creatorIdentifier.IdentifierValue = authorIdentifier.IdentifierValue;
+                                creator.Identifiers.Add(creatorIdentifier);
+                            }
+                        }
+
                         KeyValuePair<string, OAIRecord.Creator> authorData = new KeyValuePair<string, OAIRecord.Creator>(author.MarcDataFieldTag, creator);
                         this.Creators.Add(authorData);
                     }
@@ -738,6 +759,7 @@ namespace MOBOT.BHL.OAI2
 
             if (title != null)
             {
+                this.RecordIdentifier = "title/" + title.TitleID.ToString();
                 this.Title = title.FullTitle;
                 this.PartNumber = (title.PartNumber == null) ? String.Empty : title.PartNumber;
                 this.PartName = (title.PartName == null) ? String.Empty : title.PartName;
@@ -797,6 +819,19 @@ namespace MOBOT.BHL.OAI2
                     OAIRecord.Creator creator = new OAIRecord.Creator(author.FullName, (string.IsNullOrEmpty(author.Numeration) ? author.Unit : author.Numeration),
                         (string.IsNullOrEmpty(author.Title) ? author.Location : author.Title), author.Dates, author.Relationship, author.FullerForm, 
                         author.TitleOfWork, author.NameExtended);
+
+                    List<DataObjects.AuthorIdentifier> authorIdentifiers = provider.AuthorIdentifierSelectByAuthorID(author.AuthorID);
+                    foreach(DataObjects.AuthorIdentifier authorIdentifier in authorIdentifiers)
+                    {
+                        if (authorIdentifier.Display == 1)
+                        {
+                            OAIRecord.Identifier creatorIdentifier = new Identifier();
+                            creatorIdentifier.IdentifierType = authorIdentifier.IdentifierLabel.Replace(' ', '-').ToLower();
+                            creatorIdentifier.IdentifierValue = authorIdentifier.IdentifierValue;
+                            creator.Identifiers.Add(creatorIdentifier);
+                        }
+                    }
+
                     KeyValuePair<string, OAIRecord.Creator> authorData = new KeyValuePair<string, OAIRecord.Creator>(author.MarcDataFieldTag, creator);
                     this.Creators.Add(authorData);
                 }
@@ -910,6 +945,7 @@ namespace MOBOT.BHL.OAI2
                         break;
                 }
 
+                this.RecordIdentifier = "part/" + segment.SegmentID.ToString();
                 this.Title = segment.Title;
                 this.Url = "https://www.biodiversitylibrary.org/part/" + segment.SegmentID.ToString();
                 this.Sequence = "1";
@@ -956,6 +992,18 @@ namespace MOBOT.BHL.OAI2
                 {
                     OAIRecord.Creator creator = new OAIRecord.Creator(string.Empty, string.Empty, string.Empty,
                         string.Empty, string.Empty, string.Empty, string.Empty, author.FullName);
+
+                    foreach (DataObjects.AuthorIdentifier authorIdentifier in author.Author.AuthorIdentifiers)
+                    {
+                        if (authorIdentifier.Display == 1)
+                        {
+                            OAIRecord.Identifier creatorIdentifier = new Identifier();
+                            creatorIdentifier.IdentifierType = authorIdentifier.IdentifierLabel.Replace(' ', '-').ToLower();
+                            creatorIdentifier.IdentifierValue = authorIdentifier.IdentifierValue;
+                            creator.Identifiers.Add(creatorIdentifier);
+                        }
+                    }                    
+
                     KeyValuePair<string, OAIRecord.Creator> authorData = new KeyValuePair<string, OAIRecord.Creator>(string.Empty, creator);
                     this.Creators.Add(authorData);
                 }

@@ -672,13 +672,13 @@ namespace MOBOT.BHL.OAIMODS
                     case "100":
                     case "110":
                     case "111":
-                        creatorContributorRole = "\t<role>\t\t<roleTerm type=\"text\">creator</roleTerm>\n</role>\n";
+                        creatorContributorRole = "\t<role>\n\t\t<roleTerm type=\"text\">creator</roleTerm>\n\t</role>\n";
                         break;
                     case "700":
                     case "710":
                     case "711":
                     case "720":
-                        creatorContributorRole = "\t<role>\t\t<roleTerm type=\"text\">contributor</roleTerm>\n</role>\n";
+                        creatorContributorRole = "\t<role>\n\t\t<roleTerm type=\"text\">contributor</roleTerm>\n\t</role>\n";
                         break;
                     default:
                         break;
@@ -693,8 +693,12 @@ namespace MOBOT.BHL.OAIMODS
                 sb.Append("<name" + type + ">\n");  // Add "type" attribute here
                 sb.Append("\t<namePart>" + HttpUtility.HtmlEncode(name) + "</namePart>\n");
                 if (date != string.Empty) sb.Append("\t<namePart type=\"date\">" + HttpUtility.HtmlEncode(date) + "</namePart>\n");
+                foreach(OAIRecord.Identifier id in creatorData.Value.Identifiers)
+                {
+                    sb.Append("\t<nameIdentifier type=\"" + HttpUtility.HtmlEncode(id.IdentifierType) + "\">" + HttpUtility.HtmlEncode(id.IdentifierValue) + "</nameIdentifier>\n");
+                }
                 if (titleOfWork != string.Empty) sb.Append("\t<affiliation>" + HttpUtility.HtmlEncode(titleOfWork) + "</affiliation>\n");
-                if (role != string.Empty) sb.Append("\t<role>\t\t<roleTerm type=\"text\">" + HttpUtility.HtmlEncode(role) + "</roleTerm>\n</role>\n");
+                if (role != string.Empty) sb.Append("\t<role>\n\t\t<roleTerm type=\"text\">" + HttpUtility.HtmlEncode(role) + "</roleTerm>\n\t</role>\n");
                 sb.Append(creatorContributorRole);
                 sb.Append("</name>\n");
             }
@@ -1214,18 +1218,22 @@ namespace MOBOT.BHL.OAIMODS
             return sb.ToString();
         }
 
-        private String GetRecordInfoElement()
+        private string GetRecordInfoElement()
         {
             StringBuilder sb = new StringBuilder();
 
-            if (!String.IsNullOrEmpty(_oaiRecord.OriginalCatalogingSource))
+            sb.Append("<recordInfo>\n");
+            if (!string.IsNullOrWhiteSpace(_oaiRecord.OriginalCatalogingSource))
             {
-                sb.Append("<recordInfo>\n");
                 sb.Append("\t<recordContentSource authority=\"marcorg\">");
                 sb.Append(HttpUtility.HtmlEncode(_oaiRecord.OriginalCatalogingSource));
                 sb.Append("</recordContentSource>\n");
-                sb.Append("</recordInfo>\n");
             }
+            sb.Append("\t<recordIdentifier source=\"US-dcwabhl\">");
+            sb.Append(HttpUtility.HtmlEncode(_oaiRecord.RecordIdentifier));
+            sb.Append("</recordIdentifier>\n");
+            sb.Append("\t<recordOrigin>Machine-generated from BHL metadata</recordOrigin>\n");
+            sb.Append("</recordInfo>\n");
 
             return sb.ToString();
         }
