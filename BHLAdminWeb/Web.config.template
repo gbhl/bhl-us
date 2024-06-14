@@ -113,14 +113,6 @@
     <add key="APIStatsAppID" value="2" />
     <add key="APIV3StatsAppID" value="5" />
     <add key="OpenUrlStatsAppID" value="3" />
-    <!-- Use these Urls to include titles, items, pages, and names on the chart -->
-    <!--
-    <add key="GoogleMonthlyChartUrl" value="https://chart.googleapis.com/chart?cht=bvg&amp;chs=900x300&amp;chbh=5,1&amp;chxt=x,y&amp;chdl=Titles|Items|Pages|Names&amp;chd=t:{0}&amp;chds=0,{1}&amp;chxr=0,0,{2}|1,0,{3}&amp;chxl=0:{4}&amp;chf=&amp;chco=2c50f2,ffcc00,99cc00,ff0000"/>
-    <add key="GoogleCumulativeChartUrl" value="https://chart.googleapis.com/chart?cht=lc&amp;chs=900x300&amp;chxt=x,y&amp;chdl=Titles|Items|Pages|Names&amp;chd=t:{0}&amp;chds=0,{1}&amp;chxr=0,0,{2}|1,0,{3}&amp;chxl=0:{4}&amp;chf=&amp;chco=2c50f2,ffcc00,99cc00,ff0000"/>
-    -->
-    <!-- Use these Urls to include only items on the chart -->
-    <add key="GoogleMonthlyChartUrl" value="https://chart.googleapis.com/chart?cht=bvg&amp;chs=900x150&amp;chbh=25,1&amp;chxt=x,y&amp;chdl={0}&amp;chd=t:{1}&amp;chds=0,{2}&amp;chxr=0,0,{3}|1,0,{4}&amp;chxl=0:{5}&amp;chf=&amp;chco=9fc9e6&amp;chbh=r&amp;chm=N,000000,0,-1,11" />
-    <add key="GoogleCumulativeChartUrl" value="https://chart.googleapis.com/chart?cht=lc&amp;chs=900x325&amp;chxt=x,y&amp;chdl={0}&amp;chd=t:{1}&amp;chds=0,{2}&amp;chxr=0,0,{3}|1,0,{4}&amp;chxl=0:{5}&amp;chf=&amp;chco=FF0000,00FF00,0000FF,000000&amp;chm=N,FF0000,0,-1,11|N,00FF00,1,-1,11|N,0000FF,2,-1,11|N,000000,3,-1,11" />
     <add key="aspnet:UseTaskFriendlySynchronizationContext" value="true" />
     <add key="webpages:Version" value="2.0.0.0" />
     <add key="webpages:Enabled" value="false" />

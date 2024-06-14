@@ -474,3 +474,12 @@ tr.import-detail-row td.import-detail {
     font-weight:bold;
     color:blue;
 }
+
+.exGraphDiv {
+    width: 800px;
+    height: 200px;
+    border-style: solid;
+    border-color: Black;
+    border-width: 1px;
+    margin: 5px;
+}

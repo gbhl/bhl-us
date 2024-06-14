@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 	<title>BHL Admin</title>
-	<link rel="stylesheet" type="text/css" runat="server" id="link1" href="/styles/adminstyle.css" />
+	<link rel="stylesheet" type="text/css" runat="server" id="link1" href="/styles/adminstyle.css?v=2" />
 	<link rel="icon" href="/favicon.ico" type="image/x-icon" />
 </head>
 <body id="body" runat="server">

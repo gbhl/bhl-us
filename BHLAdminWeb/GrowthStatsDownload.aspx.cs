@@ -14,7 +14,7 @@ namespace MOBOT.BHL.AdminWeb
 
             Response.Clear();
             Response.AppendHeader("Content-Type", "application/vnd.ms-excel");
-            Response.AppendHeader("Content-Disposition", "attachment; filename=BHLGrowthStats.xls");
+            Response.AppendHeader("Content-Disposition", "attachment; filename=BHLGrowthStats" + institutionCode + ".xls");
 
             List<MonthlyStats> titleStats = new List<MonthlyStats>();
             List<MonthlyStats> itemStats = new List<MonthlyStats>();
@@ -30,23 +30,26 @@ namespace MOBOT.BHL.AdminWeb
             List<MonthlyStats> stats = provider.MonthlyStatsSelectByDateAndInstitution(2000, 1, 2099, 12, institutionCode);
             foreach(MonthlyStats stat in stats)
             {
-                switch (stat.StatType)
+                if (stat.StatValue > 0)
                 {
-                    case "Titles Created":
-                        titleStats.Add(stat);
-                        break;
-                    case "Items Created":
-                        itemStats.Add(stat);
-                        break;
-                    case "Pages Created":
-                        pageStats.Add(stat);
-                        break;
-                    case "PageNames Created":
-                        nameStats.Add(stat);
-                        break;
-                    case "Segments Created":
-                        segmentStats.Add(stat);
-                        break;
+                    switch (stat.StatType)
+                    {
+                        case "Titles Created":
+                            titleStats.Add(stat);
+                            break;
+                        case "Items Created":
+                            itemStats.Add(stat);
+                            break;
+                        case "Pages Created":
+                            pageStats.Add(stat);
+                            break;
+                        case "PageNames Created":
+                            nameStats.Add(stat);
+                            break;
+                        case "Segments Created":
+                            segmentStats.Add(stat);
+                            break;
+                    }
                 }
             }
 
