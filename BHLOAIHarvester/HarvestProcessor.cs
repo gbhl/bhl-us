@@ -219,13 +219,13 @@ namespace BHLOAIHarvester
                 PublicationPlace = oaiRecord.PublicationPlace,
                 PublicationDate = oaiRecord.PublicationDates,
                 CallNumber = oaiRecord.CallNumber,
-                Issn = oaiRecord.Issn,
-                Isbn = oaiRecord.Isbn,
-                Lccn = oaiRecord.Llc,
-                Doi = oaiRecord.Doi,
                 Url = oaiRecord.Url
             };
             if (oaiRecord.Contributors.Count > 0) oaiDataRecord.Contributor = oaiRecord.Contributors[0];
+            if (oaiRecord.Issns.Count > 0) oaiDataRecord.Issn = oaiRecord.Issns[0];
+            if (oaiRecord.Isbns.Count > 0) oaiDataRecord.Isbn = oaiRecord.Isbns[0];
+            if (oaiRecord.Llcs.Count > 0) oaiDataRecord.Lccn = oaiRecord.Llcs[0];
+            if (oaiRecord.Dois.Count > 0) oaiDataRecord.Doi = oaiRecord.Dois[0];
 
             foreach (KeyValuePair<string, MOBOT.BHL.OAI2.OAIRecord> relatedTitle in oaiRecord.RelatedTitles)
             {

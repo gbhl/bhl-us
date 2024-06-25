@@ -316,22 +316,22 @@ namespace MOBOT.BHL.OAIMODS
             var doi = from d in root.Elements(ns + "identifier")
                         where d.Attribute("type").Value == "doi"
                         select d;
-            if (doi.Count() > 0) _oaiRecord.Doi = doi.First().Value;
+            foreach(string d in doi) _oaiRecord.Dois.Add(d);
 
             var isbn = from d in root.Elements(ns + "identifier")
                         where d.Attribute("type").Value == "isbn"
                         select d;
-            if (isbn.Count() > 0) _oaiRecord.Isbn = isbn.First().Value;
+            foreach (string i in isbn) _oaiRecord.Isbns.Add(i);
 
             var issn = from d in root.Elements(ns + "identifier")
                         where d.Attribute("type").Value == "issn"
                         select d;
-            if (issn.Count() > 0) _oaiRecord.Issn = issn.First().Value;
+            foreach (string i in issn) _oaiRecord.Issns.Add(i);
 
             var lccn = from d in root.Elements(ns + "identifier")
                         where d.Attribute("type").Value == "lccn"
                         select d;
-            if (lccn.Count() > 0) _oaiRecord.Llc = lccn.First().Value;
+            foreach (string l in lccn) _oaiRecord.Llcs.Add(l);
 
             var uris = from d in root.Elements(ns + "identifier")
                         where d.Attribute("type").Value == "uri"
@@ -340,15 +340,11 @@ namespace MOBOT.BHL.OAIMODS
             {
                 // See if a DOI is embedded within the URI
                 string uriValue = uri.Value;
-                if (!string.IsNullOrWhiteSpace(_oaiRecord.Doi)) _oaiRecord.Url = uriValue;  // Already have a DOI
-                else
-                {
-                    if (uriValue.Contains("http://dx.doi.org/")) _oaiRecord.Doi = uriValue.Replace("http://dx.doi.org/", "");
-                    else if (uriValue.Contains("https://dx.doi.org/")) _oaiRecord.Doi = uriValue.Replace("https://dx.doi.org/", "");
-                    else if (uriValue.Contains("http://doi.org/")) _oaiRecord.Doi = uriValue.Replace("http://doi.org/", "");
-                    else if (uriValue.Contains("https://doi.org/")) _oaiRecord.Doi = uriValue.Replace("https://doi.org/", "");
-                    else _oaiRecord.Url = uriValue;
-                }
+                if (uriValue.Contains("http://dx.doi.org/")) _oaiRecord.Dois.Add(uriValue.Replace("http://dx.doi.org/", ""));
+                else if (uriValue.Contains("https://dx.doi.org/")) _oaiRecord.Dois.Add(uriValue.Replace("https://dx.doi.org/", ""));
+                else if (uriValue.Contains("http://doi.org/")) _oaiRecord.Dois.Add(uriValue.Replace("http://doi.org/", ""));
+                else if (uriValue.Contains("https://doi.org/")) _oaiRecord.Dois.Add(uriValue.Replace("https://doi.org/", ""));
+                else _oaiRecord.Url = uriValue;
             }
 
             // Volume and Url
@@ -1023,9 +1019,9 @@ namespace MOBOT.BHL.OAIMODS
             {
                 sb.Append("<classification authority=\"lcc\">" + HttpUtility.HtmlEncode(title.CallNumber) + "</classification>\n");
             }
-            if (!String.IsNullOrEmpty(title.Ddc))
+            foreach(string ddc in title.Ddcs)
             {
-                sb.Append("<classification authority=\"ddc\">" + HttpUtility.HtmlEncode(title.Ddc) + "</classification>\n");
+                sb.Append("<classification authority=\"ddc\">" + HttpUtility.HtmlEncode(ddc) + "</classification>\n");
             }
 
             return sb.ToString();
@@ -1127,33 +1123,45 @@ namespace MOBOT.BHL.OAIMODS
         {
             StringBuilder sb = new StringBuilder();
 
-            if (!String.IsNullOrWhiteSpace(title.Isbn))
+            foreach(string isbn in title.Isbns)
             {
-                sb.Append("<identifier type=\"isbn\">" + HttpUtility.HtmlEncode(title.Isbn) + "</identifier>\n");
+                sb.Append("<identifier type=\"isbn\">" + HttpUtility.HtmlEncode(isbn) + "</identifier>\n");
             }
-            if (!String.IsNullOrWhiteSpace(title.Issn))
+            foreach(string issn in title.Issns)
             {
-                sb.Append("<identifier type=\"issn\">" + HttpUtility.HtmlEncode(title.Issn) + "</identifier>\n");
+                sb.Append("<identifier type=\"issn\">" + HttpUtility.HtmlEncode(issn) + "</identifier>\n");
             }
-            if (!String.IsNullOrWhiteSpace(title.EIssn))
+            foreach(string eissn in title.EIssns)
             {
-                sb.Append("<identifier type=\"issn\">" + HttpUtility.HtmlEncode(title.EIssn) + "</identifier>\n");
+                sb.Append("<identifier type=\"issn\">" + HttpUtility.HtmlEncode(eissn) + "</identifier>\n");
             }
-            foreach (String oclcNumber in title.oclcNumbers)
+            foreach (string oclcNumber in title.oclcNumbers)
             {
                 sb.Append("<identifier type=\"oclc\">" + HttpUtility.HtmlEncode(oclcNumber) + "</identifier>\n");
             }
-            if (!String.IsNullOrWhiteSpace(title.Nlm))
+            foreach(string nlm in title.Nlms)
             {
-                sb.Append("<identifier type=\"nlm\">" + HttpUtility.HtmlEncode(title.Nlm) + "</identifier>\n");
+                sb.Append("<identifier type=\"nlm\">" + HttpUtility.HtmlEncode(nlm) + "</identifier>\n");
             }
-            if (!String.IsNullOrWhiteSpace(title.Llc))
+            foreach(string nal in title.Nals)
             {
-                sb.Append("<identifier type=\"lccn\">" + HttpUtility.HtmlEncode(title.Llc) + "</identifier>\n");
+                sb.Append("<identifier type=\"nal\">" + HttpUtility.HtmlEncode(nal) + "</identifier>\n");
             }
-            if (!String.IsNullOrWhiteSpace(title.Doi))
+            foreach(string coden in title.Codens)
             {
-                sb.Append("<identifier type=\"doi\">" + HttpUtility.HtmlEncode(title.Doi) + "</identifier>\n");
+                sb.Append("<identifier type=\"coden\">" + HttpUtility.HtmlEncode(coden) + "</identifier>\n");
+            }
+            foreach(string gpo in title.Gpos)
+            {
+                sb.Append("<identifier type=\"gpo\">" + HttpUtility.HtmlEncode(gpo) + "</identifier>\n");
+            }
+            foreach(string llc in title.Llcs)
+            {
+                sb.Append("<identifier type=\"lccn\">" + HttpUtility.HtmlEncode(llc) + "</identifier>\n");
+            }
+            foreach(string doi in title.Dois)
+            {
+                sb.Append("<identifier type=\"doi\">" + HttpUtility.HtmlEncode(doi) + "</identifier>\n");
             }
 
             return sb.ToString();

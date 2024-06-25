@@ -159,11 +159,11 @@ namespace MOBOT.BHL.OAIDC
             {
                 string identifier = i.Value;
                 if (identifier.StartsWith("info:doi/"))
-                    _oaiRecord.Doi = identifier.Replace("info:doi/", "");
+                    _oaiRecord.Dois.Add(identifier.Replace("info:doi/", ""));
                 else if (identifier.StartsWith("urn:ISSN:"))
-                    _oaiRecord.Issn = identifier.Replace("urn:ISSN:", "");
+                    _oaiRecord.Issns.Add(identifier.Replace("urn:ISSN:", ""));
                 else if (identifier.StartsWith("urn:ISBN:"))
-                    _oaiRecord.Isbn = identifier.Replace("urn:ISBN:", "");
+                    _oaiRecord.Isbns.Add(identifier.Replace("urn:ISBN:", ""));
                 else 
                     _oaiRecord.Url = identifier;
             }
@@ -245,10 +245,10 @@ namespace MOBOT.BHL.OAIDC
 
             // Identifier
             if (!string.IsNullOrWhiteSpace(_oaiRecord.Url)) sb.Append("<dc:identifier>" + HttpUtility.HtmlEncode(_oaiRecord.Url) + "</dc:identifier>\n");
-            if (!string.IsNullOrWhiteSpace(_oaiRecord.Doi)) sb.Append("<dc:identifier>info:doi/" + HttpUtility.HtmlEncode(_oaiRecord.Doi) + "</dc:identifier>\n");
-            if (!string.IsNullOrWhiteSpace(_oaiRecord.Issn)) sb.Append("<dc:identifier>urn:ISSN:" + HttpUtility.HtmlEncode(_oaiRecord.Issn) + "</dc:identifier>\n");
-            if (!string.IsNullOrWhiteSpace(_oaiRecord.EIssn)) sb.Append("<dc:identifier>urn:ISSN:" + HttpUtility.HtmlEncode(_oaiRecord.EIssn) + "</dc:identifier>\n");
-            if (!string.IsNullOrWhiteSpace(_oaiRecord.Isbn)) sb.Append("<dc:identifier>urn:ISBN:" + HttpUtility.HtmlEncode(_oaiRecord.Isbn) + "</dc:identifier>\n");
+            foreach(string doi in _oaiRecord.Dois) sb.Append("<dc:identifier>info:doi/" + HttpUtility.HtmlEncode(doi) + "</dc:identifier>\n");
+            foreach(string issn in _oaiRecord.Issns) sb.Append("<dc:identifier>urn:ISSN:" + HttpUtility.HtmlEncode(issn) + "</dc:identifier>\n");
+            foreach(string eissn in _oaiRecord.EIssns) sb.Append("<dc:identifier>urn:ISSN:" + HttpUtility.HtmlEncode(eissn) + "</dc:identifier>\n");
+            foreach(string isbn in _oaiRecord.Isbns) sb.Append("<dc:identifier>urn:ISBN:" + HttpUtility.HtmlEncode(isbn) + "</dc:identifier>\n");
 
             // Source
             // No mapping for this DataSet

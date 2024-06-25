@@ -313,68 +313,92 @@ namespace MOBOT.BHL.OAI2
             set { _sequence = value; }
         }
 
-        List<String> _oclcNumbers = new List<string>();
+        List<string> _oclcNumbers = new List<string>();
 
-        public List<String> oclcNumbers
+        public List<string> oclcNumbers
         {
             get { return _oclcNumbers; }
             set { _oclcNumbers = value; }
         }
 
-        String _issn = String.Empty;
+        List<string> _issns = new List<string>();
 
-        public String Issn
+        public List<string> Issns
         {
-            get { return _issn; }
-            set { _issn = value; }
+            get { return _issns; }
+            set { _issns = value; }
         }
 
-        String _eissn = String.Empty;
+        List<string> _eissns = new List<string>();
 
-        public String EIssn
+        public List<string> EIssns
         {
-            get { return _eissn; }
-            set { _eissn = value; }
+            get { return _eissns; }
+            set { _eissns = value; }
         }
 
-        String _isbn = String.Empty;
+        List<string> _isbns = new List<string>();
 
-        public String Isbn
+        public List<string> Isbns
         {
-            get { return _isbn; }
-            set { _isbn = value; }
+            get { return _isbns; }
+            set { _isbns = value; }
         }
 
-        String _llc = String.Empty;
+        List<string> _llcs = new List<string>();
 
-        public String Llc
+        public List<string> Llcs
         {
-            get { return _llc; }
-            set { _llc = value; }
+            get { return _llcs; }
+            set { _llcs = value; }
         }
 
-        String _ddc = String.Empty;
+        List<string> _ddcs = new List<string>();
 
-        public String Ddc
+        public List<string> Ddcs
         {
-            get { return _ddc; }
-            set { _ddc = value; }
+            get { return _ddcs; }
+            set { _ddcs = value; }
         }
 
-        String _nlm = String.Empty;
+        List<string> _nlms = new List<string>();
 
-        public String Nlm
+        public List<string> Nlms
         {
-            get { return _nlm; }
-            set { _nlm = value; }
+            get { return _nlms; }
+            set { _nlms = value; }
         }
 
-        String _doi = String.Empty;
+        List<string> _nals = new List<string>();
 
-        public String Doi
+        public List<string> Nals
         {
-            get { return _doi; }
-            set { _doi = value; }
+            get { return _nals; }
+            set { _nals = value; }
+        }
+
+        List<string> _codens = new List<string>();
+
+        public List<string> Codens
+        {
+            get { return _codens; }
+            set { _codens = value; }
+        }
+
+        List<string> _gpos = new List<string>();
+
+        public List<string> Gpos
+        {
+            get { return _gpos; }
+            set { _gpos = value; }
+        }
+
+        List<string> _dois = new List<string>();
+
+        public List<string> Dois
+        {
+            get { return _dois; }
+            set { _dois = value; }
         }
 
         List<String> _formats = new List<string>();
@@ -711,12 +735,6 @@ namespace MOBOT.BHL.OAI2
                     List<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID((int)book.PrimaryTitleID);
                     this.LoadIdentifiers(titleIdentifiers, this);
 
-                    List<Title_Identifier> dois = provider.DOISelectValidForTitle(title.TitleID);
-                    foreach (Title_Identifier doi in dois)
-                    {
-                        this.SetIdentifier("doi", doi.IdentifierValue, this);
-                    }
-
                     List<TitleAssociation> titleAssociations = provider.TitleAssociationSelectExtendedForTitle(title.TitleID);
                     foreach (TitleAssociation titleAssociation in titleAssociations)
                     {
@@ -882,12 +900,6 @@ namespace MOBOT.BHL.OAI2
                 List<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID(title.TitleID);
                 this.LoadIdentifiers(titleIdentifiers, this);
 
-                List<Title_Identifier> dois = provider.DOISelectValidForTitle(title.TitleID);
-                foreach(Title_Identifier doi in dois)
-                {
-                    this.SetIdentifier("doi", doi.IdentifierValue, this);
-                }
-
                 List<TitleAssociation> titleAssociations = provider.TitleAssociationSelectExtendedForTitle(title.TitleID);
                 foreach (TitleAssociation titleAssociation in titleAssociations)
                 {
@@ -1014,14 +1026,6 @@ namespace MOBOT.BHL.OAI2
                 }
 
                 this.LoadIdentifiers(segment.IdentifierList, this);
-                foreach(ItemIdentifier itemIdentifier in segment.IdentifierList)
-                {
-                    if (string.Compare("doi", itemIdentifier.IdentifierName, true) == 0)
-                    {
-                        this.SetIdentifier("doi", itemIdentifier.IdentifierValue, this);
-                        break;
-                    }
-                }
             }
         }
 
@@ -1079,25 +1083,34 @@ namespace MOBOT.BHL.OAI2
                     record.oclcNumbers.Add(identifierValue);
                     break;
                 case "issn":
-                    record.Issn = identifierValue;
+                    record.Issns.Add(identifierValue);
                     break;
                 case "eissn":
-                    record.EIssn = identifierValue;
+                    record.EIssns.Add(identifierValue);
                     break;
                 case "isbn":
-                    record.Isbn = identifierValue;
+                    record.Isbns.Add(identifierValue);
                     break;
                 case "dlc":
-                    record.Llc = identifierValue;
+                    record.Llcs.Add(identifierValue);
                     break;
                 case "ddc":
-                    record.Ddc = identifierValue;
+                    record.Ddcs.Add(identifierValue);
                     break;
                 case "nlm":
-                    record.Nlm = identifierValue;
+                    record.Nlms.Add(identifierValue);
+                    break;
+                case "nal":
+                    record.Nals.Add(identifierValue);
+                    break;
+                case "coden":
+                    record.Codens.Add(identifierValue);
+                    break;
+                case "gpo":
+                    record.Gpos.Add(identifierValue);
                     break;
                 case "doi":
-                    record.Doi = identifierValue;
+                    record.Dois.Add(identifierValue);
                     break;
             }
         }
