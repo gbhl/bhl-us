@@ -1,10 +1,4 @@
-﻿
--- SegmentClusterSegmentSelectAuto PROCEDURE
--- Generated 9/18/2012 12:12:30 PM
--- Do not modify the contents of this procedure.
--- Select Procedure for SegmentClusterSegment
-
-CREATE PROCEDURE SegmentClusterSegmentSelectAuto
+﻿CREATE PROCEDURE SegmentClusterSegmentSelectAuto
 
 @SegmentID INT
 
@@ -17,6 +11,7 @@ SELECT
 	[SegmentID],
 	[SegmentClusterID],
 	[IsPrimary],
+	[SequenceOrder],
 	[CreationDate],
 	[LastModifiedDate],
 	[CreationUserID],
@@ -37,3 +32,4 @@ ELSE BEGIN
 	RETURN -- select successful
 END
 
+GO

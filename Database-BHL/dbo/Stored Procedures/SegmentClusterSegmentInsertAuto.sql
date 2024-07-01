@@ -1,14 +1,9 @@
-﻿
--- SegmentClusterSegmentInsertAuto PROCEDURE
--- Generated 9/18/2012 12:12:30 PM
--- Do not modify the contents of this procedure.
--- Insert Procedure for SegmentClusterSegment
-
-CREATE PROCEDURE SegmentClusterSegmentInsertAuto
+﻿CREATE PROCEDURE SegmentClusterSegmentInsertAuto
 
 @SegmentID INT,
 @SegmentClusterID INT,
 @IsPrimary SMALLINT,
+@SequenceOrder SMALLINT,
 @CreationUserID INT,
 @LastModifiedUserID INT
 
@@ -21,6 +16,7 @@ INSERT INTO [dbo].[SegmentClusterSegment]
 	[SegmentID],
 	[SegmentClusterID],
 	[IsPrimary],
+	[SequenceOrder],
 	[CreationDate],
 	[LastModifiedDate],
 	[CreationUserID],
@@ -31,6 +27,7 @@ VALUES
 	@SegmentID,
 	@SegmentClusterID,
 	@IsPrimary,
+	@SequenceOrder,
 	getdate(),
 	getdate(),
 	@CreationUserID,
@@ -49,6 +46,7 @@ ELSE BEGIN
 		[SegmentID],
 		[SegmentClusterID],
 		[IsPrimary],
+		[SequenceOrder],
 		[CreationDate],
 		[LastModifiedDate],
 		[CreationUserID],
@@ -62,3 +60,4 @@ ELSE BEGIN
 	RETURN -- insert successful
 END
 
+GO

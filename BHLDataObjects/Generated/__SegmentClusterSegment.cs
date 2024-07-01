@@ -24,6 +24,7 @@
 
 using System;
 using System.Data;
+using CsvHelper.Configuration.Attributes;
 using CustomDataAccess;
 
 #endregion Using
@@ -48,6 +49,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="segmentID"></param>
 		/// <param name="segmentClusterID"></param>
 		/// <param name="isPrimary"></param>
+		/// <param name="sequenceOrder"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
@@ -55,6 +57,7 @@ namespace MOBOT.BHL.DataObjects
 		public __SegmentClusterSegment(int segmentID, 
 			int segmentClusterID, 
 			short isPrimary, 
+			short sequenceOrder,
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int creationUserID, 
@@ -63,6 +66,7 @@ namespace MOBOT.BHL.DataObjects
 			SegmentID = segmentID;
 			SegmentClusterID = segmentClusterID;
 			IsPrimary = isPrimary;
+			SequenceOrder = sequenceOrder;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
@@ -108,6 +112,11 @@ namespace MOBOT.BHL.DataObjects
 						_IsPrimary = (short)column.Value;
 						break;
 					}
+					case "SequenceOrder" :
+					{
+						_SequenceOrder = (short?)column.Value;
+						break;
+					}
 					case "CreationDate" :
 					{
 						_CreationDate = (DateTime)column.Value;
@@ -128,7 +137,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedUserID = (int)column.Value;
 						break;
 					}
-								}
+				}
 			}
 			
 			IsNew = false;
@@ -216,18 +225,45 @@ namespace MOBOT.BHL.DataObjects
 				}
 			}
 		}
-		
-		#endregion IsPrimary
-		
-		#region CreationDate
-		
-		private DateTime _CreationDate;
+
+        #endregion IsPrimary
+
+        #region SequenceOrder
+
+        private short? _SequenceOrder = null;
+
+        /// <summary>
+        /// Column: IsPrimary;
+        /// DBMS data type: smallint;
+        /// </summary>
+        [ColumnDefinition("SequenceOrder", DbTargetType=SqlDbType.SmallInt, Ordinal=4, NumericPrecision=5, IsNullable = true)]
+        public short? SequenceOrder
+        {
+            get
+            {
+                return _SequenceOrder;
+            }
+            set
+            {
+                if (_SequenceOrder != value)
+                {
+                    _SequenceOrder = value;
+                    _IsDirty = true;
+                }
+            }
+        }
+
+        #endregion SequenceOrder
+
+        #region CreationDate
+
+        private DateTime _CreationDate;
 		
 		/// <summary>
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=4)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=5)]
 		public DateTime CreationDate
 		{
 			get
@@ -254,7 +290,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=5)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=6)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -281,7 +317,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationUserID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=6, NumericPrecision=10)]
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=7, NumericPrecision=10)]
 		public int CreationUserID
 		{
 			get
@@ -308,7 +344,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedUserID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=7, NumericPrecision=10)]
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=8, NumericPrecision=10)]
 		public int LastModifiedUserID
 		{
 			get
@@ -373,6 +409,7 @@ namespace MOBOT.BHL.DataObjects
 					o.SegmentID == SegmentID &&
 					o.SegmentClusterID == SegmentClusterID &&
 					o.IsPrimary == IsPrimary &&
+					o.SequenceOrder == SequenceOrder &&
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
@@ -478,7 +515,8 @@ namespace MOBOT.BHL.DataObjects
 		{	
 			public const string SegmentID = "SegmentID";	
 			public const string SegmentClusterID = "SegmentClusterID";	
-			public const string IsPrimary = "IsPrimary";	
+			public const string IsPrimary = "IsPrimary";
+			public const string SequenceOrder = "SequenceOrder";
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	

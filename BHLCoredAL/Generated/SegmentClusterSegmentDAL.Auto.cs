@@ -150,6 +150,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="segmentID"></param>
 		/// <param name="segmentClusterID"></param>
 		/// <param name="isPrimary"></param>
+		/// <param name="sequenceOrder"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type SegmentClusterSegment.</returns>
@@ -159,10 +160,11 @@ namespace MOBOT.BHL.DAL
 			int segmentID,
 			int segmentClusterID,
 			short isPrimary,
+			short? sequenceOrder,
 			int creationUserID,
 			int lastModifiedUserID)
 		{
-			return SegmentClusterSegmentInsertAuto( sqlConnection, sqlTransaction, "BHL", segmentID, segmentClusterID, isPrimary, creationUserID, lastModifiedUserID );
+			return SegmentClusterSegmentInsertAuto( sqlConnection, sqlTransaction, "BHL", segmentID, segmentClusterID, isPrimary, sequenceOrder, creationUserID, lastModifiedUserID );
 		}
 		
 		/// <summary>
@@ -174,6 +176,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="segmentID"></param>
 		/// <param name="segmentClusterID"></param>
 		/// <param name="isPrimary"></param>
+		/// <param name="sequenceOrder"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type SegmentClusterSegment.</returns>
@@ -184,6 +187,7 @@ namespace MOBOT.BHL.DAL
 			int segmentID,
 			int segmentClusterID,
 			short isPrimary,
+			short? sequenceOrder,
 			int creationUserID,
 			int lastModifiedUserID)
 		{
@@ -194,6 +198,7 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID),
 					CustomSqlHelper.CreateInputParameter("SegmentClusterID", SqlDbType.Int, null, false, segmentClusterID),
 					CustomSqlHelper.CreateInputParameter("IsPrimary", SqlDbType.SmallInt, null, false, isPrimary),
+					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.SmallInt, null, true, sequenceOrder),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, false, creationUserID),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
@@ -248,6 +253,7 @@ namespace MOBOT.BHL.DAL
 				value.SegmentID,
 				value.SegmentClusterID,
 				value.IsPrimary,
+				value.SequenceOrder,
 				value.CreationUserID,
 				value.LastModifiedUserID);
 		}
@@ -327,6 +333,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="segmentID"></param>
 		/// <param name="segmentClusterID"></param>
 		/// <param name="isPrimary"></param>
+		/// <param name="sequenceOrder"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type SegmentClusterSegment.</returns>
 		public SegmentClusterSegment SegmentClusterSegmentUpdateAuto(
@@ -335,9 +342,10 @@ namespace MOBOT.BHL.DAL
 			int segmentID,
 			int segmentClusterID,
 			short isPrimary,
+			short? sequenceOrder,
 			int lastModifiedUserID)
 		{
-			return SegmentClusterSegmentUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentID, segmentClusterID, isPrimary, lastModifiedUserID);
+			return SegmentClusterSegmentUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentID, segmentClusterID, isPrimary, sequenceOrder, lastModifiedUserID);
 		}
 		
 		/// <summary>
@@ -349,6 +357,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="segmentID"></param>
 		/// <param name="segmentClusterID"></param>
 		/// <param name="isPrimary"></param>
+		/// <param name="sequenceOrder"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type SegmentClusterSegment.</returns>
 		public SegmentClusterSegment SegmentClusterSegmentUpdateAuto(
@@ -358,6 +367,7 @@ namespace MOBOT.BHL.DAL
 			int segmentID,
 			int segmentClusterID,
 			short isPrimary,
+			short? sequenceOrder,
 			int lastModifiedUserID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
@@ -367,6 +377,7 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID),
 					CustomSqlHelper.CreateInputParameter("SegmentClusterID", SqlDbType.Int, null, false, segmentClusterID),
 					CustomSqlHelper.CreateInputParameter("IsPrimary", SqlDbType.SmallInt, null, false, isPrimary),
+					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.SmallInt, null, true, sequenceOrder),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
@@ -420,6 +431,7 @@ namespace MOBOT.BHL.DAL
 				value.SegmentID,
 				value.SegmentClusterID,
 				value.IsPrimary,
+				value.SequenceOrder,
 				value.LastModifiedUserID);
 		}
 		
@@ -468,6 +480,7 @@ namespace MOBOT.BHL.DAL
 					value.SegmentID,
 						value.SegmentClusterID,
 						value.IsPrimary,
+						value.SequenceOrder,
 						value.CreationUserID,
 						value.LastModifiedUserID);
 				
@@ -499,6 +512,7 @@ namespace MOBOT.BHL.DAL
 					value.SegmentID,
 						value.SegmentClusterID,
 						value.IsPrimary,
+						value.SequenceOrder,
 						value.LastModifiedUserID);
 					
 				return new CustomDataAccessStatus<SegmentClusterSegment>(

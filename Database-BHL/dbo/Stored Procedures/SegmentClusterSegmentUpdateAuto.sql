@@ -1,14 +1,9 @@
-﻿
--- SegmentClusterSegmentUpdateAuto PROCEDURE
--- Generated 9/18/2012 12:12:30 PM
--- Do not modify the contents of this procedure.
--- Update Procedure for SegmentClusterSegment
-
-CREATE PROCEDURE SegmentClusterSegmentUpdateAuto
+﻿CREATE PROCEDURE SegmentClusterSegmentUpdateAuto
 
 @SegmentID INT,
 @SegmentClusterID INT,
 @IsPrimary SMALLINT,
+@SequenceOrder SMALLINT,
 @LastModifiedUserID INT
 
 AS 
@@ -22,6 +17,7 @@ SET
 	[SegmentID] = @SegmentID,
 	[SegmentClusterID] = @SegmentClusterID,
 	[IsPrimary] = @IsPrimary,
+	[SequenceOrder] = @SequenceOrder,
 	[LastModifiedDate] = getdate(),
 	[LastModifiedUserID] = @LastModifiedUserID
 
@@ -40,6 +36,7 @@ ELSE BEGIN
 		[SegmentID],
 		[SegmentClusterID],
 		[IsPrimary],
+		[SequenceOrder],
 		[CreationDate],
 		[LastModifiedDate],
 		[CreationUserID],
@@ -53,3 +50,4 @@ ELSE BEGIN
 	RETURN -- update successful
 END
 
+GO
