@@ -236,7 +236,10 @@
                                     <%: segment.Title %>
                                 </a>
                             <% if (!string.IsNullOrWhiteSpace(segment.Authors)) { %> - <%: segment.Authors %> <% } %> 
-                            <% if (!string.IsNullOrWhiteSpace(segment.ContainerTitle)) { %> - <%: segment.ContainerTitle%> <% } %> 
+                            <% if (!string.IsNullOrWhiteSpace(segment.ContainerTitle)) { 
+                                %> - <%: segment.ContainerTitle%> 
+                                <% if (!string.IsNullOrWhiteSpace(segment.Volume)) { %> (<%: segment.Volume %>)<% } %>
+                            <% } %> 
                             <% if (!string.IsNullOrWhiteSpace(segment.Date)) { %> - <%: segment.Date%> <% } %> 
                             <% if (!string.IsNullOrWhiteSpace(segment.PageRange)) { %> - p.<%: segment.PageRange%> <% } %> 
                             <br /><br />
