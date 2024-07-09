@@ -31,6 +31,21 @@
             <% if (!String.IsNullOrEmpty(BhlSegment.TranslatedTitle)) { %>
                 <div class="segmentdetails"><h3>Translated Title</h3> <p><%: BhlSegment.TranslatedTitle%></p></div>
             <% } %>
+            <%if (BhlSegment.SegmentExternalResources.Count > 0) { %>
+                <h3>External Resources</h3>
+                <p>
+                    <%foreach (SegmentExternalResource resource in BhlSegment.SegmentExternalResources)
+                    {%>
+                        <%:resource.ExternalResourceTypeLabel%>:
+                        <%if (string.IsNullOrWhiteSpace(resource.Url)) { %>
+                            <%:resource.UrlText %>
+                        <%} else { %>
+                            <a class="ExtLinkBrowse" href="<%:resource.Url%>" rel="noopener noreferrer" target="_blank"><%:resource.UrlText%></a>
+                        <%}%>
+                        <br />
+                    <% } %>
+                </p>
+            <% } %>
             <% if (BhlSegment.AuthorList.Count > 0) { %>
                 <h3>By</h3>
                 <p>

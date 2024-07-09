@@ -9,7 +9,7 @@ SET NOCOUNT ON
 SELECT	
 	[TitleExternalResourceID],
 	[TitleID],
-	[TitleExternalResourceTypeID],
+	[ExternalResourceTypeID],
 	[UrlText],
 	[Url],
 	[SequenceOrder],

@@ -1,8 +1,8 @@
 
-// Generated 7/9/2024 11:03:06 AM
+// Generated 7/9/2024 11:03:14 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class TitleExternalResourceDAL is based upon dbo.TitleExternalResource.
+// This partial class SegmentExternalResourceDAL is based upon dbo.SegmentExternalResource.
 
 #region How To Implement
 
@@ -13,7 +13,7 @@
 //
 // namespace MOBOT.BHL.DAL
 // {
-// 		public partial class TitleExternalResourceDAL
+// 		public partial class SegmentExternalResourceDAL
 //		{
 //		}
 // }
@@ -33,51 +33,51 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class TitleExternalResourceDAL 
+	partial class SegmentExternalResourceDAL 
 	{
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from dbo.TitleExternalResource by primary key(s).
+		/// Select values from dbo.SegmentExternalResource by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="titleExternalResourceID"></param>
-		/// <returns>Object of type TitleExternalResource.</returns>
-		public TitleExternalResource TitleExternalResourceSelectAuto(
+		/// <param name="segmentExternalResourceID"></param>
+		/// <returns>Object of type SegmentExternalResource.</returns>
+		public SegmentExternalResource SegmentExternalResourceSelectAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
-			int titleExternalResourceID)
+			int segmentExternalResourceID)
 		{
-			return TitleExternalResourceSelectAuto(	sqlConnection, sqlTransaction, "BHL",	titleExternalResourceID );
+			return SegmentExternalResourceSelectAuto(	sqlConnection, sqlTransaction, "BHL",	segmentExternalResourceID );
 		}
 			
 		/// <summary>
-		/// Select values from dbo.TitleExternalResource by primary key(s).
+		/// Select values from dbo.SegmentExternalResource by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
-		/// <param name="titleExternalResourceID"></param>
-		/// <returns>Object of type TitleExternalResource.</returns>
-		public TitleExternalResource TitleExternalResourceSelectAuto(
+		/// <param name="segmentExternalResourceID"></param>
+		/// <returns>Object of type SegmentExternalResource.</returns>
+		public SegmentExternalResource SegmentExternalResourceSelectAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
-			int titleExternalResourceID )
+			int segmentExternalResourceID )
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings( connectionKeyName ), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
-			using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleExternalResourceSelectAuto", connection, transaction, 
-				CustomSqlHelper.CreateInputParameter("TitleExternalResourceID", SqlDbType.Int, null, false, titleExternalResourceID)))
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentExternalResourceSelectAuto", connection, transaction, 
+				CustomSqlHelper.CreateInputParameter("SegmentExternalResourceID", SqlDbType.Int, null, false, segmentExternalResourceID)))
 			{
-				using (CustomSqlHelper<TitleExternalResource> helper = new CustomSqlHelper<TitleExternalResource>())
+				using (CustomSqlHelper<SegmentExternalResource> helper = new CustomSqlHelper<SegmentExternalResource>())
 				{
-					List<TitleExternalResource> list = helper.ExecuteReader(command);
+					List<SegmentExternalResource> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
-						TitleExternalResource o = list[0];
+						SegmentExternalResource o = list[0];
 						list = null;
 						return o;
 					}
@@ -90,39 +90,39 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from dbo.TitleExternalResource by primary key(s).
+		/// Select values from dbo.SegmentExternalResource by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="titleExternalResourceID"></param>
+		/// <param name="segmentExternalResourceID"></param>
 		/// <returns>List&lt;CustomDataRow&gt;</returns>
-		public List<CustomDataRow> TitleExternalResourceSelectAutoRaw(
+		public List<CustomDataRow> SegmentExternalResourceSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
-			int titleExternalResourceID)
+			int segmentExternalResourceID)
 		{
-			return TitleExternalResourceSelectAutoRaw( sqlConnection, sqlTransaction, "BHL", titleExternalResourceID );
+			return SegmentExternalResourceSelectAutoRaw( sqlConnection, sqlTransaction, "BHL", segmentExternalResourceID );
 		}
 		
 		/// <summary>
-		/// Select values from dbo.TitleExternalResource by primary key(s).
+		/// Select values from dbo.SegmentExternalResource by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
-		/// <param name="titleExternalResourceID"></param>
+		/// <param name="segmentExternalResourceID"></param>
 		/// <returns>List&lt;CustomDataRow&gt;</returns>
-		public List<CustomDataRow> TitleExternalResourceSelectAutoRaw(
+		public List<CustomDataRow> SegmentExternalResourceSelectAutoRaw(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
-			int titleExternalResourceID)
+			int segmentExternalResourceID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
-			using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleExternalResourceSelectAuto", connection, transaction,
-				CustomSqlHelper.CreateInputParameter("TitleExternalResourceID", SqlDbType.Int, null, false, titleExternalResourceID)))
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentExternalResourceSelectAuto", connection, transaction,
+				CustomSqlHelper.CreateInputParameter("SegmentExternalResourceID", SqlDbType.Int, null, false, segmentExternalResourceID)))
 			{
 				return CustomSqlHelper.ExecuteReaderAndReturnRows(command);
 			}
@@ -133,22 +133,22 @@ namespace MOBOT.BHL.DAL
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into dbo.TitleExternalResource.
+		/// Insert values into dbo.SegmentExternalResource.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="titleID"></param>
+		/// <param name="segmentID"></param>
 		/// <param name="externalResourceTypeID"></param>
 		/// <param name="urlText"></param>
 		/// <param name="url"></param>
 		/// <param name="sequenceOrder"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <returns>Object of type TitleExternalResource.</returns>
-		public TitleExternalResource TitleExternalResourceInsertAuto(
+		/// <returns>Object of type SegmentExternalResource.</returns>
+		public SegmentExternalResource SegmentExternalResourceInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
-			int titleID,
+			int segmentID,
 			int externalResourceTypeID,
 			string urlText,
 			string url,
@@ -156,28 +156,28 @@ namespace MOBOT.BHL.DAL
 			int creationUserID,
 			int lastModifiedUserID)
 		{
-			return TitleExternalResourceInsertAuto( sqlConnection, sqlTransaction, "BHL", titleID, externalResourceTypeID, urlText, url, sequenceOrder, creationUserID, lastModifiedUserID );
+			return SegmentExternalResourceInsertAuto( sqlConnection, sqlTransaction, "BHL", segmentID, externalResourceTypeID, urlText, url, sequenceOrder, creationUserID, lastModifiedUserID );
 		}
 		
 		/// <summary>
-		/// Insert values into dbo.TitleExternalResource.
+		/// Insert values into dbo.SegmentExternalResource.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
-		/// <param name="titleID"></param>
+		/// <param name="segmentID"></param>
 		/// <param name="externalResourceTypeID"></param>
 		/// <param name="urlText"></param>
 		/// <param name="url"></param>
 		/// <param name="sequenceOrder"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <returns>Object of type TitleExternalResource.</returns>
-		public TitleExternalResource TitleExternalResourceInsertAuto(
+		/// <returns>Object of type SegmentExternalResource.</returns>
+		public SegmentExternalResource SegmentExternalResourceInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
-			int titleID,
+			int segmentID,
 			int externalResourceTypeID,
 			string urlText,
 			string url,
@@ -188,9 +188,9 @@ namespace MOBOT.BHL.DAL
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
-			using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleExternalResourceInsertAuto", connection, transaction, 
-				CustomSqlHelper.CreateOutputParameter("TitleExternalResourceID", SqlDbType.Int, null, false),
-					CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID),
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentExternalResourceInsertAuto", connection, transaction, 
+				CustomSqlHelper.CreateOutputParameter("SegmentExternalResourceID", SqlDbType.Int, null, false),
+					CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID),
 					CustomSqlHelper.CreateInputParameter("ExternalResourceTypeID", SqlDbType.Int, null, false, externalResourceTypeID),
 					CustomSqlHelper.CreateInputParameter("UrlText", SqlDbType.NVarChar, 100, false, urlText),
 					CustomSqlHelper.CreateInputParameter("Url", SqlDbType.NVarChar, 200, false, url),
@@ -199,12 +199,12 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
-				using (CustomSqlHelper<TitleExternalResource> helper = new CustomSqlHelper<TitleExternalResource>())
+				using (CustomSqlHelper<SegmentExternalResource> helper = new CustomSqlHelper<SegmentExternalResource>())
 				{
-					List<TitleExternalResource> list = helper.ExecuteReader(command);
+					List<SegmentExternalResource> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
-						TitleExternalResource o = list[0];
+						SegmentExternalResource o = list[0];
 						list = null;
 						return o;
 					}
@@ -217,36 +217,36 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into dbo.TitleExternalResource. Returns an object of type TitleExternalResource.
+		/// Insert values into dbo.SegmentExternalResource. Returns an object of type SegmentExternalResource.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="value">Object of type TitleExternalResource.</param>
-		/// <returns>Object of type TitleExternalResource.</returns>
-		public TitleExternalResource TitleExternalResourceInsertAuto(
+		/// <param name="value">Object of type SegmentExternalResource.</param>
+		/// <returns>Object of type SegmentExternalResource.</returns>
+		public SegmentExternalResource SegmentExternalResourceInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
-			TitleExternalResource value)
+			SegmentExternalResource value)
 		{
-			return TitleExternalResourceInsertAuto(sqlConnection, sqlTransaction, "BHL", value);
+			return SegmentExternalResourceInsertAuto(sqlConnection, sqlTransaction, "BHL", value);
 		}
 		
 		/// <summary>
-		/// Insert values into dbo.TitleExternalResource. Returns an object of type TitleExternalResource.
+		/// Insert values into dbo.SegmentExternalResource. Returns an object of type SegmentExternalResource.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
-		/// <param name="value">Object of type TitleExternalResource.</param>
-		/// <returns>Object of type TitleExternalResource.</returns>
-		public TitleExternalResource TitleExternalResourceInsertAuto(
+		/// <param name="value">Object of type SegmentExternalResource.</param>
+		/// <returns>Object of type SegmentExternalResource.</returns>
+		public SegmentExternalResource SegmentExternalResourceInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
-			TitleExternalResource value)
+			SegmentExternalResource value)
 		{
-			return TitleExternalResourceInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
-				value.TitleID,
+			return SegmentExternalResourceInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
+				value.SegmentID,
 				value.ExternalResourceTypeID,
 				value.UrlText,
 				value.Url,
@@ -260,39 +260,39 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from dbo.TitleExternalResource by primary key(s).
+		/// Delete values from dbo.SegmentExternalResource by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="titleExternalResourceID"></param>
+		/// <param name="segmentExternalResourceID"></param>
 		/// <returns>true if successful otherwise false.</returns>
-		public bool TitleExternalResourceDeleteAuto(
+		public bool SegmentExternalResourceDeleteAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
-			int titleExternalResourceID)
+			int segmentExternalResourceID)
 		{
-			return TitleExternalResourceDeleteAuto( sqlConnection, sqlTransaction, "BHL", titleExternalResourceID );
+			return SegmentExternalResourceDeleteAuto( sqlConnection, sqlTransaction, "BHL", segmentExternalResourceID );
 		}
 		
 		/// <summary>
-		/// Delete values from dbo.TitleExternalResource by primary key(s).
+		/// Delete values from dbo.SegmentExternalResource by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
-		/// <param name="titleExternalResourceID"></param>
+		/// <param name="segmentExternalResourceID"></param>
 		/// <returns>true if successful otherwise false.</returns>
-		public bool TitleExternalResourceDeleteAuto(
+		public bool SegmentExternalResourceDeleteAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
-			int titleExternalResourceID)
+			int segmentExternalResourceID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
-			using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleExternalResourceDeleteAuto", connection, transaction, 
-				CustomSqlHelper.CreateInputParameter("TitleExternalResourceID", SqlDbType.Int, null, false, titleExternalResourceID), 
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentExternalResourceDeleteAuto", connection, transaction, 
+				CustomSqlHelper.CreateInputParameter("SegmentExternalResourceID", SqlDbType.Int, null, false, segmentExternalResourceID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				int returnCode = CustomSqlHelper.ExecuteNonQuery(command, "ReturnCode");
@@ -318,52 +318,52 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in dbo.TitleExternalResource. Returns an object of type TitleExternalResource.
+		/// Update values in dbo.SegmentExternalResource. Returns an object of type SegmentExternalResource.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="titleExternalResourceID"></param>
-		/// <param name="titleID"></param>
+		/// <param name="segmentExternalResourceID"></param>
+		/// <param name="segmentID"></param>
 		/// <param name="externalResourceTypeID"></param>
 		/// <param name="urlText"></param>
 		/// <param name="url"></param>
 		/// <param name="sequenceOrder"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <returns>Object of type TitleExternalResource.</returns>
-		public TitleExternalResource TitleExternalResourceUpdateAuto(
+		/// <returns>Object of type SegmentExternalResource.</returns>
+		public SegmentExternalResource SegmentExternalResourceUpdateAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
-			int titleExternalResourceID,
-			int titleID,
+			int segmentExternalResourceID,
+			int segmentID,
 			int externalResourceTypeID,
 			string urlText,
 			string url,
 			short sequenceOrder,
 			int lastModifiedUserID)
 		{
-			return TitleExternalResourceUpdateAuto( sqlConnection, sqlTransaction, "BHL", titleExternalResourceID, titleID, externalResourceTypeID, urlText, url, sequenceOrder, lastModifiedUserID);
+			return SegmentExternalResourceUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentExternalResourceID, segmentID, externalResourceTypeID, urlText, url, sequenceOrder, lastModifiedUserID);
 		}
 		
 		/// <summary>
-		/// Update values in dbo.TitleExternalResource. Returns an object of type TitleExternalResource.
+		/// Update values in dbo.SegmentExternalResource. Returns an object of type SegmentExternalResource.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
-		/// <param name="titleExternalResourceID"></param>
-		/// <param name="titleID"></param>
+		/// <param name="segmentExternalResourceID"></param>
+		/// <param name="segmentID"></param>
 		/// <param name="externalResourceTypeID"></param>
 		/// <param name="urlText"></param>
 		/// <param name="url"></param>
 		/// <param name="sequenceOrder"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <returns>Object of type TitleExternalResource.</returns>
-		public TitleExternalResource TitleExternalResourceUpdateAuto(
+		/// <returns>Object of type SegmentExternalResource.</returns>
+		public SegmentExternalResource SegmentExternalResourceUpdateAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
-			int titleExternalResourceID,
-			int titleID,
+			int segmentExternalResourceID,
+			int segmentID,
 			int externalResourceTypeID,
 			string urlText,
 			string url,
@@ -373,9 +373,9 @@ namespace MOBOT.BHL.DAL
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
-			using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleExternalResourceUpdateAuto", connection, transaction, 
-				CustomSqlHelper.CreateInputParameter("TitleExternalResourceID", SqlDbType.Int, null, false, titleExternalResourceID),
-					CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID),
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentExternalResourceUpdateAuto", connection, transaction, 
+				CustomSqlHelper.CreateInputParameter("SegmentExternalResourceID", SqlDbType.Int, null, false, segmentExternalResourceID),
+					CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID),
 					CustomSqlHelper.CreateInputParameter("ExternalResourceTypeID", SqlDbType.Int, null, false, externalResourceTypeID),
 					CustomSqlHelper.CreateInputParameter("UrlText", SqlDbType.NVarChar, 100, false, urlText),
 					CustomSqlHelper.CreateInputParameter("Url", SqlDbType.NVarChar, 200, false, url),
@@ -383,12 +383,12 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
-				using (CustomSqlHelper<TitleExternalResource> helper = new CustomSqlHelper<TitleExternalResource>())
+				using (CustomSqlHelper<SegmentExternalResource> helper = new CustomSqlHelper<SegmentExternalResource>())
 				{
-					List<TitleExternalResource> list = helper.ExecuteReader(command);
+					List<SegmentExternalResource> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
-						TitleExternalResource o = list[0];
+						SegmentExternalResource o = list[0];
 						list = null;
 						return o;
 					}
@@ -401,37 +401,37 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in dbo.TitleExternalResource. Returns an object of type TitleExternalResource.
+		/// Update values in dbo.SegmentExternalResource. Returns an object of type SegmentExternalResource.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="value">Object of type TitleExternalResource.</param>
-		/// <returns>Object of type TitleExternalResource.</returns>
-		public TitleExternalResource TitleExternalResourceUpdateAuto(
+		/// <param name="value">Object of type SegmentExternalResource.</param>
+		/// <returns>Object of type SegmentExternalResource.</returns>
+		public SegmentExternalResource SegmentExternalResourceUpdateAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
-			TitleExternalResource value)
+			SegmentExternalResource value)
 		{
-			return TitleExternalResourceUpdateAuto(sqlConnection, sqlTransaction, "BHL", value );
+			return SegmentExternalResourceUpdateAuto(sqlConnection, sqlTransaction, "BHL", value );
 		}
 		
 		/// <summary>
-		/// Update values in dbo.TitleExternalResource. Returns an object of type TitleExternalResource.
+		/// Update values in dbo.SegmentExternalResource. Returns an object of type SegmentExternalResource.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
-		/// <param name="value">Object of type TitleExternalResource.</param>
-		/// <returns>Object of type TitleExternalResource.</returns>
-		public TitleExternalResource TitleExternalResourceUpdateAuto(
+		/// <param name="value">Object of type SegmentExternalResource.</param>
+		/// <returns>Object of type SegmentExternalResource.</returns>
+		public SegmentExternalResource SegmentExternalResourceUpdateAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
-			TitleExternalResource value)
+			SegmentExternalResource value)
 		{
-			return TitleExternalResourceUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
-				value.TitleExternalResourceID,
-				value.TitleID,
+			return SegmentExternalResourceUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
+				value.SegmentExternalResourceID,
+				value.SegmentID,
 				value.ExternalResourceTypeID,
 				value.UrlText,
 				value.Url,
@@ -444,44 +444,44 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage dbo.TitleExternalResource object.
+		/// Manage dbo.SegmentExternalResource object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in dbo.TitleExternalResource.
+		/// then either insert values into, delete values from, or update values in dbo.SegmentExternalResource.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="value">Object of type TitleExternalResource.</param>
-		/// <returns>Object of type CustomDataAccessStatus<TitleExternalResource>.</returns>
-		public CustomDataAccessStatus<TitleExternalResource> TitleExternalResourceManageAuto(
+		/// <param name="value">Object of type SegmentExternalResource.</param>
+		/// <returns>Object of type CustomDataAccessStatus<SegmentExternalResource>.</returns>
+		public CustomDataAccessStatus<SegmentExternalResource> SegmentExternalResourceManageAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
-			TitleExternalResource value , int userId )
+			SegmentExternalResource value , int userId )
 		{
-			return TitleExternalResourceManageAuto( sqlConnection, sqlTransaction, "BHL", value , userId );
+			return SegmentExternalResourceManageAuto( sqlConnection, sqlTransaction, "BHL", value , userId );
 		}
 		
 		/// <summary>
-		/// Manage dbo.TitleExternalResource object.
+		/// Manage dbo.SegmentExternalResource object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in dbo.TitleExternalResource.
+		/// then either insert values into, delete values from, or update values in dbo.SegmentExternalResource.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
-		/// <param name="value">Object of type TitleExternalResource.</param>
-		/// <returns>Object of type CustomDataAccessStatus<TitleExternalResource>.</returns>
-		public CustomDataAccessStatus<TitleExternalResource> TitleExternalResourceManageAuto(
+		/// <param name="value">Object of type SegmentExternalResource.</param>
+		/// <returns>Object of type CustomDataAccessStatus<SegmentExternalResource>.</returns>
+		public CustomDataAccessStatus<SegmentExternalResource> SegmentExternalResourceManageAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
-			TitleExternalResource value , int userId )
+			SegmentExternalResource value , int userId )
 		{
 			if (value.IsNew && !value.IsDeleted)
 			{
 				value.CreationUserID = userId;
 				value.LastModifiedUserID = userId;
-				TitleExternalResource returnValue = TitleExternalResourceInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
-					value.TitleID,
+				SegmentExternalResource returnValue = SegmentExternalResourceInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
+					value.SegmentID,
 						value.ExternalResourceTypeID,
 						value.UrlText,
 						value.Url,
@@ -489,22 +489,22 @@ namespace MOBOT.BHL.DAL
 						value.CreationUserID,
 						value.LastModifiedUserID);
 				
-				return new CustomDataAccessStatus<TitleExternalResource>(
+				return new CustomDataAccessStatus<SegmentExternalResource>(
 					CustomDataAccessContext.Insert, 
 					true, returnValue);
 			}
 			else if (!value.IsNew && value.IsDeleted)
 			{
-				if (TitleExternalResourceDeleteAuto(sqlConnection, sqlTransaction, connectionKeyName,
-					value.TitleExternalResourceID))
+				if (SegmentExternalResourceDeleteAuto(sqlConnection, sqlTransaction, connectionKeyName,
+					value.SegmentExternalResourceID))
 				{
-				return new CustomDataAccessStatus<TitleExternalResource>(
+				return new CustomDataAccessStatus<SegmentExternalResource>(
 					CustomDataAccessContext.Delete, 
 					true, value);
 				}
 				else
 				{
-				return new CustomDataAccessStatus<TitleExternalResource>(
+				return new CustomDataAccessStatus<SegmentExternalResource>(
 					CustomDataAccessContext.Delete, 
 					false, value);
 				}
@@ -512,22 +512,22 @@ namespace MOBOT.BHL.DAL
 			else if (value.IsDirty && !value.IsDeleted)
 			{
 				value.LastModifiedUserID = userId;
-				TitleExternalResource returnValue = TitleExternalResourceUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
-					value.TitleExternalResourceID,
-						value.TitleID,
+				SegmentExternalResource returnValue = SegmentExternalResourceUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
+					value.SegmentExternalResourceID,
+						value.SegmentID,
 						value.ExternalResourceTypeID,
 						value.UrlText,
 						value.Url,
 						value.SequenceOrder,
 						value.LastModifiedUserID);
 					
-				return new CustomDataAccessStatus<TitleExternalResource>(
+				return new CustomDataAccessStatus<SegmentExternalResource>(
 					CustomDataAccessContext.Update, 
 					true, returnValue);
 			}
 			else
 			{
-				return new CustomDataAccessStatus<TitleExternalResource>(
+				return new CustomDataAccessStatus<SegmentExternalResource>(
 					CustomDataAccessContext.NA, 
 					false, value);
 			}

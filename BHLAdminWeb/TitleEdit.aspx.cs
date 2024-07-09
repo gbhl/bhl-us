@@ -466,7 +466,7 @@ namespace MOBOT.BHL.AdminWeb
                     continue;
                 }
                 if (titleExternalResourceId == tr.TitleExternalResourceID &&
-                    externalResourceTypeID == tr.TitleExternalResourceTypeID &&
+                    externalResourceTypeID == tr.ExternalResourceTypeID &&
                     urlText == tr.UrlText &&
                     url == tr.Url)
                 {
@@ -493,26 +493,26 @@ namespace MOBOT.BHL.AdminWeb
             return maxSeq;
         }
 
-        List<TitleExternalResourceType> _externalResourceTypes = null;
-        protected List<TitleExternalResourceType> GetExternalResourceTypes()
+        List<ExternalResourceType> _externalResourceTypes = null;
+        protected List<ExternalResourceType> GetExternalResourceTypes()
         {
             BHLProvider bp = new BHLProvider();
-            _externalResourceTypes = bp.TitleExternalResourceTypeSelectAll();
+            _externalResourceTypes = bp.ExternalResourceTypeSelectByIDType("title");
 
             return _externalResourceTypes;
         }
 
         protected int GetExternalResourceIndex(object dataItem)
         {
-            string externalResourceTypeIdString = DataBinder.Eval(dataItem, "TitleExternalResourceTypeID").ToString();
+            string externalResourceTypeIdString = DataBinder.Eval(dataItem, "ExternalResourceTypeID").ToString();
 
             if (!externalResourceTypeIdString.Equals("0"))
             {
                 int externalResourceTypeId = int.Parse(externalResourceTypeIdString);
                 int ix = 0;
-                foreach (TitleExternalResourceType externalResourceType in _externalResourceTypes)
+                foreach (ExternalResourceType externalResourceType in _externalResourceTypes)
                 {
-                    if (externalResourceType.TitleExternalResourceTypeID == externalResourceTypeId)
+                    if (externalResourceType.ExternalResourceTypeID == externalResourceTypeId)
                     {
                         return ix;
                     }
@@ -1275,18 +1275,12 @@ namespace MOBOT.BHL.AdminWeb
                     }
 
                     // Update the external resource being edited
-                    //TitleExternalResourceType resourceType = new BHLProvider().NoteTypeSelectAuto(Convert.ToInt32(ddlNoteType.SelectedValue));
-
                     titleExternalResource.TitleID = title.TitleID;
-                    titleExternalResource.TitleExternalResourceTypeID = resourceTypeID;
+                    titleExternalResource.ExternalResourceTypeID = resourceTypeID;
                     titleExternalResource.UrlText = urlText;
                     titleExternalResource.Url = url;
                     titleExternalResource.SequenceOrder = sequenceOrder;
                     titleExternalResource.ExternalResourceTypeLabel = ddlExternalResourceType.SelectedItem.Text;
-                    //titleNote.NoteTypeName = noteType.NoteTypeName;
-                    //titleNote.NoteTypeDisplay = noteType.NoteTypeDisplay;
-                    //titleNote.MarcDataFieldTag = noteType.MarcDataFieldTag;
-                    //titleNote.MarcIndicator1 = noteType.MarcIndicator1;
                 }
             }
 
@@ -1324,7 +1318,7 @@ namespace MOBOT.BHL.AdminWeb
             Title title = (Title)Session["Title" + idLabel.Text];
             TitleExternalResource externalResource = new TitleExternalResource();
             externalResource.TitleID = title.TitleID;
-            externalResource.TitleExternalResourceTypeID = 0;
+            externalResource.ExternalResourceTypeID = 0;
             externalResource.SequenceOrder = GetMaxExternalResourceSequence();
             externalResource.SequenceOrder++;
             title.TitleExternalResources.Add(externalResource);
@@ -2197,7 +2191,7 @@ namespace MOBOT.BHL.AdminWeb
             {
                 if (!ter.IsDeleted)
                 {
-                    if (ter.TitleExternalResourceTypeID <= 0 || string.IsNullOrWhiteSpace(ter.UrlText))
+                    if (ter.ExternalResourceTypeID <= 0 || string.IsNullOrWhiteSpace(ter.UrlText))
                     {
                         flag = true;
                         errorControl.AddErrorText("External Resources must have a Type and Text.");

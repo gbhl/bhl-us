@@ -8,7 +8,7 @@ using System;
 namespace MOBOT.BHL.DataObjects
 {
 	[Serializable]
-	public class TitleExternalResourceType : __TitleExternalResourceType
+	public class ExternalResourceType : __ExternalResourceType
 	{
 	}
 }

@@ -628,6 +628,65 @@
 	</fieldset>
 	<br />
 	<fieldset>
+		<legend class="dataHeader">External Resources</legend>
+		<asp:GridView ID="resourcesList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
+			AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white" Width="900px" CssClass="boxTable" 
+			OnRowCancelingEdit="resourcesList_RowCancelingEdit" OnRowEditing="resourcesList_RowEditing"
+			OnRowUpdating="resourcesList_RowUpdating" OnRowCommand="resourcesList_RowCommand" 
+			DataKeyNames="SegmentExternalResourceID, ExternalResourceTypeID, UrlText, Url">
+			<Columns>
+				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
+				<asp:TemplateField HeaderText="Type" ItemStyle-Width="170px">
+					<ItemTemplate>
+						<%# Eval( "ExternalResourceTypeLabel" ) %>
+					</ItemTemplate>
+					<EditItemTemplate>
+						<asp:DropDownList ID="ddlExternalResourceType" runat="server" DataTextField="ExternalResourceTypeLabel" 
+							DataValueField="ExternalResourceTypeID" DataSource="<%# GetExternalResourceTypes() %>" 
+							SelectedIndex="<%# GetExternalResourceIndex( Container.DataItem ) %>" />
+					</EditItemTemplate>
+				</asp:TemplateField>
+				<asp:TemplateField HeaderText="Text" ItemStyle-Width="250px">
+					<ItemTemplate>
+						<%# Eval( "UrlText" ) %>
+					</ItemTemplate>
+					<EditItemTemplate>
+						<asp:TextBox ID="txtUrlText" runat="server" MaxLength="100" Text='<%# Eval( "UrlText") %>' />
+					</EditItemTemplate>
+				</asp:TemplateField>
+				<asp:TemplateField HeaderText="Url" ItemStyle-Width="250px">
+					<ItemTemplate>
+						<%# Eval( "Url" ) %>
+					</ItemTemplate>
+					<EditItemTemplate>
+						<asp:TextBox ID="txtUrl" runat="server" MaxLength="200" Text='<%# Eval( "Url") %>' />
+					</EditItemTemplate>
+				</asp:TemplateField>
+                <asp:TemplateField HeaderText="Seq #" ItemStyle-Width="50px">
+                    <ItemTemplate>
+                        <%# Eval("SequenceOrder") %>
+                    </ItemTemplate>
+                    <EditItemTemplate>
+						<asp:TextBox ID="txtExternalResourceSequence" runat="server" Text='<%# Eval( "SequenceOrder") %>' Width="50"/>
+                    </EditItemTemplate>
+                </asp:TemplateField>
+				<asp:TemplateField ItemStyle-Width="130px">
+					<ItemTemplate>
+						<asp:LinkButton ID="editResourceButton" runat="server" CommandName="Edit" Text="Edit"></asp:LinkButton>
+					</ItemTemplate>
+					<EditItemTemplate>
+						<asp:LinkButton ID="updateResourceButton" runat="server" CommandName="Update" Text="Update"></asp:LinkButton>
+						<asp:LinkButton ID="cancelResourceEditButton" runat="server" CommandName="Cancel" Text="Cancel"></asp:LinkButton>
+					</EditItemTemplate>
+				</asp:TemplateField>
+			</Columns>
+			<HeaderStyle HorizontalAlign="Left" CssClass="SearchResultsHeader" />
+		</asp:GridView>
+		<br />
+		<asp:Button ID="addResourceButton" runat="server" Text="Add External Resource" OnClick="addResourceButton_Click" />
+	</fieldset>
+	<br />
+	<fieldset>
 		<legend class="dataHeader">Identifiers</legend>
 		<asp:GridView ID="identifiersList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 		AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"

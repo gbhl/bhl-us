@@ -313,6 +313,14 @@ namespace MOBOT.BHL.DataObjects
             set { _keywordList = value; }
         }
 
+        private List<SegmentExternalResource> _segmentExternalResources = new List<SegmentExternalResource>();
+
+        public List<SegmentExternalResource> SegmentExternalResources
+        {
+            get { return _segmentExternalResources; }
+            set { _segmentExternalResources = value; }
+        }
+
         private List<ItemIdentifier> _identifierList = new List<ItemIdentifier>();
 
         public List<ItemIdentifier> IdentifierList

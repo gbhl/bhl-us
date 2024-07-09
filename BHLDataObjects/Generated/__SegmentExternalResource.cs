@@ -1,7 +1,7 @@
 
-// Generated 7/9/2024 11:03:06 AM
+// Generated 7/9/2024 11:03:14 AM
 // Do not modify the contents of this code file.
-// This abstract class __TitleExternalResource is based upon dbo.TitleExternalResource.
+// This abstract class __SegmentExternalResource is based upon dbo.SegmentExternalResource.
 
 #region How To Implement
 
@@ -13,7 +13,7 @@
 // namespace MOBOT.BHL.DataObjects
 // {
 //		[Serializable]
-// 		public class TitleExternalResource : __TitleExternalResource
+// 		public class SegmentExternalResource : __SegmentExternalResource
 //		{
 //		}
 // }
@@ -31,22 +31,22 @@ using CustomDataAccess;
 namespace MOBOT.BHL.DataObjects
 {
 	[Serializable]
-	public abstract class __TitleExternalResource : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
+	public abstract class __SegmentExternalResource : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
 		#region Constructors
 		
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		public __TitleExternalResource()
+		public __SegmentExternalResource()
 		{
 		}
 
 		/// <summary>
 		/// Overloaded constructor specifying each column value.
 		/// </summary>
-		/// <param name="titleExternalResourceID"></param>
-		/// <param name="titleID"></param>
+		/// <param name="segmentExternalResourceID"></param>
+		/// <param name="segmentID"></param>
 		/// <param name="externalResourceTypeID"></param>
 		/// <param name="urlText"></param>
 		/// <param name="url"></param>
@@ -55,8 +55,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		public __TitleExternalResource(int titleExternalResourceID, 
-			int titleID, 
+		public __SegmentExternalResource(int segmentExternalResourceID, 
+			int segmentID, 
 			int externalResourceTypeID, 
 			string urlText, 
 			string url, 
@@ -66,8 +66,8 @@ namespace MOBOT.BHL.DataObjects
 			int creationUserID, 
 			int lastModifiedUserID) : this()
 		{
-			_TitleExternalResourceID = titleExternalResourceID;
-			TitleID = titleID;
+			_SegmentExternalResourceID = segmentExternalResourceID;
+			SegmentID = segmentID;
 			ExternalResourceTypeID = externalResourceTypeID;
 			UrlText = urlText;
 			Url = url;
@@ -85,7 +85,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		///
 		/// </summary>
-		~__TitleExternalResource()
+		~__SegmentExternalResource()
 		{
 		}
 		
@@ -102,14 +102,14 @@ namespace MOBOT.BHL.DataObjects
 			{
 				switch (column.Name)
 				{
-					case "TitleExternalResourceID" :
+					case "SegmentExternalResourceID" :
 					{
-						_TitleExternalResourceID = (int)column.Value;
+						_SegmentExternalResourceID = (int)column.Value;
 						break;
 					}
-					case "TitleID" :
+					case "SegmentID" :
 					{
-						_TitleID = (int)column.Value;
+						_SegmentID = (int)column.Value;
 						break;
 					}
 					case "ExternalResourceTypeID" :
@@ -162,20 +162,20 @@ namespace MOBOT.BHL.DataObjects
 		
 		#region Properties
 		
-		#region TitleExternalResourceID
+		#region SegmentExternalResourceID
 		
-		private int _TitleExternalResourceID = default(int);
+		private int _SegmentExternalResourceID = default(int);
 		
 		/// <summary>
-		/// Column: TitleExternalResourceID;
+		/// Column: SegmentExternalResourceID;
 		/// DBMS data type: int; Auto key;
 		/// </summary>
-		[ColumnDefinition("TitleExternalResourceID", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsAutoKey=true, IsInPrimaryKey=true)]
-		public int TitleExternalResourceID
+		[ColumnDefinition("SegmentExternalResourceID", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsAutoKey=true, IsInPrimaryKey=true)]
+		public int SegmentExternalResourceID
 		{
 			get
 			{
-				return _TitleExternalResourceID;
+				return _SegmentExternalResourceID;
 			}
 			set
 			{
@@ -188,34 +188,34 @@ namespace MOBOT.BHL.DataObjects
 			}
 		}
 		
-		#endregion TitleExternalResourceID
+		#endregion SegmentExternalResourceID
 		
-		#region TitleID
+		#region SegmentID
 		
-		private int _TitleID = default(int);
+		private int _SegmentID = default(int);
 		
 		/// <summary>
-		/// Column: TitleID;
+		/// Column: SegmentID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("TitleID", DbTargetType=SqlDbType.Int, Ordinal=2, NumericPrecision=10, IsInForeignKey=true)]
-		public int TitleID
+		[ColumnDefinition("SegmentID", DbTargetType=SqlDbType.Int, Ordinal=2, NumericPrecision=10, IsInForeignKey=true)]
+		public int SegmentID
 		{
 			get
 			{
-				return _TitleID;
+				return _SegmentID;
 			}
 			set
 			{
-				if (_TitleID != value)
+				if (_SegmentID != value)
 				{
-					_TitleID = value;
+					_SegmentID = value;
 					_IsDirty = true;
 				}
 			}
 		}
 		
-		#endregion TitleID
+		#endregion SegmentID
 		
 		#region ExternalResourceTypeID
 		
@@ -440,17 +440,17 @@ namespace MOBOT.BHL.DataObjects
 		#region From Array serialization
 		
 		/// <summary>
-		/// Deserializes the byte array and returns an instance of <see cref="__TitleExternalResource"/>.
+		/// Deserializes the byte array and returns an instance of <see cref="__SegmentExternalResource"/>.
 		/// </summary>
-		/// <returns>If the byte array can be deserialized and cast to an instance of <see cref="__TitleExternalResource"/>, 
-		/// returns an instance of <see cref="__TitleExternalResource"/>; otherwise returns null.</returns>
-		public static new __TitleExternalResource FromArray(byte[] byteArray)
+		/// <returns>If the byte array can be deserialized and cast to an instance of <see cref="__SegmentExternalResource"/>, 
+		/// returns an instance of <see cref="__SegmentExternalResource"/>; otherwise returns null.</returns>
+		public static new __SegmentExternalResource FromArray(byte[] byteArray)
 		{
-			__TitleExternalResource o = null;
+			__SegmentExternalResource o = null;
 			
 			try
 			{
-				o = (__TitleExternalResource) CustomObjectBase.FromArray(byteArray);
+				o = (__SegmentExternalResource) CustomObjectBase.FromArray(byteArray);
 			}
 			catch (Exception e)
 			{
@@ -465,21 +465,21 @@ namespace MOBOT.BHL.DataObjects
 		#region CompareTo
 		
 		/// <summary>
-		/// Compares this instance with a specified object. Throws an ArgumentException if the specified object is not of type <see cref="__TitleExternalResource"/>.
+		/// Compares this instance with a specified object. Throws an ArgumentException if the specified object is not of type <see cref="__SegmentExternalResource"/>.
 		/// </summary>
-		/// <param name="obj">An <see cref="__TitleExternalResource"/> object to compare with this instance.</param>
+		/// <param name="obj">An <see cref="__SegmentExternalResource"/> object to compare with this instance.</param>
 		/// <returns>0 if the specified object equals this instance; -1 if the specified object does not equal this instance.</returns>
 		public virtual int CompareTo(Object obj)
 		{
-			if (obj is __TitleExternalResource)
+			if (obj is __SegmentExternalResource)
 			{
-				__TitleExternalResource o = (__TitleExternalResource) obj;
+				__SegmentExternalResource o = (__SegmentExternalResource) obj;
 				
 				if (
 					o.IsNew == IsNew &&
 					o.IsDeleted == IsDeleted &&
-					o.TitleExternalResourceID == TitleExternalResourceID &&
-					o.TitleID == TitleID &&
+					o.SegmentExternalResourceID == SegmentExternalResourceID &&
+					o.SegmentID == SegmentID &&
 					o.ExternalResourceTypeID == ExternalResourceTypeID &&
 					GetComparisonString(o.UrlText) == GetComparisonString(UrlText) &&
 					GetComparisonString(o.Url) == GetComparisonString(Url) &&
@@ -501,7 +501,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			else
 			{
-				throw new ArgumentException("Argument is not of type __TitleExternalResource");
+				throw new ArgumentException("Argument is not of type __SegmentExternalResource");
 			}
 		}
  		
@@ -512,10 +512,10 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Equality operator (==) returns true if the values of its operands are equal, false otherwise.
 		/// </summary>
-		/// <param name="a">The first <see cref="__TitleExternalResource"/> object to compare.</param>
-		/// <param name="b">The second <see cref="__TitleExternalResource"/> object to compare.</param>
+		/// <param name="a">The first <see cref="__SegmentExternalResource"/> object to compare.</param>
+		/// <param name="b">The second <see cref="__SegmentExternalResource"/> object to compare.</param>
 		/// <returns>true if values of operands are equal, false otherwise.</returns>
-		public static bool operator == (__TitleExternalResource a, __TitleExternalResource b)
+		public static bool operator == (__SegmentExternalResource a, __SegmentExternalResource b)
 		{
 			if (((Object) a) == null || ((Object) b) == null)
 			{
@@ -544,10 +544,10 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Inequality operator (!=) returns false if its operands are equal, true otherwise.
 		/// </summary>
-		/// <param name="a">The first <see cref="__TitleExternalResource"/> object to compare.</param>
-		/// <param name="b">The second <see cref="__TitleExternalResource"/> object to compare.</param>
+		/// <param name="a">The first <see cref="__SegmentExternalResource"/> object to compare.</param>
+		/// <param name="b">The second <see cref="__SegmentExternalResource"/> object to compare.</param>
 		/// <returns>false if values of operands are equal, false otherwise.</returns>
-		public static bool operator !=(__TitleExternalResource a, __TitleExternalResource b)
+		public static bool operator !=(__SegmentExternalResource a, __SegmentExternalResource b)
 		{
 			return !(a == b);
 		}
@@ -555,16 +555,16 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Returns true the specified object is equal to this object instance, false otherwise.
 		/// </summary>
-		/// <param name="obj">The <see cref="__TitleExternalResource"/> object to compare with the current <see cref="__TitleExternalResource"/>.</param>
+		/// <param name="obj">The <see cref="__SegmentExternalResource"/> object to compare with the current <see cref="__SegmentExternalResource"/>.</param>
 		/// <returns>true if specified object is equal to the instance of this object, false otherwise.</returns>
 		public override bool Equals(Object obj)
 		{
-			if (!(obj is __TitleExternalResource))
+			if (!(obj is __SegmentExternalResource))
 			{
 				return false;
 			}
 			
-			return this == (__TitleExternalResource) obj;
+			return this == (__SegmentExternalResource) obj;
 		}
 	
         /// <summary>
@@ -582,13 +582,13 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// list.Sort(SortOrder.Ascending, __TitleExternalResource.SortColumn.TitleExternalResourceID);
+		/// list.Sort(SortOrder.Ascending, __SegmentExternalResource.SortColumn.SegmentExternalResourceID);
 		/// </summary>
 		[Serializable]
 		public sealed class SortColumn
 		{	
-			public const string TitleExternalResourceID = "TitleExternalResourceID";	
-			public const string TitleID = "TitleID";	
+			public const string SegmentExternalResourceID = "SegmentExternalResourceID";	
+			public const string SegmentID = "SegmentID";	
 			public const string ExternalResourceTypeID = "ExternalResourceTypeID";	
 			public const string UrlText = "UrlText";	
 			public const string Url = "Url";	

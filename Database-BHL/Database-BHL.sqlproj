@@ -1060,13 +1060,21 @@
     <None Include="dbo\Stored Procedures\AuthorSelectByAuthorID.sql" />
     <None Include="dbo\Stored Procedures\ApiTitleAssociationSelectByTitleID.sql" />
     <None Include="dbo\Stored Procedures\TitleExternalResourceSelectByTitleID.sql" />
-    <None Include="dbo\Stored Procedures\TitleExternalResourceTypeSelectAll.sql" />
     <None Include="dbo\Types\IdentifierTableType.sql" />
     <None Include="dbo\Views\vwAuthorName.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectByPageID.sql" />
     <None Include="annotation\Stored Procedures\AnnotationSubjectCategorySelect.sql" />
     <None Include="annotation\Stored Procedures\AnnotationSubjectSelect.sql" />
     <None Include="dbo\Stored Procedures\ItemNormalizeFileNamePrefix.sql" />
+    <None Include="dbo\Tables\ExternalResourceType.sql" />
+    <None Include="dbo\Tables\ExternalResourceTypeIDType.sql" />
+    <None Include="Data\dbo.ExternalResourceTypeIDType.Table.sql" />
+    <None Include="dbo\Tables\SegmentExternalResource.sql" />
+    <None Include="dbo\Stored Procedures\SegmentExternalResourceDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\SegmentExternalResourceSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\SegmentExternalResourceUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\ExternalResourceTypeSelectByIDType.sql" />
+    <None Include="dbo\Stored Procedures\SegmentExternalResourceSelectBySegmentID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1452,8 +1460,8 @@
     <None Include="dbo\Stored Procedures\TitleExternalResourceUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleExternalResourceDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleExternalResourceSelectAuto.sql" />
-    <None Include="dbo\Tables\TitleExternalResourceType.sql" />
     <None Include="dbo\Tables\TitleExternalResource.sql" />
-    <None Include="Data\dbo.TitleExternalResourceType.Table.sql" />
+    <None Include="Data\dbo.ExternalResourceType.Table.sql" />
+    <None Include="dbo\Stored Procedures\SegmentExternalResourceInsertAuto.sql" />
   </ItemGroup>
 </Project>

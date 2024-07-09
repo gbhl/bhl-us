@@ -471,6 +471,9 @@ namespace MOBOT.BHL.AdminWeb
                 keywordsList.DataSource = segment.KeywordList;
                 keywordsList.DataBind();
 
+                resourcesList.DataSource = segment.SegmentExternalResources;
+                resourcesList.DataBind();
+
                 identifiersList.DataSource = segment.IdentifierList;
                 identifiersList.DataBind();
 
@@ -612,6 +615,95 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         #endregion SegmentKeyword methods
+
+        #region SegmentExternalResource methods
+
+        private void bindExternalResourceData()
+        {
+            Segment segment = (Segment)Session["Segment" + idLabel.Text];
+
+            // filter out deleted items
+            List<SegmentExternalResource> segmentExternalResources = new List<SegmentExternalResource>();
+            foreach (SegmentExternalResource sr in segment.SegmentExternalResources)
+            {
+                if (sr.IsDeleted == false)
+                {
+                    segmentExternalResources.Add(sr);
+                }
+            }
+
+            resourcesList.DataSource = segmentExternalResources;
+            resourcesList.DataBind();
+        }
+
+        private SegmentExternalResource findSegmentExternalResource(List<SegmentExternalResource> segmentExternalResources,
+            int segmentExternalResourceId, int externalResourceTypeID, string urlText, string url)
+        {
+            foreach (SegmentExternalResource sr in segmentExternalResources)
+            {
+                if (sr.IsDeleted)
+                {
+                    continue;
+                }
+                if (segmentExternalResourceId == sr.SegmentExternalResourceID &&
+                    externalResourceTypeID == sr.ExternalResourceTypeID &&
+                    urlText == sr.UrlText &&
+                    url == sr.Url)
+                {
+                    return sr;
+                }
+            }
+
+            return null;
+        }
+
+        protected short GetMaxExternalResourceSequence()
+        {
+            short maxSeq = 0;
+
+            Segment segment = (Segment)Session["Segment" + idLabel.Text];
+            foreach (SegmentExternalResource segmentExternalResource in segment.SegmentExternalResources)
+            {
+                if (!segmentExternalResource.IsDeleted)
+                {
+                    if (segmentExternalResource.SequenceOrder > maxSeq) maxSeq = segmentExternalResource.SequenceOrder;
+                }
+            }
+
+            return maxSeq;
+        }
+
+        List<ExternalResourceType> _externalResourceTypes = null;
+        protected List<ExternalResourceType> GetExternalResourceTypes()
+        {
+            BHLProvider bp = new BHLProvider();
+            _externalResourceTypes = bp.ExternalResourceTypeSelectByIDType("segment");
+
+            return _externalResourceTypes;
+        }
+
+        protected int GetExternalResourceIndex(object dataItem)
+        {
+            string externalResourceTypeIdString = DataBinder.Eval(dataItem, "ExternalResourceTypeID").ToString();
+
+            if (!externalResourceTypeIdString.Equals("0"))
+            {
+                int externalResourceTypeId = int.Parse(externalResourceTypeIdString);
+                int ix = 0;
+                foreach (ExternalResourceType externalResourceType in _externalResourceTypes)
+                {
+                    if (externalResourceType.ExternalResourceTypeID == externalResourceTypeId)
+                    {
+                        return ix;
+                    }
+                    ix++;
+                }
+            }
+
+            return 0;
+        }
+
+        #endregion
 
         #region SegmentIdentifier methods
 
@@ -945,6 +1037,123 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         #endregion SegmentKeyword event handlers
+
+        #region SegmentExternalResource event handlers
+
+        protected void resourcesList_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            resourcesList.EditIndex = e.NewEditIndex;
+            bindExternalResourceData();
+        }
+
+        protected void resourcesList_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            GridViewRow row = resourcesList.Rows[e.RowIndex];
+
+            if (row != null)
+            {
+                DropDownList ddlExternalResourceType = row.FindControl("ddlExternalResourceType") as DropDownList;
+                TextBox txtUrlText = row.FindControl("txtUrlText") as TextBox;
+                TextBox txtUrl = row.FindControl("txtUrl") as TextBox;
+                TextBox txtExternalResourceSequence = row.FindControl("txtExternalResourceSequence") as TextBox;
+                if (txtUrlText != null)
+                {
+                    short sequenceOrder = 0;
+                    Segment segment = (Segment)Session["Segment" + idLabel.Text];
+
+                    string urlText = txtUrlText.Text;
+                    string url = txtUrl.Text;
+                    string resourceSequenceText = txtExternalResourceSequence.Text;
+                    if (!short.TryParse(resourceSequenceText, out sequenceOrder)) sequenceOrder = 0;
+                    int resourceTypeID;
+                    if (!Int32.TryParse(ddlExternalResourceType.Text, out resourceTypeID)) resourceTypeID = 1;
+
+                    SegmentExternalResource segmentExternalResource = findSegmentExternalResource(segment.SegmentExternalResources,
+                        (int)resourcesList.DataKeys[e.RowIndex].Values[0],
+                        (int)resourcesList.DataKeys[e.RowIndex].Values[1],
+                        resourcesList.DataKeys[e.RowIndex].Values[2].ToString(),
+                        resourcesList.DataKeys[e.RowIndex].Values[3].ToString());
+
+                    // Update all sequences if necessary
+                    short oldSeq = segmentExternalResource.SequenceOrder;
+
+                    // If sequence has been decreased
+                    if (sequenceOrder < oldSeq)
+                    {
+                        // Increment all sequences between the old and new sequence values
+                        foreach (SegmentExternalResource resource in segment.SegmentExternalResources)
+                        {
+                            if (resource.SequenceOrder >= sequenceOrder && resource.SequenceOrder < oldSeq) resource.SequenceOrder++;
+                        }
+                    }
+
+                    // If sequence has been increased
+                    if (sequenceOrder > oldSeq)
+                    {
+                        // Decrement all sequences between the old and new sequence values
+                        foreach (SegmentExternalResource resource in segment.SegmentExternalResources)
+                        {
+                            if (resource.SequenceOrder <= sequenceOrder && resource.SequenceOrder > oldSeq)
+                            {
+                                resource.SequenceOrder--;
+                            }
+                        }
+                    }
+
+                    // Update the external resource being edited
+                    segmentExternalResource.SegmentID = segment.SegmentID;
+                    segmentExternalResource.ExternalResourceTypeID = resourceTypeID;
+                    segmentExternalResource.UrlText = urlText;
+                    segmentExternalResource.Url = url;
+                    segmentExternalResource.SequenceOrder = sequenceOrder;
+                    segmentExternalResource.ExternalResourceTypeLabel = ddlExternalResourceType.SelectedItem.Text;
+                }
+            }
+
+            resourcesList.EditIndex = -1;
+            bindExternalResourceData();
+        }
+
+        protected void resourcesList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            resourcesList.EditIndex = -1;
+            bindExternalResourceData();
+        }
+
+        protected void resourcesList_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName.Equals("RemoveButton"))
+            {
+                resourcesList.EditIndex = -1;
+                int rowNum = int.Parse(e.CommandArgument.ToString());
+                Segment segment = (Segment)Session["Segment" + idLabel.Text];
+
+                SegmentExternalResource externalResource = findSegmentExternalResource(segment.SegmentExternalResources,
+                    (int)resourcesList.DataKeys[rowNum].Values[0],
+                    (int)resourcesList.DataKeys[rowNum].Values[1],
+                    resourcesList.DataKeys[rowNum].Values[2].ToString(),
+                    resourcesList.DataKeys[rowNum].Values[3].ToString());
+
+                externalResource.IsDeleted = true;
+                bindExternalResourceData();
+            }
+        }
+
+        protected void addResourceButton_Click(object sender, EventArgs e)
+        {
+            Segment segment = (Segment)Session["Segment" + idLabel.Text];
+            SegmentExternalResource externalResource = new SegmentExternalResource();
+            externalResource.SegmentID = segment.SegmentID;
+            externalResource.ExternalResourceTypeID = 0;
+            externalResource.SequenceOrder = GetMaxExternalResourceSequence();
+            externalResource.SequenceOrder++;
+            segment.SegmentExternalResources.Add(externalResource);
+            resourcesList.EditIndex = resourcesList.Rows.Count;
+            bindExternalResourceData();
+            resourcesList.Rows[resourcesList.EditIndex].FindControl("cancelResourceEditButton").Visible = false;
+        }
+
+        #endregion
 
         #region SegmentIdentifier event handlers
 
@@ -1429,6 +1638,7 @@ namespace MOBOT.BHL.AdminWeb
                     segment.IdentifierList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                     segment.AuthorList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                     segment.KeywordList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                    segment.SegmentExternalResources.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                     segment.PageList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
 
                     // If the ItemID has been modified, then reset the sequenceorder.  If other segments exist on the selected
@@ -1478,6 +1688,12 @@ namespace MOBOT.BHL.AdminWeb
             {
                 flag = true;
                 errorControl.AddErrorText("Keywords has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
+            }
+
+            if (resourcesList.EditIndex != -1)
+            {
+                flag = true;
+                errorControl.AddErrorText("External Resources has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (identifiersList.EditIndex != -1)
@@ -1665,6 +1881,19 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         flag = true;
                         errorControl.AddErrorText("Keywords cannot be blank");
+                        break;
+                    }
+                }
+            }
+
+            foreach (SegmentExternalResource ser in segment.SegmentExternalResources)
+            {
+                if (!ser.IsDeleted)
+                {
+                    if (ser.ExternalResourceTypeID <= 0 || string.IsNullOrWhiteSpace(ser.UrlText))
+                    {
+                        flag = true;
+                        errorControl.AddErrorText("External Resources must have a Type and Text.");
                         break;
                     }
                 }

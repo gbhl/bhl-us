@@ -1,7 +1,7 @@
-CREATE PROCEDURE dbo.TitleExternalResourceUpdateAuto
+﻿CREATE PROCEDURE dbo.SegmentExternalResourceUpdateAuto
 
-@TitleExternalResourceID INT,
-@TitleID INT,
+@SegmentExternalResourceID INT,
+@SegmentID INT,
 @ExternalResourceTypeID INT,
 @UrlText NVARCHAR(100),
 @Url NVARCHAR(200),
@@ -12,9 +12,9 @@ AS
 
 SET NOCOUNT ON
 
-UPDATE [dbo].[TitleExternalResource]
+UPDATE [dbo].[SegmentExternalResource]
 SET
-	[TitleID] = @TitleID,
+	[SegmentID] = @SegmentID,
 	[ExternalResourceTypeID] = @ExternalResourceTypeID,
 	[UrlText] = @UrlText,
 	[Url] = @Url,
@@ -22,18 +22,18 @@ SET
 	[LastModifiedDate] = getdate(),
 	[LastModifiedUserID] = @LastModifiedUserID
 WHERE
-	[TitleExternalResourceID] = @TitleExternalResourceID
+	[SegmentExternalResourceID] = @SegmentExternalResourceID
 		
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure dbo.TitleExternalResourceUpdateAuto. No information was updated as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.SegmentExternalResourceUpdateAuto. No information was updated as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-		[TitleExternalResourceID],
-		[TitleID],
+		[SegmentExternalResourceID],
+		[SegmentID],
 		[ExternalResourceTypeID],
 		[UrlText],
 		[Url],
@@ -42,9 +42,9 @@ ELSE BEGIN
 		[LastModifiedDate],
 		[CreationUserID],
 		[LastModifiedUserID]
-	FROM [dbo].[TitleExternalResource]
+	FROM [dbo].[SegmentExternalResource]
 	WHERE
-		[TitleExternalResourceID] = @TitleExternalResourceID
+		[SegmentExternalResourceID] = @SegmentExternalResourceID
 	
 	RETURN -- update successful
 END

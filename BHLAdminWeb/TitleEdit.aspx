@@ -562,7 +562,7 @@
 			AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white" Width="900px" CssClass="boxTable" 
 			OnRowCancelingEdit="resourcesList_RowCancelingEdit" OnRowEditing="resourcesList_RowEditing"
 			OnRowUpdating="resourcesList_RowUpdating" OnRowCommand="resourcesList_RowCommand" 
-			DataKeyNames="TitleExternalResourceID, TitleExternalResourceTypeID, UrlText, Url">
+			DataKeyNames="TitleExternalResourceID, ExternalResourceTypeID, UrlText, Url">
 			<Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 				<asp:TemplateField HeaderText="Type" ItemStyle-Width="170px">
@@ -571,7 +571,7 @@
 					</ItemTemplate>
 					<EditItemTemplate>
 						<asp:DropDownList ID="ddlExternalResourceType" runat="server" DataTextField="ExternalResourceTypeLabel" 
-							DataValueField="TitleExternalResourceTypeID" DataSource="<%# GetExternalResourceTypes() %>" 
+							DataValueField="ExternalResourceTypeID" DataSource="<%# GetExternalResourceTypes() %>" 
 							SelectedIndex="<%# GetExternalResourceIndex( Container.DataItem ) %>" />
 					</EditItemTemplate>
 				</asp:TemplateField>

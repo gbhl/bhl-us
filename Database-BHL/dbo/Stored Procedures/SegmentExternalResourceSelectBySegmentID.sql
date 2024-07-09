@@ -1,6 +1,6 @@
-﻿CREATE PROCEDURE [dbo].[TitleExternalResourceSelectByTitleID]
+﻿CREATE PROCEDURE dbo.SegmentExternalResourceSelectBySegmentID
 
-@TitleID int
+@SegmentID int
 
 AS
 
@@ -8,8 +8,8 @@ BEGIN
 
 SET NOCOUNT ON
 
-SELECT	r.TitleExternalResourceID,
-		r.TitleID,
+SELECT	r.SegmentExternalResourceID,
+		r.SegmentID,
 		r.ExternalResourceTypeID,
 		rt.ExternalResourceTypeLabel,
 		r.UrlText,
@@ -19,9 +19,9 @@ SELECT	r.TitleExternalResourceID,
 		r.LastModifiedDate,
 		r.CreationUserID,
 		r.LastModifiedUserID
-FROM	TitleExternalResource r
+FROM	SegmentExternalResource r
 		INNER JOIN ExternalResourceType rt ON r.ExternalResourceTypeID = rt.ExternalResourceTypeID
-WHERE	r.TitleID = @TitleID
+WHERE	r.SegmentID = @SegmentID
 ORDER BY
 		r.SequenceOrder
 

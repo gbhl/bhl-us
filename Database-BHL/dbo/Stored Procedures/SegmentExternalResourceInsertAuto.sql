@@ -1,7 +1,7 @@
-CREATE PROCEDURE dbo.TitleExternalResourceInsertAuto
+﻿CREATE PROCEDURE dbo.SegmentExternalResourceInsertAuto
 
-@TitleExternalResourceID INT OUTPUT,
-@TitleID INT,
+@SegmentExternalResourceID INT OUTPUT,
+@SegmentID INT,
 @ExternalResourceTypeID INT,
 @UrlText NVARCHAR(100),
 @Url NVARCHAR(200),
@@ -13,8 +13,8 @@ AS
 
 SET NOCOUNT ON
 
-INSERT INTO [dbo].[TitleExternalResource]
-( 	[TitleID],
+INSERT INTO [dbo].[SegmentExternalResource]
+( 	[SegmentID],
 	[ExternalResourceTypeID],
 	[UrlText],
 	[Url],
@@ -24,7 +24,7 @@ INSERT INTO [dbo].[TitleExternalResource]
 	[CreationUserID],
 	[LastModifiedUserID] )
 VALUES
-( 	@TitleID,
+( 	@SegmentID,
 	@ExternalResourceTypeID,
 	@UrlText,
 	@Url,
@@ -34,18 +34,18 @@ VALUES
 	@CreationUserID,
 	@LastModifiedUserID )
 
-SET @TitleExternalResourceID = Scope_Identity()
+SET @SegmentExternalResourceID = Scope_Identity()
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure dbo.TitleExternalResourceInsertAuto. No information was inserted as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.SegmentExternalResourceInsertAuto. No information was inserted as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-		[TitleExternalResourceID],
-		[TitleID],
+		[SegmentExternalResourceID],
+		[SegmentID],
 		[ExternalResourceTypeID],
 		[UrlText],
 		[Url],
@@ -54,9 +54,9 @@ ELSE BEGIN
 		[LastModifiedDate],
 		[CreationUserID],
 		[LastModifiedUserID]	
-	FROM [dbo].[TitleExternalResource]
+	FROM [dbo].[SegmentExternalResource]
 	WHERE
-		[TitleExternalResourceID] = @TitleExternalResourceID
+		[SegmentExternalResourceID] = @SegmentExternalResourceID
 	
 	RETURN -- insert successful
 END

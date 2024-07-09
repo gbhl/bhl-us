@@ -125,6 +125,7 @@ namespace MOBOT.BHL.DAL
                 segment.ContributorList = new InstitutionDAL().InstitutionSelectBySegmentIDAndRole(connection, transaction, segment.SegmentID, InstitutionRole.Contributor);
                 segment.IdentifierList = new ItemIdentifierDAL().ItemIdentifierSelectBySegmentID(connection, transaction, segment.SegmentID, null);
                 segment.KeywordList = new ItemKeywordDAL().ItemKeywordSelectBySegmentID(connection, transaction, segment.SegmentID);
+                segment.SegmentExternalResources = new SegmentExternalResourceDAL().SegmentExternalResourceSelectBySegmentID(connection, transaction, segment.SegmentID);
                 segment.PageList = new ItemPageDAL().ItemPageSelectBySegmentID(connection, transaction, segment.SegmentID);
                 // The data held in NameList is not used anywhere, so the expensive NameSegmentSelectBySegmentID database query is unnecessary
                 //segment.NameList = new NameSegmentDAL().NameSegmentSelectBySegmentID(connection, transaction, segment.SegmentID);
@@ -802,58 +803,6 @@ namespace MOBOT.BHL.DAL
 
                 segmentID = updatedSegment.ReturnObject.SegmentID;
 
-                /*
-                DOIDAL doiDAL = new DOIDAL();
-                List<DOI> doiList = doiDAL.DOISelectValidForSegment(connection, transaction, segmentID);
-
-                DOI doi = null;
-                if (doiList.Count == 0)
-                {
-                    if (!string.IsNullOrWhiteSpace(segment.DOIName))
-                    {
-                        // Insert
-                        doi = new DOI();
-                        doi.IsNew = true;
-                        doi.EntityID = segmentID;
-                        doi.DOIEntityTypeID = 40;   // Segment
-                        doi.DOIName = segment.DOIName;
-                        doi.DOIStatusID = 200;
-                        doi.StatusDate = DateTime.Now;
-                        doi.StatusMessage = "User-edited";
-                        doi.IsValid = 1;
-                        doi.CreationDate = DateTime.Now;
-                        doi.LastModifiedDate = DateTime.Now;
-                    }
-                }
-                else // DOI exists
-                {
-                    doi = doiList[0];
-                    doi.IsNew = false;
-
-                    if (!string.IsNullOrWhiteSpace(segment.DOIName))
-                    {
-                        // Update
-                        if (string.Compare(doi.DOIName, segment.DOIName, true) != 0)
-                        {
-                            doi.DOIName = segment.DOIName;
-                            if (!doi.DOIName.StartsWith("10.5962"))
-                            {
-                                doi.DOIStatusID = 200;
-                                doi.StatusDate = DateTime.Now;
-                            }
-                            doi.StatusMessage = "User-edited";
-                            doi.LastModifiedDate = DateTime.Now;
-                        }
-                    }
-                    else
-                    {
-                        // Delete
-                        doi.IsDeleted = true;
-                    }
-                }
-                if (doi != null) doiDAL.DOIManageAuto(connection, transaction, doi, userId);
-                */
-
                 if (segment.ContributorList.Count > 0)
                 {
                     ItemInstitutionDAL itemInstitutionDAL = new ItemInstitutionDAL();
@@ -919,6 +868,16 @@ namespace MOBOT.BHL.DAL
                         // Insert/Update the TitleKeyword record
                         if (itemKeyword.ItemID == 0) itemKeyword.ItemID = (int)updatedSegment.ReturnObject.ItemID;
                         itemKeywordDAL.ItemKeywordManageAuto(connection, transaction, itemKeyword, userId);
+                    }
+                }
+
+                if (segment.SegmentExternalResources.Count > 0)
+                {
+                    SegmentExternalResourceDAL externalResourceDAL = new SegmentExternalResourceDAL();
+                    foreach (SegmentExternalResource resource in segment.SegmentExternalResources)
+                    {
+                        if (resource.SegmentID == 0) resource.SegmentID = updatedSegment.ReturnObject.SegmentID;
+                        externalResourceDAL.SegmentExternalResourceManageAuto(connection, transaction, resource, userId);
                     }
                 }
 
