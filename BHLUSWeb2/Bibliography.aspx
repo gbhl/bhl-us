@@ -27,28 +27,26 @@
                 <p><%: BhlTitle.FullTitleExtended %></p>
                 <% if (TitleVariants.Count > 0 || !string.IsNullOrWhiteSpace(BhlTitle.UniformTitle)) { %>
                     <h3>Title Variants</h3>
-                    <% foreach (TitleVariant tv in TitleVariants) { %>
                     <p>
+                    <% foreach (TitleVariant tv in TitleVariants) { %>
                         <i><%: tv.TitleVariantLabel %>:</i>
                         <%
                         List<string> tvTitle = new List<string>();
                         if (!string.IsNullOrWhiteSpace(tv.Title)) tvTitle.Add(tv.Title);
                         if (!string.IsNullOrWhiteSpace(tv.TitleRemainder)) tvTitle.Add(tv.TitleRemainder);
                         %>
-                        <%: string.Join(", ", tvTitle.ToArray()) %>
-                    </p>
-                    <% } 
+                        <%: string.Join(", ", tvTitle.ToArray()) %><br />
+                    <% }
                     if (!string.IsNullOrWhiteSpace(BhlTitle.UniformTitle))
                     {%>
-                      <p>
-                          <i>Uniform: </i><%: BhlTitle.UniformTitle %>
-                      </p>  
-                    <%}
-                } %>
+                          <i>Uniform: </i><%: BhlTitle.UniformTitle %><br />
+                    <% } %>
+                    </p>  
+                <% } %>
                 <% if(TitleAssociations.Count > 0) { %>                    
                     <h3>Related Titles</h3>
-                    <% foreach (TitleAssociation ta in TitleAssociations) { %>
                     <p>
+                    <% foreach (TitleAssociation ta in TitleAssociations) { %>
                         <i><%: ta.TitleAssociationLabel %>:</i>
                         <%
                         List<string> taTitle = new List<string>();
@@ -67,24 +65,26 @@
                             <a href='/search?searchTerm="<%:ta.Title %>"&stype=C'>
                                 <%: string.Join(", ", taTitle.ToArray()) %>
                             </a>
-                        <% } %>							
-                    </p>
+                        <% } %>
+                        <br />
                     <% } %>
+                    </p>
                 <% } %>
                 <%if (TitleExternalResources.Count > 0) { %>
                     <h3>External Resources</h3>
+                    <p>
                     <%foreach (TitleExternalResource resource in TitleExternalResources)
                     {%>
-                        <p>
-                            <%:resource.ExternalResourceTypeLabel%>:
-                            <%if (string.IsNullOrWhiteSpace(resource.Url)) { %>
-                                <%:resource.UrlText %>
-                            <%} else { %>
-                                <a class="ExtLinkBrowse" href="<%:resource.Url%>" rel="noopener noreferrer" target="_blank"><%:resource.UrlText%></a>
-                            <%}%>
-                        </p>
-                    <%}
-                }%>
+                        <%:resource.ExternalResourceTypeLabel%>:
+                        <%if (string.IsNullOrWhiteSpace(resource.Url)) { %>
+                            <%:resource.UrlText %>
+                        <%} else { %>
+                            <a class="ExtLinkBrowse" href="<%:resource.Url%>" rel="noopener noreferrer" target="_blank"><%:resource.UrlText%></a>
+                        <%}%>
+                        <br />
+                    <%}%>
+                    </p>
+                <%}%>
                 <h3>By</h3>
                 <p>
                     <% foreach (Author author in AuthorsDetail) { %>
@@ -144,11 +144,11 @@
                 <% } %>
                 <% if (Collections.Count > 0) { %>
                     <h3>BHL Collections</h3>
-                    <% foreach (Collection collection in Collections) { %>
                     <p>
-                        <a href="/browse/collection/<%: collection.CollectionID %>" title="Collection"><%: collection.CollectionName %></a>
-                    </p>
+                    <% foreach (Collection collection in Collections) { %>
+                        <a href="/browse/collection/<%: collection.CollectionID %>" title="Collection"><%: collection.CollectionName %></a><br />
                     <% } %>
+                    </p>
                 <% } %>
                 <% if (!string.IsNullOrWhiteSpace(BhlTitle.CallNumber)) { %>
                     <h3>Call Number</h3>
