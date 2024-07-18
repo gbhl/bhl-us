@@ -155,6 +155,12 @@
 <a href="#EntityCountType">EntityCountType</a>
 </li>
 <li>
+<a href="#ExternalResourceType">ExternalResourceType</a>
+</li>
+<li>
+<a href="#ExternalResourceTypeIDType">ExternalResourceTypeIDType</a>
+</li>
+<li>
 <a href="#Identifier">Identifier</a>
 </li>
 <li>
@@ -329,6 +335,9 @@
 <a href="#SegmentClusterType">SegmentClusterType</a>
 </li>
 <li>
+<a href="#SegmentExternalResource">SegmentExternalResource</a>
+</li>
+<li>
 <a href="#SegmentGenre">SegmentGenre</a>
 </li>
 <li>
@@ -357,9 +366,6 @@
 </li>
 <li>
 <a href="#TitleExternalResource">TitleExternalResource</a>
-</li>
-<li>
-<a href="#TitleExternalResourceType">TitleExternalResourceType</a>
 </li>
 <li>
 <a href="#TitleKeyword">TitleKeyword</a>
@@ -1388,6 +1394,100 @@
 </div>
 </div>
 <div class="tableNameHeading">
+<h1>ExternalResourceType<a name="ExternalResourceType"></a>
+</h1>
+<h2>
+      (Physical Name: ExternalResourceType)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ExternalResourceTypeID (PK)</td><td class="tdTableDefinition">ExternalResourceTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ExternalResourceTypeName</td><td class="tdTableDefinition">ExternalResourceTypeName</td><td class="tdTableDefinition">VARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ExternalResourceTypeLabel</td><td class="tdTableDefinition">ExternalResourceTypeLabel</td><td class="tdTableDefinition">VARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#ExternalResourceTypeIDType">ExternalResourceTypeIDType</a> referencing (ExternalResourceTypeID)</li>
+<li>
+<a href="#SegmentExternalResource">SegmentExternalResource</a> referencing (ExternalResourceTypeID)</li>
+<li>
+<a href="#TitleExternalResource">TitleExternalResource</a> referencing (ExternalResourceTypeID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>ExternalResourceTypeIDType<a name="ExternalResourceTypeIDType"></a>
+</h1>
+<h2>
+      (Physical Name: ExternalResourceTypeIDType)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ExternalResourceTypeIDTypeID (PK)</td><td class="tdTableDefinition">ExternalResourceTypeIDTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ExternalResourceTypeID
+                &nbsp;(<a href="#ExternalResourceType">FK</a>)
+              </td><td class="tdTableDefinition">ExternalResourceTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IDTypeID
+                &nbsp;(<a href="#IDType">FK</a>)
+              </td><td class="tdTableDefinition">IDTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#IDType">IDType</a> through (IDTypeID)</li>
+<li>
+<a href="#ExternalResourceType">ExternalResourceType</a> through (ExternalResourceTypeID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
 <h1>Identifier<a name="Identifier"></a>
 </h1>
 <h2>
@@ -1541,6 +1641,8 @@
 <ul>
 <li>
 <a href="#IdentifierIDType">IdentifierIDType</a> referencing (IDTypeID)</li>
+<li>
+<a href="#ExternalResourceTypeIDType">ExternalResourceTypeIDType</a> referencing (IDTypeID)</li>
 </ul>
 </div>
 </div>
@@ -4124,6 +4226,8 @@
 <ul>
 <li>
 <a href="#SegmentClusterSegment">SegmentClusterSegment</a> referencing (SegmentID)</li>
+<li>
+<a href="#SegmentExternalResource">SegmentExternalResource</a> referencing (SegmentID)</li>
 </ul>
 </div>
 </div>
@@ -4240,6 +4344,63 @@
 </tr>
 </table>
 <div class="references"></div>
+</div>
+<div class="tableNameHeading">
+<h1>SegmentExternalResource<a name="SegmentExternalResource"></a>
+</h1>
+<h2>
+      (Physical Name: SegmentExternalResource)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SegmentExternalResourceID (PK)</td><td class="tdTableDefinition">SegmentExternalResourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SegmentID
+                &nbsp;(<a href="#Segment">FK</a>)
+              </td><td class="tdTableDefinition">SegmentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ExternalResourceTypeID
+                &nbsp;(<a href="#ExternalResourceType">FK</a>)
+              </td><td class="tdTableDefinition">ExternalResourceTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">UrlText</td><td class="tdTableDefinition">UrlText</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Url</td><td class="tdTableDefinition">Url</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SMALLINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Segment">Segment</a> through (SegmentID)</li>
+<li>
+<a href="#ExternalResourceType">ExternalResourceType</a> through (ExternalResourceTypeID)</li>
+</ul>
+</div>
 </div>
 <div class="tableNameHeading">
 <h1>SegmentGenre<a name="SegmentGenre"></a>
@@ -4823,9 +4984,9 @@
               </td><td class="tdTableDefinition">TitleID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">TitleExternalResourceTypeID
-                &nbsp;(<a href="#TitleExternalResourceType">FK</a>)
-              </td><td class="tdTableDefinition">TitleExternalResourceTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">ExternalResourceTypeID
+                &nbsp;(<a href="#ExternalResourceType">FK</a>)
+              </td><td class="tdTableDefinition">ExternalResourceTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">UrlText</td><td class="tdTableDefinition">UrlText</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
@@ -4855,49 +5016,7 @@
 <li>
 <a href="#Title">Title</a> through (TitleID)</li>
 <li>
-<a href="#TitleExternalResourceType">TitleExternalResourceType</a> through (TitleExternalResourceTypeID)</li>
-</ul>
-</div>
-</div>
-<div class="tableNameHeading">
-<h1>TitleExternalResourceType<a name="TitleExternalResourceType"></a>
-</h1>
-<h2>
-      (Physical Name: TitleExternalResourceType)
-      </h2>
-</div>
-<div class="table">
-<table class="tableDefinition" width="100%">
-<tr>
-<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">TitleExternalResourceTypeID (PK)</td><td class="tdTableDefinition">TitleExternalResourceTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">ExternalResourceTypeName</td><td class="tdTableDefinition">ExternalResourceTypeName</td><td class="tdTableDefinition">VARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">ExternalResourceTypeLabel</td><td class="tdTableDefinition">ExternalResourceTypeLabel</td><td class="tdTableDefinition">VARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-</table>
-<div class="references">
-<p class="subTitle">Referenced By</p>
-<ul>
-<li>
-<a href="#TitleExternalResource">TitleExternalResource</a> referencing (TitleExternalResourceTypeID)</li>
+<a href="#ExternalResourceType">ExternalResourceType</a> through (ExternalResourceTypeID)</li>
 </ul>
 </div>
 </div>
