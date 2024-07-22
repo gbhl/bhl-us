@@ -35,12 +35,16 @@
     <add key="GeminiPassword" value="issue tracking service password"/>
     <add key="GeminiDesc" value="A new issue from the web"/>
     <add key="GeminiProjectId" value="7"/>
+    <add key="GeminiScanProjectID" value="25"/>
+    <add key="GeminiScanCustomFieldIdOCLC" value="51"/>
+    <add key="GeminiScanCustomFieldIdYearStart" value="49"/>
     <add key="GeminiComponentIdScanRequest" value="78"/>
     <add key="GeminiComponentIdFeedback" value="56"/>
     <add key="GeminiTypeIdScanRequest" value="60"/>
     <add key="GeminiTypeIdTechFeedback" value="22"/>
     <add key="GeminiTypeIdSuggestion" value="36"/>
     <add key="GeminiTypeIdBiblioIssue" value="55"/>
+    <add key="GeminiTypeIdTitle" value="80" />
     <add key="GeminiStatusId" value="28"/>
     <add key="GeminiPriorityId" value="17"/>
     <add key="GeminiSeverityId" value="19"/>

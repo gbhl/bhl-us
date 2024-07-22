@@ -91,6 +91,7 @@
 			     		<a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageAbout"] %>">About</a>
 			            <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageHelp"] %>">Help</a>				            
                         <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>">FAQ</a>
+                        <a href="/contact">Feedback</a>
 		            </nav>
                     <span id="altmetricbadge">
                         <div data-badge-popover="bottom" data-badge-type="donut" data-uri="" data-hide-no-mentions="true" data-no-score="true" data-template="biodiversitylibrary" class="altmetric-embed"></div>

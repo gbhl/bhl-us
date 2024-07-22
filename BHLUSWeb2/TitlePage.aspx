@@ -4,7 +4,7 @@
 <asp:content id="mainContent" contentplaceholderid="mainContentPlaceHolder" runat="server">
     <div id="page-title">
         <div id="volumebar"  style="float:right;" classcss="js-invisible no-js-hide">
-            <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>" title="FAQ" class="report"><img alt="FAQ" src="/images/rpterror.png" /></a>
+            <a href="/contact/" title="Report an error" class="report"><img alt="Report an error" src="/images/rpterror.png" /></a>
             <% if (!string.IsNullOrWhiteSpace(PublicationDetail.DownloadUrl)) { %>
                 <div class="buttondrop download">Download Contents<div class="play"></div>
                     <div class="downloadcontents">
