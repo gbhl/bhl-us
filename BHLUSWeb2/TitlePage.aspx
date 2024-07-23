@@ -1751,7 +1751,7 @@
 
         <%if (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Segment) { %>
             // Default to table of contents for virtual items
-            $('#segmentstab').click();
+            //$('#segmentstab').click();
         <%}%>
     });
 

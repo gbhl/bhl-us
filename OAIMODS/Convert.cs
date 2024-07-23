@@ -362,9 +362,9 @@ namespace MOBOT.BHL.OAIMODS
                     if (enumerationAndChronology != null) _oaiRecord.JournalVolume = enumerationAndChronology.Value;
                 }
 
-                // Url (this overrides any Uri values we previously identified)
+                // Url (previously identified Uri values take precedence)
                 XElement url = location.Element(ns + "url");
-                if (url != null) _oaiRecord.Url = url.Value;
+                if (url != null && string.IsNullOrWhiteSpace(_oaiRecord.Url)) _oaiRecord.Url = url.Value;
             }
 
             if (_oaiRecord.Type == OAIRecord.RecordType.BookJournal || _oaiRecord.Type == OAIRecord.RecordType.Issue)
