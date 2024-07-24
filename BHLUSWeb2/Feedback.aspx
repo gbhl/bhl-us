@@ -53,11 +53,6 @@
                     <label class="caption" for="commentTextBox">Comment:</label>
                     <asp:TextBox ID="commentTextBox" ClientIDMode="Static" runat="server" Height="100px" Width="375" TextMode="MultiLine"></asp:TextBox>
                 </div>
-                <div style="margin-bottom:10px;">
-                    <label class="caption" for="urlTextBox">URL:</label>
-                    <asp:TextBox ID="urlTextBox" ClientIDMode="Static" runat="server" Width="375" placeholder="Related page link (ex: https://biodiversitylibrary.org/page/1234)"></asp:TextBox>
-                    <span style="font-style:italic">(optional)</span>
-                </div>
             </div>
 		    <!-- End Feedback Form -->
 

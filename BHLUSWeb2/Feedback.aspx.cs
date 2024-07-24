@@ -113,6 +113,7 @@ namespace MOBOT.BHL.Web2
             int priorityId = int.Parse(ConfigurationManager.AppSettings["GeminiPriorityId"]);
             int severityId = int.Parse(ConfigurationManager.AppSettings["GeminiSeverityId"]);
             int resolutionId = int.Parse(ConfigurationManager.AppSettings["GeminiResolutionId"]);
+            int requestSourceId = int.Parse(ConfigurationManager.AppSettings["GeminiRequestSourceUserId"]);
 
             ServiceManager serviceManager = new ServiceManager(geminiWebServiceURL, geminiUserName, geminiUserPassword, "", false);
             UserDto user = serviceManager.Admin.WhoAmI();
@@ -134,6 +135,7 @@ namespace MOBOT.BHL.Web2
                 //data.AddComponent(scanReqComponentId);  // Collections
                 data.ProjectId = scanProjectId;
                 data.TypeId = titleTypeId;    // 80=Title
+                data.FixedInVersionId = requestSourceId;    // 22=User Request
             }
             else
             {
@@ -273,36 +275,29 @@ namespace MOBOT.BHL.Web2
                 sb.Append("<b>Name: </b>");
                 sb.Append(Server.HtmlEncode(nameTextBox.Text.Trim()));
             }
-
-            string url = string.Empty;
-            if (urlTextBox.Text.Trim().Length > 0)
+            if (emailTextBox.Text.Trim() != string.Empty)
             {
-                // Display the user-supplied URL, if it exists
-                url = Server.HtmlEncode(urlTextBox.Text.Trim());
+                if (sb.Length > 0) sb.Append("<br>");
+                sb.Append("<b>Email: </b>");
+                sb.Append(Server.HtmlEncode(emailTextBox.Text.Trim()));
             }
-            else if (!string.IsNullOrWhiteSpace((string)ViewState["FeedbackRefererURL"]))
+            if (!string.IsNullOrWhiteSpace((string)ViewState["FeedbackRefererURL"]))
             {
-                // Else display the referrer URL
-                url = ViewState["FeedbackRefererURL"].ToString();
-            }
-
-            if (url.Length > 0)
-            {
-                sb.Append("<br>");
+                if (sb.Length > 0) sb.Append("<br>");
                 sb.Append("<b>URL: </b>");
-                sb.Append(url);
+                sb.Append(ViewState["FeedbackRefererURL"].ToString());
             }
 
             if (ViewState["PageID"] != null)
             {
-                sb.Append("<br>");
+                if (sb.Length > 0) sb.Append("<br>");
                 sb.Append("<b>Viewed Page: </b>");
                 sb.Append(ViewState["PageID"].ToString());
             }
 
             if (ViewState["TitleID"] != null)
             {
-                sb.Append("<br>");
+                if (sb.Length > 0) sb.Append("<br>");
                 sb.Append("<b>Viewed Title:</b>");
                 sb.Append(ViewState["TitleID"].ToString());
             }
@@ -328,6 +323,13 @@ namespace MOBOT.BHL.Web2
                 sb.Append("<b>Email: </b>");
                 sb.Append(Server.HtmlEncode(emailTextBox.Text.Trim()));
             }
+            if (!string.IsNullOrWhiteSpace((string)ViewState["FeedbackRefererURL"]))
+            {
+                sb.Append("<br>");
+                sb.Append("<b>URL: </b>");
+                sb.Append(ViewState["FeedbackRefererURL"].ToString());
+            }
+
             if (sb.Length > 0) sb.Append("<br><br>");
             sb.Append("<b>Type: </b>");
             sb.Append(typeBook.Checked ? typeBook.Value : typeJournal.Checked ? typeJournal.Value : typeUnsure.Value);

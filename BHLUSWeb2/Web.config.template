@@ -49,6 +49,7 @@
     <add key="GeminiPriorityId" value="17"/>
     <add key="GeminiSeverityId" value="19"/>
     <add key="GeminiResolutionId" value="15"/>
+    <add key="GeminiRequestSourceUserId" value="22"/>
 
     <!-- Feature toggle for IIIF implementation:  Valid values are "on", "off", and "toggle" -->
     <add key="IIIFState" value="off" />
