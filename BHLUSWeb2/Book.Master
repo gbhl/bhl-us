@@ -61,6 +61,7 @@
 			     		<a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageAbout"] %>">About</a>
 			            <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageHelp"] %>">Help</a>				            
                         <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>">FAQ</a>
+                        <a href="/contact">Feedback</a>
                         <span id="headersocialbook">
                             <span id="socicons"></span>
                             <script type="text/javascript" src="/js/socicon.js?v=1"></script>

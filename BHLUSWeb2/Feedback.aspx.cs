@@ -3,8 +3,10 @@ using BHL.SiteServicesREST.v1;
 using Countersoft.Gemini.Api;
 using Countersoft.Gemini.Commons.Dto;
 using Countersoft.Gemini.Commons.Entity;
+using Countersoft.Gemini.Commons.Entity.ProjectTemplates;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using Nest;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -51,7 +53,7 @@ namespace MOBOT.BHL.Web2
         private void fillCombos()
         {
             BHLProvider bp = new BHLProvider();
-            List<Language> languages = bp.LanguageSelectAll();
+            List<DataObjects.Language> languages = bp.LanguageSelectAll();
 
             srLanguageList.DataSource = languages;
             srLanguageList.DataTextField = "LanguageName";
@@ -99,16 +101,19 @@ namespace MOBOT.BHL.Web2
             string geminiUserPassword = ConfigurationManager.AppSettings["GeminiPassword"];
             string issueSummary = ConfigurationManager.AppSettings["GeminiDesc"];
             int projectId = int.Parse(ConfigurationManager.AppSettings["GeminiProjectId"]);
+            int scanProjectId = int.Parse(ConfigurationManager.AppSettings["GeminiScanProjectID"]);
             int scanReqComponentId = int.Parse(ConfigurationManager.AppSettings["GeminiComponentIdScanRequest"]);
             int feedbackComponentId = int.Parse(ConfigurationManager.AppSettings["GeminiComponentIdFeedback"]);
             int scanReqTypeId = int.Parse(ConfigurationManager.AppSettings["GeminiTypeIdScanRequest"]);
             int techFeedTypeId = int.Parse(ConfigurationManager.AppSettings["GeminiTypeIdTechFeedback"]);
             int suggestTypeId = int.Parse(ConfigurationManager.AppSettings["GeminiTypeIdSuggestion"]);
             int bibIssueTypeId = int.Parse(ConfigurationManager.AppSettings["GeminiTypeIdBiblioIssue"]);
+            int titleTypeId = int.Parse(ConfigurationManager.AppSettings["GeminiTypeIdTitle"]);
             int statusId = int.Parse(ConfigurationManager.AppSettings["GeminiStatusId"]);
             int priorityId = int.Parse(ConfigurationManager.AppSettings["GeminiPriorityId"]);
             int severityId = int.Parse(ConfigurationManager.AppSettings["GeminiSeverityId"]);
             int resolutionId = int.Parse(ConfigurationManager.AppSettings["GeminiResolutionId"]);
+            int requestSourceId = int.Parse(ConfigurationManager.AppSettings["GeminiRequestSourceUserId"]);
 
             ServiceManager serviceManager = new ServiceManager(geminiWebServiceURL, geminiUserName, geminiUserPassword, "", false);
             UserDto user = serviceManager.Admin.WhoAmI();
@@ -127,8 +132,10 @@ namespace MOBOT.BHL.Web2
                 }
                 issueLongDesc = getScanRequest();
 
-                data.AddComponent(scanReqComponentId);  // Collections
-                data.TypeId = scanReqTypeId;    // 60=Scan Request
+                //data.AddComponent(scanReqComponentId);  // Collections
+                data.ProjectId = scanProjectId;
+                data.TypeId = titleTypeId;    // 80=Title
+                data.FixedInVersionId = requestSourceId;    // 22=User Request
             }
             else
             {
@@ -137,6 +144,7 @@ namespace MOBOT.BHL.Web2
                 issueLongDesc = getComment();
 
                 data.AddComponent(feedbackComponentId);  // Web-Other
+                data.ProjectId = projectId;
                 if (subjectTech.Checked) data.TypeId = techFeedTypeId;    // 22=Tech Issue
                 if (subjectSuggest.Checked) data.TypeId = suggestTypeId;    // 36=Suggestion
                 if (subjectBibIssue.Checked) data.TypeId = bibIssueTypeId;    // 55=Bib Issue
@@ -149,7 +157,6 @@ namespace MOBOT.BHL.Web2
             data.StatusId = statusId;         // 28=Unassigned
             data.SeverityId = severityId;        // 19=Null
             data.ReportedBy = user.Entity.Id;
-            data.ProjectId = projectId;
 
             try
             {
@@ -161,6 +168,7 @@ namespace MOBOT.BHL.Web2
                     ValidateCaptcha(Request.Form["g-recaptcha-response"]))
                 {
                     IssueDto newIssue = serviceManager.Item.Create(data);
+                    AddScanRequestCustomFields(serviceManager, newIssue, user.Entity.Id);
 
                     string subject = "BHL Feedback (# " + newIssue.Id.ToString() + ") Received";
                     if (subjectScanReq.Checked) subject = "BHL Scanning Request (# " + newIssue.Id.ToString() + ") Received";
@@ -196,6 +204,31 @@ namespace MOBOT.BHL.Web2
                 errorPanel.Visible = true;
                 errorLabel.Text = "There was a problem sending your comment. Your feedback is important to us, we apologize.";
             }
+        }
+
+        private void AddScanRequestCustomFields(ServiceManager serviceManager, IssueDto issue, int userId)
+        {
+            int customFieldOclc = int.Parse(ConfigurationManager.AppSettings["GeminiScanCustomFieldIdOCLC"]);
+            int customFieldYearStart = int.Parse(ConfigurationManager.AppSettings["GeminiScanCustomFieldIdYearStart"]);
+
+            if (subjectScanReq.Checked)
+            {
+                if (!string.IsNullOrWhiteSpace(srOCLCTextBox.Text))
+                    serviceManager.Item.CustomFieldDataCreate(GetCustomFieldData(issue, userId, customFieldOclc, srOCLCTextBox.Text.Trim()));
+                if (!string.IsNullOrWhiteSpace(srYearTextBox.Text))
+                    serviceManager.Item.CustomFieldDataCreate(GetCustomFieldData(issue, userId, customFieldYearStart, srYearTextBox.Text.Trim()));
+            }
+        }
+
+        private CustomFieldData GetCustomFieldData(IssueDto issue, int userId, int customFieldId, string value)
+        {
+            CustomFieldData customFieldData = new CustomFieldData();
+            customFieldData.ProjectId = issue.Project.Id;
+            customFieldData.IssueId = issue.Id;
+            customFieldData.UserId = userId;
+            customFieldData.CustomFieldId = customFieldId;
+            customFieldData.Data = value;
+            return customFieldData;
         }
 
         /// <summary>
@@ -242,36 +275,29 @@ namespace MOBOT.BHL.Web2
                 sb.Append("<b>Name: </b>");
                 sb.Append(Server.HtmlEncode(nameTextBox.Text.Trim()));
             }
-
-            string url = string.Empty;
-            if (urlTextBox.Text.Trim().Length > 0)
+            if (emailTextBox.Text.Trim() != string.Empty)
             {
-                // Display the user-supplied URL, if it exists
-                url = Server.HtmlEncode(urlTextBox.Text.Trim());
+                if (sb.Length > 0) sb.Append("<br>");
+                sb.Append("<b>Email: </b>");
+                sb.Append(Server.HtmlEncode(emailTextBox.Text.Trim()));
             }
-            else if (!string.IsNullOrWhiteSpace((string)ViewState["FeedbackRefererURL"]))
+            if (!string.IsNullOrWhiteSpace((string)ViewState["FeedbackRefererURL"]))
             {
-                // Else display the referrer URL
-                url = ViewState["FeedbackRefererURL"].ToString();
-            }
-
-            if (url.Length > 0)
-            {
-                sb.Append("<br>");
+                if (sb.Length > 0) sb.Append("<br>");
                 sb.Append("<b>URL: </b>");
-                sb.Append(url);
+                sb.Append(ViewState["FeedbackRefererURL"].ToString());
             }
 
             if (ViewState["PageID"] != null)
             {
-                sb.Append("<br>");
+                if (sb.Length > 0) sb.Append("<br>");
                 sb.Append("<b>Viewed Page: </b>");
                 sb.Append(ViewState["PageID"].ToString());
             }
 
             if (ViewState["TitleID"] != null)
             {
-                sb.Append("<br>");
+                if (sb.Length > 0) sb.Append("<br>");
                 sb.Append("<b>Viewed Title:</b>");
                 sb.Append(ViewState["TitleID"].ToString());
             }
@@ -297,6 +323,13 @@ namespace MOBOT.BHL.Web2
                 sb.Append("<b>Email: </b>");
                 sb.Append(Server.HtmlEncode(emailTextBox.Text.Trim()));
             }
+            if (!string.IsNullOrWhiteSpace((string)ViewState["FeedbackRefererURL"]))
+            {
+                sb.Append("<br>");
+                sb.Append("<b>URL: </b>");
+                sb.Append(ViewState["FeedbackRefererURL"].ToString());
+            }
+
             if (sb.Length > 0) sb.Append("<br><br>");
             sb.Append("<b>Type: </b>");
             sb.Append(typeBook.Checked ? typeBook.Value : typeJournal.Checked ? typeJournal.Value : typeUnsure.Value);
