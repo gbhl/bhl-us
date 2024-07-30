@@ -40,20 +40,26 @@ AND		sa.VIAFIdentifier <> ''
 -- Compare name strings of authors in import DB and production.  If matches are found,
 -- update import DB with production author ID.
 SELECT DISTINCT
-		an.AuthorID, sa.SegmentAuthorID
-INTO	#tmpNameAuthorID
+		sa.BHLAuthorID,
+		sa.SegmentAuthorID,
+		dbo.fnRemoveNonAlphaNumericCharacters(sa.LastName) AS LastNameToken,
+		dbo.fnRemoveNonAlphaNumericCharacters(sa.FirstName) AS FirstNameToken,
+		dbo.fnRemoveNonAlphaNumericCharacters(sa.LastName + sa.FirstName) AS FullNameToken
+INTO	#tmpSegmentAuthor
 FROM	dbo.BSSegment s
 		INNER JOIN dbo.BSSegmentAuthor sa ON s.SegmentID = sa.SegmentID
 		-- Only segments contributed by BioStor
 		INNER JOIN dbo.ImportSource src ON sa.ImportSourceID = src.ImportSourceID AND src.Source = 'BioStor'
-		INNER JOIN dbo.BHLvwAuthorName an 
-			ON (
-				dbo.fnRemoveNonAlphaNumericCharacters(sa.LastName) = an.LastNameToken AND 
-				dbo.fnRemoveNonAlphaNumericCharacters(sa.FirstName) = an.FirstNameToken
-				)
-			OR an.FullNameToken = dbo.fnRemoveNonAlphaNumericCharacters(sa.LastName + sa.FirstName)
 WHERE	s.SegmentID = @SegmentID
 AND		sa.BHLAuthorID IS NULL	-- only authors not already resolved
+
+SELECT DISTINCT
+		an.AuthorID, sa.SegmentAuthorID
+INTO	#tmpNameAuthorID
+FROM	#tmpSegmentAuthor sa
+		INNER JOIN dbo.BHLvwAuthorName an 
+			ON (sa.LastNameToken = an.LastNameToken AND sa.FirstNameToken = an.FirstNameToken)
+			OR an.FullNameToken = sa.FullNameToken
 
 -- Update the BHLAuthorIDs in the import DB for which a single matching author was found
 UPDATE	sa
