@@ -363,6 +363,9 @@ namespace BHL.TextImportUtility
         /// <returns></returns>
         private string NormalizeMarkup(string fileContents)
         {
+            //---------------------------------------------------------------------------------------
+            // The following statements clean up markup commonly found in FromThePage transcriptions
+
             /*
             Additions 
                 Replace 
@@ -503,6 +506,54 @@ namespace BHL.TextImportUtility
             // Remove all remaining HTML elements
             fileContents = Regex.Replace(fileContents, "<.*?>", string.Empty);
 
+            //---------------------------------------------------------------------------------------
+            // The following statements clean up markup commonly found in Smithsonian Transcription Center transcriptions
+
+            fileContents = Regex.Replace(fileContents, @"\[\[[D|d]itto[|s]?(\s*for[:| ]\s*|\s?[:|-]\s?)(.*?)\]\]", @">>>>$2<<<<");
+
+            // Convert markup for image to a temporary form
+            fileContents = Regex.Replace(fileContents, @"\[\[([I|i]mage|[P|p]hoto|IMAGE)( of | ?[:|-] ?)(.*?)\]\]", @">>illustration<<$3>>/illustration<<");
+            fileContents = fileContents.Replace("[[[I|i]mage]]", ">>illustration<<");
+
+            // Convert markup for strikethrough to a temporary form
+            fileContents = Regex.Replace(fileContents, @"\[\[/.*?[S|s]trikethrough.*?\]\]", ">>/strike<<");
+            fileContents = Regex.Replace(fileContents, @"\[\[.*?[S|s]trikethrough.*?\]\]", ">>strike<<");
+            fileContents = Regex.Replace(fileContents, @"\[\[/.*?[S|s]trikeout.*?\]\]", ">>/strike<<");
+            fileContents = Regex.Replace(fileContents, @"\[\[.*?[S|s]trikeout.*?\]\]", ">>strike<<");
+
+            // Convert markup for underline to a temporary form
+            fileContents = Regex.Replace(fileContents, @"\[\[/.*?[U|u]nderline.*?\]\]", ">>/underline<<");
+            fileContents = Regex.Replace(fileContents, @"\[\[.*?[U|u]nderline.*?\]\]", ">>underline<<");
+
+            // Convert markup for male/female symbols to a temporary form
+            fileContents = Regex.Replace(fileContents, @"\[\[male symbol\]\]", ">>male<<", RegexOptions.IgnoreCase);
+            fileContents = Regex.Replace(fileContents, @"\[\[2 male symbols\]\]", ">>male<< >>male<<", RegexOptions.IgnoreCase);
+            fileContents = Regex.Replace(fileContents, @"\[\[female symbol\]\]", ">>female<<", RegexOptions.IgnoreCase);
+            fileContents = Regex.Replace(fileContents, @"\[\[2 female symbols\]\]", ">>female<< >>female<<", RegexOptions.IgnoreCase);
+
+            // Convert markup for margins to a temporary form
+            fileContents = Regex.Replace(fileContents, @"\[\[marginalia\]\]", ">>margin<<", RegexOptions.IgnoreCase);
+            fileContents = Regex.Replace(fileContents, @"\[\[/marginalia\]\]", ">>/margin<<", RegexOptions.IgnoreCase);
+            fileContents = Regex.Replace(fileContents, @"\[\[\s?(left|right|top|in)+ margin\]\]", ">>margin<<", RegexOptions.IgnoreCase);
+            fileContents = Regex.Replace(fileContents, @"\[\[\s?(\\|/)(left|right|top|in)+ margin\]\]", ">>/margin<<", RegexOptions.IgnoreCase);
+
+            // Clean up (remove) remaining [[ ]] markup
+            fileContents = Regex.Replace(fileContents, @"\[\[(.*?) ?[T|t]able ?(.*?)\]\]", "");   // [[table]]
+            fileContents = Regex.Replace(fileContents, @"\[\[(.*?) ?[B|b]lank ?(.*?)\]\]", "");   // [[blank]]
+            fileContents = Regex.Replace(fileContents, @"\[\[(.*?) ?[S|s]tart ?(.*?)\]\]", "");   // [[start]]
+            fileContents = Regex.Replace(fileContents, @"\[\[(.*?) ?[E|e]nd ?(.*?)\]\]", "");     // [[end]]
+
+            // Convert the temporary markup to the standard BHL form
+            fileContents = Regex.Replace(fileContents, @">>>>(.*?)<<<<", @"[$1]");
+            fileContents = Regex.Replace(fileContents, @">>illustration<<(.*?)>>/illustration<<", @"[[illustration]]$1[[/illustration]]");
+            fileContents = fileContents.Replace(">>illustration<<", "[[illustration]]");
+            fileContents = fileContents.Replace(">>strike<<", "[[strike]]").Replace(">>/strike<<", "[[/strike]]");
+            fileContents = fileContents.Replace(">>underline<<", "[[underline]]").Replace(">>/underline<<", "[[/underline]]");
+            fileContents = fileContents.Replace(">>male<<", "[male]");
+            fileContents = fileContents.Replace(">>female<<", "[female]");
+            fileContents = fileContents.Replace(">>margin<<", "[[margin]]").Replace(">>/margin<<", "[[/margin]]");
+
+            //---------------------------------------------------------------------------------------
             // Return the cleaned file contents
             return fileContents;
         }
