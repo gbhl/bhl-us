@@ -202,7 +202,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#525c6b', end
 #left-panel2 .left-panel-boxes:last-child {margin-bottom: 0; padding-bottom: 25px;}
 
 .left-panel-boxes .panel-box-heading {
-    margin: 10px 0;
+    margin: 20px 0 10px 0;
     font-family: Georgia;
     font-style: normal; 
     font-size: 13px; 
@@ -214,6 +214,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#525c6b', end
     font-style: normal; 
     font-size: 13px; 
     color: #fff; 
+    float:right;
 }
 .flickrbox a, .flickrbox a:visited {
     color:#ffffff;
@@ -269,9 +270,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#525c6b', end
     color: #3a75ae;
 }
 
-.showmore 
-{
-    padding:3px;
+.showmore {
+    padding: 3px 0 5px 0;
 }
 
 .showmore a
@@ -282,17 +282,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#525c6b', end
 }
 
 .urlbox {
+    clear: both;    
     background: #303945;
     border: 1px solid #2a3038;
     padding: 5px; 
-    
 }
 .urlbox a, .urlbox a:visited {
     color: #f4f3ec;
     font-family: Georgia;
     font-style: normal; 
     font-size: 0.8em;
-    font-size: 0.7em\9; /* IE8 specific hack */
 }
 
 .ubiolink {
@@ -669,6 +668,33 @@ a.BRButtonFeatured {
 } 
 .large-icon.ris { background: url("../images/bhlau images/large_icon_ris.png") no-repeat scroll 0 0 transparent }
 .large-icon.bibtex { background: url("../images/bhlau images/large_icon_bibtex.png") no-repeat scroll 0 0 transparent }
+
+.BR-copy-icon {
+    width: 18px;
+    height: 18px;
+    text-indent: -9999px;
+    background: url(../images/BG_copy_icon.png) no-repeat;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin: 0 10px 0 3px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    float: right;
+}
+
+.BR-copy-icon:hover, .BR-copy-icon.active:hover {
+    background-position: -0px -18px;
+}
+
+.BR-copy-icon:active, .BR-copy-icon.active:active {
+    border: 0;
+    background-position: -0px -36px;
+}
 
 #dlcitation-dialog .bookcitationlinks
 {

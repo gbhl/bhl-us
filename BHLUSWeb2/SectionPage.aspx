@@ -5,6 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
+<link rel="stylesheet" href="/css/bhl-citation-js.css?v=0" />
 <uc:NavBar runat="server" />
 <div id="page-title">
     <div class="column-wrap">
@@ -143,13 +144,14 @@
                 </p>
             <% } %>
             <p>&nbsp;</p>
-            <p>
-                <a class="button" href="/handlers/modsdownload.ashx?pid=<%: BhlSegment.SegmentID %>">Download MODS</a>
-            </p>
         </div>
     </div>
 </section>
 <aside>
+    <div id="divCitationModal">
+        <a id="btnCite" class="btnCite" onclick="showCitationModal(cmArgs);">Cite This Publication</a>
+	    <div id="citeModal" class="citeModal"></div>
+    </div>
     <h3></h3>
     <div class="partlinks">
         <div class="partlink js-hide">
@@ -226,9 +228,6 @@
                     <% } %>
                     <a class="icon pdf" title="download pdf" download="<%: BhlSegment.SegmentID %>.pdf" href="/partpdf/<%: BhlSegment.SegmentID %>">PDF</a>
                 <%} %>
-                <div class="downloadlabel">Cite:</div>
-                <a class="icon ris" title="download ris" download="bhlpart<%: BhlSegment.SegmentID %>.ris" href="/handlers/risdownload.ashx?pid=<%: BhlSegment.SegmentID %>">RIS</a>
-                <a class="icon bibtex" title="download bibtex" download="bhlpart<%: BhlSegment.SegmentID %>.bib" href="/handlers/bibtexdownload.ashx?pid=<%: BhlSegment.SegmentID %>">BibTeX</a>
             </div>
         </div>
     </div>
@@ -303,6 +302,14 @@
 </asp:Content>
 <asp:Content ID="scriptContent" ContentPlaceHolderID="scriptContentPlaceHolder" runat="server">
 <script src="/js/libs/jquery.history.min.js"></script>
+<script src="/js/citation-js/citation-js@0.6.4.js" type="text/javascript"></script>
+<script src="/js/citation-js/bhl-citation-js.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var cmArgs = new CitationModalArgs();
+    cmArgs.init({
+        sid: <%: BhlSegment.SegmentID %>
+    });
+</script>
 <script type="text/javascript">
 //<![CDATA[
     $(document).ready(function () {

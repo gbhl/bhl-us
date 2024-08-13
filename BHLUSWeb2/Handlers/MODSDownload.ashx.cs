@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Web;
 
 namespace MOBOT.BHL.Web2
 {
-    /// <summary>
-    /// Summary description for MODSDownload
-    /// </summary>
     public class MODSDownload : IHttpHandler
     {
         public void ProcessRequest(HttpContext context)
         {
             int id;
-            string idString;
-            string idType = "title";
+            string idType = context.Request.RequestContext.RouteData.Values["type"] as string;
+            string idString = context.Request.RequestContext.RouteData.Values["id"] as string;
 
-            idString = context.Request.RequestContext.RouteData.Values["id"] as string;
-
+            if (!string.IsNullOrWhiteSpace(idString) && string.IsNullOrWhiteSpace(idType)) idType = "title";
             if (string.IsNullOrEmpty(idString))
             {
                 idString = context.Request.QueryString["pid"] as string;

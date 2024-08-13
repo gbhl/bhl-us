@@ -2,6 +2,7 @@
 <%@ Import Namespace="MOBOT.BHL.DataObjects" %>
 <%@ Register TagPrefix="uc" TagName="COinS" Src="~/controls/COinSControl.ascx" %>
 <asp:content id="mainContent" contentplaceholderid="mainContentPlaceHolder" runat="server">
+    <link rel="stylesheet" href="/css/bhl-citation-js.css?v=0" />
     <div id="page-title">
         <div id="volumebar"  style="float:right;" classcss="js-invisible no-js-hide">
             <a href="/contact/" title="Report an error" class="report"><img alt="Report an error" src="/images/rpterror.png" /></a>
@@ -12,7 +13,6 @@
                         <div><a href="#" class="selectpages">Select pages to download</a></div>
                         <div><a href="#" class="selectpart">Download Part</a></div>
                         <div><a href="#" class="downloadbook">Download Book</a></div>
-                        <div><a href="#" class="downloadcitation">Download Citation</a></div>
                         <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PublicationDetail.BarCode) %>" rel="noopener noreferrer" target="_blank">View at Internet Archive</a></div>
                     </div>
                 </div> 
@@ -29,27 +29,6 @@
                         href="/<%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? "item" : "part"%>images/<%: PublicationDetail.ID %>">Download JPEG 2000</a>
                     <a class="large-icon ocr" download="<%: PublicationDetail.ID %>.txt" 
                         href="/<%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? "item" : "part"%>text/<%: PublicationDetail.ID %>">Download Text</a>
-                </div>
-                <div class="jqmWindow" id="dlcitation-dialog">
-                    <div class="head">
-                        <a class="jqmClose" title="Close Dialog">Close Dialog</a>
-                        <h2>Download citation</h2>
-                        <hr />
-                    </div>
-                    <div class="bookcitationlinks">
-                        <div class="bookcitelinklabel">BOOK</div>
-                        <a class="large-icon ris" title="download ris" 
-                            download="bhlitem<%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? PublicationDetail.ID : PublicationDetail.ContainerID %>.ris" 
-                            href="/risdownload/<%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? PublicationDetail.ID : PublicationDetail.ContainerID %>">Download RIS</a>
-                        <a class="large-icon bibtex" title="download bibtex" 
-                            download="bhlitem<%= (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? PublicationDetail.ID : PublicationDetail.ContainerID %>.bib" 
-                            href="/bibtexdownload/<%= (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) ? PublicationDetail.ID : PublicationDetail.ContainerID %>">Download BibTeX</a>
-                    </div>
-                    <div class="partcitationlinks">
-                        <div class="partcitelinklabel">CURRENT ARTICLE</div>
-                        <a class="large-icon ris" title="download ris" download="bhlpart<%: PublicationDetail.ID %>.ris" href="/handlers/risdownload.ashx?pid=<%: PublicationDetail.ID %>">Download RIS</a>
-                        <a class="large-icon bibtex" title="download bibtex" download="bhlpart<%= PublicationDetail.ID %>.bib" href="/handlers/bibtexdownload.ashx?pid=<%= PublicationDetail.ID %>">Download BibTeX</a>
-                    </div>
                 </div>
             <% } %>
 
@@ -159,13 +138,23 @@
                 <div class="showmore">
                     <a href="#">Show More</a>
                 </div>
-                <div class="panel-box-heading">
-                    URL for Current Page
+	        </div>
+	        <div class="left-panel-boxes">
+                <div id="divCitationModal">
+                    <a id="btnCite" class="btnCiteBV" onclick="showCitationModal(cmArgs);">Cite This Publication</a>
+	                <div id="citeModal" class="citeModal"></div>
                 </div>
-                <div class="urlbox"><a id="currentpageURL" href="#"></a></div>
-                <div class="flickrbox">
-                    <span id="flickrurlspan" style="display:none"><a class="flickrurl" id="currentFlickrURL" rel="noopener noreferrer" target="_blank" href="#">View Current Page in Flickr</a>&nbsp;<img width="12" src="/images/flickr-icon-normal.png"></span>&nbsp;
-                </div>
+		        <div style="clear: both;">
+			        <div class="panel-box-heading" style="float: left;">
+				        Page Link <a class="BR-copy-icon" title="Copy Page Link" onclick="navigator.clipboard.writeText(currentpageURL.text);"></a>
+			        </div>
+			        <div id="flickrBox" class="panel-box-heading flickrbox">
+			            <a class="flickrurl" id="currentFlickrURL" rel="noopener noreferrer" target="_blank" href="#">View in Flickr</a>
+		            </div>
+		        </div>
+		        <div class="urlbox">
+			        <a id="currentpageURL" href="#"></a>
+		        </div>
             </div>
             <div id="names-container-div" class="left-panel-boxes limit-height">
                 <div class="panel-box-heading">
@@ -481,7 +470,7 @@
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder"
     runat="server">
     <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=4" />
-    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=10" />
+    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=12" />
     <link rel="stylesheet" type="text/css" href="/css/nspop.css?v=1" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
@@ -499,6 +488,16 @@
 <script src="/js/libs/dragscrollable.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.text-overflow.min.js" type="text/javascript"></script>
 <script src="/js/nspop.js?v=2" type="text/javascript"></script>
+<script src="/js/citation-js/citation-js@0.6.4.js" type="text/javascript"></script>
+<script src="/js/citation-js/bhl-citation-js.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var cmArgs = new CitationModalArgs();
+    cmArgs.init({
+        iid: <%: (PublicationDetail.Type != MOBOT.BHL.DataObjects.Enum.ItemType.Segment) ? PublicationDetail.ID.ToString() : "null"%>,
+        sid: <%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Segment) ? PublicationDetail.ID.ToString() : "null"%>,
+        stext: <%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Segment) ? "'" + PublicationDetail.Genre + "'": "null"%>
+    });
+</script>
 <script type="text/javascript">
 //<![CDATA[
 
@@ -826,10 +825,6 @@
         $('#download-dialog').jqm({
             onHide: onHideAction,
             trigger: '.downloadbook'
-        });
-        $("#dlcitation-dialog").jqm({
-            onHide: onHideAction,
-            trigger: '.downloadcitation'
         });
         $('#textsourcehelp-dialog').jqm({
             onHide: onHideAction,
@@ -1217,11 +1212,11 @@
             }
         }
         //function to update page URL, Names and text
-        br.updatePageDetailsUI = function(index){
+        br.updatePageDetailsUI = function (index) {
+
             var segListItem = $("#lstSegments li[id='" + pages[index].SegmentID + "']");
             var segTitleLink = $("#articleTitleLink");
 
-            <%// if (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) { %>
             // Update the segment list
             var segTitle = $(segListItem).children("a.viewSegLinkTitle");
             if (segTitle != null) {
@@ -1234,7 +1229,20 @@
                 segTitleLink.attr("href", "/part/" + pages[index].SegmentID);
             }
             highlightSeg(segTitle);
-            <%// } %>
+
+            // Set the arguments for the citation dialog
+            if (segTitle != null && segTitle.length !== 0) {
+                if (pages[index].SegmentID != null)
+                    cmArgs.segmentText = pages[index].GenreName;
+                else
+                    cmArgs.segmentText = null;
+                cmArgs.segmentId = pages[index].SegmentID;
+            }
+            else {
+                cmArgs.segmentText = null;
+                cmArgs.segmentId = null;
+            }
+            cmArgs.pageId = pages[index].PageID;
 
             // Update the Download Part and Download Citation menu items
             <% if (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Book) { %>
@@ -1272,16 +1280,16 @@
             $("#currentpageURL").text("<%: Request.Url.GetLeftPart(UriPartial.Authority) %>/page/" + pages[index].PageID);
             $("#currentpageURL").attr("href", "<%: Request.Url.GetLeftPart(UriPartial.Authority) %>/page/" + pages[index].PageID);
             var currentFlickrUrl = $("#currentFlickrURL");
-            var flickrUrlSpan = $("#flickrurlspan");
+            var flickrBox = $("#flickrBox");
             if (pages[index].FlickrUrl == "")
             {
-                flickrUrlSpan.toggle(false);
+                flickrBox.toggle(false);
                 currentFlickrUrl.attr("href", "#");
             }
             else
             {
                 currentFlickrUrl.attr("href", pages[index].FlickrUrl);
-                flickrUrlSpan.toggle(true);
+                flickrBox.toggle(true);
             }
 
             var showOCRButton = $('#showOCRButton'); 

@@ -126,11 +126,16 @@ namespace MOBOT.BHL.Web2
 
             routes.MapPageRoute("Bibliography", "bibliography/{titleid}", "~/bibliography.aspx");
 
-            routes.Add("MODSDownload", new Route("modsdownload/{id}", new HttpHandlerRouteHandler<MODSDownload>()));
+            routes.Add("MODSDownload", new Route("modsdownload/{type}/{id}", new HttpHandlerRouteHandler<MODSDownload>()));
+            routes.Add("MODSDownloadOld", new Route("modsdownload/{id}", new HttpHandlerRouteHandler<MODSDownload>()));
 
-            routes.Add("BibTeXDownload", new Route("bibtexdownload/{id}", new HttpHandlerRouteHandler<BibTeXDownload>()));
+            routes.Add("BibTeXDownload", new Route("bibtexdownload/{type}/{id}", new HttpHandlerRouteHandler<BibTeXDownload>()));
+            routes.Add("BibTeXDownloadOld", new Route("bibtexdownload/{id}", new HttpHandlerRouteHandler<BibTeXDownload>()));
 
-            routes.Add("RISDownload", new Route("risdownload/{id}", new HttpHandlerRouteHandler<RISDownload>()));
+            routes.Add("RISDownload", new Route("risdownload/{type}/{id}", new HttpHandlerRouteHandler<RISDownload>()));
+            routes.Add("RISDownloadOld", new Route("risdownload/{id}", new HttpHandlerRouteHandler<RISDownload>()));
+
+            routes.Add("CSLDownload", new Route("csldownload/{type}/{id}", new HttpHandlerRouteHandler<CSLDownload>()));
 
             routes.Add("NameListDownload", new Route("namelistdownload", new HttpHandlerRouteHandler<NameListDownloadService>()));
 

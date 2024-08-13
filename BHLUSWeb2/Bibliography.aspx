@@ -3,6 +3,7 @@
 <%@ Register TagPrefix="uc" TagName="NavBar" Src="~/controls/NavBar.ascx" %>
 <%@ Register TagPrefix="uc" TagName="COinS" Src="~/controls/COinSControl.ascx" %>
 <asp:Content ID="mainContent" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
+<link rel="stylesheet" href="/css/bhl-citation-js.css?v=0" />
 <uc:NavBar runat="server" />
 <div id="page-title" class="bibliography">
     <div class="column-wrap">
@@ -15,12 +16,14 @@
 <div id="content" class="column-wrap clearfix" itemscope itemtype="https://schema.org/Book">
     <section>
         <div class="tabs js-hide">
+            <!--
             <ul class="tab-nav no-js-hide">
                 <li class="details first-child" style="display:none"><a href="#/details">Details</a></li>
                 <li class="mods" style="display:none"><a href="#/mods">MODS</a></li>
                 <li class="bibtex" style="display:none"><a href="#/bibtex">BibTeX</a></li>
                 <li class="ris last-child" style="display:none"><a href="#/ris">RIS</a></li>
-            </ul>            
+            </ul>
+            -->
             <uc:COinS ID="COinS" runat="server" />
             <div id="details" class="tab-body">
                 <h3>Title</h3>
@@ -187,13 +190,16 @@
                 <p>&nbsp;</p>
                 <p>
                     <a class="button" href="<%: LocalLibraryUrl %>" rel="noopener noreferrer" target="_blank">Find in a local library</a>
-                    <a class="button" style="float:right" href="/modsdownload/<%: BhlTitle.TitleID %>">Download MODS</a>
                 </p>
             </div>
         </div>
     </section>
     <aside>
         <% if(BibliographyItems.Count > 0) { %>
+            <div id="divCitationModal">
+                <a id="btnCite" class="btnCite" onclick="showCitationModal(cmArgs);">Cite This Publication</a>
+	            <div id="citeModal" class="citeModal"></div>
+            </div>
             <h3 class="volume-heading">Volumes</h3>
             <div class="volumes">
             <% foreach(BibliographyItem bibliographyItem in BibliographyItems) { %>
@@ -367,9 +373,6 @@
                             <a class="icon ocr" title="download ocr" download="<%: bibliographyItem.Book.BookID %>.txt" href="/itemtext/<%: bibliographyItem.Book.BookID %>">OCR</a>
                             <a class="icon pdf" title="download pdf" download="<%: bibliographyItem.Book.BookID %>.pdf" href="/itempdf/<%: bibliographyItem.Book.BookID %>">PDF</a>
                         <%} %>
-                        <div class="downloadlabel">Cite:</div>
-                        <a class="icon ris" title="download ris" download="bhlitem<%: bibliographyItem.Book.BookID %>.ris" href="/risdownload/<%: bibliographyItem.Book.BookID %>">RIS</a>
-                        <a class="icon bibtex" title="download bibtex" download="bhlitem<%: bibliographyItem.Book.BookID %>.bib" href="/bibtexdownload/<%: bibliographyItem.Book.BookID %>">BibTeX</a>
                     </div>
                     <% } %>
                 </div>
@@ -384,6 +387,14 @@
 
 <asp:Content ID="scriptContent" ContentPlaceHolderID="scriptContentPlaceHolder" runat="server">
 <script src="/js/libs/jquery.history.min.js"></script>
+<script src="/js/citation-js/citation-js@0.6.4.js" type="text/javascript"></script>
+<script src="/js/citation-js/bhl-citation-js.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var cmArgs = new CitationModalArgs();
+    cmArgs.init({
+        tid: <%: BhlTitle.TitleID %>
+    });
+</script>
 <script type="text/javascript">
 //<![CDATA[
     $(document).ready(function () {

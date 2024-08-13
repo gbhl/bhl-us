@@ -87,6 +87,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Drawing" />
@@ -173,6 +174,7 @@
     <Content Include="api2\docs\SubjectSearch.xml" />
     <Content Include="api2\docs\TitleSearchSimple.xml" />
     <Content Include="api2\soap.asmx" />
+    <Content Include="css\bhl-citation-js.css" />
     <Content Include="css\cookieconsent.css" />
     <Content Include="css\nspop.css" />
     <Content Include="css\socicon.css" />
@@ -450,6 +452,14 @@
     <Content Include="images\view_page.gif" />
     <Content Include="ItemNotFound.aspx" />
     <Content Include="ItemPage.aspx" />
+    <Content Include="js\citation-js\bhl-citation-js.js" />
+    <Content Include="js\citation-js\citation-js%400.6.4.js" />
+    <Content Include="js\citation-js\plugins\american-medical-association-11th.js" />
+    <Content Include="js\citation-js\plugins\apa-7th.js" />
+    <Content Include="js\citation-js\plugins\chicago-author-date-17th.js" />
+    <Content Include="js\citation-js\plugins\chicago-note-bibliography-17th.js" />
+    <Content Include="js\citation-js\plugins\modern-language-association-9th.js" />
+    <Content Include="js\citation-js\plugins\wikipedia-templates.js" />
     <Content Include="js\cookieconsent-config.js" />
     <Content Include="js\cookieconsent.umd.js" />
     <Content Include="js\nspop.js" />
@@ -532,6 +542,7 @@
     <Content Include="Handlers\GetItemText.ashx" />
     <Content Include="Handlers\GetItemPdf.ashx" />
     <Content Include="Handlers\GetItemImages.ashx" />
+    <Content Include="Handlers\CSLDownload.ashx" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28Local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28SI%29.pubxml" />
     <None Include="Properties\PublishProfiles\Production - BHL %28local%29.pubxml" />
@@ -848,6 +859,9 @@
     </Compile>
     <Compile Include="Handlers\ITunesRSS.ashx.cs">
       <DependentUpon>ITunesRSS.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\CSLDownload.ashx.cs">
+      <DependentUpon>CSLDownload.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handlers\MODSDownload.ashx.cs">
       <DependentUpon>MODSDownload.ashx</DependentUpon>
