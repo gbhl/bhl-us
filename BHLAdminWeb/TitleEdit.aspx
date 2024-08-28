@@ -803,7 +803,7 @@
     </fieldset>
 	<br />
 	<fieldset>
-		<legend class="dataHeader">Title Associations (MARC 440, 490, 78X, 830, and 773)</legend>
+		<legend class="dataHeader">Title Associations (MARC 440, 490, 740, 76X, 77X, 78X, and 830)</legend>
 		<asp:GridView ID="associationsList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 		AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white" Width="800px" CssClass="boxTable" 
 			OnRowCommand="associationsList_RowCommand" DataKeyNames="TitleAssociationID">

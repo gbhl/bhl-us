@@ -1143,7 +1143,9 @@ BEGIN TRY
 		WHERE	m.Code = 'a'
 		AND		m.DataFieldTag IN ('780', '785')
 
-		-- Get 770, 772, 773, 775, 777, 787 tags 
+		-- Get 760, 762, 770, 772, 773, 775, 777, 787 tags 
+		-- 760 are Main Series entry items
+		-- 762 are Subseries entry items
 		-- 770 are Supplement/Special Issue items
 		-- 772 are Supplement Parent items
 		-- 773 is Host Item information... defines "container" items for titles that are also articles
@@ -1167,8 +1169,9 @@ BEGIN TRY
 		FROM	(
 				SELECT ItemID, MarcDataFieldID, DataFieldTag, [a], [d], [g], [t]
 				FROM	(SELECT * FROM dbo.vwIAMarcDataField
-						WHERE DataFieldTag IN ('770', '772', '773', '775', '777', '787')) AS m
+						WHERE DataFieldTag IN ('760', '762', '770', '772', '773', '775', '777', '787')) AS m
 				PIVOT	(MIN(SubFieldValue) FOR Code in ([a], [d], [g], [t])) AS Pvt
+				WHERE	[a] IS NOT NULL OR [d] IS NOT NULL OR [g] IS NOT NULL OR [t] IS NOT NULL
 				) x INNER JOIN #tmpTitle ti
 					ON x.ItemID = ti.ItemID
 		GROUP BY x.ItemID, x.MarcDataFieldID, x.DataFieldTag
