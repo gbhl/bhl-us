@@ -165,7 +165,7 @@ namespace BHL.Export.TSV
 
         public void WriteItemHeader(string filePath)
         {
-            File.AppendAllText(filePath, "ItemID\tTitleID\tThumbnailPageID\tBarCode\tMARCItemID\tCallNumber\tVolumeInfo\tItemURL\tItemTextURL\tItemPDFURL\tItemImagesURL\tLocalID\tYear\tInstitutionName\tZQuery\tCreationDate" + Environment.NewLine, Encoding.UTF8);
+            File.AppendAllText(filePath, "ItemID\tTitleID\tThumbnailPageID\tBarCode\tMARCItemID\tCallNumber\tVolumeInfo\tItemURL\tItemTextURL\tItemPDFURL\tItemImagesURL\tLocalID\tYear\tInstitutionName\tZQuery\tCreationDate\tCopyrightStatus\tRightsStatement\tLicenseType\tRightsHolder" + Environment.NewLine, Encoding.UTF8);
         }
 
         public void WritePageHeader(string filePath)
@@ -180,7 +180,7 @@ namespace BHL.Export.TSV
 
         public void WriteSegmentHeader(string filePath)
         {
-            File.AppendAllText(filePath, "PartID\tItemID\tContributorName\tSequenceOrder\tSegmentType\tTitle\tContainerTitle\tPublicationDetails\tVolume\tSeries\tIssue\tDate\tPageRange\tStartPageID\tLanguageName\tSegmentUrl\tExternalUrl\tDownloadUrl\tRightsStatus\tRightsStatement\tLicenseName\tLicenseUrl" + Environment.NewLine, Encoding.UTF8);
+            File.AppendAllText(filePath, "PartID\tItemID\tContributorName\tSequenceOrder\tSegmentType\tTitle\tContainerTitle\tPublicationDetails\tVolume\tSeries\tIssue\tDate\tPageRange\tStartPageID\tLanguageName\tSegmentUrl\tExternalUrl\tDownloadUrl\tRightsStatus\tRightsStatement\tLicenseName\tLicenseUrl\tRightsHolder" + Environment.NewLine, Encoding.UTF8);
         }
 
         public void WriteSegmentAuthorHeader(string filePath)
@@ -311,9 +311,14 @@ namespace BHL.Export.TSV
             string institutionName = GetDBString(reader, "InstitutionName");
             string zQuery = GetDBString(reader, "ZQuery");
             string creationDate = GetDBString(reader, "CreationDate");
-            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}",
+            string copyrightStatus = GetDBString(reader, "CopyrightStatus");
+            string rightsStatement = GetDBString(reader, "Rights");
+            string licenseType = GetDBString(reader, "LicenseType");
+            string rightsHolder = GetDBString(reader, "RightsHolder");
+            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}\t{16}\t{17}\t{18}\t{19}",
                 itemID, titleID, thumbnailPageID, barCode, marcItemID, callNumber, volumeInfo, itemURL, itemTextURL,
-                itemPDFURL, itemImagesURL, identifierBib, year, institutionName, zQuery, creationDate);
+                itemPDFURL, itemImagesURL, identifierBib, year, institutionName, zQuery, creationDate,
+                copyrightStatus, rightsStatement, licenseType, rightsHolder);
         }
 
         public string GetPageRow(SqlDataReader reader, string statType)
@@ -365,10 +370,11 @@ namespace BHL.Export.TSV
             string rightsStatement = GetDBString(reader, "RightsStatement");
             string licenseName = GetDBString(reader, "LicenseName");
             string licenseUrl = GetDBString(reader, "LicenseUrl");
-            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}\t{16}\t{17}\t{18}\t{19}\t{20}\t{21}",
+            string rightsHolder = GetDBString(reader, "RightsHolder");
+            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}\t{16}\t{17}\t{18}\t{19}\t{20}\t{21}\t{22}",
                 partID, itemID, contributorName, sequenceOrder, segmentType, title, containerTitle, publicationDetails,
                 volume, series, issue, date, pageRange, startPageID, languageName, segmentUrl, externalUrl, downloadUrl,
-                rightsStatus, rightsStatement, licenseName, licenseUrl);
+                rightsStatus, rightsStatement, licenseName, licenseUrl, rightsHolder);
         }
 
         public string GetSegmentAuthorRow(SqlDataReader reader, string statType)
