@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -78,5 +79,19 @@ namespace MOBOT.BHL.DAL
 			}
 		}
 
+        public List<IndicatedPage> IndicatedPageSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("IndicatedPageSelectByPageID", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID)))
+            {
+                using (CustomSqlHelper<IndicatedPage> helper = new CustomSqlHelper<IndicatedPage>())
+                {
+                    return helper.ExecuteReader(command);
+                }
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
 using CustomDataAccess;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
@@ -135,6 +136,11 @@ namespace MOBOT.BHL.Server
 				transactionController.Dispose();
 			}
 		}
+
+        public List<IndicatedPage> IndicatedPageSelectByPageID(int pageID)
+        {
+            return new IndicatedPageDAL().IndicatedPageSelectByPageID(null, null, pageID);
+        }
 
     }
 }

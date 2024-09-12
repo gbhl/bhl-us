@@ -4,24 +4,21 @@ using System.Web;
 
 namespace MOBOT.BHL.Web2
 {
-    /// <summary>
-    /// Summary description for $codebehindclassname$
-    /// </summary>
     public class BibTeXDownload : IHttpHandler
     {
         public void ProcessRequest(HttpContext context)
         {
             int id;
+            string idType = context.Request.RequestContext.RouteData.Values["type"] as string;
             string idString = context.Request.RequestContext.RouteData.Values["id"] as string;
-            string idType = "item";
 
-            if (string.IsNullOrEmpty(idString))
+            if (!string.IsNullOrWhiteSpace(idString) && string.IsNullOrWhiteSpace(idType)) idType = "item";
+            if (string.IsNullOrWhiteSpace(idString))
             {
                 idString = context.Request.QueryString["tid"] as string;
                 idType = "title";
             }
-
-            if (string.IsNullOrEmpty(idString))
+            if (string.IsNullOrWhiteSpace(idString))
             {
                 idString = context.Request.QueryString["pid"] as string;
                 idType = "part";
@@ -35,7 +32,7 @@ namespace MOBOT.BHL.Web2
                 try
                 {
                     filename += idType + idString;
-                    switch (idType)
+                    switch (idType.ToLower())
                     {
                         case "title":
                             response = new BHLProvider().TitleBibTeXGetCitationStringForTitleID(id);

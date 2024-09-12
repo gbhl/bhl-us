@@ -1221,7 +1221,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
     border-radius: 3px;
     min-height: 298px;
     float:left;
-    margin:37px 0 0 0;
+    margin:0 0 37px 0;
 }
 .featurebox.support
 {
@@ -1670,7 +1670,7 @@ section
 	margin:0 0 30px 0;	
 }
 .authorinfo {
-    margin-top: 40px;
+    margin-top: 10px;
     padding: 11px 21px 21px 21px;
     border-style: solid;
     border-color: #c5ced3;
@@ -1938,6 +1938,7 @@ label.caption
 #content aside, #message section, #content-authors aside, #content-names aside, #content-subjects aside , aside.collection-info
 {
 	width:310px;
+    margin-top:30px;
 }
 #content-noaside section
 {
