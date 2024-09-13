@@ -107,6 +107,21 @@
                             @if (Model.ItemResult.Items.Count > 0 && Model.TotalFacets > 0)
                             {
                                 <div class="col-sm-4">
+                                    <p class="facetLabel">Sort Results By</p>
+                                    <div class="facetBody">
+                                        <div class="searchPubSortOption">
+                                            <input type="radio" id="pubSortRelevance" name="rdoPubSortby" value="r" @(Model.ItemSort != "t" && Model.ItemSort != "d" ? "checked" : "")>
+                                            <label for="relevance">Relevance</label>
+                                        </div>
+                                        <div class="searchPubSortOption">
+                                            <input type="radio" id="pubSortTitle" name="rdoPubSortby" value="t" @(Model.ItemSort == "t" ? "checked" : "")>
+                                            <label for="title">Title</label>
+                                        </div>
+                                        <div class="searchPubSortOption">
+                                            <input type="radio" id="pubSortDate" name="rdoPubSortby" value="d" @(Model.ItemSort == "d" ? "checked" : "")>
+                                            <label for="date">Date</label>
+                                        </div>
+                                    </div>
                                     <p class="facetLabel">Narrow Search By</p>
                                     @Html.Partial("_SearchFacet", new ViewDataDictionary { { "facetLabel", "Type" }, { "facetData", Model.Params.GenreFacets } })
                                     @Html.Partial("_SearchFacet", new ViewDataDictionary { { "facetLabel", "Material" }, { "facetData", Model.Params.MaterialTypeFacets } })
@@ -550,6 +565,11 @@
             window.location.href = '/search?' + qs;
         });
 
+        $("input[name=rdoPubSortby]").click(function () {
+            var qs = buildQS();
+            window.location.href = '/search?' + qs;
+        });
+
         function pagerClick(tab) {
             var qs = buildQS();
             if (tab === '') {
@@ -562,7 +582,7 @@
 
         function buildQS() {
             var qs = 'searchTerm=' + encodeURIComponent( $('#Params_SearchTerm').val() ) +
-                "&tinc=" + $('#Params_TermInclude').val() +
+                '&tinc=' + $('#Params_TermInclude').val() +
                 '&searchCat=' + $('#Params_SearchCategory').val() +
                 '&stype=' + $('#Params_SearchType').val() +
                 '&lname=' + encodeURIComponent( $('#Params_LastName').val() ) +
@@ -580,7 +600,8 @@
                 '&ppage=' + $('#ItemPage').val() +
                 '&apage=' + $('#AuthorPage').val() +
                 '&kpage=' + $('#KeywordPage').val() +
-                '&npage=' + $('#NamePage').val();
+                '&npage=' + $('#NamePage').val() +
+                '&psort=' + $("input[name=rdoPubSortby]:checked").val();
 
             // Add facet values
             $('.facetCheckBox:checkbox:checked').each(function () {

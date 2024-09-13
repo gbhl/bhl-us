@@ -18,7 +18,7 @@ namespace MOBOT.BHL.Web2.Controllers
         [HttpGet]
         public ActionResult Index(string searchTerm, string tinc, string stype, string searchCat, string lname, string ninc,
             string yr, string subj, string sinc, string lang, string col, string nt, string ntinc, string txt, string txinc, 
-            string ppage, string apage, string kpage, string npage, string[] facet)
+            string ppage, string apage, string kpage, string npage, string psort, string[] facet)
         {
             // Prevent browser Back button page caching
             Response.Cache.SetCacheability(HttpCacheability.NoCache);  // HTTP 1.1
@@ -98,6 +98,7 @@ namespace MOBOT.BHL.Web2.Controllers
             model.KeywordPage = startPage;
             if (!Int32.TryParse(npage ?? "1", out startPage)) startPage = 1;
             model.NamePage = startPage;
+            model.ItemSort = psort;
 
             // For annotation searches, use the non-elasticsearch search page
             if (model.Params.SearchCategory == "O") return new RedirectResult("~/search.aspx?" + Request.QueryString);
@@ -259,7 +260,10 @@ namespace MOBOT.BHL.Web2.Controllers
                 search.Facet = true;
                 search.StartPage = model.ItemPage;
                 search.NumResults = publicationPageSize;
-                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
+
+                if (model.ItemSort == "t") search.SortField = SortField.Title;
+                else if (model.ItemSort == "d") search.SortField = SortField.Date;
+                else search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]); // Score
 
                 if (model.Params.SearchType == "F")
                 {
@@ -293,7 +297,11 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     search.StartPage = model.ItemPage;
                     search.NumResults = publicationPageSize;
-                    search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
+
+                    if (model.ItemSort == "t") search.SortField = SortField.Title;
+                    else if (model.ItemSort == "d") search.SortField = SortField.Date;
+                    else search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]); // Score
+
                     search.Facet = true;
                     model.ItemResult = search.SearchCatalog(
                         new SearchStringParam(searchTerm, GetParamOperator(model.Params.TermInclude)),

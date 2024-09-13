@@ -2729,6 +2729,10 @@ ul.creator-titles li
     font-size: 12px;
     margin: 5px 0px 5px 15px;
 }
+.searchPubSortOption {
+    margin-left: 15px;
+    font-size: 12px;
+}
 .searchPagerContainer {
     margin: 0px 0px 25px 0px;
 }
