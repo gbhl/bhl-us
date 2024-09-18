@@ -256,7 +256,7 @@
                                                                                 @Html.Raw(Server.HtmlEncode(item.Dates[0]));
                                                                                 if (item.Dates.Count > 1)
                                                                                 {
-                                                                                    @Html.Raw(Server.HtmlEncode(item.Dates[item.Dates.Count - 1]));
+                                                                                    @Html.Raw(Server.HtmlEncode("-" + item.Dates[item.Dates.Count - 1]));
                                                                                 }
                                                                             }
                                                                         </div>
