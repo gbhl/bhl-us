@@ -110,16 +110,13 @@
                                     <p class="facetLabel">Sort Results By</p>
                                     <div class="facetBody">
                                         <div class="searchPubSortOption">
-                                            <input type="radio" id="pubSortRelevance" name="rdoPubSortby" value="r" @(Model.ItemSort != "t" && Model.ItemSort != "d" ? "checked" : "")>
-                                            <label for="relevance">Relevance</label>
-                                        </div>
-                                        <div class="searchPubSortOption">
-                                            <input type="radio" id="pubSortTitle" name="rdoPubSortby" value="t" @(Model.ItemSort == "t" ? "checked" : "")>
-                                            <label for="title">Title</label>
-                                        </div>
-                                        <div class="searchPubSortOption">
-                                            <input type="radio" id="pubSortDate" name="rdoPubSortby" value="d" @(Model.ItemSort == "d" ? "checked" : "")>
-                                            <label for="date">Date</label>
+                                            <select id="ddlPubSortby" style="height:25px !important">
+                                                <option value="rd" @(Model.ItemSort[0] != 't' && Model.ItemSort[0] != 'd' ? "selected" : "")>Relevance</option>
+                                                <option value="ta" @(Model.ItemSort == "ta" ? "selected" : "")>Title (A to Z)</option>
+                                                <option value="td" @(Model.ItemSort == "td" ? "selected" : "")>Title (Z to A)</option>
+                                                <option value="da" @(Model.ItemSort == "da" ? "selected" : "")>Date (lowest to highest)</option>
+                                                <option value="dd" @(Model.ItemSort == "dd" ? "selected" : "")>Date (highest to lowest)</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <p class="facetLabel">Narrow Search By</p>
@@ -565,7 +562,7 @@
             window.location.href = '/search?' + qs;
         });
 
-        $("input[name=rdoPubSortby]").click(function () {
+        $("#ddlPubSortby").change(function () {
             var qs = buildQS();
             window.location.href = '/search?' + qs;
         });
@@ -601,7 +598,7 @@
                 '&apage=' + $('#AuthorPage').val() +
                 '&kpage=' + $('#KeywordPage').val() +
                 '&npage=' + $('#NamePage').val() +
-                '&psort=' + $("input[name=rdoPubSortby]:checked").val();
+                '&psort=' + $('#ddlPubSortby').val();
 
             // Add facet values
             $('.facetCheckBox:checkbox:checked').each(function () {

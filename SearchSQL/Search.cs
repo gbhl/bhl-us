@@ -22,6 +22,7 @@ namespace BHL.Search.SQL
         public bool Highlight { get; set; }
         public int NumResults { get; set; }
         public SortField SortField { get; set; }
+        public SortDirection SortDirection { get; set; }
         public int StartPage { get; set; }
         public bool Suggest { get; set; }
 

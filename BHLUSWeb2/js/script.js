@@ -120,7 +120,7 @@ $(document).ready(function () {
             .text($('option:selected', select).text());
 
             select
-            .before(styledSelect)
+            //.before(styledSelect)
             .addClass('styled');
 
             styledSelect.outerWidth($.browser.msie ? select.outerWidth() - 2 : select.outerWidth());

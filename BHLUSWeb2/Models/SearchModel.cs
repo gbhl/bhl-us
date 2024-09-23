@@ -13,7 +13,7 @@ namespace MOBOT.BHL.Web2.Models
             AuthorPage = 1;
             KeywordPage = 1;
             NamePage = 1;
-            ItemSort = "r"; // Relevance
+            ItemSort = "rd"; // Relevance Descending
         }
 
         public SearchParams Params { get; set; }
