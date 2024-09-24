@@ -114,8 +114,8 @@
                                                 <option value="rd" @(Model.ItemSort[0] != 't' && Model.ItemSort[0] != 'd' ? "selected" : "")>Relevance</option>
                                                 <option value="ta" @(Model.ItemSort == "ta" ? "selected" : "")>Title (A to Z)</option>
                                                 <option value="td" @(Model.ItemSort == "td" ? "selected" : "")>Title (Z to A)</option>
-                                                <option value="da" @(Model.ItemSort == "da" ? "selected" : "")>Date (lowest to highest)</option>
-                                                <option value="dd" @(Model.ItemSort == "dd" ? "selected" : "")>Date (highest to lowest)</option>
+                                                <option value="da" @(Model.ItemSort == "da" ? "selected" : "")>Date (oldest first)</option>
+                                                <option value="dd" @(Model.ItemSort == "dd" ? "selected" : "")>Date (newest first)</option>
                                             </select>
                                         </div>
                                     </div>

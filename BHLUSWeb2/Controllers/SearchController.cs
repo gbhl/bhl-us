@@ -316,9 +316,18 @@ namespace MOBOT.BHL.Web2.Controllers
                     search.StartPage = model.ItemPage;
                     search.NumResults = publicationPageSize;
 
-                    if (model.ItemSort == "t") search.SortField = SortField.Title;
-                    else if (model.ItemSort == "d") search.SortField = SortField.Date;
-                    else {
+                    if (model.ItemSort[0] == 't')
+                    {
+                        search.SortField = SortField.Title;
+                        search.SortDirection = (model.ItemSort[1] == 'd' ? SortDirection.Descending : SortDirection.Ascending);
+                    }
+                    else if (model.ItemSort[0] == 'd')
+                    {
+                        search.SortField = SortField.Date;
+                        search.SortDirection = (model.ItemSort[1] == 'd' ? SortDirection.Descending : SortDirection.Ascending);
+                    }
+                    else
+                    {
                         search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]); // Score
                         search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["PublicationResultDefaultSortDirection"]);
                     }
