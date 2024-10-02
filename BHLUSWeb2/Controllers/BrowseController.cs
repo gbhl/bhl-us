@@ -65,7 +65,23 @@ namespace MOBOT.BHL.Web2.Controllers
             var bookResults = GetCollectionBooks(model.Collection, model.Start, model.BookPage, model.NumPerPage, model.Sort);
             model.TotalBooks = bookResults.Item1;
             model.BookResults = bookResults.Item2;
-            var stats = new BHLProvider().StatsSelectForCollection(model.Collection.CollectionID);
+
+            Stats stats;
+            string cacheKey = "CollectionStats" + model.Collection.CollectionID.ToString();
+            if (HttpContext.Cache[cacheKey] != null)
+            {
+                // Use cached version
+                stats = (Stats)HttpContext.Cache[cacheKey];
+            }
+            else
+            {
+                // Refresh cache
+                stats = new BHLProvider().StatsSelectForCollection(model.Collection.CollectionID);
+                HttpContext.Cache.Add(cacheKey, stats, null, DateTime.Now.AddMinutes(
+                    Convert.ToDouble(ConfigurationManager.AppSettings["CollectionStatsQueryCacheTime"])),
+                    System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+            }
+
             model.NumTitles = stats.TitleCount;
             model.NumBooks = stats.VolumeCount;
             model.NumPages = stats.PageCount;
@@ -117,7 +133,23 @@ namespace MOBOT.BHL.Web2.Controllers
             var segmentResults = GetInstitutionSegments(model.Institution.InstitutionCode, model.Start, model.PartPage, model.NumPerPage, model.Sort);
             model.TotalSegments = segmentResults.Item1;
             model.SegmentResults = segmentResults.Item2;
-            var stats = new BHLProvider().StatsSelectForInstitution(model.Institution.InstitutionCode);
+
+            Stats stats;
+            string cacheKey = "InstitutionStats" + model.Institution.InstitutionCode;
+            if (HttpContext.Cache[cacheKey] != null)
+            {
+                // Use cached version
+                stats = (Stats)HttpContext.Cache[cacheKey];
+            }
+            else
+            {
+                // Refresh cache
+                stats = new BHLProvider().StatsSelectForInstitution(model.Institution.InstitutionCode);
+                HttpContext.Cache.Add(cacheKey, stats, null, DateTime.Now.AddMinutes(
+                    Convert.ToDouble(ConfigurationManager.AppSettings["InstitutionStatsQueryCacheTime"])),
+                    System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+            }
+
             model.NumTitles = stats.TitleCount;
             model.NumBooks = stats.VolumeCount;
             model.NumPages = stats.PageCount;

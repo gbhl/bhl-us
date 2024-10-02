@@ -150,6 +150,10 @@
     <add key="LanguageListQueryCacheTime" value="1440"/>
     <!-- Maximum time in minutes that the list of collections is cached -->
     <add key="CollectionListQueryCacheTime" value="10"/>
+    <!-- Maximum time in minutes that the collection stats are cached -->
+    <add key="CollectionStatsQueryCacheTime" value="120" />
+    <!-- Maximum time in minutes that the institution stats are cached -->
+    <add key="InstitutionStatsQueryCacheTime" value="120" />
     <!-- Maximum time in minutes that the featured collection is cached -->
     <add key="FeaturedCollectionCacheTime" value="5"/>
     <!-- Maximum time in minutes that the twitter feed is cached -->
