@@ -141,7 +141,7 @@ namespace BHL.SearchIndexer
                     .Doc(document)
                     .DocAsUpsert()  // Insert document if it doesn't already exist
                     .RetryOnConflict(3)
-                    .Refresh(Elasticsearch.Net.Refresh.WaitFor)
+                    .Refresh(Elasticsearch.Net.Refresh.False)
                     );
                 if (!response.IsValid) throw new Exception(GetIndexErrorString(response));
             }
@@ -155,7 +155,7 @@ namespace BHL.SearchIndexer
                      .Doc(document)
                      .DocAsUpsert()  // Insert document if it doesn't already exist
                      .RetryOnConflict(3)
-                     .Refresh(Elasticsearch.Net.Refresh.WaitFor)
+                     .Refresh(Elasticsearch.Net.Refresh.False)
                     );
                 if (!response.IsValid) throw new Exception(GetIndexErrorString(response));
             }
@@ -166,7 +166,7 @@ namespace BHL.SearchIndexer
             if (document != null)
             {
                 DeleteResponse response = _es.Delete<CatalogItem>(document, d => d
-                                    .Refresh(Elasticsearch.Net.Refresh.WaitFor)
+                                    .Refresh(Elasticsearch.Net.Refresh.False)
                                     );
                 if (response.Result == Result.Error) throw new Exception(GetIndexErrorString(response));
             }
@@ -177,7 +177,7 @@ namespace BHL.SearchIndexer
             if (document != null)
             {
                 DeleteResponse response = _es.Delete<Item>(document, d => d
-                    .Refresh(Elasticsearch.Net.Refresh.WaitFor)
+                    .Refresh(Elasticsearch.Net.Refresh.False)
                     );
                 if (response.Result == Result.Error) throw new Exception(GetIndexErrorString(response));
             }
@@ -188,7 +188,7 @@ namespace BHL.SearchIndexer
             if (document != null)
             {
                 DeleteResponse response = _es.Delete<Author>(document, d => d
-                    .Refresh(Elasticsearch.Net.Refresh.WaitFor)
+                    .Refresh(Elasticsearch.Net.Refresh.False)
                     );
                 if (response.Result == Result.Error) throw new Exception(GetIndexErrorString(response));
             }
@@ -199,7 +199,7 @@ namespace BHL.SearchIndexer
             if (document != null)
             {
                 DeleteResponse response = _es.Delete<Keyword>(document, d => d
-                    .Refresh(Elasticsearch.Net.Refresh.WaitFor)
+                    .Refresh(Elasticsearch.Net.Refresh.False)
                     );
                 if (response.Result == Result.Error) throw new Exception(GetIndexErrorString(response));
             }
@@ -210,7 +210,7 @@ namespace BHL.SearchIndexer
             if (document != null)
             {
                 DeleteResponse response = _es.Delete<Name>(document, d => d
-                    .Refresh(Elasticsearch.Net.Refresh.WaitFor)
+                    .Refresh(Elasticsearch.Net.Refresh.False)
                     );
                 if (response.Result == Result.Error) throw new Exception(GetIndexErrorString(response));
             }
@@ -221,7 +221,7 @@ namespace BHL.SearchIndexer
             if (document != null)
             {
                 DeleteResponse response = _es.Delete<Page>(document, d => d
-                    .Refresh(Elasticsearch.Net.Refresh.WaitFor)
+                    .Refresh(Elasticsearch.Net.Refresh.False)
                     );
                 if (response.Result == Result.Error) throw new Exception(GetIndexErrorString(response));
             }
@@ -233,7 +233,7 @@ namespace BHL.SearchIndexer
             if (document != null)
             {
                 IDeleteResponse response = _es.Delete<object>(document, d => d
-                    .Refresh(Elasticsearch.Net.Refresh.WaitFor)
+                    .Refresh(Elasticsearch.Net.Refresh.False)
                 );
                 if (!response.IsValid) throw new Exception(GetIndexErrorString(response));
             }

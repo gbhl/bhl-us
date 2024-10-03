@@ -1,6 +1,7 @@
 {
 	"settings": {
 		"number_of_shards": 10,
+		"refresh_interval" : "30s",
 		"merge": {
 			"scheduler": {
 				"max_thread_count": "1"

@@ -1,6 +1,7 @@
 {
 	"settings": {
 		"number_of_shards": 10,
+		"refresh_interval" : "30s",
 		"highlight" : {
           "max_analyzed_offset" : "10000000"
         },
