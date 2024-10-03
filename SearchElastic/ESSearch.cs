@@ -23,6 +23,9 @@ namespace BHL.Search.Elastic
         // Fields to sort.  Empty for no sort.
         private string _sortField = ESSortField.SCORE;
 
+        // Direction in which to sort.
+        private SortDirection _sortDirection = SortDirection.Descending;
+
         // Fields on which to facet.
         private List<Tuple<string, ESFacetSortOrder>> _facetFields = new List<Tuple<string, ESFacetSortOrder>>();
 
@@ -60,6 +63,12 @@ namespace BHL.Search.Elastic
         {
             get { return _sortField; }
             set { _sortField = string.IsNullOrWhiteSpace(value) ? ESSortField.SCORE : value; }
+        }
+
+        public SortDirection SortDirection
+        {
+            get { return _sortDirection; }
+            set { _sortDirection = value; }
         }
 
         public List<Tuple<string, ESFacetSortOrder>> FacetFields
@@ -753,7 +762,7 @@ namespace BHL.Search.Elastic
 
         private void SetSortField(SearchDescriptor<dynamic> searchDesc)
         {
-            if (_sortField == ESSortField.SCORE)
+            if (_sortDirection == SortDirection.Descending)
                 searchDesc.Sort(s => s.Descending(_sortField));
             else
                 searchDesc.Sort(s => s.Ascending(_sortField));
@@ -1406,6 +1415,7 @@ namespace BHL.Search.Elastic
             Console.WriteLine(string.Format("INDEX: {0}", IndexName));
             Console.WriteLine(string.Format("RETURN FIELDS: {0}", string.Join(",", ReturnFields.ToArray())));
             Console.WriteLine(string.Format("SORT FIELDS: {0}", SortField));
+            Console.WriteLine(string.Format("SORT DIRECTION: {0}", SortDirection));
 
             string facetFields = string.Empty;
             foreach(Tuple<string, ESFacetSortOrder> facet in FacetFields)

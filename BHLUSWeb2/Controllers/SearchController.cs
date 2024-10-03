@@ -18,7 +18,7 @@ namespace MOBOT.BHL.Web2.Controllers
         [HttpGet]
         public ActionResult Index(string searchTerm, string tinc, string stype, string searchCat, string lname, string ninc,
             string yr, string subj, string sinc, string lang, string col, string nt, string ntinc, string txt, string txinc, 
-            string ppage, string apage, string kpage, string npage, string[] facet)
+            string ppage, string apage, string kpage, string npage, string psort, string[] facet)
         {
             // Prevent browser Back button page caching
             Response.Cache.SetCacheability(HttpCacheability.NoCache);  // HTTP 1.1
@@ -98,6 +98,7 @@ namespace MOBOT.BHL.Web2.Controllers
             model.KeywordPage = startPage;
             if (!Int32.TryParse(npage ?? "1", out startPage)) startPage = 1;
             model.NamePage = startPage;
+            model.ItemSort = psort ?? "rd"; // Default to Relevance Descending
 
             // For annotation searches, use the non-elasticsearch search page
             if (model.Params.SearchCategory == "O") return new RedirectResult("~/search.aspx?" + Request.QueryString);
@@ -177,6 +178,7 @@ namespace MOBOT.BHL.Web2.Controllers
             search.Highlight = true;
             search.Suggest = false;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PageResultDefaultSort"]);
+            search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["PageResultDefaultSortDirection"]);
             List<Tuple<SearchField, string>> limits = new List<Tuple<SearchField, string>>();
             Tuple<SearchField, string> itemLimit = new Tuple<SearchField, string>(SearchField.ItemID, itemId.ToString());
             limits.Add(itemLimit);
@@ -247,19 +249,37 @@ namespace MOBOT.BHL.Web2.Controllers
                 search.StartPage = model.AuthorPage;
                 search.NumResults = authorPageSize;
                 search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["AuthorResultDefaultSort"]);
+                search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["AuthorResultDefaultSortDirection"]);
                 model.AuthorResult = search.SearchAuthor(searchTerm);
                 search.StartPage = model.KeywordPage;
                 search.NumResults = keywordPageSize;
                 search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["KeywordResultDefaultSort"]);
+                search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["KeywordResultDefaultSortDirection"]);
                 model.KeywordResult = search.SearchKeyword(searchTerm);
                 search.StartPage = model.NamePage;
                 search.NumResults = namePageSize;
                 search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["NameResultDefaultSort"]);
+                search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["NameResultDefaultSortDirection"]);
                 model.NameResult = search.SearchName(searchTerm);
                 search.Facet = true;
                 search.StartPage = model.ItemPage;
                 search.NumResults = publicationPageSize;
-                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
+
+                if (model.ItemSort[0] == 't')
+                {
+                    search.SortField = SortField.Title;
+                    search.SortDirection = (model.ItemSort[1] == 'd' ? SortDirection.Descending : SortDirection.Ascending);
+                }
+                else if (model.ItemSort[0] == 'd')
+                {
+                    search.SortField = SortField.Date;
+                    search.SortDirection = (model.ItemSort[1] == 'd' ? SortDirection.Descending : SortDirection.Ascending);
+                }
+                else
+                {
+                    search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]); // Score
+                    search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["PublicationResultDefaultSortDirection"]);
+                }
 
                 if (model.Params.SearchType == "F")
                 {
@@ -280,6 +300,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     search.StartPage = model.AuthorPage;
                     search.NumResults = authorPageSize;
                     search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["AuthorResultDefaultSort"]);
+                    search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["AuthorResultDefaultSortDirection"]);
                     model.AuthorResult = search.SearchAuthor(searchTerm);
                 }
                 if ((model.Params.SearchCategory.Equals("N") || model.Params.SearchCategory.Equals("M")))
@@ -287,13 +308,30 @@ namespace MOBOT.BHL.Web2.Controllers
                     search.StartPage = model.NamePage;
                     search.NumResults = namePageSize;
                     search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["NameResultDefaultSort"]);
+                    search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["NameResultDefaultSortDirection"]);
                     model.NameResult = search.SearchName(searchTerm);
                 }
                 if (model.Params.SearchCategory.Equals("T"))
                 {
                     search.StartPage = model.ItemPage;
                     search.NumResults = publicationPageSize;
-                    search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
+
+                    if (model.ItemSort[0] == 't')
+                    {
+                        search.SortField = SortField.Title;
+                        search.SortDirection = (model.ItemSort[1] == 'd' ? SortDirection.Descending : SortDirection.Ascending);
+                    }
+                    else if (model.ItemSort[0] == 'd')
+                    {
+                        search.SortField = SortField.Date;
+                        search.SortDirection = (model.ItemSort[1] == 'd' ? SortDirection.Descending : SortDirection.Ascending);
+                    }
+                    else
+                    {
+                        search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]); // Score
+                        search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["PublicationResultDefaultSortDirection"]);
+                    }
+
                     search.Facet = true;
                     model.ItemResult = search.SearchCatalog(
                         new SearchStringParam(searchTerm, GetParamOperator(model.Params.TermInclude)),
@@ -309,6 +347,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     search.StartPage = model.KeywordPage;
                     search.NumResults = keywordPageSize;
                     search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["KeywordResultDefaultSort"]);
+                    search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["KeywordResultDefaultSortDirection"]);
                     model.KeywordResult = search.SearchKeyword(searchTerm);
                 }
             }

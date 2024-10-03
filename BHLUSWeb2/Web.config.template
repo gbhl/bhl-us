@@ -181,10 +181,15 @@
     <add key="NameResultPageSize" value="20" />
     <add key="PageResultPageSize" value="5000" />
     <add key="PublicationResultDefaultSort" value="Score" /> <!-- Valid values: Score, Author, Date, Title -->
+    <add key="PublicationResultDefaultSortDirection" value="Descending" />
     <add key="AuthorResultDefaultSort" value="PrimaryAuthor" /> <!-- Valid values: Score, PrimaryAuthor -->
+    <add key="AuthorResultDefaultSortDirection" value="Ascending" />
     <add key="KeywordResultDefaultSort" value="Keyword" /> <!-- Valid values: Score, Keyword -->
+    <add key="KeywordResultDefaultSortDirection" value="Ascending" />
     <add key="NameResultDefaultSort" value="Name" /> <!-- Valid values: Score, Name -->
-    <add key="PageResultDefaultSort" value="Sequence" /> <!-- Valid values: Score, Sequence -->
+    <add key="NameResultDefaultSortDirection" value="Ascending" />
+    <add key="PageResultDefaultSort" value="Sequence" />  <!-- Valid values: Score, Sequence -->
+    <add key="PageResultDefaultSortDirection" value="Ascending" />
     <!-- Required for forms with large numbers of fields -->
     <add key="aspnet:MaxHttpCollectionKeys" value="2500" />
     <!-- Google ReCaptcha keys -->

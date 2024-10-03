@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="stylesheet" href="/css/style.css?v=27" />
+    <link rel="stylesheet" href="/css/style.css?v=28" />
     <link rel="stylesheet" href="/css/socicon.css?v=1" media="all" />
 	<link rel="stylesheet" href="/css/cookieconsent.css" />
     <link title="Biodiversity Heritage Library News [RSS]" href="https://blog.biodiversitylibrary.org/feed" type="application/rss+xml" rel="alternate" />
@@ -187,7 +187,7 @@
         <asp:ContentPlaceHolder ID="scriptContentPlaceHolder" runat="server" />
 
         <script src="/js/plugins.js?v=2"></script> 
-          <script src="/js/script.js?v=6"></script> 
+          <script src="/js/script.js?v=7"></script> 
         <script type="text/plain" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js" data-category="analytics" data-service="altmetric"></script>
     </form>
 </body>

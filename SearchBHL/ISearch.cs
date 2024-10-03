@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace BHL.Search
 {
@@ -22,6 +23,11 @@ namespace BHL.Search
         /// Field on which to sort.
         /// </summary>
         SortField SortField { get; set; }
+
+        /// <summary>
+        /// Direction in which to sort
+        /// </summary>
+        SortDirection SortDirection { get; set; }
 
         /// <summary>
         /// Fields on which to facet.

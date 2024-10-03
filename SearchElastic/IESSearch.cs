@@ -48,6 +48,11 @@ namespace BHL.Search.Elastic
         string SortField { set; get; }
 
         /// <summary>
+        /// Direction in which to sort
+        /// </summary>
+        SortDirection SortDirection { get; set; }
+
+        /// <summary>
         /// Fields on which to facet.
         /// </summary>
         List<Tuple<string, ESFacetSortOrder>> FacetFields { set; get; }

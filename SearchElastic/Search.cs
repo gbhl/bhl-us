@@ -21,6 +21,7 @@ namespace BHL.Search.Elastic
         private bool _highlight = false;
         private bool _suggest = false;
         private SortField _sortField = SortField.Score;
+        private SortDirection _sortDirection = SortDirection.Descending;
 
         public bool Facet
         {
@@ -59,6 +60,12 @@ namespace BHL.Search.Elastic
                 _sortField = value;
                 _esSortField = GetSortField();
             }
+        }
+
+        public SortDirection SortDirection
+        {
+            get { return _sortDirection; }
+            set { _sortDirection = value; }
         }
 
         //------------------------------------------------------------
@@ -349,6 +356,7 @@ namespace BHL.Search.Elastic
             _esSearch.StartPage = _startPage;
             _esSearch.ReturnFields = returnFields;
             _esSearch.SortField = _esSortField;
+            _esSearch.SortDirection = _sortDirection;
             if (_facet) _esSearch.FacetFields = facetFields;
             if (_highlight) _esSearch.HighlightFields = highlightFields;
             _esSearch.Suggest = _suggest;

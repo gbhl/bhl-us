@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    var searchDefaultText = "Search";
     var searchDefaultTexts = ["Search the catalog and full-text", "Search the catalog"];
 
     // Upgrade browsers plugin
@@ -10,7 +9,6 @@ $(document).ready(function () {
 
     // Search bar
     $('#searchbar #btnSearchSubmit').click(function (e) {
-        //if ($('#searchbar .field').val() == searchDefaultText) {
         if ($.inArray($("#searchbar .field").val(), searchDefaultTexts) >= 0) {
             e.preventDefault();
             return false;
@@ -19,16 +17,12 @@ $(document).ready(function () {
     $('#searchbar .field')
         .val(searchDefaultTexts[0])
         .focus(function () {
-            //if ($(this).val() == searchDefaultText) {
-            //    $(this).val("");
-            //}
             if ($.inArray($(this).val(), searchDefaultTexts) >= 0) {
                 $(this).val("");
             }
         })
         .blur(function () {
             if ($.trim($(this).val()) == "") {
-                //$(this).val(searchDefaultText);
                 if ($("#rdoSearchTypeF").is(":checked")) $(this).val(searchDefaultTexts[0]);
                 if ($("#rdoSearchTypeC").is(":checked")) $(this).val(searchDefaultTexts[1]);
             }
@@ -47,7 +41,6 @@ $(document).ready(function () {
                 if ($.inArray($('#searchbar .field').val(), searchDefaultTexts) >= 0) $('#searchbar .field').val(searchDefaultTexts[1]);
             }
         });
-
 
     // Code taken from here to account for deprecated "browser" jQuery attribute
     // https://stackoverflow.com/a/14798444
@@ -105,23 +98,22 @@ $(document).ready(function () {
         });
     }
 
-
     if (($.browser.msie && (parseInt($.browser.version, 10) < 9))) {
         $("#volumedd > div").css("display", "none");
         $("#volumedd").attr("class", "ieUnder9");
     } else {
         // Style selects
-        $('select').not('.ui-pg-selbox').each(function () {
+        $('#ddlVolumes').not('.ui-pg-selbox').each(function () {
             var select = $(this);
             var options = $('options', select);
 
             var styledSelect = $('<div/>')
-            .addClass('select')
-            .text($('option:selected', select).text());
+                .addClass('select')
+                .text($('option:selected', select).text());
 
             select
-            .before(styledSelect)
-            .addClass('styled');
+                .before(styledSelect)
+                .addClass('styled');
 
             styledSelect.outerWidth($.browser.msie ? select.outerWidth() - 2 : select.outerWidth());
 
@@ -141,33 +133,7 @@ $(document).ready(function () {
                 styledSelect.removeClass('active');
             });
         });
-    }
-
-    // Featured books accordian
-    var accordion = $('#accordion');
-    // Default state
-    $('a:not(.active) .push', accordion).hide();
-    // Hover states
-    if (typeof $().hoverIntent == 'function') {
-        $('a', accordion).hoverIntent(function () {
-            var book = $(this)
-            var push = $('.push', this);
-
-            // Close active
-            $('a.active', accordion)
-                .not(book)
-                .removeClass('active')
-                .find('.push')
-                .slideUp();
-
-            // Open selected book
-            if (!book.hasClass('active')) {
-                book.addClass('active');
-                push.slideDown();
-            }
-        }, function () {
-        });
-    }
+    } 
 
     // Volumes Collapsing on Bibliography page
     $('.volume:first').addClass('active');
