@@ -43,6 +43,9 @@ namespace MOBOT.BHL.Web2
                         case "item":
                             response = new BHLProvider().BookSelectRISCitationStringForBookID(id);
                             break;
+                        case "page":
+                            response = new BHLProvider().PageSelectRISCitationStringForPageID(id);
+                            break;
                     }
                 }
                 catch

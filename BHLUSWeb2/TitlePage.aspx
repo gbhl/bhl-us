@@ -489,7 +489,7 @@
 <script src="/js/libs/jquery.text-overflow.min.js" type="text/javascript"></script>
 <script src="/js/nspop.js?v=2" type="text/javascript"></script>
 <script src="/js/citation-js/citation-js@0.6.4.js" type="text/javascript"></script>
-<script src="/js/citation-js/bhl-citation-js.js" type="text/javascript"></script>
+<script src="/js/citation-js/bhl-citation-js.js?v=1" type="text/javascript"></script>
 <script type="text/javascript">
     var cmArgs = new CitationModalArgs();
     cmArgs.init({

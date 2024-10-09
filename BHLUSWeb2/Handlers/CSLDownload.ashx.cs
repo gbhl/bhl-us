@@ -29,6 +29,8 @@ namespace MOBOT.BHL.Web2
                     {
                         case "title":
                             idTypeArg = "t"; break;
+                        case "item":
+                            idTypeArg = "i"; break;
                         case "part":
                             idTypeArg = "s"; break;
                         case "page":

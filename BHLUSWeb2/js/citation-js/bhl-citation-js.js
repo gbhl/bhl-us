@@ -105,14 +105,14 @@ async function showCitation(target, format, cmArgs)
     }
     if (target == 'p') {
         targetId = cmArgs.pageId;
-        divDLBibTex.style.display = 'none';
-        lnkDLBibTex.href = '#'
+        divDLBibTex.style.display = 'block';
+        lnkDLBibTex.href = '/bibtexdownload/page/' + cmArgs.pageId;
         divDLCSL.style.display = 'block';
         lnkDLCSL.href = '/csldownload/page/' + cmArgs.pageId;
         divDLMODS.style.display = 'none';
-        lnkDLMODS.href = '#'
-        divDLRIS.style.display = 'none';
-        lnkDLRIS.href = '#'
+        lnkDLMODS.href = '#';
+        divDLRIS.style.display = 'block';
+        lnkDLRIS.href = '/risdownload/page/' + cmArgs.pageId;
     }
     // Show the citation, formatted appropriately
     await getCitation(citationText, "innerHTML", format, target, targetId);

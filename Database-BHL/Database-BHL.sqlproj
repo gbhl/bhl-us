@@ -1075,6 +1075,8 @@
     <None Include="dbo\Stored Procedures\SegmentExternalResourceUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\ExternalResourceTypeSelectByIDType.sql" />
     <None Include="dbo\Stored Procedures\SegmentExternalResourceSelectBySegmentID.sql" />
+    <None Include="dbo\Stored Procedures\PageBibTeXSelectForPageID.sql" />
+    <None Include="dbo\Stored Procedures\PageSelectRISCitationForPageID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

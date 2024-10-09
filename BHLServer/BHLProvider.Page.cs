@@ -4,6 +4,7 @@ using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Net;
 using System.Transactions;
 
 namespace MOBOT.BHL.Server
@@ -304,6 +305,54 @@ namespace MOBOT.BHL.Server
         public List<PageTextLog> PageTextLogSelectNonOCRForItem(int itemID)
         {
             return new PageTextLogDAL().PageTextLogSelectNonOCRForItem(null, null, itemID);
+        }
+
+		public string PageSelectRISCitationStringForPageID(int pageID)
+		{
+            System.Text.StringBuilder risString = new System.Text.StringBuilder("");
+            List<RISCitation> citations = new PageDAL().PageSelectRISCitationForPageID(null, null, pageID);
+            foreach (RISCitation citation in citations)
+            {
+                risString.Append(this.GenerateRISCitation(citation));
+            }
+            return risString.ToString();
+        }
+
+        public List<TitleBibTeX> PageBibTeXSelectForPageID(int pageID)
+        {
+            return (new PageDAL().PageBibTeXSelectForPageID(null, null, pageID));
+        }
+
+        public string PageBibTeXGetCitationStringForPageID(int pageID)
+		{
+            System.Text.StringBuilder bibtexString = new System.Text.StringBuilder("");
+            List<TitleBibTeX> citations = this.PageBibTeXSelectForPageID(pageID);
+            foreach (TitleBibTeX citation in citations)
+            {
+                string volume = citation.Volume;
+                string copyrightStatus = citation.CopyrightStatus;
+                string url = citation.Url;
+                string note = citation.Note;
+                string pages = citation.Pages.ToString();
+				if (!string.IsNullOrWhiteSpace(citation.PageRange)) pages = citation.PageRange;	// Override "pages" with PageRange (only one should be populated)
+                string keywords = citation.Keywords;
+
+                Dictionary<string, string> elements = new Dictionary<string, string>();
+                elements.Add(BibTeXRefElementName.TITLE, citation.Title);
+                if (volume != String.Empty) elements.Add(BibTeXRefElementName.VOLUME, volume);
+                if (copyrightStatus != String.Empty) elements.Add(BibTeXRefElementName.COPYRIGHT, copyrightStatus);
+                if (url != String.Empty) elements.Add(BibTeXRefElementName.URL, url);
+                if (note != String.Empty) elements.Add(BibTeXRefElementName.NOTE, note);
+                elements.Add(BibTeXRefElementName.PUBLISHER, citation.Publisher);
+                elements.Add(BibTeXRefElementName.AUTHOR, citation.Authors.Replace("|", " and "));
+                elements.Add(BibTeXRefElementName.YEAR, citation.Year);
+                if (pages != String.Empty) elements.Add(BibTeXRefElementName.PAGES, pages);
+                if (keywords != String.Empty) elements.Add(BibTeXRefElementName.KEYWORDS, keywords);
+
+                BibTeX bibTex = new BibTeX(BibTeXRefType.INBOOK, citation.CitationKey, elements);
+                bibtexString.Append(bibTex.GenerateReference());
+            }
+            return bibtexString.ToString();
         }
     }
 }

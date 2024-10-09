@@ -43,6 +43,9 @@ namespace MOBOT.BHL.Web2
                         case "item":
                             response = new BHLProvider().BookBibTeXGetCitationStringForBookID(id);
                             break;
+                        case "page":
+                            response = new BHLProvider().PageBibTeXGetCitationStringForPageID(id);
+                            break;
                     }
                 }
                 catch

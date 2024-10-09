@@ -468,5 +468,54 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
+
+        /// <summary>
+        /// Select data for a RIS citation for the specified Page.
+        /// </summary>
+        /// <param name="sqlConnection">Sql connection or null.</param>
+        /// <param name="sqlTransaction">Sql transaction or null.</param>
+        /// <returns>List of type RISCitation.</returns>
+        public List<RISCitation> PageSelectRISCitationForPageID(
+                        SqlConnection sqlConnection,
+                        SqlTransaction sqlTransaction,
+                        int pageID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("PageSelectRISCitationForPageID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID)))
+            {
+                using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
+                {
+                    List<RISCitation> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Select data for a BibTex reference for the specified Page.
+        /// </summary>
+        /// <param name="sqlConnection">Sql connection or null.</param>
+        /// <param name="sqlTransaction">Sql transaction or null.</param>
+        /// <param name="pageId">Page identifier for which to get BibTex data</param>
+        /// <returns>List of type TitleBibTeX.</returns>
+        public List<TitleBibTeX> PageBibTeXSelectForPageID(
+                        SqlConnection sqlConnection,
+                        SqlTransaction sqlTransaction,
+                        int pageId)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("PageBibTeXSelectForPageID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageId)))
+            {
+                using (CustomSqlHelper<TitleBibTeX> helper = new CustomSqlHelper<TitleBibTeX>())
+                {
+                    List<TitleBibTeX> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
     }
 }
