@@ -16,8 +16,13 @@
 	        AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
 		    CssClass="boxTable" Font-Size="Small" HeaderStyle-CssClass="boxHeader" Width="100%">
 		    <Columns>
-		    <asp:BoundField HeaderText="ID" DataField="TitleID" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" />
+            <asp:TemplateField HeaderText="ID" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left">
+                <ItemTemplate>
+                    <a id="hypTitles" target="_blank" href="<%# ConfigurationManager.AppSettings["BaseUrl"]%>/bibliography/<%# Eval( "TitleID" ) %>"><%# Eval("TitleID") %></a>
+                </ItemTemplate>
+            </asp:TemplateField>
 		    <asp:BoundField HeaderText="Title" DataField="FullTitle" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" />
+		    <asp:BoundField HeaderText="Date" DataField="PublicationDates" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" ItemStyle-Wrap="false" />
 		    <asp:BoundField HeaderText="Role" DataField="RoleDescription" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="Left" />
             <asp:BoundField HeaderText="Relationship" DataField="Relationship" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="Left" />
             <asp:BoundField HeaderText="Title&nbsp;of&nbsp;Work" DataField="TitleOfWork" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" />

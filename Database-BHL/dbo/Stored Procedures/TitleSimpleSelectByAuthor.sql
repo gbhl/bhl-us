@@ -9,6 +9,8 @@ SET NOCOUNT ON
 SELECT
 	T.TitleID,
 	T.FullTitle,
+	T.StartYear,
+	T.EndYear,
 	R.RoleDescription,
 	TA.Relationship,
 	TA.TitleOfWork
@@ -19,3 +21,4 @@ WHERE
 	T.PublishReady = 1 AND
 	TA.AuthorID = @AuthorId
 ORDER BY T.SortTitle
+GO

@@ -16,8 +16,13 @@
 	        AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
 		    CssClass="boxTable" Font-Size="Small" HeaderStyle-CssClass="boxHeader" Width="100%">
 		    <Columns>
-		    <asp:BoundField HeaderText="ID" DataField="SegmentID" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" />
+            <asp:TemplateField HeaderText="ID" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left">
+                <ItemTemplate>
+                    <a id="hypSegments" target="_blank" href="<%# ConfigurationManager.AppSettings["BaseUrl"]%>/part/<%# Eval( "SegmentID" ) %>"><%# Eval("SegmentID") %></a>
+                </ItemTemplate>
+            </asp:TemplateField>
 		    <asp:BoundField HeaderText="Title" DataField="Title" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" />
+		    <asp:BoundField HeaderText="Date" DataField="Date" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" ItemStyle-Wrap="false" />
 		    <asp:BoundField HeaderText="Type" DataField="GenreName" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="Left" />
 		    </Columns>
         </asp:GridView>    

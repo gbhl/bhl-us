@@ -1,19 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using CustomDataAccess;
 
 namespace MOBOT.BHL.DataObjects
 {
-	public class CreatorTitle : ISetValues
+    public class CreatorTitle : ISetValues
 	{
-		int _titleID;
-		string _fullTitle;
-		string _roleDescription;
-        string _relationship;
-        string _titleOfWork;
+        private int _titleID;
+        private string _fullTitle;
+        private string _roleDescription;
+        private string _relationship;
+        private string _titleOfWork;
+        private short? _StartYear = null;
+        private short? _EndYear = null;
 
-		public int TitleID
+        public int TitleID
 		{
 			get { return this._titleID; }
 			set { this._titleID = value; }
@@ -43,10 +42,31 @@ namespace MOBOT.BHL.DataObjects
             set { this._titleOfWork = value; }
         }
 
-		
-		#region ISetValues Members
+        public short? StartYear
+        {
+            get { return _StartYear; }
+            set { this._StartYear = value; }
+        }
+        public short? EndYear
+        {
+            get { return _EndYear; }
+            set { this._EndYear = value; }
+        }
 
-		public void SetValues( CustomDataRow row )
+        public string PublicationDates
+        {
+            get
+            {
+                string dates = 
+                    (StartYear == null ? string.Empty : StartYear.ToString()) + 
+                    (EndYear == null ? string.Empty : "-" + EndYear.ToString());
+                return dates;
+            }
+        }
+
+        #region ISetValues Members
+
+        public void SetValues( CustomDataRow row )
 		{
 			foreach ( CustomDataColumn column in row )
 			{
@@ -77,8 +97,18 @@ namespace MOBOT.BHL.DataObjects
                             TitleOfWork = (string)column.Value;
                             break;
                         }
-				}
-			}
+                    case "StartYear":
+                        {
+                            _StartYear = (short?)column.Value;
+                            break;
+                        }
+                    case "EndYear":
+                        {
+                            _EndYear = (short?)column.Value;
+                            break;
+                        }
+                }
+            }
 		}
 
 		#endregion
