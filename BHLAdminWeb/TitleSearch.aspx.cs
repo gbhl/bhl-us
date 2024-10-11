@@ -85,7 +85,7 @@ namespace MOBOT.BHL.AdminWeb
 		{
             ErrorMessaage = string.Empty;
 			if ( rdoSearchTypeTitle.Checked && titleidTextBox.Text.Trim().Length == 0 && titleTextBox.Text.Trim().Length == 0  ) return;
-            if ( rdoSearchTypeItem.Checked && itemidTextBox.Text.Trim().Length == 0 ) return;
+            if ( rdoSearchTypeItem.Checked && itemidTextBox.Text.Trim().Length == 0 && sourceidTextBox.Text.Trim().Length == 0 ) return;
             if ( rdoSearchTypeSegment.Checked && segmentidTextBox.Text.Trim().Length == 0 ) return;
 
 			BHLProvider bp = new BHLProvider();
@@ -154,6 +154,7 @@ namespace MOBOT.BHL.AdminWeb
                 else if (rdoSearchTypeItem.Checked)
                 {
                     _searchCriteria.SearchType = TitleSearchCriteria.SearchTarget.Item;
+                    _searchCriteria.SourceID = sourceidTextBox.Text.Trim();
                     if (itemidTextBox.Text.Trim().Length > 0)
                     {
                         if (int.TryParse(itemidTextBox.Text.Trim(), out id)) _searchCriteria.ItemID = id;

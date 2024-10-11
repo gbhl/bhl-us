@@ -8,6 +8,7 @@ namespace MOBOT.BHL.DataObjects
 	{
 		private int? _titleID;
 		private int? _itemID;
+		private string _sourceID = null;
 		private int? _segmentID;
 		private string _MARCBibId;
 		private string _title;
@@ -33,6 +34,12 @@ namespace MOBOT.BHL.DataObjects
 			get { return this._itemID; }
 			set { this._itemID = value; }
         }
+
+		public string SourceID
+		{
+			get { return this._sourceID; }
+			set { this._sourceID = value; }
+		}
 
 		public int? SegmentID
         {

@@ -38,7 +38,8 @@
 					Full Title:&nbsp;&nbsp;<asp:TextBox ID="titleTextBox" runat="server" CssClass="SearchText" />&nbsp;&nbsp;
 				</div>
 				<div id="divItemFields" style="display:none">
-					Item ID:&nbsp;&nbsp;<asp:TextBox ID="itemidTextBox" runat="server" CssClass="SearchText" />&nbsp;&nbsp;
+					Item ID:&nbsp;&nbsp;<asp:TextBox ID="itemidTextBox" runat="server" style="width:150px" CssClass="SearchText" />&nbsp;&nbsp;
+					Source ID:&nbsp;&nbsp;<asp:TextBox ID="sourceidTextBox" runat="server" style="width:150px" CssClass="SearchText" />&nbsp;&nbsp;
 				</div>
 				<div id="divSegmentFields" style="display:none">
 					Segment ID:&nbsp;&nbsp;<asp:TextBox ID="segmentidTextBox" runat="server" CssClass="SearchText" />&nbsp;&nbsp;

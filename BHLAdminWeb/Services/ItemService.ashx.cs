@@ -81,7 +81,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                 case "ItemSearch":
                     {
                         context.Response.ContentType = "application/json";
-                        response = this.ItemSearch(itemID, virtualOnly);
+                        response = this.ItemSearch(itemID, barCode, virtualOnly);
                         break;
                     }
                 case "ItemSearchByTitle":
@@ -111,11 +111,11 @@ namespace MOBOT.BHL.AdminWeb.Services
             context.Response.Write(response);
         }
 
-        private string ItemSearch(int itemId, int? virtualOnly)
+        private string ItemSearch(int itemId, string sourceId, int? virtualOnly)
         {
             try
             {
-                Book book = new BHLProvider().BookSelectByBarcodeOrItemID(itemId, null);
+                Book book = new BHLProvider().BookSelectByBarcodeOrItemID(itemId, sourceId);
 
                 // If the "type" of book (virtual or non-virtual) was specified, then only return that type
                 if (book != null && virtualOnly != null)

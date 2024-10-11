@@ -149,9 +149,9 @@ namespace MOBOT.BHL.Server
             {
                 List<Title> titles = new List<Title>();
 
-                if (criteria.ItemID != null)
+                if (criteria.ItemID != null || !string.IsNullOrWhiteSpace(criteria.SourceID))
                 { 
-                    Book book  = new BookDAL().BookSelectByBarCodeOrItemID(null, null, criteria.ItemID, null);
+                    Book book  = new BookDAL().BookSelectByBarCodeOrItemID(null, null, criteria.ItemID, criteria.SourceID);
                     if (book != null)
                     {
                         if (book.PrimaryTitleID != null)

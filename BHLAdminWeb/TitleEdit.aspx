@@ -15,7 +15,7 @@
         el.style.visibility = (el.style.visibility === "visible") ? "hidden" : "visible";
 	}
 
-	function titleSearch(titleId, title, itemId) {
+	function titleSearch(titleId, title, itemId, sourceId) {
 		if ($('#rdoSearchTypeTitle').prop('checked')) {
 			if (titleId === "" && title === "") {
 				alert("Please specify a Title ID or Title.");
@@ -25,12 +25,12 @@
 			executeServiceCall('services/titleservice.ashx?op=TitleSearch&titleID=' + titleId + '&title=' + title, showTitleList);
 		}
 		else {
-            if (itemId === "") {
-                alert("Please specify an Item ID.");
+            if (itemId === "" && sourceId === "") {
+                alert("Please specify an Item ID or Source ID.");
                 return;
             }
 
-            executeServiceCall('services/itemservice.ashx?op=ItemSearch&itemID=' + itemId, showItemList);
+            executeServiceCall('services/itemservice.ashx?op=ItemSearch&itemID=' + itemId + '&barcode=' + sourceId, showItemList);
 		}
     }
 
@@ -974,9 +974,10 @@
 						Full Title:&nbsp;&nbsp;<input id="srchTitle" type="text" class="SearchText" onkeydown="keyDownHandler(event, btnItemSearch);" />&nbsp;&nbsp;
 					</span>
 					<span id="divItemFields" style="display:none">
-						Item ID:&nbsp;&nbsp;<input id="itemidTextBox" type="text" class="SearchText" onkeydown="keyDownHandler(event, btnItemSearch);" />&nbsp;&nbsp;
+						Item ID:&nbsp;&nbsp;<input id="itemidTextBox" type="text" class="SearchText" style="width:150px" onkeydown="keyDownHandler(event, btnItemSearch);" />&nbsp;&nbsp;
+						Source ID:&nbsp;&nbsp;<input id="sourceidTextBox" type="text" class="SearchText" style="width:150px" onkeydown="keyDownHandler(event, btnItemSearch);" />&nbsp;&nbsp;
 					</span>
-					<input id="btnItemSearch" type="button" onclick="titleSearch(document.getElementById('srchTitleID').value, document.getElementById('srchTitle').value, document.getElementById('itemidTextBox').value);" value="Search" class="SearchText" />
+					<input id="btnItemSearch" type="button" onclick="titleSearch(document.getElementById('srchTitleID').value, document.getElementById('srchTitle').value, document.getElementById('itemidTextBox').value, document.getElementById('sourceidTextBox').value);" value="Search" class="SearchText" />
 	            </td>
 	        </tr>
 	        <tr>
