@@ -23,7 +23,7 @@ namespace MOBOT.BHL.Web2
                 DataObjects.Item item = provider.ItemSelectFilenames(ItemType.Segment, id);
 
                 context.Response.ContentType = "application/octet-stream";
-                if (!string.IsNullOrWhiteSpace(item.TextFilename))
+                if (!string.IsNullOrWhiteSpace(item.ImagesFilename))
                 {
                     try
                     {

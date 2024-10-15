@@ -26,7 +26,7 @@ namespace MOBOT.BHL.Web2
                 DataObjects.Item item = provider.ItemSelectFilenames(ItemType.Book, itemID);
 
                 context.Response.ContentType = "application/octet-stream";
-                if (!string.IsNullOrWhiteSpace(item.TextFilename))
+                if (!string.IsNullOrWhiteSpace(item.ImagesFilename))
                 {
                     System.Net.WebClient client = new System.Net.WebClient();
 
