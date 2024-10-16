@@ -1,0 +1,25 @@
+﻿SET IDENTITY_INSERT servlog.[Service] ON 
+
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID, Display) VALUES (1, 'Unknown', '', NULL, 0)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (2, 'BHLBioStorHarvest', '', 5)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (3, 'BHLDOIService', 'Submit', 4)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (4, 'BHLDOIService', 'Validate', 4)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (5, 'BHLExportProcessor', 'BibTeX', 6)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (6, 'BHLExportProcessor', 'IAID', 5)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (7, 'BHLExportProcessor', 'KBART', 6)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (8, 'BHLExportProcessor', 'MODS', 6)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (9, 'BHLExportProcessor', 'RIS', 6)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (10, 'BHLExportProcessor', 'TSV', 6)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (11, 'BHLFlickrTagHarvest', '', 6)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (12, 'BHLFlickrThumbGrab', '', NULL)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (13, 'BHLMETSUpload', '', 4)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (14, 'BHLNameFileGenerator', '', 4)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (15, 'BHLOAIHarvester', '', 4)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (16, 'BHLOCRRefresh', '', NULL)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (17, 'BHLPageNameRefresh', '', 4)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (18, 'BHLPDFGenerator', '', NULL)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (19, 'BHLTextImportProcessor', '', NULL)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (20, 'IAAnalysisHarvest', '', 5)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (21, 'IAHarvestAsync', '', 5)
+
+SET IDENTITY_INSERT servlog.[Service] OFF
