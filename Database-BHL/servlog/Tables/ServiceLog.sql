@@ -12,3 +12,22 @@
     ,CONSTRAINT [PK_ServLogServiceLog] PRIMARY KEY CLUSTERED ([ServiceLogID] ASC)
 	)
 GO
+
+ALTER TABLE servlog.ServiceLog WITH NOCHECK
+    ADD CONSTRAINT FK_ServLogServiceLog_Service FOREIGN KEY (ServiceID) REFERENCES servlog.[Service] (ServiceID);
+GO
+
+ALTER TABLE servlog.ServiceLog WITH NOCHECK
+    ADD CONSTRAINT FK_ServLogServiceLog_Severity FOREIGN KEY (SeverityID) REFERENCES servlog.Severity (SeverityID);
+GO
+
+CREATE NONCLUSTERED INDEX IDX_ServLogServiceLog_CreationDate ON [servlog].[ServiceLog] 
+(
+	[CreationDate] ASC
+)
+INCLUDE
+(
+	[ServiceID],
+	[SeverityID]
+)
+GO

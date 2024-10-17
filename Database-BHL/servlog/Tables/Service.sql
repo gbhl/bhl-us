@@ -13,3 +13,7 @@
     ,CONSTRAINT [PK_ServLogService] PRIMARY KEY CLUSTERED ([ServiceID] ASC)
 	)
 GO
+
+ALTER TABLE servlog.[Service] WITH NOCHECK
+    ADD CONSTRAINT FK_ServLogService_Frequency FOREIGN KEY (FrequencyID) REFERENCES servlog.Frequency (FrequencyID);
+GO

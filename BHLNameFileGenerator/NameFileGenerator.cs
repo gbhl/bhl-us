@@ -237,7 +237,8 @@ namespace MOBOT.BHL.BHLNameFileGenerator
                     this.LogMessage("Sending Email....");
                     string message = this.GetEmailBody();
                     this.LogMessage(message);
-                    this.SendEmail(message);
+                    //this.SendEmail(message);
+                    this.SendServiceLog("BHLNameFileGenerator", message);
                 }
                 else
                 {
@@ -263,7 +264,6 @@ namespace MOBOT.BHL.BHLNameFileGenerator
             string thisComputer = Environment.MachineName;
             string itemType = string.Empty;
 
-            sb.Append("BHLNameFileGenerator: Name File Processing on " + thisComputer + " complete." + endOfLine);
             if (this.getItemsPerformed)
             {
                 sb.Append(endOfLine + "Refreshed list of items for which to build name files" + endOfLine);
@@ -315,6 +315,29 @@ namespace MOBOT.BHL.BHLNameFileGenerator
             catch (Exception ex)
             {
                 log.Error("Email Exception: ", ex);
+            }
+        }
+
+        /// <summary>
+        /// Send the specified email message 
+        /// </summary>
+        /// <param name="message">Body of the message to be sent</param>
+        private void SendServiceLog(string serviceName, string message)
+        {
+            try
+            {
+                ServiceLogModel serviceLog = new ServiceLogModel();
+                serviceLog.Servicename = serviceName;
+                serviceLog.Logdate = DateTime.Now;
+                serviceLog.Severityname = (errorMessages.Count == 0 ? "Information" : "Error");
+                serviceLog.Message = string.Format("Processing on {0} completed.\n\r{1}", Environment.MachineName, message);
+
+                ServiceLogsClient restClient = new ServiceLogsClient(configParms.BHLWSEndpoint);
+                restClient.InsertServiceLog(serviceLog);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Service Log Exception: ", ex);
             }
         }
 

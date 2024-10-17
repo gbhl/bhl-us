@@ -2,7 +2,7 @@
 
 namespace BHL.WebServiceREST.v1.Client
 {
-    internal class ServiceLogsClient : RestClient
+    public class ServiceLogsClient : RestClient
     {
         public ServiceLogsClient(string baseUrl) : base(baseUrl)
         {

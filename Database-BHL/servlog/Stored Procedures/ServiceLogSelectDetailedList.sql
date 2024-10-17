@@ -6,15 +6,17 @@
 	@NumRows int = 100,
 	@StartRow int = 1,
 	@SortColumn nvarchar(150) = 'CreationDate',
-	@SortDirection nvarchar(4) = 'DESC'
+	@SortDirection nvarchar(5) = 'DESC'
 AS
 BEGIN
 	SET NOCOUNT ON
 
+	DECLARE @SortCDateDirection nvarchar(4) = 'DESC'
 	IF @SortDirection <> 'ASC' AND @SortDirection <> 'DESC' SET @SortDirection = 'ASC'
 	IF @SortColumn = 'CreationDate' 
 	BEGIN
 		SET @SortColumn = ''
+		SET @SortCDateDirection = @SortDirection
 		SET @SortDirection = ''
 	END
 	IF @SortDirection <> '' SET @SortDirection = @SortDirection + ', '
@@ -25,7 +27,7 @@ BEGIN
 
 	DECLARE @SQL nvarchar(max)
 	SET @SQL =
-		'SELECT	ROW_NUMBER() OVER (ORDER BY ' + @SortColumn + ' ' + @SortDirection + 'CreationDate DESC) AS RowNumber ' +
+		'SELECT	ROW_NUMBER() OVER (ORDER BY ' + @SortColumn + ' ' + @SortDirection + 'CreationDate ' + @SortCDateDirection + ') AS RowNumber ' +
 				',ServiceLogID ' +
 		'FROM	servlog.ServiceLog ' +
 		'WHERE	(ServiceID = ' + CONVERT(varchar(10), @ServiceID) + ' OR ' + CONVERT(varchar(10), @ServiceID) + ' = 0) ' +
@@ -64,6 +66,6 @@ BEGIN
 			LEFT JOIN servlog.Frequency f ON s.FrequencyID = f.FrequencyID
 			INNER JOIN servlog.Severity sv ON l.SeverityID = sv.SeverityID
 	WHERE	RowNumber >= @StartRow
-	ORDER BY l.CreationDate DESC
+	ORDER BY RowNumber
 END
 GO
