@@ -5,7 +5,6 @@ using MOBOT.BHLImport.DataObjects;
 using MOBOT.BHLImport.Server;
 using System;
 using System.Collections.Generic;
-using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -132,6 +131,10 @@ namespace BHLOAIHarvester
 
                             UpdateHarvestCount(set.HarvestSetName, oaiRecord.Type.ToString());
                         }
+                    }
+                    else if (responseMessage.StartsWith("noRecordsMatch"))
+                    {
+                        // Do nothing; no records harvested from this set
                     }
                     else
                     {
@@ -479,29 +482,21 @@ namespace BHLOAIHarvester
         {
             try
             {
-                // Send email if PDFS were deleted, or if an error occurred.
-                // Don't send an email each time a PDF is generated.
+                string message;
+                string serviceName = "BHLOAIHarvester";
                 if (itemsHarvested.Count > 0 || errorMessages.Count > 0)
                 {
-                    String subject = String.Empty;
-                    String thisComputer = Environment.MachineName;
-                    if (this.errorMessages.Count == 0)
-                    {
-                        subject = "BHLOAIHarvester: OAI harvesting on " + thisComputer + " completed successfully.";
-                    }
-                    else
-                    {
-                        subject = "BHLOAIHarvester: OAI harvesting on " + thisComputer + " completed with errors.";
-                    }
-
                     this.LogMessage("Sending Email....");
-                    String message = this.GetCompletionEmailBody();
+                    message = this.GetCompletionEmailBody();
                     this.LogMessage(message);
-                    this.SendEmail(subject, message, configParms.EmailFromAddress, configParms.EmailToAddress, "");
+                    this.SendServiceLog(serviceName, message);
+                    this.SendEmail(serviceName, message);
                 }
                 else
                 {
-                    this.LogMessage("Nothing to do.  Email not sent.");
+                    message = "Nothing to do";
+                    this.LogMessage(message);
+                    this.SendServiceLog(serviceName, message);
                 }
             }
             catch (Exception ex)
@@ -520,9 +515,6 @@ namespace BHLOAIHarvester
             StringBuilder sb = new();
             const string endOfLine = "\r\n";
 
-            string thisComputer = Environment.MachineName;
-
-            sb.Append(string.Format("BHLOAIHarvester: OAI harvesting on {0} complete.{1}{2}", thisComputer, endOfLine, endOfLine));
             if (this.itemsHarvested.Count > 0)
             {
                 foreach (KeyValuePair<string, List<string>> kvp in itemsHarvested)
@@ -549,35 +541,57 @@ namespace BHLOAIHarvester
         /// Send the specified email message 
         /// </summary>
         /// <param name="message">Body of the message to be sent</param>
-        private void SendEmail(String subject, String message, String fromAddress,
-            String toAddress, String ccAddresses)
+        private void SendEmail(String serviceName, String message)
         {
             try
             {
-                MailRequestModel mailRequest = new()
+                if (this.errorMessages.Count > 0 && configParms.EmailOnError)
                 {
-                    Subject = subject,
-                    Body = message,
-                    From = fromAddress
-                };
+                    MailRequestModel mailRequest = new()
+                    {
+                        Subject = string.Format("{0}: Harvesting on {1} completed {2}",
+                            serviceName,
+                            Environment.MachineName,
+                            (this.errorMessages.Count == 0 ? "successfully" : "with errors")),
+                        Body = message,
+                        From = configParms.EmailFromAddress
+                    };
 
-                List<string> recipients = new();
-                foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
-                mailRequest.To = recipients;
+                    List<string> recipients = new();
+                    foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                    mailRequest.To = recipients;
 
-                if (ccAddresses != String.Empty)
-                {
-                    List<string> ccs = new();
-                    foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
-                    mailRequest.Cc = ccs;
+                    EmailClient restClient = new(configParms.BHLWSEndpoint);
+                    restClient.SendEmail(mailRequest);
                 }
-
-                EmailClient restClient = new(configParms.BHLWSEndpoint);
-                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {
                 LogMessage("Email Exception.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Send the specified message to the log table in the database
+        /// </summary>
+        /// <param name="serviceName">Name of the service being logged</param>
+        /// <param name="message">Body of the message to be sent</param>
+        private void SendServiceLog(string serviceName, string message)
+        {
+            try
+            {
+                ServiceLogModel serviceLog = new ServiceLogModel();
+                serviceLog.Servicename = serviceName;
+                serviceLog.Logdate = DateTime.Now;
+                serviceLog.Severityname = (errorMessages.Count > 0 ? "Error" : "Information");
+                serviceLog.Message = string.Format("Processing on {0} completed.\n\r{1}", Environment.MachineName, message);
+
+                ServiceLogsClient restClient = new ServiceLogsClient(configParms.BHLWSEndpoint);
+                restClient.InsertServiceLog(serviceLog);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Service Log Exception: ", ex);
             }
         }
 

@@ -8,6 +8,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
     {
         public string EmailFromAddress { get; set; } = string.Empty;
         public string EmailToAddress { get; set; } = string.Empty;
+        public bool EmailOnError { get; set; } = true;
         public string PdfFilePath { get; set; } = string.Empty;
         public string PdfUrl { get; set; } = string.Empty;
         public string OcrTextLocation { get; set; } = string.Empty;
@@ -25,6 +26,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 {
                     EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
                     EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+                    EmailOnError = ConfigurationManager.AppSettings["EmailOnError"].ToLower() == "true";
                     PdfFilePath = ConfigurationManager.AppSettings["PdfFilePath"];
                     PdfUrl = ConfigurationManager.AppSettings["PdfUrl"];
                     OcrTextLocation = ConfigurationManager.AppSettings["OCRTextLocation"];

@@ -3,7 +3,6 @@ using BHL.WebServiceREST.v1.Client;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Mail;
 using System.Text;
 
 namespace MOBOT.BHL.BHLPDFGenerator
@@ -247,32 +246,30 @@ namespace MOBOT.BHL.BHLPDFGenerator
             {
                 // Send email if PDFS were deleted, or if an error occurred.
                 // Don't send an email each time a PDF is generated.
+                string message;
+                string serviceName = "BHLPDFGenerator";
                 if (deletedPdfs.Count > 0 || errorMessages.Count > 0)
                 {
-                    String subject = String.Empty;
-                    String thisComputer = Environment.MachineName;
-                    if (this.errorMessages.Count == 0)
-                    {
-                        subject = "BHLPDFGenerator: PDF generation on " + thisComputer + " completed successfully.";
-                    }
-                    else
-                    {
-                        subject = "BHLPDFGenerator: PDF generation on " + thisComputer + " completed with errors.";
-                    }
+                    string subject = string.Format("{0}: Processing on {1} completed {2}",
+                        serviceName,
+                        Environment.MachineName,
+                        (this.errorMessages.Count == 0 ? "successfully" : "with errors"));
 
                     this.LogMessage("Sending Email....");
-                    String message = this.GetCompletionEmailBody();
+                    message = this.GetCompletionEmailBody();
                     this.LogMessage(message);
+                    this.SendServiceLog(serviceName, message);
                     this.SendEmail(subject, message, configParms.EmailFromAddress, configParms.EmailToAddress, "");
                 }
                 else
                 {
-                    this.LogMessage("No PDFs generated.  Email not sent.");
+                    message = "Nothing to do";
+                    this.LogMessage(message);
                 }
             }
             catch (Exception ex)
             {
-                log.Error("Exception sending email.", ex);
+                log.Error("Exception processing results.", ex);
                 return;
             }
         }
@@ -288,7 +285,6 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
             string thisComputer = Environment.MachineName;
 
-            sb.Append("BHLPDFGenerator: PDF Generation on " + thisComputer + " complete." + endOfLine);
             if (this.deletedPdfs.Count > 0)
             {
                 sb.Append(endOfLine + "Deleted " + this.deletedPdfs.Count.ToString() + " PDFs" + endOfLine);
@@ -358,28 +354,55 @@ namespace MOBOT.BHL.BHLPDFGenerator
         {
             try
             {
-                MailRequestModel mailRequest = new MailRequestModel();
-                mailRequest.Subject = subject;
-                mailRequest.Body = message;
-                mailRequest.From = fromAddress;
-
-                List<string> recipients = new List<string>();
-                foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
-                mailRequest.To = recipients;
-
-                if (ccAddresses != String.Empty)
+                if ((this.errorMessages.Count > 0 && configParms.EmailOnError) || this.deletedPdfs.Count > 0)
                 {
-                    List<string> ccs = new List<string>();
-                    foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
-                    mailRequest.Cc = ccs;
-                }
+                    MailRequestModel mailRequest = new MailRequestModel();
+                    mailRequest.Subject = subject;
+                    mailRequest.Body = message;
+                    mailRequest.From = fromAddress;
 
-                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
-                restClient.SendEmail(mailRequest);
+                    List<string> recipients = new List<string>();
+                    foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
+                    mailRequest.To = recipients;
+
+                    if (ccAddresses != String.Empty)
+                    {
+                        List<string> ccs = new List<string>();
+                        foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
+                        mailRequest.Cc = ccs;
+                    }
+
+                    EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                    restClient.SendEmail(mailRequest);
+                }
             }
             catch (Exception ex)
             {
                 log.Error("Email Exception: ", ex);
+            }
+        }
+
+        /// <summary>
+        /// Send the specified message to the log table in the database
+        /// </summary>
+        /// <param name="serviceName">Name of the service being logged</param>
+        /// <param name="message">Body of the message to be sent</param>
+        private void SendServiceLog(string serviceName, string message)
+        {
+            try
+            {
+                ServiceLogModel serviceLog = new ServiceLogModel();
+                serviceLog.Servicename = serviceName;
+                serviceLog.Logdate = DateTime.Now;
+                serviceLog.Severityname = (errorMessages.Count > 0 ? "Error" : "Information");
+                serviceLog.Message = string.Format("Processing on {0} completed.\n\r{1}", Environment.MachineName, message);
+
+                ServiceLogsClient restClient = new ServiceLogsClient(configParms.BHLWSEndpoint);
+                restClient.InsertServiceLog(serviceLog);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Service Log Exception: ", ex);
             }
         }
 

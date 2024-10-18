@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Configuration;
+using BHL.WebServiceREST.v1;
 
 namespace MOBOT.BHL.BHLBioStorHarvest
 {
@@ -8,6 +9,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
     {
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
+        public bool EmailOnError { get; set; }
 
         public string Mode { get; set; }
         public DateTime DateSince { get; set; }
@@ -37,6 +39,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         {
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            EmailOnError = StringToBool(ConfigurationManager.AppSettings["EmailOnError"]);
 
             Mode = ConfigurationManager.AppSettings["Mode"];
             DateSince = Convert.ToDateTime(ConfigurationManager.AppSettings["SinceDate"]);
@@ -69,6 +72,19 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
             this.LoadAppConfig();
+        }
+
+        private bool StringToBool(string value)
+        {
+            switch (value)
+            {
+                case "true":
+                    return true;
+                case "false":
+                    return false;
+                default:
+                    return true;
+            }
         }
     }
 }

@@ -51,6 +51,13 @@ namespace MOBOT.BHL.BHLDOIService
             set { _emailToAddress = value; }
         }
 
+        private bool _emailOnError = false;
+        public bool EmailOnError
+        {
+            get { return _emailOnError; }
+            set { _emailOnError = value; }
+        }
+
         private string _doiPrefix = string.Empty;
         public string DoiPrefix
         {
@@ -434,6 +441,7 @@ namespace MOBOT.BHL.BHLDOIService
             SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            EmailOnError = ConfigurationManager.AppSettings["EmailOnError"].ToLower() == "true";
             DoiPrefix = ConfigurationManager.AppSettings["DOIPrefix"];
             DoiFormat = ConfigurationManager.AppSettings["DOIFormat"];
             CrossrefDepositorName = ConfigurationManager.AppSettings["CrossRefDepositorName"];

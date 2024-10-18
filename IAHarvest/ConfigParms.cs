@@ -33,6 +33,13 @@ namespace IAHarvest
             }
         }
 
+        private bool _emailOnError = false;
+        public bool EmailOnError
+        {
+            get { return _emailOnError; }
+            set { _emailOnError = value; }
+        }
+
         private string _mode = string.Empty;
         public string Mode
         {
@@ -412,6 +419,7 @@ namespace IAHarvest
         {
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            EmailOnError = ConfigurationManager.AppSettings["EmailOnError"].ToLower() == "true";
             Mode = ConfigurationManager.AppSettings["Mode"];
             Download = Convert.ToBoolean(ConfigurationManager.AppSettings["Download"]);
             Upload = Convert.ToBoolean(ConfigurationManager.AppSettings["Upload"]);

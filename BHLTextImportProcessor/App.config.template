@@ -15,6 +15,7 @@
     <!-- Email Settings-->
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+    <add key="EmailOnError" value="true"/>
     <!-- Text file path -->
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
     <!-- Status codes -->

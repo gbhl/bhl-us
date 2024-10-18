@@ -14,6 +14,7 @@ namespace MOBOT.BHL.BHLMETSUpload
         public string SMTPHost { get; set; }
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
+        public bool EmailOnError { get; set; }
         public string BHLWSEndpoint { get; set; } = string.Empty;
 
         public void LoadAppConfig()
@@ -26,7 +27,21 @@ namespace MOBOT.BHL.BHLMETSUpload
             SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            EmailOnError = StringToBool(ConfigurationManager.AppSettings["EmailOnError"]);
             BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
+        }
+
+        private bool StringToBool(string value)
+        {
+            switch (value)
+            {
+                case "true":
+                    return true;
+                case "false":
+                    return false;
+                default:
+                    return true;
+            }
         }
     }
 }

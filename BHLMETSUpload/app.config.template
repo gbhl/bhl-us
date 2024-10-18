@@ -9,6 +9,7 @@
   <appSettings>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+    <add key="EmailOnError" value="false"/>
     <add key="IAFileName" value="_bhlmets.xml"/>
     <add key="METSEmail" value="ORGANIZATION EMAIL ADDRESS TO EMBED IN METS FILES"/>
     <add key="IAS3AccessKey" value="INTERNET ARCHVIE ACCESS KEY"/>

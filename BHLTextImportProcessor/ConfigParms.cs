@@ -10,6 +10,7 @@ namespace BHL.TextImportProcessor
         public string SMTPHost { get; set; }
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
+        public bool EmailOnError { get; set; }
         public string TextFilePath { get; set; }
         public int TextImportBatchStatusImported { get; set; }
         public int TextImportBatchFileStatusImported { get; set; }
@@ -25,6 +26,7 @@ namespace BHL.TextImportProcessor
             SMTPHost = string.Empty;
             EmailFromAddress = string.Empty;
             EmailToAddress = string.Empty;
+            EmailOnError = true;
             TextFilePath = string.Empty;
             TextImportBatchStatusImported = 0;
             TextImportBatchFileStatusImported = 0;
@@ -41,6 +43,7 @@ namespace BHL.TextImportProcessor
             this.SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];
             this.EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             this.EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            this.EmailOnError = ConfigurationManager.AppSettings["EmailOnError"].ToLower() == "true";
             this.TextFilePath = ConfigurationManager.AppSettings["OCRTextLocation"];
             this.TextImportBatchStatusImported = Convert.ToInt32(ConfigurationManager.AppSettings["TextImportBatchStatusImported"]);
             this.TextImportBatchFileStatusImported = Convert.ToInt32(ConfigurationManager.AppSettings["TextImportBatchFileStatusImported"]);

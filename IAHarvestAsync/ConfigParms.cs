@@ -20,6 +20,13 @@ namespace IAHarvestAsync
             set { _emailToAddress = value; }
         }
 
+        private bool _emailOnError = true;
+        public bool EmailOnError
+        {
+            get { return _emailOnError; }
+            set { _emailOnError = value; }
+        }
+
         private bool _upload = false;
         public bool Upload
         {
@@ -92,6 +99,7 @@ namespace IAHarvestAsync
         {
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            EmailOnError = ConfigurationManager.AppSettings["EmailOnError"].ToLower() == "true";
             DownloadAll = Convert.ToBoolean(ConfigurationManager.AppSettings["DownloadAll"]);
             Download = Convert.ToBoolean(ConfigurationManager.AppSettings["DownloadItem"]);
             Upload = Convert.ToBoolean(ConfigurationManager.AppSettings["UploadItem"]);

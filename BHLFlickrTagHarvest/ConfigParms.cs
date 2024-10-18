@@ -1,6 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.IO;
+﻿using System.Configuration;
 
 namespace BHLFlickrTagHarvest
 {
@@ -8,6 +6,7 @@ namespace BHLFlickrTagHarvest
     {
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
+        public bool EmailOnError { get; set; }
         public string FlickrApiKey { get; set; }
         public string BHLFlickrUserID { get; set; }
         public string BHLWSEndpoint { get; set; } = string.Empty;
@@ -16,6 +15,7 @@ namespace BHLFlickrTagHarvest
         {
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            EmailOnError = ConfigurationManager.AppSettings["EmailOnError"].ToLower() == "true";
             FlickrApiKey = ConfigurationManager.AppSettings["FlickrApiKey"];
             BHLFlickrUserID = ConfigurationManager.AppSettings["BHLFlickrUserID"];
             BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];

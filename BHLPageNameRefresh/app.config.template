@@ -8,6 +8,7 @@
 		<add key="OCRTextLocation" value="NO LONGER USED"/>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+    <add key="EmailOnError" value="false"/>
     <!-- Maximum age in days of Page Names before they are refreshed -->
 		<add key="MaximumPageNameAge" value="365"/>
 		<!-- Number of seconds between UBIO web service calls -->

@@ -9,6 +9,7 @@
   <appSettings>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+    <add key="EmailOnError" value="false"/>
     <add key="FlickrAPIKey" value="FLICKR API KEY"/>
     <add key="FlickrAPIUrl_photo.getInfo" value="https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&amp;photo_id={0}&amp;api_key={1}"/>
     <add key="FlickrDownloadUrl" value="https://farm{0}.staticflickr.com/{1}/{2}_{3}_m.jpg"/>
