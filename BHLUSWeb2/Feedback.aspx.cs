@@ -41,7 +41,7 @@ namespace MOBOT.BHL.Web2
                     }
                 }
 
-                ViewState["FeedbackRefererURL"] = (Request.UrlReferrer != null) ? Request.UrlReferrer.ToString() : "/";
+                ViewState["FeedbackRefererURL"] = (Request.UrlReferrer != null) ? Request.UrlReferrer.AbsoluteUri : "/";
 
                 string page = Request.QueryString["page"];
                 if (page != null) ViewState["PageID"] = page;
