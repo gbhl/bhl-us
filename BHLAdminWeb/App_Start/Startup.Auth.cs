@@ -46,10 +46,9 @@ namespace MOBOT.BHL.AdminWeb
             //   appId: "",
             //   appSecret: "");
 
-            // TODO: Replace the Google keys with the keys tied to the BHL account for the BETA site
             //app.UseGoogleAuthentication(
-            //    clientId: "688146021135-1vftn4rjc777klmt6ttbsofenrh3bq48.apps.googleusercontent.com",
-            //    clientSecret: "PoEkIm575D-Ale7jqobQOoHQ");
+            //    clientId: "",
+            //    clientSecret: "");
         }
     }
 
@@ -91,10 +90,9 @@ namespace MOBOT.BHL.AdminWeb
             //   appId: "",
             //   appSecret: "");
 
-            // TODO: Replace the Google keys with the keys tied to the BHL account for the PRODUCTION site
             //app.UseGoogleAuthentication(
-            //    clientId: "688146021135-1vftn4rjc777klmt6ttbsofenrh3bq48.apps.googleusercontent.com",
-            //    clientSecret: "PoEkIm575D-Ale7jqobQOoHQ");
+            //    clientId: "",
+            //    clientSecret: "");
         }
     }
 }
