@@ -1,8 +1,11 @@
 ﻿using BHL.WebServiceREST.v1;
 using BHL.WebServiceREST.v1.Client;
+using log4net;
+using log4net.Core;
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
+using System.Security.Authentication.ExtendedProtection;
 using System.Text;
 
 namespace BHL.Export
@@ -94,13 +97,15 @@ namespace BHL.Export
         {
             try
             {
-                // send email with process results to Exchange group
+                string message;
+                string serviceName = "BHLExportProcessor";
                 if (stats.Count > 0 || errors.Count > 0)
                 {
                     _log.Info("Sending Email....");
-                    string message = GetEmailBody(stats, errors);
+                    message = GetEmailBody(stats, errors);
                     _log.Info(message);
-                    SendEmail(message, errors.Count > 0);
+                    SendServiceLog(serviceName, message, errors);
+                    SendEmail(serviceName, message, errors);
                 }
                 else
                 {
@@ -125,7 +130,6 @@ namespace BHL.Export
 
             string thisComputer = Environment.MachineName;
 
-            sb.Append(string.Format("BHLExportProcessor: Processing {0} export on {1} complete.{2}", _configParms.ProcessorToRun, thisComputer, endOfLine));
             foreach (KeyValuePair<string, int> kvp in stats)
             {
                 sb.Append(string.Format("{0}Processed {1} {2}{0}", endOfLine, kvp.Value.ToString(), kvp.Key));
@@ -146,28 +150,57 @@ namespace BHL.Export
         /// Send the specified email message 
         /// </summary>
         /// <param name="message">Body of the message to be sent</param>
-        private void SendEmail(String message, bool withErrors)
+        private void SendEmail(string serviceName, string message, List<string> errors)
         {
             try
             {
-                MailRequestModel mailRequest = new MailRequestModel();
-                mailRequest.Subject = string.Format("{0} export: Processing on {1} completed {2}.", 
-                    _configParms.ProcessorToRun, 
-                    Environment.MachineName, 
-                    withErrors ? "with errors" : "successfully"); ;
-                mailRequest.Body = message;
-                mailRequest.From = _configParms.EmailFromAddress;
+                if (errors.Count > 0 && _configParms.EmailOnError)
+                {
+                    MailRequestModel mailRequest = new MailRequestModel();
+                    mailRequest.Subject = string.Format("{0}-{1} export: Processing on {2} completed {3}.",
+                        serviceName,
+                        _configParms.ProcessorToRun,
+                        Environment.MachineName,
+                        errors.Count > 0 ? "with errors" : "successfully"); ;
+                    mailRequest.Body = message;
+                    mailRequest.From = _configParms.EmailFromAddress;
 
-                List<string> recipients = new List<string>();
-                foreach (string recipient in _configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
-                mailRequest.To = recipients;
+                    List<string> recipients = new List<string>();
+                    foreach (string recipient in _configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                    mailRequest.To = recipients;
 
-                EmailClient restClient = new EmailClient(_configParms.BHLWSEndpoint);
-                restClient.SendEmail(mailRequest);
+                    EmailClient restClient = new EmailClient(_configParms.BHLWSEndpoint);
+                    restClient.SendEmail(mailRequest);
+                }
             }
             catch (Exception ex)
             {
                 _log.Error("Email Exception: ", ex);
+            }
+        }
+
+        /// <summary>
+        /// Send the specified message to the log table in the database
+        /// </summary>
+        /// <param name="serviceName">Name of the service being logged</param>
+        /// <param name="message">Body of the message to be sent</param>
+        private void SendServiceLog(string serviceName, string message, List<string> errors)
+        {
+            try
+            {
+                ServiceLogModel serviceLog = new ServiceLogModel();
+                serviceLog.Servicename = serviceName;
+                serviceLog.Serviceparam = _configParms.ProcessorToRun;
+                serviceLog.Logdate = DateTime.Now;
+                serviceLog.Severityname = (errors.Count > 0 ? "Error" : "Information");
+                serviceLog.Message = string.Format("Processing on {0} completed.\n\r{1}", Environment.MachineName, message);
+
+                ServiceLogsClient restClient = new ServiceLogsClient(_configParms.BHLWSEndpoint);
+                restClient.InsertServiceLog(serviceLog);
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Service Log Exception: ", ex);
             }
         }
     }

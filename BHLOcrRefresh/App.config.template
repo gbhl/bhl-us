@@ -10,6 +10,7 @@
   <appSettings>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+    <add key="EmailOnError" value="true"/>
 
     <add key="OcrJobNewPath" value="PATH TO NEW JOB FILES"/>
     <add key="OcrJobProcessingPath" value="PATH TO JOB FILES BEING PROCESSED"/>

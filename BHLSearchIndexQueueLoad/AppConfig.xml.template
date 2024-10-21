@@ -33,6 +33,7 @@
     <!-- Email settings -->
     <EmailFromAddress>noreply@biodiversitylibrary.org</EmailFromAddress>
     <EmailToAddresses>EMAIL RECIPIENT EMAIL ADDRESSES</EmailToAddresses>  <!-- comma-separated -->
+    <EmailOnError>true</EmailOnError>
 
     <!-- BHLWS service endpoint -->
     <BHLWSUrl>BHLWS SERVICE URL</BHLWSUrl>
