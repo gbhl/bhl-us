@@ -11,6 +11,7 @@
     <!-- Email settings -->
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+    <add key="EmailOnError" value="false"/>
     <!-- Prefix assigned to BHL by CrossRef.  All BHL DOIs must begin with this prefix.  -->
     <add key="DOIPrefix" value="00.0000"/>
     <!-- Format for new DOIs.  Completed DOI should look like "10.5962/t.1000" -->

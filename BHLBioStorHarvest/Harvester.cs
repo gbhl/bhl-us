@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Mail;
 using System.Text;
 using System.Xml.Linq;
 using EFModel = MOBOT.BHLImport.BHLImportEFDataModel;
@@ -733,31 +732,25 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         {
             try
             {
+                string message;
+                string serviceName = "BHLBioStorHarvest";
                 if (itemsDownloaded.Count > 0 || itemsUnavailable.Count > 0 ||
                     itemsHarvested.Count > 0 || articlesHarvested.Count > 0 || 
                     itemsPreprocessed.Count > 0 || articlesPreprocessed.Count > 0 ||
                     itemsPublished.Count > 0 || articlesPublished.Count > 0 ||
                     articlesSkipped.Count > 0 || errorMessages.Count > 0)
                 {
-                    String subject = String.Empty;
-                    String thisComputer = Environment.MachineName;
-                    if (this.errorMessages.Count == 0)
-                    {
-                        subject = "BHLBioStorHarvest: BioStor harvesting on " + thisComputer + " completed successfully.";
-                    }
-                    else
-                    {
-                        subject = "BHLBioStorHarvest: BioStor harvesting on " + thisComputer + " completed with errors.";
-                    }
-
                     this.LogMessage("Sending Email....");
-                    String message = this.GetCompletionEmailBody();
+                    message = this.GetCompletionEmailBody();
                     this.LogMessage(message);
-                    this.SendEmail(subject, message, configParms.EmailFromAddress, configParms.EmailToAddress);
+                    this.SendServiceLog(serviceName, message);
+                    this.SendEmail(serviceName, message);
                 }
                 else
                 {
-                    this.LogMessage("Nothing to do.  Email not sent.");
+                    message = "Nothing to do";
+                    this.LogMessage(message);
+                    this.SendServiceLog(serviceName, message);
                 }
             }
             catch (Exception ex)
@@ -776,9 +769,6 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             StringBuilder sb = new StringBuilder();
             const string endOfLine = "\r\n";
 
-            string thisComputer = Environment.MachineName;
-
-            sb.Append("BHLBioStorHarvest: BioStor harvesting on " + thisComputer + " complete." + endOfLine);
             if (this.itemsDownloaded.Count > 0)
             {
                 sb.Append(endOfLine + this.itemsDownloaded.Count.ToString() + " Items were Downloaded from BioStor." + endOfLine);
@@ -831,27 +821,58 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         /// Send the specified email message 
         /// </summary>
         /// <param name="message">Body of the message to be sent</param>
-        private void SendEmail(String subject, String message, String fromAddress, String toAddress)
+        private void SendEmail(string serviceName, string message)
         {
             try
             {
-                MailRequestModel mailRequest = new MailRequestModel
+                if (this.errorMessages.Count > 0 && configParms.EmailOnError)
                 {
-                    Subject = subject,
-                    Body = message,
-                    From = fromAddress
-                };
+                    MailRequestModel mailRequest = new MailRequestModel
+                    {
+                        Subject = string.Format("{0}: Harvesting on {1} completed {2}",
+                            serviceName,
+                            Environment.MachineName,
+                            (this.errorMessages.Count == 0 ? "successfully" : "with errors")),
+                        Body = message,
+                        From = configParms.EmailFromAddress
+                    };
 
-                List<string> recipients = new List<string>();
-                foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
-                mailRequest.To = recipients;
+                    List<string> recipients = new List<string>();
+                    foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                    mailRequest.To = recipients;
 
-                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
-                restClient.SendEmail(mailRequest);
+                    EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                    restClient.SendEmail(mailRequest);
+                }
             }
             catch (Exception ex)
             {
                 LogMessage("Email Exception.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Send the specified message to the log table in the database
+        /// </summary>
+        /// <param name="serviceName">Name of the service being logged</param>
+        /// <param name="message">Body of the message to be sent</param>
+        private void SendServiceLog(string serviceName, string message)
+        {
+            try
+            {
+                ServiceLogModel serviceLog = new ServiceLogModel();
+                serviceLog.Servicename = serviceName;
+                serviceLog.Logdate = DateTime.Now;
+                serviceLog.Severityname = (errorMessages.Count > 0 ? "Error" :
+                    (itemsUnavailable.Count > 0 ? "Warning" : "Information"));
+                serviceLog.Message = string.Format("Processing on {0} completed.\n\r{1}", Environment.MachineName, message);
+
+                ServiceLogsClient restClient = new ServiceLogsClient(configParms.BHLWSEndpoint);
+                restClient.InsertServiceLog(serviceLog);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Service Log Exception: ", ex);
             }
         }
 

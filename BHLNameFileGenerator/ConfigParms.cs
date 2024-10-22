@@ -9,6 +9,7 @@ namespace MOBOT.BHL.BHLNameFileGenerator
         public const string SMTPHostKey = "SMTPHost";
         public const string EmailFromAddressKey = "EmailFromAddress";
         public const string EmailToAddressKey = "EmailToAddress";
+        public const string EmailOnErrorKey = "EmailOnError";
         public const string GetItemsKey = "GetItems";
         public const string CreateFilesKey = "CreateFiles";
         public const string UploadFilesKey = "UploadFiles";
@@ -37,6 +38,13 @@ namespace MOBOT.BHL.BHLNameFileGenerator
         {
             get { return _emailToAddress; }
             set { _emailToAddress = value; }
+        }
+
+        private bool _emailOnError = false;
+        public bool EmailOnError
+        {
+            get { return _emailOnError; }
+            set { _emailOnError = value; }
         }
 
         private bool _getItems = true;
@@ -102,6 +110,7 @@ namespace MOBOT.BHL.BHLNameFileGenerator
             this.SMTPHost = ConfigurationManager.AppSettings[SMTPHostKey];
             this.EmailFromAddress = ConfigurationManager.AppSettings[EmailFromAddressKey];
             this.EmailToAddress = ConfigurationManager.AppSettings[EmailToAddressKey];
+            this.EmailOnError = this.StringToBool(ConfigurationManager.AppSettings[EmailOnErrorKey]);
             this.GetItems = this.StringToBool(ConfigurationManager.AppSettings[GetItemsKey]);
             this.CreateFiles = this.StringToBool(ConfigurationManager.AppSettings[CreateFilesKey]);
             this.UploadFiles = this.StringToBool(ConfigurationManager.AppSettings[UploadFilesKey]);

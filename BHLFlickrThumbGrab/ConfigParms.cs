@@ -8,6 +8,7 @@ namespace MOBOT.BHL.BHLFlickrThumbGrab
         public string SMTPHost { get; set; }
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
+        public bool EmailOnError { get; set; }
         public string FlickrAPIUrl_photoGetInfo { get; set; }
         public string FlickrDownloadUrl { get; set; }
         public string ImageFileName { get; set; }
@@ -23,6 +24,7 @@ namespace MOBOT.BHL.BHLFlickrThumbGrab
             SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            EmailOnError = StringToBool(ConfigurationManager.AppSettings["EmailOnError"]);
             FlickrAPIUrl_photoGetInfo = ConfigurationManager.AppSettings["FlickrAPIUrl_photo.getInfo"];
             FlickrDownloadUrl = ConfigurationManager.AppSettings["FlickrDownloadUrl"];
             ImageFileName = ConfigurationManager.AppSettings["ImageFileName"];
@@ -31,6 +33,19 @@ namespace MOBOT.BHL.BHLFlickrThumbGrab
             NumberToGrab = ConfigurationManager.AppSettings["NumberToGrab"];
             DefaultFilesFolder = ConfigurationManager.AppSettings["DefaultFilesFolder"];
             BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
+        }
+
+        private bool StringToBool(string value)
+        {
+            switch (value)
+            {
+                case "true":
+                    return true;
+                case "false":
+                    return false;
+                default:
+                    return true;
+            }
         }
     }
 }

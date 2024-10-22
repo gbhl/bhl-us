@@ -10,6 +10,7 @@
   <appSettings>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+    <add key="EmailOnError" value="true"/>
     <!-- BHLWS service endpoint -->
     <add key = "BHLWSUrl" value="BHLWS SERVICE URL" />
   </appSettings>

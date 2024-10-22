@@ -12,7 +12,8 @@
 	<appSettings>
 		<add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
 		<add key="EmailToAddress" value="EMAIL RECIPIENTS"/>
-		<!-- DownloadIDs indicates whether or not to get a list of identifiers from Internet Archive -->
+    <add key="EmailOnError" value="true"/>
+    <!-- DownloadIDs indicates whether or not to get a list of identifiers from Internet Archive -->
 		<add key="DownloadIDs" value="false"/>
 		<!-- GetXML indicates whether or not to get the data for the identifiers -->
 		<add key="GetXML" value="true"/>

@@ -160,17 +160,21 @@ namespace IAHarvestAsync
         {
             try
             {
-                // send email with process results
+                string message;
+                string serviceName = "IAHarvestAsync";
                 if (retrievedIds.Count > 0 || processedItems.Count > 0 || errorMessages.Count > 0)
                 {
                     LogMessage("Sending Email....");
-                    string message = GetEmailBody();
+                    message = GetEmailBody();
                     LogMessage(message);
-                    SendEmail(message);
+                    SendServiceLog(serviceName, message);
+                    SendEmail(serviceName, message);
                 }
                 else
                 {
-                    LogMessage("No items processed.  Email not sent.");
+                    message = "No items processed";
+                    LogMessage(message);
+                    SendServiceLog(serviceName, message);
                 }
             }
             catch (Exception ex)
@@ -189,7 +193,6 @@ namespace IAHarvestAsync
             StringBuilder sb = new();
             const string endOfLine = "\r\n";
 
-            sb.Append("IAHarvestAsync: IA Harvesting on " + Environment.MachineName + " complete." + endOfLine);
             if (retrievedIds.Count > 0) sb.Append(endOfLine + "Retrieved " + retrievedIds.Count.ToString() + " Identifiers" + endOfLine);
             if (processedItems.Count > 0) sb.Append(endOfLine + "Processed " + processedItems.Count.ToString() + " Identifiers" + endOfLine);
             if (errorMessages.Count > 0)
@@ -205,27 +208,57 @@ namespace IAHarvestAsync
         /// Send the specified email message 
         /// </summary>
         /// <param name="message">Body of the message to be sent</param>
-        private static void SendEmail(string message)
+        private static void SendEmail(string serviceName, string message)
         {
             try
             {
-                MailRequestModel mailRequest = new()
+                if (errorMessages.Count > 0 && configParms.EmailOnError)
                 {
-                    Subject = string.Format("IAHarvestAsync: IA Harvesting on {0} completed with {1} errors.", Environment.MachineName, errorMessages.Count.ToString()),
-                    Body = message,
-                    From = configParms.EmailFromAddress
-                };
+                    MailRequestModel mailRequest = new()
+                    {
+                        Subject = string.Format("{0}: Harvesting on {0} completed with {1} errors.",
+                        serviceName,
+                        Environment.MachineName,
+                        errorMessages.Count.ToString()),
+                        Body = message,
+                        From = configParms.EmailFromAddress
+                    };
 
-                List<string> recipients = new();
-                foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
-                mailRequest.To = recipients;
+                    List<string> recipients = new();
+                    foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                    mailRequest.To = recipients;
 
-                EmailClient restClient = new(configParms.BHLWSEndpoint);
-                restClient.SendEmail(mailRequest);
+                    EmailClient restClient = new(configParms.BHLWSEndpoint);
+                    restClient.SendEmail(mailRequest);
+                }
             }
             catch (Exception ex)
             {
                 log.Error("Email Exception: ", ex);
+            }
+        }
+
+        /// <summary>
+        /// Send the specified message to the log table in the database
+        /// </summary>
+        /// <param name="serviceName">Name of the service being logged</param>
+        /// <param name="message">Body of the message to be sent</param>
+        private static void SendServiceLog(string serviceName, string message)
+        {
+            try
+            {
+                ServiceLogModel serviceLog = new ServiceLogModel();
+                serviceLog.Servicename = serviceName;
+                serviceLog.Logdate = DateTime.Now;
+                serviceLog.Severityname = (errorMessages.Count > 0 ? "Error" : "Information");
+                serviceLog.Message = string.Format("Processing on {0} completed.\n\r{1}", Environment.MachineName, message);
+
+                ServiceLogsClient restClient = new ServiceLogsClient(configParms.BHLWSEndpoint);
+                restClient.InsertServiceLog(serviceLog);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Service Log Exception: ", ex);
             }
         }
 

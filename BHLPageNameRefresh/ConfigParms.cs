@@ -10,6 +10,7 @@ namespace MOBOT.BHL.PageNameRefresh
         public string OcrTextLocation { get; set; } = string.Empty;
         public string EmailFromAddress { get; set; } = string.Empty;
         public string EmailToAddress { get; set; } = string.Empty;
+        public bool EmailOnError { get; set; } = false;
         public int MaximumPageNameAge { get; set; } = 0;
         public int ExternalWebServiceInterval { get; set; } = 0;
         public string NameServiceSourceName { get; set; } = string.Empty;
@@ -25,6 +26,7 @@ namespace MOBOT.BHL.PageNameRefresh
             this.OcrTextLocation = ConfigurationManager.AppSettings["OCRTextLocation"];
             this.EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             this.EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            this.EmailOnError = ConfigurationManager.AppSettings["EmailOnError"].ToLower() == "true";
             this.MaximumPageNameAge = Convert.ToInt32(ConfigurationManager.AppSettings["MaximumPageNameAge"]);
             this.ExternalWebServiceInterval = Convert.ToInt32(ConfigurationManager.AppSettings["ExternalWebServiceInterval"]);
             this.NameServiceSourceName = ConfigurationManager.AppSettings["NameServiceSourceName"];

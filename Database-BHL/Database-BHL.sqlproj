@@ -98,6 +98,9 @@
     <Folder Include="txtimport" />
     <Folder Include="txtimport\Tables" />
     <Folder Include="txtimport\Stored Procedures" />
+    <Folder Include="servlog" />
+    <Folder Include="servlog\Stored Procedures" />
+    <Folder Include="servlog\Tables" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\Keyword.sql" />
@@ -1077,6 +1080,19 @@
     <None Include="dbo\Stored Procedures\SegmentExternalResourceSelectBySegmentID.sql" />
     <None Include="dbo\Stored Procedures\PageBibTeXSelectForPageID.sql" />
     <None Include="dbo\Stored Procedures\PageSelectRISCitationForPageID.sql" />
+    <None Include="Security\Schemas\servlog.sql" />
+    <None Include="servlog\Tables\Frequency.sql" />
+    <None Include="servlog\Tables\Service.sql" />
+    <None Include="servlog\Tables\Severity.sql" />
+    <None Include="servlog\Tables\ServiceLog.sql" />
+    <None Include="servlog\Stored Procedures\ServiceLogInsert.sql" />
+    <None Include="servlog\Stored Procedures\ServiceLogSelectAuto.sql" />
+    <None Include="servlog\Stored Procedures\ServiceSelectAll.sql" />
+    <None Include="servlog\Stored Procedures\ServiceLogSelectSummaryList.sql" />
+    <None Include="servlog\Stored Procedures\ServiceLogSelectDetailedList.sql" />
+    <None Include="Data\servlog.Frequency.Table.sql" />
+    <None Include="Data\servlog.Service.Table.sql" />
+    <None Include="Data\servlog.Severity.Table.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

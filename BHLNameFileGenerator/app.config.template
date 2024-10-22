@@ -9,6 +9,7 @@
   <appSettings>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+    <add key="EmailOnError" value="false"/>
     <add key="GetItems" value="false"/>
     <add key="CreateFiles" value="false"/>
     <add key="UploadFiles" value="true"/>

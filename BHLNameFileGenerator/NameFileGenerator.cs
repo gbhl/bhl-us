@@ -232,21 +232,26 @@ namespace MOBOT.BHL.BHLNameFileGenerator
             try
             {
                 // send email with process results to Exchange group
+                string message;
+                string serviceName = "BHLNameFileGenerator";
                 if (getItemsPerformed || filesCreated.Count > 0 || filesUploaded.Count > 0 || errorMessages.Count > 0)
                 {
                     this.LogMessage("Sending Email....");
-                    string message = this.GetEmailBody();
+                    message = this.GetEmailBody();
                     this.LogMessage(message);
-                    this.SendEmail(message);
+                    this.SendServiceLog(serviceName, message);
+                    this.SendEmail(serviceName, message);
                 }
                 else
                 {
-                    this.LogMessage("No items processed.  Email not sent.");
+                    message = "No items processed";
+                    this.LogMessage(message);
+                    this.SendServiceLog(serviceName, message);
                 }
             }
             catch (Exception ex)
             {
-                log.Error("Exception sending email.", ex);
+                log.Error("Exception processing results.", ex);
                 return;
             }
         }
@@ -263,7 +268,6 @@ namespace MOBOT.BHL.BHLNameFileGenerator
             string thisComputer = Environment.MachineName;
             string itemType = string.Empty;
 
-            sb.Append("BHLNameFileGenerator: Name File Processing on " + thisComputer + " complete." + endOfLine);
             if (this.getItemsPerformed)
             {
                 sb.Append(endOfLine + "Refreshed list of items for which to build name files" + endOfLine);
@@ -292,29 +296,57 @@ namespace MOBOT.BHL.BHLNameFileGenerator
         /// Send the specified email message 
         /// </summary>
         /// <param name="message">Body of the message to be sent</param>
-        private void SendEmail(string message)
+        private void SendEmail(string serviceName, string message)
         {
             try
             {
-                EmailClient restClient = null;
+                if (this.errorMessages.Count > 0 && configParms.EmailOnError)
+                {
+                    EmailClient restClient = null;
 
-                MailRequestModel mailRequest = new MailRequestModel();
-                mailRequest.Subject = string.Format("BHLNameFileGenerator: Name File Processing on {0} completed {1}.", 
-                    Environment.MachineName, 
-                    (errorMessages.Count == 0) ? "successfully" : "with errors"); ;
-                mailRequest.Body = message;
-                mailRequest.From = configParms.EmailFromAddress;
+                    MailRequestModel mailRequest = new MailRequestModel();
+                    mailRequest.Subject = string.Format("{0}: Processing on {1} completed {2}.",
+                        serviceName,
+                        Environment.MachineName,
+                        (errorMessages.Count == 0) ? "successfully" : "with errors");
+                    mailRequest.Body = message;
+                    mailRequest.From = configParms.EmailFromAddress;
 
-                List<string> recipients = new List<string>();
-                foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
-                mailRequest.To = recipients;
+                    List<string> recipients = new List<string>();
+                    foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                    mailRequest.To = recipients;
 
-                restClient = new EmailClient(configParms.BHLWSEndpoint);
-                restClient.SendEmail(mailRequest);
+                    restClient = new EmailClient(configParms.BHLWSEndpoint);
+                    restClient.SendEmail(mailRequest);
+                }
             }
             catch (Exception ex)
             {
                 log.Error("Email Exception: ", ex);
+            }
+        }
+
+        /// <summary>
+        /// Send the specified message to the log table in the database
+        /// </summary>
+        /// <param name="serviceName">Name of the service being logged</param>
+        /// <param name="message">Body of the message to be logged</param>
+        private void SendServiceLog(string serviceName, string message)
+        {
+            try
+            {
+                ServiceLogModel serviceLog = new ServiceLogModel();
+                serviceLog.Servicename = serviceName;
+                serviceLog.Logdate = DateTime.Now;
+                serviceLog.Severityname = (errorMessages.Count == 0 ? "Information" : "Error");
+                serviceLog.Message = string.Format("Processing on {0} completed.\n\r{1}", Environment.MachineName, message);
+
+                ServiceLogsClient restClient = new ServiceLogsClient(configParms.BHLWSEndpoint);
+                restClient.InsertServiceLog(serviceLog);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Service Log Exception: ", ex);
             }
         }
 

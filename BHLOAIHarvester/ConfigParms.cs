@@ -6,6 +6,7 @@ namespace BHLOAIHarvester
     {
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
+        public bool EmailOnError { get; set; }
 
         public string HarvestSetID { get; set; }
         public string FromDate { get; set; }
@@ -16,6 +17,7 @@ namespace BHLOAIHarvester
         {
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            EmailOnError = ConfigurationManager.AppSettings["EmailOnError"].ToLower() == "true";
             BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
 

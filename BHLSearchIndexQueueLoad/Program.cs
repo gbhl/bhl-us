@@ -33,6 +33,7 @@ namespace BHL.SearchIndexQueueLoad
 
         private static string _emailFromAddress = string.Empty;
         private static string _emailToAddresses = string.Empty;
+        private static bool _emailOnError = true;
 
         private static string _bhlwsurl = string.Empty;
 
@@ -156,10 +157,19 @@ namespace BHL.SearchIndexQueueLoad
                 Log.Information("{NumQueued} messages queued successfully", numQueued);
                 Log.Information("Queuing Complete");
 
+                string message;
+                string serviceName = "BHLSearchIndexQueueLoad";
                 if (isError)
                 {
+                    message = "An error occurred while adding messages to the index queue. See the BHLSearchIndexQueueLoad logs for detailed information.";
                     // Send email notification of errors
-                    SendEmailErrorNotification();
+                    SendServiceLog(serviceName, message, true);
+                    SendEmailErrorNotification(serviceName, message);                    
+                }
+                else if (numQueued > 0)
+                {
+                    message = string.Format("{0} messages queued successfully", numQueued);
+                    SendServiceLog(serviceName, message, false);
                 }
             }
         }
@@ -168,25 +178,52 @@ namespace BHL.SearchIndexQueueLoad
         /// Send an email with the specified message
         /// </summary>
         /// <param name="message"></param>
-        private static void SendEmailErrorNotification()
+        private static void SendEmailErrorNotification(string serviceName, string message)
         {
             try
             {
-                MailRequestModel mailRequest = new MailRequestModel();
-                mailRequest.Subject = "BHLSearchIndexQueueLoad: Index Message Queueing on " + Environment.MachineName + " completed with errors"; ;
-                mailRequest.Body = "An error occurred while adding messages to the index queue.See the BHLSearchIndexQueueLoad logs for detailed information.";
-                mailRequest.From = _emailFromAddress;
+                if (_emailOnError)
+                {
+                    MailRequestModel mailRequest = new MailRequestModel();
+                    mailRequest.Subject = serviceName + ": Process on " + Environment.MachineName + " completed with errors"; ;
+                    mailRequest.Body = message;
+                    mailRequest.From = _emailFromAddress;
 
-                List<string> recipients = new List<string>();
-                foreach (string recipient in _emailToAddresses.Split(',')) recipients.Add(recipient);
-                mailRequest.To = recipients;
+                    List<string> recipients = new List<string>();
+                    foreach (string recipient in _emailToAddresses.Split(',')) recipients.Add(recipient);
+                    mailRequest.To = recipients;
 
-                EmailClient restClient = new EmailClient(_bhlwsurl);
-                restClient.SendEmail(mailRequest);
+                    EmailClient restClient = new EmailClient(_bhlwsurl);
+                    restClient.SendEmail(mailRequest);
+                }
             }
             catch (Exception ex)
             {
                 Log.Error(ex, "Could not send Email");
+            }
+        }
+
+        /// <summary>
+        /// Send the specified message to the log table in the database
+        /// </summary>
+        /// <param name="serviceName">Name of the service being logged</param>
+        /// <param name="message">Body of the message to be sent</param>
+        private static void SendServiceLog(string serviceName, string message, bool isError)
+        {
+            try
+            {
+                ServiceLogModel serviceLog = new ServiceLogModel();
+                serviceLog.Servicename = serviceName;
+                serviceLog.Logdate = DateTime.Now;
+                serviceLog.Severityname = isError ? "Error" : "Information";
+                serviceLog.Message = string.Format("Processing on {0} completed.\n\r{1}", Environment.MachineName, message);
+
+                ServiceLogsClient restClient = new ServiceLogsClient(_bhlwsurl);
+                restClient.InsertServiceLog(serviceLog);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Service Log Exception: ");
             }
         }
 
@@ -243,6 +280,7 @@ namespace BHL.SearchIndexQueueLoad
 
             _emailFromAddress = new ConfigurationManager(_configFile).AppSettings("EmailFromAddress");
             _emailToAddresses = new ConfigurationManager(_configFile).AppSettings("EmailToAddresses");
+            _emailOnError = new ConfigurationManager(_configFile).AppSettings("EmailOnError").ToLower() == "true";
 
             _bhlwsurl = new ConfigurationManager(_configFile).AppSettings("BHLWSUrl");
 

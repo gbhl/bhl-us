@@ -12,6 +12,7 @@
   <appSettings>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+    <add key="EmailOnError" value="true"/>
 
     <!-- Valid values for "Mode" are:
       "SINCE" (process all items updated since a specific date) 

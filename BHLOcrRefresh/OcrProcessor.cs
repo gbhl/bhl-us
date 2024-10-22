@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Xml;
 
@@ -20,6 +19,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
         // needing to edit the code.
 
         private ConfigParms configParms = new();
+        private List<string> jobsComplete = new();
         private List<string> errorMessages = new();
 
         public object ItemsClientclient { get; private set; }
@@ -54,6 +54,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
                         }); // Log the new source of the page text
                         LogMessage(status);
                         MarkJobComplete(itemID, status);
+                        jobsComplete.Add(itemID.ToString());
                     }
                     catch (Exception ex)
                     {
@@ -381,20 +382,26 @@ namespace MOBOT.BHL.BHLOcrRefresh
         {
             try
             {
+                string message;
+                string serviceName = "BHLOcrRefresh";
                 // Only send email if an error occurred.
                 if (errorMessages.Count > 0)
                 {
-                    string thisComputer = Environment.MachineName;
-                    string subject = "BHLOcrRefresh: Process on " + thisComputer + " completed with errors.";
                     LogMessage("Sending Email....");
-                    string message = GetCompletionEmailBody();
+                    message = GetCompletionEmailBody();
                     LogMessage(message);
-                    SendEmail(subject, message, configParms.EmailFromAddress, configParms.EmailToAddress, "");
+                    SendServiceLog(serviceName, message);
+                    SendEmail(serviceName, message);
+                }
+                else if (jobsComplete.Count > 0)
+                {
+                    message = string.Format("{0} Ocr jobs completed successfully", jobsComplete.Count.ToString());
+                    SendServiceLog(serviceName, message);
                 }
             }
             catch (Exception ex)
             {
-                LogMessage("Exception sending email.", ex);
+                LogMessage("Exception processing results.", ex);
             }
         }
 
@@ -409,7 +416,6 @@ namespace MOBOT.BHL.BHLOcrRefresh
 
             string thisComputer = Environment.MachineName;
 
-            sb.Append("BHLOcrRefresh: Process on " + thisComputer + " complete." + endOfLine);
             if (errorMessages.Count > 0)
             {
                 sb.Append(endOfLine + errorMessages.Count.ToString() + " Errors Occurred" + endOfLine + "See the log file for details" + endOfLine);
@@ -426,28 +432,48 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// Send the specified email message 
         /// </summary>
         /// <param name="message">Body of the message to be sent</param>
-        private void SendEmail(string subject, string message, string fromAddress, string toAddress, string ccAddresses)
+        private void SendEmail(string serviceName, string message)
         {
-            MailRequestModel mailRequest = new()
+            if (errorMessages.Count > 0 && configParms.EmailOnError)
             {
-                Subject = subject,
-                Body = message,
-                From = fromAddress
-            };
+                MailRequestModel mailRequest = new()
+                {
+                    Subject = string.Format("{0}: Process on {1} completed with errors.", serviceName, Environment.MachineName),
+                    Body = message,
+                    From = configParms.EmailFromAddress
+                };
 
-            List<string> recipients = new();
-            foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
-            mailRequest.To = recipients;
+                List<string> recipients = new();
+                foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
 
-            if (ccAddresses != string.Empty)
-            {
-                List<string> ccs = new();
-                foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
-                mailRequest.Cc = ccs;
+                EmailClient restClient = new(configParms.BHLWSEndpoint);
+                restClient.SendEmail(mailRequest);
             }
+        }
 
-            EmailClient restClient = new(configParms.BHLWSEndpoint);
-            restClient.SendEmail(mailRequest);
+        /// <summary>
+        /// Send the specified message to the log table in the database
+        /// </summary>
+        /// <param name="serviceName">Name of the service being logged</param>
+        /// <param name="message">Body of the message to be sent</param>
+        private void SendServiceLog(string serviceName, string message)
+        {
+            try
+            {
+                ServiceLogModel serviceLog = new ServiceLogModel();
+                serviceLog.Servicename = serviceName;
+                serviceLog.Logdate = DateTime.Now;
+                serviceLog.Severityname = (errorMessages.Count > 0 ? "Error" : "Information");
+                serviceLog.Message = string.Format("Processing on {0} completed.\n\r{1}", Environment.MachineName, message);
+
+                ServiceLogsClient restClient = new ServiceLogsClient(configParms.BHLWSEndpoint);
+                restClient.InsertServiceLog(serviceLog);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Service Log Exception: ", ex);
+            }
         }
 
         private static void LogMessage(string message)

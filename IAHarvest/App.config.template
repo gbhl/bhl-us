@@ -12,7 +12,9 @@
 	<appSettings>
 		<add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
 		<add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
-		<!-- Valid values for "Mode" are:
+    <!-- "Quiet" setting takes precedence -->
+    <add key="EmailOnError" value="false"/>
+    <!-- Valid values for "Mode" are:
 			  "SETS" (process sets)
 			  "ITEM" (process a specific item) -->
 		<add key="Mode" value="SETS"/>
@@ -24,7 +26,7 @@
 		<add key="Download" value="true"/>
 		<!-- Upload indicates whether or not to publish data to the production database -->
 		<add key="Upload" value="true"/>
-    <!-- Quiet indicates whether only error messages produce emails (quiet=true) or all status updates are sent via email (quiet=false)-->
+    <!-- Quiet indicates whether service logs and email notifications are sent (quiet=false) or not (quiet=true) -->
     <add key="Quiet" value="false"/>
     <!-- Allow items added to IA more than 7 days ago to be published without "formal" approval from IA -->
 		<add key="AllowUnapprovedPublish" value="true"/>

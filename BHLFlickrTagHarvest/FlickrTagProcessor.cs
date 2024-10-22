@@ -1,15 +1,13 @@
-﻿using FlickrNet;
+﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
+using FlickrNet;
+using MOBOT.BHL.Server;
+using MOBOT.BHLImport.DataObjects;
+using MOBOT.BHLImport.Server;
 using System;
 using System.Collections.Generic;
-using System.Net.Mail;
 using System.Text;
 using System.Threading;
-using MOBOT.BHLImport.Server;
-using MOBOT.BHLImport.DataObjects;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using BHL.WebServiceREST.v1.Client;
-using BHL.WebServiceREST.v1;
 
 namespace BHLFlickrTagHarvest
 {
@@ -429,7 +427,8 @@ namespace BHLFlickrTagHarvest
         {
             try
             {
-                // send email with process results to Exchange group
+                string message;
+                string serviceName = "BHLFlickrTagHarvest";
                 if (pagesProcessed.Count > 0 || tagsAdded.Count > 0 ||
                     tagsUpdated.Count > 0 || tagsRemoved.Count > 0 || 
                     notesAdded.Count > 0 || notesUpdated.Count > 0 ||
@@ -437,18 +436,21 @@ namespace BHLFlickrTagHarvest
                     errorMessages.Count > 0)
                 {
                     LogMessage("Sending Email....");
-                    string message = this.GetEmailBody();
+                    message = this.GetEmailBody();
                     LogMessage(message);
-                    this.SendEmail(message);
+                    this.SendServiceLog(serviceName, message);
+                    this.SendEmail(serviceName, message);
                 }
                 else
                 {
-                    LogMessage("No pages processed.  Email not sent.");
+                    message = "No pages processed";
+                    LogMessage(message);
+                    this.SendServiceLog(serviceName, message);
                 }
             }
             catch (Exception ex)
             {
-                LogMessage("Exception sending email.", ex);
+                LogMessage("Exception processing results.", ex);
                 return;
             }
         }
@@ -485,9 +487,6 @@ namespace BHLFlickrTagHarvest
             StringBuilder sb = new();
             const string endOfLine = "\r\n";
 
-            string thisComputer = Environment.MachineName;
-
-            sb.Append("BHLFlickrTagHarvest: Flickr Harvesting on " + thisComputer + " complete." + endOfLine);
             if (this.pagesProcessed.Count > 0)
             {
                 sb.Append(endOfLine + "Processed " + this.pagesProcessed.Count.ToString() + " Pages" + endOfLine);
@@ -539,31 +538,61 @@ namespace BHLFlickrTagHarvest
         /// <summary>
         /// Send the specified email message 
         /// </summary>
+        /// <param name="serviceName">Name of service</param>
         /// <param name="message">Body of the message to be sent</param>
-        private void SendEmail(string message)
+        private void SendEmail(string serviceName, string message)
         {
             try
             {
-                MailRequestModel mailRequest = new()
+                if (this.errorMessages.Count > 0 && configParms.EmailOnError)
                 {
-                    Subject = string.Format(
-                        "BHLFlickrTagHarvest: Flickr Harvesting on {0} completed {1}.",
+                    MailRequestModel mailRequest = new()
+                    {
+                        Subject = string.Format(
+                        "{0}: Flickr Harvesting on {1} completed {2} ",
+                        serviceName,
                         Environment.MachineName,
                         (errorMessages.Count == 0 ? "successfully" : "with errors")),
-                    Body = message,
-                    From = configParms.EmailFromAddress
-                };
+                        Body = message,
+                        From = configParms.EmailFromAddress
+                    };
 
-                List<string> recipients = new();
-                foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
-                mailRequest.To = recipients;
+                    List<string> recipients = new();
+                    foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                    mailRequest.To = recipients;
 
-                EmailClient restClient = new(configParms.BHLWSEndpoint);
-                restClient.SendEmail(mailRequest);
+                    EmailClient restClient = new(configParms.BHLWSEndpoint);
+                    restClient.SendEmail(mailRequest);
+                }
             }
             catch (Exception ex)
             {
                 LogMessage("Email Exception: ", ex);
+            }
+        }
+
+        /// <summary>
+        /// Send the specified message to the log table in the database
+        /// </summary>
+        /// <param name="serviceName">Name of the service being logged</param>
+        /// <param name="message">Body of the message to be sent</param>
+        private void SendServiceLog(string serviceName, string message)
+        {
+            try
+            {
+                ServiceLogModel serviceLog = new ServiceLogModel();
+                serviceLog.Servicename = serviceName;
+                serviceLog.Logdate = DateTime.Now;
+                serviceLog.Severityname = (errorMessages.Count > 0 ? "Error" : 
+                    (photosNotFound.Count > 0 ? "Warning" :  "Information"));
+                serviceLog.Message = string.Format("Processing on {0} completed.\n\r{1}", Environment.MachineName, message);
+
+                ServiceLogsClient restClient = new ServiceLogsClient(configParms.BHLWSEndpoint);
+                restClient.InsertServiceLog(serviceLog);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Service Log Exception: ", ex);
             }
         }
 

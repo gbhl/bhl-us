@@ -13,6 +13,7 @@
   <appSettings>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+    <add key="EmailOnError" value="true"/>
     <add key="FlickrApiKey" value="FLICKR API KEY"/>
     <add key="BHLFlickrUserID" value="FLICKR USER ID"/>
     <!-- HarvestTarget - Identifies which metadata to harvest

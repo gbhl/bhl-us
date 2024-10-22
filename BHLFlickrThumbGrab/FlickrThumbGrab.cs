@@ -1,14 +1,13 @@
-﻿using WS = BHL.WebServiceREST.v1;
+﻿using BHL.WebServiceREST.v1;
 using BHL.WebServiceREST.v1.Client;
 using FreeImageAPI;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Net.Mail;
 using System.Text;
 using System.Xml.Linq;
-using BHL.WebServiceREST.v1;
+using WS = BHL.WebServiceREST.v1;
 
 namespace MOBOT.BHL.BHLFlickrThumbGrab
 {
@@ -295,24 +294,26 @@ namespace MOBOT.BHL.BHLFlickrThumbGrab
             {
                 // Send email if an error occurred.
                 // Don't send an email each time images are grabbed.
+                string message;
+                string serviceName = "BHLFlickrThumbGrab";
                 if (errorMessages.Count > 0)
                 {
-                    String thisComputer = Environment.MachineName;
-                    String subject = "BHLFlickrThumbGrab: Processing on " + thisComputer + " completed with errors.";
-
                     this.LogMessage("Sending Email....");
-                    String message = this.GetCompletionEmailBody();
+                    message = this.GetCompletionEmailBody();
                     this.LogMessage(message);
-                    this.SendEmail(subject, message, configParms.EmailFromAddress, configParms.EmailToAddress, "");
+                    this.SendServiceLog(serviceName, message);
+                    this.SendEmail(serviceName, message);
                 }
                 else
                 {
-                    this.LogMessage("Nothing to do.  Email not sent.");
+                    message = "Nothing to do";
+                    this.LogMessage(message);
+                    this.SendServiceLog(serviceName, message);
                 }
             }
             catch (Exception ex)
             {
-                log.Error("Exception sending email.", ex);
+                log.Error("Exception processing results.", ex);
                 return;
             }
         }
@@ -328,7 +329,6 @@ namespace MOBOT.BHL.BHLFlickrThumbGrab
 
             string thisComputer = Environment.MachineName;
 
-            sb.Append("BHLFlickrThumbGrab: Processing on " + thisComputer + " complete." + endOfLine);
             if (this.imagesDownloaded.Count > 0)
             {
                 sb.Append(endOfLine + this.imagesDownloaded.Count.ToString() + " images were Downloaded" + endOfLine);
@@ -353,35 +353,52 @@ namespace MOBOT.BHL.BHLFlickrThumbGrab
         /// Send the specified email message 
         /// </summary>
         /// <param name="message">Body of the message to be sent</param>
-        private void SendEmail(String subject, String message, String fromAddress,
-            String toAddress, String ccAddresses)
+        private void SendEmail(string serviceName, string message)
         {
             try
             {
-                EmailClient restClient = null;
-
-                MailRequestModel mailRequest = new MailRequestModel();
-                mailRequest.Subject = subject;
-                mailRequest.Body = message;
-                mailRequest.From = fromAddress;
-
-                List<string> recipients = new List<string>();
-                foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
-                mailRequest.To = recipients;
-
-                if (ccAddresses != String.Empty)
+                if (this.errorMessages.Count > 0 && configParms.EmailOnError)
                 {
-                    List<string> ccs = new List<string>();
-                    foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
-                    mailRequest.Cc = ccs;
-                }
+                    MailRequestModel mailRequest = new MailRequestModel();
+                    mailRequest.Subject = string.Format("{0}: Processing on {1} completed with errors.", serviceName, Environment.MachineName);
+                    mailRequest.Body = message;
+                    mailRequest.From = configParms.EmailFromAddress;
 
-                restClient = new EmailClient(configParms.BHLWSEndpoint);
-                restClient.SendEmail(mailRequest);
+                    List<string> recipients = new List<string>();
+                    foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                    mailRequest.To = recipients;
+
+                    EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                    restClient.SendEmail(mailRequest);
+                }
             }
             catch (Exception ex)
             {
                 log.Error("Email Exception: ", ex);
+            }
+        }
+
+        /// <summary>
+        /// Send the specified message to the log table in the database
+        /// </summary>
+        /// <param name="serviceName">Name of the service being logged</param>
+        /// <param name="message">Body of the message to be logged</param>
+        private void SendServiceLog(string serviceName, string message)
+        {
+            try
+            {
+                ServiceLogModel serviceLog = new ServiceLogModel();
+                serviceLog.Servicename = serviceName;
+                serviceLog.Logdate = DateTime.Now;
+                serviceLog.Severityname = (errorMessages.Count == 0 ? "Information" : "Error");
+                serviceLog.Message = string.Format("Processing on {0} completed.\n\r{1}", Environment.MachineName, message);
+
+                ServiceLogsClient restClient = new ServiceLogsClient(configParms.BHLWSEndpoint);
+                restClient.InsertServiceLog(serviceLog);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Service Log Exception: ", ex);
             }
         }
 

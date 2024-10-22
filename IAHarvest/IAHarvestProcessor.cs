@@ -1,5 +1,6 @@
 using BHL.WebServiceREST.v1;
 using BHL.WebServiceREST.v1.Client;
+using log4net.Util;
 using MOBOT.BHLImport.DataObjects;
 using MOBOT.BHLImport.Server;
 using System;
@@ -1497,23 +1498,31 @@ namespace IAHarvest
             try
             {
                 // Report the process results
+                string message;
+                string serviceName = "IAHarvest";
                 if (retrievedIds.Count > 0 || harvestedXml.Count > 0 || publishedItems.Count > 0 || errorMessages.Count > 0)
                 {
                     LogMessage("Sending Email....");
-                    string message = this.GetEmailBody();
+                    message = this.GetEmailBody();
                     LogMessage(message);
 
-                    // Send email if not in Quiet mode or if errors occurred
-                    if (!configParms.Quiet || errorMessages.Count > 0) this.SendEmail(message);
+                    // Send email if not in Quiet mode
+                    if (!configParms.Quiet)
+                    {
+                        SendServiceLog(serviceName, message);
+                        this.SendEmail(serviceName, message);
+                    }
                 }
                 else
                 {
-                    LogMessage("No items or pages processed.  Email not sent.");
+                    message = "No items or pages processed";
+                    LogMessage(message);
+                    if (!configParms.Quiet) SendServiceLog(serviceName, message);
                 }
             }
             catch (Exception ex)
             {
-                log.Error("Exception sending email.", ex);
+                log.Error("Exception processing results.", ex);
                 return;
             }
         }
@@ -1581,9 +1590,6 @@ namespace IAHarvest
             StringBuilder sb = new();
             const string endOfLine = "\r\n";
 
-            string thisComputer = Environment.MachineName;
-
-            sb.Append("IAHarvest: IA Harvesting on " + thisComputer + " complete." + endOfLine);
             if (this.retrievedIds.Count > 0)
             {
                 sb.Append(endOfLine + "Retrieved " + this.retrievedIds.Count.ToString() + " Identifiers" + endOfLine);
@@ -1612,30 +1618,58 @@ namespace IAHarvest
         /// Send the specified email message 
         /// </summary>
         /// <param name="message">Body of the message to be sent</param>
-        private void SendEmail(string message)
+        private void SendEmail(string serviceName, string message)
         {
             try
             {
-                MailRequestModel mailRequest = new()
+                if (errorMessages.Count > 0 && configParms.EmailOnError)
                 {
-                    Subject = string.Format(
-                    "IAHarvest: IA Harvesting on {0} completed {1}.",
-                    Environment.MachineName,
-                    (errorMessages.Count == 0 ? "successfully" : "with errors")),
-                    Body = message,
-                    From = configParms.EmailFromAddress
-                };
+                    MailRequestModel mailRequest = new()
+                    {
+                        Subject = string.Format(
+                            "{0}: Harvesting on {1} completed {2}.",
+                            serviceName,
+                            Environment.MachineName,
+                            (errorMessages.Count == 0 ? "successfully" : "with errors")),
+                        Body = message,
+                        From = configParms.EmailFromAddress
+                    };
 
-                List<string> recipients = new();
-                foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
-                mailRequest.To = recipients;
+                    List<string> recipients = new();
+                    foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                    mailRequest.To = recipients;
 
-                EmailClient restClient = new(configParms.BHLWSEndpoint);
-                restClient.SendEmail(mailRequest);
+                    EmailClient restClient = new(configParms.BHLWSEndpoint);
+                    restClient.SendEmail(mailRequest);
+                }
             }
             catch (Exception ex)
             {
                 log.Error("Email Exception: ", ex);
+            }
+        }
+
+        /// <summary>
+        /// Send the specified message to the log table in the database
+        /// </summary>
+        /// <param name="serviceName">Name of the service being logged</param>
+        /// <param name="message">Body of the message to be sent</param>
+        private void SendServiceLog(string serviceName, string message)
+        {
+            try
+            {
+                ServiceLogModel serviceLog = new ServiceLogModel();
+                serviceLog.Servicename = serviceName;
+                serviceLog.Logdate = DateTime.Now;
+                serviceLog.Severityname = (errorMessages.Count > 0 ? "Error" : "Information");
+                serviceLog.Message = string.Format("Processing on {0} completed.\n\r{1}", Environment.MachineName, message);
+
+                ServiceLogsClient restClient = new ServiceLogsClient(configParms.BHLWSEndpoint);
+                restClient.InsertServiceLog(serviceLog);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Service Log Exception: ", ex);
             }
         }
 

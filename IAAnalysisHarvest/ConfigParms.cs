@@ -48,6 +48,13 @@ namespace IAAnalysisHarvest
             }
         }
 
+        private bool _emailOnError = true;
+        public bool EmailOnError
+        {
+            get { return _emailOnError; }
+            set { _emailOnError = value; }
+        }
+
         private bool _downloadIDs;
         public bool DownloadIDs
         {
@@ -109,6 +116,7 @@ namespace IAAnalysisHarvest
             if (DateTime.TryParse(ConfigurationManager.AppSettings["EndDate"], out DateTime endDate)) this.EndDate = endDate;
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            EmailOnError = ConfigurationManager.AppSettings["EmailOnError"].ToLower() == "true";
             DownloadIDs = Convert.ToBoolean(ConfigurationManager.AppSettings["DownloadIDs"]);
             GetXml = Convert.ToBoolean(ConfigurationManager.AppSettings["GetXML"]);
             SearchListIdentifiersUrl = ConfigurationManager.AppSettings["SearchListIdentifiersUrl"];

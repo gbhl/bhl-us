@@ -8,6 +8,7 @@ namespace BHL.Export
         public string SMTPHost { get; set; }
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
+        public bool EmailOnError { get; set; }
         public bool LogToFile { get; set;}
         public bool LogToConsole { get; set; }
         public Dictionary<string, ExportProcessor> Processors { get; set; }
@@ -19,6 +20,7 @@ namespace BHL.Export
             SMTPHost = string.Empty;
             EmailFromAddress = string.Empty;
             EmailToAddress = string.Empty;
+            EmailOnError = true;
             LogToFile = true;
             LogToConsole = true;
             Processors = new Dictionary<string, ExportProcessor>();
@@ -31,6 +33,7 @@ namespace BHL.Export
             SMTPHost = ConfigurationManager.AppSettings["SMTPHost"] ?? string.Empty;
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"] ?? string.Empty;
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"] ?? string.Empty;
+            EmailOnError = (ConfigurationManager.AppSettings["EmailOnError"] ?? string.Empty).ToLower() == "true";
             LogToFile = !((ConfigurationManager.AppSettings["LogToFile"] ?? string.Empty).ToLower() == "false");
             LogToConsole = !((ConfigurationManager.AppSettings["LogToConsole"] ?? string.Empty).ToLower() == "false");
             InitializeProcessorList(ConfigurationManager.AppSettings["Processors"]);
