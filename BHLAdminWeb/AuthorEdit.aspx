@@ -140,6 +140,29 @@
 				</td>
 			</tr>
 			<tr>
+				<td style="white-space: nowrap;padding-top:7px" align="right" valign="top" class="dataHeader">
+					Generational Suffix:
+				</td>
+				<td colspan="3">
+					<asp:DropDownList ID="ddlGenSuffix" ClientIDMode="Static" runat="server">
+						<asp:ListItem Value="" Text=""></asp:ListItem>
+						<asp:ListItem Value="III" Text="III"></asp:ListItem>
+						<asp:ListItem Value="Jr." Text="Jr."></asp:ListItem>
+						<asp:ListItem Value="Sr." Text="Sr."></asp:ListItem>
+					</asp:DropDownList><br />
+					<span style="font-size:10px">Not shown on the public site. <a class="small" style="cursor:pointer" onclick="gsInfoModal.style.display='block';">Click here to learn more.</a></span>
+					<div id="gsInfoModal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+						<div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 40%; color: initial;">
+							<span id="closeModal" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor:pointer;" onclick="gsInfoModal.style.display='none';">&times;</span>
+							<div style="margin-bottom: 20px; clear: both;">
+								<p>The Generational Suffix field is only used for sending metadata to Crossref during DOI registration.</p>
+								<p>To display suffixes (such as "Jr." and "III") on the public site, use the Numeration, Title, or Full Name fields, per standard library cataloging practices.</p>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">
 					Unit:
 				</td>
@@ -214,6 +237,12 @@
             $(window).load(function () { toggleFieldsForAuthorType() } );
         });
 
+        window.onclick = function (event) {
+            if (event.target == gsInfoModal) {
+                gsInfoModal.style.display = "none";
+            }
+		}	
+
         $("#ddlAuthorType").change(function () {
             toggleFieldsForAuthorType();
         });
@@ -222,19 +251,22 @@
             switch ($("#ddlAuthorType").val()) {
                 case "1":
                     this.enableField("#txtNumeration");
-                    this.enableField("#txtTitle");
+					this.enableField("#txtTitle");
+					this.enableField("#ddlGenSuffix");
                     this.disableField("#txtUnit");
                     this.disableField("#txtLocation");
                     break;
                 case "2":
                     this.disableField("#txtNumeration");
-                    this.disableField("#txtTitle");
+					this.disableField("#txtTitle");
+					this.disableField("#ddlGenSuffix");
                     this.enableField("#txtUnit");
                     this.enableField("#txtLocation");
                     break;
                 case "3":
                     this.disableField("#txtNumeration");
-                    this.disableField("#txtTitle");
+					this.disableField("#txtTitle");
+					this.disableField("#ddlGenSuffix");
                     this.disableField("#txtUnit");
                     this.enableField("#txtLocation");
                     break;
