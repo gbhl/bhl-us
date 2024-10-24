@@ -632,12 +632,14 @@
 <td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">AuthorID (PK)</td><td class="tdTableDefinition">AuthorID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">AuthorID (PK)
+                &nbsp;(<a href="#Author">FK</a>)
+              </td><td class="tdTableDefinition">AuthorID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">AuthorTypeID
                 &nbsp;(<a href="#AuthorType">FK</a>)
-              </td><td class="tdTableDefinition">AuthorTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+              </td><td class="tdTableDefinition">AuthorTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">StartDate</td><td class="tdTableDefinition">StartDate</td><td class="tdTableDefinition">NVARCHAR(25)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
@@ -676,29 +678,30 @@
 <td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">Parent_AuthorID
-                &nbsp;(<a href="#Author">FK</a>)
-              </td><td class="tdTableDefinition">Parent_AuthorID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">Note</td><td class="tdTableDefinition">Note</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">GenerationalSuffix</td><td class="tdTableDefinition">GenerationalSuffix</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 </table>
 <div class="references">
 <p class="subTitle">References</p>
 <ul>
 <li>
-<a href="#Author">Author</a> through (Parent_AuthorID)</li>
-<li>
 <a href="#AuthorType">AuthorType</a> through (AuthorTypeID)</li>
+<li>
+<a href="#Author">Author</a> through (AuthorID)</li>
 </ul>
 <p class="subTitle">Referenced By</p>
 <ul>
 <li>
 <a href="#TitleAuthor">TitleAuthor</a> referencing (AuthorID)</li>
 <li>
+<a href="#Author">Author</a> referencing (AuthorID)</li>
+<li>
 <a href="#AuthorIdentifier">AuthorIdentifier</a> referencing (AuthorID)</li>
 <li>
 <a href="#AuthorName">AuthorName</a> referencing (AuthorID)</li>
-<li>
-<a href="#Author">Author</a> referencing (AuthorID)</li>
 <li>
 <a href="#ItemAuthor">ItemAuthor</a> referencing (AuthorID)</li>
 </ul>
@@ -2015,9 +2018,9 @@
 <p class="subTitle">References</p>
 <ul>
 <li>
-<a href="#Author">Author</a> through (AuthorID)</li>
-<li>
 <a href="#Item">Item</a> through (ItemID)</li>
+<li>
+<a href="#Author">Author</a> through (AuthorID)</li>
 </ul>
 </div>
 </div>
