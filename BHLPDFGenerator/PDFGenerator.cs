@@ -354,7 +354,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
         {
             try
             {
-                if ((this.errorMessages.Count > 0 && configParms.EmailOnError) || this.deletedPdfs.Count > 0)
+                if (this.errorMessages.Count > 0 && configParms.EmailOnError)
                 {
                     MailRequestModel mailRequest = new MailRequestModel();
                     mailRequest.Subject = subject;
