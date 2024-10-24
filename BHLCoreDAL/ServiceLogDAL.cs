@@ -41,22 +41,6 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public List<ServiceLog> ServiceLogSelectSummaryList(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(
-                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("servlog.ServiceLogSelectSummaryList", connection, transaction))
-            {
-                using (CustomSqlHelper<ServiceLog> helper = new CustomSqlHelper<ServiceLog>())
-                {
-                    List<ServiceLog> list = helper.ExecuteReader(command);
-                    return (list);
-                }
-            }
-        }
-
         public List<ServiceLog> ServiceLogSelectDetailedList(
             SqlConnection sqlConnection, 
             SqlTransaction sqlTransaction,

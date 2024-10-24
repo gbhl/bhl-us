@@ -70,7 +70,7 @@ namespace MOBOT.BHL.Server
         void PageTextLogInsertForItem(int itemID, string textSource, int userID);
         ServiceLog ServiceLogSelectAuto(int serviceLogID);
         void ServiceLogInsert(DateTime logdate, string servicename, string serviceparam, string severityname,int? errornumber, string procedure, int? line, string message, string stacktrace);
-        List<ServiceLog> ServiceLogSelectSummaryList();
+        List<Service> ServiceLogSelectSummaryList();
         List<ServiceLog> ServiceLogSelectDetailedList(int? serviceID = null, int? severityID = null, DateTime? startDate = null, DateTime? endDate = null, int numRows = 100, int startRow = 1, string sortColumn = "CreationDate", string sortDirection = "DESC");
         List<Service> ServiceSelectAll();
         Segment SegmentSelectAuto(int segmentID);

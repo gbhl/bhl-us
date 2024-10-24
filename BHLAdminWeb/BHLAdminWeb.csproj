@@ -273,6 +273,7 @@
     <Compile Include="Controllers\LibraryController.cs" />
     <Compile Include="Controllers\MonitorController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\TextImportController.cs" />
     <Compile Include="Controls\EditHistoryLink.ascx.cs">
       <DependentUpon>EditHistoryLink.ascx</DependentUpon>
@@ -457,6 +458,7 @@
     <Compile Include="Models\OrphanModel.cs" />
     <Compile Include="Models\ReportingStatsModel.cs" />
     <Compile Include="Models\SegmentResolutionLogModel.cs" />
+    <Compile Include="Models\ServicesModels.cs" />
     <Compile Include="Models\TextImportHistoryModel.cs" />
     <Compile Include="Models\TextImportModel.cs" />
     <Compile Include="MVCServices\AdminService.cs" />
@@ -1089,6 +1091,8 @@
     <Content Include="Views\Doi\QueueDelete.cshtml" />
     <Content Include="Views\Doi\QueueAddInfo.cshtml" />
     <Content Include="Views\CitationImport\ImportFileStatus.cshtml" />
+    <Content Include="Views\Services\Overview.cshtml" />
+    <Content Include="Views\Services\Log.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>

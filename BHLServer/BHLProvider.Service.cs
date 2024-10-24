@@ -10,5 +10,11 @@ namespace MOBOT.BHL.Server
         {
             return new ServiceDAL().ServiceSelectAll(null, null);
         }
+
+        public List<Service> ServiceLogSelectSummaryList()
+        {
+            return new ServiceDAL().ServiceLogSelectSummaryList(null, null);
+        }
+
     }
 }
