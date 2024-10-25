@@ -259,7 +259,10 @@ namespace MOBOT.BHL.BHLPDFGenerator
                     message = this.GetCompletionEmailBody();
                     this.LogMessage(message);
                     this.SendServiceLog(serviceName, message);
-                    this.SendEmail(subject, message, configParms.EmailFromAddress, configParms.EmailToAddress, "");
+                    if (this.errorMessages.Count > 0 && configParms.EmailOnError)
+                    {
+                        this.SendEmail(subject, message, configParms.EmailFromAddress, configParms.EmailToAddress, "");
+                    }
                 }
                 else
                 {
@@ -354,27 +357,24 @@ namespace MOBOT.BHL.BHLPDFGenerator
         {
             try
             {
-                if (this.errorMessages.Count > 0 && configParms.EmailOnError)
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.Subject = subject;
+                mailRequest.Body = message;
+                mailRequest.From = fromAddress;
+
+                List<string> recipients = new List<string>();
+                foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
+                mailRequest.To = recipients;
+
+                if (ccAddresses != String.Empty)
                 {
-                    MailRequestModel mailRequest = new MailRequestModel();
-                    mailRequest.Subject = subject;
-                    mailRequest.Body = message;
-                    mailRequest.From = fromAddress;
-
-                    List<string> recipients = new List<string>();
-                    foreach (string recipient in toAddress.Split(',')) recipients.Add(recipient);
-                    mailRequest.To = recipients;
-
-                    if (ccAddresses != String.Empty)
-                    {
-                        List<string> ccs = new List<string>();
-                        foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
-                        mailRequest.Cc = ccs;
-                    }
-
-                    EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
-                    restClient.SendEmail(mailRequest);
+                    List<string> ccs = new List<string>();
+                    foreach (string cc in ccAddresses.Split(',')) ccs.Add(cc);
+                    mailRequest.Cc = ccs;
                 }
+
+                EmailClient restClient = new EmailClient(configParms.BHLWSEndpoint);
+                restClient.SendEmail(mailRequest);
             }
             catch (Exception ex)
             {
