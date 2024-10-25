@@ -1,7 +1,88 @@
-﻿
+﻿@model MOBOT.BHL.AdminWeb.Models.ServiceLogModel
+@section Javascript
+{
+    <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesPath"])" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#recordlist').dataTable({
+                "bProcessing": true,
+                "bFilter": false,
+                "bLengthChange": false,
+                "iDisplayLength": 100,
+                "sDom": '<"H"lfr>t<"F"ip>',
+                "sPaginationType": "full_numbers"
+                , "aoColumns": [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                ]
+                , "aaSorting": [[4, 'desc']]
+            });
+        });
+    </script>
+}
+@section CSS
+{
+    <link href="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesCSSPath"])" rel="stylesheet" type="text/css" />
+}
 @{
     ViewBag.Title = "Service Log";
 }
 
-<h2>Service Log</h2>
+<p>
+    <a href="/">< Return to Dashboard</a><br />
+</p>
+<span class="pageHeader">@ViewBag.Title</span><span style="float:right"><a href="~/Services/overview">View Service Overview</a></span>
+<hr />
+<br />
 
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    <div style="margin-bottom:10px">
+        <div class="col-md-3">
+            <div style="height:25px">Service: @Html.DropDownListFor(m => m.ServiceID, new SelectList(ViewBag.ServiceList, "ServiceID", "FullName"), "-- All --")</div>
+            <div style="height:25px">Import Status: @Html.DropDownListFor(m => m.SeverityID, new SelectList(ViewBag.SeverityList, "SeverityID", "Label"), "-- All --")</div>
+        </div>
+        <div class="col-md-9">
+            <div style="height:25px">Start Date: @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { type = "date" } })</div>
+            <div style="height:25px">End Date: @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { type = "date" } }) </div>
+        </div>
+        <div class="col-md-12">
+            <div style="margin:5px 0px"><input type="submit" name="btnShow" id="btnShow" value="Update" /></div>
+        </div>
+    </div>
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="recordlist" style="width:100%">
+        <thead>
+            <tr>
+                <th width="12%">Severity</th>
+                <th width="12%">Service</th>
+                <th width="12%">Frequency</th>
+                <th width="52%">Message</th>
+                <th width="12%">Log Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (MOBOT.BHL.DataObjects.ServiceLog serviceLog in Model.ServiceLogList)
+            {
+                <tr>
+                    <td style="white-space: nowrap; vertical-align: top; color: @serviceLog.FGColorHexCode">@serviceLog.SeverityLabel</td>
+                    <td style="white-space: nowrap; vertical-align: top;">@serviceLog.FullName</td>
+                    <td style="white-space: nowrap; vertical-align: top;">@serviceLog.FrequencyLabel</td>
+                    <td style="vertical-align: top;">@serviceLog.Message</td>
+                    <td style="white-space:nowrap; vertical-align:top; color:@((serviceLog.IntervalInMinutes ?? 100000000) < (serviceLog.MinutesElapsedSinceLog ?? 0) ? "#FF0000" : "#000000")">@(serviceLog.CreationDate == null ? "" : serviceLog.CreationDate.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Severity</th>
+                <th>Service</th>
+                <th>Frequency</th>
+                <th>Message</th>
+                <th>Log Date</th>
+            </tr>
+        </tfoot>
+    </table>
+}

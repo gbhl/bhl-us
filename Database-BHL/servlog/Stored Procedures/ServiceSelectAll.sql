@@ -10,6 +10,7 @@ BEGIN
 			,ISNULL(f.[Label], '') AS FrequencyLabel
 			,f.IntervalInMinutes
 			,[Disabled]
+			,s.Display
 			,s.CreationDate
 			,s.CreationUserID
 			,s.LastModifiedDate

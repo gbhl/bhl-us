@@ -1,10 +1,5 @@
-
-#region Using
-
 using CustomDataAccess;
 using System;
-
-#endregion Using
 
 namespace MOBOT.BHL.DataObjects
 {
@@ -16,6 +11,14 @@ namespace MOBOT.BHL.DataObjects
 		public int? MinutesElapsedSinceLog { get; set; }
 		public string SeverityLabel { get; set; }
 		public string FGColorHexCode { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return (this.Name + " " + (string.IsNullOrWhiteSpace(this.Param) ? "" : "/") + " " + this.Param).Trim();
+            }
+        }
 
         public override void SetValues(CustomDataRow row)
         {

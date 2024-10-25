@@ -464,6 +464,7 @@
     <Compile Include="MVCServices\AdminService.cs" />
     <Compile Include="MVCServices\CitationService.cs" />
     <Compile Include="MVCServices\EmailService.cs" />
+    <Compile Include="MVCServices\ServiceLogService.cs" />
     <Compile Include="MVCServices\TextImportService.cs" />
     <Compile Include="NamePageEdit.aspx.cs">
       <DependentUpon>NamePageEdit.aspx</DependentUpon>

@@ -1093,6 +1093,7 @@
     <None Include="Data\servlog.Frequency.Table.sql" />
     <None Include="Data\servlog.Service.Table.sql" />
     <None Include="Data\servlog.Severity.Table.sql" />
+    <None Include="servlog\Stored Procedures\SeveritySelectAll.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

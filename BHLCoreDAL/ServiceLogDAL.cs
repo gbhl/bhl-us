@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Data;
 using MOBOT.BHL.DataObjects;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace MOBOT.BHL.DAL
 {
@@ -71,6 +72,22 @@ namespace MOBOT.BHL.DAL
                 using (CustomSqlHelper<ServiceLog> helper = new CustomSqlHelper<ServiceLog>())
                 {
                     List<ServiceLog> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        public List<Severity> SeveritySelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("servlog.SeveritySelectAll", connection, transaction))
+            {
+                using (CustomSqlHelper<Severity> helper = new CustomSqlHelper<Severity>())
+                {
+                    List<Severity> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
