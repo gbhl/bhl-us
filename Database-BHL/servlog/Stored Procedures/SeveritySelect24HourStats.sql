@@ -17,6 +17,8 @@ SELECT	sv.SeverityID,
 		ISNULL(cte.TotalRecords, 0) AS TotalRecords
 FROM	servlog.Severity sv
 		LEFT JOIN CTE ON sv.SeverityID = cte.SeverityID
+ORDER BY
+		[Label]
 
 END
 

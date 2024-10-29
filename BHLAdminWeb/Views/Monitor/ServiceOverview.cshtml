@@ -31,7 +31,7 @@
                         <td>@(service.Disabled == 0 ? "Yes" : "No")</td>
                         <td><a href="/Monitor/ServiceLog/@service.ServiceID">@service.FullName</a></td>
                         <td>@service.FrequencyLabel</td>
-                        <td style="color:@((service.IntervalInMinutes ?? 100000000) < (service.MinutesElapsedSinceLog ?? 0) ? "#FF0000" : "#000000")">@(service.CreationDate == null ? "" : service.CreationDate.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                        <td style="color:@((service.IntervalInMinutes ?? 100000000) < (service.MinutesElapsedSinceLog ?? 0) ? "#FF0000" : "#000000")">@(service.LogCreationDate == null ? "" : ((DateTime)service.LogCreationDate).ToString("yyyy-MM-dd HH:mm:ss"))</td>
                         <td style="color:@service.FGColorHexCode">@(service.SeverityLabel ?? "")</td>
                     </tr>
                 }

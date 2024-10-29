@@ -11,6 +11,7 @@ namespace MOBOT.BHL.DataObjects
 		public int? MinutesElapsedSinceLog { get; set; }
 		public string SeverityLabel { get; set; }
 		public string FGColorHexCode { get; set; }
+        public DateTime? LogCreationDate { get; set; }
 
         public string FullName
         {
@@ -49,6 +50,11 @@ namespace MOBOT.BHL.DataObjects
                     case "FGColorHexCode":
                         {
                             FGColorHexCode = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "LogCreationDate":
+                        {
+                            LogCreationDate = (DateTime?)column.Value;
                             break;
                         }
                 }

@@ -17,7 +17,7 @@ BEGIN
 			,ISNULL(f.[Label], '') AS FrequencyLabel
 			,f.IntervalInMinutes
 			,DATEDIFF(minute, l.CreationDate, GETDATE()) AS MinutesElapsedSinceLog	-- Do this calc here or in calling code?
-			,l.CreationDate
+			,l.CreationDate AS LogCreationDate
 			,sv.[Label] AS SeverityLabel
 			,sv.FGColorHexCode
 	FROM	CTE 
