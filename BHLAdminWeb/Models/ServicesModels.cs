@@ -163,7 +163,8 @@ namespace MOBOT.BHL.AdminWeb.Models
                 get
                 {
                     return string.Format("<span style='color:{0}'>{1}</span>", 
-                        ((this.intervalInMinutes ?? 100000000) < (this.minutesElapsedSinceLog ?? 0) ? "#FF0000" : "#000000"),
+                        //((this.intervalInMinutes ?? 100000000) < (this.minutesElapsedSinceLog ?? 0) ? "#FF0000" : "#000000"),
+                        "#000000",
                         (this.creationDate == null ? "" : this.creationDate));
                 }
             }
