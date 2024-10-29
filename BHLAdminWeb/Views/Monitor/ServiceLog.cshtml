@@ -5,20 +5,22 @@
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
             $('#recordlist').dataTable({
-                "bProcessing": true,
-                "bFilter": false,
-                "bLengthChange": false,
-                "iDisplayLength": 100,
-                "sDom": '<"H"lfr>t<"F"ip>',
-                "sPaginationType": "full_numbers"
-                , "aoColumns": [
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
+                "processing": true
+                ,"serverSide": true
+                ,"filter": false
+                ,"lengthChange": false
+                ,"displayLength": 50
+                ,"dom": '<"H"lfr>t<"F"ip>'
+                ,"paginationType": "full_numbers"
+				,"ajaxSource": '/Monitor/GetServiceLogRecords?serviceID=@Model.ServiceID&severityID=@Model.SeverityID&startDate=@Model.StartDate&endDate=@Model.EndDate'
+                , "columns": [
+					{ "data": "fullName", "sortable": true, "class": "servlogCell" }
+					, { "data": "frequencyLabel", "sortable": true, "class": "servlogCell" }
+					, { "data": "logDate", "sortable": true, "class": "servlogCell" }
+					, { "data": "message", "sortable": true, "class": "servlogMessageCell" }
+                    , { "data": "severity", "sortable": true, "class": "servlogCell" }
                 ]
-                , "aaSorting": [[4, 'desc']]
+                , "sorting": [[2, 'desc']]
             });
         });
     </script>
@@ -33,8 +35,9 @@
 
 <p>
     <a href="/">< Return to Dashboard</a><br />
+    <a href="/monitor">< Return to Server Monitor</a>
 </p>
-<span class="pageHeader">@ViewBag.Title</span><span style="float:right"><a href="~/Services/overview">View Service Overview</a></span>
+<span class="pageHeader">@ViewBag.Title</span><span style="float:right"><a href="~/Monitor/ServiceOverview">View Service Overview</a></span>
 <hr />
 <br />
 
@@ -50,39 +53,23 @@
             <div style="height:25px">End Date: @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { type = "date" } }) </div>
         </div>
         <div class="col-md-12">
-            <div style="margin:5px 0px"><input type="submit" name="btnShow" id="btnShow" value="Update" /></div>
+            <div style="margin:5px 0px">
+                <input type="submit" name="btnShow" id="btnShow" value="Update" />&nbsp;
+                <input type="submit" name="btnDownload" id="btnDownload" value="Download" />
+            </div>
         </div>
     </div>
     <table cellpadding="0" cellspacing="0" border="0" class="display" id="recordlist" style="width:100%">
         <thead>
             <tr>
-                <th width="12%">Severity</th>
                 <th width="12%">Service</th>
                 <th width="12%">Frequency</th>
-                <th width="52%">Message</th>
                 <th width="12%">Log Date</th>
+                <th width="52%">Message</th>
+                <th width="12%">Severity</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (MOBOT.BHL.DataObjects.ServiceLog serviceLog in Model.ServiceLogList)
-            {
-                <tr>
-                    <td style="white-space: nowrap; vertical-align: top; color: @serviceLog.FGColorHexCode">@serviceLog.SeverityLabel</td>
-                    <td style="white-space: nowrap; vertical-align: top;">@serviceLog.FullName</td>
-                    <td style="white-space: nowrap; vertical-align: top;">@serviceLog.FrequencyLabel</td>
-                    <td style="vertical-align: top;">@serviceLog.Message</td>
-                    <td style="white-space:nowrap; vertical-align:top; color:@((serviceLog.IntervalInMinutes ?? 100000000) < (serviceLog.MinutesElapsedSinceLog ?? 0) ? "#FF0000" : "#000000")">@(serviceLog.CreationDate == null ? "" : serviceLog.CreationDate.ToString("yyyy-MM-dd HH:mm:ss"))</td>
-                </tr>
-            }
         </tbody>
-        <tfoot>
-            <tr>
-                <th>Severity</th>
-                <th>Service</th>
-                <th>Frequency</th>
-                <th>Message</th>
-                <th>Log Date</th>
-            </tr>
-        </tfoot>
     </table>
 }

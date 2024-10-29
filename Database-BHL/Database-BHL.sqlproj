@@ -1094,6 +1094,7 @@
     <None Include="Data\servlog.Service.Table.sql" />
     <None Include="Data\servlog.Severity.Table.sql" />
     <None Include="servlog\Stored Procedures\SeveritySelectAll.sql" />
+    <None Include="servlog\Stored Procedures\SeveritySelect24HourStats.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

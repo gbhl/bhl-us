@@ -24,6 +24,11 @@ namespace MOBOT.BHL.Server
             return new ServiceLogDAL().ServiceLogSelectDetailedList(null, null, serviceID, severityID, startDate, endDate, numRows, startRow, sortColumn, sortDirection);
         }
 
+        public List<Severity> SeveritySelect24HourStats()
+        {
+            return new ServiceLogDAL().SeveritySelect24HourStats(null, null);
+        }
+
         public List<Severity> SeveritySelectAll()
         {
             return new ServiceLogDAL().SeveritySelectAll(null, null);

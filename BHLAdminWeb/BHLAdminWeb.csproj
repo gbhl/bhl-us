@@ -273,7 +273,6 @@
     <Compile Include="Controllers\LibraryController.cs" />
     <Compile Include="Controllers\MonitorController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
-    <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\TextImportController.cs" />
     <Compile Include="Controls\EditHistoryLink.ascx.cs">
       <DependentUpon>EditHistoryLink.ascx</DependentUpon>
@@ -1078,7 +1077,6 @@
     <Content Include="Upload\Citation\ImportSegmentTemplate.xls" />
     <Content Include="Upload\Citation\ImportSegmentTemplate.xlsx" />
     <Content Include="Views\Monitor\Index.cshtml" />
-    <Content Include="Views\Monitor\AddToQueue.cshtml" />
     <Content Include="Views\TextImport\Index.cshtml" />
     <Content Include="Views\TextImport\Review.cshtml" />
     <Content Include="Views\Report\TextImportHistory.cshtml" />
@@ -1092,8 +1090,8 @@
     <Content Include="Views\Doi\QueueDelete.cshtml" />
     <Content Include="Views\Doi\QueueAddInfo.cshtml" />
     <Content Include="Views\CitationImport\ImportFileStatus.cshtml" />
-    <Content Include="Views\Services\Overview.cshtml" />
-    <Content Include="Views\Services\Log.cshtml" />
+    <Content Include="Views\Monitor\ServiceOverview.cshtml" />
+    <Content Include="Views\Monitor\ServiceLog.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>

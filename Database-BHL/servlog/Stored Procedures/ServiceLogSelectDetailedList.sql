@@ -27,12 +27,15 @@ BEGIN
 
 	DECLARE @SQL nvarchar(max)
 	SET @SQL =
-		'SELECT	ROW_NUMBER() OVER (ORDER BY ' + @SortColumn + ' ' + @SortDirection + 'CreationDate ' + @SortCDateDirection + ') AS RowNumber ' +
+		'SELECT	ROW_NUMBER() OVER (ORDER BY ' + @SortColumn + ' ' + @SortDirection + 'l.CreationDate ' + @SortCDateDirection + ') AS RowNumber ' +
 				',ServiceLogID ' +
-		'FROM	servlog.ServiceLog ' +
-		'WHERE	(ServiceID = ' + CONVERT(varchar(10), @ServiceID) + ' OR ' + CONVERT(varchar(10), @ServiceID) + ' = 0) ' +
-		'AND	(SeverityID = ' + CONVERT(varchar(10), @SeverityID) + ' OR ' + CONVERT(varchar(10), @SeverityID) + ' = 0) '+
-		'AND	CreationDate BETWEEN ''' + CONVERT(varchar(20), @StartDate, 101) + ''' AND ''' + CONVERT(varchar(20), @EndDate, 101) + ''''
+		'FROM servlog.ServiceLog l INNER JOIN servlog.[Service] s ON l.ServiceID = s.ServiceID ' +
+			'LEFT JOIN servlog.Frequency f ON s.FrequencyID = f.FrequencyID ' +
+			'INNER JOIN servlog.Severity sv ON l.SeverityID = sv.SeverityID ' +
+		'WHERE s.Display = 1 ' + 
+		'AND (l.ServiceID = ' + CONVERT(varchar(10), @ServiceID) + ' OR ' + CONVERT(varchar(10), @ServiceID) + ' = 0) ' +
+		'AND (l.SeverityID = ' + CONVERT(varchar(10), @SeverityID) + ' OR ' + CONVERT(varchar(10), @SeverityID) + ' = 0) '+
+		'AND l.CreationDate BETWEEN ''' + CONVERT(varchar(20), @StartDate, 101) + ''' AND ''' + CONVERT(varchar(20), @EndDate, 101) + ''''
 
 	CREATE TABLE #Log
 		(
@@ -41,9 +44,13 @@ BEGIN
 		)
 
 	INSERT #Log EXEC (@SQL)
+
+	DECLARE @TotalRecords int
+	SELECT @TotalRecords = COUNT(*) FROM #Log
 	
 	SELECT TOP (@NumRows)
-			t.RowNumber
+			@TotalRecords AS TotalRecords
+			,t.RowNumber
 			,l.ServiceLogID
 			,l.ServiceID
 			,s.[Name]

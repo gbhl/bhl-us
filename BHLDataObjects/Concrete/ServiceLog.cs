@@ -6,6 +6,7 @@ namespace MOBOT.BHL.DataObjects
 	[Serializable]
 	public class ServiceLog : __ServiceLog
 	{
+        public int TotalRecords { get; set; }
 		public string Name { get; set; }
 		public string Param { get; set; }
 		public string FrequencyLabel { get; set; }
@@ -28,6 +29,11 @@ namespace MOBOT.BHL.DataObjects
             {
                 switch (column.Name)
                 {
+                    case "TotalRecords":
+                        {
+                            TotalRecords = (int)column.Value;
+                            break;
+                        }
                     case "Name":
                         {
                             Name = Utility.EmptyIfNull(column.Value);

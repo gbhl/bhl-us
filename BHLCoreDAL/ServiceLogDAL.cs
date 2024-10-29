@@ -77,6 +77,22 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public List<Severity> SeveritySelect24HourStats(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("servlog.SeveritySelect24HourStats", connection, transaction))
+            {
+                using (CustomSqlHelper<Severity> helper = new CustomSqlHelper<Severity>())
+                {
+                    List<Severity> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
         public List<Severity> SeveritySelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(

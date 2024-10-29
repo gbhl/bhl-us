@@ -460,6 +460,7 @@ tr.import-detail-row td.import-detail {
     border-width: 1px;
     border-style: solid;
     padding: 10px;
+    margin: 0px 0px 20px 0px;
 }
 
 .statDetails {
@@ -482,4 +483,13 @@ tr.import-detail-row td.import-detail {
     border-color: Black;
     border-width: 1px;
     margin: 5px;
+}
+
+.servlogCell {
+    white-space: nowrap;
+    vertical-align: top;
+}
+
+.servlogMessageCell {
+    vertical-align: top;
 }
