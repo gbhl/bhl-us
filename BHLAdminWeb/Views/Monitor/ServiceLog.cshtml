@@ -46,7 +46,7 @@
     <div style="margin-bottom:10px">
         <div class="col-md-3">
             <div style="height:25px">Service: @Html.DropDownListFor(m => m.ServiceID, new SelectList(ViewBag.ServiceList, "ServiceID", "FullName"), "-- All --")</div>
-            <div style="height:25px">Import Status: @Html.DropDownListFor(m => m.SeverityID, new SelectList(ViewBag.SeverityList, "SeverityID", "Label"), "-- All --")</div>
+            <div style="height:25px">Severity: @Html.DropDownListFor(m => m.SeverityID, new SelectList(ViewBag.SeverityList, "SeverityID", "Label"), "-- All --")</div>
         </div>
         <div class="col-md-9">
             <div style="height:25px">Start Date: @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { type = "date" } })</div>
