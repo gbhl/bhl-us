@@ -62,8 +62,6 @@
                     <div class="monitorSubHeader">Actions</div>
                     <div class="col-md-12 statDetails">
                         <div class="row">
-                            <!--<div class="col-md-12 statDetail"><a href="/monitor/addtoqueue">Add Messages to a Queue</a></div>-->
-                            <div class="col-md-12 statDetail">Add Messages to a Queue (UNDER CONSTRUCTION)</div>
                             <div class="col-md-12 statDetail"><a href="@ViewBag.MessageQueueAdminAddress" rel="noopener noreferrer" target="_blank">Queue Manager</a> (Requires SI Network connection)</div>
                         </div>
                     </div>
@@ -77,6 +75,25 @@
                             </div>
                         }
                     </div>
+                </div>
+                <div class="col-md-12 monitorSection">
+                    <div class="monitorHeader">Services</div>
+                    <div class="monitorSubHeader">Actions</div>
+                    <div class="col-md-12 statDetails">
+                        <div class="row">
+                            <div class="col-md-6 statDetail"><a href="~/Monitor/ServiceOverview">View Service Overview</a></div>
+                            <div class="col-md-6 statDetail"><a href="~/Monitor/ServiceLog">View Service Log</a></div>
+                        </div>
+                    </div>
+                    <div class="monitorSubHeader">24-Hour Summary</div>
+                    <div class="col-md-12 statDetails">
+                        @foreach (var severity in Model.serviceSeverities)
+                        {
+                            <div class="row">
+                                <div class="col-md-12 statDetail"><span style="color:@((severity.TotalLogs > 0) && (severity.Name != "Information") ? severity.FGColorHexCode : "#000000")">@severity.TotalLogs @severity.Label</span> message(s) received</div>
+                            </div>
+                            }
+                        </div>
                 </div>
             </div>
         </div>

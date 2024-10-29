@@ -1,4 +1,5 @@
 ﻿using BHL.SiteServiceREST.v1.Client;
+using MOBOT.BHL.DataObjects;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -9,6 +10,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
@@ -20,6 +23,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         public string queueName { get; set; }
         public string queueMessages { get; set; }
         public string queueResult { get; set; }
+        public List<Severity> serviceSeverities { get; set; }
 
         public MonitorModel()
         {
@@ -32,6 +36,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         {
             GetSearchStats();
             GetMQStats();
+            GetServiceStats();
         }
 
         private void GetSearchStats()
@@ -132,6 +137,12 @@ namespace MOBOT.BHL.AdminWeb.Models
             {
                 mqMonitor.ErrorMessage = "Error retrieving Message Queue statistics.";
             }
+        }
+
+        private void GetServiceStats()
+        {
+            List<Severity> severities = new Server.BHLProvider().SeveritySelect24HourStats();
+            serviceSeverities = severities;
         }
 
         public class SearchMonitor

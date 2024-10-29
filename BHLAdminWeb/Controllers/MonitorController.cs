@@ -1,11 +1,9 @@
 ﻿using MOBOT.BHL.AdminWeb.ActionFilters;
 using MOBOT.BHL.AdminWeb.Models;
-using System.Collections.Generic;
+using MOBOT.BHL.AdminWeb.MVCServices;
+using System;
 using System.Configuration;
 using System.Web.Mvc;
-using System.Linq;
-using MOBOT.BHL.Web.Utilities;
-using BHL.SiteServiceREST.v1.Client;
 
 namespace MOBOT.BHL.AdminWeb.Controllers
 {
@@ -23,43 +21,88 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             return View(model);
         }
 
-        // GET: AddToQueue
-        public ActionResult AddToQueue()
+        // GET: ServiceOverview
+        [HttpGet]
+        public ActionResult ServiceOverview()
         {
-            return View(new MonitorModel());
+            ViewBag.PageTitle += "Services Overview";
+            ServiceOverviewModel model = new ServiceOverviewModel();
+            return View(model);
         }
 
-        // POST: /Monitor/AddToQueue
-        [HttpPost]
-        public ActionResult AddToQueue(MonitorModel model)
+        // GET: ServiceLog
+        [HttpGet]
+        public ActionResult ServiceLog(int? id = null)
         {
-            string selectedQueue = model.queueName;
-            string response = "Messages queued successfully";
+            ViewBag.PageTitle += "Service Log";
 
-            try
-            {
-                List<string> messages = new List<string>();
-                messages.AddRange(model.queueMessages
-                    .Replace(System.Environment.NewLine, "~")
-                    .Split('~'));
+            ServiceLogService service = new ServiceLogService();
+            ViewBag.ServiceList = service.ServiceList();
+            ViewBag.SeverityList = service.SeverityList();
 
-                Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
-                client.PutQueueMessages(selectedQueue, messages);
-            }
-            catch (System.Exception ex)
-            {
-                response = "Error adding messages to queue";
-                if (ConfigurationManager.AppSettings["LogExceptions"] == "true")
-                {
-                    ExceptionUtility.LogException(ex, "MonitorController.AddToQueue");
-                }
-                if (System.Web.HttpContext.Current.IsDebuggingEnabled) throw (ex);
-            }
-
-            model = new MonitorModel();
-            ModelState.Clear();
-            model.queueResult = response;
+            ServiceLogModel model = new ServiceLogModel(id);
+            model.ServiceID = (id == null ? string.Empty : id.ToString());
             return View(model);
+        }
+
+        // POST: ServiceLog
+        [HttpPost]
+        public ActionResult ServiceLog(ServiceLogModel model)
+        {
+            if (Request.Form["btnDownload"] != null)
+            {
+                var cd = new System.Net.Mime.ContentDisposition
+                {
+                    FileName = string.Format("ServiceLog{0}.csv", System.DateTime.Now.ToString("yyyyMMddHHmmss")),
+                    Inline = false,  // prompt the user for downloading, set true to show the file in the browser
+                };
+                Response.AppendHeader("Content-Disposition", cd.ToString());
+
+                model.GetServiceLogCSV();  // Get the report data to be downloaded
+                return File(model.DownloadLog, "text/csv");
+            }
+            else
+            {
+                ServiceLogService service = new ServiceLogService();
+                ViewBag.ServiceList = service.ServiceList();
+                ViewBag.SeverityList = service.SeverityList();
+            }
+
+            return View(model);
+        }
+
+        //
+        // AJAX method to support /Services/Log
+        [HttpGet]
+        public ActionResult GetServiceLogRecords(int? serviceID, int? severityID, DateTime? startDate, DateTime? endDate,
+            int sEcho, int iDisplayStart, int iDisplayLength, int iSortCol_0, string sSortDir_0)
+        {
+            string sortColumn;
+
+            switch (iSortCol_0)
+            {
+                case 0:
+                    sortColumn = "s.Name " + sSortDir_0 + ", s.Param";
+                    break;
+                case 1:
+                    sortColumn = "f.Label";
+                    break;
+                case 2:
+                default:
+                    sortColumn = "l.CreationDate";
+                    break;
+                case 3:
+                    sortColumn = "l.Message";
+                    break;
+                case 4:
+                    sortColumn = "sv.Label";
+                    break;
+            }
+
+            ServiceLogJson.Rootobject json = new ServiceLogModel().GetServiceLogRecords(serviceID, severityID, startDate, endDate, iDisplayLength,
+                iDisplayStart, sortColumn, sSortDir_0);
+            json.sEcho = sEcho;
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
     }
 }

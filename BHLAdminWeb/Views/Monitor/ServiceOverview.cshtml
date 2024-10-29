@@ -1,0 +1,41 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.ServiceOverviewModel
+
+@{
+    ViewBag.Title = "Services Overview";
+}
+
+<p>
+    <a href="/">< Return to Dashboard</a><br />
+    <a href="/monitor">< Return to Server Monitor</a>
+</p>
+<span class="pageHeader">@ViewBag.Title</span><span style="float:right"><a href="~/Monitor/ServiceLog">View Service Log</a></span>
+<hr />
+<br />
+
+<div class="col-md-12">
+    <table cellpadding="0" cellspacing="0" border="0" class="display table-bordered" id="recordlist" style="width:100%">
+        <thead>
+            <tr>
+                <th width="8%">Enabled</th>
+                <th width="50%">Service</th>
+                <th width="14%">Frequency</th>
+                <th width="14%">Last Log<br />Date/Time</th>
+                <th width="14%">Last Log<br />Severity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (MOBOT.BHL.DataObjects.Service service in Model.ServiceList)
+                {
+                    <tr>
+                        <td>@(service.Disabled == 0 ? "Yes" : "No")</td>
+                        <td><a href="/Monitor/ServiceLog/@service.ServiceID">@service.FullName</a></td>
+                        <td>@service.FrequencyLabel</td>
+                        <td style="color:@((service.IntervalInMinutes ?? 100000000) < (service.MinutesElapsedSinceLog ?? 0) ? "#FF0000" : "#000000")">@(service.CreationDate == null ? "" : service.CreationDate.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                        <td style="color:@service.FGColorHexCode">@(service.SeverityLabel ?? "")</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

@@ -19,14 +19,19 @@ namespace MOBOT.BHL.Server
                 errornumber, procedure, line, message, stacktrace);
         }
 
-        public List<ServiceLog> ServiceLogSelectSummaryList()
-        {
-            return new ServiceLogDAL().ServiceLogSelectSummaryList(null, null);
-        }
-
         public List<ServiceLog> ServiceLogSelectDetailedList(int? serviceID = null, int? severityID = null, DateTime? startDate = null, DateTime? endDate = null, int numRows = 100, int startRow = 1, string sortColumn = "CreationDate", string sortDirection = "DESC")
         {
             return new ServiceLogDAL().ServiceLogSelectDetailedList(null, null, serviceID, severityID, startDate, endDate, numRows, startRow, sortColumn, sortDirection);
+        }
+
+        public List<Severity> SeveritySelect24HourStats()
+        {
+            return new ServiceLogDAL().SeveritySelect24HourStats(null, null);
+        }
+
+        public List<Severity> SeveritySelectAll()
+        {
+            return new ServiceLogDAL().SeveritySelectAll(null, null);
         }
     }
 }
