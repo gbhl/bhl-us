@@ -17,6 +17,7 @@ namespace MOBOT.BHL.DataObjects
             string endDate,
             string numeration,
             string title,
+            string generationalSuffix,
             string unit,
             string location,
             string note,
@@ -26,7 +27,7 @@ namespace MOBOT.BHL.DataObjects
             DateTime? lastModifiedDate,
             int? creationUserID,
             int? lastModifiedUserID) : base(authorID, authorTypeID, startDate, endDate, numeration, title, unit, location,
-                note, isActive, redirectAuthorID, creationDate, lastModifiedDate, creationUserID, lastModifiedUserID)
+                note, isActive, redirectAuthorID, creationDate, lastModifiedDate, creationUserID, lastModifiedUserID, generationalSuffix)
         {
         }
 

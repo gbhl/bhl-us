@@ -1,17 +1,3 @@
-
-IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[AuthorUpdateAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[AuthorUpdateAuto]
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_NULLS ON
-GO
-
--- Update Procedure for dbo.Author
--- Do not modify the contents of this procedure.
--- Generated 6/6/2019 11:14:00 AM
-
 CREATE PROCEDURE dbo.AuthorUpdateAuto
 
 @AuthorID INT,
@@ -25,7 +11,8 @@ CREATE PROCEDURE dbo.AuthorUpdateAuto
 @Note NVARCHAR(MAX),
 @IsActive SMALLINT,
 @RedirectAuthorID INT,
-@LastModifiedUserID INT
+@LastModifiedUserID INT,
+@GenerationalSuffix NVARCHAR(50)
 
 AS 
 
@@ -44,7 +31,8 @@ SET
 	[IsActive] = @IsActive,
 	[RedirectAuthorID] = @RedirectAuthorID,
 	[LastModifiedDate] = getdate(),
-	[LastModifiedUserID] = @LastModifiedUserID
+	[LastModifiedUserID] = @LastModifiedUserID,
+	[GenerationalSuffix] = @GenerationalSuffix
 WHERE
 	[AuthorID] = @AuthorID
 		
@@ -70,7 +58,8 @@ ELSE BEGIN
 		[CreationDate],
 		[LastModifiedDate],
 		[CreationUserID],
-		[LastModifiedUserID]
+		[LastModifiedUserID],
+		[GenerationalSuffix]
 	FROM [dbo].[Author]
 	WHERE
 		[AuthorID] = @AuthorID
@@ -78,9 +67,3 @@ ELSE BEGIN
 	RETURN -- update successful
 END
 GO
- 
-SET QUOTED_IDENTIFIER OFF
-GO
-SET ANSI_NULLS ON
-GO
-

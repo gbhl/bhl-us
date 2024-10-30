@@ -1,17 +1,3 @@
-
-IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[AuthorInsertAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[AuthorInsertAuto]
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_NULLS ON
-GO
-
--- Insert Procedure for dbo.Author
--- Do not modify the contents of this procedure.
--- Generated 6/6/2019 11:14:00 AM
-
 CREATE PROCEDURE dbo.AuthorInsertAuto
 
 @AuthorID INT OUTPUT,
@@ -26,7 +12,8 @@ CREATE PROCEDURE dbo.AuthorInsertAuto
 @IsActive SMALLINT,
 @RedirectAuthorID INT = null,
 @CreationUserID INT = null,
-@LastModifiedUserID INT = null
+@LastModifiedUserID INT = null,
+@GenerationalSuffix NVARCHAR(50)
 
 AS 
 
@@ -46,7 +33,8 @@ INSERT INTO [dbo].[Author]
 	[CreationDate],
 	[LastModifiedDate],
 	[CreationUserID],
-	[LastModifiedUserID] )
+	[LastModifiedUserID],
+	[GenerationalSuffix] )
 VALUES
 ( 	@AuthorTypeID,
 	@StartDate,
@@ -61,7 +49,8 @@ VALUES
 	getdate(),
 	getdate(),
 	@CreationUserID,
-	@LastModifiedUserID )
+	@LastModifiedUserID,
+	@GenerationalSuffix )
 
 SET @AuthorID = Scope_Identity()
 
@@ -87,7 +76,8 @@ ELSE BEGIN
 		[CreationDate],
 		[LastModifiedDate],
 		[CreationUserID],
-		[LastModifiedUserID]	
+		[LastModifiedUserID],
+		[GenerationalSuffix]	
 	FROM [dbo].[Author]
 	WHERE
 		[AuthorID] = @AuthorID
@@ -95,9 +85,3 @@ ELSE BEGIN
 	RETURN -- insert successful
 END
 GO
- 
-SET QUOTED_IDENTIFIER OFF
-GO
-SET ANSI_NULLS ON
-GO
-

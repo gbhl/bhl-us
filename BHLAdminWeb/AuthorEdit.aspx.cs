@@ -89,6 +89,7 @@ namespace MOBOT.BHL.AdminWeb
             txtEndDate.Text = author.EndDate;
             txtNumeration.Text = author.Numeration;
             txtTitle.Text = author.Title;
+            ddlGenSuffix.SelectedValue = author.GenerationalSuffix;
             txtUnit.Text = author.Unit;
             txtLocation.Text = author.Location;
             txtNote.Text = author.Note;
@@ -211,20 +212,9 @@ namespace MOBOT.BHL.AdminWeb
                 if (authorIdentifierId == ai.AuthorIdentifierID &&
                     identifierID == ai.IdentifierID &&
                     identifierValue == ai.IdentifierValue)
-                /*
-                if (authorIdentifierId == 0 && ai.AuthorIdentifierID == 0 &&
-                    identifierID == ai.IdentifierID &&
-                    identifierValue == ai.IdentifierValue)
-                */
                 {
                     return ai;
                 }
-                /*
-                else if (authorIdentifierId > 0 && ai.AuthorIdentifierID == authorIdentifierId)
-                {
-                    return ai;
-                }
-                */
             }
 
             return null;
@@ -419,14 +409,13 @@ namespace MOBOT.BHL.AdminWeb
                     author.EndDate = txtEndDate.Text;
                     author.Numeration = txtNumeration.Text;
                     author.Title = txtTitle.Text;
+                    author.GenerationalSuffix = ddlGenSuffix.SelectedValue;
                     author.Unit = txtUnit.Text;
                     author.Location = txtLocation.Text;
                     author.Note = txtNote.Text;
                     author.IsNew = (author.AuthorID == 0);
 
                     // Forces deletes to happen first
-                    //author.AuthorNames.Sort(SortOrder.Descending, "IsDeleted");
-                    //author.AuthorIdentifiers.Sort(SortOrder.Descending, "IsDeleted");
                     author.AuthorNames.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                     author.AuthorIdentifiers.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
 

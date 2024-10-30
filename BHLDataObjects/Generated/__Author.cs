@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:24:51 PM
+// Generated 10/23/2024 1:02:49 PM
 // Do not modify the contents of this code file.
 // This abstract class __Author is based upon dbo.Author.
 
@@ -60,6 +60,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="generationalSuffix"></param>
 		public __Author(int authorID, 
 			int? authorTypeID, 
 			string startDate, 
@@ -74,7 +75,8 @@ namespace MOBOT.BHL.DataObjects
 			DateTime? creationDate, 
 			DateTime? lastModifiedDate, 
 			int? creationUserID, 
-			int? lastModifiedUserID) : this()
+			int? lastModifiedUserID, 
+			string generationalSuffix) : this()
 		{
 			_AuthorID = authorID;
 			AuthorTypeID = authorTypeID;
@@ -91,6 +93,7 @@ namespace MOBOT.BHL.DataObjects
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
+			GenerationalSuffix = generationalSuffix;
 		}
 		
 		#endregion Constructors
@@ -190,6 +193,11 @@ namespace MOBOT.BHL.DataObjects
 					case "LastModifiedUserID" :
 					{
 						_LastModifiedUserID = (int?)column.Value;
+						break;
+					}
+					case "GenerationalSuffix" :
+					{
+						_GenerationalSuffix = (string)column.Value;
 						break;
 					}
 								}
@@ -614,6 +622,34 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion LastModifiedUserID
+		
+		#region GenerationalSuffix
+		
+		private string _GenerationalSuffix = string.Empty;
+		
+		/// <summary>
+		/// Column: GenerationalSuffix;
+		/// DBMS data type: nvarchar(50);
+		/// </summary>
+		[ColumnDefinition("GenerationalSuffix", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=50)]
+		public string GenerationalSuffix
+		{
+			get
+			{
+				return _GenerationalSuffix;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 50);
+				if (_GenerationalSuffix != value)
+				{
+					_GenerationalSuffix = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion GenerationalSuffix
 			
 		#endregion Properties
 
@@ -672,7 +708,8 @@ namespace MOBOT.BHL.DataObjects
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
-					o.LastModifiedUserID == LastModifiedUserID 
+					o.LastModifiedUserID == LastModifiedUserID &&
+					GetComparisonString(o.GenerationalSuffix) == GetComparisonString(GenerationalSuffix) 
 				)
 				{
 					o = null;
@@ -786,7 +823,8 @@ namespace MOBOT.BHL.DataObjects
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";
+			public const string LastModifiedUserID = "LastModifiedUserID";	
+			public const string GenerationalSuffix = "GenerationalSuffix";
 		}
 				
 		#endregion SortColumn

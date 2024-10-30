@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:24:51 PM
+// Generated 10/23/2024 1:02:49 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class AuthorDAL is based upon dbo.Author.
@@ -149,6 +149,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="redirectAuthorID"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="generationalSuffix"></param>
 		/// <returns>Object of type Author.</returns>
 		public Author AuthorInsertAuto(
 			SqlConnection sqlConnection, 
@@ -164,9 +165,10 @@ namespace MOBOT.BHL.DAL
 			short isActive,
 			int? redirectAuthorID,
 			int? creationUserID,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string generationalSuffix)
 		{
-			return AuthorInsertAuto( sqlConnection, sqlTransaction, "BHL", authorTypeID, startDate, endDate, numeration, title, unit, location, note, isActive, redirectAuthorID, creationUserID, lastModifiedUserID );
+			return AuthorInsertAuto( sqlConnection, sqlTransaction, "BHL", authorTypeID, startDate, endDate, numeration, title, unit, location, note, isActive, redirectAuthorID, creationUserID, lastModifiedUserID, generationalSuffix );
 		}
 		
 		/// <summary>
@@ -187,6 +189,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="redirectAuthorID"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="generationalSuffix"></param>
 		/// <returns>Object of type Author.</returns>
 		public Author AuthorInsertAuto(
 			SqlConnection sqlConnection, 
@@ -203,7 +206,8 @@ namespace MOBOT.BHL.DAL
 			short isActive,
 			int? redirectAuthorID,
 			int? creationUserID,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string generationalSuffix)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -221,7 +225,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("IsActive", SqlDbType.SmallInt, null, false, isActive),
 					CustomSqlHelper.CreateInputParameter("RedirectAuthorID", SqlDbType.Int, null, true, redirectAuthorID),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("GenerationalSuffix", SqlDbType.NVarChar, 50, false, generationalSuffix), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
@@ -282,7 +287,8 @@ namespace MOBOT.BHL.DAL
 				value.IsActive,
 				value.RedirectAuthorID,
 				value.CreationUserID,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.GenerationalSuffix);
 		}
 		
 		#endregion ===== INSERT =====
@@ -364,6 +370,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="isActive"></param>
 		/// <param name="redirectAuthorID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="generationalSuffix"></param>
 		/// <returns>Object of type Author.</returns>
 		public Author AuthorUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -379,9 +386,10 @@ namespace MOBOT.BHL.DAL
 			string note,
 			short isActive,
 			int? redirectAuthorID,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string generationalSuffix)
 		{
-			return AuthorUpdateAuto( sqlConnection, sqlTransaction, "BHL", authorID, authorTypeID, startDate, endDate, numeration, title, unit, location, note, isActive, redirectAuthorID, lastModifiedUserID);
+			return AuthorUpdateAuto( sqlConnection, sqlTransaction, "BHL", authorID, authorTypeID, startDate, endDate, numeration, title, unit, location, note, isActive, redirectAuthorID, lastModifiedUserID, generationalSuffix);
 		}
 		
 		/// <summary>
@@ -402,6 +410,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="isActive"></param>
 		/// <param name="redirectAuthorID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="generationalSuffix"></param>
 		/// <returns>Object of type Author.</returns>
 		public Author AuthorUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -418,7 +427,8 @@ namespace MOBOT.BHL.DAL
 			string note,
 			short isActive,
 			int? redirectAuthorID,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string generationalSuffix)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -435,7 +445,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("Note", SqlDbType.NVarChar, 1073741823, false, note),
 					CustomSqlHelper.CreateInputParameter("IsActive", SqlDbType.SmallInt, null, false, isActive),
 					CustomSqlHelper.CreateInputParameter("RedirectAuthorID", SqlDbType.Int, null, true, redirectAuthorID),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("GenerationalSuffix", SqlDbType.NVarChar, 50, false, generationalSuffix), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
@@ -496,7 +507,8 @@ namespace MOBOT.BHL.DAL
 				value.Note,
 				value.IsActive,
 				value.RedirectAuthorID,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.GenerationalSuffix);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -552,7 +564,8 @@ namespace MOBOT.BHL.DAL
 						value.IsActive,
 						value.RedirectAuthorID,
 						value.CreationUserID,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.GenerationalSuffix);
 				
 				return new CustomDataAccessStatus<Author>(
 					CustomDataAccessContext.Insert, 
@@ -589,7 +602,8 @@ namespace MOBOT.BHL.DAL
 						value.Note,
 						value.IsActive,
 						value.RedirectAuthorID,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.GenerationalSuffix);
 					
 				return new CustomDataAccessStatus<Author>(
 					CustomDataAccessContext.Update, 

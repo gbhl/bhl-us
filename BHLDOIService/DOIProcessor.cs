@@ -495,7 +495,7 @@ namespace MOBOT.BHL.BHLDOIService
                     titleAuthor.AuthorRoleID == configParms.AuthorRole700)
                 {
                     contributor.PersonName = titleAuthor.FullName.TrimEnd(',');
-                    contributor.Suffix = titleAuthor.Numeration;
+                    contributor.Suffix = titleAuthor.Author.GenerationalSuffix;
                     contributor.Sequence = (titleAuthor.AuthorRoleID == configParms.AuthorRole100 ?
                                             DOIDepositData.PersonNameSequence.First :
                                             DOIDepositData.PersonNameSequence.Additional);
@@ -679,7 +679,7 @@ namespace MOBOT.BHL.BHLDOIService
                 if (itemAuthor.Author.AuthorTypeID == configParms.AuthorTypePerson)
                 {
                     contributor.PersonName = itemAuthor.FullName.TrimEnd(',');
-                    contributor.Suffix = itemAuthor.Numeration;
+                    contributor.Suffix = itemAuthor.Author.GenerationalSuffix;
                 }
                 else
                 {
