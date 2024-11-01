@@ -363,6 +363,7 @@ namespace MOBOT.BHL.Server
                             {
                                 string matchType = (string)(result["matchType"] ?? "NoMatch");
                                 string curation = (string)(result["curation"] ?? "NotCurated");
+                                string url = (string)(result["outlink"] ?? string.Empty);
 
                                 // Possible matchType values
                                 //  Exact - exact string match
@@ -377,18 +378,23 @@ namespace MOBOT.BHL.Server
                                 // NOTE about curation:  The 'curation' field is more for automatic processing,
                                 // and it is often on a 'safe' side, and excludes some outdated resources, that
                                 // are almost definitely... curated.
-                                if (matchType != "NoMatch")  // Don't use questionable matches
+                                //
+                                // Additional NOTE about curation:  (To determine which sources to display) you can
+                                // also look at 'curation' field. If it is set to 'NotCurated' it is better not to
+                                // show it. Good values would be "Curated" and "AutoCurated".  Oct 30, 2024
+                                //
+                                // Don't use questionable matches, unless an outlink (url) is specified
+                                if (matchType != "NoMatch" && (curation != "NotCurated" || !string.IsNullOrWhiteSpace(url)))
                                 {
                                     int dataSourceID = (int)(result["dataSourceId"] ?? "0");
                                     string dataSourceTitle = (string)(result["dataSourceTitleShort"] ?? string.Empty);
-                                    string gniUUID = (string)(result["currentNameId"] ?? string.Empty);
-                                    string nameString = (string)(result["currentName"] ?? string.Empty);
-                                    string canonicalForm = (string)(result["currentCanonicalFull"] ?? string.Empty);
+                                    string gniUUID = (string)(string.IsNullOrWhiteSpace((string)(result["currentNameId"] ?? string.Empty)) ? (string.IsNullOrWhiteSpace((string)(result["matchedNameId"] ?? string.Empty)) ? string.Empty : result["matchedNameId"]) : result["currentNameId"]);
+                                    string nameString = (string)(string.IsNullOrWhiteSpace((string)(result["currentName"] ?? string.Empty)) ? (string.IsNullOrWhiteSpace((string)(result["matchedName"] ?? string.Empty)) ? string.Empty : result["matchedName"]) : result["currentName"]);
+                                    string canonicalForm = (string)(string.IsNullOrWhiteSpace((string)(result["currentCanonicalFull"] ?? string.Empty)) ? (string.IsNullOrWhiteSpace((string)(result["matchedCanonicalFull"] ?? string.Empty)) ? string.Empty : result["matchedCanonicalFull"]) : result["currentCanonicalFull"]);
                                     string classificationPath = (string)(result["classificationPath"] ?? string.Empty);
                                     string classificationPathRanks = (string)(result["classificationRanks"] ?? string.Empty);
                                     string classificationPathIDs = (string)(result["classificationIds"] ?? string.Empty);
                                     string localID = (string)(result["recordId"] ?? string.Empty);
-                                    string url = (string)(result["outlink"] ?? string.Empty);
                                     double score = 0;
                                     JToken scoreDetails = result["scoreDetails"];
                                     if (scoreDetails != null)

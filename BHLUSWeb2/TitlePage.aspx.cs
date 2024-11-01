@@ -746,8 +746,8 @@ Append("</a>").
                 foreach (ItemAuthor author in authorList)
                 {
                     Author itemAuthor = new Author(
-                        author.AuthorID, null, author.StartDate, author.EndDate, author.Numeration, author.Title,
-                        author.Unit, author.Location, string.Empty, 1, null, null, null, null, null
+                        author.AuthorID, null, author.StartDate, author.EndDate, author.Numeration, author.Title, 
+                        string.Empty, author.Unit, author.Location, string.Empty, 1, null, null, null, null, null
                         )
                     {
                         FullName = author.FullName,
