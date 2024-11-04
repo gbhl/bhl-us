@@ -379,12 +379,8 @@ namespace MOBOT.BHL.Server
                                 // and it is often on a 'safe' side, and excludes some outdated resources, that
                                 // are almost definitely... curated.
                                 //
-                                // Additional NOTE about curation:  (To determine which sources to display) you can
-                                // also look at 'curation' field. If it is set to 'NotCurated' it is better not to
-                                // show it. Good values would be "Curated" and "AutoCurated".  Oct 30, 2024
-                                //
                                 // Don't use questionable matches, unless an outlink (url) is specified
-                                if (matchType != "NoMatch" && (curation != "NotCurated" || !string.IsNullOrWhiteSpace(url)))
+                                if (matchType != "NoMatch" && !string.IsNullOrWhiteSpace(url))
                                 {
                                     int dataSourceID = (int)(result["dataSourceId"] ?? "0");
                                     string dataSourceTitle = (string)(result["dataSourceTitleShort"] ?? string.Empty);
