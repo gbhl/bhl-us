@@ -2,6 +2,8 @@
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
+using System.ServiceModel.Configuration;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -41,6 +43,12 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     TextBox textBox = (TextBox)c;
                     textBox.Text = "";
+                    textBox.Enabled = true;
+                }
+                if (c is Label)
+                {
+                    Label label = (Label)c;
+                    label.Text = "";
                 }
                 else if (c.HasControls())
                 {
@@ -76,12 +84,17 @@ namespace MOBOT.BHL.AdminWeb
                     return;
                 }
 
+                // Set the id of the editing user
+                var user = Helper.GetCurrentUserDetail(new HttpRequestWrapper(Request));
+                int? userId = user.Id;
+
                 SegmentGenre segmentGenre = new BHLProvider().SegmentGenreSelectAuto(int.Parse(idLabel.Text));
                 segmentGenre.GenreName = nameTextBox.Text.Trim();
+                segmentGenre.GenreDescription = descriptionTextBox.Text.Trim();
                 segmentGenre.IsNew = false;
 
                 BHLProvider bp = new BHLProvider();
-                bp.SaveSegmentGenre(segmentGenre);
+                bp.SaveSegmentGenre(segmentGenre, userId ?? 1);
 
                 ddlSegmentTypes.SelectedItem.Text = nameTextBox.Text.Trim();
             }
@@ -98,13 +111,18 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (validate())
             {
+                // Set the id of the editing user
+                var user = Helper.GetCurrentUserDetail(new HttpRequestWrapper(Request));
+                int? userId = user.Id;
+
                 SegmentGenre segmentGenre = new SegmentGenre();
                 segmentGenre.SegmentGenreID = 0;
                 segmentGenre.GenreName = nameTextBox.Text.Trim();
+                segmentGenre.GenreDescription = descriptionTextBox.Text.Trim();
                 segmentGenre.IsNew = true;
 
                 BHLProvider bp = new BHLProvider();
-                bp.SaveSegmentGenre(segmentGenre);
+                bp.SaveSegmentGenre(segmentGenre, userId ?? 1);
             }
             else
             {
@@ -132,11 +150,12 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     idLabel.Text = segmentGenre.SegmentGenreID.ToString();
                     nameTextBox.Text = segmentGenre.GenreName;
+                    nameTextBox.Enabled = false;
+                    descriptionTextBox.Text = segmentGenre.GenreDescription;
                     ddlSegmentTypes.SelectedValue = segmentGenre.SegmentGenreID.ToString();
 
                     editHistoryControl.EntityName = "segmentgenre";
                     editHistoryControl.EntityId = segmentGenre.SegmentGenreID.ToString();
-
                 }
             }
         }

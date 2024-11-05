@@ -24,7 +24,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public void Save(SqlConnection sqlConnection, SqlTransaction sqlTransaction, SegmentGenre segmentGenre)
+        public void Save(SqlConnection sqlConnection, SqlTransaction sqlTransaction, SegmentGenre segmentGenre, int userId)
         {
             SqlConnection connection = sqlConnection;
             SqlTransaction transaction = sqlTransaction;
@@ -41,7 +41,7 @@ namespace MOBOT.BHL.DAL
             {
                 transaction = CustomSqlHelper.BeginTransaction(connection, transaction, isTransactionCoordinator);
 
-                new SegmentGenreDAL().SegmentGenreManageAuto(connection, transaction, segmentGenre, 1);
+                new SegmentGenreDAL().SegmentGenreManageAuto(connection, transaction, segmentGenre, userId);
 
                 CustomSqlHelper.CommitTransaction(transaction, isTransactionCoordinator);
             }

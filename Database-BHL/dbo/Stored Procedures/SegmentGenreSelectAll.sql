@@ -8,6 +8,7 @@ SET NOCOUNT ON
 
 SELECT	SegmentGenreID,
 		GenreName,
+		GenreDescription,
 		CreationDate,
 		LastModifiedDate,
 		CreationUserID,
@@ -18,3 +19,4 @@ ORDER BY
 
 END
 
+GO

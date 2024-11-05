@@ -14,7 +14,7 @@
 	<mobot:ErrorControl runat="server" id="errorControl"></mobot:ErrorControl>
 	<asp:Literal id="litMessage" runat="server"></asp:Literal>
 	<br />
-	<div class="box" style="padding: 5px; width: 425px;">
+	<div class="box" style="padding: 5px; width: 625px;">
 		<table cellpadding="4px" width="75%">
 			<tr>
 				<td style="white-space: nowrap" align="right">
@@ -29,7 +29,15 @@
 					Name:
 				</td>
 				<td>
-					<asp:TextBox ID="nameTextBox" runat="server" MaxLength="50" Width="350"></asp:TextBox>
+					<asp:TextBox ID="nameTextBox" runat="server" MaxLength="50" Width="325"></asp:TextBox>
+				</td>
+			</tr>
+			<tr>
+				<td style="white-space: nowrap; padding-top:7px" align="right" valign="top">
+					Description:
+				</td>
+				<td>
+					<asp:TextBox ID="descriptionTextBox" runat="server" MaxLength="500" Width="525" TextMode="MultiLine" Height="45"></asp:TextBox>
 				</td>
 			</tr>
 		</table>

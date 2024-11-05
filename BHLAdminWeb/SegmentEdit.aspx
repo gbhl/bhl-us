@@ -454,7 +454,10 @@
 		</tr>
 		<tr>
 			<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Type:</td>
-			<td><asp:DropDownList ID="ddlSegmentGenre" DataTextField="GenreName" DataValueField="SegmentGenreID" runat="server"></asp:DropDownList></td>
+			<td>
+				<asp:DropDownList ID="ddlSegmentGenre" DataTextField="GenreName" DataValueField="SegmentGenreID" runat="server"></asp:DropDownList>
+				&nbsp;&nbsp;<a class="small" href="#" title="About" onclick="window.open('SegmentGenreAbout.aspx', 'About', 'resizeable=0,scrollbars=1,height=500,width=500,status=0,toolbar=0,menubar=0,location=0');">Type descriptions</a>
+			</td>
 		</tr>
 		<tr>
 			<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Title:</td>

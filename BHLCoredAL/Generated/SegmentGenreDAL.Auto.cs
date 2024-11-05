@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:27:00 PM
+// Generated 11/5/2024 11:57:22 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class SegmentGenreDAL is based upon dbo.SegmentGenre.
@@ -140,15 +140,17 @@ namespace MOBOT.BHL.DAL
 		/// <param name="genreName"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="genreDescription"></param>
 		/// <returns>Object of type SegmentGenre.</returns>
 		public SegmentGenre SegmentGenreInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string genreName,
 			int? creationUserID,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string genreDescription)
 		{
-			return SegmentGenreInsertAuto( sqlConnection, sqlTransaction, "BHL", genreName, creationUserID, lastModifiedUserID );
+			return SegmentGenreInsertAuto( sqlConnection, sqlTransaction, "BHL", genreName, creationUserID, lastModifiedUserID, genreDescription );
 		}
 		
 		/// <summary>
@@ -160,6 +162,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="genreName"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="genreDescription"></param>
 		/// <returns>Object of type SegmentGenre.</returns>
 		public SegmentGenre SegmentGenreInsertAuto(
 			SqlConnection sqlConnection, 
@@ -167,7 +170,8 @@ namespace MOBOT.BHL.DAL
 			string connectionKeyName,
 			string genreName,
 			int? creationUserID,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string genreDescription)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -176,7 +180,8 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateOutputParameter("SegmentGenreID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("GenreName", SqlDbType.NVarChar, 50, false, genreName),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("GenreDescription", SqlDbType.NVarChar, 500, false, genreDescription), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<SegmentGenre> helper = new CustomSqlHelper<SegmentGenre>())
@@ -228,7 +233,8 @@ namespace MOBOT.BHL.DAL
 			return SegmentGenreInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.GenreName,
 				value.CreationUserID,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.GenreDescription);
 		}
 		
 		#endregion ===== INSERT =====
@@ -301,15 +307,17 @@ namespace MOBOT.BHL.DAL
 		/// <param name="segmentGenreID"></param>
 		/// <param name="genreName"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="genreDescription"></param>
 		/// <returns>Object of type SegmentGenre.</returns>
 		public SegmentGenre SegmentGenreUpdateAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int segmentGenreID,
 			string genreName,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string genreDescription)
 		{
-			return SegmentGenreUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentGenreID, genreName, lastModifiedUserID);
+			return SegmentGenreUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentGenreID, genreName, lastModifiedUserID, genreDescription);
 		}
 		
 		/// <summary>
@@ -321,6 +329,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="segmentGenreID"></param>
 		/// <param name="genreName"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="genreDescription"></param>
 		/// <returns>Object of type SegmentGenre.</returns>
 		public SegmentGenre SegmentGenreUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -328,7 +337,8 @@ namespace MOBOT.BHL.DAL
 			string connectionKeyName,
 			int segmentGenreID,
 			string genreName,
-			int? lastModifiedUserID)
+			int? lastModifiedUserID,
+			string genreDescription)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -336,7 +346,8 @@ namespace MOBOT.BHL.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentGenreUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("SegmentGenreID", SqlDbType.Int, null, false, segmentGenreID),
 					CustomSqlHelper.CreateInputParameter("GenreName", SqlDbType.NVarChar, 50, false, genreName),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("GenreDescription", SqlDbType.NVarChar, 500, false, genreDescription), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<SegmentGenre> helper = new CustomSqlHelper<SegmentGenre>())
@@ -388,7 +399,8 @@ namespace MOBOT.BHL.DAL
 			return SegmentGenreUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.SegmentGenreID,
 				value.GenreName,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.GenreDescription);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -435,7 +447,8 @@ namespace MOBOT.BHL.DAL
 				SegmentGenre returnValue = SegmentGenreInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.GenreName,
 						value.CreationUserID,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.GenreDescription);
 				
 				return new CustomDataAccessStatus<SegmentGenre>(
 					CustomDataAccessContext.Insert, 
@@ -463,7 +476,8 @@ namespace MOBOT.BHL.DAL
 				SegmentGenre returnValue = SegmentGenreUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.SegmentGenreID,
 						value.GenreName,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.GenreDescription);
 					
 				return new CustomDataAccessStatus<SegmentGenre>(
 					CustomDataAccessContext.Update, 

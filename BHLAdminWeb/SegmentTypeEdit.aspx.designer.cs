@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.AdminWeb {
-    
-    
-    public partial class SegmentTypeEdit {
-        
+namespace MOBOT.BHL.AdminWeb
+{
+
+
+    public partial class SegmentTypeEdit
+    {
+
         /// <summary>
         /// ddlSegmentTypes control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSegmentTypes;
-        
+
         /// <summary>
         /// errorControl control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.AdminWeb.ErrorControl errorControl;
-        
+
         /// <summary>
         /// litMessage control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litMessage;
-        
+
         /// <summary>
         /// idLabel control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label idLabel;
-        
+
         /// <summary>
         /// nameTextBox control.
         /// </summary>
@@ -56,7 +58,16 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox nameTextBox;
-        
+
+        /// <summary>
+        /// descriptionTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox descriptionTextBox;
+
         /// <summary>
         /// saveButton control.
         /// </summary>
@@ -65,7 +76,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button saveButton;
-        
+
         /// <summary>
         /// clearButton control.
         /// </summary>
@@ -74,7 +85,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button clearButton;
-        
+
         /// <summary>
         /// saveAsNewButton control.
         /// </summary>
@@ -83,7 +94,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button saveAsNewButton;
-        
+
         /// <summary>
         /// editHistoryControl control.
         /// </summary>

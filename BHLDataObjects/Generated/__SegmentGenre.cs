@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:27:00 PM
+// Generated 11/5/2024 11:57:22 AM
 // Do not modify the contents of this code file.
 // This abstract class __SegmentGenre is based upon dbo.SegmentGenre.
 
@@ -51,12 +51,14 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="genreDescription"></param>
 		public __SegmentGenre(int segmentGenreID, 
 			string genreName, 
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int? creationUserID, 
-			int? lastModifiedUserID) : this()
+			int? lastModifiedUserID, 
+			string genreDescription) : this()
 		{
 			_SegmentGenreID = segmentGenreID;
 			GenreName = genreName;
@@ -64,6 +66,7 @@ namespace MOBOT.BHL.DataObjects
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
+			GenreDescription = genreDescription;
 		}
 		
 		#endregion Constructors
@@ -118,6 +121,11 @@ namespace MOBOT.BHL.DataObjects
 					case "LastModifiedUserID" :
 					{
 						_LastModifiedUserID = (int?)column.Value;
+						break;
+					}
+					case "GenreDescription" :
+					{
+						_GenreDescription = (string)column.Value;
 						break;
 					}
 								}
@@ -293,6 +301,34 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion LastModifiedUserID
+		
+		#region GenreDescription
+		
+		private string _GenreDescription = string.Empty;
+		
+		/// <summary>
+		/// Column: GenreDescription;
+		/// DBMS data type: nvarchar(500);
+		/// </summary>
+		[ColumnDefinition("GenreDescription", DbTargetType=SqlDbType.NVarChar, Ordinal=7, CharacterMaxLength=500)]
+		public string GenreDescription
+		{
+			get
+			{
+				return _GenreDescription;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 500);
+				if (_GenreDescription != value)
+				{
+					_GenreDescription = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion GenreDescription
 			
 		#endregion Properties
 
@@ -342,7 +378,8 @@ namespace MOBOT.BHL.DataObjects
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
-					o.LastModifiedUserID == LastModifiedUserID 
+					o.LastModifiedUserID == LastModifiedUserID &&
+					GetComparisonString(o.GenreDescription) == GetComparisonString(GenreDescription) 
 				)
 				{
 					o = null;
@@ -447,7 +484,8 @@ namespace MOBOT.BHL.DataObjects
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";
+			public const string LastModifiedUserID = "LastModifiedUserID";	
+			public const string GenreDescription = "GenreDescription";
 		}
 				
 		#endregion SortColumn

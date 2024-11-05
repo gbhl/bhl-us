@@ -16,9 +16,9 @@ namespace MOBOT.BHL.Server
             return (new SegmentGenreDAL().SegmentGenreSelectAuto(null, null, segmentGenreID));
         }
 
-        public void SaveSegmentGenre(SegmentGenre segmentGenre)
+        public void SaveSegmentGenre(SegmentGenre segmentGenre, int userId)
         {
-            new SegmentGenreDAL().Save(null, null, segmentGenre);
+            new SegmentGenreDAL().Save(null, null, segmentGenre, userId);
         }
     }
 }

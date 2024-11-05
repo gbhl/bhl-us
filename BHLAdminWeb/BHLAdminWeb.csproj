@@ -608,6 +608,13 @@
     <Compile Include="SegmentEdit.aspx.designer.cs">
       <DependentUpon>SegmentEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SegmentGenreAbout.aspx.cs">
+      <DependentUpon>SegmentGenreAbout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SegmentGenreAbout.aspx.designer.cs">
+      <DependentUpon>SegmentGenreAbout.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SegmentSearch.aspx.cs">
       <DependentUpon>SegmentSearch.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -989,6 +996,7 @@
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.4\jquery-ui.min.js" />
+    <Content Include="SegmentGenreAbout.aspx" />
     <Content Include="styles\adminstyle.css" />
     <Content Include="styles\jqgridtheme\jquery-ui-1.8.10.custom.css" />
     <Content Include="styles\jqgridtheme\ui.jqgrid.css" />

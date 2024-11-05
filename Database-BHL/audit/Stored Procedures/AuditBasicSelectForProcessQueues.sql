@@ -19,7 +19,6 @@ Keyword
 Language
 MaterialType
 PageType
-SegmentGenre
 TitleAssociationType
 */
 
@@ -522,13 +521,6 @@ FROM	audit.AuditBasic ab WITH (NOLOCK)
 		INNER JOIN dbo.vwSegment s ON si.ItemID = s.ItemID
 WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
 AND		EntityName = 'dbo.SegmentInstitution'
-AND		s.SegmentStatusID IN (30, 40)
-UNION
-SELECT	AuditBasicID, ab.Operation, EntityName, 'segment', s.SegmentID, NULL, 'Search' AS [Queue], AuditDate
-FROM	audit.AuditBasic ab WITH (NOLOCK)
-		INNER JOIN dbo.vwSegment s WITH (NOLOCK) ON ab.EntityKey1 = s.SegmentGenreID
-WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
-AND		EntityName = 'dbo.SegmentGenre'
 AND		s.SegmentStatusID IN (30, 40)
 UNION
 SELECT	AuditBasicID, ab.Operation, EntityName, 'segment', s.SegmentID, NULL, 'Search' AS [Queue], AuditDate
