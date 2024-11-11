@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net;
 using System.IO;
+using System.Net;
+using System.Text;
 
 namespace MOBOT.IA.Utilities
 {
-	public class S3
+    public class S3
 	{
 		#region Properties
 
 		private string _accessKey = "zEoAD8Wa9KCnDcJ7";
 		private string _secretKey = "hWMpGUEnSeAiXRnZ";
-		private string _s3BaseDomain = "http://s3.us.archive.org";
+		private string _s3BaseDomain = "https://s3.us.archive.org";
 		private string _bucketAddressFormat = "{0}/{1}";
 		private string _objectAddressFormat = "{0}/{1}/{2}";
 
@@ -68,7 +67,7 @@ namespace MOBOT.IA.Utilities
 		public string PutObject( string fileName, string bucketName, string objectName, string contentType, EncodingType encodingType,
 			List<KeyValuePair<string, string>> headers, bool preventDerive, bool makeBucket )
 		{
-			string result = string.Empty;
+			string result;
 			try
 			{
 				if ( preventDerive )
@@ -201,7 +200,7 @@ namespace MOBOT.IA.Utilities
 			try
 			{
 				// open the file
-				fileStream = new FileStream( fileName, FileMode.Open, System.IO.FileAccess.Read, FileShare.Read );
+				fileStream = new FileStream( fileName, FileMode.Open, FileAccess.Read, FileShare.Read );
 
 				// Prepare the web request
 				var req = (HttpWebRequest)WebRequest.Create( url );
@@ -258,12 +257,10 @@ namespace MOBOT.IA.Utilities
 				if ( writeStream != null )
 				{
 					writeStream.Dispose();
-					writeStream = null;
 				}
 				if ( fileStream != null )
 				{
 					fileStream.Dispose();
-					fileStream = null;
 				}
 			}
 		}
