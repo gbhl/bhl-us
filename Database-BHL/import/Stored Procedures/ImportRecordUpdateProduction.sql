@@ -231,16 +231,26 @@ BEGIN TRY
 	DECLARE @BookItemID int
 	SELECT @BookItemID = b.ItemID FROM dbo.Book b INNER JOIN import.ImportRecord r ON b.BookID = r.ItemID WHERE r.ImportRecordID = @ImportRecordID
 
-	UPDATE	ir
-	SET		ParentID = @BookItemID,
-			SequenceOrder = (SELECT ISNULL(MAX(SequenceOrder), 0) + 1 FROM dbo.ItemRelationship WHERE ParentID = @BookItemID),
-			LastModifiedUserID = @UserID,
-			LastModifiedDate = GETDATE()
-	FROM	dbo.ItemRelationship ir
-			INNER JOIN dbo.Item i ON ir.ParentID = i.ItemID AND i.ItemTypeID = @ItemTypeBookID
-	WHERE	ir.ChildID = @ItemID
-	AND		ir.ParentID <> @BookItemID	
-	
+	IF EXISTS (SELECT RelationshipID FROM dbo.ItemRelationship WHERE ChildID = @ItemID)
+	BEGIN
+		UPDATE	ir
+		SET		ParentID = @BookItemID,
+				SequenceOrder = (SELECT ISNULL(MAX(SequenceOrder), 0) + 1 FROM dbo.ItemRelationship WHERE ParentID = @BookItemID),
+				LastModifiedUserID = @UserID,
+				LastModifiedDate = GETDATE()
+		FROM	dbo.ItemRelationship ir
+				INNER JOIN dbo.Item i ON ir.ParentID = i.ItemID AND i.ItemTypeID = @ItemTypeBookID
+		WHERE	ir.ChildID = @ItemID
+		AND		ir.ParentID <> @BookItemID	
+	END
+	ELSE
+	BEGIN
+		-- Segment not previously associated with an item, so add a new ItemRelationship record
+		INSERT	dbo.ItemRelationship (ParentID, ChildID, SequenceOrder)
+		SELECT	@BookItemID, @ItemID, (SELECT ISNULL(MAX(SequenceOrder), 0) + 1 FROM dbo.ItemRelationship WHERE ParentID = @BookItemID)
+		WHERE	@BookItemID IS NOT NULL
+	END
+
 	-- Add updated ItemInstitution records to production
 	IF EXISTS(SELECT ImportRecordContributorID FROM import.ImportRecordContributor WHERE ImportRecordID = @ImportRecordID)
 	BEGIN
