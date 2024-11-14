@@ -33,18 +33,29 @@ namespace MOBOT.BHL.Web2
             {
                 BHLProvider provider = new BHLProvider();
                 Page page = provider.PageSelectExternalUrlForPageID(pageID);
-                String imageUrl = String.Empty;
+                string imageUrl = string.Empty;
+                string contentType = "image/jpeg";
 
                 // Make sure we found an active page
                 if (page != null)
                 {
-                    // Use the IA URL to get a JPG from the JP2
-                    String pageUrlSuffix = "_w" + width.ToString() + ".jpg";
-                    imageUrl = page.AltExternalURL.Replace(".jpg", "") + pageUrlSuffix;
+                    imageUrl = page.AltExternalURL;
+                    if (imageUrl.Contains("archive.org"))
+                    {
+                        // Use the IA URL to get a JPG from the JP2
+                        string pageUrlSuffix = "_w" + width.ToString() + ".jpg";
+                        imageUrl = imageUrl.Replace(".jpg", "") + pageUrlSuffix;
+
+                    }
+                    else
+                    {
+                        imageUrl = imageUrl.Replace(".jpg", "") + "_thumb.webp";
+                        contentType = "image/webp";
+                    }
                 }
 
                 System.Net.WebClient client = new System.Net.WebClient();
-                context.Response.ContentType = "image/jpeg";
+                context.Response.ContentType = contentType;
                 try
                 {
                     if (imageUrl == String.Empty)
