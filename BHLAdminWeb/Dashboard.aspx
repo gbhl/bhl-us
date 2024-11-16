@@ -21,6 +21,11 @@
 						</td>
 					</tr>
 					<tr>
+						<td align="center" runat="server" id="tdImageServer">
+							<a href="/ImageServerEdit.aspx">Image Server</a>
+						</td>
+					</tr>
+					<tr>
 					    <td align="center" runat="server" id="tdCollections">
 					        <a href="/CollectionEdit.aspx">Collections</a>
 					    </td>
