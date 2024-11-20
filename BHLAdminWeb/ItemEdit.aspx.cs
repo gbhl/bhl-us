@@ -6,6 +6,7 @@ using MOBOT.BHLImport.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -371,18 +372,25 @@ namespace MOBOT.BHL.AdminWeb
 			BHLProvider bp = new BHLProvider();
 			Book book = bp.BookSelectByBarcodeOrItemID( id, barcode );
 
+            string bookID = string.Empty;
             if (book != null)
             {
                 // Look up flickr status of the item
                 DataObjects.Item flickrItem = bp.ItemInFlickrByItemID(book.BookID);
                 book.HasFlickrImages = (flickrItem != null) ? flickrItem.HasFlickrImages : false;
+                bookID = book.BookID.ToString();
+            }
+            else
+            {
+                litMessage.Text = "Item not found";
+                litMessage.Visible = true;
             }
 
             // Clear the thumbnail pages dropdown
             ddlThumbnailPageID.Items.Clear();
 
-            Session["Item" + book.BookID.ToString()] = book;
-			fillUI(book.BookID.ToString());
+            Session["Item" + bookID] = book;
+			fillUI(bookID);
 		}
 
 		private void bindPageData()
