@@ -31,7 +31,6 @@
     <add key="SMTPHost" value="smtp.si.edu"/>
     <add key="DBCommandTimeout" value="1800"/>
     <add key="DebugValue" value="debug"/>
-    <add key="ConfigNameCurrentIAVault" value="CurrentIAVaultID"/>
     <!-- DOI file locations -->
     <add key="DOIDepositFileLocation" value="DRIVE:\FOLDER\deposit\{0}.xml"/>
     <add key="DOISubmitLogFileLocation" value="DRIVE:\FOLDER\submitlog\{0}.log.xml"/>
