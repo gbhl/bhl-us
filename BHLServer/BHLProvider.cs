@@ -75,7 +75,7 @@ namespace MOBOT.BHL.Server
                 {
                     // Local file not loaded; look for a remote copy (at Internet Archive)
                     Item item = this.ItemSelectFilenames(itemType, entityID);
-                    xml = XDocument.Load(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.ScandataFilename));
+                    xml = XDocument.Load(this.GetRemoteFilePath(RemoteFileType.Scandata, item.BarCode, item.ScandataFilename));
                 }
 
                 XNamespace ns = string.Empty;
@@ -884,6 +884,45 @@ namespace MOBOT.BHL.Server
         public List<KBART> ExportKBART(string urlRoot)
         {
             return new KBARTDAL().Export(null, null, urlRoot);
+        }
+
+        public string GetRemoteFilePath(RemoteFileType type, string barcode, string fileName)
+        {
+            // Build the IA or AWS path
+            string configKey = "ImageBaseUrl";
+            switch (type)
+            {
+                case RemoteFileType.ImageZip:
+                    configKey = "ImageZIPPathTemplate";
+                    break;
+                case RemoteFileType.Pdf:
+                    configKey = "PDFPathTemplate";
+                    break;
+                case RemoteFileType.Scandata:
+                    configKey = "ScandataPathTemplate";
+                    break;
+            }
+
+            string remoteFilePath = string.Empty;
+            DataObjects.Configuration configuration = new ConfigurationDAL().ConfigurationSelectByName(null, null, configKey);
+            if (configuration != null)
+            {
+                string pathTemplate = configuration.ConfigurationValue;
+                remoteFilePath = pathTemplate
+                    .Replace("{barcode}", barcode)
+                    .Replace("{fileName}", fileName);
+            }
+
+            return remoteFilePath;
+        }
+
+        public enum RemoteFileType
+        {
+            ImageJpg,
+            ImageWebp,
+            ImageZip,
+            Pdf,
+            Scandata
         }
 
         [Serializable]

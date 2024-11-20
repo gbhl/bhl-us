@@ -1,7 +1,7 @@
 ﻿using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
 using System;
-using System.Configuration;
+using System.Net.Http;
 using System.Web;
 
 namespace MOBOT.BHL.Web2
@@ -23,15 +23,30 @@ namespace MOBOT.BHL.Web2
                 BHLProvider provider = new BHLProvider();
                 DataObjects.Item item = provider.ItemSelectFilenames(ItemType.Book, itemID);
 
-                context.Response.ContentType = "application/pdf";
                 if (!string.IsNullOrWhiteSpace(item.PdfFilename))
                 {
-                    System.Net.WebClient client = new System.Net.WebClient();
-
                     try
                     {
-                        //context.Response.BinaryWrite(client.DownloadData(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.PdfFilename)));
-                        context.Response.Redirect(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.PdfFilename));
+                        var filePath = provider.GetRemoteFilePath(BHLProvider.RemoteFileType.Pdf, item.BarCode, item.PdfFilename);
+
+                        // Check if the file exists before redirecting to it
+                        var exists = false;
+                        using (var client = new HttpClient())
+                        {
+                            var request = new HttpRequestMessage(HttpMethod.Head, filePath);
+                            var response = client.SendAsync(request).GetAwaiter().GetResult();
+                            exists = response.IsSuccessStatusCode;
+                        }
+                        if (exists)
+                        {
+                            context.Response.ClearHeaders();
+                            context.Response.ContentType = "application/pdf";
+                            context.Response.Redirect(filePath);
+                        }
+                        else
+                        {
+                            context.Response.Redirect("~/pagenotfound");
+                        }
                     }
                     catch (System.Net.WebException wex)
                     {
