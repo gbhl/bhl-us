@@ -143,8 +143,6 @@
     <add key="WikiPageAPI" value="https://about.biodiversitylibrary.org/tools-and-services/developer-and-data-tools/#APIs" />
     <add key="projectUpdatesFeedLocation" value="https://blog.biodiversitylibrary.org/feed"/>
     <add key="projectUpdatesRssTitle" value="Biodiversity Heritage Library News [RSS]"/>
-    <add key="IADownloadLink" value="https://www.archive.org/download/{0}/{1}" />
-    <add key="IADownloadScandataLink" value="https://www.archive.org/download/{0}/scandata.zip/scandata.xml"/>
     <!-- begin attribution div properties -->
     <!-- Maximum time in minutes that the list of languages is cached -->
     <add key="LanguageListQueryCacheTime" value="1440"/>

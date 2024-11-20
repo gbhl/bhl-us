@@ -593,7 +593,12 @@
         br.getPageURI = function (index) {
             var url = "";
             if (pages != null) {
-                url = pages[index].ExternalBaseUrl + '/download/' + pages[index].BarCode + '/page/n' + (pages[index].SequenceOrder - 1) + '_w1150.jpg';
+                if (pages[index].ExternalBaseUrl.includes("archive.org")) {
+                    url = pages[index].ExternalBaseUrl + '/download/' + pages[index].BarCode + '/page/n' + (pages[index].SequenceOrder - 1) + '_w1150.jpg';
+                }
+                else {
+                    url = pages[index].ExternalBaseUrl + '/web/' + pages[index].BarCode + '/' + pages[index].BarCode + '_' + ('0000' + (index + 1)).slice(-4) + '_large.webp';
+                }
             }
             return url;
         }

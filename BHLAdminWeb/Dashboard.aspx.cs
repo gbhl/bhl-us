@@ -215,7 +215,8 @@ namespace MOBOT.BHL.AdminWeb
             {
                 tdPageTypes.InnerHtml = GetMenuText(tdPageTypes.InnerHtml);
                 spnMonitor.Visible = false;
-                //tdImageServer.InnerHtml = GetMenuText(tdImageServer.InnerHtml);
+                tdWebResources.Visible = false;
+                //tdWebResources.InnerHtml = GetMenuText(tdWebResources.InnerHtml);
                 //tdVaults.InnerHtml = GetMenuText(tdVaults.InnerHtml);
             }
         }

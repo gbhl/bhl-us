@@ -27,7 +27,8 @@ namespace BHL.IIIF
 
         public ScanData GetScanData(int itemId, string barCode)
         {
-            Item item = new BHLProvider().ItemSelectFilenames(ItemType.Book, itemId);
+            BHLProvider provider = new BHLProvider();
+            Item item = provider.ItemSelectFilenames(ItemType.Book, itemId);
             if (string.IsNullOrWhiteSpace(item.ScandataFilename)) item.ScandataFilename = barCode + "_scandata.xml";
 
             WebClient wc = new WebClient();
@@ -36,12 +37,12 @@ namespace BHL.IIIF
             bool loaded = true;
 
             // Load the scandata.xml file
-            PageSummaryView psv = new BHLProvider().PageSummarySelectByItemId(itemId, true);
+            PageSummaryView psv = provider.PageSummarySelectByItemId(itemId, true);
             string filePath = psv.OCRFolderShare + "\\" + psv.FileRootFolder + "\\" + psv.BarCode + "_scandata.xml";
             try
             {
                 // Local for a local copy first
-                StringReader reader = new StringReader(new BHLProvider().GetFileAccessProvider().GetFileText(filePath));
+                StringReader reader = new StringReader(provider.GetFileAccessProvider().GetFileText(filePath));
                 xml.Load(reader);
             }
             catch
@@ -49,14 +50,14 @@ namespace BHL.IIIF
                 // No local file found; look for a remote copy (at Internet Archive)
                 try
                 {
-                    xml.Load(wc.OpenRead(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], barCode, item.ScandataFilename)));
+                    xml.Load(wc.OpenRead(provider.GetRemoteFilePath(BHLProvider.RemoteFileType.Scandata, barCode, item.ScandataFilename)));
                 }
                 catch
                 {
                     // Direct path to scandata file failed, try scandata.zip instead
                     try
                     {
-                        xml.Load(wc.OpenRead(string.Format(ConfigurationManager.AppSettings["IADownloadScandataLink"], barCode)));
+                        xml.Load(wc.OpenRead(provider.GetRemoteFilePath(BHLProvider.RemoteFileType.Scandata, barCode, "scandata.zip/scandata.xml")));
                     }
                     catch (Exception ex)
                     {

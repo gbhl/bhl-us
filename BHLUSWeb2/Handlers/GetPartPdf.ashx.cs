@@ -6,7 +6,7 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Net;
-using System.Threading.Tasks;
+using System.Net.Http;
 using System.Web;
 
 namespace MOBOT.BHL.Web2
@@ -30,14 +30,32 @@ namespace MOBOT.BHL.Web2
                 BHLProvider provider = new BHLProvider();
                 DataObjects.Item item = provider.ItemSelectFilenames(ItemType.Segment, id);
 
-                context.Response.ContentType = "application/pdf";
                 if (!string.IsNullOrWhiteSpace(item.PdfFilename))
                 {
                     try
                     {
-                        context.Response.Redirect(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.PdfFilename));
+                        var filePath = provider.GetRemoteFilePath(BHLProvider.RemoteFileType.Pdf, item.BarCode, item.PdfFilename);
+
+                        // Check if the file exists before redirecting to it
+                        var exists = false;
+                        using (var client = new HttpClient())
+                        {
+                            var request = new HttpRequestMessage(HttpMethod.Head, filePath);
+                            var response = client.SendAsync(request).GetAwaiter().GetResult();
+                            exists = response.IsSuccessStatusCode;
+                        }
+                        if (exists)
+                        {
+                            context.Response.ClearHeaders();
+                            context.Response.ContentType = "application/pdf";
+                            context.Response.Redirect(filePath);
+                        }
+                        else
+                        {
+                            context.Response.Redirect("~/pagenotfound");
+                        }
                     }
-                    catch (System.Net.WebException wex)
+                    catch (WebException wex)
                     {
                         if (wex.Message.Contains("404"))
                         {
@@ -65,7 +83,6 @@ namespace MOBOT.BHL.Web2
             context.Response.Clear();
             context.Response.ClearContent();
             context.Response.ClearHeaders();
-            //context.Response.Buffer = true;
             context.Response.ContentType = "application/pdf";
             context.Response.AddHeader("content-disposition", "filename=part" + id.ToString() + ".pdf");
 
@@ -92,7 +109,6 @@ namespace MOBOT.BHL.Web2
                 try
                 {
                     stream.CopyTo(context.Response.OutputStream);
-                    //context.Response.BeginFlush(res => context.Response.EndFlush(res), Thread.CurrentThread.ManagedThreadId);
                 }
                 catch (Exception ex)
                 {

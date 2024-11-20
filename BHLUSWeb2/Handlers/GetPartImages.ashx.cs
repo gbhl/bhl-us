@@ -1,7 +1,7 @@
 ﻿using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
 using System;
-using System.Configuration;
+using System.Net.Http;
 using System.Web;
 
 namespace MOBOT.BHL.Web2
@@ -22,12 +22,30 @@ namespace MOBOT.BHL.Web2
                 BHLProvider provider = new BHLProvider();
                 DataObjects.Item item = provider.ItemSelectFilenames(ItemType.Segment, id);
 
-                context.Response.ContentType = "application/octet-stream";
                 if (!string.IsNullOrWhiteSpace(item.ImagesFilename))
                 {
                     try
                     {
-                        context.Response.Redirect(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.ImagesFilename));
+                        var filePath = provider.GetRemoteFilePath(BHLProvider.RemoteFileType.ImageZip, item.BarCode, item.ImagesFilename);
+
+                        // Check if the file exists before redirecting to it
+                        var exists = false;
+                        using (var client = new HttpClient())
+                        {
+                            var request = new HttpRequestMessage(HttpMethod.Head, filePath);
+                            var response = client.SendAsync(request).GetAwaiter().GetResult();
+                            exists = response.IsSuccessStatusCode;
+                        }
+                        if (exists)
+                        {
+                            context.Response.ClearHeaders();
+                            context.Response.ContentType = "application/octet-stream";
+                            context.Response.Redirect(filePath);
+                        }
+                        else
+                        {
+                            context.Response.Redirect("~/pagenotfound");
+                        }
                     }
                     catch (System.Net.WebException wex)
                     {

@@ -25,10 +25,11 @@ namespace MOBOT.BHL.Web2.Handlers
             string domainRoot = ConfigurationManager.AppSettings["BaseUrl"];
 
             StringBuilder sb = new StringBuilder();
+            BHLProvider provider = new BHLProvider();
             int collectionID;
             bool gotCollection = false;
             bool isValid = true;
-            List<Collection> collections =new BHLProvider().CollectionSelectByUrl((string)context.Request.RequestContext.RouteData.Values["id"]);
+            List<Collection> collections = provider.CollectionSelectByUrl((string)context.Request.RequestContext.RouteData.Values["id"]);
 
             if (collections.Count > 0)
             {
@@ -44,7 +45,7 @@ namespace MOBOT.BHL.Web2.Handlers
 
             if (isValid)
             {
-                Collection collection = new BHLProvider().CollectionSelectAuto(collectionID);
+                Collection collection = provider.CollectionSelectAuto(collectionID);
                 if (!(collection == null)) gotCollection = (collection.Active == 1 && (collection.CollectionTarget == "iTunes" || collection.CollectionTarget == "All"));
                 if (gotCollection)
                 {
@@ -113,7 +114,7 @@ namespace MOBOT.BHL.Web2.Handlers
                     feed.ElementExtensions.Add(feedElement);
 
                     // Add the items in the collection
-                    List<DataObjects.Book> books = new BHLProvider().BookSelectByCollection(collectionID);
+                    List<DataObjects.Book> books = provider.BookSelectByCollection(collectionID);
                     List<SyndicationItem> syndItems = new List<SyndicationItem>();
                     foreach (DataObjects.Book book in books)
                     {
@@ -130,7 +131,7 @@ namespace MOBOT.BHL.Web2.Handlers
                             SyndicationItem syndItem = new SyndicationItem(
                                 new TextSyndicationContent((book.ShortTitle + (string.IsNullOrEmpty(book.Volume) ? string.Empty : ", " + book.Volume)).Trim()).Text,
                                 new TextSyndicationContent(content).Text,
-                                new Uri(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], book.BarCode, book.PdfFilename)));
+                                new Uri(provider.GetRemoteFilePath(BHLProvider.RemoteFileType.Pdf, book.BarCode, book.PdfFilename)));
                             //new Uri(domainRoot + "itempdf/" + item.ItemID.ToString()));
                             syndItem.PublishDate = DateTime.SpecifyKind((book.CreationDate ?? DateTime.Now), DateTimeKind.Local);
                             syndItem.AddPermalink(new Uri(domainRoot + "item/" + book.ItemID.ToString()));
@@ -178,7 +179,7 @@ namespace MOBOT.BHL.Web2.Handlers
                             itemAttribute.Value = "application/pdf";
                             itemElement.Attributes.Append(itemAttribute);
                             itemAttribute = doc.CreateAttribute("url");
-                            itemAttribute.Value = string.Format(ConfigurationManager.AppSettings["IADownloadLink"], book.BarCode, book.PdfFilename);
+                            itemAttribute.Value = provider.GetRemoteFilePath(BHLProvider.RemoteFileType.Pdf, book.BarCode, book.PdfFilename);
                             itemElement.Attributes.Append(itemAttribute);
                             syndItem.ElementExtensions.Add(itemElement);
 

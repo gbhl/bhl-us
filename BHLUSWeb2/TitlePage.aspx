@@ -1148,7 +1148,22 @@
             var url = "";
             if (pages != null) {
                 var calculatedWidth = (width) ? width : Math.floor(br.getPageWidth(index) / reduce);
-                url = pages[index].ExternalBaseUrl + '/download/' + pages[index].BarCode + '/page/n' + (pages[index].SequenceOrder - 1) + '_w' + calculatedWidth;
+                if (pages[index].ExternalBaseUrl.includes("archive.org")) {
+                    url = pages[index].ExternalBaseUrl + '/download/' + pages[index].BarCode + '/page/n' + (pages[index].SequenceOrder - 1) + '_w' + calculatedWidth;
+                }
+                else {
+                    var fileSize = "full";
+                    if (calculatedWidth < Math.floor(br.getPageWidth(index) / 16)) {
+                        fileSize = "thumb";
+                    } else if (calculatedWidth < Math.floor(br.getPageWidth(index) / 8)) {
+                        fileSize = "small";
+                    } else if (calculatedWidth < Math.floor(br.getPageWidth(index) / 4)) {
+                        fileSize = "medium";
+                    } else if (calculatedWidth < Math.floor(br.getPageWidth(index) / 2)) {
+                        fileSize = "large";
+                    }
+                    url = pages[index].ExternalBaseUrl + '/web/' + pages[index].BarCode + '/' + pages[index].BarCode + '_' + ('0000' + (index + 1)).slice(-4) + '_' + fileSize + '.webp';
+                }
             }
 
             return url;

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <location path="." inheritInChildApplications="false">
+    <system.webServer>
+      <handlers>
+        <add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModuleV2" resourceType="Unspecified" />
+      </handlers>
+      <aspNetCore processPath=".\SiteServiceREST.exe" stdoutLogEnabled="false" stdoutLogFile=".\logs\stdout" hostingModel="inprocess" />
+    </system.webServer>
+  </location>
+  <connectionStrings>
+    <remove name="BHL"/>
+    <add name="BHL" connectionString="connection string for BHL database" providerName="System.Data.SqlClient"/>
+  </connectionStrings>
+  <appSettings>
+    <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
+    <add key="ItemTextLocation" value="{0}\{1}\{2}"/>
+    <add key="MARCXmlLocation" value="{0}\{1}\{2}_marc.xml"/>
+    <add key="ScandataXmlLocation" value="{0}\{1}\{2}_scandata.xml"/>
+    <add key="SMTPHost" value="smtp server address"/>
+    <add key="UseRemoteFileAccessProvider" value="false"/>
+    <add key="DBCommandTimeout" value="1800"/>
+    <add key="DebugValue" value="debug"/>
+    <add key="ConfigNameCurrentIAVault" value="CurrentIAVaultID"/>
+    <!-- DOI file locations -->
+    <add key="DOIDepositFileLocation" value="path-to-doi-service-folder\deposit\{0}.xml"/>
+    <add key="DOISubmitLogFileLocation" value="path-to-doi-service-folder\submitlog\{0}.log.xml"/>
+    <!-- OCR Job file locations -->
+    <add key="OCRJobNewPath" value="path-to-ocr-job-folder\new\"/>
+    <!-- Message Queue settings -->
+    <add key="MQHost" value="message queue server address"/>
+    <add key="MQPort" value="message queue port"/>
+    <add key="MQAPIPort" value="message queue api port"/>
+    <add key="MQUsername" value="message queue username"/>
+    <add key="MQPassword" value="message queue password"/>
+    <!-- List of available queues, error queues, and exchanges, formatted as follows:
+      Queue|ErrorQueue|ErrorExchange~Queue|ErrorQueue|ErrorExchange~Queue|ErrorQueue|ErrorExchange -->
+    <add key="MQQueues" value="bhl.dev.index|bhl.dev.index.error|bhl.dev.exchange.index.error~bhl.dev.index.names|bhl.dev.index.names.error|bhl.dev.exchange.index.names.error"/>
+    <!-- Pregenerated PDFs -->
+    <add key="PregeneratedPdfLocation" value="pregenerated-pdf-folder\{0}{1}bhl-segment-{2}.pdf" />
+  </appSettings>
+</configuration>

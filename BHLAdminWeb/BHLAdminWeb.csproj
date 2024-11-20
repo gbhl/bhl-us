@@ -411,6 +411,13 @@
     <Compile Include="IAHarvestItemStatusAbout.aspx.designer.cs">
       <DependentUpon>IAHarvestItemStatusAbout.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WebResourcePaths.aspx.cs">
+      <DependentUpon>WebResourcePaths.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebResourcePaths.aspx.designer.cs">
+      <DependentUpon>WebResourcePaths.aspx</DependentUpon>
+    </Compile>
     <Compile Include="InstitutionEdit.aspx.cs">
       <DependentUpon>InstitutionEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -921,6 +928,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="WebResourcePaths.aspx" />
     <Content Include="Images\BHLlogo.png" />
     <Content Include="Images\bib_minus.gif" />
     <Content Include="Images\bib_plus.GIF" />
