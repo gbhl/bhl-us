@@ -170,19 +170,24 @@
     }
 
     function validateRedirect() {
-        var statusDDL = document.getElementById("ddlItemStatus");
+		var statusDDL = document.getElementById("ddlItemStatus");
+		var segmentsLst = document.getElementById("segmentsList");
         var replacedByTB = document.getElementById("replacedByTextBox");
-        var replaceWarningDiv = document.getElementById("replaceWarning");
+		var replaceWarningDiv = document.getElementById("replaceWarning");
 
         var visibility = "none";
         var border = "";
         if (statusDDL.value != 40 && replacedByTB.value == "") {
             visibility = "block";
             border = "2px solid #ed7600";
-        }
+		}
 
         replaceWarningDiv.style.display = visibility;
-        replacedByTB.style.border = border;
+		replacedByTB.style.border = border;
+		if (statusDDL.value != 40 && segmentsLst) {
+            var orphanSegmentsWarningDiv = document.getElementById("orphanSegmentsWarning");
+            orphanSegmentsWarningDiv.style.display = "block";
+        }
     }
 
     document.getElementById("masterForm").onsubmit = function () {
@@ -334,6 +339,11 @@
                         Enter the ID of the replacement ITEM in the "Replaced By" field.<br />
                         To REMOVE content click "Save" below.
                     </div>
+					<div id="orphanSegmentsWarning" style="margin-top:3px; color:red; display:none;">
+						ORPHAN SEGMENTS WARNING:  This item has defined segments.<br />
+						Unpublishing this item will orphan these segments. Please reattach<br />
+						the segments to the replacement item.
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -625,7 +635,7 @@
 			<legend class="dataHeader">Segments</legend>
             <br />
 			<input type="button" onclick="overlaySegmentSearch();document.getElementById('srchSegmentID').focus();" id="btnAddSegment" value="Add Segment" />
-			<asp:GridView ID="segmentsList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
+			<asp:GridView ID="segmentsList" runat="server" ClientIDMode="Static" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 			    AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
 				Width="900px" CssClass="boxTable" OnRowCancelingEdit="segmentsList_RowCancelingEdit" OnRowEditing="segmentsList_RowEditing"
 				OnRowUpdating="segmentsList_RowUpdating" OnRowCommand="segmentsList_RowCommand" DataKeyNames="SegmentID">
