@@ -14,8 +14,8 @@ namespace MOBOT.BHL.DataObjects
 		{
 		}
 
-		public Vault( int vaultID, string server, string folderShare, string webVirtualDirectory, string ocrFolderShare )
-			: base( vaultID, server, folderShare, webVirtualDirectory, ocrFolderShare )
+		public Vault( int vaultID, string server, string folderShare, string webVirtualDirectory, string ocrFolderShare, byte isCurrent )
+			: base( vaultID, server, folderShare, webVirtualDirectory, ocrFolderShare, isCurrent )
 		{
 		}
 
