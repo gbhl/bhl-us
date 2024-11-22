@@ -901,6 +901,9 @@ namespace MOBOT.BHL.Server
                 case RemoteFileType.Scandata:
                     configKey = "ScandataPathTemplate";
                     break;
+                case RemoteFileType.Djvu:
+                    configKey = "DjvuPathTemplate";
+                    break;
             }
 
             string remoteFilePath = string.Empty;
@@ -914,15 +917,6 @@ namespace MOBOT.BHL.Server
             }
 
             return remoteFilePath;
-        }
-
-        public enum RemoteFileType
-        {
-            ImageJpg,
-            ImageWebp,
-            ImageZip,
-            Pdf,
-            Scandata
         }
 
         [Serializable]

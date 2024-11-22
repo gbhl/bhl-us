@@ -27,7 +27,7 @@ namespace MOBOT.BHL.Web2
                 {
                     try
                     {
-                        var filePath = provider.GetRemoteFilePath(BHLProvider.RemoteFileType.Pdf, item.BarCode, item.PdfFilename);
+                        var filePath = provider.GetRemoteFilePath(RemoteFileType.Pdf, item.BarCode, item.PdfFilename);
 
                         // Check if the file exists before redirecting to it
                         var exists = false;

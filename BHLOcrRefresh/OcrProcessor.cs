@@ -215,10 +215,9 @@ namespace MOBOT.BHL.BHLOcrRefresh
             try
             {
                 Item item = new ItemsClient(configParms.BHLWSEndpoint).GetItemFilenames(Convert.ToInt32(itemID));
+                string djvuPath = new ConfigurationClient(configParms.BHLWSEndpoint).GetDjvuFilePath(item.BarCode, item.DjvuFilename);
 
-                string iaUrl = string.Format("https://www.archive.org/download/{0}/{1}", item.BarCode, item.DjvuFilename);
-
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(iaUrl);
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(djvuPath);
                 req.Method = "GET";
                 req.Timeout = 15000;
                 HttpWebResponse resp = (HttpWebResponse)req.GetResponse();

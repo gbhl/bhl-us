@@ -131,7 +131,7 @@ namespace MOBOT.BHL.Web2.Handlers
                             SyndicationItem syndItem = new SyndicationItem(
                                 new TextSyndicationContent((book.ShortTitle + (string.IsNullOrEmpty(book.Volume) ? string.Empty : ", " + book.Volume)).Trim()).Text,
                                 new TextSyndicationContent(content).Text,
-                                new Uri(provider.GetRemoteFilePath(BHLProvider.RemoteFileType.Pdf, book.BarCode, book.PdfFilename)));
+                                new Uri(provider.GetRemoteFilePath(DataObjects.Enum.RemoteFileType.Pdf, book.BarCode, book.PdfFilename)));
                             //new Uri(domainRoot + "itempdf/" + item.ItemID.ToString()));
                             syndItem.PublishDate = DateTime.SpecifyKind((book.CreationDate ?? DateTime.Now), DateTimeKind.Local);
                             syndItem.AddPermalink(new Uri(domainRoot + "item/" + book.ItemID.ToString()));
@@ -179,7 +179,7 @@ namespace MOBOT.BHL.Web2.Handlers
                             itemAttribute.Value = "application/pdf";
                             itemElement.Attributes.Append(itemAttribute);
                             itemAttribute = doc.CreateAttribute("url");
-                            itemAttribute.Value = provider.GetRemoteFilePath(BHLProvider.RemoteFileType.Pdf, book.BarCode, book.PdfFilename);
+                            itemAttribute.Value = provider.GetRemoteFilePath(DataObjects.Enum.RemoteFileType.Pdf, book.BarCode, book.PdfFilename);
                             itemElement.Attributes.Append(itemAttribute);
                             syndItem.ElementExtensions.Add(itemElement);
 

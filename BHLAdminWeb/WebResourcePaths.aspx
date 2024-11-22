@@ -37,6 +37,10 @@
             <label for="txtScandataPath" style="display:inline-block; width:20%;">Scandata Path Template:</label>
             <asp:TextBox runat="server" MaxLength="1000" ClientIDMode="Static" ID="txtScandataPath" Width="550"></asp:TextBox>
         </p>
+        <p>
+            <label for="txtDjvuPath" style="display:inline-block; width:20%;">Djvu Path Template:</label>
+            <asp:TextBox runat="server" MaxLength="1000" ClientIDMode="Static" ID="txtDjvuPath" Width="550"></asp:TextBox>
+        </p>
     </div>
     <br />
 	<asp:Button ID="saveButton" runat="server" OnClick="saveButton_Click" Text="Save" />
@@ -49,6 +53,7 @@
         txtImageZipPath.value = "https://archive.org/download/{barcode}/{fileName}";
         txtPdfPath.value = "https://archive.org/download/{barcode}/{fileName}";
         txtScandataPath.value = "https://archive.org/download/{barcode}/{fileName}";
+        txtDjvuPath.value = "https://archive.org/download/{barcode}/{fileName}";
     }
 
     function fillAWSDefault() {
@@ -56,6 +61,7 @@
         txtImageZipPath.value = "https://bhl-open-data.s3.us-east-2.amazonaws.com/images/{barcode}/{fileName}";
         txtPdfPath.value = "https://bhl-open-data.s3.us-east-2.amazonaws.com/pdf/{fileName}";
         txtScandataPath.value = "https://bhl-open-data.s3.us-east-2.amazonaws.com/web/{barcode}/{fileName}";
+        txtDjvuPath.value = "https://bhl-open-data.s3.us-east-2.amazonaws.com/web/{barcode}/{fileName}";
     }
 </script>
 

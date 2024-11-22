@@ -26,7 +26,7 @@ namespace MOBOT.BHL.Web2
                 {
                     try
                     {
-                        var filePath = provider.GetRemoteFilePath(BHLProvider.RemoteFileType.ImageZip, item.BarCode, item.ImagesFilename);
+                        var filePath = provider.GetRemoteFilePath(RemoteFileType.ImageZip, item.BarCode, item.ImagesFilename);
 
                         // Check if the file exists before redirecting to it
                         var exists = false;
