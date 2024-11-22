@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:27:33 PM
+// Generated 11/22/2024 1:27:47 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class VaultDAL is based upon dbo.Vault.
@@ -142,6 +142,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="folderShare"></param>
 		/// <param name="webVirtualDirectory"></param>
 		/// <param name="oCRFolderShare"></param>
+		/// <param name="isCurrent"></param>
 		/// <returns>Object of type Vault.</returns>
 		public Vault VaultInsertAuto(
 			SqlConnection sqlConnection, 
@@ -150,9 +151,10 @@ namespace MOBOT.BHL.DAL
 			string server,
 			string folderShare,
 			string webVirtualDirectory,
-			string oCRFolderShare)
+			string oCRFolderShare,
+			byte isCurrent)
 		{
-			return VaultInsertAuto( sqlConnection, sqlTransaction, "BHL", vaultID, server, folderShare, webVirtualDirectory, oCRFolderShare );
+			return VaultInsertAuto( sqlConnection, sqlTransaction, "BHL", vaultID, server, folderShare, webVirtualDirectory, oCRFolderShare, isCurrent );
 		}
 		
 		/// <summary>
@@ -166,6 +168,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="folderShare"></param>
 		/// <param name="webVirtualDirectory"></param>
 		/// <param name="oCRFolderShare"></param>
+		/// <param name="isCurrent"></param>
 		/// <returns>Object of type Vault.</returns>
 		public Vault VaultInsertAuto(
 			SqlConnection sqlConnection, 
@@ -175,7 +178,8 @@ namespace MOBOT.BHL.DAL
 			string server,
 			string folderShare,
 			string webVirtualDirectory,
-			string oCRFolderShare)
+			string oCRFolderShare,
+			byte isCurrent)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -185,7 +189,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("Server", SqlDbType.NVarChar, 30, true, server),
 					CustomSqlHelper.CreateInputParameter("FolderShare", SqlDbType.NVarChar, 30, true, folderShare),
 					CustomSqlHelper.CreateInputParameter("WebVirtualDirectory", SqlDbType.NVarChar, 30, true, webVirtualDirectory),
-					CustomSqlHelper.CreateInputParameter("OCRFolderShare", SqlDbType.NVarChar, 100, true, oCRFolderShare), 
+					CustomSqlHelper.CreateInputParameter("OCRFolderShare", SqlDbType.NVarChar, 100, true, oCRFolderShare),
+					CustomSqlHelper.CreateInputParameter("IsCurrent", SqlDbType.TinyInt, null, false, isCurrent), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Vault> helper = new CustomSqlHelper<Vault>())
@@ -239,7 +244,8 @@ namespace MOBOT.BHL.DAL
 				value.Server,
 				value.FolderShare,
 				value.WebVirtualDirectory,
-				value.OCRFolderShare);
+				value.OCRFolderShare,
+				value.IsCurrent);
 		}
 		
 		#endregion ===== INSERT =====
@@ -314,6 +320,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="folderShare"></param>
 		/// <param name="webVirtualDirectory"></param>
 		/// <param name="oCRFolderShare"></param>
+		/// <param name="isCurrent"></param>
 		/// <returns>Object of type Vault.</returns>
 		public Vault VaultUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -322,9 +329,10 @@ namespace MOBOT.BHL.DAL
 			string server,
 			string folderShare,
 			string webVirtualDirectory,
-			string oCRFolderShare)
+			string oCRFolderShare,
+			byte isCurrent)
 		{
-			return VaultUpdateAuto( sqlConnection, sqlTransaction, "BHL", vaultID, server, folderShare, webVirtualDirectory, oCRFolderShare);
+			return VaultUpdateAuto( sqlConnection, sqlTransaction, "BHL", vaultID, server, folderShare, webVirtualDirectory, oCRFolderShare, isCurrent);
 		}
 		
 		/// <summary>
@@ -338,6 +346,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="folderShare"></param>
 		/// <param name="webVirtualDirectory"></param>
 		/// <param name="oCRFolderShare"></param>
+		/// <param name="isCurrent"></param>
 		/// <returns>Object of type Vault.</returns>
 		public Vault VaultUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -347,7 +356,8 @@ namespace MOBOT.BHL.DAL
 			string server,
 			string folderShare,
 			string webVirtualDirectory,
-			string oCRFolderShare)
+			string oCRFolderShare,
+			byte isCurrent)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -357,7 +367,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("Server", SqlDbType.NVarChar, 30, true, server),
 					CustomSqlHelper.CreateInputParameter("FolderShare", SqlDbType.NVarChar, 30, true, folderShare),
 					CustomSqlHelper.CreateInputParameter("WebVirtualDirectory", SqlDbType.NVarChar, 30, true, webVirtualDirectory),
-					CustomSqlHelper.CreateInputParameter("OCRFolderShare", SqlDbType.NVarChar, 100, true, oCRFolderShare), 
+					CustomSqlHelper.CreateInputParameter("OCRFolderShare", SqlDbType.NVarChar, 100, true, oCRFolderShare),
+					CustomSqlHelper.CreateInputParameter("IsCurrent", SqlDbType.TinyInt, null, false, isCurrent), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Vault> helper = new CustomSqlHelper<Vault>())
@@ -411,7 +422,8 @@ namespace MOBOT.BHL.DAL
 				value.Server,
 				value.FolderShare,
 				value.WebVirtualDirectory,
-				value.OCRFolderShare);
+				value.OCRFolderShare,
+				value.IsCurrent);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -460,7 +472,8 @@ namespace MOBOT.BHL.DAL
 						value.Server,
 						value.FolderShare,
 						value.WebVirtualDirectory,
-						value.OCRFolderShare);
+						value.OCRFolderShare,
+						value.IsCurrent);
 				
 				return new CustomDataAccessStatus<Vault>(
 					CustomDataAccessContext.Insert, 
@@ -490,7 +503,8 @@ namespace MOBOT.BHL.DAL
 						value.Server,
 						value.FolderShare,
 						value.WebVirtualDirectory,
-						value.OCRFolderShare);
+						value.OCRFolderShare,
+						value.IsCurrent);
 					
 				return new CustomDataAccessStatus<Vault>(
 					CustomDataAccessContext.Update, 

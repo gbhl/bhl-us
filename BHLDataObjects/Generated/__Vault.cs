@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:27:33 PM
+// Generated 11/22/2024 1:27:47 PM
 // Do not modify the contents of this code file.
 // This abstract class __Vault is based upon dbo.Vault.
 
@@ -50,17 +50,20 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="folderShare"></param>
 		/// <param name="webVirtualDirectory"></param>
 		/// <param name="oCRFolderShare"></param>
+		/// <param name="isCurrent"></param>
 		public __Vault(int vaultID, 
 			string server, 
 			string folderShare, 
 			string webVirtualDirectory, 
-			string oCRFolderShare) : this()
+			string oCRFolderShare, 
+			byte isCurrent) : this()
 		{
 			VaultID = vaultID;
 			Server = server;
 			FolderShare = folderShare;
 			WebVirtualDirectory = webVirtualDirectory;
 			OCRFolderShare = oCRFolderShare;
+			IsCurrent = isCurrent;
 		}
 		
 		#endregion Constructors
@@ -110,6 +113,11 @@ namespace MOBOT.BHL.DataObjects
 					case "OCRFolderShare" :
 					{
 						_OCRFolderShare = (string)column.Value;
+						break;
+					}
+					case "IsCurrent" :
+					{
+						_IsCurrent = (byte)column.Value;
 						break;
 					}
 								}
@@ -260,6 +268,33 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion OCRFolderShare
+		
+		#region IsCurrent
+		
+		private byte _IsCurrent = default(byte);
+		
+		/// <summary>
+		/// Column: IsCurrent;
+		/// DBMS data type: tinyint;
+		/// </summary>
+		[ColumnDefinition("IsCurrent", DbTargetType=SqlDbType.TinyInt, Ordinal=6, NumericPrecision=3)]
+		public byte IsCurrent
+		{
+			get
+			{
+				return _IsCurrent;
+			}
+			set
+			{
+				if (_IsCurrent != value)
+				{
+					_IsCurrent = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion IsCurrent
 			
 		#endregion Properties
 
@@ -308,7 +343,8 @@ namespace MOBOT.BHL.DataObjects
 					GetComparisonString(o.Server) == GetComparisonString(Server) &&
 					GetComparisonString(o.FolderShare) == GetComparisonString(FolderShare) &&
 					GetComparisonString(o.WebVirtualDirectory) == GetComparisonString(WebVirtualDirectory) &&
-					GetComparisonString(o.OCRFolderShare) == GetComparisonString(OCRFolderShare) 
+					GetComparisonString(o.OCRFolderShare) == GetComparisonString(OCRFolderShare) &&
+					o.IsCurrent == IsCurrent 
 				)
 				{
 					o = null;
@@ -412,7 +448,8 @@ namespace MOBOT.BHL.DataObjects
 			public const string Server = "Server";	
 			public const string FolderShare = "FolderShare";	
 			public const string WebVirtualDirectory = "WebVirtualDirectory";	
-			public const string OCRFolderShare = "OCRFolderShare";
+			public const string OCRFolderShare = "OCRFolderShare";	
+			public const string IsCurrent = "IsCurrent";
 		}
 				
 		#endregion SortColumn

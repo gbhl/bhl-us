@@ -21,7 +21,6 @@
     <add key="UseRemoteFileAccessProvider" value="false"/>
     <add key="DBCommandTimeout" value="1800"/>
     <add key="DebugValue" value="debug"/>
-    <add key="ConfigNameCurrentIAVault" value="CurrentIAVaultID"/>
     <!-- DOI file locations -->
     <add key="DOIDepositFileLocation" value="path-to-doi-service-folder\deposit\{0}.xml"/>
     <add key="DOISubmitLogFileLocation" value="path-to-doi-service-folder\submitlog\{0}.log.xml"/>

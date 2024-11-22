@@ -24,7 +24,26 @@ namespace MOBOT.BHL.DAL
 			}
 		}
 
-		public void Save( SqlConnection sqlConnection, SqlTransaction sqlTransaction, Vault vault )
+		public Vault SelectCurrent(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+		{
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("VaultSelectCurrent", connection, transaction))
+            {
+                using (CustomSqlHelper<Vault> helper = new CustomSqlHelper<Vault>())
+                {
+                    List<Vault> list = helper.ExecuteReader(command);
+                    if (list.Count > 0)
+                        return list[0];
+                    else
+                        return null;
+                }
+            }
+        }
+
+        public void Save( SqlConnection sqlConnection, SqlTransaction sqlTransaction, Vault vault )
 		{
 			SqlConnection connection = sqlConnection;
 			SqlTransaction transaction = sqlTransaction;

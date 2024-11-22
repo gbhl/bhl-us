@@ -1567,9 +1567,9 @@ BEGIN TRY
 	
 	-- Get the current vault ID to assign to the items
 	DECLARE @VaultID INT
-	SELECT	@VaultID = CONVERT(INT, ConfigurationValue)
-	FROM	dbo.BHLConfiguration
-	WHERE	ConfigurationName = 'CurrentIAVaultID'
+	SELECT	@VaultID = VaultID
+	FROM	dbo.BHLVault
+	WHERE	IsCurrent = 1
 
 	-- Set the vault identifier
 	UPDATE	#tmpItem

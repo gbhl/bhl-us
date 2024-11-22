@@ -676,18 +676,12 @@ namespace MOBOT.BHL.Server
         /// <param name="itemID"></param>
         public void MarcCreateFile(string marcBibID, string content)
         {
-            MOBOT.BHL.DataObjects.Configuration config = this.ConfigurationSelectByName(
-                System.Configuration.ConfigurationManager.AppSettings["ConfigNameCurrentIAVault"]);
-            if (config != null)
+            Vault vault = new VaultDAL().SelectCurrent(null, null);
+            if (vault != null)
             {
-                Vault vault = this.VaultSelect(Convert.ToInt32(config.ConfigurationValue));
-                if (vault != null)
-                {
-                    String destinationFile = string.Format("{0}\\{1}\\{2}_marc.xml", vault.OCRFolderShare, marcBibID, marcBibID);
-                    MOBOT.FileAccess.IFileAccessProvider fileAccess =
-                        this.GetFileAccessProvider();
-                    fileAccess.SaveFile(Encoding.ASCII.GetBytes(content), destinationFile);
-                }
+                String destinationFile = string.Format("{0}\\{1}\\{2}_marc.xml", vault.OCRFolderShare, marcBibID, marcBibID);
+                IFileAccessProvider fileAccess = this.GetFileAccessProvider();
+                fileAccess.SaveFile(Encoding.ASCII.GetBytes(content), destinationFile);
             }
         }
 
