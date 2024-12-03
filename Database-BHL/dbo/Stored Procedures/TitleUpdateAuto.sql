@@ -29,7 +29,8 @@ CREATE PROCEDURE dbo.TitleUpdateAuto
 @PartNumber NVARCHAR(255),
 @PartName NVARCHAR(255),
 @BibliographicLevelID INT,
-@MaterialTypeID INT
+@MaterialTypeID INT,
+@HasMovingWall SMALLINT
 
 AS 
 
@@ -66,7 +67,8 @@ SET
 	[PartNumber] = @PartNumber,
 	[PartName] = @PartName,
 	[BibliographicLevelID] = @BibliographicLevelID,
-	[MaterialTypeID] = @MaterialTypeID
+	[MaterialTypeID] = @MaterialTypeID,
+	[HasMovingWall] = @HasMovingWall
 WHERE
 	[TitleID] = @TitleID
 		
@@ -110,7 +112,8 @@ ELSE BEGIN
 		[PartNumber],
 		[PartName],
 		[BibliographicLevelID],
-		[MaterialTypeID]
+		[MaterialTypeID],
+		[HasMovingWall]
 	FROM [dbo].[Title]
 	WHERE
 		[TitleID] = @TitleID

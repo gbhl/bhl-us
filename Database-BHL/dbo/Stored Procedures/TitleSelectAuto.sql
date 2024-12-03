@@ -39,7 +39,8 @@ SELECT
 	[PartNumber],
 	[PartName],
 	[BibliographicLevelID],
-	[MaterialTypeID]
+	[MaterialTypeID],
+	[HasMovingWall]
 FROM	
 	[dbo].[Title]
 WHERE	
