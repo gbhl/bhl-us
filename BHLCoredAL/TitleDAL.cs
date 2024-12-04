@@ -34,25 +34,16 @@ namespace MOBOT.BHL.DAL
                 }
 
                 title.TitleIdentifiers = new Title_IdentifierDAL().Title_IdentifierSelectByTitleID(connection, transaction, titleId, null);
-
 				title.TitleCollections = new TitleCollectionDAL().SelectByTitle( connection, transaction, titleId );
-
 				title.Books = new BookDAL().BookSelectByTitleID( connection, transaction, titleId );
-
                 title.ItemTitles = new ItemTitleDAL().ItemTitleSelectByTitle(connection, transaction, titleId);
-
                 title.TitleKeywords = new TitleKeywordDAL().TitleKeywordSelectByTitleID(connection, transaction, titleId);
-
                 title.TitleAssociations = new TitleAssociationDAL().TitleAssociationSelectExtendedForTitle(connection, transaction, titleId);
-
                 title.TitleVariants = new TitleVariantDAL().TitleVariantSelectByTitleID(connection, transaction, titleId);
-
                 title.TitleLanguages = new TitleLanguageDAL().TitleLanguageSelectByTitleID(connection, transaction, titleId);
-
+                title.TitleDocuments = new TitleDocumentDAL().TitleDocumentSelectByTitleID(connection, transaction, titleId);
                 title.TitleExternalResources = new TitleExternalResourceDAL().TitleExternalResourceSelectByTitleID(connection, transaction, titleId);
-
                 title.TitleNotes = new TitleNoteDAL().TitleNoteSelectByTitleID(connection, transaction, titleId);
-
                 title.TitleInstitutions = new InstitutionDAL().InstitutionSelectByTitleID(connection, transaction, titleId);
 			}
 
@@ -485,6 +476,16 @@ namespace MOBOT.BHL.DAL
 						titleCollectionDAL.TitleCollectionManageAuto( connection, transaction, titleCollection );
 					}
 				}
+
+                if (title.TitleDocuments.Count > 0)
+                {
+                    TitleDocumentDAL titleDocumentDAL = new TitleDocumentDAL();
+                    foreach(TitleDocument document in title.TitleDocuments)
+                    {
+                        if (document.TitleID == 0) document.TitleID = updatedTitle.ReturnObject.TitleID;
+                        titleDocumentDAL.TitleDocumentManageAuto(connection, transaction, document, userId);
+                    }
+                }
 
 				if ( title.ItemTitles.Count > 0 )
 				{

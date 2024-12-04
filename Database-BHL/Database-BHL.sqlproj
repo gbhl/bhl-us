@@ -1104,6 +1104,7 @@
     <None Include="dbo\Stored Procedures\TitleDocumentDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleDocumentInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleDocumentUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleDocumentSelectByTitleID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

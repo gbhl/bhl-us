@@ -251,6 +251,7 @@ namespace MOBOT.BHL.AdminWeb
             replacedByOrig.Value = title.RedirectTitleID.ToString();
             String displayTitle = ((title.ShortTitle.Length > 30) ? title.ShortTitle.Substring(0, 30) + "..." : title.ShortTitle);
             makePrimary.Text = "Make Title " + title.TitleID.ToString() + " (\"" + displayTitle + "\") the Primary title for the items.";
+            chkMovingWall.Checked = (title.HasMovingWall == 1);
             ddlBibliographicLevel.SelectedValue = (title.BibliographicLevelID ?? 0).ToString();
             ddlMaterialType.SelectedValue = (title.MaterialTypeID ?? 0).ToString();
             publishReadyCheckBox.Checked = title.PublishReady;
@@ -311,6 +312,9 @@ namespace MOBOT.BHL.AdminWeb
 
             languagesList.DataSource = title.TitleLanguages;
             languagesList.DataBind();
+
+            documentsList.DataSource = title.TitleDocuments;
+            documentsList.DataBind();
 
 			bindItemData();
         }
@@ -943,7 +947,80 @@ namespace MOBOT.BHL.AdminWeb
 			return null;
 		}
 
-		#endregion Collection methods
+        #endregion Collection methods
+
+        #region TitleDocument methods
+
+        private void bindDocumentData()
+        {
+            Title title = (Title)Session["Title" + idLabel.Text];
+
+            // filter out deleted items
+            List<TitleDocument> titleDocuments = new List<TitleDocument>();
+            foreach (TitleDocument td in title.TitleDocuments)
+            {
+                if (td.IsDeleted == false)
+                {
+                    titleDocuments.Add(td);
+                }
+            }
+
+            documentsList.DataSource = titleDocuments;
+            documentsList.DataBind();
+        }
+
+        private TitleDocument findTitleDocument(List<TitleDocument> titleDocuments,
+            int titleDocumentId, int documentTypeID, string name, string url)
+        {
+            foreach (TitleDocument td in titleDocuments)
+            {
+                if (td.IsDeleted)
+                {
+                    continue;
+                }
+                if (titleDocumentId == td.TitleDocumentID &&
+                    documentTypeID == td.DocumentTypeID &&
+                    name == td.Name &&
+                    url == td.Url)
+                {
+                    return td;
+                }
+            }
+
+            return null;
+        }
+
+        List<DocumentType> _documentTypes = null;
+        protected List<DocumentType> GetDocumentTypes()
+        {
+            BHLProvider bp = new BHLProvider();
+            _documentTypes = bp.DocumentTypeSelectAll();
+
+            return _documentTypes;
+        }
+
+        protected int GetDocumentTypeIndex(object dataItem)
+        {
+            string documentTypeIdString = DataBinder.Eval(dataItem, "DocumentTypeID").ToString();
+
+            if (!documentTypeIdString.Equals("0"))
+            {
+                int documentTypeId = int.Parse(documentTypeIdString);
+                int ix = 0;
+                foreach (DocumentType documentType in _documentTypes)
+                {
+                    if (documentType.DocumentTypeID == documentTypeId)
+                    {
+                        return ix;
+                    }
+                    ix++;
+                }
+            }
+
+            return 0;
+        }
+
+        #endregion
 
         #region Item methods
 
@@ -1765,6 +1842,90 @@ namespace MOBOT.BHL.AdminWeb
 
         #endregion Collection event handlers
 
+        #region TitleDocument event handlers
+
+        protected void documentsList_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            documentsList.EditIndex = e.NewEditIndex;
+            bindDocumentData();
+        }
+
+        protected void documentsList_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            GridViewRow row = documentsList.Rows[e.RowIndex];
+
+            if (row != null)
+            {
+                DropDownList ddlDocumentType = row.FindControl("ddlDocumentType") as DropDownList;
+                TextBox txtName = row.FindControl("txtName") as TextBox;
+                TextBox txtUrl = row.FindControl("txtUrl") as TextBox;
+                if (txtName != null)
+                {
+                    Title title = (Title)Session["Title" + idLabel.Text];
+
+                    string name = txtName.Text;
+                    string url = txtUrl.Text;
+                    int documentTypeID;
+                    if (!Int32.TryParse(ddlDocumentType.Text, out documentTypeID)) documentTypeID = 1;
+
+                    TitleDocument titleDocument = findTitleDocument(title.TitleDocuments,
+                        (int)documentsList.DataKeys[e.RowIndex].Values[0],
+                        (int)documentsList.DataKeys[e.RowIndex].Values[1],
+                        documentsList.DataKeys[e.RowIndex].Values[2].ToString(),
+                        documentsList.DataKeys[e.RowIndex].Values[3].ToString());
+
+                    // Update the document being edited
+                    titleDocument.TitleID = title.TitleID;
+                    titleDocument.DocumentTypeID = documentTypeID;
+                    titleDocument.Name = name;
+                    titleDocument.Url = url;
+                    titleDocument.TypeLabel = ddlDocumentType.SelectedItem.Text;
+                }
+            }
+
+            documentsList.EditIndex = -1;
+            bindDocumentData();
+        }
+
+        protected void documentsList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            documentsList.EditIndex = -1;
+            bindDocumentData();
+        }
+
+        protected void documentsList_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName.Equals("RemoveButton"))
+            {
+                resourcesList.EditIndex = -1;
+                int rowNum = int.Parse(e.CommandArgument.ToString());
+                Title title = (Title)Session["Title" + idLabel.Text];
+
+                TitleDocument document = findTitleDocument(title.TitleDocuments,
+                    (int)documentsList.DataKeys[rowNum].Values[0],
+                    (int)documentsList.DataKeys[rowNum].Values[1],
+                    documentsList.DataKeys[rowNum].Values[2].ToString(),
+                    documentsList.DataKeys[rowNum].Values[3].ToString());
+
+                document.IsDeleted = true;
+                bindDocumentData();
+            }
+        }
+
+        protected void addDocumentButton_Click(object sender, EventArgs e)
+        {
+            Title title = (Title)Session["Title" + idLabel.Text];
+            TitleDocument document = new TitleDocument();
+            document.TitleID = title.TitleID;
+            document.DocumentTypeID = 0;
+            title.TitleDocuments.Add(document);
+            documentsList.EditIndex = documentsList.Rows.Count;
+            bindDocumentData();
+            documentsList.Rows[documentsList.EditIndex].FindControl("cancelDocumentEditButton").Visible = false;
+        }
+
+        #endregion
+
         #region Item event handlers
 
         protected void itemsList_RowEditing(object sender, GridViewEditEventArgs e
@@ -2011,6 +2172,7 @@ namespace MOBOT.BHL.AdminWeb
                 // Gather up data on form
                 title.RedirectTitleID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
                 title.PublishReady = publishReadyCheckBox.Checked;
+                title.HasMovingWall = (short)(chkMovingWall.Checked ? 1 : 0);
                 title.BibliographicLevelID = bibLevelID;
                 title.MaterialTypeID = materialTypeID;
 				title.FullTitle = fullTitleTextBox.Text.Trim();
@@ -2047,6 +2209,7 @@ namespace MOBOT.BHL.AdminWeb
                 title.TitleExternalResources.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 title.TitleAssociations.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
                 title.TitleVariants.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                title.TitleDocuments.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
 
                 //----------------------------------------
                 BHLProvider bp = new BHLProvider();
@@ -2119,6 +2282,12 @@ namespace MOBOT.BHL.AdminWeb
             {
                 flag = true;
                 errorControl.AddErrorText("Collections has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
+            }
+
+            if (documentsList.EditIndex != -1)
+            {
+                flag = true;
+                errorControl.AddErrorText("Documents has an edit pending.  Click the appropriate link to complete the edit (Update, Remove, or Cancel).");
             }
 
             if (itemsList.EditIndex != -1)
@@ -2268,6 +2437,19 @@ namespace MOBOT.BHL.AdminWeb
                     }
                 }
                 ix++;
+            }
+
+            foreach (TitleDocument td in title.TitleDocuments)
+            {
+                if (!td.IsDeleted)
+                {
+                    if (td.DocumentTypeID <= 0 || string.IsNullOrWhiteSpace(td.Name) || string.IsNullOrWhiteSpace(td.Url))
+                    {
+                        flag = true;
+                        errorControl.AddErrorText("Documents must have a Type, Name, and Url.");
+                        break;
+                    }
+                }
             }
 
             // Validate identifiers

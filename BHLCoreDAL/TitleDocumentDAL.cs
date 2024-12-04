@@ -1,7 +1,12 @@
 
 #region Using
 
+using CustomDataAccess;
+using MOBOT.BHL.DataObjects;
 using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 
 #endregion Using
 
@@ -9,6 +14,24 @@ namespace MOBOT.BHL.DAL
 {
 	public partial class TitleDocumentDAL
 	{
-	}
+        public List<TitleDocument> TitleDocumentSelectByTitleID(SqlConnection sqlConnection,
+         SqlTransaction sqlTransaction, int titleID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleDocumentSelectByTitleID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID)))
+            {
+                using (CustomSqlHelper<TitleDocument> helper = new CustomSqlHelper<TitleDocument>())
+                {
+                    List<TitleDocument> list = helper.ExecuteReader(command);
+
+                    return list;
+                }
+            }
+        }
+    }
 }
 

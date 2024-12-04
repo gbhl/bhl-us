@@ -285,6 +285,14 @@
 			</td>
 		</tr>
 		<tr>
+			<td style="white-space: nowrap" align="right" class="dataHeader">
+				Has Moving Wall:
+			</td>
+			<td colspan="4">
+				<asp:CheckBox ID="chkMovingWall" ClientIDMode="Static" runat="server" />
+			</td>
+		</tr>
+		<tr>
 			<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
 				Bibliographic Level (MARC Leader char 07):
 			</td>
@@ -866,6 +874,56 @@
 		</asp:GridView>
 		<br />
 		<asp:Button ID="addCollectionButton" runat="server" Text="Add Collection" OnClick="addCollectionButton_Click" />
+	</fieldset>
+	<br />
+	<fieldset>
+		<legend class="dataHeader">Documents</legend>
+		<asp:GridView ID="documentsList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" AlternatingRowStyle-BackColor="#F7FAFB"
+			RowStyle-BackColor="white" Width="400px" CssClass="boxTable" OnRowCancelingEdit="documentsList_RowCancelingEdit" 
+			OnRowEditing="documentsList_RowEditing" OnRowUpdating="documentsList_RowUpdating" OnRowCommand="documentsList_RowCommand" 
+			DataKeyNames="TitleDocumentID, DocumentTypeID, Name, Url">
+			<Columns>
+				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
+				<asp:TemplateField HeaderText="Type" ItemStyle-Wrap="false">
+					<ItemTemplate>
+						<%# Eval( "TypeLabel" ) %>
+					</ItemTemplate>
+					<EditItemTemplate>
+						<asp:DropDownList ID="ddlDocumentType" runat="server" DataTextField="Label" 
+							DataValueField="DocumentTypeID" DataSource="<%# GetDocumentTypes() %>" 
+							SelectedIndex="<%# GetDocumentTypeIndex( Container.DataItem ) %>" />
+					</EditItemTemplate>
+				</asp:TemplateField>
+				<asp:TemplateField HeaderText="Name" ItemStyle-Wrap="false">
+					<ItemTemplate>
+						<%# Eval( "Name" ) %>
+					</ItemTemplate>
+					<EditItemTemplate>
+						<asp:TextBox ID="txtName" runat="server" MaxLength="100" Text='<%# Eval( "Name") %>' />
+					</EditItemTemplate>
+				</asp:TemplateField>
+				<asp:TemplateField HeaderText="Url" ItemStyle-Wrap="false">
+					<ItemTemplate>
+						<a href='<%# Eval("Url") %>' target="_blank"><%# Eval("Url") %></a>
+					</ItemTemplate>
+					<EditItemTemplate>
+						<asp:TextBox ID="txtUrl" runat="server" MaxLength="200" Width="400" Text='<%# Eval( "Url") %>' />
+					</EditItemTemplate>
+				</asp:TemplateField>
+				<asp:TemplateField ItemStyle-Width="130px">
+					<ItemTemplate>
+						<asp:LinkButton ID="editDocumentButton" runat="server" CommandName="Edit" Text="Edit"></asp:LinkButton>
+					</ItemTemplate>
+					<EditItemTemplate>
+						<asp:LinkButton ID="updateDocumentButton" runat="server" CommandName="Update" Text="Update"></asp:LinkButton>
+						<asp:LinkButton ID="cancelDocumentEditButton" runat="server" CommandName="Cancel" Text="Cancel"></asp:LinkButton>
+					</EditItemTemplate>
+				</asp:TemplateField>
+			</Columns>
+			<HeaderStyle HorizontalAlign="Left" CssClass="SearchResultsHeader" />
+		</asp:GridView>
+		<br />
+		<asp:Button ID="addDocumentButton" runat="server" Text="Add Document" OnClick="addDocumentButton_Click" />
 	</fieldset>
 	<br />
 	Item status filter: <asp:RadioButton ID="showAllRadioButton" runat="server" GroupName="filterItemGroup" Checked="false" AutoPostBack="true" Text="Show all" OnCheckedChanged="itemFilter_CheckedChanged" />
