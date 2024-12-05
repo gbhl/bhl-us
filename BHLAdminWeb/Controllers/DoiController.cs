@@ -1,4 +1,5 @@
-﻿using MOBOT.BHL.AdminWeb.Models;
+﻿using Microsoft.Ajax.Utilities;
+using MOBOT.BHL.AdminWeb.Models;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
@@ -141,6 +142,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     List<string> titleIDs = new List<string>();
                     List<string> segmentIDs = new List<string>();
                     bool copyrightWarning = false;
+                    bool documentWarning = false;
 
                     if (model.EntityTypeID == _doiTypeTitleID)
                     {
@@ -156,6 +158,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                                 ValidationOutput validation = ValidateTitle(titleId);
                                 if (validation.IsValid) titleIDs.Add(titleId + "|" + validation.Action + "|" + validation.Title);
                                 copyrightWarning = copyrightWarning ? copyrightWarning : (validation.CopyrightWarning && validation.Action != "UPDATE");
+                                documentWarning = documentWarning ? documentWarning : (validation.DocumentWarning && validation.Action != "UPDATE");
                             }
                         }
                     }
@@ -171,6 +174,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                                     if (segments.Count > 0)
                                     {
                                         copyrightWarning = titleValidation.CopyrightWarning && titleValidation.Action != "UPDATE";
+                                        documentWarning = titleValidation.DocumentWarning && titleValidation.Action != "UPDATE";
 
                                         foreach (Segment segment in segments)
                                         {
@@ -190,7 +194,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                                     List<Segment> segments = new BHLProvider().SegmentSelectWithoutDOIByItemID(Convert.ToInt32(model.ItemID));
                                     if (segments.Count > 0)
                                     {
-                                         copyrightWarning = itemValidation.CopyrightWarning && itemValidation.Action != "UPDATE";
+                                        copyrightWarning = itemValidation.CopyrightWarning && itemValidation.Action != "UPDATE";
+                                        documentWarning = itemValidation.DocumentWarning && itemValidation.Action != "UPDATE";
 
                                         foreach (Segment segment in segments)
                                         {
@@ -215,6 +220,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                                         if (segmentValidation.IsValid)
                                         {
                                             copyrightWarning = copyrightWarning ? copyrightWarning : (segmentValidation.CopyrightWarning && segmentValidation.Action != "UPDATE");
+                                            documentWarning = documentWarning ? documentWarning : (segmentValidation.DocumentWarning && segmentValidation.Action != "UPDATE");
                                             segmentIDs.Add(segmentId + "|" + segmentValidation.Action + "|" + segmentValidation.Title);
                                         }
                                     }
@@ -229,6 +235,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                         titleIDs.Sort();
                         segmentIDs.Sort();
                         TempData["CopyrightWarning"] = copyrightWarning;
+                        TempData["DocumentWarning"] = documentWarning;
                         TempData["Titles"] = titleIDs;
                         TempData["Segments"] = segmentIDs;
                         return RedirectToAction("QueueAddConfirm", "Doi");
@@ -251,9 +258,11 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         {
             bool copyrightWarning = (bool)TempData["CopyrightWarning"];
             if (copyrightWarning) ModelState.AddModelError("Copyright", "One or more of these items may be in copyright. Please ensure you have permission to assign DOIs before proceeding.");
+            bool documentWarning = (bool)TempData["DocumentWarning"];
+            if (documentWarning) ModelState.AddModelError("Document", "One or more of these items is lacking appopriate documentation. Please ensure you have permission to assign DOIs before proceeding.");
             List<string> titles = (List<string>)TempData["Titles"];
             List<string> segments = (List<string>)TempData["Segments"];
-            return View(new QueueAddConfirmViewModel(copyrightWarning, titles, segments));
+            return View(new QueueAddConfirmViewModel(copyrightWarning, documentWarning, titles, segments));
         }
 
         [HttpPost]
@@ -324,7 +333,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
         private ValidationOutput ValidateTitle(string titleID, bool validateDOI = true)
         {
-            ValidationOutput output = new ValidationOutput(true, false);
+            ValidationOutput output = new ValidationOutput(true, false, false);
             int titleInt;
             int copyrightYear = DateTime.Now.Year - 95;
 
@@ -356,6 +365,15 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     output.CopyrightWarning = true;
                 }
 
+                // Make sure appropriate documentation exists
+                if (output.IsValid)
+                {
+                    bool hasDoiDoc = false;
+                    List<TitleDocument> documents = provider.TitleDocumentSelectByTitleID(titleInt);
+                    foreach (TitleDocument td in documents) if (td.Name == "DOI") hasDoiDoc = true;
+                    if (!hasDoiDoc) output.DocumentWarning = true;
+                }
+
                 if (output.IsValid && validateDOI)
                 {
                     // Determine if we are adding a new DOI or updating an existing one
@@ -379,7 +397,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
         private ValidationOutput ValidateItem(string itemID)
         {
-            ValidationOutput output = new ValidationOutput(true, false);
+            ValidationOutput output = new ValidationOutput(true, false, false);
             int itemInt;
             int copyrightYear = DateTime.Now.Year - 95;
 
@@ -429,6 +447,15 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     }
 
                 }
+
+                if (output.IsValid)
+                {
+                    // Make sure appropriate documentation exists
+                    bool hasDoiDoc = false;
+                    List<TitleDocument> documents = provider.TitleDocumentSelectByBookID(itemInt);
+                    foreach (TitleDocument td in documents) if (td.Name == "DOI") hasDoiDoc = true;
+                    if (!hasDoiDoc) output.DocumentWarning = true;
+                }
             }
 
             return output;
@@ -436,7 +463,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
         private ValidationOutput ValidateSegment(string segmentID)
         {
-            ValidationOutput output = new ValidationOutput(true, false);
+            ValidationOutput output = new ValidationOutput(true, false, false);
             int segmentInt;
             int copyrightYear = DateTime.Now.Year - 95;
 
@@ -476,6 +503,15 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     {
                         if (segmentDate.Year >= copyrightYear) output.CopyrightWarning = true;
                     }
+                }
+
+                if (output.IsValid)
+                {
+                    // Make sure appropriate documentation exists
+                    bool hasDoiDoc = false;
+                    List<TitleDocument> documents = provider.TitleDocumentSelectBySegmentID(segmentInt);
+                    foreach (TitleDocument td in documents) if (td.Name == "DOI") hasDoiDoc = true;
+                    if (!hasDoiDoc) output.DocumentWarning = true;
                 }
 
                 if (output.IsValid)
@@ -534,15 +570,17 @@ namespace MOBOT.BHL.AdminWeb.Controllers
     {
         public bool IsValid { get; set; }
         public bool CopyrightWarning { get; set; }
+        public bool DocumentWarning { get; set; }
 
         public string Title { get; set; } = string.Empty;
 
         public string Action { get; set; } = "ADD";
 
-        public ValidationOutput(bool isValid, bool copyrightWarning)
+        public ValidationOutput(bool isValid, bool copyrightWarning, bool documentWarning)
         {
             IsValid = isValid;
             CopyrightWarning = copyrightWarning;
+            DocumentWarning = documentWarning;
         }
     }
 }

@@ -18,8 +18,8 @@ SELECT	d.TitleDocumentID,
 		d.LastModifiedDate,
 		d.CreationUserID,
 		d.LastModifiedUserID
-FROM	TitleDocument d
-		INNER JOIN DocumentType t ON d.DocumentTypeID = t.DocumentTypeID
+FROM	dbo.TitleDocument d
+		INNER JOIN dbo.DocumentType t ON d.DocumentTypeID = t.DocumentTypeID
 WHERE	d.TitleID = @TitleID
 ORDER BY
 		t.Label, d.Name
