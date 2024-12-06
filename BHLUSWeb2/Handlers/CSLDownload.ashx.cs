@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Net.Http;
 using System.Web;
 
@@ -12,6 +11,7 @@ namespace MOBOT.BHL.Web2
             int id;
             string idType = context.Request.RequestContext.RouteData.Values["type"] as string;
             string idString = context.Request.RequestContext.RouteData.Values["id"] as string;
+            string tidString = context.Request.QueryString["t"] as string;  // Secondary ID containing TitleID associated with "id"
 
             string response = string.Empty;
             string filename = "bhl";
@@ -37,7 +37,7 @@ namespace MOBOT.BHL.Web2
                             idTypeArg = "p"; break;
                     }
 
-                    string path = string.Format("/service/GetCitationJSON?idType={0}&id={1}", idTypeArg, idString);
+                    string path = string.Format("/service/GetCitationJSON?idType={0}&id1={1}&id2={2}", idTypeArg, idString, tidString);
                     response = new HttpClient().GetStringAsync(new Uri(baseAddress, path)).Result;
                 }
                 catch

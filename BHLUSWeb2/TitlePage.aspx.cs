@@ -516,7 +516,7 @@ Append("</a>").
                         if (book.RedirectBookID != null)
                             Response.Redirect("~/item/" + book.RedirectBookID); // Follow container item redirect
                         else
-                            Response.Redirect("~/item/" + book.BookID);     // Show container item
+                            Response.Redirect("~/item/" + book.BookID + (string.IsNullOrWhiteSpace(titleID) ? "" : "?t=" + titleID));     // Show container item
                     }
 
                     PublicationDetail.Type = ItemType.Book;
@@ -560,8 +560,10 @@ Append("</a>").
             int itemid;
             if (int.TryParse(itemID, out itemid))
             {
+                int? qsTitleId = int.TryParse(titleID, out int tmp) ? (int?)tmp : null;
+
                 // If we came from the bibliography page, get the title id
-                int titleId = 0;
+                int? refererTitleId = null;
                 String referer = Request.ServerVariables["HTTP_REFERER"];
                 if (referer != null)
                 {
@@ -570,14 +572,12 @@ Append("</a>").
                     if (referer.StartsWith(bibPath, true, null))
                     {
                         referer = referer.Replace(bibPath, String.Empty);
-                        Int32.TryParse(referer, out titleId);
+                        refererTitleId = int.TryParse(referer, out int tmpid) ? (int?)tmpid : null;
                     }
                 }
 
-                if (titleId == 0)   // Include details for the primary title
-                    psv = bhlProvider.PageSummarySelectByItemId(itemid, true);
-                else                // Include details for a specific title
-                    psv = bhlProvider.PageSummarySelectByItemIdAndTitleId(itemid, titleId);
+                int? titleid = qsTitleId ?? refererTitleId;
+                psv = bhlProvider.PageSummarySelectByItemId(itemid, titleid);
 
                 // Check to make sure this item hasn't been replaced.  If it has, redirect to the appropriate itemid.
                 if (psv != null)
@@ -607,9 +607,9 @@ Append("</a>").
             PublicationDetail.Type = ItemType.Segment;
             if (int.TryParse(segmentID, out int segmentid))
             {
-                var segmentPages = bhlProvider.PageSummarySegmentSelectBySegmentID(segmentid);
-                if (segmentPages.Count > 0) psv = segmentPages.First();
+                int? titleid = int.TryParse(titleID, out int tmp) ? (int?)tmp : null;
 
+                psv = bhlProvider.PageSummarySegmentSelectBySegmentID(segmentid, titleid);
                 if (psv == null)
                 {
                     // If no pages then see if this is an external segment (redirect to the url)
@@ -622,7 +622,7 @@ Append("</a>").
                 else if (psv.IsVirtual == 0)
                 {
                     // Associated with a non-virtual item, so redirect to the start page
-                    Response.Redirect("~/page/" + psv.PageID.ToString());
+                    Response.Redirect("~/page/" + psv.PageID.ToString() + (string.IsNullOrWhiteSpace(titleID) ? "" : "?t=" + titleID));
                 }
             }
 
@@ -636,12 +636,12 @@ Append("</a>").
             DataObjects.Book book = bhlProvider.BookSelectByBarcodeOrItemID(null, barcode);
             if (book != null)
             {
-                Response.Redirect("~/item/" + book.BookID);
+                Response.Redirect("~/item/" + book.BookID + (string.IsNullOrWhiteSpace(titleID) ? "" : "?t=" + titleID));
             }
             else
             {
                 Segment segment = bhlProvider.SegmentSelectByBarCode(barcode);
-                if (segment != null) Response.Redirect("~/page/" + segment.StartPageID);
+                if (segment != null) Response.Redirect("~/page/" + segment.StartPageID + (string.IsNullOrWhiteSpace(titleID) ? "" : "?t=" + titleID));
             }
 
             return psv;

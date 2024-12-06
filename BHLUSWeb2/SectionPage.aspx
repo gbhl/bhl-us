@@ -303,7 +303,7 @@
 <asp:Content ID="scriptContent" ContentPlaceHolderID="scriptContentPlaceHolder" runat="server">
 <script src="/js/libs/jquery.history.min.js"></script>
 <script src="/js/citation-js/citation-js@0.6.4.js" type="text/javascript"></script>
-<script src="/js/citation-js/bhl-citation-js.js?v=1" type="text/javascript"></script>
+<script src="/js/citation-js/bhl-citation-js.js?v=2" type="text/javascript"></script>
 <script type="text/javascript">
     var cmArgs = new CitationModalArgs();
     cmArgs.init({

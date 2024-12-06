@@ -8,6 +8,7 @@ function CitationModalArgs() {
     this.itemId = null;
     this.segmentId = null;
     this.pageId = null;
+    this.itemTitleId = '';
     this.titleText = 'Title';
     this.itemText = 'Volume';
     this.segmentText = 'Article';
@@ -23,6 +24,7 @@ CitationModalArgs.prototype.init = function(args) {
     if (typeof args.iid !== 'undefined') this.itemId = args.iid;
     if (typeof args.sid !== 'undefined') this.segmentId = args.sid;
     if (typeof args.pid !== 'undefined') this.pageId = args.pid;
+    if (typeof args.itid !== 'undefined') this.itemTitleId = args.itid;
     if (typeof args.ttext !== 'undefined') this.titleText = args.ttext;
     if (typeof args.itext !== 'undefined') this.itemText = args.itext;
     if (typeof args.stext !== 'undefined') this.segmentText = args.stext;
@@ -69,6 +71,7 @@ window.onclick = function(event) {
 async function showCitation(target, format, cmArgs)
 {
     let targetId = null;
+    let secondaryId = '';
     // Get the target identifier and set up the download links
     if (target == 't') {
         targetId = cmArgs.titleId;
@@ -83,39 +86,42 @@ async function showCitation(target, format, cmArgs)
     }
     if (target == 'i') {
         targetId = cmArgs.itemId;
+        secondaryId = cmArgs.itemTitleId;
         divDLBibTex.style.display = 'block';
-        lnkDLBibTex.href = '/bibtexdownload/item/' + cmArgs.itemId;
+        lnkDLBibTex.href = '/bibtexdownload/item/' + cmArgs.itemId + (cmArgs.itemTitleId === '' ? '' : '?t=' + cmArgs.itemTitleId);
         divDLCSL.style.display = 'block';
-        lnkDLCSL.href = '/csldownload/item/' + cmArgs.itemId;
+        lnkDLCSL.href = '/csldownload/item/' + cmArgs.itemId + (cmArgs.itemTitleId === '' ? '' : '?t=' + cmArgs.itemTitleId);
         divDLMODS.style.display = 'block';
-        lnkDLMODS.href = '/modsdownload/item/' + cmArgs.itemId;
+        lnkDLMODS.href = '/modsdownload/item/' + cmArgs.itemId + (cmArgs.itemTitleId === '' ? '' : '?t=' + cmArgs.itemTitleId);
         divDLRIS.style.display = 'block';
-        lnkDLRIS.href = '/risdownload/item/' + cmArgs.itemId;
+        lnkDLRIS.href = '/risdownload/item/' + cmArgs.itemId + (cmArgs.itemTitleId === '' ? '' : '?t=' + cmArgs.itemTitleId);
     }
     if (target == 's') {
         targetId = cmArgs.segmentId;
+        secondaryId = cmArgs.itemTitleId;
         divDLBibTex.style.display = 'block';
-        lnkDLBibTex.href = '/bibtexdownload/part/' + cmArgs.segmentId;
+        lnkDLBibTex.href = '/bibtexdownload/part/' + cmArgs.segmentId + (cmArgs.itemTitleId === '' ? '' : '?t=' + cmArgs.itemTitleId);
         divDLCSL.style.display = 'block';
-        lnkDLCSL.href = '/csldownload/part/' + cmArgs.segmentId;
+        lnkDLCSL.href = '/csldownload/part/' + cmArgs.segmentId + (cmArgs.itemTitleId === '' ? '' : '?t=' + cmArgs.itemTitleId);
         divDLMODS.style.display = 'block';
-        lnkDLMODS.href = '/modsdownload/part/' + cmArgs.segmentId;
+        lnkDLMODS.href = '/modsdownload/part/' + cmArgs.segmentId + (cmArgs.itemTitleId === '' ? '' : '?t=' + cmArgs.itemTitleId);
         divDLRIS.style.display = 'block';
-        lnkDLRIS.href = '/risdownload/part/' + cmArgs.segmentId;
+        lnkDLRIS.href = '/risdownload/part/' + cmArgs.segmentId + (cmArgs.itemTitleId === '' ? '' : '?t=' + cmArgs.itemTitleId);
     }
     if (target == 'p') {
         targetId = cmArgs.pageId;
+        secondaryId = cmArgs.itemTitleId;
         divDLBibTex.style.display = 'block';
-        lnkDLBibTex.href = '/bibtexdownload/page/' + cmArgs.pageId;
+        lnkDLBibTex.href = '/bibtexdownload/page/' + cmArgs.pageId + (cmArgs.itemTitleId === '' ? '' : '?t=' + cmArgs.itemTitleId);
         divDLCSL.style.display = 'block';
-        lnkDLCSL.href = '/csldownload/page/' + cmArgs.pageId;
+        lnkDLCSL.href = '/csldownload/page/' + cmArgs.pageId + (cmArgs.itemTitleId === '' ? '' : '?t=' + cmArgs.itemTitleId);
         divDLMODS.style.display = 'none';
         lnkDLMODS.href = '#';
         divDLRIS.style.display = 'block';
-        lnkDLRIS.href = '/risdownload/page/' + cmArgs.pageId;
+        lnkDLRIS.href = '/risdownload/page/' + cmArgs.pageId + (cmArgs.itemTitleId === '' ? '' : '?t=' + cmArgs.itemTitleId);
     }
     // Show the citation, formatted appropriately
-    await getCitation(citationText, "innerHTML", format, target, targetId);
+    await getCitation(citationText, "innerHTML", format, target, targetId, secondaryId);
 }
 
 // Display temporary messages
@@ -149,7 +155,7 @@ String.prototype.wrapLinks = function (new_window) {
 //	modern-language-association-9th.js
 //  american-medical-association-11th.js
 //  wikipedia-templates.js
-async function getCitation(ref, prop, templateName, idType, id)
+async function getCitation(ref, prop, templateName, idType, id1, id2)
 {
     ref[prop] = "Loading...";
 
@@ -200,7 +206,7 @@ async function getCitation(ref, prop, templateName, idType, id)
         //      https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html
         //      https://github.com/citation-style-language/schema/blob/master/schemas/input/csl-data.json (schema)
         //      https://gist.github.com/larsgw/e5e7e7a5552df67d4dab4bd9378e5412 (example)
-        await fetch('/service/GetCitationJSON?idType=' + idType + '&id=' + id + '&r=' + Math.random() * 1000000)
+        await fetch('/service/GetCitationJSON?idType=' + idType + '&id1=' + id1 + '&id2=' + id2 + '&r=' + Math.random() * 1000000)
             .then((response) => {
                 response.json().then((citationData) => {
                     // Produce an HTML formatted citation string
@@ -379,7 +385,7 @@ function createCiteModal(modalContainer, cmArgs) {
 
     const downloads = [
         { divid: 'divDLBibTex', lnkid: 'lnkDLBibTex', text: 'BibTeX' },
-        { divid: 'divDLCSL', lnkid: 'lnkDLCSL', text: 'CSL' },
+        { divid: 'divDLCSL', lnkid: 'lnkDLCSL', text: 'CSL-JSON' },
         { divid: 'divDLMODS', lnkid: 'lnkDLMODS', text: 'MODS' },
         { divid: 'divDLRIS', lnkid: 'lnkDLRIS', text: 'RIS' }
     ];

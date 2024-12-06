@@ -11,6 +11,7 @@ namespace MOBOT.BHL.Web2
             int id;
             string idType = context.Request.RequestContext.RouteData.Values["type"] as string;
             string idString = context.Request.RequestContext.RouteData.Values["id"] as string;
+            string tidString = context.Request.QueryString["t"] as string;  // Secondary ID containing TitleID associated with "id"
 
             if (!string.IsNullOrWhiteSpace(idString) && string.IsNullOrWhiteSpace(idType)) idType = "item";
             if (string.IsNullOrWhiteSpace(idString))

@@ -15,24 +15,31 @@ namespace MOBOT.BHL.Web2.Controllers
             return Json(nameSources, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetCitationJSON(string idType, int id)
+        /// <summary>
+        /// Get the CSL citation (json) for the specified identifiers
+        /// </summary>
+        /// <param name="idType">Type of id1: s=segment, p=page, i=item, t=title</param>
+        /// <param name="id1">Primary identifier of the entity being cited</param>
+        /// <param name="id2">Title identifier related to the entity being cited.  Needed when entity is related to more than 1 title.</param>
+        /// <returns></returns>
+        public ActionResult GetCitationJSON(string idType, int id1, int? id2)
         {
             Dictionary<string, object> cslData;
 
             switch (idType)
             {
                 case "s":
-                    cslData = GetCSLPartData(id);
+                    cslData = GetCSLPartData(id1, id2);
                     break;
                 case "p":
-                    cslData = GetCSLPageData(id);
+                    cslData = GetCSLPageData(id1, id2);
                     break;
                 case "i":
-                    cslData = GetCSLItemData(id);
+                    cslData = GetCSLItemData(id1, id2);
                     break;
                 case "t":
                 default:
-                    cslData = GetCSLTitleData(id);
+                    cslData = GetCSLTitleData(id1);
                     break;
             }
 
@@ -89,31 +96,33 @@ namespace MOBOT.BHL.Web2.Controllers
             return cslData;
         }
 
-        private Dictionary<string, object> GetCSLItemData(int id)
+        private Dictionary<string, object> GetCSLItemData(int id1, int? id2)
         {
             BHLProvider bhlProvider = new BHLProvider();
 
             // Get the title-level metadata
-            PageSummaryView psv = bhlProvider.PageSummarySelectByItemId(id, true);
+            PageSummaryView psv = bhlProvider.PageSummarySelectByItemId(id1, id2);
             Dictionary<string, object> cslData = GetCSLTitleData(psv.TitleID);
 
             // Add volume-specific metadata
-            DataObjects.Book book = bhlProvider.BookSelectAuto(id);
+            DataObjects.Book book = bhlProvider.BookSelectAuto(id1);
             if (!string.IsNullOrWhiteSpace(book.StartVolume)) cslData.Add("volume", book.StartVolume);
             if (!string.IsNullOrWhiteSpace(book.StartIssue)) cslData.Add("issue", book.StartIssue);
 
             // Override some attributes with page-level values
-            cslData["id"] = "BHL_Item_" + id.ToString() + "_Citation";
-            cslData["citation-label"] = "BHL_Item_" + id.ToString() + "_Citation";
-            cslData["URL"] = "https://www.biodiversitylibrary.org/item/" + id.ToString();
+            cslData["id"] = "BHL_Item_" + id1.ToString() + "_Citation";
+            cslData["citation-label"] = "BHL_Item_" + id1.ToString() + "_Citation";
+            cslData["URL"] = "https://www.biodiversitylibrary.org/item/" + id1.ToString() + (id2 == null ? "" : "?t=" + id2.ToString());
             if (cslData.ContainsKey("DOI")) cslData.Remove("DOI");
 
             return cslData;
         }
 
-        private Dictionary<string, object> GetCSLPartData(int id)
+        private Dictionary<string, object> GetCSLPartData(int id1, int? id2)
         {
-            Segment segment = new BHLProvider().SegmentSelectExtended(id);
+            Segment segment = new BHLProvider().SegmentSelectExtended(id1);
+            Title title = (id2 == null) ? null : new BHLProvider().TitleSelectAuto((int)id2);
+
             List<object> authors = new List<object>();
 
             foreach (ItemAuthor a in segment.AuthorList)
@@ -162,10 +171,10 @@ namespace MOBOT.BHL.Web2.Controllers
 
             Dictionary<string, object> cslData = new Dictionary<string, object>();
             if (authors.Count > 0) cslData.Add("author", authors.ToArray());
-            cslData.Add("container-title", segment.ContainerTitle);
+            cslData.Add("container-title", (title == null ? segment.ContainerTitle : title.FullTitle));
             cslData.Add("type", cslType);
-            cslData.Add("id", "BHL_Part_" + id.ToString() + "_Citation");
-            cslData.Add("citation-label", "BHL_Part_" + id.ToString() + "_Citation");
+            cslData.Add("id", "BHL_Part_" + id1.ToString() + "_Citation");
+            cslData.Add("citation-label", "BHL_Part_" + id1.ToString() + "_Citation");
             if (!string.IsNullOrWhiteSpace(segment.Date))
             {
                 cslData.Add(
@@ -181,7 +190,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 if (ii.IdentifierName == "DOI" && !cslData.ContainsKey("DOI")) cslData.Add("DOI", ii.IdentifierValue);
             }
             cslData.Add("title", segment.Title);
-            cslData.Add("URL", "https://www.biodiversitylibrary.org/part/" + id.ToString());
+            cslData.Add("URL", "https://www.biodiversitylibrary.org/part/" + id1.ToString());
             if (!string.IsNullOrWhiteSpace(segment.LanguageCode)) cslData.Add("language", segment.LanguageCode);
             if (!string.IsNullOrWhiteSpace(segment.Volume)) cslData.Add("volume", segment.Volume);
             if (!string.IsNullOrWhiteSpace(segment.Issue)) cslData.Add("issue", segment.Issue);
@@ -193,25 +202,25 @@ namespace MOBOT.BHL.Web2.Controllers
             return cslData;
         }
 
-        private Dictionary<string, object> GetCSLPageData(int id)
+        private Dictionary<string, object> GetCSLPageData(int id1, int? id2)
         {
             // Get most of the metadata for the page from the related title
             BHLProvider bhlProvider = new BHLProvider();
-            PageSummaryView psv = bhlProvider.PageSummarySelectByPageId(id);
+            PageSummaryView psv = bhlProvider.PageSummarySelectByPageId(id1, id2);
             Dictionary<string, object> cslData = GetCSLTitleData(psv.TitleID);
 
             // Get volume-specific metadata for the page citation
-            Page page = bhlProvider.PageMetadataSelectByPageID(id);
+            Page page = bhlProvider.PageMetadataSelectByPageID(id1);
             if (!string.IsNullOrWhiteSpace(page.Volume)) cslData.Add("volume", page.Volume);
             if (!string.IsNullOrWhiteSpace(page.Issue)) cslData.Add("issue", page.Issue);
 
             // Override some attributes with page-level values
-            cslData["id"] = "BHL_Page_" + id.ToString() + "_Citation";
-            cslData["citation-label"] = "BHL_Page_" + id.ToString() + "_Citation";
-            cslData["URL"] = "https://www.biodiversitylibrary.org/page/" + id.ToString();
+            cslData["id"] = "BHL_Page_" + id1.ToString() + "_Citation";
+            cslData["citation-label"] = "BHL_Page_" + id1.ToString() + "_Citation";
+            cslData["URL"] = "https://www.biodiversitylibrary.org/page/" + id1.ToString() + (id2 == null ? "" : "?t=" + id2.ToString());
             if (cslData.ContainsKey("DOI")) cslData.Remove("DOI");
 
-            List<IndicatedPage> pageIndicators  = bhlProvider.IndicatedPageSelectByPageID(id);
+            List<IndicatedPage> pageIndicators  = bhlProvider.IndicatedPageSelectByPageID(id1);
             bool firstPageIndicator = true;
             foreach(IndicatedPage ip in pageIndicators)
             {
