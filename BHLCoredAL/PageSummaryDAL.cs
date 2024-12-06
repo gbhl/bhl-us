@@ -327,7 +327,7 @@ namespace MOBOT.BHL.DAL
         }
     }
 
-    public PageSummaryView PageSummarySegmentSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID)
+    public List<PageSummaryView> PageSummarySegmentSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID)
     {
         SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
         SqlTransaction transaction = sqlTransaction;
@@ -338,14 +338,7 @@ namespace MOBOT.BHL.DAL
             using (CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>())
             {
                 List<PageSummaryView> list = helper.ExecuteReader(command);
-                if (list.Count > 0)
-                {
-                    return list[0];
-                }
-                else
-                {
-                    return null;
-                }
+                return list;
             }
         }
     }

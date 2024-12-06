@@ -5,13 +5,13 @@ using System.Collections.Generic;
 namespace MOBOT.BHL.Server
 {
     public partial class BHLProvider
-  {
-      /// <summary>
-      /// Select values from PageSummaryView by Item identifier.
-      /// </summary>
-      /// <param name="itemId"></param>
-      /// <param name="showPrimaryTitle">Returns details of primary title if true, picks any related title if false.</param>
-      /// <returns></returns>
+    {
+        /// <summary>
+        /// Select values from PageSummaryView by Item identifier.
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="showPrimaryTitle">Returns details of primary title if true, picks any related title if false.</param>
+        /// <returns></returns>
     public PageSummaryView PageSummarySelectByItemId( int itemId, bool showPrimaryTitle )
     {
         List<PageSummaryView> list = new PageSummaryDAL().PageSummarySelectByItemId( null, null, itemId );
@@ -122,6 +122,30 @@ namespace MOBOT.BHL.Server
         return psRow;
     }
 
+    public PageSummaryView PageSummarySelectByPageId(int pageId, int? titleId)
+    {
+        List<PageSummaryView> list = new PageSummaryDAL().PageSummarySelectByPageId(null, null, pageId);
+        if (list != null)
+        {
+            // Return the row that matches the specified titleId.  If no match, return the primary title.
+            PageSummaryView psMatch = null;
+            PageSummaryView psPrimary = null;
+            foreach(PageSummaryView ps in list)
+            {
+                if (ps.TitleID == titleId) psMatch = ps;
+                if (ps.TitleID == ps.PrimaryTitleID) psPrimary = ps;
+            }
+
+            if (psMatch != null) return psMatch;
+            if (psPrimary != null) return psPrimary;
+        }
+
+        // Just return the first row
+        PageSummaryView psRow = null;
+        if (list != null) psRow = list[0];
+        return psRow;
+    }
+
     /// <summary>
     /// Select values from PageSummaryView by Item and Sequence.
     /// </summary>
@@ -130,7 +154,7 @@ namespace MOBOT.BHL.Server
     /// <returns>Object of type Title.</returns>
     public PageSummaryView PageSummarySelectByItemAndSequence( int itemID, int sequence )
     {
-      return ( new PageSummaryDAL().PageSummarySelectByItemAndSequence( null, null, itemID, sequence ) );
+        return ( new PageSummaryDAL().PageSummarySelectByItemAndSequence( null, null, itemID, sequence ) );
     }
 
     public List<PageSummaryView> PageSummarySelectFoldersForTitleID(int titleID)
@@ -155,12 +179,41 @@ namespace MOBOT.BHL.Server
 
     public PageSummaryView PageSummarySegmentSelectByPageID(int pageID)
     {
-        return new PageSummaryDAL().PageSummarySegmentSelectByPageID(null, null, pageID);
+        List<PageSummaryView> list = new PageSummaryDAL().PageSummarySegmentSelectByPageID(null, null, pageID);
+
+        // Just return the first row
+        PageSummaryView psRow = null;
+        if (list != null) psRow = list[0];
+        return psRow;
+    }
+
+    public PageSummaryView PageSummarySegmentSelectByPageID(int pageId, int? titleId)
+    {
+        List<PageSummaryView> list = new PageSummaryDAL().PageSummarySegmentSelectByPageID(null, null, pageId);
+        if (list != null)
+        {
+            // Return the row that matches the specified titleId.  If no match, return the primary title.
+            PageSummaryView psMatch = null;
+            PageSummaryView psPrimary = null;
+            foreach (PageSummaryView ps in list)
+            {
+                if (ps.TitleID == titleId) psMatch = ps;
+                if (ps.TitleID == ps.PrimaryTitleID) psPrimary = ps;
+            }
+
+            if (psMatch != null) return psMatch;
+            if (psPrimary != null) return psPrimary;
+        }
+
+        // Just return the first row
+        PageSummaryView psRow = null;
+        if (list != null) psRow = list[0];
+        return psRow;
     }
 
     public PageSummaryView PageSummarySegmentSelectByItemAndSequence(int itemID, int sequence)
     {
         return new PageSummaryDAL().PageSummarySegmentSelectByItemAndSequence(null, null, itemID, sequence);
     }
-  }
+    }
 }

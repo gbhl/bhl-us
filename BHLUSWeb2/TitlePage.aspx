@@ -9,7 +9,7 @@
             <% if (!string.IsNullOrWhiteSpace(PublicationDetail.DownloadUrl)) { %>
                 <div class="buttondrop download">Download Contents<div class="play"></div>
                     <div class="downloadcontents">
-                        <div><a href="<%: (PublicationDetail.TitleCount > 1) ? "/biblioselect/" + PublicationDetail.ID : "/bibliography/" + PublicationDetail.TitleID %>">View Metadata</a></div>
+                        <div><a href="/bibliography/<%: PublicationDetail.TitleID %>">View Metadata</a></div>
                         <div><a href="#" class="selectpages">Select pages to download</a></div>
                         <div><a href="#" class="selectpart">Download Part</a></div>
                         <div><a href="#" class="downloadbook">Download Book</a></div>
@@ -40,7 +40,7 @@
             <% } %>
         </div>
         <div id="titletext">
-            <a class="ellipsis journaltitlelink" href="<%: (PublicationDetail.TitleCount > 1) ? "/biblioselect/" + PublicationDetail.ID : "/bibliography/" + PublicationDetail.TitleID %>"><%: PublicationDetail.FullTitle %></a>
+            <a class="ellipsis journaltitlelink" href="/bibliography/<%: PublicationDetail.TitleID %>"><%: PublicationDetail.FullTitle %></a>
             <a id="articleTitleLink" class="ellipsis articletitlelink" href="<%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Segment) ? "/part/" + PublicationDetail.ID.ToString() : "#" %>">
                 <%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Segment) ? PublicationDetail.Genre + ": " + PublicationDetail.ArticleTitle : "" %>
             </a>
@@ -1293,7 +1293,7 @@
 
             // Update page URL and names
             $("#currentpageURL").text("<%: Request.Url.GetLeftPart(UriPartial.Authority) %>/page/" + pages[index].PageID);
-            $("#currentpageURL").attr("href", "<%: Request.Url.GetLeftPart(UriPartial.Authority) %>/page/" + pages[index].PageID);
+            $("#currentpageURL").attr("href", "<%: Request.Url.GetLeftPart(UriPartial.Authority) %>/page/" + pages[index].PageID + "<%: string.IsNullOrWhiteSpace(PublicationDetail.RequestedTitleID) ? "" : "?t=" + PublicationDetail.RequestedTitleID %>");
             var currentFlickrUrl = $("#currentFlickrURL");
             var flickrBox = $("#flickrBox");
             if (pages[index].FlickrUrl == "")

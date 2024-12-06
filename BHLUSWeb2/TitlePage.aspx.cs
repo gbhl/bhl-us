@@ -1,14 +1,17 @@
 ﻿using BHL.SiteServiceREST.v1.Client;
 using BHL.SiteServicesREST.v1;
+using Countersoft.Foundation.Commons.Core;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Utility;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -28,12 +31,11 @@ namespace MOBOT.BHL.Web2
                 bool getFirstPage = true;
 
                 int pageid = int.MinValue;
-                //int? segmentid = null;
 
                 if (RouteData.Values["pageid"] != null)
                 {
                     getFirstPage = false;
-                    pageSummary = GetPageSummaryForPageID((string)RouteData.Values["pageid"]);
+                    pageSummary = GetPageSummaryForPageID((string)RouteData.Values["pageid"], (string)Context.Request.QueryString["t"]);
                 }
                 else if (RouteData.Values["titleid"] != null)
                 {
@@ -41,15 +43,15 @@ namespace MOBOT.BHL.Web2
                 }
                 else if (RouteData.Values["itemid"] != null)
                 {
-                    pageSummary = GetPageSummaryForItemID((string)RouteData.Values["itemid"]);
+                    pageSummary = GetPageSummaryForItemID((string)RouteData.Values["itemid"], (string)Context.Request.QueryString["t"]);
                 }
                 else if (RouteData.Values["segmentid"] != null)
                 {
-                    pageSummary = GetPageSummaryForSegmentID((string)RouteData.Values["segmentid"]);
+                    pageSummary = GetPageSummaryForSegmentID((string)RouteData.Values["segmentid"], (string)Context.Request.QueryString["t"]);
                 }
                 else if (RouteData.Values["iabarcode"] != null)
                 {
-                    pageSummary = GetPageSummaryForBarcode((string)RouteData.Values["iabarcode"]);
+                    pageSummary = GetPageSummaryForBarcode((string)RouteData.Values["iabarcode"], (string)Context.Request.QueryString["t"]);
                 }
 
                 // Make sure something was found
@@ -93,9 +95,6 @@ namespace MOBOT.BHL.Web2
                 }
 
                 ddlVolumes.SelectedIndex = selectedIndex;
-                //ddlVolumes.SelectedValue = PublicationDetail.Type == ItemType.Book ? 
-                //    "0|" + PublicationDetail.ID.ToString() + "|" + PublicationDetail.ContainerID.ToString() : 
-                //    "1|" + PublicationDetail.ContainerID.ToString() + "|" + PublicationDetail.ID.ToString();
 
                 // Show contributing institution
                 foreach (Institution institution in PublicationDetail.Institutions)
@@ -159,9 +158,6 @@ namespace MOBOT.BHL.Web2
                     if (Convert.ToBoolean(ConfigurationManager.AppSettings["ShowAnnotations"])) setAnnotationContent(PublicationDetail.ItemID);
                 }
 
-                // Get any segment ID associated with the current page
-                //segmentid = GetSegmentID(pages, pageid);
-
                 // Add Google Scholar metadata to the page headers
                 SetGoogleScholarTags(PublicationDetail.Type, PublicationDetail.ID);
 
@@ -223,30 +219,6 @@ namespace MOBOT.BHL.Web2
                                                 }));
             }
         }
-
-        /*
-        /// <summary>
-        /// Get the segment id associated with the current page
-        /// </summary>
-        /// <param name="pages">List of all pages</param>
-        /// <param name="currentPageID">Identifier of the current page</param>
-        /// <returns>Segment ID associated with the page, or null</returns>
-        private int? GetSegmentID(List<Page> pages, int currentPageID)
-        {
-            int? segmentid = null;
-
-            foreach (Page page in pages)
-            {
-                if (page.PageID == currentPageID)
-                {
-                    segmentid = page.SegmentID;
-                    break;
-                }
-            }
-
-            return segmentid;
-        }
-        */
 
         /// <summary>
         /// Set the Google Scholar tags for the page
@@ -522,12 +494,14 @@ Append("</a>").
             return redirect;
         }
 
-        private PageSummaryView GetPageSummaryForPageID(string pageID)
+        private PageSummaryView GetPageSummaryForPageID(string pageID, string titleID)
         {
             PageSummaryView psv = null;
 
             if (int.TryParse(pageID, out int pageid))
             {
+                int? titleid = int.TryParse(titleID, out int tmp) ? (int?)tmp : null;
+
                 Page page = bhlProvider.PageSelectAuto(pageid);
                 if (page == null) Response.Redirect("~/pagenotfound");  // Page ID does not exist
 
@@ -546,7 +520,7 @@ Append("</a>").
                     }
 
                     PublicationDetail.Type = ItemType.Book;
-                    psv = bhlProvider.PageSummarySelectByPageId(pageid, true);
+                    psv = bhlProvider.PageSummarySelectByPageId(pageid, titleid);
                     if (psv!= null)
                     {
                         // Page active, but container item redirected
@@ -566,7 +540,7 @@ Append("</a>").
                     }
 
                     PublicationDetail.Type = ItemType.Segment;
-                    psv = bhlProvider.PageSummarySegmentSelectByPageID(pageid);
+                    psv = bhlProvider.PageSummarySegmentSelectByPageID(pageid, titleid);
                     if (psv != null)
                     {
                         // Page active, but container item redirected
@@ -578,7 +552,7 @@ Append("</a>").
             return psv;
         }
 
-        private PageSummaryView GetPageSummaryForItemID(string itemID)
+        private PageSummaryView GetPageSummaryForItemID(string itemID, string titleID)
         {
             PageSummaryView psv = null;
 
@@ -626,7 +600,7 @@ Append("</a>").
             return psv;
         }
 
-        private PageSummaryView GetPageSummaryForSegmentID(string segmentID)
+        private PageSummaryView GetPageSummaryForSegmentID(string segmentID, string titleID)
         {
             PageSummaryView psv = null; ;
 
@@ -655,7 +629,7 @@ Append("</a>").
             return psv;
         }
 
-        private PageSummaryView GetPageSummaryForBarcode(string barcode)
+        private PageSummaryView GetPageSummaryForBarcode(string barcode, string titleID)
         {
             PageSummaryView psv = null;
 
@@ -679,6 +653,7 @@ Append("</a>").
             publicationDetail.ID = pageSummary.BookID;
             publicationDetail.ItemID = pageSummary.ItemID;
             publicationDetail.TitleID = pageSummary.TitleID;
+            if (pageSummary.TitleID != pageSummary.PrimaryTitleID) publicationDetail.RequestedTitleID = pageSummary.TitleID.ToString();
             publicationDetail.BarCode = pageSummary.BarCode;
             publicationDetail.FullTitle = pageSummary.FullTitleExtended;
             publicationDetail.ShortTitle = pageSummary.ShortTitle;
@@ -874,6 +849,7 @@ Append("</a>").
             public int? StartPageID { get; set; }
             public int TitleCount { get; set; }
             public int TitleID { get; set; }
+            public string RequestedTitleID { get; set; }
             public string TitleGenre { get; set; }
             public string Genre { get; set; }
             public string DOI { get; set; }
