@@ -478,12 +478,13 @@ namespace MOBOT.BHL.DAL
         public List<RISCitation> PageSelectRISCitationForPageID(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
-                        int pageID)
+                        int pageID, int? titleID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("PageSelectRISCitationForPageID", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID)))
+                CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID),
+                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, true, titleID)))
             {
                 using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
                 {
@@ -503,12 +504,13 @@ namespace MOBOT.BHL.DAL
         public List<TitleBibTeX> PageBibTeXSelectForPageID(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
-                        int pageId)
+                        int pageId, int? titleId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("PageBibTeXSelectForPageID", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageId)))
+                CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageId),
+                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, true, titleId)))
             {
                 using (CustomSqlHelper<TitleBibTeX> helper = new CustomSqlHelper<TitleBibTeX>())
                 {

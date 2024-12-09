@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[BookBibTeXSelectForBookID]
 
-@BookID INT
+@BookID INT,
+@TitleID INT = NULL
 
 AS
 BEGIN
@@ -11,7 +12,8 @@ DECLARE @RedirID int
 SELECT @RedirID = RedirectBookID FROM dbo.Book WHERE BookID = @BookID
 
 IF (@RedirID IS NOT NULL)
-	exec dbo.BookBibTeXSelectForBookID @RedirID
+	-- If redirected, don't limit by TitleID (default to primary title)
+	exec dbo.BookBibTeXSelectForBookID @RedirID, NULL
 ELSE
 	SELECT	'bhlitem' + CONVERT(NVARCHAR(10), b.BookID) AS CitationKey,
 			'https://www.biodiversitylibrary.org/item/' + CONVERT(NVARCHAR(10), b.BookID) AS Url,
@@ -29,7 +31,7 @@ ELSE
 			) AS Pages,
 			c.Subjects AS Keywords
 	FROM	dbo.Title t
-			INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID AND it.IsPrimary = 1
+			INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID AND ((it.IsPrimary = 1 AND @TitleID IS NULL) OR it.TitleID = @TitleID)
 			INNER JOIN dbo.Item i ON it.ItemID = i.ItemID
 			INNER JOIN dbo.Book b ON i.ItemID = b.ItemID
 			INNER JOIN dbo.SearchCatalog c ON t.TitleID = c.TitleID AND b.BookID = c.ItemID

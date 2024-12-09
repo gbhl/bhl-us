@@ -79,15 +79,15 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectAllBibTeXCitations(null, null);
         }
 
-        public List<TitleBibTeX> SegmentSelectBibTeXForSegmentID(int segmentID, short includeNoContent)
+        public List<TitleBibTeX> SegmentSelectBibTeXForSegmentID(int segmentID, int? titleID, short includeNoContent)
         {
-            return new SegmentDAL().SegmentSelectBibTexForSegmentID(null, null, segmentID, includeNoContent);
+            return new SegmentDAL().SegmentSelectBibTexForSegmentID(null, null, segmentID, titleID, includeNoContent);
         }
 
-        public String SegmentBibTeXGetCitationStringForSegmentID(int segmentID, bool includeNoContent)
+        public string SegmentBibTeXGetCitationStringForSegmentID(int segmentID, int? titleID, bool includeNoContent)
         {
             System.Text.StringBuilder bibtexString = new System.Text.StringBuilder("");
-            List<TitleBibTeX> citations = this.SegmentSelectBibTeXForSegmentID(segmentID, (short)(includeNoContent ? 1 : 0));
+            List<TitleBibTeX> citations = this.SegmentSelectBibTeXForSegmentID(segmentID, titleID, (short)(includeNoContent ? 1 : 0));
             foreach (TitleBibTeX citation in citations)
             {
                 string journal = String.Empty;
@@ -105,14 +105,14 @@ namespace MOBOT.BHL.Server
                     bookTitle = citation.Journal;
                 }
 
-                String volume = citation.Volume;
-                String copyrightStatus = citation.CopyrightStatus;
-                String url = citation.Url;
-                String note = citation.Note;
-                String pages = citation.PageRange;
-                String keywords = citation.Keywords;
+                string volume = citation.Volume;
+                string copyrightStatus = citation.CopyrightStatus;
+                string url = citation.Url;
+                string note = citation.Note;
+                string pages = citation.PageRange;
+                string keywords = citation.Keywords;
 
-                System.Collections.Generic.Dictionary<String, String> elements = new System.Collections.Generic.Dictionary<string, string>();
+                Dictionary<string, string> elements = new System.Collections.Generic.Dictionary<string, string>();
                 elements.Add(BibTeXRefElementName.TITLE, citation.Title);
                 if (journal != String.Empty) elements.Add(BibTeXRefElementName.JOURNAL, journal);
                 if (bookTitle != String.Empty) elements.Add(BibTeXRefElementName.BOOKTITLE, bookTitle);
@@ -137,10 +137,10 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectAllRISCitations(null, null);
         }
 
-        public String SegmentGetRISCitationStringForSegmentID(int segmentID)
+        public String SegmentGetRISCitationStringForSegmentID(int segmentID, int? titleID)
         {
             System.Text.StringBuilder risString = new System.Text.StringBuilder("");
-            List<RISCitation> citations = new SegmentDAL().SegmentSelectRISCitationForSegmentID(null, null, segmentID);
+            List<RISCitation> citations = new SegmentDAL().SegmentSelectRISCitationForSegmentID(null, null, segmentID, titleID);
             foreach (RISCitation citation in citations)
             {
                 risString.Append(this.GenerateRISCitation(citation));

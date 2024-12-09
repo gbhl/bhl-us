@@ -143,7 +143,7 @@ namespace BHLServerTest
             BHLProvider target = new BHLProvider();
             int segmentID = 6450;
             string actual;
-            actual = target.SegmentBibTeXGetCitationStringForSegmentID(segmentID, false);
+            actual = target.SegmentBibTeXGetCitationStringForSegmentID(segmentID, null, false);
             Assert.IsTrue(actual.Length > 0);
         }
 

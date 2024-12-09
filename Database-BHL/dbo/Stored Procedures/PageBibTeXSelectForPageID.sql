@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE dbo.PageBibTeXSelectForPageID
 
-@PageID INT
+@PageID INT,
+@TitleID INT = NULL
 
 AS
 BEGIN
@@ -18,7 +19,7 @@ SELECT	'bhlpage' + CONVERT(NVARCHAR(10), ip.PageID) AS CitationKey,
 		ISNULL(ind.PageNumber, '') AS PageRange,
 		c.Subjects AS Keywords
 FROM	dbo.Title t
-		INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID AND it.IsPrimary = 1
+		INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID AND ((it.IsPrimary = 1 AND @TitleID IS NULL) OR it.TitleID = @TitleID)
 		INNER JOIN dbo.Item i ON it.ItemID = i.ItemID
 		INNER JOIN dbo.Book b ON i.ItemID = b.ItemID
 		INNER JOIN dbo.ItemPage ip ON i.ItemID = ip.ItemID

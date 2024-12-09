@@ -307,10 +307,10 @@ namespace MOBOT.BHL.Server
             return new PageTextLogDAL().PageTextLogSelectNonOCRForItem(null, null, itemID);
         }
 
-		public string PageSelectRISCitationStringForPageID(int pageID)
+		public string PageSelectRISCitationStringForPageID(int pageID, int? titleID)
 		{
             System.Text.StringBuilder risString = new System.Text.StringBuilder("");
-            List<RISCitation> citations = new PageDAL().PageSelectRISCitationForPageID(null, null, pageID);
+            List<RISCitation> citations = new PageDAL().PageSelectRISCitationForPageID(null, null, pageID, titleID);
             foreach (RISCitation citation in citations)
             {
                 risString.Append(this.GenerateRISCitation(citation));
@@ -318,15 +318,15 @@ namespace MOBOT.BHL.Server
             return risString.ToString();
         }
 
-        public List<TitleBibTeX> PageBibTeXSelectForPageID(int pageID)
+        public List<TitleBibTeX> PageBibTeXSelectForPageID(int pageID, int? titleID)
         {
-            return (new PageDAL().PageBibTeXSelectForPageID(null, null, pageID));
+            return (new PageDAL().PageBibTeXSelectForPageID(null, null, pageID, titleID));
         }
 
-        public string PageBibTeXGetCitationStringForPageID(int pageID)
+        public string PageBibTeXGetCitationStringForPageID(int pageID, int? titleID)
 		{
             System.Text.StringBuilder bibtexString = new System.Text.StringBuilder("");
-            List<TitleBibTeX> citations = this.PageBibTeXSelectForPageID(pageID);
+            List<TitleBibTeX> citations = this.PageBibTeXSelectForPageID(pageID, titleID);
             foreach (TitleBibTeX citation in citations)
             {
                 string volume = citation.Volume;

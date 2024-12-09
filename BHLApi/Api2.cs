@@ -628,7 +628,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             BHLProvider provider = new BHLProvider();
-            return provider.SegmentBibTeXGetCitationStringForSegmentID(segmentIDint, true);
+            return provider.SegmentBibTeXGetCitationStringForSegmentID(segmentIDint, null, true);
         }
 
         public string GetSegmentRIS(string segmentID)
@@ -641,7 +641,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             BHLProvider provider = new BHLProvider();
-            return provider.SegmentGetRISCitationStringForSegmentID(segmentIDint);
+            return provider.SegmentGetRISCitationStringForSegmentID(segmentIDint, null);
         }
 
         #endregion Segment methods

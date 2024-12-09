@@ -92,10 +92,10 @@ namespace MOBOT.BHL.Server
 			return new BookDAL().BookSelectPagination(null, null, bookID);
 		}
 
-		public string BookSelectRISCitationStringForBookID(int bookID)
+		public string BookSelectRISCitationStringForBookID(int bookID, int? titleID)
 		{
 			System.Text.StringBuilder risString = new System.Text.StringBuilder("");
-			List<RISCitation> citations = new BookDAL().BookSelectRISCitationsForItemID(null, null, bookID);
+			List<RISCitation> citations = new BookDAL().BookSelectRISCitationsForItemID(null, null, bookID, titleID);
 			foreach (RISCitation citation in citations)
 			{
 				risString.Append(this.GenerateRISCitation(citation));
@@ -103,15 +103,15 @@ namespace MOBOT.BHL.Server
 			return risString.ToString();
 		}
 
-		public List<TitleBibTeX> BookBibTeXSelectForBookID(int bookID)
+		public List<TitleBibTeX> BookBibTeXSelectForBookID(int bookID, int? titleID)
 		{
-			return (new BookDAL().BookBibTeXSelectForBookID(null, null, bookID));
+			return (new BookDAL().BookBibTeXSelectForBookID(null, null, bookID, titleID));
 		}
 
-		public String BookBibTeXGetCitationStringForBookID(int bookID)
+		public String BookBibTeXGetCitationStringForBookID(int bookID, int? titleID)
 		{
 			System.Text.StringBuilder bibtexString = new System.Text.StringBuilder("");
-			List<TitleBibTeX> citations = this.BookBibTeXSelectForBookID(bookID);
+			List<TitleBibTeX> citations = this.BookBibTeXSelectForBookID(bookID, titleID);
 			foreach (TitleBibTeX citation in citations)
 			{
 				//List<TitleNote> titleNotes = this.TitleNoteSelectByTitleID(titleID);

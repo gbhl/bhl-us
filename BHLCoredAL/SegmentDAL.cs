@@ -491,12 +491,14 @@ namespace MOBOT.BHL.DAL
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         int segmentId,
+                        int? titleId,
                         short includeNoContent)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectBibTexForSegmentID", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentId),
+                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, true, titleId),
                 CustomSqlHelper.CreateInputParameter("IncludeNoContent", SqlDbType.SmallInt, null, false, includeNoContent)))
             {
                 using (CustomSqlHelper<TitleBibTeX> helper = new CustomSqlHelper<TitleBibTeX>())
@@ -561,12 +563,13 @@ namespace MOBOT.BHL.DAL
         public List<RISCitation>SegmentSelectRISCitationForSegmentID(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
-                        int segmentID)
+                        int segmentID, int? titleID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectRISCitationForSegmentID", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
+                CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID),
+                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, true, titleID)))
             {
                 using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
                 {

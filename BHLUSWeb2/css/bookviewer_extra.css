@@ -108,6 +108,19 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#525c6b', end
     width: 90%;
     line-height: normal;
 }
+.selectTitleLink {
+    font-size: 11px !important;
+    width:auto !important;
+    color:yellow !important;
+    text-decoration:underline;
+    float:left;
+    margin-left:30px;
+    margin-right:15px;
+    line-height:normal;
+}
+.selectTitleLink:hover {
+    cursor:pointer;
+}
 .journaltitlelink
 {
     font-size: 18px !important;

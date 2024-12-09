@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[BookSelectRISCitationsForBookID]
 
-@BookID INT
+@BookID INT,
+@TitleID INT = NULL
 
 AS
 
@@ -38,7 +39,7 @@ SELECT	DISTINCT
 		dbo.fnNoteStringForTitle(t.TitleID, '') AS Notes
 INTO	#RIS
 FROM	dbo.Title t
-		INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID AND it.IsPrimary = 1
+		INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID AND ((it.IsPrimary = 1 AND @TitleID IS NULL) OR it.TitleID = @TitleID)
 		INNER JOIN dbo.Item i ON it.ItemID = i.ItemID
 		INNER JOIN dbo.Book b ON i.ItemID = b.ItemID
 		LEFT JOIN dbo.BibliographicLevel bl ON t.BibliographicLevelID = bl.BibliographicLevelID

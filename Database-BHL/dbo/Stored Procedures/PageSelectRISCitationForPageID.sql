@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE dbo.PageSelectRISCitationForPageID
 
-@PageID INT
+@PageID INT,
+@TitleID INT = NULL
 
 AS
 
@@ -39,7 +40,7 @@ SELECT	DISTINCT
 		ISNULL(ind.PageNumber, '') AS StartPage
 INTO	#RIS
 FROM	dbo.Title t
-		INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID AND it.IsPrimary = 1
+		INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID AND ((it.IsPrimary = 1 AND @TitleID IS NULL) OR it.TitleID = @TitleID)
 		INNER JOIN dbo.Item i ON it.ItemID = i.ItemID
 		INNER JOIN dbo.Book b ON i.ItemID = b.ItemID
 		INNER JOIN dbo.ItemPage ip ON i.ItemID = ip.ItemID

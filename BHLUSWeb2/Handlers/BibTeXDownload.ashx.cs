@@ -8,7 +8,6 @@ namespace MOBOT.BHL.Web2
     {
         public void ProcessRequest(HttpContext context)
         {
-            int id;
             string idType = context.Request.RequestContext.RouteData.Values["type"] as string;
             string idString = context.Request.RequestContext.RouteData.Values["id"] as string;
             string tidString = context.Request.QueryString["t"] as string;  // Secondary ID containing TitleID associated with "id"
@@ -28,10 +27,11 @@ namespace MOBOT.BHL.Web2
             string response = string.Empty;
             string filename = "bhl";
 
-            if (Int32.TryParse(idString, out id))
+            if (Int32.TryParse(idString, out int id))
             {
                 try
                 {
+                    int? tid = int.TryParse(tidString, out int tmp) ? (int?)tmp : null;
                     filename += idType + idString;
                     switch (idType.ToLower())
                     {
@@ -39,13 +39,13 @@ namespace MOBOT.BHL.Web2
                             response = new BHLProvider().TitleBibTeXGetCitationStringForTitleID(id);
                             break;
                         case "part":
-                            response = new BHLProvider().SegmentBibTeXGetCitationStringForSegmentID(id, false);
+                            response = new BHLProvider().SegmentBibTeXGetCitationStringForSegmentID(id, tid, false);
                             break;
                         case "item":
-                            response = new BHLProvider().BookBibTeXGetCitationStringForBookID(id);
+                            response = new BHLProvider().BookBibTeXGetCitationStringForBookID(id, tid);
                             break;
                         case "page":
-                            response = new BHLProvider().PageBibTeXGetCitationStringForPageID(id);
+                            response = new BHLProvider().PageBibTeXGetCitationStringForPageID(id, tid);
                             break;
                     }
                 }

@@ -470,7 +470,7 @@
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder"
     runat="server">
     <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=4" />
-    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=12" />
+    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=13" />
     <link rel="stylesheet" type="text/css" href="/css/nspop.css?v=1" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">

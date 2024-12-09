@@ -492,12 +492,13 @@ namespace MOBOT.BHL.DAL
 		public List<RISCitation> BookSelectRISCitationsForItemID(
 						SqlConnection sqlConnection,
 						SqlTransaction sqlTransaction,
-						int bookID)
+						int bookID, int? titleID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("BookSelectRISCitationsForBookID", connection, transaction,
-				CustomSqlHelper.CreateInputParameter("BookID", SqlDbType.Int, null, false, bookID)))
+				CustomSqlHelper.CreateInputParameter("BookID", SqlDbType.Int, null, false, bookID),
+                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, true, titleID)))
 			{
 				using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
 				{
@@ -517,12 +518,13 @@ namespace MOBOT.BHL.DAL
 		public List<TitleBibTeX> BookBibTeXSelectForBookID(
 						SqlConnection sqlConnection,
 						SqlTransaction sqlTransaction,
-						int bookId)
+						int bookId, int? titleID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("BookBibTeXSelectForBookID", connection, transaction,
-				CustomSqlHelper.CreateInputParameter("BookID", SqlDbType.Int, null, false, bookId)))
+				CustomSqlHelper.CreateInputParameter("BookID", SqlDbType.Int, null, false, bookId),
+                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, true, titleID)))
 			{
 				using (CustomSqlHelper<TitleBibTeX> helper = new CustomSqlHelper<TitleBibTeX>())
 				{

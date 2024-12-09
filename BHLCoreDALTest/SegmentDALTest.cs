@@ -91,8 +91,9 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int segmentId = 2341;
+            int? titleId = null;
             short includeNoContent = 0;
-            List<TitleBibTeX> actual = target.SegmentSelectBibTexForSegmentID(sqlConnection, sqlTransaction, segmentId, includeNoContent);
+            List<TitleBibTeX> actual = target.SegmentSelectBibTexForSegmentID(sqlConnection, sqlTransaction, segmentId, titleId, includeNoContent);
             Assert.IsTrue(actual.Count > 0);
         }
 
