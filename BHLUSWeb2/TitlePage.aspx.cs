@@ -729,21 +729,6 @@ Append("</a>").
                         FullerForm = author.FullerForm
                     };
                     publicationDetail.Authors.Add(itemAuthor);
-
-                    /*
-                    publicationDetail.Authors.Add(new Author()
-                    {
-                        AuthorID = author.AuthorID,
-                        FullName = author.FullName,
-                        Numeration = author.Numeration,
-                        Unit = author.Unit,
-                        Title = author.Title,
-                        Location = author.Location,
-                        FullerForm = author.FullerForm,
-                        StartDate = author.StartDate,
-                        EndDate = author.EndDate
-                    });
-                    */
                 }
 
                 // Get the list of related Segments
@@ -765,8 +750,8 @@ Append("</a>").
                 COinS.Date = segment.Date;
             }
 
-            // Used to set up the bibliogaphy link
-            publicationDetail.TitleCount = bhlProvider.TitleSelectByItem(PublicationDetail.ID).Count;
+            // Used for "Select title" links
+            publicationDetail.Titles = bhlProvider.TitleSelectByItem(PublicationDetail.ID);
 
             // Get the title genre
             Title title = bhlProvider.TitleSelectAuto(publicationDetail.TitleID);
@@ -847,7 +832,6 @@ Append("</a>").
             public int? ContainerID { get; set; }
             public int ContainerItemID { get; set; }
             public int? StartPageID { get; set; }
-            public int TitleCount { get; set; }
             public int TitleID { get; set; }
             public string RequestedTitleID { get; set; }
             public string TitleGenre { get; set; }
@@ -877,6 +861,7 @@ Append("</a>").
             public List<Author> AdditionalAuthors { get; set; } = new List<Author>();
             public List<Segment> Children { get; set; } = new List<Segment>();
             public List<Institution> Institutions { get; set; } = new List<Institution>();
+            public List<Title> Titles { get; set; } = new List<Title>();
         }
     }
 }

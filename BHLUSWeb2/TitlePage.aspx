@@ -40,7 +40,8 @@
             <% } %>
         </div>
         <div id="titletext">
-            <a class="ellipsis journaltitlelink" href="/bibliography/<%: PublicationDetail.TitleID %>"><%: PublicationDetail.FullTitle %></a>
+            <span id="selectTitleLink" class="selectTitleLink" style="display:<%: (PublicationDetail.Titles.Count > 1) ? "block" : "none" %>"" onclick="showTitleSelector();">All titles related to this item</span>
+            <a class="ellipsis journaltitlelink" style="<%: (PublicationDetail.Titles.Count <= 1) ? "margin-top:15px;" : "" %>" href="/bibliography/<%: PublicationDetail.TitleID %>"><%: PublicationDetail.FullTitle %></a>
             <a id="articleTitleLink" class="ellipsis articletitlelink" href="<%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Segment) ? "/part/" + PublicationDetail.ID.ToString() : "#" %>">
                 <%: (PublicationDetail.Type == MOBOT.BHL.DataObjects.Enum.ItemType.Segment) ? PublicationDetail.Genre + ": " + PublicationDetail.ArticleTitle : "" %>
             </a>
@@ -90,6 +91,25 @@
         </div>
     <uc:COinS ID="COinS" runat="server" />
     </div> <!-- page-title -->
+
+    <div id="titleSelector" class="brTitleSelectPopup" style="display: none; position: absolute; left: 175px; top: 100px; z-index: 99">
+	    <div class="brTitleSelectLabel"></div>
+	    <div class="brTitleSelectClose">
+		    <a href="#" class="brTitleSelectCloseLink" onclick="closeTitleSelector();">
+			    <img src="/images/close-button.png" height="20" width="20">
+		    </a>
+	    </div>
+        <div class="brTitleSelectLabel">
+            This item is linked to multiple titles. To view it in the context of a specific title, please select a title from the list below.
+        </div>
+	    <div class="brTitleSelectList">
+            <% foreach (Title t in PublicationDetail.Titles) { %>
+		    <div class="brTitleSelectTitle">
+			    <a href="<%: Request.Url.GetLeftPart(UriPartial.Authority) %>/item/<%: PublicationDetail.ID %>?t=<%: t.TitleID %>" rel="noopener noreferrer"><%: t.FullTitleExtended %></a>
+		    </div>
+            <%} %>
+	    </div>
+    </div>
 
     <div id="bookviewercontainer">
         <div id="left-panel2">
@@ -1739,6 +1759,27 @@
                 $('.BRpagedivthumb img').height(pageHeight); 
             }
         }
+    }
+
+    function showTitleSelector() {
+        titleSelector.style.display = 'inline';
+        document.addEventListener("mouseup", hideTitleSelector, false);
+    }
+
+    function hideTitleSelector(e) {
+        var titleSelectorPopup = $(".titleSelector");
+        if (!titleSelectorPopup.is(e.target) // if the target of the click isn't the container...
+            && (titleSelectorPopup.has(e.target).length === 0) // ... nor a descendant of the container
+            && (e.target != titleSelectorPopup.get(0))) // nor the scrollbar
+        {
+            closeTitleSelector();
+        }
+    }
+
+    function closeTitleSelector() {
+        var titleSelectorPopup = document.getElementsByClassName('brTitleSelectPopup')[0];
+        titleSelectorPopup.style.display = 'none';
+        document.removeEventListener("mouseup", hideTitleSelector, false);
     }
 
     $(document).ready(function(){
