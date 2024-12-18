@@ -1,5 +1,5 @@
 
-// Generated 2/16/2024 1:57:28 PM
+// Generated 12/18/2024 1:29:30 PM
 // Do not modify the contents of this code file.
 // This abstract class __Book is based upon dbo.Book.
 
@@ -92,6 +92,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="pageProgression"></param>
 		/// <param name="virtualVolumeKey"></param>
+		/// <param name="copyrightIndicator"></param>
 		public __Book(int bookID, 
 			int itemID, 
 			int? redirectBookID, 
@@ -138,7 +139,8 @@ namespace MOBOT.BHL.DataObjects
 			int? creationUserID, 
 			int? lastModifiedUserID, 
 			string pageProgression, 
-			string virtualVolumeKey) : this()
+			string virtualVolumeKey, 
+			string copyrightIndicator) : this()
 		{
 			_BookID = bookID;
 			ItemID = itemID;
@@ -187,6 +189,7 @@ namespace MOBOT.BHL.DataObjects
 			LastModifiedUserID = lastModifiedUserID;
 			PageProgression = pageProgression;
 			VirtualVolumeKey = virtualVolumeKey;
+			CopyrightIndicator = copyrightIndicator;
 		}
 		
 		#endregion Constructors
@@ -446,6 +449,11 @@ namespace MOBOT.BHL.DataObjects
 					case "VirtualVolumeKey" :
 					{
 						_VirtualVolumeKey = (string)column.Value;
+						break;
+					}
+					case "CopyrightIndicator" :
+					{
+						_CopyrightIndicator = (string)column.Value;
 						break;
 					}
 								}
@@ -1758,6 +1766,34 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion VirtualVolumeKey
+		
+		#region CopyrightIndicator
+		
+		private string _CopyrightIndicator = string.Empty;
+		
+		/// <summary>
+		/// Column: CopyrightIndicator;
+		/// DBMS data type: nvarchar(100);
+		/// </summary>
+		[ColumnDefinition("CopyrightIndicator", DbTargetType=SqlDbType.NVarChar, Ordinal=48, CharacterMaxLength=100)]
+		public string CopyrightIndicator
+		{
+			get
+			{
+				return _CopyrightIndicator;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 100);
+				if (_CopyrightIndicator != value)
+				{
+					_CopyrightIndicator = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CopyrightIndicator
 			
 		#endregion Properties
 
@@ -1848,7 +1884,8 @@ namespace MOBOT.BHL.DataObjects
 					o.CreationUserID == CreationUserID &&
 					o.LastModifiedUserID == LastModifiedUserID &&
 					GetComparisonString(o.PageProgression) == GetComparisonString(PageProgression) &&
-					GetComparisonString(o.VirtualVolumeKey) == GetComparisonString(VirtualVolumeKey) 
+					GetComparisonString(o.VirtualVolumeKey) == GetComparisonString(VirtualVolumeKey) &&
+					GetComparisonString(o.CopyrightIndicator) == GetComparisonString(CopyrightIndicator) 
 				)
 				{
 					o = null;
@@ -1994,7 +2031,8 @@ namespace MOBOT.BHL.DataObjects
 			public const string CreationUserID = "CreationUserID";	
 			public const string LastModifiedUserID = "LastModifiedUserID";	
 			public const string PageProgression = "PageProgression";	
-			public const string VirtualVolumeKey = "VirtualVolumeKey";
+			public const string VirtualVolumeKey = "VirtualVolumeKey";	
+			public const string CopyrightIndicator = "CopyrightIndicator";
 		}
 				
 		#endregion SortColumn

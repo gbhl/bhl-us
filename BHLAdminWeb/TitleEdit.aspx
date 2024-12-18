@@ -219,6 +219,35 @@
         replacedByTB.style.border = border;
     }
 
+	function validateMovingWall(mwChk) {
+        var wallWarningDiv = document.getElementById("wallWarning");
+		if (mwChk.checked) {
+			wallWarningDiv.style.display = "block";
+		}
+		else {
+			wallWarningDiv.style.display = "none";
+		}
+	}
+
+	function validateDocUrl(docUrl) {
+		var docUrlWarningDiv = document.getElementById("docUrlWarning");
+		if (isUrlValid(docUrl.value)) {
+			docUrlWarningDiv.style.display = "none";
+		}
+		else {
+            docUrlWarningDiv.style.display = "block";
+		}
+	}
+
+    function isUrlValid(string) {
+        try {
+			new URL(string);
+            return true;
+        } catch (err) {
+            return false;
+        }
+	}
+
     document.getElementById("masterForm").onsubmit = function () {
         var publishedCB = document.getElementById("publishReadyCheckBox");
         var publishedOrig = document.getElementById("publishReadyOrig");
@@ -285,11 +314,14 @@
 			</td>
 		</tr>
 		<tr>
-			<td style="white-space: nowrap" align="right" class="dataHeader">
-				Has Moving Wall:
+			<td style="white-space: nowrap" align="right" class="dataHeader" valign="top">
+				<div style="margin-top:3px">Has Moving Wall:</div>
 			</td>
 			<td colspan="4">
-				<asp:CheckBox ID="chkMovingWall" ClientIDMode="Static" runat="server" />
+				<asp:CheckBox ID="chkMovingWall" ClientIDMode="Static" runat="server" onclick="validateMovingWall(this);" />
+				<div id="wallWarning" style="color:#ed7600; display:none;">
+					Please include supporting documentation in Permissions Documentation section below.
+				</div>
 			</td>
 		</tr>
 		<tr>
@@ -877,11 +909,11 @@
 	</fieldset>
 	<br />
 	<fieldset>
-		<legend class="dataHeader">Documents</legend>
+		<legend class="dataHeader">Permissions Documentation</legend>
 		<asp:GridView ID="documentsList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" AlternatingRowStyle-BackColor="#F7FAFB"
 			RowStyle-BackColor="white" Width="400px" CssClass="boxTable" OnRowCancelingEdit="documentsList_RowCancelingEdit" 
 			OnRowEditing="documentsList_RowEditing" OnRowUpdating="documentsList_RowUpdating" OnRowCommand="documentsList_RowCommand" 
-			DataKeyNames="TitleDocumentID, DocumentTypeID, Name, Url">
+			DataKeyNames="TitleDocumentID, DocumentTypeID, Name, Url" EditRowStyle-VerticalAlign="Top">
 			<Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 				<asp:TemplateField HeaderText="Type" ItemStyle-Wrap="false">
@@ -894,7 +926,7 @@
 							SelectedIndex="<%# GetDocumentTypeIndex( Container.DataItem ) %>" />
 					</EditItemTemplate>
 				</asp:TemplateField>
-				<asp:TemplateField HeaderText="Name" ItemStyle-Wrap="false">
+				<asp:TemplateField HeaderText="Notes" ItemStyle-Wrap="false">
 					<ItemTemplate>
 						<%# Eval( "Name" ) %>
 					</ItemTemplate>
@@ -907,7 +939,10 @@
 						<a href='<%# Eval("Url") %>' target="_blank"><%# Eval("Url") %></a>
 					</ItemTemplate>
 					<EditItemTemplate>
-						<asp:TextBox ID="txtUrl" runat="server" MaxLength="200" Width="400" Text='<%# Eval( "Url") %>' />
+						<asp:TextBox ID="txtUrl" runat="server" MaxLength="200" Width="400" Text='<%# Eval( "Url") %>' onchange="validateDocUrl(this);" />
+						<div id="docUrlWarning" style="color:red; display:none;">
+							Value must be a complete valid Url
+						</div>
 					</EditItemTemplate>
 				</asp:TemplateField>
 				<asp:TemplateField ItemStyle-Width="130px">

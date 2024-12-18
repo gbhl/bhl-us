@@ -2443,10 +2443,16 @@ namespace MOBOT.BHL.AdminWeb
             {
                 if (!td.IsDeleted)
                 {
-                    if (td.DocumentTypeID <= 0 || string.IsNullOrWhiteSpace(td.Name) || string.IsNullOrWhiteSpace(td.Url))
+                    if (td.DocumentTypeID <= 0 || string.IsNullOrWhiteSpace(td.Url))
                     {
                         flag = true;
-                        errorControl.AddErrorText("Documents must have a Type, Name, and Url.");
+                        errorControl.AddErrorText("Permissions Documents must have a Type and Url.");
+                        break;
+                    }
+                    else if (!string.IsNullOrWhiteSpace(td.Url) && !Uri.IsWellFormedUriString(td.Url, UriKind.Absolute))
+                    {
+                        flag = true;
+                        errorControl.AddErrorText("Permissions Documents must have a valid Url.");
                         break;
                     }
                 }
