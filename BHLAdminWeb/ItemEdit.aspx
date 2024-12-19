@@ -415,6 +415,7 @@
 				<td>
 					<asp:DropDownList ID="ddlCopyrightIndicator" ClientIDMode="Static" runat="server">
 						<asp:ListItem Value="" Text=""></asp:ListItem>
+						<asp:ListItem Value="Copyright not provided" Text="Copyright not provided"></asp:ListItem>
 						<asp:ListItem Value="In-copyright" Text="In-copyright"></asp:ListItem>
 						<asp:ListItem Value="No Known Copyright" Text="No Known Copyright"></asp:ListItem>
 						<asp:ListItem Value="Public Domain" Text="Public Domain"></asp:ListItem>
