@@ -411,6 +411,7 @@
     <Compile Include="IAHarvestItemStatusAbout.aspx.designer.cs">
       <DependentUpon>IAHarvestItemStatusAbout.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\PermissionsTitlesModel.cs" />
     <Compile Include="WebResourcePaths.aspx.cs">
       <DependentUpon>WebResourcePaths.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1108,6 +1109,7 @@
     <Content Include="Views\CitationImport\ImportFileStatus.cshtml" />
     <Content Include="Views\Monitor\ServiceOverview.cshtml" />
     <Content Include="Views\Monitor\ServiceLog.cshtml" />
+    <Content Include="Views\Report\PermissionsTitles.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>

@@ -1,0 +1,81 @@
+﻿@section Javascript
+{
+    <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesPath"])" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#recordlist').dataTable({
+                "processing": true
+                , "serverSide": true
+                , "filter": false
+                , "lengthChange": false
+                , "displayLength": 50
+                , "dom": '<"H"lfr>t<"F"ip>'
+                , "paginationType": "full_numbers"
+                , "ajaxSource": '/Report/GetPermissionsTitleRecords'
+                , "columns": [
+                    { "data": "titleID", "bSortable": true },
+                    { "data": "fullTitle", "bSortable": true },
+                    { "data": "bibliographicLevel", "bSortable": false },
+                    { "data": "years", "bSortable": false },
+                    { "data": "ISSN", "bSortable": false },
+                    { "data": "OCLC", "bSortable": false },
+                    { "data": "hasMovingWall", "bSortable": true },
+                    { "data": "hasDocumentation", "bSortable": false }
+                ]
+                , "sorting": [[1, 'asc']]
+            });
+        });
+    </script>
+}
+@section CSS
+{
+    <link href="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesCSSPath"])" rel="stylesheet" type="text/css" />
+}
+@{
+    ViewBag.Title = "Permissions Titles";
+}
+
+<p>
+    <a href="/">< Return to Dashboard</a><br />
+</p>
+<span class="pageHeader">@ViewBag.Title</span>
+<hr />
+<br />
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    <div>
+        <div style="margin:10px 0px">
+            <input type="submit" name="btnDownload" id="btnDownload" value="Download">
+        </div>
+    </div>
+
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="recordlist" style="width:100%">
+        <thead>
+            <tr>
+                <th width="6%">Title ID</th>
+                <th width="30%">Title</th>
+                <th width="9%">Type</th>
+                <th width="8%">Years</th>
+                <th width="6%">OCLC</th>
+                <th width="6%">ISSN</th>
+                <th width="8%">Moving Wall</th>
+                <th width="7%">Documents</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th width="6%">Title ID</th>
+                <th width="30%">Title</th>
+                <th width="9%">Type</th>
+                <th width="8%">Years</th>
+                <th width="6%">OCLC</th>
+                <th width="6%">ISSN</th>
+                <th width="8%">Moving Wall</th>
+                <th width="7%">Documents</th>
+            </tr>
+        </tfoot>
+    </table>
+}
+

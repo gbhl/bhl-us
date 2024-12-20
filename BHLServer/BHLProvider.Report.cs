@@ -10,5 +10,10 @@ namespace MOBOT.BHL.Server
         {
             return new ReportDAL().ReportSelectOrphanedEntities(null, null);
         }
+
+        public List<PermissionsTitle> ReportSelectPermissionsTitles(int numRows, int startRow, string sortColumn, string sortDirection)
+        {
+            return new ReportDAL().ReportSelectPermissionsTitles(null, null, numRows, startRow, sortColumn, sortDirection);
+        }
     }
 }
