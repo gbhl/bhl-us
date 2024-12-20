@@ -140,6 +140,9 @@
 <a href="#Configuration">Configuration</a>
 </li>
 <li>
+<a href="#DocumentType">DocumentType</a>
+</li>
+<li>
 <a href="#DOI">DOI</a>
 </li>
 <li>
@@ -363,6 +366,9 @@
 </li>
 <li>
 <a href="#TitleCollection">TitleCollection</a>
+</li>
+<li>
+<a href="#TitleDocument">TitleDocument</a>
 </li>
 <li>
 <a href="#TitleExternalResource">TitleExternalResource</a>
@@ -1084,7 +1090,10 @@
 <td class="tdTableDefinition">PageProgression</td><td class="tdTableDefinition">PageProgression</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">VirtualVolumnKey</td><td class="tdTableDefinition">VirtualVolumeKey</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">VirtualVolumeKey</td><td class="tdTableDefinition">VirtualVolumeKey</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CopyrightIndicator</td><td class="tdTableDefinition">CopyrightIndicator</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 </table>
 <div class="references">
@@ -1210,6 +1219,48 @@
 </tr>
 </table>
 <div class="references"></div>
+</div>
+<div class="tableNameHeading">
+<h1>DocumentType<a name="DocumentType"></a>
+</h1>
+<h2>
+      (Physical Name: DocumentType)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">DocumentTypeID (PK)</td><td class="tdTableDefinition">DocumentTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Name</td><td class="tdTableDefinition">Name</td><td class="tdTableDefinition">NVARCHAR(40)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Label</td><td class="tdTableDefinition">Label</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#TitleDocument">TitleDocument</a> referencing (DocumentTypeID)</li>
+</ul>
+</div>
 </div>
 <div class="tableNameHeading">
 <h1>DOI<a name="DOI"></a>
@@ -1967,9 +2018,9 @@
 <li>
 <a href="#ItemAuthor">ItemAuthor</a> referencing (ItemID)</li>
 <li>
-<a href="#Book">Book</a> referencing (ItemID)</li>
-<li>
 <a href="#Segment">Segment</a> referencing (ItemID)</li>
+<li>
+<a href="#Book">Book</a> referencing (ItemID)</li>
 </ul>
 </div>
 </div>
@@ -2636,9 +2687,9 @@
 <li>
 <a href="#ItemLanguage">ItemLanguage</a> referencing (LanguageCode)</li>
 <li>
-<a href="#Book">Book</a> referencing (LanguageCode)</li>
-<li>
 <a href="#Segment">Segment</a> referencing (LanguageCode)</li>
+<li>
+<a href="#Book">Book</a> referencing (LanguageCode)</li>
 </ul>
 </div>
 </div>
@@ -3582,9 +3633,9 @@
 <p class="subTitle">Referenced By</p>
 <ul>
 <li>
-<a href="#Book">Book</a> referencing (PaginationStatusID)</li>
-<li>
 <a href="#Segment">Segment</a> referencing (PaginationStatusID)</li>
+<li>
+<a href="#Book">Book</a> referencing (PaginationStatusID)</li>
 </ul>
 </div>
 </div>
@@ -4644,6 +4695,8 @@
 <a href="#ItemTitle">ItemTitle</a> referencing (TitleID)</li>
 <li>
 <a href="#TitleExternalResource">TitleExternalResource</a> referencing (TitleID)</li>
+<li>
+<a href="#TitleDocument">TitleDocument</a> referencing (TitleID)</li>
 </ul>
 </div>
 </div>
@@ -4966,6 +5019,60 @@
 <a href="#Title">Title</a> through (TitleID)</li>
 <li>
 <a href="#Collection">Collection</a> through (CollectionID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>TitleDocument<a name="TitleDocument"></a>
+</h1>
+<h2>
+      (Physical Name: TitleDocument)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">TitleDocumentID (PK)</td><td class="tdTableDefinition">TitleDocumentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">TitleID
+                &nbsp;(<a href="#Title">FK</a>)
+              </td><td class="tdTableDefinition">TitleID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">DocumentTypeID
+                &nbsp;(<a href="#DocumentType">FK</a>)
+              </td><td class="tdTableDefinition">DocumentTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Name</td><td class="tdTableDefinition">Name</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Url</td><td class="tdTableDefinition">Url</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Title">Title</a> through (TitleID)</li>
+<li>
+<a href="#DocumentType">DocumentType</a> through (DocumentTypeID)</li>
 </ul>
 </div>
 </div>
