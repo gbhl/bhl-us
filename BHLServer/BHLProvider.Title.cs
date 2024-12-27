@@ -267,6 +267,29 @@ namespace MOBOT.BHL.Server
                             }
                         }
                     }
+
+                    // Copy Collections to the related title
+                    if (title.TitleCollections.Count > 0)
+                    {
+                        List<TitleCollection> targetTitleCollections = new TitleCollectionDAL().SelectByTitle(null, null, targetTitle.TitleID);
+                        foreach(TitleCollection tc in title.TitleCollections)
+                        {
+                            bool exists = false;
+                            foreach(TitleCollection targetTC in targetTitleCollections)
+                            {
+                                if (tc.CollectionID == targetTC.CollectionID) { exists = true; break; }
+                            }
+                            if (!exists)
+                            {
+                                targetTitle.TitleCollections.Add(new TitleCollection
+                                {
+                                    TitleID = targetTitle.TitleID,
+                                    CollectionID = tc.CollectionID
+                                });
+                            }
+                        }
+                    }
+
                     new TitleDAL().Save(null, null, targetTitle, userId);
                 }
             }
