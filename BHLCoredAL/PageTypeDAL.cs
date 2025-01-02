@@ -45,7 +45,7 @@ namespace MOBOT.BHL.DAL
 
 				CustomSqlHelper.CommitTransaction( transaction, isTransactionCoordinator );
 			}
-			catch ( Exception ex )
+			catch (Exception)
 			{
 				CustomSqlHelper.RollbackTransaction( transaction, isTransactionCoordinator );
 

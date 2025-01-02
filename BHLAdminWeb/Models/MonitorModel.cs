@@ -80,7 +80,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                     searchMonitor.Indexes.Add(GetSearchIndexStats(indexName));
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 searchMonitor.ErrorMessage = "Error retrieving Search Server statistics.";
             }
@@ -133,7 +133,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                     mqMonitor.Queues.Add(mq);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 mqMonitor.ErrorMessage = "Error retrieving Message Queue statistics.";
             }

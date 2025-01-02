@@ -112,14 +112,14 @@ namespace BHL.TextImportProcessor
                                             if (((HttpWebResponse)wex.Response).StatusCode == HttpStatusCode.NotFound)
                                             {
                                                 // 404 Not Found - retry three times before giving up
-                                                if (retryLimit == 3) throw wex;
+                                                if (retryLimit == 3) throw;
                                                 Thread.Sleep(TimeSpan.FromSeconds(30)); // Wait 30 seconds before trying again
                                                 retryLimit++;
                                             }
                                             else
                                             {
                                                 // Some non-404 error, don't try again
-                                                throw wex;
+                                                throw;
                                             }
                                         }
                                     }

@@ -745,7 +745,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             foreach (Segment s in segments)
             {
-                if (s.ItemID == null)
+                if (s.ItemID <= 0)
                 {
                     continue;
                 }
@@ -1456,38 +1456,6 @@ namespace MOBOT.BHL.AdminWeb
         }
 
 		#endregion
-
-        #region TitleItem
-
-        [Serializable]
-        private class ItemTitle : DataObjects.Title
-        {
-            private int _titleID;
-
-            public int TitleID
-            {
-                get { return _titleID; }
-                set { _titleID = value; }
-            }
-
-            private String _shortTitle;
-
-            public String ShortTitle
-            {
-                get { return _shortTitle; }
-                set { _shortTitle = value; }
-            }
-
-            private bool _isPrimary;
-
-            public bool IsPrimary
-            {
-                get { return _isPrimary; }
-                set { _isPrimary = value; }
-            }
-        }
-
-        #endregion
 
         private void ResetScrollPosition()
         {

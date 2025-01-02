@@ -183,7 +183,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 this._fileLocation = String.Format(this.FilePathFormat, fileName);
                 this._fileUrl = String.Format(this.UrlFormat, fileName);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -295,7 +295,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
                 return buffer;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -362,7 +362,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 pdfPageLabels.AddPageLabel(++pageNumber, iTextSharp.text.pdf.PdfPageLabels.EMPTY, "OCR");
                 copy.PageLabels = pdfPageLabels;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -434,7 +434,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                     this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, ocrText);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

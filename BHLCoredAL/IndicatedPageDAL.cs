@@ -73,7 +73,7 @@ namespace MOBOT.BHL.DAL
 					}
 				}
 			}
-			catch ( Exception ex )
+			catch (Exception)
 			{
 				throw;
 			}

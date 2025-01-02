@@ -46,7 +46,7 @@ namespace BHL.WebServiceREST.v1.Controllers
         [ProducesResponseType(200)]
         public IActionResult UpdatePdfStatus(int pdfID, PdfModel request)
         {
-            _bhlProvider.PDFUpdatePdfStatus(pdfID, (int)request.pdfstatusid);
+            _bhlProvider.PDFUpdatePdfStatus(pdfID, request.pdfstatusid ?? 0);
             return Ok();
         }
 
@@ -55,7 +55,7 @@ namespace BHL.WebServiceREST.v1.Controllers
         public IActionResult UpdatePdfGenerationInfo(int pdfID, PdfModel request)
         {
             PDF pdf = _bhlProvider.PDFUpdateGenerationInfo(pdfID, request.fileLocation, request.fileUrl,
-                    (int)request.numberImagesMissing, (int)request.numberOcrMissing);
+                    request.numberImagesMissing ?? 0, request.numberOcrMissing ?? 0);
             return Ok(pdf);
         }
     }

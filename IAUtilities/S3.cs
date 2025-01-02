@@ -248,7 +248,7 @@ namespace MOBOT.IA.Utilities
 					}
 				}
 			}
-			catch ( Exception ex )
+			catch (Exception)
 			{
 				throw;
 			}

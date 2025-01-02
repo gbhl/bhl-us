@@ -437,7 +437,7 @@ namespace MOBOT.BHL.OAI2
                     {
                         errorMessage = @"<error code=""idDoesNotExist"">identifier '" + HttpUtility.HtmlEncode(identifier) + "' not found.</error>";
                     }
-                    else if (segment.ItemID == null && string.IsNullOrEmpty(segment.Url))
+                    else if (segment.ItemID <= 0 && string.IsNullOrEmpty(segment.Url))
                     {
                         // Segment has no content, so don't include it in OAI output
                         errorMessage = @"<error code=""idDoesNotExist"">identifier '" + HttpUtility.HtmlEncode(identifier) + "' not found.</error>";

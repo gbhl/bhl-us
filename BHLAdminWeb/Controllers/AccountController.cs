@@ -411,7 +411,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     }
                     AddErrors(result);
                 }
-                catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+                catch (System.Data.Entity.Validation.DbEntityValidationException)
                 {
 
                 }

@@ -113,7 +113,7 @@ namespace BHL.SiteServicesREST.v1.Services
         /// <param name="method"></param>
         /// <param name="body"></param>
         /// <returns></returns>
-        private async Task<string> InvokeMQAPI(string uri, string method = "GET", string body = null)
+        private async Task<string> InvokeMQAPI(string uri, string method = "GET", string body = "")
         {
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(uri);
             req.Method = method;
@@ -143,7 +143,6 @@ namespace BHL.SiteServicesREST.v1.Services
                     jsonResponse = reader.ReadToEnd();
                 }
             }
-            req = null;
 
             return jsonResponse;
         }

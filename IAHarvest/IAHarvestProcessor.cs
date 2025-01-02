@@ -997,8 +997,8 @@ namespace IAHarvest
                                     pageText.Clear();
                                     // Read the page counter value from the "usemap" attribute of the OBJECT element
                                     // Example:  <OBJECT ... type="image/x.djvu" usemap="musselbedsofthec00wils_0002.djvu" width="2861" height="4543">
-                                    string? useMap = reader.GetAttribute("usemap");
-                                    if (useMap != null) pageCounter = Convert.ToInt32(useMap.Substring(useMap.Replace(".djvu", "").Length - 4, 4));
+                                    string useMap = reader.GetAttribute("usemap") ?? string.Empty;
+                                    if (!string.IsNullOrWhiteSpace(useMap)) pageCounter = Convert.ToInt32(useMap.Substring(useMap.Replace(".djvu", "").Length - 4, 4));
                                 }
                                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "WORD") wordStarted = true;
                                 if (reader.NodeType == XmlNodeType.Text && wordStarted) pageText.Append(reader.Value + " ");

@@ -24,8 +24,8 @@ namespace BHL.WebServiceREST.v1.Controllers
         [ProducesResponseType(200)]
         public IActionResult AddDoi(DoiModel request)
         {
-            _bhlProvider.DOIInsert((int)request.entitytypeid, (int)request.entityid, (int)request.doistatusid, request.doiname, 
-                (short)request.isvalid, request.doibatchid, request.message, (int)request.userid, (int)request.excludebhldoi);
+            _bhlProvider.DOIInsert(request.entitytypeid ?? 0, request.entityid ?? 0, request.doistatusid ?? 0, request.doiname, 
+                request.isvalid ?? 1, request.doibatchid, request.message, request.userid ?? 0, request.excludebhldoi ?? 0);
             return Ok();
         }
 
@@ -33,7 +33,7 @@ namespace BHL.WebServiceREST.v1.Controllers
         [ProducesResponseType(200)]
         public IActionResult UpdateDoiBatchID(int doiID, DoiModel request)
         {
-            _bhlProvider.DOIUpdateBatchID(doiID, (int)request.doistatusid, request.doibatchid, request.userid);
+            _bhlProvider.DOIUpdateBatchID(doiID, request.doistatusid ?? 0, request.doibatchid, request.userid);
             return Ok();
         }
 
@@ -41,7 +41,7 @@ namespace BHL.WebServiceREST.v1.Controllers
         [ProducesResponseType(200)]
         public IActionResult UpdateDoiName(int doiID, DoiModel request)
         {
-            _bhlProvider.DOIUpdateDOIName(doiID, (int)request.doistatusid, request.doiname, request.userid);
+            _bhlProvider.DOIUpdateDOIName(doiID, request.doistatusid ?? 0, request.doiname, request.userid);
             return Ok();
         }
 
@@ -50,7 +50,7 @@ namespace BHL.WebServiceREST.v1.Controllers
         public IActionResult UpdateDoiStatus(int doiID, DoiModel request)
         {
             DOI doi = _bhlProvider.DOISelectAuto(doiID);
-            _bhlProvider.DOIUpdateStatus(doiID, (int)request.doistatusid, request.message ?? string.Empty, request.isvalid ?? doi.IsValid, request.userid);
+            _bhlProvider.DOIUpdateStatus(doiID, request.doistatusid ?? 0, request.message ?? string.Empty, request.isvalid ?? doi.IsValid, request.userid);
             return Ok();
         }
 
@@ -58,7 +58,7 @@ namespace BHL.WebServiceREST.v1.Controllers
         [ProducesResponseType(200)]
         public IActionResult AddDoiIdentifier(DoiModel request)
         {
-            _bhlProvider.DOIInsertIdentifier((int)request.entitytypeid, (int)request.entityid, request.doiname, request.userid);
+            _bhlProvider.DOIInsertIdentifier(request.entitytypeid ?? 0, request.entityid ?? 0, request.doiname, request.userid);
             return Ok();
         }
 

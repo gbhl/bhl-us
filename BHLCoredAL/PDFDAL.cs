@@ -58,7 +58,7 @@ namespace MOBOT.BHL.DAL
 
                 return savedpdf;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 CustomSqlHelper.RollbackTransaction(transaction, isTransactionCoordinator);
                 throw;
@@ -211,7 +211,7 @@ namespace MOBOT.BHL.DAL
 
                 CustomSqlHelper.CommitTransaction(transaction, isTransactionCoordinator);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 CustomSqlHelper.RollbackTransaction(transaction, isTransactionCoordinator);
 

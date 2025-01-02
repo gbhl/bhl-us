@@ -23,8 +23,6 @@ namespace MOBOT.BHL.AdminWeb.Services
 
         public void ProcessRequest(HttpContext context)
         {
-            string response;
-
             // Clean up inputs
             string itemStatusId = context.Request.QueryString["id"];
             string iaId = context.Request.QueryString["iaid"];

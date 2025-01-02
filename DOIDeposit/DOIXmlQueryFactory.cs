@@ -50,7 +50,6 @@ namespace MOBOT.BHL.DOIDeposit
                     break;
                 case DOIQueryType.Journal:
                     throw new NotImplementedException();
-                    break;
                 case DOIQueryType.Article:
                     deposit = new DOIArticleXmlQuery(data);
                     break;

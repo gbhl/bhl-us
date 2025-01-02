@@ -111,7 +111,7 @@ namespace MOBOT.BHL.Server
 
                 transactionController.CommitTransaction();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 transactionController.RollbackTransaction();
                 throw;
