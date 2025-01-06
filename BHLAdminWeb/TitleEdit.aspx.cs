@@ -1866,25 +1866,40 @@ namespace MOBOT.BHL.AdminWeb
                     string name = txtName.Text;
                     string url = txtUrl.Text;
                     int documentTypeID;
-                    if (!Int32.TryParse(ddlDocumentType.Text, out documentTypeID)) documentTypeID = 1;
 
-                    TitleDocument titleDocument = findTitleDocument(title.TitleDocuments,
-                        (int)documentsList.DataKeys[e.RowIndex].Values[0],
-                        (int)documentsList.DataKeys[e.RowIndex].Values[1],
-                        documentsList.DataKeys[e.RowIndex].Values[2].ToString(),
-                        documentsList.DataKeys[e.RowIndex].Values[3].ToString());
+                    HtmlGenericControl warningDiv = row.FindControl("docUrlWarning") as HtmlGenericControl;
+                    if (isValidUrl(url))
+                    {
+                        if (!Int32.TryParse(ddlDocumentType.Text, out documentTypeID)) documentTypeID = 1;
 
-                    // Update the document being edited
-                    titleDocument.TitleID = title.TitleID;
-                    titleDocument.DocumentTypeID = documentTypeID;
-                    titleDocument.Name = name;
-                    titleDocument.Url = url;
-                    titleDocument.TypeLabel = ddlDocumentType.SelectedItem.Text;
+                        TitleDocument titleDocument = findTitleDocument(title.TitleDocuments,
+                            (int)documentsList.DataKeys[e.RowIndex].Values[0],
+                            (int)documentsList.DataKeys[e.RowIndex].Values[1],
+                            documentsList.DataKeys[e.RowIndex].Values[2].ToString(),
+                            documentsList.DataKeys[e.RowIndex].Values[3].ToString());
+
+                        // Update the document being edited
+                        titleDocument.TitleID = title.TitleID;
+                        titleDocument.DocumentTypeID = documentTypeID;
+                        titleDocument.Name = name;
+                        titleDocument.Url = url;
+                        titleDocument.TypeLabel = ddlDocumentType.SelectedItem.Text;
+
+                        warningDiv.Style.Add("display", "none");
+                    }
+                    else
+                    {
+                        warningDiv.Style.Add("display", "block");
+                        e.Cancel = true;
+                    }
                 }
             }
 
-            documentsList.EditIndex = -1;
-            bindDocumentData();
+            if (!e.Cancel)
+            {
+                documentsList.EditIndex = -1;
+                bindDocumentData();
+            }
         }
 
         protected void documentsList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -2229,8 +2244,20 @@ namespace MOBOT.BHL.AdminWeb
             ResetScrollPosition();
 		}
 
-		#endregion
+        #endregion
 
+        private bool isValidUrl(string url)
+        {
+            try
+            {
+                Uri siteUri = new Uri(url);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         private bool validate(Title title)
         {
             bool flag = false;

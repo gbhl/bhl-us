@@ -13,7 +13,15 @@
                 , "paginationType": "full_numbers"
                 , "ajaxSource": '/Report/GetPermissionsTitleRecords'
                 , "columns": [
-                    { "data": "titleID", "bSortable": true },
+                    {
+                        "targets": 0,
+                        "data": function (data, type, row, meta) {
+                            if (type === 'display') {
+                                titleUrl = '<a target="_blank" href="/TitleEdit.aspx?id=' + data.titleID + '">' + data.titleID + '</a>';
+                            }
+                            return titleUrl;
+                        }
+                    },
                     { "data": "fullTitle", "bSortable": true },
                     { "data": "bibliographicLevel", "bSortable": false },
                     { "data": "years", "bSortable": false },

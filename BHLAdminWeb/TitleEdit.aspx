@@ -940,7 +940,7 @@
 					</ItemTemplate>
 					<EditItemTemplate>
 						<asp:TextBox ID="txtUrl" runat="server" MaxLength="200" Width="400" Text='<%# Eval( "Url") %>' onchange="validateDocUrl(this);" />
-						<div id="docUrlWarning" style="color:red; display:none;">
+						<div id="docUrlWarning" clientidmode="Static" runat="server" style="color:red;display:none">
 							Value must be a complete valid Url
 						</div>
 					</EditItemTemplate>
