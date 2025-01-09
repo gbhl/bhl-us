@@ -1912,7 +1912,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (e.CommandName.Equals("RemoveButton"))
             {
-                resourcesList.EditIndex = -1;
+                documentsList.EditIndex = -1;
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 Title title = (Title)Session["Title" + idLabel.Text];
 

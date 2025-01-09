@@ -11,6 +11,7 @@ namespace MOBOT.BHL.DataObjects
         public int TitleID { get; set; }
         public string FullTitle { get; set; }
 		public string BibliographicLevelName { get; set; }
+        public string MaterialTypeLabel { get; set; }
         public string StartYear { get; set; }
 		public string EndYear { get; set; }
         public string Years
@@ -30,6 +31,9 @@ namespace MOBOT.BHL.DataObjects
             }
         }
         public bool HasMovingWall { get; set; }
+        public int NumNoKnownCopyright { get; set; }
+        public int NumInCopyright { get; set; }
+        public int NumNotProvided { get; set; }
         public string Issn { get; set; }
         public string Oclc { get; set; }
         public bool HasDocumentation { get; set; }
@@ -60,6 +64,11 @@ namespace MOBOT.BHL.DataObjects
                             BibliographicLevelName = Utility.EmptyIfNull(column.Value);
                             break;
                         }
+                    case "MaterialTypeLabel":
+                        {
+                            MaterialTypeLabel = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
                     case "StartYear":
                         {
                             StartYear = column.Value == null ? "" : column.Value.ToString();
@@ -83,6 +92,21 @@ namespace MOBOT.BHL.DataObjects
                     case "HasMovingWall":
                         {
                             HasMovingWall = ((short)column.Value == 1);
+                            break;
+                        }
+                    case "NumNoKnownCopyright":
+                        {
+                            NumNoKnownCopyright = Utility.ZeroIfNull(column.Value);
+                            break;
+                        }
+                    case "NumInCopyright":
+                        {
+                            NumInCopyright = Utility.ZeroIfNull(column.Value);
+                            break;
+                        }
+                    case "NumNotProvided":
+                        {
+                            NumNotProvided = Utility.ZeroIfNull(column.Value);
                             break;
                         }
                     case "HasDocumentation":

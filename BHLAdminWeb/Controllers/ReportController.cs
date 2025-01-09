@@ -81,8 +81,9 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [HttpGet]
         public ActionResult PermissionsTitles()
         {
+            PermissionsTitlesModel model = new PermissionsTitlesModel();
             ViewBag.PageTitle += "Permissions Titles";
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -97,7 +98,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 };
                 Response.AppendHeader("Content-Disposition", cd.ToString());
 
-                model.GetPermissionsTitlesCSV();  // Get the report data to be downloaded
+                model.GetPermissionsTitlesCSV(model.TitleID);  // Get the report data to be downloaded
                 return File(model.DownloadTitles, "text/csv");
             }
 
@@ -107,7 +108,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         //
         // AJAX method to support /Report/PermissionsTitles
         [HttpGet]
-        public ActionResult GetPermissionsTitleRecords(int sEcho, int iDisplayStart, int iDisplayLength, int iSortCol_0, string sSortDir_0)
+        public ActionResult GetPermissionsTitleRecords(int? titleID, int sEcho, int iDisplayStart, int iDisplayLength, int iSortCol_0, string sSortDir_0)
         {
             string sortColumn;
 
@@ -119,15 +120,18 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 case 1:
                     sortColumn = "SortTitle";
                     break;
-                case 6:
+                case 10:
                     sortColumn = "HasMovingWall";
+                    break;
+                case 11:
+                    sortColumn = "HasDocumentation";
                     break;
                 default:
                     sortColumn = "SortTitle";
                     break;
             }
 
-            PermissionsTitlesJson.Rootobject json = new PermissionsTitlesModel().GetRecords(iDisplayLength, iDisplayStart, sortColumn, sSortDir_0);
+            PermissionsTitlesJson.Rootobject json = new PermissionsTitlesModel().GetRecords(titleID, iDisplayLength, iDisplayStart, sortColumn, sSortDir_0);
             json.sEcho = sEcho;
             return Json(json, JsonRequestBehavior.AllowGet);
         }

@@ -11,17 +11,19 @@ namespace MOBOT.BHL.AdminWeb.Models
     public class PermissionsTitlesModel
     {
         public byte[] DownloadTitles { get; set; }
+        public int? TitleID { get; set; } = null;
 
         /// <summary>
         /// Get permissions titles records
         /// </summary>
+        /// <param name="titleID">Title ID on which to filter (NULL if no filtering)</param>
         /// <param name="numRows">Number of rows to return</param>
         /// <param name="startRow">First row to return (enables paging)</param>
         /// <param name="sortColumn">Column by which to sort data</param>
         /// <param name="sortDirection">Direction of sort</param>
-        public PermissionsTitlesJson.Rootobject GetRecords(int numRows, int startRow, string sortColumn, string sortDirection)
+        public PermissionsTitlesJson.Rootobject GetRecords(int? titleID, int numRows, int startRow, string sortColumn, string sortDirection)
         {
-            List<PermissionsTitle> records = new BHLProvider().ReportSelectPermissionsTitles(numRows, startRow, sortColumn, sortDirection);
+            List<PermissionsTitle> records = new BHLProvider().ReportSelectPermissionsTitles(titleID, numRows, startRow, sortColumn, sortDirection);
 
             PermissionsTitlesJson.Rootobject json = new PermissionsTitlesJson.Rootobject();
             json.iTotalRecords = (records.Count == 0) ? "0" : records[0].TotalRecords.ToString();
@@ -37,9 +39,13 @@ namespace MOBOT.BHL.AdminWeb.Models
                     titleID = records[x].TitleID.ToString(),
                     fullTitle = records[x].FullTitle,
                     bibliographicLevel = records[x].BibliographicLevelName,
+                    materialType = records[x].MaterialTypeLabel,
                     years = records[x].Years,
                     ISSN = (records[x].Issn.EndsWith("|") ? records[x].Issn.Substring(0, records[x].Issn.Length - 1) : records[x].Issn).Replace("|", "<br/>"),
                     OCLC = (records[x].Oclc.EndsWith("|") ? records[x].Oclc.Substring(0, records[x].Oclc.Length - 1) : records[x].Oclc).Replace("|", "<br/>"),
+                    numNoKnownCopyright = records[x].NumNoKnownCopyright.ToString(),
+                    numInCopyright = records[x].NumInCopyright.ToString(),
+                    numNotProvided = records[x].NumNotProvided.ToString(),
                     hasMovingWall = records[x].HasMovingWall ? "Yes" : "No",
                     hasDocumentation = records[x].HasDocumentation ? "Yes" : "No"
                 };
@@ -49,10 +55,10 @@ namespace MOBOT.BHL.AdminWeb.Models
             return json;
         }
 
-        public void GetPermissionsTitlesCSV()
+        public void GetPermissionsTitlesCSV(int? titleID)
         {
             // Get the data to be formatted as CSV
-            List<PermissionsTitle> logs = new BHLProvider().ReportSelectPermissionsTitles(10000000, 1, "SortTitle", "asc");
+            List<PermissionsTitle> logs = new BHLProvider().ReportSelectPermissionsTitles(titleID, 10000000, 1, "SortTitle", "asc");
 
             var data = new List<dynamic>();
             foreach (var log in logs)
@@ -61,9 +67,13 @@ namespace MOBOT.BHL.AdminWeb.Models
                 record.Add("Title ID", log.TitleID);
                 record.Add("Full Title", log.FullTitle);
                 record.Add("Type", log.BibliographicLevelName);
+                record.Add("Material Type", log.MaterialTypeLabel);
                 record.Add("Years", log.Years);
                 record.Add("ISSN", log.Issn.EndsWith("|") ? log.Issn.Substring(0, log.Issn.Length - 1) : log.Issn);
                 record.Add("OCLC", log.Oclc.EndsWith("|") ? log.Oclc.Substring(0, log.Oclc.Length - 1) : log.Oclc);
+                record.Add("# Items - No Known Copyright", log.NumNoKnownCopyright);
+                record.Add("# Items - In Copyright", log.NumInCopyright);
+                record.Add("# Items - Copyright Not Provided", log.NumNotProvided);
                 record.Add("Has Moving Wall", (log.HasMovingWall ? "Yes" : "No"));
                 record.Add("Has Documents", (log.HasMovingWall ? "Yes" : "No"));
                 data.Add(record);
@@ -94,9 +104,13 @@ namespace MOBOT.BHL.AdminWeb.Models
             public string titleID { get; set; }
             public string fullTitle { get; set; }
             public string bibliographicLevel { get; set; }
+            public string materialType { get; set; }
             public string years { get; set; }
             public string ISSN { get; set; }
             public string OCLC { get; set; }
+            public string numNoKnownCopyright { get; set; }
+            public string numInCopyright { get; set; }
+            public string numNotProvided { get; set; }
             public string hasMovingWall { get; set; }
             public string hasDocumentation { get; set; }
         }
