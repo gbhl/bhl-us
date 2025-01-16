@@ -98,7 +98,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 };
                 Response.AppendHeader("Content-Disposition", cd.ToString());
 
-                model.GetPermissionsTitlesCSV(model.TitleID);  // Get the report data to be downloaded
+                // Get the report data to be downloaded
+                model.GetPermissionsTitlesCSV(model.TitleID, model.IncludeNotKnown, model.IncludeInCopyright, model.IncludeNotProvided);
                 return File(model.DownloadTitles, "text/csv");
             }
 
@@ -108,7 +109,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         //
         // AJAX method to support /Report/PermissionsTitles
         [HttpGet]
-        public ActionResult GetPermissionsTitleRecords(int? titleID, int sEcho, int iDisplayStart, int iDisplayLength, int iSortCol_0, string sSortDir_0)
+        public ActionResult GetPermissionsTitleRecords(int? titleID, bool nk, bool ic, bool np, 
+            int sEcho, int iDisplayStart, int iDisplayLength, int iSortCol_0, string sSortDir_0)
         {
             string sortColumn;
 
@@ -131,7 +133,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     break;
             }
 
-            PermissionsTitlesJson.Rootobject json = new PermissionsTitlesModel().GetRecords(titleID, iDisplayLength, iDisplayStart, sortColumn, sSortDir_0);
+            PermissionsTitlesJson.Rootobject json = new PermissionsTitlesModel().GetRecords(titleID, nk, ic, np, 
+                iDisplayLength, iDisplayStart, sortColumn, sSortDir_0);
             json.sEcho = sEcho;
             return Json(json, JsonRequestBehavior.AllowGet);
         }

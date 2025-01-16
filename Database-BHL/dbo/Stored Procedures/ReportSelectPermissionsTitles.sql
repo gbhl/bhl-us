@@ -1,6 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[ReportSelectPermissionsTitles]
 
 @TitleID int = NULL,
+@NotKnown int = 0,
+@InCopyright int = 1,
+@NotProvided int = 0,
 @NumRows int = 25,
 @StartRow int = 1,
 @SortColumn nvarchar(150) = 'TitleID',
@@ -49,9 +52,16 @@ SET @SQL = 'WITH CTE AS (' +
 	'AND	t.PublishReady = 1 ' +
 	'GROUP BY t.TitleID, t.FullTitle, t.SortTitle, t.HasMovingWall ' +
 	'), ' +
-	'CTECount AS (SELECT COUNT(*) TotalRecords FROM CTE) ' +
+	'CTECount AS (SELECT COUNT(*) TotalRecords FROM CTE ' + 
+		'WHERE NumNoKnownCopyright > 0 AND ' + CONVERT(varchar(1), @NotKnown) + '=1 ' + 
+		'OR NumInCopyright > 0 AND ' + CONVERT(varchar(1), @InCopyright) + '=1 ' + 
+		'OR NumNotProvided > 0 AND ' + CONVERT(varchar(1), @NotProvided) + '=1 ' +
+		') ' +
 	'SELECT ROW_NUMBER() OVER (ORDER BY ' + @SortColumn + ') AS RowNumber, TotalRecords, TitleID, NumNoKnownCopyright, NumInCopyright, NumNotProvided, HasDocumentation ' +
-	'FROM CTE CROSS JOIN CTECount;'
+	'FROM CTE CROSS JOIN CTECount ' + 
+	'WHERE NumNoKnownCopyright > 0 AND ' + CONVERT(varchar(1), @NotKnown) + '=1 ' + 
+	'OR NumInCopyright > 0 AND ' + CONVERT(varchar(1), @InCopyright) + '=1 ' + 
+	'OR NumNotProvided > 0 AND ' + CONVERT(varchar(1), @NotProvided) + '=1;'
 
 INSERT #tmpRecord EXEC (@SQL)
 

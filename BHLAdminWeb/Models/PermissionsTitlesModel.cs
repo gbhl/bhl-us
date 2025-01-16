@@ -13,6 +13,10 @@ namespace MOBOT.BHL.AdminWeb.Models
         public byte[] DownloadTitles { get; set; }
         public int? TitleID { get; set; } = null;
 
+        public bool IncludeNotKnown { get; set; } = false;
+        public bool IncludeInCopyright { get; set; } = true;
+        public bool IncludeNotProvided { get; set; } = false;
+
         /// <summary>
         /// Get permissions titles records
         /// </summary>
@@ -21,9 +25,9 @@ namespace MOBOT.BHL.AdminWeb.Models
         /// <param name="startRow">First row to return (enables paging)</param>
         /// <param name="sortColumn">Column by which to sort data</param>
         /// <param name="sortDirection">Direction of sort</param>
-        public PermissionsTitlesJson.Rootobject GetRecords(int? titleID, int numRows, int startRow, string sortColumn, string sortDirection)
+        public PermissionsTitlesJson.Rootobject GetRecords(int? titleID, bool nk, bool ic, bool np, int numRows, int startRow, string sortColumn, string sortDirection)
         {
-            List<PermissionsTitle> records = new BHLProvider().ReportSelectPermissionsTitles(titleID, numRows, startRow, sortColumn, sortDirection);
+            List<PermissionsTitle> records = new BHLProvider().ReportSelectPermissionsTitles(titleID, nk, ic, np, numRows, startRow, sortColumn, sortDirection);
 
             PermissionsTitlesJson.Rootobject json = new PermissionsTitlesJson.Rootobject();
             json.iTotalRecords = (records.Count == 0) ? "0" : records[0].TotalRecords.ToString();
@@ -55,10 +59,10 @@ namespace MOBOT.BHL.AdminWeb.Models
             return json;
         }
 
-        public void GetPermissionsTitlesCSV(int? titleID)
+        public void GetPermissionsTitlesCSV(int? titleID, bool nk, bool ic, bool np)
         {
             // Get the data to be formatted as CSV
-            List<PermissionsTitle> logs = new BHLProvider().ReportSelectPermissionsTitles(titleID, 10000000, 1, "SortTitle", "asc");
+            List<PermissionsTitle> logs = new BHLProvider().ReportSelectPermissionsTitles(titleID, nk, ic, np, 10000000, 1, "SortTitle", "asc");
 
             var data = new List<dynamic>();
             foreach (var log in logs)

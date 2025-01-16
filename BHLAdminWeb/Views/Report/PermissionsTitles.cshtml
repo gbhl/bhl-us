@@ -12,7 +12,7 @@
                 , "displayLength": 50
                 , "dom": '<"H"lfr>t<"F"ip>'
                 , "paginationType": "full_numbers"
-                , "ajaxSource": '/Report/GetPermissionsTitleRecords?titleID=@Model.TitleID'
+                , "ajaxSource": '/Report/GetPermissionsTitleRecords?titleID=@Model.TitleID&nk=@Model.IncludeNotKnown&ic=@Model.IncludeInCopyright&np=@Model.IncludeNotProvided'
                 , "columns": [
                     {
                         "targets": 0,
@@ -56,8 +56,14 @@
 <br />
 <form action="/report/PermissionsTitles" method="post">
     <div>
+        <div style="margin:10px 0px;">
+            <div style="display:inline; font-weight:bold">Include Titles that have Items with Copyright Status:</div>&nbsp;
+            @Html.CheckBoxFor(model => model.IncludeNotKnown, new { id = "chkCSNotKnown", name = "chkCSNotKnown" }) Not Known&nbsp;
+            @Html.CheckBoxFor(model => model.IncludeInCopyright, new { id = "chkCSInCopyright", name = "chkCSInCopyright" }) In Copyright&nbsp;
+            @Html.CheckBoxFor(model => model.IncludeNotProvided, new { id = "chkCSNotProvided", name = "chkCSNotProvided" }) Not Provided&nbsp;
+        </div>
         <div style="margin:10px 0px">
-            <div style="display:inline; margin-right:10px; font-weight:bold">Include Where Title ID Is:</div>
+            <div style="display:inline; margin-right:10px; font-weight:bold">Include where Title ID is:</div>
             <div style="display:inline;">
                 <input type="text" id="TitleID" name="TitleID" value="@Model.TitleID" placeholder="(Optional)" />
             </div>
