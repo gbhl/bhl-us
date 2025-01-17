@@ -30,7 +30,8 @@ CREATE PROCEDURE dbo.TitleInsertAuto
 @PartNumber NVARCHAR(255) = null,
 @PartName NVARCHAR(255) = null,
 @BibliographicLevelID INT = null,
-@MaterialTypeID INT = null
+@MaterialTypeID INT = null,
+@HasMovingWall SMALLINT
 
 AS 
 
@@ -68,7 +69,8 @@ INSERT INTO [dbo].[Title]
 	[PartNumber],
 	[PartName],
 	[BibliographicLevelID],
-	[MaterialTypeID] )
+	[MaterialTypeID],
+	[HasMovingWall] )
 VALUES
 ( 	@MARCBibID,
 	@MARCLeader,
@@ -101,7 +103,8 @@ VALUES
 	@PartNumber,
 	@PartName,
 	@BibliographicLevelID,
-	@MaterialTypeID )
+	@MaterialTypeID,
+	@HasMovingWall )
 
 SET @TitleID = Scope_Identity()
 
@@ -145,7 +148,8 @@ ELSE BEGIN
 		[PartNumber],
 		[PartName],
 		[BibliographicLevelID],
-		[MaterialTypeID]	
+		[MaterialTypeID],
+		[HasMovingWall]	
 	FROM [dbo].[Title]
 	WHERE
 		[TitleID] = @TitleID

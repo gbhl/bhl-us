@@ -59,10 +59,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>2F00B402372A0B1BE352FA6163DA279955123BD0</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>D35437BE7C2BDF9E48B255BB50DF29AF5E57851F</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>BHLPDFGenerator_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>BHLPDFGenerator_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -107,6 +107,7 @@
     <None Include="app.config.template">
       <SubType>Designer</SubType>
     </None>
+    <None Include="BHLPDFGenerator_1_TemporaryKey.pfx" />
     <None Include="BHLPDFGenerator_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>

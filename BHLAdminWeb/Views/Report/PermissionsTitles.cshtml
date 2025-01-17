@@ -1,0 +1,114 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.PermissionsTitlesModel
+@section Javascript
+{
+    <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesPath"])" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#recordlist').dataTable({
+                "processing": true
+                , "serverSide": true
+                , "filter": false
+                , "lengthChange": false
+                , "displayLength": 50
+                , "dom": '<"H"lfr>t<"F"ip>'
+                , "paginationType": "full_numbers"
+                , "ajaxSource": '/Report/GetPermissionsTitleRecords?titleID=@Model.TitleID&nk=@Model.IncludeNotKnown&ic=@Model.IncludeInCopyright&np=@Model.IncludeNotProvided'
+                , "columns": [
+                    {
+                        "targets": 0,
+                        "data": function (data, type, row, meta) {
+                            if (type === 'display') {
+                                titleUrl = '<a target="_blank" href="/TitleEdit.aspx?id=' + data.titleID + '">' + data.titleID + '</a>';
+                            }
+                            return titleUrl;
+                        }
+                    },
+                    { "data": "fullTitle", "bSortable": true },
+                    { "data": "bibliographicLevel", "bSortable": false },
+                    { "data": "materialType", "bSortable": false },
+                    { "data": "years", "bSortable": false },
+                    { "data": "ISSN", "bSortable": false },
+                    { "data": "OCLC", "bSortable": false },
+                    { "data": "numNoKnownCopyright", "bSortable": false },
+                    { "data": "numInCopyright", "bSortable": false },
+                    { "data": "numNotProvided", "bSortable": false },
+                    { "data": "hasMovingWall", "bSortable": true },
+                    { "data": "hasDocumentation", "bSortable": true }
+                ]
+                , "sorting": [[1, 'asc']]
+            });
+        });
+    </script>
+}
+@section CSS
+{
+    <link href="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesCSSPath"])" rel="stylesheet" type="text/css" />
+}
+@{
+    ViewBag.Title = "Permissions Titles";
+}
+
+<p>
+    <a href="/">< Return to Dashboard</a><br />
+</p>
+<span class="pageHeader">@ViewBag.Title</span>
+<hr />
+<br />
+<form action="/report/PermissionsTitles" method="post">
+    <div>
+        <div style="margin:10px 0px;">
+            <div style="display:inline; font-weight:bold">Include Titles that have Items with Copyright Status:</div>&nbsp;
+            @Html.CheckBoxFor(model => model.IncludeNotKnown, new { id = "chkCSNotKnown", name = "chkCSNotKnown" }) Not Known&nbsp;
+            @Html.CheckBoxFor(model => model.IncludeInCopyright, new { id = "chkCSInCopyright", name = "chkCSInCopyright" }) In Copyright&nbsp;
+            @Html.CheckBoxFor(model => model.IncludeNotProvided, new { id = "chkCSNotProvided", name = "chkCSNotProvided" }) Not Provided&nbsp;
+        </div>
+        <div style="margin:10px 0px">
+            <div style="display:inline; margin-right:10px; font-weight:bold">Include where Title ID is:</div>
+            <div style="display:inline;">
+                <input type="text" id="TitleID" name="TitleID" value="@Model.TitleID" placeholder="(Optional)" />
+            </div>
+        </div>
+    </div>
+    <div>
+        <div style="margin:10px 0px">
+            <input type="submit" name="btnShow" id="btnShow" value="Show" />
+            <input type="submit" name="btnDownload" id="btnDownload" value="Download" />
+        </div>
+    </div>
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="recordlist" style="width:100%">
+        <thead>
+            <tr>
+                <th width="6%">Title ID</th>
+                <th width="30%">Title</th>
+                <th width="9%">Type</th>
+                <th width="8%">Material Type</th>
+                <th width="8%">Years</th>
+                <th width="6%">OCLC</th>
+                <th width="6%">ISSN</th>
+                <th width="4%"># Items<br />No Known Copyright</th>
+                <th width="4%"># Items<br />In Copyright</th>
+                <th width="4%"># Items<br />Not Provided</th>
+                <th width="8%">Moving Wall</th>
+                <th width="7%">Documents</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th width="6%">Title ID</th>
+                <th width="30%">Title</th>
+                <th width="9%">Type</th>
+                <th width="8%">Material Type</th>
+                <th width="8%">Years</th>
+                <th width="6%">OCLC</th>
+                <th width="6%">ISSN</th>
+                <th width="4%"># Items<br />No Known Copyright</th>
+                <th width="4%"># Items<br />In Copyright</th>
+                <th width="4%"># Items<br />Not Provided</th>
+                <th width="8%">Moving Wall</th>
+                <th width="7%">Documents</th>
+            </tr>
+        </tfoot>
+    </table>
+</form>

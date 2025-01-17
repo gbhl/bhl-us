@@ -2,6 +2,7 @@
 using MOBOT.BHL.AdminWeb.Models;
 using MOBOT.BHL.AdminWeb.ActionFilters;
 using MOBOT.BHL.AdminWeb.MVCServices;
+using static MOBOT.BHL.AdminWeb.Models.PermissionsTitlesModel;
 
 namespace MOBOT.BHL.AdminWeb.Controllers
 {
@@ -75,6 +76,67 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
             model.GetCSV();  // Get the report data to be downloaded
             return File(model.DownloadOrphans, "text/csv");
+        }
+
+        [HttpGet]
+        public ActionResult PermissionsTitles()
+        {
+            PermissionsTitlesModel model = new PermissionsTitlesModel();
+            ViewBag.PageTitle += "Permissions Titles";
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult PermissionsTitles(PermissionsTitlesModel model)
+        {
+            if (Request.Form["btnDownload"] != null)
+            {
+                var cd = new System.Net.Mime.ContentDisposition
+                {
+                    FileName = string.Format("PermissionsTitles{0}.csv", System.DateTime.Now.ToString("yyyyMMddHHmmss")),
+                    Inline = false,  // prompt the user for downloading, set true to show the file in the browser
+                };
+                Response.AppendHeader("Content-Disposition", cd.ToString());
+
+                // Get the report data to be downloaded
+                model.GetPermissionsTitlesCSV(model.TitleID, model.IncludeNotKnown, model.IncludeInCopyright, model.IncludeNotProvided);
+                return File(model.DownloadTitles, "text/csv");
+            }
+
+            return View(model);
+        }
+
+        //
+        // AJAX method to support /Report/PermissionsTitles
+        [HttpGet]
+        public ActionResult GetPermissionsTitleRecords(int? titleID, bool nk, bool ic, bool np, 
+            int sEcho, int iDisplayStart, int iDisplayLength, int iSortCol_0, string sSortDir_0)
+        {
+            string sortColumn;
+
+            switch (iSortCol_0)
+            {
+                case 0:
+                    sortColumn = "TitleID";
+                    break;
+                case 1:
+                    sortColumn = "SortTitle";
+                    break;
+                case 10:
+                    sortColumn = "HasMovingWall";
+                    break;
+                case 11:
+                    sortColumn = "HasDocumentation";
+                    break;
+                default:
+                    sortColumn = "SortTitle";
+                    break;
+            }
+
+            PermissionsTitlesJson.Rootobject json = new PermissionsTitlesModel().GetRecords(titleID, nk, ic, np, 
+                iDisplayLength, iDisplayStart, sortColumn, sSortDir_0);
+            json.sEcho = sEcho;
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
 
         //

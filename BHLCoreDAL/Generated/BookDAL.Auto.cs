@@ -1,5 +1,5 @@
 
-// Generated 2/16/2024 1:57:28 PM
+// Generated 12/18/2024 1:29:30 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class BookDAL is based upon dbo.Book.
@@ -181,6 +181,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="pageProgression"></param>
 		/// <param name="virtualVolumeKey"></param>
+		/// <param name="copyrightIndicator"></param>
 		/// <returns>Object of type Book.</returns>
 		public Book BookInsertAuto(
 			SqlConnection sqlConnection, 
@@ -228,9 +229,10 @@ namespace MOBOT.BHL.DAL
 			int? creationUserID,
 			int? lastModifiedUserID,
 			string pageProgression,
-			string virtualVolumeKey)
+			string virtualVolumeKey,
+			string copyrightIndicator)
 		{
-			return BookInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, redirectBookID, thumbnailPageID, languageCode, barCode, mARCItemID, callNumber, volume, startYear, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, identifierBib, zQuery, sponsor, externalUrl, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, isVirtual, creationUserID, lastModifiedUserID, pageProgression, virtualVolumeKey );
+			return BookInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, redirectBookID, thumbnailPageID, languageCode, barCode, mARCItemID, callNumber, volume, startYear, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, identifierBib, zQuery, sponsor, externalUrl, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, isVirtual, creationUserID, lastModifiedUserID, pageProgression, virtualVolumeKey, copyrightIndicator );
 		}
 		
 		/// <summary>
@@ -283,6 +285,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="pageProgression"></param>
 		/// <param name="virtualVolumeKey"></param>
+		/// <param name="copyrightIndicator"></param>
 		/// <returns>Object of type Book.</returns>
 		public Book BookInsertAuto(
 			SqlConnection sqlConnection, 
@@ -331,7 +334,8 @@ namespace MOBOT.BHL.DAL
 			int? creationUserID,
 			int? lastModifiedUserID,
 			string pageProgression,
-			string virtualVolumeKey)
+			string virtualVolumeKey,
+			string copyrightIndicator)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -381,7 +385,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
 					CustomSqlHelper.CreateInputParameter("PageProgression", SqlDbType.NVarChar, 10, false, pageProgression),
-					CustomSqlHelper.CreateInputParameter("VirtualVolumeKey", SqlDbType.NVarChar, 100, false, virtualVolumeKey), 
+					CustomSqlHelper.CreateInputParameter("VirtualVolumeKey", SqlDbType.NVarChar, 100, false, virtualVolumeKey),
+					CustomSqlHelper.CreateInputParameter("CopyrightIndicator", SqlDbType.NVarChar, 100, false, copyrightIndicator), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Book> helper = new CustomSqlHelper<Book>())
@@ -474,7 +479,8 @@ namespace MOBOT.BHL.DAL
 				value.CreationUserID,
 				value.LastModifiedUserID,
 				value.PageProgression,
-				value.VirtualVolumeKey);
+				value.VirtualVolumeKey,
+				value.CopyrightIndicator);
 		}
 		
 		#endregion ===== INSERT =====
@@ -588,6 +594,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="pageProgression"></param>
 		/// <param name="virtualVolumeKey"></param>
+		/// <param name="copyrightIndicator"></param>
 		/// <returns>Object of type Book.</returns>
 		public Book BookUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -635,9 +642,10 @@ namespace MOBOT.BHL.DAL
 			byte isVirtual,
 			int? lastModifiedUserID,
 			string pageProgression,
-			string virtualVolumeKey)
+			string virtualVolumeKey,
+			string copyrightIndicator)
 		{
-			return BookUpdateAuto( sqlConnection, sqlTransaction, "BHL", bookID, itemID, redirectBookID, thumbnailPageID, languageCode, barCode, mARCItemID, callNumber, volume, startYear, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, identifierBib, zQuery, sponsor, externalUrl, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, isVirtual, lastModifiedUserID, pageProgression, virtualVolumeKey);
+			return BookUpdateAuto( sqlConnection, sqlTransaction, "BHL", bookID, itemID, redirectBookID, thumbnailPageID, languageCode, barCode, mARCItemID, callNumber, volume, startYear, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, identifierBib, zQuery, sponsor, externalUrl, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, isVirtual, lastModifiedUserID, pageProgression, virtualVolumeKey, copyrightIndicator);
 		}
 		
 		/// <summary>
@@ -690,6 +698,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="pageProgression"></param>
 		/// <param name="virtualVolumeKey"></param>
+		/// <param name="copyrightIndicator"></param>
 		/// <returns>Object of type Book.</returns>
 		public Book BookUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -738,7 +747,8 @@ namespace MOBOT.BHL.DAL
 			byte isVirtual,
 			int? lastModifiedUserID,
 			string pageProgression,
-			string virtualVolumeKey)
+			string virtualVolumeKey,
+			string copyrightIndicator)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -787,7 +797,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("IsVirtual", SqlDbType.TinyInt, null, false, isVirtual),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
 					CustomSqlHelper.CreateInputParameter("PageProgression", SqlDbType.NVarChar, 10, false, pageProgression),
-					CustomSqlHelper.CreateInputParameter("VirtualVolumeKey", SqlDbType.NVarChar, 100, false, virtualVolumeKey), 
+					CustomSqlHelper.CreateInputParameter("VirtualVolumeKey", SqlDbType.NVarChar, 100, false, virtualVolumeKey),
+					CustomSqlHelper.CreateInputParameter("CopyrightIndicator", SqlDbType.NVarChar, 100, false, copyrightIndicator), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Book> helper = new CustomSqlHelper<Book>())
@@ -880,7 +891,8 @@ namespace MOBOT.BHL.DAL
 				value.IsVirtual,
 				value.LastModifiedUserID,
 				value.PageProgression,
-				value.VirtualVolumeKey);
+				value.VirtualVolumeKey,
+				value.CopyrightIndicator);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -968,7 +980,8 @@ namespace MOBOT.BHL.DAL
 						value.CreationUserID,
 						value.LastModifiedUserID,
 						value.PageProgression,
-						value.VirtualVolumeKey);
+						value.VirtualVolumeKey,
+						value.CopyrightIndicator);
 				
 				return new CustomDataAccessStatus<Book>(
 					CustomDataAccessContext.Insert, 
@@ -1037,7 +1050,8 @@ namespace MOBOT.BHL.DAL
 						value.IsVirtual,
 						value.LastModifiedUserID,
 						value.PageProgression,
-						value.VirtualVolumeKey);
+						value.VirtualVolumeKey,
+						value.CopyrightIndicator);
 					
 				return new CustomDataAccessStatus<Book>(
 					CustomDataAccessContext.Update, 

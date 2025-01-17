@@ -1,5 +1,5 @@
 
-// Generated 1/5/2021 3:27:05 PM
+// Generated 12/2/2024 5:43:00 PM
 // Do not modify the contents of this code file.
 // This abstract class __Title is based upon dbo.Title.
 
@@ -78,6 +78,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="partName"></param>
 		/// <param name="bibliographicLevelID"></param>
 		/// <param name="materialTypeID"></param>
+		/// <param name="hasMovingWall"></param>
 		public __Title(int titleID, 
 			string mARCBibID, 
 			string mARCLeader, 
@@ -110,7 +111,8 @@ namespace MOBOT.BHL.DataObjects
 			string partNumber, 
 			string partName, 
 			int? bibliographicLevelID, 
-			int? materialTypeID) : this()
+			int? materialTypeID, 
+			short hasMovingWall) : this()
 		{
 			_TitleID = titleID;
 			MARCBibID = mARCBibID;
@@ -145,6 +147,7 @@ namespace MOBOT.BHL.DataObjects
 			PartName = partName;
 			BibliographicLevelID = bibliographicLevelID;
 			MaterialTypeID = materialTypeID;
+			HasMovingWall = hasMovingWall;
 		}
 		
 		#endregion Constructors
@@ -334,6 +337,11 @@ namespace MOBOT.BHL.DataObjects
 					case "MaterialTypeID" :
 					{
 						_MaterialTypeID = (int?)column.Value;
+						break;
+					}
+					case "HasMovingWall" :
+					{
+						_HasMovingWall = (short)column.Value;
 						break;
 					}
 								}
@@ -1257,6 +1265,33 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion MaterialTypeID
+		
+		#region HasMovingWall
+		
+		private short _HasMovingWall = default(short);
+		
+		/// <summary>
+		/// Column: HasMovingWall;
+		/// DBMS data type: smallint;
+		/// </summary>
+		[ColumnDefinition("HasMovingWall", DbTargetType=SqlDbType.SmallInt, Ordinal=34, NumericPrecision=5)]
+		public short HasMovingWall
+		{
+			get
+			{
+				return _HasMovingWall;
+			}
+			set
+			{
+				if (_HasMovingWall != value)
+				{
+					_HasMovingWall = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion HasMovingWall
 			
 		#endregion Properties
 
@@ -1333,7 +1368,8 @@ namespace MOBOT.BHL.DataObjects
 					GetComparisonString(o.PartNumber) == GetComparisonString(PartNumber) &&
 					GetComparisonString(o.PartName) == GetComparisonString(PartName) &&
 					o.BibliographicLevelID == BibliographicLevelID &&
-					o.MaterialTypeID == MaterialTypeID 
+					o.MaterialTypeID == MaterialTypeID &&
+					o.HasMovingWall == HasMovingWall 
 				)
 				{
 					o = null;
@@ -1465,7 +1501,8 @@ namespace MOBOT.BHL.DataObjects
 			public const string PartNumber = "PartNumber";	
 			public const string PartName = "PartName";	
 			public const string BibliographicLevelID = "BibliographicLevelID";	
-			public const string MaterialTypeID = "MaterialTypeID";
+			public const string MaterialTypeID = "MaterialTypeID";	
+			public const string HasMovingWall = "HasMovingWall";
 		}
 				
 		#endregion SortColumn

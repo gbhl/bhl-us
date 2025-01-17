@@ -530,6 +530,11 @@
                             <a href="/Report/Orphans">Orphaned Titles/Items/Segments</a>
                         </td>
                     </tr>
+					<tr>
+						<td align="center" runat="server" id="tdRptPermissionsTitles">
+							<a href="/Report/PermissionsTitles">Permissions Titles</a>
+						</td>
+					</tr>
                     <tr>
                         <td align="center" runat="server" id="tdDLExtContent">
                             <a href="/Downloads/ExternalContent">Links to External Content [Download]</a>

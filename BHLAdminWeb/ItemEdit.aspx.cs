@@ -213,6 +213,7 @@ namespace MOBOT.BHL.AdminWeb
                 licenseUrlTextBox.Text = book.LicenseUrl;
                 rightsTextBox.Text = book.Rights;
                 dueDiligenceTextBox.Text = book.DueDiligence;
+                ddlCopyrightIndicator.SelectedValue = book.CopyrightIndicator;
                 copyrightStatusTextBox.Text = book.CopyrightStatus;
                 copyrightRegionTextBox.Text = book.CopyrightRegion;
                 copyrightCommentTextBox.Text = book.CopyrightComment;
@@ -1254,6 +1255,7 @@ namespace MOBOT.BHL.AdminWeb
                 book.LicenseUrl = licenseUrlTextBox.Text.Trim();
                 book.Rights = rightsTextBox.Text.Trim();
                 book.DueDiligence = dueDiligenceTextBox.Text.Trim();
+                book.CopyrightIndicator = ddlCopyrightIndicator.SelectedValue;
                 book.CopyrightStatus = copyrightStatusTextBox.Text.Trim();
                 book.CopyrightRegion = copyrightRegionTextBox.Text.Trim();
                 book.CopyrightComment = copyrightCommentTextBox.Text.Trim();

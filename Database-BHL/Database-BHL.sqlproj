@@ -5,6 +5,7 @@
     <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
     <VisualStudioVersion Condition="'$(SSDTExists)' == ''">10.0</VisualStudioVersion>
     <TargetFrameworkProfile />
+    <GenerateCreateScript>True</GenerateCreateScript>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -14,7 +15,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{1eba8419-b379-473b-b641-7aa6fddb30a7}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql150DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -23,7 +24,7 @@
     <ModelCollation>1033,CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
@@ -1096,6 +1097,17 @@
     <None Include="servlog\Stored Procedures\SeveritySelectAll.sql" />
     <None Include="servlog\Stored Procedures\SeveritySelect24HourStats.sql" />
     <None Include="dbo\Stored Procedures\VaultSelectCurrent.sql" />
+    <None Include="dbo\Tables\DocumentType.sql" />
+    <None Include="Data\dbo.DocumentType.Table.sql" />
+    <None Include="dbo\Tables\TitleDocument.sql" />
+    <None Include="dbo\Stored Procedures\DocumentTypeSelectAll.sql" />
+    <None Include="dbo\Stored Procedures\TitleDocumentSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleDocumentDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleDocumentInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleDocumentUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleDocumentSelectByTitleID.sql" />
+    <None Include="dbo\Stored Procedures\TitleDocumentSelectBySegmentID.sql" />
+    <None Include="dbo\Stored Procedures\ReportSelectPermissionsTitles.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1484,5 +1496,6 @@
     <None Include="dbo\Tables\TitleExternalResource.sql" />
     <None Include="Data\dbo.ExternalResourceType.Table.sql" />
     <None Include="dbo\Stored Procedures\SegmentExternalResourceInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleDocumentSelectByBookID.sql" />
   </ItemGroup>
 </Project>

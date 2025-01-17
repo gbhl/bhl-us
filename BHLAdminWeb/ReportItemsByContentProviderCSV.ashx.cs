@@ -52,6 +52,7 @@ namespace MOBOT.BHL.AdminWeb
                     record.Add("Holding Institution", string.Join("|", book.InstitutionStrings));
                     record.Add("Rights Holder", string.Join("|", book.RightsHolderStrings));
                     record.Add("Added By", string.Join("|", book.ScanningInstitutionStrings));
+                    record.Add("Copyright Indicator", book.CopyrightIndicator);
                     record.Add("Copyright Status", book.CopyrightStatus);
                     record.Add("Rights", book.Rights);
                     record.Add("License Type", book.LicenseUrl);

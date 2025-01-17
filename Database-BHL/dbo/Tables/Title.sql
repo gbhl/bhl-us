@@ -32,6 +32,7 @@
     [PartName]                    NVARCHAR (255)  COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
     [BibliographicLevelID]        INT             NULL,
 	[MaterialTypeID]              INT             NULL,
+	[HasMovingWall]               SMALLINT        CONSTRAINT [DF_Title_HasMovingWall] DEFAULT ((0)) NOT NULL,
     CONSTRAINT [aaaaaTitle_PK] PRIMARY KEY CLUSTERED ([TitleID] ASC),
     CONSTRAINT [CK Title EndYear] CHECK ([EndYear]>=(1400) AND [EndYear]<=(2025) OR [EndYear] IS NULL),
     CONSTRAINT [CK Title StartYear] CHECK ([StartYear]>=(1400) AND [StartYear]<=(2025) OR [StartYear] IS NULL),

@@ -44,7 +44,8 @@ CREATE PROCEDURE dbo.BookInsertAuto
 @CreationUserID INT = null,
 @LastModifiedUserID INT = null,
 @PageProgression NVARCHAR(10),
-@VirtualVolumeKey NVARCHAR(100)
+@VirtualVolumeKey NVARCHAR(100),
+@CopyrightIndicator NVARCHAR(100)
 
 AS 
 
@@ -96,7 +97,8 @@ INSERT INTO [dbo].[Book]
 	[CreationUserID],
 	[LastModifiedUserID],
 	[PageProgression],
-	[VirtualVolumeKey] )
+	[VirtualVolumeKey],
+	[CopyrightIndicator] )
 VALUES
 ( 	@ItemID,
 	@RedirectBookID,
@@ -143,7 +145,8 @@ VALUES
 	@CreationUserID,
 	@LastModifiedUserID,
 	@PageProgression,
-	@VirtualVolumeKey )
+	@VirtualVolumeKey,
+	@CopyrightIndicator )
 
 SET @BookID = Scope_Identity()
 
@@ -201,7 +204,8 @@ ELSE BEGIN
 		[CreationUserID],
 		[LastModifiedUserID],
 		[PageProgression],
-		[VirtualVolumeKey]	
+		[VirtualVolumeKey],
+		[CopyrightIndicator]	
 	FROM [dbo].[Book]
 	WHERE
 		[BookID] = @BookID

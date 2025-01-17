@@ -96,6 +96,15 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.Label marcBibIdLabel;
 
         /// <summary>
+        /// chkMovingWall control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkMovingWall;
+
+        /// <summary>
         /// ddlBibliographicLevel control.
         /// </summary>
         /// <remarks>
@@ -427,6 +436,24 @@ namespace MOBOT.BHL.AdminWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button addCollectionButton;
+
+        /// <summary>
+        /// documentsList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView documentsList;
+
+        /// <summary>
+        /// addDocumentButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button addDocumentButton;
 
         /// <summary>
         /// showAllRadioButton control.

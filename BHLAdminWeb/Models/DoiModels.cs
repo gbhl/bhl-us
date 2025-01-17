@@ -1,4 +1,5 @@
-﻿using MOBOT.BHL.DataObjects;
+﻿using Microsoft.Owin.Security;
+using MOBOT.BHL.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -63,6 +64,7 @@ namespace MOBOT.BHL.AdminWeb.Models
     public class QueueAddConfirmViewModel
     {
         public bool CopyrightWarning { get; set; } = false;
+        public bool DocumentWarning { get; set; } = false;
         public List<string> Titles { get; set; } = new List<string>();
         public List<string> Segments { get; set; } = new List<string>();
 
@@ -70,9 +72,10 @@ namespace MOBOT.BHL.AdminWeb.Models
         {
         }
 
-        public QueueAddConfirmViewModel(bool copyrightWarning, List<string> titles, List<string> segments)
+        public QueueAddConfirmViewModel(bool copyrightWarning, bool documentWarning, List<string> titles, List<string> segments)
         {
             CopyrightWarning = copyrightWarning;
+            DocumentWarning = documentWarning;
             Titles = titles;
             Segments = segments;
         }

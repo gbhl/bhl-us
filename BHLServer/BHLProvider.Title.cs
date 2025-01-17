@@ -243,9 +243,54 @@ namespace MOBOT.BHL.Server
                         title.TitleID.ToString(),
                         DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt"),
                         string.IsNullOrWhiteSpace(userDescription) ? "unknown" : userDescription);
-                    targetTitle.LastModifiedDate = DateTime.Now;
-                    targetTitle.LastModifiedUserID = userId;
-                    new TitleDAL().TitleUpdateAuto(null, null, targetTitle);
+
+                    // Copy TitleDocuments to the related title
+                    if (title.TitleDocuments.Count > 0)
+                    {
+                        List<TitleDocument> targetTitleDocuments = new TitleDocumentDAL().TitleDocumentSelectByTitleID(null, null, targetTitle.TitleID);
+                        foreach (TitleDocument doc in title.TitleDocuments)
+                        {
+                            bool exists = false;
+                            foreach (TitleDocument targetDoc in targetTitleDocuments)
+                            {
+                                if (doc.Url == targetDoc.Url) { exists = true; break; }
+                            }
+                            if (!exists)
+                            {
+                                targetTitle.TitleDocuments.Add(new TitleDocument
+                                {
+                                    TitleID = targetTitle.TitleID,
+                                    DocumentTypeID = doc.DocumentTypeID,
+                                    Name = doc.Name,
+                                    Url = doc.Url
+                                });
+                            }
+                        }
+                    }
+
+                    // Copy Collections to the related title
+                    if (title.TitleCollections.Count > 0)
+                    {
+                        List<TitleCollection> targetTitleCollections = new TitleCollectionDAL().SelectByTitle(null, null, targetTitle.TitleID);
+                        foreach(TitleCollection tc in title.TitleCollections)
+                        {
+                            bool exists = false;
+                            foreach(TitleCollection targetTC in targetTitleCollections)
+                            {
+                                if (tc.CollectionID == targetTC.CollectionID) { exists = true; break; }
+                            }
+                            if (!exists)
+                            {
+                                targetTitle.TitleCollections.Add(new TitleCollection
+                                {
+                                    TitleID = targetTitle.TitleID,
+                                    CollectionID = tc.CollectionID
+                                });
+                            }
+                        }
+                    }
+
+                    new TitleDAL().Save(null, null, targetTitle, userId);
                 }
             }
 
