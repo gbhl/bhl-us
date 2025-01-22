@@ -35,6 +35,7 @@ build/
 [Aa]pp.[Cc]onfig
 [Aa]pp[Cc]onfig.xml
 [Aa]pp[Cc]onfig*.xml
+[Tt]esthost.dll.[Cc]onfig
 !/BHLUSWeb2/data/[Ww]eb.[Cc]onfig
 
 # BHL projects

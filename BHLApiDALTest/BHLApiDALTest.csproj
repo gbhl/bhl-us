@@ -3,7 +3,8 @@
   <PropertyGroup>
     <RootNamespace>BHLApiDALTest</RootNamespace>
     <AssemblyName>BHLApiDALTest</AssemblyName>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,5 +47,10 @@
       <Project>{EF8580AD-4BF2-4143-AAC8-03B8136BF151}</Project>
       <Name>BHLApiDataObjects</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="testhost.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

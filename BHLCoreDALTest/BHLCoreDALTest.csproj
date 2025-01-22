@@ -4,8 +4,8 @@
     <OutputType>Library</OutputType>
     <RootNamespace>BHLCoreDALTest</RootNamespace>
     <AssemblyName>BHLCoreDALTest</AssemblyName>
-    <TargetFramework>netstandard2.0</TargetFramework>
-	<IsTestProject>true</IsTestProject>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,5 +40,10 @@
     <ProjectReference Include="..\BHLCoreDAL\BHLCoreDAL.csproj" />
     <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj" />
     <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="testhost.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

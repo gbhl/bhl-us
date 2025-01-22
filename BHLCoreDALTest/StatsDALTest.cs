@@ -76,7 +76,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             Stats actual = target.StatsSelect(sqlConnection, sqlTransaction);
-            Assert.IsTrue(actual.NameCount > 0);
+            Assert.IsTrue(actual.TitleCount > 0);
         }
 
         [TestMethod()]

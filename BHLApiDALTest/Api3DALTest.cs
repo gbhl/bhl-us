@@ -107,7 +107,7 @@ namespace BHLApiDALTest
             Api3DAL target = new Api3DAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string identifierName = "BioStor";
+            string identifierName = "BioStor Author ID";
             string identifierValue = "1916";
             List<Author> actual = target.AuthorSelectByIdentifier(sqlConnection, sqlTransaction, identifierName, identifierValue);
             Assert.IsTrue(actual.Count > 0);

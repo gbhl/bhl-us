@@ -153,7 +153,7 @@ namespace BHLCoreDALTest
             OpenUrlCitationDAL target = new OpenUrlCitationDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int pageID = 3299787;
+            int pageID = 3001657;
             List<OpenUrlCitation> actual;
             actual = target.OpenUrlCitationSelectByPageID(sqlConnection, sqlTransaction, pageID);
             Assert.IsTrue(actual.Count == 1);

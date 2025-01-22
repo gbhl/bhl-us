@@ -1048,10 +1048,6 @@
     <Content Include="Site.Master" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BHLApiDALTest\BHLApiDALTest.csproj">
-      <Project>{D26F8B49-9AC0-41A2-B832-B46E5A43AD9C}</Project>
-      <Name>BHLApiDALTest</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BHLApiDataObjects2\BHLApiDataObjects2.csproj">
       <Project>{A4039079-6627-4D17-8B92-3B8B73B187E2}</Project>
       <Name>BHLApiDataObjects2</Name>

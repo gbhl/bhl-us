@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<configuration>
-  <connectionStrings>
-    <remove name="BHL" />
-    <remove name="Admin" />
-    <add name="BHL" connectionString="connection string for main database"  providerName="System.Data.SqlClient" />
-    <add name="Admin" connectionString="optional connection string for logging database" providerName="System.Data.SqlClient"/>
-  </connectionStrings>
-</configuration>

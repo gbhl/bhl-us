@@ -63,7 +63,7 @@ namespace BHLCoreDALTest
             InstitutionDAL target = new InstitutionDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int itemID = 22500;
+            int itemID = 88;
             List<Institution> actual = target.InstitutionSelectByItemID(sqlConnection, sqlTransaction, itemID);
             Assert.IsNotNull(actual);
         }
@@ -108,7 +108,7 @@ namespace BHLCoreDALTest
             InstitutionDAL target = new InstitutionDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int itemID = 22004;
+            int itemID = 1;
             string role = "Holding Institution";
             List<Institution> actual = target.InstitutionSelectByItemIDAndRole(sqlConnection, sqlTransaction, itemID, role);
             Assert.IsTrue(actual.Count > 0);
