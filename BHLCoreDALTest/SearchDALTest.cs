@@ -182,7 +182,7 @@ namespace BHLCoreDALTest
             SearchDAL target = new SearchDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string authorName = "charles darwin";
+            string authorName = "thomas henry huxley";
             List<Author> actual = target.SearchAuthorComplete(sqlConnection, sqlTransaction, authorName);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -196,7 +196,7 @@ namespace BHLCoreDALTest
             SearchDAL target = new SearchDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string authorName = "brown";
+            string authorName = "huxley";
             int returnCount = 1;
             List<Author> actual = target.SearchAuthor(sqlConnection, sqlTransaction, authorName, returnCount);
             Assert.AreEqual(actual.Count, 1);

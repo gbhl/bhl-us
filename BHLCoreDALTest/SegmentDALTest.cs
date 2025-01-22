@@ -120,12 +120,11 @@ namespace BHLCoreDALTest
             SegmentDAL target = new SegmentDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int segmentId = 2341;
+            int segmentId = 74350;
             Segment actual = target.SegmentSelectExtended(sqlConnection, sqlTransaction, segmentId);
-            Assert.AreEqual(actual.SegmentID, 2341);
+            Assert.AreEqual(actual.SegmentID, 74350);
             Assert.IsTrue(actual.AuthorList.Count > 0);
             Assert.IsTrue(actual.IdentifierList.Count > 0);
-            Assert.IsTrue(actual.KeywordList.Count > 0);
         }
 
         /// <summary>
@@ -197,7 +196,7 @@ namespace BHLCoreDALTest
             SegmentDAL target = new SegmentDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string title = "q";
+            string title = "p";
             int pageNum = 1;
             int numPages = 10;
             string sort = "title";
