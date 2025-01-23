@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <appSettings>
+    <add key="ElasticSearchServerAddress" value="SEARCH_SERVER_BASE_URL"/>
+    <add key="ESDefaultIndex" value="_all"/>
+    <add key="ESAllIndex" value="items,authors,keywords,names"/>
+    <add key="ESCatalogIndex" value="catalog"/>
+    <add key="ESItemsIndex" value="items"/>
+    <add key="ESPagesIndex" value="pages"/>
+    <add key="ESAuthorsIndex" value="authors"/>
+    <add key="ESKeywordsIndex" value="keywords"/>
+    <add key="ESNamesIndex" value="names"/>
+    <add key="DebugSearch" value="false"/>
+  </appSettings>
+</configuration>
