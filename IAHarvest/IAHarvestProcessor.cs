@@ -1009,11 +1009,11 @@ namespace IAHarvest
                                     if (reader.Name == "PARAGRAPH") pageText.AppendLine();
                                     if (reader.Name == "OBJECT")
                                     {
-                                        File.WriteAllText(string.Format("{0}{1}\\{1}\\{1}_{2}.txt", localFileFolder, iaIdentifier, Convert.ToString(pageCounter).PadLeft(4, '0')), pageText.ToString());
+                                        File.WriteAllText(string.Format("{0}{1}\\{1}\\{1}_{2}.txt", localFileFolder, iaIdentifier, Convert.ToString(counter).PadLeft(4, '0')), pageText.ToString());
 
                                         // Write a record to the database for this page
                                         string externalUrl = this.GetPageExternalUrl(itemID, iaIdentifier, pageCounter);
-                                        string textFileName = string.Format("{0}_{1}.txt", iaIdentifier, Convert.ToString(pageCounter).PadLeft(4, '0'));
+                                        string textFileName = string.Format("{0}_{1}.txt", iaIdentifier, Convert.ToString(counter).PadLeft(4, '0'));
                                         provider.IAPageInsertAuto(itemID, textFileName, pageCounter, externalUrl);
 
                                         counter++;
