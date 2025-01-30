@@ -1,6 +1,8 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace MOBOT.BHL.Web2.Controllers
@@ -183,18 +185,21 @@ namespace MOBOT.BHL.Web2.Controllers
                                 { "date-parts", new object[] { new string[] { segment.Date } } }
                     });
             }
+            string eLocator = string.Empty;
             foreach (ItemIdentifier ii in segment.IdentifierList)
             {
                 if (ii.IdentifierName == "ISSN" && !cslData.ContainsKey("ISSN")) cslData.Add("ISSN", ii.IdentifierValue);
                 if (ii.IdentifierName == "ISBN" && !cslData.ContainsKey("ISBN")) cslData.Add("ISBN", ii.IdentifierValue);
                 if (ii.IdentifierName == "DOI" && !cslData.ContainsKey("DOI")) cslData.Add("DOI", ii.IdentifierValue);
+                if (ii.IdentifierName == "eLocator") eLocator = ii.IdentifierValue;
             }
             cslData.Add("title", segment.Title);
             cslData.Add("URL", "https://www.biodiversitylibrary.org/part/" + id1.ToString());
             if (!string.IsNullOrWhiteSpace(segment.LanguageCode)) cslData.Add("language", segment.LanguageCode);
             if (!string.IsNullOrWhiteSpace(segment.Volume)) cslData.Add("volume", segment.Volume);
             if (!string.IsNullOrWhiteSpace(segment.Issue)) cslData.Add("issue", segment.Issue);
-            if (!string.IsNullOrWhiteSpace(segment.PageRange)) cslData.Add("page", segment.PageRange);
+            // If an eLocator exists, substitute it for the page number
+            if (!string.IsNullOrWhiteSpace(segment.PageRange)) cslData.Add("page", (string.IsNullOrWhiteSpace(eLocator) ? segment.PageRange : eLocator));
             if (!string.IsNullOrWhiteSpace(segment.RightsStatus)) cslData.Add("license", segment.RightsStatus);
             if (!string.IsNullOrWhiteSpace(segment.PublisherName)) cslData.Add("publisher", segment.PublisherName);
             if (!string.IsNullOrWhiteSpace(segment.PublisherPlace)) cslData.Add("publisher-place", segment.PublisherPlace);
@@ -206,7 +211,9 @@ namespace MOBOT.BHL.Web2.Controllers
         {
             // Get most of the metadata for the page from the related title
             BHLProvider bhlProvider = new BHLProvider();
-            PageSummaryView psv = bhlProvider.PageSummarySelectByPageId(id1, id2);
+            PageSummaryView psv;
+            psv = bhlProvider.PageSummarySelectByPageId(id1, id2);
+            if (psv == null) psv = bhlProvider.PageSummarySegmentSelectByPageID(id1, id2);
             Dictionary<string, object> cslData = GetCSLTitleData(psv.TitleID);
 
             // Get volume-specific metadata for the page citation
@@ -221,21 +228,16 @@ namespace MOBOT.BHL.Web2.Controllers
             if (cslData.ContainsKey("DOI")) cslData.Remove("DOI");
 
             List<IndicatedPage> pageIndicators  = bhlProvider.IndicatedPageSelectByPageID(id1);
-            bool firstPageIndicator = true;
-            foreach(IndicatedPage ip in pageIndicators)
+
+            // Select first page indicator with a prefix of "Page".  If no match, use first indicator with no prefix.
+            var indicator = pageIndicators.FirstOrDefault(i => i.PagePrefix.ToLower() == "page");
+            if (indicator != null)
             {
-                if (ip.PagePrefix.ToLower() == "page")
-                {
-                    if (cslData.ContainsKey("page") && firstPageIndicator)
-                    {
-                        cslData["page"] = ip.PageNumber;
-                        firstPageIndicator = !firstPageIndicator;
-                    }
-                    else if (!cslData.ContainsKey("page"))
-                    {
-                        cslData.Add("page", ip.PageNumber);
-                    }
-                }
+                cslData.Add("page", indicator.PageNumber);
+            }
+            else {
+                indicator = pageIndicators.FirstOrDefault(i => i.PagePrefix == "");
+                if (indicator != null) cslData.Add("page", indicator.PageNumber);
             }
 
             return cslData;
