@@ -142,6 +142,7 @@
                                             if (!string.IsNullOrWhiteSpace(segment.Volume)) vs.Add("Vol " + segment.Volume);
                                             if (!string.IsNullOrWhiteSpace(segment.Issue)) vs.Add("Iss " + segment.Issue);
                                             if (!string.IsNullOrWhiteSpace(segment.StartPageNumber)) vs.Add("Page " + segment.StartPageNumber);
+                                            if (!string.IsNullOrWhiteSpace(segment.Date)) vs.Add("Date " + segment.Date);
                                             if (vs.Count > 0)
                                             {%>
                                                 <%: string.Join(", ", vs.ToArray()) %>
