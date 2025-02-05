@@ -103,14 +103,14 @@
         </div>
         <div id="divAlert" runat="server" visible="false" class="alertbox"><asp:Literal ID="litAlertMessage" runat="server"></asp:Literal></div>
         <asp:ContentPlaceHolder ID="mainContentPlaceHolder" runat="server" />
-            
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<!--
         <script>            !window.jQuery && document.write(unescape('%3Cscript src="/js/libs/jquery-1.4.4.min.js"%3E%3C/script%3E'))</script>
-
+-->
         <asp:ContentPlaceHolder ID="scriptContentPlaceHolder" runat="server" />  
         
-        <script src="/js/plugins.js?v=2"></script>
-        <script src="/js/script.js?v=7"></script>
+        <script src="/js/plugins.js?v=3"></script>
+        <script src="/js/script.js?v=8"></script>
         <script type="text/plain" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js" data-category="analytics" data-service="altmetric"></script>
     </form>
 

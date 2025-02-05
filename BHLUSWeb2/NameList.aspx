@@ -27,7 +27,7 @@
 </asp:Content>
 
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder" runat="server">
-<link rel="stylesheet" type="text/css" href="/css/jqgridtheme/jquery-ui-1.8.10.custom.css" />
+<link rel="stylesheet" type="text/css" href="/css/jqgridtheme/jquery-ui-1.14.1.min.css" />
 <link rel="stylesheet" type="text/css" href="/css/jqgridtheme/ui.jqgrid.css" />
 </asp:Content>
 

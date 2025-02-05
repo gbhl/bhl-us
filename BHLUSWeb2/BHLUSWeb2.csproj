@@ -176,6 +176,13 @@
     <Content Include="api2\soap.asmx" />
     <Content Include="css\bhl-citation-js.css" />
     <Content Include="css\cookieconsent.css" />
+    <Content Include="css\jqgridtheme\images\ui-icons_444444_256x240.png" />
+    <Content Include="css\jqgridtheme\images\ui-icons_555555_256x240.png" />
+    <Content Include="css\jqgridtheme\images\ui-icons_777620_256x240.png" />
+    <Content Include="css\jqgridtheme\images\ui-icons_777777_256x240.png" />
+    <Content Include="css\jqgridtheme\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="css\jqgridtheme\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="css\jqgridtheme\jquery-ui-1.14.1.min.css" />
     <Content Include="css\nspop.css" />
     <Content Include="css\socicon.css" />
     <Content Include="Docs\api3.html" />
@@ -243,7 +250,6 @@
     <Content Include="css\jqgridtheme\images\ui-icons_454545_256x240.png" />
     <Content Include="css\jqgridtheme\images\ui-icons_888888_256x240.png" />
     <Content Include="css\jqgridtheme\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="css\jqgridtheme\jquery-ui-1.8.10.custom.css" />
     <Content Include="css\jqgridtheme\ui.jqgrid.css" />
     <Content Include="css\style.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -255,6 +261,7 @@
     <Content Include="Error.aspx" />
     <Content Include="Feedback.aspx" />
     <Content Include="feedbackmsg.txt" />
+    <Content Include="flickrthumbs.txt" />
     <Content Include="GetApiKey.aspx" />
     <Content Include="images\01_home_pic_img.png" />
     <Content Include="images\02_home_pic_img.png" />
@@ -391,6 +398,16 @@
     <Content Include="images\facebook_like_over.png" />
     <Content Include="images\flickr-icon-normal.png" />
     <Content Include="images\flickr-icon-over.png" />
+    <Content Include="images\flickrthumbs\10535931.jpg" />
+    <Content Include="images\flickrthumbs\1203798.jpg" />
+    <Content Include="images\flickrthumbs\1203991.jpg" />
+    <Content Include="images\flickrthumbs\12042246.jpg" />
+    <Content Include="images\flickrthumbs\12232608.jpg" />
+    <Content Include="images\flickrthumbs\306998.jpg" />
+    <Content Include="images\flickrthumbs\3894920.jpg" />
+    <Content Include="images\flickrthumbs\6307518.jpg" />
+    <Content Include="images\flickrthumbs\7360249.jpg" />
+    <Content Include="images\flickrthumbs\8448711.jpg" />
     <Content Include="images\flickrthumbs\Default\10535931.jpg" />
     <Content Include="images\flickrthumbs\Default\1203798.jpg" />
     <Content Include="images\flickrthumbs\Default\1203991.jpg" />
@@ -463,6 +480,8 @@
     <Content Include="js\citation-js\plugins\wikipedia-templates.js" />
     <Content Include="js\cookieconsent-config.js" />
     <Content Include="js\cookieconsent.umd.js" />
+    <Content Include="js\libs\jquery-3.7.1.min.js" />
+    <Content Include="js\libs\jquery-ui-1.14.1.custom.min.js" />
     <Content Include="js\nspop.js" />
     <Content Include="Handlers\GetPartPdf.ashx" />
     <Content Include="Handlers\GetPartImages.ashx" />
@@ -502,7 +521,6 @@
     <Content Include="js\libs\FlickrUpload.js" />
     <Content Include="js\libs\grid.locale-en.js" />
     <Content Include="js\libs\jqModal.min.js" />
-    <Content Include="js\libs\jquery-1.12.4.min.js" />
     <Content Include="js\libs\jquery-1.4.4.min.js" />
     <Content Include="js\libs\jquery-ui-1.8.11.custom.min.js" />
     <Content Include="js\libs\jquery.bt.min.js" />

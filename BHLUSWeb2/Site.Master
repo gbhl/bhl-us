@@ -179,15 +179,13 @@
                 </div>
             </nav>
         </footer>
-        
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script>!window.jQuery && document.write(unescape('%3Cscript src="/js/libs/jquery-1.12.4.min.js"%3E%3C/script%3E'))</script>
-
-         <script type="text/javascript" src="/js/jMyCarousel/jMyCarousel.js" language="javascript"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script>!window.jQuery && document.write(unescape('%3Cscript src="/js/libs/jquery-3.7.1.min.js"%3E%3C/script%3E'))</script>
+         <script type="text/javascript" src="/js/jMyCarousel/jMyCarousel.js?v=2" language="javascript"></script>
         <asp:ContentPlaceHolder ID="scriptContentPlaceHolder" runat="server" />
 
-        <script src="/js/plugins.js?v=2"></script> 
-          <script src="/js/script.js?v=7"></script> 
+        <script src="/js/plugins.js?v=3"></script> 
+          <script src="/js/script.js?v=8"></script> 
         <script type="text/plain" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js" data-category="analytics" data-service="altmetric"></script>
     </form>
 </body>

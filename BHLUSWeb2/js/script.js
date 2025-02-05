@@ -1,9 +1,6 @@
 $(document).ready(function () {
     var searchDefaultTexts = ["Search the catalog and full-text", "Search the catalog"];
 
-    // Upgrade browsers plugin
-    $.upgradebrowsers();
-
     /* used to prevent flickering of elements while doc is still loading */
     $('.js .js-invisible').css('visibility', 'visible');
 

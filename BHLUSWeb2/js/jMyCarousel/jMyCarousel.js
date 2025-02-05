@@ -48,7 +48,7 @@
 
         return this.each(function () {                           // Returns the element collection. Chainable.   
             var running = false, animCss = o.vertical ? "top" : "left", sizeCss = o.vertical ? "height" : "width";
-            var div = $(this), ul = $("ul", div), tLi = $("li", ul), tl = tLi.size(), v = o.visible;
+            var div = $(this), ul = $("ul", div), tLi = $("li", ul), tl = tLi.length, v = o.visible;
             var mousewheelN = 0; // will help for the mousewheel effect (to count how many steps we have to walk ahead)
             var defaultBtn = (o.btnNext === null && o.btnPrev === null) ? true : false;
             var cssU = (v.toString().indexOf("%") != -1 ? '%' : (v.toString().indexOf("px") != -1) ? 'px' : 'el');
@@ -94,7 +94,7 @@
             if (o.height != null) liSizeV = o.height;       // use specified size for main layer (added by MWL)
 
             var curr = o.start;   								// Current position in pixels  
-            var nbAllElts = li.size(); 						// Total number of items  
+            var nbAllElts = li.length;  						// Total number of items  
             var ulSize = liSize * nbAllElts;                   	// size of full ul(total length, not just for the visible items)
             var nbElts = tl; 								// number of elements (only visible items)
             var eltsSize = nbElts * liSize; 					// size of the visible elements only
@@ -171,7 +171,7 @@
                 div.css("width", liSizeV + 'px');
                 ul.css("width", liSizeV + 'px');
                 li.css('margin-bottom', (parseInt(li.css('margin-bottom')) * 2) + 'px'); // bypass the "margin collapsing" effect by multiplying the margin-bottom by 2 
-                li.eq(li.size() - 1).css('margin-bottom', li.css('margin-top')); 		// Last element has to be the right margin since no margin collapse there
+                li.eq(li.length - 1).css('margin-bottom', li.css('margin-top')); 		// Last element has to be the right margin since no margin collapse there
             } else {													// horizontal mode
                 div.css('height', liSizeV + 'px');
                 ul.css('height', liSizeV + 'px');
