@@ -113,9 +113,6 @@
 }
 
 @section scripts {
-    <script src="/js/libs/jquery.hoverintent.min.js"></script>
-    <script src="/js/libs/jquery.text-overflow.min.js"></script>
-
     <script type="text/javascript">
     //<![CDATA[
     $(document).ready(function () {
@@ -167,8 +164,7 @@
 
         // If no default sub-section found then head on to the default otherwise show selected sub-section
         if (!subSection.length) {
-            $.History.go('/titles');
-            return false;
+            $('#titles').show();
         } else {
             subSection.show();
         }

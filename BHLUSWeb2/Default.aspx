@@ -78,7 +78,6 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderID="scriptContentPlaceHolder" runat="server" >
-<script src="/js/libs/jquery.text-overflow.min.js"></script>
 <script type="text/javascript">
 //<![CDATA[
     $(document).ready(function () {

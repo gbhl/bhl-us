@@ -319,73 +319,78 @@
 	</div>
 </asp:Content>
 <asp:Content ID="scriptContent" ContentPlaceHolderID="scriptContentPlaceHolder" runat="server">
-<script src="/js/libs/jquery.history.min.js"></script>
-<script src="/js/libs/jquery.hoverintent.min.js"></script>
-<script src="/js/libs/jquery.text-overflow.min.js"></script>
 <script type="text/javascript">
 //<![CDATA[
-    $(document).ready(function () {
-        var subSections = $('#sub-sections').children(); //.hide();
+$(document).ready(function () {
+    var subSections = $('#sub-sections').children(); //.hide();
 
-        // Navigate to the default sub-section if no hash
-        if (!location.hash) {
-            if (<%: (titleCount ?? "0") %> > 0) {
-                window.location.replace('#/titles');
-            }
-            else if (<%: (segmentCount ?? "0") %> > 0) {
-                window.location.replace('#/sections');
-            }
-            else if (<%: (authorCount ?? "0") %> > 0) {
-                window.location.replace('#/authors');
-            }
-            else if (<%: (subjectCount ?? "0") %> > 0) {
-                window.location.replace('#/subjects');
-            }
-            else if (<%: (nameCount ?? "0") %> > 0) {
-                window.location.replace('#/names');
-            }
-            else if (<%: (annotationCount ?? "0") %> > 0) {
-                window.location.replace('#/annotations');
-            }
-            else if (<%: (annoConceptCount ?? "0") %> > 0) {
-                window.location.replace('#/annotationConcepts');
-            }
-            else if (<%: (annoSubjectCount ?? "0") %> > 0) {
-                window.location.replace('#/annotationSubjects');
-            }
-            else {
-                window.location.replace('#/titles');
-            }
+    // Navigate to the default sub-section if no hash
+    if (!location.hash) {
+        if (<%: (titleCount ?? "0") %> > 0) {
+            window.location.replace('#/titles');
         }
+        else if (<%: (segmentCount ?? "0") %> > 0) {
+            window.location.replace('#/sections');
+        }
+        else if (<%: (authorCount ?? "0") %> > 0) {
+            window.location.replace('#/authors');
+        }
+        else if (<%: (subjectCount ?? "0") %> > 0) {
+            window.location.replace('#/subjects');
+        }
+        else if (<%: (nameCount ?? "0") %> > 0) {
+            window.location.replace('#/names');
+        }
+        else if (<%: (annotationCount ?? "0") %> > 0) {
+            window.location.replace('#/annotations');
+        }
+        else if (<%: (annoConceptCount ?? "0") %> > 0) {
+            window.location.replace('#/annotationConcepts');
+        }
+        else if (<%: (annoSubjectCount ?? "0") %> > 0) {
+            window.location.replace('#/annotationSubjects');
+        }
+        else {
+            window.location.replace('#/titles');
+        }
+    }
 
-        $.History.bind(function (state) {
-            if (!$('#sub-sections').is(':visible')) {
-                $('#sub-sections').show();
-            }
-            var stateName = state.replace(/[^a-zA-Z0-9\s]/gi, '');
-            var subSection = $('#' + stateName);
-            //var subSectionHeader = $('#subhead-' + stateName)
-            subSections.hide();
+    selectTab();
+});
 
-            // Highlight selected link
-            $('#linkbar a').removeClass('active');
-            $('#linkbar .' + stateName + ' a').addClass('active').blur();
+$(window).on('hashchange', function () {
+    selectTab();
+});
 
-            // Special case
-            if (stateName == 'all') {
-                subSections.show();
-                return false;
-            }
+function selectTab() {
+    var state = location.hash;
+    var subSections = $('#sub-sections').children();
 
-            // If no default sub-section found then head on to the default otherwise show selected sub-section
-            if (!subSection.length) {
-              $.History.go('/all');
-                return false;
-            } else {
-                subSection.show();
-            }
-        });
-    });
+    if (!$('#sub-sections').is(':visible')) {
+        $('#sub-sections').show();
+    }
+    var stateName = state.replace(/[^a-zA-Z0-9\s]/gi, '');
+    var subSection = $('#' + stateName);
+    subSections.hide();
+
+    // Highlight selected link
+    $('#linkbar a').removeClass('active');
+    $('#linkbar .' + stateName + ' a').addClass('active').blur();
+
+    // Special case
+    if (stateName == 'all') {
+        subSections.show();
+        return false;
+    }
+
+    // If no default sub-section found then head on to the default otherwise show selected sub-section
+    if (!subSection.length) {
+        $('#all').show();
+    } else {
+        subSection.show();
+    }
+});
+
 //]]>
 </script>
 </asp:Content>

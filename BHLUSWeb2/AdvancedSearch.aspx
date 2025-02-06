@@ -181,12 +181,10 @@
                     $("#tabs").tabs({
                         activate: function (event, ui) {
                             var scrollTop = $(window).scrollTop(); // save current scroll position
-                            window.location.hash = ui.newPanel.attr('id'); // add hash to url
                             $(window).scrollTop(scrollTop); // keep scroll at current position
                         }
                     });
                 });
-                $("#tabs").tabs('select', '#<%= startTabDiv %>');    // Default to a particular tab
             });
 
             // Validate book search
@@ -332,5 +330,5 @@
                 if (event.keyCode == '13') $("#<%= btnSearchName.ClientID %>").click();
             });
 
-</script>
+        </script>
 </asp:Content>
