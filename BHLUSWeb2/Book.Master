@@ -19,7 +19,7 @@
     <link rel="Stylesheet" href="/css/bookviewer.css?v=3" />
     <link rel="stylesheet" href="/css/socicon.css?v=1" media="all" />
 	<link rel="stylesheet" href="/css/cookieconsent.css" />
-    <script src="/js/libs/modernizr-1.6.min.js"></script>
+    <script src="/js/libs/modernizr-custom.js"></script>
 
     <asp:ContentPlaceHolder id="PageHeaderIncludesPlaceHolder" runat="server" />
 
@@ -103,7 +103,9 @@
         </div>
         <div id="divAlert" runat="server" visible="false" class="alertbox"><asp:Literal ID="litAlertMessage" runat="server"></asp:Literal></div>
         <asp:ContentPlaceHolder ID="mainContentPlaceHolder" runat="server" />
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <!--<script src="https://code.jquery.com/jquery-migrate-3.5.2.js"></script>-->
 <!--
         <script>            !window.jQuery && document.write(unescape('%3Cscript src="/js/libs/jquery-1.4.4.min.js"%3E%3C/script%3E'))</script>
 -->

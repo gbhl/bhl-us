@@ -495,8 +495,8 @@
     <link rel="stylesheet" type="text/css" href="/css/nspop.css?v=1" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
-<script src="/js/libs/jquery.easing.1.3.js" type="text/javascript"></script>
-<script src="/js/libs/jquery-ui-1.8.11.custom.min.js" type="text/javascript"></script>
+<script src="/js/libs/jquery.easing.min.js" type="text/javascript"></script>
+<script src="/js/libs/jquery-ui-1.14.1.custom.min.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.hoverintent.min.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.xcolor.min.js" type="text/javascript"></script>
 <script src="/js/libs/jqModal.min.js" type="text/javascript"></script>
@@ -506,8 +506,8 @@
 <script src="/js/libs/jquery.bt.min.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.printElement.min.js" type="text/javascript"></script>
 <script src="/js/libs/BookReader.js?v=4" type="text/javascript"></script>
-<script src="/js/libs/dragscrollable.js" type="text/javascript"></script>
-<script src="/js/libs/jquery.text-overflow.min.js" type="text/javascript"></script>
+<script src="/js/libs/dragscrollable.min.js" type="text/javascript"></script>
+<script src="/js/libs/jquery.text-overflow.js" type="text/javascript"></script>
 <script src="/js/nspop.js?v=2" type="text/javascript"></script>
 <script src="/js/citation-js/citation-js@0.6.4.js" type="text/javascript"></script>
 <script src="/js/citation-js/bhl-citation-js.js?v=2" type="text/javascript"></script>
@@ -606,10 +606,10 @@
 
             // Set up zoom actions on PDF toolbar
             var pdfToolbar = $('#toolbar-top');
-            pdfToolbar.find('.zoom_out').unbind('click');   // unbind first so the same event isn't bound twice
-            pdfToolbar.find('.zoom_in').unbind('click');
-            pdfToolbar.find('.zoom_out').click(function (e) { br.zoom(-1); e.preventDefault(); });
-            pdfToolbar.find('.zoom_in').click(function (e) { br.zoom(1); e.preventDefault(); });
+            pdfToolbar.find('.zoom_out').off('click');   // make sure same event isn't bound twice
+            pdfToolbar.find('.zoom_in').off('click');
+            pdfToolbar.find('.zoom_out').on("click", function (e) { br.zoom(-1); e.preventDefault(); });
+            pdfToolbar.find('.zoom_in').on("click", function (e) { br.zoom(1); e.preventDefault(); });
 
             actionMode = actionModeType.Select;
             if (3 != br.mode) { br.switchMode(3); }
@@ -668,7 +668,7 @@
                                 'class' : 'BRicon pop_ocr',
                                 'title' : 'View text in Window',
                                 'text' : 'View text in Window'
-                            }).click(function() {
+                            }).on("click", function() {
                                 if ((typeof ocrPopUp == undefined) || !ocrPopUp || ocrPopUp.closed)
                                 {
                                     ocrPopUp = window.open('about:blank', '_blank', 'width=650,height=440,scrollbars=yes');
@@ -705,7 +705,7 @@
                         .appendTo(newpageOCR);
 
                     // Create BeautyTips if canvas exists & not IE (results in singlepage view scrolling to top).
-                    if(Modernizr.canvas && !$.browser.msie) {
+                    if(Modernizr.canvas) { // && !$.browser.msie) {
                         $('.pop_ocr').bt({
                             padding: 10,
                             spikeLength:10,
@@ -774,13 +774,13 @@
         }
 
         // Check for Enter in Search Inside text box
-        $("#sibSearchText").keypress(function (event) {
+        $("#sibSearchText").on("keypress", function (event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode == '13') $("#sibSearchBtn").click();
         });
 
         // Click binder for search button
-        $("#sibSearchBtn").click(function () {
+        $("#sibSearchBtn").on("click", function () {
             var resultsBox = $(".sibResultsBox");
             $("#sibTextEcho").html($("#sibSearchText").val());
 
@@ -833,7 +833,7 @@
         });
 
         // Change binder for volumes dropdown
-        $('#ddlVolumes').live("change", function () {
+        $('#volumedd').on("change", "#ddlVolumes", function () {
             var ids = $(this).val().split("|");
             if (ids[0] == 0) { // IsVirtual
                 location.href = '/item/' + ids[1];  // BookID
@@ -865,27 +865,27 @@
             toTop: true,
             onHide: onHideAction
         });
-        $(".buttondrop.download").click(function(){
+        $(".buttondrop.download").on("click", function(){
             if ($(".downloadcontents").css("display") == "block") {
                 $(".downloadcontents").slideUp("fast"); 
             } else {
                 $(".downloadcontents").slideDown("fast"); 
             }
             
-            $(document).mouseup(function (e){
+            $(document).on("mouseup", function (e){
                 $(".downloadcontents").slideUp("fast"); 
-                $(document).unbind("mouseup");
+                $(document).off("mouseup");
             });
         });
-        $(".selectpages").click(function(){
+        $(".selectpages").on("click", function(){
             selectPagesToDownload();
         });
-        $(".cancelpdf", pdfBar).click(function(){
+        $(".cancelpdf", pdfBar).on("click", function(){
             cancelSelectPages();
         });
 
         // Click Binder for PDF Review button
-        var pdfReview = $('.review', pdfBar).click(function() {
+        var pdfReview = $('.review', pdfBar).on("click", function() {
             if(pdfPages.length > 0) {
                 changePdfMode((pdfMode) ? pdfMode : PdfModeType.Icon, true);
 
@@ -895,21 +895,21 @@
         });
 
         // Click Binder for PDF Generate button
-        var pdfGenerate = $('.generate', pdfBar).click(function() {
+        var pdfGenerate = $('.generate', pdfBar).on("click", function() {
             if(pdfPages.length > 0) {
                 $('#generate-dialog').jqmShow();
             }
         });        
 
         // Click Binder for PDF Generate button on Dialog
-        $('#review-dialog .generate').click(function() {
+        $('#review-dialog .generate').on("click", function() {
             isModalDialogChange = true;
             $('#review-dialog').jqmHide();
             $('#generate-dialog').jqmShow();            
         });
 
         // Click Binder for PDF Review button on Dialog
-        $('#generate-dialog .review').click(function() {
+        $('#generate-dialog .review').on("click", function() {
             isModalDialogChange = true;
             $('#generate-dialog').jqmHide();
             
@@ -919,24 +919,24 @@
         });
 
         // Click Binder for list view on Review Dialog
-        var pdfListLink = $('#review-dialog .list-view').click(function() {
+        var pdfListLink = $('#review-dialog .list-view').on("click", function() {
             changePdfMode(PdfModeType.List);
             $('#review-dialog .body').data('jsp').reinitialise();
         });
 
         // Click Binder for icon view on Review Dialog
-        var pdfIconLink = $('#review-dialog .icon-view').click(function() {
+        var pdfIconLink = $('#review-dialog .icon-view').on("click", function() {
             changePdfMode(PdfModeType.Icon);
             $('#review-dialog .body').data('jsp').reinitialise();
         });
 
         // Binder for page dropdown list
-        $('#lstPages').live("change", function(){
+        $("#leftpanetabs_content").on("change", "#lstPages", function () {
           br.jumpToIndex($('#lstPages').attr("selectedIndex"));
         });
 
         // Binder for segment list used by iDevices
-        $('#lbSegments').live("change", function(){
+        $("#leftpanetabs_content").on("change", "#lbSegments", function () {
             var pageNum = $('#lbSegments').attr("value"); 
             var pageIndex = br.getPageIndexWithPageNum(pageNum);
 
@@ -952,7 +952,7 @@
         });
 
         // Binders for non-iDevice segment list
-        $(document).delegate("a.viewSegLinkTitle", "click", function() {
+        $(document).on("click", "a.viewSegLinkTitle", function() {
             return selectSeg(this);
         });
 
@@ -980,15 +980,15 @@
             $("#lstSegments ul li").css("color", "#444444");
             $("#lstSegments ul li a").css("color", "#444444");
             $("#lstSegments li .segListVolPage").css("color", "#000000");
-            $(segLink).parent().css("background-color","Highlight");
-            $(segLink).parent().css("color","HighlightText");
-            $(segLink).css("color", "HighlightText");
+            $(segLink).parent().css("background-color","#0078D7");
+            $(segLink).parent().css("color","#FFFFFF");
+            $(segLink).css("color", "#FFFFFF");
             $(segLink).parent().children(".segListVolPage").css("color","#BFBFBF");
             $("#lbSegments").val($(segLink).attr("id"));
         }
 
         // Binder for "Show More" link
-        $(document).delegate(".showmore a", "click", function() {
+        $(document).on("click", ".showmore a", function() {
             var leftPanelHeight = $("#left-panel2").height();
             var newHeight = leftPanelHeight;
             var showMore = ($(this).html() === "Show More");
@@ -1027,7 +1027,7 @@
 
                 $.each(pdfPages, function(index, pdfPageIndex) { 
                     var pdfPage;
-                    var deletePage = $("<a/>", { 'class': 'delete', text: 'delete' }).click(function() {
+                    var deletePage = $("<a/>", { 'class': 'delete', text: 'delete' }).on("click", function() {
                         pdfPageCount = pdfPages.remove(index);
                         $('#ptb' + pdfPageIndex).removeClass('selected').attr('bt-xtitle', 'Add to My PDF');
                         lastPdfIndex = -1;
@@ -1094,7 +1094,7 @@
         }
 
         // PDF Generation
-        $('#generate-dialog .finish').click(function () {
+        $('#generate-dialog .finish').on("click", function () {
             var finishButton = $(this);
             if(validatePdfForm() && !finishButton.hasClass('loading')) {                
                 finishButton                    
@@ -1371,7 +1371,7 @@
 
         // Function used by book reader to create the pagetoolbox
         br.getPageToolbox = function (index) {
-            var pageToolbox = $("<div/>", { 'class': 'pagetoolbox', 'id': 'ptb' + index }).bind(pageToolBoxEvent, function (event) {
+            var pageToolbox = $("<div/>", { 'class': 'pagetoolbox', 'id': 'ptb' + index }).on(pageToolBoxEvent, function (event) {
                 /*
                 var origBG = '#404040'
                 var origActiveBG = '#455667';
@@ -1470,7 +1470,7 @@
         }
 
         // Create BeautyTips if canvas exists & not IE (results in singlepage view scrolling to top)
-        if(Modernizr.canvas && !$.browser.msie) {
+        if(Modernizr.canvas) { // && !$.browser.msie) {
             $('.dicon, .jqmClose').bt({
                 padding: 10,
                 spikeLength: 10,
@@ -1525,7 +1525,7 @@
 
             // Print page 
             var printPageButton = $('.page_print');
-            printPageButton.click(function () {
+            printPageButton.on("click", function () {
                 $('<img/>', { src: br.getPageURI(br.currentIndex()) })
                     .printElement({
                         printMode: 'popup',
@@ -1539,7 +1539,7 @@
 
             // Toggle left hand container for Pages 
             var showPagesButton = $('#showPagesButton');
-            showPagesButton.click(function () {
+            showPagesButton.on("click", function () {
                 $("#left-panel2").toggle("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
                 if (showPagesButton.attr("title") == "Show Pages") {
                     showPagesButton.attr("title", "Hide Pages");
@@ -1554,7 +1554,7 @@
 
             // Toggle right hand container for text 
             var showOCRButton = $('#showOCRButton');
-            showOCRButton.click(function () {
+            showOCRButton.on("click", function () {
                 newpageOCR.text("");
                 if (showOCRButton.attr("title") == "Show Text") {
                     updateOCR(br.currentIndex());
@@ -1577,7 +1577,7 @@
 
             // Toggle right hand container for info 
             var showInfoButton = $('#showInfoButton');
-            showInfoButton.click(function () {
+            showInfoButton.on("click", function () {
                 if (showInfoButton.attr("title") == "Show Info") {
                     $("#right-panel2").show("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
                     $("#pageInfo-panel").show();
@@ -1598,7 +1598,7 @@
 
             // Toggle right hand container for Search
             var showSearchButton = $('#showSearchButton');
-            showSearchButton.click(function () {
+            showSearchButton.on("click", function () {
                 if (showSearchButton.attr("title") == "Search Inside") {
                     $("#right-panel2").show("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
                     $("#pageSearch-panel").show();
@@ -1620,7 +1620,7 @@
 
             // Toggle right hand container for Annotations
             var showAnnotationsButton = $("#showAnnotationsButton");
-            showAnnotationsButton.click(function () {
+            showAnnotationsButton.on("click", function () {
                 if (showAnnotationsButton.attr("title") == "Show Annotations") {
                     $("#right-panel2").show("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
                     $("#AnnotationBox").show();
@@ -1649,7 +1649,7 @@
             updateUIHeights(); 
         }
 
-        $("#BRcontainer").bind('scroll', this, function (e) {
+        $("#BRcontainer").on('scroll', this, function (e) {
             if (self.mode != self.constMode2up) {
                 e.data.loadLeafs();
             }
@@ -1662,7 +1662,7 @@
 
     });
 
-    $(window).bind('resize', this, function (e) {
+    $(window).on('resize', this, function (e) {
         updateUIHeights(); 
     });
 
@@ -1754,12 +1754,14 @@
         var pageWidth = $('.BRpagedivthumb img').css('width');
         var pageHeight = $('.BRpagedivthumb img').css('height');
 
+        /*
         if ($.browser.msie && (parseInt($.browser.version, 10) === 8 || parseInt($.browser.version, 10) === 7)) {
             for (var i = 0; i < $('.BRpagedivthumb img').length; i++) {
                 $('.BRpagedivthumb img').width(pageWidth);
                 $('.BRpagedivthumb img').height(pageHeight); 
             }
         }
+        */
     }
 
     function showTitleSelector() {
@@ -1785,7 +1787,7 @@
 
     $(document).ready(function(){
         //	Called when we click on the tab itself
-	    $('#pagestab').click(function() {
+	    $('#pagestab').on("click", function() {
 
             if ($('#pagestab').hasClass('active')) return false; 
 
@@ -1798,7 +1800,7 @@
 		    return false;
 	    });
 	    //	Called when we click on the tab itself
-	    $('#segmentstab').click(function() {
+	    $('#segmentstab').on("click", function() {
         
             if ($('#segmentstab').hasClass('active')) return false; 
 
@@ -1847,7 +1849,7 @@
 
     //set show/hide for legend
     //use phantom_legend to keep rest of Annotation Box content evenly spaced
-    $_toggle_legend.click(function() {
+    $_toggle_legend.on("click", function() {
         if ($_phantom_legend.height() > 0)
             $_phantom_legend.height($_legend_items.outerHeight());
         $_legend_items.toggle(50, function() {
