@@ -636,7 +636,7 @@
                 if (pdfPageIndex >= 0) {
                     // Deselect the page
                     pdfPageCount = pdfPages.remove(pdfPageIndex);
-                    $('#ptb' + x).removeClass('selected').attr('bt-xtitle', 'Add to My PDF');
+                    $('#ptb' + x).removeClass('selected').prop('bt-xtitle', 'Add to My PDF');
                     lastPdfIndex = -1;
                     updatePdfPageCounter(pdfPageCount);
                 }
@@ -932,19 +932,19 @@
 
         // Binder for page dropdown list
         $("#leftpanetabs_content").on("change", "#lstPages", function () {
-          br.jumpToIndex($('#lstPages').attr("selectedIndex"));
+          br.jumpToIndex($('#lstPages').prop("selectedIndex"));
         });
 
         // Binder for segment list used by iDevices
         $("#leftpanetabs_content").on("change", "#lbSegments", function () {
-            var pageNum = $('#lbSegments').attr("value"); 
+            var pageNum = $('#lbSegments').prop("value"); 
             var pageIndex = br.getPageIndexWithPageNum(pageNum);
 
             if ('undefined' != typeof(pageIndex)) {
                 var leafTop = 0;
                 var h;
                 br.jumpToIndex(pageIndex);
-                $('#BRcontainer').attr('scrollTop', leafTop);
+                $('#BRcontainer').prop('scrollTop', leafTop);
                 return true;
             }
             // Page not found
@@ -967,7 +967,7 @@
                 var leafTop = 0;
                 var h;
                 br.jumpToIndex(pageIndex);
-                $('#BRcontainer').attr('scrollTop', leafTop);
+                $('#BRcontainer').prop('scrollTop', leafTop);
                 return true;
             }
             // Page not found
@@ -1029,7 +1029,7 @@
                     var pdfPage;
                     var deletePage = $("<a/>", { 'class': 'delete', text: 'delete' }).on("click", function() {
                         pdfPageCount = pdfPages.remove(index);
-                        $('#ptb' + pdfPageIndex).removeClass('selected').attr('bt-xtitle', 'Add to My PDF');
+                        $('#ptb' + pdfPageIndex).removeClass('selected').prop('bt-xtitle', 'Add to My PDF');
                         lastPdfIndex = -1;
                         changePdfMode(mode, true);
                         updatePdfPageCounter(pdfPageCount);
@@ -1259,9 +1259,10 @@
             if (segTitle != null) {
                 if (pages[index].SegmentID != null) {
                     segTitleLink.html(pages[index].GenreName + ": " + segTitle.html());
+                    segTitleLink.toggle(true);
                 }
                 else {
-                    segTitleLink.html(segTitle.html());
+                    segTitleLink.toggle(false);
                 }
                 segTitleLink.attr("href", "/part/" + pages[index].SegmentID);
             }
@@ -1395,7 +1396,7 @@
                         // Select/Deselect a single page
                         if(pdfPageIndex < 0) {
                             pdfPageCount = pdfPages.push(x);
-                            $('#ptb' + x).addClass('selected').attr('bt-xtitle', 'Remove from My PDF');
+                            $('#ptb' + x).addClass('selected').prop('bt-xtitle', 'Remove from My PDF');
 
                             if(!pdfBar.hasClass('active')) {
                                 pdfBar.removeClass('disabled').addClass('active').fadeTo(200, 1);
@@ -1410,7 +1411,7 @@
                     // Select/Deselect a single page
                     if(pdfPageIndex < 0) {
                         pdfPageCount = pdfPages.push(index);
-                        pageToolbox.addClass('selected').attr('bt-xtitle', 'Remove from My PDF');
+                        pageToolbox.addClass('selected').prop('bt-xtitle', 'Remove from My PDF');
 
                         if(!pdfBar.hasClass('active')) {
                             pdfBar.removeClass('disabled').addClass('active').fadeTo(200, 1);
@@ -1418,7 +1419,7 @@
                         lastPdfIndex = index;
                     } else {
                         pdfPageCount = pdfPages.remove(pdfPageIndex);
-                        pageToolbox.removeClass('selected').attr('bt-xtitle', 'Add to My PDF');
+                        pageToolbox.removeClass('selected').prop('bt-xtitle', 'Add to My PDF');
                         lastPdfIndex = -1;
                     }
                 }
