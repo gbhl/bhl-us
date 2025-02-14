@@ -121,7 +121,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                                 }
                                 else if (pdfPage.ExternalURL.IndexOf("/download/" + pdfPage.BarCode + "/page/n", StringComparison.OrdinalIgnoreCase) >= 0)
                                 {
-                                    extUrl = pdfPage.ExternalURL + "_w1000"; // scale the image down a bit for inclusion in the PDF
+                                    extUrl = pdfPage.ExternalURL;
                                 }
                                 else
                                 {
@@ -129,7 +129,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                                 }
                                 urlString = extUrl;
 
-                                pageUrls.Add(pdfPage.PageID.ToString() + "|" + urlString + "|" + ocrTextLocation);
+                                pageUrls.Add(pdfPage.PageID.ToString() + "|" + urlString + "|" + ocrTextLocation + "|" + pdfPage.SequenceOrder.ToString());
                             }
 
                             if (pageUrls.Count > 0)
@@ -137,16 +137,14 @@ namespace MOBOT.BHL.BHLPDFGenerator
                                 this.LogMessage("Generating file for PDF " + pdf.PdfID);
 
                                 // Generate the PDF
-                                PDFDocument pdfDoc = new PDFDocument(pdf, pageUrls,
-                                    configParms.PdfFilePath, configParms.PdfUrl, configParms.BHLWSEndpoint);
+                                PDFDocument pdfDoc = new PDFDocument(pdf, pageUrls, configParms.PdfFilePath, configParms.PdfUrl, configParms.BHLWSEndpoint);
                                 pdfDoc.GenerateFile(configParms.RetryImageWait);
 
                                 this.LogMessage(string.Format("Generated file for PDF {0} with {1} image errors.",
                                     pdf.PdfID.ToString(), pdf.NumberImagesMissing.ToString()));
                                 foreach (string error in pdfDoc.ImageErrors)
                                 {
-                                    this.LogMessage(string.Format("Image error for PDF {0}\r\n{1}",
-                                        pdf.PdfID.ToString(), error));
+                                    this.LogMessage(string.Format("Image error for PDF {0}\r\n{1}", pdf.PdfID.ToString(), error));
                                 }
 
                                 // Send email to the PDF requestor

@@ -12,6 +12,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
         public string PdfFilePath { get; set; } = string.Empty;
         public string PdfUrl { get; set; } = string.Empty;
         public string OcrTextLocation { get; set; } = string.Empty;
+        public int ImageQuality { get; set; } = 40;
         public int RetryImageWait { get; set; } = 0;
         public string BHLWSEndpoint { get; set; } = string.Empty;
 
@@ -30,6 +31,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                     PdfFilePath = ConfigurationManager.AppSettings["PdfFilePath"];
                     PdfUrl = ConfigurationManager.AppSettings["PdfUrl"];
                     OcrTextLocation = ConfigurationManager.AppSettings["OCRTextLocation"];
+                    ImageQuality = Convert.ToInt32(ConfigurationManager.AppSettings["ImageQuality"]);
                     RetryImageWait = Convert.ToInt32(ConfigurationManager.AppSettings["RetryImageWait"]);
                     BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
                 }
