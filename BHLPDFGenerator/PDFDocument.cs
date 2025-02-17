@@ -403,6 +403,12 @@ namespace MOBOT.BHL.BHLPDFGenerator
             }
         }
 
+        /// <remarks>
+        /// Version 2.88.9 of SkiaSharp is in use, rather than the current version (3.116.1), due to the problem detailed 
+        /// at https://github.com/mono/SkiaSharp/issues/2607. Deployment of version 3.116.1 fails for .NET Framework projects.
+        /// </remarks>
+        /// <param name="stream"></param>
+        /// <returns></returns>
         private Stream ReduceImageQuality(Stream stream)
         {
             var outputStream = new MemoryStream();
