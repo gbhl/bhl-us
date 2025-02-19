@@ -326,7 +326,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
             List<Tuple<string, float, float, float, float, float>> pageWords)
         {
             string imagePath = pageUrl.Split('|')[1];
-            Font standardFont = new Font(Font.HELVETICA, 10, Font.NORMAL, Color.BLACK);
+            Font ocrFont = new Font(Font.HELVETICA, 8.0f, Font.NORMAL, Color.BLACK);
 
             Image image = null;
             bool downloadFailed = false;
@@ -381,7 +381,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 // Add a layer with the OCR text
                 foreach (Tuple<string, float, float, float, float, float> ocrWord in pageWords)
                 {
-                    this.AddHiddenText(writer, Element.ALIGN_LEFT, standardFont, ocrWord, scaleFactor, image.Height);
+                    this.AddHiddenText(writer, Element.ALIGN_LEFT, ocrFont, ocrWord, scaleFactor, image.Height);
                 }
 
                 image.SetAbsolutePosition(0, 0);  // point (0,0) is the upper left corner of the page
@@ -546,19 +546,13 @@ namespace MOBOT.BHL.BHLPDFGenerator
         {
             string content = ocrWord.Item1;
             float llx = (ocrWord.Item4 * scaleFactor);
-            float lly = ((imageHeight - ocrWord.Item5) * scaleFactor) - 10; // -10 adjustment to correctly align with image
+            float lly = ((imageHeight - ocrWord.Item5) * scaleFactor) - 5; // -5 adjustment to correctly align with image
             float urx = (ocrWord.Item2 * scaleFactor);
-            float ury = ((imageHeight - ocrWord.Item3) * scaleFactor) - 10; // -10 adjustment to correctly align with image
+            float ury = ((imageHeight - ocrWord.Item3) * scaleFactor) - 5; // -5 adjustment to correctly align with image
 
             ColumnText ct = new ColumnText(writer.DirectContentUnder);   // DirectContent for testing (visible), DirectContentUnder for production (hidden)
-            ct.SetSimpleColumn(llx, lly, urx, ury);
-            ct.AddElement(new Paragraph(content)
-            {
-                Alignment = alignment,
-                Font = font,
-                Leading = 0f
-                //,MultipliedLeading = 0.9f   // If this used, then -10 adjustment of Y values not needed above.  However, many words dropped (why?).
-            });
+            Chunk ck = new Chunk(content, font);
+            ct.SetSimpleColumn(new Phrase(ck), llx, lly, urx, ury, 0f, alignment);
             ct.Go();
         }
 
