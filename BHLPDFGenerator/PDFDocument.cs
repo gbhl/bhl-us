@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Xml;
 
@@ -436,34 +437,56 @@ namespace MOBOT.BHL.BHLPDFGenerator
             List<Tuple<string, float, float, float, float, float>> ocrWords;
 
             // Get the DJVU from IA
-            Stream djvu = GetDJVU(this.PdfRecord.BookID.ToString());
+            string djvuLocalLocation = pageUrl.Split('|')[2];
+            using (Stream djvu = GetDJVU(djvuLocalLocation))
+            {
 
-            // Convert the DJVU for the page into a list of words
-            int sequenceOrder = Int32.Parse(pageUrl.Split('|')[3]);
-            ocrWords = LoadDjvuForPage(djvu, sequenceOrder);
+                // Convert the DJVU for the page into a list of words
+                int sequenceOrder = Int32.Parse(pageUrl.Split('|')[3]);
+                ocrWords = LoadDjvuForPage(djvu, sequenceOrder);
+            }
 
             return ocrWords;
         }
 
         /// <summary>
-        /// Get the contents of the DJVU file for the specified barcode from Internet Archive
+        /// Get the contents of the DJVU file for the item
         /// </summary>
+        /// <remarks>
+        /// First tries reading a local file.  If not found, it reads the DJVU from Internet Archive.
+        /// </remarks>
         /// <param name="barcode"></param>
         /// <returns></returns>
-        private Stream GetDJVU(string bookID)
+        private Stream GetDJVU(string djvuLocalLocation)
         {
-            Stream djvu = Stream.Null;
-            BooksClient booksClient = new BooksClient(this.BHLWSUrl);
-            ConfigurationClient configurationClient = new ConfigurationClient(this.BHLWSUrl);
+            Stream djvu;
 
-            Item item = booksClient.GetBookFilenames(Convert.ToInt32(bookID));
-            string djvuPath = configurationClient.GetDjvuFilePath(item.BarCode, item.DjvuFilename);
+            // Get the path to the local DJVU file for the item
+            Item item;
+            if (this.PdfRecord.BookID != null)
+                item = new BooksClient(this.BHLWSUrl).GetBookFilenames((int)this.PdfRecord.BookID);
+            else
+                item = new SegmentsClient(this.BHLWSUrl).GetSegmentFilenames((int)this.PdfRecord.SegmentID);
 
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(djvuPath);
-            req.Method = "GET";
-            req.Timeout = 15000;
-            HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
-            djvu = resp.GetResponseStream();
+            string djvuLocalPath = djvuLocalLocation + item.DjvuFilename;
+
+            // Open the DJVU file
+            if (File.Exists(djvuLocalPath))
+            {
+                // Open a local DJVU file
+                djvu = File.Open(djvuLocalPath, FileMode.Open);
+            }
+            else
+            {
+                // Open a remote DJVU file
+                string djvuPath = new ConfigurationClient(this.BHLWSUrl).GetDjvuFilePath(item.BarCode, item.DjvuFilename);
+
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(djvuPath);
+                req.Method = "GET";
+                req.Timeout = 15000;
+                HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+                djvu = resp.GetResponseStream();
+            }
 
             return djvu;
         }

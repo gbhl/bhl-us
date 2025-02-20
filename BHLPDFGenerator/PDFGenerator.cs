@@ -108,11 +108,9 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
                             foreach (PageSummaryView pdfPage in pdfPages)
                             {
-                                // Build the URLs to the page and OCR text and add them to the list
+                                // Build the URLs to the page and OCR/DJVU text and add them to the list
                                 String urlString = String.Empty;
-                                String ocrTextLocation = String.Format(configParms.OcrTextLocation,
-                                    pdfPage.OcrFolderShare, pdfPage.FileRootFolder, pdfPage.BarCode,
-                                    pdfPage.FileNamePrefix);
+                                String ocrTextLocation = String.Format(configParms.OcrTextLocation, pdfPage.OcrFolderShare, pdfPage.FileRootFolder);
 
                                 String extUrl = String.Empty;
                                 if (pdfPage.ExternalURL.EndsWith(".jp2"))
