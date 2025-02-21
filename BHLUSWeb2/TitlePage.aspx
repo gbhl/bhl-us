@@ -356,7 +356,7 @@
                     </div>
                     <div class="jqmWindow" id="review-dialog">
                         <div class="head">
-                            <a class="jqmClose" title="Close Dialog">Close Dialog</a>
+                            <a class="jqmClose" title="Close Dialog" onclick="closePDFBuilder();">Close Dialog</a>
                             <a class="button generate modal">Generate My PDF</a>
                             <h2>Review My PDF</h2>
                             <span id="page-count"></span>
@@ -371,7 +371,7 @@
                     </div>
                     <div class="jqmWindow" id="generate-dialog">
                         <div class="head">
-                            <a class="jqmClose" title="Close Dialog">Close Dialog</a>
+                            <a class="jqmClose" title="Close Dialog" onclick="closePDFBuilder();">Close Dialog</a>
                             <a class="button finish">Finish</a>
                             <a class="button review modal">Review My PDF</a>
                             <h2>Generate My PDF</h2>
@@ -498,13 +498,9 @@
 <script src="/js/libs/jquery.easing.min.js" type="text/javascript"></script>
 <script src="/js/libs/jquery-ui-1.14.1.custom.min.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.hoverintent.min.js" type="text/javascript"></script>
-<script src="/js/libs/jquery.xcolor.min.js" type="text/javascript"></script>
 <script src="/js/libs/jqModal.min.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.jscrollpane.min.js" type="text/javascript"></script>
-<script src="/js/libs/jquery.mousewheel.min.js" type="text/javascript"></script>
-<script src="/js/libs/jquery.validate.min.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.bt.min.js" type="text/javascript"></script>
-<script src="/js/libs/jquery.printElement.min.js" type="text/javascript"></script>
 <script src="/js/libs/BookReader.js?v=4" type="text/javascript"></script>
 <script src="/js/libs/dragscrollable.min.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.text-overflow.js" type="text/javascript"></script>
@@ -565,38 +561,20 @@
         };
         var pdfMode;
         var lastPdfIndex = -1;
-        var isModalDialogChange;
         var cancelPdfSelection = false;
         var newpageOCR = $("#pageOCR-panel");
         var pageNames = $("#names-panel");
 
-        // On Hide Action for Dialogs
-        function onHideAction(hash) {
-            if (isModalDialogChange) {
-                hash.w.hide();
-                hash.o.remove();
-                resetGenerate();
-            } else {
-                hash.w.fadeOut(200);
-                hash.o.fadeOut(200, function () {
-                    hash.o.remove();
-                    resetGenerate();
-                });
-            }
+        function resetGenerate() {
+            $('#generate-dialog div, #generate-dialog .footer, #generate-dialog .finish, #generate-dialog .review').show();
+            $("#tbEmail").show();
+            $('#generate-dialog .intro').show();
+            $('#generate-dialog .success').hide();
+            $('#generate-dialog .failure').hide();
 
-            function resetGenerate() {
-                $('#generate-dialog div, #generate-dialog .footer, #generate-dialog .finish, #generate-dialog .review').show();
-				$("#tbEmail").show();
-                $('#generate-dialog .intro').show();
-                $('#generate-dialog .success').hide();
-                $('#generate-dialog .failure').hide();
-
-                if (cancelPdfSelection) cancelSelectPages();
-                cancelPdfSelection = false;
-            }
-
-            isModalDialogChange = false;
-        };
+            if (cancelPdfSelection) cancelSelectPages();
+            cancelPdfSelection = false;
+        }
 
         function selectPagesToDownload() {
             if (actionMode == actionModeType.Select) return;
@@ -691,14 +669,18 @@
                     
                     header.append(
                         $('<h5/>', {
-                            'html': textSource + ' ' + '<a href="#" class="textsourcehelp" style="float:none" onclick="$(\'#textsourcehelp-dialog\').jqmShow()">' + 
+                            'html': textSource + ' ' + '<a href="#" class="textsourcehelp" style="float:none">' + 
                                 $('<img/>', {
                                     'src': '/images/help.png',
                                     'alt': 'Text source help',
                                     'title': 'What Is This?',
                                     'style': 'vertical-align: middle;margin-top: -5px; height:16px; width:16px; cursor:pointer;'
                                 }).get(0).outerHTML + "</a>"
-                        }));
+                        })
+                        .on("click", function () {
+                            showTextSourceHelp();
+                        })
+                    );
 
                     var text = $('<div/>', { 'class': 'text' })
                         .html('<span>' + $.trim(data.ocrText).replace(/\n/g, '<br />') + '<br /><br /><br /><br /><br /></span>')
@@ -845,27 +827,89 @@
 
         // Create Modal Dialogs
         $('#download-dialog').jqm({
-            onHide: onHideAction,
             trigger: '.downloadbook'
         });
-        $('#textsourcehelp-dialog').jqm({
-            onHide: onHideAction,
-            trigger: '.textsourcehelp'
+
+        // TextSourceHelp dialog methods
+        function showTextSourceHelp() {
+            $("#textsourcehelp-dialog").show();
+            bindClickOutsideTSHelpTrigger();
+        }
+        function hideTextSourceHelp(e) {
+            var textSourceHelpPopup = $("#textsourcehelp-dialog");
+            if (!textSourceHelpPopup.is(e.target) // if the target of the click isn't the container...
+                && (textSourceHelpPopup.has(e.target).length === 0) // ... nor a descendant of the container
+                && (e.target != textSourceHelpPopup.get(0))) // nor the scrollbar
+            {
+                closeTextSourceHelp();
+            }
+        }
+
+        function closeTextSourceHelp() {
+            $("#textsourcehelp-dialog").hide();
+            unbindClickOutsideTSHelpTrigger();
+        }
+
+        function unbindClickOutsideTSHelpTrigger() {
+            document.removeEventListener("mouseup", hideTextSourceHelp, false);
+        }
+        function bindClickOutsideTSHelpTrigger() {
+            document.addEventListener("mouseup", hideTextSourceHelp, false);
+        }
+
+        // Click binder for textsource help close button
+        $("#textsourcehelp-dialog .jqmClose").on("click", function () {
+            closeTextSourceHelp();
+        });        
+
+        // PDF Builder dialog methods
+        function showPDFBuilderGenerate() {
+            $("#generate-dialog").show();
+            bindClickOutsidePDFBuilderTrigger();
+        }
+        function showPDFBuilderReview() {
+            $("#review-dialog").show();
+            bindClickOutsidePDFBuilderTrigger();
+        }
+
+        function hidePDFBuilder(e) {
+            var pdfGeneratePopup = $("#generate-dialog");
+            var pdfReviewPopup = $("#review-dialog");
+            if (!pdfGeneratePopup.is(e.target) // if the target of the click isn't the container...
+                && (!pdfReviewPopup.is(e.target))
+                && (pdfGeneratePopup.has(e.target).length === 0) // ... nor a descendant of the container
+                && (pdfReviewPopup.has(e.target).length === 0)
+                && (e.target != pdfGeneratePopup.get(0)) // nor the scrollbar
+                && (e.target != pdfReviewPopup.get(0))) {
+                closePDFBuilder();
+            }
+        }
+
+        function closePDFBuilder() {
+            $("#generate-dialog").hide();
+            $("#review-dialog").hide();
+            resetGenerate();
+            unbindClickOutsidePDFBuilderTrigger();
+        }
+
+        function unbindClickOutsidePDFBuilderTrigger() {
+            document.removeEventListener("mouseup", hidePDFBuilder, false);
+        }
+        function bindClickOutsidePDFBuilderTrigger() {
+            document.addEventListener("mouseup", hidePDFBuilder, false);
+        }
+
+        // Click binders for PDF BUilder close buttons
+        $("#generate-dialog .jqmClose").on("click", function () {
+            closePDFBuilder();
         });
 
-        $('#review-dialog').jqm({
-            toTop: true,
-            onHide: onHideAction,
-            onShow: function(hash) { 
-                hash.w.show();
-                $('.ellipsis').textOverflow();
-            }
+        $("#review-dialog .jqmClose").on("click", function () {
+            closePDFBuilder();
         });
-        $('#generate-dialog').jqm({
-            toTop: true,
-            onHide: onHideAction
-        });
-        $(".buttondrop.download").on("click", function(){
+
+
+        $(".buttondrop.download").on("click", function () {
             if ($(".downloadcontents").css("display") == "block") {
                 $(".downloadcontents").slideUp("fast"); 
             } else {
@@ -888,33 +932,29 @@
         var pdfReview = $('.review', pdfBar).on("click", function() {
             if(pdfPages.length > 0) {
                 changePdfMode((pdfMode) ? pdfMode : PdfModeType.Icon, true);
-
-                $('#review-dialog').jqmShow();
+                showPDFBuilderReview();
                 $('#review-dialog .body').jScrollPane();
             }
         });
 
         // Click Binder for PDF Generate button
         var pdfGenerate = $('.generate', pdfBar).on("click", function() {
-            if(pdfPages.length > 0) {
-                $('#generate-dialog').jqmShow();
+            if (pdfPages.length > 0) {
+                showPDFBuilderGenerate();
             }
         });        
 
         // Click Binder for PDF Generate button on Dialog
         $('#review-dialog .generate').on("click", function() {
-            isModalDialogChange = true;
-            $('#review-dialog').jqmHide();
-            $('#generate-dialog').jqmShow();            
+            closePDFBuilder();
+            showPDFBuilderGenerate();
         });
 
         // Click Binder for PDF Review button on Dialog
         $('#generate-dialog .review').on("click", function() {
-            isModalDialogChange = true;
-            $('#generate-dialog').jqmHide();
-            
+            closePDFBuilder();            
             changePdfMode((pdfMode) ? pdfMode : PdfModeType.List, true);
-            $('#review-dialog').jqmShow();
+            showPDFBuilderReview();
             $('#review-dialog .body').jScrollPane();
         });
 
@@ -1527,15 +1567,16 @@
             // Print page 
             var printPageButton = $('.page_print');
             printPageButton.on("click", function () {
-                $('<img/>', { src: br.getPageURI(br.currentIndex()) })
-                    .printElement({
-                        printMode: 'popup',
-                        printBodyOptions: {
-                            classNameToAdd: 'printPopup'
-                        },
-                        "leaveOpen": true,
-                        pageTitle: '<%: PublicationDetail.ShortTitle %>' + ((pages[br.currentIndex()].WebDisplay) ? ' - ' + pages[br.currentIndex()].WebDisplay : '')
-                    });
+                var printImg = $('<img/>', { src: br.getPageURI(br.currentIndex()) });
+                printImg.css({ 'width': '100%', 'height': '100%', 'object-fit': 'contain' });
+                printImg.on("load", function () {
+                    printWindow.print();
+                    printWindow.close();
+                });
+                var printWindow = window.open('', "PrintWindow", "width=750,height=650,top=50,left=50,toolbars=no,scrollbars=yes,status=no,resizable=yes");
+                $(printWindow.document.body).append(printImg);
+                printWindow.document.close();
+                printWindow.focus();
             });
 
             // Toggle left hand container for Pages 

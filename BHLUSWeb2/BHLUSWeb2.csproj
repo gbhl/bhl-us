@@ -531,7 +531,6 @@
     <Content Include="js\libs\jquery.jqGrid.min.js" />
     <Content Include="js\libs\jquery.jscrollpane.min.js" />
     <Content Include="js\libs\jquery.mousewheel.min.js" />
-    <Content Include="js\libs\jquery.printElement.min.js" />
     <Content Include="js\libs\jquery.validate.min.js" />
     <Content Include="js\libs\jquery.xcolor.min.js" />
     <Content Include="js\plugins.js" />
