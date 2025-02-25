@@ -1410,7 +1410,7 @@
 
         // Function used by book reader to create the pagetoolbox
         br.getPageToolbox = function (index) {
-            var pageToolbox = $("<div/>", { 'class': 'pagetoolbox', 'id': 'ptb' + index }).on(pageToolBoxEvent, function (event) {
+            var pageToolbox = $("<div/>", { 'class': 'pagetoolbox', 'id': 'ptb' + index }).on(pageToolBoxEvent, function (event, shiftKey) {
                 /*
                 var origBG = '#404040'
                 var origActiveBG = '#455667';
@@ -1420,7 +1420,7 @@
                 var startIndex;
                 var endIndex;
 
-                if (event.shiftKey && lastPdfIndex !== -1) {
+                if ((event.shiftKey || shiftKey) && lastPdfIndex !== -1) {
                     // Select multiple pages
                     if (index < lastPdfIndex) 
                         { startIndex = index; endIndex = lastPdfIndex - 1; }

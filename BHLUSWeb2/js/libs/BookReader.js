@@ -619,7 +619,7 @@ BookReader.prototype.drawLeafsThumbnail = function (seekIndex) {
                     'class': 'BRpagedivthumb'
                 }).data('leaf', leaf)
                 .on('tap', function (event) {
-                    if (actionModeType.Select == actionMode) { $(this).next().trigger(pageToolBoxEvent); }
+                    if (actionModeType.Select == actionMode) { $(this).next().trigger(pageToolBoxEvent, event.shiftKey); }
                     else if (actionMode == actionModeType.Read) {
                         self.firstIndex = $(this).data('leaf');
                         self.switchMode(self.constMode1up);
@@ -630,7 +630,7 @@ BookReader.prototype.drawLeafsThumbnail = function (seekIndex) {
 
                 })
                 .on('click', function (event) {
-                    if (actionModeType.Select == actionMode) { $(this).next().trigger(pageToolBoxEvent); }
+                    if (actionModeType.Select == actionMode) { $(this).next().trigger(pageToolBoxEvent, event.shiftKey); }
                     else if (actionMode == actionModeType.Read) {
                         self.firstIndex = $(this).data('leaf');
                         self.switchMode(self.constMode1up);
