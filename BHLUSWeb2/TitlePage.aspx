@@ -490,7 +490,7 @@
 
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder"
     runat="server">
-    <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=4" />
+    <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=5" />
     <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=13" />
     <link rel="stylesheet" type="text/css" href="/css/nspop.css?v=1" />
 </asp:Content>
@@ -599,7 +599,6 @@
             resetPDFDialog();
 
             $(".pagetoolbox").show();
-            setInterval('fixIEDisplayIssue()', 1000);
         }
 
         function cancelSelectPages() {
@@ -614,7 +613,7 @@
                 if (pdfPageIndex >= 0) {
                     // Deselect the page
                     pdfPageCount = pdfPages.remove(pdfPageIndex);
-                    $('#ptb' + x).removeClass('selected').prop('bt-xtitle', 'Add to My PDF');
+                    $('#ptb' + x).removeClass('selected');
                     lastPdfIndex = -1;
                     updatePdfPageCounter(pdfPageCount);
                 }
@@ -622,7 +621,6 @@
 
             $(".pagetoolbox").hide();
             lastPdfIndex = -1;
-            fixIEDisplayIssue();
         }
 
         function updateOCR(index){
@@ -1069,7 +1067,7 @@
                     var pdfPage;
                     var deletePage = $("<a/>", { 'class': 'delete', text: 'delete' }).on("click", function() {
                         pdfPageCount = pdfPages.remove(index);
-                        $('#ptb' + pdfPageIndex).removeClass('selected').prop('bt-xtitle', 'Add to My PDF');
+                        $('#ptb' + pdfPageIndex).removeClass('selected');
                         lastPdfIndex = -1;
                         changePdfMode(mode, true);
                         updatePdfPageCounter(pdfPageCount);
@@ -1436,7 +1434,7 @@
                         // Select/Deselect a single page
                         if(pdfPageIndex < 0) {
                             pdfPageCount = pdfPages.push(x);
-                            $('#ptb' + x).addClass('selected').prop('bt-xtitle', 'Remove from My PDF');
+                            $('#ptb' + x).addClass('selected').css('display', 'block');;
 
                             if(!pdfBar.hasClass('active')) {
                                 pdfBar.removeClass('disabled').addClass('active').fadeTo(200, 1);
@@ -1451,7 +1449,7 @@
                     // Select/Deselect a single page
                     if(pdfPageIndex < 0) {
                         pdfPageCount = pdfPages.push(index);
-                        pageToolbox.addClass('selected').prop('bt-xtitle', 'Remove from My PDF');
+                        pageToolbox.addClass('selected').css('display', 'block');
 
                         if(!pdfBar.hasClass('active')) {
                             pdfBar.removeClass('disabled').addClass('active').fadeTo(200, 1);
@@ -1459,7 +1457,7 @@
                         lastPdfIndex = index;
                     } else {
                         pdfPageCount = pdfPages.remove(pdfPageIndex);
-                        pageToolbox.removeClass('selected').prop('bt-xtitle', 'Add to My PDF');
+                        pageToolbox.removeClass('selected');
                         lastPdfIndex = -1;
                     }
                 }
@@ -1478,7 +1476,7 @@
             var pdfPageIndex = $.inArray(index, pdfPages);
             // Page has already been added to pdfPages
             if(pdfPageIndex >= 0) {
-                pageToolbox.addClass('selected').css('display', 'block'); // .addClass('active')
+                pageToolbox.addClass('selected').css('display', 'block');
             }
 
             // Hard coded dimensions due to inability to ensure correct dimensions
@@ -1790,20 +1788,6 @@
         $("#tbTitle").val("");
         $("#tbAuthors").val("");
         $("#tbSubjects").val("");
-    }
-
-    function fixIEDisplayIssue() {
-        var pageWidth = $('.BRpagedivthumb img').css('width');
-        var pageHeight = $('.BRpagedivthumb img').css('height');
-
-        /*
-        if ($.browser.msie && (parseInt($.browser.version, 10) === 8 || parseInt($.browser.version, 10) === 7)) {
-            for (var i = 0; i < $('.BRpagedivthumb img').length; i++) {
-                $('.BRpagedivthumb img').width(pageWidth);
-                $('.BRpagedivthumb img').height(pageHeight); 
-            }
-        }
-        */
     }
 
     function showTitleSelector() {

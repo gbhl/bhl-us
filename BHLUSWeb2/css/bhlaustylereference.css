@@ -2523,7 +2523,7 @@ ul.creator-titles li
 /* Page toolbox */
 .pagetoolbox
 {
-	display:none;
+	/*display:none;*/
 	position:absolute;
 	/*background-color:rgba(0,0,0, 0.7);*/
 	background: rgba(255, 255, 255, 0.1);
