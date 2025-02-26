@@ -327,7 +327,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
             List<Tuple<string, float, float, float, float, float>> pageWords)
         {
             string imagePath = pageUrl.Split('|')[1];
-            Font ocrFont = new Font(Font.HELVETICA, 8.0f, Font.NORMAL, Color.BLACK);
+            Font ocrFont = new Font(Font.HELVETICA, 6.0f, Font.NORMAL, Color.BLACK);
 
             Image image = null;
             bool downloadFailed = false;
@@ -524,11 +524,16 @@ namespace MOBOT.BHL.BHLPDFGenerator
                         // Coords in a DJVU file are listed in the following order: lower-left-x, lower-left-y, upper-right-x, upper-right-y
                         // The upper left corner of a page is point (0,0)
                         /*  Example: 
-                            <LINE>
-                            <WORD coords="131,641,435,573" x-confidence="54">JOURNAL </WORD>
-                            <WORD coords="435,641,544,575" x-confidence="24">OF </WORD>
-                            <WORD coords="544,642,942,576" x-confidence="37">MICROSCOPY </WORD>
-                            </LINE>
+                          <OBJECT>
+                           <HIDDENTEXT>
+                            <PAGECOLUMN>
+                             <REGION>
+                              <PARAGRAPH>
+                                <LINE>
+                                  <WORD coords="131,641,435,573" x-confidence="54">JOURNAL </WORD>
+                                  <WORD coords="435,641,544,575" x-confidence="24">OF </WORD>
+                                  <WORD coords="544,642,942,576" x-confidence="37">MICROSCOPY </WORD>
+                                </LINE>
                         */
                         string coords = reader.GetAttribute("coords");
                         string[] coordList = coords.Split(',');
@@ -570,7 +575,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
             string content = ocrWord.Item1;
             float llx = (ocrWord.Item4 * scaleFactor);
             float lly = ((imageHeight - ocrWord.Item5) * scaleFactor) - 5; // -5 adjustment to correctly align with image
-            float urx = (ocrWord.Item2 * scaleFactor);
+            float urx = (ocrWord.Item2 * scaleFactor) + 10;
             float ury = ((imageHeight - ocrWord.Item3) * scaleFactor) - 5; // -5 adjustment to correctly align with image
 
             ColumnText ct = new ColumnText(writer.DirectContentUnder);   // DirectContent for testing (visible), DirectContentUnder for production (hidden)
