@@ -1,4 +1,5 @@
 using System.Configuration;
+using System.Linq;
 
 namespace BHL.Export.TSV
 {
@@ -12,6 +13,7 @@ namespace BHL.Export.TSV
         public string PartFile { get; set; } = string.Empty;
         public string PartAuthorFile { get; set; } = string.Empty;
         public string PartIdentifierFile { get; set; } = string.Empty;
+        public string PartPageFile { get; set; } = string.Empty;
         public string KeywordFile { get; set; } = string.Empty;
         public string TitleFile { get; set; } = string.Empty;
         public string TitleIdentifierFile { get; set; } = string.Empty;
@@ -27,6 +29,7 @@ namespace BHL.Export.TSV
         public string InternalPartFile { get; set; } = string.Empty;
         public string InternalPartAuthorFile { get; set; } = string.Empty;
         public string InternalPartIdentifierFile { get; set; } = string.Empty;
+        public string InternalPartPageFile { get; set; } = string.Empty;
         public string InternalKeywordFile { get; set; } = string.Empty;
         public string InternalTitleFile { get; set; } = string.Empty;
         public string InternalTitleIdentifierFile { get; set; } = string.Empty;
@@ -43,6 +46,7 @@ namespace BHL.Export.TSV
             PartFile = ConfigurationManager.AppSettings["TSVPartFile"];
             PartAuthorFile = ConfigurationManager.AppSettings["TSVPartAuthorFile"];
             PartIdentifierFile = ConfigurationManager.AppSettings["TSVPartIdentifierFile"];
+            PartPageFile = ConfigurationManager.AppSettings["TSVPartPageFile"];
             KeywordFile = ConfigurationManager.AppSettings["TSVKeywordFile"];
             TitleFile = ConfigurationManager.AppSettings["TSVTitleFile"];
             TitleIdentifierFile = ConfigurationManager.AppSettings["TSVTitleIdentifierFile"];
@@ -58,6 +62,7 @@ namespace BHL.Export.TSV
             InternalPartFile = ConfigurationManager.AppSettings["TSVInternalPartFile"];
             InternalPartAuthorFile = ConfigurationManager.AppSettings["TSVInternalPartAuthorFile"];
             InternalPartIdentifierFile = ConfigurationManager.AppSettings["TSVInternalPartIdentifierFile"];
+            InternalPartPageFile = ConfigurationManager.AppSettings["TSVInternalPartPageFile"];
             InternalKeywordFile = ConfigurationManager.AppSettings["TSVInternalKeywordFile"];
             InternalTitleFile = ConfigurationManager.AppSettings["TSVInternalTitleFile"];
             InternalTitleIdentifierFile = ConfigurationManager.AppSettings["TSVInternalTitleIdentifierFile"];

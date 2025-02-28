@@ -1108,6 +1108,7 @@
     <None Include="dbo\Stored Procedures\TitleDocumentSelectByTitleID.sql" />
     <None Include="dbo\Stored Procedures\TitleDocumentSelectBySegmentID.sql" />
     <None Include="dbo\Stored Procedures\ReportSelectPermissionsTitles.sql" />
+    <None Include="dbo\Stored Procedures\ExportSegmentPage.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

@@ -13,6 +13,8 @@ copy data\doi.txt "\\SERVER\FOLDER\doi.txt"
 copy data\item.txt "\\SERVER\FOLDER\item.txt"
 copy data\part.txt "\\SERVER\FOLDER\part.txt"
 copy data\partcreator.txt "\\SERVER\FOLDER\partcreator.txt"
+copy data\partidentifier.txt "\\SERVER\FOLDER\partidentifier.txt"
+copy data\partpage.txt "\\SERVER\FOLDER\partpage.txt"
 copy data\data.zip "\\SERVER\FOLDER\data.zip"
 
 REM Delete the export files
@@ -24,6 +26,8 @@ del data\doi.txt
 del data\item.txt
 del data\part.txt
 del data\partcreator.txt
+del data\partidentifier.txt
+del data\partpage.txt
 del data\page.txt
 del data\pagename.txt
 del data\data.zip
