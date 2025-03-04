@@ -3,7 +3,7 @@
 <%@ Register TagPrefix="uc" TagName="NavBar" Src="~/controls/NavBar.ascx" %>
 <%@ Register TagPrefix="uc" TagName="COinS" Src="~/controls/COinSControl.ascx" %>
 <asp:Content ID="mainContent" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
-<link rel="stylesheet" href="/css/bhl-citation-js.css?v=0" />
+<link rel="stylesheet" href="/css/bhl-citation-js.css?v=1" />
 <uc:NavBar runat="server" />
 <div id="page-title" class="bibliography">
     <div class="column-wrap">

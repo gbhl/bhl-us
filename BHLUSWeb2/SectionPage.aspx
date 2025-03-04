@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
-<link rel="stylesheet" href="/css/bhl-citation-js.css?v=0" />
+<link rel="stylesheet" href="/css/bhl-citation-js.css?v=1" />
 <uc:NavBar runat="server" />
 <div id="page-title">
     <div class="column-wrap">

@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="/css/socicon.css?v=1" media="all" />
 	<link rel="stylesheet" href="/css/cookieconsent.css" />
     <link title="Biodiversity Heritage Library News [RSS]" href="https://blog.biodiversitylibrary.org/feed" type="application/rss+xml" rel="alternate" />
+    <script src="/js/libs/modernizr-custom.js"></script> 
 
     <asp:ContentPlaceHolder id="PageHeaderIncludesPlaceHolder" runat="server" />
 

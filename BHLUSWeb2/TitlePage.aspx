@@ -2,7 +2,7 @@
 <%@ Import Namespace="MOBOT.BHL.DataObjects" %>
 <%@ Register TagPrefix="uc" TagName="COinS" Src="~/controls/COinSControl.ascx" %>
 <asp:content id="mainContent" contentplaceholderid="mainContentPlaceHolder" runat="server">
-    <link rel="stylesheet" href="/css/bhl-citation-js.css?v=0" />
+    <link rel="stylesheet" href="/css/bhl-citation-js.css?v=1" />
     <div id="page-title">
         <div id="volumebar"  style="float:right;" classcss="js-invisible no-js-hide">
             <a href="/contact/" title="Report an error" class="report"><img alt="Report an error" src="/images/rpterror.png" /></a>
@@ -492,7 +492,7 @@
     runat="server">
     <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=5" />
     <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=13" />
-    <link rel="stylesheet" type="text/css" href="/css/nspop.css?v=1" />
+    <link rel="stylesheet" type="text/css" href="/css/nspop.css?v=2" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
 <script src="/js/libs/jquery.easing.min.js" type="text/javascript"></script>
@@ -1976,26 +1976,11 @@
     function onRelatedItemHover(id)
     {
         return;
-        // find containing page block and extract id for display
-        var $_relatedAnnotation = $('#Annotation_' + id);
-        var $page = $_relatedAnnotation.parentsUntil('#AnnotationRepository');
-        if ($page.attr('id'))
-            changePage($page.attr('id').replace("pageAnnotations_", ''));
-        else
-        {
-            var $_relatedItem = $('#related-item' + id);
-            var pos = $_relatedItem.offset();
-            var $_not_avail = $('#annotation-not-available');
-            $_not_avail.offset({top:pos.top - 35, left:pos.left});
-            $_not_avail.show();
-        }
     }
 
     function onRelatedItemBlur()
     {
         return;
-        var $_not_avail = $('#annotation-not-available');
-        $_not_avail.hide();
     }
 
     function onRelatedItemClick(id)
