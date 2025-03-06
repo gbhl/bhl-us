@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
-<link rel="stylesheet" href="/css/bhl-citation-js.css?v=0" />
+<link rel="stylesheet" href="/css/bhl-citation-js.css?v=1" />
 <uc:NavBar runat="server" />
 <div id="page-title">
     <div class="column-wrap">
@@ -301,7 +301,6 @@
 </aside>
 </asp:Content>
 <asp:Content ID="scriptContent" ContentPlaceHolderID="scriptContentPlaceHolder" runat="server">
-<script src="/js/libs/jquery.history.min.js"></script>
 <script src="/js/citation-js/citation-js@0.6.4.js" type="text/javascript"></script>
 <script src="/js/citation-js/bhl-citation-js.js?v=2" type="text/javascript"></script>
 <script type="text/javascript">
@@ -317,36 +316,6 @@
         // Update the Altmetric badge
         $(".altmetric-embed").attr("data-uri", "https://www.biodiversitylibrary.org/part/" + "<%: BhlSegment.SegmentID %>");
         if (typeof _altmetric_embed_init === 'function') _altmetric_embed_init();
-/*
-        var tabBodys = $('.tab-body').hide();
-
-        // Navigate to the default sub-section if no hash
-        if (!location.hash) {
-            $.History.go('/details');
-        }
-
-        $.History.bind(function (state) {
-            if (!$('.tabs').is(':visible')) {
-                $('.tabs').show();
-            };
-            var stateName = state.replace(/[^a-zA-Z0-9\s]/gi, '');
-            var tabBody = $('#' + stateName);
-
-            tabBodys.hide();
-
-            // Highlight selected link
-            $('.tab-nav li').removeClass('active');
-            $('.tab-nav .' + stateName).addClass('active').blur();
-
-            // If no default sub-section found then head on to the default otherwise show selected sub-section
-            if (!tabBody.length) {
-                $.History.go('/details');
-                return false;
-            } else {
-                tabBody.show();
-            }
-        });
-*/
     });
 //]]>
 </script>

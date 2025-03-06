@@ -2,7 +2,7 @@
 <%@ Register TagPrefix="uc" TagName="NavBar" Src="~/controls/NavBar.ascx" %>
 <%@ Register TagPrefix="uc" TagName="FeatureBox" Src="~/controls/ucFeatureBox.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder" runat="server">
-        <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css" type="text/css" rel="stylesheet"/>
+        <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.14.1/themes/base/jquery-ui.css" type="text/css" rel="stylesheet"/>
         <link rel="stylesheet" href="/css/ui.jqgrid.css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
@@ -172,23 +172,19 @@
 
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContentPlaceHolder" runat="server">
-
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" language="javascript"></script>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js" language="javascript"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" language="javascript"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js" language="javascript"></script>
         <script type="text/javascript">
             // Set up tabs
             $(document).ready(function () {
                 $(function() {
                     $("#tabs").tabs({
                         activate: function (event, ui) {
-                            alert(ui.newPanel.attr('id'));
                             var scrollTop = $(window).scrollTop(); // save current scroll position
-                            window.location.hash = ui.newPanel.attr('id'); // add hash to url
                             $(window).scrollTop(scrollTop); // keep scroll at current position
                         }
                     });
                 });
-                $("#tabs").tabs('select', '#<%= startTabDiv %>');    // Default to a particular tab
             });
 
             // Validate book search
@@ -334,5 +330,5 @@
                 if (event.keyCode == '13') $("#<%= btnSearchName.ClientID %>").click();
             });
 
-</script>
+        </script>
 </asp:Content>

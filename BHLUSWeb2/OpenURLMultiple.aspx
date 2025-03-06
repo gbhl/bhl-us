@@ -47,6 +47,4 @@
 </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContentPlaceHolder" runat="server">
-<script src="/js/libs/jquery.hoverintent.min.js"></script>
-<script src="/js/libs/jquery.text-overflow.min.js"></script>
 </asp:Content>
