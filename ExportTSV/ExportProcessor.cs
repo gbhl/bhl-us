@@ -43,6 +43,7 @@ namespace BHL.Export.TSV
             if (File.Exists(configParms.PartAuthorFile)) File.Delete(configParms.PartAuthorFile);
             if (File.Exists(configParms.PartFile)) File.Delete(configParms.PartFile);
             if (File.Exists(configParms.PartIdentifierFile)) File.Delete(configParms.PartIdentifierFile);
+            if (File.Exists(configParms.PartPageFile)) File.Delete(configParms.PartPageFile);
             if (File.Exists(configParms.TitleFile)) File.Delete(configParms.TitleFile);
             if (File.Exists(configParms.TitleIdentifierFile)) File.Delete(configParms.TitleIdentifierFile);
 
@@ -54,6 +55,7 @@ namespace BHL.Export.TSV
             if (File.Exists(configParms.InternalPartAuthorFile)) File.Delete(configParms.InternalPartAuthorFile);
             if (File.Exists(configParms.InternalPartFile)) File.Delete(configParms.InternalPartFile);
             if (File.Exists(configParms.InternalPartIdentifierFile)) File.Delete(configParms.InternalPartIdentifierFile);
+            if (File.Exists(configParms.InternalPartPageFile)) File.Delete(configParms.InternalPartPageFile);
             if (File.Exists(configParms.InternalTitleFile)) File.Delete(configParms.InternalTitleFile);
             if (File.Exists(configParms.InternalTitleIdentifierFile)) File.Delete(configParms.InternalTitleIdentifierFile);
 
@@ -67,6 +69,7 @@ namespace BHL.Export.TSV
             Export("ExportSegment", configParms.PartFile, configParms.InternalPartFile, WriteSegmentHeader, GetSegmentRow, "Segments");
             Export("ExportSegmentAuthor", configParms.PartAuthorFile, configParms.InternalPartAuthorFile, WriteSegmentAuthorHeader, GetSegmentAuthorRow, "Segment Authors");
             Export("ExportSegmentIdentifier", configParms.PartIdentifierFile, configParms.InternalPartIdentifierFile, WriteSegmentIdentifierHeader, GetSegmentIdentifierRow, "Segment Identifiers");
+            Export("ExportSegmentPage", configParms.PartPageFile, configParms.InternalPartPageFile, WriteSegmentPageHeader, GetSegmentPageRow, "Segment Pages");
             Export("ExportAuthorIdentifier", configParms.AuthorIdentifierFile, configParms.InternalAuthorIdentifierFile, WriteAuthorIdentifierHeader, GetAuthorIdentifierRow, "Author Identifiers");
             Export("ExportPageName", configParms.PageNameFile, null, WritePageNameHeader, GetPageNameRow, "Page Names");
             Export("ExportPage", configParms.PageFile, null, WritePageHeader, GetPageRow, "Pages");
@@ -191,6 +194,11 @@ namespace BHL.Export.TSV
         public void WriteSegmentIdentifierHeader(string filePath)
         {
             File.AppendAllText(filePath, "PartID\tIdentifierName\tIdentifierValue\tCreationDate" + Environment.NewLine, Encoding.UTF8);
+        }
+
+        public void WriteSegmentPageHeader(string filePath)
+        {
+            File.AppendAllText(filePath, "PartID\tPageID\tItemID\tSequenceOrder\tCreationDate" + Environment.NewLine, Encoding.UTF8);
         }
 
         public void WriteKeywordHeader(string filePath)
@@ -393,6 +401,16 @@ namespace BHL.Export.TSV
             string identifierValue = GetDBString(reader, "IdentifierValue");
             string creationDate = GetDBString(reader, "CreationDate");
             return string.Format("{0}\t{1}\t{2}\t{3}", partID, identifierName, identifierValue, creationDate);
+        }
+
+        public string GetSegmentPageRow(SqlDataReader reader, string statType)
+        {
+            string partID = GetDBInt32(reader, "SegmentID");
+            string pageID = GetDBInt32(reader, "PageID");
+            string bookID = GetDBInt32(reader, "BookID");
+            string sequenceOrder = GetDBInt32(reader, "SequenceOrder");
+            string creationDate = GetDBString(reader, "CreationDate");
+            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}", partID, pageID, bookID, sequenceOrder, creationDate);
         }
 
         public string GetKeywordRow(SqlDataReader reader, string statType)

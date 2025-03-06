@@ -112,6 +112,7 @@
     <add key="TSVPartFile" value="\\SERVER\FOLDER\data\part.txt" />
     <add key="TSVPartAuthorFile" value="\\SERVER\FOLDER\data\partcreator.txt" />
     <add key="TSVPartIdentifierFile" value="\\SERVER\FOLDER\data\partidentifier.txt"/>
+    <add key="TSVPartPageFile" value="\\SERVER\FOLDER\data\partpage.txt"/>
     <add key="TSVKeywordFile" value="\\SERVER\FOLDER\data\subject.txt" />
     <add key="TSVTitleFile" value="\\SERVER\FOLDER\data\title.txt" />
     <add key="TSVTitleIdentifierFile" value="\\SERVER\FOLDER\data\titleidentifier.txt" />
@@ -123,6 +124,7 @@
     <add key="TSVInternalPartFile" value="\\SERVER\FOLDER\data\partint.txt" />
     <add key="TSVInternalPartAuthorFile" value="\\SERVER\FOLDER\data\partcreatorint.txt" />
     <add key="TSVInternalPartIdentifierFile" value="\\SERVER\FOLDER\data\partidentifierint.txt"/>
+    <add key="TSVInternalPartPageFile" value="\\SERVER\FOLDER\data\partpageint.txt"/>
     <add key="TSVInternalKeywordFile" value="\\SERVER\FOLDER\data\subjectint.txt" />
     <add key="TSVInternalTitleFile" value="\\SERVER\FOLDER\data\titleint.txt" />
     <add key="TSVInternalTitleIdentifierFile" value="\\SERVER\FOLDER\data\titleidentifierint.txt" />

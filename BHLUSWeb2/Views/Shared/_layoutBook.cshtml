@@ -10,13 +10,13 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>@ViewBag.Title</title>
     @RenderSection("CSS", required: false)
-    <link rel="stylesheet" href="/css/bhlaustylereference.css?v=7" />
+    <link rel="stylesheet" href="/css/bhlaustylereference.css?v=8" />
     <link rel="stylesheet" href="/css/style.css?v=28" />
     <link rel="Stylesheet" href="/css/bookviewer.css?v=3" />
     <link rel="stylesheet" href="/css/socicon.css?v=1" media="all" />
     <link rel="stylesheet" href="/css/cookieconsent.css" />
-    <script src="/js/libs/modernizr-1.6.min.js"></script>
-    <link href="~/css/BookReader.css?v=4" rel="stylesheet" type="text/css" />
+    <script src="/js/libs/modernizr-custom.js"></script>
+    <link href="~/css/BookReader.css?v=5" rel="stylesheet" type="text/css" />
     <link href="~/css/bookviewer_extra.css?v=13" rel="stylesheet" type="text/css" />
     <!-- START OF SmartSource Data Collector TAG v10.4.23 -->
     <!-- Copyright (c) 2018 Webtrends Inc.  All rights reserved. -->
@@ -105,12 +105,10 @@
         @RenderBody()
     </div>
     <!--</div>-->
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>!window.jQuery && document.write(unescape('%3Cscript src="/js/libs/jquery-1.12.4.min.js"%3E%3C/script%3E'))</script>
-
-    <script src="/js/plugins.js?v=2"></script>
-    <script src="/js/script.js?v=7"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>!window.jQuery && document.write(unescape('%3Cscript src="/js/libs/jquery-3.7.1.min.js"%3E%3C/script%3E'))</script>
+    <script src="/js/plugins.js?v=3"></script>
+    <script src="/js/script.js?v=8"></script>
     <script type="text/plain" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js" data-category="analytics" data-service="altmetric"></script>
 
     @RenderSection("scripts", required: false)

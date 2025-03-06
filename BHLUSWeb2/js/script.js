@@ -1,14 +1,11 @@
 $(document).ready(function () {
     var searchDefaultTexts = ["Search the catalog and full-text", "Search the catalog"];
 
-    // Upgrade browsers plugin
-    $.upgradebrowsers();
-
     /* used to prevent flickering of elements while doc is still loading */
     $('.js .js-invisible').css('visibility', 'visible');
 
     // Search bar
-    $('#searchbar #btnSearchSubmit').click(function (e) {
+    $('#searchbar #btnSearchSubmit').on("click", function (e) {
         if ($.inArray($("#searchbar .field").val(), searchDefaultTexts) >= 0) {
             e.preventDefault();
             return false;
@@ -16,12 +13,12 @@ $(document).ready(function () {
     });
     $('#searchbar .field')
         .val(searchDefaultTexts[0])
-        .focus(function () {
+        .on("focus", function () {
             if ($.inArray($(this).val(), searchDefaultTexts) >= 0) {
                 $(this).val("");
             }
         })
-        .blur(function () {
+        .on("blur", function () {
             if ($.trim($(this).val()) == "") {
                 if ($("#rdoSearchTypeF").is(":checked")) $(this).val(searchDefaultTexts[0]);
                 if ($("#rdoSearchTypeC").is(":checked")) $(this).val(searchDefaultTexts[1]);
@@ -29,14 +26,14 @@ $(document).ready(function () {
         });
 
     $('#rdoSearchTypeF')
-        .change(function () {
+        .on("change", function () {
             if ($(this).is(':checked')) {
                 if ($.inArray($('#searchbar .field').val(), searchDefaultTexts) >= 0) $('#searchbar .field').val(searchDefaultTexts[0]);
             }
         });
 
     $('#rdoSearchTypeC')
-        .change(function () {
+        .on("change", function () {
             if ($(this).is(':checked')) {
                 if ($.inArray($('#searchbar .field').val(), searchDefaultTexts) >= 0) $('#searchbar .field').val(searchDefaultTexts[1]);
             }
@@ -117,19 +114,19 @@ $(document).ready(function () {
 
             styledSelect.outerWidth($.browser.msie ? select.outerWidth() - 2 : select.outerWidth());
 
-            select.change(function (event, index) {
+            select.on("change", function (event, index) {
                 styledSelect.text($('option:selected', this).text());
                 console.log(index);
                 if (!index) {
                     console.log("update page view");
                 }
-            }).hover(function () {
+            }).on("mouseenter", function () {
                 styledSelect.addClass('hover');
-            }, function () {
+            }).on("mouseleave", function () {
                 styledSelect.removeClass('hover');
-            }).mousedown(function () {
+            }).on("mousedown", function () {
                 styledSelect.addClass('active');
-            }).mouseup(function () {
+            }).on("mouseup", function () {
                 styledSelect.removeClass('active');
             });
         });
@@ -139,7 +136,7 @@ $(document).ready(function () {
     $('.volume:first').addClass('active');
     $('.volume .body').not(':first').hide();
     $('.volume').show();
-    $('.volume .title').click(function () {
+    $('.volume .title').on("click", function () {
         var volume = $(this).parent();
         var volumeBody = $('.body', volume);
 
@@ -152,7 +149,7 @@ $(document).ready(function () {
     $('.partalso:first').addClass('active');
     $('.partalso .body').not(':first').hide();
     $('.partalso').show();
-    $('.partalso .title').click(function () {
+    $('.partalso .title').on("click", function () {
         var volume = $(this).parent();
         var volumeBody = $('.body', volume);
 
@@ -162,7 +159,7 @@ $(document).ready(function () {
     });
 
     // Abstractsection collapsing on part Bibliography page
-    $('.partabstract .title').click(function () {
+    $('.partabstract .title').on("click", function () {
         var volume = $(this).parent();
         var volumeBody = $('.body', volume);
 
@@ -172,7 +169,7 @@ $(document).ready(function () {
     });
 
     // Note section collapsing on part Bibliography page
-    $('.partnote .title').click(function () {
+    $('.partnote .title').on("click", function () {
         var volume = $(this).parent();
         var volumeBody = $('.body', volume);
 
