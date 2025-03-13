@@ -51,9 +51,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Antlr3.Runtime">
-      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -160,9 +157,6 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="netstandard">
       <Private>True</Private>
-    </Reference>
-    <Reference Include="WebGrease">
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -999,11 +993,8 @@
     <None Include="Properties\PublishProfiles\Beta - BHL Admin %28local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Production - BHL Admin %28local%29.pubxml" />
     <Content Include="ReportItemsByContentProviderCSV.ashx" />
-    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-1.9.1.js" />
-    <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.4\jquery-ui.min.js" />
     <Content Include="SegmentGenreAbout.aspx" />
     <Content Include="styles\adminstyle.css" />
@@ -1068,7 +1059,6 @@
     <Content Include="Views\Report\CitationImportHistory.cshtml" />
     <Content Include="Services\CitationImportService.ashx" />
     <Content Include="Views\Library\Align.cshtml" />
-    <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Shared\EditorTemplates\SelectRoleEditorViewModel.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />

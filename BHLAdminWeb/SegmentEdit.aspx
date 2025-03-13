@@ -1040,7 +1040,7 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.titleSearchType').change(function () {
+        $('.titleSearchType').on("change", function () {
             showSearchFields();
         });
     });

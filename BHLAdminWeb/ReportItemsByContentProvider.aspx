@@ -86,8 +86,8 @@
         });
 
         // Resize the grid to fill the space
-        $(window).load(function () { resizeGrid(); });
-        $(window).resize(function () { resizeGrid(); });
+        $(window).on("load", function () { resizeGrid(); });
+        $(window).on("resize", function () { resizeGrid(); });
 
         function resizeGrid() {
             $("#list").setGridWidth($(window).width() - 40);

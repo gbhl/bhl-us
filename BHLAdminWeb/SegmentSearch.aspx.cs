@@ -1,11 +1,8 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -15,14 +12,6 @@ namespace MOBOT.BHL.AdminWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            HtmlLink cssLnk = new HtmlLink();
-            cssLnk.Attributes.Add("rel", "stylesheet");
-            cssLnk.Attributes.Add("type", "text/css");
-            cssLnk.Href = ConfigurationManager.AppSettings["jQueryUICSSPath"];
-            Page.Header.Controls.Add(cssLnk);
-            ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, ConfigurationManager.AppSettings["jQueryPath"]);
-            ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, ConfigurationManager.AppSettings["jQueryUIPath"]);
-
             errorControl.Visible = false;
             Page.SetFocus(txtTitle);
             Page.Title = "BHL Admin - Segment Search";

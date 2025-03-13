@@ -128,7 +128,7 @@
         $(document).ready(function() {
 			$("#tabs").tabs();
 
-			$('.titleSearchType').change(function () {
+			$('.titleSearchType').on('change', function () {
 				showSearchFields();
 			});
 		});

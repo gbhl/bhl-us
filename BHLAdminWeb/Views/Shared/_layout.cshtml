@@ -6,8 +6,8 @@
     <title>@ViewBag.PageTitle</title>
     @Styles.Render("~/Content/css")
     <link href="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryUICSSPath"])" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/favicon.ico")" rel="icon" type="image/x-icon" />
-    @Scripts.Render("~/bundles/jquery")
+    <link href="@Url.Content("~/favicon.ico")" rel="icon" type="image/x-icon" />
+    <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryPath"])" type="text/javascript"></script>
     <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryUIPath"])" type="text/javascript"></script>
     @RenderSection("Javascript", required: false)
     @RenderSection("CSS", required: false)

@@ -234,7 +234,7 @@
 	</div>
     <script type="text/javascript">
         $(document).ready(function () {
-            $(window).load(function () { toggleFieldsForAuthorType() } );
+            $(window).on("load", function () { toggleFieldsForAuthorType() } );
         });
 
         window.onclick = function (event) {

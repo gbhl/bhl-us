@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Web;
-using System.Text;
-using System.Web.UI.WebControls;
 using System.Configuration;
-using FlickrUtility;
+using System.Text;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -20,8 +17,7 @@ namespace MOBOT.BHL.AdminWeb
                 string pageIds = Request["pageids"];
                 string titleId = Request["titleid"];
 
-                // Using an old version of jQuery here because the Flickr components require it
-                Page.ClientScript.RegisterClientScriptInclude("FlickrUploadJQueryJS", ConfigurationManager.AppSettings["jQuery142Path"]);
+                Page.ClientScript.RegisterClientScriptInclude("FlickrUploadJQueryJS", ConfigurationManager.AppSettings["jQueryPath"]);
                 Page.ClientScript.RegisterClientScriptInclude("FlickrUploadJS", "/js/FlickrUpload.js");
                 Page.ClientScript.RegisterStartupScript(typeof(FlickrUpload), "FlickrUpload", createInitJS());
             }

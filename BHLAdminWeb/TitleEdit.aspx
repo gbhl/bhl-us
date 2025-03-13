@@ -1128,7 +1128,7 @@
         overlay(); __doPostBack('', '');
     }
 
-    $("#ddlExtContent").change(function () {
+    $("#ddlExtContent").on("change", function () {
         var selected = this.value;
         var textBox = $("#RepositoryUrlTextBox");
         textBox.prop("disabled", selected === "");
@@ -1136,7 +1136,7 @@
     });
 
     $(document).ready(function () {
-        $('.titleSearchType').change(function () {
+        $('.titleSearchType').on("change", function () {
             showSearchFields();
         });
     });
