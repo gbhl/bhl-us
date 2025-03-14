@@ -307,11 +307,7 @@
             $_noAnnotationsStub = $('#no-annotations-stub');
 
             //set show/hide for Annotation Box
-            $_toggleAnnotationBox.click(
-                                        function(){
-                                                    $_annotationBoxContent.toggle(50, toggleAnnotationBody());
-                                                  }
-                                       );    
+            $_toggleAnnotationBox.click(function() { $_annotationBoxContent.toggle(50, toggleAnnotationBody()); });    
         
         //initialize legend box
         var $_toggle_legend = $('#toggle_legend'),
@@ -323,39 +319,20 @@
 
             //set show/hide for legend
             //use phantom_legend to keep rest of Annotation Box content evenly spaced
-            $_toggle_legend.click(
-                                    function(){
-                                                if ($_phantom_legend.height() > 0)
-                                                    $_phantom_legend.height($_legend_items.outerHeight());
-                                                $_legend_items.toggle(50,
-                                                                        function()
-                                                                        {
-                                                                            $_phantom_legend.toggle(0);
-                                                                            $_hide_legend.toggle();
-                                                                            $_show_legend.toggle();
-                                                                        }
-                                                                      );  
-                                            }
-                                  );
-/*
-        var CUTOFF = $(window).height() - 100;
-        window.onresize=function(){
-            window.status = $(window).height() + ", " + CUTOFF;
-            if ($(window).height() < CUTOFF)
-            {
-                $_annotationBoxContent.css("overflow","auto");
-            }
-            else
-            {
-                $_annotationBoxContent.css("overflow","visible");
-             }
-        };
-*/
+            $_toggle_legend.click(function(){
+                                    if ($_phantom_legend.height() > 0)
+                                        $_phantom_legend.height($_legend_items.outerHeight());
+                                    $_legend_items.toggle(50, function() {
+                                        $_phantom_legend.toggle(0);
+                                        $_hide_legend.toggle();
+                                        $_show_legend.toggle();
+                                    });  
+                                });
+
         function toggleAnnotationBody()
         {
             $_hide_annotations.toggle();
             $_AnnotationBox.toggleClass('active');
-            //$_stub.toggle();
             $_show_annotations.toggle();
         }
 
@@ -383,7 +360,6 @@
         {
             //all the annotation content has been written to the page on Page Load, and hidden
             //retrieve appropriate section by newSequence
-
             if ($("#AnnotationBox").css("display") == "none")
             {
                 $("#AnnotationBox").css("top", $("#BRtoolbar").height() + 1).css("display", "block");
@@ -531,44 +507,21 @@
     qsParm["pgs"] = "<%= NumPages %>";
     qsParm["fixedWidth"] = "<%= FixedImageWidth %>";
     qsParm["fixedHeight"] = "<%= FixedImageHeight %>";
-    if (!loadIE6Viewer()) {
 
-        // Create the BookReader object
-        br = new BookReader();
+    // Create the BookReader object
+    br = new BookReader();
         
-        // Make AJAX call here to get an object containing page information
-        var pages = null;
-        if (qsParm["objectId"] != "") {
-            var operation = "PageSummarySelectForViewerByItemID";
-            if (qsParm["objectType"] == "Segment") operation = "PageSummarySelectForViewerBySegmentID";
-            $.getJSON("/Services/PageSummaryService.ashx?op=" + operation + "&itemID=" + qsParm["objectId"],
-                function (data) {
-                    pages = data;
-                    InitializeViewer(<%= StartPage %>);
-                }
-            );
-        }
-    }
-
-    // If IE6, notify user that a more modern browser is needed for the book reader
-    function loadIE6Viewer() {
-        var isLoaded = false;
-
-        if ($.browser.msie && parseFloat($.browser.version) < 7) {
-            ifrm = document.getElementById("bookReaderFrame");
-            if (ifrm == null) {
-                ifrm = document.createElement("iframe");
-                ifrm.setAttribute("name", "bookReaderFrame");
-                ifrm.setAttribute("id", "bookReaderFrame");
-                ifrm.width = "800px";
-                ifrm.height = "600px";
-                document.getElementById("BookReader").appendChild(ifrm);
+    // Make AJAX call here to get an object containing page information
+    var pages = null;
+    if (qsParm["objectId"] != "") {
+        var operation = "PageSummarySelectForViewerByItemID";
+        if (qsParm["objectType"] == "Segment") operation = "PageSummarySelectForViewerBySegmentID";
+        $.getJSON("/Services/PageSummaryService.ashx?op=" + operation + "&itemID=" + qsParm["objectId"],
+            function (data) {
+                pages = data;
+                InitializeViewer(<%= StartPage %>);
             }
-            ifrm.setAttribute("src", "/Controls/OLBookReader/Viewer/index.html");
-            isLoaded = true;
-        }
-
-        return isLoaded;
+        );
     }
 
     // Initialize the primary book viewer (for everything other than IE6)

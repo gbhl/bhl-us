@@ -158,6 +158,9 @@
     <Reference Include="netstandard">
       <Private>True</Private>
     </Reference>
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessDenied.aspx.cs">

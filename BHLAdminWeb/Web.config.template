@@ -78,7 +78,6 @@
     <add key="WikiPageHelpDocs" value="https://s.si.edu/bhldocumentation" />
     <!-- jQuery libraries -->
     <add key="jQueryPath" value="//code.jquery.com/jquery-3.7.1.js"/>
-    <add key="jQuery142Path" value="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" />
     <add key="jQueryUIPath" value="/Scripts/jquery-ui-1.11.4/jquery-ui.min.js" />
     <add key="jQueryUICSSPath" value="/styles/jquery-ui-1.11.4/jquery-ui.min.css" />
     <add key="jQueryDataTablesPath" value="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" />
@@ -211,7 +210,10 @@
         <assemblyIdentity name="Microsoft.Owin.Security.Cookies" publicKeyToken="31bf3856ad364e35" culture="neutral" />
         <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
       </dependentAssembly>
-    </assemblyBinding>
+      <dependentAssembly>
+        <assemblyIdentity name="WebGrease" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-1.5.2.14234" newVersion="1.5.2.14234" />
+      </dependentAssembly>    </assemblyBinding>
     <assemblyBinding>
       <dependentAssembly>
         <assemblyIdentity name="ICSharpCode.SharpZipLib" publicKeyToken="1b03e6acf1164f73" culture="neutral" />

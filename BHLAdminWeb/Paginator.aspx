@@ -327,7 +327,7 @@
 		</table>
 	</div>
 	<script>
-        $('#FlickrDelete').click(function () {
+        $('#FlickrDelete').on("click", function () {
             return confirm('Are you sure you want to delete the Flickr links for all of the selected pages ?\r\n\r\nNote: This process will not delete this image(s) in Flickr.  It will only delete the Flickr link(s) for the selected page(s) in BHL.  You must manually delete the images from Flickr.');
         });
 	</script>
