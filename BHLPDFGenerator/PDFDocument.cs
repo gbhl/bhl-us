@@ -1,8 +1,14 @@
 ﻿using BHL.WebServiceREST.v1;
 using BHL.WebServiceREST.v1.Client;
 using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
+using System.Xml;
 
 namespace MOBOT.BHL.BHLPDFGenerator
 {
@@ -81,6 +87,13 @@ namespace MOBOT.BHL.BHLPDFGenerator
             set { _numberOcrMissing = value; }
         }
 
+        private int _imageQuality = 40;
+        public int ImageQuality
+        {
+            get { return _imageQuality; }
+            set { _imageQuality = value; }
+        }
+
         private List<string> _imageErrors = new List<string>();
         public List<string> ImageErrors
         {
@@ -129,14 +142,11 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 // Initialize the PDF document
                 doc = new Document();
                 iTextSharp.text.pdf.PdfWriter writer = iTextSharp.text.pdf.PdfWriter.GetInstance(doc,
-                    new System.IO.FileStream(String.Format(this.FilePathFormat, fileName), System.IO.FileMode.Create));
+                    new FileStream(String.Format(this.FilePathFormat, fileName), FileMode.Create));
 
-                // Add metadata if this is to be the final document
-                if (this.PdfRecord.ImagesOnly ?? true)
-                {
-                    AddMetadata(doc);
-                    writer.XmpMetadata = this.GetXmpMetadata();
-                }
+                // Add metadata
+                AddMetadata(doc);
+                writer.XmpMetadata = this.GetXmpMetadata();
 
                 // Set margins and page size 
                 SetStandardPageSize(doc);
@@ -151,7 +161,18 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 doc.SetMargins(0, 0, 0, 0);
                 foreach (String pageUrl in PageUrls)
                 {
-                    this.AddImageToPDF(doc, pageUrl.Split('|')[1], retryImageWait);
+                    // Add a page image and its associated text
+                    List<Tuple<string, float, float, float, float, float>> pageWords = new List<Tuple<string, float, float, float, float, float>>();
+                    try
+                    {
+                        pageWords = this.LoadOcrPageText(pageUrl);
+                    }
+                    catch(Exception ex)
+                    {
+                        this.ImageErrors.Add(string.Format("Page Text: {0}\r\nMessage: {1}\r\nStack Trace: {2}", pageUrl.Split('|')[1], ex.Message, ex.StackTrace));
+                        this._numberOcrMissing++;
+                    }
+                    this.AddImageAndOCRToPDF(doc, writer, pageUrl, retryImageWait, pageWords);
                 }
 
                 // Add page labels to the PDF
@@ -165,18 +186,9 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
                 doc.Close();
 
-                // If requested, add the OCR to the PDF
-                if (!this.PdfRecord.ImagesOnly ?? true)
-                {
-                    _pageLabels.Add("OCR");
-                    this.AddOCRToPDF(String.Format(this.FilePathFormat, fileName));
-                }
-                else
-                {
-                    // Add PDF extension to temp file
-                    if (System.IO.File.Exists(String.Format(this.FilePathFormat, fileName + ".pdf"))) System.IO.File.Delete(String.Format(this.FilePathFormat, fileName + ".pdf"));
-                    System.IO.File.Move(String.Format(this.FilePathFormat, fileName), String.Format(this.FilePathFormat, fileName + ".pdf"));
-                }
+                // Add PDF extension to temp file
+                if (File.Exists(String.Format(this.FilePathFormat, fileName + ".pdf"))) File.Delete(String.Format(this.FilePathFormat, fileName + ".pdf"));
+                File.Move(String.Format(this.FilePathFormat, fileName), String.Format(this.FilePathFormat, fileName + ".pdf"));
 
                 fileName += ".pdf";
                 this._fileName = fileName;
@@ -193,7 +205,6 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 {
                     // Finish writing the PDF
                     if (doc.IsOpen()) doc.Close();
-                    doc = null;
                 }
             }
 
@@ -307,151 +318,18 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
         private static void SetStandardPageSize(iTextSharp.text.Document doc)
         {
-            doc.SetPageSize(new iTextSharp.text.Rectangle(iTextSharp.text.PageSize.LETTER.Width,
-                iTextSharp.text.PageSize.LETTER.Height));
+            doc.SetPageSize(new iTextSharp.text.Rectangle(iTextSharp.text.PageSize.A4.Width,
+                iTextSharp.text.PageSize.A4.Height));
             doc.SetMargins(50, 50, 50, 50);
         }
 
-        private void AddOCRToPDF(String fileLocation)
+        private void AddImageAndOCRToPDF(Document pdf, PdfWriter writer, string pageUrl, int retryImageWait,
+            List<Tuple<string, float, float, float, float, float>> pageWords)
         {
-            // Create a temp PDF with the OCR pages
-            this.CreateOCRPDF(fileLocation);
+            string imagePath = pageUrl.Split('|')[1];
+            Font ocrFont = new Font(Font.HELVETICA, 6.0f, Font.NORMAL, Color.BLACK);
 
-            // Concatenate the PDFs... first the images, then the text
-            // We do this because a problem was encountered adding the text directly
-            // to the "original" PDF containing the images.  An unwanted blank page 
-            // was inserted between  the images and text.  An apparent iTextSharp bug.
-
-            iTextSharp.text.pdf.PdfReader reader = null;
-            Document doc = null;
-            iTextSharp.text.pdf.PdfSmartCopy copy = null;
-
-            try
-            {
-                reader = new iTextSharp.text.pdf.PdfReader(fileLocation);
-                doc = new Document(reader.GetPageSizeWithRotation(1));
-                copy = new iTextSharp.text.pdf.PdfSmartCopy(doc,
-                    new System.IO.FileStream(fileLocation + ".pdf", System.IO.FileMode.Create));
-                this.AddMetadata(doc);
-                copy.XmpMetadata = this.GetXmpMetadata();
-                doc.Open();
-
-                // Add the images to the final PDF
-                for (int x = 1; x <= reader.NumberOfPages; x++)
-                {
-                    iTextSharp.text.pdf.PdfImportedPage ipage = copy.GetImportedPage(reader, x);
-                    copy.AddPage(ipage);
-                }
-                reader.Close();
-
-                // Add the OCR to the final PDF
-                reader = new iTextSharp.text.pdf.PdfReader(fileLocation + "OCR");
-                for (int x = 1; x <= reader.NumberOfPages; x++)
-                {
-                    iTextSharp.text.pdf.PdfImportedPage ipage = copy.GetImportedPage(reader, x);
-                    copy.AddPage(ipage);
-                }
-
-                // Add page labels to the final PDF
-                int pageNumber = 0;
-                iTextSharp.text.pdf.PdfPageLabels pdfPageLabels = new iTextSharp.text.pdf.PdfPageLabels();
-                foreach (String pageLabel in _pageLabels)
-                {
-                    pdfPageLabels.AddPageLabel(++pageNumber, iTextSharp.text.pdf.PdfPageLabels.EMPTY, pageLabel);
-                }
-                pdfPageLabels.AddPageLabel(++pageNumber, iTextSharp.text.pdf.PdfPageLabels.EMPTY, "OCR");
-                copy.PageLabels = pdfPageLabels;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                if (reader != null)
-                {
-                    reader.Close();
-                    reader = null;
-                }
-                if (doc != null)
-                {
-                    if (doc.IsOpen()) doc.Close();
-                    doc = null;
-                }
-                if (copy != null)
-                {
-                    copy.Close();
-                    copy = null;
-                }
-
-                if (System.IO.File.Exists(fileLocation)) System.IO.File.Delete(fileLocation);
-                if (System.IO.File.Exists(fileLocation + "OCR")) System.IO.File.Delete(fileLocation + "OCR");
-            }
-        }
-
-        private void CreateOCRPDF(String fileLocation)
-        {
-            String fileName = String.Empty;
-            iTextSharp.text.Document doc = null;
-
-            try
-            {
-                fileName = fileLocation + "OCR";
-
-                // Initialize the PDF document
-                doc = new Document();
-                iTextSharp.text.pdf.PdfWriter.GetInstance(doc,
-                    new System.IO.FileStream(fileName, System.IO.FileMode.Create));
-
-                // Set up the fonts to be used
-                iTextSharp.text.Font standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.HELVETICA, 10, iTextSharp.text.Font.NORMAL, iTextSharp.text.Color.BLACK);
-                iTextSharp.text.Font boldFont = new iTextSharp.text.Font(iTextSharp.text.Font.HELVETICA, 10, iTextSharp.text.Font.BOLD, iTextSharp.text.Color.BLACK);
-
-                // Set margins and page size 
-                SetStandardPageSize(doc);
-                doc.Open();
-
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, boldFont, "The following text is generated from uncorrected OCR or manual transcriptions.");
-
-                foreach (String pageUrl in PageUrls)
-                {
-                    String ocrUrl = pageUrl.Split('|')[2];
-                    String ocrText = String.Empty;
-
-                    if (System.IO.File.Exists(ocrUrl))
-                    {
-                        ocrText = System.IO.File.ReadAllText(ocrUrl);
-                    }
-                    else
-                    {
-                        this._numberOcrMissing++;
-                        ocrText = "OCR text unavailable for this page.";
-                    }
-
-                    this.AddSpace(doc, standardFont);
-                    this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, boldFont, "[Begin Page: " + this.GetPageDescription(Convert.ToInt32(pageUrl.Split('|')[0])) + "]");
-                    this.AddSpace(doc, standardFont);
-                    this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, ocrText);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                if (doc != null)
-                {
-                    // Finish writing the PDF
-                    if (doc.IsOpen()) doc.Close();
-                    doc = null;
-                }
-            }
-        }
-
-        private void AddImageToPDF(Document pdf, String imagePath, int retryImageWait)
-        {
-            iTextSharp.text.Image image = null;
+            Image image = null;
             bool downloadFailed = false;
 
             try
@@ -464,7 +342,14 @@ namespace MOBOT.BHL.BHLPDFGenerator
                     attempts++;
                     try
                     {
-                        image = iTextSharp.text.Image.GetInstance(new Uri(imagePath));
+                        // Get a re-sampled instance of the image (decrease quality, hopefully undetectable or nearly so)
+                        using (Stream imageStream = new WebClient().OpenRead(new Uri(imagePath)))
+                        {
+                            var resampledStream = ReduceImageQuality(imageStream);
+                            image = Image.GetInstance(((MemoryStream)resampledStream).ToArray());
+                        }
+                        // Use this if not worried about resizing/resampling images
+                        //image = Image.GetInstance(new Uri(imagePath));
                         tryDownload = false;    // no need to continue downloads
                     }
                     catch (Exception ex)
@@ -486,38 +371,217 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 float imageWidth = image.Width;
                 float imageHeight = image.Height;
                 pdf.SetMargins(0, 0, 0, 0);
-                pdf.SetPageSize(new iTextSharp.text.Rectangle(imageWidth, imageHeight + 37));
-                pdf.NewPage();
-                pdf.Add(image);
 
-                // This is a cludge for working around an iTextSharp bug.  The first text page after
-                // a page containing only an image is blank.  To avoid this, we add this extra blank
-                // "chunk" after the image.  This is also why extra space is added to the page height.
-                pdf.Add(new Chunk("", new iTextSharp.text.Font(iTextSharp.text.Font.HELVETICA, 1, iTextSharp.text.Font.NORMAL, iTextSharp.text.Color.BLACK)));
+                float scaleFactor = (PageSize.A4.Height / image.Height);
+                float newWidth = image.Width * scaleFactor;
+                image.ScaleAbsolute(newWidth, PageSize.A4.Height);
+                pdf.SetPageSize(new Rectangle(newWidth, PageSize.A4.Height));
+
+                pdf.NewPage();
+
+                // Add a layer with the OCR text
+                foreach (Tuple<string, float, float, float, float, float> ocrWord in pageWords)
+                {
+                    this.AddHiddenText(writer, Element.ALIGN_LEFT, ocrFont, ocrWord, scaleFactor, image.Height);
+                }
+
+                image.SetAbsolutePosition(0, 0);  // point (0,0) is the upper left corner of the page
+                pdf.Add(image); // SetAbsolutePosition() will cause text to "overright" this image
             }
             catch (Exception ex)
             {
                 if (!downloadFailed)
                 {
                     // Not a download error, so we need to log it (download errors logged elsewhere)
-                    this.ImageErrors.Add(string.Format(
-                        "Image: {0}\r\nMessage: {1}\r\nStack Trace: {2}",
-                        imagePath, ex.Message, ex.StackTrace));
+                    this.ImageErrors.Add(string.Format("Image: {0}\r\nMessage: {1}\r\nStack Trace: {2}", imagePath, ex.Message, ex.StackTrace));
                 }
 
                 // Error getting the image, add a "Page Unavailable" placeholder
                 this._numberImagesMissing++;
                 SetStandardPageSize(pdf);
                 pdf.NewPage();
-                this.AddParagraph(pdf,
-                    iTextSharp.text.Element.ALIGN_CENTER,
-                    new iTextSharp.text.Font(iTextSharp.text.Font.HELVETICA, 12, iTextSharp.text.Font.NORMAL, iTextSharp.text.Color.BLACK),
-                    "Page Unavailable");
+                this.AddParagraph(pdf, Element.ALIGN_CENTER, new Font(Font.HELVETICA, 12, Font.NORMAL, Color.BLACK), "Page Unavailable");
             }
-            finally
+        }
+
+        /// <remarks>
+        /// Version 2.88.9 of SkiaSharp is in use, rather than the current version (3.116.1), due to the problem detailed 
+        /// at https://github.com/mono/SkiaSharp/issues/2607. Deployment of version 3.116.1 fails for .NET Framework projects.
+        /// </remarks>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        private Stream ReduceImageQuality(Stream stream)
+        {
+            var outputStream = new MemoryStream();
+            using (var skData = SkiaSharp.SKData.Create(stream))
             {
-                image = null;
+                using (var codec = SkiaSharp.SKCodec.Create(skData))
+                {
+                    using (var destinationImage = SkiaSharp.SKBitmap.Decode(codec))
+                    {
+                        using (var outputImage = SkiaSharp.SKImage.FromBitmap(destinationImage))
+                        {
+                            using (var data = outputImage.Encode(SkiaSharp.SKEncodedImageFormat.Jpeg, quality: this.ImageQuality))
+                            {
+                                data.SaveTo(outputStream);
+                            }
+                        }
+                    }
+                }
             }
+            return outputStream;
+        }
+
+        private List<Tuple<string, float, float, float, float, float>> LoadOcrPageText(string pageUrl)
+        {
+            List<Tuple<string, float, float, float, float, float>> ocrWords;
+
+            // Get the DJVU from IA
+            string djvuLocalLocation = pageUrl.Split('|')[2];
+            using (Stream djvu = GetDJVU(djvuLocalLocation))
+            {
+
+                // Convert the DJVU for the page into a list of words
+                int sequenceOrder = Int32.Parse(pageUrl.Split('|')[3]);
+                ocrWords = LoadDjvuForPage(djvu, sequenceOrder);
+            }
+
+            return ocrWords;
+        }
+
+        /// <summary>
+        /// Get the contents of the DJVU file for the item
+        /// </summary>
+        /// <remarks>
+        /// First tries reading a local file.  If not found, it reads the DJVU from Internet Archive.
+        /// </remarks>
+        /// <param name="barcode"></param>
+        /// <returns></returns>
+        private Stream GetDJVU(string djvuLocalLocation)
+        {
+            Stream djvu;
+
+            // Get the path to the local DJVU file for the item
+            Item item;
+            if (this.PdfRecord.BookID != null)
+                item = new BooksClient(this.BHLWSUrl).GetBookFilenames((int)this.PdfRecord.BookID);
+            else
+                item = new SegmentsClient(this.BHLWSUrl).GetSegmentFilenames((int)this.PdfRecord.SegmentID);
+
+            string djvuLocalPath = djvuLocalLocation + item.DjvuFilename;
+
+            // Open the DJVU file
+            if (File.Exists(djvuLocalPath))
+            {
+                // Open a local DJVU file
+                djvu = File.Open(djvuLocalPath, FileMode.Open);
+            }
+            else
+            {
+                // Open a remote DJVU file
+                string djvuPath = new ConfigurationClient(this.BHLWSUrl).GetDjvuFilePath(item.BarCode, item.DjvuFilename);
+
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(djvuPath);
+                req.Method = "GET";
+                req.Timeout = 15000;
+                HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+                djvu = resp.GetResponseStream();
+            }
+
+            return djvu;
+        }
+
+        /// <summary>
+        /// Convert the specified page's DJVU stream to a list of words
+        /// </summary>
+        /// <param name="djvu">DJVU stream from which to extract words</param>
+        /// <param name="sequenceOrder">Page for which to extract words</param>
+        private List<Tuple<string, float, float, float, float, float>> LoadDjvuForPage(Stream djvu, int sequenceOrder)
+        {
+            List<Tuple<string, float, float, float, float, float>> pageWords = new List<Tuple<string, float, float, float, float, float>>();
+
+            StringBuilder pageText = new StringBuilder();
+            XmlReaderSettings settings = new XmlReaderSettings() { Async = true, DtdProcessing = DtdProcessing.Parse };
+            using (XmlReader reader = XmlReader.Create(djvu, settings))
+            {
+                bool wordStarted = false;
+                float leftX = 0;
+                float leftY = 0;
+                float rightX = 0;
+                float rightY = 0;
+                int pageSequence = 0;
+                bool pageToRead = false;
+                while (reader.Read())
+                {
+                    if (reader.NodeType == XmlNodeType.Element && reader.Name == "OBJECT")
+                    {
+                        pageSequence++;
+                        if (pageSequence == sequenceOrder) pageToRead = true;
+                    }
+                    if (reader.NodeType == XmlNodeType.Element && pageToRead && reader.Name == "WORD")
+                    {
+                        wordStarted = true;
+                        // Coords in a DJVU file are listed in the following order: lower-left-x, lower-left-y, upper-right-x, upper-right-y
+                        // The upper left corner of a page is point (0,0)
+                        /*  Example: 
+                          <OBJECT>
+                           <HIDDENTEXT>
+                            <PAGECOLUMN>
+                             <REGION>
+                              <PARAGRAPH>
+                                <LINE>
+                                  <WORD coords="131,641,435,573" x-confidence="54">JOURNAL </WORD>
+                                  <WORD coords="435,641,544,575" x-confidence="24">OF </WORD>
+                                  <WORD coords="544,642,942,576" x-confidence="37">MICROSCOPY </WORD>
+                                </LINE>
+                        */
+                        string coords = reader.GetAttribute("coords");
+                        string[] coordList = coords.Split(',');
+                        leftX = float.Parse(coordList[0]);
+                        leftY = float.Parse(coordList[1]);
+                        rightX = float.Parse(coordList[2]);
+                        rightY = float.Parse(coordList[3]);
+                    }
+                    if (reader.NodeType == XmlNodeType.Text && pageToRead && wordStarted) pageText.Append(reader.Value + " ");
+                    if (reader.NodeType == XmlNodeType.EndElement)
+                    {
+                        if (reader.Name == "WORD" && pageToRead)
+                        {
+                            pageWords.Add(new Tuple<string, float, float, float, float, float>(
+                                pageText.ToString(), rightX, rightY, leftX, leftY, 0)
+                            );
+
+                            wordStarted = false;
+                            leftX = 0;
+                            leftY = 0;
+                            rightX = 0;
+                            rightY = 0;
+                            pageText.Clear();
+                        }
+                        if (reader.Name == "OBJECT" && pageToRead)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return pageWords;
+        }
+
+        private void AddHiddenText(PdfWriter writer, int alignment, Font font, Tuple<string, float, float, float, float, float> ocrWord,
+            float scaleFactor, float imageHeight)
+        {
+            string content = ocrWord.Item1;
+            float llx = (ocrWord.Item4 * scaleFactor);
+            float lly = ((imageHeight - ocrWord.Item5) * scaleFactor) - 5; // -5 adjustment to correctly align with image
+            float urx = (ocrWord.Item2 * scaleFactor) + 10;
+            float ury = ((imageHeight - ocrWord.Item3) * scaleFactor) - 5; // -5 adjustment to correctly align with image
+
+            ColumnText ct = new ColumnText(writer.DirectContentUnder);   // DirectContent for testing (visible), DirectContentUnder for production (hidden)
+            Chunk ck = new Chunk(content, font);
+            ct.SetSimpleColumn(new Phrase(ck), llx, lly, urx, ury, 0f, alignment);
+            ct.Go();
         }
 
         private void AddHeaderPages(Document doc, String fileName)

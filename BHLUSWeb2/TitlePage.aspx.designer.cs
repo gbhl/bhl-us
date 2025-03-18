@@ -51,24 +51,6 @@ namespace MOBOT.BHL.Web2
         protected global::System.Web.UI.WebControls.ListBox lbSegments;
 
         /// <summary>
-        /// tbImages control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton tbImages;
-
-        /// <summary>
-        /// tbImagesOcr control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton tbImagesOcr;
-
-        /// <summary>
         /// attributionPlaceHolder control.
         /// </summary>
         /// <remarks>

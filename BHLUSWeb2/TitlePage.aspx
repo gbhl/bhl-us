@@ -405,10 +405,6 @@
                                 <div class="field-wrap">
                                     <input class="field required email" type="text" id="tbEmail" name="tbEmail" /><span id="tbEmailErr" style="color:#8a1826; font-size:12px; font-family:Georgia,Times,serif; position:absolute; left:322px; top:6.5px;"></span>
                                 </div>
-                                <label for="grpImageOCR">Include</label>
-                                <div class="field-wrap">
-                                    <asp:RadioButton ID="tbImages" ClientIDMode="Static" GroupName="grpImageOCR" runat="server" Text=" Page images only" Checked=true />&nbsp;&nbsp;<asp:RadioButton ID="tbImagesOcr" ClientIDMode="Static" GroupName="grpImageOCR" runat="server" Text=" Page images and text" />
-                                </div>
                             </div>
                             <div class="optional">
                                 <span>Optional</span>
@@ -495,15 +491,15 @@
     <link rel="stylesheet" type="text/css" href="/css/nspop.css?v=2" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
-<script src="/js/libs/jquery.easing.min.js" type="text/javascript"></script>
+<script src="/js/libs/jquery.easing.min.js?v=1.4.1" type="text/javascript"></script>
 <script src="/js/libs/jquery-ui-1.14.1.custom.min.js" type="text/javascript"></script>
-<script src="/js/libs/jquery.hoverintent.min.js" type="text/javascript"></script>
-<script src="/js/libs/jqModal.min.js" type="text/javascript"></script>
-<script src="/js/libs/jquery.jscrollpane.min.js" type="text/javascript"></script>
-<script src="/js/libs/jquery.bt.min.js" type="text/javascript"></script>
-<script src="/js/libs/BookReader.js?v=4" type="text/javascript"></script>
-<script src="/js/libs/dragscrollable.min.js" type="text/javascript"></script>
-<script src="/js/libs/jquery.text-overflow.js" type="text/javascript"></script>
+<script src="/js/libs/jquery.hoverintent.min.js?v=1.10.2" type="text/javascript"></script>
+<script src="/js/libs/jqModal.min.js?v=1.4.2" type="text/javascript"></script>
+<script src="/js/libs/jquery.jscrollpane.min.js?v=2.2.3" type="text/javascript"></script>
+<script src="/js/libs/jquery.bt.min.js?v=0.9.5" type="text/javascript"></script>
+<script src="/js/libs/BookReader.js?v=5" type="text/javascript"></script>
+<script src="/js/libs/dragscrollable.min.js?v=1.2" type="text/javascript"></script>
+<script src="/js/libs/jquery.text-overflow.js?v=0.7.4" type="text/javascript"></script>
 <script src="/js/nspop.js?v=2" type="text/javascript"></script>
 <script src="/js/citation-js/citation-js@0.6.4.js" type="text/javascript"></script>
 <script src="/js/citation-js/bhl-citation-js.js?v=2" type="text/javascript"></script>
@@ -1155,7 +1151,6 @@
                         'title': $('#tbTitle').val(),
                         'authors': $('#tbAuthors').val(),
                         'subjects': $('#tbSubjects').val(),
-                        'imagesOnly': $('#tbImages:checked').val()
                     },
                     success: function (data) {
                         if(data.isSuccess) {
