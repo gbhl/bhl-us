@@ -497,7 +497,7 @@
 <script src="/js/libs/jqModal.min.js?v=1.4.2" type="text/javascript"></script>
 <script src="/js/libs/jquery.jscrollpane.min.js?v=2.2.3" type="text/javascript"></script>
 <script src="/js/libs/jquery.bt.min.js?v=0.9.5" type="text/javascript"></script>
-<script src="/js/libs/BookReader.js?v=5" type="text/javascript"></script>
+<script src="/js/libs/BookReader.js?v=6" type="text/javascript"></script>
 <script src="/js/libs/dragscrollable.min.js?v=1.2" type="text/javascript"></script>
 <script src="/js/libs/jquery.text-overflow.js?v=0.7.4" type="text/javascript"></script>
 <script src="/js/nspop.js?v=2" type="text/javascript"></script>

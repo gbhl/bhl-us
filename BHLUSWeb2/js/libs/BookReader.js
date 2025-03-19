@@ -340,6 +340,9 @@ BookReader.prototype.setClickHandler2UP = function( element, data, handler) {
     $(element).off('tap').on('tap', data, function(e) {
         handler(e);
     });
+    $(element).off('click').on('click', data, function (e) {
+        handler(e);
+    });
 }
 
 // drawLeafsOnePage()
