@@ -731,6 +731,7 @@ namespace IAHarvest
                     provider.IAItemIdentifierDeleteByItem(itemID);  // Delete existing, as we're doing a full replace
                     this.ReadAndSaveItemIdentifierElements(itemID, xml, "metadata/identifier-doi");
                     this.ReadAndSaveItemIdentifierElements(itemID, xml, "metadata/identifier-ark");
+                    this.ReadAndSaveItemIdentifierElements(itemID, xml, "metadata/identifier-elocator");
                     this.ReadAndSaveItemIdentifierElements(itemID, xml, "metadata/external-identifier");
                     this.ReadAndSaveItemIdentifierElements(itemID, xml, "metadata/issn");
                     this.ReadAndSaveItemIdentifierElements(itemID, xml, "metadata/isbn");

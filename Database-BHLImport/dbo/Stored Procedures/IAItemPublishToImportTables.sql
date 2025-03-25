@@ -1718,7 +1718,7 @@ BEGIN TRY
 	WHERE	t.ItemID = @ItemID
 	AND		l.LanguageCode IN (SELECT LanguageCode FROM dbo.BHLLanguage)
 
-		-- =======================================================================
+	-- =======================================================================
 	-- =======================================================================
 	-- =======================================================================
 	-- Get Item Identifiers
@@ -1736,6 +1736,20 @@ BEGIN TRY
 				AND 'DOI' = ti.IdentifierName
 				AND i.IdentifierValue = ti.IdentifierValue
 	WHERE	i.IdentifierDescription = 'identifier-doi'
+	AND		ti.IdentifierValue IS NULL
+
+	INSERT INTO #tmpIdentifier
+	SELECT DISTINCT
+			t.ItemID,
+			'eLocator',
+			i.IdentifierValue
+	FROM	#tmpItem t INNER JOIN dbo.IAItemIdentifier i
+				ON t.ItemID = i.ItemID
+			LEFT JOIN #tmpIdentifier ti
+				ON t.ItemID = ti.ItemID
+				AND 'eLocator' = ti.IdentifierName
+				AND i.IdentifierValue = ti.IdentifierValue
+	WHERE	i.IdentifierDescription = 'identifier-elocator'
 	AND		ti.IdentifierValue IS NULL
 
 	/*
