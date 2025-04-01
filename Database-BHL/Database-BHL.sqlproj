@@ -1109,6 +1109,7 @@
     <None Include="dbo\Stored Procedures\TitleDocumentSelectBySegmentID.sql" />
     <None Include="dbo\Stored Procedures\ReportSelectPermissionsTitles.sql" />
     <None Include="dbo\Stored Procedures\ExportSegmentPage.sql" />
+    <None Include="dbo\Stored Procedures\DOIPrefixSelectAll.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1498,5 +1499,7 @@
     <None Include="Data\dbo.ExternalResourceType.Table.sql" />
     <None Include="dbo\Stored Procedures\SegmentExternalResourceInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleDocumentSelectByBookID.sql" />
+    <None Include="dbo\Tables\DOIPrefix.sql" />
+    <None Include="Data\dbo.DOIPrefix.Table.sql" />
   </ItemGroup>
 </Project>

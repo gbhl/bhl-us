@@ -541,5 +541,6 @@
     <Build Include="dbo\Stored Procedures\IABHLCreatorUpdateAuto.sql" />
     <None Include="dbo\Tables\IABHLCreator.sql" />
     <None Include="dbo\Tables\IABHLCreatorIdentifier.sql" />
+    <None Include="dbo\Synonyms\BHLDOIPrefix.sql" />
   </ItemGroup>
 </Project>
