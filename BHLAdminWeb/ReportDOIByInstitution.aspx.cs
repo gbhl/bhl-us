@@ -24,5 +24,13 @@ namespace MOBOT.BHL.AdminWeb
             institutionList.DataSource = institutions;
             institutionList.DataBind();
         }
+
+        protected void btnDownload_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ReportDOIByInstitutionCSV.ashx" +
+                "?s=" + rblOrderBy.SelectedValue + 
+                "&i=" + (chkIncludeAll.Checked ? "0" : "1") + 
+                "&b=" + (chkShow.Checked ? "1" : "0"));
+        }
     }
 }

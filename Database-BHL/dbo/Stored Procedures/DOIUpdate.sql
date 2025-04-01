@@ -40,8 +40,16 @@ BEGIN
 	-- Insert a new DOI
 	EXEC dbo.DOIInsert @DOIEntityTypeID, @EntityID, @DOIStatusID, @DOIName, @IsValid, @DOIBatchID, @StatusMessage, @UserID, @ExcludeBHLDOI
 
+	-- Get the prefix of the replaced DOI
+	DECLARE @OrigDOIPrefix nvarchar(30)
+	SET @OrigDOIPrefix = SUBSTRING(@OriginalDOIName, 1, 
+						CASE WHEN CHARINDEX('/', @OriginalDOIName) > 0 
+							THEN CHARINDEX('/', @OriginalDOIName) - 1 
+							ELSE LEN(@OriginalDOIName) 
+						END)
+
 	IF @OriginalDOIName IS NOT NULL AND @DOIName <> @OriginalDOIName AND @ProcessName <> '' AND 
-		(@OriginalDOIName NOT LIKE '%10.5962%' OR @ExcludeBHLDOI = 0)
+		(@OrigDOIPrefix NOT IN (SELECT Prefix FROM dbo.DOIPrefix) OR @ExcludeBHLDOI = 0)
 	BEGIN
 		-- If an existing DOI has been changed by a data harvest process, log the before/after DOI values
 		INSERT	dbo.BHLImportDOIHarvestLog (HarvesterName, DOIEntityTypeID, EntityID, OriginalDOIName, NewDOIName)

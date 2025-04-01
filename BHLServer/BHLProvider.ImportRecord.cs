@@ -560,17 +560,19 @@ namespace MOBOT.BHL.Server
                 }
                 else
                 {
-                    string bhlPrefix = "10.5962";
+                    List<DOIPrefix> prefixes = new DOIDAL().DOIPrefixSelectAll(null, null);
+                    var existingPrefixMatch = prefixes.Where(x => existingDOI.StartsWith(x.Prefix));
+                    var citationPrefixMatch = prefixes.Where(x => citation.DOI.StartsWith(x.Prefix));
 
-                    // If a BHL-assigned DOI (prefix 10.5962) is being added or replaced, issue a warning indicating that the change will be ignored.
+                    // If a BHL-managed DOI is being added or replaced, issue a warning indicating that the change will be ignored.
                     // This does NOT produce an invalid citation.
                     if (citation.DOI != existingDOI)
                     {
-                        if (existingDOI.StartsWith(bhlPrefix))
+                        if (existingPrefixMatch.Count() > 0)
                         {
                             citation.Warnings.Add(GetNewImportRecordWarning(string.Format("Existing BHL-assigned DOI {0} can not be modified via a batch update", existingDOI)));
                         }
-                        else if (citation.DOI.StartsWith(bhlPrefix))
+                        else if (citationPrefixMatch.Count() > 0)
                         {
                             citation.Warnings.Add(GetNewImportRecordWarning(string.Format("BHL-assigned DOI {0} cannot be added via a batch update", citation.DOI)));
                         }

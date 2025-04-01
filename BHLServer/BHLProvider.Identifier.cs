@@ -106,7 +106,9 @@ namespace MOBOT.BHL.Server
             // Set the indicator that specifies if this is a new BHL DOI
             if (string.Compare(identifierTemplate.IdentifierName, "DOI", true, CultureInfo.CurrentCulture) == 0)
             {
-                if (identifierValue.StartsWith("10.5962") && IsNew) result.IncludesNewBHLDOI = true;
+                List<DOIPrefix> prefixes = new DOIDAL().DOIPrefixSelectAll(null, null);
+                var prefixMatch = prefixes.Where(x => identifierValue.StartsWith(x.Prefix));
+                if (prefixMatch.Count() > 0 && IsNew) result.IncludesNewBHLDOI = true;
             }
 
             return result;

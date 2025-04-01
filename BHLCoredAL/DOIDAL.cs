@@ -291,5 +291,19 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
+
+        public List<DOIPrefix> DOIPrefixSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.DOIPrefixSelectAll", connection, transaction))
+            {
+                using (CustomSqlHelper<DOIPrefix> helper = new CustomSqlHelper<DOIPrefix>())
+                {
+                    List<DOIPrefix> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
     }
 }

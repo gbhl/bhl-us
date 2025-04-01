@@ -213,7 +213,12 @@ SELECT	d.AuditID,
 		'DOI' AS [Queue],
 		d.AuditDate
 FROM	#DOI d
-		INNER JOIN dbo.Title_Identifier ti ON d.EntityID1 = ti.TitleID AND ti.IdentifierValue LIKE '%10.5962%'
+		INNER JOIN dbo.Title_Identifier ti ON d.EntityID1 = ti.TitleID
+			AND SUBSTRING(	ti.IdentifierValue, 1, 
+							CASE WHEN CHARINDEX('/', ti.IdentifierValue) > 0 
+								THEN CHARINDEX('/', ti.IdentifierValue) - 1 
+								ELSE LEN(ti.IdentifierValue) 
+							END) IN (SELECT Prefix FROM dbo.DOIPrefix)
 		INNER JOIN dbo.Identifier id ON ti.IdentifierID = id.IdentifierID AND id.IdentifierName = 'DOI'
 WHERE	d.IndexEntity = 'title'
 UNION
@@ -226,7 +231,12 @@ SELECT	d.AuditID,
 		d.AuditDate
 FROM	#DOI d
 		INNER JOIN dbo.Segment s ON d.EntityID1 = s.SegmentID
-		INNER JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID AND ii.IdentifierValue LIKE '%10.5962%'
+		INNER JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID
+			AND SUBSTRING(	ii.IdentifierValue, 1, 
+							CASE WHEN CHARINDEX('/', ii.IdentifierValue) > 0 
+								THEN CHARINDEX('/', ii.IdentifierValue) - 1 
+								ELSE LEN(ii.IdentifierValue) 
+							END) IN (SELECT Prefix FROM dbo.DOIPrefix)
 		INNER JOIN dbo.Identifier id ON ii.IdentifierID = id.IdentifierID AND id.IdentifierName = 'DOI'
 WHERE	d.IndexEntity = 'segment'
 ORDER BY AuditDate,

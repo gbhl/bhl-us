@@ -14,7 +14,15 @@ AS
 BEGIN
 	SET NOCOUNT ON
 
-	IF @DOIName <> '' AND @DOIName IS NOT NULL AND (@DOIName NOT LIKE '%10.5962%' OR @ExcludeBHLDOI = 0)
+	-- Get the prefix of the DOI being inserted
+	DECLARE @DOIPrefix nvarchar(30)
+	SET @DOIPrefix = SUBSTRING(@DOIName, 1, 
+						CASE WHEN CHARINDEX('/', @DOIName) > 0 
+							THEN CHARINDEX('/', @DOIName) - 1 
+							ELSE LEN(@DOIName) 
+						END)
+
+	IF @DOIName <> '' AND @DOIName IS NOT NULL AND (@DOIPrefix NOT IN (SELECT Prefix FROM dbo.DOIPrefix) OR @ExcludeBHLDOI = 0)
 	BEGIN
 		DECLARE @IdentifierDOIID int
 		SELECT @IdentifierDOIID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'DOI'

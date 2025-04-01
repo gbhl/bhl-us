@@ -16,30 +16,55 @@ BEGIN
 	SELECT @DOITitleEntityTypeID = DOIEntityTypeID FROM dbo.DOIEntityType WHERE DOIEntityTypeName = 'Title'
 	SELECT @DOISegmentEntityTypeID = DOIEntityTypeID FROM dbo.DOIEntityType WHERE DOIEntityTypeName = 'Segment'
 
-	-- Mark the DOI record as invalid
-	UPDATE 	dbo.DOI 
-	SET 	IsValid = 0, LastModifiedDate = GETDATE(), LastModifiedUserID = @UserID 
-	WHERE 	DOIEntityTypeID = @DOIEntityTypeID 
-	AND 	EntityID = @EntityID 
-	AND 	IsValid = 1
-	AND		(DOIName NOT LIKE '%10.5962%' OR @ExcludeBHLDOI = 0)
+	-- Get the prefix of the DOI being deleted
+	DECLARE @DOIPrefix nvarchar(30)
 
-	-- Delete from the appropriate Identifier table
 	IF @DOIEntityTypeID = @DOITitleEntityTypeID
 	BEGIN
-		DELETE	dbo.Title_Identifier 
+		SELECT	@DOIPrefix = IdentifierValue
+		FROM	dbo.Title_Identifier
 		WHERE	TitleID = @EntityID 
 		AND		IdentifierID = @IdentifierDOIID
-		AND		(IdentifierValue NOT LIKE '%10.5962%' OR @ExcludeBHLDOI = 0)
 	END
 	IF @DOIEntityTypeID = @DOISegmentEntityTypeID
 	BEGIN
-		DELETE	ii
+		SELECT	@DOIPrefix = IdentifierValue
 		FROM	dbo.ItemIdentifier ii
 				INNER JOIN dbo.Segment s ON ii.ItemID = s.ItemID
 		WHERE	s.SegmentID = @EntityID 
 		AND		ii.IdentifierID = @IdentifierDOIID
-		AND		(ii.IdentifierValue NOT LIKE '%10.5962%' OR @ExcludeBHLDOI = 0)
+	END
+	SET @DOIPrefix = SUBSTRING(@DOIPrefix, 1, 
+						CASE WHEN CHARINDEX('/', @DOIPrefix) > 0 
+							THEN CHARINDEX('/', @DOIPrefix) - 1 
+							ELSE LEN(@DOIPrefix) 
+						END)
+
+	-- If the DOI is not a BHL-managed DOI and has not been excluded, then proceed with the deletes
+	IF (@DOIPrefix NOT IN (SELECT Prefix from dbo.DOIPrefix) OR @ExcludeBHLDOI = 0)
+	BEGIN
+		-- Mark the DOI record as invalid
+		UPDATE 	dbo.DOI 
+		SET 	IsValid = 0, LastModifiedDate = GETDATE(), LastModifiedUserID = @UserID 
+		WHERE 	DOIEntityTypeID = @DOIEntityTypeID 
+		AND 	EntityID = @EntityID 
+		AND 	IsValid = 1
+
+		-- Delete from the appropriate Identifier table
+		IF @DOIEntityTypeID = @DOITitleEntityTypeID
+		BEGIN
+			DELETE	dbo.Title_Identifier 
+			WHERE	TitleID = @EntityID 
+			AND		IdentifierID = @IdentifierDOIID
+		END
+		IF @DOIEntityTypeID = @DOISegmentEntityTypeID
+		BEGIN
+			DELETE	ii
+			FROM	dbo.ItemIdentifier ii
+					INNER JOIN dbo.Segment s ON ii.ItemID = s.ItemID
+			WHERE	s.SegmentID = @EntityID 
+			AND		ii.IdentifierID = @IdentifierDOIID
+		END
 	END
 
 END
