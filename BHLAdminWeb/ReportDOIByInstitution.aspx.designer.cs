@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.AdminWeb {
-    
-    
-    public partial class ReportDOIByInstitution {
-        
+namespace MOBOT.BHL.AdminWeb
+{
+
+
+    public partial class ReportDOIByInstitution
+    {
+
         /// <summary>
         /// rblOrderBy control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList rblOrderBy;
-        
+
         /// <summary>
         /// btnUpdate control.
         /// </summary>
@@ -29,7 +31,16 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnUpdate;
-        
+
+        /// <summary>
+        /// btnDownload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDownload;
+
         /// <summary>
         /// chkShow control.
         /// </summary>
@@ -38,7 +49,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkShow;
-        
+
         /// <summary>
         /// chkIncludeAll control.
         /// </summary>
@@ -47,7 +58,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkIncludeAll;
-        
+
         /// <summary>
         /// institutionList control.
         /// </summary>

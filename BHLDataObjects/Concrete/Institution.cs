@@ -30,18 +30,32 @@ namespace MOBOT.BHL.DataObjects
 
         #region Properties
 
-        private int _titleDOIs = 0;
-        public int TitleDOIs
+        private int _titleMinted = 0;
+        public int TitleMinted { get => _titleMinted; set => _titleMinted = value; }
+        private int _titleAcquired = 0;
+        public int TitleAcquired { get => _titleAcquired; set => _titleAcquired = value; }
+        private int _titleNonBHL = 0;
+        public int TitleNonBHL { get => _titleNonBHL; set => _titleNonBHL = value; }
+
+        private int _titleTotalDOIs = 0;
+        public int TitleTotalDOIs
         {
-            get { return _titleDOIs; }
-            set { _titleDOIs = value; }
+            get { return _titleTotalDOIs; }
+            set { _titleTotalDOIs = value; }
         }
 
-        private int _segmentDOIs = 0;
-        public int SegmentDOIs
+        private int _segmentMinted = 0;
+        public int SegmentMinted { get => _segmentMinted; set => _segmentMinted = value; }
+        private int _segmentAcquired = 0;
+        public int SegmentAcquired { get => _segmentAcquired; set => _segmentAcquired = value; }
+        private int _segmentNonBHL = 0;
+        public int SegmentNonBHL { get => _segmentNonBHL; set => _segmentNonBHL = value; }
+
+        private int _segmentTotalDOIs = 0;
+        public int SegmentTotalDOIs
         {
-            get { return _segmentDOIs; }
-            set { _segmentDOIs = value; }
+            get { return _segmentTotalDOIs; }
+            set { _segmentTotalDOIs = value; }
         }
 
         private int _totalDOIs = 0;
@@ -97,14 +111,44 @@ namespace MOBOT.BHL.DataObjects
             {
                 switch (column.Name)
                 {
-                    case "TitleDOIs":
+                    case "TitleMinted":
                         {
-                            _titleDOIs = (int)column.Value;
+                            _titleMinted = (int)column.Value;
+                            break; 
+                        }
+                    case "TitleAcquired":
+                        {
+                            _titleAcquired = (int)column.Value;
                             break;
                         }
-                    case "SegmentDOIs":
+                    case "TitleNonBHL":
                         {
-                            _segmentDOIs = (int)column.Value;
+                            _titleNonBHL = (int)column.Value;
+                            break;
+                        }
+                    case "TitleTotalDOIs":
+                        {
+                            _titleTotalDOIs = (int)column.Value;
+                            break;
+                        }
+                    case "SegmentMinted":
+                        {
+                            _segmentMinted = (int)column.Value;
+                            break;
+                        }
+                    case "SegmentAcquired":
+                        {
+                            _segmentAcquired = (int)column.Value;
+                            break;
+                        }
+                    case "SegmentNonBHL":
+                        {
+                            _segmentNonBHL = (int)column.Value;
+                            break;
+                        }
+                    case "SegmentTotalDOIs":
+                        {
+                            _segmentTotalDOIs = (int)column.Value;
                             break;
                         }
                     case "TotalDOIs":

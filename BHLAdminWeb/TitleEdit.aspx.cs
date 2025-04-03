@@ -2511,7 +2511,7 @@ namespace MOBOT.BHL.AdminWeb
                 if (identifierValidationResult.IncludesNewBHLDOI)
                 {
                     flag = true;
-                    errorControl.AddErrorText("A BHL-created DOI can only be added by submitting the Title metadata to a DOI registrar (such as Crossref)");
+                    errorControl.AddErrorText("A BHL-managed DOI can only be added by submitting the Title metadata to a DOI registrar (such as Crossref)");
                 }
             }
 
