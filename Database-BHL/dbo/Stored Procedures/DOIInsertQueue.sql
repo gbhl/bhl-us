@@ -32,18 +32,44 @@ BEGIN
 
 	-- Get any BHL DOI that has already been assigned to this entity
 	DECLARE @DOIName nvarchar(50)
-	SELECT @DOIName = COALESCE(ti.IdentifierValue, ii.IdentifierValue, d.DOIName)
-	FROM	dbo.DOI d
-			LEFT JOIN dbo.Title_Identifier ti 
-				ON d.DOIEntityTypeID = @EntityTypeTitleID AND d.EntityID = ti.TitleID AND ti.IdentifierID = @DOIIdentifierID AND ti.IdentifierValue LIKE '%10.59265'
-			LEFT JOIN dbo.Segment s 
-				ON d.DOIEntityTypeID = @EntityTypeSegmentID AND d.EntityID = s.SegmentID
-			LEFT JOIN dbo.ItemIdentifier ii 
-				ON s.ItemID = ii.ItemID AND ii.IdentifierID = @DOIIdentifierID AND ii.IdentifierValue LIKE '%10.59265'
-	WHERE	d.EntityID = @EntityID
-	AND		d.DOIEntityTypeID = @DOIEntityTypeID
-	AND		d.DOIStatusID NOT IN (@DOIStatusQueuedID, @DOIStatusErrorID)
 
+	-- Look in Title_Identifier and ItemIdentifier first to make sure we pick up BHL-acquired DOIs
+	SELECT	@DOIName = ti.IdentifierValue
+	FROM	dbo.Title_Identifier ti 
+	WHERE	ti.TitleID = @EntityID
+	AND		ti.IdentifierID = @DOIIdentifierID 
+	AND		SUBSTRING(	ti.IdentifierValue, 1, 
+							CASE WHEN CHARINDEX('/', ti.IdentifierValue) > 0 
+								THEN CHARINDEX('/', ti.IdentifierValue) - 1 
+								ELSE LEN(ti.IdentifierValue) 
+							END) IN (SELECT Prefix FROM dbo.DOIPrefix)
+
+	IF (@DOIName IS NULL)
+	BEGIN
+		SELECT @DOIName = ii.IdentifierValue
+		FROM	dbo.Segment s 
+				LEFT JOIN dbo.ItemIdentifier ii 
+					ON s.ItemID = ii.ItemID 
+					AND ii.IdentifierID = @DOIIdentifierID 
+					AND SUBSTRING(	ii.IdentifierValue, 1, 
+								CASE WHEN CHARINDEX('/', ii.IdentifierValue) > 0 
+									THEN CHARINDEX('/', ii.IdentifierValue) - 1 
+									ELSE LEN(ii.IdentifierValue) 
+								END) IN (SELECT Prefix FROM dbo.DOIPrefix)
+		WHERE	s.SegmentID = @EntityID
+	END
+
+	-- Look in the DOI table last, if we haven't already found a BHL-managed DOI elsewhere
+	IF (@DOIName IS NULL)
+	BEGIN
+		SELECT	@DOIName = d.DOIName
+		FROM	dbo.DOI d
+		WHERE	d.EntityID = @EntityID
+		AND		d.DOIEntityTypeID = @DOIEntityTypeID
+		AND		d.DOIStatusID NOT IN (@DOIStatusQueuedID, @DOIStatusErrorID)
+	END
+
+	-- Add the new message to the DOI queue
 	INSERT INTO [dbo].[DOI]
 	( 	[DOIEntityTypeID],
 		[EntityID],
