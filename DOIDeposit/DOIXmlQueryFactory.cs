@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MOBOT.BHL.DOIDeposit
 {
@@ -17,6 +14,7 @@ namespace MOBOT.BHL.DOIDeposit
         public enum DOIQueryType
         {
             Monograph,
+            Chapter,
             Journal,
             Article
         }
@@ -41,7 +39,7 @@ namespace MOBOT.BHL.DOIDeposit
 
         public DOIQuery GetDOIQuery(DOIQueryType type, DOIDepositData data)
         {
-            DOIQuery deposit = null;
+            DOIQuery deposit;
 
             switch (type)
             {

@@ -630,16 +630,22 @@ namespace MOBOT.BHL.BHLDOIService
         private DOIDepositData GetSegmentDepositData(int entityID)
         {
             DOIDepositData data = new DOIDepositData();
-            SegmentsClient segmentRestClient = null;
-            TitlesClient titlesRestClient = null;
-
-            segmentRestClient = new SegmentsClient(configParms.BHLWSRestEndpoint);
-            titlesRestClient = new TitlesClient(configParms.BHLWSRestEndpoint);
+            SegmentsClient segmentRestClient = new SegmentsClient(configParms.BHLWSRestEndpoint);
+            TitlesClient titlesRestClient = new TitlesClient(configParms.BHLWSRestEndpoint);
 
             Segment segment = segmentRestClient.GetSegmentDetails(entityID);
 
             data.DoiResource = string.Format(configParms.BhlPartUrlFormat, entityID.ToString());
-            data.PublicationType = DOIDepositData.PublicationTypeValue.Article;
+            if (segment.GenreName == configParms.SegmentGenreChapter)
+            {
+                data.PublicationType = DOIDepositData.PublicationTypeValue.Chapter;
+                // Chapters must be submitted as part of a complete book deposit, so get the book metadata here
+                if (segment.TitleId != null) data.PublicationContainerData = GetBookDepositData((int)segment.TitleId);
+            }
+            else
+            {
+                data.PublicationType = DOIDepositData.PublicationTypeValue.Article;
+            }
             data.ArticleTitle = segment.Title;
             data.ArticlePublicationDate = segment.Date;
             data.PublisherName = segment.PublisherName;
@@ -659,16 +665,13 @@ namespace MOBOT.BHL.BHLDOIService
                 if (string.Compare(titleIdentifier.IdentifierName, "eISSN", true, CultureInfo.CurrentCulture) == 0) data.Issn.Add(("electronic", titleIdentifier.IdentifierValue));
             }
 
-            // If no ISSNs, use the DOI of the associated title
-            if (data.Issn.Count == 0)
+            // If no ISSNs, we'll use the DOI of the associated title
+            Title_Identifier[] titleDOIs = titlesRestClient.GetTitleDois(segment.TitleId ?? 0).ToArray<Title_Identifier>();
+            foreach(Title_Identifier doi in titleDOIs)
             {
-                Title_Identifier[] titleDOIs = titlesRestClient.GetTitleDois(segment.TitleId ?? 0).ToArray<Title_Identifier>();
-                foreach(Title_Identifier doi in titleDOIs)
-                {
-                    data.TitleDOIName = doi.IdentifierValue;
-                    data.TitleDOIResource = string.Format(configParms.BhlTitleUrlFormat, segment.TitleId);
-                    break;
-                }
+                data.TitleDOIName = doi.IdentifierValue;
+                data.TitleDOIResource = string.Format(configParms.BhlTitleUrlFormat, segment.TitleId);
+                break;
             }
 
             bool first = true;
@@ -740,9 +743,10 @@ namespace MOBOT.BHL.BHLDOIService
         /// <returns></returns>
         private string GetDepositTemplate(DOIDepositData data)
         {
-            string depositTemplate = string.Empty;
+            string depositTemplate;
             if (data.PublicationType == DOIDepositData.PublicationTypeValue.Monograph ||
-                data.PublicationType == DOIDepositData.PublicationTypeValue.MonographicSeries)
+                data.PublicationType == DOIDepositData.PublicationTypeValue.MonographicSeries ||
+                data.PublicationType == DOIDepositData.PublicationTypeValue.Chapter)
                 depositTemplate = File.ReadAllText(configParms.MonographDepositTemplateFile);
             else if (data.PublicationType == DOIDepositData.PublicationTypeValue.Article)
                 depositTemplate = File.ReadAllText(configParms.ArticleDepositTemplateFile);
@@ -777,6 +781,8 @@ namespace MOBOT.BHL.BHLDOIService
             if (data.PublicationType == DOIDepositData.PublicationTypeValue.Monograph ||
                 data.PublicationType == DOIDepositData.PublicationTypeValue.MonographicSeries)
                 deposit = depositFactory.GetDOIDeposit(DOIDepositFactory.DOIDepositType.Monograph);
+            else if (data.PublicationType == DOIDepositData.PublicationTypeValue.Chapter)
+                deposit = depositFactory.GetDOIDeposit(DOIDepositFactory.DOIDepositType.Chapter);
             else if (data.PublicationType == DOIDepositData.PublicationTypeValue.Article)
                 deposit = depositFactory.GetDOIDeposit(DOIDepositFactory.DOIDepositType.Article);
             else

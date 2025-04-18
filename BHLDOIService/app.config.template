@@ -79,6 +79,8 @@
     <add key="TitleIdentifier_CODEN" value="10"/>
     <!-- Title Variants.  These should match the rows in the TitleVariantType database table. -->
     <add key="TitleVariant_Abbreviated" value="3"/>
+    <!-- Segment Genres. These should match the GenreName values in the SegmentGenre database table. -->
+    <add key="SegmentGenre_Chapter" value="Chapter" />
     <!-- Author Roles.  These should match the rows in the AuthorRole database table. -->
     <add key="AuthorRole_100" value="1"/>
     <add key="AuthorRole_110" value="2"/>

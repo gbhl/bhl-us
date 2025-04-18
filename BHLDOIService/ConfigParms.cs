@@ -367,6 +367,13 @@ namespace MOBOT.BHL.BHLDOIService
             set { _titleVariantAbbreviated = value; }
         }
 
+        private string _segmentGenreChapter = "Chapter";
+        public string SegmentGenreChapter
+        {
+            get { return _segmentGenreChapter; }
+            set { _segmentGenreChapter = value; }
+        }
+
         private int _authorRole100 = 1;
         public int AuthorRole100
         {

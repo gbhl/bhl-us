@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -73,7 +72,7 @@ namespace MOBOT.BHL.DOIDeposit
 
             string title = Data.Title;
             string pubDate = Data.PublicationDate;
-            if (Data.PublicationType == DOIDepositData.PublicationTypeValue.Article)
+            if (Data.PublicationType == DOIDepositData.PublicationTypeValue.Article || Data.PublicationType == DOIDepositData.PublicationTypeValue.Chapter)
             {
                 title = Data.ArticleTitle;
                 pubDate = Data.ArticlePublicationDate;
@@ -84,6 +83,11 @@ namespace MOBOT.BHL.DOIDeposit
                 content.Append("<volume_title match=\"fuzzy\">" + 
                     XmlEncode(title.Replace(':', ' ').Substring(0, (title.Length > 256 ? 256 : title.Length))) + 
                     "</volume_title>");
+            }
+
+            if (Data.PublicationType == DOIDepositData.PublicationTypeValue.Chapter)
+            {
+                content.Append("<first_page match=\"optional\">" + XmlEncode(Data.FirstPage) + "</first_page>");
             }
 
             if (!string.IsNullOrWhiteSpace(pubDate))

@@ -17,6 +17,7 @@ namespace MOBOT.BHL.DOIDeposit
         public enum DOIDepositType
         {
             Monograph,
+            Chapter,
             Journal,
             Article
         }
@@ -47,6 +48,9 @@ namespace MOBOT.BHL.DOIDeposit
             {
                 case DOIDepositType.Monograph:
                     deposit = new DOIMonographDeposit(data);
+                    break;
+                case DOIDepositType.Chapter:
+                    deposit = new DOIChapterDeposit(data);
                     break;
                 case DOIDepositType.Journal:
                     deposit = new DOIJournalDeposit(data);
