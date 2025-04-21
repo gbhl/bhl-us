@@ -1,13 +1,30 @@
-﻿<div id="FeatureBox2_panCollection" style="display:@ViewBag.CollectionDisplay">
-    <div class="featurebox" id="">
-        <h3>Featured Content</h3>
-        <h4>@ViewBag.CollectionName</h4>
-        <span class="content">
-            <a href="@ViewBag.CollectionUrlRoot/collection/@ViewBag.CollectionUrl" id="FeatureBox2_lnkFeaturedCollectionImage" title="@ViewBag.CollectionName">
-                <img src="@ViewBag.CollectionImageUrl" id="FeatureBox2_imgFeaturedCollection" alt="@ViewBag.CollectionName" />
-            </a>
-        </span>
-        <a href="@ViewBag.CollectionUrlRoot/collection/@ViewBag.CollectionUrl" id="FeatureBox2_lnkCollectionButton" class="featurebutton-home" title="@ViewBag.CollectionName">Explore</a>
+﻿@if (System.Web.Configuration.WebConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true")
+{
+    <div id="FeatureBox2_panCollection" style="display:block">
+        <div class="featurebox" id="">
+            <h3>Help Support <span>BHL</span></h3>
+            <h4>&nbsp;</h4>
+            <span class="content">
+                <a href="@System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]" title="Donate Now">
+                    <img src="~/images/BHL-Logo-Portrait-196x196.png" alt="Donate Now" />
+                </a>
+            </span>
+            <a href="@System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]" class="featurebutton-home" title="Donate Now">Donate Now</a>
+        </div>
     </div>
-</div>
-
+}
+else
+{
+    <div id="FeatureBox2_panCollection" style="display:@ViewBag.CollectionDisplay">
+        <div class="featurebox" id="">
+            <h3>Featured Content</h3>
+            <h4>@ViewBag.CollectionName</h4>
+            <span class="content">
+                <a href="@ViewBag.CollectionUrlRoot/collection/@ViewBag.CollectionUrl" id="FeatureBox2_lnkFeaturedCollectionImage" title="@ViewBag.CollectionName">
+                    <img src="@ViewBag.CollectionImageUrl" id="FeatureBox2_imgFeaturedCollection" alt="@ViewBag.CollectionName" />
+                </a>
+            </span>
+            <a href="@ViewBag.CollectionUrlRoot/collection/@ViewBag.CollectionUrl" id="FeatureBox2_lnkCollectionButton" class="featurebutton-home" title="@ViewBag.CollectionName">Explore</a>
+        </div>
+    </div>
+}

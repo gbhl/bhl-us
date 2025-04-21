@@ -1,7 +1,20 @@
-﻿<div id="FeatureBox1_panSupport">
-    <div class="featurebox support">
-        <h3>Help Support <span>BHL</span></h3>
-        <p>BHL's existence depends on the support of its patrons. Help us keep this free resource alive!</p>
-        <a class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="http://library.si.edu/donate-bhl">Donate Now</a>
+﻿@if (System.Web.Configuration.WebConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true")
+{
+    <div id="FeatureBox1_panSupport">
+        <div class="featurebox newfuture">
+            <h3>A New Future</h3>
+            <p>BHL moves beyond Smithsonian support and embraces new opportunities for growth and collaboration.</p>
+            <a class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="@System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]">Learn More</a>
+        </div>
     </div>
-</div>
+}
+else
+{
+    <div id="FeatureBox1_panSupport">
+        <div class="featurebox support">
+            <h3>Help Support <span>BHL</span></h3>
+            <p>BHL's existence depends on the support of its patrons. Help us keep this free resource alive!</p>
+            <a class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="@System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]">Donate Now</a>
+        </div>
+    </div>
+}

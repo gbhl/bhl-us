@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.Web2 {
-    
-    
-    public partial class ucFeatureBox {
-        
+namespace MOBOT.BHL.Web2
+{
+
+
+    public partial class ucFeatureBox
+    {
+
         /// <summary>
         /// panBlog control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel panBlog;
-        
+
         /// <summary>
         /// panSupport control.
         /// </summary>
@@ -29,7 +31,16 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel panSupport;
-        
+
+        /// <summary>
+        /// panNewFuture control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panNewFuture;
+
         /// <summary>
         /// panFlickr control.
         /// </summary>
@@ -38,7 +49,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel panFlickr;
-        
+
         /// <summary>
         /// flickrList control.
         /// </summary>
@@ -47,7 +58,16 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal flickrList;
-        
+
+        /// <summary>
+        /// panSupportLarge control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panSupportLarge;
+
         /// <summary>
         /// panCollection control.
         /// </summary>
@@ -56,7 +76,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel panCollection;
-        
+
         /// <summary>
         /// lnkFeaturedCollectionImage control.
         /// </summary>
@@ -65,7 +85,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkFeaturedCollectionImage;
-        
+
         /// <summary>
         /// imgFeaturedCollection control.
         /// </summary>
@@ -74,7 +94,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlImage imgFeaturedCollection;
-        
+
         /// <summary>
         /// lnkCollectionButton control.
         /// </summary>

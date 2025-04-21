@@ -393,7 +393,7 @@
                                 <div style="float:left;margin:0;width:49%">
                                     <h3>Help Support <span>BHL</span></h3>
                                     <p>BHL relies on donations to provide free PDF downloads and other services.  Help keep BHL free and open!</p>
-                                    <a class="featurebutton-home" title="Donate" rel="noopener noreferrer" target="_blank" href="https://library.si.edu/donate-bhl">Donate</a>
+                                    <a class="featurebutton-home" title="Donate" rel="noopener noreferrer" target="_blank" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">Donate</a>
                                 </div>
                             </div>
                             <div class="failure">

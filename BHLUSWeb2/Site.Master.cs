@@ -17,6 +17,11 @@ namespace MOBOT.BHL.Web2
             get { return harmfulcontentbanner.Visible; }
             set { harmfulcontentbanner.Visible = value; }
         }
+        public bool newFutureBannerVisible
+        {
+            get { return newfuturebanner.Visible; }
+            set { newfuturebanner.Visible = value; }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             bool debugMode = new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request);

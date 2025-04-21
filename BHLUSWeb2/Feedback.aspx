@@ -150,7 +150,7 @@
                 <div style="float:left;margin:0;width:50%">
                     <h3>Help Support <span>BHL</span></h3>
                     <p>BHL depends on the financial support of its patrons. Help us keep BHL alive!</p>
-                    <a class="featurebutton-home" title="Donate" target="_blank" rel="noopener noreferrer" href="http://library.si.edu/donate-bhl">Donate</a>
+                    <a class="featurebutton-home" title="Donate" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">Donate</a>
                 </div>
 
                 <div>&nbsp;</div>

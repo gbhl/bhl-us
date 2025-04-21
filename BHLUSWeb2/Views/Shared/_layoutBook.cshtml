@@ -11,7 +11,7 @@
     <title>@ViewBag.Title</title>
     @RenderSection("CSS", required: false)
     <link rel="stylesheet" href="/css/bhlaustylereference.css?v=8" />
-    <link rel="stylesheet" href="/css/style.css?v=28" />
+    <link rel="stylesheet" href="/css/style.css?v=29" />
     <link rel="Stylesheet" href="/css/bookviewer.css?v=3" />
     <link rel="stylesheet" href="/css/socicon.css?v=1" media="all" />
     <link rel="stylesheet" href="/css/cookieconsent.css" />
@@ -97,9 +97,18 @@
             </div>
         </div>
     </header>
-    <div class="harmfulcontentbanner">
-        Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgment of Harmful Content</a>
-    </div>
+    @if (System.Web.Configuration.WebConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true")
+    {
+        <div class="newfuturebanner">
+            Announcing a new future for BHL! <a title="new future" href="@System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]">Learn more.</a>
+        </div>
+    }
+    else
+    {
+        <div class="harmfulcontentbanner">
+            Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgment of Harmful Content</a>
+        </div>
+    }
     @Html.Action("_AlertMessage", "Partial")
     <div id="main">
         @RenderBody()

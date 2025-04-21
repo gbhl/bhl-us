@@ -282,6 +282,7 @@
     <Content Include="images\bg_volume_arrow.png" />
     <Content Include="images\bg_volume_expand.png" />
     <Content Include="images\bhl-logo-main.png" />
+    <Content Include="images\BHL-Logo-Portrait-196x196.png" />
     <Content Include="images\BHLAU Images\bg_bib_arrow.png" />
     <Content Include="images\BHLAU Images\bg_body.png" />
     <Content Include="images\BHLAU Images\bg_book_button.png" />
@@ -444,6 +445,7 @@
     <Content Include="images\mendeley.png" />
     <Content Include="images\NEH-Logo-bkgd.jpg" />
     <Content Include="images\new-tab.png" />
+    <Content Include="images\news.png" />
     <Content Include="images\nhm-official-logo.png" />
     <Content Include="images\pin-icon-normal.png" />
     <Content Include="images\pin-icon-over.png" />

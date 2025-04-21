@@ -402,6 +402,21 @@ footer nav a:hover
 .harmfulcontentbanner a {
     text-decoration: none
 }
+.newfuturebanner {
+    /* pink */
+    /*background-color: #D61674; */
+    /* orange */
+    background-color: #FAA824;
+    /* green */
+    /*background-color: #819E3D; */
+    color: #000000;
+    font-size: 13px;
+    padding: 4px;
+    text-align: center;
+}
+.newfuturebanner a {
+    text-decoration: none;
+}
 
 /* Footer Styles */
 footer 
@@ -1229,6 +1244,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
     height:auto; /*250-23-34-1-1*/
     background:  #fafaf7 url(../images/support.png) 0 0 no-repeat;
 }
+.featurebox.newfuture {
+    min-height: 0;
+    height: auto; /*250-23-34-1-1*/
+    background:  #fafaf7 url(../images/news.png) 0 0 no-repeat;
+}
 .featurebutton
 {
     width:258px;
@@ -1438,6 +1458,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
     left:0;
     z-index:100;
 }
+#newfuturebox-home {
+    position: absolute;
+    top: 311px;
+    background: #fafaf7 url(../images/news.png) 0 0 no-repeat;
+    padding: 31px 23px 20px 23px;
+    border: 4px solid #FAA824;
+    width: 258px;
+    height: 171px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    min-height: 0;
+    font: 14px/17px Georgia;
+    color: #6d6d6d;
+    z-index: 0;
+    box-shadow: 0 2px 2px #B2C5D3;
+}
 #promobox-home
 {
     position:absolute;
@@ -1457,21 +1494,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
     z-index:0;
     box-shadow:0 2px 2px #B2C5D3; 
 }
-#promobox-home p
-{
-    margin:15px 0;
-    overflow:hidden;
-}
-#promobox-home h3
-{
-    margin:0;
-    font:28px Georgia;
-    color: #8b8e92;
-}
-#promobox-home h3 span
-{
-    color:#366c92;
-}
+#promobox-home p, #newfuturebox-home p {
+        margin: 15px 0;
+        overflow: hidden;
+    }
+#promobox-home h3, #newfuturebox-home h3 {
+        margin: 0;
+        font: 28px Georgia;
+        color: #8b8e92;
+    }
+#promobox-home h3 span, #newfuturebox-home h3 span {
+        color: #366c92;
+    }
 
 #footersponsordiv {
     text-align: center;

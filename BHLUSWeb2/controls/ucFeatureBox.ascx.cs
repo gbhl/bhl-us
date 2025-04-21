@@ -44,14 +44,24 @@ namespace MOBOT.BHL.Web2
             switch (this.featureType.ToUpper())
             {
                 case "SUPPORT":
-                    panSupport.Visible = true;
+                    if (ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true")
+                        panNewFuture.Visible = true;
+                    else
+                        panSupport.Visible = true;
                     break;
                 case "BLOG":
                     panBlog.Visible = true;
                     break;
                 case "COLLECTION":
-                    PopulateCollectionBox();
-                    panCollection.Visible = true;
+                    if (ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true")
+                    {
+                        panSupportLarge.Visible = true;
+                    }
+                    else
+                    {
+                        PopulateCollectionBox();
+                        panCollection.Visible = true;
+                    }
                     break;
                 case "FLICKR":
                     panFlickr.Visible = true;

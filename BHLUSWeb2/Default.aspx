@@ -12,11 +12,19 @@
 <div class="column-wrap" style="position:relative">
 <div id="promo-home">
 <div id="heroimage-home"><img title="<%= homeHeroText %>" alt="<%= homeHeroText %>" src="images/0<%= homeHeroImage %>_home_pic_img.png" /></div>
-<div id="promobox-home" class="featurebox-home">
-<h3>Help Support <span>BHL</span></h3>
-<p>BHL's existence depends on the financial support of its patrons. Help us keep this free resource alive!</p>
-<a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="http://library.si.edu/donate-bhl">Donate Now</a>
+<% if (System.Configuration.ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true") { %>
+<div id="newfuturebox-home" class="featurebox-home">
+    <h3>A New Future</h3>
+    <p>BHL moves beyond Smithsonian support and embraces new opportunities for growth and collaboration.</p>
+    <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]%>">Learn More</a>
 </div>
+<%} else { %>
+<div id="promobox-home" class="featurebox-home">
+    <h3>Help Support <span>BHL</span></h3>
+    <p>BHL's existence depends on the financial support of its patrons. Help us keep this free resource alive!</p>
+    <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">Donate Now</a>
+</div>
+<%}%>
 </div>
 </div>
  <div id="intro-home" class="column-wrap" style="min-height:100px">
