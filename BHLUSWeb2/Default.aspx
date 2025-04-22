@@ -15,7 +15,7 @@
 <% if (System.Configuration.ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true") { %>
 <div id="newfuturebox-home" class="featurebox-home">
     <h3>A New Future</h3>
-    <p>BHL moves beyond Smithsonian support and embraces new opportunities for growth and collaboration.</p>
+    <p>BHL is moving and seeking new opportunities for growth and collaboration.</p>
     <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]%>">Learn More</a>
 </div>
 <%} else { %>
