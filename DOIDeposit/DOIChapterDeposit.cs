@@ -181,10 +181,6 @@ namespace MOBOT.BHL.DOIDeposit
             else
                 bookContent.Append("<content_item component_type=\"chapter\">");
 
-            bookContent.AppendLine("<titles>");
-            bookContent.AppendLine("<title>" + HttpUtility.HtmlEncode(Data.ArticleTitle) + "</title>");
-            bookContent.AppendLine("</titles>");
-
             if (Data.Contributors.Count() > 0)
             {
                 bookContent.AppendLine("<contributors>");
@@ -226,6 +222,10 @@ namespace MOBOT.BHL.DOIDeposit
                 }
                 bookContent.AppendLine("</contributors>");
             }
+
+            bookContent.AppendLine("<titles>");
+            bookContent.AppendLine("<title>" + HttpUtility.HtmlEncode(Data.ArticleTitle) + "</title>");
+            bookContent.AppendLine("</titles>");
 
             if (!string.IsNullOrWhiteSpace(Data.ArticlePublicationDate))
             {
