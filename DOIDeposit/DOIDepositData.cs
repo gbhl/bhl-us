@@ -269,6 +269,14 @@ namespace MOBOT.BHL.DOIDeposit
             set { _seriesVolume = value; }
         }
 
+        // Some deposits (example: chapters) require full metadata for both the entity being deposited and the parent/container entity
+        private DOIDepositData _publicationContainerData = null;
+        public DOIDepositData PublicationContainerData
+        {
+            get { return _publicationContainerData; }
+            set { _publicationContainerData = value; }
+        }
+
         #endregion Deposit Body properties
 
         public enum PublicationTypeValue
@@ -280,7 +288,7 @@ namespace MOBOT.BHL.DOIDeposit
             Journal,
             Article,
             Other,
-
+            Chapter
         }
 
         public enum PersonNameSequence
