@@ -34,17 +34,20 @@ BEGIN
 	DECLARE @DOIName nvarchar(50)
 
 	-- Look in Title_Identifier and ItemIdentifier first to make sure we pick up BHL-acquired DOIs
-	SELECT	@DOIName = ti.IdentifierValue
-	FROM	dbo.Title_Identifier ti 
-	WHERE	ti.TitleID = @EntityID
-	AND		ti.IdentifierID = @DOIIdentifierID 
-	AND		SUBSTRING(	ti.IdentifierValue, 1, 
-							CASE WHEN CHARINDEX('/', ti.IdentifierValue) > 0 
-								THEN CHARINDEX('/', ti.IdentifierValue) - 1 
-								ELSE LEN(ti.IdentifierValue) 
-							END) IN (SELECT Prefix FROM dbo.DOIPrefix)
+	IF (@DOIEntityTypeID = @EntityTypeTitleID)
+	BEGIN
+		SELECT	@DOIName = ti.IdentifierValue
+		FROM	dbo.Title_Identifier ti 
+		WHERE	ti.TitleID = @EntityID
+		AND		ti.IdentifierID = @DOIIdentifierID 
+		AND		SUBSTRING(	ti.IdentifierValue, 1, 
+								CASE WHEN CHARINDEX('/', ti.IdentifierValue) > 0 
+									THEN CHARINDEX('/', ti.IdentifierValue) - 1 
+									ELSE LEN(ti.IdentifierValue) 
+								END) IN (SELECT Prefix FROM dbo.DOIPrefix)
+	END
 
-	IF (@DOIName IS NULL)
+	IF (@DOIName IS NULL AND @DOIEntityTypeID = @EntityTypeSegmentID)
 	BEGIN
 		SELECT @DOIName = ii.IdentifierValue
 		FROM	dbo.Segment s 
