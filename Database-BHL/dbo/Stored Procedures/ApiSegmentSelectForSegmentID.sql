@@ -11,6 +11,8 @@ SELECT @IdentifierIDDOI = IdentifierID FROM dbo.Identifier WHERE IdentifierName 
 
 SELECT	s.SegmentID,
 		s.BookID AS ItemID,
+		ISNULL(isrc.SourceName, '') AS SourceName,
+		ISNULL(s.Barcode, '') AS Barcode,
 		scs.IsPrimary,
 		scs.SegmentClusterID,
 		s.SegmentStatusID,
@@ -67,6 +69,8 @@ FROM	dbo.vwSegment s
 		LEFT JOIN dbo.[Language] l ON s.LanguageCode = l.LanguageCode
 		LEFT JOIN dbo.SegmentClusterSegment scs ON s.SegmentID = scs.SegmentID
 		LEFT JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID AND ii.IdentifierID = @IdentifierIDDOI
+		INNER JOIN dbo.Item i ON s.ItemID = i.ItemID
+		INNER JOIN dbo.ItemSource isrc ON i.ItemSourceID = isrc.ItemSourceID
 WHERE	s.SegmentID = @SegmentID
 
 GO

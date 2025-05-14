@@ -281,6 +281,8 @@ namespace MOBOT.BHL.API.BHLApi
                 Part simplePart = new Part();
                 simplePart.PartID = detailedPart.PartID;
                 simplePart.PartUrl = "https://www.biodiversitylibrary.org/part/" + simplePart.PartID.ToString();
+                simplePart.Source = detailedPart.Source;
+                simplePart.SourceIdentifier = detailedPart.SourceIdentifier;
                 simplePart.Genre = detailedPart.Genre;
                 simplePart.Title = detailedPart.Title;
                 simplePart.SetContainerTitle(detailedPart.ContainerTitle);

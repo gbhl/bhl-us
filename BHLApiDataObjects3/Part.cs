@@ -356,6 +356,16 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             _sequenceOrder = (column.Value == null ? null : column.Value.ToString());
                             break;
                         }
+                    case "SourceName":
+                        {
+                            _Source = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "Barcode":
+                        {
+                            _SourceIdentifier = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
                     case "GenreName":
                         {
                             _genre = Utility.NullIfEmpty(column.Value);
