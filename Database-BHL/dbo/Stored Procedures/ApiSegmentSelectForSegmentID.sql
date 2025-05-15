@@ -70,7 +70,7 @@ FROM	dbo.vwSegment s
 		LEFT JOIN dbo.SegmentClusterSegment scs ON s.SegmentID = scs.SegmentID
 		LEFT JOIN dbo.ItemIdentifier ii ON s.ItemID = ii.ItemID AND ii.IdentifierID = @IdentifierIDDOI
 		INNER JOIN dbo.Item i ON s.ItemID = i.ItemID
-		INNER JOIN dbo.ItemSource isrc ON i.ItemSourceID = isrc.ItemSourceID
+		LEFT JOIN dbo.ItemSource isrc ON i.ItemSourceID = isrc.ItemSourceID
 WHERE	s.SegmentID = @SegmentID
 
 GO
