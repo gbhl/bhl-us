@@ -16,6 +16,7 @@ namespace BHL.Search.Elastic
         // Public Properties
 
         private int _numResults = 100;
+        private int _numFacets = 100;
         private int _startPage = 1;
         private bool _facet = false;
         private bool _highlight = false;
@@ -45,6 +46,12 @@ namespace BHL.Search.Elastic
         {
             get { return _numResults; }
             set { _numResults = value > 0 ? value : 100; }
+        }
+
+        public int NumFacets
+        {
+            get { return _numFacets; }
+            set { _numFacets = value > 0 ? value : 100; }
         }
 
         public int StartPage
@@ -353,6 +360,7 @@ namespace BHL.Search.Elastic
             _esSearch.SetSearchDefaults();
             _esSearch.IndexName = indexName;
             _esSearch.NumResults = _numResults;
+            _esSearch.NumFacets = _numFacets;
             _esSearch.StartPage = _startPage;
             _esSearch.ReturnFields = returnFields;
             _esSearch.SortField = _esSortField;

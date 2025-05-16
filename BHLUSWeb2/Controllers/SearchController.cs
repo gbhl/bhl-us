@@ -236,6 +236,7 @@ namespace MOBOT.BHL.Web2.Controllers
             int authorPageSize = Convert.ToInt32(ConfigurationManager.AppSettings["AuthorResultPageSize"]);
             int keywordPageSize = Convert.ToInt32(ConfigurationManager.AppSettings["KeywordResultPageSize"]);
             int namePageSize = Convert.ToInt32(ConfigurationManager.AppSettings["NameResultPageSize"]);
+            int numFacets = Convert.ToInt32(ConfigurationManager.AppSettings["FacetSize"]);
 
             // Submit the request to ElasticSearch here
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
@@ -264,6 +265,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 search.Facet = true;
                 search.StartPage = model.ItemPage;
                 search.NumResults = publicationPageSize;
+                search.NumFacets = numFacets;
 
                 if (model.ItemSort[0] == 't')
                 {
@@ -315,6 +317,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     search.StartPage = model.ItemPage;
                     search.NumResults = publicationPageSize;
+                    search.NumFacets = numFacets;
 
                     if (model.ItemSort[0] == 't')
                     {

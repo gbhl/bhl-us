@@ -2763,6 +2763,10 @@ ul.creator-titles li
     font-size: 12px;
     margin: 5px 0px 5px 15px;
 }
+.facetBody {
+    max-height: 300px;
+    overflow-y: auto;
+}
 .searchPubSortOption {
     margin-left: 15px;
     font-size: 12px;

@@ -12,6 +12,11 @@ namespace BHL.Search
         int NumResults { get; set; }
 
         /// <summary>
+        /// Maximum number of values to return per facet.
+        /// </summary>
+        int NumFacets {get;set;}
+
+        /// <summary>
         /// Return results starting at this page.  
         /// NumResults defines the size of the page.  Therefore, if 
         /// NumResults = 100, and StartPage = 2, results will be returned

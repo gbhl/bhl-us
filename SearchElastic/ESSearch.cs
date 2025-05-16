@@ -42,7 +42,7 @@ namespace BHL.Search.Elastic
         private int _startPage = 1;
 
         // Number of values to return for each facet
-        private int _numFacets = 30;
+        private int _numFacets = 100;
 
         // True to enable debugging output
         private bool _debug = false;

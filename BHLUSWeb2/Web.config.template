@@ -181,6 +181,7 @@
     <add key="MaximumDefaultResults" value="100"/>
     <add key="MaximumExpandedResults" value="500"/>
     <add key="PublicationResultPageSize" value="10" />
+    <add key="FacetSize" value="100"/>
     <add key="AuthorResultPageSize" value="20" />
     <add key="KeywordResultPageSize" value="20" />
     <add key="NameResultPageSize" value="20" />

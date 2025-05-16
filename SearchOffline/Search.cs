@@ -8,6 +8,7 @@ namespace BHL.Search.Offline
         public bool Facet { get; set; }
         public bool Highlight { get; set; }
         public int NumResults { get; set; }
+        public int NumFacets { get; set; }
         public SortField SortField { get; set; }
         public SortDirection SortDirection { get; set; }
         public int StartPage { get; set; }
