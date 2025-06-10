@@ -12,8 +12,8 @@
 </asp:Panel>
 <asp:Panel ID="panNewFuture" runat="server" Visible="false">
     <div class="<%= SpecialClass %> newfuture" id="<%= specialID %>">
-        <h3>A New Future</h3>
-        <p>BHL is moving and seeking new opportunities for growth and collaboration.</p>
+        <h3>Call for Support</h3>
+        <p>BHL is seeking new institutional partners to support and sustain one of the world’s most important open-access biodiversity infrastructures.</p>
         <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]%>">Learn More</a>
     </div>
 </asp:Panel>

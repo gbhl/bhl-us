@@ -133,7 +133,7 @@
 
     <add key="DonateUrl" value="https://library.si.edu/donate-bhl"/>
 
-    <add key="NewFutureNewsUrl" value="https://blog.biodiversitylibrary.org/2025/04/new-future-for-bhl.html" />
+    <add key="NewFutureNewsUrl" value="https://s.si.edu/bhlcallforsupport" />
 
     <add key="WikiPageAbout" value="https://about.biodiversitylibrary.org"/>
     <add key="WikiPagePermissions" value="https://about.biodiversitylibrary.org/copyright-and-reuse/permissions/"/>
