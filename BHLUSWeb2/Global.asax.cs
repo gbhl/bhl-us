@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
 using MOBOT.BHL.Web.Utilities;
 
@@ -11,6 +12,7 @@ namespace MOBOT.BHL.Web2
         protected void Application_Start(object sender, EventArgs e)
         {
             // Code that runs on application startup
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
 

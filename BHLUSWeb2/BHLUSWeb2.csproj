@@ -657,6 +657,8 @@
       <DependentUpon>soap.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="App_Code\FilterConfig.cs" />
+    <Compile Include="MVCServices\MvcThrottleLogger.cs" />
     <Compile Include="App_Code\RouteConfig.cs" />
     <Compile Include="AuthorNotFound.aspx.cs">
       <DependentUpon>AuthorNotFound.aspx</DependentUpon>
@@ -1198,6 +1200,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="MvcThrottle">
+      <Version>2.1.3</Version>
+    </PackageReference>
     <PackageReference Include="NETStandard.Library">
       <Version>2.0.3</Version>
     </PackageReference>

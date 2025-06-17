@@ -2,6 +2,7 @@
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Web2.Models;
+using MvcThrottle;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,6 +16,7 @@ namespace MOBOT.BHL.Web2.Controllers
     public class SearchController : Controller
     {
         // GET: Index
+        [EnableThrottling]
         [HttpGet]
         public ActionResult Index(string searchTerm, string tinc, string stype, string searchCat, string lname, string ninc,
             string yr, string subj, string sinc, string lang, string col, string nt, string ntinc, string txt, string txinc, 
