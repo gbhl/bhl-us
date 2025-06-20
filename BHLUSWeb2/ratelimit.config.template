@@ -1,3 +1,25 @@
+# Each Rate Limit configuration entry contains six parts, separated by "|" characters
+#
+#	Part 1: Configuration Type - Identifies the level at which these rate limits apply
+#
+#		Valid values include Policy, Ip, Endpoint, and UserAgent
+#			Policy - global rate limit settings
+#			Ip - rate limit settings for a specific IP address or IP range
+#			Endpoint - rate limit settings for a specific website endpoint, for example Books/Index
+#			UserAgent - rate limit settings for a specific User Agent string
+#
+#	Part 2: Label - Identifier or value to which these rate limits apply.  For example, an IP Address or User Agent.  Not required for Policy level limits.
+#
+#	Part 3: Requests/Second Limit - Integer value for the number of allowed requests per second.  Leave blank if no Per Second level is desired.
+#
+#	Part 4: Requests/Minute Limit - Integer value for the number of allowed requests per minute.  Leave blank if no Per Minute level is desired.
+#
+#	Part 5: Requests/Hour Limit - Integer value for the number of allowed requests per hour.  Leave blank if no Per Hour level is desired.
+#
+#	Part 6: Requests/Day Limit - Integer value for the number of allowed requests per day.  Leave blank if no Per Day level is desired.
+#
+# Note: Comments are not allowed in the actual configuration file, so remove any lines starting with "#"
+#
 Policy||5|60|3600|86400
 Ip|192.168.1.1|2|||
 Ip|192.168.2.0/24||30|1800|43200
