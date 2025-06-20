@@ -1,0 +1,7 @@
+Policy||5|60|3600|86400
+Ip|192.168.1.1|2|||
+Ip|192.168.2.0/24||30|1800|43200
+Ip|192.168.0.0-192.168.0.255|1|||
+Endpoint|Books/|5|30|1800|43200
+Endpoint|Books/Index|5|30|1800|43200
+UserAgent|ClaudeBot/1.0;+claudebot@anthropic.com|1|||

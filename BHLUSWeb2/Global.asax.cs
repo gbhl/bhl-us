@@ -12,7 +12,7 @@ namespace MOBOT.BHL.Web2
         protected void Application_Start(object sender, EventArgs e)
         {
             // Code that runs on application startup
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters, Server.MapPath("/ratelimit.config"));
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
 

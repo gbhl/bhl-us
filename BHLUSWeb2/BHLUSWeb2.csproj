@@ -565,6 +565,10 @@
     <None Include="Properties\PublishProfiles\Beta - BHL %28Local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28SI%29.pubxml" />
     <None Include="Properties\PublishProfiles\Production - BHL %28local%29.pubxml" />
+    <None Include="ratelimit.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ratelimit.config.template" />
     <None Include="Remoting.config.template" />
     <None Include="services\Name\Web.config.template" />
     <Content Include="Views\_ViewStart.cshtml" />
