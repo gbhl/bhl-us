@@ -162,6 +162,7 @@ ClientBin/
 *.pfx
 *.publishsettings
 *.sms.bak
+!/BHLAdminWeb/stats/*.log
 
 # RIA/Silverlight projects
 Generated_Code/

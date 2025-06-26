@@ -1233,8 +1233,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="stats\BHL1\" />
-    <Folder Include="stats\BHL2\" />
+    <Folder Include="stats\" />
     <Folder Include="styles\jqgridtheme\images\" />
     <Folder Include="Upload\ItemText\Files\" />
     <Folder Include="Views\Downloads\" />
