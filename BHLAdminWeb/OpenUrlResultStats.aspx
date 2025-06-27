@@ -2,8 +2,10 @@
 <%@ Register Src="/Controls/WebStatsNavControl.ascx" TagName="WebStatsNavControl" TagPrefix="mobot" %>
 <%@ Register Src="/Controls/ErrorControl.ascx" TagName="ErrorControl" TagPrefix="mobot" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
-    <a href="/">&lt; Return to Dashboard</a><br />
-    <br />
+	<p>
+		<a href="/">&lt; Return to Dashboard</a><br />
+		<a href="/monitor">&lt; Return to Server Monitor</a>
+    </p>
 	<table cellpadding="0" cellspacing="0" width="100%">
 		<tr>
 			<td style="width: 150px; white-space: nowrap" valign="top">

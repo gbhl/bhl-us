@@ -128,13 +128,13 @@ namespace MOBOT.BHL.AdminWeb
             else if (path.Contains("webstats")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserAdvanced);
             else if (path.Contains("webhistory")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserAdvanced);
             else if (path.Contains("openurlresult")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserAdvanced);
+            else if (path.Contains("monitor")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserAdvanced);
 
             // URLs available to "SysAdmin" users
             else if (path.Contains("pagetypeedit")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminSysAdmin);
             else if (path.Contains("webresourcepaths")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminSysAdmin);
             else if (path.Contains("vaultedit")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminSysAdmin);
             else if (path.Contains("library/align")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminSysAdmin);
-            else if (path.Contains("monitor")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminSysAdmin);
 
             return authorized;
         }

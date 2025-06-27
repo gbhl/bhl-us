@@ -4,6 +4,7 @@
     ViewBag.Title = "Server Monitor";
 }
 
+<script src="https://www.gstatic.com/charts/loader.js" type="text/javascript"></script>
 <div class="row">
     <div class="col-md-11 center monitorFrame">
         <div class="row">
@@ -13,7 +14,7 @@
             </div>
         </div>
         <div class="row monitorRow">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="col-md-12 monitorSection">
                     <div class="monitorHeader">Search Server</div>
                     <div class="monitorError">@Html.DisplayFor(m => m.searchMonitor.ErrorMessage)</div>
@@ -45,17 +46,15 @@
                     <div class="monitorSubHeader">Indexes</div>
                     <div class="col-md-12 statDetails">
                         @foreach (var index in Model.searchMonitor.Indexes)
-        {
-                <div class="row">
-                    <div class="col-md-4 statDetail">@index.Name</div>
-                    <div class="col-md-4 statDetail">Docs: @index.Documents</div>
-                    <div class="col-md-4 statDetail">Size: @index.StoreSize</div>
-                </div>
-}
+                        {
+                            <div class="row">
+                                <div class="col-md-4 statDetail">@index.Name</div>
+                                <div class="col-md-4 statDetail">Docs: @index.Documents</div>
+                                <div class="col-md-4 statDetail">Size: @index.StoreSize</div>
+                            </div>
+                        }
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
                 <div class="col-md-12 monitorSection">
                     <div class="monitorHeader">Message Queue</div>
                     <div class="monitorError">@Html.DisplayFor(m => m.mqMonitor.ErrorMessage)</div>
@@ -76,6 +75,8 @@
                         }
                     </div>
                 </div>
+            </div>
+            <div class="col-md-7">
                 <div class="col-md-12 monitorSection">
                     <div class="monitorHeader">Services</div>
                     <div class="monitorSubHeader">Actions</div>
@@ -92,10 +93,92 @@
                             <div class="row">
                                 <div class="col-md-12 statDetail"><span style="color:@((severity.TotalLogs > 0) && (severity.Name != "Information") ? severity.FGColorHexCode : "#000000")">@severity.TotalLogs @severity.Label</span> message(s) received</div>
                             </div>
-                            }
+                        }
+                    </div>
+                </div>
+                <div class="col-md-12 monitorSection">
+                    <div class="monitorHeader">Web Site Traffic</div>
+                    <div class="monitorSubHeader">Actions</div>
+                    <div class="col-md-12 statDetails">
+                        <div class="row">
+                            <div class="col-md-3 statDetail"><a href="~/Monitor/IISStats">View Web Log Stats</a></div>
+                            <div class="col-md-3 statDetail"><a href="~/WebStatsDaily.aspx?id=2&mid=v2">View API v2 Stats</a></div>
+                            <div class="col-md-3 statDetail"><a href="~/WebStatsDaily.aspx?id=5&mid=v3">View API v3 Stats</a></div>
+                            <div class="col-md-3 statDetail"><a href="~/WebStatsDaily.aspx?id=3&mid=ou">View OpenUrl Stats</a></div>
                         </div>
+                    </div>
+                    <div class="monitorSubHeader">Recent Traffic Trends</div>
+                    <div class="col-md-12">
+                        <div class="row statDetails">
+                            <!--<div>Overall</div>-->
+                            <div id="overall_chart" class="col-md-12" style="width: 100%; height: 150px; border-style:solid; border-width:1px;border-color:black">show graph here</div>
+                        </div>
+                        <div class="row statDetails">
+                            <!--<div>API v3</div>-->
+                            <div id="api3_chart" class="col-md-12" style="width: 100%; height: 150px; border-style:solid; border-width:1px;border-color:black">show graph here</div>
+                        </div>
+                        <div class="row statDetails">
+                            <!--<div>API v2</div>-->
+                            <div id="api2_chart" class="col-md-12" style="width: 100%; height: 150px; border-style:solid; border-width:1px;border-color:black">show graph here</div>
+                        </div>
+                        <div class="row statDetails">
+                            <!--<div>OpenURL</div>-->
+                            <div id="openurl_chart" class="col-md-12" style="width: 100%; height: 150px; border-style:solid; border-width:1px;border-color:black">show graph here</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    google.charts.load('current', { packages: ['corechart', 'bar'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn("datetime", "Date");
+        data.addColumn("number", "Requests");
+        data.addRows([
+            [new Date(2025, 6, 27, 0, 0, 0), 89082],
+            [new Date(2025, 6, 27, 1, 0, 0), 87463],
+            [new Date(2025, 6, 27, 2, 0, 0), 76231],
+            [new Date(2025, 6, 27, 3, 0, 0), 80679],
+            [new Date(2025, 6, 27, 4, 0, 0), 94951],
+            [new Date(2025, 6, 27, 5, 0, 0), 93996],
+            [new Date(2025, 6, 27, 6, 0, 0), 89651],
+            [new Date(2025, 6, 27, 7, 0, 0), 94454],
+            [new Date(2025, 6, 27, 8, 0, 0), 104923],
+            [new Date(2025, 6, 27, 9, 0, 0), 98289],
+            [new Date(2025, 6, 27, 10, 0, 0), 107042],
+            [new Date(2025, 6, 27, 11, 0, 0), 92122],
+            [new Date(2025, 6, 27, 12, 0, 0), 34556],
+            [new Date(2025, 6, 27, 13, 0, 0), 78124],
+            [new Date(2025, 6, 27, 14, 0, 0), 90283],
+            [new Date(2025, 6, 27, 15, 0, 0), 76997],
+            [new Date(2025, 6, 27, 16, 0, 0), 71469],
+            [new Date(2025, 6, 27, 17, 0, 0), 87291],
+            [new Date(2025, 6, 27, 18, 0, 0), 88982],
+            [new Date(2025, 6, 27, 19, 0, 0), 83635],
+            [new Date(2025, 6, 27, 20, 0, 0), 65928],
+            [new Date(2025, 6, 27, 21, 0, 0), 71057],
+            [new Date(2025, 6, 27, 22, 0, 0), 82979],
+            [new Date(2025, 6, 27, 23, 0, 0), 79877],
+        ]);
+
+        var options = {
+            title: 'Overall',
+            //colors: ['#9575cd', '#33ac71'],
+            hAxis: {
+                title: 'Hour of Day',
+                format: 'h:mm a'
+            },
+            //hAxis: { title: 'Hour of Day' },
+            vAxis: { title: 'Requests' },
+            legend: { position: 'none' },
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('overall_chart'));
+        chart.draw(data, options);
+    }
+</script>
