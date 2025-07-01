@@ -112,6 +112,18 @@
     <add key="APIStatsAppID" value="2" />
     <add key="APIV3StatsAppID" value="5" />
     <add key="OpenUrlStatsAppID" value="3" />
+    <!-- Log files containing stats for each web server -->
+    <add key="HourlyStatsServer1" value="stats\Server1-HourlyHits.log"/>
+    <add key="HourlyStatsServer2" value="stats\Server2-HourlyHits.log"/>
+    <add key="DailyStatsServer1" value="stats\Server1-DailyHits.log"/>
+    <add key="DailyStatsServer2" value="stats\Server2-DailyHits.log"/>
+    <add key="DailyByStatusStatsServer1" value="stats\Server1-DailyHitsByStatus.log"/>
+    <add key="DailyByStatusStatsServer2" value="stats\Server2-DailyHitsByStatus.log"/>
+    <add key="DailyByStemStatsServer1" value="stats\Server1-DailyHitsByStem.log"/>
+    <add key="DailyByStemStatsServer2" value="stats\Server2-DailyHitsByStem.log"/>
+    <add key="DailyByStemAndStatusStatsServer1" value="stats\Server1-DailyHitsByStemAndStatus.log"/>
+    <add key="DailyByStemAndStatusStatsServer2" value="stats\Server2-DailyHitsByStemAndStatusHourlyHits.log"/>
+
     <add key="aspnet:UseTaskFriendlySynchronizationContext" value="true" />
     <add key="webpages:Version" value="2.0.0.0" />
     <add key="webpages:Enabled" value="false" />

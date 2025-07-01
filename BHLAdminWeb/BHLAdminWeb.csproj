@@ -409,6 +409,7 @@
       <DependentUpon>IAHarvestItemStatusAbout.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\PermissionsTitlesModel.cs" />
+    <Compile Include="Models\WebStatsModel.cs" />
     <Compile Include="ReportDOIByInstitutionCSV.ashx.cs">
       <DependentUpon>ReportDOIByInstitutionCSV.ashx</DependentUpon>
     </Compile>
@@ -1107,6 +1108,7 @@
     <Content Include="Views\Monitor\ServiceLog.cshtml" />
     <Content Include="Views\Report\PermissionsTitles.cshtml" />
     <Content Include="ReportDOIByInstitutionCSV.ashx" />
+    <Content Include="Views\Monitor\WebStats.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>

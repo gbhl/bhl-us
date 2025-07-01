@@ -1,6 +1,5 @@
 ﻿using BHL.SiteServiceREST.v1.Client;
 using MOBOT.BHL.DataObjects;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -8,15 +7,13 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.UI;
 
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
     public class MonitorModel
     {
+        string _appPath;
         public SearchMonitor searchMonitor = new SearchMonitor();
         public MQMonitor mqMonitor = new MQMonitor();
         public List<string> UpdateableQueueList = new List<string>();
@@ -24,9 +21,14 @@ namespace MOBOT.BHL.AdminWeb.Models
         public string queueMessages { get; set; }
         public string queueResult { get; set; }
         public List<Severity> serviceSeverities { get; set; }
+        public List<TrafficStat> overallTraffic { get; set; } = new List<TrafficStat>();
+        public List<TrafficStat> api3Traffic { get; set; } = new List<TrafficStat>();
+        public List<TrafficStat> api2Traffic { get; set; } = new List<TrafficStat>();
+        public List<TrafficStat> openurlTraffic { get; set; } = new List<TrafficStat>();
 
-        public MonitorModel()
+        public MonitorModel(string appPath)
         {
+            _appPath = appPath;
             List<string> queues = ConfigurationManager.AppSettings["MessageQueues"].Split('|').ToList<string>();
             for (int x = queues.Count - 1; x >= 0; x--) if (queues[x].Contains("error")) queues.Remove(queues[x]);
             UpdateableQueueList = queues;
@@ -37,6 +39,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             GetSearchStats();
             GetMQStats();
             GetServiceStats();
+            GetTrafficStats();
         }
 
         private void GetSearchStats()
@@ -145,6 +148,85 @@ namespace MOBOT.BHL.AdminWeb.Models
             serviceSeverities = severities;
         }
 
+        private void GetTrafficStats()
+        {
+            DateTime today = DateTime.Now.Date;
+            DateTime yesterday = today.AddDays(-1);
+
+            GetTrafficStatsFromLogFile(new List<string> { ConfigurationManager.AppSettings["HourlyStatsServer1"], ConfigurationManager.AppSettings["HourlyStatsServer2"] }, overallTraffic);
+
+            GetTrafficStatsFromRequestLog(Convert.ToInt32(ConfigurationManager.AppSettings["APIV3StatsAppID"]), yesterday, api3Traffic);
+            GetTrafficStatsFromRequestLog(Convert.ToInt32(ConfigurationManager.AppSettings["APIV3StatsAppID"]), today, api3Traffic);
+
+            GetTrafficStatsFromRequestLog(Convert.ToInt32(ConfigurationManager.AppSettings["APIStatsAppID"]), yesterday, api2Traffic);
+            GetTrafficStatsFromRequestLog(Convert.ToInt32(ConfigurationManager.AppSettings["APIStatsAppID"]), today, api2Traffic);
+
+            GetTrafficStatsFromRequestLog(Convert.ToInt32(ConfigurationManager.AppSettings["OpenUrlStatsAppID"]), yesterday, openurlTraffic);
+            GetTrafficStatsFromRequestLog(Convert.ToInt32(ConfigurationManager.AppSettings["OpenUrlStatsAppID"]), today, openurlTraffic);
+        }
+
+        private void GetTrafficStatsFromLogFile(List<string> logFiles, List<TrafficStat> trafficStats)
+        {
+            // Combine the stats from the log files
+            Dictionary<DateTime, int> hourlyStats = new Dictionary<DateTime, int>();
+            foreach (string logFile in logFiles)
+            {
+                string[] logLines = File.ReadAllLines(_appPath + logFile);
+                bool firstLine = true;
+                foreach(string logLine in logLines)
+                {
+                    if (firstLine)
+                    {
+                        firstLine = false;  // Skip the first line
+                    }
+                    else
+                    {
+                        string[] hourlyStat = logLine.Split(',');
+                        DateTime hourlyKey = DateTime.Parse(hourlyStat[0]);
+                        int hourlyRequests = Int32.Parse(hourlyStat[1]);
+                        if (hourlyStats.ContainsKey(hourlyKey))
+                            hourlyStats[hourlyKey] += hourlyRequests;
+                        else
+                            hourlyStats.Add(hourlyKey, hourlyRequests);
+                    }
+                }
+            }
+
+            // Add the log file stats to the traffic stats
+            foreach(var hourlyStat in hourlyStats)
+            {
+                trafficStats.Add(new TrafficStat
+                {
+                    Year = hourlyStat.Key.Year,
+                    Month = hourlyStat.Key.Month,
+                    Day = hourlyStat.Key.Day,
+                    Hour = hourlyStat.Key.Hour,
+                    Minute = 0,
+                    Second = 0,
+                    Requests = hourlyStat.Value,
+                });
+            }
+        }
+
+        private void GetTrafficStatsFromRequestLog(int applicationID, DateTime dateTime, List<TrafficStat> trafficStats)
+        {
+            Utility.RequestLog rl = new Utility.RequestLog();
+            List<Utility.RequestLogStat> stats = rl.SelectHourRangeTotal(applicationID, dateTime);
+            foreach (Utility.RequestLogStat stat in stats)
+            {
+                trafficStats.Add(new TrafficStat
+                {
+                    Year = dateTime.Year,
+                    Month = dateTime.Month,
+                    Day = dateTime.Day,
+                    Hour = stat.IntColumn01,
+                    Minute = 0,
+                    Second = 0,
+                    Requests = stat.IntColumn02 ?? 0,
+                });
+            }
+        }
+
         public class SearchMonitor
         {
             string _errorMessage = string.Empty;
@@ -207,6 +289,25 @@ namespace MOBOT.BHL.AdminWeb.Models
 
             public string Name { get => _name; set => _name = value; }
             public uint Messages { get => _messages; set => _messages = value; }
+        }
+
+        public class TrafficStat
+        {
+            int _year;
+            int _month;
+            int _day;
+            int _hour;
+            int _minute;
+            int _second;
+            int _requests;
+
+            public int Year { get => _year; set => _year = value; }
+            public int Month { get => _month; set => _month = value; }
+            public int Day { get => _day; set => _day = value; }
+            public int Hour { get => _hour; set => _hour = value; }
+            public int Minute { get => _minute; set => _minute = value; }
+            public int Second { get => _second; set => _second = value; }
+            public int Requests { get => _requests; set => _requests = value; }
         }
     }
 }

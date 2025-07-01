@@ -101,9 +101,9 @@
                     <div class="monitorSubHeader">Actions</div>
                     <div class="col-md-12 statDetails">
                         <div class="row">
-                            <div class="col-md-3 statDetail"><a href="~/Monitor/IISStats">View Web Log Stats</a></div>
-                            <div class="col-md-3 statDetail"><a href="~/WebStatsDaily.aspx?id=2&mid=v2">View API v2 Stats</a></div>
+                            <div class="col-md-3 statDetail"><a href="~/Monitor/WebStats">View Overall Stats</a></div>
                             <div class="col-md-3 statDetail"><a href="~/WebStatsDaily.aspx?id=5&mid=v3">View API v3 Stats</a></div>
+                            <div class="col-md-3 statDetail"><a href="~/WebStatsDaily.aspx?id=2&mid=v2">View API v2 Stats</a></div>
                             <div class="col-md-3 statDetail"><a href="~/WebStatsDaily.aspx?id=3&mid=ou">View OpenUrl Stats</a></div>
                         </div>
                     </div>
@@ -133,52 +133,61 @@
 </div>
 <script type="text/javascript">
     google.charts.load('current', { packages: ['corechart', 'bar'] });
-    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawCharts);
 
-    function drawChart() {
+    function drawCharts() {
+        drawChart('All Traffic', 'overall_chart',
+            [
+                @foreach (var traffic in Model.overallTraffic)
+                {
+                @:[new Date( @traffic.Year, @(traffic.Month - 1), @traffic.Day, @traffic.Hour, @traffic.Minute, @traffic.Second), @traffic.Requests],
+                }
+            ]
+        );
+        drawChart('API v3', 'api3_chart',
+            [
+                @foreach (var traffic in Model.api3Traffic)
+                {
+                @:[new Date( @traffic.Year, @(traffic.Month - 1), @traffic.Day, @traffic.Hour, @traffic.Minute, @traffic.Second), @traffic.Requests],
+                }
+            ]
+        );
+        drawChart('API v2', 'api2_chart',
+            [
+                @foreach (var traffic in Model.api2Traffic)
+                {
+                @:[new Date( @traffic.Year, @(traffic.Month - 1), @traffic.Day, @traffic.Hour, @traffic.Minute, @traffic.Second), @traffic.Requests],
+                }
+            ]
+        );
+        drawChart('OpenURL', 'openurl_chart',
+            [
+                @foreach (var traffic in Model.openurlTraffic)
+                {
+                @:[new Date( @traffic.Year, @(traffic.Month - 1), @traffic.Day, @traffic.Hour, @traffic.Minute, @traffic.Second), @traffic.Requests],
+                }
+            ]
+        );
+    }
+
+    function drawChart(graphTitle, targetDiv, dataRows) {
         var data = new google.visualization.DataTable();
         data.addColumn("datetime", "Date");
         data.addColumn("number", "Requests");
-        data.addRows([
-            [new Date(2025, 6, 27, 0, 0, 0), 89082],
-            [new Date(2025, 6, 27, 1, 0, 0), 87463],
-            [new Date(2025, 6, 27, 2, 0, 0), 76231],
-            [new Date(2025, 6, 27, 3, 0, 0), 80679],
-            [new Date(2025, 6, 27, 4, 0, 0), 94951],
-            [new Date(2025, 6, 27, 5, 0, 0), 93996],
-            [new Date(2025, 6, 27, 6, 0, 0), 89651],
-            [new Date(2025, 6, 27, 7, 0, 0), 94454],
-            [new Date(2025, 6, 27, 8, 0, 0), 104923],
-            [new Date(2025, 6, 27, 9, 0, 0), 98289],
-            [new Date(2025, 6, 27, 10, 0, 0), 107042],
-            [new Date(2025, 6, 27, 11, 0, 0), 92122],
-            [new Date(2025, 6, 27, 12, 0, 0), 34556],
-            [new Date(2025, 6, 27, 13, 0, 0), 78124],
-            [new Date(2025, 6, 27, 14, 0, 0), 90283],
-            [new Date(2025, 6, 27, 15, 0, 0), 76997],
-            [new Date(2025, 6, 27, 16, 0, 0), 71469],
-            [new Date(2025, 6, 27, 17, 0, 0), 87291],
-            [new Date(2025, 6, 27, 18, 0, 0), 88982],
-            [new Date(2025, 6, 27, 19, 0, 0), 83635],
-            [new Date(2025, 6, 27, 20, 0, 0), 65928],
-            [new Date(2025, 6, 27, 21, 0, 0), 71057],
-            [new Date(2025, 6, 27, 22, 0, 0), 82979],
-            [new Date(2025, 6, 27, 23, 0, 0), 79877],
-        ]);
+        data.addRows(dataRows);
 
         var options = {
-            title: 'Overall',
-            //colors: ['#9575cd', '#33ac71'],
+            title: graphTitle,
             hAxis: {
                 title: 'Hour of Day',
                 format: 'h:mm a'
             },
-            //hAxis: { title: 'Hour of Day' },
             vAxis: { title: 'Requests' },
             legend: { position: 'none' },
         };
 
-        var chart = new google.visualization.ColumnChart(document.getElementById('overall_chart'));
+        var chart = new google.visualization.LineChart(document.getElementById(targetDiv));
+        //var chart = new google.visualization.ColumnChart(document.getElementById(targetDiv));
         chart.draw(data, options);
     }
 </script>

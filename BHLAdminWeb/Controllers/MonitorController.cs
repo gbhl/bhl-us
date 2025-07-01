@@ -3,6 +3,7 @@ using MOBOT.BHL.AdminWeb.Models;
 using MOBOT.BHL.AdminWeb.MVCServices;
 using System;
 using System.Configuration;
+using System.Web.Hosting;
 using System.Web.Mvc;
 
 namespace MOBOT.BHL.AdminWeb.Controllers
@@ -15,9 +16,17 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         // GET: Monitor
         public ActionResult Index()
         {
-            MonitorModel model = new MonitorModel();
+            MonitorModel model = new MonitorModel(Request.PhysicalApplicationPath);
             model.GetMonitorData();
             ViewBag.MessageQueueAdminAddress = ConfigurationManager.AppSettings["MessageQueueAdminAddress"];
+            return View(model);
+        }
+
+        // GET: WebStats
+        public ActionResult WebStats()
+        {
+            WebStatsModel model = new WebStatsModel(Request.PhysicalApplicationPath);
+            model.GetWebStats();
             return View(model);
         }
 
