@@ -15,7 +15,16 @@
 
 <div class="col-md-12">
     <div class="row statDetails">
-        <div id="overall_chart" class="col-md-12" style="width: 100%; height: 300px; border-style:solid; border-width:1px;border-color:black">show graph here</div>
+        <!--<div>All Requests</div>-->
+        <div id="overall_chart" class="col-md-12" style="width: 100%; height: 300px; border-style:solid; border-width:1px;border-color:black"></div>
+    </div>
+    <div class="row statDetails">
+        <!--<div>Requests By Status</div>-->
+        <div id="status_chart" class="col-md-12" style="width: 100%; height: 600px; border-style:solid; border-width:1px;border-color:black"></div>
+    </div>
+    <div class="row statDetails">
+        <!--<div>Requests By URL Stem</div>-->
+        <div id="stem_chart" class="col-md-12" style="width: 100%; height: 600px; border-style:solid; border-width:1px;border-color:black"></div>
     </div>
 </div>
 
@@ -24,11 +33,49 @@
     google.charts.setOnLoadCallback(drawCharts);
 
     function drawCharts() {
-        drawChart('All Traffic', 'overall_chart',
+        drawChart('All Requests', 'overall_chart',
             [
                 @foreach (var traffic in Model.overallTraffic)
                 {
                 @:[new Date( @traffic.Year, @(traffic.Month - 1), @traffic.Day), @traffic.Requests],
+                }
+            ]
+        );
+        drawMultilineChart('Requests By Status', 'status_chart',
+            [
+                @foreach(var s in Model.statusList)
+                {
+                @:"@s.Key.Trim()",
+                }
+            ],
+            [
+                @foreach(var traffic in Model.statusTraffic)
+                {
+                    @:[new Date(@traffic.Key.Year, @(traffic.Key.Month - 1), @traffic.Key.Day),
+                    foreach(var status in traffic.Value)
+                    {
+                    @status.Value@:,
+                    }
+                    @:],
+                }
+            ]
+        );
+        drawMultilineChart('Requests By URL Stem', 'stem_chart',
+            [
+                @foreach(var s in Model.stemList)
+                {
+                @:"@s.Key.Trim()",
+                }
+            ],
+            [
+                @foreach(var traffic in Model.stemTraffic)
+                {
+                    @:[new Date(@traffic.Key.Year, @(traffic.Key.Month - 1), @traffic.Key.Day),
+                    foreach(var status in traffic.Value)
+                    {
+                    @status.Value@:,
+                    }
+                    @:],
                 }
             ]
         );
@@ -51,9 +98,33 @@
             displayAnnotations: false,
         };
 
-        var chart = new google.visualization.AnnotatedTimeLine(document.getElementById(targetDiv));
-        //var chart = new google.visualization.LineChart(document.getElementById(targetDiv));
+        //var chart = new google.visualization.AnnotatedTimeLine(document.getElementById(targetDiv));
+        var chart = new google.visualization.LineChart(document.getElementById(targetDiv));
         //var chart = new google.visualization.ColumnChart(document.getElementById(targetDiv));
+        chart.draw(data, options);
+    }
+
+    function drawMultilineChart(graphTitle, targetDiv, columns, dataRows) {
+        var data = new google.visualization.DataTable();
+        data.addColumn('date', 'Date');
+        for (let i = 0; i < columns.length; i++) {
+            data.addColumn('number', columns[i]);
+        }
+        data.addRows(dataRows);
+
+        var options = {
+            title: graphTitle,
+            hAxis: {
+                title: 'Date',
+                format: 'yyyy/MM/dd'
+            },
+            vAxis: { title: 'Requests' },
+            //legend: { position: 'none' },
+            displayAnnotations: false,
+        };
+
+        //var chart = new google.visualization.AnnotatedTimeLine(document.getElementById(targetDiv));
+        var chart = new google.visualization.LineChart(document.getElementById(targetDiv));
         chart.draw(data, options);
     }
 </script>
