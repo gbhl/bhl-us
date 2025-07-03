@@ -210,12 +210,13 @@ namespace MOBOT.BHL.AdminWeb
                 tdApiV2Stats.InnerHtml = apiv2StatsLink.InnerText;
                 tdApiV3Stats.InnerHtml = apiv3StatsLink.InnerText;
                 tdOpenUrlStats.InnerHtml = openurlStatsLink.InnerText;
+                tdWebServerLogs.InnerHtml = webserverLogsLink.InnerText;
                 tdUserAccounts.InnerHtml = GetMenuText(tdUserAccounts.InnerHtml);
+                spnMonitor.Visible = false;
             }
             if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityRole.BHLAdminSysAdmin))
             {
                 tdPageTypes.InnerHtml = GetMenuText(tdPageTypes.InnerHtml);
-                spnMonitor.Visible = false;
                 tdWebResources.Visible = false;
                 //tdWebResources.InnerHtml = GetMenuText(tdWebResources.InnerHtml);
                 //tdVaults.InnerHtml = GetMenuText(tdVaults.InnerHtml);

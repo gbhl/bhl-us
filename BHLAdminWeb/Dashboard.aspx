@@ -474,6 +474,11 @@
 							<a href="/WebStatsDaily.aspx?id={0}&mid=ou" runat="server" id="openurlStatsLink">OpenUrl</a>
 						</td>
 					</tr>
+					<tr>
+						<td align="center" runat="server" id="tdWebServerLogs">
+							<a href="/monitor/webstats" runat="server" id="webserverLogsLink">Web Server Logs</a>
+						</td>
+					</tr>
                     <tr><td>&nbsp;</td></tr>
                     <tr><td>&nbsp;</td></tr>
 				</table>
