@@ -211,7 +211,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         private void GetTrafficStatsFromRequestLog(int applicationID, DateTime dateTime, List<TrafficStat> trafficStats)
         {
             Utility.RequestLog rl = new Utility.RequestLog();
-            List<Utility.RequestLogStat> stats = rl.SelectHourRangeTotal(applicationID, dateTime);
+            List<Utility.RequestLogStat> stats = rl.SelectHourRangeTotal(applicationID, dateTime.AddDays(1));
             foreach (Utility.RequestLogStat stat in stats)
             {
                 trafficStats.Add(new TrafficStat
