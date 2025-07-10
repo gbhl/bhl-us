@@ -64,11 +64,11 @@ namespace MOBOT.BHL.Web2
             routes.MapPageRoute("Browse-CollectionList", "browse/collections", "~/BrowseCollections.aspx");
             routes.MapPageRoute("Collection-details", "collection/{collectionid}", "~/CollectionDetails.aspx");
 
-            routes.MapPageRoute("Name", "name/{name}", "~/NameList.aspx");
-
-            routes.Add("NameList", new Route("namelist", new HttpHandlerRouteHandler<NameListService>()));
-
-            routes.MapPageRoute("NameDetail", "namedetail/{name}", "~/NameDetail.aspx");
+            routes.MapRoute("Name", "name/{name}", new { controller = "Name", action = "Index" });
+            routes.MapRoute("NameList", "namelist", new { controller = "Name", action = "NameList" });
+            routes.MapRoute("NameListDownload", "namelistdownload", new { controller = "Name", action = "NameListDownload" });
+            //routes.MapPageRoute("NameDetail", "namedetail/{name}", "~/NameDetail.aspx");
+            routes.MapRoute("NameDetail", "namedetail/{name}", new { controller = "NameDetail", action = "Index" });
 
             routes.Add("PageSummary", new Route("pagesummary", new HttpHandlerRouteHandler<PageSummaryService1>()));
 
@@ -136,8 +136,6 @@ namespace MOBOT.BHL.Web2
             routes.Add("RISDownloadOld", new Route("risdownload/{id}", new HttpHandlerRouteHandler<RISDownload>()));
 
             routes.Add("CSLDownload", new Route("csldownload/{type}/{id}", new HttpHandlerRouteHandler<CSLDownload>()));
-
-            routes.Add("NameListDownload", new Route("namelistdownload", new HttpHandlerRouteHandler<NameListDownloadService>()));
 
             routes.Add("PDF", new Route("pdf{folder}/{filename}", new HttpHandlerRouteHandler<PDFDownload>()));
 

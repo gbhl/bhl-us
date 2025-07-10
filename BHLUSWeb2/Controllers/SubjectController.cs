@@ -1,5 +1,6 @@
 ﻿using MOBOT.BHL.Server;
 using MOBOT.BHL.Web2.Models;
+using MvcThrottle;
 using System;
 using System.Configuration;
 using System.Web.Mvc;
@@ -9,6 +10,7 @@ namespace MOBOT.BHL.Web2.Controllers
     public class SubjectController : Controller
     {
         // GET: Subject
+        [EnableThrottling]
         [BrowseOutputCache(VaryByParam = "*")]
         public ActionResult Index(string subject, string sort, int? bpg, int? ppg, int? psize)
         {

@@ -1,6 +1,7 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Web2.Models;
+using MvcThrottle;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,6 +14,7 @@ namespace MOBOT.BHL.Web2.Controllers
     public class BrowseController : Controller
     {
         // GET: Browse/Authors
+        [EnableThrottling]
         [BrowseOutputCache(VaryByParam = "*")]
         public ActionResult Authors(string start, int? bpg, int? psize)
         {
@@ -33,6 +35,7 @@ namespace MOBOT.BHL.Web2.Controllers
         }
 
         // GET: Browse/Collection
+        [EnableThrottling]
         [BrowseOutputCache(VaryByParam = "*")]
         public ActionResult Collection(string id, string start, string sort, int? bpg, int? psize)
         {
@@ -112,6 +115,7 @@ namespace MOBOT.BHL.Web2.Controllers
         }
 
         // GET: Browse/Contributor
+        [EnableThrottling]
         [BrowseOutputCache(VaryByParam = "*")]
         public ActionResult Contributor(string id, string start, string sort, int? bpg, int? ppg, int? psize)
         {
@@ -185,6 +189,7 @@ namespace MOBOT.BHL.Web2.Controllers
         }
 
         // GET: Browse/Titles
+        [EnableThrottling]
         [BrowseOutputCache(VaryByParam = "*")]
         public ActionResult Titles(string start, string sort, int? bpg, int? ppg, int? psize)
         {
@@ -210,6 +215,7 @@ namespace MOBOT.BHL.Web2.Controllers
         }
 
         // GET: Browse/Year
+        [EnableThrottling]
         [BrowseOutputCache(VaryByParam = "*")]
         public ActionResult Year(string start, string end, string sort, int? bpg, int? ppg, int? psize)
         {

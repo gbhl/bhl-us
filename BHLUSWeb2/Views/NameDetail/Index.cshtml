@@ -1,0 +1,33 @@
+﻿@model MOBOT.BHL.Web2.Models.NameDetailModel
+
+@{
+    ViewBag.Title = string.Format("{0} - Biodiversity Heritage Library", Model.NameClean);
+}
+
+<div id="browseContainerDiv">
+    <nav id="sub-nav-tabs" class="no-js-hide">
+        <div class="column-wrap">
+            <div id="linkbar">
+                <h3>Name "@Model.NameClean"</h3>
+            </div>
+        </div>
+    </nav>
+
+    <div id="sub-sections" class="column-wrap clearfix">
+        <asp:Panel ID="titles" Visible="true" runat="server" ClientIDMode="Static">
+            <div id="namedetails" class="content">
+                <section>
+                    <p><h2>Find In BHL</h2></p>
+                    <p><a href="/name/@Model.NameParam">Browse the bibliography</a> for "@Model.NameClean".</p>
+                    <p><h2>Data Sources</h2></p>
+                    @Html.Raw(Model.NameDetails)
+                </section>
+            </div>
+        </asp:Panel>
+    </div>
+    <aside id="searchaside">
+        @Html.Action("_DonateFeature", "Partial")
+        @Html.Action("_CollectionFeature", "Partial")
+    </aside>
+</div>
+

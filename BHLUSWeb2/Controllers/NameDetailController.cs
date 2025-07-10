@@ -1,39 +1,44 @@
 ﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHL.Web2.Models;
+using MvcThrottle;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
+using System.Web.Mvc;
 
-namespace MOBOT.BHL.Web2
+namespace MOBOT.BHL.Web2.Controllers
 {
-    public partial class NameDetail : BasePage
+    public class NameDetailController : Controller
     {
-        public string NameParam = string.Empty;
-        public string NameClean = string.Empty;
-
-        protected void Page_Load(object sender, EventArgs e)
+        // GET: NameDetail
+        [EnableThrottling]
+        [BrowseOutputCache(VaryByParam = "*")]
+        public ActionResult Index(string name)
         {
-            if (RouteData.Values["name"] != null)
-            {
-                string searchName = (string)RouteData.Values["name"];
-                NameParam = Server.UrlEncode(searchName);
-                NameClean = Server.HtmlEncode(searchName).Replace('_', ' ').Replace('$', '.').Replace('^', '?').Replace('~', '&');
-            }
-            main.Page.Title = string.Format("{0} - Biodiversity Heritage Library", NameClean);
+            NameDetailModel model = new NameDetailModel();
 
-            if (!string.IsNullOrWhiteSpace(NameClean))
+            // Read the parameters passed to the page
+            if (name != null)
+            {
+                model.NameClean = name;
+                model.NameParam = Server.UrlEncode(model.NameClean);
+                model.NameClean= Server.HtmlEncode(model.NameClean).Replace('_', ' ').Replace('$', '.').Replace('^', '?').Replace('~', '&');
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.NameClean))
             {
                 // Call the Global Names service to get the details about the name
                 List<GNVerifierResponse> nameDetails = null;
                 string errorMessage = string.Empty;
                 try
                 {
-                    nameDetails = GetNameDetail(NameClean);
+                    nameDetails = GetNameDetail(model.NameClean);
                 }
                 catch (Exception ex)
                 {
-                    ExceptionUtility.LogException(ex, "NameDetail.Page_Load");
+                    ExceptionUtility.LogException(ex, "NameDetailController.Index");
                     errorMessage = "No response received from the <a target=\"_blank\"  rel=\"noopener noreferrer\" href=\"http://resolver.globalnames.org\">Global Names Index</a>.  Please try again later.";
                 }
 
@@ -131,7 +136,7 @@ namespace MOBOT.BHL.Web2
                                     if (!string.IsNullOrWhiteSpace(ranks[x])) className += " (" + ranks[x] + ")";
                                 }
 
-                                sbClass.Insert(0, "<ul class=\"classificationList\"><li" + (x==0 ? " style=\"padding-left:0px;\">" : ">") + className);
+                                sbClass.Insert(0, "<ul class=\"classificationList\"><li" + (x == 0 ? " style=\"padding-left:0px;\">" : ">") + className);
                                 sbClass.Append("</li></ul>");
                             }
                             sb.Append(sbClass.ToString());
@@ -143,17 +148,19 @@ namespace MOBOT.BHL.Web2
                         sb.Append("</li>");
                     }
                     sb.Append("</ol>");
-                    litDetails.Text = sb.ToString();
+                    model.NameDetails = sb.ToString();
                 }
                 else
                 {
-                    litDetails.Text = errorMessage;
+                    model.NameDetails = errorMessage;
                 }
             }
             else
             {
-                litDetails.Text = "No name supplied.";
+                model.NameDetails = "No name supplied.";
             }
+
+            return View(model);
         }
 
         /// <summary>
@@ -164,7 +171,7 @@ namespace MOBOT.BHL.Web2
         /// <returns></returns>
         private List<GNVerifierResponse> GetNameDetail(string name)
         {
-            List<GNVerifierResponse> nameDetails = bhlProvider.GetNameDetailFromGNVerifier(name);
+            List<GNVerifierResponse> nameDetails = new BHLProvider().GetNameDetailFromGNVerifier(name);
 
             return nameDetails;
         }
