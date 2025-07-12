@@ -59,7 +59,7 @@ namespace MOBOT.BHL.Web2
                         IpThrottling = true,
                         IpRules = GetRateLimitRules(ipConfig),
                         EndpointThrottling = true,
-                        EndpointType = EndpointThrottlingType.ControllerAndAction,
+                        EndpointType = EndpointThrottlingType.AbsolutePath,
                         EndpointRules = GetRateLimitRules(endpointConfig),
                         UserAgentThrottling = true,
                         UserAgentWhitelist = new List<string>
@@ -131,9 +131,9 @@ namespace MOBOT.BHL.Web2
         {
             RateLimits rl = new RateLimits();
             if (rateLimitConfig.PerSecond != null) rl.PerSecond = (long)rateLimitConfig.PerSecond;
-            if (rateLimitConfig.PerMinute != null) rl.PerSecond = (long)rateLimitConfig.PerMinute;
-            if (rateLimitConfig.PerHour != null) rl.PerSecond = (long)rateLimitConfig.PerHour;
-            if (rateLimitConfig.PerDay != null) rl.PerSecond = (long)rateLimitConfig.PerDay;
+            if (rateLimitConfig.PerMinute != null) rl.PerMinute = (long)rateLimitConfig.PerMinute;
+            if (rateLimitConfig.PerHour != null) rl.PerHour = (long)rateLimitConfig.PerHour;
+            if (rateLimitConfig.PerDay != null) rl.PerDay = (long)rateLimitConfig.PerDay;
             Tuple<string, RateLimits> rule = new Tuple<string, RateLimits>(rateLimitConfig.Label, rl);
             return rule;
         }
