@@ -12,151 +12,159 @@
 </div>
 
 <div id="content" class="column-wrap clearfix">
-    <section class="search" style="width:745px">
-        <div class="ui-tabs"><div class="ui-tabs-panel">
-        <div runat="server" id="divSubmit">
+    <section class="search" style="width:745px" runat="server" id="divSubmit">
+        <div class="ui-tabs">
+            <div class="ui-tabs-panel">
+                <div>
 
-            <div style="display:none; margin-top:15px; margin-left:11px; margin-right:11px;" id="rcvdMsg" ClientIDMode="static" runat="server">
-                <div style="background-color:#3E90C8;color:white; padding-left:22px; padding-top:5px; padding-bottom:5px; padding-right:22px;">Thank you for submitting your feedback.  If necessary, a staff member will contact you shortly.</div>
-            </div>
+                    <div style="display:none; margin-top:15px; margin-left:11px; margin-right:11px;" id="rcvdMsg" ClientIDMode="static" runat="server">
+                        <div style="background-color:#3E90C8;color:white; padding-left:22px; padding-top:5px; padding-bottom:5px; padding-right:22px;">Thank you for submitting your feedback.  If necessary, a staff member will contact you shortly.</div>
+                    </div>
 
-            <div class="hidden">Leave this empty<asp:TextBox ID="fooTextBox" runat="server"></asp:TextBox></div>
+                    <div class="hidden">Leave this empty<asp:TextBox ID="fooTextBox" runat="server"></asp:TextBox></div>
 
-            <p></p>
-            <div>
-                <p id="spanErrorText" class="ErrorText" style="margin-left:160px;display:block !important"></p>
-            </div>
-            <div>
-                <p>Thank you for your feedback! BHL is voluntarily staffed by our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageMembers"] %>">Partner Libraries</a> and we are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information.</p>
-                <br />
-            </div>
-            <div style="margin-bottom:10px;">
-                <label class="caption" for="nameTextBox">Name:</label>
-                <asp:TextBox ID="nameTextBox" ClientIDMode="Static" runat="server" Width="300px" class="field"></asp:TextBox><span style="font-style:italic"> (optional)</span>
-            </div>
-            <div style="margin-bottom:30px;">
-                <label class="caption" for="emailTextBox">Email:</label>
-                <asp:TextBox ID="emailTextBox" ClientIDMode="Static" runat="server" Width="300px"></asp:TextBox><span style="font-style:italic"> (optional)</span>
-            </div>
-            <div style="margin-bottom:30px;">
-                <label class="caption" for="rdoSubject">Subject:</label>
-                <input type="radio" runat="server" name="rdoSubject" ID="subjectTech" ClientIDMode="Static" value="22" checked />Technical Issue
-                <input type="radio" runat="server" name="rdoSubject" ID="subjectBibIssue" ClientIDMode="Static" value="55"  />Bibliographic Issue
-                <input type="radio" runat="server" name="rdoSubject" ID="subjectSuggest" ClientIDMode="Static" value="36"  />Suggestion
-                <input type="radio" runat="server" name="rdoSubject" ID="subjectScanReq" ClientIDMode="Static" value="60"  />Scanning Request
-            </div>
+                    <p></p>
+                    <div>
+                        <p id="spanErrorText" class="ErrorText" style="margin-left:160px;display:block !important"></p>
+                    </div>
+                    <div>
+                        <p>Thank you for your feedback! BHL is voluntarily staffed by our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageMembers"] %>">Partner Libraries</a> and we are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information.</p>
+                        <br />
+                    </div>
+                    <div style="margin-bottom:10px;">
+                        <label class="caption" for="nameTextBox">Name:</label>
+                        <asp:TextBox ID="nameTextBox" ClientIDMode="Static" runat="server" Width="300px" class="field"></asp:TextBox><span style="font-style:italic"> (optional)</span>
+                    </div>
+                    <div style="margin-bottom:30px;">
+                        <label class="caption" for="emailTextBox">Email:</label>
+                        <asp:TextBox ID="emailTextBox" ClientIDMode="Static" runat="server" Width="300px"></asp:TextBox><span style="font-style:italic"> (optional)</span>
+                    </div>
+                    <div style="margin-bottom:30px;">
+                        <label class="caption" for="rdoSubject">Subject:</label>
+                        <input type="radio" runat="server" name="rdoSubject" ID="subjectTech" ClientIDMode="Static" value="22" checked />Technical Issue
+                        <input type="radio" runat="server" name="rdoSubject" ID="subjectBibIssue" ClientIDMode="Static" value="55"  />Bibliographic Issue
+                        <input type="radio" runat="server" name="rdoSubject" ID="subjectSuggest" ClientIDMode="Static" value="36"  />Suggestion
+                        <input type="radio" runat="server" name="rdoSubject" ID="subjectScanReq" ClientIDMode="Static" value="60"  />Scanning Request
+                    </div>
 
-		    <!-- Feedback Form -->
-		    <div id="FeedbackForm" style="display:none; margin-top:5px;">
-                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Try our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>" target="_blank" rel="noopener noreferrer" title="Help">FAQ</a> page for answers to common questions.</p></div>
-                <div style="margin-bottom:10px;">
-                    <label class="caption" for="commentTextBox">Comment:</label>
-                    <asp:TextBox ID="commentTextBox" ClientIDMode="Static" runat="server" Height="100px" Width="375" TextMode="MultiLine"></asp:TextBox>
-                </div>
-            </div>
-		    <!-- End Feedback Form -->
+		            <!-- Feedback Form -->
+		            <div id="FeedbackForm" style="display:none; margin-top:5px;">
+                        <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Try our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>" target="_blank" rel="noopener noreferrer" title="Help">FAQ</a> page for answers to common questions.</p></div>
+                        <div style="margin-bottom:10px;">
+                            <label class="caption" for="commentTextBox">Comment:</label>
+                            <asp:TextBox ID="commentTextBox" ClientIDMode="Static" runat="server" Height="100px" Width="375" TextMode="MultiLine"></asp:TextBox>
+                        </div>
+                    </div>
+		            <!-- End Feedback Form -->
 
-		    <!-- Scanning Request Form -->
-		    <div id="ScanRequestForm" style="display:none; margin-top:5px">
-                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Please see our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageSubmissionGuide"] %>" target="_blank" rel="noopener noreferrer" title="Guidelines">guidelines</a> for submitting requests.</p></div>
-                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Search for your title in <a href="http://www.worldcat.org/" target="_blank" rel="noopener noreferrer" title="WorldCat">WorldCat</a> (recommended)</p></div>
-                <div style="margin-bottom:10px;">
-                    <label class="caption" for="srOCLCTextBox">OCLC:</label>
-                    <asp:TextBox ID="srOCLCTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="30"></asp:TextBox><span style="font-style:italic"> (optional)</span>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <label class="caption" for="srTitleTextBox">Book Title:</label>
-                    <asp:TextBox ID="srTitleTextBox" ClientIDMode="Static" runat="server" Width="400px" MaxLength="500"></asp:TextBox>
-                </div>
-                <div style="margin-bottom:1px;">
-                    <label class="caption" for="srYearTextBox">Year:</label>
-                    <asp:TextBox ID="srYearTextBox" ClientIDMode="Static" runat="server" Width="50px" MaxLength="20" style="width: 50px !important"></asp:TextBox>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <label class="caption" for="srYearMsg"></label>
-                    <textarea id="srYearMsg" style="color:#000000;background-color:#FFFFFF;font-style:italic;border:none;overflow: auto;outline: none;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;resize: none;" type="text" value="" rows="3" cols="55" disabled="">(Materials must be in the public domain or legally permitted. For U.S. © compliance, public domain = current year minus 95 years.)</textarea>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <label class="caption" for="typeList">Subject:</label>
-                    <input type="radio" runat="server" name="rdoType" ID="typeBook" ClientIDMode="Static" value="Book" checked />Book
-                    <input type="radio" runat="server" name="rdoType" ID="typeJournal" ClientIDMode="Static" value="Journal"  />Journal
-                    <input type="radio" runat="server" name="rdoType" ID="typeUnsure" ClientIDMode="Static" value="Not Sure"  />Not Sure
-                </div>
-                <div style="margin-bottom:10px;">
-                    <label class="caption" for="srVolumeTextBox">Volume:</label>
-                    <asp:TextBox ID="srVolumeTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="100" Text="All volumes" class="inlinetextbox"></asp:TextBox><span style="font-style:italic"> (journals only)</span>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <label class="caption" for="srEditionTextBox">Edition:</label>
-                    <asp:TextBox ID="srEditionTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="100"></asp:TextBox><span style="font-style:italic"> (optional)</span>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <label class="caption" for="srISBNTextBox">ISBN:</label>
-                    <asp:TextBox ID="srISBNTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="30" class="inlinetextbox"></asp:TextBox><span style="font-style:italic"> (optional)</span>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <label class="caption" for="srISSNTextBox">ISSN:</label>
-                    <asp:TextBox ID="srISSNTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="30" class="inlinetextbox"></asp:TextBox><span style="font-style:italic"> (optional)</span>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <label class="caption" for="srAuthorTextBox">Author:</label>
-                    <asp:TextBox ID="srAuthorTextBox" ClientIDMode="Static" runat="server" Width="400px" MaxLength="200"></asp:TextBox><span style="font-style:italic"> (optional)</span>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <label class="caption" for="srPublisherTextBox">Publisher:</label>
-                    <asp:TextBox ID="srPublisherTextBox" ClientIDMode="Static" runat="server" Width="400px" MaxLength="200"></asp:TextBox><span style="font-style:italic"> (optional)</span>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <label class="caption" for="srLanguageList">Language:</label>
-                    <asp:DropDownList ID="srLanguageList" ClientIDMode="Static" runat="server"></asp:DropDownList><span style="font-style:italic"> (optional)</span>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <label class="caption" for="srNoteTextBox">Note:</label>
-                    <span style="float:right; padding-right:45px;"><span style="font-style:italic"> (optional)</span></span>
-                    <asp:TextBox ID="srNoteTextBox" ClientIDMode="Static" runat="server" Height="100px" Width="400px" TextMode="MultiLine"></asp:TextBox>
-                </div>
-            </div>
-		    <!-- End Scanning Request Form -->
+		            <!-- Scanning Request Form -->
+		            <div id="ScanRequestForm" style="display:none; margin-top:5px">
+                        <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Please see our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageSubmissionGuide"] %>" target="_blank" rel="noopener noreferrer" title="Guidelines">guidelines</a> for submitting requests.</p></div>
+                        <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Search for your title in <a href="http://www.worldcat.org/" target="_blank" rel="noopener noreferrer" title="WorldCat">WorldCat</a> (recommended)</p></div>
+                        <div style="margin-bottom:10px;">
+                            <label class="caption" for="srOCLCTextBox">OCLC:</label>
+                            <asp:TextBox ID="srOCLCTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="30"></asp:TextBox><span style="font-style:italic"> (optional)</span>
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <label class="caption" for="srTitleTextBox">Book Title:</label>
+                            <asp:TextBox ID="srTitleTextBox" ClientIDMode="Static" runat="server" Width="400px" MaxLength="500"></asp:TextBox>
+                        </div>
+                        <div style="margin-bottom:1px;">
+                            <label class="caption" for="srYearTextBox">Year:</label>
+                            <asp:TextBox ID="srYearTextBox" ClientIDMode="Static" runat="server" Width="50px" MaxLength="20" style="width: 50px !important"></asp:TextBox>
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <label class="caption" for="srYearMsg"></label>
+                            <textarea id="srYearMsg" style="color:#000000;background-color:#FFFFFF;font-style:italic;border:none;overflow: auto;outline: none;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;resize: none;" type="text" value="" rows="3" cols="55" disabled="">(Materials must be in the public domain or legally permitted. For U.S. © compliance, public domain = current year minus 95 years.)</textarea>
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <label class="caption" for="typeList">Subject:</label>
+                            <input type="radio" runat="server" name="rdoType" ID="typeBook" ClientIDMode="Static" value="Book" checked />Book
+                            <input type="radio" runat="server" name="rdoType" ID="typeJournal" ClientIDMode="Static" value="Journal"  />Journal
+                            <input type="radio" runat="server" name="rdoType" ID="typeUnsure" ClientIDMode="Static" value="Not Sure"  />Not Sure
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <label class="caption" for="srVolumeTextBox">Volume:</label>
+                            <asp:TextBox ID="srVolumeTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="100" Text="All volumes" class="inlinetextbox"></asp:TextBox><span style="font-style:italic"> (journals only)</span>
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <label class="caption" for="srEditionTextBox">Edition:</label>
+                            <asp:TextBox ID="srEditionTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="100"></asp:TextBox><span style="font-style:italic"> (optional)</span>
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <label class="caption" for="srISBNTextBox">ISBN:</label>
+                            <asp:TextBox ID="srISBNTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="30" class="inlinetextbox"></asp:TextBox><span style="font-style:italic"> (optional)</span>
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <label class="caption" for="srISSNTextBox">ISSN:</label>
+                            <asp:TextBox ID="srISSNTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="30" class="inlinetextbox"></asp:TextBox><span style="font-style:italic"> (optional)</span>
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <label class="caption" for="srAuthorTextBox">Author:</label>
+                            <asp:TextBox ID="srAuthorTextBox" ClientIDMode="Static" runat="server" Width="400px" MaxLength="200"></asp:TextBox><span style="font-style:italic"> (optional)</span>
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <label class="caption" for="srPublisherTextBox">Publisher:</label>
+                            <asp:TextBox ID="srPublisherTextBox" ClientIDMode="Static" runat="server" Width="400px" MaxLength="200"></asp:TextBox><span style="font-style:italic"> (optional)</span>
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <label class="caption" for="srLanguageList">Language:</label>
+                            <asp:DropDownList ID="srLanguageList" ClientIDMode="Static" runat="server"></asp:DropDownList><span style="font-style:italic"> (optional)</span>
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <label class="caption" for="srNoteTextBox">Note:</label>
+                            <span style="float:right; padding-right:45px;"><span style="font-style:italic"> (optional)</span></span>
+                            <asp:TextBox ID="srNoteTextBox" ClientIDMode="Static" runat="server" Height="100px" Width="400px" TextMode="MultiLine"></asp:TextBox>
+                        </div>
+                    </div>
+		            <!-- End Scanning Request Form -->
 
-            <div style="margin-left:164px;">
-                <div class="g-recaptcha" data-sitekey="6LfT11cUAAAAABIA0TU2SP70JqpN9mlNgs2Y6-VY"></div>
-            </div>
-            <div>
-                <label class="caption">&nbsp;</label><asp:Button ID="submitButton" runat="server" Text="Submit" OnClientClick="submitClick();" OnClick="submitButton_Click" />
-            </div>
+                    <div style="margin-left:164px;">
+                        <div class="g-recaptcha" data-sitekey="<%=System.Configuration.ConfigurationManager.AppSettings["ReCaptchaSiteKey"]%>"></div>
+                    </div>
+                    <div>
+                        <label class="caption">&nbsp;</label><asp:Button ID="submitButton" runat="server" Text="Submit" OnClientClick="submitClick();" OnClick="submitButton_Click" />
+                    </div>
 
-        </div>
-        <div runat="server" id="divConfirm" visible="false">
-
-            <div style="text-align:center">
-                <a href="/" title="Return to BHL" id="lnkReturn" style="font-size:11px;text-decoration:none">Return to BHL</a>
-            </div>
-
-            <div style="border-bottom:1px;border-style:solid;">
-                <h3><asp:Literal runat="server" ID="litConfirmationSubject"></asp:Literal></h3>
-                <div id="showhideDetailsDiv"><p><a id="showhideDetailsLink" href="#"><span id="showhideText">Show</span> Submitted Feedback</a></p></div>
-                <div id="feedbackDetails" style="display:none">
-                    <p><asp:Literal runat="server" ID="litConfirmationText"></asp:Literal></p>
                 </div>
-            </div>
-
-            <div style="border-bottom:1px;border-style:solid;">
-                <div style="float:left;margin:0;width:50%">
-                    <h3>Join Our Mailing List</h3>
-                    <p>Sign up to receive the latest BHL news, content highlights, and promotions.</p>
-                    <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" rel="noopener noreferrer" href="http://library.si.edu/bhl-newsletter-signup">Subscribe</a>
-                </div>
-
-                <div style="float:left;margin:0;width:50%">
-                    <h3>Help Support <span>BHL</span></h3>
-                    <p>BHL depends on the financial support of its patrons. Help us keep BHL alive!</p>
-                    <a class="featurebutton-home" title="Donate" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">Donate</a>
-                </div>
-
-                <div>&nbsp;</div>
             </div>
         </div>
+    </section>
+    <section class="search" style="width:745px" runat="server" id="divConfirm" visible="false">
+        <div class="ui-tabs">
+            <div class="ui-tabs-panel">
+                <div>
 
+                    <div style="text-align:center">
+                        <a href="/" title="Return to BHL" id="lnkReturn" style="font-size:11px;text-decoration:none">Return to BHL</a>
+                    </div>
+
+                    <div style="border-bottom:1px;border-style:solid;">
+                        <h3><asp:Literal runat="server" ID="litConfirmationSubject"></asp:Literal></h3>
+                        <div id="showhideDetailsDiv"><p><a id="showhideDetailsLink" href="#"><span id="showhideText">Show</span> Submitted Feedback</a></p></div>
+                        <div id="feedbackDetails" style="display:none">
+                            <p><asp:Literal runat="server" ID="litConfirmationText"></asp:Literal></p>
+                        </div>
+                    </div>
+
+                    <div style="border-bottom:1px;border-style:solid;">
+                        <div style="float:left;margin:0;width:50%">
+                            <h3>Join Our Mailing List</h3>
+                            <p>Sign up to receive the latest BHL news, content highlights, and promotions.</p>
+                            <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" rel="noopener noreferrer" href="http://library.si.edu/bhl-newsletter-signup">Subscribe</a>
+                        </div>
+
+                        <div style="float:left;margin:0;width:50%">
+                            <h3>Help Support <span>BHL</span></h3>
+                            <p>BHL depends on the financial support of its patrons. Help us keep BHL alive!</p>
+                            <a class="featurebutton-home" title="Donate" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">Donate</a>
+                        </div>
+
+                        <div>&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 		<br />
 		<asp:ValidationSummary ID="validationSummary" runat="server" />
 		<asp:Panel ID="errorPanel" runat="server" Visible="false">
