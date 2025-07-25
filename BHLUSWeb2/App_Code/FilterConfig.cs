@@ -12,24 +12,48 @@ namespace MOBOT.BHL.Web2
     // Details at https://github.com/stefanprodan/MvcThrottle
     public class FilterConfig
     {
-        public static void RegisterGlobalFilters(GlobalFilterCollection filters, string rateLimitConfigFile)
+        public static void RegisterGlobalFilters(GlobalFilterCollection filters, string rateLimitConfigFile, string rateLimitWhitelistConfigFile)
         {
             if (File.Exists(rateLimitConfigFile))
             {
                 try
                 {
-                    // Read the rate limiting rules from the config file and separate them into Policy, IP Address, Endpoint, and User Agent rules
+                    // Read the rate limiting rules from the config files and separate them into Policy, IP Address, Endpoint, and User Agent rules
                     List<string> rateLimitConfigs = File.ReadAllLines(rateLimitConfigFile).ToList<string>();
                     RateLimitConfig policyConfig = null;
                     List<RateLimitConfig> ipConfig = new List<RateLimitConfig>();
                     List<RateLimitConfig> endpointConfig = new List<RateLimitConfig>();
                     List<RateLimitConfig> userAgentConfig = new List<RateLimitConfig>();
+
+                    List<string> ipWhitelistConfig = new List<string>();
+                    List<string> endpointWhitelistConfig = new List<string>();
+                    List<string> userAgentWhitelistConfig = new List<string>();
+
                     foreach (string rateLimitConfig in rateLimitConfigs)
                     {
-                        if (rateLimitConfig.StartsWith("Policy")) policyConfig = GetRateLimitConfig(rateLimitConfig);
-                        if (rateLimitConfig.StartsWith("Ip")) ipConfig.Add(GetRateLimitConfig(rateLimitConfig));
-                        if (rateLimitConfig.StartsWith("Endpoint")) endpointConfig.Add(GetRateLimitConfig(rateLimitConfig));
-                        if (rateLimitConfig.StartsWith("UserAgent")) userAgentConfig.Add(GetRateLimitConfig(rateLimitConfig));
+                        // Skip any comments in the config file
+                        if (!rateLimitConfig.StartsWith("#"))
+                        {
+                            if (rateLimitConfig.StartsWith("Policy")) policyConfig = GetRateLimitConfig(rateLimitConfig);
+                            if (rateLimitConfig.StartsWith("Ip")) ipConfig.Add(GetRateLimitConfig(rateLimitConfig));
+                            if (rateLimitConfig.StartsWith("Endpoint")) endpointConfig.Add(GetRateLimitConfig(rateLimitConfig));
+                            if (rateLimitConfig.StartsWith("UserAgent")) userAgentConfig.Add(GetRateLimitConfig(rateLimitConfig));
+                        }
+                    }
+
+                    if (File.Exists(rateLimitWhitelistConfigFile))
+                    {
+                        List<string> whitelistConfigs = File.ReadAllLines(rateLimitWhitelistConfigFile).ToList<string>();
+
+                        foreach (string whitelistConfig in whitelistConfigs)
+                        {
+                            if (!whitelistConfig.StartsWith("#"))
+                            {
+                                if (whitelistConfig.StartsWith("Ip")) ipWhitelistConfig.Add(GetWhitelistConfig(whitelistConfig));
+                                if (whitelistConfig.StartsWith("Endpoint")) endpointWhitelistConfig.Add(GetWhitelistConfig(whitelistConfig));
+                                if (whitelistConfig.StartsWith("UserAgent")) userAgentWhitelistConfig.Add(GetWhitelistConfig(whitelistConfig));
+                            }
+                        }
                     }
 
                     // The global policy rate limits are required
@@ -56,19 +80,15 @@ namespace MOBOT.BHL.Web2
                     ThrottlePolicy policy = new ThrottlePolicy(perSecond: policyConfig.PerSecond, 
                         perMinute: policyConfig.PerMinute, perHour: policyConfig.PerHour, perDay: policyConfig.PerDay)
                     {
-                        IpThrottling = true,
+                        IpThrottling = (ipConfig.Count > 0),
+                        IpWhitelist = ipWhitelistConfig,
                         IpRules = GetRateLimitRules(ipConfig),
                         EndpointThrottling = true,
                         EndpointType = EndpointThrottlingType.AbsolutePath,
+                        EndpointWhitelist = endpointWhitelistConfig,
                         EndpointRules = GetRateLimitRules(endpointConfig),
                         UserAgentThrottling = true,
-                        UserAgentWhitelist = new List<string>
-                        {
-                            "Googlebot",
-                            "Bingbot",
-                            "YandexBot",
-                            "DuckDuckBot"
-                        },
+                        UserAgentWhitelist = userAgentWhitelistConfig,
                         UserAgentRules = GetRateLimitRules(userAgentConfig),
                     };
 
@@ -136,6 +156,20 @@ namespace MOBOT.BHL.Web2
             if (rateLimitConfig.PerDay != null) rl.PerDay = (long)rateLimitConfig.PerDay;
             Tuple<string, RateLimits> rule = new Tuple<string, RateLimits>(rateLimitConfig.Label, rl);
             return rule;
+        }
+
+        static string GetWhitelistConfig(string whitelistConfig)
+        {
+            string[] configs = whitelistConfig.Split('|');
+            if (configs.Length == 2)
+            {
+                string whiteListValue = configs[1];
+                return whiteListValue;
+            }
+            else
+            {
+                throw new Exception(string.Format("Invalid ratelimitwhitelist.config entry: {0}", whitelistConfig));
+            }
         }
     }
 

@@ -1,42 +1,41 @@
 ﻿using MOBOT.OpenUrl.Utilities;
+using MvcThrottle;
 using System;
 using System.Configuration;
 using System.Web;
-using System.Web.Services;
+using System.Web.Mvc;
 
-namespace MOBOT.BHL.Web2.Services
+namespace MOBOT.BHL.Web2.Controllers
 {
-    /// <summary>
-    /// Summary description for $codebehindclassname$
-    /// </summary>
-    [WebService(Namespace = "http://www.biodiversitylibrary.org/")]
-    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    public class OpenUrlResolver : IHttpHandler
+    public class OpenUrlController : Controller
     {
-        public void ProcessRequest(HttpContext context)
+        [EnableThrottling]
+        // GET: OpenUrl
+        public ActionResult OpenUrlResolver()
         {
             String response = String.Empty;
             bool redirect = false;
 
-            IOpenUrlQuery ouQuery = OpenUrlQueryFactory.CreateOpenUrlQuery(HttpUtility.UrlDecode(context.Request.QueryString.ToString()));
+            IOpenUrlQuery ouQuery = OpenUrlQueryFactory.CreateOpenUrlQuery(HttpUtility.UrlDecode(Request.QueryString.ToString()));
             MOBOT.BHL.OpenUrlProvider.BHLOpenUrlProvider openurl = new MOBOT.BHL.OpenUrlProvider.BHLOpenUrlProvider();
             openurl.UrlFormat = ConfigurationManager.AppSettings["PagePageUrl"];
             openurl.ItemUrlFormat = ConfigurationManager.AppSettings["ItemPageUrl"];
             openurl.TitleUrlFormat = ConfigurationManager.AppSettings["BibPageUrl"];
             openurl.PartUrlFormat = ConfigurationManager.AppSettings["PartPageUrl"];
-            openurl.IpAddress = HttpContext.Current.Request.UserHostAddress;
+            openurl.IpAddress = Request.UserHostAddress;
             openurl.UseFullTextSearch = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]);
             IOpenUrlResponse ouResponse = openurl.FindCitation(ouQuery);
 
             // Format the response as requested
-            String format = context.Request.QueryString["format"] as String;
-            String callback = context.Request.QueryString["callback"];
+            string format = Request.QueryString["format"];
+            string callback = Request.QueryString["callback"];
+            string contentType = string.Empty;
             if (format == null) format = "redirect";
             switch (format)
             {
                 case "xml":
                     response = ouResponse.ToXml();
-                    context.Response.ContentType = "text/xml";
+                    contentType = "text/xml";
                     break;
                 case "json":
                     response = ouResponse.ToJson();
@@ -44,21 +43,17 @@ namespace MOBOT.BHL.Web2.Services
                     // Include any specified callback function in JSON responses
                     if ((callback != null) && (callback != String.Empty)) response = callback + "(" + response + ");";
 
-                    context.Response.ContentType = "text/json";
+                    contentType = "text/json";
                     break;
                 case "html":
                     response = this.FormatAsHTML(ouResponse);
-                    context.Response.ContentType = "text/html";
+                    contentType = "text/html";
                     break;
                 case "redirect":
                     redirect = true;
 
                     if (ouResponse.Status == ResponseStatus.Error || ouResponse.Status == ResponseStatus.Undefined)
                     {
-                        // Set cookie to be read on the openurlhelp page
-                        HttpCookie cookie = new HttpCookie("OpenUrlMessage", ouResponse.Message);
-                        cookie.Expires = DateTime.Now.AddSeconds(10);
-                        context.Response.Cookies.Add(cookie);
                         response = "/openurlhelp.aspx";
                         break;
                     }
@@ -70,12 +65,12 @@ namespace MOBOT.BHL.Web2.Services
                                 response = "/openurlnone.aspx";
                                 break;
                             case 1:
-                                response = (ouResponse.citations[0].Url != String.Empty ? 
-                                                ouResponse.citations[0].Url : 
-                                                (ouResponse.citations[0].PartUrl != String.Empty ? 
-                                                    ouResponse.citations[0].PartUrl : 
+                                response = (ouResponse.citations[0].Url != String.Empty ?
+                                                ouResponse.citations[0].Url :
+                                                (ouResponse.citations[0].PartUrl != String.Empty ?
+                                                    ouResponse.citations[0].PartUrl :
                                                     (ouResponse.citations[0].ItemUrl != String.Empty ?
-                                                        ouResponse.citations[0].ItemUrl : 
+                                                        ouResponse.citations[0].ItemUrl :
                                                         ouResponse.citations[0].TitleUrl)));
                                 break;
                             default:
@@ -133,11 +128,11 @@ namespace MOBOT.BHL.Web2.Services
             // Return the response (redirecting if necessary)
             if (redirect)
             {
-                context.Response.Redirect(response);
+                return Redirect(response);
             }
             else
             {
-                context.Response.Write(response);
+                return Content(response, contentType);
             }
         }
 
@@ -201,14 +196,6 @@ namespace MOBOT.BHL.Web2.Services
             html.Append("</div>");
 
             return html.ToString();
-        }
-
-        public bool IsReusable
-        {
-            get
-            {
-                return false;
-            }
         }
     }
 }

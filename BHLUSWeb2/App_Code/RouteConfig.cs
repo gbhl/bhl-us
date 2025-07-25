@@ -18,13 +18,11 @@ namespace MOBOT.BHL.Web2
 
             routes.MapPageRoute("Contact", "contact", "~/Feedback.aspx");
 
-            routes.Add("OpenUrl", new Route("openurl", new HttpHandlerRouteHandler<OpenUrlResolver>()));
-
+            routes.MapRoute("OpenUrl", "openurl", new { controller = "OpenUrl", action = "OpenUrlResolver" });
             routes.MapPageRoute("OpenUrl-None", "openurlnone", "~/OpenUrlNone.aspx");
-
             routes.MapPageRoute("OpenUrl-Multiple", "openurlmultiple", "~/OpenUrlMultiple.aspx");
 
-            routes.Add("API3", new Route("api3", new HttpHandlerRouteHandler<api3.api3>()));
+            routes.MapRoute("API3", "api3", new { controller = "Api", action = "Api3Handler" });
 
             routes.Add("OAI", new Route("oai", new HttpHandlerRouteHandler<oai2>()));
 
@@ -67,7 +65,6 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("Name", "name/{name}", new { controller = "Name", action = "Index" });
             routes.MapRoute("NameList", "namelist", new { controller = "Name", action = "NameList" });
             routes.MapRoute("NameListDownload", "namelistdownload", new { controller = "Name", action = "NameListDownload" });
-            //routes.MapPageRoute("NameDetail", "namedetail/{name}", "~/NameDetail.aspx");
             routes.MapRoute("NameDetail", "namedetail/{name}", new { controller = "NameDetail", action = "Index" });
 
             routes.Add("PageSummary", new Route("pagesummary", new HttpHandlerRouteHandler<PageSummaryService1>()));
@@ -102,27 +99,20 @@ namespace MOBOT.BHL.Web2
                 routes.MapPageRoute("Page", "page/{pageid}", "~/TitlePage.aspx");
             }
 
-            routes.Add("PageThumb", new Route("pagethumb/{pageid},{w},{h}", new HttpHandlerRouteHandler<GetPageThumb>()));
+            routes.MapRoute("PageThumb", "pagethumb/{pageid},{w},{h}", new { controller = "Page", action = "GetPageThumb" });
+            routes.MapRoute("PageThumb-Default", "pagethumb/{pageid}", new { controller = "Page", action = "GetPageThumb" });
+            routes.MapRoute("PageImage", "pageimage/{pageid}", new { controller = "Page", action = "GetPageImage" });
 
-            routes.Add("PageThumb-Default", new Route("pagethumb/{pageid}", new HttpHandlerRouteHandler<GetPageThumb>()));
+            routes.MapRoute("PageText", "pagetext/{pageid}", new { controller = "Page", action = "GetPageText" });
+            routes.MapRoute("PageOCR", "pageocr/{pageid}", new { controller = "Page", action = "GetPageText" });
 
-            routes.Add("PageImage", new Route("pageimage/{pageid}", new HttpHandlerRouteHandler<GetPageImage>()));
+            routes.MapRoute("ItemText", "itemtext/{itemid}", new { controller = "Item", action = "GetItemText" });
+            routes.MapRoute("ItemPdf", "itempdf/{itemid}", new { controller = "Item", action = "GetItemPdf" });
+            routes.MapRoute("ItemImages", "itemimages/{itemid}", new { controller = "Item", action = "GetItemImages" });
 
-            routes.Add("PageText", new Route("pagetext/{pageid}", new HttpHandlerRouteHandler<GetPageOcr>()));
-
-            routes.Add("PageOCR", new Route("pageocr/{pageid}", new HttpHandlerRouteHandler<GetPageOcrRedirect>()));
-
-            routes.Add("ItemText", new Route("itemtext/{itemid}", new HttpHandlerRouteHandler<GetItemText>()));
-
-            routes.Add("ItemPdf", new Route("itempdf/{itemid}", new HttpHandlerRouteHandler<GetItemPdf>()));
-
-            routes.Add("ItemImages", new Route("itemimages/{itemid}", new HttpHandlerRouteHandler<GetItemImages>()));
-
-            routes.Add("PartText", new Route("parttext/{id}", new HttpHandlerRouteHandler<GetPartText>()));
-
-            routes.Add("PartPdf", new Route("partpdf/{id}", new HttpHandlerRouteHandler<GetPartPdf>()));
-
-            routes.Add("PartImages", new Route("partimages/{id}", new HttpHandlerRouteHandler<GetPartImages>()));
+            routes.MapRoute("PartText", "parttext/{partid}", new { controller = "Part", action = "GetPartText" });
+            routes.MapRoute("PartPdf", "partpdf/{id}", new { controller = "Part", action = "GetPartPdf" });
+            routes.MapRoute("PartImages", "partimages/{id}", new { controller = "Part", action = "GetPartImages" });
 
             routes.MapPageRoute("Bibliography", "bibliography/{titleid}", "~/bibliography.aspx");
 

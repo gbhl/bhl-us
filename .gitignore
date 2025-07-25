@@ -36,6 +36,7 @@ build/
 [Aa]pp[Cc]onfig.xml
 [Aa]pp[Cc]onfig*.xml
 [Rr]atelimit.[Cc]onfig
+[Rr]atelimitwhitelist.[Cc]onfig
 [Tt]esthost.dll.[Cc]onfig
 !/BHLUSWeb2/data/[Ww]eb.[Cc]onfig
 

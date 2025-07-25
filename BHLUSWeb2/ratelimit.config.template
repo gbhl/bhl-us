@@ -18,7 +18,7 @@
 #
 #	Part 6: Requests/Day Limit - Integer value for the number of allowed requests per day.  Leave blank if no Per Day level is desired.
 #
-# Note: Comments are not allowed in the actual configuration file, so remove any lines starting with "#"
+# Note: Lines starting with # are regarded as comments and are skipped.
 #
 Policy||5|60|3600|86400
 Ip|192.168.1.1|2|||

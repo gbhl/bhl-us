@@ -489,9 +489,6 @@
     <Content Include="js\libs\jquery.text-overflow.js" />
     <Content Include="js\libs\modernizr-custom.js" />
     <Content Include="js\nspop.js" />
-    <Content Include="Handlers\GetPartPdf.ashx" />
-    <Content Include="Handlers\GetPartImages.ashx" />
-    <Content Include="Handlers\GetPartText.ashx" />
     <Content Include="js\socicon.js" />
     <Content Include="libman.json" />
     <Content Include="libs\countersoft\10.0.3\Newtonsoft.Json.dll" />
@@ -551,19 +548,18 @@
     <Content Include="packages.config" />
     <Content Include="Handlers\PDFDownload.ashx" />
     <Content Include="Handlers\RISDownload.ashx" />
-    <Content Include="apiv3\api3.ashx" />
     <Content Include="Docs\BHL Permissions Form.pdf" />
     <Content Include="Docs\BHL Permissions Questionnaire.pdf" />
     <Content Include="Docs\DarwinsLibraryBibliography.pdf" />
-    <Content Include="Handlers\GetPageOcrRedirect.ashx" />
-    <Content Include="Handlers\GetItemText.ashx" />
-    <Content Include="Handlers\GetItemPdf.ashx" />
-    <Content Include="Handlers\GetItemImages.ashx" />
     <Content Include="Handlers\CSLDownload.ashx" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28Local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28SI%29.pubxml" />
     <None Include="Properties\PublishProfiles\Production - BHL %28local%29.pubxml" />
     <Content Include="ratelimit.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ratelimitwhitelist.config.template" />
+    <Content Include="ratelimitwhitelist.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="ratelimit.config.template" />
@@ -651,9 +647,6 @@
       <DependentUpon>soap.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="apiv3\api3.ashx.cs">
-      <DependentUpon>api3.ashx</DependentUpon>
-    </Compile>
     <Compile Include="api\httpQuery.ashx.cs">
       <DependentUpon>httpQuery.ashx</DependentUpon>
     </Compile>
@@ -662,8 +655,13 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="App_Code\FilterConfig.cs" />
+    <Compile Include="Controllers\ApiController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\NameController.cs" />
     <Compile Include="Controllers\NameDetailController.cs" />
+    <Compile Include="Controllers\OpenUrlController.cs" />
+    <Compile Include="Controllers\PageController.cs" />
+    <Compile Include="Controllers\PartController.cs" />
     <Compile Include="Models\NameDetailModel.cs" />
     <Compile Include="Models\NameModel.cs" />
     <Compile Include="MVCServices\MvcThrottleLogger.cs" />
@@ -856,36 +854,6 @@
     <Compile Include="Handlers\BibTeXDownload.ashx.cs">
       <DependentUpon>BibTeXDownload.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\GetItemImages.ashx.cs">
-      <DependentUpon>GetItemImages.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\GetItemPdf.ashx.cs">
-      <DependentUpon>GetItemPdf.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\GetItemText.ashx.cs">
-      <DependentUpon>GetItemText.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\GetPageImage.ashx.cs">
-      <DependentUpon>GetPageImage.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\GetPageOcr.ashx.cs">
-      <DependentUpon>GetPageOcr.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\GetPageOcrRedirect.ashx.cs">
-      <DependentUpon>GetPageOcrRedirect.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\GetPageThumb.ashx.cs">
-      <DependentUpon>GetPageThumb.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\GetPartImages.ashx.cs">
-      <DependentUpon>GetPartImages.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\GetPartPdf.ashx.cs">
-      <DependentUpon>GetPartPdf.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\GetPartText.ashx.cs">
-      <DependentUpon>GetPartText.ashx</DependentUpon>
-    </Compile>
     <Compile Include="Handlers\ITunesRSS.ashx.cs">
       <DependentUpon>ITunesRSS.ashx</DependentUpon>
     </Compile>
@@ -1010,9 +978,6 @@
     <Compile Include="services\oai2.ashx.cs">
       <DependentUpon>oai2.ashx</DependentUpon>
     </Compile>
-    <Compile Include="services\OpenUrlResolver.ashx.cs">
-      <DependentUpon>OpenUrlResolver.ashx</DependentUpon>
-    </Compile>
     <Compile Include="services\PageSummaryService.ashx.cs">
       <DependentUpon>PageSummaryService.ashx</DependentUpon>
     </Compile>
@@ -1050,6 +1015,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Api\" />
+    <Folder Include="Views\OpenUrl\" />
     <Folder Include="Views\Service\" />
   </ItemGroup>
   <ItemGroup>
@@ -1154,15 +1121,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Handlers\BibTeXDownload.ashx" />
-    <Content Include="Handlers\GetPageImage.ashx" />
-    <Content Include="Handlers\GetPageOcr.ashx" />
-    <Content Include="Handlers\GetPageThumb.ashx" />
     <Content Include="Handlers\ITunesRSS.ashx" />
     <Content Include="Handlers\MODSDownload.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="services\oai2.ashx" />
-    <Content Include="services\OpenUrlResolver.ashx" />
     <Content Include="services\PageSummaryService.ashx" />
     <Content Include="services\SearchDownloadService.ashx" />
   </ItemGroup>

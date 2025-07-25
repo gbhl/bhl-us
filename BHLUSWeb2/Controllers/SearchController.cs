@@ -132,6 +132,7 @@ namespace MOBOT.BHL.Web2.Controllers
         }
 
         // POST: Advanced
+        [EnableThrottling]
         [HttpPost]
         public ActionResult Advanced(string foo)
         {
@@ -172,6 +173,7 @@ namespace MOBOT.BHL.Web2.Controllers
             return new RedirectResult("~/search?" + queryString);
         }
 
+        [EnableThrottling]
         [HttpGet]
         public ActionResult Pages(string q, int itemId)
         {
