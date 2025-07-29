@@ -38,7 +38,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     string includeOcr = Request.QueryString["ocr"] ?? "f";
                     string includeNames = Request.QueryString["names"] ?? "f";
                     ServiceResponse<List<Page>> serviceResponse = new ServiceResponse<List<Page>>();
-                    serviceResponse.Result = this.GetPageMetadata(pageID, includeOcr, includeNames, key);
+                    serviceResponse.Result = this.Api3_GetPageMetadata(pageID, includeOcr, includeNames, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     string includeOcr = Request.QueryString["ocr"] ?? "f";
                     string includeParts = Request.QueryString["parts"] ?? "f";
                     ServiceResponse<List<Item>> serviceResponse = new ServiceResponse<List<Item>>();
-                    serviceResponse.Result = this.GetItemMetadata(id, idType, includePages, includeOcr, includeParts, key);
+                    serviceResponse.Result = this.Api3_GetItemMetadata(id, idType, includePages, includeOcr, includeParts, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -64,7 +64,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     string idType = Request.QueryString["idType"];
                     string includeItems = Request.QueryString["items"] ?? "f";
                     ServiceResponse<List<Title>> serviceResponse = new ServiceResponse<List<Title>>();
-                    serviceResponse.Result = this.GetTitleMetadata(id, idType, includeItems, key);
+                    serviceResponse.Result = this.Api3_GetTitleMetadata(id, idType, includeItems, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -77,7 +77,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     string includePages = Request.QueryString["pages"] ?? "f";
                     string includeNames = Request.QueryString["names"] ?? "f";
                     ServiceResponse<List<Part>> serviceResponse = new ServiceResponse<List<Part>>();
-                    serviceResponse.Result = this.GetPartMetadata(id, idType, includePages, includeNames, key);
+                    serviceResponse.Result = this.Api3_GetPartMetadata(id, idType, includePages, includeNames, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -88,7 +88,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     string subject = Request.QueryString["subject"];
                     string includePubs = Request.QueryString["pubs"] ?? "f";
                     ServiceResponse<List<Subject>> serviceResponse = new ServiceResponse<List<Subject>>();
-                    serviceResponse.Result = this.GetSubjectMetadata(subject, includePubs, key);
+                    serviceResponse.Result = this.Api3_GetSubjectMetadata(subject, includePubs, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -100,7 +100,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     string idType = Request.QueryString["idType"];
                     string includePubs = Request.QueryString["pubs"] ?? "f";
                     ServiceResponse<List<Author>> serviceResponse = new ServiceResponse<List<Author>>();
-                    serviceResponse.Result = this.GetAuthorMetadata(id, idType, includePubs, key);
+                    serviceResponse.Result = this.Api3_GetAuthorMetadata(id, idType, includePubs, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -112,7 +112,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     string idType = Request.QueryString["idtype"];
                     string id = Request.QueryString["id"];
                     ServiceResponse<List<Name>> serviceResponse = new ServiceResponse<List<Name>>();
-                    serviceResponse.Result = this.GetNameMetadata(nameConfirmed, idType, id, key);
+                    serviceResponse.Result = this.Api3_GetNameMetadata(nameConfirmed, idType, id, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -121,7 +121,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 if (String.Compare(operation, "GetLanguages", true) == 0)
                 {
                     ServiceResponse<List<Language>> serviceResponse = new ServiceResponse<List<Language>>();
-                    serviceResponse.Result = this.GetLanguages(key);
+                    serviceResponse.Result = this.Api3_GetLanguages(key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -130,7 +130,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 if (String.Compare(operation, "GetCollections", true) == 0)
                 {
                     ServiceResponse<List<Collection>> serviceResponse = new ServiceResponse<List<Collection>>();
-                    serviceResponse.Result = this.GetCollections(key);
+                    serviceResponse.Result = this.Api3_GetCollections(key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -139,7 +139,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 if (String.Compare(operation, "GetInstitutions", true) == 0)
                 {
                     ServiceResponse<List<Institution>> serviceResponse = new ServiceResponse<List<Institution>>();
-                    serviceResponse.Result = this.GetInstitutions(key);
+                    serviceResponse.Result = this.Api3_GetInstitutions(key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -153,7 +153,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     string page = Request.QueryString["page"];
                     string pageSize = Request.QueryString["pageSize"];
 
-                    serviceResponse.Result = this.PublicationSearch((searchTerm ?? string.Empty),
+                    serviceResponse.Result = this.Api3_PublicationSearch((searchTerm ?? string.Empty),
                         searchType, (page ?? "1"), (pageSize ?? Api3.DefaultPubSearchPageSize.ToString()),
                         Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]),
                         key);
@@ -178,7 +178,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     string page = Request.QueryString["page"];
                     string pageSize = Request.QueryString["pageSize"];
 
-                    serviceResponse.Result = this.PublicationSearchAdvanced((title ?? string.Empty),
+                    serviceResponse.Result = this.Api3_PublicationSearchAdvanced((title ?? string.Empty),
                         (titleOp ?? string.Empty), (authorLastName ?? string.Empty), (year ?? string.Empty),
                         (subject ?? string.Empty), (language ?? string.Empty), (collection ?? string.Empty),
                         (notes ?? string.Empty), (notesOp ?? string.Empty),
@@ -196,7 +196,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     idType = string.IsNullOrWhiteSpace(idType) ? "Item" : idType;
                     string id = Request.QueryString["id"];
                     id = string.IsNullOrWhiteSpace(id) ? Request.QueryString["itemID"] : id;
-                    serviceResponse.Result = this.PageSearch(idType, id, text, key);
+                    serviceResponse.Result = this.Api3_PageSearch(idType, id, text, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -204,7 +204,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     string name = Request.QueryString["name"];
                     ServiceResponse<List<Name>> serviceResponse = new ServiceResponse<List<Name>>();
-                    serviceResponse.Result = this.NameSearch(name, key);
+                    serviceResponse.Result = this.Api3_NameSearch(name, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -212,7 +212,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     string subject = Request.QueryString["subject"];
                     ServiceResponse<List<Subject>> serviceResponse = new ServiceResponse<List<Subject>>();
-                    serviceResponse.Result = this.SubjectSearch(subject, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
+                    serviceResponse.Result = this.Api3_SubjectSearch(subject, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -220,7 +220,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     string name = Request.QueryString["authorname"];
                     ServiceResponse<List<Author>> serviceResponse = new ServiceResponse<List<Author>>();
-                    serviceResponse.Result = this.AuthorSearch(name, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
+                    serviceResponse.Result = this.Api3_AuthorSearch(name, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
                     response = serviceResponse.Serialize(outputType);
                 }
             }
@@ -280,7 +280,7 @@ namespace MOBOT.BHL.Web2.Controllers
             return serviceResponse.Serialize(outputType);
         }
 
-        private void ValidateUser(Api3.APIRequestType requestType, string apiKey, string detail)
+        private void Api3_ValidateUser(Api3.APIRequestType requestType, string apiKey, string detail)
         {
             // Only validate users in production
             if (ConfigurationManager.AppSettings["IsProduction"] == "true")
@@ -294,108 +294,108 @@ namespace MOBOT.BHL.Web2.Controllers
 
         #region API Methods
 
-        private List<Page> GetPageMetadata(string pageID, string includeOcr, string includeNames, string apiKey)
+        private List<Page> Api3_GetPageMetadata(string pageID, string includeOcr, string includeNames, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetPageMetadata, apiKey, pageID + "|" + includeOcr + "|" + includeNames);
+            Api3_ValidateUser(Api3.APIRequestType.GetPageMetadata, apiKey, pageID + "|" + includeOcr + "|" + includeNames);
             Api3 api = new Api3();
             return api.GetPageMetadata(pageID, includeOcr, includeNames);
         }
 
-        private List<Item> GetItemMetadata(string id, string idType, string includePages, string includeOcr, string includeParts, string apiKey)
+        private List<Item> Api3_GetItemMetadata(string id, string idType, string includePages, string includeOcr, string includeParts, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetItemMetadata, apiKey,
+            Api3_ValidateUser(Api3.APIRequestType.GetItemMetadata, apiKey,
                 id + "|" + idType + "|" + includePages + "|" + includeOcr + "|" + includeParts);
             Api3 api = new Api3();
             return api.GetItemMetadata(id, idType, includePages, includeOcr, includeParts);
         }
 
-        private List<Title> GetTitleMetadata(string id, string idType, string includeItems, string apiKey)
+        private List<Title> Api3_GetTitleMetadata(string id, string idType, string includeItems, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetTitleMetadata, apiKey, id + "|" + idType + "|" + includeItems);
+            Api3_ValidateUser(Api3.APIRequestType.GetTitleMetadata, apiKey, id + "|" + idType + "|" + includeItems);
             Api3 api = new Api3();
             return api.GetTitleMetadata(id, idType, includeItems);
         }
 
-        private List<Part> GetPartMetadata(string id, string idType, string includePages, string includeNames, string apiKey)
+        private List<Part> Api3_GetPartMetadata(string id, string idType, string includePages, string includeNames, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetPartMetadata, apiKey, id + "|" + idType + "|" + includePages + "|" + includeNames);
+            Api3_ValidateUser(Api3.APIRequestType.GetPartMetadata, apiKey, id + "|" + idType + "|" + includePages + "|" + includeNames);
             Api3 api = new Api3();
             return api.GetSegmentMetadata(id, idType, includePages, includeNames);
         }
 
-        private List<Subject> SubjectSearch(string subject, bool fullText, string apiKey)
+        private List<Subject> Api3_SubjectSearch(string subject, bool fullText, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.SubjectSearch, apiKey, subject);
+            Api3_ValidateUser(Api3.APIRequestType.SubjectSearch, apiKey, subject);
             Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
             return api.SubjectSearch(subject, fullText);
         }
 
-        private List<Subject> GetSubjectMetadata(string subject, string includePubs, string apiKey)
+        private List<Subject> Api3_GetSubjectMetadata(string subject, string includePubs, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetSubjectMetadata, apiKey, subject + "|" + includePubs);
+            Api3_ValidateUser(Api3.APIRequestType.GetSubjectMetadata, apiKey, subject + "|" + includePubs);
             Api3 api = new Api3();
             return api.GetSubjectMetadata(subject, includePubs);
         }
 
-        private List<Author> AuthorSearch(string name, bool fullText, string apiKey)
+        private List<Author> Api3_AuthorSearch(string name, bool fullText, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.AuthorSearch, apiKey, name);
+            Api3_ValidateUser(Api3.APIRequestType.AuthorSearch, apiKey, name);
             Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
             return api.AuthorSearch(name, fullText);
         }
 
-        private List<Page> PageSearch(string idType, string id, string text, string apiKey)
+        private List<Page> Api3_PageSearch(string idType, string id, string text, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.PageSearch, apiKey, string.Format("{0}|{1}|{2}", idType, id, text));
+            Api3_ValidateUser(Api3.APIRequestType.PageSearch, apiKey, string.Format("{0}|{1}|{2}", idType, id, text));
             Api3 api = new Api3();
             return api.PageSearch(idType, id, text);
         }
 
-        private List<Author> GetAuthorMetadata(string id, string idType, string includePubs, string apiKey)
+        private List<Author> Api3_GetAuthorMetadata(string id, string idType, string includePubs, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetAuthorMetadata, apiKey, id + "|" + idType + "|" + includePubs);
+            Api3_ValidateUser(Api3.APIRequestType.GetAuthorMetadata, apiKey, id + "|" + idType + "|" + includePubs);
             Api3 api = new Api3();
             return api.GetAuthorMetadata(id, idType, includePubs);
         }
 
-        private List<Name> GetNameMetadata(string nameConfirmed, string idType, string id, string apiKey)
+        private List<Name> Api3_GetNameMetadata(string nameConfirmed, string idType, string id, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetNameMetadata, apiKey, nameConfirmed + "|" + idType + "|" + id);
+            Api3_ValidateUser(Api3.APIRequestType.GetNameMetadata, apiKey, nameConfirmed + "|" + idType + "|" + id);
             Api3 api = new Api3();
             return api.GetNameMetadata(nameConfirmed, idType, id);
         }
 
-        private List<Name> NameSearch(string name, string apiKey)
+        private List<Name> Api3_NameSearch(string name, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.NameSearch, apiKey, name);
+            Api3_ValidateUser(Api3.APIRequestType.NameSearch, apiKey, name);
             Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
             return api.NameSearch(name);
         }
 
-        private List<Language> GetLanguages(string apiKey)
+        private List<Language> Api3_GetLanguages(string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetLanguages, apiKey, string.Empty);
+            Api3_ValidateUser(Api3.APIRequestType.GetLanguages, apiKey, string.Empty);
             Api3 api = new Api3();
             return api.GetLanguages();
         }
 
-        private List<Collection> GetCollections(string apiKey)
+        private List<Collection> Api3_GetCollections(string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetCollections, apiKey, string.Empty);
+            Api3_ValidateUser(Api3.APIRequestType.GetCollections, apiKey, string.Empty);
             Api3 api = new Api3();
             return api.GetCollections();
         }
 
-        private List<Publication> PublicationSearch(string searchTerm, string searchType,
+        private List<Publication> Api3_PublicationSearch(string searchTerm, string searchType,
             string page, string pageSize, bool fullText, string apiKey)
         {
             string args = string.Format("{0}|{1}|{2}|{3}", searchTerm, searchType, page.ToString(), pageSize.ToString());
-            ValidateUser(Api3.APIRequestType.PublicationSearch, apiKey, args);
+            Api3_ValidateUser(Api3.APIRequestType.PublicationSearch, apiKey, args);
             Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
             return api.SearchPublication(searchTerm, searchType, page, pageSize, fullText);
         }
 
-        private List<Publication> PublicationSearchAdvanced(string title, string titleOp,
+        private List<Publication> Api3_PublicationSearchAdvanced(string title, string titleOp,
             string authorLastName, string year, string subject, string languageCode, string collectionID,
             string notes, string notesOp, string text, string textOp, string page, string pageSize,
             bool fullText, string apiKey)
@@ -404,15 +404,15 @@ namespace MOBOT.BHL.Web2.Controllers
                 authorLastName, (year == null ? "" : year.ToString()), subject, languageCode,
                 (collectionID == null ? "" : collectionID.ToString()), notes, notesOp, text, textOp, page.ToString(),
                 pageSize.ToString());
-            ValidateUser(Api3.APIRequestType.PublicationSearchAdvanced, apiKey, args);
+            Api3_ValidateUser(Api3.APIRequestType.PublicationSearchAdvanced, apiKey, args);
             Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
             return api.SearchPublication(title, titleOp, authorLastName, year, subject, languageCode,
                 collectionID, notes, notesOp, text, textOp, page, pageSize, fullText);
         }
 
-        private List<Institution> GetInstitutions(string apiKey)
+        private List<Institution> Api3_GetInstitutions(string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetInstitutions, apiKey, string.Empty);
+            Api3_ValidateUser(Api3.APIRequestType.GetInstitutions, apiKey, string.Empty);
             Api3 api = new Api3();
             return api.GetInstitutions();
         }

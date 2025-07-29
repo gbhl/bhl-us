@@ -1,0 +1,438 @@
+﻿@model MOBOT.BHL.Web2.Models.BibliographyModel
+
+@{
+    ViewBag.Title = "Details - " + Model.Title.FullTitle + " - Biodiversity Heritage Library";
+}
+
+@section CSS {
+    <link rel="stylesheet" href="/css/bhl-citation-js.css?v=1" />
+}
+
+<div id="page-title" class="bibliography">
+    <div class="column-wrap">
+        <div class="ellipsis bibtitle">@Model.Title.ShortTitle</div>
+        <div class="bibtitleicons">
+            <a href="/contact/" title="Report an error" class="report"><img alt="Report an error" src="/images/rpterror.png" /></a>
+        </div>
+    </div>
+</div>
+
+<div id="content" class="column-wrap clearfix" itemscope itemtype="https://schema.org/Book">
+    <section>
+        <div class="tabs js-hide">
+            @{Html.RenderPartial("~/Views/Shared/_COinSControl.cshtml", Model.COinS); }
+            <div id="details" class="tab-body">
+                <h3>Title</h3>
+                <p>@Model.Title.FullTitleExtended</p>
+                @if (Model.TitleVariants.Count > 0 || !string.IsNullOrWhiteSpace(Model.Title.UniformTitle))
+                {
+                    <h3>Title Variants</h3>
+                    <p>
+                        @foreach (var tv in Model.TitleVariants)
+                        {
+                            <i>@tv.TitleVariantLabel:</i>
+                            List<string> tvTitle = new List<string>();
+                            if (!string.IsNullOrWhiteSpace(tv.Title)) { tvTitle.Add(tv.Title); }
+                            if (!string.IsNullOrWhiteSpace(tv.TitleRemainder)) { tvTitle.Add(tv.TitleRemainder); }
+                            @(string.Join(", ", tvTitle.ToArray())) <br />
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.Title.UniformTitle))
+                        {
+                            <i>Uniform: </i>@Model.Title.UniformTitle <br />
+                        }
+                    </p>
+                }
+                @if (Model.TitleAssociations.Count > 0)
+                {
+                    <h3>Related Titles</h3>
+                    <p>
+                        @foreach (var ta in Model.TitleAssociations)
+                        {
+                            <i>@ta.TitleAssociationLabel:</i>
+                            List<string> taTitle = new List<string>();
+                            if (!string.IsNullOrEmpty(ta.Title)) { taTitle.Add(ta.Title); }
+                            if (!string.IsNullOrEmpty(ta.Section)) { taTitle.Add(ta.Section); }
+                            if (!string.IsNullOrEmpty(ta.Volume)) { taTitle.Add(ta.Volume); }
+                            if (!string.IsNullOrEmpty(ta.Heading)) { taTitle.Add(ta.Heading); }
+                            if (!string.IsNullOrEmpty(ta.Publication)) { taTitle.Add(ta.Publication); }
+                            if (!string.IsNullOrEmpty(ta.Relationship)) { taTitle.Add(ta.Relationship); }
+                            if (ta.AssociatedTitleID != null)
+                            {
+                                <a href="/bibliography/@ta.AssociatedTitleID">
+                                    @string.Join(", ", taTitle.ToArray())
+                                </a>
+                            }
+                            else
+                            {
+                                <a href='/search?searchTerm="@ta.Title"&stype=C'>
+                                    @string.Join(", ", taTitle.ToArray())
+                                </a>
+                            }
+                            <br />
+                        }
+                    </p>
+                }
+                @if (Model.TitleExternalResources.Count > 0)
+                {
+                    <h3>External Resources</h3>
+                    <p>
+                        @foreach (var extResource in Model.TitleExternalResources)
+                        {
+                            <i>@extResource.ExternalResourceTypeLabel:</i>
+                            if (string.IsNullOrWhiteSpace(extResource.Url))
+                            {
+                                @extResource.UrlText
+                            }
+                            else
+                            {
+                                <a class="ExtLinkBrowse" href="@extResource.Url" rel="noopener noreferrer" target="_blank">@extResource.UrlText</a>
+                            }
+                            <br />
+                        }
+                    </p>
+                }
+                <h3>By</h3>
+                <p>
+                    @foreach (var author in Model.AuthorsDetail)
+                    {
+                        <a href="/creator/@author.AuthorID">
+                            @author.NameExtended
+                        </a>if (!string.IsNullOrWhiteSpace(author.Relationship)) { Html.Raw(", " + author.Relationship); }
+                        if (!string.IsNullOrWhiteSpace(author.TitleOfWork)) { Html.Raw(", " + author.TitleOfWork); }
+                        <br />
+                    }
+                    @if (Model.AuthorsDetail.Count > 0 && Model.AdditionalAuthorsDetail.Count > 0) { Html.Raw("<br />"); }
+                    @foreach (var author in Model.AdditionalAuthorsDetail)
+                    {
+                        <a href="/creator/@author.AuthorID">
+                            @author.NameExtended
+                        </a>if (!string.IsNullOrWhiteSpace(author.Relationship)) { Html.Raw(", " + author.Relationship); }
+                        if (!string.IsNullOrWhiteSpace(author.TitleOfWork)) { Html.Raw(", " + author.TitleOfWork); }
+                        <br />
+                    }
+                </p>
+                <h3>Type</h3>
+                <p>
+                    @Model.Genre
+                </p>
+                @if (!string.IsNullOrWhiteSpace(Model.Material))
+                {
+                    <h3>Material</h3>
+                    <p>
+                        <span>@Model.Material</span>
+                    </p>
+                }
+                <h3>Publication info</h3>
+                <p>
+                    @Model.Title.PublicationDetails
+                </p>
+                @if (!String.IsNullOrWhiteSpace(Model.Title.EditionStatement))
+                {
+                    <h3>Edition</h3>
+                    <p>
+                        <span itemprop="bookEdition">@Model.Title.EditionStatement</span>
+                    </p>
+                }
+                @if (Model.TitleNotes != null && Model.TitleNotes.Count > 0)
+                {
+                    <h3>Notes</h3>
+                    foreach (var titleNote in Model.TitleNotes)
+                    {
+                        <p>
+                            <i>@titleNote.NoteTypeDisplay@(string.IsNullOrWhiteSpace(titleNote.NoteTypeDisplay) ? "" : ": ")</i>@titleNote.NoteText
+                        </p>
+                    }
+                }
+                @if (Model.TitleKeywords != null && Model.TitleKeywords.Count > 0)
+                {
+                    <h3>Subjects</h3>
+                    <p>
+                        @for (int i = 0; i < Model.TitleKeywords.Count; i++)
+                        {
+                            <a href="/subject/@Server.UrlEncode(Model.TitleKeywords[i].Keyword)">
+                                @Model.TitleKeywords[i].Keyword
+                            </a>
+                            @((i < Model.TitleKeywords.Count - 1) ? ", " : string.Empty)
+                        }
+                    </p>
+                }
+                @if (Model.Collections.Count > 0)
+                {
+                    <h3>BHL Collections</h3>
+                    <p>
+                        @foreach (var collection in Model.Collections)
+                        {
+                            <a href="/browse/collection/@collection.CollectionID" title="Collection">@collection.CollectionName</a><br />
+                        }
+                    </p>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.Title.CallNumber))
+                {
+                    <h3>Call Number</h3>
+                    <p>
+                        @Model.Title.CallNumber
+                    </p>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.DDC))
+                {
+                    <h3>Classification</h3>
+                    <p>
+                        @Model.DDC
+                    </p>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.LanguageName))
+                {
+                    <h3>Language</h3>
+                    <p>
+                        <span itemprop="inLanguage">@Model.LanguageName</span>
+                    </p>
+                }
+                @if (Model.TitleIdentifiers.Count > 0)
+                {
+                    <h3>Identifiers</h3>
+                    <p>
+                        @foreach (var titleIdentifier in Model.TitleIdentifiers)
+                        {
+                            <i>@titleIdentifier.IdentifierLabel:</i>
+                            if (titleIdentifier.IdentifierValueDisplay.StartsWith("http", true, System.Globalization.CultureInfo.CurrentCulture))
+                            {
+                                <a href="@titleIdentifier.IdentifierValueDisplay" title="DOI"><span itemprop="@titleIdentifier.IdentifierLabel">@titleIdentifier.IdentifierValueDisplay</span></a><br />
+                            }
+                            else
+                            {
+                                <span itemprop="@titleIdentifier.IdentifierLabel">@titleIdentifier.IdentifierValueDisplay</span><br />
+                            }
+                        }
+                    </p>
+                }
+                <p>&nbsp;</p>
+                <p>
+                    <a class="button" href="@Model.LocalLibraryUrl" rel="noopener noreferrer" target="_blank">Find in a local library</a>
+                </p>
+            </div>
+        </div>
+    </section>
+    <aside>
+        @if (Model.BibliographyItems.Count > 0)
+        {
+            <div id="divCitationModal">
+                <a id="btnCite" class="btnCite" onclick="showCitationModal(cmArgs);">Cite This Publication</a>
+                <div id="citeModal" class="citeModal"></div>
+            </div>
+            <h3 class="volume-heading">Volumes</h3>
+            <div class="volumes">
+                @foreach (var bibliographyItem in Model.BibliographyItems)
+                {
+                    <div class="volume js-hide">
+                        <h4 class="title">
+                            <a class="expand no-js-hide" title="expand or collapse volume description">expand</a>
+                            <span class="text">@bibliographyItem.Book.Volume</span>
+                            <a class="viewbook" href="/item/@bibliographyItem.Book.BookID" title="View">view</a>
+                        </h4>
+                        <div class="body">
+
+                            @if (!string.IsNullOrWhiteSpace(bibliographyItem.ThumbUrl))
+                            {
+                                <a href="/item/@bibliographyItem.Book.BookID">
+                                    <img src="@bibliographyItem.ThumbUrl" width="100" />
+                                </a>
+                            }
+                            <div class="summary @(string.IsNullOrWhiteSpace(bibliographyItem.ThumbUrl) ? Html.Raw("noimg") : Html.Raw(""))">
+                                <h5>Holding Institution:</h5>
+                                <p>
+                                    @foreach (var institution in bibliographyItem.institutions)
+                                    {
+                                        if (institution.InstitutionRoleName == "Holding Institution")
+                                        {
+                                            if (string.IsNullOrWhiteSpace(institution.InstitutionUrl))
+                                            {
+                                                @institution.InstitutionName
+                                            }
+                                            else
+                                            {
+                                                <a target='_blank' rel="noopener noreferrer" href="@institution.InstitutionUrl">@institution.InstitutionName</a>
+                                            }
+                                        }
+                                    }
+                                </p>
+                                <h5>Sponsor:</h5>
+                                <p>@bibliographyItem.Book.Sponsor</p>
+                                @foreach (var institution in bibliographyItem.institutions)
+                                {
+                                    if (institution.InstitutionRoleName == "Scanning Institution")
+                                    {
+                                        <h5>Added By:</h5>
+                                        <p>
+                                            @if (string.IsNullOrWhiteSpace(institution.InstitutionUrl))
+                                            {
+                                                @institution.InstitutionName
+                                            }
+                                            else
+                                            {
+                                                <a target='_blank' rel="noopener noreferrer" href="@institution.InstitutionUrl">@institution.InstitutionName</a>
+                                            }
+                                        </p>
+                                    }
+                                }
+                                @if (bibliographyItem.Book.ScanningDate != null)
+                                {
+                                    <h5>Date Scanned:</h5>
+                                    <p>@bibliographyItem.Book.ScanningDate.Value.ToString("MM/dd/yyyy")</p>
+                                }
+                                <div class="booklinks">
+                                    @if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.ExternalUrl))
+                                    {
+                                        <a target="_blank" rel="noopener noreferrer" href="/item/@bibliographyItem.Book.BookID">View Volume (External)</a>
+                                    }
+                                    else if (bibliographyItem.Book.IsVirtual == 0)
+                                    {
+                                        <a target="_self" href="/item/@bibliographyItem.Book.BookID">View Volume</a>
+                                    }
+                                    @if (bibliographyItem.Book.NumberOfSegments > 0)
+                                    {
+                                        if (bibliographyItem.Book.IsVirtual == 0 || !string.IsNullOrWhiteSpace(bibliographyItem.Book.ExternalUrl))
+                                        {
+                                            <br />
+                                        }
+                                        <a href="/itemdetails/@bibliographyItem.Book.BookID">View Parts</a>
+                                    }
+                                </div>
+                            </div>
+                            @if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.ItemDescription))
+                            {
+                                <div class="copyspecific copyright">
+                                    <h5>Copy-specific information:</h5>
+                                    <p>
+                                        @bibliographyItem.Book.ItemDescription
+                                    </p>
+                                </div>
+                            }
+                            <div class="copyright">
+                                <h5>Copyright &amp; Usage:</h5>
+                                <p>
+                                    @{
+                                        bool showNone = true;
+                                        if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.LicenseUrl))
+                                        {
+                                            <span>License Type:</span>
+                                            if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Book.LicenseUrl, "^(https?|ftp|file)://.+$"))
+                                            {
+                                                <a target="_blank" rel="noopener noreferrer" href="@bibliographyItem.Book.LicenseUrl">@bibliographyItem.Book.LicenseUrl</a>
+                                            }
+                                            else
+                                            {
+                                                @bibliographyItem.Book.LicenseUrl
+                                            }
+                                            showNone = false;
+                                            <br />
+                                        }
+                                        if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.Rights))
+                                        {
+                                            <span>Rights:</span>
+                                            if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Book.Rights, "^(https?|ftp|file)://.+$"))
+                                            {
+                                                <a target="_blank" rel="noopener noreferrer" href="<@bibliographyItem.Book.Rights">@bibliographyItem.Book.Rights</a>
+                                            }
+                                            else
+                                            {
+                                                @bibliographyItem.Book.Rights
+                                            }
+                                            showNone = false;
+                                            <br />
+                                        }
+                                        if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.DueDiligence))
+                                        {
+                                            <span>Due Diligence:</span>
+                                            if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Book.DueDiligence, "^(https?|ftp|file)://.+$"))
+                                            {
+                                                <a target="_blank" rel="noopener noreferrer" href="@bibliographyItem.Book.DueDiligence">@bibliographyItem.Book.DueDiligence</a>
+                                            }
+                                            else
+                                            {
+                                                @bibliographyItem.Book.DueDiligence
+                                            }
+                                            showNone = false;
+                                            <br />
+                                        }
+                                        if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.CopyrightStatus))
+                                        {
+                                            <span>Copyright Status: @bibliographyItem.Book.CopyrightStatus</span><br />
+                                            showNone = false;
+                                        }
+                                        if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.CopyrightRegion))
+                                        {
+                                            <span>Copyright Region: @bibliographyItem.Book.CopyrightRegion</span><br />
+                                            showNone = false;
+                                        }
+                                        if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.CopyrightComment))
+                                        {
+                                            <span>Copyright Comments: @bibliographyItem.Book.CopyrightComment</span><br />
+                                            showNone = false;
+                                        }
+                                        if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.CopyrightEvidence))
+                                        {
+                                            <span>Copyright Evidence: @bibliographyItem.Book.CopyrightEvidence</span><br />
+                                            showNone = false;
+                                        }
+
+                                        foreach (var institution in bibliographyItem.institutions)
+                                        {
+                                            if (institution.InstitutionRoleName == "Rights Holder")
+                                            {
+                                                <span>Rights Holder:</span>
+                                                if (string.IsNullOrWhiteSpace(institution.InstitutionUrl))
+                                                {
+                                                    @institution.InstitutionName
+                                                }
+                                                else
+                                                {
+                                                    <a target='_blank' rel="noopener noreferrer" href="@institution.InstitutionUrl">@institution.InstitutionName</a>
+                                                }
+                                                showNone = false;
+                                            }
+                                        }
+                                        <br />
+                                        if (showNone)
+                                        {
+                                            <span>Not specified</span>
+                                        }
+                                    }
+                                </p>
+                            </div>
+                            @if (bibliographyItem.Book.ItemSourceID.ToString().Trim() == "1")
+                            {
+                                <div class="download">
+                                    @if (bibliographyItem.Book.IsVirtual == 0)
+                                    {
+                                        <div class="downloadlabel">Download:</div>
+                                        <a class="icon all" title="download all" href="@bibliographyItem.Book.DownloadUrl">All</a>
+                                        <a class="icon jp2" title="download jp2" href="/itemimages/@bibliographyItem.Book.BookID">JP2</a>
+                                        <a class="icon ocr" title="download ocr" download="@(bibliographyItem.Book.BookID).txt" href="/itemtext/@bibliographyItem.Book.BookID">OCR</a>
+                                        <a class="icon pdf" title="download pdf" download="@(bibliographyItem.Book.BookID).pdf" href="/itempdf/@bibliographyItem.Book.BookID">PDF</a>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </aside>
+</div>
+
+@section scripts {
+    <script src="/js/citation-js/citation-js@0.6.4.js" type="text/javascript"></script>
+    <script src="/js/citation-js/bhl-citation-js.js?v=2" type="text/javascript"></script>
+    <script type="text/javascript">
+    var cmArgs = new CitationModalArgs();
+    cmArgs.init({
+        tid: @Model.Title.TitleID
+    });
+    </script>
+    <script type="text/javascript">
+        //<![CDATA[
+        $(document).ready(function () {
+        });
+        //]]>
+    </script>
+}

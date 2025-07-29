@@ -211,7 +211,6 @@
     <Content Include="api\docs\NameSearch.xml" />
     <Content Include="api\soap.asmx" />
     <Content Include="AuthorNotFound.aspx" />
-    <Content Include="Bibliography.aspx" />
     <Content Include="BiblioSelect.aspx" />
     <Content Include="bot_list.txt" />
     <Content Include="BrowseCollections.aspx" />
@@ -600,6 +599,8 @@
     <Content Include="Views\Shared\_BrowsePager.cshtml" />
     <Content Include="Views\Name\Index.cshtml" />
     <Content Include="Views\NameDetail\Index.cshtml" />
+    <Content Include="Views\Bibliography\Index.cshtml" />
+    <Content Include="Views\Shared\_COinSControl.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -656,12 +657,15 @@
     </Compile>
     <Compile Include="App_Code\FilterConfig.cs" />
     <Compile Include="Controllers\ApiController.cs" />
+    <Compile Include="Controllers\BibliographyController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\NameController.cs" />
     <Compile Include="Controllers\NameDetailController.cs" />
     <Compile Include="Controllers\OpenUrlController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\PartController.cs" />
+    <Compile Include="Models\BibliographyModel.cs" />
+    <Compile Include="Models\COinSModel.cs" />
     <Compile Include="Models\NameDetailModel.cs" />
     <Compile Include="Models\NameModel.cs" />
     <Compile Include="MVCServices\MvcThrottleLogger.cs" />
@@ -675,13 +679,6 @@
     </Compile>
     <Compile Include="BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Bibliography.aspx.cs">
-      <DependentUpon>Bibliography.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Bibliography.aspx.designer.cs">
-      <DependentUpon>Bibliography.aspx</DependentUpon>
     </Compile>
     <Compile Include="BiblioSelect.aspx.cs">
       <DependentUpon>BiblioSelect.aspx</DependentUpon>
@@ -1017,6 +1014,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Api\" />
     <Folder Include="Views\OpenUrl\" />
+    <Folder Include="Views\Part\" />
     <Folder Include="Views\Service\" />
   </ItemGroup>
   <ItemGroup>

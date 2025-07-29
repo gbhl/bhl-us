@@ -114,7 +114,7 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("PartPdf", "partpdf/{id}", new { controller = "Part", action = "GetPartPdf" });
             routes.MapRoute("PartImages", "partimages/{id}", new { controller = "Part", action = "GetPartImages" });
 
-            routes.MapPageRoute("Bibliography", "bibliography/{titleid}", "~/bibliography.aspx");
+            routes.MapRoute("Bibliography", "bibliography/{titleid}", new { controller = "Bibliography", action = "Index" });
 
             routes.Add("MODSDownload", new Route("modsdownload/{type}/{id}", new HttpHandlerRouteHandler<MODSDownload>()));
             routes.Add("MODSDownloadOld", new Route("modsdownload/{id}", new HttpHandlerRouteHandler<MODSDownload>()));

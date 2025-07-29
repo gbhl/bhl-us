@@ -1,5 +1,6 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Web2.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -333,6 +334,11 @@ namespace MOBOT.BHL.Web2.Controllers
             }
 
             return collection;
+        }
+
+        public ActionResult _COinSControl()
+        {
+            return PartialView();
         }
     }
 }
