@@ -130,7 +130,23 @@ namespace MOBOT.BHL.Web2.Controllers
                     {
                         try
                         {
-                            return File(stream, "application/octet-stream", item.ImagesFilename);
+                            Response.Clear();
+                            Response.ClearContent();
+                            Response.ClearHeaders();
+                            Response.ContentType = "application/octet-stream";
+                            Response.AddHeader("content-disposition", "filename=" + item.ImagesFilename);
+
+                            const int bufferSize = 16384;  // 16KB buffer size
+                            byte[] buffer = new byte[bufferSize];
+
+                            int bytesRead;
+                            while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
+                            {
+                                Response.OutputStream.Write(buffer, 0, bytesRead);
+                                Response.Flush();
+                            }
+
+                            return new EmptyResult();
                         }
                         catch (Exception ex)
                         {

@@ -1,9 +1,12 @@
 ﻿using BHL.SiteServiceREST.v1.Client;
+using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHL.Web2.Models;
 using MvcThrottle;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Net;
@@ -15,6 +18,99 @@ namespace MOBOT.BHL.Web2.Controllers
     public class PartController : Controller
     {
         int pdfTimeout = 36000000;
+
+        [EnableThrottling]
+        [HttpGet]
+        public ActionResult Index(int partid)
+        {
+            BHLProvider bhlProvider = new BHLProvider();
+            PartModel model = new PartModel();
+            model.Segment = bhlProvider.SegmentSelectExtended(partid);
+            if (model.Segment == null)
+            {
+                return Redirect("~/pagenotfound");
+            }
+            else
+            {
+                // Check to make sure this title hasn't been replaced.  If it has, redirect
+                // to the appropriate titleid.
+                if (model.Segment.RedirectSegmentID != null)
+                {
+                    return Redirect("~/part/" + model.Segment.RedirectSegmentID);
+                }
+
+                // Make sure the title is published.
+                if (model.Segment.SegmentStatusID != (int)ItemStatus.ItemStatusValue.New &&
+                    model.Segment.SegmentStatusID != (int)ItemStatus.ItemStatusValue.Published)
+                {
+                    return Redirect("~/itemunavailable");
+                }
+            }
+
+            List<PageSummaryView> psv = bhlProvider.PageSummarySegmentSelectBySegmentID(partid);
+            if (psv.Count > 0)
+            {
+                model.IsVirtual = psv[0].IsVirtual; model.Segment.BarCode = psv[0].BarCode;
+            }
+            else
+            {
+                model.HasLocalContent = 0;
+            }
+
+            model.Segment.IdentifierList = bhlProvider.ItemIdentifierSelectForDisplayBySegmentID(partid);
+            InstitutionNameComparer comp = new InstitutionNameComparer();
+            model.Segment.ContributorList.Sort(comp);
+
+            // Get the rights holder of the container item
+            if (model.Segment.BookID != null)
+            {
+                DataObjects.Book book = bhlProvider.BookSelectAuto((int)model.Segment.BookID);
+                List<Institution> institutions = bhlProvider.InstitutionSelectByItemID(book.ItemID);
+                foreach (Institution institution in institutions)
+                {
+                    if (institution.InstitutionRoleName == "Rights Holder") model.RightsHolder = institution;
+                }
+            }
+
+            // Add Google Scholar metadata to the page headers
+            model.GoogleScholarTags = bhlProvider.GetGoogleScholarMetadataForSegment(partid, ConfigurationManager.AppSettings["PartPageUrl"]);
+
+            // Set the data for the COinS output
+            model.COinS.SegmentID = partid;
+            model.COinS.ItemIdentifiers = model.Segment.IdentifierList;
+            model.COinS.ItemKeywords = model.Segment.KeywordList;
+            model.COinS.ItemAuthors = model.Segment.AuthorList;
+            model.COinS.Genre = model.Segment.GenreName;
+            model.COinS.ArticleTitle = model.Segment.Title;
+            model.COinS.Title = model.Segment.ContainerTitle;
+            model.COinS.Volume = model.Segment.Volume;
+            model.COinS.Issue = model.Segment.Issue;
+            model.COinS.StartPageNumber = model.Segment.StartPageNumber;
+            model.COinS.EndPageNumber = model.Segment.EndPageNumber;
+            model.COinS.PageRange = model.Segment.PageRange;
+            model.COinS.Language = model.Segment.LanguageCode;
+            model.COinS.Date = model.Segment.Date;
+
+            ViewBag.COinS = "<span class=\"Z3988\" title=\"" + model.COinS.GetCOinS() + "\"></span>";
+
+            // Set the Schema.org itemtype
+            switch (model.Segment.GenreName)
+            {
+                case "Book":
+                case "Journal":
+                    model.SchemaType = "https://schema.org/Book";
+                    break;
+                case "Article":
+                case "Preprint":
+                    model.SchemaType = "https://schema.org/ScholarlyArticle";
+                    break;
+                default: // BookItem, Chapter, Issue, Proceeding, Conference, Unknown, Treatment
+                    model.SchemaType = "https://schema.org/CreativeWork";
+                    break;
+            }
+
+            return View(model);
+        }
 
         [EnableThrottling]
         public ActionResult GetPartText(int partid)

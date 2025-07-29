@@ -1,0 +1,344 @@
+﻿@model MOBOT.BHL.Web2.Models.PartModel
+
+@{
+    ViewBag.Title = "Details - " + Model.Segment.Title + " - Biodiversity Heritage Library";
+}
+
+@section CSS {
+    <link rel="stylesheet" href="/css/bhl-citation-js.css?v=1" />
+    @foreach (KeyValuePair<string, string> tag in Model.GoogleScholarTags)
+    {
+        <meta name="@tag.Key" content="@Server.HtmlEncode(tag.Value)" />
+    }
+}
+
+<div id="page-title">
+    <div class="column-wrap">
+        <div class="ellipsis bibtitle">@Model.Segment.GenreName: @Model.Segment.Title</div>
+        <div class="bibtitleicons">
+            <a href="/contact/" title="Report an error" class="report"><img alt="Report an error" src="/images/rpterror.png" /></a>
+        </div>
+    </div>
+</div>
+<div id="content" class="column-wrap clearfix" itemscope itemtype="@Model.SchemaType">
+<section>
+    <div class="tabs js-hide">
+        <ul class="tab-nav no-js-hide">
+            <li class="details first-child" style="display:none"><a href="#/details">Details</a></li>
+            <li class="mods" style="display:none"><a href="#/mods">MODS</a></li>
+            <li class="bibtex" style="display:none"><a href="#/bibtex">BibTeX</a></li>
+            <li class="ris last-child" style="display:none"><a href="#/ris">RIS</a></li>
+        </ul>
+        @{Html.RenderPartial("~/Views/Shared/_COinSControl.cshtml", Model.COinS); }
+        <div id="details" class="tab-body">
+            <div class="segmentdetails"><h3>Title</h3> <p>@Model.Segment.Title</p></div>
+            @if (!string.IsNullOrEmpty(Model.Segment.TranslatedTitle)) {
+                <div class="segmentdetails"><h3>Translated Title</h3> <p>@Model.Segment.TranslatedTitle</p></div>
+            }
+            @if (Model.Segment.SegmentExternalResources.Count > 0) {
+                <h3>External Resources</h3>
+                <p>
+                    @foreach (var resource in Model.Segment.SegmentExternalResources)
+                    {
+                        <span>@resource.ExternalResourceTypeLabel:</span>
+                        if (string.IsNullOrWhiteSpace(resource.Url)) {
+                            Html.Raw(resource.UrlText);
+                        } else {
+                            <a class="ExtLinkBrowse" href="@resource.Url" rel="noopener noreferrer" target="_blank">@resource.UrlText</a>
+                        }
+                        <br />
+                    }
+                </p>
+            }
+            @if (Model.Segment.AuthorList.Count > 0) {
+                <h3>By</h3>
+                <p>
+                    @foreach (var author in Model.Segment.AuthorList) {
+                        <a href="/creator/@author.AuthorID">@author.NameExtended</a><br />
+                    }
+                </p>
+            }
+            @if (!string.IsNullOrEmpty(Model.Segment.GenreName)) {
+            <div class="segmentdetails"><h3>Type</h3> <p>@Model.Segment.GenreName</p></div>
+            }
+            @if (!string.IsNullOrEmpty(Model.Segment.Date)) {
+            <div class="segmentdetails"><h3>Date of Publication</h3> <p>@Model.Segment.Date</p></div>
+            }
+            @if (!string.IsNullOrEmpty(Model.Segment.ContainerTitle)) {
+            <div class="segmentdetails"><h3>Original Publication</h3> <p>@Model.Segment.ContainerTitleExtended</p></div>
+            }
+            @if (!string.IsNullOrEmpty(Model.Segment.Volume)) {
+            <div class="segmentdetails"><h3>Volume</h3> <p>@Model.Segment.Volume</p></div>
+            }
+            @if (!string.IsNullOrEmpty(Model.Segment.Series) || !string.IsNullOrWhiteSpace(Model.Segment.Issue)) {
+                <div class="segmentdetails"><h3>Series / Issue</h3> 
+                    <p>
+                    @if (!string.IsNullOrWhiteSpace(Model.Segment.Series)) { 
+                        <span>Series:</span> @Model.Segment.Series <br /> 
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Segment.Issue)) { 
+                        <span>Issue:</span> @Model.Segment.Issue
+                    } 
+                    </p>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(Model.Segment.PageRange)) {
+            <div class="segmentdetails"><h3>Pages</h3> <p>@Model.Segment.PageRange</p></div>
+            }
+            @if (Model.Segment.KeywordList.Count > 0) {
+                <h3>Subjects</h3>
+                <p>
+                @for (int i = 0; i < Model.Segment.KeywordList.Count; i++)
+                    {
+                    <a href="/subject/@Server.UrlEncode(Model.Segment.KeywordList[i].Keyword)">
+                        @Model.Segment.KeywordList[i].Keyword
+                    </a>
+                    @((i < Model.Segment.KeywordList.Count - 1) ? ", " : string.Empty)
+                }
+                </p>
+            }
+            @if (!string.IsNullOrEmpty(Model.Segment.ContributorName)) {
+                <div class="segmentdetails"><h3>Contributed by</h3> <p>
+                    @foreach (var institution in Model.Segment.ContributorList) {
+                        if (!string.IsNullOrWhiteSpace(institution.InstitutionUrl)) {
+                            <a target="_blank" rel="noopener noreferrer" class="ExtLinkBrowse" style="line-height:19px" href="@institution.InstitutionUrl" title="Contributor">@institution.InstitutionName</a>
+                        } else {
+                            @institution.InstitutionName<br />
+                        }
+                    }
+                    </p>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(Model.Segment.Notes)) {
+            <div class="segmentdetails"><h3>Notes</h3> <p>@Model.Segment.Notes</p></div>
+            }
+            @if (!string.IsNullOrEmpty(Model.Segment.LanguageName)) {
+            <div class="segmentdetails"><h3>Language</h3> <p><span itemprop="inLanguage">@Model.Segment.LanguageName</span></p></div>
+            }
+            @if (!string.IsNullOrEmpty(Model.Segment.PublicationDetails) ||
+                   !string.IsNullOrEmpty(Model.Segment.PublisherName) ||
+                   !string.IsNullOrEmpty(Model.Segment.PublisherPlace)) {
+                <div class="segmentdetails"><h3>Published by</h3> 
+                <p>
+                    <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><span itemprop="name">
+                    @if (!string.IsNullOrEmpty(Model.Segment.PublicationDetails)) {
+                    @Model.Segment.PublicationDetails
+                    } else {
+                    @Model.Segment.PublisherPlace @Model.Segment.PublisherName
+                    }
+                    </span></span>
+                </p>
+                </div>
+            }
+            @if (Model.Segment.IdentifierList.Count > 0) {
+                <h3>Identifiers</h3><p>
+                    @foreach (var itemIdentifier in Model.Segment.IdentifierList) {
+                        <span>@itemIdentifier.IdentifierLabel:</span>
+                        if (itemIdentifier.IdentifierValueDisplay.StartsWith("http", true, System.Globalization.CultureInfo.CurrentCulture)) 
+                        {
+                            <a target="blank" class="ExtLinkBrowse" style="line-height:19px" href="@itemIdentifier.IdentifierValueDisplay"><span itemprop="@itemIdentifier.IdentifierLabel">@itemIdentifier.IdentifierValueDisplay</span></a><br />
+                        } else {
+                            <span itemprop="@itemIdentifier.IdentifierLabel">@itemIdentifier.IdentifierValueDisplay</span><br />
+                        }
+                    }
+                </p>
+            }
+            <p>&nbsp;</p>
+        </div>
+    </div>
+</section>
+<aside>
+    <div id="divCitationModal">
+        <a id="btnCite" class="btnCite" onclick="showCitationModal(cmArgs);">Cite This Publication</a>
+        <div id="citeModal" class="citeModal"></div>
+    </div>
+    <h3></h3>
+    <div class="partlinks">
+        <div class="partlink js-hide">
+            <h4 class="title">
+                <!--<a class="expand no-js-hide" title="expand or collapse volume description">expand</a>-->
+                <span class="text">@Model.Segment.GenreName access</span>
+            </h4>
+            <div class="body" style="border-bottom: 1px solid #C5CED3; padding: 20px 0 0;">
+                <div class="partlinks">
+                    @if ((Model.Segment.StartPageID != null) && Model.Segment.StartPageID > 0)
+                    {
+                        <a href="/page/@Model.Segment.StartPageID">View @Model.Segment.GenreName</a> <br />
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Segment.Url))
+                    {
+                        <a target="_blank" rel="noopener noreferrer" href="@Model.Segment.Url">View @Model.Segment.GenreName (External Location)</a> <br />
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.Segment.DownloadUrl))
+                    {
+                        <a href="@Model.Segment.DownloadUrl">Download @Model.Segment.GenreName</a> <br />
+                    }
+                </div>
+                <div class="volume" ">
+                    <div class="copyright">
+                        <h5>Copyright &amp; Usage:</h5>
+                        <p>
+                            @if (!String.IsNullOrEmpty(Model.Segment.LicenseName))
+                            {
+                                <span>License Type Name: @Model.Segment.LicenseName</span><br />
+                            }
+                            @if (!String.IsNullOrEmpty(Model.Segment.LicenseUrl))
+                            {
+                                <span>License Type URL:</span>
+                                if (System.Text.RegularExpressions.Regex.IsMatch(Model.Segment.LicenseUrl, "^(https?|ftp|file)://.+$"))
+                                {
+                                    <a target="_blank" rel="noopener noreferrer" href="@Model.Segment.LicenseUrl">@Model.Segment.LicenseUrl</a>
+                                }
+                                else
+                                {
+                                    @Model.Segment.LicenseUrl
+                                }
+                                <br />
+                            }
+                            @if (!String.IsNullOrEmpty(Model.Segment.RightsStatement))
+                            {
+                                <span>Rights:</span>
+                                if (System.Text.RegularExpressions.Regex.IsMatch(Model.Segment.RightsStatement, "^(https?|ftp|file)://.+$"))
+                                {
+                                    <a target="_blank" rel="noopener noreferrer" href="@Model.Segment.RightsStatement">@Model.Segment.RightsStatement</a>
+                                }
+                                else
+                                {
+                                    @Model.Segment.RightsStatement
+                                }
+                                <br />
+                            }
+                            @if (!String.IsNullOrEmpty(Model.Segment.RightsStatus))
+                            {
+                                <span>Copyright Status: @Model.Segment.RightsStatus</span><br />
+                            }
+                            @if (Model.RightsHolder != null)
+                            {
+                                <span>Rights Holder:</span>
+                                if (string.IsNullOrWhiteSpace(Model.RightsHolder.InstitutionUrl))
+                                {
+                                    @Model.RightsHolder.InstitutionName
+                                }
+                                else
+                                {
+                                    <a rel="noopener noreferrer" target='_blank' href="@Model.RightsHolder.InstitutionUrl">@Model.RightsHolder.InstitutionName</a>
+                                }
+                                <br />
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="download">
+                @if (Model.IsVirtual == 1 || (Model.HasLocalContent == 1 && System.Configuration.ConfigurationManager.AppSettings["UsePregeneratedPDFs"] == "true"))
+                {
+                    <div class="downloadlabel">Download:</div>
+                    if (Model.IsVirtual == 1)
+                    {
+                        <a class="icon all" title="download all" href="https://www.archive.org/download/@Model.Segment.BarCode">All</a>
+                        <a class="icon jp2" title="download jp2" href="/partimages/@Model.Segment.SegmentID">JP2</a>
+                        <a class="icon ocr" title="download ocr" download="@(Model.Segment.SegmentID).txt" href="/parttext/@Model.Segment.SegmentID">OCR</a>
+                    }
+                    <a class="icon pdf" title="download pdf" download="@(Model.Segment.SegmentID).pdf" href="/partpdf/@Model.Segment.SegmentID">PDF</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="partalsos" @((Model.Segment.RelatedSegmentList.Count == 0) ? Html.Raw("style=\"display:none\"") : Html.Raw(""))>
+        <div class="partalso js-hide">
+            <h4 class="title">
+                <a class="expand no-js-hide" title="expand or collapse volume description">expand</a>
+                <span class="text">See Also</span>
+            </h4>
+            <div class="body" style="border-bottom: 1px solid #C5CED3; padding: 20px 0 0;">
+                <div class="partlinks">
+                    @if (Model.Segment.RelatedSegmentList.Count > 0)
+                    {
+                        <p>
+                            @foreach (var segment in Model.Segment.RelatedSegmentList)
+                            {
+                                <span>@segment.SegmentClusterTypeLabel:</span>
+                                <a href="/part/@segment.SegmentID">
+                                    @segment.Title
+                                </a>
+                                if (!string.IsNullOrWhiteSpace(segment.Authors))
+                                {
+                                    <span>- @segment.Authors</span>
+                                }
+                                if (!string.IsNullOrWhiteSpace(segment.ContainerTitle))
+                                {
+                                    <span>- @segment.ContainerTitle</span>
+                                    if (!string.IsNullOrWhiteSpace(segment.Volume))
+                                    {
+                                        @segment.Volume
+                                    }
+                                }
+                                if (!string.IsNullOrWhiteSpace(segment.Date))
+                                {
+                                    <span>- @segment.Date</span>
+                                }
+                                if (!string.IsNullOrWhiteSpace(segment.PageRange))
+                                {
+                                    <span>- p.@segment.PageRange</span>
+                                }
+                                <br /><br />
+                            }
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="partabstracts" @((string.IsNullOrWhiteSpace(Model.Segment.Summary)) ? Html.Raw("style=\"display:none\"") : Html.Raw(""))>
+        <div class="partabstract js-hide">
+            <h4 class="title">
+                <a class="expand no-js-hide" title="expand or collapse abstract">expand</a>
+                <span class="text">Abstract</span>
+            </h4>
+            <div class="body" style="border-bottom: 1px solid #C5CED3; padding: 20px 0 0; display:none">
+                <div class="partlinks">
+                    <p>
+                        @Model.Segment.Summary
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="partnotes" @((string.IsNullOrWhiteSpace(Model.Segment.Notes)) ? Html.Raw("style=\"display:none\"") : Html.Raw(""))>
+        <div class="partnote js-hide">
+            <h4 class="title">
+                <a class="expand no-js-hide" title="expand or collapse abstract">expand</a>
+                <span class="text">Notes</span>
+            </h4>
+            <div class="body" style="border-bottom: 1px solid #C5CED3; padding: 20px 0 0; display:none">
+                <div class="partlinks">
+                    <p>
+                        @Model.Segment.Notes
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+
+@section scripts {
+<script src="/js/citation-js/citation-js@0.6.4.js" type="text/javascript"></script>
+<script src="/js/citation-js/bhl-citation-js.js?v=2" type="text/javascript"></script>
+<script type="text/javascript">
+var cmArgs = new CitationModalArgs();
+cmArgs.init({
+    sid: @Model.Segment.SegmentID
+});
+</script>
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function () {
+
+    // Update the Altmetric badge
+    $(".altmetric-embed").attr("data-uri", "https://www.biodiversitylibrary.org/part/" + "@Model.Segment.SegmentID");
+    if (typeof _altmetric_embed_init === 'function') _altmetric_embed_init();
+});
+//]]>
+</script>
+}

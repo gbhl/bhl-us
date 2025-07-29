@@ -1,12 +1,10 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Web2.Models;
-using System.Collections.Generic;
-using System;
-using System.Web.Mvc;
 using MvcThrottle;
-using MOBOT.BHL.API.BHLApiDataObjects2;
-using System.Drawing;
+using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace MOBOT.BHL.Web2.Controllers
 {
@@ -14,7 +12,6 @@ namespace MOBOT.BHL.Web2.Controllers
     {
         [EnableThrottling]
         [HttpGet]
-        // GET: Bibliography
         public ActionResult Index(int titleid)
         {
             BHLProvider bhlProvider = new BHLProvider();

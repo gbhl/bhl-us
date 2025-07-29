@@ -23,6 +23,8 @@ namespace MOBOT.BHL.Web2
             routes.MapPageRoute("OpenUrl-Multiple", "openurlmultiple", "~/OpenUrlMultiple.aspx");
 
             routes.MapRoute("API3", "api3", new { controller = "Api", action = "Api3Handler" });
+            routes.MapRoute("API2-http", "api2/httpQuery.ashx", new { controller = "Api", action = "Api2Handler" });
+            routes.MapRoute("API2", "api2", new { controller = "Api", action = "Api2Handler" });
 
             routes.Add("OAI", new Route("oai", new HttpHandlerRouteHandler<oai2>()));
 
@@ -113,6 +115,7 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("PartText", "parttext/{partid}", new { controller = "Part", action = "GetPartText" });
             routes.MapRoute("PartPdf", "partpdf/{id}", new { controller = "Part", action = "GetPartPdf" });
             routes.MapRoute("PartImages", "partimages/{id}", new { controller = "Part", action = "GetPartImages" });
+            routes.MapRoute("Part-Detail", "part/{partid}", new { controller = "Part", action = "Index" });
 
             routes.MapRoute("Bibliography", "bibliography/{titleid}", new { controller = "Bibliography", action = "Index" });
 
@@ -132,10 +135,6 @@ namespace MOBOT.BHL.Web2
             routes.MapPageRoute("Biblioselect", "biblioselect/{itemid}", "~/BiblioSelect.aspx");
 
             routes.MapPageRoute("Item-Detail", "itemdetails/{itemid}", "~/ItemPage.aspx");
-
-            routes.MapPageRoute("Segment-Detail", "section/{segmentid}", "~/SectionPage.aspx");
-
-            routes.MapPageRoute("Part-Detail", "part/{segmentid}", "~/SectionPage.aspx");
 
             routes.Add("GeneratePdf", new Route("generatepdf", new HttpHandlerRouteHandler<GeneratePdf>()));
 

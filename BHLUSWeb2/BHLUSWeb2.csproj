@@ -543,7 +543,6 @@
     <Content Include="PageNotFound.aspx" />
     <Content Include="Recent.aspx" />
     <Content Include="RecentRss.aspx" />
-    <Content Include="SectionPage.aspx" />
     <Content Include="packages.config" />
     <Content Include="Handlers\PDFDownload.ashx" />
     <Content Include="Handlers\RISDownload.ashx" />
@@ -601,6 +600,7 @@
     <Content Include="Views\NameDetail\Index.cshtml" />
     <Content Include="Views\Bibliography\Index.cshtml" />
     <Content Include="Views\Shared\_COinSControl.cshtml" />
+    <Content Include="Views\Part\Index.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -641,9 +641,6 @@
     <Compile Include="AdvancedSearch.aspx.designer.cs">
       <DependentUpon>AdvancedSearch.aspx</DependentUpon>
     </Compile>
-    <Compile Include="api2\httpQuery.ashx.cs">
-      <DependentUpon>httpQuery.ashx</DependentUpon>
-    </Compile>
     <Compile Include="api2\soap.asmx.cs">
       <DependentUpon>soap.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -668,6 +665,7 @@
     <Compile Include="Models\COinSModel.cs" />
     <Compile Include="Models\NameDetailModel.cs" />
     <Compile Include="Models\NameModel.cs" />
+    <Compile Include="Models\PartModel.cs" />
     <Compile Include="MVCServices\MvcThrottleLogger.cs" />
     <Compile Include="App_Code\RouteConfig.cs" />
     <Compile Include="AuthorNotFound.aspx.cs">
@@ -955,13 +953,6 @@
     <Compile Include="RecentRss.aspx.designer.cs">
       <DependentUpon>RecentRss.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SectionPage.aspx.cs">
-      <DependentUpon>SectionPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SectionPage.aspx.designer.cs">
-      <DependentUpon>SectionPage.aspx</DependentUpon>
-    </Compile>
     <Compile Include="services\GeneratePdf.ashx.cs">
       <DependentUpon>GeneratePdf.ashx</DependentUpon>
     </Compile>
@@ -1014,7 +1005,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Api\" />
     <Folder Include="Views\OpenUrl\" />
-    <Folder Include="Views\Part\" />
     <Folder Include="Views\Service\" />
   </ItemGroup>
   <ItemGroup>
@@ -1129,9 +1119,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="api\httpQuery.ashx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="api2\httpQuery.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Remoting.config" />
