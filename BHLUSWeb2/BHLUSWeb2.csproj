@@ -556,7 +556,7 @@
     <Content Include="ratelimit.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ratelimitwhitelist.config.template" />
+    <None Include="ratelimitwhitelist.config.template" />
     <Content Include="ratelimitwhitelist.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
