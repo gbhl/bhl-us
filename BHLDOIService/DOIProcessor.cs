@@ -1,13 +1,13 @@
 ﻿using BHL.WebServiceREST.v1;
 using BHL.WebServiceREST.v1.Client;
 using MOBOT.BHL.DOIDeposit;
-using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Xml.Linq;
 
@@ -306,7 +306,7 @@ namespace MOBOT.BHL.BHLDOIService
                     string doiQuery = this.GenerateDOIQuery(DOIDepositData.PublicationTypeValue.Monograph, depositData, queryTemplate);
 
                     // Send the query
-                    string queryResponse = this.SubmitQuery(doiQuery);
+                    XDocument queryResponse = this.SubmitQuery(doiQuery);
 
                     // Process the response
                     result = this.ProcessQueryResult(queryResponse, result);
@@ -815,49 +815,37 @@ namespace MOBOT.BHL.BHLDOIService
             return query.ToString(queryTemplate);
         }
 
-        /// <summary>
-        /// Use the RESTSharp library to submit the CrossRef deposit file
-        /// </summary>
-        /// <remarks>
-        /// See http://dkdevelopment.net/2010/05/25/dropbox-api-restsharp-and-c-part-2-the-revenge/
-        /// for an example of using RestSharp to perform a file upload.
-        /// </remarks>
-        /// <param name="deposit"></param>
-        private void SubmitDOI(string deposit, string filename)
+        public async void SubmitDOI(string deposit, string filename)
         {
-            // Set up the REST client
-            // NOTE:  The Url Base and Url Query are separated here because RestSharp puts a
-            // trailing slash at the end of the base URL of POST operations.  Therefore, if we 
-            // included the Url Query in the Url used to set up the RestClient object, the slash
-            // would be placed at the end of the querystring.  By splitting the Base and Query, 
-            // we "trick" RestSharp into putting the slash between the Base and Query (which is
-            // where a slash should appear).
-            RestSharp.RestClient restClient = new RestSharp.RestClient(configParms.CrossrefDepositUrlBase);
-            RestRequest request = new RestRequest(
-                String.Format(configParms.CrossrefDepositUrlQueryFormat,
-                configParms.CrossrefLogin, configParms.CrossrefPassword, configParms.CrossrefDepositArea), 
-                Method.Post);
-
-            // Convert the deposit into a byte array and add it to the request
-            byte[] bytes = new UTF8Encoding().GetBytes(deposit);
-            request.AddFile("fname", bytes, filename, "text/xml");
-
-            // Perform the POST operation
-            //RestResponse response = restClient.ExecuteAsync(request);
-            RestResponse response = System.Threading.Tasks.Task.Run(async () => await restClient.ExecuteAsync(request)).GetAwaiter().GetResult();
-
-            // Check the result of the POST operation.
-            if (response.ResponseStatus != ResponseStatus.Completed)
+            using (var httpClient = new HttpClient())
+            using (var form = new MultipartFormDataContent())
             {
-                throw new Exception("Error posting deposit for " + filename + ": " + response.ErrorMessage);
-            }
-            if (response.StatusCode != HttpStatusCode.OK)
-            {
-                throw new Exception("Error posting deposit for " + filename + ": " + response.StatusDescription);
-            }
-            if (response.Content.Contains("FAILURE"))
-            {
-                throw new Exception("Error posting deposit for " + filename + ": " + response.Content);
+                // Add form fields
+                form.Add(new StringContent(configParms.CrossrefLogin), "login_id");
+                form.Add(new StringContent(configParms.CrossrefPassword), "login_passwd");
+                form.Add(new StringContent(configParms.CrossrefDepositArea), "area");
+
+                // Add file content
+                byte[] bytes = new UTF8Encoding().GetBytes(deposit);
+                using (var depositStream = new MemoryStream(bytes))
+                {
+                    StreamContent depositContent = new StreamContent(depositStream);
+                    depositContent.Headers.ContentType = MediaTypeHeaderValue.Parse("text/xml");
+                    form.Add(depositContent, "fname", filename);
+
+                    // Send POST request synchronously
+                    HttpResponseMessage response = httpClient.PostAsync(configParms.CrossrefDepositUrlBase, form).GetAwaiter().GetResult();
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new Exception($"Error posting deposit for {filename}: {response.StatusCode}-{response.ReasonPhrase}");
+                    }
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    if (responseContent.Contains("FAILURE"))
+                    {
+                        throw new Exception($"Error posting deposit for {filename}: {responseContent}");
+                    }
+                }
             }
         }
 
@@ -866,37 +854,11 @@ namespace MOBOT.BHL.BHLDOIService
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        private string SubmitQuery(string query)
+        private XDocument SubmitQuery(string query)
         {
-            string response = string.Empty;
-
-            // Set up the REST client
-            RestSharp.RestClient restClient = new RestSharp.RestClient(configParms.CrossrefXmlQueryUrlBase);
-            RestRequest request = new RestRequest(
-                String.Format(configParms.CrossrefXmlQueryFormat,
-                configParms.CrossrefLogin, configParms.CrossrefPassword, query),
-                Method.Get);
-
-            // Submit the query
-            //RestResponse restResponse = restClient.Execute(request);
-            RestResponse restResponse = System.Threading.Tasks.Task.Run(async () => await restClient.ExecuteAsync(request)).GetAwaiter().GetResult();
-
-            // Check the query result
-            if (restResponse.ResponseStatus != ResponseStatus.Completed)
-            {
-                throw new Exception("Error querying for DOI: " + restResponse.ErrorMessage);
-            }
-            if (restResponse.StatusCode != HttpStatusCode.OK)
-            {
-                throw new Exception(string.Format("Error querying for DOI: {0}\n\r{1}", 
-                    restResponse.StatusDescription, restResponse.Content));
-            }
-            if (restResponse.Content.Contains("FAILURE"))
-            {
-                throw new Exception("Error querying for DOI:" + restResponse.Content);
-            }
-
-            return restResponse.Content;
+            var xml = XDocument.Load(
+                string.Format(configParms.CrossrefXmlQueryFormat, configParms.CrossrefLogin, configParms.CrossrefPassword, query));
+            return xml;
         }
 
         /// <summary>
@@ -905,7 +867,7 @@ namespace MOBOT.BHL.BHLDOIService
         /// <param name="queryResult"></param>
         /// <param name="result"></param>
         /// <returns></returns>
-        private ExistingDOICheckResult ProcessQueryResult(string queryResult, ExistingDOICheckResult result)
+        private ExistingDOICheckResult ProcessQueryResult(XDocument queryResult, ExistingDOICheckResult result)
         {
             /*
             Query results look something like the following:
@@ -962,7 +924,8 @@ namespace MOBOT.BHL.BHLDOIService
 
             try
             {
-                XDocument xmlResult = XDocument.Parse(queryResult);
+                //XDocument xmlResult = XDocument.Parse(queryResult);
+                XDocument xmlResult = queryResult;
                 XNamespace ns = "http://www.crossref.org/qrschema/3.0";
 
                 XElement firstQueryElement = xmlResult.
