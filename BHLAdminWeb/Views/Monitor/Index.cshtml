@@ -8,9 +8,12 @@
 <div class="row">
     <div class="col-md-11 center monitorFrame">
         <div class="row">
-            <div class="col-md-12 monitorPageHeader">
+            <div class="col-md-6 monitorPageHeader">
                 <span class="pageHeader">Server Monitor </span>
                 <span><a href="/">Administrative Dashboard</a></span>
+            </div>
+            <div class="col-md-6 monitorPageHeader">
+                <span style="float:right">Last Update: @System.DateTime.Now.ToString("MMM dd, yyyy  HH:mm:ss")</span>
             </div>
         </div>
         <div class="row monitorRow">
@@ -21,14 +24,13 @@
                     <div class="monitorSubHeader">Overview</div>
                     <div class="col-md-12 statDetails">
                         <div class="row">
-                            <div class="col-md-6 statDetail">Name: @Html.DisplayFor(m => m.searchMonitor.Name)</div>
-                            <div class="col-md-6 statDetail">Uptime: @Html.DisplayFor(m => m.searchMonitor.Uptime)</div>
-                            <div class="col-md-6 statDetail">Store Size: @Html.DisplayFor(m => m.searchMonitor.StoreSize)</div>
-                            <div class="col-md-6 statDetail">Documents: @Html.DisplayFor(m => m.searchMonitor.Documents)</div>
+                            <div id="srchSrvUptime" class="col-md-12 statDetail">Uptime: @Html.DisplayFor(m => m.searchMonitor.ServerUptime)</div>
                         </div>
-                    </div>
-                    <div class="monitorSubHeader">Performance</div>
-                    <div class="col-md-12 statDetails">
+                        <div class="row">
+                            <div id="srchLoad1" class="col-md-4 statDetail">1 Min Load: <span class="statHighlight">@Html.DisplayFor(m => m.searchMonitor.Load1Min)</span></div>
+                            <div id="srchLoad5" class="col-md-4 statDetail">5 Min Load: <span class="statHighlight">@Html.DisplayFor(m => m.searchMonitor.Load5Min)</span></div>
+                            <div id="srchLoad15" class="col-md-4 statDetail">15 Min Load: <span class="statHighlight">@Html.DisplayFor(m => m.searchMonitor.Load15Min)</span></div>
+                        </div>
                         <div class="row">
                             <div id="srchCPU" class="col-md-12 statDetail">CPU: <span class="statHighlight">@Html.DisplayFor(m => m.searchMonitor.CpuPercent)%</span></div>
                         </div>
@@ -43,14 +45,19 @@
                             <div id="srchTotalDisk" class="col-md-4 statDetail">Total: @Html.DisplayFor(m => m.searchMonitor.TotalDisk)</div>
                         </div>
                     </div>
-                    <div class="monitorSubHeader">Indexes</div>
-                    <div class="col-md-12 statDetails">
-                        @foreach (var index in Model.searchMonitor.Indexes)
+                    <div class="monitorSubHeader">Processes</div>
+                    <div class="col-md-12 statDetails" style="height:150px;overflow:auto;border-width:1px;border-color:#DDE1E0;border-style:solid;">
+                        <div class="row">
+                            <div id="srchProcNameHead" class="col-md-8 statDetail" style="font-weight:bold">Command</div>
+                            <div id="srchProcCpuHead" class="col-md-2 statDetail" style="font-weight:bold">CPU%</div>
+                            <div id="srchProcMemHead" class="col-md-2 statDetail" style="font-weight:bold">Mem%</div>
+                        </div>
+                        @foreach (var process in Model.searchMonitor.Processes)
                         {
                             <div class="row">
-                                <div class="col-md-4 statDetail">@index.Name</div>
-                                <div class="col-md-4 statDetail">Docs: @index.Documents</div>
-                                <div class="col-md-4 statDetail">Size: @index.StoreSize</div>
+                                <div id="srchDiskUsage" class="col-md-8 statDetail">@process.ProcName</div>
+                                <div id="srchFreeDisk" class="col-md-2 statDetail">@(process.CpuPct)%</div>
+                                <div id="srchTotalDisk" class="col-md-2 statDetail">@(process.MemPct)%</div>
                             </div>
                         }
                     </div>
@@ -71,6 +78,30 @@
                             <div class="row">
                                 <div class="col-md-6 statDetail">@queue.Name</div>
                                 <div class="col-md-6 statDetail">Messages: <span class="statHighlight">@queue.Messages</span></div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="col-md-12 monitorSection">
+                    <div class="monitorHeader">Search Engine</div>
+                    <div class="monitorError">@Html.DisplayFor(m => m.searchMonitor.ErrorMessage)</div>
+                    <div class="monitorSubHeader">Overview</div>
+                    <div class="col-md-12 statDetails">
+                        <div class="row">
+                            <div class="col-md-6 statDetail">Name: @Html.DisplayFor(m => m.searchMonitor.Name)</div>
+                            <div class="col-md-6 statDetail">Uptime: @Html.DisplayFor(m => m.searchMonitor.ServiceUptime)</div>
+                            <div class="col-md-6 statDetail">Store Size: @Html.DisplayFor(m => m.searchMonitor.StoreSize)</div>
+                            <div class="col-md-6 statDetail">Documents: @Html.DisplayFor(m => m.searchMonitor.Documents)</div>
+                        </div>
+                    </div>
+                    <div class="monitorSubHeader">Indexes</div>
+                    <div class="col-md-12 statDetails">
+                        @foreach (var index in Model.searchMonitor.Indexes)
+                        {
+                            <div class="row">
+                                <div class="col-md-4 statDetail">@index.Name</div>
+                                <div class="col-md-4 statDetail">Docs: @index.Documents</div>
+                                <div class="col-md-4 statDetail">Size: @index.StoreSize</div>
                             </div>
                         }
                     </div>

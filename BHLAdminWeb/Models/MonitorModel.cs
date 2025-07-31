@@ -48,6 +48,7 @@ namespace MOBOT.BHL.AdminWeb.Models
 
             try
             {
+                // Get info from the search service API
                 JObject jsonResponse = CallSearchApi(string.Format("{0}{1}",
                         ConfigurationManager.AppSettings["SearchServerAddress"],
                         ConfigurationManager.AppSettings["SearchServerStatsUrl"]));
@@ -64,7 +65,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                 JToken nodes = jsonResponse["nodes"];
                 if (nodes != null)
                 {
-                    searchMonitor.Uptime = nodes["jvm"]["max_uptime"].ToString();
+                    searchMonitor.ServiceUptime = nodes["jvm"]["max_uptime"].ToString();
                     searchMonitor.CpuPercent = Convert.ToInt32(nodes["process"]["cpu"]["percent"]);
                     searchMonitor.TotalMemory = nodes["jvm"]["mem"]["heap_max"].ToString();
                     searchMonitor.UsedMemory = nodes["jvm"]["mem"]["heap_used"].ToString();
@@ -81,6 +82,28 @@ namespace MOBOT.BHL.AdminWeb.Models
                 foreach (string indexName in ConfigurationManager.AppSettings["SearchServerIndexes"].Split('|'))
                 {
                     searchMonitor.Indexes.Add(GetSearchIndexStats(indexName));
+                }
+
+                // Get additional info from the server monitor API
+                JObject jsonServerMonitor = GetSearchServerStats();
+
+                // Parse the data from the response
+                searchMonitor.ServerUptime = jsonServerMonitor["uptime_text"].ToString();
+                searchMonitor.Load1Min = jsonServerMonitor["load_avg"]["1_min"].ToString();
+                searchMonitor.Load5Min = jsonServerMonitor["load_avg"]["5_min"].ToString();
+                searchMonitor.Load15Min = jsonServerMonitor["load_avg"]["15_min"].ToString();
+
+                if (jsonServerMonitor["processes"] != null)
+                {
+                    foreach(var process in jsonServerMonitor["processes"])
+                    {
+                        ServerProcess serverProc = new ServerProcess();
+                        serverProc.ProcId = process["proces_id"].ToString();
+                        serverProc.ProcName = process["command"].ToString();
+                        serverProc.CpuPct = process["cpu_pct"].ToString();
+                        serverProc.MemPct = process["mem_pct"].ToString();
+                        searchMonitor.Processes.Add(serverProc);
+                    }
                 }
             }
             catch (Exception)
@@ -113,6 +136,13 @@ namespace MOBOT.BHL.AdminWeb.Models
             WebClient webClient = new WebClient();
             string apiResponse = webClient.DownloadString(uri);
             return JObject.Parse(apiResponse);
+        }
+
+        private JObject GetSearchServerStats()
+        {
+            Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+            string serverStats = client.GetSearchServerStats();
+            return JObject.Parse(serverStats);
         }
 
         private void GetMQStats()
@@ -234,9 +264,13 @@ namespace MOBOT.BHL.AdminWeb.Models
             string _name = string.Empty;
             int _documents = 0;
             string _storeSize = string.Empty;
-            string _uptime = string.Empty;
+            string _serveruptime = string.Empty;
+            string _serviceuptime = string.Empty;
 
             int _cpuPercent = 0;
+            string _1minLoad = string.Empty;
+            string _5minLoad = string.Empty;
+            string _15minLoad = string.Empty;
             double _memoryUsagePercent = 0;
             string _totalMemory = string.Empty;
             string _usedMemory = string.Empty;
@@ -245,13 +279,18 @@ namespace MOBOT.BHL.AdminWeb.Models
             string _freeDisk = string.Empty;
 
             List<SearchIndex> _indexes = new List<SearchIndex>();
+            List<ServerProcess> _processes = new List<ServerProcess>();
 
             public string ErrorMessage { get => _errorMessage; set => _errorMessage = value; }
             public string Name { get => _name; set => _name = value; }
             public int Documents { get => _documents; set => _documents = value; }
             public string StoreSize { get => _storeSize; set => _storeSize = value; }
-            public string Uptime { get => _uptime; set => _uptime = value; }
+            public string ServerUptime { get => _serveruptime; set => _serveruptime = value; }
+            public string ServiceUptime { get => _serviceuptime; set => _serviceuptime = value; }
             public int CpuPercent { get => _cpuPercent; set => _cpuPercent = value; }
+            public string Load1Min { get => _1minLoad; set => _1minLoad = value; }
+            public string Load5Min { get => _5minLoad; set => _5minLoad = value; }
+            public string Load15Min { get => _15minLoad; set => _15minLoad = value; }
             public double MemoryUsagePercent { get => _memoryUsagePercent; set => _memoryUsagePercent = value; }
             public string TotalMemory { get => _totalMemory; set => _totalMemory = value; }
             public string UsedMemory { get => _usedMemory; set => _usedMemory = value; }
@@ -259,6 +298,19 @@ namespace MOBOT.BHL.AdminWeb.Models
             public string TotalDisk { get => _totalDisk; set => _totalDisk = value; }
             public string FreeDisk { get => _freeDisk; set => _freeDisk = value; }
             public List<SearchIndex> Indexes { get => _indexes; set => _indexes = value; }
+            public List<ServerProcess> Processes { get => _processes; set => _processes = value; }
+        }
+
+        public class ServerProcess
+        {
+            string _procId = string.Empty;
+            string _procName = string.Empty;
+            string _cpuPct = string.Empty;
+            string _memPct = string.Empty;
+            public string ProcId { get => _procId; set => _procId = value; }
+            public string ProcName { get => _procName; set => _procName = value; }
+            public string CpuPct { get => _cpuPct; set => _cpuPct = value; }
+            public string MemPct { get => _memPct; set => _memPct = value; }
         }
 
         public class SearchIndex

@@ -318,5 +318,14 @@ namespace BHL.SiteServiceREST.v1.Client
                 return restClient.GetSegmentPageImageDimensions(segmentID, pageModels);
             }
         }
+
+        public string GetSearchServerStats()
+        {
+            using (var httpClient = new HttpClient())
+            {
+                SiteService restClient = new SiteService(_baseUrl, httpClient);
+                return restClient.GetSearchServerStats();
+            }
+        }
     }
 }
