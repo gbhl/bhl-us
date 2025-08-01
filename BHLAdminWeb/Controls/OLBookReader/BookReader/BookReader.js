@@ -2593,25 +2593,92 @@ BookReader.prototype.jumpIndexForRightEdgePageX = function(pageX) {
 
 BookReader.prototype.initToolbar = function(mode, ui) {
 
-    $("#BookReader").append("<div id='BRtoolbar'>"
-        + "<span id='BRtoolbarbuttons' style='float: right'>"
-        +   "<button class='BRicon print rollover' /> "
-        +   "<div class='BRtoolbarmode2' style='display: none'><button class='BRicon rollover book_leftmost' /><button class='BRicon rollover book_left' /><button class='BRicon rollover book_right' /><button class='BRicon rollover book_rightmost' /></div>"
-        +   "<div class='BRtoolbarmode1' style='display: none'><button class='BRicon rollover book_top' /><button class='BRicon rollover book_up' /> <button class='BRicon rollover book_down' /><button class='BRicon rollover book_bottom' /></div>"
-        + "</span>"
-        
-        + "<span>"
-        +   " <button class='BRicon rollover zoom_out' onclick='br.zoom(-1); return false;'/>" 
-        +   "<button class='BRicon rollover zoom_in' onclick='br.zoom(1); return false;'/>"
-        +   " <span class='label'>Zoom: <span id='BRzoom'>"+parseInt(100/this.reduce)+"</span></span>"
-        +   " <button class='BRicon rollover one_page_mode' onclick='br.switchMode(1); return false;'/>"
-        +   " <button class='BRicon rollover two_page_mode' onclick='br.switchMode(2); return false;'/>"
-        + "</span>"
-        
-        + "<span id='#BRbooktitle'>"
-        +   "&nbsp;&nbsp;<a class='BRblack title' href='"+this.bookUrl+"' target='_blank'>"+this.shortTitle(50)+"</a>"
-        + "</span>"
-        + "</div>");
+    const bookReader = document.getElementById("BookReader");
+
+    const toolbar = document.createElement("div");
+    toolbar.id = "BRtoolbar";
+
+    // Toolbar Buttons (right side)
+    const toolbarButtons = document.createElement("span");
+    toolbarButtons.id = "BRtoolbarbuttons";
+    toolbarButtons.style.float = "right";
+
+    const printButton = document.createElement("button");
+    printButton.className = "BRicon print rollover";
+    toolbarButtons.appendChild(printButton);
+
+    // Mode 2 toolbar
+    const mode2 = document.createElement("div");
+    mode2.className = "BRtoolbarmode2";
+    mode2.style.display = "none";
+    ["book_leftmost", "book_left", "book_right", "book_rightmost"].forEach(cls => {
+        const btn = document.createElement("button");
+        btn.className = `BRicon rollover ${cls}`;
+        mode2.appendChild(btn);
+    });
+    toolbarButtons.appendChild(mode2);
+
+    // Mode 1 toolbar
+    const mode1 = document.createElement("div");
+    mode1.className = "BRtoolbarmode1";
+    mode1.style.display = "none";
+    ["book_top", "book_up", "book_down", "book_bottom"].forEach(cls => {
+        const btn = document.createElement("button");
+        btn.className = `BRicon rollover ${cls}`;
+        mode1.appendChild(btn);
+    });
+    toolbarButtons.appendChild(mode1);
+
+    toolbar.appendChild(toolbarButtons);
+
+    // Zoom and mode controls
+    const controlSpan = document.createElement("span");
+
+    const zoomOutBtn = document.createElement("button");
+    zoomOutBtn.className = "BRicon rollover zoom_out";
+    zoomOutBtn.onclick = () => { br.zoom(-1); return false; };
+    controlSpan.appendChild(zoomOutBtn);
+
+    const zoomInBtn = document.createElement("button");
+    zoomInBtn.className = "BRicon rollover zoom_in";
+    zoomInBtn.onclick = () => { br.zoom(1); return false; };
+    controlSpan.appendChild(zoomInBtn);
+
+    // Zoom label
+    const zoomLabel = document.createElement("span");
+    zoomLabel.className = "label";
+    zoomLabel.innerHTML = `Zoom: <span id="BRzoom">${parseInt(100 / this.reduce)}</span>`;
+    controlSpan.appendChild(zoomLabel);
+
+    // Mode buttons
+    const onePageBtn = document.createElement("button");
+    onePageBtn.className = "BRicon rollover one_page_mode";
+    onePageBtn.onclick = () => { br.switchMode(1); return false; };
+    controlSpan.appendChild(onePageBtn);
+
+    const twoPageBtn = document.createElement("button");
+    twoPageBtn.className = "BRicon rollover two_page_mode";
+    twoPageBtn.onclick = () => { br.switchMode(2); return false; };
+    controlSpan.appendChild(twoPageBtn);
+
+    toolbar.appendChild(controlSpan);
+
+    // Book title
+    const titleSpan = document.createElement("span");
+    titleSpan.id = "BRbooktitle"; // Removed extra '#' from original
+
+    const titleLink = document.createElement("a");
+    titleLink.className = "BRblack title";
+    titleLink.href = this.bookUrl;
+    titleLink.target = "_blank";
+    titleLink.textContent = this.shortTitle(50);
+    titleSpan.innerHTML = "&nbsp;&nbsp;";
+    titleSpan.appendChild(titleLink);
+
+    toolbar.appendChild(titleSpan);
+
+    // Append toolbar to BookReader
+    bookReader.appendChild(toolbar);
     
     this.updateToolbarZoom(this.reduce); // Pretty format
         
