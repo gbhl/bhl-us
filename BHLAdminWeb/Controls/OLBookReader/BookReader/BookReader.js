@@ -177,11 +177,11 @@ BookReader.prototype.init = function() {
                 // Re-center if the scrollbars have disappeared
                 var center = e.data.twoPageGetViewCenter();
                 var doRecenter = false;
-                if (e.data.twoPage.totalWidth < $('#BRcontainer').prop('clientWidth')) {
+                if (e.data.twoPage.totalWidth < document.getElementById('BRcontainer').clientWidth) {
                     center.percentageX = 0.5;
                     doRecenter = true;
                 }
-                if (e.data.twoPage.totalHeight < $('#BRcontainer').prop('clientHeight')) {
+                if (e.data.twoPage.totalHeight < document.getElementById('BRcontainer').clientHeight) {
                     center.percentageY = 0.5;
                     doRecenter = true;
                 }
@@ -446,7 +446,7 @@ BookReader.prototype.drawLeafsOnePage = function () {
 
 
     var scrollTop = $('#BRcontainer').prop('scrollTop');
-    var scrollBottom = scrollTop + $('#BRcontainer').height();
+    var scrollBottom = scrollTop + parseInt($('#BRcontainer').height());
     //console.log('top=' + scrollTop + ' bottom='+scrollBottom);
 
     var indicesToDisplay = [];
@@ -498,7 +498,7 @@ BookReader.prototype.drawLeafsOnePage = function () {
     }
 
     //var viewWidth = $('#BRpageview').width(); //includes scroll bar width
-    var viewWidth = $('#BRcontainer').prop('scrollWidth');
+    var viewWidth = document.getElementById('BRcontainer').scrollWidth;
 
 
     for (i = 0; i < indicesToDisplay.length; i++) {
@@ -571,7 +571,7 @@ BookReader.prototype.drawLeafsOnePage = function () {
 //______________________________________________________________________________
 BookReader.prototype.drawLeafsTwoPage = function() {
     var scrollTop = $('#BRtwopageview').prop('scrollTop');
-    var scrollBottom = scrollTop + $('#BRtwopageview').height();
+    var scrollBottom = scrollTop + parseInt($('#BRtwopageview').height());
     
     // $$$ we should use calculated values in this.twoPage (recalc if necessary)
     
@@ -715,12 +715,12 @@ BookReader.prototype.resizePageView = function() {
     var i;
     var viewHeight = 0;
     //var viewWidth  = $('#BRcontainer').width(); //includes scrollBar
-    var viewWidth  = $('#BRcontainer').prop('clientWidth');   
+    var viewWidth = document.getElementById('BRcontainer').clientWidth;
 
     var oldScrollTop  = $('#BRcontainer').prop('scrollTop');
     var oldScrollLeft = $('#BRcontainer').prop('scrollLeft');
-    var oldPageViewHeight = $('#BRpageview').height();
-    var oldPageViewWidth = $('#BRpageview').width();
+    var oldPageViewHeight = parseInt($('#BRpageview').height());
+    var oldPageViewWidth = parseInt($('#BRpageview').width());
     
     var oldCenterY = this.centerY1up();
     var oldCenterX = this.centerX1up();
@@ -732,20 +732,20 @@ BookReader.prototype.resizePageView = function() {
     }
     
     for (i=0; i<this.numLeafs; i++) {
-        viewHeight += parseInt(this._getPageHeight(i)/this.reduce) + this.padding; 
-        var width = parseInt(this._getPageWidth(i)/this.reduce);
+        viewHeight += parseInt(this._getPageHeight(i))/this.reduce + this.padding; 
+        var width = parseInt(this._getPageWidth(i))/this.reduce;
         if (width>viewWidth) viewWidth=width;
     }
     $('#BRpageview').height(viewHeight);
     $('#BRpageview').width(viewWidth);    
 
     var newCenterY = scrollRatio*viewHeight;
-    var newTop = Math.max(0, Math.floor( newCenterY - $('#BRcontainer').height()/2 ));
+    var newTop = Math.max(0, Math.floor( newCenterY - parseInt($('#BRcontainer').height())/2 ));
     $('#BRcontainer').prop('scrollTop', newTop);
     
     // We use clientWidth here to avoid miscalculating due to scroll bar
     var newCenterX = oldCenterX * (viewWidth / oldPageViewWidth);
-    var newLeft = newCenterX - $('#BRcontainer').prop('clientWidth') / 2;
+    var newLeft = newCenterX - document.getElementById('BRcontainer').clientWidth / 2;
     newLeft = Math.max(newLeft, 0);
     $('#BRcontainer').prop('scrollLeft', newLeft);
     //console.log('oldCenterX ' + oldCenterX + ' newCenterX ' + newCenterX + ' newLeft ' + newLeft);
@@ -763,10 +763,10 @@ BookReader.prototype.resizePageView = function() {
 // Returns the current offset of the viewport center in scaled document coordinates.
 BookReader.prototype.centerX1up = function() {
     var centerX;
-    if ($('#BRpageview').width() < $('#BRcontainer').prop('clientWidth')) { // fully shown
-        centerX = $('#BRpageview').width();
+    if ($('#BRpageview').width() < document.getElementById('BRcontainer').clientWidth) { // fully shown
+        centerX = parseInt($('#BRpageview').width());
     } else {
-        centerX = $('#BRcontainer').prop('scrollLeft') + $('#BRcontainer').prop('clientWidth') / 2;
+        centerX = $('#BRcontainer').prop('scrollLeft') + document.getElementById('BRcontainer').clientWidth / 2;
     }
     centerX = Math.floor(centerX);
     return centerX;
@@ -776,7 +776,7 @@ BookReader.prototype.centerX1up = function() {
 //______________________________________________________________________________
 // Returns the current offset of the viewport center in scaled document coordinates.
 BookReader.prototype.centerY1up = function() {
-    var centerY = $('#BRcontainer').prop('scrollTop') + $('#BRcontainer').height() / 2;
+    var centerY = $('#BRcontainer').prop('scrollTop') + parseInt($('#BRcontainer').height()) / 2;
     return Math.floor(centerY);
 }
 
@@ -784,8 +784,8 @@ BookReader.prototype.centerY1up = function() {
 //______________________________________________________________________________
 BookReader.prototype.centerPageView = function() {
 
-    var scrollWidth  = $('#BRcontainer').prop('scrollWidth');
-    var clientWidth  =  $('#BRcontainer').prop('clientWidth');
+    var scrollWidth = document.getElementById('BRcontainer').scrollWidth;
+    var clientWidth = document.getElementById('BRcontainer').clientWidth;
     //console.log('sW='+scrollWidth+' cW='+clientWidth);
     if (scrollWidth > clientWidth) {
         $('#BRcontainer').prop('scrollLeft', (scrollWidth-clientWidth)/2);
@@ -945,14 +945,14 @@ BookReader.prototype.jumpToIndex = function (index, pageX, pageY) {
         if (pageY) {
             //console.log('pageY ' + pageY);
             var offset = parseInt((pageY) / this.reduce);
-            offset -= $('#BRcontainer').prop('clientHeight') >> 1;
+            offset -= document.getElementById('BRcontainer').clientHeight >> 1;
             //console.log( 'jumping to ' + leafTop + ' ' + offset);
             leafTop += offset;
         }
 
         if (pageX) {
             var offset = parseInt((pageX) / this.reduce);
-            offset -= $('#BRcontainer').prop('clientWidth') >> 1;
+            offset -= document.getElementById('BRcontainer').clientWidth >> 1;
             leafLeft += offset;
         }
 
@@ -1091,10 +1091,10 @@ BookReader.prototype.prepareTwoPageView = function(centerPercentageX, centerPerc
         
     // If there will not be scrollbars (e.g. when zooming out) we center the book
     // since otherwise the book will be stuck off-center
-    if (this.twoPage.totalWidth < $('#BRcontainer').prop('clientWidth')) {
+    if (this.twoPage.totalWidth < document.getElementById('BRcontainer').clientWidth) {
         centerPercentageX = 0.5;
     }
-    if (this.twoPage.totalHeight < $('#BRcontainer').prop('clientHeight')) {
+    if (this.twoPage.totalHeight < document.getElementById('BRcontainer').clientHeight) {
         centerPercentageY = 0.5;
     }
         
@@ -1234,7 +1234,7 @@ BookReader.prototype.prepareTwoPagePopUp = function() {
         // $$$ TODO: Make sure popup is positioned so that it is in view
         //           (https://bugs.edge.launchpad.net/gnubook/+bug/327456)        
         $(e.data.twoPagePopUp).css({
-            left: e.pageX - $('#BRcontainer').offset().left + $('#BRcontainer').scrollLeft() - $(e.data.twoPagePopUp).width() - 25 + 'px',
+            left: e.pageX - $('#BRcontainer').offset().left + $('#BRcontainer').scrollLeft() - parseInt($(e.data.twoPagePopUp).width()) - 25 + 'px',
             top: e.pageY-$('#BRcontainer').offset().top + $('#BRcontainer').scrollTop() + 'px'
         });
     });
@@ -1346,16 +1346,16 @@ BookReader.prototype.getIdealSpreadSize = function(firstIndex, secondIndex) {
         //console.log('using secondIndexRatio ' + ratio);
     }
 
-    var totalLeafEdgeWidth = parseInt(this.numLeafs * 0.1);
-    var maxLeafEdgeWidth   = parseInt($('#BRcontainer').prop('clientWidth') * 0.1);
+    var totalLeafEdgeWidth = parseInt(this.numLeafs) * 0.1;
+    var maxLeafEdgeWidth = parseInt(document.getElementById('BRcontainer').clientWidth) * 0.1;
     ideal.totalLeafEdgeWidth     = Math.min(totalLeafEdgeWidth, maxLeafEdgeWidth);
     
     var widthOutsidePages = 2 * (this.twoPage.coverInternalPadding + this.twoPage.coverExternalPadding) + ideal.totalLeafEdgeWidth;
     var heightOutsidePages = 2* (this.twoPage.coverInternalPadding + this.twoPage.coverExternalPadding);
     
-    ideal.width = ($('#BRcontainer').width() - widthOutsidePages) >> 1;
+    ideal.width = (parseInt($('#BRcontainer').width()) - widthOutsidePages) >> 1;
     ideal.width -= 10; // $$$ fudge factor
-    ideal.height = $('#BRcontainer').height() - heightOutsidePages;
+    ideal.height = parseInt($('#BRcontainer').height()) - heightOutsidePages;
     ideal.height -= 20; // fudge factor
     //console.log('init idealWidth='+ideal.width+' idealHeight='+ideal.height + ' ratio='+ratio);
 
@@ -1368,7 +1368,7 @@ BookReader.prototype.getIdealSpreadSize = function(firstIndex, secondIndex) {
     }
     
     // $$$ check this logic with large spreads
-    ideal.reduce = ((first.height + second.height) / 2) / ideal.height;
+    ideal.reduce = ((parseInt(first.height) + parseInt(second.height)) / 2) / ideal.height;
     
     return ideal;
 }
@@ -1380,7 +1380,7 @@ BookReader.prototype.getSpreadSizeFromReduce = function(firstIndex, secondIndex,
     var spreadSize = {};
     // $$$ Scale this based on reduce?
     var totalLeafEdgeWidth = parseInt(this.numLeafs * 0.1);
-    var maxLeafEdgeWidth   = parseInt($('#BRcontainer').prop('clientWidth') * 0.1); // $$$ Assumes leaf edge width constant at all zoom levels
+    var maxLeafEdgeWidth = parseInt(document.getElementById('BRcontainer').clientWidth * 0.1); // $$$ Assumes leaf edge width constant at all zoom levels
     spreadSize.totalLeafEdgeWidth     = Math.min(totalLeafEdgeWidth, maxLeafEdgeWidth);
 
     // $$$ Possibly incorrect -- we should make height "dominant"
@@ -1406,8 +1406,8 @@ BookReader.prototype.twoPageGetAutofitReduce = function() {
 // Set the cursor for two page view
 BookReader.prototype.twoPageSetCursor = function() {
     // console.log('setting cursor');
-    if ( ($('#BRtwopageview').width() > $('#BRcontainer').prop('clientWidth')) ||
-         ($('#BRtwopageview').height() > $('#BRcontainer').prop('clientHeight')) ) {
+    if ((parseInt($('#BRtwopageview').width()) > document.getElementById('BRcontainer').clientWidth) ||
+        (parseInt($('#BRtwopageview').height()) > document.getElementById('BRcontainer').clientHeight) ) {
         $(this.prefetchedImgs[this.twoPage.currentIndexL]).css('cursor','move');
         $(this.prefetchedImgs[this.twoPage.currentIndexR]).css('cursor','move');
     } else {
@@ -1638,7 +1638,7 @@ BookReader.prototype.flipLeftToRight = function(newIndexL, newIndexR) {
     // Left gets the offset of the current left leaf from the document
     var left = $(this.prefetchedImgs[leftLeaf]).offset().left;
     // $$$ This seems very similar to the gutter.  May be able to consolidate the logic.
-    var right = $('#BRtwopageview').prop('clientWidth')-left-$(this.prefetchedImgs[leftLeaf]).width()+$('#BRtwopageview').offset().left-2+'px';
+    var right = document.getElementById('BRtwopageview').clientWidth-left-parseInt($(this.prefetchedImgs[leftLeaf]).width())+$('#BRtwopageview').offset().left-2+'px';
     
     // We change the left leaf to right positioning
     // $$$ This causes animation glitches during resize.  See https://bugs.edge.launchpad.net/gnubook/+bug/328327
@@ -1991,7 +1991,7 @@ BookReader.prototype.prepareFlipRightToLeft = function(nextL, nextR) {
     //console.log(' prepareRTL changing nextL ' + nextL + ' to right: ' + $('#BRcontainer').width()-gutter);
     $(this.prefetchedImgs[nextL]).css({
         position: 'absolute',
-        right:   $('#BRtwopageview').prop('clientWidth')-gutter+'px',
+        right: document.getElementById('BRtwopageview').clientWidth-gutter+'px',
         top:    top+'px',
         backgroundColor: this.getPageBackgroundColor(nextL),
         height: this.twoPage.height,
@@ -2215,8 +2215,8 @@ BookReader.prototype.twoPageGetViewCenter = function() {
 
     var containerOffset = $('#BRcontainer').offset();
     var viewOffset = $('#BRtwopageview').offset();
-    center.percentageX = (containerOffset.left - viewOffset.left + ($('#BRcontainer').prop('clientWidth') >> 1)) / this.twoPage.totalWidth;
-    center.percentageY = (containerOffset.top - viewOffset.top + ($('#BRcontainer').prop('clientHeight') >> 1)) / this.twoPage.totalHeight;
+    center.percentageX = (containerOffset.left - viewOffset.left + (document.getElementById('BRcontainer').clientWidth >> 1)) / this.twoPage.totalWidth;
+    center.percentageY = (containerOffset.top - viewOffset.top + (document.getElementById('BRcontainer').clientHeight >> 1)) / this.twoPage.totalHeight;
     
     return center;
 }
@@ -2232,12 +2232,12 @@ BookReader.prototype.twoPageCenterView = function(percentageX, percentageY) {
         percentageY = 0.5;
     }
 
-    var viewWidth = $('#BRtwopageview').width();
-    var containerClientWidth = $('#BRcontainer').prop('clientWidth');
+    var viewWidth = parseInt($('#BRtwopageview').width());
+    var containerClientWidth = document.getElementById('BRcontainer').clientWidth;
     var intoViewX = percentageX * viewWidth;
     
-    var viewHeight = $('#BRtwopageview').height();
-    var containerClientHeight = $('#BRcontainer').prop('clientHeight');
+    var viewHeight = parseInt($('#BRtwopageview').height());
+    var containerClientHeight = document.getElementById('BRcontainer').clientHeight;
     var intoViewY = percentageY * viewHeight;
     
     if (viewWidth < containerClientWidth) {
@@ -2412,7 +2412,7 @@ BookReader.prototype.showEmbedCode = function() {
     $(this.embedPopup).css({
         position: 'absolute',
         top:      '20px',
-        left:     ($('#BRcontainer').prop('clientWidth')-400)/2 + 'px',
+        left:     (document.getElementById('BRcontainer').clientWidth -400)/2 + 'px',
         width:    '400px',
         padding:  "20px",
         border:   "3px double #999999",
@@ -2569,7 +2569,7 @@ BookReader.prototype.jumpIndexForLeftEdgePageX = function(pageX) {
         return jumpIndex;
 
     } else {
-        var jumpIndex = this.twoPage.currentIndexL + ($(this.leafEdgeL).offset().left + $(this.leafEdgeL).width() - pageX) * 10;
+        var jumpIndex = this.twoPage.currentIndexL + ($(this.leafEdgeL).offset().left + parseInt($(this.leafEdgeL).width()) - pageX) * 10;
         jumpIndex = BookReader.util.clamp(Math.round(jumpIndex), this.twoPage.currentIndexL + 2, this.lastDisplayableIndex());
         return jumpIndex;
     }
@@ -3209,7 +3209,7 @@ BookReader.prototype._getPageWidth = function(index) {
     // May or may not be the best approach.
     // If index is out of range we return the width of first or last page
     index = BookReader.util.clamp(index, 0, this.numLeafs - 1);
-    return this.getPageWidth(index);
+    return parseInt(this.getPageWidth(index));
 }
 
 // _getPageHeight
@@ -3217,7 +3217,7 @@ BookReader.prototype._getPageWidth = function(index) {
 // Returns the page height for the given index, or first or last page if out of range
 BookReader.prototype._getPageHeight= function(index) {
     index = BookReader.util.clamp(index, 0, this.numLeafs - 1);
-    return this.getPageHeight(index);
+    return parseInt(this.getPageHeight(index));
 }
 
 // _getPageURI
