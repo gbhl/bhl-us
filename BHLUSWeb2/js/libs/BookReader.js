@@ -68,6 +68,7 @@ function BookReader() {
     this.searchResults = {};
     
     this.firstIndex = null;
+    this.prevIndex = -1;
     
     this.lastDisplayableIndex2up = null;
     
@@ -3797,28 +3798,32 @@ BookReader.prototype.updateSliderIndex = function (index) {
 }
 
 BookReader.prototype.updateNavPageNum = function (index) {
-    var pageName = this.getPageName(index);
+    if (this.prevIndex !== index) {
+        this.prevIndex = index;
 
-    var pageNum = $('#BRPageNum');
-    if (!pageNum.length > 0) {
-        pageNum = $('<span id="BRPageNum" class="tooltip"><span class="text"></span><span class="arrow"></span></span>').appendTo('.ui-slider-handle').hide();
+        var pageName = this.getPageName(index);
+
+        var pageNum = $('#BRPageNum');
+        if (!pageNum.length > 0) {
+            pageNum = $('<span id="BRPageNum" class="tooltip"><span class="text"></span><span class="arrow"></span></span>').appendTo('.ui-slider-handle').hide();
+        }
+
+        $('.text', pageNum).text(pageName);
+        $('#page-input').val(index + 1);
+
+        // BHL addition
+        $('#lstPages').prop("selectedIndex", index);
+        try {
+            this.updatePageDetailsUI(index);
+        }
+        catch (err) {
+        }
+        // End BHL addition
+
+        pageNum.css({
+            'margin-left': ((parseInt($('.ui-slider-handle').width()) / 2) - parseInt(pageNum.width())) / 2
+        });
     }
-
-    $('.text', pageNum).text(pageName);
-    $('#page-input').val(index + 1);
-
-    // BHL addition
-    $('#lstPages').prop("selectedIndex", index);
-    try {
-        this.updatePageDetailsUI(index);
-    }
-    catch (err) {
-    }
-    // End BHL addition
-
-    pageNum.css({
-        'margin-left': ((parseInt($('.ui-slider-handle').width()) / 2) - parseInt(pageNum.width())) / 2
-    });
 }
 
 BookReader.prototype.add2upPageToolBox = function (index, page) {
