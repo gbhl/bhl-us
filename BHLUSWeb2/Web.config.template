@@ -95,6 +95,13 @@
     <add key="LogExceptions" value="true"/>
     <add key="MonitorThreshold" value="20"/>
     <add key="DebugValue" value="debug"/>
+    <!-- 
+    Set "IpThrottling" to "true" to consider IP addresses when rate limiting, "false" 
+    to ignore IP addresses.  Setting to "false" may be useful if troublesome traffic 
+    (bots) is using unique a unique IP address for each request.  NOTE: Setting this
+    to "false" may require other rate limits to be adjusted upwards.
+    -->
+    <add key="IpThrottling" value="true"/>
 
     <!-- OAI Settings -->
     <add key="OAIRepositoryName" value="Biodiversity Heritage Library OAI Repository"/>

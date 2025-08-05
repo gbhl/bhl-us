@@ -228,12 +228,9 @@ namespace MOBOT.BHL.Web2.Controllers
                 }
                 catch (Exception ex)
                 {
+                    if (stream != null) stream.Dispose();
                     ExceptionUtility.LogException(ex, "GetPartPDF.GetPregeneratedPdf");
                     return Redirect("~/error");
-                }
-                finally
-                {
-                    stream.Dispose();
                 }
             }
             else

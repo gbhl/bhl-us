@@ -3,6 +3,7 @@ using MOBOT.BHL.Web.Utilities;
 using MvcThrottle;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
@@ -77,10 +78,15 @@ namespace MOBOT.BHL.Web2
                         {"ClaudeBot/1.0;+claudebot@anthropic.com", new RateLimits { PerSecond = 1 }},
                     }
                     */
+                    // Throttle by IP if configured, or if limiting rules are set on any specific IP
+                    bool ipThrottle = 
+                        string.Compare(ConfigurationManager.AppSettings["IpThrottling"].ToString(), "true", true) == 0 || 
+                        (ipConfig.Count > 0);
+
                     ThrottlePolicy policy = new ThrottlePolicy(perSecond: policyConfig.PerSecond, 
                         perMinute: policyConfig.PerMinute, perHour: policyConfig.PerHour, perDay: policyConfig.PerDay)
                     {
-                        IpThrottling = true, //(ipConfig.Count > 0),  // consider only IP limiting when rules set on a specific IP
+                        IpThrottling = ipThrottle,
                         IpWhitelist = ipWhitelistConfig,
                         IpRules = GetRateLimitRules(ipConfig),
                         EndpointThrottling = true,
