@@ -1,0 +1,36 @@
+﻿SELECT DISTINCT ?AuthorID ?Wikidata ?VIAF ?DLC ?ORCID ?SNAC_ARK ?ResearchGate_Profile WHERE {
+  {
+  {
+    SELECT DISTINCT ?item WHERE {
+      ?item p:P4081 ?statement0.
+      ?statement0 ps:P4081 _:anyValueP4081.
+    }
+  }
+  BIND(REPLACE(STR(?item), "http://www.wikidata.org/entity/", "") AS ?Wikidata )
+  OPTIONAL { ?item wdt:P4081 ?AuthorID. }
+  OPTIONAL { ?item wdt:P214 ?VIAF. }
+  OPTIONAL { ?item wdt:P244 ?DLC. }
+  OPTIONAL { ?item wdt:P496 ?ORCID. }
+  OPTIONAL { ?item wdt:P3430 ?SNAC_ARK. }
+  OPTIONAL { ?item wdt:P2038 ?ResearchGate_Profile. }
+
+  }
+    UNION  { SERVICE wdsubgraph:scholarly_articles {
+
+  {
+    SELECT DISTINCT ?item WHERE {
+      ?item p:P4081 ?statement0.
+      ?statement0 ps:P4081 _:anyValueP40812.
+    }
+  }
+  BIND(REPLACE(STR(?item), "http://www.wikidata.org/entity/", "") AS ?Wikidata )
+  OPTIONAL { ?item wdt:P4081 ?AuthorID. }
+  OPTIONAL { ?item wdt:P214 ?VIAF. }
+  OPTIONAL { ?item wdt:P244 ?DLC. }
+  OPTIONAL { ?item wdt:P496 ?ORCID. }
+  OPTIONAL { ?item wdt:P3430 ?SNAC_ARK. }
+  OPTIONAL { ?item wdt:P2038 ?ResearchGate_Profile. }
+
+
+ } }
+}

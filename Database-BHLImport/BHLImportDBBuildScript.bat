@@ -112,6 +112,8 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Tables\OAIRecordRelatedTitle.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\OAIRecordRight.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\OAIRecordSubject.sql"
 
+sqlcmd -E -S %1 -d %2 -i "dbo\Tables\WDEntityIdentifier.sql"
+
 REM --------------------------------------
 REM  Add Synonyms
 REM --------------------------------------
@@ -514,6 +516,8 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\Title_TitleIdentifierInsertAuto.
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\Title_TitleIdentifierSelectAuto.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\Title_TitleIdentifierSelectByKeyNameAndValue.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\Title_TitleIdentifierUpdateAuto.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\WDEntityIdentifierDeleteByEntityType.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\WDEntityIdentifierInsert.sql"
 
 GOTO DONE
 

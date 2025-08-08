@@ -1,0 +1,46 @@
+﻿SELECT DISTINCT ?TitleID ?Wikidata ?OCLC ?ISSN ?Linking_ISSN ?ISBN13 ?ISBN10 ?Coden ?DLC ?NLM ?TL2 ?DOI WHERE {
+  {
+  {
+    SELECT DISTINCT ?item WHERE {
+      ?item p:P4327 ?statement0.
+      ?statement0 ps:P4327 _:anyValueP4327.
+    }
+  }
+  BIND(REPLACE(STR(?item), "http://www.wikidata.org/entity/", "") AS ?Wikidata )
+  OPTIONAL { ?item wdt:P4327 ?TitleID. }
+  OPTIONAL { ?item wdt:P243 ?OCLC. }
+  OPTIONAL { ?item wdt:P236 ?ISSN. }
+  OPTIONAL { ?item wdt:P7363 ?Linking_ISSN. }
+  OPTIONAL { ?item wdt:P212 ?ISBN13. }
+  OPTIONAL { ?item wdt:P957 ?ISBN10. }
+  OPTIONAL { ?item wdt:P1159 ?Coden. }
+  OPTIONAL { ?item wdt:P244 ?DLC. }
+  OPTIONAL { ?item wdt:P1055 ?NLM. }
+  OPTIONAL { ?item wdt:P5878 ?TL2. }
+  OPTIONAL { ?item wdt:P356 ?DOI. }
+  
+  }
+    UNION  { SERVICE wdsubgraph:scholarly_articles {
+
+  {
+    SELECT DISTINCT ?item WHERE {
+      ?item p:P4327 ?statement0.
+      ?statement0 ps:P4327 _:anyValueP43272.
+    }
+  }
+  BIND(REPLACE(STR(?item), "http://www.wikidata.org/entity/", "") AS ?Wikidata )
+  OPTIONAL { ?item wdt:P4327 ?TitleID. }
+  OPTIONAL { ?item wdt:P243 ?OCLC. }
+  OPTIONAL { ?item wdt:P236 ?ISSN. }
+  OPTIONAL { ?item wdt:P7363 ?Linking_ISSN. }
+  OPTIONAL { ?item wdt:P212 ?ISBN13. }
+  OPTIONAL { ?item wdt:P957 ?ISBN10. }
+  OPTIONAL { ?item wdt:P1159 ?Coden. }
+  OPTIONAL { ?item wdt:P244 ?DLC. }
+  OPTIONAL { ?item wdt:P1055 ?NLM. }
+  OPTIONAL { ?item wdt:P5878 ?TL2. }
+  OPTIONAL { ?item wdt:P356 ?DOI. }
+
+
+ } }
+}

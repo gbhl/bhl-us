@@ -76,6 +76,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHL.WebServiceREST.v1.Clien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BHL.WebServiceREST.v1", "BHLWebServiceREST.v1\BHL.WebServiceREST.v1.csproj", "{40D6A66C-2310-4FBE-AA48-80079C28E2C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WDHarvest", "WDHarvest\WDHarvest.csproj", "{B3D16980-63EA-44BC-8C7F-69BE19E753FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -432,6 +434,18 @@ Global
 		{40D6A66C-2310-4FBE-AA48-80079C28E2C2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{40D6A66C-2310-4FBE-AA48-80079C28E2C2}.Release|x86.ActiveCfg = Release|Any CPU
 		{40D6A66C-2310-4FBE-AA48-80079C28E2C2}.Release|x86.Build.0 = Release|Any CPU
+		{B3D16980-63EA-44BC-8C7F-69BE19E753FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3D16980-63EA-44BC-8C7F-69BE19E753FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3D16980-63EA-44BC-8C7F-69BE19E753FC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B3D16980-63EA-44BC-8C7F-69BE19E753FC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B3D16980-63EA-44BC-8C7F-69BE19E753FC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B3D16980-63EA-44BC-8C7F-69BE19E753FC}.Debug|x86.Build.0 = Debug|Any CPU
+		{B3D16980-63EA-44BC-8C7F-69BE19E753FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3D16980-63EA-44BC-8C7F-69BE19E753FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3D16980-63EA-44BC-8C7F-69BE19E753FC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B3D16980-63EA-44BC-8C7F-69BE19E753FC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B3D16980-63EA-44BC-8C7F-69BE19E753FC}.Release|x86.ActiveCfg = Release|Any CPU
+		{B3D16980-63EA-44BC-8C7F-69BE19E753FC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
