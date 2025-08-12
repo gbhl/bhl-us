@@ -518,6 +518,8 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\Title_TitleIdentifierSelectByKey
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\Title_TitleIdentifierUpdateAuto.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\WDEntityIdentifierDeleteByEntityType.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\WDEntityIdentifierInsert.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\WDEntityIdentifierPublishAuthorIDs.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\WDEntityIdentifierPublishTitleIDs.sql"
 
 GOTO DONE
 

@@ -44,5 +44,27 @@ namespace MOBOT.BHLImport.DAL
                 CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
+
+        public void WDEntityIdentifierPublishAuthorIDs(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.WDEntityIdentifierPublishAuthorIDs", connection, transaction))
+            {
+                CustomSqlHelper.ExecuteNonQuery(command);
+            }
+        }
+
+        public void WDEntityIdentifierPublishTitleIDs(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.WDEntityIdentifierPublishTitleIDs", connection, transaction))
+            {
+                CustomSqlHelper.ExecuteNonQuery(command);
+            }
+        }
     }
 }

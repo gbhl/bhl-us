@@ -1,6 +1,5 @@
 ﻿using MOBOT.BHLImport.DAL;
 using System;
-using System.Net.NetworkInformation;
 
 namespace MOBOT.BHLImport.Server
 {
@@ -16,6 +15,16 @@ namespace MOBOT.BHLImport.Server
         {
             new WDEntityIdentifierDAL().WDEntityIdentifierInsert(null, null, 
                 entityType, entityId, identifierType, identifierValue, harvestDate);
+        }
+
+        public void WDEntityIdentifierPublishAuthorIDs()
+        {
+            new WDEntityIdentifierDAL().WDEntityIdentifierPublishAuthorIDs(null, null);
+        }
+
+        public void WDEntityIdentifierPublishTitleIDs()
+        {
+            new WDEntityIdentifierDAL().WDEntityIdentifierPublishTitleIDs(null, null);
         }
     }
 }

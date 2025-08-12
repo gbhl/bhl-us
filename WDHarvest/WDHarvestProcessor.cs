@@ -1,7 +1,9 @@
 ﻿using BHL.WebServiceREST.v1;
 using BHL.WebServiceREST.v1.Client;
+using MOBOT.BHL.Utility;
 using MOBOT.BHLImport.Server;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class WDHarvestProcessor
 {
@@ -13,10 +15,10 @@ public class WDHarvestProcessor
     // needing to edit the code.
 
     private ConfigParms configParms = new();
-    private List<string> retrievedTitleIds = new();
-    private List<string> retrievedAuthorIds = new();
+    private List<EntityIdentifierPair> retrievedTitleIds = new();
+    private List<EntityIdentifierPair> retrievedAuthorIds = new();
     private List<string> errorMessages = new();
-    private List<string> invalidIds = new();
+    private List<EntityIdentifierPair> invalidIds = new();
 
     // Create an BHLImportProvider for use in this class
     BHLImportProvider provider = new();
@@ -56,41 +58,63 @@ public class WDHarvestProcessor
             HarvestIdentifiers(bhlEntityType, "titleQuery.rq", harvestDateTime, retrievedTitleIds);
         }
 
-        // TODO
         // Push new author identifiers into the production database
         if (configParms.HarvestAuthorIDs)
         {
             bhlEntityType = "Author";
-
             LogMessage($"{bhlEntityType} identifier publish started");
-
-
-
-
-
+            provider.WDEntityIdentifierPublishAuthorIDs();
             LogMessage($"{bhlEntityType} identifier publish complete");
         }
 
-        // TODO
         // Push new title identifiers into the production database
         if (configParms.HarvestTitleIDs)
         {
             bhlEntityType = "Title";
-
             LogMessage($"{bhlEntityType} identifier publish started");
-
-
-
-
-
+            provider.WDEntityIdentifierPublishTitleIDs();
             LogMessage($"{bhlEntityType} identifier publish complete");
         }
 
-        // TODO
         // Pull reports of identifiers needing investigation and deliver to the appropriate recipients
         if (configParms.EmailAnalysis)
         {
+            string outputFolder = "data";
+            string outputFileNewIDs = "AddedIdentifiers";
+            string fileSuffix = DateTime.Now.ToString("yyyyMMdd.HHmm");
+
             LogMessage("Report generation started");
+
+            // Prepare output folder
+            if (!Directory.Exists(outputFolder)) Directory.CreateDirectory(outputFolder);
+
+            // Output a list of added identifiers
+            var data = new List<dynamic>();
+            foreach (var authorid in retrievedAuthorIds)   // TODO:  Switch to use a list of added-to-production IDs from WDEntityIdentifierPublishAuthorIds
+            {
+                dynamic record = new System.Dynamic.ExpandoObject();
+                record.BHLEntityType = authorid.EntityType;
+                record.BHLEntityID = authorid.EntityID;
+                record.IdentifierType = authorid.Type;
+                record.IdentifierValue = authorid.Value;
+                data.Add(record);
+            }
+            foreach (var titleid in retrievedTitleIds)   // TODO:  Switch to use a list of added-to-production IDs from WDEntityIdentifierPublishTitleIds
+            {
+                dynamic record = new System.Dynamic.ExpandoObject();
+                record.BHLEntityType = titleid.EntityType;
+                record.BHLEntityID = titleid.EntityID;
+                record.IdentifierType = titleid.Type;
+                record.IdentifierValue = titleid.Value;
+                data.Add(record);
+            }
+            File.WriteAllBytes($"{outputFolder}\\{outputFileNewIDs}.{fileSuffix}.csv", new CSV().FormatCSVData(data));
+
+
+
+            // TODO: Get and output a list of potential problems
+
+
 
 
 
@@ -112,7 +136,7 @@ public class WDHarvestProcessor
     /// <param name="queryFile"></param>
     /// <param name="harvestDateTime"></param>
     /// <param name="identifierList"></param>
-    private void HarvestIdentifiers(string bhlEntityType, string queryFile, DateTime harvestDateTime, List<string> identifierList)
+    private void HarvestIdentifiers(string bhlEntityType, string queryFile, DateTime harvestDateTime, List<EntityIdentifierPair> identifierList)
     {
         LogMessage($"{bhlEntityType} identifier harvest started");
 
@@ -128,17 +152,18 @@ public class WDHarvestProcessor
             // Convert the TSV files to a one-id-pair-per-line format
             var idEntries = TSVConverter.ConvertTSVToObjects(bhlEntityType, cleanedTsv);
 
-            // Save the identifiers from both Wikidata query endpoints
+            // Save the identifiers
             foreach (var entry in idEntries)
             {
                 if (Int32.TryParse(entry.EntityID, out int entityId))
                 {
                     provider.WDEntityIdentifierInsert(entry.EntityType, entityId, entry.Type, entry.Value, harvestDateTime);
-                    identifierList.Add($"{entry.EntityID}|{entry.Type}|{entry.Value}");
+                    identifierList.Add(entry);
                 }
                 else
                 {
-                    invalidIds.Add($"{entry.EntityType}|{entry.EntityID}|{entry.Type}|{entry.Value}");
+                    entry.Message = "Malformed BHL Entity Identifier";
+                    invalidIds.Add(entry);
                 }
             }
         }
@@ -243,8 +268,7 @@ public class WDHarvestProcessor
             sb.Append($"{endOfLine}{this.invalidIds.Count.ToString()} Invalid Identifiers Found{endOfLine}");
             foreach(var id in invalidIds)
             {
-                var invalid = id.Split('|');
-                sb.Append($"{invalid[0]} {invalid[1]} - {invalid[2]}:{invalid[3]}{endOfLine}");
+                sb.Append($"{id.EntityType} {id.EntityID} - {id.Type}:{id.Value}{endOfLine}");
             }
         }
         if (this.errorMessages.Count > 0)

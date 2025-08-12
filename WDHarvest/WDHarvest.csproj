@@ -15,6 +15,7 @@
     <ProjectReference Include="..\BHLImportCoreDAL\BHLImportCoreDAL.csproj" />
     <ProjectReference Include="..\BHLImportDataObjects\BHLImportDataObjects.csproj" />
     <ProjectReference Include="..\BHLImportServer\BHLImportServer.csproj" />
+    <ProjectReference Include="..\BHLUtility\BHLUtility.csproj" />
     <ProjectReference Include="..\BHLWebServiceREST.v1.Client\BHL.WebServiceREST.v1.Client.csproj" />
     <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj" />
   </ItemGroup>
