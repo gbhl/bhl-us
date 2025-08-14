@@ -1,9 +1,9 @@
 ﻿using BHL.WebServiceREST.v1;
 using BHL.WebServiceREST.v1.Client;
 using MOBOT.BHL.Utility;
+using MOBOT.BHLImport.DataObjects;
 using MOBOT.BHLImport.Server;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class WDHarvestProcessor
 {
@@ -17,8 +17,11 @@ public class WDHarvestProcessor
     private ConfigParms configParms = new();
     private List<EntityIdentifierPair> retrievedTitleIds = new();
     private List<EntityIdentifierPair> retrievedAuthorIds = new();
+    private List<WDEntityIdentifier> publishedAuthorIds = new();
+    private List<WDEntityIdentifier> publishedTitleIds = new();
     private List<string> errorMessages = new();
     private List<EntityIdentifierPair> invalidIds = new();
+    private List<WDEntityIdentifier> idsToReview = new();
 
     // Create an BHLImportProvider for use in this class
     BHLImportProvider provider = new();
@@ -40,6 +43,13 @@ public class WDHarvestProcessor
         DateTime harvestDateTime = DateTime.Now;
         string bhlEntityType;
 
+        // Prepare output folder and filenames
+        string outputFolder = "data";
+        if (!Directory.Exists(outputFolder)) Directory.CreateDirectory(outputFolder);
+        string fileSuffix = harvestDateTime.ToString("yyyyMMdd.HHmm");
+        string addedFilename = $"AddedIdentifiers.{fileSuffix}.csv";
+        string reviewFilename = $"IdentifiersToReview.{fileSuffix}.csv";
+
         // NOTE: Some data has been "split" into "regular" and "scholarly" types.  Most, but not all, BHL material
         // is in the "regular" data set.  Because of this split, federated queries must be submitted to Wikidata to
         // return all BHL data.
@@ -59,72 +69,50 @@ public class WDHarvestProcessor
         }
 
         // Push new author identifiers into the production database
-        if (configParms.HarvestAuthorIDs)
+        if (configParms.PublishAuthorIDs)
         {
             bhlEntityType = "Author";
             LogMessage($"{bhlEntityType} identifier publish started");
-            provider.WDEntityIdentifierPublishAuthorIDs();
+            publishedAuthorIds = provider.WDEntityIdentifierPublishAuthorIDs();
             LogMessage($"{bhlEntityType} identifier publish complete");
         }
 
         // Push new title identifiers into the production database
-        if (configParms.HarvestTitleIDs)
+        if (configParms.PublishTitleIDs)
         {
             bhlEntityType = "Title";
             LogMessage($"{bhlEntityType} identifier publish started");
-            provider.WDEntityIdentifierPublishTitleIDs();
+            publishedTitleIds = provider.WDEntityIdentifierPublishTitleIDs();
             LogMessage($"{bhlEntityType} identifier publish complete");
         }
 
-        // Pull reports of identifiers needing investigation and deliver to the appropriate recipients
-        if (configParms.EmailAnalysis)
+        // If any identifiers were published, write them to a file
+        if (publishedAuthorIds.Count > 0 || publishedTitleIds.Count > 0)
         {
-            string outputFolder = "data";
-            string outputFileNewIDs = "AddedIdentifiers";
-            string fileSuffix = DateTime.Now.ToString("yyyyMMdd.HHmm");
+            LogMessage("Output of published identifiers started");
 
-            LogMessage("Report generation started");
+            // Output a list of published identifiers
+            var data = GetPublishedIdentifierList();
+            File.WriteAllBytes($"{outputFolder}\\{addedFilename}", new CSV().FormatCSVData(data));
 
-            // Prepare output folder
-            if (!Directory.Exists(outputFolder)) Directory.CreateDirectory(outputFolder);
-
-            // Output a list of added identifiers
-            var data = new List<dynamic>();
-            foreach (var authorid in retrievedAuthorIds)   // TODO:  Switch to use a list of added-to-production IDs from WDEntityIdentifierPublishAuthorIds
-            {
-                dynamic record = new System.Dynamic.ExpandoObject();
-                record.BHLEntityType = authorid.EntityType;
-                record.BHLEntityID = authorid.EntityID;
-                record.IdentifierType = authorid.Type;
-                record.IdentifierValue = authorid.Value;
-                data.Add(record);
-            }
-            foreach (var titleid in retrievedTitleIds)   // TODO:  Switch to use a list of added-to-production IDs from WDEntityIdentifierPublishTitleIds
-            {
-                dynamic record = new System.Dynamic.ExpandoObject();
-                record.BHLEntityType = titleid.EntityType;
-                record.BHLEntityID = titleid.EntityID;
-                record.IdentifierType = titleid.Type;
-                record.IdentifierValue = titleid.Value;
-                data.Add(record);
-            }
-            File.WriteAllBytes($"{outputFolder}\\{outputFileNewIDs}.{fileSuffix}.csv", new CSV().FormatCSVData(data));
-
-
-
-            // TODO: Get and output a list of potential problems
-
-
-
-
-
-
-
-            LogMessage("Report generation complete");
+            LogMessage("Output of published identifiers complete");
         }
 
-        // Report the results of item/page processing
-        this.ProcessResults();
+        // Pull report of identifiers needing investigation
+        if (configParms.DoAnalysis)
+        {
+            LogMessage("Analysis started");
+
+            // Get and output a list of potential problems
+            idsToReview = provider.WDEntityIdentifierSelectNeedReview();
+            var data = GetIdentifiersToReview();
+            File.WriteAllBytes($"{outputFolder}\\{reviewFilename}", new CSV().FormatCSVData(data));
+
+            LogMessage("Analysis complete");
+        }
+
+        // Report the results
+        this.ProcessResults(outputFolder, addedFilename, reviewFilename);
 
         LogMessage("WDHarvest Processing Complete");
     }
@@ -162,6 +150,7 @@ public class WDHarvestProcessor
                 }
                 else
                 {
+                    entry.EntityDescription = "Unknown";
                     entry.Message = "Malformed BHL Entity Identifier";
                     invalidIds.Add(entry);
                 }
@@ -176,6 +165,67 @@ public class WDHarvestProcessor
         {
             LogMessage($"{bhlEntityType} identifier harvest complete");
         }
+    }
+
+    /// <summary>
+    /// Combine all published identifiers into a single list
+    /// </summary>
+    /// <returns></returns>
+    private List<dynamic> GetPublishedIdentifierList()
+    {
+        // Produce a list of all added identifiers
+        var data = new List<dynamic>();
+        foreach (var authorid in publishedAuthorIds)
+        {
+            dynamic record = new System.Dynamic.ExpandoObject();
+            record.BHLEntityType = authorid.BHLEntityType;
+            record.BHLEntityID = authorid.BHLEntityID;
+            record.IdentifierType = authorid.IdentifierType;
+            record.IdentifierValue = authorid.IdentifierValue;
+            data.Add(record);
+        }
+        foreach (var titleid in publishedTitleIds)
+        {
+            dynamic record = new System.Dynamic.ExpandoObject();
+            record.BHLEntityType = titleid.BHLEntityType;
+            record.BHLEntityID = titleid.BHLEntityID;
+            record.IdentifierType = titleid.IdentifierType;
+            record.IdentifierValue = titleid.IdentifierValue;
+            data.Add(record);
+        }
+        return data;
+    }
+
+    /// <summary>
+    /// Combine all identifiers needing a review into a single list
+    /// </summary>
+    /// <returns></returns>
+    private List<dynamic> GetIdentifiersToReview()
+    {
+        var data = new List<dynamic>();
+        foreach (var id in invalidIds)
+        {
+            dynamic record = new System.Dynamic.ExpandoObject();
+            record.BHLEntityType = id.EntityType;
+            record.BHLEntityID = id.EntityID;
+            record.EntityDescription = id.EntityDescription;
+            record.IdentifierType = id.Type;
+            record.IdentifierValue = id.Value;
+            record.Message = id.Message;
+            data.Add(record);
+        }
+        foreach (var id in idsToReview)
+        {
+            dynamic record = new System.Dynamic.ExpandoObject();
+            record.BHLEntityType = id.BHLEntityType;
+            record.BHLEntityID = id.BHLEntityID;
+            record.EntityDescription = id.EntityDescription;
+            record.IdentifierType = id.IdentifierType;
+            record.IdentifierValue = id.IdentifierValue;
+            record.Message = id.Message;
+            data.Add(record);
+        }
+        return data;
     }
 
     /// <summary>
@@ -200,7 +250,7 @@ public class WDHarvestProcessor
 
             if (string.Compare(split[0], "/TITLEIDS", true) == 0) configParms.HarvestTitleIDs = Convert.ToBoolean(split[1]);
             if (string.Compare(split[0], "/AUTHORIDS", true) == 0) configParms.HarvestAuthorIDs = Convert.ToBoolean(split[1]);
-            if (string.Compare(split[0], "/ANALYSIS", true) == 0) configParms.EmailAnalysis = Convert.ToBoolean(split[1]); 
+            if (string.Compare(split[0], "/ANALYSIS", true) == 0) configParms.DoAnalysis = Convert.ToBoolean(split[1]); 
         }
 
         return true;
@@ -216,26 +266,40 @@ public class WDHarvestProcessor
     }
 
     /// <summary>
-    /// Examine the results of the process and take the appropriate 
-    /// actions (log, send email, do nothing).
+    /// Examine the results of the process and take the appropriate actions (log, send email, do nothing).
     /// </summary>
-    private void ProcessResults()
+    private void ProcessResults(string outputFolder, string addedFilename, string reviewFilename)
     {
         try
         {
             // Report the process results
+            string subject;
             string message;
-            string serviceName = "WDHarvest";
-            if (retrievedTitleIds.Count > 0 || retrievedAuthorIds.Count > 0 || invalidIds.Count > 0 || errorMessages.Count > 0)
+            if (retrievedTitleIds.Count > 0 || retrievedAuthorIds.Count > 0 || 
+                publishedTitleIds.Count > 0 || publishedAuthorIds.Count > 0 ||
+                invalidIds.Count > 0 || errorMessages.Count > 0)
             {
-                LogMessage("Sending Email....");
-                message = this.GetEmailBody();
+                LogMessage("Sending Emails");
+
+                // Email links to output files to specified recipients
+                if (publishedAuthorIds.Count > 0 || publishedTitleIds.Count > 0 || invalidIds.Count > 0 || idsToReview.Count > 0)
+                {
+                    subject = "BHL Wikidata Harvesting is complete";
+                    message = GetStaffEmailBody(outputFolder, addedFilename, reviewFilename);
+                    LogMessage(message);
+                    SendEmail("", message, configParms.StaffEmailToAddress);
+                }
+
+                // Email processing summary to admins
+                string successOrFailure = (errorMessages.Count == 0 ? "successfully" : "with errors");
+                subject = $"WDHarvest: Harvesting on {Environment.MachineName} completed {successOrFailure}.";                        
+                message = GetAdminEmailBody();
                 LogMessage(message);
-                this.SendEmail(serviceName, message);
+                SendEmail(subject, message, configParms.AdminEmailToAddress);
             }
             else
             {
-                message = "No items or pages processed";
+                message = "No data harvested";
                 LogMessage(message);
             }
         }
@@ -246,38 +310,40 @@ public class WDHarvestProcessor
         }
     }
 
+    private string GetStaffEmailBody(string outputFolder, string addedFilename, string reviewFilename)
+    {
+        string emailBody = File.ReadAllText(@"StaffEmailTemplate.txt");
+        emailBody.Replace("<PublishedTitleCount>", publishedTitleIds.Count.ToString());
+        emailBody.Replace("<PublishedAuthorCount>", publishedAuthorIds.Count.ToString());
+        emailBody.Replace("<ReviewCount>", (invalidIds.Count + idsToReview.Count).ToString());
+        emailBody.Replace("<Folder>", outputFolder);
+        emailBody.Replace("<AddFile>", addedFilename);
+        emailBody.Replace("<ReviewFile>", reviewFilename);
+        return emailBody;
+    }
+
     /// <summary>
     /// Constructs the body of an email message to be sent
     /// </summary>
     /// <returns>Body of email message to be sent</returns>
-    private string GetEmailBody()
+    private string GetAdminEmailBody()
     {
         StringBuilder sb = new();
         const string endOfLine = "\r\n";
 
-        if (this.retrievedTitleIds.Count > 0)
+        if (retrievedTitleIds.Count > 0) sb.Append($"Retrieved {retrievedTitleIds.Count.ToString()} Title Identifiers{endOfLine}");
+        if (retrievedAuthorIds.Count > 0) sb.Append($"Retrieved {retrievedAuthorIds.Count.ToString()} Author Identifiers{endOfLine}");
+        if (publishedTitleIds.Count > 0) sb.Append($"Published {publishedTitleIds.Count.ToString()} Title Identifiers{endOfLine}");
+        if (publishedAuthorIds.Count > 0) sb.Append($"Published {publishedAuthorIds.Count.ToString()} Author Identifiers{endOfLine}");
+        if (invalidIds.Count > 0)
         {
-            sb.Append($"Retrieved {this.retrievedTitleIds.Count.ToString()} Title Identifiers{endOfLine}");
+            sb.Append($"{endOfLine}{invalidIds.Count.ToString()} Invalid Identifiers Found{endOfLine}");
+            foreach(var id in invalidIds) sb.Append($"{id.EntityType} {id.EntityID} - {id.Type}:{id.Value}{endOfLine}");
         }
-        if (this.retrievedAuthorIds.Count > 0)
+        if (errorMessages.Count > 0)
         {
-            sb.Append($"Retrieved {this.retrievedAuthorIds.Count.ToString()} Author Identifiers{endOfLine}");
-        }
-        if (this.invalidIds.Count > 0)
-        {
-            sb.Append($"{endOfLine}{this.invalidIds.Count.ToString()} Invalid Identifiers Found{endOfLine}");
-            foreach(var id in invalidIds)
-            {
-                sb.Append($"{id.EntityType} {id.EntityID} - {id.Type}:{id.Value}{endOfLine}");
-            }
-        }
-        if (this.errorMessages.Count > 0)
-        {
-            sb.Append($"{endOfLine}{this.errorMessages.Count.ToString()} Errors Occurred{endOfLine}See the log file for details{endOfLine}{endOfLine}");
-            foreach (string message in errorMessages)
-            {
-                sb.Append($"{message}{endOfLine}");
-            }
+            sb.Append($"{endOfLine}{errorMessages.Count.ToString()} Errors Occurred{endOfLine}See the log file for details{endOfLine}{endOfLine}");
+            foreach (string message in errorMessages) sb.Append($"{message}{endOfLine}");
         }
 
         return sb.ToString();
@@ -287,7 +353,7 @@ public class WDHarvestProcessor
     /// Send the specified email message 
     /// </summary>
     /// <param name="message">Body of the message to be sent</param>
-    private void SendEmail(string serviceName, string message)
+    private void SendEmail(string subject, string message, string adminRecipients)
     {
         try
         {
@@ -295,17 +361,13 @@ public class WDHarvestProcessor
             {
                 MailRequestModel mailRequest = new()
                 {
-                    Subject = string.Format(
-                        "{0}: Harvesting on {1} completed {2}.",
-                        serviceName,
-                        Environment.MachineName,
-                        (errorMessages.Count == 0 ? "successfully" : "with errors")),
+                    Subject = subject,
                     Body = message,
                     From = configParms.EmailFromAddress
                 };
 
                 List<string> recipients = new();
-                foreach (string recipient in configParms.EmailToAddress.Split(',')) recipients.Add(recipient);
+                foreach (string recipient in adminRecipients.Split(',')) recipients.Add(recipient);
                 mailRequest.To = recipients;
 
                 EmailClient restClient = new(configParms.BHLWSEndpoint);

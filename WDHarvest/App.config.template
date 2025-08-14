@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <configSections>
+    <section name="log4net" type="System.Configuration.IgnoreSectionHandler"/>
+  </configSections>
+  <connectionStrings>
+    <add name="BHLImport" connectionString="DATABASE CONNECTION STRING" providerName="System.Data.SqlClient"/>
+  </connectionStrings>
+  <appSettings>
+    <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
+    <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+    <add key="AdminEmailToAddress" value="ADMIN EMAIL RECIPIENT ADDRESSES"/>
+    <add key="StaffEmailToAddress" value="STAFF EMAIL RECIPIENT ADDRESSES"/>
+    <!-- "Quiet" setting takes precedence -->
+    <add key="EmailOnError" value="false"/>
+
+    <!-- Actions to perform -->
+    <add key="HarvestTitleIDs" value="true"/>
+    <add key="HarvestAuthorIDs" value="true"/>
+    <add key="PublishTitleIDs" value="true"/>
+    <add key="PublishAuthorIDs" value="true"/>
+    <add key="DoAnalysis" value="true"/>
+    
+    <!-- BHLWS service endpoint -->
+    <add key="BHLWSUrl" value="BHLWS SERVICE URL" />
+  </appSettings>
+  <log4net>
+    <!-- Define some output appenders -->
+    <appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
+      <file value="\\SERVER\${COMPUTERNAME}-WDHarvest-rolling-log.txt"/>
+      <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+      <appendToFile value="true"/>
+      <maxSizeRollBackups value="10"/>
+      <maximumFileSize value="5000000"/>
+      <rollingStyle value="Size"/>
+      <staticLogFileName value="true"/>
+      <layout type="log4net.Layout.PatternLayout">
+        <header value="[Header]
+"/>
+        <footer value="[Footer]
+"/>
+        <conversionPattern value="%date [%thread] %-5level %logger [%ndc] - %message%newline"/>
+      </layout>
+    </appender>
+    <!-- Setup the root category, add the appenders and set the default level -->
+    <root>
+      <level value="ALL"/>
+      <appender-ref ref="RollingLogFileAppender"/>
+    </root>
+  </log4net>
+</configuration>

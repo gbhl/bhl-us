@@ -520,6 +520,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\WDEntityIdentifierDeleteByEntity
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\WDEntityIdentifierInsert.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\WDEntityIdentifierPublishAuthorIDs.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\WDEntityIdentifierPublishTitleIDs.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\WDEntityIdentifierSelectNeedReview.sql"
 
 GOTO DONE
 

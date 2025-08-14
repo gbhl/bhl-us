@@ -457,6 +457,7 @@
     <None Include="dbo\Stored Procedures\WDEntityIdentifierInsert.sql" />
     <None Include="dbo\Stored Procedures\WDEntityIdentifierPublishAuthorIDs.sql" />
     <None Include="dbo\Stored Procedures\WDEntityIdentifierPublishTitleIDs.sql" />
+    <None Include="dbo\Stored Procedures\WDEntityIdentifierSelectNeedReview.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />

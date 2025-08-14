@@ -1,5 +1,7 @@
 ﻿using MOBOT.BHLImport.DAL;
+using MOBOT.BHLImport.DataObjects;
 using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHLImport.Server
 {
@@ -17,14 +19,19 @@ namespace MOBOT.BHLImport.Server
                 entityType, entityId, identifierType, identifierValue, harvestDate);
         }
 
-        public void WDEntityIdentifierPublishAuthorIDs()
+        public List<WDEntityIdentifier> WDEntityIdentifierPublishAuthorIDs()
         {
-            new WDEntityIdentifierDAL().WDEntityIdentifierPublishAuthorIDs(null, null);
+            return new WDEntityIdentifierDAL().WDEntityIdentifierPublishAuthorIDs(null, null);
         }
 
-        public void WDEntityIdentifierPublishTitleIDs()
+        public List<WDEntityIdentifier> WDEntityIdentifierPublishTitleIDs()
         {
-            new WDEntityIdentifierDAL().WDEntityIdentifierPublishTitleIDs(null, null);
+            return new WDEntityIdentifierDAL().WDEntityIdentifierPublishTitleIDs(null, null);
+        }
+
+        public List<WDEntityIdentifier> WDEntityIdentifierSelectNeedReview()
+        {
+            return new WDEntityIdentifierDAL().WDEntityIdentifierSelectNeedReview(null, null);
         }
     }
 }

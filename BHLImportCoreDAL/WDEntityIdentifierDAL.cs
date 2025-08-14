@@ -1,5 +1,7 @@
 using CustomDataAccess;
+using MOBOT.BHLImport.DataObjects;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -45,25 +47,48 @@ namespace MOBOT.BHLImport.DAL
             }
         }
 
-        public void WDEntityIdentifierPublishAuthorIDs(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<WDEntityIdentifier> WDEntityIdentifierPublishAuthorIDs(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.WDEntityIdentifierPublishAuthorIDs", connection, transaction))
             {
-                CustomSqlHelper.ExecuteNonQuery(command);
+                using (CustomSqlHelper<WDEntityIdentifier> helper = new CustomSqlHelper<WDEntityIdentifier>())
+                {
+                    List<WDEntityIdentifier> list = helper.ExecuteReader(command);
+                    return list;
+                }
             }
         }
 
-        public void WDEntityIdentifierPublishTitleIDs(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<WDEntityIdentifier> WDEntityIdentifierPublishTitleIDs(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.WDEntityIdentifierPublishTitleIDs", connection, transaction))
             {
-                CustomSqlHelper.ExecuteNonQuery(command);
+                using (CustomSqlHelper<WDEntityIdentifier> helper = new CustomSqlHelper<WDEntityIdentifier>())
+                {
+                    List<WDEntityIdentifier> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
+        public List<WDEntityIdentifier> WDEntityIdentifierSelectNeedReview(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.WDEntityIdentifierSelectNeedReview", connection, transaction))
+            {
+                using (CustomSqlHelper<WDEntityIdentifier> helper = new CustomSqlHelper<WDEntityIdentifier>())
+                {
+                    List<WDEntityIdentifier> list = helper.ExecuteReader(command);
+                    return list;
+                }
             }
         }
     }

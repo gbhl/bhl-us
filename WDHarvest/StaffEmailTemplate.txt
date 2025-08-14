@@ -1,0 +1,12 @@
+﻿Harvesting of Author and Title identifiers from Wikidata is complete.
+
+    <PublishedTitleCount> new Title identifiers were added to BHL
+    <PublishedAuthorCount> new Author identifiers were added to BHL
+    <ReviewCount> identifiers need to be reviewed
+
+Lists of all newly added identifiers and of all identifiers needing a review will be available for download shortly.  Access them at the following locations:
+
+    Newly added identifiers:  https://admin.biodiversitylibrary.org/<Folder>/<AddFile>
+    Identifiers needing review:  https://admin.biodiversitylibrary.org/<Folder>/<ReviewFile>
+
+Thank you.
