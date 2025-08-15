@@ -7,6 +7,7 @@ BEGIN
 -- Get the IDs to add to production
 SELECT	a.AuthorID, 
 		i.IdentifierID, 
+		i.IdentifierName,
 		w.IdentifierValue
 INTO	#AuthorIDs
 FROM	dbo.WDEntityIdentifier w
@@ -21,7 +22,7 @@ INSERT	dbo.BHLAuthorIdentifier (AuthorID, IdentifierID, IdentifierValue)
 SELECT	AuthorID, IdentifierID, IdentifierValue FROM #AuthorIDs
 
 -- Return the list of newly added IDs
-SELECT AuthorID, IdentifierID, IdentifierValue FROM #AuthorIDs
+SELECT 'Author' AS BHLEntityType, AuthorID AS BHLEntityID, IdentifierName AS IdentifierType, IdentifierValue FROM #AuthorIDs
 
 END
 GO

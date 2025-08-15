@@ -7,6 +7,7 @@ BEGIN
 -- Get the IDs to add to production
 SELECT	t.TitleID, 
 		i.IdentifierID, 
+		i.IdentifierName,
 		w.IdentifierValue
 INTO	#TitleIDs
 FROM	dbo.WDEntityIdentifier w
@@ -26,7 +27,7 @@ INSERT	dbo.BHLTitle_Identifier (TitleID, IdentifierID, IdentifierValue)
 SELECT	TitleID, IdentifierID, IdentifierValue FROM #TitleIDs
 
 -- Return the list of newly added IDs
-SELECT TitleID, IdentifierID, IdentifierValue FROM #TitleIDs
+SELECT 'Title' AS BHLEntityType, TitleID AS BHLEntityID, IdentifierName AS IdentifierType, IdentifierValue FROM #TitleIDs
 
 END
 GO

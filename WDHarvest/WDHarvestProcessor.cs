@@ -47,8 +47,8 @@ public class WDHarvestProcessor
         string outputFolder = "data";
         if (!Directory.Exists(outputFolder)) Directory.CreateDirectory(outputFolder);
         string fileSuffix = harvestDateTime.ToString("yyyyMMdd.HHmm");
-        string addedFilename = $"AddedIdentifiers.{fileSuffix}.csv";
-        string reviewFilename = $"IdentifiersToReview.{fileSuffix}.csv";
+        string addedFilename = $"WDHarvestAdded.{fileSuffix}.csv";
+        string reviewFilename = $"WDHarvestReview.{fileSuffix}.csv";
 
         // NOTE: Some data has been "split" into "regular" and "scholarly" types.  Most, but not all, BHL material
         // is in the "regular" data set.  Because of this split, federated queries must be submitted to Wikidata to
@@ -275,9 +275,10 @@ public class WDHarvestProcessor
             // Report the process results
             string subject;
             string message;
-            if (retrievedTitleIds.Count > 0 || retrievedAuthorIds.Count > 0 || 
+            string serviceName = "WDHarvest";
+            if (retrievedTitleIds.Count > 0 || retrievedAuthorIds.Count > 0 ||
                 publishedTitleIds.Count > 0 || publishedAuthorIds.Count > 0 ||
-                invalidIds.Count > 0 || errorMessages.Count > 0)
+                invalidIds.Count > 0 || idsToReview.Count > 0 || errorMessages.Count > 0)
             {
                 LogMessage("Sending Emails");
 
@@ -287,20 +288,25 @@ public class WDHarvestProcessor
                     subject = "BHL Wikidata Harvesting is complete";
                     message = GetStaffEmailBody(outputFolder, addedFilename, reviewFilename);
                     LogMessage(message);
-                    SendEmail("", message, configParms.StaffEmailToAddress);
+                    SendEmail(subject, message, configParms.StaffEmailToAddress);
                 }
 
                 // Email processing summary to admins
                 string successOrFailure = (errorMessages.Count == 0 ? "successfully" : "with errors");
-                subject = $"WDHarvest: Harvesting on {Environment.MachineName} completed {successOrFailure}.";                        
+                subject = $"{serviceName}: Harvesting on {Environment.MachineName} completed {successOrFailure}.";
                 message = GetAdminEmailBody();
                 LogMessage(message);
-                SendEmail(subject, message, configParms.AdminEmailToAddress);
+                SendServiceLog(serviceName, message);
+                if (errorMessages.Count > 0 && configParms.EmailOnError)
+                {
+                    SendEmail(subject, message, configParms.AdminEmailToAddress);
+                }
             }
             else
             {
                 message = "No data harvested";
                 LogMessage(message);
+                SendServiceLog(serviceName, message);
             }
         }
         catch (Exception ex)
@@ -313,12 +319,12 @@ public class WDHarvestProcessor
     private string GetStaffEmailBody(string outputFolder, string addedFilename, string reviewFilename)
     {
         string emailBody = File.ReadAllText(@"StaffEmailTemplate.txt");
-        emailBody.Replace("<PublishedTitleCount>", publishedTitleIds.Count.ToString());
-        emailBody.Replace("<PublishedAuthorCount>", publishedAuthorIds.Count.ToString());
-        emailBody.Replace("<ReviewCount>", (invalidIds.Count + idsToReview.Count).ToString());
-        emailBody.Replace("<Folder>", outputFolder);
-        emailBody.Replace("<AddFile>", addedFilename);
-        emailBody.Replace("<ReviewFile>", reviewFilename);
+        emailBody = emailBody.Replace("<PublishedTitleCount>", publishedTitleIds.Count.ToString());
+        emailBody = emailBody.Replace("<PublishedAuthorCount>", publishedAuthorIds.Count.ToString());
+        emailBody = emailBody.Replace("<ReviewCount>", (invalidIds.Count + idsToReview.Count).ToString());
+        emailBody = emailBody.Replace("<Folder>", outputFolder);
+        emailBody = emailBody.Replace("<AddFile>", addedFilename);
+        emailBody = emailBody.Replace("<ReviewFile>", reviewFilename);
         return emailBody;
     }
 
@@ -335,16 +341,13 @@ public class WDHarvestProcessor
         if (retrievedAuthorIds.Count > 0) sb.Append($"Retrieved {retrievedAuthorIds.Count.ToString()} Author Identifiers{endOfLine}");
         if (publishedTitleIds.Count > 0) sb.Append($"Published {publishedTitleIds.Count.ToString()} Title Identifiers{endOfLine}");
         if (publishedAuthorIds.Count > 0) sb.Append($"Published {publishedAuthorIds.Count.ToString()} Author Identifiers{endOfLine}");
-        if (invalidIds.Count > 0)
-        {
-            sb.Append($"{endOfLine}{invalidIds.Count.ToString()} Invalid Identifiers Found{endOfLine}");
-            foreach(var id in invalidIds) sb.Append($"{id.EntityType} {id.EntityID} - {id.Type}:{id.Value}{endOfLine}");
-        }
+        if (invalidIds.Count > 0 || idsToReview.Count > 0) sb.Append($"{(invalidIds.Count + idsToReview.Count).ToString()} Identifiers Require Manual Review{endOfLine}");
         if (errorMessages.Count > 0)
         {
             sb.Append($"{endOfLine}{errorMessages.Count.ToString()} Errors Occurred{endOfLine}See the log file for details{endOfLine}{endOfLine}");
             foreach (string message in errorMessages) sb.Append($"{message}{endOfLine}");
         }
+        sb.Append($"{endOfLine}Lists of published identifiers and identifiers needing review can be downloaded from the https://admin.biodiversitylibrary.org/data folder.");
 
         return sb.ToString();
     }
@@ -357,26 +360,47 @@ public class WDHarvestProcessor
     {
         try
         {
-            if (errorMessages.Count > 0 && configParms.EmailOnError)
+            MailRequestModel mailRequest = new()
             {
-                MailRequestModel mailRequest = new()
-                {
-                    Subject = subject,
-                    Body = message,
-                    From = configParms.EmailFromAddress
-                };
+                Subject = subject,
+                Body = message,
+                From = configParms.EmailFromAddress
+            };
 
-                List<string> recipients = new();
-                foreach (string recipient in adminRecipients.Split(',')) recipients.Add(recipient);
-                mailRequest.To = recipients;
+            List<string> recipients = new();
+            foreach (string recipient in adminRecipients.Split(',')) recipients.Add(recipient);
+            mailRequest.To = recipients;
 
-                EmailClient restClient = new(configParms.BHLWSEndpoint);
-                restClient.SendEmail(mailRequest);
-            }
+            EmailClient restClient = new(configParms.BHLWSEndpoint);
+            restClient.SendEmail(mailRequest);
         }
         catch (Exception ex)
         {
             log.Error("Email Exception: ", ex);
+        }
+    }
+
+    /// <summary>
+    /// Send the specified message to the log table in the database
+    /// </summary>
+    /// <param name="serviceName">Name of the service being logged</param>
+    /// <param name="message">Body of the message to be sent</param>
+    private void SendServiceLog(string serviceName, string message)
+    {
+        try
+        {
+            ServiceLogModel serviceLog = new ServiceLogModel();
+            serviceLog.Servicename = serviceName;
+            serviceLog.Logdate = DateTime.Now;
+            serviceLog.Severityname = (errorMessages.Count > 0 ? "Error" : "Information");
+            serviceLog.Message = string.Format("Processing on {0} completed.\n\r{1}", Environment.MachineName, message);
+
+            ServiceLogsClient restClient = new ServiceLogsClient(configParms.BHLWSEndpoint);
+            restClient.InsertServiceLog(serviceLog);
+        }
+        catch (Exception ex)
+        {
+            log.Error("Service Log Exception: ", ex);
         }
     }
 

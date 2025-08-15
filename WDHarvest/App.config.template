@@ -12,7 +12,7 @@
     <add key="AdminEmailToAddress" value="ADMIN EMAIL RECIPIENT ADDRESSES"/>
     <add key="StaffEmailToAddress" value="STAFF EMAIL RECIPIENT ADDRESSES"/>
     <!-- "Quiet" setting takes precedence -->
-    <add key="EmailOnError" value="false"/>
+    <add key="EmailOnError" value="true"/>
 
     <!-- Actions to perform -->
     <add key="HarvestTitleIDs" value="true"/>
