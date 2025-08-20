@@ -423,6 +423,21 @@ namespace MOBOT.BHL.API.BHLApiDAL
             }
         }
 
+        public List<Part> SegmentSelectByBarcode(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string barcode)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiSegmentSelectByBarcode", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 200, false, barcode)))
+            {
+                using (CustomSqlHelper<Part> helper = new CustomSqlHelper<Part>())
+                {
+                    return helper.ExecuteReader(command);
+                }
+            }
+        }
+
         public List<Part> SegmentSelectByDOI(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string doi)
         {

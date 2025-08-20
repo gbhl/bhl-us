@@ -2,7 +2,6 @@
 using MOBOT.BHL.API.BHLApiDAL;
 using MOBOT.BHL.API.BHLApiDataObjects3;
 using MOBOT.BHL.Server;
-using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -428,26 +427,19 @@ namespace MOBOT.BHL.API.BHLApi
                 case "bhl":
                     parts = dal.SegmentSelectForSegmentID(null, null, segmentID);
                     break;
-                //case "oclc":
-                //case "issn":
-                //case "isbn":
-                //case "lccn":
-                //case "ddc":
-                //case "nal":
-                //case "nlm":
-                //case "coden":
                 case "biostor":
                 case "jstor":
                 case "soulsby":
-                    //if (idType.ToLower() == "lccn") idType = "dlc";
                     parts = dal.SegmentSelectByIdentifier(null, null, idType, id);
+                    break;
+                case "ia":
+                    parts = dal.SegmentSelectByBarcode(null, null, id);
                     break;
                 case "doi":
                     parts = dal.SegmentSelectByDOI(null, null, id);
                     break;
                 default:
-                    //throw new InvalidApiParamException("idType  must be one of the following values: bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby");
-                    throw new InvalidApiParamException("idType  must be one of the following values: bhl, doi, biostor, jstor, soulsby");
+                    throw new InvalidApiParamException("idType must be one of the following values: bhl, ia, doi, biostor, jstor, soulsby");
             }
 
             // Add the extended metadata

@@ -1110,6 +1110,7 @@
     <None Include="dbo\Stored Procedures\ReportSelectPermissionsTitles.sql" />
     <None Include="dbo\Stored Procedures\ExportSegmentPage.sql" />
     <None Include="dbo\Stored Procedures\DOIPrefixSelectAll.sql" />
+    <None Include="dbo\Stored Procedures\ApiSegmentSelectByBarcode.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
