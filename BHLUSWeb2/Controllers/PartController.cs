@@ -20,7 +20,6 @@ namespace MOBOT.BHL.Web2.Controllers
         int pdfTimeout = 36000000;
 
         [EnableThrottling]
-        [HttpGet]
         public ActionResult Index(int partid)
         {
             BHLProvider bhlProvider = new BHLProvider();

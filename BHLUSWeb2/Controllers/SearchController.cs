@@ -17,7 +17,7 @@ namespace MOBOT.BHL.Web2.Controllers
     {
         // GET: Index
         [EnableThrottling]
-        [HttpGet]
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Head)]
         public ActionResult Index(string searchTerm, string tinc, string stype, string searchCat, string lname, string ninc,
             string yr, string subj, string sinc, string lang, string col, string nt, string ntinc, string txt, string txinc, 
             string ppage, string apage, string kpage, string npage, string psort, string[] facet)
@@ -174,7 +174,7 @@ namespace MOBOT.BHL.Web2.Controllers
         }
 
         [EnableThrottling]
-        [HttpGet]
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Head)]
         public ActionResult Pages(string q, int itemId)
         {
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);

@@ -11,7 +11,6 @@ namespace MOBOT.BHL.Web2.Controllers
     public class BibliographyController : Controller
     {
         [EnableThrottling]
-        [HttpGet]
         public ActionResult Index(int titleid)
         {
             BHLProvider bhlProvider = new BHLProvider();
