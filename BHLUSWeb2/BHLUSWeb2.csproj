@@ -1055,6 +1055,10 @@
       <Project>{9d4f7066-f859-43b6-bab1-e8a33ca3bff7}</Project>
       <Name>IIIFUtility</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MvcThrottle\MvcThrottle.csproj">
+      <Project>{17c09440-ddbf-44b8-8410-c888525e9ca5}</Project>
+      <Name>MvcThrottle</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NameServiceDAL\BHLApiDAL.csproj">
       <Project>{DB3BF959-1D08-441B-8622-F4E066DE91DC}</Project>
       <Name>BHLApiDAL</Name>
@@ -1134,9 +1138,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MvcThrottle">
-      <Version>2.1.3</Version>
-    </PackageReference>
     <PackageReference Include="NETStandard.Library">
       <Version>2.0.3</Version>
     </PackageReference>
