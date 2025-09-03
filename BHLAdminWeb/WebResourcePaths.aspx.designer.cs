@@ -51,13 +51,22 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.WebControls.TextBox txtPdfPath;
 
         /// <summary>
-        /// txtScandataPath control.
+        /// txtPreLocalScandataPath control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtScandataPath;
+        protected global::System.Web.UI.WebControls.TextBox txtPreLocalScandataPath;
+
+        /// <summary>
+        /// txtPostLocalScandataPath control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPostLocalScandataPath;
 
         /// <summary>
         /// txtDjvuPath control.

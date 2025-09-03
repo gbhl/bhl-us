@@ -57,25 +57,47 @@ namespace MOBOT.BHL.Server
             {
                 var xml = new XDocument();
                 bool scanDataLoaded = false;
-                string scanData = this.ScandataGetFileContents(itemType, entityID);
-                if (!string.IsNullOrWhiteSpace(scanData))
+
+                Item item = this.ItemSelectFilenames(itemType, entityID);
+                string preLocalScandataPath = this.GetRemoteFilePath(RemoteFileType.PreLocalScandata, item.BarCode, item.ScandataFilename);
+                string postLocalScandataPath = this.GetRemoteFilePath(RemoteFileType.PostLocalScandata, item.BarCode, item.ScandataFilename);
+
+                if (!string.IsNullOrWhiteSpace(preLocalScandataPath))
                 {
+                    // First try to read from the remote copy of scandata (AWS)
                     try
                     {
-                        xml = XDocument.Load(new StringReader(scanData));
+                        xml = XDocument.Load(preLocalScandataPath);
                         scanDataLoaded = true;
                     }
                     catch
                     {
-                        // Could not load, try a remote copy instead
+                        // Could not load, try a local copy instead
                     }
                 }
 
                 if (!scanDataLoaded)
                 {
-                    // Local file not loaded; look for a remote copy (at Internet Archive)
-                    Item item = this.ItemSelectFilenames(itemType, entityID);
-                    xml = XDocument.Load(this.GetRemoteFilePath(RemoteFileType.Scandata, item.BarCode, item.ScandataFilename));
+                    // Remote file not loaded, read the local copy
+                    string scanData = this.ScandataGetFileContents(itemType, entityID);
+                    if (!string.IsNullOrWhiteSpace(scanData))
+                    {
+                        try
+                        {
+                            xml = XDocument.Load(new StringReader(scanData));
+                            scanDataLoaded = true;
+                        }
+                        catch
+                        {
+                            // Could not load, try a secondary remote copy instead
+                        }
+                    }
+                }
+
+                if (!scanDataLoaded && !string.IsNullOrWhiteSpace(postLocalScandataPath))
+                {
+                    // File not loaded; look for a secondary remote copy (at Internet Archive)
+                    xml = XDocument.Load(postLocalScandataPath);
                 }
 
                 XNamespace ns = string.Empty;
@@ -892,8 +914,11 @@ namespace MOBOT.BHL.Server
                 case RemoteFileType.Pdf:
                     configKey = "PDFPathTemplate";
                     break;
-                case RemoteFileType.Scandata:
-                    configKey = "ScandataPathTemplate";
+                case RemoteFileType.PreLocalScandata:
+                    configKey = "PreLocalScandataPathTemplate";
+                    break;
+                case RemoteFileType.PostLocalScandata:
+                    configKey = "PostLocalScandataPathTemplate";
                     break;
                 case RemoteFileType.Djvu:
                     configKey = "DjvuPathTemplate";
