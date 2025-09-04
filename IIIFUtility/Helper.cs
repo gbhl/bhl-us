@@ -50,14 +50,14 @@ namespace BHL.IIIF
                 // No local file found; look for a remote copy (at Internet Archive)
                 try
                 {
-                    xml.Load(wc.OpenRead(provider.GetRemoteFilePath(RemoteFileType.Scandata, barCode, item.ScandataFilename)));
+                    xml.Load(wc.OpenRead(provider.GetRemoteFilePath(RemoteFileType.PostLocalScandata, barCode, item.ScandataFilename)));
                 }
                 catch
                 {
                     // Direct path to scandata file failed, try scandata.zip instead
                     try
                     {
-                        xml.Load(wc.OpenRead(provider.GetRemoteFilePath(RemoteFileType.Scandata, barCode, "scandata.zip/scandata.xml")));
+                        xml.Load(wc.OpenRead(provider.GetRemoteFilePath(RemoteFileType.PostLocalScandata, barCode, "scandata.zip/scandata.xml")));
                     }
                     catch (Exception ex)
                     {

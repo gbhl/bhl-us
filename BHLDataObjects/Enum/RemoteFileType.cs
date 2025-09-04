@@ -9,7 +9,8 @@ namespace MOBOT.BHL.DataObjects.Enum
         ImageWebp,
         ImageZip,
         Pdf,
-        Scandata,
+        PreLocalScandata,
+        PostLocalScandata,
         Djvu
     }
 }

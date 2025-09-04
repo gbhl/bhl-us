@@ -13,7 +13,8 @@ namespace MOBOT.BHL.AdminWeb
                 txtImageBaseUrl.Text = GetConfigurationValue("ImageBaseURL");
                 txtImageZipPath.Text =  GetConfigurationValue("ImageZIPPathTemplate");
                 txtPdfPath.Text = GetConfigurationValue("PDFPathTemplate");
-                txtScandataPath.Text = GetConfigurationValue("ScandataPathTemplate");
+                txtPostLocalScandataPath.Text = GetConfigurationValue("PostLocalScandataPathTemplate");
+                txtPreLocalScandataPath.Text = GetConfigurationValue("PreLocalScandataPathTemplate");
                 txtDjvuPath.Text = GetConfigurationValue("DjvuPathTemplate");
             }
         }
@@ -36,7 +37,8 @@ namespace MOBOT.BHL.AdminWeb
             if (provider.ConfigurationSave("ImageBaseURL", txtImageBaseUrl.Text) != null &&
                 provider.ConfigurationSave("ImageZIPPathTemplate", txtImageZipPath.Text) != null &&
                 provider.ConfigurationSave("PDFPathTemplate", txtPdfPath.Text) != null &&
-                provider.ConfigurationSave("ScandataPathTemplate", txtScandataPath.Text) != null &&
+                provider.ConfigurationSave("PostLocalScandataPathTemplate", txtPostLocalScandataPath.Text) != null &&
+                provider.ConfigurationSave("PreLocalScandataPathTemplate", txtPreLocalScandataPath.Text) != null &&
                 provider.ConfigurationSave("DjvuPathTemplate", txtDjvuPath.Text) != null)
             {
                 lblMessage.Text = "Web Resource Paths updated.";
