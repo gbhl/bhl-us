@@ -1,9 +1,9 @@
 var socialSpan = document.getElementById("socicons");
 if (socialSpan) {
-	addSocialElement(socialSpan, "https://facebook.com/biodivlibrary", "socicon socicon-fb", "/images/socicon-fb.png", "Open Facebook", "Facebook");
-	addSocialElement(socialSpan, "https://twitter.com/biodivlibrary", "socicon socicon-twitter", "/images/socicon-twitter.png", "Open Twitter", "Twitter");
-	addSocialElement(socialSpan, "https://flickr.com/biodivlibrary", "socicon socicon-flickr", "/images/socicon-flickr.png", "Open Flickr", "Flickr");
+	addSocialElement(socialSpan, "https://bsky.app/profile/biodivlibrary.bsky.social", "socicon socicon-bsky", "/images/socicon-bsky.png", "Open BlueSky", "BlueSky");
 	addSocialElement(socialSpan, "https://instagram.com/biodivlibrary", "socicon socicon-insta", "/images/socicon-insta.png", "Open Instagram", "Instagram");
+	addSocialElement(socialSpan, "https://facebook.com/biodivlibrary", "socicon socicon-fb", "/images/socicon-fb.png", "Open Facebook", "Facebook");
+	addSocialElement(socialSpan, "https://flickr.com/biodivlibrary", "socicon socicon-flickr", "/images/socicon-flickr.png", "Open Flickr", "Flickr");
 }
 
 function addSocialElement(target, url, cssclass, icon, alt, title) {

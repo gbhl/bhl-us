@@ -7,6 +7,10 @@
 .socicon img {
 	margin-right:0px !important;
 }
+.socicon-bsky:hover {
+	content: url("/images/socicon-bsky-hover.png") / "Open BlueSky";
+	cursor: pointer;
+}
 .socicon-fb:hover {
 	content:url("/images/socicon-fb-hover.png") / "Open Facebook";
 	cursor:pointer;

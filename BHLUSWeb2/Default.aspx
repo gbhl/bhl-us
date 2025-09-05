@@ -14,8 +14,8 @@
 <div id="heroimage-home"><img title="<%= homeHeroText %>" alt="<%= homeHeroText %>" src="images/0<%= homeHeroImage %>_home_pic_img.png" /></div>
 <% if (System.Configuration.ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true") { %>
 <div id="newfuturebox-home" class="featurebox-home">
-    <h3>Call for Support</h3>
-    <p style="margin:10px 0">BHL is seeking new institutional partners to support and sustain one of the world’s most important open-access biodiversity infrastructures.</p>
+    <h3>Future of BHL</h3>
+    <p style="margin:10px 0">BHL's future is uncertain, but hopeful. Follow the latest news of our ongoing transition.<br><br></p>
     <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]%>">Learn More</a>
 </div>
 <%} else { %>
