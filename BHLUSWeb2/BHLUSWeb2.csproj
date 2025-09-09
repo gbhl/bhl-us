@@ -452,6 +452,8 @@
     <Content Include="images\rss.png" />
     <Content Include="images\sil_horizontal_clr.png" />
     <Content Include="images\sil_vertical_clr.png" />
+    <Content Include="images\socicon-bsky-hover.png" />
+    <Content Include="images\socicon-bsky.png" />
     <Content Include="images\socicon-fb-hover.png" />
     <Content Include="images\socicon-fb.png" />
     <Content Include="images\socicon-flickr-hover.png" />

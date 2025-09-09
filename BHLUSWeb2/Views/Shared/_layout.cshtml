@@ -10,8 +10,8 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>@ViewBag.Title</title>
     @RenderSection("CSS", required: false)
-    <link rel="stylesheet" href="/css/style.css?v=30" />
-    <link rel="stylesheet" href="/css/socicon.css?v=1" media="all" />
+    <link rel="stylesheet" href="/css/style.css?v=31" />
+    <link rel="stylesheet" href="/css/socicon.css?v=2" media="all" />
     <link rel="stylesheet" href="/css/cookieconsent.css" />
     <script src="/js/libs/modernizr-custom.js"></script>
 
@@ -88,14 +88,14 @@
                 </span>
                 <span id="headersocial">
                     <span id="socicons"></span>
-                    <script type="text/javascript" src="/js/socicon.js?v=1"></script>
+                    <script type="text/javascript" src="/js/socicon.js?v=2"></script>
                 </span>
             </div>
         </header>
         @if (System.Web.Configuration.WebConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true")
         {
             <div class="newfuturebanner">
-                BHL announces Call for Support. <a title="new future" href="@System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]">Learn more.</a>
+                The future of BHL is uncertain, but hopeful. <a title="new future" href="@System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]">Learn more.</a>
             </div>
         }
         else
