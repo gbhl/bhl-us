@@ -138,7 +138,7 @@
     <add key="TwitterConsumerSecret" value="your twitter consumer secret goes here"/>
     <add key="BHLTwitterFeedUrl" value="https://api.twitter.com/1.1/search/tweets.json?q=from:biodivlibrary&amp;count=3&amp;include_entities=true"/>
 
-    <add key="DonateUrl" value="https://library.si.edu/donate-bhl"/>
+    <add key="DonateUrl" value="https://about.biodiversitylibrary.org/get-involved/donate/"/>
 
     <add key="NewFutureNewsUrl" value="https://s.si.edu/bhlcallforsupport" />
 
