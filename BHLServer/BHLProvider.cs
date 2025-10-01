@@ -10,8 +10,10 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Linq;
 
@@ -51,7 +53,7 @@ namespace MOBOT.BHL.Server
         /// <param name="pages"></param>
         /// <param name="itemID"></param>
         /// <returns></returns>
-        public List<BHLProvider.ViewerPage> PageGetImageDimensions(List<BHLProvider.ViewerPage> pages, ItemType itemType, int entityID)
+        public async Task<List<BHLProvider.ViewerPage>> PageGetImageDimensions(List<BHLProvider.ViewerPage> pages, ItemType itemType, int entityID)
         {
             try
             {
@@ -67,7 +69,8 @@ namespace MOBOT.BHL.Server
                     // First try to read from the remote copy of scandata (AWS)
                     try
                     {
-                        xml = XDocument.Load(preLocalScandataPath);
+                        xml = await XMLDocumentLoadAsync(preLocalScandataPath);
+                        //xml = XDocument.Load(preLocalScandataPath);
                         scanDataLoaded = true;
                     }
                     catch
@@ -97,7 +100,8 @@ namespace MOBOT.BHL.Server
                 if (!scanDataLoaded && !string.IsNullOrWhiteSpace(postLocalScandataPath))
                 {
                     // File not loaded; look for a secondary remote copy (at Internet Archive)
-                    xml = XDocument.Load(postLocalScandataPath);
+                    xml = await XMLDocumentLoadAsync(postLocalScandataPath);
+                    //xml = XDocument.Load(postLocalScandataPath);
                 }
 
                 XNamespace ns = string.Empty;
@@ -150,6 +154,39 @@ namespace MOBOT.BHL.Server
             }
 
             return pages;
+        }
+
+        /// <summary>
+        /// Asyncronously load scandata files from the specified URL
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private async Task<XDocument> XMLDocumentLoadAsync(string url)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    response.EnsureSuccessStatusCode(); // Throws an exception if the HTTP response status is an error code
+
+                    using (Stream stream = await response.Content.ReadAsStreamAsync())
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        string xmlContent = await reader.ReadToEndAsync();
+                        return XDocument.Parse(xmlContent);
+                    }
+                }
+                catch (HttpRequestException e)
+                {
+                    throw new Exception($"Request error: {e.Message}");
+                }
+                catch (Exception e)
+                {
+                    throw new Exception($"An unexpected error occurred: {e.Message}");
+                }
+            }
         }
 
         /// <summary>

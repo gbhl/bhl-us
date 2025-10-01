@@ -39,7 +39,7 @@ namespace BHL.SiteServicesREST.v1.Controllers
 
         [HttpPut("{itemID}/ImageDimensions", Name = "GetItemPageImageDimensions")]
         [ProducesResponseType(200, Type = typeof(List<ViewerPageModel>))]
-        public IActionResult ImageDimensions(int itemID, List<ViewerPageModel> pageModels)
+        public async Task<IActionResult> ImageDimensions(int itemID, List<ViewerPageModel> pageModels)
         {
             List<BHLProvider.ViewerPage> pages = new List<BHLProvider.ViewerPage>();
             foreach (var model in pageModels) pages.Add(new BHLProvider.ViewerPage
@@ -53,7 +53,7 @@ namespace BHL.SiteServicesREST.v1.Controllers
                 Width = model.Width
             });
 
-            pages = _bhlProvider.PageGetImageDimensions(pages, ItemType.Book, itemID);
+            pages = await _bhlProvider.PageGetImageDimensions(pages, ItemType.Book, itemID);
 
             List<ViewerPageModel> returnPages = new List<ViewerPageModel>();
             foreach (var page in pages) returnPages.Add(new ViewerPageModel

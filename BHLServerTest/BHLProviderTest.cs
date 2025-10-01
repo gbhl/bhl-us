@@ -97,7 +97,7 @@ namespace BHLServerTest
         }
 
         [TestMethod]
-        public void PageGetImageDimensionsTest()
+        public async void PageGetImageDimensionsTest()
         {
             BHLProvider target = new BHLProvider();
 
@@ -112,7 +112,7 @@ namespace BHLServerTest
                 Width = 0
             };
             actual.Add(page);
-            actual = target.PageGetImageDimensions(actual, itemType, itemid);
+            actual = await target.PageGetImageDimensions(actual, itemType, itemid);
             Assert.IsTrue(actual[0].Height > 0);
         }
 

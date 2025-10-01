@@ -3,6 +3,7 @@ using MOBOT.BHL.DataObjects.Enum;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace MOBOT.BHL.Server
 {
@@ -11,7 +12,7 @@ namespace MOBOT.BHL.Server
         string GetItemText(ItemType itemType, int entityID);
         byte[] GetItemPdf(ItemType itemType, int entityID);
         string GetItemPdfPath(ItemType itemType, int entityID);
-        List<BHLProvider.ViewerPage> PageGetImageDimensions(List<BHLProvider.ViewerPage> pages, ItemType itemType, int entityID);
+        Task<List<BHLProvider.ViewerPage>> PageGetImageDimensions(List<BHLProvider.ViewerPage> pages, ItemType itemType, int entityID);
         string DOIGetFileContents(string batchId, string type);
         string MarcGetFileContents(int id, string type);
         void MarcCreateFile(string marcBibID, string content);
