@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="stylesheet" href="/css/bhlaustylereference.css?v=8" />
-    <link rel="stylesheet" href="/css/style.css?v=31" />
+    <link rel="stylesheet" href="/css/style.css?v=32" />
     <link rel="Stylesheet" href="/css/bookviewer.css?v=3" />
     <link rel="stylesheet" href="/css/socicon.css?v=2" media="all" />
 	<link rel="stylesheet" href="/css/cookieconsent.css" />
@@ -44,6 +44,22 @@
     </script>
     <noscript><img alt="dcsimg" id="dcsimg" width="1" height="1" src="//logs1.smithsonian.museum/dcsse0w37bdzpxzj2yuxm4sap_9g8y/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=10.4.23&amp;dcssip=www.biodiversitylibrary.org"/></noscript>
     <!-- END OF SmartSource Data Collector TAG v10.4.23 -->
+    <!-- Fundraise Up: the new standard for online giving -->
+    <script>
+        (function (w, d, s, n, a) {
+            if (!w[n]) {
+                var l = 'call,catch,on,once,set,then,track,openCheckout'
+                    .split(','), i, o = function (n) {
+                        return 'function' == typeof n ? o.l.push([arguments]) && o
+                            : function () { return o.l.push([n, arguments]) && o }
+                    }, t = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s); j.async = !0; j.src = 'https://cdn.fundraiseup.com/widget/' + a + '';
+                t.parentNode.insertBefore(j, t); o.s = Date.now(); o.v = 5; o.h = w.location.href; o.l = [];
+                for (i = 0; i < 8; i++)o[l[i]] = o(l[i]); w[n] = o
+            }
+        })(window, document, 'script', 'FundraiseUp', 'ANCRYWKV');
+    </script>
+    <!-- End Fundraise Up -->
 </head>
 
 <body id="book-master" class="book-master">
@@ -63,7 +79,9 @@
                         <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>">FAQ</a>
                         <a href="/contact">Feedback</a>
                         <span id="headersocialbook">
-                            <span id="socicons"></span>
+                            <span id="socicons">
+                                <span style="display:inline-block;position:relative;top:-13px"><a href="#XTBSDNXZ" style="display: none"></a></span>
+                            </span>
                             <script type="text/javascript" src="/js/socicon.js?v=2"></script>
                         </span>
 		            </nav>
