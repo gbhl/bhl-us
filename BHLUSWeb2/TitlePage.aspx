@@ -8,13 +8,6 @@
             <a href="/contact/" title="Report an error" class="report"><img alt="Report an error" src="/images/rpterror.png" /></a>
             <% if (!string.IsNullOrWhiteSpace(PublicationDetail.DownloadUrl)) { %>
                 <div class="buttondrop download">Download Contents<div class="play"></div>
-                    <div class="downloadcontents">
-                        <div><a href="/bibliography/<%: PublicationDetail.TitleID %>">View Metadata</a></div>
-                        <div><a href="#" class="selectpages">Select pages to download</a></div>
-                        <div><a href="#" class="selectpart">Download Part</a></div>
-                        <div><a href="#" class="downloadbook">Download Book</a></div>
-                        <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PublicationDetail.BarCode) %>" rel="noopener noreferrer" target="_blank">View at Internet Archive</a></div>
-                    </div>
                 </div> 
                 <div class="jqmWindow" id="download-dialog">
                     <div class="head">
@@ -431,6 +424,14 @@
             </div> <!-- bookcontent -->
         </div> <!-- bookwrapper -->
     </div> <!-- bookwrapper -->
+
+    <div class="downloadcontents">
+        <div><a href="/bibliography/<%: PublicationDetail.TitleID %>">View Metadata</a></div>
+        <div><a href="#" class="selectpages">Select pages to download</a></div>
+        <div><a href="#" class="selectpart">Download Part</a></div>
+        <div><a href="#" class="downloadbook">Download Book</a></div>
+        <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PublicationDetail.BarCode) %>" rel="noopener noreferrer" target="_blank">View at Internet Archive</a></div>
+    </div>
 
     <div id="AnnotationBoxPlaceholder" class="active">
         <div id="AnnotationBox" class="active" style="display:none">
@@ -904,6 +905,12 @@
 
 
         $(".buttondrop.download").on("click", function () {
+            // Set the position of the download menu in relation to the menu anchor
+            let parent = document.querySelector(".buttondrop.download");
+            let parentposition = parent.getBoundingClientRect();
+            ddposition = (parentposition.bottom || 0) + 1;
+            $(".downloadcontents").css("top", ddposition);
+            
             if ($(".downloadcontents").css("display") == "block") {
                 $(".downloadcontents").slideUp("fast"); 
             } else {
