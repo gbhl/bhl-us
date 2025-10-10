@@ -97,7 +97,6 @@ namespace MOBOT.BHL.AdminWeb.Services
                 context.Response.ClearHeaders();
                 context.Response.Buffer = true;
                 context.Response.ContentType = "text/csv";
-                context.Response.AddHeader("Content-Disposition", "attachment; filename=IAHarvestItemList.csv");
 
                 // Get the data to output
                 BHLImportProvider provider = new BHLImportProvider();

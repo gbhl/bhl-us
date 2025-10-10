@@ -4,6 +4,9 @@ using MOBOT.BHLImport.Server;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -83,7 +86,25 @@ namespace MOBOT.BHL.AdminWeb
             string msg = string.Empty;
             if (this.Validate(out msg))
             {
-                Response.Redirect("/services/dataharvestservice.ashx?dl=1&id=" + ddlStatusView.SelectedValue + "&iaid=" + txtIAIdentifier.Text);
+                HttpClient hc = new HttpClient();
+                hc.Timeout = TimeSpan.FromMinutes(10);
+                Uri url = Request.Url;
+                string absoluteUri = string.Format("{0}://{1}:{2}/services/dataharvestservice.ashx?dl=1&id={3}&iaid={4}", 
+                    url.Scheme, url.Host, url.Port, ddlStatusView.SelectedValue, txtIAIdentifier.Text);
+                string data = hc.GetStringAsync(absoluteUri).Result;
+
+                try
+                {
+                    Response.Buffer = true;
+                    Response.ContentType = "text/csv";
+                    Response.AddHeader("Content-Disposition", "attachment; filename=IAHarvestItemList.csv");
+                    Response.Write(data);
+                    Response.Flush();
+                }
+                finally
+                {
+                    Response.End();
+                }
             }
             else
             {
