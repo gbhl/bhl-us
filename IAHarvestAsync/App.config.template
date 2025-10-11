@@ -21,7 +21,7 @@
     <add key="Quiet" value="True"/>
 
     <!-- Internet Archive search URL -->
-    <add key="SearchListIdentifiersUrl" value="http://www.archive.org/advancedsearch.php?q={0}+AND+-collection:citebank+AND+-collection:bhlstaging+AND+-subject:bhlstaging+AND+mediatype:texts+AND+oai_updatedate:[{1}+TO+{2}]&amp;fl[]=identifier&amp;fl[]=bhl_virtual_titleid&amp;fl[]=oai_updatedate&amp;rows=500000&amp;fmt=xml"/>
+    <add key="SearchListIdentifiersUrl" value="http://www.archive.org/advancedsearch.php?q={0}+AND+-collection:citebank+AND+-collection:bhlstaging+AND+-subject:bhlstaging+AND+mediatype:texts+AND+oai_updatedate:[{1}+TO+{2}]&amp;fl[]=identifier&amp;fl[]=bhl_virtual_titleid&amp;fl[]=oai_updatedate&amp;rows=500000&amp;output=xml"/>
 
     <add key="LocalFileFolder" value="c:\temp\bhl1\"/>
 
