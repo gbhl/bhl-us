@@ -11,11 +11,27 @@ SET @langs = ''
 -- This might be the way that languages are stored in the 
 -- MARC 41 record, so we just concatenate all MARC 41
 -- records for an item to get the full list of languages.
-SELECT	@langs = @langs + COALESCE(SubFieldValue, '')
-FROM	vwMarcDataField
-WHERE	DataFieldTag = '041'
-AND		Code IN ('a', 'b')
-AND		MarcID = @MarcId
+;WITH CTE AS (
+	-- Return a CTE with each language and its associated source code (i.e. eng, iso639-3)
+	SELECT	l.MarcDataFieldID, l.SubFieldValue AS Language, s.SubFieldValue AS Source
+	FROM	(	SELECT	MarcDataFieldID, Code, SubFieldValue
+				FROM	vwMarcDataField
+				WHERE	DataFieldTag = '041'
+				AND		Code IN ('a', 'b')
+				AND		MarcID = @MarcId
+			) l
+			LEFT JOIN (
+				SELECT	MarcDataFieldID, Code, SubFieldValue
+				FROM	vwMarcDataField
+				WHERE	DataFieldTag = '041'
+				AND		Code = '2'
+				AND		MarcID = @MarcId
+				) s ON l.MarcDataFieldID = s.MarcDataFieldID
+	)
+-- Only include languages with no source code or a source code of iso639-2b
+SELECT	@langs = @langs + COALESCE(Language, '')
+FROM	CTE
+WHERE	ISNULL(Source, 'iso639-2b') = 'iso639-2b'
 
 -- Parse each individual language code into the return table.
 DECLARE	@pos smallint
