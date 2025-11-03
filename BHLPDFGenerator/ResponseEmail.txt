@@ -1,0 +1,15 @@
+﻿Your PDF generation request has been completed.
+
+[ArticleHeader][ArticleTitle][ArticleAuthor][ArticleSubject][ArticleFooter]
+The PDF can be downloaded from the following location: [FileLocation]
+
+You have 30 days to complete the download.
+
+Having Problems Viewing Your PDF? Depending on your browser, you may experience trouble using the built-in PDF viewer, which may not correctly display the images contained in this PDF. If you experience viewing problems in your browser, open the PDF in an alternative viewer.
+
+If you have questions or need to report an error, please contact us via our Feedback page: https://www.biodiversitylibrary.org/feedback.aspx
+
+**Please Support BHL**
+BHL depends on the financial support of its patrons. Help us continue to provide free services like custom PDFs with a tax-deductible donation: https://ancrywkv.donorsupport.co/page/BHLDonations
+
+Join our mailing list to receive the latest BHL news and content highlights: https://s.si.edu/bhl-mailinglist02

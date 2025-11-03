@@ -148,6 +148,9 @@
     <Content Include="legal.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="ResponseEmail.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BHLWebServiceREST.v1.Client\BHL.WebServiceREST.v1.Client.csproj">

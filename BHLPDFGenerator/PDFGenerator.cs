@@ -304,44 +304,42 @@ namespace MOBOT.BHL.BHLPDFGenerator
         /// Constructs the body of an email message to be sent
         /// </summary>
         /// <returns>Body of email message to be sent</returns>
-        private String GetRequestorEmailBody(int pdfId, String fileLocation, string articleTitle, 
-            string articleCreators, string articleTags)
+        private String GetRequestorEmailBody(int pdfId, String fileLocation, string articleTitle, string articleCreators, string articleTags)
         {
-            StringBuilder sb = new StringBuilder();
             const string endOfLine = "\r\n";
+            string emailText = File.ReadAllText(@"ResponseEmail.txt");
+            emailText = emailText.Replace("[FileLocation]", fileLocation);
 
-            sb.Append("Your PDF generation request has been completed.");
-            sb.Append(endOfLine);
-            sb.Append(endOfLine);
             if (!string.IsNullOrWhiteSpace(articleTitle + articleCreators + articleTags))
             {
-                sb.Append("The following metadata was supplied with this request:" + endOfLine + endOfLine);
-                if (articleTitle.Trim() != string.Empty) sb.Append("Article/Chapter Title - " + articleTitle.Trim() + endOfLine);
-                if (articleCreators.Trim() != string.Empty) sb.Append("Author(s) - " + articleCreators.Trim() + endOfLine);
-                if (articleTags.Trim() != string.Empty) sb.Append("Subjects(s) - " + articleTags.Trim() + endOfLine);
-                sb.Append(endOfLine);
-            }
-            sb.Append("The PDF can be downloaded from the following location: " + fileLocation);
-            sb.Append(endOfLine);
-            sb.Append(endOfLine);
-            sb.Append("You have 30 days to complete the download.");
-            sb.Append(endOfLine);
-            sb.Append(endOfLine);
-            sb.Append("Having Problems Viewing Your PDF? Depending on your browser, you may experience trouble using the built-in PDF viewer, which may not correctly display the images contained in this PDF. If you experience viewing problems in your browser, open the PDF in an alternative viewer.");
-            sb.Append(endOfLine);
-            sb.Append(endOfLine);
-            sb.Append("If you have questions or need to report an error, please contact us via our Feedback page: https://www.biodiversitylibrary.org/feedback.aspx");
-            sb.Append(endOfLine);
-            sb.Append(endOfLine);
-            sb.Append("**Please Support BHL**");
-            sb.Append(endOfLine);
-            sb.Append("BHL depends on the financial support of its patrons. Help us continue to provide free services like custom PDFs with a tax-deductible donation: https://s.si.edu/donate-bhl02");
-            sb.Append(endOfLine);
-            sb.Append(endOfLine);
-            sb.Append("Join our mailing list to receive the latest BHL news and content highlights: https://s.si.edu/bhl-mailinglist02");
-            sb.Append(endOfLine);
+                emailText = emailText.Replace("[ArticleHeader]", "The following metadata was supplied with this request:" + endOfLine + endOfLine);
 
-            return sb.ToString();
+                if (articleTitle.Trim() != string.Empty)
+                    emailText = emailText.Replace("[ArticleTitle]", "Article/Chapter Title - " + articleTitle.Trim() + endOfLine);
+                else
+                    emailText = emailText.Replace("[ArticleTitle]", "");
+
+                if (articleCreators.Trim() != string.Empty) 
+                    emailText = emailText.Replace("[ArticleAuthor]", "Author(s) - " + articleCreators.Trim() + endOfLine);
+                else
+                    emailText = emailText.Replace("[ArticleAuthor]", "");
+
+                if (articleTags.Trim() != string.Empty) 
+                    emailText = emailText.Replace("[ArticleSubject]", "Subjects(s) - " + articleTags.Trim() + endOfLine);
+                else
+                    emailText = emailText.Replace("[ArticleSubject]", "");
+
+                emailText = emailText.Replace("[ArticleFooter]", endOfLine);
+            }
+            else
+            {
+                emailText = emailText.Replace("[ArticleHeader]", "");
+                emailText = emailText.Replace("[ArticleTitle]", "");
+                emailText = emailText.Replace("[ArticleAuthor]", "");
+                emailText = emailText.Replace("[ArticleSubject]", "");
+                emailText = emailText.Replace("[ArticleFooter]", "");
+            }
+            return emailText;
         }
 
         /// <summary>
