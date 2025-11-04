@@ -95,6 +95,7 @@
     <add key="LogExceptions" value="true"/>
     <add key="MonitorThreshold" value="20"/>
     <add key="DebugValue" value="debug"/>
+    <add key="FundraiseUpCampaignCode" value="#FUNDRAISEUP_CODE"/>
     <!-- 
     Set "IpThrottling" to "true" to consider IP addresses when rate limiting, "false" 
     to ignore IP addresses.  Setting to "false" may be useful if troublesome traffic 
