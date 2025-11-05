@@ -496,8 +496,13 @@ namespace MOBOT.BHL.DAL
                         // Update the item
                         if (itemTitle.TitleID == 0) itemTitle.TitleID = updatedTitle.ReturnObject.TitleID;
 						itemTitleDAL.ItemTitleManageAuto( connection, transaction, itemTitle, userId );
-					}
-				}
+                        if (itemTitle.IsDirty || itemTitle.IsDeleted)
+                        {
+                            // Update the primary title id (stored on the Item table)
+                            itemDAL.ItemUpdatePrimaryTitleID(connection, transaction, itemTitle.ItemID, itemTitle.PrimaryTitleID);
+                        }
+                    }
+                }
 
                 if (title.TitleInstitutions.Count > 0)
                 {
