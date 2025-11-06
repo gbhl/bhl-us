@@ -179,6 +179,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     }
                     else
                     {
+                        ExceptionUtility.LogException(wex, "PartController.GetPartPdf");
                         return Redirect("~/error");
                     }
                 }
@@ -207,14 +208,12 @@ namespace MOBOT.BHL.Web2.Controllers
             catch (WebException wex)
             {
                 if (stream != null) stream.Dispose();
-
-                string redirect = "~/error";
-                var response = wex.Response as HttpWebResponse;
-                if (response != null)
+                if (wex.Response is HttpWebResponse response)
                 {
-                    if (response.StatusCode == HttpStatusCode.NotFound) redirect = "~/pagenotfound";
+                    if (response.StatusCode == HttpStatusCode.NotFound) return Redirect("~/pagenotfound");
                 }
-                return Redirect(redirect);
+                ExceptionUtility.LogException(wex, "PartController.GetPregeneratedPDF");
+                return Redirect("~/error");
             }
 
             if (stream != null)
@@ -228,7 +227,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 catch (Exception ex)
                 {
                     if (stream != null) stream.Dispose();
-                    ExceptionUtility.LogException(ex, "GetPartPDF.GetPregeneratedPdf");
+                    ExceptionUtility.LogException(ex, "PartController.GetPregeneratedPdf");
                     return Redirect("~/error");
                 }
             }
@@ -282,6 +281,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     }
                     else
                     {
+                        ExceptionUtility.LogException(wex, "PartController.GetPartImages");
                         return Redirect("~/error");
                     }
                 }

@@ -82,6 +82,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     }
                     else
                     {
+                        ExceptionUtility.LogException(wex, "ItemController.GetItemPdf");
                         return Redirect("~/error");
                     }
                 }
@@ -113,14 +114,12 @@ namespace MOBOT.BHL.Web2.Controllers
                 catch (WebException wex)
                 {
                     if (stream != null) stream.Dispose();
-
-                    string redirect = "~/error";
-                    var response = wex.Response as HttpWebResponse;
-                    if (response != null)
+                    if (wex.Response is HttpWebResponse response)
                     {
-                        if (response.StatusCode == HttpStatusCode.NotFound) redirect = "~/pagenotfound";
+                        if (response.StatusCode == HttpStatusCode.NotFound) return Redirect("~/pagenotfound");
                     }
-                    return Redirect(redirect);
+                    ExceptionUtility.LogException(wex, "ItemController.GetItemImages");
+                    return Redirect("~/error");
                 }
 
                 if (fileSize > 2147483647)
@@ -150,7 +149,7 @@ namespace MOBOT.BHL.Web2.Controllers
                         }
                         catch (Exception ex)
                         {
-                            ExceptionUtility.LogException(ex, "GetItemImages.ProcessRequest");
+                            ExceptionUtility.LogException(ex, "ItemController.GetItemImages");
                             return Redirect("~/error");
                         }
                         finally

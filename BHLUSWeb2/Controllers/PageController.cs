@@ -1,6 +1,7 @@
 ﻿using BHL.SiteServiceREST.v1.Client;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
 using MvcThrottle;
 using System;
 using System.Configuration;
@@ -70,6 +71,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 }
                 else
                 {
+                    ExceptionUtility.LogException(wex, "PageController.GetPageThumb");
                     return Redirect("~/error");
                 }
             }
@@ -110,6 +112,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 }
                 else
                 {
+                    ExceptionUtility.LogException(wex, "PageController.GetPageImage");
                     return Redirect("~/error");
                 }
             }

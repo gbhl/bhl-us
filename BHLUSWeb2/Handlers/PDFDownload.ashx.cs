@@ -3,7 +3,6 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Net;
-using System.Threading;
 using System.Web;
 
 namespace MOBOT.BHL.Web2
@@ -28,7 +27,6 @@ namespace MOBOT.BHL.Web2
             context.Response.Clear();
             context.Response.ClearContent();
             context.Response.ClearHeaders();
-            //context.Response.Buffer = true;
             context.Response.ContentType = "application/pdf";
             context.Response.AddHeader("content-disposition", "filename=" + filename);
 
@@ -37,17 +35,15 @@ namespace MOBOT.BHL.Web2
             {
                 stream = this.GetPdfStream(pdfPath);
             }
-            catch (System.Net.WebException wex)
+            catch (WebException wex)
             {
                 if (stream != null) stream.Dispose();
-
-                string redirect = "~/error";
-                var response = wex.Response as HttpWebResponse;
-                if (response != null)
+                if (wex.Response is HttpWebResponse response)
                 {
-                    if (response.StatusCode == HttpStatusCode.NotFound) redirect = "~/pagenotfound";
+                    if (response.StatusCode == HttpStatusCode.NotFound) context.Response.Redirect("~/pagenotfound", true);
                 }
-                context.Response.Redirect(redirect, true);
+                ExceptionUtility.LogException(wex, "PDFDownload.ProcessRequest");
+                context.Response.Redirect("~/error", true);
             }
 
             if (stream != null)
@@ -55,7 +51,6 @@ namespace MOBOT.BHL.Web2
                 try
                 {
                     stream.CopyTo(context.Response.OutputStream);
-                    //context.Response.BeginFlush(res => context.Response.EndFlush(res), Thread.CurrentThread.ManagedThreadId);
                 }
                 catch (Exception ex)
                 {
