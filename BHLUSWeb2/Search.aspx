@@ -83,7 +83,6 @@
                     <li class="<%= SetSortClass("author") %>"><asp:HyperLink ID="lnkAuthorSort" runat="server" Text="Author"></asp:HyperLink></li>
                     <li class="<%= SetSortClass("date") %>"><asp:HyperLink ID="lnkDateSort" runat="server" Text="Year"></asp:HyperLink></li>
                     </ul>
-                    <asp:HyperLink ID="hypBookDownload" runat="server" Text="Download results" Visible="false"  class="searchtitlelinks"></asp:HyperLink>
                     <asp:HyperLink ID="lnkTitleMoreTop" Visible="false" runat="server" Text="View more Books/Journals..." class="searchtitlelinks"/>
                     <asp:Literal ID="litTitleRefineTop" Visible="false" runat="server" Text="" />
                     <div class="floatclear"></div>
@@ -140,7 +139,6 @@
                     <li class="<%= SetSortClass("author") %>"><asp:HyperLink ID="lnkAuthorSegSort" runat="server" Text="Author"></asp:HyperLink></li>
                     <li class="<%= SetSortClass("year") %>"><asp:HyperLink ID="lnkDateSegSort" runat="server" Text="Year"></asp:HyperLink></li>
                     </ul>
-                    <asp:HyperLink ID="hypSegmentDownload" runat="server" Text="Download results" Visible="false"  class="searchtitlelinks"></asp:HyperLink>
                     <asp:HyperLink ID="lnkSegmentMoreTop" Visible="false" runat="server" Text="View more Articles/Chapters/Treatments"  class="searchtitlelinks"/>
                     <asp:Literal ID="litSegmentRefineTop" Visible="false" runat="server" Text=""  />
                     <div class="floatclear"></div>

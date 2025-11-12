@@ -6,12 +6,10 @@ using System.Configuration;
 
 namespace MOBOT.BHL.Web2
 {
-    public partial class CollectionDetails : BrowsePage
+    public partial class CollectionDetails : BasePage
     {
-        protected override void Page_Load(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
-
-            base.Page_Load(sender, e);
             int collectionID;
 
                 List<Collection> collections = new BHLProvider().CollectionSelectByUrl((string)RouteData.Values["collectionid"]);
@@ -80,11 +78,6 @@ namespace MOBOT.BHL.Web2
             if (collection == null)
             {
                 html = "Collection not found";
-            }
-            else if (collection.CollectionTarget == "iTunes")
-            {
-                html = "<p>This collection is only viewable at iTunesU.</p>";
-                if (!string.IsNullOrEmpty(collection.ITunesURL)) html += "<p><a href='" + collection.ITunesURL + "'>Click here to view the collection at iTunesU.</a></p>";
             }
             else
             {

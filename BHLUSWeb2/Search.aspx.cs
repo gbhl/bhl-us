@@ -393,12 +393,6 @@ namespace MOBOT.BHL.Web2
                     lnkTitleMore.Visible = true;
                     lnkTitleMoreTop.Visible = true;
                 }
-                if (books.Count > 0)
-                {
-                    hypBookDownload.NavigateUrl = String.Format("/services/searchdownloadservice.ashx?searchTerm={0}&searchCat={1}&lang={2}&lname={3}&vol={4}&ed={5}&yr={6}&subj={7}&col={8}&dltype=T",
-                        searchTerm, searchCat, searchLang, searchLastName, searchVolume, searchEdition, searchYear, searchSubject, searchCollection);
-                    hypBookDownload.Visible = true;
-                }
                 if (books.Count == maxExpandedResults)
                 {
                     litTitleRefine.Visible = true;
@@ -515,12 +509,6 @@ namespace MOBOT.BHL.Web2
                     lnkSegmentMoreTop.NavigateUrl = lnkSegmentMore.NavigateUrl;
                     lnkSegmentMore.Visible = true;
                     lnkSegmentMoreTop.Visible = true;
-                }
-                if (segments.Count > 0)
-                {
-                    hypSegmentDownload.NavigateUrl = String.Format("/services/searchdownloadservice.ashx?searchTerm={0}&searchCat={1}&cont={2}&lname={3}&yr={4}&dltype=S",
-                        searchTerm, searchCat, searchContainerTitle, searchLastName, searchYear);
-                    hypSegmentDownload.Visible = true;
                 }
                 if (segments.Count == maxExpandedResults)
                 {

@@ -1,21 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using MOBOT.BHL.Web.Utilities;
 
 namespace MOBOT.BHL.Web2
 {
-    public partial class _Default : BrowsePage
+    public partial class _Default : BasePage
     {
         public int homeHeroImage = 1;
         public string homeHeroText = "";
-        protected override void Page_Load(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
-            base.Page_Load(sender, e);
             Master.bodyID = "body-home";
             Master.harmfulContentBannerVisible = false;
             Master.newFutureBannerVisible = false;

@@ -6,7 +6,7 @@ using System.Configuration;
 
 namespace MOBOT.BHL.Web2
 {
-    public partial class AdvancedSearch : BrowsePage
+    public partial class AdvancedSearch : BasePage
     {
         private TabName _startTab = TabName.Book;
         public string startTabDiv = "divBookSearch";
@@ -27,9 +27,8 @@ namespace MOBOT.BHL.Web2
             Annotation
         }
 
-        protected override void Page_Load(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
-            base.Page_Load(sender, e);
             main.Page.Title = String.Format(ConfigurationManager.AppSettings["PageTitle"], "Advanced Search");
 
             if (!this.IsPostBack)

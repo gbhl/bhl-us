@@ -33,12 +33,15 @@ namespace MOBOT.BHL.Web2.Controllers
             {
                 // Refresh cache
                 model.Author = bhlProvider.AuthorSelectExtended(creatorId);
-                HttpContext.Cache.Add(cacheKey, model.Author, null, DateTime.Now.AddMinutes(
-                    Convert.ToDouble(ConfigurationManager.AppSettings["AuthorMetadataCacheTime"])),
-                    System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+                if (model.Author != null)
+                {
+                    HttpContext.Cache.Add(cacheKey, model.Author, null, DateTime.Now.AddMinutes(
+                        Convert.ToDouble(ConfigurationManager.AppSettings["AuthorMetadataCacheTime"])),
+                        System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+                }
             }
 
-            if (model.Author == null) Response.Redirect("~/authornotfound");
+            if (model.Author == null) return Redirect("~/authornotfound");
             if (model.Author.RedirectAuthorID != null) Response.Redirect("~/creator/" + model.Author.RedirectAuthorID);
 
             // Remove any author identifiers not intended for display

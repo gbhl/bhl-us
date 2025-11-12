@@ -130,7 +130,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Admin\Default.html" />
     <Content Include="AdvancedSearch.aspx" />
     <Content Include="alertmsg.txt" />
     <Content Include="api2\docs\AuthorSearch.xml" />
@@ -210,7 +209,6 @@
     <Content Include="api\docs\NameList.xml" />
     <Content Include="api\docs\NameSearch.xml" />
     <Content Include="api\soap.asmx" />
-    <Content Include="AuthorNotFound.aspx" />
     <Content Include="BiblioSelect.aspx" />
     <Content Include="bot_list.txt" />
     <Content Include="BrowseCollections.aspx" />
@@ -257,7 +255,6 @@
     <Content Include="dlconcepts.aspx" />
     <Content Include="dlindexbrowse.aspx" />
     <Content Include="dlsearch.aspx" />
-    <Content Include="Error.aspx" />
     <Content Include="Feedback.aspx" />
     <Content Include="feedbackmsg.txt" />
     <Content Include="flickrthumbs.txt" />
@@ -471,7 +468,6 @@
     <Content Include="images\twitter-icon-over.png" />
     <Content Include="images\up.gif" />
     <Content Include="images\view_page.gif" />
-    <Content Include="ItemNotFound.aspx" />
     <Content Include="ItemPage.aspx" />
     <Content Include="js\citation-js\bhl-citation-js.js" />
     <Content Include="js\citation-js\citation-js%400.6.4.js" />
@@ -500,8 +496,6 @@
     <Content Include="tify\tifysrc\tify-logo.svg" />
     <Content Include="tify\tifysrc\tify.css" />
     <Content Include="tify\tifysrc\tify.js" />
-    <Content Include="TitleUnavailable.aspx" />
-    <Content Include="ItemUnavailable.aspx" />
     <Content Include="js\jMyCarousel\credits.txt" />
     <Content Include="js\jMyCarousel\img\arrow_down.gif" />
     <Content Include="js\jMyCarousel\img\arrow_left.gif" />
@@ -542,7 +536,6 @@
     <Content Include="OpenUrlHelp.aspx" />
     <Content Include="OpenURLMultiple.aspx" />
     <Content Include="OpenURLNone.aspx" />
-    <Content Include="PageNotFound.aspx" />
     <Content Include="Recent.aspx" />
     <Content Include="RecentRss.aspx" />
     <Content Include="packages.config" />
@@ -563,7 +556,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="ratelimit.config.template" />
-    <None Include="Remoting.config.template" />
     <None Include="services\Name\Web.config.template" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_layout.cshtml" />
@@ -603,6 +595,13 @@
     <Content Include="Views\Bibliography\Index.cshtml" />
     <Content Include="Views\Shared\_COinSControl.cshtml" />
     <Content Include="Views\Part\Index.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\PageNotFound\Index.cshtml" />
+    <Content Include="Views\TitleNotFound\Index.cshtml" />
+    <Content Include="Views\ItemNotFound\Index.cshtml" />
+    <Content Include="Views\AuthorNotFound\Index.cshtml" />
+    <Content Include="Views\ItemUnavailable\Index.cshtml" />
+    <Content Include="Views\TitleUnavailable\Index.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -618,7 +617,6 @@
     <Content Include="services\Name\NameService.asmx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="TitleNotFound.aspx" />
     <Content Include="TitlePage.aspx" />
     <Content Include="Search.aspx" />
     <Content Include="Web.config">
@@ -657,12 +655,20 @@
     <Compile Include="App_Code\FilterConfig.cs" />
     <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Controllers\BibliographyController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\AuthorNotFoundController.cs" />
+    <Compile Include="Controllers\TitleNotFoundController.cs" />
     <Compile Include="Controllers\NameController.cs" />
     <Compile Include="Controllers\NameDetailController.cs" />
     <Compile Include="Controllers\OpenUrlController.cs" />
     <Compile Include="Controllers\PageController.cs" />
+    <Compile Include="Controllers\ItemNotFoundController.cs" />
+    <Compile Include="Controllers\PageNotFoundController.cs" />
     <Compile Include="Controllers\PartController.cs" />
+    <Compile Include="Controllers\RedirectController.cs" />
+    <Compile Include="Controllers\ItemUnavailableController.cs" />
+    <Compile Include="Controllers\TitleUnavailableController.cs" />
     <Compile Include="Models\BibliographyModel.cs" />
     <Compile Include="Models\COinSModel.cs" />
     <Compile Include="Models\NameDetailModel.cs" />
@@ -670,13 +676,6 @@
     <Compile Include="Models\PartModel.cs" />
     <Compile Include="MVCServices\MvcThrottleLogger.cs" />
     <Compile Include="App_Code\RouteConfig.cs" />
-    <Compile Include="AuthorNotFound.aspx.cs">
-      <DependentUpon>AuthorNotFound.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AuthorNotFound.aspx.designer.cs">
-      <DependentUpon>AuthorNotFound.aspx</DependentUpon>
-    </Compile>
     <Compile Include="BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -709,9 +708,6 @@
       <DependentUpon>BrowseContributors.aspx</DependentUpon>
     </Compile>
     <Compile Include="BrowseOutputCacheAttribute.cs" />
-    <Compile Include="BrowsePage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="CollectionDetails.aspx.cs">
       <DependentUpon>CollectionDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -824,13 +820,6 @@
     <Compile Include="dlsearch.aspx.designer.cs">
       <DependentUpon>dlsearch.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Error.aspx.cs">
-      <DependentUpon>Error.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Error.aspx.designer.cs">
-      <DependentUpon>Error.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Feedback.aspx.cs">
       <DependentUpon>Feedback.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -851,9 +840,6 @@
     <Compile Include="Handlers\BibTeXDownload.ashx.cs">
       <DependentUpon>BibTeXDownload.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\ITunesRSS.ashx.cs">
-      <DependentUpon>ITunesRSS.ashx</DependentUpon>
-    </Compile>
     <Compile Include="Handlers\CSLDownload.ashx.cs">
       <DependentUpon>CSLDownload.ashx</DependentUpon>
     </Compile>
@@ -865,13 +851,6 @@
     </Compile>
     <Compile Include="Handlers\RISDownload.ashx.cs">
       <DependentUpon>RISDownload.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="ItemNotFound.aspx.cs">
-      <DependentUpon>ItemNotFound.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ItemNotFound.aspx.designer.cs">
-      <DependentUpon>ItemNotFound.aspx</DependentUpon>
     </Compile>
     <Compile Include="ItemPage.aspx.cs">
       <DependentUpon>ItemPage.aspx</DependentUpon>
@@ -889,20 +868,6 @@
     <Compile Include="Models\YearBrowseModel.cs" />
     <Compile Include="RssFeedControlVersion2.cs">
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TitleUnavailable.aspx.cs">
-      <DependentUpon>TitleUnavailable.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TitleUnavailable.aspx.designer.cs">
-      <DependentUpon>TitleUnavailable.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ItemUnavailable.aspx.cs">
-      <DependentUpon>ItemUnavailable.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ItemUnavailable.aspx.designer.cs">
-      <DependentUpon>ItemUnavailable.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Monitor.aspx.cs">
@@ -934,13 +899,6 @@
     <Compile Include="OpenURLNone.aspx.designer.cs">
       <DependentUpon>OpenURLNone.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PageNotFound.aspx.cs">
-      <DependentUpon>PageNotFound.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PageNotFound.aspx.designer.cs">
-      <DependentUpon>PageNotFound.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Recent.aspx.cs">
       <DependentUpon>Recent.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -971,22 +929,12 @@
     <Compile Include="services\PageSummaryService.ashx.cs">
       <DependentUpon>PageSummaryService.ashx</DependentUpon>
     </Compile>
-    <Compile Include="services\SearchDownloadService.ashx.cs">
-      <DependentUpon>SearchDownloadService.ashx</DependentUpon>
-    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
-    </Compile>
-    <Compile Include="TitleNotFound.aspx.cs">
-      <DependentUpon>TitleNotFound.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TitleNotFound.aspx.designer.cs">
-      <DependentUpon>TitleNotFound.aspx</DependentUpon>
     </Compile>
     <Compile Include="TitlePage.aspx.cs">
       <DependentUpon>TitlePage.aspx</DependentUpon>
@@ -1007,6 +955,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Api\" />
     <Folder Include="Views\OpenUrl\" />
+    <Folder Include="Views\Redirect\" />
     <Folder Include="Views\Service\" />
   </ItemGroup>
   <ItemGroup>
@@ -1115,19 +1064,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Handlers\BibTeXDownload.ashx" />
-    <Content Include="Handlers\ITunesRSS.ashx" />
     <Content Include="Handlers\MODSDownload.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="services\oai2.ashx" />
     <Content Include="services\PageSummaryService.ashx" />
-    <Content Include="services\SearchDownloadService.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="api\httpQuery.ashx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Remoting.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="services\GeneratePdf.ashx" />

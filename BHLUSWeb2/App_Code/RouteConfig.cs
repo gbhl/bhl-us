@@ -1,7 +1,6 @@
 ﻿using MOBOT.BHL.Web.Utilities;
 using MOBOT.BHL.Web2.services;
 using MOBOT.BHL.Web2.Services;
-using System;
 using System.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -18,6 +17,9 @@ namespace MOBOT.BHL.Web2
 
             routes.MapPageRoute("Contact", "contact", "~/Feedback.aspx");
 
+            routes.MapRoute("PermissionsRedirect", "permissions", new { controller = "Redirect", action = "Permissions" });
+            routes.MapRoute("AboutRedirect", "about", new { controller = "Redirect", action = "About" });
+
             routes.MapRoute("OpenUrl", "openurl", new { controller = "OpenUrl", action = "OpenUrlResolver" });
             routes.MapPageRoute("OpenUrl-None", "openurlnone", "~/OpenUrlNone.aspx");
             routes.MapPageRoute("OpenUrl-Multiple", "openurlmultiple", "~/OpenUrlMultiple.aspx");
@@ -27,8 +29,6 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("API2", "api2", new { controller = "Api", action = "Api2Handler" });
 
             routes.Add("OAI", new Route("oai", new HttpHandlerRouteHandler<oai2>()));
-
-            routes.Add("itunes", new Route("itunesurss/collection/{id}", new HttpHandlerRouteHandler<MOBOT.BHL.Web2.Handlers.ITunesRSS>()));
 
             routes.MapRoute("ServiceDefault", "service/{action}", new { controller = "Service" });
 
@@ -144,15 +144,15 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("BrowseCreator", "creator/{creatorid}/{sort}", new { controller = "Creator", action = "Index", sort = "title" });
             routes.MapRoute("BrowseSubject", "subject/{subject}/{sort}", new { controller = "Subject", action = "Index", sort = "title" });
 
-            routes.MapPageRoute("Error-TitleNotFound", "titlenotfound", "~/TitleNotFound.aspx");
-            routes.MapPageRoute("Error-TitleUnavailable", "titleunavailable", "~/TitleUnavailable.aspx");
-            routes.MapPageRoute("Error-AuthorNotFound", "authornotfound", "~/AuthorNotFound.aspx");
-            routes.MapPageRoute("Error-ItemNotFound", "itemnotfound", "~/ItemNotFound.aspx");
-            routes.MapPageRoute("Error-ItemUnavailable", "itemunavailable", "~/ItemUnavailable.aspx");
-            routes.MapPageRoute("Error-PageNotFound", "pagenotfound", "~/PageNotFound.aspx");
-            routes.MapPageRoute("Error-General", "error", "~/Error.aspx");
+            routes.MapRoute("Error-TitleNotFound", "titlenotfound", new { controller = "TitleNotFound", action = "Index" });
+            routes.MapRoute("Error-TitleUnavailable", "titleunavailable", new { controller = "TitleUnavailable", action = "Index" });
+            routes.MapRoute("Error-AuthorNotFound", "authornotfound", new { controller = "AuthorNotFound", action = "Index" });
+            routes.MapRoute("Error-ItemNotFound", "itemnotfound", new { controller = "ItemNotFound", action = "Index" });
+            routes.MapRoute("Error-ItemUnavailable", "itemunavailable", new { controller = "ItemUnavailable", action = "Index" });
+            routes.MapRoute("Error-PageNotFound", "pagenotfound", new { controller = "PageNotFound", action = "Index"});
+            routes.MapRoute("Error-General", "error", new { controller = "Error", action = "Index" });
 
-            routes.MapPageRoute("CatchAll", "{*url}", "~/PageNotFound.aspx");
+            routes.MapRoute("CatchAll", "{*url}", new { controller = "PageNotFound", action = "Index" });
         }
     }
 }

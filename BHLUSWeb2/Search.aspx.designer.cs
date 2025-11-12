@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.Web2 {
-    
-    
-    public partial class Search {
-        
+namespace MOBOT.BHL.Web2
+{
+
+
+    public partial class Search
+    {
+
         /// <summary>
         /// navbar control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.Web2.NavBar navbar;
-        
+
         /// <summary>
         /// lnkNewSearch control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkNewSearch;
-        
+
         /// <summary>
         /// spanTitleSummary control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanTitleSummary;
-        
+
         /// <summary>
         /// spanSectionSummary control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanSectionSummary;
-        
+
         /// <summary>
         /// spanAuthorSummary control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanAuthorSummary;
-        
+
         /// <summary>
         /// spanSubjectSummary control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanSubjectSummary;
-        
+
         /// <summary>
         /// spanNameSummary control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanNameSummary;
-        
+
         /// <summary>
         /// spanAnnotationSummary control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanAnnotationSummary;
-        
+
         /// <summary>
         /// spanAnnotationConceptSummary control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanAnnotationConceptSummary;
-        
+
         /// <summary>
         /// spanAnnotationSubjectSummary control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanAnnotationSubjectSummary;
-        
+
         /// <summary>
         /// titles control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel titles;
-        
+
         /// <summary>
         /// lnkRankSort control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkRankSort;
-        
+
         /// <summary>
         /// lnkTitleSort control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkTitleSort;
-        
+
         /// <summary>
         /// lnkAuthorSort control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkAuthorSort;
-        
+
         /// <summary>
         /// lnkDateSort control.
         /// </summary>
@@ -146,16 +148,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkDateSort;
-        
-        /// <summary>
-        /// hypBookDownload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hypBookDownload;
-        
+
         /// <summary>
         /// lnkTitleMoreTop control.
         /// </summary>
@@ -164,7 +157,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkTitleMoreTop;
-        
+
         /// <summary>
         /// litTitleRefineTop control.
         /// </summary>
@@ -173,7 +166,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litTitleRefineTop;
-        
+
         /// <summary>
         /// litTitleRefine control.
         /// </summary>
@@ -182,7 +175,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litTitleRefine;
-        
+
         /// <summary>
         /// BookBrowse control.
         /// </summary>
@@ -191,7 +184,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.Web2.BookBrowseControl BookBrowse;
-        
+
         /// <summary>
         /// lnkTitleMore control.
         /// </summary>
@@ -200,7 +193,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkTitleMore;
-        
+
         /// <summary>
         /// authors control.
         /// </summary>
@@ -209,7 +202,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel authors;
-        
+
         /// <summary>
         /// lnkAuthorMoreTop control.
         /// </summary>
@@ -218,7 +211,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkAuthorMoreTop;
-        
+
         /// <summary>
         /// litAuthorRefineTop control.
         /// </summary>
@@ -227,7 +220,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litAuthorRefineTop;
-        
+
         /// <summary>
         /// litAuthorRefine control.
         /// </summary>
@@ -236,7 +229,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litAuthorRefine;
-        
+
         /// <summary>
         /// authorRepeater control.
         /// </summary>
@@ -245,7 +238,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater authorRepeater;
-        
+
         /// <summary>
         /// lnkAuthorMore control.
         /// </summary>
@@ -254,7 +247,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkAuthorMore;
-        
+
         /// <summary>
         /// sections control.
         /// </summary>
@@ -263,7 +256,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel sections;
-        
+
         /// <summary>
         /// lnkRankSegSort control.
         /// </summary>
@@ -272,7 +265,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkRankSegSort;
-        
+
         /// <summary>
         /// lnkTitleSegSort control.
         /// </summary>
@@ -281,7 +274,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkTitleSegSort;
-        
+
         /// <summary>
         /// lnkAuthorSegSort control.
         /// </summary>
@@ -290,7 +283,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkAuthorSegSort;
-        
+
         /// <summary>
         /// lnkDateSegSort control.
         /// </summary>
@@ -299,16 +292,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkDateSegSort;
-        
-        /// <summary>
-        /// hypSegmentDownload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hypSegmentDownload;
-        
+
         /// <summary>
         /// lnkSegmentMoreTop control.
         /// </summary>
@@ -317,7 +301,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkSegmentMoreTop;
-        
+
         /// <summary>
         /// litSegmentRefineTop control.
         /// </summary>
@@ -326,7 +310,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litSegmentRefineTop;
-        
+
         /// <summary>
         /// litSegmentRefine control.
         /// </summary>
@@ -335,7 +319,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litSegmentRefine;
-        
+
         /// <summary>
         /// SectionBrowse control.
         /// </summary>
@@ -344,7 +328,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.Web2.SectionBrowseControl SectionBrowse;
-        
+
         /// <summary>
         /// lnkSegmentMore control.
         /// </summary>
@@ -353,7 +337,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkSegmentMore;
-        
+
         /// <summary>
         /// subjects control.
         /// </summary>
@@ -362,7 +346,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel subjects;
-        
+
         /// <summary>
         /// lnkSubjectMoreTop control.
         /// </summary>
@@ -371,7 +355,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkSubjectMoreTop;
-        
+
         /// <summary>
         /// litSubjectRefineTop control.
         /// </summary>
@@ -380,7 +364,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litSubjectRefineTop;
-        
+
         /// <summary>
         /// litSubjectRefine control.
         /// </summary>
@@ -389,7 +373,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litSubjectRefine;
-        
+
         /// <summary>
         /// subjectRepeater control.
         /// </summary>
@@ -398,7 +382,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater subjectRepeater;
-        
+
         /// <summary>
         /// lnkSubjectMore control.
         /// </summary>
@@ -407,7 +391,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkSubjectMore;
-        
+
         /// <summary>
         /// names control.
         /// </summary>
@@ -416,7 +400,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel names;
-        
+
         /// <summary>
         /// lnkNameMoreTop control.
         /// </summary>
@@ -425,7 +409,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkNameMoreTop;
-        
+
         /// <summary>
         /// litNameRefineTop control.
         /// </summary>
@@ -434,7 +418,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litNameRefineTop;
-        
+
         /// <summary>
         /// litNameRefine control.
         /// </summary>
@@ -443,7 +427,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litNameRefine;
-        
+
         /// <summary>
         /// nameRepeater control.
         /// </summary>
@@ -452,7 +436,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater nameRepeater;
-        
+
         /// <summary>
         /// lnkNameMore control.
         /// </summary>
@@ -461,7 +445,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkNameMore;
-        
+
         /// <summary>
         /// annotations control.
         /// </summary>
@@ -470,7 +454,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel annotations;
-        
+
         /// <summary>
         /// lnkAnnotationMoreTop control.
         /// </summary>
@@ -479,7 +463,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkAnnotationMoreTop;
-        
+
         /// <summary>
         /// litAnnotationRefineTop control.
         /// </summary>
@@ -488,7 +472,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litAnnotationRefineTop;
-        
+
         /// <summary>
         /// litAnnotationRefine control.
         /// </summary>
@@ -497,7 +481,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litAnnotationRefine;
-        
+
         /// <summary>
         /// annotationRepeater control.
         /// </summary>
@@ -506,7 +490,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater annotationRepeater;
-        
+
         /// <summary>
         /// lnkAnnotationMore control.
         /// </summary>
@@ -515,7 +499,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkAnnotationMore;
-        
+
         /// <summary>
         /// annotationConcepts control.
         /// </summary>
@@ -524,7 +508,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel annotationConcepts;
-        
+
         /// <summary>
         /// lnkAnnotationConceptMoreTop control.
         /// </summary>
@@ -533,7 +517,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkAnnotationConceptMoreTop;
-        
+
         /// <summary>
         /// litAnnotationConceptRefineTop control.
         /// </summary>
@@ -542,7 +526,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litAnnotationConceptRefineTop;
-        
+
         /// <summary>
         /// litAnnotationConceptRefine control.
         /// </summary>
@@ -551,7 +535,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litAnnotationConceptRefine;
-        
+
         /// <summary>
         /// annotationConceptRepeater control.
         /// </summary>
@@ -560,7 +544,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater annotationConceptRepeater;
-        
+
         /// <summary>
         /// lnkAnnotationConceptMore control.
         /// </summary>
@@ -569,7 +553,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkAnnotationConceptMore;
-        
+
         /// <summary>
         /// annotationSubjects control.
         /// </summary>
@@ -578,7 +562,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel annotationSubjects;
-        
+
         /// <summary>
         /// lnkAnnotationSubjectMoreTop control.
         /// </summary>
@@ -587,7 +571,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkAnnotationSubjectMoreTop;
-        
+
         /// <summary>
         /// litAnnotationSubjectRefineTop control.
         /// </summary>
@@ -596,7 +580,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litAnnotationSubjectRefineTop;
-        
+
         /// <summary>
         /// litAnnotationSubjectRefine control.
         /// </summary>
@@ -605,7 +589,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litAnnotationSubjectRefine;
-        
+
         /// <summary>
         /// annotationSubjectRepeater control.
         /// </summary>
@@ -614,7 +598,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater annotationSubjectRepeater;
-        
+
         /// <summary>
         /// lnkAnnotationSubjectMore control.
         /// </summary>
@@ -623,7 +607,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkAnnotationSubjectMore;
-        
+
         /// <summary>
         /// FeatureBox5 control.
         /// </summary>
@@ -632,7 +616,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.Web2.ucFeatureBox FeatureBox5;
-        
+
         /// <summary>
         /// FeatureBox6 control.
         /// </summary>

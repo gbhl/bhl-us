@@ -2,11 +2,11 @@
 
 namespace MOBOT.BHL.Web2
 {
-    public partial class BrowseContributors : BrowsePage
+    public partial class BrowseContributors : BasePage
 	{
-		protected override void Page_Load(object sender, EventArgs e)
+		protected void Page_Load(object sender, EventArgs e)
 		{
-            base.Page_Load(sender, e);
+
 
 		}
 	}

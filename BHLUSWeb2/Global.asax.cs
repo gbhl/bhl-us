@@ -23,24 +23,6 @@ namespace MOBOT.BHL.Web2
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            // Handle redirects to the wiki site (external to the BHL domain)
-            var url = Request.Url;
-            var port = url.Port;
-            if (url.AbsolutePath.Equals("/permissions", StringComparison.InvariantCultureIgnoreCase) ||
-                url.AbsolutePath.Equals("/permissions/", StringComparison.InvariantCultureIgnoreCase))
-            {
-                Response.Redirect(ConfigurationManager.AppSettings["WikiPagePermissions"]);
-            }
-            if (url.AbsolutePath.Equals("/about", StringComparison.InvariantCultureIgnoreCase) ||
-                url.AbsolutePath.Equals("/about/", StringComparison.InvariantCultureIgnoreCase))
-            {
-                Response.Redirect(ConfigurationManager.AppSettings["WikiPageAbout"]);
-            }
-            if (url.AbsolutePath.ToLower().Contains("admin/") && 
-                !url.AbsolutePath.Equals("/admin/default.html", StringComparison.InvariantCultureIgnoreCase))
-            {
-                Response.Redirect("/admin/default.html");
-            }
         }
 
         protected void Application_Error(object sender, EventArgs e)
