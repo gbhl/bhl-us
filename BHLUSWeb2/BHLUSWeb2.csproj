@@ -211,11 +211,8 @@
     <Content Include="controls\COinSControl.ascx" />
     <Content Include="controls\CollectionListControl.ascx" />
     <Content Include="controls\ContributorListControl.ascx" />
-    <Content Include="controls\MendeleyShareControl.ascx" />
     <Content Include="controls\NavBar.ascx" />
     <Content Include="controls\SectionBrowseControl.ascx" />
-    <Content Include="controls\SocialLinksPanel.ascx" />
-    <Content Include="controls\TwitterFeedControl.ascx" />
     <Content Include="controls\ucFeatureBox.ascx" />
     <Content Include="css\bhlaustylereference.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -732,13 +729,6 @@
     <Compile Include="controls\ContributorListControl.ascx.designer.cs">
       <DependentUpon>ContributorListControl.ascx</DependentUpon>
     </Compile>
-    <Compile Include="controls\MendeleyShareControl.ascx.cs">
-      <DependentUpon>MendeleyShareControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="controls\MendeleyShareControl.ascx.designer.cs">
-      <DependentUpon>MendeleyShareControl.ascx</DependentUpon>
-    </Compile>
     <Compile Include="controls\NavBar.ascx.cs">
       <DependentUpon>NavBar.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -752,20 +742,6 @@
     </Compile>
     <Compile Include="controls\SectionBrowseControl.ascx.designer.cs">
       <DependentUpon>SectionBrowseControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="controls\SocialLinksPanel.ascx.cs">
-      <DependentUpon>SocialLinksPanel.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="controls\SocialLinksPanel.ascx.designer.cs">
-      <DependentUpon>SocialLinksPanel.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="controls\TwitterFeedControl.ascx.cs">
-      <DependentUpon>TwitterFeedControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="controls\TwitterFeedControl.ascx.designer.cs">
-      <DependentUpon>TwitterFeedControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="controls\ucFeatureBox.ascx.cs">
       <DependentUpon>ucFeatureBox.ascx</DependentUpon>

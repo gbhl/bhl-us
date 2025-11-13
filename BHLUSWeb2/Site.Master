@@ -1,7 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="MOBOT.BHL.Web2.SiteMaster" %>
 <%@ Register TagPrefix="MOBOT" Assembly="MOBOT.BHL.Web.Utilities" Namespace="MOBOT.BHL.Web.Utilities" %>
-<%@ Register TagPrefix="sl" Src="~/Controls/SocialLinksPanel.ascx" TagName="SocialLinks" %>
-<%@ Register TagPrefix="twit" Src="~/Controls/TwitterFeedControl.ascx" TagName="TwitterFeed" %>
 <!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
