@@ -532,12 +532,9 @@
     <Content Include="Recent.aspx" />
     <Content Include="RecentRss.aspx" />
     <Content Include="packages.config" />
-    <Content Include="Handlers\PDFDownload.ashx" />
-    <Content Include="Handlers\RISDownload.ashx" />
     <Content Include="Docs\BHL Permissions Form.pdf" />
     <Content Include="Docs\BHL Permissions Questionnaire.pdf" />
     <Content Include="Docs\DarwinsLibraryBibliography.pdf" />
-    <Content Include="Handlers\CSLDownload.ashx" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28Local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28SI%29.pubxml" />
     <None Include="Properties\PublishProfiles\Production - BHL %28local%29.pubxml" />
@@ -639,6 +636,7 @@
     <Compile Include="App_Code\FilterConfig.cs" />
     <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Controllers\BibliographyController.cs" />
+    <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\AuthorNotFoundController.cs" />
@@ -821,21 +819,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\BibTeXDownload.ashx.cs">
-      <DependentUpon>BibTeXDownload.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\CSLDownload.ashx.cs">
-      <DependentUpon>CSLDownload.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\MODSDownload.ashx.cs">
-      <DependentUpon>MODSDownload.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\PDFDownload.ashx.cs">
-      <DependentUpon>PDFDownload.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\RISDownload.ashx.cs">
-      <DependentUpon>RISDownload.ashx</DependentUpon>
-    </Compile>
     <Compile Include="ItemPage.aspx.cs">
       <DependentUpon>ItemPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -931,6 +914,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Api\" />
+    <Folder Include="Views\Download\" />
     <Folder Include="Views\OpenUrl\" />
     <Folder Include="Views\Redirect\" />
     <Folder Include="Views\Service\" />
@@ -1038,10 +1022,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Book.Master" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Handlers\BibTeXDownload.ashx" />
-    <Content Include="Handlers\MODSDownload.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="services\oai2.ashx" />

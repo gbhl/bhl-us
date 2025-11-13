@@ -1332,7 +1332,7 @@
                 $(".partcitelinklabel").html("CURRENT " + pages[index].GenreName.toUpperCase());
                 $(".partcitationlinks a.large-icon.ris").attr("href", "/handlers/risdownload.ashx?pid=" + pages[index].SegmentID);
                 $(".partcitationlinks a.large-icon.ris").attr("download", "bhlpart" + pages[index].SegmentID + ".ris");
-                $(".partcitationlinks a.large-icon.bibtex").attr("href", "/handlers/bibtexdownload.ashx?pid=" + pages[index].SegmentID);
+                $(".partcitationlinks a.large-icon.bibtex").attr("href", "/bibtexdownload/part/" + pages[index].SegmentID);
                 $(".partcitationlinks a.large-icon.bibtex").attr("download", "bhlpart" + pages[index].SegmentID + ".bib");
                 $(".partcitationlinks").show();
             }

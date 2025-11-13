@@ -119,18 +119,18 @@ namespace MOBOT.BHL.Web2
 
             routes.MapRoute("Bibliography", "bibliography/{titleid}", new { controller = "Bibliography", action = "Index" });
 
-            routes.Add("MODSDownload", new Route("modsdownload/{type}/{id}", new HttpHandlerRouteHandler<MODSDownload>()));
-            routes.Add("MODSDownloadOld", new Route("modsdownload/{id}", new HttpHandlerRouteHandler<MODSDownload>()));
+            routes.MapRoute("MODSDownload", "modsdownload/{type}/{id}", new { controller = "Download", action = "MODS" });
+            routes.MapRoute("MODSDownloadOld", "modsdownload/{id}", new { controller = "Download", action = "MODS" });
 
-            routes.Add("BibTeXDownload", new Route("bibtexdownload/{type}/{id}", new HttpHandlerRouteHandler<BibTeXDownload>()));
-            routes.Add("BibTeXDownloadOld", new Route("bibtexdownload/{id}", new HttpHandlerRouteHandler<BibTeXDownload>()));
+            routes.MapRoute("BibTeXDownload", "bibtexdownload/{type}/{id}", new { controller = "Download", action = "BibTeX" });
+            routes.MapRoute("BibTeXDownloadOld", "bibtexdownload/{id}", new { controller = "Download", action = "BibTeX" });
 
-            routes.Add("RISDownload", new Route("risdownload/{type}/{id}", new HttpHandlerRouteHandler<RISDownload>()));
-            routes.Add("RISDownloadOld", new Route("risdownload/{id}", new HttpHandlerRouteHandler<RISDownload>()));
+            routes.MapRoute("RISDownload", "risdownload/{type}/{id}", new { controller = "Download", action = "RIS" });
+            routes.MapRoute("RISDownloadOld", "risdownload/{id}", new { controller = "Download", action = "RIS" });
 
-            routes.Add("CSLDownload", new Route("csldownload/{type}/{id}", new HttpHandlerRouteHandler<CSLDownload>()));
+            routes.MapRoute("CSLDownload", "csldownload/{type}/{id}", new { controller = "Download", action = "CSL" });
 
-            routes.Add("PDF", new Route("pdf{folder}/{filename}", new HttpHandlerRouteHandler<PDFDownload>()));
+            routes.MapRoute("PDF", "pdf{folder}/{filename}", new { controller = "Download", action = "PDF" });
 
             routes.MapPageRoute("Biblioselect", "biblioselect/{itemid}", "~/BiblioSelect.aspx");
 

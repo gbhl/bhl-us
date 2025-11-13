@@ -46,7 +46,7 @@ var result = ViewData["searchResult"] as List<MOBOT.BHL.DataObjects.Segment>;
         }
         else
         {
-            <a href="/part/<%# Eval(" SegmentID")%>" title="Segment"><%# Eval("Title") %></a>
+            <a href="/part/@segment.SegmentID" title="Segment">@segment.Title</a>
             <div class="titledetails" @(segment.Authors == string.Empty ? "hidden" : "")>By: @segment.Authors.ToString().Replace("|", " - ")</div>
             <div class="titledetails" @(segment.GenreName == string.Empty ? "hidden" : "")>Type: @segment.GenreName</div>
             <div class="titledetails" @(segment.ContainerTitleExtended == string.Empty ? "hidden" : "")>In: @segment.ContainerTitleExtended</div>
