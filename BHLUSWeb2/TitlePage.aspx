@@ -381,7 +381,7 @@
                                 <div style="float:left;margin:0;width:49%">
                                     <h3>Join Our Mailing List</h3>
                                     <p>Sign up to receive the latest BHL news, content highlights, and promotions.</p>
-                                    <a class="featurebutton-home" title="Subscribe to BHL Newsletter" rel="noopener noreferrer" target="_blank" href="https://library.si.edu/bhl-newsletter-signup">Subscribe</a>
+                                    <a class="featurebutton-home" title="Subscribe to BHL Newsletter" rel="noopener noreferrer" target="_blank" href="<%=System.Configuration.ConfigurationManager.AppSettings["NewsletterSignupUrl"]%>">Subscribe</a>
                                 </div>
                                 <div style="float:left;margin:0;width:49%">
                                     <h3>Help Support <span>BHL</span></h3>
