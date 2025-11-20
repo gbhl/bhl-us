@@ -59,6 +59,11 @@ namespace MOBOT.BHL.Web2.Controllers
             }
 
             model.Collection = bhlProvider.CollectionSelectAuto(collectionID);
+            if (model.Collection == null)
+            {
+                return new RedirectResult("~/collectionnotfound");
+            }
+
             if (model.Collection.CanContainItems > 0) model.ShowVolume = true;
             model.Start = start;
             model.Sort = sort.ToLower();
@@ -125,6 +130,12 @@ namespace MOBOT.BHL.Web2.Controllers
             BHLProvider bhlProvider = new BHLProvider();
 
             model.Institution = bhlProvider.InstitutionSelectAuto(id);
+
+            if (model.Institution == null)
+            {
+                return new RedirectResult("~/pagenotfound");
+            }
+
             model.Start = start;
             model.DisplayStart = (model.Start == "0") ? "a number" : "\"" + model.Start.ToUpper() + "\"";
             model.Sort = sort.ToLower();

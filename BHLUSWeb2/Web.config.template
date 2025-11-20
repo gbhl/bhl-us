@@ -94,6 +94,8 @@
     <add key="EnableFullTextSearch" value="true"/>
     <add key="LogExceptions" value="true"/>
     <add key="MonitorThreshold" value="20"/>
+    <!-- Valid Log Levels are: DETAILED, SHORT, NONE -->
+    <add key="ExceptionLogLevel" value="DETAILED"/>
     <add key="DebugValue" value="debug"/>
     <add key="FundraiseUpCampaignCode" value="#FUNDRAISEUP_CODE"/>
     <!-- 

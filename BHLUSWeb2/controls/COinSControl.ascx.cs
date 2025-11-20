@@ -247,14 +247,17 @@ namespace MOBOT.BHL.Web2
             }
             else if (MarcLeader != null)
             {
-                switch (MarcLeader.Substring(7, 1))
+                if (MarcLeader.Length >= 8)
                 {
-                    case "s":
-                    case "b":
-                        genre = "journal"; break;
-                    case "a":
-                    case "m":
-                        genre = "book"; break;
+                    switch (MarcLeader.Substring(7, 1))
+                    {
+                        case "s":
+                        case "b":
+                            genre = "journal"; break;
+                        case "a":
+                        case "m":
+                            genre = "book"; break;
+                    }
                 }
             }
             return genre.ToLower();
