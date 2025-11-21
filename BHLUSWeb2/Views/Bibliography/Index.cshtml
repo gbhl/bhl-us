@@ -221,6 +221,7 @@
             </div>
             <h3 class="volume-heading">Volumes</h3>
             <div class="volumes">
+                
                 @foreach (var bibliographyItem in Model.BibliographyItems)
                 {
                     <div class="volume js-hide">
@@ -234,7 +235,7 @@
                             @if (!string.IsNullOrWhiteSpace(bibliographyItem.ThumbUrl))
                             {
                                 <a href="/item/@bibliographyItem.Book.BookID">
-                                    <img src="@bibliographyItem.ThumbUrl" width="100" />
+                                    <img src="@bibliographyItem.ThumbUrl" @(bibliographyItem.Book.BookID != Model.BibliographyItems[0].Book.BookID ? Html.Raw("loading=\"lazy\"") : Html.Raw("")) width="100" />
                                 </a>
                             }
                             <div class="summary @(string.IsNullOrWhiteSpace(bibliographyItem.ThumbUrl) ? Html.Raw("noimg") : Html.Raw(""))">
