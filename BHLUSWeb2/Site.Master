@@ -62,7 +62,7 @@
 </head>
 
 <body id="<%= bodyID %>">
-    <script type="module" src="/js/cookieconsent-config.js?v=2"></script>
+    <script type="module" src="/js/cookieconsent-config.js?v=3"></script>
     <script type="text/javascript" data-category="necessary">
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -71,7 +71,7 @@
             ad_user_data: 'denied',
             ad_personalization: 'denied',
             analytics_storage: 'denied',
-            functionality_storage: 'denied',
+            functionality_storage: 'granted',
             personalization_storage: 'denied',
             wait_for_update: 500
         });
