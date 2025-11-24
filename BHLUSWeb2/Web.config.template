@@ -145,7 +145,7 @@
 
     <add key="NewFutureNewsUrl" value="https://s.si.edu/bhlcallforsupport" />
 
-    <add key="NewsletterSignupUrl" value="http://library.si.edu/bhl-newsletter-signup"/>
+    <add key="NewsletterSignupUrl" value="https://lp.constantcontactpages.com/sl/YKrBfqY/BHLsignup"/>
 
     <add key="WikiPageAbout" value="https://about.biodiversitylibrary.org"/>
     <add key="WikiPagePermissions" value="https://about.biodiversitylibrary.org/copyright-and-reuse/permissions/"/>
