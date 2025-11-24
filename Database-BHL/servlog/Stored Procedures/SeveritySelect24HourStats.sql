@@ -6,8 +6,8 @@ BEGIN
 
 WITH CTE AS (
 	SELECT	SeverityID, COUNT(*) AS TotalRecords
-	FROM	servlog.ServiceLog
-	WHERE	CreationDate >= DATEADD(hour, -24, GETDATE())
+	FROM	servlog.ServiceLog l INNER JOIN servlog.Service s ON l.ServiceID = s.ServiceID AND s.Display = 1
+	WHERE	l.CreationDate >= DATEADD(hour, -24, GETDATE())
 	GROUP BY SeverityID
 	)
 SELECT	sv.SeverityID,
