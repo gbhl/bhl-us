@@ -7,6 +7,8 @@ using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MOBOT.BHL.Web2.Controllers
@@ -239,19 +241,13 @@ namespace MOBOT.BHL.Web2.Controllers
         }
 
         [EnableThrottling]
-        public ActionResult PDF()
+        public async Task<ActionResult> PDF()
         {
             string folder = Request.RequestContext.RouteData.Values["folder"] as string;
             string filename = Request.RequestContext.RouteData.Values["filename"] as string;
             string pdfPath = string.Format(ConfigurationManager.AppSettings["PdfUrl"], folder, filename);
             int pdfTimeout = 36000000;
             Server.ScriptTimeout = pdfTimeout / 1000;
-
-            Response.Clear();
-            Response.ClearContent();
-            Response.ClearHeaders();
-            Response.ContentType = "application/pdf";
-            Response.AddHeader("content-disposition", "filename=" + filename);
 
             Stream stream = null;
             try
@@ -263,12 +259,12 @@ namespace MOBOT.BHL.Web2.Controllers
                 if (stream != null) stream.Dispose();
                 if (wex.Response is HttpWebResponse response)
                 {
-                    if (response.StatusCode == HttpStatusCode.NotFound) Response.Redirect("~/pagenotfound", true);
+                    if (response.StatusCode == HttpStatusCode.NotFound) return Redirect("~/pagenotfound");
                 }
                 else
                 {
-                    ExceptionUtility.LogException(wex, "PDFDownload.ProcessRequest");
-                    Response.Redirect("~/error", true);
+                    ExceptionUtility.LogException(wex, "DownloadController.PDF");
+                    return Redirect("~/error");
                 }
             }
 
@@ -276,19 +272,20 @@ namespace MOBOT.BHL.Web2.Controllers
             {
                 try
                 {
-                    stream.CopyTo(Response.OutputStream);
+                    Response.ContentType = "application/octet-stream";
+                    Response.Headers.Add("content-disposition", "attachment;filename=" + filename);
+                    Response.BufferOutput = false;
+
+                    await stream.CopyToAsync(Response.OutputStream);
+                    Response.Flush();
+                    HttpContext.ApplicationInstance.CompleteRequest();
                 }
                 catch (Exception ex)
                 {
-                    ExceptionUtility.LogException(ex, "PDFDownload.ProcessRequest");
-                }
-                finally
-                {
-                    stream.Dispose();
+                    ExceptionUtility.LogException(ex, "DownloadController.PDF");
                 }
             }
 
-            Response.End();
             return new EmptyResult();
         }
 

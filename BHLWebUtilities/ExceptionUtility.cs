@@ -65,7 +65,8 @@ namespace MOBOT.BHL.Web.Utilities
                     logFile = HttpContext.Current.Server.MapPath(logFile);
 
                     // Open the log file for append and write the log entry
-                    sw = new StreamWriter(logFile, true);
+                    FileStream fs = new FileStream(logFile, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
+                    sw = new StreamWriter(fs);
                     sw.Write(sb.ToString());
                 }
                 catch

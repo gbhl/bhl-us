@@ -118,8 +118,11 @@ namespace MOBOT.BHL.Web2.Controllers
                     {
                         if (response.StatusCode == HttpStatusCode.NotFound) return Redirect("~/pagenotfound");
                     }
-                    ExceptionUtility.LogException(wex, "ItemController.GetItemImages");
-                    return Redirect("~/error");
+                    else
+                    {
+                        ExceptionUtility.LogException(wex, "ItemController.GetItemImages");
+                        return Redirect("~/error");
+                    }
                 }
 
                 if (fileSize > 2147483647)
@@ -133,7 +136,7 @@ namespace MOBOT.BHL.Web2.Controllers
                             Response.ClearContent();
                             Response.ClearHeaders();
                             Response.ContentType = "application/octet-stream";
-                            Response.AddHeader("content-disposition", "filename=" + item.ImagesFilename);
+                            Response.Headers.Add("content-disposition", "filename=" + item.ImagesFilename);
 
                             const int bufferSize = 16384;  // 16KB buffer size
                             byte[] buffer = new byte[bufferSize];

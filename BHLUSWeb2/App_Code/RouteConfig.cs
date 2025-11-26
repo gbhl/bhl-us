@@ -130,6 +130,7 @@ namespace MOBOT.BHL.Web2
 
             routes.MapRoute("CSLDownload", "csldownload/{type}/{id}", new { controller = "Download", action = "CSL" });
 
+            //routes.Add("PDF", new Route("pdf{folder}/{filename}", new HttpHandlerRouteHandler<PDFDownload>()));
             routes.MapRoute("PDF", "pdf{folder}/{filename}", new { controller = "Download", action = "PDF" });
 
             routes.MapPageRoute("Biblioselect", "biblioselect/{itemid}", "~/BiblioSelect.aspx");

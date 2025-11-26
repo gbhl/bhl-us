@@ -238,8 +238,11 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     if (response.StatusCode == HttpStatusCode.NotFound) return Redirect("~/pagenotfound");
                 }
-                ExceptionUtility.LogException(wex, "PartController.GetPregeneratedPDF");
-                return Redirect("~/error");
+                else
+                {
+                    ExceptionUtility.LogException(wex, "PartController.GetPregeneratedPDF");
+                    return Redirect("~/error");
+                }
             }
 
             if (stream != null)
