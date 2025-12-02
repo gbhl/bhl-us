@@ -45,11 +45,11 @@ namespace MOBOT.BHL.Web2.Controllers
                 List<DataObjects.Book> Books = bhlProvider.BookSelectByTitleId((int)titleid);
                 if (Books == null)
                 {
-                    Response.Redirect("~/titleunavailable");
+                    return Redirect("~/titleunavailable");
                 }
                 if (Books.Count == 0)
                 {
-                    Response.Redirect("~/titleunavailable");
+                    return Redirect("~/titleunavailable");
                 }
                 else
                 {

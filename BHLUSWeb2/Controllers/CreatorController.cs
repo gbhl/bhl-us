@@ -47,7 +47,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 }
 
                 if (model.Author == null) return Redirect("~/authornotfound");
-                if (model.Author.RedirectAuthorID != null) Response.Redirect("~/creator/" + model.Author.RedirectAuthorID);
+                if (model.Author.RedirectAuthorID != null) return Redirect("~/creator/" + model.Author.RedirectAuthorID);
 
                 // Remove any author identifiers not intended for display
                 model.Author.AuthorIdentifiers.RemoveAll(x => x.Display == 0);

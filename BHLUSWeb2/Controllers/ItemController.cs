@@ -133,8 +133,6 @@ namespace MOBOT.BHL.Web2.Controllers
                         try
                         {
                             Response.Clear();
-                            Response.ClearContent();
-                            Response.ClearHeaders();
                             Response.ContentType = "application/octet-stream";
                             Response.Headers.Add("content-disposition", "filename=" + item.ImagesFilename);
 
@@ -153,6 +151,7 @@ namespace MOBOT.BHL.Web2.Controllers
                         catch (Exception ex)
                         {
                             ExceptionUtility.LogException(ex, "ItemController.GetItemImages");
+                            Response.Clear();
                             return Redirect("~/error");
                         }
                         finally
