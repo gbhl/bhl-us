@@ -1,7 +1,6 @@
 ﻿using BHL.SiteServiceREST.v1.Client;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using MOBOT.BHL.Web.Utilities;
 using MvcThrottle;
 using System;
 using System.Configuration;
@@ -43,7 +42,6 @@ namespace MOBOT.BHL.Web2.Controllers
 
                 Page page = new BHLProvider().PageSelectExternalUrlForPageID((int)pageid);
                 string imageUrl = string.Empty;
-                string contentType = "image/jpeg";
 
                 // Make sure we found an active page
                 if (page != null)
@@ -59,35 +57,11 @@ namespace MOBOT.BHL.Web2.Controllers
                     else
                     {
                         imageUrl = imageUrl.Replace(".jpg", "") + "_thumb.webp";
-                        contentType = "image/webp";
                     }
                 }
 
-                System.Net.WebClient client = new System.Net.WebClient();
-                try
-                {
-                    if (imageUrl == String.Empty)
-                    {
-                        imageUrl = ConfigurationManager.AppSettings["ImageNotFoundThumbPath"];
-                        Response.StatusCode = 404;
-                        Response.TrySkipIisCustomErrors = true;
-                    }
-                    return File(client.DownloadData(imageUrl), contentType);
-                }
-                catch (System.Net.WebException wex)
-                {
-                    if (wex.Message.Contains("404"))
-                    {
-                        Response.StatusCode = 404;
-                        Response.TrySkipIisCustomErrors = true;
-                        return File(client.DownloadData(ConfigurationManager.AppSettings["ImageNotFoundThumbPath"]), contentType);
-                    }
-                    else
-                    {
-                        ExceptionUtility.LogException(wex, "PageController.GetPageThumb", ExceptionUtility.LogLevel.Short);
-                        return Redirect("~/error");
-                    }
-                }
+                if (imageUrl == String.Empty) imageUrl = ConfigurationManager.AppSettings["ImageNotFoundThumbPath"];
+                return Redirect(imageUrl);
             }
         }
 
@@ -110,31 +84,8 @@ namespace MOBOT.BHL.Web2.Controllers
                     imageUrl = page.AltExternalURL.Replace(".jp2", ".jpg");
                 }
 
-                System.Net.WebClient client = new System.Net.WebClient();
-                try
-                {
-                    if (imageUrl == String.Empty)
-                    {
-                        imageUrl = ConfigurationManager.AppSettings["ImageNotFoundPath"];
-                        Response.StatusCode = 404;
-                        Response.TrySkipIisCustomErrors = true;
-                    }
-                    return File(client.DownloadData(imageUrl), "image/jpeg");
-                }
-                catch (System.Net.WebException wex)
-                {
-                    if (wex.Message.Contains("404"))
-                    {
-                        Response.StatusCode = 404;
-                        Response.TrySkipIisCustomErrors = true;
-                        return File(client.DownloadData(ConfigurationManager.AppSettings["ImageNotFoundPath"]), "iamge/jpeg");
-                    }
-                    else
-                    {
-                        ExceptionUtility.LogException(wex, "PageController.GetPageImage");
-                        return Redirect("~/error");
-                    }
-                }
+                if (imageUrl == String.Empty) imageUrl = ConfigurationManager.AppSettings["ImageNotFoundPath"];
+                return Redirect(imageUrl);
             }
         }
     }
