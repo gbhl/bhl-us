@@ -295,7 +295,8 @@ namespace BHL.TextImportUtility
             {
                 var config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
                 {
-                    HasHeaderRecord = true
+                    HasHeaderRecord = true,
+                    PrepareHeaderForMatch = args => args.Header.ToLower(), // Convert both header and member name (allow case-insensitive headers)
                 };
                 CsvReader csv = new CsvReader(reader, config);
 
@@ -589,7 +590,8 @@ namespace BHL.TextImportUtility
                 {
                     var config = new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture)
                     {
-                        HasHeaderRecord = true
+                        HasHeaderRecord = true,
+                        PrepareHeaderForMatch = args => args.Header.ToLower(), // Convert both header and member name (allow case-insensitive headers)
                     };
                     CsvReader csv = new CsvReader(reader, config);
 
