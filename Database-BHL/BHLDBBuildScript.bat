@@ -52,6 +52,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Tables\AuthorRole.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\AuthorType.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\BibliographicLevel.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\Configuration.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Tables\CurrentStats.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\DocumentType.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\DOIEntityType.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\DOIStatus.sql"
@@ -462,6 +463,12 @@ REM --------------------------------------
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\MonthlyStatsUpdate.sql"
 sqlcmd -E -S %1 -d %2 -Q "exec dbo.MonthlyStatsUpdate"
 
+REM --------------------------------------
+REM  Populate CurrentStats Table
+REM --------------------------------------
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\CurrentStatsUpdate.sql"
+sqlcmd -E -S %1 -d %2 -Q "exec dbo.CurrentStatsUpdate"
+
 :RESUMESTRUCTURE
 
 IF "%~5" == "structure" GOTO CREATESP
@@ -637,6 +644,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ConfigurationInsertAuto.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ConfigurationSelectAuto.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ConfigurationSelectByName.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ConfigurationUpdateAuto.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\CurrentStatsSelect.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\DocumentTypeSelectAll.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\DOIDelete.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\DOIDeleteAuto.sql"

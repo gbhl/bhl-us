@@ -133,140 +133,52 @@
 						<td>
 							<table width="97%" cellspacing="0px" style="margin-left:3px; margin-right:3px">
 								<tr>
-									<td width="44%">
-										&nbsp;
-									</td>
-									<td align="center" style="white-space: nowrap; width: 28%; border-bottom: 1px solid black">
-										All Records
-									</td>
-									<td align="center" style="white-space: nowrap; width: 28%; border-bottom: 1px solid black">
-										Active
-									</td>
+									<td width="44%">&nbsp;</td>
+									<td align="center" style="white-space: nowrap; width: 28%; border-bottom: 1px solid black">All Records</td>
+									<td align="center" style="white-space: nowrap; width: 28%; border-bottom: 1px solid black">Active</td>
 								</tr>
 								<tr>
-									<td>
-										Titles
-									</td>
-									<td align="right" class="liveData" runat="server" id="titlesAllCell">
-									</td>
-									<td align="right" class="liveData" runat="server" id="titlesActiveCell">
-									</td>
+									<td>Titles</td>
+									<td align="right" runat="server" id="titlesAllCell"></td>
+									<td align="right" runat="server" id="titlesActiveCell"></td>
 								</tr>
 								<tr>
-									<td>
-										Items
-									</td>
-									<td align="right" class="liveData" runat="server" id="itemsAllCell">
-									</td>
-									<td align="right" class="liveData" runat="server" id="itemsActiveCell">
-									</td>
+									<td>Items</td>
+									<td align="right" runat="server" id="itemsAllCell"></td>
+									<td align="right" runat="server" id="itemsActiveCell"></td>
 								</tr>
 								<tr>
-									<td>
-										Pages
-									</td>
-									<td align="right" class="liveData" runat="server" id="pagesAllCell">
-									</td>
-									<td align="right" class="liveData" runat="server" id="pagesActiveCell">
-									</td>
+									<td>Pages</td>
+									<td align="right" runat="server" id="pagesAllCell"></td>
+									<td align="right" runat="server" id="pagesActiveCell"></td>
 								</tr>
                                 <tr>
-                                    <td>
-                                        Segments
-                                    </td>
-                                    <td align="right" class="liveData" runat="server" id="segmentsAllCell">
-                                    </td>
-                                    <td align="right" class="liveData" runat="server" id="segmentsActiveCell">
-                                    </td>
+                                    <td>Segments</td>
+                                    <td align="right" runat="server" id="segmentsAllCell"></td>
+                                    <td align="right" runat="server" id="segmentsActiveCell"></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        Items w/ Segments
-                                    </td>
-                                    <td align="right" class="liveData" runat="server" id="itemSegmentsAllCell">
-                                    </td>
-                                    <td align="right" class="liveData" runat="server" id="itemSegmentsActiveCell">
-                                    </td>
+                                    <td>Items w/ Segments</td>
+                                    <td align="right" runat="server" id="itemSegmentsAllCell"></td>
+                                    <td align="right" runat="server" id="itemSegmentsActiveCell"></td>
                                 </tr>
 								<tr>
-								    <td colspan="3" align="center" runat="server" id="tdShowNames"><a id="namesShowLink" href="#" onclick="showNames();">Show All Names</a>
-								    </td>
+									<td>Names</td>
+									<td align="right" runat="server" id="namesAllCell"></td>
+									<td align="right" runat="server" id="namesActiveCell"></td>
 								</tr>
 								<tr>
-									<td>
-										<span id="namesNameLabel" style="display:none">Names</span>
-									    <img id="imgNamesLoading" alt="Loading" src="images/loading.gif" style="display:none" />
-									</td>
-									<td align="right" class="liveData" runat="server" id="namesAllCell">
-									    <span id="namesAllSpan" style="display:none"></span>
-									</td>
-									<td align="right" class="liveData" runat="server" id="namesActiveCell">
-									    <span id="namesActiveSpan" style="display:none"></span>
-									</td>
+									<td>Unique Names</td>
+									<td align="right" runat="server" id="uniqueAllCell"></td>
+									<td align="right" runat="server" id="uniqueActiveCell"></td>
 								</tr>
 								<tr>
-								    <td colspan="3" align="center" runat="server" id="tdShowUniqueNames"><a id="uniqueNamesShowLink" href="#" onclick="showUniqueNames();">Show Unique Names</a>
-								    </td>
+									<td>Verified Names</td>
+									<td align="right" runat="server" id="verifiedAllCell"></td>
+									<td align="right" runat="server" id="verifiedActiveCell"></td>
 								</tr>
 								<tr>
-									<td>
-										<span id="uniqueNameLabel" style="display:none">Unique Names</span>
-									    <img id="imgUniqueLoading" alt="Loading" src="images/loading.gif" style="display:none" />
-									</td>
-									<td align="right" class="liveData" runat="server" id="uniqueAllCell">
-									    <span id="uniqueAllSpan" style="display:none"></span>
-									</td>
-									<td align="right" class="liveData" runat="server" id="uniqueActiveCell">
-									    <span id="uniqueActiveSpan" style="display:none"></span>
-									</td>
-								</tr>
-								<tr>
-								    <td colspan="3" align="center" runat="server" id="tdShowVerifiedNames"><a id="verifiedNamesShowLink" href="#" onclick="showVerifiedNames();">Show Verified Names</a>
-								    </td>
-								</tr>
-								<tr>
-									<td>
-										<span id="verifiedNameLabel" style="display:none">Verified Names</span>
-									    <img id="imgVerifiedLoading" alt="Loading" src="images/loading.gif" style="display:none" />
-									</td>
-									<td align="right" class="liveData" runat="server" id="verifiedAllCell">
-									    <span id="verifiedAllSpan" style="display:none"></span>
-									</td>
-									<td align="right" class="liveData" runat="server" id="verifiedActiveCell">
-									    <span id="verifiedActiveSpan" style="display:none"></span>
-									</td>
-								</tr>
-								<tr>
-								    <td colspan="3" align="center" runat="server" id="tdShowEOLNames"><a id="eolNamesShowLink" href="#" onclick="showEOLNames();">Show EOL Names</a>
-								    </td>
-								</tr>
-								<tr>
-									<td>
-										<span id="eolNameNameLabel" style="display:none">EOL Names</span>
-									    <img id="imgEOLNameLoading" alt="Loading" src="images/loading.gif" style="display:none" />
-									</td>
-									<td align="right" class="liveData" runat="server" id="eolNameAllCell">
-									    <span id="eolNameAllSpan" style="display:none"></span>
-									</td>
-									<td align="right" class="liveData" runat="server" id="eolNameActiveCell">
-									    <span id="eolNameActiveSpan" style="display:none"></span>
-									</td>
-								</tr>
-								<tr>
-								    <td colspan="3" align="center" runat="server" id="tdShowEOLPages"><a id="eolPagesShowLink" href="#" onclick="showEOLPages();">Show Pages with EOL Names</a>
-								    </td>
-								</tr>
-								<tr>
-									<td>
-										<span id="eolPageNameLabel" style="display:none">EOL Pages</span>
-									    <img id="imgEOLPageLoading" alt="Loading" src="images/loading.gif" style="display:none" />
-									</td>
-									<td align="right" class="liveData" runat="server" id="eolPageAllCell">
-									    <span id="eolPageAllSpan" style="display:none"></span>
-									</td>
-									<td align="right" class="liveData" runat="server" id="eolPageActiveCell">
-									    <span id="eolPageActiveSpan" style="display:none"></span>
-									</td>
+									<td colspan="3" style="padding-top:15px;font-style:italic" runat="server" id="statsUpdateDateCell"></td>
 								</tr>
 							</table>
 						</td>
@@ -581,65 +493,6 @@
         </tr>
 	</table>
 	<script type="text/javascript">
-        function showNames() {
-            document.getElementById('imgNamesLoading').style.display = 'block';
-            document.getElementById('namesShowLink').style.display = 'none';
-            executeServiceCall("services/statsservice.ashx?op=SelectNames", updateNamesUI);
-        }
-
-        function showUniqueNames() {
-            document.getElementById('imgUniqueLoading').style.display = 'block';
-            document.getElementById('uniqueNamesShowLink').style.display = 'none';
-            executeServiceCall("services/statsservice.ashx?op=SelectUniqueNames", updateUniqueNamesUI);
-        }
-
-        function showVerifiedNames() {
-            document.getElementById('imgVerifiedLoading').style.display = 'block';
-            document.getElementById('verifiedNamesShowLink').style.display = 'none';
-            executeServiceCall("services/statsservice.ashx?op=SelectVerifiedNames", updateVerifiedNamesUI);
-        }
-
-        function showEOLNames() {
-            document.getElementById('imgEOLNameLoading').style.display = 'block';
-            document.getElementById('eolNamesShowLink').style.display = 'none';
-            executeServiceCall("services/statsservice.ashx?op=SelectEOLNames", updateEOLNamesUI);
-        }
-
-        function showEOLPages() {
-            document.getElementById('imgEOLPageLoading').style.display = 'block';
-            document.getElementById('eolPagesShowLink').style.display = 'none';
-            executeServiceCall("services/statsservice.ashx?op=SelectEOLPages", updateEOLPagesUI);
-        }
-
-        function updateNamesUI(results) {
-            updateUI(results.NameTotal, results.NameCount, 'imgNamesLoading', 'namesAllSpan', 'namesActiveSpan', 'namesNameLabel');
-        }
-
-        function updateUniqueNamesUI(results) {
-            updateUI(results.UniqueNameTotal, results.UniqueNameCount, 'imgUniqueLoading', 'uniqueAllSpan', 'uniqueActiveSpan', 'uniqueNameLabel');
-        }
-
-        function updateVerifiedNamesUI(results) {
-            updateUI(results.VerifiedNameTotal, results.VerifiedNameCount, 'imgVerifiedLoading', 'verifiedAllSpan', 'verifiedActiveSpan', 'verifiedNameLabel');
-        }
-
-        function updateEOLNamesUI(results) {
-            updateUI(results.EolNameTotal, results.EolNameCount, 'imgEOLNameLoading', 'eolNameAllSpan', 'eolNameActiveSpan', 'eolNameNameLabel');
-        }
-
-        function updateEOLPagesUI(results) {
-            updateUI(results.EolPageTotal, results.EolPageCount, 'imgEOLPageLoading', 'eolPageAllSpan', 'eolPageActiveSpan', 'eolPageNameLabel');
-        }
-
-        function updateUI(total, count, img, allSpan, activeSpan, nameLabel) {
-            document.getElementById(allSpan).innerHTML = total;
-            document.getElementById(activeSpan).innerHTML = count;
-            document.getElementById(img).style.display = 'none';
-            document.getElementById(nameLabel).style.display = 'block';
-            document.getElementById(allSpan).style.display = 'block';
-            document.getElementById(activeSpan).style.display = 'block';
-        }
-
         function executeServiceCall(url, callback) {
             var request = createXMLHttpRequest();
             request.open("GET", url, true);
@@ -663,7 +516,6 @@
                 throw new Error("XMLHttpRequest not supported");
             }
         }
-
 	</script>
 	</cc:ContentPanel>
 </asp:Content>

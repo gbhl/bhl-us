@@ -57,16 +57,16 @@ namespace MOBOT.BHL.AdminWeb
 
             // Get the production stats
             String cacheKey = "DashboardStats";
-            MOBOT.BHL.DataObjects.Stats stats = null;
+            Stats stats = null;
             if (Cache[cacheKey] != null)
             {
                 // Use cached version
-                stats = (MOBOT.BHL.DataObjects.Stats)Cache[cacheKey];
+                stats = (Stats)Cache[cacheKey];
             }
             else
             {
                 // Refresh cache
-                stats = bp.StatsSelectExpanded();
+                stats = bp.CurrentStatsSelect();
                 Cache.Add(cacheKey, stats, null, DateTime.Now.AddMinutes(
                     Convert.ToDouble(ConfigurationManager.AppSettings["DashboardStatsCacheTime"])),
                     System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
@@ -82,6 +82,13 @@ namespace MOBOT.BHL.AdminWeb
             segmentsActiveCell.InnerHtml = stats.SegmentCount.ToString();
             itemSegmentsAllCell.InnerHtml = stats.ItemSegmentTotal.ToString();
             itemSegmentsActiveCell.InnerHtml = stats.ItemSegmentCount.ToString();
+            namesAllCell.InnerHtml = stats.NameTotal.ToString();
+            namesActiveCell.InnerHtml = stats.NameCount.ToString();
+            uniqueAllCell.InnerHtml = stats.UniqueNameTotal.ToString();
+            uniqueActiveCell.InnerHtml = stats.UniqueNameCount.ToString();
+            verifiedAllCell.InnerHtml = stats.VerifiedNameTotal.ToString();
+            verifiedActiveCell.InnerHtml = stats.VerifiedNameCount.ToString();
+            statsUpdateDateCell.InnerHtml = string.Format("Last updated {0} minutes ago", (int)((DateTime.Now - stats.LastModifiedDate).TotalMinutes));
 
             // Get the growth stats
             List<MonthlyStats> growthYear = bp.MonthlyStatsSelectCurrentYearSummary();
@@ -170,12 +177,6 @@ namespace MOBOT.BHL.AdminWeb
                 tdNoteTypes.InnerHtml = GetMenuText(tdNoteTypes.InnerHtml);
                 tdPDFRequests.InnerHtml = GetMenuText(tdPDFRequests.InnerHtml);
                 tdSegmentTypes.InnerHtml = GetMenuText(tdSegmentTypes.InnerHtml);
-
-                tdShowNames.InnerHtml = GetMenuText(tdShowNames.InnerHtml);
-                tdShowUniqueNames.InnerHtml = GetMenuText(tdShowUniqueNames.InnerHtml);
-                tdShowVerifiedNames.InnerHtml = GetMenuText(tdShowVerifiedNames.InnerHtml);
-                tdShowEOLNames.InnerHtml = GetMenuText(tdShowEOLNames.InnerHtml);
-                tdShowEOLPages.InnerHtml = GetMenuText(tdShowEOLPages.InnerHtml);
 
                 tdExpandedGrowthStats.InnerHtml = GetMenuText(tdExpandedGrowthStats.InnerHtml);
                 tdExpandedPDFStats.InnerHtml = GetMenuText(tdExpandedPDFStats.InnerHtml);

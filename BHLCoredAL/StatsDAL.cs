@@ -21,31 +21,6 @@ namespace MOBOT.BHL.DAL
             return this.StatsSelect(sqlConnection, sqlTransaction, true, false, false, false, false, false);
         }
 
-        public Stats StatsSelectNames(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
-        {
-            return this.StatsSelect(sqlConnection, sqlTransaction, true, true, false, false, false, false);
-        }
-
-        public Stats StatsSelectUniqueNames(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
-        {
-            return this.StatsSelect(sqlConnection, sqlTransaction, true, false, true, false, false, false);
-        }
-
-        public Stats StatsSelectVerifiedNames(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
-        {
-            return this.StatsSelect(sqlConnection, sqlTransaction, true, false, false, true, false, false);
-        }
-
-        public Stats StatsSelectEOLNames(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
-        {
-            return this.StatsSelect(sqlConnection, sqlTransaction, true, false, false, false, true, false);
-        }
-
-        public Stats StatsSelectEOLPages(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
-        {
-            return this.StatsSelect(sqlConnection, sqlTransaction, true, false, false, false, false, true);
-        }
-
 		private Stats StatsSelect(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction,
@@ -88,12 +63,8 @@ namespace MOBOT.BHL.DAL
 				stats.UniqueNameTotal = (int)row[ "UniqueNameTotal" ].Value;
                 stats.VerifiedNameCount = (int)row["VerifiedNameCount"].Value;
                 stats.VerifiedNameTotal = (int)row["VerifiedNameTotal"].Value;
-                stats.EolNameCount = (int)row["EOLNameCount"].Value;
-                stats.EolNameTotal = (int)row["EOLNameTotal"].Value;
-                stats.EolPageCount = (int)row["EOLPageCount"].Value;
-                stats.EolPageTotal = (int)row["EOLPageTotal"].Value;
 
-				return stats;
+                return stats;
 			}
 		}
 
@@ -172,5 +143,41 @@ namespace MOBOT.BHL.DAL
 
             return counts;
         }
+
+        public Stats CurrentStatsSelect(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.CurrentStatsSelect", connection, transaction))
+            {
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                CustomDataRow row = list[0];
+
+                Stats stats = new Stats();
+                stats.TitleCount = (int)row["TitleCount"].Value;
+                stats.TitleTotal = (int)row["TitleTotal"].Value;
+                stats.VolumeCount = (int)row["VolumeCount"].Value;
+                stats.VolumeTotal = (int)row["VolumeTotal"].Value;
+                stats.PageCount = (int)row["PageCount"].Value;
+                stats.PageTotal = (int)row["PageTotal"].Value;
+                stats.SegmentCount = (int)row["SegmentCount"].Value;
+                stats.SegmentTotal = (int)row["SegmentTotal"].Value;
+                stats.ItemSegmentCount = (int)row["ItemSegmentCount"].Value;
+                stats.ItemSegmentTotal = (int)row["ItemSegmentTotal"].Value;
+                stats.NameCount = (int)row["NameCount"].Value;
+                stats.NameTotal = (int)row["NameTotal"].Value;
+                stats.UniqueNameCount = (int)row["UniqueNameCount"].Value;
+                stats.UniqueNameTotal = (int)row["UniqueNameTotal"].Value;
+                stats.VerifiedNameCount = (int)row["VerifiedNameCount"].Value;
+                stats.VerifiedNameTotal = (int)row["VerifiedNameTotal"].Value;
+                stats.LastModifiedDate = (System.DateTime)row["LastModifiedDate"].Value;
+
+                return stats;
+            }
+
+        }
+
     }
 }

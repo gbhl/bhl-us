@@ -276,15 +276,6 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.HtmlControls.HtmlTableCell itemSegmentsActiveCell;
 
         /// <summary>
-        /// tdShowNames control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdShowNames;
-
-        /// <summary>
         /// namesAllCell control.
         /// </summary>
         /// <remarks>
@@ -301,15 +292,6 @@ namespace MOBOT.BHL.AdminWeb
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableCell namesActiveCell;
-
-        /// <summary>
-        /// tdShowUniqueNames control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdShowUniqueNames;
 
         /// <summary>
         /// uniqueAllCell control.
@@ -330,15 +312,6 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.HtmlControls.HtmlTableCell uniqueActiveCell;
 
         /// <summary>
-        /// tdShowVerifiedNames control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdShowVerifiedNames;
-
-        /// <summary>
         /// verifiedAllCell control.
         /// </summary>
         /// <remarks>
@@ -357,58 +330,13 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.HtmlControls.HtmlTableCell verifiedActiveCell;
 
         /// <summary>
-        /// tdShowEOLNames control.
+        /// statsUpdateDateCell control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdShowEOLNames;
-
-        /// <summary>
-        /// eolNameAllCell control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell eolNameAllCell;
-
-        /// <summary>
-        /// eolNameActiveCell control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell eolNameActiveCell;
-
-        /// <summary>
-        /// tdShowEOLPages control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdShowEOLPages;
-
-        /// <summary>
-        /// eolPageAllCell control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell eolPageAllCell;
-
-        /// <summary>
-        /// eolPageActiveCell control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell eolPageActiveCell;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell statsUpdateDateCell;
 
         /// <summary>
         /// itemsThisYear control.

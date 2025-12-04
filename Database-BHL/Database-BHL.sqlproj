@@ -1113,6 +1113,9 @@
     <None Include="dbo\Stored Procedures\ApiSegmentSelectByBarcode.sql" />
     <None Include="dbo\Stored Procedures\BookSelectHasNonOcrText.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectHasNonOcrText.sql" />
+    <None Include="dbo\Tables\CurrentStats.sql" />
+    <None Include="dbo\Stored Procedures\CurrentStatsUpdate.sql" />
+    <None Include="dbo\Stored Procedures\CurrentStatsSelect.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

@@ -16,31 +16,6 @@ namespace MOBOT.BHL.Server
             return (new StatsDAL().StatsSelectExpanded(null, null));
         }
 
-        public Stats StatsSelectNames()
-        {
-            return (new StatsDAL().StatsSelectNames(null, null));
-        }
-
-        public Stats StatsSelectUniqueNames()
-        {
-            return (new StatsDAL().StatsSelectUniqueNames(null, null));
-        }
-
-        public Stats StatsSelectVerifiedNames()
-        {
-            return (new StatsDAL().StatsSelectVerifiedNames(null, null));
-        }
-
-        public Stats StatsSelectEOLNames()
-        {
-            return (new StatsDAL().StatsSelectEOLNames(null, null));
-        }
-
-        public Stats StatsSelectEOLPages()
-        {
-            return (new StatsDAL().StatsSelectEOLPages(null, null));
-        }
-
         public Stats StatsSelectForCollection(int collectionID)
         {
             return new StatsDAL().StatsSelectForCollection(null, null, collectionID);
@@ -54,6 +29,11 @@ namespace MOBOT.BHL.Server
         public List<EntityCount> EntityCountSelectLatest()
         {
             return new StatsDAL().EntityCountSelectLatest(null, null);
+        }
+
+        public Stats CurrentStatsSelect()
+        {
+            return (new StatsDAL().CurrentStatsSelect(null, null));
         }
     }
 }

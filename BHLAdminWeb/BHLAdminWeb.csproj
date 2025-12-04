@@ -674,9 +674,6 @@
     <Compile Include="Services\SegmentService.ashx.cs">
       <DependentUpon>SegmentService.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Services\StatsService.ashx.cs">
-      <DependentUpon>StatsService.ashx</DependentUpon>
-    </Compile>
     <Compile Include="Services\TitleService.ashx.cs">
       <DependentUpon>TitleService.ashx</DependentUpon>
     </Compile>
@@ -1040,7 +1037,6 @@
     <Content Include="Services\NameService.ashx" />
     <Content Include="Services\PageService.ashx" />
     <Content Include="Services\SegmentService.ashx" />
-    <Content Include="Services\StatsService.ashx" />
     <Content Include="Services\TitleService.ashx" />
     <Content Include="xsl\MARC21transformEnglish.xsl" />
     <Content Include="xsl\MARC21transformMARC.xsl" />

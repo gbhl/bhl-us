@@ -1,8 +1,4 @@
-#region Using
-
 using System;
-
-#endregion Using
 
 namespace MOBOT.BHL.DataObjects
 {
@@ -11,8 +7,10 @@ namespace MOBOT.BHL.DataObjects
 	{
 		private int _titleCount;
 		private int _titleTotal;
-		private int _volumeTotal;
-		private int _pageTotal;
+        private int _volumeCount;
+        private int _volumeTotal;
+        private int _pageCount;
+        private int _pageTotal;
         private int _segmentCount;
         private int _segmentTotal;
         private int _itemSegmentCount;
@@ -23,49 +21,24 @@ namespace MOBOT.BHL.DataObjects
 		private int _uniqueNameTotal;
         private int _verifiedNameCount;
         private int _verifiedNameTotal;
-        private int _eolNameCount;
-        private int _eolNameTotal;
-        private int _eolPageCount;
-        private int _eolPageTotal;
+        private DateTime _lastModifiedDate;
 
 		public int TitleCount
 		{
-			get
-			{
-				return _titleCount;
-			}
-			set
-			{
-				_titleCount = value;
-			}
+			get { return _titleCount; }
+			set { _titleCount = value; }
 		}
-
-		private int _volumeCount;
 
 		public int VolumeCount
 		{
-			get
-			{
-				return _volumeCount;
-			}
-			set
-			{
-				_volumeCount = value;
-			}
+			get { return _volumeCount; }
+			set { _volumeCount = value; }
 		}
-
-		private int _pageCount;
 
 		public int PageCount
 		{
-			get
-			{
-				return _pageCount;
-			}
-			set
-			{
-				_pageCount = value;
-			}
+			get { return _pageCount; }
+			set { _pageCount = value; }
 		}
 
 		public int TitleTotal
@@ -146,28 +119,10 @@ namespace MOBOT.BHL.DataObjects
             set { _verifiedNameTotal = value; }
         }
 
-        public int EolNameCount
+        public DateTime LastModifiedDate
         {
-            get { return _eolNameCount; }
-            set { _eolNameCount = value; }
-        }
-
-        public int EolNameTotal
-        {
-            get { return _eolNameTotal; }
-            set { _eolNameTotal = value; }
-        }
-
-        public int EolPageCount
-        {
-            get { return _eolPageCount; }
-            set { _eolPageCount = value; }
-        }
-
-        public int EolPageTotal
-        {
-            get { return _eolPageTotal; }
-            set { _eolPageTotal = value; }
+            get { return _lastModifiedDate; }
+            set { _lastModifiedDate = value; }
         }
     }
 }
