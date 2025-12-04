@@ -1049,5 +1049,40 @@ namespace MOBOT.BHL.DAL
                 }
             }
         }
+
+        /// <summary>
+        /// Determines if the specified segment has any non-OCR text associated with it.
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="segmentID"></param>
+        /// <returns></returns>
+        public bool SegmentSelectHasNonOcrText(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            int segmentID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectHasNonOcrText", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
+            {
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader != null)
+                {
+                    int numNonOcr = 0;
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        numNonOcr = reader.GetInt32(0);
+                    }
+                    return (numNonOcr > 0);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

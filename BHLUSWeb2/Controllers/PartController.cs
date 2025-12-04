@@ -127,30 +127,41 @@ namespace MOBOT.BHL.Web2.Controllers
             }
             else
             {
-                string partText;
-                string cacheKey = "PartText" + partid.ToString();
-                System.Web.Caching.Cache cache = new System.Web.Caching.Cache();
-
-                if (cache[cacheKey] != null)
+                BHLProvider provider = new BHLProvider();
+                if (provider.ItemSelectHasNonOcrText(ItemType.Segment, (int)partid))
                 {
-                    // Use cached version
-                    partText = cache[cacheKey].ToString();
+                    string partText;
+                    string cacheKey = "PartText" + partid.ToString();
+                    System.Web.Caching.Cache cache = new System.Web.Caching.Cache();
+
+                    if (cache[cacheKey] != null)
+                    {
+                        // Use cached version
+                        partText = cache[cacheKey].ToString();
+                    }
+                    else
+                    {
+                        // Refresh cache
+                        Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                        partText = client.GetSegmentText((int)partid);
+                        cache.Add(cacheKey, partText, null, DateTime.Now.AddMinutes(
+                            Convert.ToDouble(ConfigurationManager.AppSettings["ItemTextCacheTime"])),
+                            System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+                    }
+
+                    Response.Cache.SetNoTransforms();
+                    ContentResult content = new ContentResult();
+                    content.Content = partText;
+                    content.ContentType = "text/plain";
+                    return content;
                 }
                 else
                 {
-                    // Refresh cache
-                    Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
-                    partText = client.GetSegmentText((int)partid);
-                    cache.Add(cacheKey, partText, null, DateTime.Now.AddMinutes(
-                        Convert.ToDouble(ConfigurationManager.AppSettings["ItemTextCacheTime"])),
-                        System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+                    // The text is all OCR, so redirect to remote storage
+                    Item item = provider.ItemSelectFilenames(ItemType.Segment, (int)partid);
+                    string itemtextPath = provider.GetRemoteFilePath(RemoteFileType.ItemText, item.BarCode, item.TextFilename);
+                    return Redirect(itemtextPath);
                 }
-
-                Response.Cache.SetNoTransforms();
-                ContentResult content = new ContentResult();
-                content.Content = partText;
-                content.ContentType = "text/plain";
-                return content;
             }
         }
 

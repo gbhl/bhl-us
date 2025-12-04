@@ -102,6 +102,22 @@ namespace MOBOT.BHL.Server
             return item;
         }
 
+        public bool ItemSelectHasNonOcrText(ItemType itemType, int entityID)
+        {
+            bool hasNonOcrText = false;
+            switch (itemType)
+            {
+                case ItemType.Segment:
+                    hasNonOcrText = new SegmentDAL().SegmentSelectHasNonOcrText(null, null, entityID);
+                    break;
+                case ItemType.Book:
+                default:
+                    hasNonOcrText = new BookDAL().BookSelectHasNonOcrText(null, null, entityID);
+                    break;
+            }
+            return hasNonOcrText;
+        }
+
         public List<Item> ItemResolve(string title, string issn, string isbn, string oclc,
             string volume, string issue, string year)
         {

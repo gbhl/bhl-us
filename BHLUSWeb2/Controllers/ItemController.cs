@@ -16,30 +16,42 @@ namespace MOBOT.BHL.Web2.Controllers
         [EnableThrottling]
         public ActionResult GetItemText(int itemid)
         {
-            string itemText;
-            string cacheKey = "ItemText" + itemid.ToString();
-            System.Web.Caching.Cache cache = new System.Web.Caching.Cache();
-
-            if (cache[cacheKey] != null)
+            BHLProvider provider = new BHLProvider();
+            if (provider.ItemSelectHasNonOcrText(ItemType.Book, itemid))
             {
-                // Use cached version
-                itemText = cache[cacheKey].ToString();
+                // Read from local BHL storage if the text includes non-OCR sources
+                string itemText;
+                string cacheKey = "ItemText" + itemid.ToString();
+                System.Web.Caching.Cache cache = new System.Web.Caching.Cache();
+
+                if (cache[cacheKey] != null)
+                {
+                    // Use cached version
+                    itemText = cache[cacheKey].ToString();
+                }
+                else
+                {
+                    // Refresh cache
+                    Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                    itemText = client.GetItemText(itemid);
+                    cache.Add(cacheKey, itemText, null, DateTime.Now.AddMinutes(
+                        Convert.ToDouble(ConfigurationManager.AppSettings["ItemTextCacheTime"])),
+                        System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+                }
+
+                Response.Cache.SetNoTransforms();
+                ContentResult content = new ContentResult();
+                content.Content = itemText;
+                content.ContentType = "text/plain";
+                return content;
             }
             else
             {
-                // Refresh cache
-                Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
-                itemText = client.GetItemText(itemid);
-                cache.Add(cacheKey, itemText, null, DateTime.Now.AddMinutes(
-                    Convert.ToDouble(ConfigurationManager.AppSettings["ItemTextCacheTime"])),
-                    System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+                // The text is all OCR, so redirect to remote storage
+                DataObjects.Item item = provider.ItemSelectFilenames(ItemType.Book, itemid);
+                string itemtextPath = provider.GetRemoteFilePath(RemoteFileType.ItemText, item.BarCode, item.TextFilename);
+                return Redirect(itemtextPath);
             }
-
-            Response.Cache.SetNoTransforms();
-            ContentResult content = new ContentResult();
-            content.Content = itemText;
-            content.ContentType = "text/plain";
-            return content;
         }
 
         [EnableThrottling]

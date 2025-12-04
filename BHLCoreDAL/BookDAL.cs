@@ -533,6 +533,41 @@ namespace MOBOT.BHL.DAL
 				}
 			}
 		}
-	}
+
+        /// <summary>
+        /// Determines if the specified book has any non-OCR text associated with it.
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="segmentID"></param>
+        /// <returns></returns>
+		public bool BookSelectHasNonOcrText(
+			SqlConnection sqlConnection,
+			SqlTransaction sqlTransaction,
+			int bookID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			SqlTransaction transaction = sqlTransaction;
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("BookSelectHasNonOcrText", connection, transaction,
+					CustomSqlHelper.CreateInputParameter("BookID", SqlDbType.Int, null, false, bookID)))
+			{
+				SqlDataReader reader = command.ExecuteReader();
+				if (reader != null)
+				{
+					int numNonOcr = 0;
+                    if (reader.HasRows)
+					{
+                        reader.Read();
+						numNonOcr = reader.GetInt32(0);
+					}
+                    return (numNonOcr > 0);
+				}
+				else
+				{
+					return false;
+				}
+			}
+        }
+    }
 }
 

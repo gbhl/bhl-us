@@ -960,6 +960,9 @@ namespace MOBOT.BHL.Server
                 case RemoteFileType.Djvu:
                     configKey = "DjvuPathTemplate";
                     break;
+                case RemoteFileType.ItemText:
+                    configKey = "ItemTextPathTemplate";
+                    break;
             }
 
             string remoteFilePath = string.Empty;
