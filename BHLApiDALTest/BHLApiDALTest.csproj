@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>BHLApiDALTest</RootNamespace>
     <AssemblyName>BHLApiDALTest</AssemblyName>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

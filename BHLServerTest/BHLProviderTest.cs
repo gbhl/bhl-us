@@ -3,6 +3,7 @@ using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BHLServerTest
 {
@@ -97,7 +98,7 @@ namespace BHLServerTest
         }
 
         [TestMethod]
-        public async void PageGetImageDimensionsTest()
+        public async Task PageGetImageDimensionsTest()
         {
             BHLProvider target = new BHLProvider();
 
