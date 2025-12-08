@@ -11,6 +11,11 @@ namespace MOBOT.BHL.Server
             return (new PDFStatsDAL().PDFStatsSelectOverview(null, null));
         }
 
+        public List<PDFStats> PDFStatsSelectOverviewBasic()
+        {
+            return (new PDFStatsDAL().PDFStatsSelectOverviewBasic(null, null));
+        }
+
         public List<PDFStats> PDFStatsSelectExpanded()
         {
             return (new PDFStatsDAL().PDFStatsSelectExpanded(null, null));

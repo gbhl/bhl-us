@@ -22,13 +22,10 @@ GO
 CREATE NONCLUSTERED INDEX [IX_DOI_TypeIDEntityID]
     ON [dbo].[DOI]([DOIEntityTypeID] ASC, [EntityID] ASC)
     INCLUDE([DOIName]);
-
-
 GO
+
 CREATE NONCLUSTERED INDEX [IX_DOI_EntityIsValid]
     ON [dbo].[DOI]([EntityID] ASC, [IsValid] ASC);
-
-
 GO
 
 CREATE NONCLUSTERED INDEX IX_DOI_TypeIDNameValidStatus 
@@ -37,4 +34,8 @@ GO
 
 CREATE NONCLUSTERED INDEX IX_DOI_NameIsValid 
 	ON [dbo].[DOI]([DOIName],[IsValid])
+GO
+
+CREATE NONCLUSTERED INDEX IX_DOI_DOIStatusID
+    ON [dbo].[DOI] ([DOIStatusID])
 GO

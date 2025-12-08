@@ -16,3 +16,10 @@ CREATE UNIQUE NONCLUSTERED INDEX IX_MonthlyStats_YearMonthInstitutionType ON dbo
 	Year, Month, InstitutionCode, StatType, StatLevel 
 )
 GO
+
+CREATE NONCLUSTERED INDEX IX_MonthlyStats_YearTypeLevel ON dbo.MonthlyStats 
+(
+    Year,StatType,StatLevel
+)
+INCLUDE ([Month],[StatValue])
+GO

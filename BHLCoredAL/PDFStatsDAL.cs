@@ -15,7 +15,7 @@ namespace MOBOT.BHL.DAL
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("PDFStatsSelectOverview", connection, transaction))
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.PDFStatsSelectOverview", connection, transaction))
             {
                 List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                 List<PDFStats> listOfStats = new List<PDFStats>();
@@ -36,6 +36,30 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public List<PDFStats> PDFStatsSelectOverviewBasic(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.PDFStatsSelectOverviewBasic", connection, transaction))
+            {
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<PDFStats> listOfStats = new List<PDFStats>();
+                foreach (CustomDataRow row in list)
+                {
+                    PDFStats stats = new PDFStats();
+                    stats.PdfStatusID = (int)row["PdfStatusID"].Value;
+                    stats.PdfStatusName = row["PdfStatusName"].Value.ToString();
+                    stats.NumberofPdfs = (int)row["NumberOfPDFs"].Value;
+                    listOfStats.Add(stats);
+                }
+
+                return listOfStats;
+            }
+        }
+
         public List<PDFStats> PDFStatsSelectExpanded(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction)
@@ -43,7 +67,7 @@ namespace MOBOT.BHL.DAL
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("PDFStatsSelectExpanded", connection, transaction))
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.PDFStatsSelectExpanded", connection, transaction))
             {
                 List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                 List<PDFStats> listOfStats = new List<PDFStats>();

@@ -126,7 +126,7 @@
 				<table width="100%" cellspacing="0px">
 					<tr>
 						<td class="boxHeader" align="center">
-							Library Stats<div style="float:right"><a class="small" href="#" title="About Library Stats" onclick="window.open('LibraryStatsAbout.html', 'About', 'resizeable=0,scrollbars=1,height=530,width=500,status=0,toolbar=0,menubar=0,location=0');"><img src="images/help.png" alt="Help" height="16" width="16" /></a></div>
+							Library Stats<div style="float:right"><a class="small" href="#" title="About Library Stats" onclick="window.open('LibraryStatsAbout.html', 'About', 'resizeable=0,scrollbars=1,height=430,width=500,status=0,toolbar=0,menubar=0,location=0');"><img src="images/help.png" alt="Help" height="16" width="16" /></a></div>
 						</td>
 					</tr>
 					<tr>
@@ -176,9 +176,6 @@
 									<td>Verified Names</td>
 									<td align="right" runat="server" id="verifiedAllCell"></td>
 									<td align="right" runat="server" id="verifiedActiveCell"></td>
-								</tr>
-								<tr>
-									<td colspan="3" style="padding-top:15px;font-style:italic" runat="server" id="statsUpdateDateCell"></td>
 								</tr>
 							</table>
 						</td>

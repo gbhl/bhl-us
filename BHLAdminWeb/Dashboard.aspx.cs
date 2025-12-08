@@ -36,10 +36,10 @@ namespace MOBOT.BHL.AdminWeb
             apiv2StatsLink.HRef = string.Format(apiv2StatsLink.HRef, ConfigurationManager.AppSettings["APIStatsAppID"]);
             apiv3StatsLink.HRef = string.Format(apiv3StatsLink.HRef, ConfigurationManager.AppSettings["APIV3StatsAppID"]);
             openurlStatsLink.HRef = string.Format(openurlStatsLink.HRef, ConfigurationManager.AppSettings["OpenUrlStatsAppID"]);
-            trafficStatsMenu.Visible = new MOBOT.BHL.Utility.RequestLog().Loaded; // Show the web stats menu if stats are available
+            trafficStatsMenu.Visible = new Utility.RequestLog().Loaded; // Show the web stats menu if stats are available
 
             // Get the PDF generation stats
-            gvPDFGeneration.DataSource = bp.PDFStatsSelectOverview();
+            gvPDFGeneration.DataSource = bp.PDFStatsSelectOverviewBasic();
             gvPDFGeneration.DataBind();
 
             // Get the data harvest stats
@@ -56,21 +56,21 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             // Get the production stats
-            String cacheKey = "DashboardStats";
+            //String cacheKey = "DashboardStats";
             Stats stats = null;
-            if (Cache[cacheKey] != null)
-            {
-                // Use cached version
-                stats = (Stats)Cache[cacheKey];
-            }
-            else
-            {
-                // Refresh cache
+            //if (Cache[cacheKey] != null)
+            //{
+            //    // Use cached version
+            //    stats = (Stats)Cache[cacheKey];
+            //}
+            //else
+            //{
+            //    // Refresh cache
                 stats = bp.CurrentStatsSelect();
-                Cache.Add(cacheKey, stats, null, DateTime.Now.AddMinutes(
-                    Convert.ToDouble(ConfigurationManager.AppSettings["DashboardStatsCacheTime"])),
-                    System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
-            }
+            //    Cache.Add(cacheKey, stats, null, DateTime.Now.AddMinutes(
+            //        Convert.ToDouble(ConfigurationManager.AppSettings["DashboardStatsCacheTime"])),
+            //        System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+            //}
 
 			titlesAllCell.InnerHtml = stats.TitleTotal.ToString();
 			titlesActiveCell.InnerHtml = stats.TitleCount.ToString();
@@ -88,7 +88,7 @@ namespace MOBOT.BHL.AdminWeb
             uniqueActiveCell.InnerHtml = stats.UniqueNameCount.ToString();
             verifiedAllCell.InnerHtml = stats.VerifiedNameTotal.ToString();
             verifiedActiveCell.InnerHtml = stats.VerifiedNameCount.ToString();
-            statsUpdateDateCell.InnerHtml = string.Format("Last updated {0} minutes ago", (int)((DateTime.Now - stats.LastModifiedDate).TotalMinutes));
+            //statsUpdateDateCell.InnerHtml = string.Format("Last updated {0} minutes ago", (int)((DateTime.Now - stats.LastModifiedDate).TotalMinutes));
 
             // Get the growth stats
             List<MonthlyStats> growthYear = bp.MonthlyStatsSelectCurrentYearSummary();

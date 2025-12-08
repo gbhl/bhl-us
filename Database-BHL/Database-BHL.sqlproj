@@ -1116,6 +1116,7 @@
     <None Include="dbo\Tables\CurrentStats.sql" />
     <None Include="dbo\Stored Procedures\CurrentStatsUpdate.sql" />
     <None Include="dbo\Stored Procedures\CurrentStatsSelect.sql" />
+    <None Include="dbo\Stored Procedures\PdfStatsSelectOverviewBasic.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
