@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>BHL.Export.BibTeX</RootNamespace>
     <AssemblyName>BHL.Export.BibTeX</AssemblyName>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\BHLUtility\BHLUtility.csproj">

@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>IAHarvestAsync</RootNamespace>
     <AssemblyName>IAHarvestAsync</AssemblyName>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
