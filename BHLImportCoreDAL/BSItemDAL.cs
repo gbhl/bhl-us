@@ -1,12 +1,8 @@
-#region Using
-
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-
-#endregion Using
 
 namespace MOBOT.BHLImport.DAL
 {
@@ -47,6 +43,23 @@ namespace MOBOT.BHLImport.DAL
                 CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNumber),
                 CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sortColumn),
                 CustomSqlHelper.CreateInputParameter("SortDirection", SqlDbType.NVarChar, 4, false, sortDirection)))
+            {
+                using (CustomSqlHelper<BSItem> helper = new CustomSqlHelper<BSItem>())
+                {
+                    List<BSItem> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
+        public List<BSItem> BSItemAvailabilityCheck(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int? bhlItemID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.BSItemAvailabilityCheck", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("@BHLItemID", SqlDbType.Int, null, false, bhlItemID)))
             {
                 using (CustomSqlHelper<BSItem> helper = new CustomSqlHelper<BSItem>())
                 {

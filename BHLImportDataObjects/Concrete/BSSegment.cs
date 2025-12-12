@@ -3,6 +3,7 @@
 
 using CustomDataAccess;
 using System;
+using System.Collections.Generic;
 
 #endregion Using
 
@@ -17,6 +18,14 @@ namespace MOBOT.BHLImport.DataObjects
         {
             get { return _statusLabel; }
             set { _statusLabel = value; }
+        }
+
+        private List<BSSegmentPage> _bsSegmentPages = new List<BSSegmentPage>();
+
+        public List<BSSegmentPage> BSSegmentPages
+        {
+            get { return _bsSegmentPages; }
+            set { _bsSegmentPages = value; }
         }
 
         public override void SetValues(CustomDataRow row)

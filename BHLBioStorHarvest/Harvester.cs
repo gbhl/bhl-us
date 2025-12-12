@@ -2,14 +2,11 @@
 using BHL.WebServiceREST.v1.Client;
 using MOBOT.BHL.SegmentClusterer;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Xml.Linq;
-using EFModel = MOBOT.BHLImport.BHLImportEFDataModel;
-using EFService = MOBOT.BHLImport.BHLImportEFDataService;
+using EFModel = MOBOT.BHLImport.DataObjects;
+using Provider = MOBOT.BHLImport.Server;
 
 namespace MOBOT.BHL.BHLBioStorHarvest
 {
@@ -38,7 +35,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         private const string MODE_ITEM = "ITEM";
         private const string MODE_FILE = "FILE";
 
-        private EFService.DataService provider = new EFService.DataService();
+        private Provider.BHLImportProvider provider = new Provider.BHLImportProvider();
         
         public void Harvest()
         {
@@ -497,26 +494,6 @@ namespace MOBOT.BHL.BHLBioStorHarvest
 
             return processSuccess;
         }
-
-        /*
-        private void GetVIAFIdentifiers(int itemID)
-        {
-            List<EFModel.BSSegment> segments = provider.SelectSegmentsForItem(itemID);
-            foreach (EFModel.BSSegment segment in segments)
-            {
-                List<EFModel.BSSegmentAuthor> authors = provider.GetSegmentAuthorsForSegment(configParms.ImportSourceID, segment.SegmentID);
-                foreach (EFModel.BSSegmentAuthor author in authors)
-                {
-                    // TODO: Put the following in a separate assembly for sharing with other apps
-                    // TODO: Get the VIAF identifier for the author
-
-
-                }
-
-                articlesPreprocessed.Add(segment.SegmentID.ToString());
-            }
-        }
-        */
 
         #endregion Preprocessing
 

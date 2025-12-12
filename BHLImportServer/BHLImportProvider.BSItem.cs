@@ -2,6 +2,7 @@
 using MOBOT.BHLImport.DataObjects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MOBOT.BHLImport.Server
 {
@@ -59,6 +60,120 @@ namespace MOBOT.BHLImport.Server
         string sortColumn, string sortDirection)
         {
             return new BSItemDAL().BSItemSelectByStatus(null, null, itemStatusID, numberOfRows, pageNumber, sortColumn, sortDirection);
+        }
+
+        public List<BSItem> SelectItemsForDownload(int? itemID)
+        {
+            return new BSItemDAL().BSItemSelectByItemAndStatus(null, null, itemID, BSITEMSTATUS_NEW);
+            //var items = context.BSItems.OrderBy(i => i.ItemID).Where(i =>
+            //    (i.ItemStatusID == BSITEMSTATUS_NEW && (itemID == null || i.ItemID == itemID)));
+
+        }
+
+        public List<BSItem> SelectItemsForAuthorResolution(int? bhlItemID)
+        {
+            return new BSItemDAL().BSItemSelectByItemAndStatus(null, null, bhlItemID, BSITEMSTATUS_HARVESTED);
+            //var items = context.BSItems.Where(i =>
+            //    (i.ItemStatusID == BSITEMSTATUS_HARVESTED && (bhlItemID == null || i.BHLItemID == bhlItemID)));
+        }
+
+        public List<BSItem> SelectItemsForPublishing(int? bhlItemID)
+        {     
+            return new BSItemDAL().BSItemSelectByItemAndStatus(null, null, bhlItemID, BSITEMSTATUS_PREPROCESSED);
+            //var items = context.BSItems.OrderBy(i => i.ItemID).Where(i =>
+            //    (i.ItemStatusID == BSITEMSTATUS_PREPROCESSED && (bhlItemID == null || i.BHLItemID == bhlItemID)));
+        }
+
+        /// <summary>
+        /// Check NEW items to make sure that none are unavailable in production BHL.  Return a list of any that *are* unavailable.
+        /// </summary>
+        /// <returns></returns>
+        public List<BSItem> CheckItemAvailability(int? bhlItemID)
+        {
+            //BHLImportEntities context = GetDataContext();
+            //var unavailableItems = context.BSItemAvailabilityCheck(bhlItemID);
+            //return unavailableItems.ToList();
+
+            return new BSItemDAL().BSItemAvailabilityCheck(null, null, bhlItemID);
+        }
+
+        public int AddItem(BSItem item)
+        {
+            int itemID;
+
+            // See if this BHL item is already in queue to be processed
+            List<BSItem> queued = new BSItemDAL().BSItemSelectInQueue(null, null, item.BHLItemID);
+            //var existingItem = context.BSItems.Where(i =>
+            //    i.BHLItemID == item.BHLItemID && (i.ItemStatusID != BSITEMSTATUS_PUBLISHED)).Take(1);
+
+            if (queued.Count > 0)
+            {
+                // If already in the queue , delete all segment records and reset to NEW
+                itemID = queued.First().ItemID;
+                this.DeleteAllSegmentsForItem(itemID);
+                this.SetItemStatus(itemID, BSITEMSTATUS_NEW);
+            }
+            else
+            {
+                // If not already in the queue, add it
+                this.SetItemDefaults(item);
+                BSItem newItem = new BSItemDAL().BSItemInsertAuto(null, null, item);
+                itemID = newItem.ItemID;
+            }
+
+            return itemID;
+        }
+
+        private void DeleteAllSegmentsForItem(int itemID)
+        {
+            new BSItemDAL().BSItemDeleteAllSegments(null, null, itemID);
+        }
+
+        /// <summary>
+        /// Set the defaults for any required fields that are null.
+        /// </summary>
+        /// <param name="item"></param>
+        private void SetItemDefaults(BSItem item)
+        {
+            DateTime date = DateTime.Now;
+            item.ItemStatusID = (item.ItemStatusID <= 0 ? BSITEMSTATUS_NEW : item.ItemStatusID);
+            item.CreationDate = (item.CreationDate == DateTime.MinValue ? date : item.CreationDate);
+            item.LastModifiedDate = (item.LastModifiedDate == DateTime.MinValue ? date : item.LastModifiedDate);
+        }
+
+        public void SetItemHarvested(int itemID)
+        {
+            this.SetItemStatus(itemID, BSITEMSTATUS_HARVESTED);
+        }
+
+        public void SetItemPreprocessed(int itemID)
+        {
+            this.SetItemStatus(itemID, BSITEMSTATUS_PREPROCESSED);
+        }
+
+        public void SetItemPublished(int itemID)
+        {
+            this.SetItemStatus(itemID, BSITEMSTATUS_PUBLISHED);
+        }
+
+        public void SetItemHarvestError(int itemID)
+        {
+            this.SetItemStatus(itemID, BSITEMSTATUS_HARVESTERROR);
+        }
+
+        public void SetItemPublishError(int itemID)
+        {
+            this.SetItemStatus(itemID, BSITEMSTATUS_PUBLISHERROR);
+        }
+
+        private void SetItemStatus(int itemID, int itemStatusID)
+        {
+            BSItem item = new BSItemDAL().BSItemSelectAuto(null, null, itemID);
+            if (item != null)
+            {
+                item.ItemStatusID = itemStatusID;
+                new BSItemDAL().BSItemUpdateAuto(null, null, item);
+            }
         }
     }
 }
