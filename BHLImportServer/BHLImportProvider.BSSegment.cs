@@ -92,8 +92,7 @@ namespace MOBOT.BHLImport.Server
 
         public List<BSSegment> SelectSegmentsForPublishing(int itemID)
         {
-            return new BSSegmentDAL().SelectSegmentsForPublishing(null, null, itemID);
-            //var segments = context.BSSegments.Where(s => s.ItemID == itemID && s.BHLSegmentID == null);
+            return new BSSegmentDAL().BSSegmentSelectHarvestedByItem(null, null, itemID);
         }
 
         public void ResolveSegmentAuthors(int segmentID)

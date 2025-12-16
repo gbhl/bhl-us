@@ -65,23 +65,16 @@ namespace MOBOT.BHLImport.Server
         public List<BSItem> SelectItemsForDownload(int? itemID)
         {
             return new BSItemDAL().BSItemSelectByItemAndStatus(null, null, itemID, BSITEMSTATUS_NEW);
-            //var items = context.BSItems.OrderBy(i => i.ItemID).Where(i =>
-            //    (i.ItemStatusID == BSITEMSTATUS_NEW && (itemID == null || i.ItemID == itemID)));
-
         }
 
         public List<BSItem> SelectItemsForAuthorResolution(int? bhlItemID)
         {
-            return new BSItemDAL().BSItemSelectByItemAndStatus(null, null, bhlItemID, BSITEMSTATUS_HARVESTED);
-            //var items = context.BSItems.Where(i =>
-            //    (i.ItemStatusID == BSITEMSTATUS_HARVESTED && (bhlItemID == null || i.BHLItemID == bhlItemID)));
+            return new BSItemDAL().BSItemSelectByBHLItemAndStatus(null, null, bhlItemID, BSITEMSTATUS_HARVESTED);
         }
 
         public List<BSItem> SelectItemsForPublishing(int? bhlItemID)
         {     
-            return new BSItemDAL().BSItemSelectByItemAndStatus(null, null, bhlItemID, BSITEMSTATUS_PREPROCESSED);
-            //var items = context.BSItems.OrderBy(i => i.ItemID).Where(i =>
-            //    (i.ItemStatusID == BSITEMSTATUS_PREPROCESSED && (bhlItemID == null || i.BHLItemID == bhlItemID)));
+            return new BSItemDAL().BSItemSelectByBHLItemAndStatus(null, null, bhlItemID, BSITEMSTATUS_PREPROCESSED);
         }
 
         /// <summary>
@@ -102,7 +95,7 @@ namespace MOBOT.BHLImport.Server
             int itemID;
 
             // See if this BHL item is already in queue to be processed
-            List<BSItem> queued = new BSItemDAL().BSItemSelectInQueue(null, null, item.BHLItemID);
+            List<BSItem> queued = new BSItemDAL().BSItemSelectQueuedByBHLItem(null, null, item.BHLItemID);
             //var existingItem = context.BSItems.Where(i =>
             //    i.BHLItemID == item.BHLItemID && (i.ItemStatusID != BSITEMSTATUS_PUBLISHED)).Take(1);
 
