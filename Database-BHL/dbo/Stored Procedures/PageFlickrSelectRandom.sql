@@ -6,20 +6,22 @@ AS
 
 BEGIN
 
-SET NOCOUNT ON
+SET NOCOUNT ON;
 
-SELECT TOP (@NumToReturn)
-		f.PageID, 
-		f.FlickrURL, 
+WITH CTE AS (
+	SELECT TOP (@NumToReturn) 
+			f.PageID, 
+			f.FlickrURL
+	FROM	dbo.PageFlickr f
+	ORDER BY NEWID()
+)
+SELECT DISTINCT
+		cte.PageID, 
+		cte.FlickrURL, 
 		v.ShortTitle, 
-		dbo.fnIndicatedPageStringForPage(f.PageID) AS IndicatedPage,
-		dbo.fnPageTypeStringForPage(f.PageID) AS PageType
-FROM	dbo.PageFlickr f INNER JOIN dbo.PageSummaryView v
-			ON f.PageID = v.PageID
--- Default set
---WHERE	f.PageID IN (1203991, 10535931, 3894920, 8448711, 306998, 7360249, 12042246, 6307518, 12232608, 1203798)
-ORDER BY NEWID()
+		dbo.fnIndicatedPageStringForPage(cte.PageID) AS IndicatedPage,
+		dbo.fnPageTypeStringForPage(cte.PageID) AS PageType
+FROM	cte INNER JOIN dbo.PageSummaryView v
+			ON cte.PageID = v.PageID
 
 END
-
-
