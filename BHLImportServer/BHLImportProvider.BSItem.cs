@@ -55,10 +55,104 @@ namespace MOBOT.BHLImport.Server
             return results;
         }
 
-        public List<BSItem> BSItemSelectByStatus(int itemStatusID, int numberOfRows, int pageNumber,
-        string sortColumn, string sortDirection)
+        public List<BSItem> BSItemSelectByStatus(int itemStatusID, int numberOfRows, int pageNumber, string sortColumn, string sortDirection)
         {
             return new BSItemDAL().BSItemSelectByStatus(null, null, itemStatusID, numberOfRows, pageNumber, sortColumn, sortDirection);
+        }
+
+        public List<BSItem> SelectItemsForDownload(int? itemID)
+        {
+            return new BSItemDAL().BSItemSelectByItemAndStatus(null, null, itemID, BSITEMSTATUS_NEW);
+        }
+
+        /*
+        public List<BSItem> SelectItemsForAuthorResolution(int? bhlItemID)
+        {
+            return new BSItemDAL().BSItemSelectByBHLItemAndStatus(null, null, bhlItemID, BSITEMSTATUS_HARVESTED);
+        }
+        */
+
+        public List<BSItem> SelectItemsForPublishing(int? bhlItemID)
+        {     
+            return new BSItemDAL().BSItemSelectByBHLItemAndStatus(null, null, bhlItemID, BSITEMSTATUS_HARVESTED);
+        }
+
+        /// <summary>
+        /// Check NEW items to make sure that none are unavailable in production BHL.  Return a list of any that *are* unavailable.
+        /// </summary>
+        /// <returns></returns>
+        public List<BSItem> CheckItemAvailability(int? bhlItemID)
+        {
+            return new BSItemDAL().BSItemAvailabilityCheck(null, null, bhlItemID);
+        }
+
+        public int AddItem(BSItem item)
+        {
+            int itemID;
+            BSItemDAL itemDAL = new BSItemDAL();
+
+            // See if this BHL item is already in queue to be processed
+            List<BSItem> queued = itemDAL.BSItemSelectQueuedByBHLItem(null, null, item.BHLItemID);
+
+            if (queued.Count > 0)
+            {
+                // If already in the queue , delete all segment records and reset to NEW
+                itemID = queued[0].ItemID;
+                itemDAL.BSItemDeleteAllSegments(null, null, itemID);
+                itemDAL.BSItemUpdateItemStatus(null, null, itemID, BSITEMSTATUS_NEW);
+            }
+            else
+            {
+                // If not already in the queue, add it
+                this.SetItemDefaults(item);
+                BSItem newItem = itemDAL.BSItemInsertAuto(null, null, item);
+                itemID = newItem.ItemID;
+            }
+
+            return itemID;
+        }
+
+        /// <summary>
+        /// Set the defaults for any required fields that are null.
+        /// </summary>
+        /// <param name="item"></param>
+        private void SetItemDefaults(BSItem item)
+        {
+            DateTime date = DateTime.Now;
+            item.ItemStatusID = (item.ItemStatusID <= 0 ? BSITEMSTATUS_NEW : item.ItemStatusID);
+            item.CreationDate = (item.CreationDate == DateTime.MinValue ? date : item.CreationDate);
+            item.LastModifiedDate = (item.LastModifiedDate == DateTime.MinValue ? date : item.LastModifiedDate);
+        }
+
+        public void SetItemHarvested(int itemID)
+        {
+            this.SetItemStatus(itemID, BSITEMSTATUS_HARVESTED);
+        }
+
+        public void SetItemPreprocessed(int itemID)
+        {
+            this.SetItemStatus(itemID, BSITEMSTATUS_PREPROCESSED);
+        }
+
+        public void SetItemPublished(int itemID)
+        {
+            this.SetItemStatus(itemID, BSITEMSTATUS_PUBLISHED);
+        }
+
+        public void SetItemHarvestError(int itemID)
+        {
+            this.SetItemStatus(itemID, BSITEMSTATUS_HARVESTERROR);
+        }
+
+        public void SetItemPublishError(int itemID)
+        {
+            this.SetItemStatus(itemID, BSITEMSTATUS_PUBLISHERROR);
+        }
+
+        private void SetItemStatus(int itemID, int itemStatusID)
+        {
+            BSItemDAL itemDAL = new BSItemDAL();
+            itemDAL.BSItemUpdateItemStatus(null, null, itemID, itemStatusID);
         }
     }
 }

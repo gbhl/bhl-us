@@ -1,12 +1,8 @@
-#region Using
-
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-
-#endregion Using
 
 namespace MOBOT.BHLImport.DAL
 {
@@ -29,7 +25,7 @@ namespace MOBOT.BHLImport.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("BSItemDeleteAllSegments", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
 
@@ -53,6 +49,84 @@ namespace MOBOT.BHLImport.DAL
                     List<BSItem> list = helper.ExecuteReader(command);
                     return list;
                 }
+            }
+        }
+
+        public List<BSItem> BSItemSelectQueuedByBHLItem(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int? bhlItemID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.BSItemSelectQueuedByBHLItem", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("@BHLItemID", SqlDbType.Int, null, false, bhlItemID)))
+            {
+                using (CustomSqlHelper<BSItem> helper = new CustomSqlHelper<BSItem>())
+                {
+                    List<BSItem> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
+        public List<BSItem> BSItemSelectByBHLItemAndStatus(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int? bhlItemID, int itemStatusID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.BSItemSelectByBHLItemAndStatus", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("@BHLItemID", SqlDbType.Int, null, true, bhlItemID),
+                CustomSqlHelper.CreateInputParameter("@ItemStatusID", SqlDbType.Int, null, false, itemStatusID)))
+            {
+                using (CustomSqlHelper<BSItem> helper = new CustomSqlHelper<BSItem>())
+                {
+                    List<BSItem> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
+        public List<BSItem> BSItemSelectByItemAndStatus(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int? itemID, int itemStatusID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.BSItemSelectByItemAndStatus", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("@ItemID", SqlDbType.Int, null, true, itemID),
+                CustomSqlHelper.CreateInputParameter("@ItemStatusID", SqlDbType.Int, null, false, itemStatusID)))
+            {
+                using (CustomSqlHelper<BSItem> helper = new CustomSqlHelper<BSItem>())
+                {
+                    List<BSItem> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
+        public List<BSItem> BSItemAvailabilityCheck(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int? bhlItemID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.BSItemAvailabilityCheck", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("@BHLItemID", SqlDbType.Int, null, false, bhlItemID)))
+            {
+                using (CustomSqlHelper<BSItem> helper = new CustomSqlHelper<BSItem>())
+                {
+                    List<BSItem> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
+        public void BSItemUpdateItemStatus(SqlConnection sqlConnection,SqlTransaction sqlTransaction, int itemID, int itemStatusID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.BSItemUpdateItemStatus", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
+                CustomSqlHelper.CreateInputParameter("ItemStatusID", SqlDbType.Int, null, false, itemStatusID)))
+            {
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
     }
