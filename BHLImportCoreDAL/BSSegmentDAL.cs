@@ -56,7 +56,7 @@ namespace MOBOT.BHLImport.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.BSSegmentResolveAuthors", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
 
@@ -70,7 +70,7 @@ namespace MOBOT.BHLImport.DAL
                 CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID),
                 CustomSqlHelper.CreateOutputParameter("@SegmentStatusID", SqlDbType.Int, null, false)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
                 statusID = (int)command.Parameters["@SegmentStatusID"].Value;
             }
         }

@@ -25,7 +25,7 @@ namespace MOBOT.BHLImport.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("BSItemDeleteAllSegments", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
 
@@ -126,7 +126,7 @@ namespace MOBOT.BHLImport.DAL
                 CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
                 CustomSqlHelper.CreateInputParameter("ItemStatusID", SqlDbType.Int, null, false, itemStatusID)))
             {
-                command.ExecuteNonQuery();
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
     }
