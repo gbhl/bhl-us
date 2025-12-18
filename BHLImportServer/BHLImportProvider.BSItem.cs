@@ -2,7 +2,6 @@
 using MOBOT.BHLImport.DataObjects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MOBOT.BHLImport.Server
 {
@@ -56,8 +55,7 @@ namespace MOBOT.BHLImport.Server
             return results;
         }
 
-        public List<BSItem> BSItemSelectByStatus(int itemStatusID, int numberOfRows, int pageNumber,
-        string sortColumn, string sortDirection)
+        public List<BSItem> BSItemSelectByStatus(int itemStatusID, int numberOfRows, int pageNumber, string sortColumn, string sortDirection)
         {
             return new BSItemDAL().BSItemSelectByStatus(null, null, itemStatusID, numberOfRows, pageNumber, sortColumn, sortDirection);
         }
@@ -67,14 +65,16 @@ namespace MOBOT.BHLImport.Server
             return new BSItemDAL().BSItemSelectByItemAndStatus(null, null, itemID, BSITEMSTATUS_NEW);
         }
 
+        /*
         public List<BSItem> SelectItemsForAuthorResolution(int? bhlItemID)
         {
             return new BSItemDAL().BSItemSelectByBHLItemAndStatus(null, null, bhlItemID, BSITEMSTATUS_HARVESTED);
         }
+        */
 
         public List<BSItem> SelectItemsForPublishing(int? bhlItemID)
         {     
-            return new BSItemDAL().BSItemSelectByBHLItemAndStatus(null, null, bhlItemID, BSITEMSTATUS_PREPROCESSED);
+            return new BSItemDAL().BSItemSelectByBHLItemAndStatus(null, null, bhlItemID, BSITEMSTATUS_HARVESTED);
         }
 
         /// <summary>
@@ -83,43 +83,33 @@ namespace MOBOT.BHLImport.Server
         /// <returns></returns>
         public List<BSItem> CheckItemAvailability(int? bhlItemID)
         {
-            //BHLImportEntities context = GetDataContext();
-            //var unavailableItems = context.BSItemAvailabilityCheck(bhlItemID);
-            //return unavailableItems.ToList();
-
             return new BSItemDAL().BSItemAvailabilityCheck(null, null, bhlItemID);
         }
 
         public int AddItem(BSItem item)
         {
             int itemID;
+            BSItemDAL itemDAL = new BSItemDAL();
 
             // See if this BHL item is already in queue to be processed
-            List<BSItem> queued = new BSItemDAL().BSItemSelectQueuedByBHLItem(null, null, item.BHLItemID);
-            //var existingItem = context.BSItems.Where(i =>
-            //    i.BHLItemID == item.BHLItemID && (i.ItemStatusID != BSITEMSTATUS_PUBLISHED)).Take(1);
+            List<BSItem> queued = itemDAL.BSItemSelectQueuedByBHLItem(null, null, item.BHLItemID);
 
             if (queued.Count > 0)
             {
                 // If already in the queue , delete all segment records and reset to NEW
-                itemID = queued.First().ItemID;
-                this.DeleteAllSegmentsForItem(itemID);
-                this.SetItemStatus(itemID, BSITEMSTATUS_NEW);
+                itemID = queued[0].ItemID;
+                itemDAL.BSItemDeleteAllSegments(null, null, itemID);
+                itemDAL.BSItemUpdateItemStatus(null, null, itemID, BSITEMSTATUS_NEW);
             }
             else
             {
                 // If not already in the queue, add it
                 this.SetItemDefaults(item);
-                BSItem newItem = new BSItemDAL().BSItemInsertAuto(null, null, item);
+                BSItem newItem = itemDAL.BSItemInsertAuto(null, null, item);
                 itemID = newItem.ItemID;
             }
 
             return itemID;
-        }
-
-        private void DeleteAllSegmentsForItem(int itemID)
-        {
-            new BSItemDAL().BSItemDeleteAllSegments(null, null, itemID);
         }
 
         /// <summary>
@@ -161,12 +151,8 @@ namespace MOBOT.BHLImport.Server
 
         private void SetItemStatus(int itemID, int itemStatusID)
         {
-            BSItem item = new BSItemDAL().BSItemSelectAuto(null, null, itemID);
-            if (item != null)
-            {
-                item.ItemStatusID = itemStatusID;
-                new BSItemDAL().BSItemUpdateAuto(null, null, item);
-            }
+            BSItemDAL itemDAL = new BSItemDAL();
+            itemDAL.BSItemUpdateItemStatus(null, null, itemID, itemStatusID);
         }
     }
 }

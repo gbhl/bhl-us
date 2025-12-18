@@ -117,5 +117,17 @@ namespace MOBOT.BHLImport.DAL
                 }
             }
         }
+
+        public void BSItemUpdateItemStatus(SqlConnection sqlConnection,SqlTransaction sqlTransaction, int itemID, int itemStatusID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.BSItemUpdateItemStatus", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
+                CustomSqlHelper.CreateInputParameter("ItemStatusID", SqlDbType.Int, null, false, itemStatusID)))
+            {
+                command.ExecuteNonQuery();
+            }
+        }
     }
 }

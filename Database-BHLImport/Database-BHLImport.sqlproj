@@ -464,6 +464,7 @@
     <None Include="dbo\Stored Procedures\BSItemSelectQueuedByBHLItem.sql" />
     <None Include="dbo\Stored Procedures\BSItemSelectByBHLItemAndStatus.sql" />
     <None Include="dbo\Stored Procedures\BSItemSelectByItemAndStatus.sql" />
+    <None Include="dbo\Stored Procedures\BSItemUpdateItemStatus.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />

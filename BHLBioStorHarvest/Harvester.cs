@@ -5,8 +5,8 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Text;
 using System.Xml.Linq;
-using EFModel = MOBOT.BHLImport.DataObjects;
-using Provider = MOBOT.BHLImport.Server;
+using MOBOT.BHLImport.DataObjects;
+using MOBOT.BHLImport.Server;
 
 namespace MOBOT.BHL.BHLBioStorHarvest
 {
@@ -35,7 +35,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         private const string MODE_ITEM = "ITEM";
         private const string MODE_FILE = "FILE";
 
-        private Provider.BHLImportProvider provider = new Provider.BHLImportProvider();
+        private BHLImportProvider provider = new BHLImportProvider();
         
         public void Harvest()
         {
@@ -72,7 +72,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                         }
                         if (noErrors) noErrors = CheckItemAvailability();  // Make sure items not inactive in BHL
                         if (noErrors) noErrors = HarvestItems();  // Harvest the data from BioStor
-                        if (noErrors) noErrors = PreprocessData();    // Prepare the data for production
+                        //if (noErrors) noErrors = PreprocessData();    // Prepare the data for production
                         if (noErrors && !configParms.NoPublish) noErrors = PublishToProduction();   // Publish data to production
                         if (noErrors && !configParms.NoCluster) ClusterSegments(); // Cluster the new segments
                         break;
@@ -82,7 +82,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                             int itemID = this.InsertItem(configParms.BHLItemID);
                             noErrors = CheckItemAvailability(configParms.BHLItemID);  // Make sure item not inactive in BHL
                             if (noErrors) noErrors = HarvestItems(itemID);  // Harvest the item from BioStor
-                            if (noErrors) noErrors = PreprocessData(configParms.BHLItemID);  // Prepare the data for production
+                            //if (noErrors) noErrors = PreprocessData(configParms.BHLItemID);  // Prepare the data for production
                             if (noErrors && !configParms.NoPublish) noErrors = PublishToProduction(configParms.BHLItemID);  // Publish data to production
                             if (noErrors && !configParms.NoCluster) noErrors = ClusterSegments(configParms.BHLItemID);    // Cluster the new segments
                         }
@@ -110,11 +110,11 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             bool harvestComplete = true;
             try
             {
-                List<EFModel.BSItem> items = provider.SelectItemsForDownload(itemID);
+                List<BSItem> items = provider.SelectItemsForDownload(itemID);
 
                 this.LogMessage(string.Format("Selected {0} items for harvesting.", items.Count()));
 
-                foreach (EFModel.BSItem item in items)
+                foreach (BSItem item in items)
                 {
                     // Stop if harvesting fails.  Consider continuing to the next item (instead of stopping).
                     if (!HarvestItem(item.ItemID, (int)item.BHLItemID))
@@ -162,8 +162,8 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                     foreach (JObject article in articles.Cast<JObject>())
                     {
                         sequenceOrder++;
-                        EFModel.BSSegment segment = GetSegment(bhlItemID, sequenceOrder, article);
-                        List<EFModel.BSSegmentAuthor> segmentAuthors = GetAuthors(article);
+                        BSSegment segment = GetSegment(bhlItemID, sequenceOrder, article);
+                        List<BSSegmentAuthor> segmentAuthors = GetAuthors(article);
                         segment.ItemID = itemID;
                         provider.InsertSegment(segment, segmentAuthors);
                         articlesHarvested.Add(segment.Title);
@@ -208,10 +208,10 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             return isHarvested;
         }
 
-        private EFModel.BSSegment GetSegment(int itemID, short sequenceOrder, JObject article)
+        private BSSegment GetSegment(int itemID, short sequenceOrder, JObject article)
         {
             // Create a new segment.
-            EFModel.BSSegment segment = new EFModel.BSSegment
+            BSSegment segment = new BSSegment
             {
                 ItemID = itemID,
                 SequenceOrder = sequenceOrder,
@@ -257,7 +257,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                 short pageSequenceOrder = 1;
                 foreach (int page in pages.Select(v => (int)v))
                 {
-                    EFModel.BSSegmentPage segmentPage = new EFModel.BSSegmentPage
+                    BSSegmentPage segmentPage = new BSSegmentPage
                     {
                         BHLPageID = Convert.ToInt32(page),
                         SequenceOrder = pageSequenceOrder
@@ -270,9 +270,9 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             return segment;
         }
 
-        private List<EFModel.BSSegmentAuthor> GetAuthors(JObject article)
+        private List<BSSegmentAuthor> GetAuthors(JObject article)
         {
-            List<EFModel.BSSegmentAuthor> segmentAuthors = new List<EFModel.BSSegmentAuthor>();
+            List<BSSegmentAuthor> segmentAuthors = new List<BSSegmentAuthor>();
 
             // Get the authors for the article
             JArray authors = (JArray)article["authors"];
@@ -289,10 +289,10 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                     // Make sure this isn't a duplicate author
                     var duplicate = segmentAuthors.Find(a => 
                         a.BioStorID == bioStorId && a.LastName == lastName.Trim() && a.FirstName == firstName.Trim());
-                    if (duplicate == default(EFModel.BSSegmentAuthor))
+                    if (duplicate == default(BSSegmentAuthor))
                     {
                         // Get the author info
-                        EFModel.BSSegmentAuthor segmentAuthor = new EFModel.BSSegmentAuthor
+                        BSSegmentAuthor segmentAuthor = new BSSegmentAuthor
                         {
                             ImportSourceID = configParms.ImportSourceID,
                             BioStorID = ((string)author["id"]) ?? string.Empty,
@@ -401,7 +401,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
 
         private int InsertItem(int itemID)
         {
-            EFModel.BSItem item = new EFModel.BSItem
+            BSItem item = new BSItem
             {
                 BHLItemID = itemID
             };
@@ -458,6 +458,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
 
         #endregion Harvest supporting methods
 
+        /*
         #region Preprocessing
 
         /// <summary>
@@ -470,9 +471,9 @@ namespace MOBOT.BHL.BHLBioStorHarvest
 
             try
             {
-                List<EFModel.BSItem> items = new List<EFModel.BSItem>();
+                List<BSItem> items = new List<BSItem>();
                 items = provider.SelectItemsForAuthorResolution(bhlItemID);
-                foreach (EFModel.BSItem item in items)
+                foreach (BSItem item in items)
                 {
                     itemID = item.ItemID;
 
@@ -496,6 +497,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         }
 
         #endregion Preprocessing
+        */
 
         #region Publish To Production
 
@@ -507,19 +509,19 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             try
             {
                 // Get all items with segments that are ready to be published
-                List<EFModel.BSItem> items = provider.SelectItemsForPublishing(bhlItemID);
+                List<BSItem> items = provider.SelectItemsForPublishing(bhlItemID);
 
-                foreach (EFModel.BSItem item in items)
+                foreach (BSItem item in items)
                 {
                     itemID = item.ItemID;
 
                     // Get all of the ready-to-publish segments for the item
-                    List<EFModel.BSSegment> segments = provider.SelectSegmentsForPublishing(itemID);
+                    List<BSSegment> segments = provider.SelectSegmentsForPublishing(itemID);
 
                     int published = 0;
                     int skipped = 0;
 
-                    foreach (EFModel.BSSegment segment in segments)
+                    foreach (BSSegment segment in segments)
                     {
                         // Check the production database to see if we aleady have records for this segment's authors
                         provider.ResolveSegmentAuthors(segment.SegmentID);
@@ -589,8 +591,8 @@ namespace MOBOT.BHL.BHLBioStorHarvest
 
             try
             {
-                List<EFModel.BSItem> unavailableItems = provider.CheckItemAvailability(bhlItemID);
-                foreach (EFModel.BSItem item in unavailableItems) itemsUnavailable.Add(item.ItemID.ToString());
+                List<BSItem> unavailableItems = provider.CheckItemAvailability(bhlItemID);
+                foreach (BSItem item in unavailableItems) itemsUnavailable.Add(item.ItemID.ToString());
 
                 this.LogMessage("Found " + itemsUnavailable.Count.ToString() + " items inactive in BHL.");
             }
