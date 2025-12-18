@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="..\BHLWebServiceREST.v1\bin\Debug\net6.0\BHL.WebServiceREST.v1.json" Namespace="BHL.WebServiceREST.v1" ClassName="BHLWS">
+    <OpenApiReference Include="..\BHLWebServiceREST.v1\bin\Debug\net10.0\BHL.WebServiceREST.v1.json" Namespace="BHL.WebServiceREST.v1" ClassName="BHLWS">
       <CodeGenerator>NSwagCSharp</CodeGenerator>
       <Link>OpenAPIs\BHL.WebServiceREST.v1.json</Link>
 	  <Options>/GenerateSyncMethods:true</Options>

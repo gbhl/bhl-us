@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="..\SiteServiceREST.v1\bin\Debug\net8.0\SiteServicesREST.v1.json" CodeGenerator="NSwagCSharp" Namespace="BHL.SiteServicesREST.v1" ClassName="SiteService" Link="OpenAPIs\SiteServicesREST.v1.json">
+    <OpenApiReference Include="..\SiteServiceREST.v1\bin\Debug\net10.0\SiteServicesREST.v1.json" CodeGenerator="NSwagCSharp" Namespace="BHL.SiteServicesREST.v1" ClassName="SiteService" Link="OpenAPIs\SiteServicesREST.v1.json">
 		<Options>/GenerateSyncMethods:true</Options>
 	</OpenApiReference>
   </ItemGroup>
