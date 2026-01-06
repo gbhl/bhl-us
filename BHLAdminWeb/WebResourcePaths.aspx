@@ -41,7 +41,7 @@
             <span>Book reader will read this location first, before falling back to a local file.</span>
         </p>
         <p>
-            <label for="txtPostLocalScandataPath" style="display:inline-block; width:25%;">Pre-Local Scandata Path Template:</label>
+            <label for="txtPostLocalScandataPath" style="display:inline-block; width:25%;">Post-Local Scandata Path Template:</label>
             <asp:TextBox runat="server" MaxLength="1000" ClientIDMode="Static" ID="txtPostLocalScandataPath" Width="550"></asp:TextBox>
             <br />
             <span style="display:inline-block;width:25%">&nbsp;</span>
