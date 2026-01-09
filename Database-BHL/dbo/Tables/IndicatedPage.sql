@@ -11,12 +11,14 @@
     CONSTRAINT [PK_IndicatedPage] PRIMARY KEY CLUSTERED ([PageID] ASC, [Sequence] ASC),
     CONSTRAINT [IndicatedPage_FK00] FOREIGN KEY ([PageID]) REFERENCES [dbo].[Page] ([PageID]) ON UPDATE CASCADE
 );
-
-
 GO
+
 CREATE NONCLUSTERED INDEX [IX_IndicatedPage_PageNumber]
     ON [dbo].[IndicatedPage]([PageNumber] ASC)
     INCLUDE([PageID], [PagePrefix]);
+GO
 
-
+CREATE NONCLUSTERED INDEX IX_IndicatedPage_Sequence
+	ON [dbo].[IndicatedPage] ([Sequence])
+	INCLUDE ([PagePrefix],[PageNumber])
 GO
