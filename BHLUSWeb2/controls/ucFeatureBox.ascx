@@ -13,7 +13,7 @@
 <asp:Panel ID="panNewFuture" runat="server" Visible="false">
     <div class="<%= SpecialClass %> newfuture" id="<%= specialID %>">
         <h3>Future of BHL</h3>
-        <p>BHL's future is uncertain, but hopeful. Follow the latest news of our ongoing transition.</p>
+        <p><%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsText"]%></p>
         <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]%>">Learn More</a>
     </div>
 </asp:Panel>

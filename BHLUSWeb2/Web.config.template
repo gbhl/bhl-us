@@ -143,7 +143,9 @@
 
     <add key="DonateUrl" value="https://ancrywkv.donorsupport.co/page/BHLDonations"/>
 
-    <add key="NewFutureNewsUrl" value="https://s.si.edu/bhlcallforsupport" />
+    <add key="NewFutureNewsBannerText" value="The future of BHL is uncertain, but hopeful." />
+    <add key="NewFutureNewsText" value="BHL's future is uncertain, but hopeful. Follow the latest news of our ongoing transition." />
+    <add key="NewFutureNewsUrl" value="https://about.biodiversitylibrary.org/about/future-of-bhl/" />
 
     <add key="NewsletterSignupUrl" value="https://lp.constantcontactpages.com/sl/YKrBfqY/BHLsignup"/>
 

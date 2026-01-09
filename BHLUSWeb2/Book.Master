@@ -117,7 +117,7 @@
             </header>
         <%if (System.Configuration.ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true") {%>
         <div class="newfuturebanner">
-	        The future of BHL is uncertain, but hopeful. <a title="new future" href="<%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]%>">Learn more.</a>
+	        <%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsBannerText"]%> <a title="new future" href="<%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]%>">Learn more.</a>
         </div>
         <%} else { %>
         <div class="harmfulcontentbanner">
