@@ -387,7 +387,7 @@ function selectTab() {
     } else {
         subSection.show();
     }
-});
+};
 
 //]]>
 </script>
