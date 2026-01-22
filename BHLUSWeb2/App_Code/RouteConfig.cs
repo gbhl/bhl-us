@@ -32,27 +32,13 @@ namespace MOBOT.BHL.Web2
 
             routes.MapRoute("ServiceDefault", "service/{action}", new { controller = "Service" });
 
-            if (ConfigurationManager.AppSettings["UseElasticSearch"] == "true")
-            {
-                // Use new routes to MVC views if elasticsearch is enabled
-                routes.MapRoute("Search", "search", new { controller = "Search", action = "Index" });
-                routes.MapRoute("SearchPage", "search/pages", new { controller = "Search", action = "Pages" });
+            routes.MapRoute("Search", "search", new { controller = "Search", action = "Index" });
+            routes.MapRoute("SearchPage", "search/pages", new { controller = "Search", action = "Pages" });
 
-                routes.MapRoute("Advanced-Search-Tab", "advsearch/{searchtype}",
-                    new { controller = "Search", action = "Advanced" },
-                    new RouteValueDictionary { { "searchtype", "book" } });
-                routes.MapRoute("Advanced-Search", "advsearch", new { controller = "Search", action = "Advanced" });
-            }
-            else
-            {
-                // Elasticsearch is turned off, so use the old routes
-                routes.MapPageRoute("Search", "search", "~/Search.aspx");
-
-                routes.MapPageRoute("Advanced-Search-Tab", "advsearch/{searchtype}", "~/AdvancedSearch.aspx", false,
-                new RouteValueDictionary { {"searchtype","book"} } );
-
-                routes.MapPageRoute("Advanced-Search", "advsearch", "~/AdvancedSearch.aspx");
-            }
+            routes.MapRoute("Advanced-Search-Tab", "advsearch/{searchtype}",
+                new { controller = "Search", action = "Advanced" },
+                new RouteValueDictionary { { "searchtype", "book" } });
+            routes.MapRoute("Advanced-Search", "advsearch", new { controller = "Search", action = "Advanced" });
 
             routes.MapRoute("BrowseTitles", "browse/titles/{start}/{sort}", new { controller = "Browse", action = "Titles", start = "a", sort="title" });
             routes.MapRoute("BrowseAuthors", "browse/authors/{start}", new { controller = "Browse", action = "Authors", start = "a" });

@@ -13,7 +13,6 @@ namespace MOBOT.BHL.API.BHLApi
     public class Api3
     {
         private int _apiApplicationID = 5;  // application ID 5 corresponds to "BHL API v3";
-        private bool _useElasticSearch = true;  // if this is set to false, some API methods will not return data
         public const int MaxPubSearchPageSize = 200;    // maximum page size for PublicationSearch methods
         public const int DefaultPubSearchPageSize = 100;    // default page size for PublicationSearch methods
 
@@ -21,11 +20,6 @@ namespace MOBOT.BHL.API.BHLApi
 
         public Api3()
         {
-        }
-
-        public Api3(bool useElasticSearch)
-        {
-            _useElasticSearch = useElasticSearch;
         }
 
         public Api3(int applicationID)
@@ -1003,14 +997,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             List<Publication> pubs = new List<Publication>();
-            if (_useElasticSearch)
-            {
-                pubs = SearchPublicationGlobal(searchTerm, searchType, pageInt, pageSizeInt);
-            }
-            else
-            {
-                pubs = SearchPublicationGlobalSQL(searchTerm, sqlFullText);
-            }
+            pubs = SearchPublicationGlobal(searchTerm, searchType, pageInt, pageSizeInt);
 
             return pubs;
         }
@@ -1133,16 +1120,8 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             List<Publication> pubs = new List<Publication>();
-            if (_useElasticSearch)
-            {
-                pubs = SearchPublicationAdvanced(title, titleOp, authorName, year, subject, languageCode,
-                    collectionID, notes, notesOp, text, textOp, pageInt, pageSizeInt);
-            }
-            else
-            {
-                pubs = SearchPublicationAdvancedSQL(title, authorName, yearInt, subject, 
-                    languageCode, collectionIDint, sqlFullText);
-            }
+            pubs = SearchPublicationAdvanced(title, titleOp, authorName, year, subject, languageCode,
+                collectionID, notes, notesOp, text, textOp, pageInt, pageSizeInt);
 
             return pubs;
         }
@@ -1420,6 +1399,7 @@ namespace MOBOT.BHL.API.BHLApi
         /// <param name="collectionID"></param>
         /// <param name="sqlFullText"></param>
         /// <returns></returns>
+        /*
         private List<Publication> SearchPublicationAdvancedSQL(string title, string authorName, 
             int year, string subject, string languageCode, int collectionID, bool sqlFullText)
         {
@@ -1505,6 +1485,7 @@ namespace MOBOT.BHL.API.BHLApi
 
             return pubs;
         }
+        */
 
         /// <summary>
         /// Use SQL to search metadata globally
@@ -1512,11 +1493,13 @@ namespace MOBOT.BHL.API.BHLApi
         /// <param name="searchTerm"></param>
         /// <param name="sqlFullText"></param>
         /// <returns></returns>
+        /*
         private List<Publication> SearchPublicationGlobalSQL(string searchTerm, bool sqlFullText)
         {
             // There is no non-ElasticSearch implementation
             throw new NotImplementedException();
         }
+        */
 
         private List<Title> SearchBook(string title, string authorLastName, string volume, string edition,
             int? year, string subject, string languageCode, int? collectionID, int returnCount, bool sqlFullText)
@@ -1635,28 +1618,17 @@ namespace MOBOT.BHL.API.BHLApi
         {
             List<Subject> subjects = new List<Subject>();
 
-            if (_useElasticSearch)
-            {
-                // Submit the request to ElasticSearch
-                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
-                search.StartPage = 1;
-                search.NumResults = 10000;
-                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["KeywordResultDefaultSort"]);
-                ISearchResult result = search.SearchKeyword(subject);
+            // Submit the request to the search engine
+            ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.StartPage = 1;
+            search.NumResults = 10000;
+            search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["KeywordResultDefaultSort"]);
+            ISearchResult result = search.SearchKeyword(subject);
 
-                // Build the list of results
-                foreach (KeywordHit hit in result.Keywords)
-                {
-                    subjects.Add(new Subject { SubjectText = hit.Keyword });
-                }
-            }
-            else
+            // Build the list of results
+            foreach (KeywordHit hit in result.Keywords)
             {
-                Api3DAL dal = new Api3DAL();
-                if (sqlFullText)
-                    subjects = dal.SearchTitleKeyword(null, null, subject);
-                else
-                    subjects = dal.TitleKeywordSelectLikeTag(null, null, subject);
+                subjects.Add(new Subject { SubjectText = hit.Keyword });
             }
 
             return subjects;
@@ -1666,30 +1638,20 @@ namespace MOBOT.BHL.API.BHLApi
         {
             List<Author> creators = new List<Author>();
 
-            if (_useElasticSearch)
-            {
-                // Submit the request to ElasticSearch
-                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
-                search.StartPage = 1;
-                search.NumResults = 10000;
-                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["AuthorResultDefaultSort"]);
-                ISearchResult result = search.SearchAuthor(name);
+            // Submit the request to the search engine
+            ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.StartPage = 1;
+            search.NumResults = 10000;
+            search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["AuthorResultDefaultSort"]);
+            ISearchResult result = search.SearchAuthor(name);
 
-                // Build the list of results
-                List<int> creatorIds = new List<int>();
-                foreach (AuthorHit hit in result.Authors)
-                {
-                    creatorIds.Add(Convert.ToInt32(hit.Id));
-                }
-                creators = new Api3DAL().AuthorSelectForList(null, null, creatorIds);
-            }
-            else
+            // Build the list of results
+            List<int> creatorIds = new List<int>();
+            foreach (AuthorHit hit in result.Authors)
             {
-                if (sqlFullText)
-                    creators = new Api3DAL().SearchAuthor(null, null, name);
-                else
-                    creators = new Api3DAL().AuthorSelectNameStartsWith(null, null, name);
+                creatorIds.Add(Convert.ToInt32(hit.Id));
             }
+            creators = new Api3DAL().AuthorSelectForList(null, null, creatorIds);
 
             foreach (Author creator in creators)
             {
@@ -1708,24 +1670,17 @@ namespace MOBOT.BHL.API.BHLApi
 
             List<Name> names = new List<Name>();
 
-            if (_useElasticSearch)
-            {
-                // Submit the request to ElasticSearch
-                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
-                search.StartPage = 1;
-                search.NumResults = 10000;
-                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["NameResultDefaultSort"]);
-                ISearchResult result = search.SearchName(name);
+            // Submit the request to the search engine
+            ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.StartPage = 1;
+            search.NumResults = 10000;
+            search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["NameResultDefaultSort"]);
+            ISearchResult result = search.SearchName(name);
 
-                // Build the list of results
-                foreach (NameHit hit in result.Names)
-                {
-                    names.Add(new Name { NameConfirmed = hit.Name });
-                }
-            }
-            else
+            // Build the list of results
+            foreach (NameHit hit in result.Names)
             {
-                names = new Api3DAL().NameResolvedSelectByNameLike(null, null, name);
+                names.Add(new Name { NameConfirmed = hit.Name });
             }
 
             return names;
@@ -1764,56 +1719,48 @@ namespace MOBOT.BHL.API.BHLApi
             DataTable pageIDs = new DataTable();
             pageIDs.Columns.Add(new DataColumn("ID", typeof(int)));
 
-            if (_useElasticSearch)
+            // Submit the request to the search engine
+            ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.StartPage = 1;
+            search.NumResults = 10000;
+            search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PageResultDefaultSort"]);
+
+            List<Tuple<SearchField, string>> limits = new List<Tuple<SearchField, string>>();
+            Tuple<SearchField, string> itemLimit = new Tuple<SearchField, string>(SearchField.ItemID, itemID.ToString());
+            limits.Add(itemLimit);
+            ISearchResult result = search.SearchPage(text ?? "", limits, true);
+
+            // Build the list of results
+            foreach (PageHit hit in result.Pages)
             {
-                // Submit the request to ElasticSearch
-                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
-                search.StartPage = 1;
-                search.NumResults = 10000;
-                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PageResultDefaultSort"]);
-
-                List<Tuple<SearchField, string>> limits = new List<Tuple<SearchField, string>>();
-                Tuple<SearchField, string> itemLimit = new Tuple<SearchField, string>(SearchField.ItemID, itemID.ToString());
-                limits.Add(itemLimit);
-                ISearchResult result = search.SearchPage(text ?? "", limits, true);
-
-                // Build the list of results
-                foreach (PageHit hit in result.Pages)
+                Page page = new Page
                 {
-                    Page page = new Page
-                    {
-                        PageID = Convert.ToInt32(hit.PageId),
-                        PageUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.PageId,
-                        ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + hit.PageId,
-                        FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + hit.PageId,
-                        OcrUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.PageId,
-                        OcrText = hit.Text
-                    };
+                    PageID = Convert.ToInt32(hit.PageId),
+                    PageUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.PageId,
+                    ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + hit.PageId,
+                    FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + hit.PageId,
+                    OcrUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.PageId,
+                    OcrText = hit.Text
+                };
 
-                    if (entityType.ToUpper() == "ITEM") { page.BHLType = BHLType.Item; page.ItemID = entityID; }
-                    if (entityType.ToUpper() == "PART") { page.BHLType = BHLType.Part; page.PartID = entityID; }
+                if (entityType.ToUpper() == "ITEM") { page.BHLType = BHLType.Item; page.ItemID = entityID; }
+                if (entityType.ToUpper() == "PART") { page.BHLType = BHLType.Part; page.PartID = entityID; }
 
-                    pageIDs.Rows.Add(page.PageID);
+                pageIDs.Rows.Add(page.PageID);
 
-                    if (hit.PageTypes.Count > 0) page.PageTypes = new List<PageType>();
-                    foreach (string pageType in hit.PageTypes)
-                    {
-                        page.PageTypes.Add(new PageType { PageTypeName = pageType });
-                    }
-
-                    if (hit.PageIndicators.Count > 0) page.PageNumbers = new List<PageNumber>();
-                    foreach (string pageIndicator in hit.PageIndicators)
-                    {
-                        page.PageNumbers.Add(new PageNumber { Number = pageIndicator });
-                    }
-
-                    pages.Add(page);
+                if (hit.PageTypes.Count > 0) page.PageTypes = new List<PageType>();
+                foreach (string pageType in hit.PageTypes)
+                {
+                    page.PageTypes.Add(new PageType { PageTypeName = pageType });
                 }
-            }
-            else
-            {
-                // There is no non-ElasticSearch implementation
-                throw new NotImplementedException();
+
+                if (hit.PageIndicators.Count > 0) page.PageNumbers = new List<PageNumber>();
+                foreach (string pageIndicator in hit.PageIndicators)
+                {
+                    page.PageNumbers.Add(new PageNumber { Number = pageIndicator });
+                }
+
+                pages.Add(page);
             }
 
             if (pages.Count > 0)

@@ -57,8 +57,7 @@
     <!-- Feature toggle for IIIF implementation:  Valid values are "on", "off", and "toggle" -->
     <add key="IIIFState" value="off" />
     
-    <!-- Feature toggle for ElasticSearch implementation -->
-    <add key="UseElasticSearch" value="false"/>
+    <!-- ElasticSearch settings -->
     <add key="DebugSearch" value="true" />
     <add key="ElasticSearchServerAddress" value="ELASTICSEARCH_URL" />
     <!-- Index names-->

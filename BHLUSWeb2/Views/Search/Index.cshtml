@@ -448,10 +448,25 @@
                     <div style="padding-left:10px; padding-bottom:5px;"></div>
                 </p>
 
-            @Html.Action("_DonateFeatureSmall", "Partial")
-            <p>&nbsp;</p>
-            @Html.Action("_CollectionFeatureSmall", "Partial")
-        </div>
+                @if (AppConfig.UseElasticSearch())
+                {
+                    @Html.Action("_DonateFeatureSmall", "Partial")
+                }
+                else
+                {
+                    @Html.Action("_DonateFeature", "Partial")
+                }
+                <p>&nbsp;</p>
+                @if (AppConfig.UseElasticSearch())
+                {
+                    @Html.Action("_CollectionFeatureSmall", "Partial")
+                }
+                else
+                {
+                    @Html.Action("_CollectionFeature", "Partial")
+                }
+
+            </div>
 </form>
 <!--
     </div>

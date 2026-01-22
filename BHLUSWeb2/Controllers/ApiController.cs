@@ -318,7 +318,7 @@ namespace MOBOT.BHL.Web2.Controllers
         private List<API.BHLApiDataObjects3.Subject> Api3_SubjectSearch(string subject, bool fullText, string apiKey)
         {
             Api3_ValidateUser(Api3.APIRequestType.SubjectSearch, apiKey, subject);
-            Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
+            Api3 api = new Api3();
             return api.SubjectSearch(subject, fullText);
         }
 
@@ -332,7 +332,7 @@ namespace MOBOT.BHL.Web2.Controllers
         private List<API.BHLApiDataObjects3.Author> Api3_AuthorSearch(string name, bool fullText, string apiKey)
         {
             Api3_ValidateUser(Api3.APIRequestType.AuthorSearch, apiKey, name);
-            Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
+            Api3 api = new Api3();
             return api.AuthorSearch(name, fullText);
         }
 
@@ -360,7 +360,7 @@ namespace MOBOT.BHL.Web2.Controllers
         private List<API.BHLApiDataObjects3.Name> Api3_NameSearch(string name, string apiKey)
         {
             Api3_ValidateUser(Api3.APIRequestType.NameSearch, apiKey, name);
-            Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
+            Api3 api = new Api3();
             return api.NameSearch(name);
         }
 
@@ -383,7 +383,7 @@ namespace MOBOT.BHL.Web2.Controllers
         {
             string args = string.Format("{0}|{1}|{2}|{3}", searchTerm, searchType, page.ToString(), pageSize.ToString());
             Api3_ValidateUser(Api3.APIRequestType.PublicationSearch, apiKey, args);
-            Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
+            Api3 api = new Api3();
             return api.SearchPublication(searchTerm, searchType, page, pageSize, fullText);
         }
 
@@ -397,7 +397,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 (collectionID == null ? "" : collectionID.ToString()), notes, notesOp, text, textOp, page.ToString(),
                 pageSize.ToString());
             Api3_ValidateUser(Api3.APIRequestType.PublicationSearchAdvanced, apiKey, args);
-            Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
+            Api3 api = new Api3();
             return api.SearchPublication(title, titleOp, authorLastName, year, subject, languageCode,
                 collectionID, notes, notesOp, text, textOp, page, pageSize, fullText);
         }
