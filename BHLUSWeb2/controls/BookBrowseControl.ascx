@@ -1,11 +1,15 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BookBrowseControl.ascx.cs" Inherits="MOBOT.BHL.Web2.BookBrowseControl" %>
 <asp:Repeater ID="bookRepeater" runat="server">
 	<ItemTemplate>
-        <%
         <li class="titlelisting">
             <div style="display:inline-block; width:620px">
                 <div style="float:left">
-                    <a target="<%# Eval("ExternalUrl") == string.Empty ? "_self\" class=\"title" : "_blank\" rel=\"noopener noreferrer\" class=\"title ExtLinkBrowse" %>" href="/item/<%# Eval("ItemID ")%>"><%# Eval("FullTitle")%> <%# Eval("PartNumber")%> <%# Eval("PartName")%></a>
+                    <a target='<%# Eval("ExternalUrl") == string.Empty ? "_self" : "_blank" %>' 
+                       rel="noopener noreferrer" 
+                       class="title ExtLinkBrowse" 
+                       href='/item/<%# Eval("ItemID")%>'>
+                       <%# Eval("FullTitle")%> <%# Eval("PartNumber")%> <%# Eval("PartName")%>
+                    </a>
                 </div>
                 <div style="float:right">
                     <a class="titleviewbook" href="/bibliography/<%# Eval("TitleID") %>">View Metadata</a>
