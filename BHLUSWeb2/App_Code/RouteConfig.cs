@@ -119,8 +119,6 @@ namespace MOBOT.BHL.Web2
             //routes.Add("PDF", new Route("pdf{folder}/{filename}", new HttpHandlerRouteHandler<PDFDownload>()));
             routes.MapRoute("PDF", "pdf{folder}/{filename}", new { controller = "Download", action = "PDF" });
 
-            routes.MapPageRoute("Biblioselect", "biblioselect/{itemid}", "~/BiblioSelect.aspx");
-
             routes.MapPageRoute("Item-Detail", "itemdetails/{itemid}", "~/ItemPage.aspx");
 
             routes.Add("GeneratePdf", new Route("generatepdf", new HttpHandlerRouteHandler<GeneratePdf>()));

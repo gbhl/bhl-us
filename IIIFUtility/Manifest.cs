@@ -197,7 +197,6 @@ namespace BHL.IIIF
         private string GetRelated(int numTitles, Book book)
         {
             string bibUrl = _rootUrl + "/bibliography/" + book.PrimaryTitleID.ToString();
-            if (numTitles > 1) bibUrl = _rootUrl + "/biblioselect/" + book.BookID.ToString();
 
             string related =
                 "\"related\": [" +

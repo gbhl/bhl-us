@@ -202,7 +202,6 @@
     <Content Include="Docs\api3\GetItemMetadata.html" />
     <Content Include="Docs\api3\GetPageMetadata.html" />
     <Content Include="apikeymsg.txt" />
-    <Content Include="BiblioSelect.aspx" />
     <Content Include="bot_list.txt" />
     <Content Include="BrowseCollections.aspx" />
     <Content Include="BrowseContributors.aspx" />
@@ -658,13 +657,6 @@
     <Compile Include="App_Code\RouteConfig.cs" />
     <Compile Include="BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="BiblioSelect.aspx.cs">
-      <DependentUpon>BiblioSelect.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="BiblioSelect.aspx.designer.cs">
-      <DependentUpon>BiblioSelect.aspx</DependentUpon>
     </Compile>
     <Compile Include="Book.Master.cs">
       <DependentUpon>Book.Master</DependentUpon>
