@@ -95,21 +95,13 @@ BEGIN
 				ISNULL(@PublicationDate, '')
 				, 255), DEFAULT),
 			StartYear =	CONVERT(int, CASE WHEN ISNUMERIC(LEFT(@Date, 4)) = 1 THEN 
-										CASE WHEN CONVERT(int, LEFT(@Date, 4)) BETWEEN 1400 AND 2025 THEN
-											LEFT(@Date, 4) 
-										ELSE
-											NULL
-										END
+										LEFT(@Date, 4) 
 									ELSE 
 										NULL 
 									END),
 			EndYear = CONVERT(int,  CASE WHEN LEN(@Date) >= 9 THEN
 										CASE WHEN ISNUMERIC(SUBSTRING(@Date, 6, 4)) = 1 THEN 
-											CASE WHEN CONVERT(int, SUBSTRING(@Date, 6, 4)) BETWEEN 1400 AND 2025 THEN
-												SUBSTRING(@Date, 6, 4) 
-											ELSE 
-												NULL
-											END
+											SUBSTRING(@Date, 6, 4) 
 										ELSE 
 											NULL 
 										END

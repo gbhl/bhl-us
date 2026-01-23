@@ -69,8 +69,8 @@ AND		c.MarcID = @MarcID
 
 -- Make sure the start and end years are within the valid ranges
 UPDATE	#tmpTitle
-SET		StartYear = CASE WHEN ((StartYear>=1400 AND StartYear<=2025) OR StartYear IS NULL) THEN StartYear ELSE NULL END,
-		EndYear = CASE WHEN ((EndYear>=1400 AND EndYear<=2025) OR EndYear IS NULL) THEN EndYear ELSE NULL END
+SET		StartYear = CASE WHEN ((StartYear<=(YEAR(GETDATE()) + 1)) OR StartYear IS NULL) THEN StartYear ELSE NULL END,
+		EndYear = CASE WHEN ((EndYear<=(YEAR(GETDATE()) + 1)) OR EndYear IS NULL) THEN EndYear ELSE NULL END
 
 -- If the language code is unrecognized, replace it with NULL.  In
 -- the vast majority of cases, the code is unrecognized because it is
