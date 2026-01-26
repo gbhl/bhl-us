@@ -130,7 +130,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AdvancedSearch.aspx" />
     <Content Include="alertmsg.txt" />
     <Content Include="api2\docs\AuthorSearch.xml" />
     <Content Include="api2\docs\BookSearch.xml" />
@@ -206,12 +205,10 @@
     <Content Include="BrowseCollections.aspx" />
     <Content Include="BrowseContributors.aspx" />
     <Content Include="CollectionDetails.aspx" />
-    <Content Include="controls\BookBrowseControl.ascx" />
     <Content Include="controls\COinSControl.ascx" />
     <Content Include="controls\CollectionListControl.ascx" />
     <Content Include="controls\ContributorListControl.ascx" />
     <Content Include="controls\NavBar.ascx" />
-    <Content Include="controls\SectionBrowseControl.ascx" />
     <Content Include="controls\ucFeatureBox.ascx" />
     <Content Include="css\bhlaustylereference.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -243,7 +240,6 @@
     <Content Include="css\ui.jqgrid.css" />
     <Content Include="dlconcepts.aspx" />
     <Content Include="dlindexbrowse.aspx" />
-    <Content Include="dlsearch.aspx" />
     <Content Include="Feedback.aspx" />
     <Content Include="feedbackmsg.txt" />
     <Content Include="flickrthumbs.txt" />
@@ -602,7 +598,6 @@
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="TitlePage.aspx" />
-    <Content Include="Search.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -618,13 +613,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdvancedSearch.aspx.cs">
-      <DependentUpon>AdvancedSearch.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdvancedSearch.aspx.designer.cs">
-      <DependentUpon>AdvancedSearch.aspx</DependentUpon>
-    </Compile>
     <Compile Include="api2\soap.asmx.cs">
       <DependentUpon>soap.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -694,13 +682,6 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
-    <Compile Include="controls\BookBrowseControl.ascx.cs">
-      <DependentUpon>BookBrowseControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="controls\BookBrowseControl.ascx.designer.cs">
-      <DependentUpon>BookBrowseControl.ascx</DependentUpon>
-    </Compile>
     <Compile Include="controls\COinSControl.ascx.cs">
       <DependentUpon>COinSControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -729,13 +710,6 @@
     <Compile Include="controls\NavBar.ascx.designer.cs">
       <DependentUpon>NavBar.ascx</DependentUpon>
     </Compile>
-    <Compile Include="controls\SectionBrowseControl.ascx.cs">
-      <DependentUpon>SectionBrowseControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="controls\SectionBrowseControl.ascx.designer.cs">
-      <DependentUpon>SectionBrowseControl.ascx</DependentUpon>
-    </Compile>
     <Compile Include="controls\ucFeatureBox.ascx.cs">
       <DependentUpon>ucFeatureBox.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -763,13 +737,6 @@
     </Compile>
     <Compile Include="dlindexbrowse.aspx.designer.cs">
       <DependentUpon>dlindexbrowse.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="dlsearch.aspx.cs">
-      <DependentUpon>dlsearch.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="dlsearch.aspx.designer.cs">
-      <DependentUpon>dlsearch.aspx</DependentUpon>
     </Compile>
     <Compile Include="Feedback.aspx.cs">
       <DependentUpon>Feedback.aspx</DependentUpon>
@@ -871,13 +838,6 @@
     </Compile>
     <Compile Include="TitlePage.aspx.designer.cs">
       <DependentUpon>TitlePage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Search.aspx.cs">
-      <DependentUpon>Search.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Search.aspx.designer.cs">
-      <DependentUpon>Search.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
