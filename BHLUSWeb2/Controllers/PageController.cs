@@ -56,7 +56,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     }
                     else
                     {
-                        imageUrl = imageUrl.Replace(".jpg", "") + "_thumb.webp";
+                        imageUrl = imageUrl.Replace("_full.webp", "_thumb.webp");
                     }
                 }
 
