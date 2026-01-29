@@ -8,7 +8,7 @@ namespace MOBOT.BHL.Web2
     {
         public BrowseOutputCacheAttribute()
         {
-            this.Duration = Convert.ToInt32(ConfigurationManager.AppSettings["BrowseQueryCacheTime"]) * 60;
+            this.Duration = AppConfig.BrowseQueryCacheTime * 60;
         }
     }
 }

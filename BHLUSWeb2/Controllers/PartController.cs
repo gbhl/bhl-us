@@ -78,7 +78,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 }
 
                 // Add Google Scholar metadata to the page headers
-                model.GoogleScholarTags = bhlProvider.GetGoogleScholarMetadataForSegment((int)partid, ConfigurationManager.AppSettings["PartPageUrl"]);
+                model.GoogleScholarTags = bhlProvider.GetGoogleScholarMetadataForSegment((int)partid, AppConfig.PartPageUrl);
 
                 // Set the data for the COinS output
                 model.COinS.SegmentID = (int)partid;
@@ -144,8 +144,7 @@ namespace MOBOT.BHL.Web2.Controllers
                         // Refresh cache
                         Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
                         partText = client.GetSegmentText((int)partid);
-                        cache.Add(cacheKey, partText, null, DateTime.Now.AddMinutes(
-                            Convert.ToDouble(ConfigurationManager.AppSettings["ItemTextCacheTime"])),
+                        cache.Add(cacheKey, partText, null, DateTime.Now.AddMinutes(AppConfig.ItemTextCacheTime),
                             System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
                     }
 

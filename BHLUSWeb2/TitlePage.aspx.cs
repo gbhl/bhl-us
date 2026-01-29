@@ -1,17 +1,14 @@
 ﻿using BHL.SiteServiceREST.v1.Client;
 using BHL.SiteServicesREST.v1;
-using Countersoft.Foundation.Commons.Core;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
-using MOBOT.BHL.Utility;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -229,11 +226,11 @@ namespace MOBOT.BHL.Web2
 
             if (type == ItemType.Book)
             {
-                tags = bhlProvider.GetGoogleScholarMetadataForItem(entityid, ConfigurationManager.AppSettings["ItemPageUrl"]);
+                tags = bhlProvider.GetGoogleScholarMetadataForItem(entityid, AppConfig.ItemPageUrl);
             }
             else if (type == ItemType.Segment)
             {
-                tags = bhlProvider.GetGoogleScholarMetadataForSegment(entityid, ConfigurationManager.AppSettings["PartPageUrl"]);
+                tags = bhlProvider.GetGoogleScholarMetadataForSegment(entityid, AppConfig.PartPageUrl);
             }
 
             foreach (KeyValuePair<string, string> tag in tags)
@@ -465,10 +462,10 @@ Append("</a>").
             bool switchViewer = false;
 
             // If IIIF usage is turned on, immediately redirect to the original search
-            if (ConfigurationManager.AppSettings["IIIFState"] == "on") return true;
+            if (AppConfig.IIIFState == "on") return true;
 
             // If IIIF usage is turned off, never redirect
-            if (ConfigurationManager.AppSettings["IIIFState"] == "off") return false;
+            if (AppConfig.IIIFState == "off") return false;
 
             // Toggle mode, so need to see if user switched to or from IIIF viewing
 

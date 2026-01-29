@@ -63,12 +63,12 @@ namespace MOBOT.BHL.Web2
 
             routes.MapPageRoute("Segment", "segment/{segmentid}", "~/TitlePage.aspx");
 
-            if (ConfigurationManager.AppSettings["IIIFState"] == "off") // IIIF disabled
+            if (AppConfig.IIIFState == "off") // IIIF disabled
             {
                 routes.MapPageRoute("Item", "item/{itemid}", "~/TitlePage.aspx");
                 routes.MapPageRoute("Page", "page/{pageid}", "~/TitlePage.aspx");
             }
-            else if (ConfigurationManager.AppSettings["IIIFState"] == "on")  // IIIF enabled
+            else if (AppConfig.IIIFState == "on")  // IIIF enabled
             {
                 routes.MapRoute("IIIFManifest", "iiif/{itemId}/manifest", new { controller = "IIIF", action = "Manifest" });
                 routes.MapRoute("IIIFTextManifest", "iiif/{itemId}/text/{pageSeq}", new { controller = "IIIF", action = "TextManifest" });

@@ -28,7 +28,7 @@
                         <p id="spanErrorText" class="ErrorText" style="margin-left:160px;display:block !important"></p>
                     </div>
                     <div>
-                        <p>Thank you for your feedback! BHL is voluntarily staffed by our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageMembers"] %>">Partner Libraries</a> and we are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information.</p>
+                        <p>Thank you for your feedback! BHL is voluntarily staffed by our <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageMembers %>">Partner Libraries</a> and we are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information.</p>
                         <br />
                     </div>
                     <div style="margin-bottom:10px;">
@@ -49,7 +49,7 @@
 
 		            <!-- Feedback Form -->
 		            <div id="FeedbackForm" style="display:none; margin-top:5px;">
-                        <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Try our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>" target="_blank" rel="noopener noreferrer" title="Help">FAQ</a> page for answers to common questions.</p></div>
+                        <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Try our <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageFAQ %>" target="_blank" rel="noopener noreferrer" title="Help">FAQ</a> page for answers to common questions.</p></div>
                         <div style="margin-bottom:10px;">
                             <label class="caption" for="commentTextBox">Comment:</label>
                             <asp:TextBox ID="commentTextBox" ClientIDMode="Static" runat="server" Height="100px" Width="375" TextMode="MultiLine"></asp:TextBox>
@@ -59,7 +59,7 @@
 
 		            <!-- Scanning Request Form -->
 		            <div id="ScanRequestForm" style="display:none; margin-top:5px">
-                        <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Please see our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageSubmissionGuide"] %>" target="_blank" rel="noopener noreferrer" title="Guidelines">guidelines</a> for submitting requests.</p></div>
+                        <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Please see our <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageSubmissionGuide %>" target="_blank" rel="noopener noreferrer" title="Guidelines">guidelines</a> for submitting requests.</p></div>
                         <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Search for your title in <a href="http://www.worldcat.org/" target="_blank" rel="noopener noreferrer" title="WorldCat">WorldCat</a> (recommended)</p></div>
                         <div style="margin-bottom:10px;">
                             <label class="caption" for="srOCLCTextBox">OCLC:</label>
@@ -120,7 +120,7 @@
 		            <!-- End Scanning Request Form -->
 
                     <div style="margin-left:164px;">
-                        <div class="g-recaptcha" data-sitekey="<%=System.Configuration.ConfigurationManager.AppSettings["ReCaptchaSiteKey"]%>"></div>
+                        <div class="g-recaptcha" data-sitekey="<%= MOBOT.BHL.Web2.AppConfig.ReCaptchaSiteKey%>"></div>
                     </div>
                     <div>
                         <label class="caption">&nbsp;</label><asp:Button ID="submitButton" runat="server" Text="Submit" OnClientClick="submitClick();" OnClick="submitButton_Click" />

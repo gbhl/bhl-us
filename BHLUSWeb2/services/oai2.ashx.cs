@@ -18,14 +18,14 @@ namespace MOBOT.BHL.Web2
         public void ProcessRequest(HttpContext context)
         {
             OAI2Publisher oai = new OAI2Publisher(
-                ConfigurationManager.AppSettings["OAIBaseUrl"],
-                ConfigurationManager.AppSettings["OAIRepositoryName"],
-                ConfigurationManager.AppSettings["OAIAdminEmail"],
-                ConfigurationManager.AppSettings["OAIIdentifierNamespace"],
-                ConfigurationManager.AppSettings["OAIMetadataFormats"],
-                ConfigurationManager.AppSettings["OAIMaxListSets"],
-                ConfigurationManager.AppSettings["OAIMaxListIdentifiers"],
-                ConfigurationManager.AppSettings["OAIMaxListRecords"]
+                AppConfig.OAIBaseUrl,
+                AppConfig.OAIRepositoryName,
+                AppConfig.OAIAdminEmail,
+                AppConfig.OAIIdentifierNamespace,
+                AppConfig.OAIMetadataFormats,
+                AppConfig.OAIMaxListSets,
+                AppConfig.OAIMaxListIdentifiers,
+                AppConfig.OAIMaxListRecords
                 );
 
             context.Response.ContentType = "text/xml";

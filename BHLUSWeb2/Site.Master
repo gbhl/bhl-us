@@ -102,9 +102,9 @@
 		                <h1>Biodiversity Heritage Library</h1>
                     </a>
 		            <nav>
-			     		<a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageAbout"] %>">About</a>
-			            <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageHelp"] %>">Help</a>				            
-                        <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>">FAQ</a>
+			     		<a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageAbout %>">About</a>
+			            <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageHelp %>">Help</a>				            
+                        <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageFAQ %>">FAQ</a>
                         <a href="/contact">Feedback</a>                         
 		            </nav>
                     <span id="altmetricbadge">
@@ -112,15 +112,15 @@
                     </span>
                     <span id="headersocial">
                         <span id="socicons">
-                            <span style="display:inline-block;position:relative;top:-13px"><a href="<%= System.Configuration.ConfigurationManager.AppSettings["FundraiseUpCampaignCode"] %>" style="display: none"></a></span>
+                            <span style="display:inline-block;position:relative;top:-13px"><a href="<%= MOBOT.BHL.Web2.AppConfig.FundraiseUpCampaignCode %>" style="display: none"></a></span>
                         </span>
                         <script type="text/javascript" src="/js/socicon.js?v=1"></script>
                     </span>
                 </div>
             </header>
-            <%if (System.Configuration.ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true") {%>
+            <%if (MOBOT.BHL.Web2.AppConfig.ShowNewFuture) {%>
             <div class="newfuturebanner" id="newfuturebanner" runat="server">
-	            <%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsBannerText"]%> <a title="new future" href="<%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]%>">Learn more.</a>
+	            <%=MOBOT.BHL.Web2.AppConfig.NewFutureNewsBannerText%> <a title="new future" href="<%=MOBOT.BHL.Web2.AppConfig.NewFutureNewsUrl%>">Learn more.</a>
             </div>
             <%} else { %>
             <div class="harmfulcontentbanner" id="harmfulcontentbanner" runat="server">
@@ -144,7 +144,7 @@
                     </div>
                     <div class="getinvolved">
                         <h3>Get Involved</h3>
-                        <a class="community" target="_blank" rel="noopener noreferrer" href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageContribute"] %>">Ways To Contribute</a>
+                        <a class="community" target="_blank" rel="noopener noreferrer" href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageContribute %>">Ways To Contribute</a>
                     </div>
                 </div>
                 <div id="socialmiddle" class="socialcolumn">
@@ -183,10 +183,10 @@
             </div>
             <nav> 
                 <div class="column-wrap" style="text-align:center">
-                    <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageCopyright"] %>">Copyright and Reuse</a> |
-                    <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageDataDisclaimer"] %>">Data Disclaimer</a> |
-                    <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageDeveloper"] %>">Developer and Data Tools</a> |
-		            <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageMembers"] %>">Partners</a> |
+                    <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageCopyright %>">Copyright and Reuse</a> |
+                    <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageDataDisclaimer %>">Data Disclaimer</a> |
+                    <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageDeveloper %>">Developer and Data Tools</a> |
+		            <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageMembers %>">Partners</a> |
                     <a href="http://si.edu/Privacy">Privacy</a> |
                     <a data-cc="show-preferencesModal" href="#">Cookies</a> |
                     <a href="http://si.edu/Termsofuse">Terms of Use</a>	            
@@ -194,7 +194,7 @@
             </nav>
             <nav>
                 <div class="column-wrap" id="footersponsordiv">
-                    <a href="<%= System.Configuration.ConfigurationManager.AppSettings["FundraiseUpCampaignCode"] %>" style="display: none"></a>
+                    <a href="<%= MOBOT.BHL.Web2.AppConfig.FundraiseUpCampaignCode %>" style="display: none"></a>
                 </div>
             </nav>
         </footer>

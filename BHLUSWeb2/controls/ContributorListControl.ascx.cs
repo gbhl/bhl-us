@@ -30,8 +30,7 @@ namespace MOBOT.BHL.Web2.controls
                     allInstitutions = GetInstitutions();
 
                     // Cache the list
-                    Cache.Add(cacheKey, allInstitutions, null, DateTime.Now.AddMinutes(
-                        Convert.ToDouble(ConfigurationManager.AppSettings["BrowseQueryCacheTime"])),
+                    Cache.Add(cacheKey, allInstitutions, null, DateTime.Now.AddMinutes(AppConfig.BrowseQueryCacheTime),
                         System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
                 }
 

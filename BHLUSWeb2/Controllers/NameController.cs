@@ -188,7 +188,7 @@ namespace MOBOT.BHL.Web2.Controllers
             foreach (NameSearchPage page in searchResult.Pages)
             {
                 var record = new ExpandoObject() as IDictionary<string, Object>;
-                record.Add("Url", string.Format(ConfigurationManager.AppSettings["PagePageUrl"].ToString(), page.PageID.ToString()));
+                record.Add("Url", string.Format(AppConfig.PagePageUrl, page.PageID.ToString()));
                 record.Add("Type", page.BibliographicLevelLabel);
                 record.Add("Title", page.FullTitle);
                 record.Add("Publisher Place", page.PublisherPlace);
@@ -217,7 +217,7 @@ namespace MOBOT.BHL.Web2.Controllers
             foreach (NameSearchPage page in searchResult.Pages)
             {
                 string volume = page.Volume;
-                string url = string.Format(ConfigurationManager.AppSettings["PagePageUrl"].ToString(), page.PageID.ToString());
+                string url = string.Format(AppConfig.PagePageUrl, page.PageID.ToString());
                 string pages = page.IndicatedPages;
 
                 Dictionary<string, string> elements = new Dictionary<string, string>();

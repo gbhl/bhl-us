@@ -96,24 +96,24 @@ namespace MOBOT.BHL.Web2
             string issueLongDesc = string.Empty;
 
             // Get Gemini data from web.config file
-            string geminiWebServiceURL = ConfigurationManager.AppSettings["GeminiURL"];
-            string geminiUserName = ConfigurationManager.AppSettings["GeminiUser"];
-            string geminiUserPassword = ConfigurationManager.AppSettings["GeminiPassword"];
-            string issueSummary = ConfigurationManager.AppSettings["GeminiDesc"];
-            int projectId = int.Parse(ConfigurationManager.AppSettings["GeminiProjectId"]);
-            int scanProjectId = int.Parse(ConfigurationManager.AppSettings["GeminiScanProjectID"]);
-            int scanReqComponentId = int.Parse(ConfigurationManager.AppSettings["GeminiComponentIdScanRequest"]);
-            int feedbackComponentId = int.Parse(ConfigurationManager.AppSettings["GeminiComponentIdFeedback"]);
-            int scanReqTypeId = int.Parse(ConfigurationManager.AppSettings["GeminiTypeIdScanRequest"]);
-            int techFeedTypeId = int.Parse(ConfigurationManager.AppSettings["GeminiTypeIdTechFeedback"]);
-            int suggestTypeId = int.Parse(ConfigurationManager.AppSettings["GeminiTypeIdSuggestion"]);
-            int bibIssueTypeId = int.Parse(ConfigurationManager.AppSettings["GeminiTypeIdBiblioIssue"]);
-            int titleTypeId = int.Parse(ConfigurationManager.AppSettings["GeminiTypeIdTitle"]);
-            int statusId = int.Parse(ConfigurationManager.AppSettings["GeminiStatusId"]);
-            int priorityId = int.Parse(ConfigurationManager.AppSettings["GeminiPriorityId"]);
-            int severityId = int.Parse(ConfigurationManager.AppSettings["GeminiSeverityId"]);
-            int resolutionId = int.Parse(ConfigurationManager.AppSettings["GeminiResolutionId"]);
-            int requestSourceId = int.Parse(ConfigurationManager.AppSettings["GeminiRequestSourceUserId"]);
+            string geminiWebServiceURL = AppConfig.GeminiURL;
+            string geminiUserName = AppConfig.GeminiUser;
+            string geminiUserPassword = AppConfig.GeminiPassword;
+            string issueSummary = AppConfig.GeminiDesc;
+            int projectId = AppConfig.GeminiProjectId;
+            int scanProjectId = AppConfig.GeminiScanProjectID;
+            int scanReqComponentId = AppConfig.GeminiComponentIdScanRequest;
+            int feedbackComponentId = AppConfig.GeminiComponentIdFeedback;
+            int scanReqTypeId = AppConfig.GeminiTypeIdScanRequest;
+            int techFeedTypeId = AppConfig.GeminiTypeIdTechFeedback;
+            int suggestTypeId = AppConfig.GeminiTypeIdSuggestion;
+            int bibIssueTypeId = AppConfig.GeminiTypeIdBiblioIssue;
+            int titleTypeId = AppConfig.GeminiTypeIdTitle;
+            int statusId = AppConfig.GeminiStatusId;
+            int priorityId = AppConfig.GeminiPriorityId;
+            int severityId = AppConfig.GeminiSeverityId;
+            int resolutionId = AppConfig.GeminiResolutionId;
+            int requestSourceId = AppConfig.GeminiRequestSourceUserId;
 
             ServiceManager serviceManager = new ServiceManager(geminiWebServiceURL, geminiUserName, geminiUserPassword, "", false);
             UserDto user = serviceManager.Admin.WhoAmI();
@@ -208,8 +208,8 @@ namespace MOBOT.BHL.Web2
 
         private void AddScanRequestCustomFields(ServiceManager serviceManager, IssueDto issue, int userId)
         {
-            int customFieldOclc = int.Parse(ConfigurationManager.AppSettings["GeminiScanCustomFieldIdOCLC"]);
-            int customFieldYearStart = int.Parse(ConfigurationManager.AppSettings["GeminiScanCustomFieldIdYearStart"]);
+            int customFieldOclc = AppConfig.GeminiScanCustomFieldIdOCLC;
+            int customFieldYearStart = AppConfig.GeminiScanCustomFieldIdYearStart;
 
             if (subjectScanReq.Checked)
             {
@@ -240,8 +240,8 @@ namespace MOBOT.BHL.Web2
         {
             bool isValid = true;
 
-            string verifyUrl = ConfigurationManager.AppSettings["ReCaptchaVerifyUrl"];
-            string secretKey = ConfigurationManager.AppSettings["ReCaptchaSecretKey"];
+            string verifyUrl = AppConfig.ReCaptchaVerifyUrl;
+            string secretKey = AppConfig.ReCaptchaSecretKey;
             string verifyParams = string.Format("secret={0}&response={1}", secretKey, gRecaptchaResponse);
 
             string postResponse = string.Empty;
@@ -415,13 +415,13 @@ namespace MOBOT.BHL.Web2
             try
             {
                 string message = this.GetReceivedMessage();
-                string faqLink = ConfigurationManager.AppSettings["WikiPageFAQ"];
+                string faqLink = AppConfig.WikiPageFAQ;
                 message = message.Replace("[FAQLink]", faqLink);
                 message = message.Replace("[Feedback]", this.CleanStringForEmail(feedbackReceived));
 
                 if (message != String.Empty)
                 {
-                    Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                    Client client = new Client(AppConfig.SiteServicesURL);
                     MailRequestModel mailRequest = new MailRequestModel();
                     mailRequest.From = "noreply@biodiversitylibrary.org";
                     mailRequest.To = new List<string>();

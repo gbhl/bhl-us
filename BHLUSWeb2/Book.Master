@@ -73,13 +73,13 @@
 		                <h1>Biodiversity Heritage Library</h1>
                     </a>
 		            <nav style="width:475;">
-			     		<a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageAbout"] %>">About</a>
-			            <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageHelp"] %>">Help</a>				            
-                        <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>">FAQ</a>
+			     		<a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageAbout %>">About</a>
+			            <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageHelp %>">Help</a>				            
+                        <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageFAQ %>">FAQ</a>
                         <a href="/contact">Feedback</a>
                         <span id="headersocialbook">
                             <span id="socicons">
-                                <span style="display:inline-block;position:relative;top:-13px"><a href="<%= System.Configuration.ConfigurationManager.AppSettings["FundraiseUpCampaignCode"] %>" style="display: none"></a></span>
+                                <span style="display:inline-block;position:relative;top:-13px"><a href="<%= MOBOT.BHL.Web2.AppConfig.FundraiseUpCampaignCode %>" style="display: none"></a></span>
                             </span>
                             <script type="text/javascript" src="/js/socicon.js?v=2"></script>
                         </span>
@@ -96,7 +96,7 @@
                         <a href="/advsearch" title="Advanced Search">advanced search</a>
         	            <asp:TextBox id="tbSearchTerm" CssClass="field" runat="server" ClientIDMode="Static" />
                         <asp:Button id="btnSearchSubmit" CssClass="button" runat="server" Text="submit" OnClick="btnSearchSubmit_Click" ClientIDMode="Static" />
-                        <%if (System.Configuration.ConfigurationManager.AppSettings["IIIFState"] == "toggle") {%>
+                        <%if (MOBOT.BHL.Web2.AppConfig.IIIFState == "toggle") {%>
                         <style>
 					        #book-master header #iiifLink a {
 						        font-size:12px;
@@ -115,9 +115,9 @@
                     </div>
                 </div>
             </header>
-        <%if (System.Configuration.ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true") {%>
+        <%if (MOBOT.BHL.Web2.AppConfig.ShowNewFuture) {%>
         <div class="newfuturebanner">
-	        <%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsBannerText"]%> <a title="new future" href="<%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]%>">Learn more.</a>
+	        <%=MOBOT.BHL.Web2.AppConfig.NewFutureNewsBannerText%> <a title="new future" href="<%=MOBOT.BHL.Web2.AppConfig.NewFutureNewsUrl%>">Learn more.</a>
         </div>
         <%} else { %>
         <div class="harmfulcontentbanner">

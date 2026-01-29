@@ -62,8 +62,7 @@ namespace MOBOT.BHL.Web2
                 // Cache the html content
                 if (collection != null)
                 {
-                    Cache.Add(cacheKey, collection, null, DateTime.Now.AddMinutes(
-                        Convert.ToDouble(ConfigurationManager.AppSettings["BrowseQueryCacheTime"])),
+                    Cache.Add(cacheKey, collection, null, DateTime.Now.AddMinutes(AppConfig.BrowseQueryCacheTime),
                         System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
                 }
             }

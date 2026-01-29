@@ -85,8 +85,7 @@ namespace MOBOT.BHL.Web2.Controllers
             {
                 // Refresh cache
                 stats = new BHLProvider().StatsSelectForCollection(model.Collection.CollectionID);
-                HttpContext.Cache.Add(cacheKey, stats, null, DateTime.Now.AddMinutes(
-                    Convert.ToDouble(ConfigurationManager.AppSettings["CollectionStatsQueryCacheTime"])),
+                HttpContext.Cache.Add(cacheKey, stats, null, DateTime.Now.AddMinutes(AppConfig.CollectionStatsQueryCacheTime),
                     System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
             }
 
@@ -160,8 +159,7 @@ namespace MOBOT.BHL.Web2.Controllers
             {
                 // Refresh cache
                 stats = new BHLProvider().StatsSelectForInstitution(model.Institution.InstitutionCode);
-                HttpContext.Cache.Add(cacheKey, stats, null, DateTime.Now.AddMinutes(
-                    Convert.ToDouble(ConfigurationManager.AppSettings["InstitutionStatsQueryCacheTime"])),
+                HttpContext.Cache.Add(cacheKey, stats, null, DateTime.Now.AddMinutes(AppConfig.InstitutionStatsQueryCacheTime),
                     System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
             }
 

@@ -56,8 +56,7 @@ namespace MOBOT.BHL.Web2
             {
                 // Refresh cache
                 stats = new BHLProvider().EntityCountSelectLatest();
-                Cache.Add(cacheKey, stats, null, DateTime.Now.AddMinutes(
-                    Convert.ToDouble(ConfigurationManager.AppSettings["StatsSelectQueryCacheTime"])),
+                Cache.Add(cacheKey, stats, null, DateTime.Now.AddMinutes(AppConfig.StatsSelectQueryCacheTime),
                     System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
             }
 
@@ -83,8 +82,7 @@ namespace MOBOT.BHL.Web2
             {
                 // Refresh cache
                 alertMessage = System.IO.File.ReadAllText(Request.PhysicalApplicationPath + "\\alertmsg.txt");
-                Cache.Add(cacheKey, alertMessage, null, DateTime.Now.AddMinutes(
-                    Convert.ToDouble(ConfigurationManager.AppSettings["AlertMessageCacheTime"])),
+                Cache.Add(cacheKey, alertMessage, null, DateTime.Now.AddMinutes(AppConfig.AlertMessageCacheTime),
                     System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
             }
 

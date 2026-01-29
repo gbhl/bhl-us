@@ -39,7 +39,7 @@
             <div runat="server" id="divDone" visible="false" style="display:block" class="ui-tabs-panel" ClientIDMode="static">
                 <p>
                     Your API key has been mailed to <asp:Literal runat="server" ID="litEmail"></asp:Literal>.  Please check your email and
-                    then refer to the <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageAPI"] %>">API documentation</a> to learn how to 
+                    then refer to the <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageAPI %>">API documentation</a> to learn how to 
                     begin using the BHL API.
                 </p>
             </div>

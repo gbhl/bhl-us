@@ -28,8 +28,7 @@ namespace MOBOT.BHL.Web2.Controllers
             {
                 // Refresh cache
                 alertMessage = System.IO.File.ReadAllText(Request.PhysicalApplicationPath + "\\alertmsg.txt");
-                HttpContext.Cache.Add(cacheKey, alertMessage, null, DateTime.Now.AddMinutes(
-                    Convert.ToDouble(ConfigurationManager.AppSettings["AlertMessageCacheTime"])),
+                HttpContext.Cache.Add(cacheKey, alertMessage, null, DateTime.Now.AddMinutes(AppConfig.AlertMessageCacheTime),
                     System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
             }
 
@@ -55,8 +54,7 @@ namespace MOBOT.BHL.Web2.Controllers
             {
                 // Refresh cache
                 stats = new BHLProvider().EntityCountSelectLatest();
-                HttpContext.Cache.Add(cacheKey, stats, null, DateTime.Now.AddMinutes(
-                    Convert.ToDouble(ConfigurationManager.AppSettings["StatsSelectQueryCacheTime"])),
+                HttpContext.Cache.Add(cacheKey, stats, null, DateTime.Now.AddMinutes(AppConfig.StatsSelectQueryCacheTime),
                     System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
             }
 
@@ -226,8 +224,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 }
 
                 // Cache the feed contents
-                HttpContext.Cache.Add(cacheKey, twitterFeedContents, null, DateTime.Now.AddMinutes(
-                    Convert.ToDouble(ConfigurationManager.AppSettings["TwitterFeedCacheTime"])),
+                HttpContext.Cache.Add(cacheKey, twitterFeedContents, null, DateTime.Now.AddMinutes(AppConfig.TwitterFeedCacheTime),
                     System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
             }
 
@@ -327,8 +324,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 // Cache the featured collection
                 if (collection != null)
                 {
-                    HttpContext.Cache.Add(cacheKey, collection, null, DateTime.Now.AddMinutes(
-                        Convert.ToDouble(ConfigurationManager.AppSettings["FeaturedCollectionCacheTime"])),
+                    HttpContext.Cache.Add(cacheKey, collection, null, DateTime.Now.AddMinutes(AppConfig.FeaturedCollectionCacheTime),
                         System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
                 }
             }

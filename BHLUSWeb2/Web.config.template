@@ -16,7 +16,6 @@
     <add key="PagePageUrl" value="https://beta.biodiversitylibrary.org/page/{0}"/>
     <add key="PartPageUrl" value="https://beta.biodiversitylibrary.org/part/{0}"/>
     <add key="PartPdfUrl" value="https://beta.biodiversitylibrary.org/partpdf/{0}"/>
-    <add key="AuthorPageUrl" value="https://beta.biodiversitylibrary/creator/{0}"/>
 
     <add key="ImageNotFoundPath" value="https://beta.biodiversitylibrary.org/images/image_not_found.jpg"/>
     <add key="ImageNotFoundThumbPath" value="https://beta.biodiversitylibrary.org/images/image_not_found_thumb.jpg"/>
@@ -126,10 +125,6 @@
        mods | http://www.loc.gov/mods/v3 | http://www.loc.gov/standards/mods/v3/mods-3-7.xsd | MOBOT.BHL.OAIMODS | false | 100
        olef | http://www.bhle.eu/bhl-schema/v1/ | http://www.bhle.eu/bhl-schema/v1/OLEF_v1.0.xsd | MOBOT.BHL.OAIOLEF | true | 10"/>
 
-    <!-- begin Default Year Browse  Dates -->
-    <add key="browseByYearDefaultStart" value="1450"/>
-    <add key="browseByYearDefaultEnd" value="1580"/>   
-    <!-- End Default Year Browse Dates-->
     <add key="DefaultBrowseNumPerPage" value="250" />
     <add key="PageTitle" value="{0} - Biodiversity Heritage Library" />
     <add key="TweetMessage" value="{0} @BioDivLibrary" />
@@ -152,7 +147,6 @@
     <add key="WikiPagePermissions" value="https://about.biodiversitylibrary.org/copyright-and-reuse/permissions/"/>
     <add key="WikiPageHelp" value="https://about.biodiversitylibrary.org/help/" />
     <add key="WikiPageContribute" value="https://about.biodiversitylibrary.org/get-involved/" />
-    <add key="WikiPageToolsServices" value="https://about.biodiversitylibrary.org/tools-and-services/" />
     <add key="WikiPageDeveloper" value="https://about.biodiversitylibrary.org/tools-and-services/developer-and-data-tools/" />
     <add key="WikiPageMembers" value="https://about.biodiversitylibrary.org/about/bhl-consortium/" />
     <add key="WikiPageCopyright" value="https://about.biodiversitylibrary.org/copyright-and-reuse/" />
@@ -162,7 +156,6 @@
     <add key="WikiPageSubmissionGuide" value="https://about.biodiversitylibrary.org/help/guidelines-for-submitting-scanning-requests/" />
     <add key="WikiPageAPI" value="https://about.biodiversitylibrary.org/tools-and-services/developer-and-data-tools/#APIs" />
     <add key="projectUpdatesFeedLocation" value="https://blog.biodiversitylibrary.org/feed"/>
-    <add key="projectUpdatesRssTitle" value="Biodiversity Heritage Library News [RSS]"/>
     <!-- begin attribution div properties -->
     <!-- Maximum time in minutes that the list of languages is cached -->
     <add key="LanguageListQueryCacheTime" value="1440"/>
@@ -182,8 +175,6 @@
     <add key="BrowseQueryCacheTime" value="10"/>
     <!-- Maximum time in minutes that the flickr thumbnail list is cached -->
     <add key="FlickrThumbListCacheTime" value="10"/>
-    <!-- Maximum time in minutes that the name detail is cached -->
-    <add key="NameDetailCacheTime" value="10"/>
     <!-- Maximum time in minutes that the alert message is cached -->
     <add key="AlertMessageCacheTime" value="1"/>
     <!-- Maximum time in minutes that item text is cached -->

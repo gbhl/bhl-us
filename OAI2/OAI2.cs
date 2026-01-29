@@ -75,7 +75,7 @@ namespace MOBOT.BHL.OAI2
         #region Constructors
 
         public OAI2Publisher(String baseUrl, String repositoryName, String adminEmail, String identifierNamespace, 
-            String formats, String maxListSets, String maxListIdentifiers, String maxListRecords)
+            String formats, int maxListSets, int maxListIdentifiers, int maxListRecords)
         {
             InitializeMetadataFormats(formats);
 
@@ -83,9 +83,9 @@ namespace MOBOT.BHL.OAI2
             _repositoryName = repositoryName;
             _adminEmail = adminEmail;
             _identifierNamespace = identifierNamespace;
-            _maxListSets = Convert.ToInt32(maxListSets);
-            _maxListIdentifiers = Convert.ToInt32(maxListIdentifiers);
-            _maxListRecords = Convert.ToInt32(maxListRecords);
+            _maxListSets = maxListSets;
+            _maxListIdentifiers = maxListIdentifiers;
+            _maxListRecords = maxListRecords;
         }
 
         private void InitializeMetadataFormats(String formats)

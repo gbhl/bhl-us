@@ -95,7 +95,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 try
                 {
                     filename += idType + idString;
-                    OAI2.OAIRecord record = new OAI2.OAIRecord("oai:" + ConfigurationManager.AppSettings["OAIIdentifierNamespace"] + ":" + idType + "/" + id.ToString());
+                    OAI2.OAIRecord record = new OAI2.OAIRecord("oai:" + AppConfig.OAIIdentifierNamespace  + ":" + idType + "/" + id.ToString());
                     if (!string.IsNullOrWhiteSpace(tidString))
                     {
                         if (int.TryParse(tidString, out int tidInt))

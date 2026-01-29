@@ -13,7 +13,7 @@
             The following contributors have cooperated to digitize content from their collections for free and 
             open access via the BHL and the <a href="https://archive.org" target="_blank" rel="noopener noreferrer">Internet Archive</a>. 
             For a list of licensors who have generously provided permission to include in-copyright titles in 
-            the BHL, please see our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPagePermissions"] %>" target="_blank" rel="noopener noreferrer">Permissions page</a>.
+            the BHL, please see our <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPagePermissions %>" target="_blank" rel="noopener noreferrer">Permissions page</a>.
         </p>
         <h2>BHL Participating Contributors</h2>
         <asp:DataList ID="dlMembers" runat="server" RepeatDirection="Vertical" Width="100%" ItemStyle-Wrap="true" role="presentation" >

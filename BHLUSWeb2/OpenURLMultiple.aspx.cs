@@ -1,9 +1,6 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.Web2
 {
@@ -39,7 +36,7 @@ namespace MOBOT.BHL.Web2
                                 {
                                     Page page = bhlProvider.PageMetadataSelectByPageID(id);
                                     OpenUrlBookResult book = new OpenUrlBookResult();
-                                    book.Url = string.Format(ConfigurationManager.AppSettings["PagePageUrl"], page.PageID.ToString());
+                                    book.Url = string.Format(AppConfig.PagePageUrl, page.PageID.ToString());
                                     book.Title = page.ShortTitle;
                                     book.Volume = page.Volume;
                                     book.Issue = page.Issue;
@@ -54,7 +51,7 @@ namespace MOBOT.BHL.Web2
                                 {
                                     PageSummaryView psv = bhlProvider.PageSummarySelectByItemId(id, true);
                                     OpenUrlBookResult book = new OpenUrlBookResult();
-                                    book.Url = string.Format(ConfigurationManager.AppSettings["ItemPageUrl"], psv.BookID.ToString());
+                                    book.Url = string.Format(AppConfig.ItemPageUrl, psv.BookID.ToString());
                                     book.Title = psv.ShortTitle;
                                     book.Volume = psv.Volume;
                                     BookList.Add(book);
@@ -66,7 +63,7 @@ namespace MOBOT.BHL.Web2
                                 {
                                     Title title = bhlProvider.TitleSelect(id);
                                     OpenUrlBookResult book = new OpenUrlBookResult();
-                                    book.Url = string.Format(ConfigurationManager.AppSettings["BibPageUrl"], title.TitleID.ToString());
+                                    book.Url = string.Format(AppConfig.BibPageUrl, title.TitleID.ToString());
                                     book.Title = title.ShortTitle;
                                     BookList.Add(book);
                                 }

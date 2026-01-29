@@ -1,7 +1,6 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
-using System.Configuration;
 using System.IO;
 
 namespace MOBOT.BHL.Web2
@@ -44,7 +43,7 @@ namespace MOBOT.BHL.Web2
             switch (this.featureType.ToUpper())
             {
                 case "SUPPORT":
-                    if (ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true")
+                    if (AppConfig.ShowNewFuture)
                         panNewFuture.Visible = true;
                     else
                         panSupport.Visible = true;
@@ -53,7 +52,7 @@ namespace MOBOT.BHL.Web2
                     panBlog.Visible = true;
                     break;
                 case "COLLECTION":
-                    if (ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true")
+                    if (AppConfig.ShowNewFuture)
                     {
                         panSupportLarge.Visible = true;
                     }
@@ -91,8 +90,7 @@ namespace MOBOT.BHL.Web2
                 // Cache the featured collection
                 if (collection != null)
                 {
-                    Cache.Add(cacheKey, collection, null, DateTime.Now.AddMinutes(
-                        Convert.ToDouble(ConfigurationManager.AppSettings["FeaturedCollectionCacheTime"])),
+                    Cache.Add(cacheKey, collection, null, DateTime.Now.AddMinutes(AppConfig.FeaturedCollectionCacheTime),
                         System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
                 }
             }
@@ -140,8 +138,7 @@ namespace MOBOT.BHL.Web2
                     if (File.Exists(Request.PhysicalApplicationPath + "\\flickrthumbs.txt"))
                     {
                         flickrThumbList = File.ReadAllLines(Request.PhysicalApplicationPath + "\\flickrthumbs.txt");
-                        Cache.Add(cacheKey, flickrThumbList, null, DateTime.Now.AddMinutes(
-                            Convert.ToDouble(ConfigurationManager.AppSettings["FlickrThumbListCacheTime"])),
+                        Cache.Add(cacheKey, flickrThumbList, null, DateTime.Now.AddMinutes(AppConfig.FlickrThumbListCacheTime),
                             System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
                     }
                 }

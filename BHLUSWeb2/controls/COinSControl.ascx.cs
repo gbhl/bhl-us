@@ -1,7 +1,6 @@
 ﻿using MOBOT.BHL.DataObjects;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Text;
 using System.Web.UI;
 
@@ -72,8 +71,8 @@ namespace MOBOT.BHL.Web2
             if (isbn != string.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISBN:" + isbn));
             string lccn = GetIdentifierValue(IdentifierTarget.Title, "DLC");
             if (lccn != string.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("info:lccn/" + lccn));
-            if (TitleID != 0) output.Append("&amp;rft_id=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["BibPageUrl"], TitleID)));
-            if (ItemID != 0) output.Append("&amp;rft_id=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["ItemPageUrl"], ItemID)));
+            if (TitleID != 0) output.Append("&amp;rft_id=" + Server.UrlEncode(string.Format(AppConfig.BibPageUrl, TitleID)));
+            if (ItemID != 0) output.Append("&amp;rft_id=" + Server.UrlEncode(string.Format(AppConfig.ItemPageUrl, ItemID)));
 
             // Add format-specific attributes
             switch (GetGenre())
@@ -130,8 +129,8 @@ namespace MOBOT.BHL.Web2
                         output.Append("&amp;rft_val_fmt=" + Server.UrlEncode("info:ofi/fmt:kev:mtx:dc"));
                         output.Append("&amp;rft.source=" + Server.UrlEncode("Biodiversity Heritage Library"));
                         output.Append("&amp;rft.rights=" + Server.UrlEncode("Creative Commons Attribution 3.0"));
-                        if (TitleID != 0) output.Append("&amp;rft.identifier=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["BibPageUrl"], TitleID)));
-                        if (ItemID != 0) output.Append("&amp;rft.identifier=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["ItemPageUrl"], ItemID)));
+                        if (TitleID != 0) output.Append("&amp;rft.identifier=" + Server.UrlEncode(string.Format(AppConfig.BibPageUrl, TitleID)));
+                        if (ItemID != 0) output.Append("&amp;rft.identifier=" + Server.UrlEncode(string.Format(AppConfig.ItemPageUrl, ItemID)));
                         if (Title != string.Empty) output.Append("&amp;rft.title=" + Server.UrlEncode(Title));
                         if (Language != string.Empty) output.Append("&amp;rft.language=" + Server.UrlEncode(Language));
                         foreach (Author author in TitleAuthors)
@@ -172,7 +171,7 @@ namespace MOBOT.BHL.Web2
             if (issn != string.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISSN:" + issn));
             string eissn = GetIdentifierValue(IdentifierTarget.Title, "eISSN");
             if (eissn != string.Empty) output.Append("&amp;rft_id=" + Server.UrlEncode("urn:ISSN:" + eissn));
-            output.Append("&amp;rft_id=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["PartPageUrl"], SegmentID)));
+            output.Append("&amp;rft_id=" + Server.UrlEncode(string.Format(AppConfig.PartPageUrl, SegmentID)));
 
             // Add format-specific attributes
             switch (GetGenre())
@@ -216,7 +215,7 @@ namespace MOBOT.BHL.Web2
                         output.Append("&amp;rft_val_fmt=" + Server.UrlEncode("info:ofi/fmt:kev:mtx:dc"));
                         output.Append("&amp;rft.source=" + Server.UrlEncode("Biodiversity Heritage Library"));
                         output.Append("&amp;rft.rights=" + Server.UrlEncode("Creative Commons Attribution 3.0"));
-                        output.Append("&amp;rft.identifier=" + Server.UrlEncode(string.Format(ConfigurationManager.AppSettings["PartPageUrl"], SegmentID)));
+                        output.Append("&amp;rft.identifier=" + Server.UrlEncode(string.Format(AppConfig.PartPageUrl, SegmentID)));
                         if (!string.IsNullOrWhiteSpace(ArticleTitle)) output.Append("&amp;rft.title=" + Server.UrlEncode(ArticleTitle));
                         if (!string.IsNullOrWhiteSpace(Language)) output.Append("&amp;rft.language=" + Server.UrlEncode(Language));
                         foreach(ItemAuthor author in ItemAuthors)

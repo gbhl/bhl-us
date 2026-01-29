@@ -13,8 +13,8 @@
 <asp:Panel ID="panNewFuture" runat="server" Visible="false">
     <div class="<%= SpecialClass %> newfuture" id="<%= specialID %>">
         <h3>Future of BHL</h3>
-        <p><%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsText"]%></p>
-        <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]%>">Learn More</a>
+        <p><%=MOBOT.BHL.Web2.AppConfig.NewFutureNewsText%></p>
+        <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=MOBOT.BHL.Web2.AppConfig.NewFutureNewsUrl%>">Learn More</a>
     </div>
 </asp:Panel>
 <asp:Panel ID="panFlickr" runat="server"  Visible="false">

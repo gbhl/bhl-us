@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace MOBOT.BHL.Web2.Controllers
 {
@@ -8,12 +7,12 @@ namespace MOBOT.BHL.Web2.Controllers
         // GET: Redirect
         public ActionResult Permissions()
         {
-            return RedirectPermanent(ConfigurationManager.AppSettings["WikiPagePermissions"]);
+            return RedirectPermanent(AppConfig.WikiPagePermissions);
         }
 
         public ActionResult About()
         {
-            return RedirectPermanent(ConfigurationManager.AppSettings["WikiPageAbout"]);
+            return RedirectPermanent(AppConfig.WikiPageAbout);
         }
     }
 }

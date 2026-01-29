@@ -40,8 +40,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     model.Author = bhlProvider.AuthorSelectExtended((int)creatorId);
                     if (model.Author != null)
                     {
-                        HttpContext.Cache.Add(cacheKey, model.Author, null, DateTime.Now.AddMinutes(
-                            Convert.ToDouble(ConfigurationManager.AppSettings["AuthorMetadataCacheTime"])),
+                        HttpContext.Cache.Add(cacheKey, model.Author, null, DateTime.Now.AddMinutes(AppConfig.AuthorMetadataCacheTime),
                             System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
                     }
                 }

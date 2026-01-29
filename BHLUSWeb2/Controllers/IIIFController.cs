@@ -125,10 +125,10 @@ namespace MOBOT.BHL.Web2.Controllers
         private bool ViewerRedirect()
         {
             // If IIIF usage is turned off, immediately redirect to the original search
-            if (ConfigurationManager.AppSettings["IIIFState"] == "off") return true;
+            if (AppConfig.IIIFState == "off") return true;
 
             // If IIIF usage is turned on, never redirect
-            if (ConfigurationManager.AppSettings["IIIFState"] == "on") return false;
+            if (AppConfig.IIIFState == "on") return false;
 
             // Toggle mode
 

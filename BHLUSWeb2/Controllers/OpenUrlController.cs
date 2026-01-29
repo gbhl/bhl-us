@@ -1,7 +1,6 @@
 ﻿using MOBOT.OpenUrl.Utilities;
 using MvcThrottle;
 using System;
-using System.Configuration;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,12 +17,12 @@ namespace MOBOT.BHL.Web2.Controllers
 
             IOpenUrlQuery ouQuery = OpenUrlQueryFactory.CreateOpenUrlQuery(HttpUtility.UrlDecode(Request.QueryString.ToString()));
             MOBOT.BHL.OpenUrlProvider.BHLOpenUrlProvider openurl = new MOBOT.BHL.OpenUrlProvider.BHLOpenUrlProvider();
-            openurl.UrlFormat = ConfigurationManager.AppSettings["PagePageUrl"];
-            openurl.ItemUrlFormat = ConfigurationManager.AppSettings["ItemPageUrl"];
-            openurl.TitleUrlFormat = ConfigurationManager.AppSettings["BibPageUrl"];
-            openurl.PartUrlFormat = ConfigurationManager.AppSettings["PartPageUrl"];
+            openurl.UrlFormat = AppConfig.PagePageUrl;
+            openurl.ItemUrlFormat = AppConfig.ItemPageUrl;
+            openurl.TitleUrlFormat = AppConfig.BibPageUrl;
+            openurl.PartUrlFormat = AppConfig.PartPageUrl;
             openurl.IpAddress = Request.UserHostAddress;
-            openurl.UseFullTextSearch = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]);
+            openurl.UseFullTextSearch = AppConfig.EnableFullTextSearch;
             IOpenUrlResponse ouResponse = openurl.FindCitation(ouQuery);
 
             // Format the response as requested
