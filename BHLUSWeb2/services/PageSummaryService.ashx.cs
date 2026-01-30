@@ -55,7 +55,7 @@ namespace MOBOT.BHL.Web2.Services
                 using (WebClient client = new WebClient())
                 {
                     client.Encoding = System.Text.Encoding.UTF8; 
-                    ocrText = HttpUtility.HtmlEncode(client.DownloadString(ConfigurationManager.AppSettings["BaseUrl"] + "/pagetext/" + pageID));
+                    ocrText = HttpUtility.HtmlEncode(client.DownloadString(AppConfig.BaseUrl + "/pagetext/" + pageID));
                 }
 
                 if (string.IsNullOrWhiteSpace(ocrText))

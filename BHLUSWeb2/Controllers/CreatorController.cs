@@ -21,7 +21,7 @@ namespace MOBOT.BHL.Web2.Controllers
             }
             else
             {
-                int browseNumPerPage = Convert.ToInt32(ConfigurationManager.AppSettings["DefaultBrowseNumPerPage"]);
+                int browseNumPerPage = Convert.ToInt32(AppConfig.DefaultBrowseNumPerPage);
 
                 CreatorModel model = new CreatorModel();
                 BHLProvider bhlProvider = new BHLProvider();

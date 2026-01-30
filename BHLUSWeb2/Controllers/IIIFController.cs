@@ -34,7 +34,7 @@ namespace MOBOT.BHL.Web2.Controllers
             ViewBag.IIIFLinkTarget = "/item/" + itemId; // Used for IIIF toggle
             ViewBag.ItemID = itemId;
             ViewBag.PageSequence = (firstPage == null ? 1 : firstPage.SequenceOrder);
-            ViewBag.Title = string.Format(ConfigurationManager.AppSettings["PageTitle"], (String.IsNullOrEmpty(page.Volume) ? String.Empty : page.Volume + " - ") + page.ShortTitle);
+            ViewBag.Title = string.Format(AppConfig.PageTitle, (String.IsNullOrEmpty(page.Volume) ? String.Empty : page.Volume + " - ") + page.ShortTitle);
 
             return View();
         }
@@ -54,7 +54,7 @@ namespace MOBOT.BHL.Web2.Controllers
             ViewBag.IIIFLinkTarget = "/page/" + pageId; // Used for IIIF toggle
             ViewBag.ItemID = page.BookID;
             ViewBag.PageSequence = page.SequenceOrder;
-            ViewBag.Title = string.Format(ConfigurationManager.AppSettings["PageTitle"], (String.IsNullOrEmpty(page.Volume) ? String.Empty : page.Volume + " - ") + page.ShortTitle);
+            ViewBag.Title = string.Format(AppConfig.PageTitle, (String.IsNullOrEmpty(page.Volume) ? String.Empty : page.Volume + " - ") + page.ShortTitle);
 
             return View();
         }

@@ -64,7 +64,7 @@ namespace MOBOT.BHL.Web2
             string message = this.GetEmailMessage(apiKey, contactName);
             if (message != String.Empty)
             {
-                Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                Client client = new Client(AppConfig.SiteServicesURL);
                 MailRequestModel mailRequest = new MailRequestModel();
                 mailRequest.From = "noreply@biodiversitylibrary.org";
                 mailRequest.To = new List<string>();

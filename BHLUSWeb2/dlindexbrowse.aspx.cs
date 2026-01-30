@@ -46,7 +46,7 @@ namespace MOBOT.BHL.Web2
                 pages = bhlProvider.SearchPageForAnnotationConcept(conceptCode);
             }
 
-            Page.Title = String.Format(ConfigurationManager.AppSettings["PageTitle"], "Darwin's Library Concept - '" + indexTerm + "'");
+            Page.Title = String.Format(AppConfig.PageTitle, "Darwin's Library Concept - '" + indexTerm + "'");
          // TODo   ((Main)Page.Master).SetTweetMessage(String.Format(ConfigurationManager.AppSettings["TweetMessage"], "Darwin's Library Concept - '" + indexTerm + "'"));
 
             litHeader.Text = BuildHeader(pages.Count, indexTerm);

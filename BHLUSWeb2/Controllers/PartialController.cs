@@ -89,9 +89,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     // in the Twitter documentation: https://dev.twitter.com/docs/auth/application-only-auth
 
                     // Base64-encode the Twitter credentials
-                    string bearerCredentials = string.Format("{0}:{1}",
-                                                    ConfigurationManager.AppSettings["TwitterConsumerKey"],
-                                                    ConfigurationManager.AppSettings["TwitterConsumerSecret"]);
+                    string bearerCredentials = string.Format("{0}:{1}", AppConfig.TwitterConsumerKey, AppConfig.TwitterConsumerSecret);
                     string bearerCredentialsBase64 = Convert.ToBase64String(
                         new System.Text.ASCIIEncoding().GetBytes(bearerCredentials));
                     string accessToken = string.Empty;
@@ -116,7 +114,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     {
                         //webClient.Headers.Add("Host: api.twitter.com");
                         webClient.Headers.Add(string.Format("Authorization: Bearer {0}", accessToken));
-                        jsonResponse = webClient.DownloadString(ConfigurationManager.AppSettings["BHLTwitterFeedURL"]);
+                        jsonResponse = webClient.DownloadString(AppConfig.BHLTwitterFeedUrl);
                     }
                     json = JObject.Parse(jsonResponse);
 

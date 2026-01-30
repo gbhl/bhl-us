@@ -44,7 +44,7 @@ namespace MOBOT.BHL.Web2
                 DateTime endTime = DateTime.Now;
                 double queryTime = endTime.Subtract(startTime).TotalSeconds;
 
-                if (queryTime >= Convert.ToDouble(ConfigurationManager.AppSettings["MonitorThreshold"]))
+                if (queryTime >= AppConfig.MonitorThreshold)
                 {
                     WriteError(string.Format("Slow database response - It took {0} seconds to process database queries", queryTime), string.Empty);
                     exceptionsOccurred = true;

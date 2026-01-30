@@ -79,9 +79,7 @@ namespace MOBOT.BHL.Web2
                     }
                     */
                     // Throttle by IP if configured, or if limiting rules are set on any specific IP
-                    bool ipThrottle = 
-                        string.Compare(ConfigurationManager.AppSettings["IpThrottling"].ToString(), "true", true) == 0 || 
-                        (ipConfig.Count > 0);
+                    bool ipThrottle = AppConfig.IpThrottling || (ipConfig.Count > 0);
 
                     ThrottlePolicy policy = new ThrottlePolicy(perSecond: policyConfig.PerSecond, 
                         perMinute: policyConfig.PerMinute, perHour: policyConfig.PerHour, perDay: policyConfig.PerDay)

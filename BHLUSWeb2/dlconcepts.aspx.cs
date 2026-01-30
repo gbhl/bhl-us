@@ -10,7 +10,7 @@ namespace MOBOT.BHL.Web2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.Title = String.Format(ConfigurationManager.AppSettings["PageTitle"], "Darwin's Library Concepts");
+            Page.Title = String.Format(AppConfig.PageTitle, "Darwin's Library Concepts");
 
             // Get the concepts for the Darwin's Library annotations
             List<AnnotationConcept> concepts = bhlProvider.AnnotationConceptSelectAll(1);

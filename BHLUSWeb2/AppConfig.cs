@@ -80,9 +80,8 @@ namespace MOBOT.BHL.Web2
         // Browse defaults
         public static int DefaultBrowseNumPerPage => GetInt("DefaultBrowseNumPerPage", 250);
 
-        // Page and tweet formatting
+        // Page formatting
         public static string PageTitle => GetString("PageTitle");
-        public static string TweetMessage => GetString("TweetMessage");
 
         // File locations
         public static string OCRTextLocation => GetString("OCRTextLocation");

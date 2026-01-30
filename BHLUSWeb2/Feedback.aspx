@@ -151,13 +151,13 @@
                         <div style="float:left;margin:0;width:50%">
                             <h3>Join Our Mailing List</h3>
                             <p>Sign up to receive the latest BHL news, content highlights, and promotions.</p>
-                            <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["NewsletterSignupUrl"]%>">Subscribe</a>
+                            <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" rel="noopener noreferrer" href="<%=MOBOT.BHL.Web2.AppConfig.NewsletterSignupUrl%>">Subscribe</a>
                         </div>
 
                         <div style="float:left;margin:0;width:50%">
                             <h3>Help Support <span>BHL</span></h3>
                             <p>BHL depends on the financial support of its patrons. Help us keep BHL alive!</p>
-                            <a class="featurebutton-home" title="Donate" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">Donate</a>
+                            <a class="featurebutton-home" title="Donate" target="_blank" rel="noopener noreferrer" href="<%=MOBOT.BHL.Web2.AppConfig.DonateUrl%>">Donate</a>
                         </div>
 
                         <div>&nbsp;</div>

@@ -70,7 +70,7 @@ namespace MOBOT.BHL.Web2
                     pageid = firstPage.PageID;
                 }
 
-                Page.Title = string.Format(ConfigurationManager.AppSettings["PageTitle"], (String.IsNullOrEmpty(PublicationDetail.Volume) ? String.Empty : PublicationDetail.Volume + " - ") + PublicationDetail.ShortTitle);
+                Page.Title = string.Format(AppConfig.PageTitle, (String.IsNullOrEmpty(PublicationDetail.Volume) ? String.Empty : PublicationDetail.Volume + " - ") + PublicationDetail.ShortTitle);
 
                 // Set Volume drop down list
                 List<DataObjects.Book> books = bhlProvider
@@ -152,7 +152,7 @@ namespace MOBOT.BHL.Web2
                 // Check and set up Annotations
                 if (PublicationDetail.Type == ItemType.Book)
                 {
-                    if (Convert.ToBoolean(ConfigurationManager.AppSettings["ShowAnnotations"])) setAnnotationContent(PublicationDetail.ItemID);
+                    if (AppConfig.ShowAnnotations) setAnnotationContent(PublicationDetail.ItemID);
                 }
 
                 // Add Google Scholar metadata to the page headers
@@ -187,7 +187,7 @@ namespace MOBOT.BHL.Web2
                     }
                 }
 
-                Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                Client client = new Client(AppConfig.SiteServicesURL);
                 if (PublicationDetail.Type == ItemType.Book)
                 {
                     viewerPages = client.GetItemPageImageDimensions(PublicationDetail.ID, viewerPages).ToList<ViewerPageModel>();
@@ -226,11 +226,12 @@ namespace MOBOT.BHL.Web2
 
             if (type == ItemType.Book)
             {
-                tags = bhlProvider.GetGoogleScholarMetadataForItem(entityid, AppConfig.ItemPageUrl);
+                tags = bhlProvider.GetGoogleScholarMetadataForItem(entityid, AppConfig.ItemPageUrl, AppConfig.ItemPdfUrl);
             }
             else if (type == ItemType.Segment)
             {
-                tags = bhlProvider.GetGoogleScholarMetadataForSegment(entityid, AppConfig.PartPageUrl);
+                tags = bhlProvider.GetGoogleScholarMetadataForSegment(entityid, AppConfig.PartPageUrl, 
+                    (AppConfig.UsePregeneratedPDFs ? AppConfig.PartPdfUrl : string.Empty));
             }
 
             foreach (KeyValuePair<string, string> tag in tags)

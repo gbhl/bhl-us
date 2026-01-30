@@ -127,7 +127,6 @@
 
     <add key="DefaultBrowseNumPerPage" value="250" />
     <add key="PageTitle" value="{0} - Biodiversity Heritage Library" />
-    <add key="TweetMessage" value="{0} @BioDivLibrary" />
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
     <add key="ItemTextLocation" value="{0}\{1}\{2}" />
 

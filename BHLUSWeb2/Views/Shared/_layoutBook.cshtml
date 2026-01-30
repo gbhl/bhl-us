@@ -155,13 +155,13 @@
         gtag('set', 'ads_data_redaction', true);
         //gtag('set', 'url_passthrough', true);
         gtag('js', new Date());
-        gtag('config', '@System.Configuration.ConfigurationManager.AppSettings["GoogleAnalyticsTrackingID"]', {
+        gtag('config', '@MOBOT.BHL.Web2.AppConfig.GoogleAnalyticsTrackingID', {
             "dimension1": "@ViewBag.holdingInstitution",
             "dimension2": "@ViewBag.bookID",
             "dimension3": "@ViewBag.sponsor"
         });
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=@System.Configuration.ConfigurationManager.AppSettings["GoogleAnalyticsTrackingID"]"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=@MOBOT.BHL.Web2.AppConfig.GoogleAnalyticsTrackingID"></script>
     <script type="text/plain" data-category="analytics" data-service="ga">
         gtag('consent', 'update', {
             personalization_storage: 'granted',

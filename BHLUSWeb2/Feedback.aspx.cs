@@ -46,7 +46,7 @@ namespace MOBOT.BHL.Web2
                 string page = Request.QueryString["page"];
                 if (page != null) ViewState["PageID"] = page;
 
-                Page.Title = String.Format(ConfigurationManager.AppSettings["PageTitle"], "Feedback");
+                Page.Title = String.Format(AppConfig.PageTitle, "Feedback");
             }
         }
 

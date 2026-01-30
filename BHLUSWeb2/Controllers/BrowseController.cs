@@ -18,7 +18,7 @@ namespace MOBOT.BHL.Web2.Controllers
         [BrowseOutputCache(VaryByParam = "*")]
         public ActionResult Authors(string start, int? bpg, int? psize)
         {
-            int browseNumPerPage = Convert.ToInt32(ConfigurationManager.AppSettings["DefaultBrowseNumPerPage"]);
+            int browseNumPerPage = Convert.ToInt32(AppConfig.DefaultBrowseNumPerPage);
 
             AuthorsBrowseModel model = new AuthorsBrowseModel();
             BHLProvider bhlProvider = new BHLProvider();
@@ -39,7 +39,7 @@ namespace MOBOT.BHL.Web2.Controllers
         [BrowseOutputCache(VaryByParam = "*")]
         public ActionResult Collection(string id, string start, string sort, int? bpg, int? psize)
         {
-            int browseNumPerPage = Convert.ToInt32(ConfigurationManager.AppSettings["DefaultBrowseNumPerPage"]);
+            int browseNumPerPage = Convert.ToInt32(AppConfig.DefaultBrowseNumPerPage);
 
             CollectionBrowseModel model = new CollectionBrowseModel();
             BHLProvider bhlProvider = new BHLProvider();
@@ -123,7 +123,7 @@ namespace MOBOT.BHL.Web2.Controllers
         [BrowseOutputCache(VaryByParam = "*")]
         public ActionResult Contributor(string id, string start, string sort, int? bpg, int? ppg, int? psize)
         {
-            int browseNumPerPage = Convert.ToInt32(ConfigurationManager.AppSettings["DefaultBrowseNumPerPage"]);
+            int browseNumPerPage = Convert.ToInt32(AppConfig.DefaultBrowseNumPerPage);
 
             ContributorBrowseModel model = new ContributorBrowseModel();
             BHLProvider bhlProvider = new BHLProvider();
@@ -202,7 +202,7 @@ namespace MOBOT.BHL.Web2.Controllers
         [BrowseOutputCache(VaryByParam = "*")]
         public ActionResult Titles(string start, string sort, int? bpg, int? ppg, int? psize)
         {
-            int browseNumPerPage = Convert.ToInt32(ConfigurationManager.AppSettings["DefaultBrowseNumPerPage"]);
+            int browseNumPerPage = Convert.ToInt32(AppConfig.DefaultBrowseNumPerPage);
 
             TitleBrowseModel model = new TitleBrowseModel();
             BHLProvider bhlProvider = new BHLProvider();
@@ -228,7 +228,7 @@ namespace MOBOT.BHL.Web2.Controllers
         [BrowseOutputCache(VaryByParam = "*")]
         public ActionResult Year(string start, string end, string sort, int? bpg, int? ppg, int? psize)
         {
-            int browseNumPerPage = Convert.ToInt32(ConfigurationManager.AppSettings["DefaultBrowseNumPerPage"]);
+            int browseNumPerPage = Convert.ToInt32(AppConfig.DefaultBrowseNumPerPage);
 
             YearBrowseModel model = new YearBrowseModel();
             BHLProvider bhlProvider = new BHLProvider();

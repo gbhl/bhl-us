@@ -298,7 +298,7 @@ namespace MOBOT.BHL.Web2.api2
             try
             {
                 ValidateUser(Api2.APIRequestType.TitleSearchSimple, apiKey, title);
-                return (new Api2().TitleSearchSimple(title, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"])));
+                return (new Api2().TitleSearchSimple(title, AppConfig.EnableFullTextSearch));
             }
             catch (Exception ex)
             {
@@ -446,7 +446,7 @@ namespace MOBOT.BHL.Web2.api2
             try
             {
                 ValidateUser(Api2.APIRequestType.SubjectSearch, apiKey, subject);
-                return (new Api2().SubjectSearch(subject, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"])));
+                return (new Api2().SubjectSearch(subject, AppConfig.EnableFullTextSearch));
             }
             catch (Exception ex)
             {
@@ -492,7 +492,7 @@ namespace MOBOT.BHL.Web2.api2
             try
             {
                 ValidateUser(Api2.APIRequestType.AuthorSearch, apiKey, name);
-                return (new Api2().AuthorSearch(name, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"])));
+                return (new Api2().AuthorSearch(name, AppConfig.EnableFullTextSearch));
             }
             catch (Exception ex)
             {
@@ -578,7 +578,7 @@ namespace MOBOT.BHL.Web2.api2
                     (year == null ? "" : year.ToString()), subject, languageCode, (collectionID == null ? "" : collectionID.ToString()));
                 ValidateUser(Api2.APIRequestType.SearchBook, apiKey, args);
                 return (new Api2().SearchBook(title, authorLastName, volume, edition, year, subject, languageCode, collectionID, 
-                    500, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"])));
+                    500, AppConfig.EnableFullTextSearch));
             }
             catch (Exception ex)
             {
@@ -595,7 +595,7 @@ namespace MOBOT.BHL.Web2.api2
                 string args = string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}", title, containerTitle, author, date, volume, series, issue);
                 ValidateUser(Api2.APIRequestType.SearchPart, apiKey, args);
                 return (new Api2().SearchSegment(title, containerTitle, author, date, volume, series, issue, 500, "Title",
-                    Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"])));
+                    AppConfig.EnableFullTextSearch));
             }
             catch (Exception ex)
             {
@@ -610,7 +610,7 @@ namespace MOBOT.BHL.Web2.api2
         private void ValidateUser(Api2.APIRequestType requestType, string apiKey, string detail)
         {
             // Only validate users in production
-            if (ConfigurationManager.AppSettings["IsProduction"] == "true")
+            if (AppConfig.IsProduction)
             {
                 if (!new Api2().ValidateApiUser(requestType, apiKey, HttpContext.Current.Request.UserHostAddress, detail))
                 {

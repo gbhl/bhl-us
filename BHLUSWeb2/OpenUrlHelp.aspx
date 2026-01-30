@@ -14,7 +14,7 @@
 
         <p>
             The Biodiversity Heritage Library's OpenURL query interface is available 
-            at <code><%= ConfigurationManager.AppSettings["BaseUrl"] %>/openurl</code>.
+            at <code><%= MOBOT.BHL.Web2.AppConfig.BaseUrl %>/openurl</code>.
         </p>
         <p>
             Both OpenURL 0.1 and OpenURL 1.0 queries are supported.
@@ -100,22 +100,22 @@
                     </tr>
                     <tr class="odd">
                         <td>pid=title:XXXX</td>
-                        <td>rft_id=<%= ConfigurationManager.AppSettings["BaseUrl"] %>/bibliography/XXXX</td>
+                        <td>rft_id=<%= MOBOT.BHL.Web2.AppConfig.BaseUrl %>/bibliography/XXXX</td>
                         <td>BHL title ID (where XXXX is the ID value)</td>
                     </tr>
                     <tr>
                         <td>pid=item:XXXX</td>
-                        <td>rft_id=<%= ConfigurationManager.AppSettings["BaseUrl"] %>/item/XXXX</td>
+                        <td>rft_id=<%= MOBOT.BHL.Web2.AppConfig.BaseUrl %>/item/XXXX</td>
                         <td>BHL item ID (where XXXX is the ID value)</td>
                     </tr>
                     <tr class="odd">
                         <td>pid=page:XXXX</td>
-                        <td>rft_id=<%= ConfigurationManager.AppSettings["BaseUrl"] %>/page/XXXX</td>
+                        <td>rft_id=<%= MOBOT.BHL.Web2.AppConfig.BaseUrl %>/page/XXXX</td>
                         <td>BHL page ID (where XXXX is the ID value)</td>
                     </tr>
                     <tr>
                         <td>pid=part:XXXX</td>
-                        <td>rft_id=<%= ConfigurationManager.AppSettings["BaseUrl"] %>/part/XXXX</td>
+                        <td>rft_id=<%= MOBOT.BHL.Web2.AppConfig.BaseUrl %>/part/XXXX</td>
                         <td>BHL part ID (where XXXX is the ID value)</td>
                     </tr>
                 </tbody>

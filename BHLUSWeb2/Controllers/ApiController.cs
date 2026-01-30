@@ -156,7 +156,7 @@ namespace MOBOT.BHL.Web2.Controllers
 
                     serviceResponse.Result = this.Api3_PublicationSearch((searchTerm ?? string.Empty),
                         searchType, (page ?? "1"), (pageSize ?? Api3.DefaultPubSearchPageSize.ToString()),
-                        Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]),
+                        AppConfig.EnableFullTextSearch,
                         key);
 
                     response = serviceResponse.Serialize(outputType);
@@ -184,7 +184,7 @@ namespace MOBOT.BHL.Web2.Controllers
                         (subject ?? string.Empty), (language ?? string.Empty), (collection ?? string.Empty),
                         (notes ?? string.Empty), (notesOp ?? string.Empty),
                         (text ?? string.Empty), (textOp ?? string.Empty), (page ?? "1"), (pageSize ?? Api3.DefaultPubSearchPageSize.ToString()),
-                        Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
+                        AppConfig.EnableFullTextSearch, key);
 
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -213,7 +213,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     string subject = Request.QueryString["subject"];
                     ServiceResponse<List<API.BHLApiDataObjects3.Subject>> serviceResponse = new ServiceResponse<List<API.BHLApiDataObjects3.Subject>>();
-                    serviceResponse.Result = this.Api3_SubjectSearch(subject, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
+                    serviceResponse.Result = this.Api3_SubjectSearch(subject, AppConfig.EnableFullTextSearch, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -221,7 +221,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     string name = Request.QueryString["authorname"];
                     ServiceResponse<List<API.BHLApiDataObjects3.Author>> serviceResponse = new ServiceResponse<List<API.BHLApiDataObjects3.Author>>();
-                    serviceResponse.Result = this.Api3_AuthorSearch(name, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
+                    serviceResponse.Result = this.Api3_AuthorSearch(name, AppConfig.EnableFullTextSearch, key);
                     response = serviceResponse.Serialize(outputType);
                 }
             }
@@ -275,7 +275,7 @@ namespace MOBOT.BHL.Web2.Controllers
         private void Api3_ValidateUser(Api3.APIRequestType requestType, string apiKey, string detail)
         {
             // Only validate users in production
-            if (ConfigurationManager.AppSettings["IsProduction"] == "true")
+            if (AppConfig.IsProduction)
             {
                 if (!new Api3().ValidateApiUser(requestType, apiKey, Request.UserHostAddress, detail))
                 {
@@ -319,7 +319,7 @@ namespace MOBOT.BHL.Web2.Controllers
         {
             Api3_ValidateUser(Api3.APIRequestType.SubjectSearch, apiKey, subject);
             Api3 api = new Api3();
-            return api.SubjectSearch(subject, fullText);
+            return api.SubjectSearch(subject, AppConfig.KeywordResultDefaultSort, fullText);
         }
 
         private List<API.BHLApiDataObjects3.Subject> Api3_GetSubjectMetadata(string subject, string includePubs, string apiKey)
@@ -333,14 +333,14 @@ namespace MOBOT.BHL.Web2.Controllers
         {
             Api3_ValidateUser(Api3.APIRequestType.AuthorSearch, apiKey, name);
             Api3 api = new Api3();
-            return api.AuthorSearch(name, fullText);
+            return api.AuthorSearch(name, AppConfig.AuthorResultDefaultSort, fullText);
         }
 
         private List<API.BHLApiDataObjects3.Page> Api3_PageSearch(string idType, string id, string text, string apiKey)
         {
             Api3_ValidateUser(Api3.APIRequestType.PageSearch, apiKey, string.Format("{0}|{1}|{2}", idType, id, text));
             Api3 api = new Api3();
-            return api.PageSearch(idType, id, text);
+            return api.PageSearch(idType, id, text, AppConfig.PageResultDefaultSort);
         }
 
         private List<API.BHLApiDataObjects3.Author> Api3_GetAuthorMetadata(string id, string idType, string includePubs, string apiKey)
@@ -361,7 +361,7 @@ namespace MOBOT.BHL.Web2.Controllers
         {
             Api3_ValidateUser(Api3.APIRequestType.NameSearch, apiKey, name);
             Api3 api = new Api3();
-            return api.NameSearch(name);
+            return api.NameSearch(name, AppConfig.NameResultDefaultSort);
         }
 
         private List<API.BHLApiDataObjects3.Language> Api3_GetLanguages(string apiKey)
@@ -384,7 +384,7 @@ namespace MOBOT.BHL.Web2.Controllers
             string args = string.Format("{0}|{1}|{2}|{3}", searchTerm, searchType, page.ToString(), pageSize.ToString());
             Api3_ValidateUser(Api3.APIRequestType.PublicationSearch, apiKey, args);
             Api3 api = new Api3();
-            return api.SearchPublication(searchTerm, searchType, page, pageSize, fullText);
+            return api.SearchPublication(searchTerm, searchType, page, pageSize, AppConfig.PublicationResultDefaultSort, fullText);
         }
 
         private List<API.BHLApiDataObjects3.Publication> Api3_PublicationSearchAdvanced(string title, string titleOp,
@@ -398,8 +398,8 @@ namespace MOBOT.BHL.Web2.Controllers
                 pageSize.ToString());
             Api3_ValidateUser(Api3.APIRequestType.PublicationSearchAdvanced, apiKey, args);
             Api3 api = new Api3();
-            return api.SearchPublication(title, titleOp, authorLastName, year, subject, languageCode,
-                collectionID, notes, notesOp, text, textOp, page, pageSize, fullText);
+            return api.SearchPublication(title, titleOp, authorLastName, year, subject, languageCode, collectionID, 
+                notes, notesOp, text, textOp, page, pageSize, AppConfig.PublicationResultDefaultSort, fullText);
         }
 
         private List<API.BHLApiDataObjects3.Institution> Api3_GetInstitutions(string apiKey)
@@ -541,7 +541,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     String title = Request.QueryString["title"];
                     ServiceResponse<List<API.BHLApiDataObjects2.Title>> serviceResponse = new ServiceResponse<List<API.BHLApiDataObjects2.Title>>();
-                    serviceResponse.Result = this.Api2_TitleSearchSimple(title, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
+                    serviceResponse.Result = this.Api2_TitleSearchSimple(title, AppConfig.EnableFullTextSearch, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -624,7 +624,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     String subject = Request.QueryString["subject"];
                     ServiceResponse<List<API.BHLApiDataObjects2.Subject>> serviceResponse = new ServiceResponse<List<API.BHLApiDataObjects2.Subject>>();
-                    serviceResponse.Result = this.Api2_SubjectSearch(subject, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
+                    serviceResponse.Result = this.Api2_SubjectSearch(subject, AppConfig.EnableFullTextSearch, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -650,7 +650,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     String name = Request.QueryString["name"];
                     ServiceResponse<List<API.BHLApiDataObjects2.Creator>> serviceResponse = new ServiceResponse<List<API.BHLApiDataObjects2.Creator>>();
-                    serviceResponse.Result = this.Api2_AuthorSearch(name, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
+                    serviceResponse.Result = this.Api2_AuthorSearch(name, AppConfig.EnableFullTextSearch, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -743,7 +743,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     serviceResponse.Result = this.Api2_SearchBook((title ?? string.Empty), (authorLastName ?? string.Empty),
                         (volume ?? string.Empty), (edition ?? string.Empty), (year ?? string.Empty), (subject ?? string.Empty),
                         (language ?? string.Empty), (collection ?? string.Empty),
-                        Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
+                        AppConfig.EnableFullTextSearch, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -759,8 +759,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     String issue = Request.QueryString["issue"];
                     serviceResponse.Result = this.Api2_SearchPart((title ?? string.Empty), (containerTitle ?? string.Empty),
                         (author ?? string.Empty), (date ?? string.Empty), (volume ?? string.Empty), (series ?? string.Empty),
-                        (issue ?? string.Empty), Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]),
-                        key);
+                        (issue ?? string.Empty), AppConfig.EnableFullTextSearch, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -821,7 +820,7 @@ namespace MOBOT.BHL.Web2.Controllers
         private void Api2_ValidateUser(Api2.APIRequestType requestType, string apiKey, string detail)
         {
             // Only validate users in production
-            if (ConfigurationManager.AppSettings["IsProduction"] == "true")
+            if (AppConfig.IsProduction)
             {
                 if (!new Api2().ValidateApiUser(requestType, apiKey, Request.UserHostAddress, detail))
                 {

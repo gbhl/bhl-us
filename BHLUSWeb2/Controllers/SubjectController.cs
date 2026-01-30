@@ -14,7 +14,7 @@ namespace MOBOT.BHL.Web2.Controllers
         [BrowseOutputCache(VaryByParam = "*")]
         public ActionResult Index(string subject, string sort, int? bpg, int? ppg, int? psize)
         {
-            int browseNumPerPage = Convert.ToInt32(ConfigurationManager.AppSettings["DefaultBrowseNumPerPage"]);
+            int browseNumPerPage = Convert.ToInt32(AppConfig.DefaultBrowseNumPerPage);
 
             SubjectModel model = new SubjectModel();
             BHLProvider bhlProvider = new BHLProvider();

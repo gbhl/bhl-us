@@ -245,7 +245,7 @@ namespace MOBOT.BHL.Web2.Controllers
         {
             string folder = Request.RequestContext.RouteData.Values["folder"] as string;
             string filename = Request.RequestContext.RouteData.Values["filename"] as string;
-            string pdfPath = string.Format(ConfigurationManager.AppSettings["PdfUrl"], folder, filename);
+            string pdfPath = string.Format(AppConfig.PdfUrl, folder, filename);
             int pdfTimeout = 36000000;
             Server.ScriptTimeout = pdfTimeout / 1000;
 

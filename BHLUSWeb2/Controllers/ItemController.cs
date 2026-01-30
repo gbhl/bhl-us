@@ -32,7 +32,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 else
                 {
                     // Refresh cache
-                    Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                    Client client = new Client(AppConfig.SiteServicesURL);
                     itemText = client.GetItemText(itemid);
                     cache.Add(cacheKey, itemText, null, DateTime.Now.AddMinutes(AppConfig.ItemTextCacheTime),
                         System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);

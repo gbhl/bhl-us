@@ -797,7 +797,7 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="itemID"></param>
         /// <returns></returns>
-        public List<KeyValuePair<string, string>> GetGoogleScholarMetadataForItem(int itemID, string uriFormat)
+        public List<KeyValuePair<string, string>> GetGoogleScholarMetadataForItem(int itemID, string uriFormat, string pdfUriFormat)
         {
             List<KeyValuePair<string, string>> tags = new List<KeyValuePair<string, string>>();
 
@@ -840,7 +840,7 @@ namespace MOBOT.BHL.Server
 
                     if (book.Pages.Count > 0)
                     {
-                        AddGoogleScholarTag(tags, "citation_pdf_url", string.Format(ConfigurationManager.AppSettings["ItemPdfUrl"], book.BookID.ToString()));
+                        AddGoogleScholarTag(tags, "citation_pdf_url", string.Format(pdfUriFormat, book.BookID.ToString()));
                     }
 
                 }
@@ -855,7 +855,7 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="segmentID"></param>
         /// <returns></returns>
-        public List<KeyValuePair<string, string>> GetGoogleScholarMetadataForSegment(int segmentID, string uriFormat)
+        public List<KeyValuePair<string, string>> GetGoogleScholarMetadataForSegment(int segmentID, string uriFormat, string pdfUriFormat)
         {
             List<KeyValuePair<string, string>> tags = new List<KeyValuePair<string, string>>();
 
@@ -911,9 +911,9 @@ namespace MOBOT.BHL.Server
                         AddGoogleScholarTag(tags, "citation_doi", doi.IdentifierValue);
                     }
 
-                    if (segment.PageList.Count > 0 && ConfigurationManager.AppSettings["UsePregeneratedPDFs"].ToLower() == "true")
+                    if (segment.PageList.Count > 0 && !string.IsNullOrWhiteSpace(pdfUriFormat))
                     {
-                        AddGoogleScholarTag(tags, "citation_pdf_url", string.Format(ConfigurationManager.AppSettings["PartPdfUrl"], segment.SegmentID.ToString()));
+                        AddGoogleScholarTag(tags, "citation_pdf_url", string.Format(pdfUriFormat, segment.SegmentID.ToString()));
                     }
                 }
             }

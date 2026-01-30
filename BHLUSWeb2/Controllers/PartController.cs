@@ -78,7 +78,8 @@ namespace MOBOT.BHL.Web2.Controllers
                 }
 
                 // Add Google Scholar metadata to the page headers
-                model.GoogleScholarTags = bhlProvider.GetGoogleScholarMetadataForSegment((int)partid, AppConfig.PartPageUrl);
+                model.GoogleScholarTags = bhlProvider.GetGoogleScholarMetadataForSegment((int)partid, AppConfig.PartPageUrl, 
+                    (AppConfig.UsePregeneratedPDFs ? AppConfig.PartPdfUrl : string.Empty));
 
                 // Set the data for the COinS output
                 model.COinS.SegmentID = (int)partid;
@@ -142,7 +143,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     else
                     {
                         // Refresh cache
-                        Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                        Client client = new Client(AppConfig.SiteServicesURL);
                         partText = client.GetSegmentText((int)partid);
                         cache.Add(cacheKey, partText, null, DateTime.Now.AddMinutes(AppConfig.ItemTextCacheTime),
                             System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
@@ -221,7 +222,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 }
                 else
                 {
-                    if (ConfigurationManager.AppSettings["UsePregeneratedPDFs"] == "true")
+                    if (AppConfig.UsePregeneratedPDFs)
                     {
                         return this.GetPregeneratedPDF((int)id);
                     }
@@ -279,7 +280,7 @@ namespace MOBOT.BHL.Web2.Controllers
 
         private Stream GetPdfStream(int id)
         {
-            Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+            Client client = new Client(AppConfig.SiteServicesURL);
             var pdf = client.GetSegmentPdf(id);
             return pdf;
         }

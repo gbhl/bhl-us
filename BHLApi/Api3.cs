@@ -933,7 +933,7 @@ namespace MOBOT.BHL.API.BHLApi
         #region Search methods
 
         public List<Publication> SearchPublication(string searchTerm, string searchType, 
-            string page, string pageSize, bool sqlFullText)
+            string page, string pageSize, string defaultSort, bool sqlFullText)
         {
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(searchTerm))
@@ -997,7 +997,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             List<Publication> pubs = new List<Publication>();
-            pubs = SearchPublicationGlobal(searchTerm, searchType, pageInt, pageSizeInt);
+            pubs = SearchPublicationGlobal(searchTerm, searchType, pageInt, pageSizeInt, defaultSort);
 
             return pubs;
         }
@@ -1005,7 +1005,7 @@ namespace MOBOT.BHL.API.BHLApi
         public List<Publication> SearchPublication(string title, string titleOp, 
             string authorName, string year, string subject, string languageCode, string collectionID, 
             string notes, string notesOp, string text, string textOp, string page, string pageSize, 
-            bool sqlFullText)
+            string defaultSort, bool sqlFullText)
         {
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(title) && string.IsNullOrWhiteSpace(authorName) && 
@@ -1121,7 +1121,7 @@ namespace MOBOT.BHL.API.BHLApi
 
             List<Publication> pubs = new List<Publication>();
             pubs = SearchPublicationAdvanced(title, titleOp, authorName, year, subject, languageCode,
-                collectionID, notes, notesOp, text, textOp, pageInt, pageSizeInt);
+                collectionID, notes, notesOp, text, textOp, pageInt, pageSizeInt, defaultSort);
 
             return pubs;
         }
@@ -1145,7 +1145,7 @@ namespace MOBOT.BHL.API.BHLApi
         /// <returns></returns>
         private List<Publication> SearchPublicationAdvanced(string title, string titleOp,
             string authorName, string year, string subject, string languageCode, string collectionID, 
-            string notes, string notesOp, string text, string textOp, int page, int pageSize)
+            string notes, string notesOp, string text, string textOp, int page, int pageSize, string defaultSort)
         {
             // Build the language and collection parameters
             Tuple<string, string> languageParam = null;
@@ -1167,7 +1167,7 @@ namespace MOBOT.BHL.API.BHLApi
             search.StartPage = page;
             search.NumResults = (pageSize < 1 || pageSize > MaxPubSearchPageSize) ? DefaultPubSearchPageSize : pageSize;
             if (!string.IsNullOrWhiteSpace(text)) search.Highlight = true;
-            search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
+            search.SortField = (SortField)Enum.Parse(typeof(SortField), defaultSort);
 
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam(title, 
@@ -1193,14 +1193,14 @@ namespace MOBOT.BHL.API.BHLApi
         /// <param name="searchTerm"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        private List<Publication> SearchPublicationGlobal(string searchTerm, string searchType, int page, int pageSize)
+        private List<Publication> SearchPublicationGlobal(string searchTerm, string searchType, int page, int pageSize, string defaultSort)
         {
             // Submit the request to ElasticSearch
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
             search.StartPage = page;
             search.NumResults = (pageSize < 1 || pageSize > MaxPubSearchPageSize) ? DefaultPubSearchPageSize : pageSize;
             search.Highlight = true;
-            search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
+            search.SortField = (SortField)Enum.Parse(typeof(SortField), defaultSort);
 
             ISearchResult result = null;
             if (searchType.ToUpper() == "F")
@@ -1614,7 +1614,7 @@ namespace MOBOT.BHL.API.BHLApi
             return parts;
         }
 
-        public List<Subject> SubjectSearch(string subject, bool sqlFullText)
+        public List<Subject> SubjectSearch(string subject, string defaultSort, bool sqlFullText)
         {
             List<Subject> subjects = new List<Subject>();
 
@@ -1622,7 +1622,7 @@ namespace MOBOT.BHL.API.BHLApi
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
             search.StartPage = 1;
             search.NumResults = 10000;
-            search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["KeywordResultDefaultSort"]);
+            search.SortField = (SortField)Enum.Parse(typeof(SortField), defaultSort);
             ISearchResult result = search.SearchKeyword(subject);
 
             // Build the list of results
@@ -1634,7 +1634,7 @@ namespace MOBOT.BHL.API.BHLApi
             return subjects;
         }
 
-        public List<Author> AuthorSearch(string name, bool sqlFullText)
+        public List<Author> AuthorSearch(string name, string defaultSort, bool sqlFullText)
         {
             List<Author> creators = new List<Author>();
 
@@ -1642,7 +1642,7 @@ namespace MOBOT.BHL.API.BHLApi
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
             search.StartPage = 1;
             search.NumResults = 10000;
-            search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["AuthorResultDefaultSort"]);
+            search.SortField = (SortField)Enum.Parse(typeof(SortField), defaultSort);
             ISearchResult result = search.SearchAuthor(name);
 
             // Build the list of results
@@ -1661,7 +1661,7 @@ namespace MOBOT.BHL.API.BHLApi
             return creators;
         }
 
-        public List<Name> NameSearch(string name)
+        public List<Name> NameSearch(string name, string defaultSort)
         {
             if (name == String.Empty)
             {
@@ -1674,7 +1674,7 @@ namespace MOBOT.BHL.API.BHLApi
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
             search.StartPage = 1;
             search.NumResults = 10000;
-            search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["NameResultDefaultSort"]);
+            search.SortField = (SortField)Enum.Parse(typeof(SortField), defaultSort);
             ISearchResult result = search.SearchName(name);
 
             // Build the list of results
@@ -1686,7 +1686,7 @@ namespace MOBOT.BHL.API.BHLApi
             return names;
         }
 
-        public List<Page> PageSearch(string entityType, string entityID, string text)
+        public List<Page> PageSearch(string entityType, string entityID, string text, string defaultSort)
         {
             // Validate the parameters
             int entityIDint;
@@ -1723,7 +1723,7 @@ namespace MOBOT.BHL.API.BHLApi
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
             search.StartPage = 1;
             search.NumResults = 10000;
-            search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PageResultDefaultSort"]);
+            search.SortField = (SortField)Enum.Parse(typeof(SortField), defaultSort);
 
             List<Tuple<SearchField, string>> limits = new List<Tuple<SearchField, string>>();
             Tuple<SearchField, string> itemLimit = new Tuple<SearchField, string>(SearchField.ItemID, itemID.ToString());

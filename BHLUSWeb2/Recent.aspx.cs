@@ -57,7 +57,7 @@ namespace MOBOT.BHL.Web2
             rssFeedLink.InnerHtml = recentLink;
             rssFeedImageLink.HRef = recentLink;
 
-            Page.Title = string.Format(ConfigurationManager.AppSettings["PageTitle"], "Recent Additions");
+            Page.Title = string.Format(AppConfig.PageTitle, "Recent Additions");
         }
     }
 }

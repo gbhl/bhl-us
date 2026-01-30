@@ -179,11 +179,11 @@ namespace MOBOT.BHL.Web2.Controllers
         public ActionResult Pages(string q, int itemId)
         {
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
-            search.NumResults = Convert.ToInt32(ConfigurationManager.AppSettings["PageResultPageSize"]); ;
+            search.NumResults = Convert.ToInt32(AppConfig.PageResultPageSize); ;
             search.Highlight = true;
             search.Suggest = false;
-            search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PageResultDefaultSort"]);
-            search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["PageResultDefaultSortDirection"]);
+            search.SortField = (SortField)Enum.Parse(typeof(SortField), AppConfig.PageResultDefaultSort);
+            search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), AppConfig.PageResultDefaultSortDirection);
             List<Tuple<SearchField, string>> limits = new List<Tuple<SearchField, string>>();
             Tuple<SearchField, string> itemLimit = new Tuple<SearchField, string>(SearchField.ItemID, itemId.ToString());
             limits.Add(itemLimit);
@@ -237,11 +237,11 @@ namespace MOBOT.BHL.Web2.Controllers
 
         public ActionResult SearchAction(SearchModel model, List<Tuple<SearchField, string>> limits)
         {
-            int publicationPageSize = Convert.ToInt32(ConfigurationManager.AppSettings["PublicationResultPageSize"]);
-            int authorPageSize = Convert.ToInt32(ConfigurationManager.AppSettings["AuthorResultPageSize"]);
-            int keywordPageSize = Convert.ToInt32(ConfigurationManager.AppSettings["KeywordResultPageSize"]);
-            int namePageSize = Convert.ToInt32(ConfigurationManager.AppSettings["NameResultPageSize"]);
-            int numFacets = Convert.ToInt32(ConfigurationManager.AppSettings["FacetSize"]);
+            int publicationPageSize = Convert.ToInt32(AppConfig.PublicationResultPageSize);
+            int authorPageSize = Convert.ToInt32(AppConfig.AuthorResultPageSize);
+            int keywordPageSize = Convert.ToInt32(AppConfig.KeywordResultPageSize);
+            int namePageSize = Convert.ToInt32(AppConfig.NameResultPageSize);
+            int numFacets = Convert.ToInt32(AppConfig.FacetSize);
 
             // Submit the request to ElasticSearch here
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
@@ -254,18 +254,18 @@ namespace MOBOT.BHL.Web2.Controllers
                 // Standard search
                 search.StartPage = model.AuthorPage;
                 search.NumResults = authorPageSize;
-                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["AuthorResultDefaultSort"]);
-                search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["AuthorResultDefaultSortDirection"]);
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), AppConfig.AuthorResultDefaultSort);
+                search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), AppConfig.AuthorResultDefaultSortDirection);
                 model.AuthorResult = search.SearchAuthor(searchTerm);
                 search.StartPage = model.KeywordPage;
                 search.NumResults = keywordPageSize;
-                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["KeywordResultDefaultSort"]);
-                search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["KeywordResultDefaultSortDirection"]);
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), AppConfig.KeywordResultDefaultSort);
+                search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), AppConfig.KeywordResultDefaultSortDirection);
                 model.KeywordResult = search.SearchKeyword(searchTerm);
                 search.StartPage = model.NamePage;
                 search.NumResults = namePageSize;
-                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["NameResultDefaultSort"]);
-                search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["NameResultDefaultSortDirection"]);
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), AppConfig.NameResultDefaultSort);
+                search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), AppConfig.NameResultDefaultSortDirection);
                 model.NameResult = search.SearchName(searchTerm);
                 search.Facet = true;
                 search.StartPage = model.ItemPage;
@@ -284,8 +284,8 @@ namespace MOBOT.BHL.Web2.Controllers
                 }
                 else
                 {
-                    search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]); // Score
-                    search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["PublicationResultDefaultSortDirection"]);
+                    search.SortField = (SortField)Enum.Parse(typeof(SortField), AppConfig.PublicationResultDefaultSort); // Score
+                    search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), AppConfig.PublicationResultDefaultSortDirection);
                 }
 
                 if (model.Params.SearchType == "F")
@@ -306,16 +306,16 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     search.StartPage = model.AuthorPage;
                     search.NumResults = authorPageSize;
-                    search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["AuthorResultDefaultSort"]);
-                    search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["AuthorResultDefaultSortDirection"]);
+                    search.SortField = (SortField)Enum.Parse(typeof(SortField), AppConfig.AuthorResultDefaultSort);
+                    search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), AppConfig.AuthorResultDefaultSortDirection);
                     model.AuthorResult = search.SearchAuthor(searchTerm);
                 }
                 if ((model.Params.SearchCategory.Equals("N") || model.Params.SearchCategory.Equals("M")))
                 {
                     search.StartPage = model.NamePage;
                     search.NumResults = namePageSize;
-                    search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["NameResultDefaultSort"]);
-                    search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["NameResultDefaultSortDirection"]);
+                    search.SortField = (SortField)Enum.Parse(typeof(SortField), AppConfig.NameResultDefaultSort);
+                    search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), AppConfig.NameResultDefaultSortDirection);
                     model.NameResult = search.SearchName(searchTerm);
                 }
                 if (model.Params.SearchCategory.Equals("T"))
@@ -336,8 +336,8 @@ namespace MOBOT.BHL.Web2.Controllers
                     }
                     else
                     {
-                        search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]); // Score
-                        search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["PublicationResultDefaultSortDirection"]);
+                        search.SortField = (SortField)Enum.Parse(typeof(SortField), AppConfig.PublicationResultDefaultSort); // Score
+                        search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), AppConfig.PublicationResultDefaultSortDirection);
                     }
 
                     search.Facet = true;
@@ -354,8 +354,8 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     search.StartPage = model.KeywordPage;
                     search.NumResults = keywordPageSize;
-                    search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["KeywordResultDefaultSort"]);
-                    search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), ConfigurationManager.AppSettings["KeywordResultDefaultSortDirection"]);
+                    search.SortField = (SortField)Enum.Parse(typeof(SortField), AppConfig.KeywordResultDefaultSort);
+                    search.SortDirection = (SortDirection)Enum.Parse(typeof(SortDirection), AppConfig.KeywordResultDefaultSortDirection);
                     model.KeywordResult = search.SearchKeyword(searchTerm);
                 }
             }

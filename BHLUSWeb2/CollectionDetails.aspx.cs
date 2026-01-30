@@ -88,14 +88,8 @@ namespace MOBOT.BHL.Web2
 
         private string GetPageTitle(Collection collection)
         {
-            string title = (collection == null ? this.Title : String.Format(ConfigurationManager.AppSettings["PageTitle"], collection.CollectionName));
+            string title = (collection == null ? this.Title : String.Format(AppConfig.PageTitle, collection.CollectionName));
             return title;
-        }
-
-        private string GetTweetText(Collection collection)
-        {
-            string tweet = (collection == null ? string.Empty : string.Format(ConfigurationManager.AppSettings["TweetMessage"], collection.CollectionName));
-            return tweet;
         }
     }
 }

@@ -29,10 +29,10 @@ namespace MOBOT.BHL.Web2
         {
             Exception exception = Server.GetLastError();
 
-            if (!HttpContext.Current.IsDebuggingEnabled && !(new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request)))
+            if (!HttpContext.Current.IsDebuggingEnabled && !(new DebugUtility(AppConfig.DebugValue).IsDebugMode(Response, Request)))
             {
                 // Log the exception
-                if (ConfigurationManager.AppSettings["LogExceptions"] == "true")
+                if (AppConfig.LogExceptions)
                 {
                     ExceptionUtility.LogException(exception, "Global.Application_Error");
                 }

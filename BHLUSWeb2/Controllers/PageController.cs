@@ -19,7 +19,7 @@ namespace MOBOT.BHL.Web2.Controllers
             }
             else
             {
-                Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                Client client = new Client(AppConfig.SiteServicesURL);
                 string ocrText = client.GetPageText((int)pageid);
                 ContentResult content = new ContentResult();
                 content.Content = ocrText;
@@ -60,7 +60,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     }
                 }
 
-                if (imageUrl == String.Empty) imageUrl = ConfigurationManager.AppSettings["ImageNotFoundThumbPath"];
+                if (imageUrl == String.Empty) imageUrl = AppConfig.ImageNotFoundThumbPath;
                 return Redirect(imageUrl);
             }
         }
@@ -84,7 +84,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     imageUrl = page.AltExternalURL.Replace(".jp2", ".jpg");
                 }
 
-                if (imageUrl == String.Empty) imageUrl = ConfigurationManager.AppSettings["ImageNotFoundPath"];
+                if (imageUrl == String.Empty) imageUrl = AppConfig.ImageNotFoundPath;
                 return Redirect(imageUrl);
             }
         }
