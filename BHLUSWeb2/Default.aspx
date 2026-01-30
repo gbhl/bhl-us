@@ -32,11 +32,6 @@
         <p class="intro-home-tagline">Inspiring discovery through free access to biodiversity knowledge.</p>
         <p>The Biodiversity Heritage Library improves research methodology by collaboratively making biodiversity literature openly available to the world as part of a global biodiversity community.</p>
         <p>Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgment of Harmful Content</a></p>
-	    <p>Major support and hosting provided by
-		    <a href="https://library.si.edu/departments/biodiversity-heritage-library" target="_blank" rel="noopener noreferrer">
-			    <img src="/images/sil_horizontal_clr.png" title="Smithsonian Libraries and Archives" alt="Smithsonian Libraries and Archives" class="sponsorimg-home">
-		    </a>
-	    </p>
     </div>
 </div>
 
