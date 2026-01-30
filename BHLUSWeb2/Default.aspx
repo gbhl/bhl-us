@@ -35,7 +35,6 @@
     </div>
 </div>
 
-
 <div id="searchbar-home">
 	    <div id="searchbox-home" class="column-wrap">
             <span>Search across books and journals, scientific names, authors and subjects</span>
