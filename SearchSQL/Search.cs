@@ -18,6 +18,7 @@ namespace BHL.Search.SQL
             _connectionString = connectionString;
         }
 
+        public string ServerAddress { get; set; }
         public bool Facet { get; set; }
         public bool Highlight { get; set; }
         public int NumResults { get; set; }
@@ -26,6 +27,7 @@ namespace BHL.Search.SQL
         public SortDirection SortDirection { get; set; }
         public int StartPage { get; set; }
         public bool Suggest { get; set; }
+        public bool Debug { set; get; }
 
         public bool IsOnline()
         {

@@ -7,14 +7,14 @@
     <div  class="<%= SpecialClass %> support" id="<%= specialID %>">
         <h3>Help Support <span>BHL</span></h3>
         <p>BHL's existence depends on the support of its patrons. Help us keep this free resource alive!</p>
-        <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=MOBOT.BHL.Web2.AppConfig.DonateUrl%>">Donate Now</a>
+        <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=MOBOT.BHL.Web.Utilities.AppConfig.DonateUrl%>">Donate Now</a>
     </div>
 </asp:Panel>
 <asp:Panel ID="panNewFuture" runat="server" Visible="false">
     <div class="<%= SpecialClass %> newfuture" id="<%= specialID %>">
         <h3>Future of BHL</h3>
-        <p><%=MOBOT.BHL.Web2.AppConfig.NewFutureNewsText%></p>
-        <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=MOBOT.BHL.Web2.AppConfig.NewFutureNewsUrl%>">Learn More</a>
+        <p><%=MOBOT.BHL.Web.Utilities.AppConfig.NewFutureNewsText%></p>
+        <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=MOBOT.BHL.Web.Utilities.AppConfig.NewFutureNewsUrl%>">Learn More</a>
     </div>
 </asp:Panel>
 <asp:Panel ID="panFlickr" runat="server"  Visible="false">
@@ -34,11 +34,11 @@
         <h3>Help Support <span>BHL</span></h3>
         <h4>&nbsp;</h4>
          <span class="content">
-             <a title="Donate Now" href="<%=MOBOT.BHL.Web2.AppConfig.DonateUrl%>">
+             <a title="Donate Now" href="<%=MOBOT.BHL.Web.Utilities.AppConfig.DonateUrl%>">
                 <img alt="Donate Now" src="~/images/BHL-Logo-Portrait-196x196.png" runat="server"/>
             </a>
          </span>
-         <a class="featurebutton-home" href="<%=MOBOT.BHL.Web2.AppConfig.DonateUrl%>">Donate Now</a>
+         <a class="featurebutton-home" href="<%=MOBOT.BHL.Web.Utilities.AppConfig.DonateUrl%>">Donate Now</a>
     </div>
 </asp:Panel>
 <asp:Panel ID="panCollection" runat="server"  Visible="false">

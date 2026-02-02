@@ -1,5 +1,4 @@
-﻿using System;
-using System.Configuration;
+﻿using MOBOT.BHL.Web.Utilities;
 using System.Web.Mvc;
 
 namespace MOBOT.BHL.Web2

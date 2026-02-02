@@ -1,6 +1,7 @@
 ﻿using BHL.Search;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
 using MOBOT.BHL.Web2.Models;
 using MvcThrottle;
 using System;
@@ -179,6 +180,8 @@ namespace MOBOT.BHL.Web2.Controllers
         public ActionResult Pages(string q, int itemId)
         {
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.ServerAddress = AppConfig.ElasticSearchServerAddress;
+            search.Debug = AppConfig.DebugSearch;
             search.NumResults = Convert.ToInt32(AppConfig.PageResultPageSize); ;
             search.Highlight = true;
             search.Suggest = false;
@@ -245,6 +248,8 @@ namespace MOBOT.BHL.Web2.Controllers
 
             // Submit the request to ElasticSearch here
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.ServerAddress = AppConfig.ElasticSearchServerAddress;
+            search.Debug = AppConfig.DebugSearch;
             search.Highlight = true;
             search.Suggest = true;
             string searchTerm = model.Params.SearchTerm ?? "";

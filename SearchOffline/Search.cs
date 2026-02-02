@@ -5,6 +5,7 @@ namespace BHL.Search.Offline
 {
     public class Search : ISearch
     {
+        public string ServerAddress { get; set; }
         public bool Facet { get; set; }
         public bool Highlight { get; set; }
         public int NumResults { get; set; }
@@ -13,6 +14,8 @@ namespace BHL.Search.Offline
         public SortDirection SortDirection { get; set; }
         public int StartPage { get; set; }
         public bool Suggest { get; set; }
+        public bool Debug { set; get; }
+
 
         public bool IsOnline()
         {

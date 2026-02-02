@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Linq;
 
-namespace MOBOT.BHL.Web2
+namespace MOBOT.BHL.Web.Utilities
 {
     /// <summary>
     /// Static class providing strongly-typed access to appSettings from web.config

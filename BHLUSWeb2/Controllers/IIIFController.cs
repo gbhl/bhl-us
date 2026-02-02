@@ -1,9 +1,9 @@
-﻿using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Web.Mvc;
 using IIIF = BHL.IIIF;
-using System.Configuration;
 
 namespace MOBOT.BHL.Web2.Controllers
 {

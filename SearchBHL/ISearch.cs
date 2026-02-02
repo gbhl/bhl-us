@@ -7,6 +7,11 @@ namespace BHL.Search
     public interface ISearch
     {
         /// <summary>
+        /// Address of search server.  Does not apply to all search providers.
+        /// </summary>
+        string ServerAddress { get; set; }
+
+        /// <summary>
         /// Maximum number of results to return.
         /// </summary>
         int NumResults { get; set; }
@@ -48,6 +53,11 @@ namespace BHL.Search
         /// True to include search term alternatives in search results.
         /// </summary>
         bool Suggest { get; set; }
+
+        /// <summary>
+        /// True to enable debug mode.
+        /// </summary>
+        bool Debug { get; set; }
 
         /// <summary>
         /// Check whether the search engine is available.

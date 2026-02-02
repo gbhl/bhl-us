@@ -2,6 +2,7 @@
 using MOBOT.BHL.API.BHLApiDAL;
 using MOBOT.BHL.API.BHLApiDataObjects3;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -1164,6 +1165,8 @@ namespace MOBOT.BHL.API.BHLApi
 
             // Submit the request to ElasticSearch
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.ServerAddress = AppConfig.ElasticSearchServerAddress;
+            search.Debug = AppConfig.DebugSearch;
             search.StartPage = page;
             search.NumResults = (pageSize < 1 || pageSize > MaxPubSearchPageSize) ? DefaultPubSearchPageSize : pageSize;
             if (!string.IsNullOrWhiteSpace(text)) search.Highlight = true;
@@ -1197,6 +1200,8 @@ namespace MOBOT.BHL.API.BHLApi
         {
             // Submit the request to ElasticSearch
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.ServerAddress = AppConfig.ElasticSearchServerAddress;
+            search.Debug = AppConfig.DebugSearch;
             search.StartPage = page;
             search.NumResults = (pageSize < 1 || pageSize > MaxPubSearchPageSize) ? DefaultPubSearchPageSize : pageSize;
             search.Highlight = true;
@@ -1620,6 +1625,8 @@ namespace MOBOT.BHL.API.BHLApi
 
             // Submit the request to the search engine
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.ServerAddress = AppConfig.ElasticSearchServerAddress;
+            search.Debug = AppConfig.DebugSearch;
             search.StartPage = 1;
             search.NumResults = 10000;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), defaultSort);
@@ -1640,6 +1647,8 @@ namespace MOBOT.BHL.API.BHLApi
 
             // Submit the request to the search engine
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.ServerAddress = AppConfig.ElasticSearchServerAddress;
+            search.Debug = AppConfig.DebugSearch;
             search.StartPage = 1;
             search.NumResults = 10000;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), defaultSort);
@@ -1672,6 +1681,8 @@ namespace MOBOT.BHL.API.BHLApi
 
             // Submit the request to the search engine
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.ServerAddress = AppConfig.ElasticSearchServerAddress;
+            search.Debug = AppConfig.DebugSearch;
             search.StartPage = 1;
             search.NumResults = 10000;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), defaultSort);
@@ -1721,6 +1732,8 @@ namespace MOBOT.BHL.API.BHLApi
 
             // Submit the request to the search engine
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.ServerAddress = AppConfig.ElasticSearchServerAddress;
+            search.Debug = AppConfig.DebugSearch;
             search.StartPage = 1;
             search.NumResults = 10000;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), defaultSort);

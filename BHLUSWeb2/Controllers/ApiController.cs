@@ -1,8 +1,8 @@
 ﻿using MOBOT.BHL.API.BHLApi;
+using MOBOT.BHL.Web.Utilities;
 using MvcThrottle;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Web.Mvc;
 
 namespace MOBOT.BHL.Web2.Controllers

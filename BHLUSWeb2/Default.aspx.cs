@@ -1,5 +1,5 @@
-﻿using System;
-using System.Configuration;
+﻿using MOBOT.BHL.Web.Utilities;
+using System;
 
 namespace MOBOT.BHL.Web2
 {

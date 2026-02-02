@@ -15,14 +15,22 @@ namespace BHL.Search.Elastic
         //------------------------------------------------------------
         // Public Properties
 
+        private string _serverAddress = string.Empty;
         private int _numResults = 100;
         private int _numFacets = 100;
         private int _startPage = 1;
         private bool _facet = false;
         private bool _highlight = false;
         private bool _suggest = false;
+        private bool _debug = false;
         private SortField _sortField = SortField.Score;
         private SortDirection _sortDirection = SortDirection.Descending;
+
+        public string ServerAddress
+        {
+            get { return _serverAddress; }
+            set { _serverAddress = value; }
+        }
 
         public bool Facet
         {
@@ -40,6 +48,12 @@ namespace BHL.Search.Elastic
         {
             get { return _suggest;  }
             set { _suggest = value; }
+        }
+
+        public bool Debug
+        {
+            get { return _debug; }
+            set { _debug = value; }
         }
 
         public int NumResults
@@ -80,7 +94,7 @@ namespace BHL.Search.Elastic
 
         public Search()
         {
-            _esSearch = new ESSearch(ConfigurationManager.AppSettings["ElasticSearchServerAddress"]);
+            _esSearch = new ESSearch(_serverAddress);
         }
 
         public bool IsOnline()
@@ -368,7 +382,7 @@ namespace BHL.Search.Elastic
             if (_facet) _esSearch.FacetFields = facetFields;
             if (_highlight) _esSearch.HighlightFields = highlightFields;
             _esSearch.Suggest = _suggest;
-            _esSearch.Debug = ConfigurationManager.AppSettings["DebugSearch"].ToLower() == "true";
+            _esSearch.Debug = _debug;
         }
 
         /// <summary>

@@ -617,7 +617,6 @@
       <DependentUpon>soap.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="AppConfig.cs" />
     <Compile Include="App_Code\FilterConfig.cs" />
     <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Controllers\BibliographyController.cs" />

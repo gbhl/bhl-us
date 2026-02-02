@@ -1,8 +1,8 @@
 ﻿using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
 using MOBOT.BHL.Web2.Models;
 using MvcThrottle;
 using System;
-using System.Configuration;
 using System.Web.Mvc;
 
 namespace MOBOT.BHL.Web2.Controllers

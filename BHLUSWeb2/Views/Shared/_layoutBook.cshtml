@@ -69,13 +69,13 @@
                 <h1>Biodiversity Heritage Library</h1>
             </a>
             <nav style="width:475;">
-                <a href="@MOBOT.BHL.Web2.AppConfig.WikiPageAbout">About</a>
-                <a href="@MOBOT.BHL.Web2.AppConfig.WikiPageHelp">Help</a>
-                <a href="@MOBOT.BHL.Web2.AppConfig.WikiPageFAQ">FAQ</a>
+                <a href="@MOBOT.BHL.Web.Utilities.AppConfig.WikiPageAbout">About</a>
+                <a href="@MOBOT.BHL.Web.Utilities.AppConfig.WikiPageHelp">Help</a>
+                <a href="@MOBOT.BHL.Web.Utilities.AppConfig.WikiPageFAQ">FAQ</a>
                 <a href="/contact">Feedback</a>
                 <span id="headersocialbook">
                     <span id="socicons">
-                        <span style="display:inline-block;position:relative;top:-13px"><a href="@MOBOT.BHL.Web2.AppConfig.FundraiseUpCampaignCode" style="display: none"></a></span>
+                        <span style="display:inline-block;position:relative;top:-13px"><a href="@MOBOT.BHL.Web.Utilities.AppConfig.FundraiseUpCampaignCode" style="display: none"></a></span>
                     </span>
                     <script type="text/javascript" src="/js/socicon.js?v=2"></script>
                 </span>
@@ -93,7 +93,7 @@
                     <a href="/advsearch" title="Advanced Search">advanced search</a>
                     <input type="text" name="searchTerm" id="searchTerm" class="field" />
                     <input type="submit" id="btnSearchSubmit" class="button" value="submit" />
-                    @if (MOBOT.BHL.Web2.AppConfig.IIIFState == "toggle")
+                    @if (MOBOT.BHL.Web.Utilities.AppConfig.IIIFState == "toggle")
                     {
                         <style>
                             #book-master header #iiifLink a {
@@ -115,10 +115,10 @@
             </div>
         </div>
     </header>
-    @if (MOBOT.BHL.Web2.AppConfig.ShowNewFuture)
+    @if (MOBOT.BHL.Web.Utilities.AppConfig.ShowNewFuture)
     {
         <div class="newfuturebanner">
-            @MOBOT.BHL.Web2.AppConfig.NewFutureNewsBannerText <a title="new future" href="@MOBOT.BHL.Web2.AppConfig.NewFutureNewsUrl">Learn more.</a>
+            @MOBOT.BHL.Web.Utilities.AppConfig.NewFutureNewsBannerText <a title="new future" href="@MOBOT.BHL.Web.Utilities.AppConfig.NewFutureNewsUrl">Learn more.</a>
         </div>
     }
     else
@@ -155,13 +155,13 @@
         gtag('set', 'ads_data_redaction', true);
         //gtag('set', 'url_passthrough', true);
         gtag('js', new Date());
-        gtag('config', '@MOBOT.BHL.Web2.AppConfig.GoogleAnalyticsTrackingID', {
+        gtag('config', '@MOBOT.BHL.Web.Utilities.AppConfig.GoogleAnalyticsTrackingID', {
             "dimension1": "@ViewBag.holdingInstitution",
             "dimension2": "@ViewBag.bookID",
             "dimension3": "@ViewBag.sponsor"
         });
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=@MOBOT.BHL.Web2.AppConfig.GoogleAnalyticsTrackingID"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=@MOBOT.BHL.Web.Utilities.AppConfig.GoogleAnalyticsTrackingID"></script>
     <script type="text/plain" data-category="analytics" data-service="ga">
         gtag('consent', 'update', {
             personalization_storage: 'granted',

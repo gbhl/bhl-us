@@ -1,3 +1,5 @@
+using System.Configuration;
+
 namespace SearchElasticTest
 {
     /*
@@ -9,10 +11,17 @@ namespace SearchElasticTest
     [TestClass]
     public class SearchElasticUnitTest
     {
+        private ISearch GetSearch()
+        {
+            ISearch search = GetSearch();
+            search.ServerAddress = ConfigurationManager.AppSettings["ElasticSearchServerAddress"];
+            return search;
+        }
+
         [TestMethod]
         public void FullTextSingleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchItem("ocean");
             Assert.IsTrue(result.IsValid);
         }
@@ -20,7 +29,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void FullTextMultipleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchItem("ocean pollution");
             Assert.IsTrue(result.IsValid);
         }
@@ -28,7 +37,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void FullTextPhraseTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchItem("\"Costa Rica\"");
             Assert.IsTrue(result.IsValid);
         }
@@ -36,7 +45,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void FullTextMultiplePhraseTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchItem("\"Costa Rica\" \"Elmas patillas\"");
             Assert.IsTrue(result.IsValid);
         }
@@ -44,7 +53,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void FullTextConditionalAndTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchItem("Charles AND Erasmus");
             Assert.IsTrue(result.IsValid);
         }
@@ -52,7 +61,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void FullTextConditionalOrTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchItem("Charles OR Erasmus");
             Assert.IsTrue(result.IsValid);
         }
@@ -60,7 +69,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void FullTextConditionalCompoundTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchItem("(Darwin AND (Charles OR Erasmus))");
             Assert.IsTrue(result.IsValid);
         }
@@ -68,7 +77,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void FullTextSearchWithFacetTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             List<Tuple<SearchField, string>> limits = new()
             {
                 new Tuple<SearchField, string>(SearchField.Genre, "Book")
@@ -91,7 +100,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void FullTextPunctuationTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchItem("O'Grady");
             Assert.IsTrue(result.IsValid);
         }
@@ -99,7 +108,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void FullTextSpecialCharsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchItem("natural history in nigeria (west-Africa) [2016]");
             Assert.IsTrue(result.IsValid);
         }
@@ -107,7 +116,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void FullTextDiacriticsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchItem("Delbón");
             Assert.IsTrue(result.IsValid);
         }
@@ -115,7 +124,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void CatalogSingleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog("ocean");
             Assert.IsTrue(result.IsValid);
         }
@@ -123,7 +132,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void CatalogMultipleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog("ocean waves");
             Assert.IsTrue(result.IsValid);
         }
@@ -131,7 +140,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void CatalogPhraseTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog("\"Costa Rica\"");
             Assert.IsTrue(result.IsValid);
         }
@@ -139,7 +148,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void CatalogMultiplePhraseTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog("\"Costa Rica\" \"Elmas patillas\"");
             Assert.IsTrue(result.IsValid);
         }
@@ -147,7 +156,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void CatalogConditionalAndTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog("Charles AND Erasmus");
             Assert.IsTrue(result.IsValid);
         }
@@ -155,7 +164,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void CatalogConditionalOrTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog("Charles OR Erasmus");
             Assert.IsTrue(result.IsValid);
         }
@@ -163,7 +172,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void CatalogConditionalCompoundTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog("(Darwin AND (Charles OR Erasmus))");
             Assert.IsTrue(result.IsValid);
         }
@@ -171,7 +180,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void CatalogSearchWithFacetTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             List<Tuple<SearchField, string>> limits = new()
             {
                 new Tuple<SearchField, string>(SearchField.Genre, "Book")
@@ -194,7 +203,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void CatalogPunctuationTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog("O'Grady");
             Assert.IsTrue(result.IsValid);
         }
@@ -202,7 +211,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void CatalogSpecialCharsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog("natural history in nigeria (west-Africa) [2016]");
             Assert.IsTrue(result.IsValid);
         }
@@ -210,7 +219,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void CatalogDiacriticsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog("Delbón");
             Assert.IsTrue(result.IsValid);
         }
@@ -218,7 +227,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AuthorSingleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchAuthor("darwin");
             Assert.IsTrue(result.IsValid);
         }
@@ -226,7 +235,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AuthorMultipleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchAuthor("charles darwin");
             Assert.IsTrue(result.IsValid);
         }
@@ -234,7 +243,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AuthorPhraseTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchAuthor("\"Charles Darwin\"");
             Assert.IsTrue(result.IsValid);
         }
@@ -242,7 +251,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AuthorMultiplePhraseTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchAuthor("\"charles darwin\" \"erasmus darwin\"");
             Assert.IsTrue(result.IsValid);
         }
@@ -250,7 +259,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AuthorConditionalAndTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchAuthor("Charles AND Erasmus");
             Assert.IsTrue(result.IsValid);
         }
@@ -258,7 +267,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AuthorConditionalOrTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchAuthor("Charles OR Erasmus");
             Assert.IsTrue(result.IsValid);
         }
@@ -266,7 +275,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AuthorConditionalCompoundTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchAuthor("(Darwin AND (Charles OR Erasmus))");
             Assert.IsTrue(result.IsValid);
         }
@@ -285,7 +294,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AuthorPunctuationTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchAuthor("O'Grady");
             Assert.IsTrue(result.IsValid);
         }
@@ -293,7 +302,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AuthorSpecialCharsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchAuthor("smith-rowe [2000]");
             Assert.IsTrue(result.IsValid);
         }
@@ -301,7 +310,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AuthorDiacriticsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchAuthor("Delbón");
             Assert.IsTrue(result.IsValid);
         }
@@ -309,7 +318,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void KeywordSingleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchKeyword("periodicals");
             Assert.IsTrue(result.IsValid);
         }
@@ -317,7 +326,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void KeywordMultipleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchKeyword("united states");
             Assert.IsTrue(result.IsValid);
         }
@@ -325,7 +334,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void KeywordPhraseTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchKeyword("\"united states\"");
             Assert.IsTrue(result.IsValid);
         }
@@ -333,7 +342,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void KeywordMultiplePhraseTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchKeyword("\"atlantic ocean\" \"marine animals\"");
             Assert.IsTrue(result.IsValid);
         }
@@ -341,7 +350,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void KeywordConditionalAndTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchKeyword("biology AND ecology");
             Assert.IsTrue(result.IsValid);
         }
@@ -349,7 +358,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void KeywordConditionalOrTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchKeyword("biology OR ecology");
             Assert.IsTrue(result.IsValid);
         }
@@ -357,7 +366,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void KeywordConditionalCompoundTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchKeyword("(marine AND (biology OR ecology))");
             Assert.IsTrue(result.IsValid);
         }
@@ -376,7 +385,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void KeywordPunctuationTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchKeyword("O'Grady");
             Assert.IsTrue(result.IsValid);
         }
@@ -384,7 +393,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void KeywordSpecialCharsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchKeyword("smith-rowe [2000]");
             Assert.IsTrue(result.IsValid);
         }
@@ -392,7 +401,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void KeywordDiacriticsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchKeyword("Delbón");
             Assert.IsTrue(result.IsValid);
         }
@@ -400,7 +409,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void NameSingleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchName("mollusca");
             Assert.IsTrue(result.IsValid);
         }
@@ -408,7 +417,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void NameMultipleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchName("Elmas hibbsi");
             Assert.IsTrue(result.IsValid);
         }
@@ -416,7 +425,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void NamePhraseTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchName("\"Elmas hibbsi\"");
             Assert.IsTrue(result.IsValid);
         }
@@ -424,7 +433,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void NameMultiplePhraseTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchName("\"Abra brasiliana\" \"E.A. Smith\"");
             Assert.IsTrue(result.IsValid);
         }
@@ -432,7 +441,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void NameConditionalAndTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchName("Abra AND Smith");
             Assert.IsTrue(result.IsValid);
         }
@@ -440,7 +449,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void NameConditionalOrTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchName("Abra OR Smith");
             Assert.IsTrue(result.IsValid);
         }
@@ -448,7 +457,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void NameConditionalCompoundTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchName("(Abies AND (grandis OR nobilis))");
             Assert.IsTrue(result.IsValid);
         }
@@ -467,7 +476,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void NamePunctuationTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchName("O'Grady");
             Assert.IsTrue(result.IsValid);
         }
@@ -475,7 +484,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void NameSpecialCharsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchName("smith-rowe [2000]");
             Assert.IsTrue(result.IsValid);
         }
@@ -483,7 +492,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void NameDiacriticsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchName("Delbón");
             Assert.IsTrue(result.IsValid);
         }
@@ -491,7 +500,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void PageSingleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             List<Tuple<SearchField, string>> limits = new()
             {
                 new Tuple<SearchField, string>(SearchField.ItemID, "22803")
@@ -503,7 +512,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void PageMultipleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             List<Tuple<SearchField, string>> limits = new()
             {
                 new Tuple<SearchField, string>(SearchField.ItemID, "22803")
@@ -515,7 +524,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void PagePhraseTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             List<Tuple<SearchField, string>> limits = new()
             {
                 new Tuple<SearchField, string>(SearchField.ItemID, "22803")
@@ -527,7 +536,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void PageMultiplePhraseTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             List<Tuple<SearchField, string>> limits = new()
             {
                 new Tuple<SearchField, string>(SearchField.ItemID, "22803")
@@ -539,7 +548,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void PageConditionalAndTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             List<Tuple<SearchField, string>> limits = new()
             {
                 new Tuple<SearchField, string>(SearchField.ItemID, "22803")
@@ -551,7 +560,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void PageConditionalOrTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             List<Tuple<SearchField, string>> limits = new()
             {
                 new Tuple<SearchField, string>(SearchField.ItemID, "22803")
@@ -563,7 +572,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void PageConditionalCompoundTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             List<Tuple<SearchField, string>> limits = new()
             {
                 new Tuple<SearchField, string>(SearchField.ItemID, "22803")
@@ -575,7 +584,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void PagePunctuationTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             List<Tuple<SearchField, string>> limits = new()
             {
                 new Tuple<SearchField, string>(SearchField.ItemID, "22803")
@@ -587,7 +596,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void PageSpecialCharsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             List<Tuple<SearchField, string>> limits = new()
             {
                 new Tuple<SearchField, string>(SearchField.ItemID, "22803")
@@ -599,7 +608,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void PageDiacriticsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             List<Tuple<SearchField, string>> limits = new()
             {
                 new Tuple<SearchField, string>(SearchField.ItemID, "22803")
@@ -611,7 +620,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedTitleAllWordsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean margins", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -628,7 +637,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedTitlePunctuationTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("O'Grady", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -645,7 +654,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedTitleSpecialCharsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("smith-rowe [2000]", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -662,7 +671,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedTitleDiacriticsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("Delbón", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -680,7 +689,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedTitleExactPhraseTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean margins", SearchStringParamOperator.Phrase),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -697,7 +706,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedAuthorSingleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("", SearchStringParamOperator.And),
                 new SearchStringParam("huxley", SearchStringParamOperator.And),
@@ -714,7 +723,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedAuthorPunctuationTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("", SearchStringParamOperator.And),
                 new SearchStringParam("O'Grady", SearchStringParamOperator.And),
@@ -731,7 +740,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedAuthorSpecialCharsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("", SearchStringParamOperator.And),
                 new SearchStringParam("smith-rowe [2000]", SearchStringParamOperator.And),
@@ -748,7 +757,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedAuthorDiacriticsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("", SearchStringParamOperator.And),
                 new SearchStringParam("Delbón", SearchStringParamOperator.And),
@@ -765,7 +774,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedAuthorMultipleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("", SearchStringParamOperator.And),
                 new SearchStringParam("thomas huxley", SearchStringParamOperator.And),
@@ -782,7 +791,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedKeywordSingleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -799,7 +808,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedKeywordPunctuationTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -816,7 +825,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedKeywordSpecialCharsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -833,7 +842,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedKeywordDiacriticsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -850,7 +859,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedKeywordMultipleWordTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -867,7 +876,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedNoteAllWordsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -884,7 +893,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedNotePunctuationTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -901,7 +910,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedNoteSpecialCharsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -918,7 +927,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedNoteDiacriticsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -935,7 +944,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedNoteExactPhraseTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -952,7 +961,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedTextAllWordsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -969,7 +978,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedTextPunctuationTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -986,7 +995,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedTextSpecialCharsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -1003,7 +1012,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedTextDiacriticsTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -1020,7 +1029,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedTextExactPhraseTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -1037,7 +1046,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedYearTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -1054,7 +1063,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedLanguageTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -1071,7 +1080,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedCollectionTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("ocean", SearchStringParamOperator.And),
                 new SearchStringParam("", SearchStringParamOperator.And),
@@ -1088,7 +1097,7 @@ namespace SearchElasticTest
         [TestMethod]
         public void AdvancedCompoundTest()
         {
-            Search search = new();
+            ISearch search = GetSearch();
             ISearchResult result = search.SearchCatalog(
                 new SearchStringParam("guide to birds", SearchStringParamOperator.And),
                 new SearchStringParam("hoffmann", SearchStringParamOperator.And),

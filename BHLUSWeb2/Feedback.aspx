@@ -28,7 +28,7 @@
                         <p id="spanErrorText" class="ErrorText" style="margin-left:160px;display:block !important"></p>
                     </div>
                     <div>
-                        <p>Thank you for your feedback! BHL is voluntarily staffed by our <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageMembers %>">Partner Libraries</a> and we are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information.</p>
+                        <p>Thank you for your feedback! BHL is voluntarily staffed by our <a href="<%= MOBOT.BHL.Web.Utilities.AppConfig.WikiPageMembers %>">Partner Libraries</a> and we are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information.</p>
                         <br />
                     </div>
                     <div style="margin-bottom:10px;">
@@ -49,7 +49,7 @@
 
 		            <!-- Feedback Form -->
 		            <div id="FeedbackForm" style="display:none; margin-top:5px;">
-                        <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Try our <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageFAQ %>" target="_blank" rel="noopener noreferrer" title="Help">FAQ</a> page for answers to common questions.</p></div>
+                        <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Try our <a href="<%= MOBOT.BHL.Web.Utilities.AppConfig.WikiPageFAQ %>" target="_blank" rel="noopener noreferrer" title="Help">FAQ</a> page for answers to common questions.</p></div>
                         <div style="margin-bottom:10px;">
                             <label class="caption" for="commentTextBox">Comment:</label>
                             <asp:TextBox ID="commentTextBox" ClientIDMode="Static" runat="server" Height="100px" Width="375" TextMode="MultiLine"></asp:TextBox>
@@ -59,7 +59,7 @@
 
 		            <!-- Scanning Request Form -->
 		            <div id="ScanRequestForm" style="display:none; margin-top:5px">
-                        <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Please see our <a href="<%= MOBOT.BHL.Web2.AppConfig.WikiPageSubmissionGuide %>" target="_blank" rel="noopener noreferrer" title="Guidelines">guidelines</a> for submitting requests.</p></div>
+                        <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Please see our <a href="<%= MOBOT.BHL.Web.Utilities.AppConfig.WikiPageSubmissionGuide %>" target="_blank" rel="noopener noreferrer" title="Guidelines">guidelines</a> for submitting requests.</p></div>
                         <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Search for your title in <a href="http://www.worldcat.org/" target="_blank" rel="noopener noreferrer" title="WorldCat">WorldCat</a> (recommended)</p></div>
                         <div style="margin-bottom:10px;">
                             <label class="caption" for="srOCLCTextBox">OCLC:</label>
@@ -120,7 +120,7 @@
 		            <!-- End Scanning Request Form -->
 
                     <div style="margin-left:164px;">
-                        <div class="g-recaptcha" data-sitekey="<%= MOBOT.BHL.Web2.AppConfig.ReCaptchaSiteKey%>"></div>
+                        <div class="g-recaptcha" data-sitekey="<%= MOBOT.BHL.Web.Utilities.AppConfig.ReCaptchaSiteKey%>"></div>
                     </div>
                     <div>
                         <label class="caption">&nbsp;</label><asp:Button ID="submitButton" runat="server" Text="Submit" OnClientClick="submitClick();" OnClick="submitButton_Click" />
@@ -151,13 +151,13 @@
                         <div style="float:left;margin:0;width:50%">
                             <h3>Join Our Mailing List</h3>
                             <p>Sign up to receive the latest BHL news, content highlights, and promotions.</p>
-                            <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" rel="noopener noreferrer" href="<%=MOBOT.BHL.Web2.AppConfig.NewsletterSignupUrl%>">Subscribe</a>
+                            <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" rel="noopener noreferrer" href="<%=MOBOT.BHL.Web.Utilities.AppConfig.NewsletterSignupUrl%>">Subscribe</a>
                         </div>
 
                         <div style="float:left;margin:0;width:50%">
                             <h3>Help Support <span>BHL</span></h3>
                             <p>BHL depends on the financial support of its patrons. Help us keep BHL alive!</p>
-                            <a class="featurebutton-home" title="Donate" target="_blank" rel="noopener noreferrer" href="<%=MOBOT.BHL.Web2.AppConfig.DonateUrl%>">Donate</a>
+                            <a class="featurebutton-home" title="Donate" target="_blank" rel="noopener noreferrer" href="<%=MOBOT.BHL.Web.Utilities.AppConfig.DonateUrl%>">Donate</a>
                         </div>
 
                         <div>&nbsp;</div>

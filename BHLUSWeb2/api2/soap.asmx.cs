@@ -1,5 +1,6 @@
 ﻿using MOBOT.BHL.API.BHLApi;
 using MOBOT.BHL.API.BHLApiDataObjects2;
+using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

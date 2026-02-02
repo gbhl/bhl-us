@@ -10,6 +10,5 @@
     <add key="ESAuthorsIndex" value="authors"/>
     <add key="ESKeywordsIndex" value="keywords"/>
     <add key="ESNamesIndex" value="names"/>
-    <add key="DebugSearch" value="false"/>
   </appSettings>
 </configuration>

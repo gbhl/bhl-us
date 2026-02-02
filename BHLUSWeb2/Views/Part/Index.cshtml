@@ -231,7 +231,7 @@
                 </div>
             </div>
             <div class="download">
-                @if (Model.IsVirtual == 1 || (Model.HasLocalContent == 1 && MOBOT.BHL.Web2.AppConfig.UsePregeneratedPDFs))
+                @if (Model.IsVirtual == 1 || (Model.HasLocalContent == 1 && MOBOT.BHL.Web.Utilities.AppConfig.UsePregeneratedPDFs))
                 {
                     <div class="downloadlabel">Download:</div>
                     if (Model.IsVirtual == 1)
