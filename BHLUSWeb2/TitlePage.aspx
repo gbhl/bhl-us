@@ -1562,7 +1562,7 @@
             var AnnotationBox = $("#AnnotationBox").detach();
             AnnotationBox.appendTo("#right-panel-content");
 
-            if (!<%=MOBOT.BHL.Web2.AppConfig.UseElasticSearch().ToString().ToLower()%>) $("#showSearchButton").hide();
+            if (!<%=System.Configuration.ConfigurationManager.AppSettings["SearchProviders"].ToLower().Contains("bhl.search.elastic").ToString().ToLower()%>) $("#showSearchButton").hide();
 
             // Print page 
             var printPageButton = $('.page_print');

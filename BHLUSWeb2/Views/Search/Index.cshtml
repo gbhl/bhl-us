@@ -448,7 +448,7 @@
                     <div style="padding-left:10px; padding-bottom:5px;"></div>
                 </p>
 
-                @if (AppConfig.UseElasticSearch())
+                @if (System.Configuration.ConfigurationManager.AppSettings["SearchProviders"].ToLower().Contains("bhl.search.elastic"))
                 {
                     @Html.Action("_DonateFeatureSmall", "Partial")
                 }
@@ -457,7 +457,7 @@
                     @Html.Action("_DonateFeature", "Partial")
                 }
                 <p>&nbsp;</p>
-                @if (AppConfig.UseElasticSearch())
+                @if (System.Configuration.ConfigurationManager.AppSettings["SearchProviders"].ToLower().Contains("bhl.search.elastic"))
                 {
                     @Html.Action("_CollectionFeatureSmall", "Partial")
                 }
