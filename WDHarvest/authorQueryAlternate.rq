@@ -6,10 +6,13 @@
     }
   }
   BIND(REPLACE(STR(?item), "http://www.wikidata.org/entity/", "") AS ?Wikidata )
-  OPTIONAL { ?item wdt:P4081 ?AuthorID. }
-  OPTIONAL { ?item wdt:P214 ?VIAF. }
-  OPTIONAL { ?item wdt:P244 ?DLC. }
-  OPTIONAL { ?item wdt:P496 ?ORCID. }
+  OPTIONAL { ?item p:P4081 [ ps:P4081 ?AuthorID; wikibase:rank ?AuthorID_Rank; ]. FILTER(?AuthorID_Rank != wikibase:DeprecatedRank) }
+  OPTIONAL { ?item p:P214 [ ps:P214 ?VIAF; wikibase:rank ?VIAF_Rank; ]. FILTER(?VIAF_Rank != wikibase:DeprecatedRank) }
+  OPTIONAL { ?item p:P244 [ ps:P244 ?DLC; wikibase:rank ?DLC_Rank; ]. FILTER(?DLC_Rank != wikibase:DeprecatedRank) }
+  OPTIONAL { ?item p:P496 [ ps:P496 ?ORCIDPartial; wikibase:rank ?ORCID_Rank; ]. FILTER(?ORCID_Rank != wikibase:DeprecatedRank).
+    wd:P496 wdt:P1630 ?orcidFormatter.
+    BIND(REPLACE(?orcidFormatter, "\\$1", ?ORCIDPartial) AS ?ORCID ) }
   OPTIONAL { ?item wdt:P3430 ?SNAC_ARK. }
-  OPTIONAL { ?item wdt:P2038 ?ResearchGate_Profile. }
+  OPTIONAL { ?item p:P3430 [ ps:P3430 ?SNAC_ARK; wikibase:rank ?SNAC_ARC_Rank; ]. FILTER(?SNAC_ARK_Rank != wikibase:DeprecatedRank) }
+  OPTIONAL { ?item p:P2038 [ ps:P2038 ?ResearchGate_Profile; wikibase:rank ?ResearchGate_Profile_Rank; ]. FILTER(?ResearchGate_Profile_Rank != wikibase:DeprecatedRank) }
 }

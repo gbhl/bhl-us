@@ -6,15 +6,15 @@
     }
   }
   BIND(REPLACE(STR(?item), "http://www.wikidata.org/entity/", "") AS ?Wikidata )
-  OPTIONAL { ?item wdt:P4327 ?TitleID. }
-  OPTIONAL { ?item wdt:P243 ?OCLC. }
-  OPTIONAL { ?item wdt:P236 ?ISSN. }
-  OPTIONAL { ?item wdt:P7363 ?Linking_ISSN. }
-  OPTIONAL { ?item wdt:P212 ?ISBN13. }
-  OPTIONAL { ?item wdt:P957 ?ISBN10. }
-  OPTIONAL { ?item wdt:P1159 ?Coden. }
-  OPTIONAL { ?item wdt:P244 ?DLC. }
-  OPTIONAL { ?item wdt:P1055 ?NLM. }
-  OPTIONAL { ?item wdt:P5878 ?TL2. }
-  OPTIONAL { ?item wdt:P356 ?DOI. }
+  OPTIONAL { ?item p:P4327 [ ps:P4327 ?TitleID; wikibase:rank ?TitleID_Rank; ]. FILTER(?TitleID_Rank != wikibase:DeprecatedRank) }
+  OPTIONAL { ?item p:P243 [ ps:P243 ?OCLC; wikibase:rank ?OCLC_Rank; ]. FILTER(?OCLC_Rank != wikibase:DeprecatedRank) }
+  OPTIONAL { ?item p:P236 [ ps:P236 ?ISSN; wikibase:rank ?ISSN_Rank; ]. FILTER(?ISSN_Rank != wikibase:DeprecatedRank) }
+  OPTIONAL { ?item p:P7363 [ ps:P7363 ?Linking_ISSN; wikibase:rank ?Linking_ISSN_Rank; ]. FILTER(?Linking_ISSN_Rank != wikibase:DeprecatedRank) }
+  OPTIONAL { ?item p:P212 [ ps:P212 ?ISBN13; wikibase:rank ?ISBN13_Rank; ]. FILTER(?ISBN13_Rank != wikibase:DeprecatedRank) }
+  OPTIONAL { ?item p:P957 [ ps:P957 ?ISBN10; wikibase:rank ?ISBN10_Rank; ]. FILTER(?ISBN10_Rank != wikibase:DeprecatedRank) }
+  OPTIONAL { ?item p:P1159 [ ps:P1159 ?Coden; wikibase:rank ?Coden_Rank; ]. FILTER(?Coden_Rank != wikibase:DeprecatedRank) }
+  OPTIONAL { ?item p:P244 [ ps:P244 ?DLC; wikibase:rank ?DLC_Rank; ]. FILTER(?DLC_Rank != wikibase:DeprecatedRank) }
+  OPTIONAL { ?item p:P1055 [ ps:P1055 ?NLM; wikibase:rank ?NLM_Rank; ]. FILTER(?NLM_Rank != wikibase:DeprecatedRank) }
+  OPTIONAL { ?item p:P5878 [ ps:P5878 ?TL2; wikibase:rank ?TL2_Rank; ]. FILTER(?TL2_Rank != wikibase:DeprecatedRank) }
+  OPTIONAL { ?item p:P356 [ ps:P356 ?DOI; wikibase:rank ?DOI_Rank; ]. FILTER(?DOI_Rank != wikibase:DeprecatedRank) }  
 }
