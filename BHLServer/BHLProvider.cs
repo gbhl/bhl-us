@@ -939,7 +939,7 @@ namespace MOBOT.BHL.Server
             return new KBARTDAL().Export(null, null, urlRoot);
         }
 
-        public string GetRemoteFilePath(RemoteFileType type, string barcode, string fileName)
+        public string GetRemoteFilePath(RemoteFileType type, string barcode="", string fileName="", int? itemID=null, int? pageID=null, int? pageSeq=null)
         {
             // Build the IA or AWS path
             string configKey = "ImageBaseUrl";
@@ -963,6 +963,9 @@ namespace MOBOT.BHL.Server
                 case RemoteFileType.ItemText:
                     configKey = "ItemTextPathTemplate";
                     break;
+                case RemoteFileType.PageText:
+                    configKey = "PageTextPathTemplate";
+                    break;
             }
 
             string remoteFilePath = string.Empty;
@@ -972,7 +975,10 @@ namespace MOBOT.BHL.Server
                 string pathTemplate = configuration.ConfigurationValue;
                 remoteFilePath = pathTemplate
                     .Replace("{barcode}", barcode)
-                    .Replace("{fileName}", fileName);
+                    .Replace("{fileName}", fileName)
+                    .Replace("{itemid}", itemID == null ? string.Empty : itemID.ToString())     // Pad to six characters with leading zeros
+                    .Replace("{pageid}", pageID == null ? string.Empty : pageID.ToString())     // Pad to eight characters with leading zeros
+                    .Replace("{pageseq}", pageSeq == null ? string.Empty : pageSeq.ToString()); // Pad to four characters with leading zeros
             }
 
             return remoteFilePath;

@@ -92,6 +92,6 @@ namespace MOBOT.BHL.Server
         List<Page> PageSelectWithExpiredPageNamesByItemID(int itemID, int maxAge);
         List<Page> PageSelectWithoutPageNames();
         List<Page> PageSelectWithoutPageNamesByItemID(int itemID);
-        string GetRemoteFilePath(RemoteFileType type, string barcode, string fileName);
+        string GetRemoteFilePath(RemoteFileType type, string barcode, string fileName, int? itemID, int? pageID, int? pageSeq);
     }
 }

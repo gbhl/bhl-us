@@ -12,6 +12,7 @@ namespace MOBOT.BHL.DataObjects.Enum
         PreLocalScandata,
         PostLocalScandata,
         Djvu,
-        ItemText
+        ItemText,
+        PageText
     }
 }
