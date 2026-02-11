@@ -14,8 +14,8 @@ SELECT	p.PageID,
 		p.Series,
 		p.Volume,
 		p.Issue,
-		dbo.fnIndicatedPageStringForPage(p.PageID) AS IndicatedPages,
-		dbo.fnPageTypeStringForPage(p.PageID) AS PageTypes,
+        SUBSTRING(LTRIM(RTRIM(COALESCE(IndicatedPages.PageString, ''))), 1, 1024) AS IndicatedPages,
+        LTRIM(RTRIM(COALESCE(PageTypes.TypeString, ''))) AS PageTypes,
 		p.FileNamePrefix,
 		v.FolderShare,
 		v.WebVirtualDirectory,
@@ -34,6 +34,26 @@ FROM	dbo.Page p
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Vault v ON i.VaultID = v.VaultID
 		LEFT JOIN dbo.PageFlickr pf WITH (NOLOCK) ON p.PageID = pf.PageID
+        -- Replaces fnIndicatedPageStringForPage
+        CROSS APPLY (
+            SELECT	STRING_AGG(
+						ip2.PagePrefix + ' ' + 
+						ISNULL(	CASE WHEN ip2.Implied = 1 
+								THEN '[' + ip2.PageNumber + ']' 
+								ELSE ip2.PageNumber END, ''),
+						', ')
+						WITHIN GROUP (ORDER BY ip2.Sequence ASC) AS PageString
+            FROM	dbo.IndicatedPage ip2
+            WHERE	ip2.PageID = p.PageID
+        ) AS IndicatedPages
+        -- Replaces fnPageTypeStringForPage
+        CROSS APPLY (
+            SELECT	STRING_AGG(pt.PageTypeName, ', ') 
+						WITHIN GROUP (ORDER BY pt.PageTypeName ASC) AS TypeString
+            FROM	dbo.Page_PageType ppt
+					INNER JOIN dbo.PageType pt ON ppt.PageTypeID = pt.PageTypeID
+            WHERE	ppt.PageID = p.PageID
+        ) AS PageTypes
 WHERE	s.SegmentID = @SegmentID
 AND		p.Active = 1
 

@@ -1,6 +1,9 @@
 ﻿using MOBOT.BHL.Server;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 
 namespace MOBOT.BHL.Web2
 {
@@ -76,28 +79,39 @@ namespace MOBOT.BHL.Web2
             Response.Write("<p>CACHED OBJECTS");
             Response.Write("<div style='border:1px;border-style:solid;border-color:#d3d3d3;width:50%;height:200px;overflow:auto'>");
             Response.Write("<table style='width:100%'>");
+
+            // Retrieve cache keys and values into a dictionary
+            Dictionary<string, object> cacheItems = new Dictionary<string, object>();
+            IDictionaryEnumerator enumerator = Cache.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                // Filter out internal system cache entries if needed
+                if (!enumerator.Key.ToString().StartsWith("System."))
+                {
+                    cacheItems.Add(enumerator.Key.ToString(), enumerator.Value);
+                }
+            }
+
+            // Sort the dictionary by key (e.g., alphabetically)
+            var sortedCacheItems = cacheItems.OrderBy(item => item.Key);
+
+            // Display the sorted list of cache keys and their sizes in KB
             double totalCacheSize = 0;
-            foreach (System.Collections.DictionaryEntry cacheItem in Cache)
+            foreach (var cacheItem in sortedCacheItems)
             {
                 string key = cacheItem.Key.ToString();
                 double numBytes = cacheItem.Value.ToString().Length;
                 totalCacheSize += numBytes;
-                Response.Write(string.Format("<tr><td>{0}</td><td>{1} KB</td></tr>", key, Math.Round(numBytes / 1024, 3).ToString()));
+                Response.Write(string.Format("<tr><td style=\"white-space:nowrap\">{0}</td><td style=\"white-space:nowrap\">{1} KB</td></tr>", key, Math.Round(numBytes / 1024, 3).ToString()));
             }
             Response.Write("</table></div>");
             Response.Write(string.Format("Total Cache Size: {0} KB", Math.Round(totalCacheSize / 1024, 3).ToString()));
             Response.Write("</p>");
-            //Response.Flush();
         }
 
         private void WriteExceptionInfo(Exception ex)
         {
-            this.WriteError(ex.Message, ex.StackTrace);
-        }
-
-        private void WriteExceptionInfo(String message)
-        {
-            this.WriteError(message, "");
+            WriteError(ex.Message, ex.StackTrace);
         }
 
         private void WriteError(String message, String stackTrace)
