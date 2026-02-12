@@ -290,6 +290,7 @@ namespace MOBOT.BHL.Web2.Controllers
         {
             Api3_ValidateUser(Api3.APIRequestType.GetPageMetadata, apiKey, pageID + "|" + includeOcr + "|" + includeNames);
             Api3 api = new Api3();
+            api.SiteServiceUrl = ConfigurationManager.AppSettings["SiteServicesURL"];
             return api.GetPageMetadata(pageID, includeOcr, includeNames);
         }
 
@@ -298,6 +299,7 @@ namespace MOBOT.BHL.Web2.Controllers
             Api3_ValidateUser(Api3.APIRequestType.GetItemMetadata, apiKey,
                 id + "|" + idType + "|" + includePages + "|" + includeOcr + "|" + includeParts);
             Api3 api = new Api3();
+            api.SiteServiceUrl = ConfigurationManager.AppSettings["SiteServicesURL"];
             return api.GetItemMetadata(id, idType, includePages, includeOcr, includeParts);
         }
 
@@ -843,6 +845,7 @@ namespace MOBOT.BHL.Web2.Controllers
         {
             Api2_ValidateUser(Api2.APIRequestType.GetPageMetadata, apiKey, pageID + "|" + includeOcr + "|" + includeNames);
             Api2 api = new Api2();
+            api.SiteServiceUrl = ConfigurationManager.AppSettings["SiteServicesURL"];
             return api.GetPageMetadata(pageID, includeOcr, includeNames);
         }
 
@@ -850,6 +853,7 @@ namespace MOBOT.BHL.Web2.Controllers
         {
             Api2_ValidateUser(Api2.APIRequestType.GetPageOcrText, apiKey, pageID);
             Api2 api = new Api2();
+            api.SiteServiceUrl = ConfigurationManager.AppSettings["SiteServicesURL"];
             return api.GetPageOcrText(pageID);
         }
 
@@ -858,6 +862,7 @@ namespace MOBOT.BHL.Web2.Controllers
             Api2_ValidateUser(Api2.APIRequestType.GetItemMetadata, apiKey,
                 itemID + "|" + includePages + "|" + includeOcr + "|" + includeParts);
             Api2 api = new Api2();
+            api.SiteServiceUrl = ConfigurationManager.AppSettings["SiteServicesURL"];
             return api.GetItemMetadata(itemID, includePages, includeOcr, includeParts);
         }
 
@@ -872,6 +877,7 @@ namespace MOBOT.BHL.Web2.Controllers
         {
             Api2_ValidateUser(Api2.APIRequestType.GetItemPages, apiKey, itemID + "|" + includeOcr);
             Api2 api = new Api2();
+            api.SiteServiceUrl = ConfigurationManager.AppSettings["SiteServicesURL"];
             return api.GetItemPages(itemID, includeOcr);
         }
 

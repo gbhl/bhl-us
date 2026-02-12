@@ -34,6 +34,7 @@
       <Project>{331e4ba6-e31a-488a-a9f0-ef0d81969b4c}</Project>
       <Name>SearchBHL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SiteServiceREST.v1.Client\SiteServicesREST.v1.Client.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Extensions">

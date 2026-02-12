@@ -927,6 +927,8 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\aws-icon-24.png" />
+    <Content Include="Images\ia-icon-24.png" />
     <Content Include="WebResourcePaths.aspx" />
     <Content Include="Images\BHLlogo.png" />
     <Content Include="Images\bib_minus.gif" />

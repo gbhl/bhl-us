@@ -976,9 +976,9 @@ namespace MOBOT.BHL.Server
                 remoteFilePath = pathTemplate
                     .Replace("{barcode}", barcode)
                     .Replace("{fileName}", fileName)
-                    .Replace("{itemid}", itemID == null ? string.Empty : itemID.ToString())     // Pad to six characters with leading zeros
-                    .Replace("{pageid}", pageID == null ? string.Empty : pageID.ToString())     // Pad to eight characters with leading zeros
-                    .Replace("{pageseq}", pageSeq == null ? string.Empty : pageSeq.ToString()); // Pad to four characters with leading zeros
+                    .Replace("{itemid}", itemID == null ? string.Empty : String.Format("0:D6", itemID))     // Pad to six characters with leading zeros
+                    .Replace("{pageid}", pageID == null ? string.Empty : String.Format("0:D8", pageID))     // Pad to eight characters with leading zeros
+                    .Replace("{pageseq}", pageSeq == null ? string.Empty : String.Format("0:D4", pageSeq)); // Pad to four characters with leading zeros
             }
 
             return remoteFilePath;

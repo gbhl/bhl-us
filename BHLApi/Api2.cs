@@ -1,16 +1,17 @@
-﻿using MOBOT.BHL.API.BHLApiDAL;
+﻿using BHL.SiteServiceREST.v1.Client;
+using MOBOT.BHL.API.BHLApiDAL;
 using MOBOT.BHL.API.BHLApiDataObjects2;
 using MOBOT.BHL.Server;
-using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MOBOT.BHL.API.BHLApi
 {
     public class Api2
     {
         private int _apiApplicationID = 2;  // application ID 2 corresponds to "BHL API v2";
+        private string _siteServiceUrl = null;  // URL for Site Services API; used to retrieve OCR text for pages
+        public string SiteServiceUrl { get => _siteServiceUrl; set => _siteServiceUrl = value; }
 
         #region Constructor
 
@@ -22,6 +23,8 @@ namespace MOBOT.BHL.API.BHLApi
         {
             _apiApplicationID = applicationID;
         }
+
+
 
         #endregion Constructor
 
@@ -83,19 +86,7 @@ namespace MOBOT.BHL.API.BHLApi
                 throw new Exception("pageID (" + pageID + ") must be a valid integer value.");
             }
 
-            System.Net.WebClient client = new System.Net.WebClient();
-            string text = string.Empty;
-            try
-            {
-                client.Encoding = Encoding.UTF8;
-                text = client.DownloadString("https://www.biodiversitylibrary.org/pagetext/" + pageID);
-            }
-            finally
-            {
-                client.Dispose();
-                client = null;
-            }
-            return text;            
+            return new Client(_siteServiceUrl).GetPageText((int)pageIDInt);
         }
 
         #endregion Page methods

@@ -16,6 +16,8 @@ namespace MOBOT.BHL.AdminWeb
                 txtPostLocalScandataPath.Text = GetConfigurationValue("PostLocalScandataPathTemplate");
                 txtPreLocalScandataPath.Text = GetConfigurationValue("PreLocalScandataPathTemplate");
                 txtDjvuPath.Text = GetConfigurationValue("DjvuPathTemplate");
+                txtItemTextPath.Text = GetConfigurationValue("ItemTextPathTemplate");
+                txtPageTextPath.Text = GetConfigurationValue("PageTextPathTemplate");
             }
         }
 
@@ -39,7 +41,9 @@ namespace MOBOT.BHL.AdminWeb
                 provider.ConfigurationSave("PDFPathTemplate", txtPdfPath.Text) != null &&
                 provider.ConfigurationSave("PostLocalScandataPathTemplate", txtPostLocalScandataPath.Text) != null &&
                 provider.ConfigurationSave("PreLocalScandataPathTemplate", txtPreLocalScandataPath.Text) != null &&
-                provider.ConfigurationSave("DjvuPathTemplate", txtDjvuPath.Text) != null)
+                provider.ConfigurationSave("DjvuPathTemplate", txtDjvuPath.Text) != null &&
+                provider.ConfigurationSave("ItemTextPathTemplate", txtItemTextPath.Text) != null &&
+                provider.ConfigurationSave("PageTextPathTemplate", txtPageTextPath.Text) != null)
             {
                 lblMessage.Text = "Web Resource Paths updated.";
                 lblMessage.ForeColor = System.Drawing.Color.Blue;

@@ -1,5 +1,6 @@
 ﻿using BHL.SiteServiceREST.v1.Client;
 using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
 using MvcThrottle;
 using System;
@@ -19,12 +20,24 @@ namespace MOBOT.BHL.Web2.Controllers
             }
             else
             {
-                Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
-                string ocrText = client.GetPageText((int)pageid);
-                ContentResult content = new ContentResult();
-                content.Content = ocrText;
-                content.ContentType = "text/plain";
-                return content;
+                BHLProvider provider = new BHLProvider();
+                PageSummaryView ps = provider.PageSummarySegmentSelectByPageID((int)pageid);
+                string remoteFilePath = provider.GetRemoteFilePath(RemoteFileType.PageText, itemID: ps.BookID, pageID: ps.PageID, pageSeq: ps.SequenceOrder);
+                if (string.IsNullOrWhiteSpace(remoteFilePath))
+                {
+                    // No remote file path, so get the text from Site Services API
+                    Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                    string ocrText = client.GetPageText((int)pageid);
+                    ContentResult content = new ContentResult();
+                    content.Content = ocrText;
+                    content.ContentType = "text/plain";
+                    return content;
+                }
+                else
+                {
+                    // Get the text from the remote location
+                    return Redirect(remoteFilePath);
+                }
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using BHL.Search;
+using BHL.SiteServiceREST.v1.Client;
 using MOBOT.BHL.API.BHLApiDAL;
 using MOBOT.BHL.API.BHLApiDataObjects3;
 using MOBOT.BHL.Server;
@@ -6,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Text;
 
 namespace MOBOT.BHL.API.BHLApi
 {
@@ -15,6 +15,8 @@ namespace MOBOT.BHL.API.BHLApi
         private int _apiApplicationID = 5;  // application ID 5 corresponds to "BHL API v3";
         public const int MaxPubSearchPageSize = 200;    // maximum page size for PublicationSearch methods
         public const int DefaultPubSearchPageSize = 100;    // default page size for PublicationSearch methods
+        private string _siteServiceUrl = null;  // URL for Site Services API; used to retrieve OCR text for pages
+        public string SiteServiceUrl { get => _siteServiceUrl; set => _siteServiceUrl = value; }
 
         #region Constructor
 
@@ -91,19 +93,7 @@ namespace MOBOT.BHL.API.BHLApi
                 throw new InvalidApiParamException("pageID (" + pageID + ") must be a valid integer value.");
             }
 
-            System.Net.WebClient client = new System.Net.WebClient();
-            string text = string.Empty;
-            try
-            {
-                client.Encoding = Encoding.UTF8;
-                text = client.DownloadString("https://www.biodiversitylibrary.org/pagetext/" + pageID);
-            }
-            finally
-            {
-                client.Dispose();
-                client = null;
-            }
-            return text;            
+            return new Client(_siteServiceUrl).GetPageText((int)pageIDInt);
         }
 
         #endregion Page methods

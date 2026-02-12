@@ -135,7 +135,9 @@ namespace MOBOT.BHL.Web2.api2
             try
             {
                 ValidateUser(Api2.APIRequestType.GetPageMetadata, apiKey, pageID + "|" + includeOcr + "|" + includeNames);
-                return (new Api2().GetPageMetadata(pageID, includeOcr, includeNames));
+                Api2 api = new Api2();
+                api.SiteServiceUrl = ConfigurationManager.AppSettings["SiteServicesURL"];
+                return api.GetPageMetadata(pageID, includeOcr, includeNames);
             }
             catch (Exception ex)
             {
@@ -149,7 +151,9 @@ namespace MOBOT.BHL.Web2.api2
             try
             {
                 ValidateUser(Api2.APIRequestType.GetPageOcrText, apiKey, pageID);
-                return (new Api2().GetPageOcrText(pageID));
+                Api2 api = new Api2();
+                api.SiteServiceUrl = ConfigurationManager.AppSettings["SiteServicesURL"];
+                return api.GetPageOcrText(pageID);
             }
             catch (Exception ex)
             {
@@ -182,7 +186,9 @@ namespace MOBOT.BHL.Web2.api2
             {
                 ValidateUser(Api2.APIRequestType.GetItemMetadata, apiKey, 
                     itemID + "|" + includePages + "|" + includeOcr + "|" + includeParts);
-                return (new Api2().GetItemMetadata(itemID, includePages, includeOcr, includeParts));
+                Api2 api = new Api2();
+                api.SiteServiceUrl = ConfigurationManager.AppSettings["SiteServicesURL"];
+                return api.GetItemMetadata(itemID, includePages, includeOcr, includeParts);
             }
             catch (Exception ex)
             {
@@ -210,7 +216,9 @@ namespace MOBOT.BHL.Web2.api2
             try
             {
                 ValidateUser(Api2.APIRequestType.GetItemPages, apiKey, itemID + "|" + includeOcr);
-                return (new Api2().GetItemPages(itemID, includeOcr));
+                Api2 api = new Api2();
+                api.SiteServiceUrl = ConfigurationManager.AppSettings["SiteServicesURL"];
+                return api.GetItemPages(itemID, includeOcr);
             }
             catch (Exception ex)
             {

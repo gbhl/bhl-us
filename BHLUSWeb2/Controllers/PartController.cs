@@ -128,38 +128,50 @@ namespace MOBOT.BHL.Web2.Controllers
             else
             {
                 BHLProvider provider = new BHLProvider();
-                if (provider.ItemSelectHasNonOcrText(ItemType.Segment, (int)partid))
-                {
-                    string partText;
-                    string cacheKey = "PartText" + partid.ToString();
-                    System.Web.Caching.Cache cache = new System.Web.Caching.Cache();
 
-                    if (cache[cacheKey] != null)
+                Item item = provider.ItemSelectFilenames(ItemType.Segment, (int)partid);
+                string itemtextPath = provider.GetRemoteFilePath(RemoteFileType.ItemText, item.BarCode, item.TextFilename, partid);
+
+                if (itemtextPath.Contains("archive.org"))
+                {
+                    // Before redirecting to archive.org, make sure BHL doesn't have an updated version of the text
+                    if (provider.ItemSelectHasNonOcrText(ItemType.Segment, (int)partid))
                     {
-                        // Use cached version
-                        partText = cache[cacheKey].ToString();
+                        // Read from local BHL storage if the text includes non-OCR sources
+                        string partText;
+                        string cacheKey = "PartText" + partid.ToString();
+                        System.Web.Caching.Cache cache = new System.Web.Caching.Cache();
+
+                        if (cache[cacheKey] != null)
+                        {
+                            // Use cached version
+                            partText = cache[cacheKey].ToString();
+                        }
+                        else
+                        {
+                            // Refresh cache
+                            Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                            partText = client.GetSegmentText((int)partid);
+                            cache.Add(cacheKey, partText, null, DateTime.Now.AddMinutes(
+                                Convert.ToDouble(ConfigurationManager.AppSettings["ItemTextCacheTime"])),
+                                System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+                        }
+
+                        Response.Cache.SetNoTransforms();
+                        ContentResult content = new ContentResult();
+                        content.Content = partText;
+                        content.ContentType = "text/plain";
+                        return content;
                     }
                     else
                     {
-                        // Refresh cache
-                        Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
-                        partText = client.GetSegmentText((int)partid);
-                        cache.Add(cacheKey, partText, null, DateTime.Now.AddMinutes(
-                            Convert.ToDouble(ConfigurationManager.AppSettings["ItemTextCacheTime"])),
-                            System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+                        // No updated copy of the text, so redirect to remote storage at archive.org
+                        return Redirect(itemtextPath);
                     }
-
-                    Response.Cache.SetNoTransforms();
-                    ContentResult content = new ContentResult();
-                    content.Content = partText;
-                    content.ContentType = "text/plain";
-                    return content;
                 }
                 else
                 {
-                    // The text is all OCR, so redirect to remote storage
-                    Item item = provider.ItemSelectFilenames(ItemType.Segment, (int)partid);
-                    string itemtextPath = provider.GetRemoteFilePath(RemoteFileType.ItemText, item.BarCode, item.TextFilename);
+                    // Remote path is not archive.org, so redirect to it
                     return Redirect(itemtextPath);
                 }
             }

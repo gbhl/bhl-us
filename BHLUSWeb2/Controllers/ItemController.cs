@@ -1,4 +1,5 @@
 ﻿using BHL.SiteServiceREST.v1.Client;
+using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
@@ -14,43 +15,61 @@ namespace MOBOT.BHL.Web2.Controllers
     public class ItemController : Controller
     {
         [EnableThrottling]
-        public ActionResult GetItemText(int itemid)
+        public ActionResult GetItemText(int? itemid)
         {
-            BHLProvider provider = new BHLProvider();
-            if (provider.ItemSelectHasNonOcrText(ItemType.Book, itemid))
+            if (!itemid.HasValue)
             {
-                // Read from local BHL storage if the text includes non-OCR sources
-                string itemText;
-                string cacheKey = "ItemText" + itemid.ToString();
-                System.Web.Caching.Cache cache = new System.Web.Caching.Cache();
-
-                if (cache[cacheKey] != null)
-                {
-                    // Use cached version
-                    itemText = cache[cacheKey].ToString();
-                }
-                else
-                {
-                    // Refresh cache
-                    Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
-                    itemText = client.GetItemText(itemid);
-                    cache.Add(cacheKey, itemText, null, DateTime.Now.AddMinutes(
-                        Convert.ToDouble(ConfigurationManager.AppSettings["ItemTextCacheTime"])),
-                        System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
-                }
-
-                Response.Cache.SetNoTransforms();
-                ContentResult content = new ContentResult();
-                content.Content = itemText;
-                content.ContentType = "text/plain";
-                return content;
+                return Redirect("~/pagenotfound");
             }
             else
             {
-                // The text is all OCR, so redirect to remote storage
-                DataObjects.Item item = provider.ItemSelectFilenames(ItemType.Book, itemid);
-                string itemtextPath = provider.GetRemoteFilePath(RemoteFileType.ItemText, item.BarCode, item.TextFilename);
-                return Redirect(itemtextPath);
+                BHLProvider provider = new BHLProvider();
+
+                Item item = provider.ItemSelectFilenames(ItemType.Book, (int)itemid);
+                string itemtextPath = provider.GetRemoteFilePath(RemoteFileType.ItemText, item.BarCode, item.TextFilename, itemid);
+
+                if (itemtextPath.Contains("archive.org"))
+                {
+                    // Before redirecting to archive.org, make sure BHL doesn't have an updated version of the text
+                    if (provider.ItemSelectHasNonOcrText(ItemType.Book, (int)itemid))
+                    {
+                        // Read from local BHL storage if the text includes non-OCR sources
+                        string itemText;
+                        string cacheKey = "ItemText" + itemid.ToString();
+                        System.Web.Caching.Cache cache = new System.Web.Caching.Cache();
+
+                        if (cache[cacheKey] != null)
+                        {
+                            // Use cached version
+                            itemText = cache[cacheKey].ToString();
+                        }
+                        else
+                        {
+                            // Refresh cache
+                            Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                            itemText = client.GetItemText((int)itemid);
+                            cache.Add(cacheKey, itemText, null, DateTime.Now.AddMinutes(
+                                Convert.ToDouble(ConfigurationManager.AppSettings["ItemTextCacheTime"])),
+                                System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+                        }
+
+                        Response.Cache.SetNoTransforms();
+                        ContentResult content = new ContentResult();
+                        content.Content = itemText;
+                        content.ContentType = "text/plain";
+                        return content;
+                    }
+                    else
+                    {
+                        // No updated copy of the text, so redirect to remote storage at archive.org
+                        return Redirect(itemtextPath);
+                    }
+                }
+                else
+                {
+                    // Remote path is not archive.org, so redirect to it
+                    return Redirect(itemtextPath);
+                }
             }
         }
 
