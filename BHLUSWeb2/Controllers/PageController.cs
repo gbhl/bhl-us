@@ -2,6 +2,7 @@
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Utility;
 using MvcThrottle;
 using System;
 using System.Configuration;
@@ -21,7 +22,8 @@ namespace MOBOT.BHL.Web2.Controllers
             else
             {
                 BHLProvider provider = new BHLProvider();
-                PageSummaryView ps = provider.PageSummarySegmentSelectByPageID((int)pageid);
+                PageSummaryView ps = provider.PageSummarySelectByPageId((int)pageid);
+                if (ps == null) ps = provider.PageSummarySegmentSelectByPageID((int)pageid);
                 string remoteFilePath = provider.GetRemoteFilePath(RemoteFileType.PageText, itemID: ps.BookID, pageID: ps.PageID, pageSeq: ps.SequenceOrder);
                 if (string.IsNullOrWhiteSpace(remoteFilePath))
                 {
