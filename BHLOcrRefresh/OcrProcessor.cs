@@ -1,5 +1,7 @@
-﻿using BHL.WebServiceREST.v1;
+﻿using BHL.QueueUtility;
+using BHL.WebServiceREST.v1;
 using BHL.WebServiceREST.v1.Client;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,17 +46,21 @@ namespace MOBOT.BHL.BHLOcrRefresh
                 {
                     try
                     {
-                        string status = GetOcrForItem(itemID);
-                        new ItemsClient(configParms.BHLWSEndpoint).DeleteItemNames(Convert.ToInt32(itemID)); // Clear names and reset last name lookup date
-                        new PageTextLogsClient(configParms.BHLWSEndpoint).InsertPageTextLog(new PageTextLogModel
+                        if (GetItemDetails(itemID, out string itemType, out int id, out string barcode))
                         {
-                            Itemid = Convert.ToInt32(itemID),
-                            Textsource = "OCR",
-                            Userid = 1
-                        }); // Log the new source of the page text
-                        LogMessage(status);
-                        MarkJobComplete(itemID, status);
-                        jobsComplete.Add(itemID.ToString());
+                            string status = GetOcrForItem(itemID, barcode);
+                            new ItemsClient(configParms.BHLWSEndpoint).DeleteItemNames(Convert.ToInt32(itemID)); // Clear names and reset last name lookup date
+                            new PageTextLogsClient(configParms.BHLWSEndpoint).InsertPageTextLog(new PageTextLogModel
+                            {
+                                Itemid = Convert.ToInt32(itemID),
+                                Textsource = "OCR",
+                                Userid = 1
+                            }); // Log the new source of the page text
+                            LogMessage(status);
+                            MarkJobComplete(itemID, status);
+                            AddToQueue(itemType, id, barcode);    // Queue a message indicating that this item has updated text
+                            jobsComplete.Add(itemID.ToString());
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -136,15 +142,13 @@ namespace MOBOT.BHL.BHLOcrRefresh
 
         #endregion Job File Methods
 
-        private string GetOcrForItem(string itemID)
+        private string GetOcrForItem(string itemID, string barcode)
         {
             string status = string.Empty;
             string tempFolder = string.Empty;
 
             try
             {
-                string barcode = GetBarcodeForItem(itemID);
-
                 // Create a temp directory for processing this item
                 tempFolder = string.Format("{0}{1}", configParms.OcrJobTempPath, barcode);
                 if (!Directory.Exists(tempFolder)) Directory.CreateDirectory(tempFolder);
@@ -175,31 +179,40 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// </summary>
         /// <param name="itemID"></param>
         /// <returns></returns>
-        private string GetBarcodeForItem(string itemID)
+        private bool GetItemDetails(string itemID, out string itemType, out int id, out string barcode)
         {
-            string barcode = string.Empty;
+            bool success = false;
+            itemType = "item";
+            id = 0;
+            barcode = string.Empty;
 
             try
             {
                 Book book = new BooksClient(configParms.BHLWSEndpoint).GetBookByItemID(Convert.ToInt32(itemID));
                 if (book != null)
                 {
+                    id = (int)book.BookID;
                     barcode = book.BarCode;
                 }
                 else
                 {
+                    itemType = "segment";
                     Segment segment = new SegmentsClient(configParms.BHLWSEndpoint).GetSegmentByItemID(Convert.ToInt32(itemID));
-                    if (segment != null) barcode = segment.BarCode;
+                    if (segment != null)
+                    {
+                        id = (int)segment.SegmentID;
+                        barcode = segment.BarCode;
+                    }
                 }
+                success = true;
             }
             catch (Exception e)
             {
-                LogMessage("Error getting barcode for item " + itemID, e);
+                LogMessage("Error getting details for item " + itemID, e);
                 if (!string.IsNullOrWhiteSpace(itemID)) MarkJobError(itemID, e.Message + "\n\r" + e.StackTrace);
             }
 
-
-            return barcode;
+            return success;
         }
 
         /// <summary>
@@ -319,6 +332,36 @@ namespace MOBOT.BHL.BHLOcrRefresh
             }
 
             return status;
+        }
+
+        /// <summary>
+        /// Add a message to a queue to indicate that the specified item has updated text.
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <param name="itemID"></param>
+        /// <param name="barCode"></param>
+        private void AddToQueue(string itemType, int itemID, string barCode)
+        {
+            // Build the message
+            string queueMsg = string.Format("{0}|{1}|{2}", itemType, itemID, barCode);
+
+            try
+            {
+                // Add the message to the queue
+                using (QueueIO queueUtil = new QueueIO(configParms.MQAddress, configParms.MQPort, configParms.MQUser, configParms.MQPassword))
+                {
+                    queueUtil.PutMessage(queueMsg,
+                        queueName: configParms.MQQueue,
+                        errorQueueName: configParms.MQErrorQueue,
+                        errorExchangeName: configParms.MQErrorExchange);
+                }
+            }
+            catch (Exception ex)
+            {
+                string errMsg = string.Format(
+                    "Error adding a message to the {0} queue: {1}", configParms.MQQueue, queueMsg);
+                Log.Error(ex, errMsg);
+            }
         }
 
         /// <summary>

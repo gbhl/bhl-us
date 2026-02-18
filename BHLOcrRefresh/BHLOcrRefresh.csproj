@@ -15,5 +15,6 @@
       <Project>{f687bc49-ff84-47f5-b67f-2101a8aefdf3}</Project>
       <Name>BHL.WebServiceREST.v1.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QueueUtility\QueueUtility.csproj" />
   </ItemGroup>
 </Project>

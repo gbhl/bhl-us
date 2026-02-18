@@ -22,7 +22,7 @@ namespace BHL.WebServiceREST.v1.Controllers
         [ProducesResponseType(200, Type = typeof(string))]
         public IActionResult GetDjvuFilePath(string barcode, string fileName)
         {
-            string filePath = _bhlProvider.GetRemoteFilePath(RemoteFileType.Djvu, barcode, fileName);
+            string filePath = _bhlProvider.GetRemoteFilePath(RemoteFileType.Djvu, barcode, fileName, null, null, null);
             return Ok(filePath);
         }
     }

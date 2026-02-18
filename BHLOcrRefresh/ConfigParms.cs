@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 
 namespace MOBOT.BHL.BHLOcrRefresh
 {
@@ -14,6 +15,14 @@ namespace MOBOT.BHL.BHLOcrRefresh
         public string OcrJobErrorPath { get; set; }
         public string OcrJobTempPath { get; set; }
         public string BHLWSEndpoint { get; set; } = string.Empty;
+        public string MQAddress { get; set; } = string.Empty;
+        public int MQPort { get; set; } = 0;
+        public string MQUser { get; set; } = string.Empty;
+        public string MQPassword { get; set; } = string.Empty;
+        public string MQQueue { get; set; } = string.Empty;
+        public string MQExchange { get; set; } = string.Empty;
+        public string MQErrorQueue { get; set; } = string.Empty;
+        public string MQErrorExchange { get; set; } = string.Empty;
 
         public void LoadAppConfig()
         {
@@ -27,6 +36,14 @@ namespace MOBOT.BHL.BHLOcrRefresh
             this.OcrJobErrorPath = ConfigurationManager.AppSettings["OcrJobErrorPath"];
             this.OcrJobTempPath = ConfigurationManager.AppSettings["OcrJobTempPath"];
             this.BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
+            this.MQAddress = ConfigurationManager.AppSettings["MQAddress"];
+            this.MQPort = Convert.ToInt32(ConfigurationManager.AppSettings["MQPort"]);
+            this.MQUser = ConfigurationManager.AppSettings["MQUser"];
+            this.MQPassword = ConfigurationManager.AppSettings["MQPassword"];
+            this.MQQueue = ConfigurationManager.AppSettings["MQQueue"];
+            this.MQExchange = ConfigurationManager.AppSettings["MQExchange"];
+            this.MQErrorQueue = ConfigurationManager.AppSettings["MQErrorQueue"];
+            this.MQErrorExchange = ConfigurationManager.AppSettings["MQErrorExchange"];
         }
     }
 }
