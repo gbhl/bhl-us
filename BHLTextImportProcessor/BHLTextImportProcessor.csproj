@@ -28,6 +28,7 @@
       <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
       <Name>CustomDataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QueueUtility\QueueUtility.csproj" />
     <ProjectReference Include="..\TextImportUtility\TextImportUtility.csproj">
       <Project>{534cfd16-b8ec-4527-8e3e-f1e64ebd2a21}</Project>
       <Name>TextImportUtility</Name>

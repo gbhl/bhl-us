@@ -18,6 +18,14 @@ namespace BHL.TextImportProcessor
         public string TextImportFilePath { get; set; }
         public string TextImportLocalFilePath { get; set; }
         public string BHLWSEndpoint { get; set; } = string.Empty;
+        public string MQAddress {get;set; } = string.Empty;
+        public int MQPort {get;set; } = 0;
+        public string MQUser {get;set; } = string.Empty;
+        public string MQPassword {get;set; } = string.Empty;
+        public string MQQueue {get;set; } = string.Empty;
+        public string MQExchange {get;set; } = string.Empty;
+        public string MQErrorQueue {get;set; } = string.Empty;
+        public string MQErrorExchange {get;set; } = string.Empty;
 
         public ConfigParms()
         {
@@ -51,6 +59,14 @@ namespace BHL.TextImportProcessor
             this.TextImportFilePath = ConfigurationManager.AppSettings["TextImportFilePath"];
             this.TextImportLocalFilePath = ConfigurationManager.AppSettings["TextImportLocalFilePath"];
             this.BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
+            this.MQAddress = ConfigurationManager.AppSettings["MQAddress"];
+            this.MQPort = Convert.ToInt32(ConfigurationManager.AppSettings["MQPort"]);
+            this.MQUser = ConfigurationManager.AppSettings["MQUser"];
+            this.MQPassword = ConfigurationManager.AppSettings["MQPassword"];
+            this.MQQueue = ConfigurationManager.AppSettings["MQQueue"];
+            this.MQExchange = ConfigurationManager.AppSettings["MQExchange"];
+            this.MQErrorQueue = ConfigurationManager.AppSettings["MQErrorQueue"];
+            this.MQErrorExchange = ConfigurationManager.AppSettings["MQErrorExchange"];
         }
     }
 }

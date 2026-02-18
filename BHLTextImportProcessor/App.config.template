@@ -27,6 +27,16 @@
     <add key="TextImportLocalFilePath" value="temp/" />
     <!-- BHLWS service endpoint -->
     <add key = "BHLWSUrl" value="BHLWS SERVICE URL" />
+
+    <!-- Message queue settings -->
+    <add key="MQAddress" value="MESSAGE QUEUE SERVER ADDRESS" />
+    <add key="MQPort" value="MESSAGE QUEUE SERVER PORT" />
+    <add key="MQUser" value="MESSAGE QUEUE USERNAME" />
+    <add key="MQPassword" value="MESSAGE QUEUE PASSWORD" />
+    <add key="MQQueue" value="NAME OF MESSAGE QUEUE FOR CHANGED/NEW ITEM TEXT" />
+    <add key="MQExchange" value="NAME OF MESSAGE QUEUE EXCHANGE " />
+    <add key="MQErrorQueue" value="NAME OF MESSAGE QUEUE ERROR QUEUE FOR CHANGED/NEW ITEM TEXT" />
+    <add key="MQErrorExchange" value="NAME OF MESSAGE QUEUE ERROR EXCHANGE" />
   </appSettings>
   <!-- This section contains the log4net configuration settings -->
   <log4net>

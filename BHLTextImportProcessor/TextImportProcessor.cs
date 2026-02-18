@@ -1,9 +1,11 @@
-﻿using BHL.TextImportUtility;
+﻿using BHL.QueueUtility;
+using BHL.TextImportUtility;
 using BHL.WebServiceREST.v1;
 using BHL.WebServiceREST.v1.Client;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.FileAccess;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -89,8 +91,13 @@ namespace BHL.TextImportProcessor
                                     this.LogMessage("Generating text files for Text Import File " + batchFile.TextImportBatchFileID);
 
                                     // Get the Page information (including file paths) for the BHL Item
+                                    string itemType = "item";
                                     List<MOBOT.BHL.DataObjects.PageSummaryView> pages = service.PageSummarySelectAllByItemID((int)batchFile.ItemID);
-                                    if (pages.Count == 0) pages = service.PageSummarySegmentSelectAllByItemID((int)batchFile.ItemID);
+                                    if (pages.Count == 0)
+                                    {
+                                        itemType = "segment";
+                                        pages = service.PageSummarySegmentSelectAllByItemID((int)batchFile.ItemID);
+                                    }
 
                                     // Get the text import file
                                     string textImportFilePath = string.Format("{0}{1}", configParms.TextImportFilePath, batchFile.Filename);
@@ -171,6 +178,9 @@ namespace BHL.TextImportProcessor
                                     // Update the file status
                                     service.TextImportBatchFileUpdateStatus(batchFile.TextImportBatchFileID, configParms.TextImportBatchFileStatusImported,
                                         batchFile.LastModifiedUserID);
+
+                                    // Add a message to the queue of items with updated text
+                                    if (pages.Count > 0) this.AddToQueue(itemType, pages[0].BookID, pages[0].BarCode);
                                 }
                                 catch (Exception ex)
                                 {
@@ -228,6 +238,36 @@ namespace BHL.TextImportProcessor
         {
             IFileAccessProvider fileAccessProvider = new FileAccessProvider();
             fileAccessProvider.SaveFile(Encoding.UTF8.GetBytes(text), textFilePath);
+        }
+
+        /// <summary>
+        /// Add a message to a queue to indicate that the specified item has updated text.
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <param name="itemID"></param>
+        /// <param name="barCode"></param>
+        private void AddToQueue(string itemType, int itemID, string barCode)
+        {
+            // Build the message
+            string queueMsg = string.Format("{0}|{1}|{2}", itemType, itemID, barCode);
+
+            try
+            {
+                // Add the message to the queue
+                using (QueueIO queueUtil = new QueueIO(configParms.MQAddress, configParms.MQPort, configParms.MQUser, configParms.MQPassword))
+                {
+                    queueUtil.PutMessage(queueMsg,
+                        queueName: configParms.MQQueue,
+                        errorQueueName: configParms.MQErrorQueue,
+                        errorExchangeName: configParms.MQErrorExchange);
+                }
+            }
+            catch (Exception ex)
+            {
+                string errMsg = string.Format(
+                    "Error adding a message to the {0} queue: {1}", configParms.MQQueue, queueMsg);
+                Log.Error(ex, errMsg);
+            }
         }
 
         /// <summary>
@@ -328,7 +368,7 @@ namespace BHL.TextImportProcessor
                 if (errorMessages.Count > 0 && configParms.EmailOnError)
                 {
                     MailRequestModel mailRequest = new MailRequestModel();
-                    mailRequest.Subject = String.Format(
+                    mailRequest.Subject = string.Format(
                         "{0}: Processing on {1} completed {2}.",
                         serviceName,
                         Environment.MachineName,
