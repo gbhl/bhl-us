@@ -1,13 +1,9 @@
-
-#region Using
-
 using System;
 using System.Data.SqlClient;
 using CustomDataAccess;
 using System.Data;
 using System.Collections.Generic;
-
-#endregion Using
+using MOBOT.BHLImport.DataObjects;
 
 namespace MOBOT.BHLImport.DAL
 {
@@ -32,5 +28,19 @@ namespace MOBOT.BHLImport.DAL
             }
         }
 
-	}
+        public List<OAIHarvestLog> OAIHarvestLogSelectWithNewRecords(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("OAIHarvestLogSelectWithNewRecords", connection, transaction))
+            {
+                using (CustomSqlHelper<OAIHarvestLog> helper = new CustomSqlHelper<OAIHarvestLog>())
+                {
+                    List<OAIHarvestLog> logs = helper.ExecuteReader(command);
+                    return logs;
+                }
+            }
+        }
+    }
 }

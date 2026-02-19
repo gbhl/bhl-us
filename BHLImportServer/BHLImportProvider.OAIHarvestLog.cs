@@ -1,7 +1,7 @@
-﻿using System;
-using CustomDataAccess;
-using MOBOT.BHLImport.DAL;
+﻿using MOBOT.BHLImport.DAL;
 using MOBOT.BHLImport.DataObjects;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHLImport.Server
 {
@@ -10,6 +10,11 @@ namespace MOBOT.BHLImport.Server
         public DateTime OAIHarvestLogSelectLastDateForHarvestSet(int harvestSetID)
         {
             return new OAIHarvestLogDAL().OAIHarvestLogSelectLastDateForHarvestSet(null, null, harvestSetID);
+        }
+
+        public List<OAIHarvestLog> OAIHarvestLogSelectWithNewRecords()
+        {
+            return new OAIHarvestLogDAL().OAIHarvestLogSelectWithNewRecords(null, null);
         }
 
         public OAIHarvestLog OAIHarvestLogInsert(int harvestSetID, DateTime? harvestStartDateTime, DateTime? fromDate,

@@ -63,6 +63,22 @@ namespace BHLOAIHarvester
                         HarvestSet(set, formats);
                     }
                 }
+
+                // Publish the harvested records to production
+                LogMessage("Begin publishing records to production");
+                List<OAIHarvestLog> logs = new BHLImportProvider().OAIHarvestLogSelectWithNewRecords();
+                foreach (OAIHarvestLog log in logs)
+                {
+                    try
+                    {
+                        new BHLImportProvider().OAIRecordPublishToProduction(log.HarvestLogID);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogMessage(string.Format("Error publishing records for HarvestLogID {0}", log.HarvestLogID), ex);
+                    }
+                }
+                LogMessage("Finished publishing records to production");
             }
 
             // Report the results

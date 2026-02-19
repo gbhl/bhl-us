@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using CustomDataAccess;
+﻿using MOBOT.BHL.Utility;
 using MOBOT.BHLImport.DAL;
 using MOBOT.BHLImport.DataObjects;
-using MOBOT.BHL.Utility;
 
 namespace MOBOT.BHLImport.Server
 {
@@ -13,6 +9,11 @@ namespace MOBOT.BHLImport.Server
         public void OAIRecordDeleteForHarvestLogID(int harvestLogID)
         {
             new OAIRecordDAL().OAIRecordDeleteForHarvestLogID(null, null, harvestLogID);
+        }
+
+        public void OAIRecordPublishToProduction(int harvestLogID)
+        {
+            new OAIRecordDAL().OAIRecordPublishToProduction(null, null, harvestLogID);
         }
 
         public void Save(OAIRecord oaiRecord)

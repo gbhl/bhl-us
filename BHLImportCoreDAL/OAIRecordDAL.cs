@@ -8,6 +8,17 @@ namespace MOBOT.BHLImport.DAL
 {
     public partial class OAIRecordDAL
 	{
+        public void OAIRecordPublishToProduction(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int? harvestLogID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.OAIRecordPublishToProduction", connection, sqlTransaction,
+                CustomSqlHelper.CreateInputParameter("HarvestLogID", SqlDbType.Int, null, true, harvestLogID)))
+            {
+                CustomSqlHelper.ExecuteNonQuery(command);
+            }
+        }
+
         public void OAIRecordDeleteForOAIRecordID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int oaiRecordID)
         {
@@ -15,7 +26,7 @@ namespace MOBOT.BHLImport.DAL
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
 
             using (SqlCommand command =
-                CustomSqlHelper.CreateCommand("OAIRecordDeleteForOAIRecordID", connection, sqlTransaction,
+                CustomSqlHelper.CreateCommand("dbo.OAIRecordDeleteForOAIRecordID", connection, sqlTransaction,
                 CustomSqlHelper.CreateInputParameter("OAIRecordID", SqlDbType.Int, null, false, oaiRecordID)))
             {
                 CustomSqlHelper.ExecuteNonQuery(command);
@@ -29,7 +40,7 @@ namespace MOBOT.BHLImport.DAL
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
 
             using (SqlCommand command =
-                CustomSqlHelper.CreateCommand("OAIRecordDeleteForHarvestLogID", connection, sqlTransaction,
+                CustomSqlHelper.CreateCommand("dbo.OAIRecordDeleteForHarvestLogID", connection, sqlTransaction,
                 CustomSqlHelper.CreateInputParameter("HarvestLogID", SqlDbType.Int, null, false, HarvestLogID)))
             {
                 CustomSqlHelper.ExecuteNonQuery(command);
@@ -42,7 +53,7 @@ namespace MOBOT.BHLImport.DAL
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("OAIRecordSelectForOAIIdentifierAndStatus", connection, transaction,
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.OAIRecordSelectForOAIIdentifierAndStatus", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("OAIIdentifier", SqlDbType.NVarChar, 100, false, oaiIdentifier),
                 CustomSqlHelper.CreateInputParameter("OAIRecordStatusID", SqlDbType.Int, null, false, oaiRecordStatusID)))
             {
@@ -68,7 +79,7 @@ namespace MOBOT.BHLImport.DAL
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("OAIRecordSelectForOAIIdentifierAndDateStamp", connection, transaction,
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.OAIRecordSelectForOAIIdentifierAndDateStamp", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("OAIIdentifier", SqlDbType.NVarChar, 100, false, oaiIdentifier),
                 CustomSqlHelper.CreateInputParameter("OAIDateStamp", SqlDbType.NVarChar, 30, false, oaiDateStamp)))
             {
