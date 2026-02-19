@@ -48,6 +48,13 @@ namespace IAHarvestAsync
             set { _downloadAll = value; }
         }
 
+        private bool _publish = true;
+        public bool Publish
+        {
+            get { return _publish; }
+            set { _publish = value; }
+        }
+
         private bool _quiet = true;
         public bool Quiet
         {
@@ -103,6 +110,7 @@ namespace IAHarvestAsync
             DownloadAll = Convert.ToBoolean(ConfigurationManager.AppSettings["DownloadAll"]);
             Download = Convert.ToBoolean(ConfigurationManager.AppSettings["DownloadItem"]);
             Upload = Convert.ToBoolean(ConfigurationManager.AppSettings["UploadItem"]);
+            Publish = Convert.ToBoolean(ConfigurationManager.AppSettings["PublishItem"]);
             Quiet = Convert.ToBoolean(ConfigurationManager.AppSettings["Quiet"]);
             SearchListIdentifiersUrl = ConfigurationManager.AppSettings["SearchListIdentifiersUrl"];
             LocalFileFolder = ConfigurationManager.AppSettings["LocalFileFolder"];

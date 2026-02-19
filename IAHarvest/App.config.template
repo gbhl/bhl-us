@@ -24,8 +24,10 @@
 		<add key="Item" value="mobot31753000512324"/>
 		<!-- Download indicates whether or not to get information from Internet Archive -->
 		<add key="Download" value="true"/>
-		<!-- Upload indicates whether or not to publish data to the production database -->
-		<add key="Upload" value="true"/>
+    <!-- Upload indicates whether or not to move the data to staging tables for publishing to production -->
+    <add key="Upload" value="true"/>
+    <!-- Publish indicates whether or not to publish data to the production database -->
+    <add key="Publish" value="true"/>
     <!-- Quiet indicates whether service logs and email notifications are sent (quiet=false) or not (quiet=true) -->
     <add key="Quiet" value="false"/>
     <!-- Allow items added to IA more than 7 days ago to be published without "formal" approval from IA -->
@@ -61,6 +63,16 @@
 		<add key="LocalFileFolder" value="C:\temp\bhl1\"/>
     <!-- BHLWS service endpoint -->
     <add key = "BHLWSUrl" value="BHLWS SERVICE URL" />
+
+    <!-- Message queue settings -->
+    <add key="MQAddress" value="MESSAGE QUEUE SERVER ADDRESS" />
+    <add key="MQPort" value="MESSAGE QUEUE SERVER PORT" />
+    <add key="MQUser" value="MESSAGE QUEUE USERNAME" />
+    <add key="MQPassword" value="MESSAGE QUEUE PASSWORD" />
+    <add key="MQQueue" value="NAME OF MESSAGE QUEUE FOR CHANGED/NEW ITEM TEXT" />
+    <add key="MQExchange" value="NAME OF MESSAGE QUEUE EXCHANGE " />
+    <add key="MQErrorQueue" value="NAME OF MESSAGE QUEUE ERROR QUEUE FOR CHANGED/NEW ITEM TEXT" />
+    <add key="MQErrorExchange" value="NAME OF MESSAGE QUEUE ERROR EXCHANGE" />
   </appSettings>
 	<log4net>
 		<!-- Define some output appenders -->

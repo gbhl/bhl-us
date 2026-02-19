@@ -32,6 +32,7 @@
       <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
       <Name>CustomDataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QueueUtility\QueueUtility.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="djvu2text.xslt">

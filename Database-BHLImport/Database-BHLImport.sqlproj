@@ -466,6 +466,7 @@
     <None Include="dbo\Stored Procedures\BSItemSelectByItemAndStatus.sql" />
     <None Include="dbo\Stored Procedures\BSItemUpdateItemStatus.sql" />
     <None Include="dbo\Stored Procedures\OAIHarvestLogSelectWithNewRecords.sql" />
+    <None Include="dbo\Stored Procedures\ItemSelectForPublishToProduction.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />

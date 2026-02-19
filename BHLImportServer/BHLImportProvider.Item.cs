@@ -1,12 +1,57 @@
-using System;
 using CustomDataAccess;
 using MOBOT.BHLImport.DAL;
 using MOBOT.BHLImport.DataObjects;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHLImport.Server
 {
     public partial class BHLImportProvider
     {
+        public List<Item> ItemSelectForPublishToProduction(string barCode)
+        {
+            ItemDAL dal = new ItemDAL();
+            return dal.ItemSelectForPublishToProduction(null, null, barCode);
+        }
+
+        public IAPublishResult ItemPublishToProductionIA(string barCode)
+        {
+            ItemDAL dal = new ItemDAL();
+            CustomDataRow row = dal.ItemPublishToProductionIA(null, null, barCode);
+            if (row != null)
+            {
+                bool success = row["ItemType"].Value != null;
+                string itemType = success ? row["ItemType"].Value.ToString() : null;
+                int id = success ? Convert.ToInt32(row["ID"].Value) : 0;
+                return new IAPublishResult(success, itemType, id, barCode);
+            }
+            else
+            {
+                return new IAPublishResult(false, null, 0, barCode);
+            }
+
+        }
+
+        /// <summary>
+        /// Data struture returned by the ItemPublishToProductionIA method.  It contains the result of the attempt to publish an item to production.
+        /// </summary>
+        public readonly struct IAPublishResult
+        {
+            public IAPublishResult(bool success, string itemType, int id, string barcode)
+            {
+                Success = success;
+                ItemType = itemType;
+                ID = id;
+                BarCode = barcode;
+            }
+
+            public bool Success { get; }
+            public string ItemType { get; }
+            public int? ID { get; }
+            public string BarCode { get; }
+
+        }
+
         public Item SaveItem(int importSourceID, string barCode, string marcBibID,
             short? itemSequence, string marcItemID, string callNumber, 
             string volume, string institutionCode, string languageCode, string sponsor,

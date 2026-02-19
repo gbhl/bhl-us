@@ -5,7 +5,6 @@ using MOBOT.BHLImport.Server;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net.Mail;
 using System.Text;
 using System.Xml;
 
@@ -136,8 +135,8 @@ namespace IAHarvestAsync
                         IAItem item = items[0];
                         LogMessage(string.Format("Harvesting data for {0}", item.IAIdentifier));
 
-                        string arguments = string.Format("/ITEM:{0} /DOWNLOAD:{1} /UPLOAD:{2} /QUIET:{3}", 
-                            item.IAIdentifier, configParms.Download, configParms.Upload, configParms.Quiet);
+                        string arguments = string.Format("/ITEM:{0} /DOWNLOAD:{1} /UPLOAD:{2} /PUBLISH:{3} /QUIET:{4}",
+                            item.IAIdentifier, configParms.Download, configParms.Upload, configParms.Publish, configParms.Quiet);
                         ProcessStartInfo startInfo = new() { FileName = configParms.IAHarvestExecutable, Arguments = arguments };
                         Process.Start(startInfo);
 

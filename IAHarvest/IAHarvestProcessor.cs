@@ -1,13 +1,12 @@
+using BHL.QueueUtility;
 using BHL.WebServiceREST.v1;
 using BHL.WebServiceREST.v1.Client;
-using log4net.Util;
 using MOBOT.BHLImport.DataObjects;
 using MOBOT.BHLImport.Server;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
-using System.Net.Mail;
 using System.Text;
 using System.Xml;
 
@@ -25,7 +24,8 @@ namespace IAHarvest
         private ConfigParms configParms = new();
         private List<string> retrievedIds = new();
         private List<string> harvestedXml = new();
-        private List<string> publishedItems = new();
+        private List<string> publishedImportItems = new();
+        private List<string> publishedProductionItems = new();
         private List<string> errorMessages = new();
 
         private const string MODE_SETS = "SETS";
@@ -99,6 +99,11 @@ namespace IAHarvest
             if (configParms.Upload)
             {
                 this.PublishToImportTables();
+            }
+
+            if (configParms.Publish)
+            {
+                this.PublishToProduction();
             }
 
             // Report the results of item/page processing
@@ -1344,7 +1349,7 @@ namespace IAHarvest
                             // Publish the item
                             if (provider.IAItemPublishToImportTables(item.ItemID))
                             {
-                                this.publishedItems.Add(item.IAIdentifier);
+                                this.publishedImportItems.Add(item.IAIdentifier);
                                 if (!this.FixFileLocations(item.ItemID))
                                 {
                                     // Possible network error has occurred, so halt publishing
@@ -1478,6 +1483,50 @@ namespace IAHarvest
             }
         }
 
+        /// <summary>
+        /// Publish the information harvested from Internet Archive to the production tables.
+        /// </summary>
+        private void PublishToProduction()
+        {
+            try
+            {
+                LogMessage("Publishing information to production tables");
+
+                // Get the items that are ready to be published
+                List<MOBOT.BHLImport.DataObjects.Item> items = provider.ItemSelectForPublishToProduction(configParms.Mode == MODE_ITEM ? configParms.Item : "");
+
+                foreach (MOBOT.BHLImport.DataObjects.Item item in items)
+                {
+                    try
+                    {
+                        // Publish the item
+                        BHLImportProvider.IAPublishResult publishResult = provider.ItemPublishToProductionIA(item.BarCode);
+                        if (publishResult.Success)
+                        {
+                            AddToQueue(publishResult.ItemType, (int)publishResult.ID, item.BarCode);    // Queue a message indicating that new text exists for an item
+                            publishedProductionItems.Add(item.BarCode);
+                        }
+                        else
+                        {
+                            log.Error("Error publishing information to production tables for " + item.BarCode);
+                            errorMessages.Add("Error publishing information to production tables for " + item.BarCode);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error("Exception publishing information to production tables for " + item.BarCode, ex);
+                        errorMessages.Add("Exception publishing information to production tables for " + item.BarCode+ "  " + ex.Message);
+                        // don't rethrow; we want to continue processing
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("Exception publishing data to production tables", ex);
+                errorMessages.Add("Exception publishing data to production tables  " + ex.Message);
+            }
+        }
+
         #endregion Publish
 
         #region Custom exceptions
@@ -1501,7 +1550,11 @@ namespace IAHarvest
                 // Report the process results
                 string message;
                 string serviceName = "IAHarvest";
-                if (retrievedIds.Count > 0 || harvestedXml.Count > 0 || publishedItems.Count > 0 || errorMessages.Count > 0)
+                if (retrievedIds.Count > 0 
+                    || harvestedXml.Count > 0 
+                    || publishedImportItems.Count > 0 
+                    || publishedProductionItems.Count > 0 
+                    || errorMessages.Count > 0)
                 {
                     LogMessage("Sending Email....");
                     message = this.GetEmailBody();
@@ -1533,6 +1586,36 @@ namespace IAHarvest
         #region Utility methods
 
         /// <summary>
+        /// Add a message to a queue to indicate that the specified item has updated text.
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <param name="itemID"></param>
+        /// <param name="barCode"></param>
+        private void AddToQueue(string itemType, int itemID, string barCode)
+        {
+            // Build the message
+            string queueMsg = string.Format("{0}|{1}|{2}", itemType, itemID, barCode);
+
+            try
+            {
+                // Add the message to the queue
+                using (QueueIO queueUtil = new QueueIO(configParms.MQAddress, configParms.MQPort, configParms.MQUser, configParms.MQPassword))
+                {
+                    queueUtil.PutMessage(queueMsg,
+                        queueName: configParms.MQQueue,
+                        errorQueueName: configParms.MQErrorQueue,
+                        errorExchangeName: configParms.MQErrorExchange);
+                }
+            }
+            catch (Exception ex)
+            {
+                string errMsg = string.Format(
+                    "Error adding a message to the {0} queue: {1}", configParms.MQQueue, queueMsg);
+                Log.Error(ex, errMsg);
+            }
+        }
+
+        /// <summary>
         /// Reads the arguments supplied on the command line and stores them 
         /// in an instance of the ConfigParms class.
         /// </summary>
@@ -1548,7 +1631,7 @@ namespace IAHarvest
                 string[] split = args[x].Split(':');
                 if (split.Length != 2)
                 { 
-                    LogMessage("Invalid command line format.  Format is IAHarvest.exe [/ITEM:itemid] [/STARTDATE:YYYY/MM/DD] [/ENDDATE:YYYY/MM/DD] [/DOWNLOAD:truefalse] [/UPLOAD:truefalse]");
+                    LogMessage("Invalid command line format.  Format is IAHarvest.exe [/ITEM:itemid] [/STARTDATE:YYYY/MM/DD] [/ENDDATE:YYYY/MM/DD] [/DOWNLOAD:truefalse] [/UPLOAD:truefalse] [/PUBLISH:truefalse] [/QUIET:truefalse]");
                     return false;
                 }
 
@@ -1561,6 +1644,7 @@ namespace IAHarvest
                 if (String.Compare(split[0], "/ENDDATE", true) == 0) configParms.SearchEndDate = Convert.ToDateTime(split[1]);
                 if (String.Compare(split[0], "/DOWNLOAD", true) == 0) configParms.Download = Convert.ToBoolean(split[1]);
                 if (String.Compare(split[0], "/UPLOAD", true) == 0) configParms.Upload = Convert.ToBoolean(split[1]);
+                if (String.Compare(split[0], "/PUBLISH", true) == 0) configParms.Publish = Convert.ToBoolean(split[1]);
                 if (String.Compare(split[0], "/QUIET", true) == 0) configParms.Quiet = Convert.ToBoolean(split[1]);
             }
 
@@ -1599,9 +1683,13 @@ namespace IAHarvest
             {
                 sb.Append(endOfLine + "Harvested XML for " + this.harvestedXml.Count.ToString() + " Identifiers" + endOfLine);
             }
-            if (this.publishedItems.Count > 0)
+            if (this.publishedImportItems.Count > 0)
             {
-                sb.Append(endOfLine + "Published data to import tables for " + this.publishedItems.Count.ToString() + " Identifiers" + endOfLine);
+                sb.Append(endOfLine + "Published data to import tables for " + this.publishedImportItems.Count.ToString() + " Identifiers" + endOfLine);
+            }
+            if (this.publishedProductionItems.Count > 0)
+            {
+                sb.Append(endOfLine + "Published data to production tables for " + this.publishedProductionItems.Count.ToString() + " Identifiers" + endOfLine);
             }
             if (this.errorMessages.Count > 0)
             {

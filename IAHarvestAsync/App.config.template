@@ -15,8 +15,10 @@
     <add key="DownloadAll" value="True" />
     <!-- DownloadItem indicates whether or not to download information for a particular item from Internet Archive -->
     <add key="DownloadItem" value="True"/>
-    <!-- Upload indicates whether or not to publish data for a particular item to the production database -->
+    <!-- Upload indicates whether or not to stage data for a particular item for publishing to the production database -->
     <add key="UploadItem" value="False"/>
+    <!-- Publish indicates whether or not to publish data for a particular item to the production database -->
+    <add key="PublishItem" value="False"/>
     <!-- Quiet indicates whether or not to suppress emails from the IAHarvest process.  If true, only errors will produce emails. -->
     <add key="Quiet" value="True"/>
 

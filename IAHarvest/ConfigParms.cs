@@ -79,6 +79,19 @@ namespace IAHarvest
             }
         }
 
+        private bool _publish = true;
+        public bool Publish
+        {
+            get
+            {
+                return _publish;
+            }
+            set
+            {
+                _publish = value;
+            }
+        }
+
         private bool _quiet = false;
 
         public bool Quiet
@@ -415,6 +428,15 @@ namespace IAHarvest
 
         public string BHLWSEndpoint { get; set; } = string.Empty;
 
+        public string MQAddress { get; set; } = string.Empty;
+        public int MQPort { get; set; } = 0;
+        public string MQUser { get; set; } = string.Empty;
+        public string MQPassword { get; set; } = string.Empty;
+        public string MQQueue { get; set; } = string.Empty;
+        public string MQExchange { get; set; } = string.Empty;
+        public string MQErrorQueue { get; set; } = string.Empty;
+        public string MQErrorExchange { get; set; } = string.Empty;
+
         public void LoadAppConfig()
         {
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
@@ -423,6 +445,7 @@ namespace IAHarvest
             Mode = ConfigurationManager.AppSettings["Mode"];
             Download = Convert.ToBoolean(ConfigurationManager.AppSettings["Download"]);
             Upload = Convert.ToBoolean(ConfigurationManager.AppSettings["Upload"]);
+            Publish = Convert.ToBoolean(ConfigurationManager.AppSettings["Publish"]);
             Quiet = Convert.ToBoolean(ConfigurationManager.AppSettings["Quiet"]);
             AllowUnapprovedPublish = Convert.ToBoolean(ConfigurationManager.AppSettings["AllowUnapprovedPublish"]);
             MinimumDaysBeforeAllowUnapprovedPublish = Convert.ToInt32(ConfigurationManager.AppSettings["MinimumDaysBeforeAllowUnapprovedPublish"]);
@@ -447,6 +470,14 @@ namespace IAHarvest
             ScandataFile = ConfigurationManager.AppSettings["ScandataFile"];
             LocalFileFolder = ConfigurationManager.AppSettings["LocalFileFolder"];
             BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
+            MQAddress = ConfigurationManager.AppSettings["MQAddress"];
+            MQPort = Convert.ToInt32(ConfigurationManager.AppSettings["MQPort"]);
+            MQUser = ConfigurationManager.AppSettings["MQUser"];
+            MQPassword = ConfigurationManager.AppSettings["MQPassword"];
+            MQQueue = ConfigurationManager.AppSettings["MQQueue"];
+            MQExchange = ConfigurationManager.AppSettings["MQExchange"];
+            MQErrorQueue = ConfigurationManager.AppSettings["MQErrorQueue"];
+            MQErrorExchange = ConfigurationManager.AppSettings["MQErrorExchange"];
         }
     }
 }
