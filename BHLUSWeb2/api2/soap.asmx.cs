@@ -1,5 +1,6 @@
 ﻿using MOBOT.BHL.API.BHLApi;
 using MOBOT.BHL.API.BHLApiDataObjects2;
+using Nest;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -56,7 +57,7 @@ namespace MOBOT.BHL.Web2.api2
         }
         
         [WebMethod]
-        public Name NameGetDetailForNameBankID(string nameBankID, string apiKey)
+        public MOBOT.BHL.API.BHLApiDataObjects2.Name NameGetDetailForNameBankID(string nameBankID, string apiKey)
         {
             try
             {
@@ -70,7 +71,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public Name NameGetDetailForName(string nameConfirmed, string apiKey)
+        public MOBOT.BHL.API.BHLApiDataObjects2.Name NameGetDetailForName(string nameConfirmed, string apiKey)
         {
             try
             {
@@ -84,7 +85,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public List<Name> NameList(string startRow, string batchSize, string apiKey)
+        public List<MOBOT.BHL.API.BHLApiDataObjects2.Name> NameList(string startRow, string batchSize, string apiKey)
         {
             try
             {
@@ -98,7 +99,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public List<Name> NameListBetweenDates(string startRow, string batchSize, string startDate, string endDate, string apiKey)
+        public List<MOBOT.BHL.API.BHLApiDataObjects2.Name> NameListBetweenDates(string startRow, string batchSize, string startDate, string endDate, string apiKey)
         {
             try
             {
@@ -112,7 +113,7 @@ namespace MOBOT.BHL.Web2.api2
         }
         
         [WebMethod]
-        public List<Name> NameSearch(string name, string apiKey)
+        public List<MOBOT.BHL.API.BHLApiDataObjects2.Name> NameSearch(string name, string apiKey)
         {
             try
             {
@@ -130,7 +131,7 @@ namespace MOBOT.BHL.Web2.api2
         #region Page methods
 
         [WebMethod]
-        public Page GetPageMetadata(string pageID, string includeOcr, string includeNames, string apiKey)
+        public MOBOT.BHL.API.BHLApiDataObjects2.Page GetPageMetadata(string pageID, string includeOcr, string includeNames, string apiKey)
         {
             try
             {
@@ -162,7 +163,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public List<Name> GetPageNames(string pageID, string apiKey)
+        public List<MOBOT.BHL.API.BHLApiDataObjects2.Name> GetPageNames(string pageID, string apiKey)
         {
             try
             {
@@ -211,7 +212,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public List<Page> GetItemPages(string itemID, string includeOcr, string apiKey)
+        public List<MOBOT.BHL.API.BHLApiDataObjects2.Page> GetItemPages(string itemID, string includeOcr, string apiKey)
         {
             try
             {
@@ -375,7 +376,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public List<Name> GetPartNames(string partID, string apiKey)
+        public List<MOBOT.BHL.API.BHLApiDataObjects2.Name> GetPartNames(string partID, string apiKey)
         {
             try
             {
@@ -541,7 +542,7 @@ namespace MOBOT.BHL.Web2.api2
         #region Language methods
 
         [WebMethod]
-        public List<Language> GetLanguages(string apiKey)
+        public List<MOBOT.BHL.API.BHLApiDataObjects2.Language> GetLanguages(string apiKey)
         {
             try
             {
@@ -620,7 +621,10 @@ namespace MOBOT.BHL.Web2.api2
             // Only validate users in production
             if (ConfigurationManager.AppSettings["IsProduction"] == "true")
             {
-                if (!new Api2().ValidateApiUser(requestType, apiKey, HttpContext.Current.Request.UserHostAddress, detail))
+                // Read the Cloudflare header for the client IP address; if not found, read from the default client IP location
+                if (!new Api2().ValidateApiUser(requestType, apiKey, 
+                    (string.IsNullOrWhiteSpace(HttpContext.Current.Request.Headers["CF-Connecting-IP"]) ? HttpContext.Current.Request.UserHostAddress : HttpContext.Current.Request.Headers["CF-Connecting-IP"]),
+                    detail))
                 {
                     throw new UnauthorizedAccessException("'" + apiKey + "' is an invalid or unauthorized API key.");
                 }

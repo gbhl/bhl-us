@@ -50,7 +50,8 @@ namespace MvcThrottle
 
         public virtual string GetClientIp(HttpRequestBase request)
         {
-            var ipAddress = request.UserHostAddress;
+            // Read the Cloudflare header for the client IP address; if not found, read from the default client IP location
+            var ipAddress = (string.IsNullOrWhiteSpace(request.Headers["CF-Connecting-IP"]) ? request.UserHostAddress : request.Headers["CF-Connecting-IP"]);
 
             // get client IP from reverse proxy
             var xForwardedFor = request.ServerVariables["HTTP_X_FORWARDED_FOR"];

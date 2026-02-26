@@ -22,7 +22,8 @@ namespace MOBOT.BHL.Web2.Controllers
             openurl.ItemUrlFormat = ConfigurationManager.AppSettings["ItemPageUrl"];
             openurl.TitleUrlFormat = ConfigurationManager.AppSettings["BibPageUrl"];
             openurl.PartUrlFormat = ConfigurationManager.AppSettings["PartPageUrl"];
-            openurl.IpAddress = Request.UserHostAddress;
+            // Read the Cloudflare header for the client IP address; if not found, read from the default client IP location
+            openurl.IpAddress = string.IsNullOrWhiteSpace(Request.Headers["CF-Connecting-IP"]) ? Request.UserHostAddress : Request.Headers["CF-Connecting-IP"];
             openurl.UseFullTextSearch = Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]);
             IOpenUrlResponse ouResponse = openurl.FindCitation(ouQuery);
 

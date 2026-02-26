@@ -277,7 +277,10 @@ namespace MOBOT.BHL.Web2.Controllers
             // Only validate users in production
             if (ConfigurationManager.AppSettings["IsProduction"] == "true")
             {
-                if (!new Api3().ValidateApiUser(requestType, apiKey, Request.UserHostAddress, detail))
+                // Read the Cloudflare header for the client IP address; if not found, read from the default client IP location
+                if (!new Api3().ValidateApiUser(requestType, apiKey,
+                    (string.IsNullOrWhiteSpace(Request.Headers["CF-Connecting-IP"]) ? Request.UserHostAddress : Request.Headers["CF-Connecting-IP"]), 
+                    detail))
                 {
                     throw new UnauthorizedAccessException("'" + apiKey + "' is an invalid or unauthorized API key.");
                 }
@@ -825,7 +828,10 @@ namespace MOBOT.BHL.Web2.Controllers
             // Only validate users in production
             if (ConfigurationManager.AppSettings["IsProduction"] == "true")
             {
-                if (!new Api2().ValidateApiUser(requestType, apiKey, Request.UserHostAddress, detail))
+                // Read the Cloudflare header for the client IP address; if not found, read from the default client IP location
+                if (!new Api2().ValidateApiUser(requestType, apiKey,
+                    (string.IsNullOrWhiteSpace(Request.Headers["CF-Connecting-IP"]) ? Request.UserHostAddress : Request.Headers["CF-Connecting-IP"]), 
+                    detail))
                 {
                     throw new UnauthorizedAccessException("'" + apiKey + "' is an invalid or unauthorized API key.");
                 }
