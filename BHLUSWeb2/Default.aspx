@@ -22,7 +22,7 @@
 <div id="promobox-home" class="featurebox-home">
     <h3>Help Support <span>BHL</span></h3>
     <p>BHL's existence depends on the financial support of its patrons. Help us keep this free resource alive!</p>
-    <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">Donate Now</a>
+    <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">Ways to Give</a>
 </div>
 <%}%>
 </div>

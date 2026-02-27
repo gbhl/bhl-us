@@ -7,7 +7,7 @@
     <div  class="<%= SpecialClass %> support" id="<%= specialID %>">
         <h3>Help Support <span>BHL</span></h3>
         <p>BHL's existence depends on the support of its patrons. Help us keep this free resource alive!</p>
-        <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">Donate Now</a>
+        <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">Ways to Give</a>
     </div>
 </asp:Panel>
 <asp:Panel ID="panNewFuture" runat="server" Visible="false">
@@ -35,10 +35,10 @@
         <h4>&nbsp;</h4>
          <span class="content">
              <a title="Donate Now" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">
-                <img alt="Donate Now" src="~/images/BHL-Logo-Portrait-196x196.png" runat="server"/>
+                <img alt="Donate Now" src="~/images/ss_butterfly.jpg" runat="server"/>
             </a>
          </span>
-         <a class="featurebutton-home" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">Donate Now</a>
+         <a class="featurebutton-home" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">Ways to Give</a>
     </div>
 </asp:Panel>
 <asp:Panel ID="panCollection" runat="server"  Visible="false">
