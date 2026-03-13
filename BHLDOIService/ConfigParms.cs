@@ -30,13 +30,6 @@ namespace MOBOT.BHL.BHLDOIService
             set { _validateSubmissions = value; }
         }
 
-        private string _smtpHost = string.Empty;
-        public string SMTPHost
-        {
-            get { return _smtpHost; }
-            set { _smtpHost = value; }
-        }
-
         private string _emailFromAddress = string.Empty;
         public string EmailFromAddress
         {
@@ -445,7 +438,6 @@ namespace MOBOT.BHL.BHLDOIService
             SubmitTitles = ConfigurationManager.AppSettings["Service_SubmitTitles"] == "true";
             SubmitSegments = ConfigurationManager.AppSettings["Service_SubmitSegments"] == "true";
             ValidateSubmissions = ConfigurationManager.AppSettings["Service_ValidateSubmissions"] == "true";
-            SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
             EmailOnError = ConfigurationManager.AppSettings["EmailOnError"].ToLower() == "true";

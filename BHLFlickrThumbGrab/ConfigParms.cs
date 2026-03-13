@@ -5,7 +5,6 @@ namespace MOBOT.BHL.BHLFlickrThumbGrab
     public class ConfigParms
     {
         public string FlickrAPIKey { get; set; }
-        public string SMTPHost { get; set; }
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
         public bool EmailOnError { get; set; }
@@ -21,7 +20,6 @@ namespace MOBOT.BHL.BHLFlickrThumbGrab
         public void LoadAppConfig()
         {
             FlickrAPIKey = ConfigurationManager.AppSettings["FlickrAPIKey"];
-            SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
             EmailOnError = StringToBool(ConfigurationManager.AppSettings["EmailOnError"]);

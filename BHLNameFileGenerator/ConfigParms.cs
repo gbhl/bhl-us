@@ -1,12 +1,10 @@
 using System;
 using System.Configuration;
-using System.Xml;
 
 namespace MOBOT.BHL.BHLNameFileGenerator
 {
     public class ConfigParms
     {
-        public const string SMTPHostKey = "SMTPHost";
         public const string EmailFromAddressKey = "EmailFromAddress";
         public const string EmailToAddressKey = "EmailToAddress";
         public const string EmailOnErrorKey = "EmailOnError";
@@ -18,13 +16,6 @@ namespace MOBOT.BHL.BHLNameFileGenerator
         public const string NameFilePathFormatKey = "NameFilePathFormat";
         public const string IAS3AccessKeyKey = "IAS3AccessKey";
         public const string IAS3SecretKeyKey = "IAS3AccessKey";
-
-        private string _smtpHost = "";
-        public string SMTPHost
-        {
-            get { return _smtpHost; }
-            set { _smtpHost = value; }
-        }
 
         private string _emailFromAddress = "";
         public string EmailFromAddress
@@ -107,7 +98,6 @@ namespace MOBOT.BHL.BHLNameFileGenerator
 
         public void LoadAppConfig()
         {
-            this.SMTPHost = ConfigurationManager.AppSettings[SMTPHostKey];
             this.EmailFromAddress = ConfigurationManager.AppSettings[EmailFromAddressKey];
             this.EmailToAddress = ConfigurationManager.AppSettings[EmailToAddressKey];
             this.EmailOnError = this.StringToBool(ConfigurationManager.AppSettings[EmailOnErrorKey]);

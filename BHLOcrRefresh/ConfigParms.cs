@@ -5,7 +5,6 @@ namespace MOBOT.BHL.BHLOcrRefresh
 {
     class ConfigParms
     {
-        public string SMTPHost { get; set; }
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
         public bool EmailOnError { get; set; }
@@ -26,7 +25,6 @@ namespace MOBOT.BHL.BHLOcrRefresh
 
         public void LoadAppConfig()
         {
-            this.SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];
             this.EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             this.EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
             this.EmailOnError = ConfigurationManager.AppSettings["EmailOnError"].ToLower() == "true";

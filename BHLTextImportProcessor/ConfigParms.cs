@@ -7,7 +7,6 @@ namespace BHL.TextImportProcessor
     {
         public bool DebugMode { get; set; }
         public string DebugPath { get; set; }
-        public string SMTPHost { get; set; }
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
         public bool EmailOnError { get; set; }
@@ -31,7 +30,6 @@ namespace BHL.TextImportProcessor
         {
             DebugMode = true;
             DebugPath = string.Empty;
-            SMTPHost = string.Empty;
             EmailFromAddress = string.Empty;
             EmailToAddress = string.Empty;
             EmailOnError = true;
@@ -48,7 +46,6 @@ namespace BHL.TextImportProcessor
         {
             this.DebugMode = (ConfigurationManager.AppSettings["DebugMode"].ToUpper() != "FALSE");
             this.DebugPath = ConfigurationManager.AppSettings["DebugPath"];
-            this.SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];
             this.EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             this.EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
             this.EmailOnError = ConfigurationManager.AppSettings["EmailOnError"].ToLower() == "true";

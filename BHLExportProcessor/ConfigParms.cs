@@ -5,7 +5,6 @@ namespace BHL.Export
 {
     public class ConfigParms
     {
-        public string SMTPHost { get; set; }
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
         public bool EmailOnError { get; set; }
@@ -17,7 +16,6 @@ namespace BHL.Export
 
         public ConfigParms()
         {
-            SMTPHost = string.Empty;
             EmailFromAddress = string.Empty;
             EmailToAddress = string.Empty;
             EmailOnError = true;
@@ -30,7 +28,6 @@ namespace BHL.Export
 
         public void LoadAppConfig()
         {
-            SMTPHost = ConfigurationManager.AppSettings["SMTPHost"] ?? string.Empty;
             EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"] ?? string.Empty;
             EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"] ?? string.Empty;
             EmailOnError = (ConfigurationManager.AppSettings["EmailOnError"] ?? string.Empty).ToLower() == "true";
