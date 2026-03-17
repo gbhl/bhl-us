@@ -278,14 +278,10 @@ Application Configuration
 <tr><td>&lt;BHLRoot&gt;\BHLCoreDALTest\App.config.template</td><td>&lt;BHLRoot&gt;\BHLCoreDALTest\App.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLDOIService\app.config.template</td><td>&lt;BHLRoot&gt;\BHLDOIService\app.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLExportProcessor\App.config.template</td><td>&lt;BHLRoot&gt;\BHLExportProcessor\App.config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\BHLFileAccessRemotingUtilities\Remoting.config.template</td><td>&lt;BHLRoot&gt;\BHLFileAccessRemotingUtilities\Remoting.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLFlickrTagHarvest\app.config.template</td><td>&lt;BHLRoot&gt;\BHLFlickrTagHarvest\app.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLFlickrThumbGrab\app.config.template</td><td>&lt;BHLRoot&gt;\BHLFlickrThumbGrab\app.config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\BHLImportEFDataModel\App.Config.template</td><td>&lt;BHLRoot&gt;\BHLImportEFDataModel\App.Config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\BHLImportService\Web.config.template</td><td>&lt;BHLRoot&gt;\BHLImportService\Web.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLMETSUpload\app.config.template</td><td>&lt;BHLRoot&gt;\BHLMETSUpload\app.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLNameFileGenerator\app.config.template</td><td>&lt;BHLRoot&gt;\BHLNameFileGenerator\app.config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\BHLNameFileGenerator\Remoting.config.template</td><td>&lt;BHLRoot&gt;\BHLNameFileGenerator\Remoting.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLOAIHarvester\app.config.template</td><td>&lt;BHLRoot&gt;\BHLOAIHarvester\app.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLOCRRefresh\app.config.template</td><td>&lt;BHLRoot&gt;\BHLOCRRefresh\app.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLPageNameRefresh\app.config.template</td><td>&lt;BHLRoot&gt;\BHLPageNameRefresh\app.config</td></tr>
@@ -295,54 +291,67 @@ Application Configuration
 <tr><td>&lt;BHLRoot&gt;\BHLSearchIndexer\AppConfig.xml.template</td><td>&lt;BHLRoot&gt;\BHLSearchIndexer\AppConfig.Full.xml</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLSearchIndexQueueLoad\AppConfig.xml.template</td><td>&lt;BHLRoot&gt;\BHLSearchIndexQueueLoad\AppConfig.xml</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLServerTest\app.config.template</td><td>&lt;BHLRoot&gt;\BHLServerTest\app.config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\BHLService\Remoting.config.template</td><td>&lt;BHLRoot&gt;\BHLService\Remoting.config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\BHLService\Web.config.template</td><td>&lt;BHLRoot&gt;\BHLService\Web.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLTextImportProcessor\app.config.template</td><td>&lt;BHLRoot&gt;\BHLTextImportProcessor\app.config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\BHLUSWeb2\Remoting.config.template</td><td>&lt;BHLRoot&gt;\BHLUSWeb2\Remoting.config</td></tr>
+<tr><td>&lt;BHLRoot&gt;\BHLUSWeb2\ratelimit.config.template</td><td>&lt;BHLRoot&gt;\BHLUSWeb2\ratelimit.config</td></tr>
+<tr><td>&lt;BHLRoot&gt;\BHLUSWeb2\ratelimitwhitelist.config.template</td><td>&lt;BHLRoot&gt;\BHLUSWeb2\ratelimitwhitelist.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLUSWeb2\Web.config.template</td><td>&lt;BHLRoot&gt;\BHLUSWeb2\Web.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLUSWeb2\Views\Web.config.template</td><td>&lt;BHLRoot&gt;\BHLUSWeb2\Views\Web.config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\BHLUSWeb2\services\Name\Web.config.template</td><td>&lt;BHLRoot&gt;\BHLUSWeb2\services\Name\Web.config</td></tr>
+<tr><td>&lt;BHLRoot&gt;\BHLWebServiceREST.v1\app.config.template</td><td>&lt;BHLRoot&gt;\BHLWebServiceREST.v1\app.config</td></tr>
+<tr><td>&lt;BHLRoot&gt;\BHLWebServiceREST.v1\Web.config.template</td><td>&lt;BHLRoot&gt;\BHLWebServiceREST.v1\Web.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\IAAnalysisHarvest\App.config.template</td><td>&lt;BHLRoot&gt;\IAAnalysisHarvest\App.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\IAHarvest\App.config.template</td><td>&lt;BHLRoot&gt;\IAHarvest\App.config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\SiteServices\Remoting.config.template</td><td>&lt;BHLRoot&gt;\SiteServices\Remoting.config</td></tr>
-<tr><td>&lt;BHLRoot&gt;\SiteServices\Web.config.template</td><td>&lt;BHLRoot&gt;\SiteServices\Web.config</td></tr>
+<tr><td>&lt;BHLRoot&gt;\IAHarvestAsync\App.config.template</td><td>&lt;BHLRoot&gt;\IAHarvestAsync\App.config</td></tr>
+<tr><td>&lt;BHLRoot&gt;\SearchElasticTest\app.config.template</td><td>&lt;BHLRoot&gt;\SearchElasticTest\app.config</td></tr>
+<tr><td>&lt;BHLRoot&gt;\SiteServiceREST.v1\app.config.template</td><td>&lt;BHLRoot&gt;\SiteServiceREST.v1\app.config</td></tr>
+<tr><td>&lt;BHLRoot&gt;\SiteServiceREST.v1\Web.config.template</td><td>&lt;BHLRoot&gt;\SiteServiceREST.v1\Web.config</td></tr>
+<tr><td>&lt;BHLRoot&gt;\WDHarvest\App.config.template</td><td>&lt;BHLRoot&gt;\WDHarvest\App.config</td></tr>
 </table>
 
 &nbsp;  
-2) Make the specified modifications to each of the config files in the following list:
+2) Make the following modifications to the config files:
 
 \# = denotes optional modifications that are not required for development installations
 
 &nbsp;  
 **WWW.BIODIVERSITYLIBRARY.ORG**
 
-**&lt;BHLRoot&gt;\BHLService\Web.config**
+The primary web user interface, allowing browsing and searching the collection as well as viewing individual items.
+
+*&lt;BHLRoot&gt;\BHLUSWeb2\ratelimit.config*
+
+This configuration file allows rate limits to be set by IP address, User Agent, and web site endpoint. See the instructions and examples in the ratelimit.config file for more information.
+
+*&lt;BHLRoot&gt;\BHLUSWeb2\ratelimitwhitelist.config*
+
+This configuration file works in tandem with the ratelimit.config file.  It specifies IP addresses, User Agents, and web site endpoints to omit from rate limiting (to be "whitelisted").  See the instructions and examples in the file for more information.
+
+*&lt;BHLRoot&gt;\BHLUSWeb2\Web.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
-<tr><td>appSettings/UseRemoteFileAccessProvider</td><td>false</td></tr>
-<tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
-</table>
-
-**&lt;BHLRoot&gt;\BHLUSWeb2\Web.config**
-
-<table>
-<tr><th>Element</th><th>Value</th></tr>
-<tr><td>appSettings/UseRemoteFileAccessProvider</td><td>false</td></tr>
-<tr><td># appSettings/TwitterConsumerKey</td><td>Consumer Key for Twitter API</td></tr>
-<tr><td># appSettings/TwitterConsumerSecret</td><td>Consumer Secret for Twitter API</td></tr>
+<tr><td># appSettings/PdfUrl</td><td>http://SITE_SERVICES_URL/pdf{0}/{1}, where SITE_SERVICES_URL is the URL for a running instance of the SiteServiceREST.v1 project</td></tr>
+<tr><td># appSettings/GoogleAnalyticsTrackingID</td><td>Tracking identifier for the site in Google Analytics</td></tr>
 <tr><td># appSettings/GeminiURL</td><td>Issue tracking service URL</td></tr>
 <tr><td># appSettings/GeminiUser</td><td>Issue tracking service username</td></tr>
 <tr><td># appSettings/GeminiPassword</td><td>Issue tracking service password</td></tr>
+<tr><td>appSettings/ElasticSearchServerAddress</td><td>Server address for an instance of ElasticSearch</td></tr>
+<tr><td>appSettings/SiteServicesUrl</td><td>URL for a running instance of the BHLSiteServiceREST.v1 project</td></tr>
+<tr><td># appSettings/FundRaiseUpCampaignCode</td><td>FundraiseUp code for the site</td></tr>
+<tr><td># appSettings/TwitterConsumerKey</td><td>Consumer Key for Twitter API</td></tr>
+<tr><td># appSettings/TwitterConsumerSecret</td><td>Consumer Secret for Twitter API</td></tr>
+<tr><td># appSettings/ReCaptchaSiteKey</td><td>Site key for Google ReCaptcha service</td></tr>
+<tr><td># appSettings/ReCaptchaSecretKey</td><td>Secret key for Google ReCaptcha service</td></tr>
 <tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
+<tr><td># connectionStrings/Admin</td><td>Optional connection string for API logging database</td></tr>
 <tr><td># system.net/mailSettings/smtp/network</td><td>STMP host address, username, and password</td></tr>
 </table>
 
 &nbsp;  
 **ADMIN.BIODIVERSITYLIBRARY.ORG**
 
-**&lt;BHLRoot&gt;\BHLAdminWeb\Web.config**
+The administrative user interface.  It requires authorization and authentication, and allows metadata editing, reporting, and system monitoring.
+
+*&lt;BHLRoot&gt;\BHLAdminWeb\Web.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
@@ -355,114 +364,229 @@ Application Configuration
 <tr><td>appSettings/CitationNewPath</td><td>Path for new uploads of citation information.</td></tr>
 <tr><td>appSettings/CitationCompletePath</td><td>Path for completed uploads of citation information.</td></tr>
 <tr><td>appSettings/CitationErrorPath</td><td>Path for failed uploads of citation information.</td></tr>
-<tr><td>appSettings/OCRJobNewPath</td><td>Path for OCR job files.</td></tr>
 <tr><td># appSettings/FlickrUserId</td><td>Flickr user identifier.</td></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
+<tr><td>appSettings/SearchServerAddress</td><td>Server address for an instance of ElasticSearch</td></tr>
+<tr><td>appSettings/MessageQueueAdminAddress</td><td>Server address for the administrative interface of an instance of RabbitMQ</td></tr>
+<tr><td>appSettings/SiteServicesUrl</td><td>URL for a running instance of the BHLSiteServiceREST.v1 project</td></tr>
 <tr><td># appSettings/EmailFromName</td><td>Email sender address to use when sending emails.</td></tr>
 <tr><td># appSettings/EmailFromAddress</td><td>Email sender name to use when sending emails.</td></tr>
 <tr><td># appSettings/BHLUserAdminEmailAddress</td><td>Email address of a BHL user administrator.</td></tr>
 <tr><td>appSettings/LocalFileFolder</td><td>File folder in which to place new data files ingested from Internet Archive.</td></tr>
-<tr><td>appSettings/DOIDepositFileLocation</td><td>Path to CrossRef deposit files.</td></tr>
-<tr><td>appSettings/DOISubmitLogFileLocation</td><td>Path to Crossref log files.</td></tr>
 <tr><td># appSettings/FlickrKey</td><td>Flickr API key</td></tr>
 <tr><td># appSettings/FlickrSecret</td><td>Flickr API secret</td></tr>
 <tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
-<tr><td>connectionStrings/BHLUser</td><td>Connection string for BHL user account database</td></tr>
-</table>
-
-&nbsp;  
-**&lt;BHLRoot&gt;\SiteServices\Web.config**
-
-<table>
-<tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
-<tr><td>appSettings/DOIDepositFileLocation</td><td>Location of DOI deposit files</td></tr>
-<tr><td>appSettings/DOISubmitLogFileLocation</td><td>Location of DOI submit log files</td></tr>
-<tr><td>appSettings/OCRJobNewPath</td><td>Path to new OCR job files</td></tr>
-<tr><td>appSettings/MQHost</td><td>Message queue host URL</td></tr>
-<tr><td>appSettings/MQPort</td><td>Message queue port</td></tr>
-<tr><td>appSettings/MQAPIPort</td><td>Message queue API port</td></tr>
-<tr><td>appSettings/MQUsername</td><td>Message queue username</td></tr>
-<tr><td>appSettings/MQPassword</td><td>Message queue password</td></tr>
-<tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@host) </td><td>SMTP host address</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@port)</td><td>STMP host port</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@userName)</td><td>SMTP host username</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@password)</td><td>SMTP host password</td></tr>
-</table>
-
-&nbsp;  
-**DATA IMPORT APPS**
-
-**&lt;BHLRoot&gt;\BHLBioStorHarvest\app.config**
-
-<table>
-<tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>	SMTP host address</td></tr>
-<tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
-<tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
-<tr><td>connectionStrings/BHLImportEntities</td><td>Connection string for BHLImport database</td></tr>
-<tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
-</table>
-
-**&lt;BHLRoot&gt;\BHLImportEFDataModel\App.Config**
-
-<table>
-<tr><th>Element</th><th>Value</th></tr>
-<tr><td>connectionStrings/BHLImportEntities</td><td>Connection string for BHLImport database</td></tr>
-</table>
-
-**&lt;BHLRoot&gt;\BHLImportService\Web.config**
-
-<table>
-<tr><th>Element</th><th>Value</th></tr>
+<tr><td>connectionStrings/BHLUser</td><td>Connection string for user account database</td></tr>
 <tr><td>connectionStrings/BHLImport</td><td>Connection string for BHLImport database</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\IAAnalysisHarvest\App.config**
+<br/>
+
+**INTERNAL APIs**
+
+**BHLWebServiceREST.v1**
+
+APIs that support the internal non-web applications.
+
+*&lt;BHLRoot&gt;\BHLWebServiceREST.v1\app.config*<br />
+*&lt;BHLRoot&gt;\BHLWebServiceREST.v1\web.config*
+
+<table>
+<tr><th>Element</th><th>Value</th></tr>
+<tr><td># appSettings/SMTPHost</td><td>Name of a SMTP server.</td></tr>
+<tr><td>appSettings/DOIDepositFileLocation</td><td>Path to CrossRef deposit files.</td></tr>
+<tr><td>appSettings/DOISubmitLogFileLocation</td><td>Path to Crossref log files.</td></tr>
+<tr><td>appSettings/OCRJobNewPath</td><td>Path to new OCR job files</td></tr>
+<tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
+</table>
+
+<br/>
+
+**SiteServiceREST.v1**
+
+APIs that support the primary web UI and the administrative web interface.
+
+*&lt;BHLRoot&gt;\SiteServiceREST.v1\app.config*<br/>
+*&lt;BHLRoot&gt;\SiteServiceREST.v1\web.config*
+
+<table>
+<tr><th>Element</th><th>Value</th></tr>
+<tr><td># appSettings/SMTPHost</td><td>Name of a SMTP server.</td></tr>
+<tr><td># appSettings/SearchServerStatsUrl</td><td>Search server URL for uptime stats</td></tr>
+<tr><td>appSettings/DOIDepositFileLocation</td><td>Path to CrossRef deposit files.</td></tr>
+<tr><td>appSettings/DOISubmitLogFileLocation</td><td>Path to Crossref log files.</td></tr>
+<tr><td>appSettings/OCRJobNewPath</td><td>Path to new OCR job files</td></tr>
+<tr><td># appSettings/MQHost</td><td>Server address for a RabbitMQ instance</td></tr>
+<tr><td># appSettings/MQPort</td><td>Server port for a RabbitMQ instance</td></tr>
+<tr><td># appSettings/MQAPIPort</td><td>Server port for a RabbitMQ API instance</td></tr>
+<tr><td># appSettings/MQUsername</td><td>Username to access a RabbitMQ instance</td></tr>
+<tr><td># appSettings/MQPassword</td><td>Password to access a RabbitMQ instance</td></tr>
+<tr><td># appSettings/PregeneratedPdfLocation</td><td>File location of pregenerated article PDFs</td></tr>
+<tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
+</table>
+
+<br/>
+
+**DATA IMPORT APPS**
+
+**BHLBioStorHarvest**
+
+Service that harvests Segment metadata from APIs that are part of the BioStor platform (https://biostor.org/).
+
+*&lt;BHLRoot&gt;\BHLBioStorHarvest\app.config*
+
+<table>
+<tr><th>Element</th><th>Value</th></tr>
+<tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
+<tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project</td></tr>
+<tr><td>connectionStrings/BHLImport</td><td>Connection string for BHLImport database</td></tr>
+<tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
+</table>
+
+<br/>
+
+**BHLFlickrTagHarvest**
+
+Service that examines the BHL Flickr collection (https://www.flickr.com/photos/biodivlibrary/) and downloads new and updated tags and notes into a database.
+
+*&lt;BHLRoot&gt;\BHLFlickrTagHarvest\app.config*
+
+<table>
+<tr><th>Element</th><th>Value</th></tr>
+<tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
+<tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
+<tr><td>appSettings/FlickrApiKey</td><td>Flickr API Key</td></tr>
+<tr><td>appSettings/BHLFlickrUserID</td><td>Flickr username</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
+<tr><td>connectionStrings/BHLImport</td><td>Connection string for BHLImport database</td></tr>
+<tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
+</table>
+
+<br/>
+
+**IAAnalysisHarvest**
+
+Service that obtains identifiers of Internet Archive (IA) items that should be harvested into BHL even though they are not part of the IA "biodiversity" collection.
+
+*&lt;BHLRoot&gt;\IAAnalysisHarvest\App.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
 <tr><td>connectionStrings/IAAnalysis</td><td>Connection string for IAAnalysis database</td></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
 <tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
 <tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\IAHarvest\App.config**
+<br/>
+
+**IAHarvest**
+
+Service that downloads metadata files for new and updated items hosted at Internet Archive.  It extracts the metadata from the files and adds it to database tables.  From there, it initiates procedures that clean the data and add it to the production database.
+
+*&lt;BHLRoot&gt;\IAHarvest\App.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
 <tr><td>connectionStrings/BHLImport</td><td>Connection string for BHLImport database</td></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
 <tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
 <tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
 <tr><td>appSettings/LocalFileFolder</td><td>Local folder to hold downloaded files</td></tr>
+<tr><td># appSettings/MQAddress</td><td>Server address for a RabbitMQ instance</td></tr>
+<tr><td># appSettings/MQPort</td><td>Server port for a RabbitMQ instance</td></tr>
+<tr><td># appSettings/MQUser</td><td>Username to access a RabbitMQ instance</td></tr>
+<tr><td># appSettings/MQPassword</td><td>Password to access a RabbitMQ instance</td></tr>
+<tr><td># appSettings/MQQueue</td><td>Name of a RabbitMQ queue for identifiers of new/updated items</td></tr>
+<tr><td># appSettings/MQExchange</td><td>Name of a RabbitMQ exchange associated with the queue</td></tr>
+<tr><td># appSettings/MQErrorQueue</td><td>Name of a RabbitMQ queue for messages that are not processed successfully</td></tr>
+<tr><td># appSettings/MQErrorExchange</td><td>Name of a RabbitMQ exchange associated with the error queue</td></tr>
+</table>
+
+<br/>
+
+**IAHarvestAsync**
+
+Service that executes multiple instances of the IAHarvest process at one time, speeding up the overall process of downloading metadata files for new and updated items from Internet Archive.
+
+*&lt;BHLRoot&gt;\IAHarvestAsync\App.config*
+
+<table>
+<tr><th>Element</th><th>Value</th></tr>
+<tr><td>connectionStrings/BHLImport</td><td>Connection string for BHLImport database</td></tr>
+<tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
+<tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
+<tr><td>appSettings/LocalFileFolder</td><td>Local folder to hold downloaded files</td></tr>
+</table>
+
+<br/>
+
+**BHLOAIHarvester**
+
+Service that harvests metadata from OAI-PMH feeds and stores it in a BHL database.  From there, it initiates procedures that clean the data and add it to the production database.
+
+*&lt;BHLRoot&gt;\BHLOAIHarvester\app.config*
+
+<table>
+<tr><th>Element</th><th>Value</th></tr>
+<tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
+<tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
+<tr><td>connectionStrings/BHLImport</td><td>Connection string for BHLImport database</td></tr>
+</table>
+
+<br/>
+
+**WDHarvest**
+
+Service that downloads persistent identifiers associated with BHL entities in Wikidata.  Identifiers are added to the production database, reports are generated identifying newly added data and potential errors, and stakeholders are notified via email.
+
+*&lt;BHLRoot&gt;\WDHarvest\App.config*
+
+<table>
+<tr><th>Element</th><th>Value</th></tr>
+<tr><td>connectionStrings/BHLImport</td><td>Connection string for BHLImport database</td></tr>
+<tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
+<tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
+<tr><td># appSettings/AdminEmailToAddress</td><td>Process administrator recipient of report notifications sent by the process</td></tr>
+<tr><td># appSettings/StaffEmailToAddress</td><td>Staff member recipients of report notifications sent by the process</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
 </table>
 
 &nbsp;  
 **UTILITY APPS**
 
-**&lt;BHLRoot&gt;\BHLDOIService\app.config**
+**BHLDOIService**
+
+Service that submits new and updated DOI metadata to Crossref, and updates the DOI metadata in BHL.
+
+*&lt;BHLRoot&gt;\BHLDOIService\app.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>	SMTP host address</td></tr>
 <tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
 <tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
 <tr><td>appSettings/CrossRefDepositorName</td><td>Depositor name associated with CrossRef account</td></tr>
 <tr><td>appSettings/CrossRefDepositorEmail</td><td>Depositor email associated with CrossRef account</td></tr>
 <tr><td>appSettings/CrossRefLogin</td><td>Login for CrossRef account</td></tr>
 <tr><td>appSettings/CrossRefPassword</td><td>Password for CrossRef account</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLExportProcessor\App.config**
+<br />
+
+**BHLExportProcessor**
+
+Service that creates BHL data exports in a variety of formats, including BibTeX, MODS, RIS, KBART, and TSV.
+
+*&lt;BHLRoot&gt;\BHLExportProcessor\App.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>	SMTP host address</td></tr>
 <tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
 <tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
 <tr><td>appSettings/RISTitleTempFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
 <tr><td>appSettings/RISTitleFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
 <tr><td>appSettings/RISTitleZipFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
@@ -537,32 +661,19 @@ Application Configuration
 <tr><td>appSettings/TSVInternalKeywordFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
 <tr><td>appSettings/TSVInternalTitleFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
 <tr><td>appSettings/TSVInternalTitleIdentifierFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@host) </td><td>SMTP host address</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@port)</td><td>STMP host port</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@userName)</td><td>SMTP host username</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@password)</td><td>SMTP host password</td></tr>
+<tr><td>appSettings/TSVInternalAuthorIdentifierFile</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLFlickrTagHarvest\app.config**
+<br />
+
+**BHLFlickrThumbGrab**
+
+Service that downloads randomly selectly BHL images from Flickr for display on the BHL home page.
+
+*&lt;BHLRoot&gt;\BHLFlickrThumbGrab\app.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
-<tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
-<tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
-<tr><td>appSettings/FlickrApiKey</td><td>Flickr API Key</td></tr>
-<tr><td>appSettings/BHLFlickrUserID</td><td>Flickr username</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@host) </td><td>SMTP host address</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@port)</td><td>STMP host port</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@userName)</td><td>SMTP host username</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@password)</td><td>SMTP host password</td></tr>
-</table>
-
-**&lt;BHLRoot&gt;\BHLFlickrThumbGrab\app.config**
-
-<table>
-<tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>	SMTP host address</td></tr>
 <tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
 <tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
 <tr><td>appSettings/FlickrAPIKey</td><td>Flickr API key</td></tr>
@@ -570,50 +681,54 @@ Application Configuration
 <tr><td>appSettings/ImageFolder</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
 <tr><td>appSettings/ImageListFilePath</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
 <tr><td>appSettings/DefaultFilesFolder</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLMETSUpload\app.config**
+<br />
+
+**BHLMETSUpload**
+
+Service that generates METS files for new and modified BHL Items.  The METS files include bibliographic metadata and page-level metadata.  After generation they are uploaded to the item's Internet Archive folder.
+
+*&lt;BHLRoot&gt;\BHLMETSUpload\app.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
 <tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
 <tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
 <tr><td>appSettings/METSEmail</td><td>Organization email address to place in METS files</td></tr>
 <tr><td>appSettings/IAS3AccessKey</td><td>Internet Archive access key</td></tr>
 <tr><td>appSettings/IAS3SecretKey</td><td>Internet Archive secret key</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLNameFileGenerator\app.config**
+<br />
+
+**BHLNameFileGenerator**
+
+Service that generates XML files containing the scientific names in an item.  After generation they are uploaded to the item's Internet Archive folder.
+
+*&lt;BHLRoot&gt;\BHLNameFileGenerator\app.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
 <tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
 <tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
 <tr><td>appSettings/IAS3AccessKey</td><td>Internet Archive access key</td></tr>
 <tr><td>appSettings/IAS3SecretKey</td><td>Internet Archive secret key</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLOAIHarvester\app.config**
+<br />
+
+**BHLOCRRefresh**
+
+Service that downloads the DJVU file for an item from Internet Archive, parses it into individual text files (one per page), and replaces the item's existing page text files on the BHL search/file server.
+
+*&lt;BHLRoot&gt;\BHLOCRRefresh\app.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
-<tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
-<tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
-<tr><td>connectionStrings/BHLImport</td><td>Connection string for BHLImport database</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@host) </td><td>SMTP host address</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@port)</td><td>STMP host port</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@userName)</td><td>SMTP host username</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@password)</td><td>SMTP host password</td></tr>
-</table>
-
-**&lt;BHLRoot&gt;\BHLOCRRefresh\app.config**
-
-<table>
-<tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
 <tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
 <tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
 <tr><td>appSettings/OcrJobNewPath</td><td>Path to new job files</td></tr>
@@ -621,37 +736,58 @@ Application Configuration
 <tr><td>appSettings/OcrJobCompletePath</td><td>Path to complete job files</td></tr>
 <tr><td>appSettings/OcrJobErrorPath</td><td>Path to failed job files</td></tr>
 <tr><td>appSettings/OcrJobTempPath</td><td>Path to temporary OCR files</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@host) </td><td>SMTP host address</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@port)</td><td>STMP host port</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@userName)</td><td>SMTP host username</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@password)</td><td>SMTP host password</td></tr>
+<tr><td>appSettings/MQAddress</td><td>Message queue host URL</td></tr>
+<tr><td>appSettings/MQPort</td><td>Message queue port</td></tr>
+<tr><td>appSettings/MQUser</td><td>Message queue username</td></tr>
+<tr><td>appSettings/MQPassword</td><td>Message queue password</td></tr>
+<tr><td>appSettings/MQQueue</td><td>Name of message queue for items with updated text</td></tr>
+<tr><td>appSettings/MQExchange</td><td>Name of MQ exchange for items with update dtext</td></tr>
+<tr><td>appSettings/MQErrorQueue</td><td>Name of error message queue</td></tr>
+<tr><td>appSettings/MQErrorExchange</td><td>Name of MQ error exchange</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLPageNameRefresh\app.config**
+<br />
+
+**BHLPageNameRefresh**
+
+Service that invokes the Global Names gnfinder tool to identify scientific names in page text.  Identified names are added to the BHL database.
+
+*&lt;BHLRoot&gt;\BHLPageNameRefresh\app.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
 <tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
 <tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLPDFGenerator\app.config**
+<br />
+
+**BHLPDFGenerator**
+
+Service that fulfills requests for custom PDFs.  Assembles the PDFs, saves them to the BHL search/file server, and emails the requestor a download link.
+
+*&lt;BHLRoot&gt;\BHLPDFGenerator\app.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
 <tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
 <tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
 <tr><td>appSettings/PdfFilePath</td><td>Replace \\SERVER\FOLDER with valid path</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLSearchIndexer\AppConfig.xml**
+<br />
+
+**BHLSearchIndexer**
+
+Service that reads messages from RabbitMQ queues and adds/updates/deletes the corresponding Elasticsearch records.
+
+*&lt;BHLRoot&gt;\BHLSearchIndexer\AppConfig.xml*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
-<tr><td># appSettings/SMTPPort</td><td>SMTP host port</td></tr>
 <tr><td># appSettings/EmailToAddresses</td><td>Recipients of emails sent by the process (comma-separated)</td></tr>
 <tr><td>appSettings/ElasticSearchServerAddress</td><td>Search Server address, including port number</td></tr>
 <tr><td>appSettings/MQAddress</td><td>Message queue host URL</td></tr>
@@ -667,12 +803,10 @@ Application Configuration
 <tr><td>connectionStrings/QA</td><td>Connection string for QA BHL database</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLSearchIndexer\AppConfig.Names.xml**
+*&lt;BHLRoot&gt;\BHLSearchIndexer\AppConfig.Names.xml*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
-<tr><td># appSettings/SMTPPort</td><td>SMTP host port</td></tr>
 <tr><td># appSettings/EmailToAddresses</td><td>Recipients of emails sent by the process (comma-separated)</td></tr>
 <tr><td>appSettings/ElasticSearchServerAddress</td><td>Search Server address, including port number</td></tr>
 <tr><td>appSettings/MQAddress</td><td>Message queue host URL</td></tr>
@@ -688,12 +822,10 @@ Application Configuration
 <tr><td>connectionStrings/QA</td><td>Connection string for QA BHL database</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLSearchIndexer\AppConfig.Full.xml**
+*&lt;BHLRoot&gt;\BHLSearchIndexer\AppConfig.Full.xml*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
-<tr><td># appSettings/SMTPPort</td><td>SMTP host port</td></tr>
 <tr><td># appSettings/EmailToAddresses</td><td>Recipients of emails sent by the process (comma-separated)</td></tr>
 <tr><td>appSettings/ElasticSearchServerAddress</td><td>Search Server address, including port number</td></tr>
 <tr><td>appSettings/DocFolder</td><td>Folder for debug output files</td></tr>
@@ -703,65 +835,113 @@ Application Configuration
 <tr><td>connectionStrings/QA</td><td>Connection string for QA BHL database</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLSearchIndexQueueLoad\AppConfig.xml**
+<br />
+
+**BHLSearchIndexQueueLoad**
+
+Service that queries the database to identify recently changed entities (titles, items, segments, authors, keywords, names), and adds messages for each changed entity to RabbitMQ queues.  FOr changed segments, it also adds messages to a RabbitMQ queue for pre-generated PDFs.
+
+*&lt;BHLRoot&gt;\BHLSearchIndexQueueLoad\AppConfig.xml*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
-<tr><td># appSettings/SMTPPort</td><td>SMTP host port</td></tr>
-<tr><td># appSettings/EmailToAddresses</td><td>Recipients of emails sent by the process (comma-separated)</td></tr>
 <tr><td>appSettings/MQAddress</td><td>Message queue host URL</td></tr>
 <tr><td>appSettings/MQPort</td><td>Message queue port</td></tr>
 <tr><td>appSettings/MQUser</td><td>Message queue username</td></tr>
 <tr><td>appSettings/MQPassword</td><td>Message queue password</td></tr>
 <tr><td>appSettings/MQQueue</td><td>Name of message queue for items/authors/keywords</td></tr>
+<tr><td>appSettings/MQExchange</td><td>Name of MQ exchange for items/authors/keywords</td></tr>
 <tr><td>appSettings/MQErrorExchange</td><td>Name of MQ error exchange for items/authors/keywords</td></tr>
 <tr><td>appSettings/MQErrorQueue</td><td>Name of MQ error queue for items/authors/keywords</td></tr>
 <tr><td>appSettings/MQQueueNames</td><td>Name of MQ queue for names</td></tr>
 <tr><td>appSettings/MQErrorExchangeNames</td><td>Name of MQ error exchange for names</td></tr>
 <tr><td>appSettings/MQErrorQueueNames</td><td>Name of MQ error queue for names</td></tr>
+<tr><td>appSettings/MQQueuePDF</td><td>Name of MQ queue for pre-generated PDFs</td></tr>
+<tr><td>appSettings/MQErrorExchangePDF</td><td>Name of MQ error exchange for pre-generated PDFs</td></tr>
+<tr><td>appSettings/MQErrorQueuePDF</td><td>Name of MQ error queue for pre-generated PDFs</td></tr>
+<tr><td># appSettings/EmailToAddresses</td><td>Recipients of emails sent by the process (comma-separated)</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
 <tr><td>connectionStrings/Production</td><td>Connection string for production BHL database</td></tr>
 <tr><td># connectionStrings/QA</td><td>Connection string for QA BHL database</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLTextImportProcessor\app.config**
+<br />
+
+**BHLTextImportProcessor**
+
+Service that parses uploaded files containing page transcripts and replaces existing page text files on the BHL search/file server.
+
+*&lt;BHLRoot&gt;\BHLTextImportProcessor\app.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
+<tr><td># appSettings/DebugPath</td><td>Path for debugging output</td></tr>
 <tr><td># appSettings/EmailFromAddress</td><td>"From" address for emails sent by the process</td></tr>
 <tr><td># appSettings/EmailToAddress</td><td>Recipient of emails sent by the process</td></tr>
-<tr><td># appSettings/DebugPath</td><td>Path for debugging output</td></tr>
 <tr><td>appSettings/TextImportFilePath</td><td>URL of location of text import files</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
+<tr><td># appSettings/MQAddress</td><td>Server address for a RabbitMQ instance</td></tr>
+<tr><td># appSettings/MQPort</td><td>Server port for a RabbitMQ instance</td></tr>
+<tr><td># appSettings/MQUser</td><td>Username to access a RabbitMQ instance</td></tr>
+<tr><td># appSettings/MQPassword</td><td>Password to access a RabbitMQ instance</td></tr>
+<tr><td>appSettings/MQQueue</td><td>Name of message queue for items with updated text</td></tr>
+<tr><td>appSettings/MQExchange</td><td>Name of MQ exchange for items with updated text</td></tr>
+<tr><td>appSettings/MQErrorQueue</td><td>Name of error message queue</td></tr>
+<tr><td>appSettings/MQErrorExchange</td><td>Name of MQ error exchange</td></tr>
 <tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@host) </td><td>SMTP host address</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@port)</td><td>STMP host port</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@userName)</td><td>SMTP host username</td></tr>
-<tr><td># system.net/mailSettings/smtp/network(@password)</td><td>SMTP host password</td></tr>
 </table>
 
 **TEST PROJECTS**
 
-**&lt;BHLRoot&gt;\BHLApiDALTest\App.config**
+**BHLAPIDALTest**
+
+Unit tests for API data access methods.
+
+*&lt;BHLRoot&gt;\BHLApiDALTest\testhost.dll.config*
+
+<table>
+<tr><th>Element</th><th>Value</th></tr>
+<tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
+<tr><td>connectionstrings/Admin</td><td>Optional connection string for logging database</td></</table>
+
+<br/>
+
+**BHLCoreDALTest**
+
+Unit tests for core data access methods.
+
+*&lt;BHLRoot&gt;\BHLCoreDALTest\testhost.dll.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
 <tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLCoreDALTest\App.config**
+<br/>
+
+**BHLServerTest**
+
+Unit tests for business rule methods.
+
+*&lt;BHLRoot&gt;\BHLServerTest\testhost.dll.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
 <tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
+<tr><td>connectionstrings/Admin</td><td>Optional connection string for logging database</td></tr>
 </table>
 
-**&lt;BHLRoot&gt;\BHLServerTest\app.config**
+<br/>
+
+**SearchElasticTest**
+
+Unit tests for methods that interact with ElasticSearch.
+
+*&lt;BHLRoot&gt;\SearchElasticTest\app.config*
 
 <table>
 <tr><th>Element</th><th>Value</th></tr>
-<tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
-<tr><td>Connectionstrings/Admin</td><td>Optional connection string for logging database</td></tr>
+<tr><td>appSettings/ElasticSearchServerAddress</td><td>Server address for the ElasticSearch instance</td></tr>
 </table>
 
 Index Data in ElasticSearch (Optional)

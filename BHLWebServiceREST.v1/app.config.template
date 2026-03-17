@@ -10,7 +10,6 @@
     <add key="ScandataXmlLocation" value="{0}\{1}\{2}_scandata.xml"/>
     <add key="SMTPHost" value="SMTP SERVER NAME"/>
     <add key="DBCommandTimeout" value="1800"/>
-    <add key="DebugValue" value="debug"/>
     <add key="ConfigNameCurrentIAVault" value="CurrentIAVaultID"/>
     <!-- DOI file locations -->
     <add key="DOIDepositFileLocation" value="DRIVE:\FOLDER\deposit\{0}.xml"/>

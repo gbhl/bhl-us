@@ -1,13 +1,11 @@
 using System;
 using System.Configuration;
-using System.Xml;
 
 namespace MOBOT.BHL.PageNameRefresh
 {
     public class ConfigParms
     {
         public string OcrTextPath { get; set; } = string.Empty;
-        public string OcrTextLocation { get; set; } = string.Empty;
         public string EmailFromAddress { get; set; } = string.Empty;
         public string EmailToAddress { get; set; } = string.Empty;
         public bool EmailOnError { get; set; } = false;
@@ -23,7 +21,6 @@ namespace MOBOT.BHL.PageNameRefresh
         public void LoadAppConfig()
         {
             this.OcrTextPath = ConfigurationManager.AppSettings["OCRTextPath"];
-            this.OcrTextLocation = ConfigurationManager.AppSettings["OCRTextLocation"];
             this.EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
             this.EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
             this.EmailOnError = ConfigurationManager.AppSettings["EmailOnError"].ToLower() == "true";

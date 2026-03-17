@@ -5,7 +5,6 @@
     </configSections>
 	<appSettings>
 		<add key="OCRTextPath" value="{0}\{1}\{2}\"/>
-		<add key="OCRTextLocation" value="NO LONGER USED"/>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
     <add key="EmailOnError" value="false"/>

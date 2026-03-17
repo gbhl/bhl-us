@@ -19,9 +19,7 @@
     <add key="ScandataXmlLocation" value="{0}\{1}\{2}_scandata.xml"/>
     <add key="IADownloadLink" value="https://www.archive.org/download/{0}/{1}"/>
     <add key="SMTPHost" value="smtp server address"/>
-    <add key="UseRemoteFileAccessProvider" value="false"/>
     <add key="DBCommandTimeout" value="1800"/>
-    <add key="DebugValue" value="debug"/>
     <add key="SearchServerStatsUrl" value="url of search server monitor service"/>
     <!-- DOI file locations -->
     <add key="DOIDepositFileLocation" value="path-to-doi-service-folder\deposit\{0}.xml"/>
