@@ -8,6 +8,9 @@
     <!-- Database connection key-->
     <ConnectionKey>QA</ConnectionKey>
 
+    <!-- BHLWS service endpoint -->
+    <BHLWSUrl>BHLWS SERVICE URL</BHLWSUrl>
+
     <!-- Search server connection string -->
     <ElasticSearchServerAddress>SEARCH SERVER ADDRESS</ElasticSearchServerAddress>>
 
@@ -30,14 +33,12 @@
     <MQPrefetchCount>5</MQPrefetchCount> <!-- Number of unacknowledged messages to read from the queue at once -->
 
     <!-- Email settings -->
-    <SmtpHost>MAIL SERVER ADDRESS</SmtpHost>
-    <SmtpPort>MAIL SERVER PORT</SmtpPort>
-    <SmtpEnableSsl>false</SmtpEnableSsl>
-    <SmtpDefaultCredentials>false</SmtpDefaultCredentials>
-    <SmtpUsername></SmtpUsername>
-    <SmtpPassword></SmtpPassword>
     <EmailFromAddress>noreply@biodiversitylibrary.org</EmailFromAddress>
     <EmailToAddresses>EMAIL RECIPIENT EMAIL ADDRESSES</EmailToAddresses>  <!-- comma-separated -->
+    <EmailOnError>false</EmailOnError>
+
+    <!-- Service log settings -->
+    <LogToDB>false</LogToDB>
 
     <!-- Location of OCR files.
           Valid values are "remote" or "local".

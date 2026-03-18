@@ -21,5 +21,8 @@ INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (18,
 INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (19, 'BHLTextImportProcessor', '', NULL)
 INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (20, 'IAAnalysisHarvest', '', 5)
 INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (21, 'IAHarvestAsync', '', 5)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (22, 'BHLSearchIndexQueueLoad', '', NULL)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (23, 'BHLSearchIndexer', '', NULL)
+INSERT servlog.[Service] ([ServiceID], [Name], [Param], FrequencyID) VALUES (24, 'WDHarvest', '', 7)
 
 SET IDENTITY_INSERT servlog.[Service] OFF

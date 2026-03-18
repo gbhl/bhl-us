@@ -6,5 +6,6 @@ INSERT servlog.Frequency ([FrequencyID], [Name], [Label], IntervalInMinutes) VAL
 INSERT servlog.Frequency ([FrequencyID], [Name], [Label], IntervalInMinutes) VALUES (4, 'Daily', 'Daily', 1440)
 INSERT servlog.Frequency ([FrequencyID], [Name], [Label], IntervalInMinutes) VALUES (5, 'Weekly', 'Weekly', 10080)
 INSERT servlog.Frequency ([FrequencyID], [Name], [Label], IntervalInMinutes) VALUES (6, 'Monthly', 'Monthly', 44640)
+INSERT servlog.Frequency ([FrequencyID], [Name], [Label], IntervalInMinutes) VALUES (7, 'Quarterly', 'Quarterly', 131400)
 
 SET IDENTITY_INSERT servlog.Frequency OFF

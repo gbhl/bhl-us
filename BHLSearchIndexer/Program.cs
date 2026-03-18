@@ -1,13 +1,12 @@
 ﻿using BHL.QueueUtility;
-using MailKit.Net.Smtp;
-using MimeKit;
+using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1.Client;
 using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.Loader;
 using System.Text;
 using System.Threading;
@@ -17,9 +16,12 @@ namespace BHL.SearchIndexer
     class Program
     {
         private static string _configFile = "AppConfig.xml";
+        private static string _serviceName = "BHLSearchIndexer";
 
         private static string _connectionKey = string.Empty;
         private static string _dbConnectionString = string.Empty;
+
+        private static string _bhlwsurl = string.Empty;
 
         private static string _esConnectionString = string.Empty;
 
@@ -32,14 +34,11 @@ namespace BHL.SearchIndexer
         private static string _mqErrorQueueName = string.Empty;
         private static ushort _mqPrefetchCount = 1;
 
-        private static string _smtpHost = string.Empty;
-        private static int _smtpPort = 0;
-        private static bool _smtpEnableSsl = false;
-        private static bool _smtpDefaultCredentials = false;
-        private static string _smtpUser = string.Empty;
-        private static string _smtpPw = string.Empty;
         private static string _emailFromAddress = string.Empty;
         private static string _emailToAddresses = string.Empty;
+        private static bool _emailOnError = false;
+
+        private static bool _logToDB = false;
 
         private static string _ocrLocation = string.Empty;
 
@@ -115,6 +114,7 @@ namespace BHL.SearchIndexer
                         .CreateLogger();
 
                     _logger.Information("Index Queue Monitoring Started");
+                    SendServiceLog("Index Queue Monitoring Started", false);
 
                     try
                     {
@@ -140,11 +140,14 @@ namespace BHL.SearchIndexer
                     }
                     catch (Exception ex)
                     {
-                        _logger.Error(ex, "Error processing the Search Index Queue.  INDEXING WILL HALT.");
-                        SendEmailErrorNotification();
+                        string errorMessage = "Error processing the Search Index Queue.  INDEXING WILL HALT.";
+                        _logger.Error(ex, errorMessage);
+                        SendServiceLog(errorMessage, true);
+                        SendEmailErrorNotification(errorMessage);
                     }
 
                     _logger.Information("Index Queue Monitoring Stopped");
+                    SendServiceLog("Index Queue Monitoring Stopped", false);
                 }
             }
         }
@@ -708,6 +711,8 @@ namespace BHL.SearchIndexer
             _connectionKey = new ConfigurationManager(_configFile).AppSettings("ConnectionKey");
             _dbConnectionString = new ConfigurationManager(_configFile).ConnectionStrings(_connectionKey);
 
+            _bhlwsurl = new ConfigurationManager(_configFile).AppSettings("BHLWSUrl");
+
             _esConnectionString = new ConfigurationManager(_configFile).AppSettings("ElasticSearchServerAddress");
 
             _mqAddress = new ConfigurationManager(_configFile).AppSettings("MQAddress");
@@ -719,14 +724,11 @@ namespace BHL.SearchIndexer
             _mqErrorQueueName = new ConfigurationManager(_configFile).AppSettings("MQErrorQueueName");
             _mqPrefetchCount = Convert.ToUInt16(new ConfigurationManager(_configFile).AppSettings("MQPrefetchCount"));
 
-            _smtpHost = new ConfigurationManager(_configFile).AppSettings("SmtpHost");
-            _smtpPort = Convert.ToInt32(new ConfigurationManager(_configFile).AppSettings("SmtpPort"));
-            _smtpEnableSsl = new ConfigurationManager(_configFile).AppSettings("SmtpEnableSsl") == "true";
-            _smtpDefaultCredentials = new ConfigurationManager(_configFile).AppSettings("SmtpDefaultCredentials") == "true";
-            _smtpUser = new ConfigurationManager(_configFile).AppSettings("SmtpUsername");
-            _smtpPw = new ConfigurationManager(_configFile).AppSettings("SmtpPassword");
             _emailFromAddress = new ConfigurationManager(_configFile).AppSettings("EmailFromAddress");
             _emailToAddresses = new ConfigurationManager(_configFile).AppSettings("EmailToAddresses");
+            _emailOnError = new ConfigurationManager(_configFile).AppSettings("EmailOnError") == "true";
+
+            _logToDB = new ConfigurationManager(_configFile).AppSettings("LogToDB") == "true";
 
             _ocrLocation = new ConfigurationManager(_configFile).AppSettings("OCRLocation");
 
@@ -758,39 +760,58 @@ namespace BHL.SearchIndexer
         }
 
         /// <summary>
-        /// Send an email notification
+        /// Send an email error notification
         /// </summary>
         /// <param name="message"></param>
-        private static void SendEmailErrorNotification()
+        private static void SendEmailErrorNotification(string errorMessage)
         {
             try
             {
-                string thisComputer = Environment.MachineName;
+                if (_emailOnError)
+                {
+                    MailRequestModel mailRequest = new MailRequestModel();
+                    mailRequest.Subject = _serviceName + ": Index Queue Processing on " + Environment.MachineName + " halted with errors";
+                    mailRequest.Body = errorMessage + "  See the BHLSearchIndexer logs for detailed information.";
+                    mailRequest.From = _emailFromAddress;
 
-                var mimeMessage = new MimeMessage();
-                mimeMessage.From.Add(new MailboxAddress("", _emailFromAddress));
-                string[] toAddresses = _emailToAddresses.Split(',');
-                foreach (string toAddress in toAddresses)
-                {
-                    mimeMessage.To.Add(new MailboxAddress("", toAddress));
-                }
-                mimeMessage.Subject = "BHLSearchIndexer: Index Queue Processing on " + thisComputer + " halted with errors";
-                mimeMessage.Body = new TextPart("plain")
-                {
-                    Text = "An error occurred while reading messages from the index queue.  See the BHLSearchIndexer logs for detailed information."
-                };
+                    List<string> recipients = new List<string>();
+                    foreach (string recipient in _emailToAddresses.Split(',')) recipients.Add(recipient);
+                    mailRequest.To = recipients;
 
-                using (var client = new SmtpClient())
-                {
-                    client.Connect(_smtpHost, _smtpPort, _smtpEnableSsl);
-                    if (!string.IsNullOrWhiteSpace(_smtpUser)) client.Authenticate(_smtpUser, _smtpPw);
-                    client.Send(mimeMessage);
-                    client.Disconnect(true);
+                    EmailClient restClient = new EmailClient(_bhlwsurl);
+                    restClient.SendEmail(mailRequest);
                 }
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, "Could not send Email");
+            }
+        }
+
+        /// <summary>
+        /// Send the specified message to the log table in the database
+        /// </summary>
+        /// <param name="serviceName">Name of the service being logged</param>
+        /// <param name="message">Body of the message to be sent</param>
+        private static void SendServiceLog(string message, bool isError)
+        {
+            try
+            {
+                if (_logToDB)
+                {
+                    ServiceLogModel serviceLog = new ServiceLogModel();
+                    serviceLog.Servicename = _serviceName;
+                    serviceLog.Logdate = DateTime.Now;
+                    serviceLog.Severityname = isError ? "Error" : "Information";
+                    serviceLog.Message = string.Format("Processing on {0} completed.\n\r{1}", Environment.MachineName, message);
+
+                    ServiceLogsClient restClient = new ServiceLogsClient(_bhlwsurl);
+                    restClient.InsertServiceLog(serviceLog);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Service Log Exception: ");
             }
         }
 

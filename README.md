@@ -789,6 +789,7 @@ Service that reads messages from RabbitMQ queues and adds/updates/deletes the co
 <table>
 <tr><th>Element</th><th>Value</th></tr>
 <tr><td># appSettings/EmailToAddresses</td><td>Recipients of emails sent by the process (comma-separated)</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
 <tr><td>appSettings/ElasticSearchServerAddress</td><td>Search Server address, including port number</td></tr>
 <tr><td>appSettings/MQAddress</td><td>Message queue host URL</td></tr>
 <tr><td>appSettings/MQPort</td><td>Message queue port</td></tr>
@@ -808,6 +809,7 @@ Service that reads messages from RabbitMQ queues and adds/updates/deletes the co
 <table>
 <tr><th>Element</th><th>Value</th></tr>
 <tr><td># appSettings/EmailToAddresses</td><td>Recipients of emails sent by the process (comma-separated)</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
 <tr><td>appSettings/ElasticSearchServerAddress</td><td>Search Server address, including port number</td></tr>
 <tr><td>appSettings/MQAddress</td><td>Message queue host URL</td></tr>
 <tr><td>appSettings/MQPort</td><td>Message queue port</td></tr>
@@ -827,6 +829,7 @@ Service that reads messages from RabbitMQ queues and adds/updates/deletes the co
 <table>
 <tr><th>Element</th><th>Value</th></tr>
 <tr><td># appSettings/EmailToAddresses</td><td>Recipients of emails sent by the process (comma-separated)</td></tr>
+<tr><td>appSettings/BHLWSUrl</td><td>URL for a running instance of the BHLWebServiceREST.v1 project.</td></tr>
 <tr><td>appSettings/ElasticSearchServerAddress</td><td>Search Server address, including port number</td></tr>
 <tr><td>appSettings/DocFolder</td><td>Folder for debug output files</td></tr>
 <tr><td>appSettings/OCRLocation</td><td>Set to “remote”</td></tr>

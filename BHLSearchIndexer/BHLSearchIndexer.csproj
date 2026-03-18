@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BHLUtility\BHLUtility.csproj" />
+    <ProjectReference Include="..\BHLWebServiceREST.v1.Client\BHL.WebServiceREST.v1.Client.csproj" />
     <ProjectReference Include="..\QueueUtility\QueueUtility.csproj" />
   </ItemGroup>
 
