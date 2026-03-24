@@ -159,6 +159,9 @@ $(document).ready(function () {
     });
 
     // Abstractsection collapsing on part Bibliography page
+    $('.partabstract:first').addClass('active');
+    $('.partabstract .body').not(':first').hide();
+    $('.partabstract').show();
     $('.partabstract .title').on("click", function () {
         var volume = $(this).parent();
         var volumeBody = $('.body', volume);
@@ -169,6 +172,9 @@ $(document).ready(function () {
     });
 
     // Note section collapsing on part Bibliography page
+    $('.partnote:first').addClass('active');
+    $('.partnote .body').not(':first').hide();
+    $('.partnote').show();
     $('.partnote .title').on("click", function () {
         var volume = $(this).parent();
         var volumeBody = $('.body', volume);

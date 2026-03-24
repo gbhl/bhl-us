@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="description" content="The Biodiversity Heritage Library works collaboratively to make biodiversity literature openly available to the world as part of a global biodiversity community." />
+    <meta name="description" content="@(!string.IsNullOrWhiteSpace(ViewBag.Description) ? ViewBag.Description : "The Biodiversity Heritage Library works collaboratively to make biodiversity literature openly available to the world as part of a global biodiversity community.")" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -217,7 +217,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>!window.jQuery && document.write(unescape('%3Cscript src="/js/libs/jquery-3.7.1.min.js"%3E%3C/script%3E'))</script>
     <script src="/js/plugins.js?v=3"></script>
-    <script src="/js/script.js?v=8"></script>
+    <script src="/js/script.js?v=9"></script>
     <script type="text/plain" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js" data-category="analytics" data-service="altmetric"></script>
 
     @RenderSection("scripts", required: false)

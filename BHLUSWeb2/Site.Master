@@ -204,7 +204,7 @@
         <asp:ContentPlaceHolder ID="scriptContentPlaceHolder" runat="server" />
 
         <script src="/js/plugins.js?v=3"></script> 
-          <script src="/js/script.js?v=8"></script> 
+          <script src="/js/script.js?v=9"></script> 
         <script type="text/plain" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js" data-category="analytics" data-service="altmetric"></script>
     </form>
 </body>

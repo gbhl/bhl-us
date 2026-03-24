@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Details - " + Model.Title.FullTitle + " - Biodiversity Heritage Library";
+    ViewBag.Description = "Details for " + Model.Title.FullTitleExtended + " in the Biodiversity Heritage Library.";
 }
 
 @section CSS {
@@ -23,7 +24,8 @@
             @{Html.RenderPartial("~/Views/Shared/_COinSControl.cshtml", Model.COinS); }
             <div id="details" class="tab-body">
                 <h3>Title</h3>
-                <p>@Model.Title.FullTitleExtended</p>
+                <span itemprop="url" style="display:none">@String.Format(System.Configuration.ConfigurationManager.AppSettings["BibPageUrl"], Model.Title.TitleID.ToString())</span>
+                <p><span itemprop="name">@Model.Title.FullTitleExtended</span></p>
                 @if (Model.TitleVariants.Count > 0 || !string.IsNullOrWhiteSpace(Model.Title.UniformTitle))
                 {
                     <h3>Title Variants</h3>
@@ -95,26 +97,44 @@
                 <p>
                     @foreach (var author in Model.AuthorsDetail)
                     {
-                        <a href="/creator/@author.AuthorID">
-                            @author.NameExtended
-                        </a>if (!string.IsNullOrWhiteSpace(author.Relationship)) { Html.Raw(", " + author.Relationship); }
-                        if (!string.IsNullOrWhiteSpace(author.TitleOfWork)) { Html.Raw(", " + author.TitleOfWork); }
+                        <span itemprop="author" itemscope itemtype="@((author.AuthorRoleID.ToString() == "1" || author.AuthorRoleID.ToString() == "4") ? "https://schema.org/Person" : "https://schema.org/Organization")">
+                            <a href="/creator/@author.AuthorID">
+                                <span itemprop="name">@author.NameExtended</span>
+                            </a>@if (!string.IsNullOrWhiteSpace(author.Relationship)) { Html.Raw(", " + author.Relationship); }
+                            <span itemprop='url' style='display:none'>@string.Format(System.Configuration.ConfigurationManager.AppSettings["AuthorPageUrl"], author.AuthorID.ToString())</span>
+                            @if (!string.IsNullOrWhiteSpace(author.TitleOfWork)) { Html.Raw(", " + author.TitleOfWork); }
+                            @if (!string.IsNullOrWhiteSpace(author.StartDate)) {
+                            <span itemprop='birthDate' style='display:none'>@author.StartDate</span>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(author.EndDate)) {
+                            <span itemprop='deathDate' style='display:none'>@author.EndDate</span>
+                            }
+                        </span>
                         <br />
                     }
                     @if (Model.AuthorsDetail.Count > 0 && Model.AdditionalAuthorsDetail.Count > 0) { Html.Raw("<br />"); }
                     @foreach (var author in Model.AdditionalAuthorsDetail)
                     {
-                        <a href="/creator/@author.AuthorID">
-                            @author.NameExtended
-                        </a>if (!string.IsNullOrWhiteSpace(author.Relationship)) { Html.Raw(", " + author.Relationship); }
-                        if (!string.IsNullOrWhiteSpace(author.TitleOfWork)) { Html.Raw(", " + author.TitleOfWork); }
+                        <span itemprop="author" itemscope itemtype="@((author.AuthorRoleID.ToString() == "1" || author.AuthorRoleID.ToString() == "4") ? "https://schema.org/Person" : "https://schema.org/Organization")">
+                            <a href="/creator/@author.AuthorID">
+                                <span itemprop="name">@author.NameExtended</span>
+                            </a>@if (!string.IsNullOrWhiteSpace(author.Relationship)) { Html.Raw(", " + author.Relationship); }
+                            <span itemprop='url' style='display:none'>@string.Format(System.Configuration.ConfigurationManager.AppSettings["AuthorPageUrl"], author.AuthorID.ToString())</span>
+                            @if (!string.IsNullOrWhiteSpace(author.TitleOfWork)) { Html.Raw(", " + author.TitleOfWork); }
+                            @if (!string.IsNullOrWhiteSpace(author.StartDate)) {
+                            <span itemprop='birthDate' style='display:none'>@author.StartDate</span>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(author.EndDate)) {
+                            <span itemprop='deathDate' style='display:none'>@author.EndDate</span>
+                            }
+                        </span>
                         <br />
                     }
                 </p>
                 <h3>Type</h3>
                 <p>
-                    @Model.Genre
-                </p>
+                    <span itemprop="genre">@Model.Genre</span>
+</p>
                 @if (!string.IsNullOrWhiteSpace(Model.Material))
                 {
                     <h3>Material</h3>
@@ -124,7 +144,8 @@
                 }
                 <h3>Publication info</h3>
                 <p>
-                    @Model.Title.PublicationDetails
+                    <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><span itemprop="name">@Model.Title.PublicationDetails</span></span>
+                    <span itemprop="datePublished" style="display:none">@Model.Title.StartYear.ToString()</span>
                 </p>
                 @if (!String.IsNullOrWhiteSpace(Model.Title.EditionStatement))
                 {
@@ -146,7 +167,7 @@
                 @if (Model.TitleKeywords != null && Model.TitleKeywords.Count > 0)
                 {
                     <h3>Subjects</h3>
-                    <p>
+                    <p><span itemprop="keywords">
                         @for (int i = 0; i < Model.TitleKeywords.Count; i++)
                         {
                             <a href="/subject/@Server.UrlEncode(Model.TitleKeywords[i].Keyword)">
@@ -154,7 +175,7 @@
                             </a>
                             @((i < Model.TitleKeywords.Count - 1) ? ", " : string.Empty)
                         }
-                    </p>
+                    </span></p>
                 }
                 @if (Model.Collections.Count > 0)
                 {

@@ -876,6 +876,7 @@ namespace MOBOT.BHL.Server
                     AddGoogleScholarTag(tags, "citation_issue", segment.Issue);
                     AddGoogleScholarTag(tags, "citation_firstpage", segment.StartPageNumber);
                     AddGoogleScholarTag(tags, "citation_lastpage", segment.EndPageNumber);
+                    AddGoogleScholarTag(tags, "citation_abstract", segment.Summary);
 
                     AddGoogleScholarTag(tags, "DC.title", segment.Title);
                     AddGoogleScholarTag(tags, "DC.issued", segment.Date);
