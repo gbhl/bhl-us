@@ -50,6 +50,7 @@
     <add key="GeminiSeverityId" value="19"/>
     <add key="GeminiResolutionId" value="15"/>
     <add key="GeminiRequestSourceUserId" value="22"/>
+    <add key="GeminiMailboxId" value="7"/>
 
     <!-- Feature toggle for New Future messaging -->
     <add key="ShowNewFuture" value="true" />

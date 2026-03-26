@@ -114,6 +114,7 @@ namespace MOBOT.BHL.Web2
             int severityId = int.Parse(ConfigurationManager.AppSettings["GeminiSeverityId"]);
             int resolutionId = int.Parse(ConfigurationManager.AppSettings["GeminiResolutionId"]);
             int requestSourceId = int.Parse(ConfigurationManager.AppSettings["GeminiRequestSourceUserId"]);
+            int mailboxId = int.Parse(ConfigurationManager.AppSettings["GeminiMailboxId"]);
 
             ServiceManager serviceManager = new ServiceManager(geminiWebServiceURL, geminiUserName, geminiUserPassword, "", false);
             UserDto user = serviceManager.Admin.WhoAmI();
@@ -157,6 +158,7 @@ namespace MOBOT.BHL.Web2
             data.StatusId = statusId;         // 28=Unassigned
             data.SeverityId = severityId;        // 19=Null
             data.ReportedBy = user.Entity.Id;
+            data.MailboxId = mailboxId;         // 7=Feedback MS Mailbox
 
             try
             {
