@@ -149,7 +149,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                                 String emailBody = this.GetRequestorEmailBody((int)pdf.PdfID, pdfDoc.FileUrl,
                                     pdf.ArticleTitle, pdf.ArticleCreators, pdf.ArticleTags);
                                 this.SendEmail("BHL PDF Generation request #" + pdf.PdfID.ToString() + " - Complete",
-                                    emailBody, "noreply@biodiversitylibrary.org", pdf.EmailAddress,
+                                    emailBody, configParms.EmailFromAddress, pdf.EmailAddress,
                                     pdf.ShareWithEmailAddresses);
 
                                 // Update PDF record feedback from the generation process.
