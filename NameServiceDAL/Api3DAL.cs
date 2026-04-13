@@ -135,7 +135,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
             if (connection == null) connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"));
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiItemSelectByBarcode", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 40, false, barcode)))
+                CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 200, false, barcode)))
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
