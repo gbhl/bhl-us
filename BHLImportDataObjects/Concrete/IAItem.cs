@@ -13,6 +13,7 @@ namespace MOBOT.BHLImport.DataObjects
 	{
 
         private int _totalItems;
+        private string _itemType;
         private string _status;
         private string _holdingInstitution;
         private string _createdUser;
@@ -22,6 +23,12 @@ namespace MOBOT.BHLImport.DataObjects
         {
             get { return _totalItems; }
             set { _totalItems = value; }
+        }
+
+        public string ItemType
+        {
+            get { return _itemType; }
+            set { _itemType = value; }
         }
 
         public string Status
@@ -57,6 +64,11 @@ namespace MOBOT.BHLImport.DataObjects
                     case "TotalItems":
                         {
                             _totalItems = (int)column.Value;
+                            break;
+                        }
+                    case "ItemType":
+                        {
+                            _itemType = Utility.EmptyIfNull(column.Value);
                             break;
                         }
                     case "Status":

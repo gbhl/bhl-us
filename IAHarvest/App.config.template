@@ -69,10 +69,14 @@
     <add key="MQPort" value="MESSAGE QUEUE SERVER PORT" />
     <add key="MQUser" value="MESSAGE QUEUE USERNAME" />
     <add key="MQPassword" value="MESSAGE QUEUE PASSWORD" />
-    <add key="MQQueue" value="NAME OF MESSAGE QUEUE FOR CHANGED/NEW ITEM TEXT" />
-    <add key="MQExchange" value="NAME OF MESSAGE QUEUE EXCHANGE " />
-    <add key="MQErrorQueue" value="NAME OF MESSAGE QUEUE ERROR QUEUE FOR CHANGED/NEW ITEM TEXT" />
-    <add key="MQErrorExchange" value="NAME OF MESSAGE QUEUE ERROR EXCHANGE" />
+    <add key="MQNewQueue" value="NAME OF MESSAGE QUEUE FOR NEW ITEMS" />
+    <add key="MQNewExchange" value="NAME OF MESSAGE QUEUE EXCHANGE FOR NEW ITEMS" />
+    <add key="MQNewErrorQueue" value="NAME OF MESSAGE QUEUE ERROR QUEUE FOR NEW ITEMS" />
+    <add key="MQNewErrorExchange" value="NAME OF MESSAGE QUEUE ERROR EXCHANGE FOR NEW ITEMS" />
+    <add key="MQUpdateQueue" value="NAME OF MESSAGE QUEUE FOR UPDATED ITEMS" />
+    <add key="MQUpdateExchange" value="NAME OF MESSAGE QUEUE ERROR QUEUE FOR UPDATED ITEMS" />
+    <add key="MQUpdateErrorQueue" value="NAME OF MESSAGE QUEUE FOR UPDATED ITEMS" />
+    <add key="MQUpdateErrorExchange" value="NAME OF MESSAGE QUEUE ERROR EXCHANGE FOR UPDATED ITEMS" />
   </appSettings>
 	<log4net>
 		<!-- Define some output appenders -->

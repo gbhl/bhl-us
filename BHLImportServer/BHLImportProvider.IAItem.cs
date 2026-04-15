@@ -60,6 +60,11 @@ namespace MOBOT.BHLImport.Server
             return (new IAItemDAL().IAItemSelectForPublishToImportTables(null, null, iaIdentifier));
         }
 
+        public IAItem IAItemSelectProductionIDByIAIdentifier(String iaIdentifier)
+        {
+            return (new IAItemDAL().IAItemSelectProductionIDByIAIdentifier(null, null, iaIdentifier));
+        }
+
         public bool IAItemPublishToProduction(int itemID)
         {
             return (new IAItemDAL().IAItemPublishToProduction(null, null, itemID));

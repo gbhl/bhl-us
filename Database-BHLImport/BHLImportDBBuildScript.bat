@@ -328,6 +328,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\IAItemSelectForPublishToImportTa
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\IAItemSelectForXMLDownload.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\IAItemSelectOKToPublish.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\IAItemSelectPendingApproval.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\IAItemSelectProductionIDByIAIdentifier.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\IAItemSetDeleteAuto.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\IAItemSetDeleteByItem.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\IAItemSetInsertAuto.sql"

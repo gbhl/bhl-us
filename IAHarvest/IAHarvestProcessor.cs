@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
+using static MOBOT.BHLImport.Server.BHLImportProvider;
 
 namespace IAHarvest
 {
@@ -269,6 +270,13 @@ namespace IAHarvest
                             this.HarvestScandata(GetFile(fileList, configParms.ScandataExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
                             this.HarvestMarcData(GetFile(fileList, configParms.MarcExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate, (item.NoMARCOk == 1));
                             this.HarvestBHLCreatorData(GetFile(fileList, configParms.BHLCreatorExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
+                        }
+                        else
+                        {
+                            // Production item, so queue a message indicating that a production item has updated files
+                            IAItem prodItem = provider.IAItemSelectProductionIDByIAIdentifier(item.IAIdentifier);
+                            AddToQueue(prodItem.ItemType, (int)prodItem.ItemID, item.IAIdentifier,
+                                configParms.MQUpdateQueue, configParms.MQUpdateErrorQueue, configParms.MQUpdateErrorExchange);
                         }
                         provider.IAItemUpdateLastXMLDataHarvestDate(item.ItemID);
                         provider.IAItemUpdateItemStatusIDAfterDataHarvest(item.ItemID,
@@ -1503,7 +1511,9 @@ namespace IAHarvest
                         BHLImportProvider.IAPublishResult publishResult = provider.ItemPublishToProductionIA(item.BarCode);
                         if (publishResult.Success)
                         {
-                            AddToQueue(publishResult.ItemType, (int)publishResult.ID, item.BarCode);    // Queue a message indicating that new text exists for an item
+                            // Queue a message indicating that a new item has been added
+                            AddToQueue(publishResult.ItemType, (int)publishResult.ID, item.BarCode,
+                                configParms.MQNewQueue, configParms.MQNewErrorQueue, configParms.MQNewErrorExchange);
                             publishedProductionItems.Add(item.BarCode);
                         }
                         else
@@ -1591,7 +1601,7 @@ namespace IAHarvest
         /// <param name="itemType"></param>
         /// <param name="itemID"></param>
         /// <param name="barCode"></param>
-        private void AddToQueue(string itemType, int itemID, string barCode)
+        private void AddToQueue(string itemType, int itemID, string barCode, string queueName, string errorQueueName, string errorExchangeName)
         {
             // Build the message
             string queueMsg = string.Format("{0}|{1}|{2}", itemType, itemID, barCode);
@@ -1601,16 +1611,13 @@ namespace IAHarvest
                 // Add the message to the queue
                 using (QueueIO queueUtil = new QueueIO(configParms.MQAddress, configParms.MQPort, configParms.MQUser, configParms.MQPassword))
                 {
-                    queueUtil.PutMessage(queueMsg,
-                        queueName: configParms.MQQueue,
-                        errorQueueName: configParms.MQErrorQueue,
-                        errorExchangeName: configParms.MQErrorExchange);
+                    queueUtil.PutMessage(queueMsg, queueName, errorQueueName, errorExchangeName);
                 }
             }
             catch (Exception ex)
             {
                 string errMsg = string.Format(
-                    "Error adding a message to the {0} queue: {1}", configParms.MQQueue, queueMsg);
+                    "Error adding a message to the {0} queue: {1}", configParms.MQNewQueue, queueMsg);
                 Log.Error(ex, errMsg);
             }
         }

@@ -432,10 +432,14 @@ namespace IAHarvest
         public int MQPort { get; set; } = 0;
         public string MQUser { get; set; } = string.Empty;
         public string MQPassword { get; set; } = string.Empty;
-        public string MQQueue { get; set; } = string.Empty;
-        public string MQExchange { get; set; } = string.Empty;
-        public string MQErrorQueue { get; set; } = string.Empty;
-        public string MQErrorExchange { get; set; } = string.Empty;
+        public string MQNewQueue { get; set; } = string.Empty;
+        public string MQNewExchange { get; set; } = string.Empty;
+        public string MQNewErrorQueue { get; set; } = string.Empty;
+        public string MQNewErrorExchange { get; set; } = string.Empty;
+        public string MQUpdateQueue { get; set; } = string.Empty;
+        public string MQUpdateExchange { get; set; } = string.Empty;
+        public string MQUpdateErrorQueue { get; set; } = string.Empty;
+        public string MQUpdateErrorExchange { get; set; } = string.Empty;
 
         public void LoadAppConfig()
         {
@@ -474,10 +478,14 @@ namespace IAHarvest
             MQPort = Convert.ToInt32(ConfigurationManager.AppSettings["MQPort"]);
             MQUser = ConfigurationManager.AppSettings["MQUser"];
             MQPassword = ConfigurationManager.AppSettings["MQPassword"];
-            MQQueue = ConfigurationManager.AppSettings["MQQueue"];
-            MQExchange = ConfigurationManager.AppSettings["MQExchange"];
-            MQErrorQueue = ConfigurationManager.AppSettings["MQErrorQueue"];
-            MQErrorExchange = ConfigurationManager.AppSettings["MQErrorExchange"];
+            MQNewQueue = ConfigurationManager.AppSettings["MQNewQueue"];
+            MQNewExchange = ConfigurationManager.AppSettings["MQNewExchange"];
+            MQNewErrorQueue = ConfigurationManager.AppSettings["MQNewErrorQueue"];
+            MQNewErrorExchange = ConfigurationManager.AppSettings["MQNewErrorExchange"];
+            MQUpdateQueue = ConfigurationManager.AppSettings["MQUpdateQueue"];
+            MQUpdateExchange = ConfigurationManager.AppSettings["MQUpdateExchange"];
+            MQUpdateErrorQueue = ConfigurationManager.AppSettings["MQUpdateErrorQueue"];
+            MQUpdateErrorExchange = ConfigurationManager.AppSettings["MQUpdateErrorExchange"];
         }
     }
 }

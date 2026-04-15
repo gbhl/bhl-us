@@ -28,7 +28,30 @@ namespace MOBOT.BHLImport.DAL
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("IAItemSelectByIAIdentifier", connection, transaction,
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.IAItemSelectByIAIdentifier", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 200, false, iaIdentifier)))
+            {
+                using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
+                {
+                    List<IAItem> list = helper.ExecuteReader(command);
+
+                    if (list.Count > 0)
+                    {
+                        return list[0];
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+        }
+
+        public IAItem IAItemSelectProductionIDByIAIdentifier(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string iaIdentifier)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.IAItemSelectProductionIDByIAIdentifier", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 200, false, iaIdentifier)))
             {
                 using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
