@@ -1601,7 +1601,7 @@ namespace IAHarvest
         /// <param name="itemType"></param>
         /// <param name="itemID"></param>
         /// <param name="barCode"></param>
-        private void AddToQueue(string itemType, int itemID, string barCode, string queueName, string errorQueueName, string errorExchangeName)
+        private void AddToQueue(string itemType, int itemID, string barCode, string qName, string errorQName, string errorExchgName)
         {
             // Build the message
             string queueMsg = string.Format("{0}|{1}|{2}", itemType, itemID, barCode);
@@ -1611,7 +1611,10 @@ namespace IAHarvest
                 // Add the message to the queue
                 using (QueueIO queueUtil = new QueueIO(configParms.MQAddress, configParms.MQPort, configParms.MQUser, configParms.MQPassword))
                 {
-                    queueUtil.PutMessage(queueMsg, queueName, errorQueueName, errorExchangeName);
+                    queueUtil.PutMessage(queueMsg,
+                        queueName: qName,
+                        errorQueueName: errorQName,
+                        errorExchangeName: errorExchgName);
                 }
             }
             catch (Exception ex)
