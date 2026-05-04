@@ -940,7 +940,7 @@ namespace MOBOT.BHL.Server
             return new KBARTDAL().Export(null, null, urlRoot);
         }
 
-        public string GetRemoteFilePath(RemoteFileType type, string barcode="", string fileName="", int? itemID=null, int? pageID=null, int? pageSeq=null)
+        public string GetRemoteFilePath(RemoteFileType type, string barcode = "", string fileName = "", PathItemType? pathItemType=null, int? itemID=null, int? pageID=null, int? pageSeq=null)
         {
             // Build the IA or AWS path
             string configKey = "ImageBaseUrl";
@@ -970,6 +970,7 @@ namespace MOBOT.BHL.Server
             }
 
             string remoteFilePath = string.Empty;
+            string itemTypeValue = pathItemType.HasValue ? (pathItemType == PathItemType.Part ? "part" : "item") : string.Empty;
             DataObjects.Configuration configuration = new ConfigurationDAL().ConfigurationSelectByName(null, null, configKey);
             if (configuration != null)
             {
@@ -977,6 +978,7 @@ namespace MOBOT.BHL.Server
                 remoteFilePath = pathTemplate
                     .Replace("{barcode}", barcode)
                     .Replace("{fileName}", fileName)
+                    .Replace("{itemType}", itemTypeValue)
                     .Replace("{itemid}", itemID == null ? string.Empty : String.Format("{0:D6}", itemID))     // Pad to six characters with leading zeros
                     .Replace("{pageid}", pageID == null ? string.Empty : String.Format("{0:D8}", pageID))     // Pad to eight characters with leading zeros
                     .Replace("{pageseq}", pageSeq == null ? string.Empty : String.Format("{0:D4}", pageSeq)); // Pad to four characters with leading zeros

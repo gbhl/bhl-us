@@ -1,5 +1,6 @@
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -65,8 +66,9 @@ namespace MOBOT.BHL.Web2.Services
 
                 return js.Serialize(new { ocrText, success = true });
             }
-            catch
+            catch (Exception ex)
             {
+                if (HttpContext.Current.IsDebuggingEnabled) ExceptionUtility.LogException(ex, "PageSummaryService.GetPageOcrText)");
                 return js.Serialize(new { ocrText = "Text unavailable for this page.", success = false });
             }
         }

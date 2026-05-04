@@ -130,7 +130,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 BHLProvider provider = new BHLProvider();
 
                 Item item = provider.ItemSelectFilenames(ItemType.Segment, (int)partid);
-                string itemtextPath = provider.GetRemoteFilePath(RemoteFileType.ItemText, item.BarCode, item.TextFilename, partid);
+                string itemtextPath = provider.GetRemoteFilePath(RemoteFileType.ItemText, item.BarCode, item.TextFilename, pathItemType: PathItemType.Part, itemID: partid);
 
                 if (itemtextPath.Contains("archive.org"))
                 {

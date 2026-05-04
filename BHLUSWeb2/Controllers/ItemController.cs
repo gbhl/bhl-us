@@ -26,7 +26,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 BHLProvider provider = new BHLProvider();
 
                 Item item = provider.ItemSelectFilenames(ItemType.Book, (int)itemid);
-                string itemtextPath = provider.GetRemoteFilePath(RemoteFileType.ItemText, item.BarCode, item.TextFilename, itemid);
+                string itemtextPath = provider.GetRemoteFilePath(RemoteFileType.ItemText, item.BarCode, item.TextFilename, pathItemType: PathItemType.Item, itemID: itemid);
 
                 if (itemtextPath.Contains("archive.org"))
                 {

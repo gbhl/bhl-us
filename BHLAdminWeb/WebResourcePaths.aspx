@@ -13,14 +13,15 @@
     </p>
     <p>
         For template fields, <span style="font-family:'Courier New'">{barcode}</span>, <span style="font-family:'Courier New'">{fileName}</span>, 
-        <span style="font-family:'Courier New'">{itemid}</span>, <span style="font-family:'Courier New'">{pageid}</span>, and 
-        <span style="font-family:'Courier New'">{pageseq}</span> can be used as placeholders for variable parts of a resource path.
+        <span style="font-family:'Courier New'">{itemType}</span>, <span style="font-family:'Courier New'">{itemid}</span>, 
+        <span style="font-family:'Courier New'">{pageid}</span>, and <span style="font-family:'Courier New'">{pageseq}</span> 
+        can be used as placeholders for variable parts of a resource path.
     </p>
     <p>
         <p>For example,</p>
         <p style="margin-left:20px; font-family:'Courier New'">
             https://www.archive.org/download/{barcode}/{fileName}<br />
-            https://bhl-open-data.s3.us-east-2.amazonaws.com/ocr/item-{itemid}/item-{itemid}-{pageid}-{pageseq}.txt
+            https://bhl-open-data.s3.us-east-2.amazonaws.com/ocr/{itemType}-{itemid}/{itemType}-{itemid}-{pageid}-{pageseq}.txt
         </p>
         <p>are templates for resource paths such as</p>
         <p style="margin-left:20px; font-family:'Courier New'">
@@ -148,12 +149,12 @@
 
     function fillItemTextPathDefault(type) {
         if (type == "ia") txtItemTextPath.value = "https://archive.org/download/{barcode}/{fileName}";
-        if (type == "aws") txtItemTextPath.value = "https://bhl-open-data.s3.us-east-2.amazonaws.com/ocr/item-{itemid}/item-{itemid}.txt";
+        if (type == "aws") txtItemTextPath.value = "https://bhl-open-data.s3.us-east-2.amazonaws.com/ocr/{itemType}-{itemid}/{itemType}-{itemid}.txt";
     }
 
     function fillPageTextPathDefault(type) {
         if (type == "ia") txtPageTextPath.value = "";
-        if (type == "aws") txtPageTextPath.value = "https://bhl-open-data.s3.us-east-2.amazonaws.com/ocr/item-{itemid}/item-{itemid}-{pageid}-{pageseq}.txt";
+        if (type == "aws") txtPageTextPath.value = "https://bhl-open-data.s3.us-east-2.amazonaws.com/ocr/{itemType}-{itemid}/{itemType}-{itemid}-{pageid}-{pageseq}.txt";
     }
 </script>
 

@@ -22,9 +22,13 @@ namespace MOBOT.BHL.Web2.Controllers
             else
             {
                 BHLProvider provider = new BHLProvider();
+                PathItemType pathItemType = PathItemType.Item;
                 PageSummaryView ps = provider.PageSummarySelectByPageId((int)pageid);
-                if (ps == null) ps = provider.PageSummarySegmentSelectByPageID((int)pageid);
-                string remoteFilePath = provider.GetRemoteFilePath(RemoteFileType.PageText, itemID: ps.BookID, pageID: ps.PageID, pageSeq: ps.SequenceOrder);
+                if (ps == null) { 
+                    ps = provider.PageSummarySegmentSelectByPageID((int)pageid); 
+                    pathItemType = PathItemType.Part; 
+                }
+                string remoteFilePath = provider.GetRemoteFilePath(RemoteFileType.PageText, pathItemType: pathItemType, itemID: ps.BookID, pageID: ps.PageID, pageSeq: ps.SequenceOrder);
                 if (string.IsNullOrWhiteSpace(remoteFilePath))
                 {
                     // No remote file path, so get the text from Site Services API
