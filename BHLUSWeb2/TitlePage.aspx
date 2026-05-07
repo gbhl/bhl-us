@@ -1215,13 +1215,13 @@
                 }
                 else {
                     var fileSize = "full";
-                    if (calculatedWidth < Math.floor(br.getPageWidth(index) / 16)) {
+                    if (calculatedWidth < Math.floor(br.getPageWidth(index) / 32)) {
                         fileSize = "thumb";
-                    } else if (calculatedWidth < Math.floor(br.getPageWidth(index) / 8)) {
+                    } else if (calculatedWidth < Math.floor(br.getPageWidth(index) / 16)) {
                         fileSize = "small";
-                    } else if (calculatedWidth < Math.floor(br.getPageWidth(index) / 4)) {
+                    } else if (calculatedWidth < Math.floor(br.getPageWidth(index) / 8)) {
                         fileSize = "medium";
-                    } else if (calculatedWidth < Math.floor(br.getPageWidth(index) / 2)) {
+                    } else if (calculatedWidth < Math.floor(br.getPageWidth(index) / 4)) {
                         fileSize = "large";
                     }
                     url = pages[index].ExternalBaseUrl + '/web/' + pages[index].BarCode + '/' + pages[index].BarCode + '_' + ('0000' + (index + 1)).slice(-4) + '_' + fileSize + '.webp';
