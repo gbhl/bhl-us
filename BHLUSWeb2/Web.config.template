@@ -90,6 +90,7 @@
 
     <!-- ###################################################################### -->
 
+    <add key="EmailFromAddress" value="noreply@biodiversitylibrary.org"/>
     <add key="ShowAnnotations" value="true"/>
     <add key="EnableFullTextSearch" value="true"/>
     <add key="LogExceptions" value="true"/>
