@@ -4,6 +4,7 @@ if (socialSpan) {
 	addSocialElement(socialSpan, "https://instagram.com/biodivlibrary", "socicon socicon-insta", "/images/socicon-insta.png", "Open Instagram", "Instagram");
 	addSocialElement(socialSpan, "https://facebook.com/biodivlibrary", "socicon socicon-fb", "/images/socicon-fb.png", "Open Facebook", "Facebook");
 	addSocialElement(socialSpan, "https://flickr.com/biodivlibrary", "socicon socicon-flickr", "/images/socicon-flickr.png", "Open Flickr", "Flickr");
+	addSocialElement(socialSpan, "https://forum.biodiversitylibrary.org", "socicon socicon-discourse", "/images/socicon-discourse.png", "Open Discourse", "Discourse");
 }
 
 function addSocialElement(target, url, cssclass, icon, alt, title) {

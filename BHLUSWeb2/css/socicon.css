@@ -1,5 +1,7 @@
 #socicons a {
 	margin: 0 0 0 0px !important;
+	position: relative;
+	z-index: 200;
 }
 .socicon {
 	margin-right:3px;
@@ -26,4 +28,8 @@
 .socicon-insta:hover {
 	content: url("/images/socicon-insta-hover.png") / "Open Instagram";
 	cursor: pointer;
+}
+.socicon-discourse:hover {
+    content: url("/images/socicon-discourse-hover.png") / "Open Discourse";
+    cursor: pointer;    
 }
