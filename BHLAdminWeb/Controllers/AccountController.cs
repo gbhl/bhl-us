@@ -206,6 +206,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             }
 
             // If we got this far, something failed, redisplay form
+            ViewBag.Institutions = GetInstitutions();
             return View(model);
         }
 
