@@ -1,4 +1,5 @@
 ﻿using MOBOT.BHL.API.BHLApi;
+using MOBOT.BHL.Web.Utilities;
 using MvcThrottle;
 using System;
 using System.Collections.Generic;
@@ -245,6 +246,7 @@ namespace MOBOT.BHL.Web2.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionUtility.LogException(ex, "ApiController.Api3Handler");
                 response = GetErrorResponse("error", ex, outputType);
                 Response.Status = "500 Internal Server Error";
                 Response.StatusCode = 500;
@@ -796,6 +798,7 @@ namespace MOBOT.BHL.Web2.Controllers
             }
             catch (Exception ex)
             {
+                ExceptionUtility.LogException(ex, "ApiController.Api2Handler");
                 response = GetErrorResponse("error", ex, outputType);
                 Response.Status = "500 Internal Server Error";
                 Response.StatusCode = 500;

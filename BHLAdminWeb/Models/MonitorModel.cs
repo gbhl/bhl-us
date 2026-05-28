@@ -1,5 +1,6 @@
 ﻿using BHL.SiteServiceREST.v1.Client;
 using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Web.Utilities;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -106,8 +107,9 @@ namespace MOBOT.BHL.AdminWeb.Models
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionUtility.LogException(ex, "MonitorModel.GetSearchStats");
                 searchMonitor.ErrorMessage = "Error retrieving Search Server statistics.";
             }
         }
@@ -166,8 +168,9 @@ namespace MOBOT.BHL.AdminWeb.Models
                     mqMonitor.Queues.Add(mq);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionUtility.LogException(ex, "MonitorModel.GetMQStats");
                 mqMonitor.ErrorMessage = "Error retrieving Message Queue statistics.";
             }
         }
