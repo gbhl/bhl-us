@@ -144,7 +144,12 @@
                     </div>
                     <div class="getinvolved">
                         <h3>Get Involved</h3>
-                        <a class="community" target="_blank" rel="noopener noreferrer" href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageContribute"] %>">Ways To Contribute</a>
+                        <p>
+                            <a class="community" target="_blank" rel="noopener noreferrer" href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageContribute"]">Ways To Contribute</a>
+                        </p>
+                        <p>
+                            <a class="community" title="Join the BHL community forum" target="_blank" rel="noopener noreferrer" href="https://forum.biodiversitylibrary.org">BHL Community Forum</a>
+                        </p>
                     </div>
                 </div>
                 <div id="socialmiddle" class="socialcolumn">
