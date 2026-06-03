@@ -539,10 +539,14 @@ namespace BHL.TextImportUtility
             fileContents = Regex.Replace(fileContents, @"\[\[\s?(\\|/)(left|right|top|in)+ margin\]\]", ">>/margin<<", RegexOptions.IgnoreCase);
 
             // Clean up (remove) remaining [[ ]] markup
-            fileContents = Regex.Replace(fileContents, @"\[\[(.*?) ?[T|t]able ?(.*?)\]\]", "");   // [[table]]
-            fileContents = Regex.Replace(fileContents, @"\[\[(.*?) ?[B|b]lank ?(.*?)\]\]", "");   // [[blank]]
-            fileContents = Regex.Replace(fileContents, @"\[\[(.*?) ?[S|s]tart ?(.*?)\]\]", "");   // [[start]]
-            fileContents = Regex.Replace(fileContents, @"\[\[(.*?) ?[E|e]nd ?(.*?)\]\]", "");     // [[end]]
+            fileContents = Regex.Replace(fileContents, @"\[\[\s*[Tt]able.*?\]\]", "");      // [[table]] by itself or with additional text (e.g., [[table of contents]])
+            fileContents = Regex.Replace(fileContents, @"\[\[.*?\b[Tt]able\s*\]\]", "");    // [[table]] preceded by additional text (e.g., [[data table]] or [[/table]]) 
+            fileContents = Regex.Replace(fileContents, @"\[\[\s*[Bb]lank.*?\]\]", "");      // [[blank]] by itself or with additional text (e.g., [[blank page]])
+            fileContents = Regex.Replace(fileContents, @"\[\[.*?\b[Bb]lank\s*\]\]", "");    // [[blank]] preceded by additional text (e.g., [[last blank]] or [[/blank]]) 
+            fileContents = Regex.Replace(fileContents, @"\[\[\s*[Ss]tart.*?\]\]", "");      // [[start]] by itself or with additional text (e.g., [[start of page 2]])
+            fileContents = Regex.Replace(fileContents, @"\[\[.*?\b[Ss]tart\s*\]\]", "");    // [[start]] preceded by additional text (e.g., [[Page 2 start]] or [[/start]])
+            fileContents = Regex.Replace(fileContents, @"\[\[\s*[Ee]nd\b.*?\]\]", "");      // [[end]] by itself or with additional text (e.g., [[end of page 2]])
+            fileContents = Regex.Replace(fileContents, @"\[\[.*?\b[Ee]nd\s*\]\]", "");      // [[end]] preceded by additional text (e.g., [[Page 2 end]] or [[/end]]) 
 
             // Convert the temporary markup to the standard BHL form
             fileContents = Regex.Replace(fileContents, @">>>>(.*?)<<<<", @"[$1]");
