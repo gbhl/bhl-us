@@ -51,6 +51,11 @@
 						</td>
 					</tr>
 					<tr>
+						<td align="center" runat="server" id="tdAlign">
+							<a href="/Library/Align">Page/Image/Text Alignment</a>
+						</td>
+					</tr>
+					<tr>
 					    <td align="center" runat="server" id="tdPDFRequests">
 					        <a href="/PdfEdit.aspx">PDF Requests</a>
 					    </td>

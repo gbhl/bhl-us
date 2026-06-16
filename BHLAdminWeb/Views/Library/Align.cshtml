@@ -1,7 +1,7 @@
 ﻿@model MOBOT.BHL.AdminWeb.Models.LibraryModel
 
 @{
-    ViewBag.Title = "Page-Image-OCR Alignment";
+    ViewBag.Title = "Page/Image/Text Alignment";
 }
 
 <input type="hidden" id="selectTab" value="@ViewBag.Action" />
@@ -14,15 +14,44 @@
 
     <div id="tabs">
         <ul>
-        <li><a href="#divAdd" title="Add Pages"><span>Add Pages</span></a></li>
-        <li><a href="#divDelete" title="Delete Pages"><span>Remove Pages</span></a></li>
-        <li><a href="#divOcr" title="Update Text"><span>Update Text</span></a></li>
+            <li><a href="#divAWS" title="AWS"><span>Update AWS</span></a></li>
+            <li @(MOBOT.BHL.AdminWeb.Helper.IsUserAuthorized(new HttpRequestWrapper(HttpContext.Current.Request), MOBOT.BHL.AdminWeb.Helper.SecurityRole.BHLAdminSysAdmin) ? "" : "style=display:none")>
+                <a href="#divAdd" title="Add Pages"><span>Add Pages</span></a>
+            </li>
+            <li @(MOBOT.BHL.AdminWeb.Helper.IsUserAuthorized(new HttpRequestWrapper(HttpContext.Current.Request), MOBOT.BHL.AdminWeb.Helper.SecurityRole.BHLAdminSysAdmin) ? "" : "style=display:none")>
+                <a href="#divDelete" title="Delete Pages"><span>Remove Pages</span></a>
+            </li>
+            <li><a href="#divOcr" title="Update Text"><span>Update Text</span></a></li>
         </ul>
 
-        @using (Html.BeginForm(null, null, FormMethod.Post, new {enctype="multipart/form-data"})) {
-
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div id="divAWS">
+                <div>
+                    <div>
+                        <div>
+                            <div class="label">Item Type:</div>
+                            <div class="field">
+                                @Html.DropDownList("AWSItemType",
+                                    new List<SelectListItem>
+                                    {  new SelectListItem { Text = "Book", Value = "Book" },
+                                        new SelectListItem { Text = "Segment", Value = "Segment" }
+                                    },
+                                    new { @style = "padding:2px" })
+                            </div>
+                        </div>
+                        <div><div class="label">ID:</div><div class="field">@Html.TextBox("AWSItemID") (Must supply this or IA Identifier)</div></div>
+                        <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("AWSIAID") (Must supply this or Item ID)</div></div>
+                    </div>
+                    <div style="margin-bottom:10px;">
+                        <input class="formButton" type="submit" name="submit:AWS" id="btnAWS" value="Update AWS" />
+                        <input class="formButton" type="reset" id="btnAWSReset" value="Clear" />
+                    </div>
+                    <div id="lblAWSErrMissing" class="ErrorText" style="display:none;">Please specify an Item ID OR Internet Archive Identifier.</div>
+                    <div id="lblAWSErrItemID" class="ErrorText" style="display:none;">Item ID must be a numeric value.</div>
+                </div>
+            </div>
             <div id="divAdd">
-
                 <div>
                     <div>
                         <div class="label">Item Type:</div>
@@ -48,10 +77,8 @@
                 <div id="lblAddErrItemID" class="ErrorText" style="display:none;">Item ID must be a numeric value.</div>
                 <div id="lblAddErrPageID" class="ErrorText" style="display:none;">Page ID must be a numeric value.</div>
                 <div id="lblAddErrNum" class="ErrorText" style="display:none;">Number to Add must be a numeric value.</div>
-
             </div>
             <div id="divDelete">
-
                 <div>
                     <div>
                         <div>
@@ -78,11 +105,9 @@
                     <div id="lblDeleteErrItemID" class="ErrorText" style="display:none;">Item ID must be a numeric value.</div>
                     <div id="lblDeleteErrPageID" class="ErrorText" style="display:none;">Page ID must be a numeric value.</div>
                     <div id="lblDeleteErrNum" class="ErrorText" style="display:none;">Number to Delete must be a numeric value.</div>
-
                 </div>
             </div>
             <div id="divOcr">
-
                 <div>
                     <div>
                         <div>
@@ -106,7 +131,6 @@
                     </div>
                     <div id="lblOcrErrMissing" class="ErrorText" style="display:none;">Please specify an Item ID OR Internet Archive Identifier.</div>
                     <div id="lblOcrErrItemID" class="ErrorText" style="display:none;">Item ID must be a numeric value.</div>
-
                 </div>
             </div>
         }
@@ -122,6 +146,19 @@
     });
 
     // Validation
+    $("#btnAWS").click(function () {
+        var returnVal = true;
+        resetMessages();
+        if (($.trim($("#AWSItemID").val()) == '' &&
+            $.trim($("#AWSIAID").val()) == '')) {
+            $("#lblAWSErrMissing").show(); returnVal = false;
+        }
+
+        if (!isNumeric($.trim($("#AWSItemID").val()))) { $("#lblAWSErrItemID").show(); returnVal = false; }
+
+        return returnVal;
+    });
+
     $("#btnAdd").click(function () {
         var returnVal = true;
         resetMessages();
@@ -167,6 +204,8 @@
     });
 
     // submit form on Enter keypress
+    $("#AWSItemID").keypress(function (event) { if (event.keyCode == '13') $("#btnAWS").click(); });
+    $("#AWSIAID").keypress(function (event) { if (event.keyCode == '13') $("#btnAWS").click(); });
     $("#AddItemType").keypress(function (event) { if (event.keyCode == '13') $('btnAdd').click(); });
     $("#AddItemID").keypress(function (event) { if (event.keyCode == '13') $("#btnAdd").click(); });
     $("#AddItemID").keypress(function (event) { if (event.keyCode == '13') $("#btnAdd").click(); });
@@ -182,6 +221,7 @@
     $("#OcrIAID").keypress(function (event) { if (event.keyCode == '13') $("#btnOcr").click(); });
 
     function resetMessages() {
+        $("#lblAWSErrMissing").hide(); $("#lblAWSErrItemID").hide();
         $("#lblAddErrMissing").hide(); $("#lblAddErrItemID").hide(); $("#lblAddErrPageID").hide(); $("#lblAddErrNum").hide();
         $("#lblDeleteErrMissing").hide(); $("#lblDeleteErrItemID").hide(); $("#lblDeleteErrPageID").hide(); $("#lblDeleteErrNum").hide();
         $("#lblOcrErrMissing").hide(); $("#lblOcrErrItemID").hide();

@@ -1,7 +1,9 @@
 ﻿using BHL.SiteServiceREST.v1.Client;
 using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.DataObjects.Enum;
 using MOBOT.BHL.Server;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 
@@ -25,6 +27,24 @@ namespace MOBOT.BHL.AdminWeb.Models
         {
             get { return _ocrJobPath; }
             set { _ocrJobPath = value; }
+        }
+
+        public string AWSItemType { get; set; }
+
+        private string _awsItemID = string.Empty;
+        
+        public string AWSItemID
+        {
+            get { return _awsItemID; }
+            set { _awsItemID = value; }
+        }
+
+        private string _awsIAID = string.Empty; 
+        
+        public string AWSIAID
+        {
+            get { return _awsIAID; }
+            set { _awsIAID = value; }
         }
 
         public string AddItemType { get; set; }
@@ -124,6 +144,71 @@ namespace MOBOT.BHL.AdminWeb.Models
         #endregion Align Properties
 
         #region Public methods
+
+        public void SubmitUpdatedItemsQueueMessage()
+        {
+            int itemID;
+
+            if (!Int32.TryParse(this.AWSItemID, out int id) && !string.IsNullOrWhiteSpace(this.AWSItemID))
+            {
+                this.Message = "ID must be a numeric value.";
+                return;
+            }
+
+            BHLProvider provider = new BHLProvider();
+            if (this.OcrItemType == "Book")
+            {
+                Book book = null;
+                if (!string.IsNullOrWhiteSpace(this.AWSIAID))
+                    book = provider.BookSelectByBarcodeOrItemID(null, this.AWSIAID);
+                else
+                    book = provider.BookSelectAuto(Int32.Parse(this.AWSItemID));
+
+                if (book == null)
+                {
+                    this.Message = "Book not found.";
+                    return;
+                }
+
+                this.AWSItemID = book.BookID.ToString();
+                this.AWSIAID = book.BarCode;
+                itemID = book.ItemID;
+            }
+            else
+            {
+                Segment segment = null;
+                if (!string.IsNullOrWhiteSpace(this.AWSIAID))
+                    segment = provider.SegmentSelectByBarCode(this.AWSIAID);
+                else
+                    segment = provider.SegmentSelectAuto(Int32.Parse(this.AWSItemID));
+
+                if (segment == null)
+                {
+                    this.Message = "Segment not found.";
+                    return;
+                }
+
+                this.AWSItemID = segment.SegmentID.ToString();
+                this.AWSIAID = segment.BarCode;
+                itemID = segment.ItemID;
+            }
+
+            try
+            {
+                //new BHLProvider().SubmitUpdatedItemsQueueMessage(this.AWSIAID);
+                this.Message = string.Format("Submitted {0} {1} ({2}) to Updated Items queue.", this.AWSItemType, this.AWSItemID, this.AWSIAID);
+            }
+            catch (SqlException ex)
+            {
+                this.Message = ex.Message;
+            }
+
+            Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+            List<string> queueMsg = new List<string>();
+            queueMsg.Add (string.Format("{0}|{1}|{2}", this.AWSItemType, this.AWSItemID, this.AWSIAID));
+            client.PutQueueMessages("QUEUE_NAME", queueMsg);
+            this.Message = string.Format("Message added to UpdatedItems queue for {0} {1} ({2}).", this.AWSItemType, this.AWSItemID, this.AWSIAID);
+        }
 
         public void AddPagesToItem()
         {

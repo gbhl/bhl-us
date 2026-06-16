@@ -16,8 +16,19 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         // GET: /Library/Align
         public ActionResult Align()
         {
-            ViewBag.PageTitle += "Page Metadata-Image-OCR Alignment Utility";
+            ViewBag.PageTitle += "Page Metadata/Image/Text Alignment Utility";
             return View();
+        }
+
+        // POST: /Library/Align
+        [HttpPost]
+        [MultipleButton(Name = "submit", Argument = "AWS")]
+        public ActionResult AlignAWS(LibraryModel model)        
+        {
+            model.SubmitUpdatedItemsQueueMessage();
+            ResetModelForAlign(model, model.AWSItemType, model.AWSItemID, model.AWSIAID);
+            ViewBag.Action = "0"; // "#divAWS";
+            return View("Align", model);
         }
 
         // POST: /Library/Align
@@ -27,7 +38,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         {
             model.AddPagesToItem();
             ResetModelForAlign(model, model.AddItemType, model.AddItemID, model.AddIAID);
-            ViewBag.Action = "0"; // "#divAdd";
+            ViewBag.Action = "1"; // "#divAdd";
             return View("Align", model);
         }
 
@@ -38,7 +49,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         {
             model.DeletePagesFromItem();
             ResetModelForAlign(model, model.DelItemType, model.DelItemID, model.DelIAID);
-            ViewBag.Action = "1"; // "#divDelete";
+            ViewBag.Action = "2"; // "#divDelete";
             return View("Align", model);
         }
 
@@ -50,7 +61,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             model.OcrJobPath = ConfigurationManager.AppSettings["OCRJobNewPath"];
             model.CreateNewOCRJobFile();
             ResetModelForAlign(model, model.OcrItemType, model.OcrItemID, model.OcrIAID);
-            ViewBag.Action = "2"; // "#divOcr";
+            ViewBag.Action = "3"; // "#divOcr";
             return View("Align", model);
         }
 
@@ -64,6 +75,10 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         {
             string message = model.Message;
             ModelState.Clear();
+
+            model.AWSItemType = itemType;
+            model.AWSItemID = itemID;
+            model.AWSIAID = iaID;
             model.AddItemType = itemType;
             model.AddItemID = itemID;
             model.AddIAID = iaID;
