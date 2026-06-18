@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
@@ -145,7 +146,7 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         #region Public methods
 
-        public void SubmitUpdatedItemsQueueMessage()
+        public async Task SubmitUpdatedItemsQueueMessage()
         {
             int itemID;
 
@@ -156,7 +157,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             BHLProvider provider = new BHLProvider();
-            if (this.OcrItemType == "Book")
+            if (this.AWSItemType == "Book")
             {
                 Book book = null;
                 if (!string.IsNullOrWhiteSpace(this.AWSIAID))
@@ -195,19 +196,26 @@ namespace MOBOT.BHL.AdminWeb.Models
 
             try
             {
-                //new BHLProvider().SubmitUpdatedItemsQueueMessage(this.AWSIAID);
-                this.Message = string.Format("Submitted {0} {1} ({2}) to Updated Items queue.", this.AWSItemType, this.AWSItemID, this.AWSIAID);
-            }
-            catch (SqlException ex)
-            {
-                this.Message = ex.Message;
-            }
+                Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                List<string> queueMsg = new List<string>();
+                queueMsg.Add(string.Format("{0}|{1}|{2}", this.AWSItemType, this.AWSItemID, this.AWSIAID));
+                
+                Task t = client.PutQueueMessagesAsync("QUEUE_NAME", queueMsg);
+                await t;
 
-            Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
-            List<string> queueMsg = new List<string>();
-            queueMsg.Add (string.Format("{0}|{1}|{2}", this.AWSItemType, this.AWSItemID, this.AWSIAID));
-            client.PutQueueMessages("QUEUE_NAME", queueMsg);
-            this.Message = string.Format("Message added to UpdatedItems queue for {0} {1} ({2}).", this.AWSItemType, this.AWSItemID, this.AWSIAID);
+                if (t.IsFaulted)
+                {
+                    throw new Exception(t.Exception.InnerException.Message);
+                }
+                else
+                {
+                    this.Message = string.Format("Message added to UpdatedItems queue for {0} {1} ({2}).", this.AWSItemType, this.AWSItemID, this.AWSIAID);
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Message = string.Format("Error adding message to UpdatedItems queue for {0} {1} ({2}): {3}", this.AWSItemType, this.AWSItemID, this.AWSIAID, ex.Message);
+            }
         }
 
         public void AddPagesToItem()
