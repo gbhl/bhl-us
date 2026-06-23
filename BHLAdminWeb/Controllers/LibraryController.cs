@@ -25,6 +25,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [MultipleButton(Name = "submit", Argument = "AWS")]
         public ActionResult AlignAWS(LibraryModel model)        
         {
+            model.UpdatedItemsQueueName = ConfigurationManager.AppSettings["UpdatedItemsQueueName"];
             model.SubmitUpdatedItemsQueueMessage();
             ResetModelForAlign(model, model.AWSItemType, model.AWSItemID, model.AWSIAID);
             ViewBag.Action = "0"; // "#divAWS";

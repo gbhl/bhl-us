@@ -30,6 +30,13 @@ namespace MOBOT.BHL.AdminWeb.Models
             set { _ocrJobPath = value; }
         }
 
+        private string _updatedItemsQueueName = string.Empty;
+
+        public string UpdatedItemsQueueName
+        {
+            get { return _updatedItemsQueueName; }
+            set { _updatedItemsQueueName = value; }
+        }
         public string AWSItemType { get; set; }
 
         private string _awsItemID = string.Empty;
@@ -157,7 +164,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             BHLProvider provider = new BHLProvider();
-            if (this.AWSItemType == "Book")
+            if (this.AWSItemType == "Item")
             {
                 Book book = null;
                 if (!string.IsNullOrWhiteSpace(this.AWSIAID))
@@ -167,7 +174,7 @@ namespace MOBOT.BHL.AdminWeb.Models
 
                 if (book == null)
                 {
-                    this.Message = "Book not found.";
+                    this.Message = "Item not found.";
                     return;
                 }
 
@@ -200,7 +207,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                 List<string> queueMsg = new List<string>();
                 queueMsg.Add(string.Format("{0}|{1}|{2}", this.AWSItemType, this.AWSItemID, this.AWSIAID));
                 
-                Task t = client.PutQueueMessagesAsync("QUEUE_NAME", queueMsg);
+                Task t = client.PutQueueMessagesAsync(this.UpdatedItemsQueueName, queueMsg);
                 await t;
 
                 if (t.IsFaulted)
@@ -292,7 +299,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             {
                 BHLProvider provider = new BHLProvider();
 
-                if (itemType == "Book")
+                if (itemType == "Item")
                 {
                     Book book = null;
                     if (!string.IsNullOrWhiteSpace(barcodeIn))
@@ -302,7 +309,7 @@ namespace MOBOT.BHL.AdminWeb.Models
 
                     if (book == null)
                     {
-                        this.Message = "Book not found.";
+                        this.Message = "Item not found.";
                         isValid = false;
                     }
                     else
@@ -346,7 +353,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             BHLProvider provider = new BHLProvider();
-            if (this.OcrItemType == "Book")
+            if (this.OcrItemType == "Item")
             {
                 Book book = null;
                 if (!string.IsNullOrWhiteSpace(this.OcrIAID))
@@ -356,7 +363,7 @@ namespace MOBOT.BHL.AdminWeb.Models
 
                 if (book == null)
                 {
-                    this.Message = "Book not found.";
+                    this.Message = "Item not found.";
                     return;
                 }
 

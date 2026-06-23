@@ -29,80 +29,86 @@
             <div id="divAWS">
                 <div>
                     <div>
+                        <div style="margin-bottom:15px;">
+                            <p>Submit the BHL or IA identifier for an Item or Segment to update its images, text, and metadata in AWS.</p>
+                        </div>
                         <div>
                             <div class="label">Item Type:</div>
                             <div class="field">
                                 @Html.DropDownList("AWSItemType",
                                     new List<SelectListItem>
-                                    {  new SelectListItem { Text = "Book", Value = "Book" },
+                                    {  new SelectListItem { Text = "Item", Value = "Item" },
                                         new SelectListItem { Text = "Segment", Value = "Segment" }
                                     },
                                     new { @style = "padding:2px" })
                             </div>
                         </div>
                         <div><div class="label">ID:</div><div class="field">@Html.TextBox("AWSItemID") (Must supply this or IA Identifier)</div></div>
-                        <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("AWSIAID") (Must supply this or Item ID)</div></div>
+                        <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("AWSIAID") (Must supply this or ID)</div></div>
                     </div>
                     <div style="margin-bottom:10px;">
                         <input class="formButton" type="submit" name="submit:AWS" id="btnAWS" value="Update AWS" />
-                        <input class="formButton" type="reset" id="btnAWSReset" value="Clear" />
                     </div>
-                    <div id="lblAWSErrMissing" class="ErrorText" style="display:none;">Please specify an Item ID OR Internet Archive Identifier.</div>
-                    <div id="lblAWSErrItemID" class="ErrorText" style="display:none;">Item ID must be a numeric value.</div>
+                    <div id="lblAWSErrMissing" class="ErrorText" style="display:none;">Please specify a BHL ID OR Internet Archive Identifier.</div>
+                    <div id="lblAWSErrItemID" class="ErrorText" style="display:none;">ID must be a numeric value.</div>
                 </div>
             </div>
             <div id="divAdd">
                 <div>
+                    <div style="margin-bottom:15px;">
+                        <p>Use this form to add Page records to an Item or Segment.</p>
+                    </div>
                     <div>
                         <div class="label">Item Type:</div>
                         <div class="field">
                             @Html.DropDownList("AddItemType",
                                 new List<SelectListItem>
-                                {  new SelectListItem { Text = "Book", Value = "Book" },
+                                {  new SelectListItem { Text = "Item", Value = "Item" },
                                     new SelectListItem { Text = "Segment", Value = "Segment" }
                                 },
                                 new { @style = "padding:2px" })
                         </div>
                     </div>
                     <div><div class="label">ID:</div><div class="field">@Html.TextBox("AddItemID") (Must supply this or IA Identifier)</div></div>
-                    <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("AddIAID") (Must supply this or Item ID)</div></div>
+                    <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("AddIAID") (Must supply this or ID)</div></div>
                     <div><div class="label">Insert Before Page ID:</div><div class="field">@Html.TextBox("AddPageID") (Use 0 to insert at end)</div></div>
                     <div><div class="label">Number of Pages to Add:</div><div class="field">@Html.TextBox("AddNum")</div></div>
                 </div>
                 <div style="margin-bottom:10px;">
                     <input class="formButton" type="submit" name="submit:Add" id="btnAdd" value="Add Pages" />
-                    <input class="formButton" type="reset" id="btnAddReset" value="Clear" />
                 </div>
-                <div id="lblAddErrMissing" class="ErrorText" style="display:none;">Please specify an Item ID OR Internet Archive Identifier, a Page ID, and a Number of Pages to add.</div>
-                <div id="lblAddErrItemID" class="ErrorText" style="display:none;">Item ID must be a numeric value.</div>
+                <div id="lblAddErrMissing" class="ErrorText" style="display:none;">Please specify a BHL ID OR Internet Archive Identifier, a Page ID, and a Number of Pages to add.</div>
+                <div id="lblAddErrItemID" class="ErrorText" style="display:none;">ID must be a numeric value.</div>
                 <div id="lblAddErrPageID" class="ErrorText" style="display:none;">Page ID must be a numeric value.</div>
                 <div id="lblAddErrNum" class="ErrorText" style="display:none;">Number to Add must be a numeric value.</div>
             </div>
             <div id="divDelete">
                 <div>
                     <div>
+                        <div style="margin-bottom:15px;">
+                            <p>Use this form to remove Page records from an Item or Segment.</p>
+                        </div>
                         <div>
                             <div class="label">Item Type:</div>
                             <div class="field">
                                 @Html.DropDownList("DelItemType",
                                     new List<SelectListItem>
-                                    {  new SelectListItem { Text = "Book", Value = "Book" },
+                                    {  new SelectListItem { Text = "Item", Value = "Item" },
                                         new SelectListItem { Text = "Segment", Value = "Segment" }
                                     },
                                     new { @style = "padding:2px" })
                             </div>
                         </div>
                         <div><div class="label">ID:</div><div class="field">@Html.TextBox("DelItemID") (Must supply this or IA Identifier)</div></div>
-                        <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("DelIAID") (Must supply this or Item ID)</div></div>
+                        <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("DelIAID") (Must supply this or ID)</div></div>
                         <div><div class="label">Delete Starting With Page ID:</div><div class="field">@Html.TextBox("DelPageID")</div></div>
                         <div><div class="label">Number of Pages to Delete:</div><div class="field">@Html.TextBox("DelNum")</div></div>
                     </div>
                     <div style="margin-bottom:10px;">
                         <input class="formButton" type="submit" name="submit:Delete" id="btnDelete" value="Remove Pages" />
-                        <input class="formButton" type="reset" id="btnDeleteReset" value="Clear" />
                     </div>
-                    <div id="lblDeleteErrMissing" class="ErrorText" style="display:none;">Please specify an Item ID OR Internet Archive Identifier, a Page ID, and a Number of Pages to remove.</div>
-                    <div id="lblDeleteErrItemID" class="ErrorText" style="display:none;">Item ID must be a numeric value.</div>
+                    <div id="lblDeleteErrMissing" class="ErrorText" style="display:none;">Please specify a BHL ID OR Internet Archive Identifier, a Page ID, and a Number of Pages to remove.</div>
+                    <div id="lblDeleteErrItemID" class="ErrorText" style="display:none;">ID must be a numeric value.</div>
                     <div id="lblDeleteErrPageID" class="ErrorText" style="display:none;">Page ID must be a numeric value.</div>
                     <div id="lblDeleteErrNum" class="ErrorText" style="display:none;">Number to Delete must be a numeric value.</div>
                 </div>
@@ -110,27 +116,29 @@
             <div id="divOcr">
                 <div>
                     <div>
+                        <div style="margin-bottom:15px;">
+                            <p>Submit the BHL or IA identifier for an Item or Segment to import the latest OCR from IA.  This will update files in BHL and AWS.</p>
+                        </div>
                         <div>
                             <div class="label">Item Type:</div>
                             <div class="field">
                                 @Html.DropDownList("OcrItemType",
                                     new List<SelectListItem>
-                                    {  new SelectListItem { Text = "Book", Value = "Book" },
+                                    {  new SelectListItem { Text = "Item", Value = "Item" },
                                         new SelectListItem { Text = "Segment", Value = "Segment" }
                                     },
                                     new { @style = "padding:2px" })
                             </div>
                         </div>
                         <div><div class="label">ID:</div><div class="field">@Html.TextBox("OcrItemID") (Must supply this or IA Identifier)</div></div>
-                        <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("OcrIAID") (Must supply this or Item ID)</div></div>
+                        <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("OcrIAID") (Must supply this or ID)</div></div>
                         <div><div class="label">Force Overwrite:</div><div class="field">@Html.CheckBox("ForceOverwrite") (Check to overwrite non-OCR text)</div></div>
                     </div>
                     <div style="margin-bottom:10px;">
                         <input class="formButton" type="submit" name="submit:Ocr" id="btnOcr" value="Update Text" />
-                        <input class="formButton" type="reset" id="btnOcrReset" value="Clear" />
                     </div>
-                    <div id="lblOcrErrMissing" class="ErrorText" style="display:none;">Please specify an Item ID OR Internet Archive Identifier.</div>
-                    <div id="lblOcrErrItemID" class="ErrorText" style="display:none;">Item ID must be a numeric value.</div>
+                    <div id="lblOcrErrMissing" class="ErrorText" style="display:none;">Please specify a BHL ID OR Internet Archive Identifier.</div>
+                    <div id="lblOcrErrItemID" class="ErrorText" style="display:none;">ID must be a numeric value.</div>
                 </div>
             </div>
         }
