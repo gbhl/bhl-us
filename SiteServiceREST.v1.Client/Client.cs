@@ -217,23 +217,21 @@ namespace BHL.SiteServiceREST.v1.Client
             }
         }
 
-        public async Task PutQueueMessagesAsync(string queueName, List<string> messages)
+        public async Task<bool> PutQueueMessagesAsync(string queueName, List<string> messages)
         {
             using (var httpClient = new HttpClient())
             {
                 SiteService restClient = new SiteService(_baseUrl, httpClient);
-                await restClient.PutQueueMessagesAsync(queueName, messages).ConfigureAwait(false);
-                return;
+                return await restClient.PutQueueMessagesAsync(queueName, messages).ConfigureAwait(false);
             }
         }
 
-        public void PutQueueMessages(string queueName, List<string> messages)
+        public bool PutQueueMessages(string queueName, List<string> messages)
         {
             using (var httpClient = new HttpClient())
             {
                 SiteService restClient = new SiteService(_baseUrl, httpClient);
-                PutQueueMessages(queueName, messages);
-                return;
+                return restClient.PutQueueMessages(queueName, messages);
             }
         }
 

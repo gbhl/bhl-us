@@ -4,7 +4,7 @@ namespace BHL.SiteServicesREST.v1.Services
 {
     public interface IQueueService
     {
-        Task AddQueueMessages(string queueName, List<string> messages);
+        Task<bool> AddQueueMessages(string queueName, List<string> messages);
         Task<uint> GetQueueMessageCount(string queueName);
     }
 }

@@ -153,7 +153,7 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         #region Public methods
 
-        public async Task SubmitUpdatedItemsQueueMessage()
+        public void SubmitUpdatedItemsQueueMessage()
         {
             int itemID;
 
@@ -207,16 +207,15 @@ namespace MOBOT.BHL.AdminWeb.Models
                 List<string> queueMsg = new List<string>();
                 queueMsg.Add(string.Format("{0}|{1}|{2}", this.AWSItemType, this.AWSItemID, this.AWSIAID));
                 
-                Task t = client.PutQueueMessagesAsync(this.UpdatedItemsQueueName, queueMsg);
-                await t;
+                bool messageAdded = client.PutQueueMessages(this.UpdatedItemsQueueName, queueMsg);
 
-                if (t.IsFaulted)
+                if (messageAdded)
                 {
-                    throw new Exception(t.Exception.InnerException.Message);
+                    this.Message = string.Format("Message added to UpdatedItems queue for {0} {1} ({2}).", this.AWSItemType, this.AWSItemID, this.AWSIAID);
                 }
                 else
                 {
-                    this.Message = string.Format("Message added to UpdatedItems queue for {0} {1} ({2}).", this.AWSItemType, this.AWSItemID, this.AWSIAID);
+                    throw new Exception("Message not added to UpdatedItems queue.");
                 }
             }
             catch (Exception ex)

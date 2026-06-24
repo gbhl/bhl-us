@@ -6,7 +6,7 @@ namespace BHL.SiteServicesREST.v1.Services
 {
     public class QueueService : IQueueService
     {
-        public async Task AddQueueMessages(string queueName, List<string> messages)
+        public async Task<bool> AddQueueMessages(string queueName, List<string> messages)
         {
             /*
              * THIS SHOULD WORK, BUT CAUSES 500 ERROR ON PROD/QA SERVER
@@ -71,6 +71,8 @@ namespace BHL.SiteServicesREST.v1.Services
                     throw new Exception(string.Format("Error queuing message: {0}", message));
                 }
             }
+
+            return true;
         }
 
         public async Task<uint> GetQueueMessageCount(string queueName)
