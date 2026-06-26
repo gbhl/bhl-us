@@ -1,6 +1,7 @@
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHL.Web2.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -55,8 +56,11 @@ namespace MOBOT.BHL.Web2.Services
 
                 using (WebClient client = new WebClient())
                 {
-                    client.Encoding = System.Text.Encoding.UTF8; 
-                    ocrText = HttpUtility.HtmlEncode(client.DownloadString(ConfigurationManager.AppSettings["BaseUrl"] + "/pagetext/" + pageID));
+                    client.Encoding = System.Text.Encoding.UTF8;
+                    // Set a user-agent header to avoid 403 errors
+                    client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36");
+                    string textUrl = string.Format("{0}/pagetext/{1}", ConfigurationManager.AppSettings["BaseUrl"], pageID);
+                    ocrText = HttpUtility.HtmlEncode(client.DownloadString(textUrl));
                 }
 
                 if (string.IsNullOrWhiteSpace(ocrText))
