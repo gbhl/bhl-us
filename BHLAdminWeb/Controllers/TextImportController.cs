@@ -1,4 +1,5 @@
-﻿using BHL.TextImportUtility;
+﻿using BHL.SiteServiceREST.v1.Client;
+using BHL.TextImportUtility;
 using MOBOT.BHL.AdminWeb.ActionFilters;
 using MOBOT.BHL.AdminWeb.Models;
 using MOBOT.BHL.AdminWeb.MVCServices;
@@ -170,21 +171,10 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public ActionResult GetOrigPageText(int pageID)
         {
             string textLink = string.Format(System.Configuration.ConfigurationManager.AppSettings["PageTextUrl"], pageID);
-            string pageText = string.Empty;
-
-            // Ignore SSL certficate errors when downloading the text for the page
-            var sslFailureCallback = new RemoteCertificateValidationCallback(delegate { return true; });
-            try
-            {
-                ServicePointManager.ServerCertificateValidationCallback += sslFailureCallback;
-                pageText = HttpUtility.HtmlEncode(new WebClient().DownloadString(textLink)).Replace("\n", "<br/>");
-            }
-            finally
-            {
-                ServicePointManager.ServerCertificateValidationCallback -= sslFailureCallback;
-            }
-
-            //string pageText = new System.Net.WebClient().DownloadString(textLink).Replace("\n", "<br/>");
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls13;
+            WebClient client = new WebClient();
+            client.Headers.Add("user-agent", "Biodiversity Heritage Library/1.0 (admin@biodiversitylibrary.org)");
+            string pageText = HttpUtility.HtmlEncode(client.DownloadString(textLink)).Replace("\n", "<br/>");
             return Content(pageText);
         }
 
