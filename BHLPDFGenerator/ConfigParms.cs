@@ -18,24 +18,15 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
         public void LoadAppConfig()
         {
-            XmlDocument doc = new XmlDocument();
-            string configPath = AppDomain.CurrentDomain.FriendlyName + ".config";
-            doc.Load(configPath);
-            foreach (XmlNode node in doc["configuration"]["appSettings"])
-            {
-                if (node.Name == "add")
-                {
-                    EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
-                    EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
-                    EmailOnError = ConfigurationManager.AppSettings["EmailOnError"].ToLower() == "true";
-                    PdfFilePath = ConfigurationManager.AppSettings["PdfFilePath"];
-                    PdfUrl = ConfigurationManager.AppSettings["PdfUrl"];
-                    OcrTextLocation = ConfigurationManager.AppSettings["OCRTextLocation"];
-                    ImageQuality = Convert.ToInt32(ConfigurationManager.AppSettings["ImageQuality"]);
-                    RetryImageWait = Convert.ToInt32(ConfigurationManager.AppSettings["RetryImageWait"]);
-                    BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
-                }
-            }
+            EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"];
+            EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"];
+            EmailOnError = ConfigurationManager.AppSettings["EmailOnError"].ToLower() == "true";
+            PdfFilePath = ConfigurationManager.AppSettings["PdfFilePath"];
+            PdfUrl = ConfigurationManager.AppSettings["PdfUrl"];
+            OcrTextLocation = ConfigurationManager.AppSettings["OCRTextLocation"];
+            ImageQuality = Convert.ToInt32(ConfigurationManager.AppSettings["ImageQuality"]);
+            RetryImageWait = Convert.ToInt32(ConfigurationManager.AppSettings["RetryImageWait"]);
+            BHLWSEndpoint = ConfigurationManager.AppSettings["BHLWSUrl"];
         }
     }
 }

@@ -1,12 +1,25 @@
-﻿using BHL.WebServiceREST.v1;
+using BHL.WebServiceREST.v1;
 using BHL.WebServiceREST.v1.Client;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
+
+// iText 9.7 (formerly iTextSharp 4.1.2)
+using iText.IO.Font.Constants;
+using iText.IO.Image;
+using iText.Kernel.Colors;
+using iText.Kernel.Font;
+using iText.Kernel.Geom;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Action;
+using iText.Kernel.Pdf.Canvas;
+using iText.Kernel.XMP;
+using iText.Kernel.XMP.Options;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Xml;
 
@@ -103,6 +116,24 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
         private List<String> _pageLabels = new List<string>();
 
+        /// <summary>
+        /// Small bundle of PdfFont + size + color, standing in for the old iTextSharp
+        /// Font object (which combined face, size, style and color in one instance).
+        /// </summary>
+        private readonly struct HeaderFont
+        {
+            public readonly PdfFont Font;
+            public readonly float Size;
+            public readonly Color Color;
+
+            public HeaderFont(PdfFont font, float size, Color color)
+            {
+                Font = font;
+                Size = size;
+                Color = color;
+            }
+        }
+
         #endregion Attributes
 
         #region Constructors
@@ -129,7 +160,8 @@ namespace MOBOT.BHL.BHLPDFGenerator
             if (this.FilePathFormat == String.Empty) throw (new Exception("No file path specified"));
 
             String fileName = String.Empty;
-            iTextSharp.text.Document doc = null;
+            PdfDocument pdfDoc = null;
+            Document doc = null;
 
             try
             {
@@ -140,25 +172,19 @@ namespace MOBOT.BHL.BHLPDFGenerator
                     (this.PdfRecord.BookID ?? this.PdfRecord.SegmentID).ToString().PadLeft(8, '0');
 
                 // Initialize the PDF document
-                doc = new Document();
-                iTextSharp.text.pdf.PdfWriter writer = iTextSharp.text.pdf.PdfWriter.GetInstance(doc,
-                    new FileStream(String.Format(this.FilePathFormat, fileName), FileMode.Create));
+                PdfWriter writer = new PdfWriter(String.Format(this.FilePathFormat, fileName));
+                pdfDoc = new PdfDocument(writer);
+                doc = new Document(pdfDoc, PageSize.A4);
+                doc.SetMargins(50, 50, 50, 50);
 
                 // Add metadata
-                AddMetadata(doc);
-                writer.XmpMetadata = this.GetXmpMetadata();
-
-                // Set margins and page size 
-                SetStandardPageSize(doc);
-
-                // Start writing the PDF
-                doc.Open();
+                AddMetadata(pdfDoc);
+                pdfDoc.SetXmpMetadata(GetXmpMetadata());
 
                 // Add header pages to the PDF
-                this.AddHeaderPages(doc, fileName);
+                this.AddHeaderPages(doc, pdfDoc, fileName);
 
                 // Add the page images to the PDF
-                doc.SetMargins(0, 0, 0, 0);
                 foreach (String pageUrl in PageUrls)
                 {
                     // Add a page image and its associated text
@@ -167,23 +193,23 @@ namespace MOBOT.BHL.BHLPDFGenerator
                     {
                         pageWords = this.LoadOcrPageText(pageUrl);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         this.ImageErrors.Add(string.Format("Page Text: {0}\r\nMessage: {1}\r\nStack Trace: {2}", pageUrl.Split('|')[1], ex.Message, ex.StackTrace));
                         this._numberOcrMissing++;
                     }
-                    this.AddImageAndOCRToPDF(doc, writer, pageUrl, retryImageWait, pageWords);
+                    this.AddImageAndOCRToPDF(pdfDoc, pageUrl, retryImageWait, pageWords);
                 }
 
-                // Add page labels to the PDF
-                int pageNumber = 0;
-                iTextSharp.text.pdf.PdfPageLabels pdfPageLabels = new iTextSharp.text.pdf.PdfPageLabels();
-                foreach (String pageLabel in _pageLabels)
+                // Add page labels to the PDF (one per page, in page order)
+                for (int i = 0; i < _pageLabels.Count; i++)
                 {
-                    pdfPageLabels.AddPageLabel(++pageNumber, iTextSharp.text.pdf.PdfPageLabels.EMPTY, pageLabel);
+                    // Passing a null numbering style means only the prefix text is shown -
+                    // equivalent to iTextSharp's PdfPageLabels.EMPTY numbering style.
+                    pdfDoc.GetPage(i + 1).SetPageLabel(null, _pageLabels[i]);
                 }
-                writer.PageLabels = pdfPageLabels;
 
+                // Closing the layout Document also closes/flushes the underlying PdfDocument.
                 doc.Close();
 
                 // Add PDF extension to temp file
@@ -201,29 +227,31 @@ namespace MOBOT.BHL.BHLPDFGenerator
             }
             finally
             {
-                if (doc != null)
+                if (doc != null && pdfDoc != null && !pdfDoc.IsClosed())
                 {
                     // Finish writing the PDF
-                    if (doc.IsOpen()) doc.Close();
+                    doc.Close();
                 }
             }
 
             return true;
         }
 
-        private void AddMetadata(iTextSharp.text.Document doc)
+        private void AddMetadata(PdfDocument pdfDoc)
         {
-            doc.AddCreator("Biodiversity Heritage Library");
-            doc.AddKeywords("PDF ID: " + this.PdfRecord.PdfID.ToString());
+            PdfDocumentInfo info = pdfDoc.GetDocumentInfo();
+
+            info.SetCreator("Biodiversity Heritage Library");
+            info.SetKeywords("PDF ID: " + this.PdfRecord.PdfID.ToString());
 
             if (this.PdfRecord.ArticleTitle != String.Empty)
             {
-                doc.AddTitle(this.PdfRecord.ArticleTitle);
-                doc.AddHeader("title", this.PdfRecord.ArticleTitle);
+                info.SetTitle(this.PdfRecord.ArticleTitle);
+                info.SetMoreInfo("title", this.PdfRecord.ArticleTitle);
             }
             if (this.PdfRecord.ArticleCreators != String.Empty)
             {
-                doc.AddHeader("author", this.PdfRecord.ArticleCreators);
+                info.SetMoreInfo("author", this.PdfRecord.ArticleCreators);
             }
 
             if (this.PdfRecord.ArticleTitle == string.Empty && this.PdfRecord.ArticleCreators == string.Empty && this.PdfRecord.SegmentID != null)
@@ -231,105 +259,72 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 Segment segment = new SegmentsClient(_bhlWSUrl).GetSegmentDetails((int)this.PdfRecord.SegmentID);
                 if (segment != null)
                 {
-                    doc.AddTitle(segment.Title);
-                    doc.AddHeader("title", segment.Title);
+                    info.SetTitle(segment.Title);
+                    info.SetMoreInfo("title", segment.Title);
 
-                    if (!string.IsNullOrWhiteSpace(segment.Authors)) doc.AddHeader("author", segment.Authors);
+                    if (!string.IsNullOrWhiteSpace(segment.Authors)) info.SetMoreInfo("author", segment.Authors);
                 }
             }
 
             if (this.PdfRecord.ArticleTags != String.Empty)
             {
-                doc.AddHeader("subject", this.PdfRecord.ArticleTags);
+                info.SetMoreInfo("subject", this.PdfRecord.ArticleTags);
             }
         }
 
-        private byte[] GetXmpMetadata()
+        private XMPMeta GetXmpMetadata()
         {
-            byte[] buffer = new byte[65536];
-            System.IO.MemoryStream ms = new System.IO.MemoryStream(buffer, true);
-
             try
             {
-                iTextSharp.text.xml.xmp.XmpWriter xmp = new iTextSharp.text.xml.xmp.XmpWriter(ms);
-                iTextSharp.text.xml.xmp.XmpSchema dc = new iTextSharp.text.xml.xmp.DublinCoreSchema();
+                XMPMeta xmp = XMPMetaFactory.Create();
 
                 Segment segment = null;
                 if (PdfRecord.SegmentID != null) segment = new SegmentsClient(_bhlWSUrl).GetSegmentDetails((int)this.PdfRecord.SegmentID);
 
-                // Add Dublin Core attributes
-                iTextSharp.text.xml.xmp.LangAlt dcTitle = new iTextSharp.text.xml.xmp.LangAlt();
-                if (string.IsNullOrWhiteSpace(PdfRecord.ArticleTitle) && segment != null)
-                    dcTitle.Add("x-default", segment.Title);
-                else
-                    dcTitle.Add("x-default", this.PdfRecord.ArticleTitle);
-                dc.SetProperty(iTextSharp.text.xml.xmp.DublinCoreSchema.TITLE, dcTitle);
+                // Dublin Core - title
+                string dcTitle = string.IsNullOrWhiteSpace(PdfRecord.ArticleTitle) && segment != null ? segment.Title : this.PdfRecord.ArticleTitle;
+                xmp.SetLocalizedText(XMPConst.NS_DC, "title", null, "x-default", dcTitle);
 
-                iTextSharp.text.xml.xmp.XmpArray dcAuthor = new iTextSharp.text.xml.xmp.XmpArray(iTextSharp.text.xml.xmp.XmpArray.ORDERED);
+                // Dublin Core - creator (ordered array)
                 if (string.IsNullOrWhiteSpace(PdfRecord.ArticleCreators) && segment != null)
                 {
-                    foreach(ItemAuthor sa in segment.AuthorList) dcAuthor.Add(sa.FullName);
+                    foreach (ItemAuthor sa in segment.AuthorList)
+                    {
+                        xmp.AppendArrayItem(XMPConst.NS_DC, "creator", new PropertyOptions(PropertyOptions.ARRAY_ORDERED), sa.FullName, null);
+                    }
                 }
                 else
                 {
                     String[] authors = this.PdfRecord.ArticleCreators.Split(',');
                     foreach (String author in authors)
                     {
-                        dcAuthor.Add(author);
+                        xmp.AppendArrayItem(XMPConst.NS_DC, "creator", new PropertyOptions(PropertyOptions.ARRAY_ORDERED), author, null);
                     }
                 }
-                dc.SetProperty(iTextSharp.text.xml.xmp.DublinCoreSchema.CREATOR, dcAuthor);
 
-                iTextSharp.text.xml.xmp.XmpArray dcSubject = new iTextSharp.text.xml.xmp.XmpArray(iTextSharp.text.xml.xmp.XmpArray.UNORDERED);
+                // Dublin Core - subject (unordered array)
                 String[] subjects = this.PdfRecord.ArticleTags.Split(',');
                 foreach (String subject in subjects)
                 {
-                    dcSubject.Add(subject);
+                    xmp.AppendArrayItem(XMPConst.NS_DC, "subject", new PropertyOptions(PropertyOptions.ARRAY), subject, null);
                 }
-                dc.SetProperty(iTextSharp.text.xml.xmp.DublinCoreSchema.SUBJECT, dcSubject);
 
-                xmp.AddRdfDescription(dc);
-                xmp.Close();    // This flushes the XMP metadata into the memory buffer
-
-                //---------------------------------------------------------------------------------
-                // Shrink the buffer to the correct size (discard empty elements of the byte array)
-                int bufsize = buffer.Length;
-                int bufcount = 0;
-                foreach (byte b in buffer)
-                {
-                    if (b == 0) break;
-                    bufcount++;
-                }
-                System.IO.MemoryStream ms2 = new System.IO.MemoryStream(buffer, 0, bufcount);
-                buffer = ms2.ToArray();
-                //---------------------------------------------------------------------------------
-
-                return buffer;
+                return xmp;// XMPMetaFactory.SerializeToBuffer(xmp, new SerializeOptions().SetOmitPacketWrapper(false));
             }
             catch (Exception)
             {
                 throw;
             }
-            finally
-            {
-                ms.Dispose();
-            }
         }
 
-        private static void SetStandardPageSize(iTextSharp.text.Document doc)
-        {
-            doc.SetPageSize(new iTextSharp.text.Rectangle(iTextSharp.text.PageSize.A4.Width,
-                iTextSharp.text.PageSize.A4.Height));
-            doc.SetMargins(50, 50, 50, 50);
-        }
-
-        private void AddImageAndOCRToPDF(Document pdf, PdfWriter writer, string pageUrl, int retryImageWait,
+        private void AddImageAndOCRToPDF(PdfDocument pdfDoc, string pageUrl, int retryImageWait,
             List<Tuple<string, float, float, float, float, float>> pageWords)
         {
             string imagePath = pageUrl.Split('|')[1];
-            Font ocrFont = new Font(Font.HELVETICA, 6.0f, Font.NORMAL, Color.BLACK);
+            PdfFont ocrFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
+            const float ocrFontSize = 6.0f;
 
-            Image image = null;
+            ImageData imageData = null;
             bool downloadFailed = false;
 
             try
@@ -345,11 +340,11 @@ namespace MOBOT.BHL.BHLPDFGenerator
                         // Get a re-sampled instance of the image (decrease quality, hopefully undetectable or nearly so)
                         using (Stream imageStream = new WebClient().OpenRead(new Uri(imagePath)))
                         {
-                            var resampledStream = ReduceImageQuality(imageStream);
-                            image = Image.GetInstance(((MemoryStream)resampledStream).ToArray());
+                            MemoryStream resampledStream = (MemoryStream)ReduceImageQuality(imageStream);
+                            imageData = ImageDataFactory.Create(resampledStream.ToArray());
                         }
                         // Use this if not worried about resizing/resampling images
-                        //image = Image.GetInstance(new Uri(imagePath));
+                        //imageData = ImageDataFactory.Create(new Uri(imagePath));
                         tryDownload = false;    // no need to continue downloads
                     }
                     catch (Exception ex)
@@ -368,25 +363,26 @@ namespace MOBOT.BHL.BHLPDFGenerator
                     }
                 }
 
-                float imageWidth = image.Width;
-                float imageHeight = image.Height;
-                pdf.SetMargins(0, 0, 0, 0);
+                float imageWidth = imageData.GetWidth();
+                float imageHeight = imageData.GetHeight();
 
-                float scaleFactor = (PageSize.A4.Height / image.Height);
-                float newWidth = image.Width * scaleFactor;
-                image.ScaleAbsolute(newWidth, PageSize.A4.Height);
-                pdf.SetPageSize(new Rectangle(newWidth, PageSize.A4.Height));
+                float scaleFactor = PageSize.A4.GetHeight() / imageHeight;
+                float newWidth = imageWidth * scaleFactor;
 
-                pdf.NewPage();
+                // Each image page is sized to match the (scaled) image, same as the original.
+                PageSize customPageSize = new PageSize(newWidth, PageSize.A4.GetHeight());
+                PdfPage page = pdfDoc.AddNewPage(customPageSize);
+                PdfCanvas canvas = new PdfCanvas(page);
 
-                // Add a layer with the OCR text
+                canvas.AddImageFittedIntoRectangle(imageData, new Rectangle(0, 0, newWidth, PageSize.A4.GetHeight()), false);
+
+                // Add an invisible OCR text layer (text-rendering mode 3) over the image.
+                // This makes the page's text selectable/searchable without being visible -
+                // functionally equivalent to the old DirectContentUnder + ColumnText approach.
                 foreach (Tuple<string, float, float, float, float, float> ocrWord in pageWords)
                 {
-                    this.AddHiddenText(writer, Element.ALIGN_LEFT, ocrFont, ocrWord, scaleFactor, image.Height);
+                    this.AddHiddenText(canvas, ocrFont, ocrFontSize, ocrWord, scaleFactor, imageHeight);
                 }
-
-                image.SetAbsolutePosition(0, 0);  // point (0,0) is the upper left corner of the page
-                pdf.Add(image); // SetAbsolutePosition() will cause text to "overright" this image
             }
             catch (Exception ex)
             {
@@ -398,9 +394,16 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
                 // Error getting the image, add a "Page Unavailable" placeholder
                 this._numberImagesMissing++;
-                SetStandardPageSize(pdf);
-                pdf.NewPage();
-                this.AddParagraph(pdf, Element.ALIGN_CENTER, new Font(Font.HELVETICA, 12, Font.NORMAL, Color.BLACK), "Page Unavailable");
+
+                PdfPage fallbackPage = pdfDoc.AddNewPage(PageSize.A4);
+                PdfFont fallbackFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
+                Canvas fallbackCanvas = new Canvas(fallbackPage, fallbackPage.GetPageSize());
+                fallbackCanvas.Add(new Paragraph("Page Unavailable")
+                    .SetFont(fallbackFont)
+                    .SetFontSize(12)
+                    .SetFontColor(ColorConstants.BLACK)
+                    .SetTextAlignment(TextAlignment.CENTER));
+                fallbackCanvas.Close();
             }
         }
 
@@ -569,24 +572,31 @@ namespace MOBOT.BHL.BHLPDFGenerator
             return pageWords;
         }
 
-        private void AddHiddenText(PdfWriter writer, int alignment, Font font, Tuple<string, float, float, float, float, float> ocrWord,
-            float scaleFactor, float imageHeight)
+        /// <summary>
+        /// Draws a single OCR word onto the page as invisible text (text-rendering mode 3),
+        /// positioned to align with the underlying page image. This replaces the old
+        /// ColumnText-on-DirectContentUnder approach - since the text is invisible either way,
+        /// it can simply be painted directly onto the page canvas.
+        /// </summary>
+        private void AddHiddenText(PdfCanvas canvas, PdfFont font, float fontSize,
+            Tuple<string, float, float, float, float, float> ocrWord, float scaleFactor, float imageHeight)
         {
             string content = ocrWord.Item1;
-            float llx = (ocrWord.Item4 * scaleFactor);
-            float lly = ((imageHeight - ocrWord.Item5) * scaleFactor) - 5; // -5 adjustment to correctly align with image
-            float urx = (ocrWord.Item2 * scaleFactor) + 10;
-            float ury = ((imageHeight - ocrWord.Item3) * scaleFactor) - 5; // -5 adjustment to correctly align with image
+            float llx = ocrWord.Item4 * scaleFactor;
+            float lly = ((imageHeight - ocrWord.Item5) * scaleFactor); //- 5; // -5 adjustment to correctly align with image
 
-            ColumnText ct = new ColumnText(writer.DirectContentUnder);   // DirectContent for testing (visible), DirectContentUnder for production (hidden)
-            Chunk ck = new Chunk(content, font);
-            ct.SetSimpleColumn(new Phrase(ck), llx, lly, urx, ury, 0f, alignment);
-            ct.Go();
+            canvas.SaveState();
+            canvas.BeginText()
+                  .SetFontAndSize(font, fontSize)
+                  .SetTextRenderingMode(PdfCanvasConstants.TextRenderingMode.INVISIBLE)
+                  .MoveText(llx, lly)
+                  .ShowText(content)
+                  .EndText();
+            canvas.RestoreState();
         }
 
-        private void AddHeaderPages(Document doc, String fileName)
+        private void AddHeaderPages(Document doc, PdfDocument pdfDoc, String fileName)
         {
-            //BHLWS.BHLWS service = new MOBOT.BHL.BHLPDFGenerator.BHLWS.BHLWS();
             ICollection<PageSummaryView> pages = new PageSummaryViewClient(_bhlWSUrl).GetPageSummaryViewByPdf((int)this.PdfRecord.PdfID);
 
             if (pages.Count > 0)
@@ -596,47 +606,46 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 _pageLabels.Add("Title Page");
                 _pageLabels.Add(" ");
 
-                Title title = new Title();
-                title = new TitlesClient(_bhlWSUrl).GetTitle((int)firstPage.TitleID);
+                Title title = new TitlesClient(_bhlWSUrl).GetTitle((int)firstPage.TitleID);
 
                 // Set up the fonts to be used
-                iTextSharp.text.Font largeFont = new iTextSharp.text.Font(iTextSharp.text.Font.HELVETICA, 14, iTextSharp.text.Font.BOLD, iTextSharp.text.Color.BLACK);
-                iTextSharp.text.Font standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.HELVETICA, 12, iTextSharp.text.Font.NORMAL, iTextSharp.text.Color.BLACK);
-                iTextSharp.text.Font smallFont = new iTextSharp.text.Font(iTextSharp.text.Font.HELVETICA, 8, iTextSharp.text.Font.NORMAL, iTextSharp.text.Color.BLACK);
+                HeaderFont largeFont = new HeaderFont(PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD), 14, ColorConstants.BLACK);
+                HeaderFont standardFont = new HeaderFont(PdfFontFactory.CreateFont(StandardFonts.HELVETICA), 12, ColorConstants.BLACK);
+                HeaderFont smallFont = new HeaderFont(PdfFontFactory.CreateFont(StandardFonts.HELVETICA), 8, ColorConstants.BLACK);
 
                 // Generate links
                 String bhlUrl = "https://www.biodiversitylibrary.org/";
-                Anchor bhlAnchor = new Anchor(bhlUrl, standardFont);
-                bhlAnchor.Reference = bhlUrl;
+                Link bhlLink = new Link(bhlUrl, PdfAction.CreateURI(bhlUrl));
+                bhlLink.GetLinkAnnotation().SetBorder(new PdfAnnotationBorder(0, 0, 0));  // Remove the border
                 String titleUrl = "https://www.biodiversitylibrary.org/bibliography/" + firstPage.TitleID.ToString();
-                Anchor titleAnchor = new Anchor(titleUrl, standardFont);
-                titleAnchor.Reference = titleUrl;
+                Link titleLink = new Link(titleUrl, PdfAction.CreateURI(titleUrl));
+                titleLink.GetLinkAnnotation().SetBorder(new PdfAnnotationBorder(0, 0, 0));  // Remove the border
                 String itemUrl;
                 if (this.PdfRecord.BookID != null)
                     itemUrl = "https://www.biodiversitylibrary.org/item/" + this.PdfRecord.BookID.ToString(); // pages[0].BookID.ToString();
                 else
                     itemUrl = "https://www.biodiversitylibrary.org/segment/" + this.PdfRecord.SegmentID.ToString();
-                Anchor itemAnchor = new Anchor(itemUrl, standardFont);
-                itemAnchor.Reference = itemUrl;
-                Anchor pdfAnchor = new Anchor(String.Format(this.UrlFormat, fileName + ".pdf"), smallFont);
-                pdfAnchor.Reference = String.Format(this.UrlFormat, fileName + ".pdf");
+                Link itemLink = new Link(itemUrl, PdfAction.CreateURI(itemUrl));
+                itemLink.GetLinkAnnotation().SetBorder(new PdfAnnotationBorder(0, 0, 0));  // Remove the border
+                String pdfUrl = String.Format(this.UrlFormat, fileName + ".pdf");
+                Link pdfLink = new Link(pdfUrl, PdfAction.CreateURI(pdfUrl));
+                pdfLink.GetLinkAnnotation().SetBorder(new PdfAnnotationBorder(0, 0, 0));  // Remove the border
 
                 // ---------------- First page ----------------
 
                 // Add the BHL logo
                 String appPath = System.IO.Directory.GetCurrentDirectory();
-                iTextSharp.text.Image logoImage = iTextSharp.text.Image.GetInstance(appPath + "\\bhllogo.png");
-                //logoImage.ScaleToFit(logoImage.Width, logoImage.Height); 
-                logoImage.Alignment = iTextSharp.text.Element.ALIGN_CENTER;
+                ImageData logoImageData = ImageDataFactory.Create(appPath + "\\bhllogo.png");
+                Image logoImage = new Image(logoImageData).SetHorizontalAlignment(HorizontalAlignment.CENTER);
                 doc.Add(logoImage);
                 logoImage = null;
 
                 // Add text
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, standardFont, bhlAnchor);
+                this.AddParagraph(doc, TextAlignment.CENTER, standardFont, bhlLink);
                 this.AddSpace(doc, standardFont);
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, largeFont, firstPage.FullTitle, 60, 60);
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, title.PublicationDetails, 60, 60);
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, titleAnchor, 60, 60);
+                this.AddParagraph(doc, TextAlignment.LEFT, largeFont, firstPage.FullTitle, 60, 60, 0, 0);
+                this.AddParagraph(doc, TextAlignment.LEFT, standardFont, title.PublicationDetails, 60, 60, 0, 0);
+                this.AddParagraph(doc, TextAlignment.LEFT, standardFont, titleLink, 60, 60, 0, 0);
                 this.AddSpace(doc, standardFont);
 
                 if (PdfRecord.SegmentID != null)
@@ -648,37 +657,35 @@ namespace MOBOT.BHL.BHLPDFGenerator
                         segment = new SegmentsClient(_bhlWSUrl).GetSegment((int)this._pdfRecord.SegmentID);
                         if (segment != null)
                         {
-                            this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, largeFont, segment.Title, 60, 60);
+                            this.AddParagraph(doc, TextAlignment.LEFT, largeFont, segment.Title, 60, 60, 0, 0);
                         }
                     }
                 }
 
-                Paragraph volumeInfo = new Paragraph();
+                List<ILeafElement> volumeInfoParts = new List<ILeafElement>();
                 if (PdfRecord.BookID != null)
                 {
                     // Include the volume
                     if ((firstPage.Volume ?? "") == "")
                     {
-                        volumeInfo.Add(new Chunk((_pdfRecord.BookID != null ? "Item: " : "Part: "), largeFont));
+                        volumeInfoParts.Add(MakeStyledText((_pdfRecord.BookID != null ? "Item: " : "Part: "), largeFont));
                     }
                     else
                     {
-                        volumeInfo.Add(new Chunk(firstPage.Volume + ": ", largeFont));
+                        volumeInfoParts.Add(MakeStyledText(firstPage.Volume + ": ", largeFont));
                     }
                 }
-                volumeInfo.Add(itemAnchor);
+                volumeInfoParts.Add(itemLink);
 
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, volumeInfo, 60, 60);
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, standardFont, " ");
+                this.AddParagraph(doc, TextAlignment.LEFT, standardFont, volumeInfoParts.ToArray(), 60, 60, 0, 0);
+                this.AddParagraph(doc, TextAlignment.CENTER, standardFont, " ");
 
                 // Add article metadata, if it is available
-                if (this.PdfRecord.ArticleTitle.Trim() != string.Empty) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, "Article/Chapter Title: " + this.PdfRecord.ArticleTitle.Trim(), 60, 60);
-                if (this.PdfRecord.ArticleCreators.Trim() != string.Empty) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, "Author(s): " + this.PdfRecord.ArticleCreators.Trim(), 60, 60);
-                if (this.PdfRecord.ArticleTags.Trim() != string.Empty) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, "Subject(s): " + this.PdfRecord.ArticleTags.Trim(), 60, 60);
+                if (this.PdfRecord.ArticleTitle.Trim() != string.Empty) this.AddParagraph(doc, TextAlignment.LEFT, standardFont, "Article/Chapter Title: " + this.PdfRecord.ArticleTitle.Trim(), 60, 60, 0, 0);
+                if (this.PdfRecord.ArticleCreators.Trim() != string.Empty) this.AddParagraph(doc, TextAlignment.LEFT, standardFont, "Author(s): " + this.PdfRecord.ArticleCreators.Trim(), 60, 60, 0, 0);
+                if (this.PdfRecord.ArticleTags.Trim() != string.Empty) this.AddParagraph(doc, TextAlignment.LEFT, standardFont, "Subject(s): " + this.PdfRecord.ArticleTags.Trim(), 60, 60, 0, 0);
 
                 // Include the list of pages
-                Paragraph pageInfo = new Paragraph();
-                pageInfo.Add("Page(s): ");
                 String pageList = String.Empty;
                 foreach (PageSummaryView page in pages)
                 {
@@ -690,8 +697,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                         pageList += pageDesc;
                     }
                 }
-                pageInfo.Add(pageList);
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, pageInfo, 60, 60);
+                this.AddParagraph(doc, TextAlignment.LEFT, standardFont, "Page(s): " + pageList, 60, 60, 0, 0);
                 this.AddSpace(doc, standardFont);
 
                 string sponsor = string.Empty;
@@ -717,36 +723,36 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 if (institutions != null || sponsor != string.Empty)
                 {
                     Institution institution = ((List<Institution>)institutions)[0];
-                    if (institution != null) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, role + ": " + institution.InstitutionName, 60, 60);
-                    if (sponsor != String.Empty) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, "Sponsored by: " + sponsor, 60, 60);
+                    if (institution != null) this.AddParagraph(doc, TextAlignment.LEFT, standardFont, role + ": " + institution.InstitutionName, 60, 60, 0, 0);
+                    if (sponsor != String.Empty) this.AddParagraph(doc, TextAlignment.LEFT, standardFont, "Sponsored by: " + sponsor, 60, 60, 0, 0);
                     this.AddSpace(doc, standardFont);
                 }
 
                 // Add the page footer information
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, smallFont,
+                this.AddParagraph(doc, TextAlignment.LEFT, smallFont,
                     "Generated " +
                     DateTime.Now.Day.ToString() + " " +
                     System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month) + " " +
                     DateTime.Now.Year.ToString() + " " +
-                    DateTime.Now.ToShortTimeString(), 60, 60);
+                    DateTime.Now.ToShortTimeString(), 60, 60, 0, 0);
 
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, smallFont, pdfAnchor, 60, 60);
+                this.AddParagraph(doc, TextAlignment.LEFT, smallFont, pdfLink, 60, 60);
 
                 // ---------------- Second page ----------------
 
-                doc.NewPage();
+                doc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
 
                 // Show the legal text if we have any, else add a blank page
                 String legal = System.IO.File.ReadAllText(appPath + "\\legal.txt");
                 if (legal.Length > 0)
                 {
                     _pageLabels[1] = "Legal";
-                    this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, legal);
+                    this.AddParagraph(doc, TextAlignment.LEFT, standardFont, legal, 60, 60);
                 }
                 else
                 {
                     _pageLabels[1] = "Blank";
-                    this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, standardFont, "This page intentionally left blank.");
+                    this.AddParagraph(doc, TextAlignment.CENTER, standardFont, "This page intentionally left blank.");
                 }
             }
         }
@@ -767,23 +773,74 @@ namespace MOBOT.BHL.BHLPDFGenerator
             return pageDescription;
         }
 
-        private void AddParagraph(Document doc, int alignment, iTextSharp.text.Font font, object content, 
-            float indentationRight = 0, float indentationLeft = 0)
+        private Text MakeStyledText(string content, HeaderFont font)
         {
-            Paragraph paragraph = new Paragraph();
-            paragraph.SetLeading(0f, 1.2f);
-            paragraph.Alignment = alignment;
-            paragraph.Font = font;
-            paragraph.IndentationLeft = indentationLeft;
-            paragraph.IndentationRight = indentationRight;
+            return new Text(content)
+                .SetFont(font.Font)
+                .SetFontSize(font.Size)
+                .SetFontColor(font.Color);
+        }
+
+        private void AddParagraph(Document doc, TextAlignment alignment, HeaderFont font, String content,
+            float indentationRight = 0, float indentationLeft = 0, float indentationTop = 0, 
+            float indentationBottom = 8f)
+        {
+            Paragraph paragraph = new Paragraph(content)
+                .SetMultipliedLeading(1.2f)
+                .SetTextAlignment(alignment)
+                .SetFont(font.Font)
+                .SetFontSize(font.Size)
+                .SetFontColor(font.Color)
+                .SetMarginLeft(indentationLeft)
+                .SetMarginRight(indentationRight)
+                .SetMarginTop(indentationTop)
+                .SetMarginBottom(indentationBottom);
+            doc.Add(paragraph);
+        }
+
+        private void AddParagraph(Document doc, TextAlignment alignment, HeaderFont font, ILeafElement content,
+            float indentationRight = 0, float indentationLeft = 0, float indentationTop = 0,
+            float indentationBottom = 8f)
+        {
+            Paragraph paragraph = new Paragraph()
+                .SetMultipliedLeading(1.2f)
+                .SetTextAlignment(alignment)
+                .SetFont(font.Font)
+                .SetFontSize(font.Size)
+                .SetFontColor(font.Color)
+                .SetMarginLeft(indentationLeft)
+                .SetMarginRight(indentationRight)
+                .SetMarginTop(indentationTop)
+                .SetMarginBottom(indentationBottom);
             paragraph.Add(content);
             doc.Add(paragraph);
         }
 
-        private void AddSpace(Document doc, iTextSharp.text.Font font)
+        private void AddParagraph(Document doc, TextAlignment alignment, HeaderFont font, ILeafElement[] parts,
+            float indentationRight = 0, float indentationLeft = 0, float indentationTop = 0,
+            float indentationBottom = 8f)
         {
-            this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, font, " ");
-            this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, font, " ");
+            Paragraph paragraph = new Paragraph()
+                .SetMultipliedLeading(1.2f)
+                .SetTextAlignment(alignment)
+                .SetFont(font.Font)
+                .SetFontSize(font.Size)
+                .SetFontColor(font.Color)
+                .SetMarginLeft(indentationLeft)
+                .SetMarginRight(indentationRight)
+                .SetMarginTop(indentationTop)
+                .SetMarginBottom(indentationBottom);
+            foreach (ILeafElement part in parts)
+            {
+                paragraph.Add(part);
+            }
+            doc.Add(paragraph);
+        }
+
+        private void AddSpace(Document doc, HeaderFont font)
+        {
+            this.AddParagraph(doc, TextAlignment.CENTER, font, " ", indentationTop: 4f, indentationBottom: 8f);
+            this.AddParagraph(doc, TextAlignment.CENTER, font, " ", indentationTop: 4f, indentationBottom: 8f);
         }
     }
 }
