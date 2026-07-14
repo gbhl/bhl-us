@@ -38,6 +38,9 @@
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>2</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Remove="PDFDocument.OLD.cs" />
   </ItemGroup>
@@ -55,8 +58,6 @@
     <None Update="app.config.template">
       <SubType>Designer</SubType>
     </None>
-    <None Include="BHLPDFGenerator_1_TemporaryKey.pfx" />
-    <None Include="BHLPDFGenerator_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Properties\Settings.settings">
