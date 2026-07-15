@@ -19,11 +19,11 @@ namespace BHL.SiteServicesREST.v1.Controllers
         }
 
         [HttpPut(Name = "PutQueueMessages")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200, Type = typeof(bool))]
         public async Task<IActionResult> QueueMessages(string queueName, List<string> messages)
         {
-            await _queueService.AddQueueMessages(queueName, messages);
-            return Ok();
+            bool result = await _queueService.AddQueueMessages(queueName, messages);
+            return Ok(result);
         }
 
         [HttpGet("Count", Name = "GetQueueMessageCount")]

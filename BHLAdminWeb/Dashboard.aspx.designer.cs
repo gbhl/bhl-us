@@ -96,6 +96,15 @@ namespace MOBOT.BHL.AdminWeb
         protected global::System.Web.UI.HtmlControls.HtmlTableCell tdPageTypes;
 
         /// <summary>
+        /// tdAlign control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdAlign;
+
+        /// <summary>
         /// tdPDFRequests control.
         /// </summary>
         /// <remarks>
