@@ -120,7 +120,7 @@
             </header>
             <%if (System.Configuration.ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true") {%>
             <div class="newfuturebanner" id="newfuturebanner" runat="server">
-	            <%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsBannerText"]%> <a title="new future" href="<%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]%>">Learn more.</a>
+	            <%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsBannerText"]%> <a title="survey" target="_blank" href="https://bit.ly/4fpc75D">Take our short user survey.</a>
             </div>
             <%} else { %>
             <div class="harmfulcontentbanner" id="harmfulcontentbanner" runat="server">
