@@ -1,19 +1,4 @@
-﻿@if (System.Web.Configuration.WebConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true")
-{
-    <div id="FeatureBox2_panCollection" style="display:block">
-        <div class="featurebox" id="">
-            <h3>Help Support <span>BHL</span></h3>
-            <h4>&nbsp;</h4>
-            <span class="content">
-                <a href="@System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]" title="Donate Now">
-                    <img src="~/images/ss_butterfly.jpg" alt="Donate Now" />
-                </a>
-            </span>
-            <a href="@System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]" class="featurebutton-home" title="Donate Now">Ways to Give</a>
-        </div>
-    </div>
-}
-else
+﻿@if (System.Web.Configuration.WebConfigurationManager.AppSettings["ShowFeatureCollection"].ToLower() == "true")
 {
     <div id="FeatureBox2_panCollection" style="display:@ViewBag.CollectionDisplay">
         <div class="featurebox" id="">
@@ -25,6 +10,21 @@ else
                 </a>
             </span>
             <a href="@ViewBag.CollectionUrlRoot/collection/@ViewBag.CollectionUrl" id="FeatureBox2_lnkCollectionButton" class="featurebutton-home" title="@ViewBag.CollectionName">Explore</a>
+        </div>
+    </div>
+}
+else
+{
+    <div id="FeatureBox2_panCollection" style="display:block">
+        <div class="featurebox" id="">
+            <h3>Celebrating 20 Years</h3>
+            <h4>Treasures from BHL</h4>
+            <span class="content">
+                <a href="https://blog.biodiversitylibrary.org/tag/bhlat20" title="Celebrate 20 Years">
+                    <img src="~/images/ss_butterfly2.png" alt="Celebrate 20 Years" />
+                </a>
+            </span>
+            <a href="https://blog.biodiversitylibrary.org/tag/bhlat20" class="featurebutton-home" title="Celebrate 20 Years">Discover the Stories</a>
         </div>
     </div>
 }

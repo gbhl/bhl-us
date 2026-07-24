@@ -10,13 +10,6 @@
         <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">Ways to Give</a>
     </div>
 </asp:Panel>
-<asp:Panel ID="panNewFuture" runat="server" Visible="false">
-    <div class="<%= SpecialClass %> newfuture" id="<%= specialID %>">
-        <h3>Future of BHL</h3>
-        <p><%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsText"]%></p>
-        <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]%>">Learn More</a>
-    </div>
-</asp:Panel>
 <asp:Panel ID="panFlickr" runat="server"  Visible="false">
     <div class="<%= SpecialClass %>" id="<%= specialID %>" >
         <h3>Today's Picks</h3>
@@ -29,16 +22,16 @@
         <a target="_blank" rel="noopener noreferrer" class="featurebutton-home" href="http://www.flickr.com/photos/biodivlibrary/sets/">View More Images on Flickr</a>
     </div>
 </asp:Panel>
-<asp:Panel ID="panSupportLarge" runat="server" Visible="false">
+<asp:Panel ID="panSpecialLarge" runat="server" Visible="false">
     <div class="<%= SpecialClass %>"  id="<%= specialID %>" >
-        <h3>Help Support <span>BHL</span></h3>
-        <h4>&nbsp;</h4>
+        <h3>Celebrating 20 Years</h3>
+        <h4>Treasures from BHL</h4>
          <span class="content">
-             <a title="Donate Now" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">
-                <img alt="Donate Now" src="~/images/ss_butterfly.jpg" runat="server"/>
+             <a title="Celebrate 20 Years" href="https://blog.biodiversitylibrary.org/tag/bhlat20">
+                <img alt="Celebrate 20 Years" src="~/images/ss_butterfly2.png" runat="server"/>
             </a>
          </span>
-         <a class="featurebutton-home" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">Ways to Give</a>
+         <a class="featurebutton-home" href="https://blog.biodiversitylibrary.org/tag/bhlat20">Discover the Stories</a>
     </div>
 </asp:Panel>
 <asp:Panel ID="panCollection" runat="server"  Visible="false">

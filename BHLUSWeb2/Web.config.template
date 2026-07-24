@@ -52,8 +52,8 @@
     <add key="GeminiRequestSourceUserId" value="22"/>
     <add key="GeminiMailboxId" value="7"/>
 
-    <!-- Feature toggle for New Future messaging -->
-    <add key="ShowNewFuture" value="true" />
+    <!-- Feature toggle for the Featured Collection -->
+    <add key="ShowFeatureCollection" value="false"/>
 
     <!-- Feature toggle for IIIF implementation:  Valid values are "on", "off", and "toggle" -->
     <add key="IIIFState" value="off" />
@@ -144,10 +144,6 @@
 
     <!--<add key="DonateUrl" value="https://ancrywkv.donorsupport.co/page/BHLDonations"/>-->
     <add key="DonateUrl" value="https://about.biodiversitylibrary.org/get-involved/donate/"/>
-
-    <add key="NewFutureNewsBannerText" value="The future of BHL is uncertain, but hopeful." />
-    <add key="NewFutureNewsText" value="BHL's future is uncertain, but hopeful. Follow the latest news of our ongoing transition." />
-    <add key="NewFutureNewsUrl" value="https://about.biodiversitylibrary.org/about/future-of-bhl/" />
 
     <add key="NewsletterSignupUrl" value="https://lp.constantcontactpages.com/sl/YKrBfqY/BHLsignup"/>
 

@@ -33,15 +33,6 @@ namespace MOBOT.BHL.Web2
         protected global::System.Web.UI.WebControls.Panel panSupport;
 
         /// <summary>
-        /// panNewFuture control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panNewFuture;
-
-        /// <summary>
         /// panFlickr control.
         /// </summary>
         /// <remarks>
@@ -60,13 +51,13 @@ namespace MOBOT.BHL.Web2
         protected global::System.Web.UI.WebControls.Literal flickrList;
 
         /// <summary>
-        /// panSupportLarge control.
+        /// panSpecialLarge control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panSupportLarge;
+        protected global::System.Web.UI.WebControls.Panel panSpecialLarge;
 
         /// <summary>
         /// panCollection control.

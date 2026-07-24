@@ -44,23 +44,20 @@ namespace MOBOT.BHL.Web2
             switch (this.featureType.ToUpper())
             {
                 case "SUPPORT":
-                    if (ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true")
-                        panNewFuture.Visible = true;
-                    else
-                        panSupport.Visible = true;
+                    panSupport.Visible = true;
                     break;
                 case "BLOG":
                     panBlog.Visible = true;
                     break;
                 case "COLLECTION":
-                    if (ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true")
-                    {
-                        panSupportLarge.Visible = true;
-                    }
-                    else
+                    if (ConfigurationManager.AppSettings["ShowFeatureCollection"].ToLower() == "true")
                     {
                         PopulateCollectionBox();
                         panCollection.Visible = true;
+                    }
+                    else
+                    {
+                        panSpecialLarge.Visible = true;
                     }
                     break;
                 case "FLICKR":
@@ -73,7 +70,6 @@ namespace MOBOT.BHL.Web2
 
         protected void PopulateCollectionBox()
         {
-
             string cacheKey = "FeaturedCollection";
             Collection collection = null;
 
@@ -84,7 +80,6 @@ namespace MOBOT.BHL.Web2
             }
             else
             {
-
                 BHLProvider provider = new BHLProvider();
                 collection = provider.CollectionSelectFeatured();
 
@@ -117,56 +112,46 @@ namespace MOBOT.BHL.Web2
                     (collection.CollectionURL == string.Empty ? collection.CollectionID.ToString() : collection.CollectionURL));
                 lnkCollectionButton.Title = collection.CollectionName;
                 title = collection.CollectionName;
-                //set special class
-               
-
-
-                //lnkFeaturedCollectionName.InnerHtml = collection.CollectionName;
             }
-
         }
 
         protected void PopulateFlickrClass()
         {
-                string[] flickrThumbList = null;
-                string cacheKey = "FlickrThumbnailList";
-                if (Cache[cacheKey] != null)
+            string[] flickrThumbList = null;
+            string cacheKey = "FlickrThumbnailList";
+            if (Cache[cacheKey] != null)
+            {
+                // Use cached version
+                flickrThumbList = (string[])Cache[cacheKey];
+            }
+            else
+            {
+                if (File.Exists(Request.PhysicalApplicationPath + "\\flickrthumbs.txt"))
                 {
-                    // Use cached version
-                    flickrThumbList = (string[])Cache[cacheKey];
+                    flickrThumbList = File.ReadAllLines(Request.PhysicalApplicationPath + "\\flickrthumbs.txt");
+                    Cache.Add(cacheKey, flickrThumbList, null, DateTime.Now.AddMinutes(
+                        Convert.ToDouble(ConfigurationManager.AppSettings["FlickrThumbListCacheTime"])),
+                        System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
                 }
-                else
+            }
+
+            // Show the flickr thumbnails
+            if (flickrThumbList != null)
+            {
+                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                sb.Append("<ul>\n");
+                foreach (string flickrThumb in flickrThumbList)
                 {
-                    if (File.Exists(Request.PhysicalApplicationPath + "\\flickrthumbs.txt"))
-                    {
-                        flickrThumbList = File.ReadAllLines(Request.PhysicalApplicationPath + "\\flickrthumbs.txt");
-                        Cache.Add(cacheKey, flickrThumbList, null, DateTime.Now.AddMinutes(
-                            Convert.ToDouble(ConfigurationManager.AppSettings["FlickrThumbListCacheTime"])),
-                            System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
-                    }
+                    string[] thumbDetails = flickrThumb.Split('\t');
+                    sb.Append(string.Format(
+                        "<li><a href='/page/{0}' title='{1}'><img alt='Flickr image:{1}' src='/images/flickrthumbs/{2}.jpg'></a></li>\n",
+                        thumbDetails[0],
+                        thumbDetails[2] + " - " + (thumbDetails[3].Length > 0 ? thumbDetails[3] : thumbDetails[4]),
+                        thumbDetails[0]));
                 }
-
-                // Show the flickr thumbnails
-                if (flickrThumbList != null)
-                {
-                    System.Text.StringBuilder sb = new System.Text.StringBuilder();
-                    sb.Append("<ul>\n");
-                    foreach (string flickrThumb in flickrThumbList)
-                    {
-                        string[] thumbDetails = flickrThumb.Split('\t');
-                        sb.Append(string.Format(
-                            "<li><a href='/page/{0}' title='{1}'><img alt='Flickr image:{1}' src='/images/flickrthumbs/{2}.jpg'></a></li>\n",
-                            thumbDetails[0],
-                            thumbDetails[2] + " - " + (thumbDetails[3].Length > 0 ? thumbDetails[3] : thumbDetails[4]),
-                            thumbDetails[0]));
-                    }
-                    sb.Append("</ul>\n");
-                    flickrList.Text = sb.ToString();
-
-                }
-
+                sb.Append("</ul>\n");
+                flickrList.Text = sb.ToString();
+            }
         }
-
-
     }
 }

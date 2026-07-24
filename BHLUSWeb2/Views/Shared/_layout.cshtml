@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>@ViewBag.Title</title>
     @RenderSection("CSS", required: false)
-    <link rel="stylesheet" href="/css/style.css?v=32" />
+    <link rel="stylesheet" href="/css/style.css?v=33" />
     <link rel="stylesheet" href="/css/socicon.css?v=3" media="all" />
     <link rel="stylesheet" href="/css/cookieconsent.css" />
     <script src="/js/libs/modernizr-custom.js"></script>
@@ -110,18 +110,9 @@
                 </span>
             </div>
         </header>
-        @if (System.Web.Configuration.WebConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true")
-        {
-            <div class="newfuturebanner">
-                @System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsBannerText"] <a title="survey" target="_blank" href="https://bit.ly/4fpc75D">Take our short user survey.</a>
-            </div>
-        }
-        else
-        {
-            <div class="harmfulcontentbanner">
-                Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgment of Harmful Content</a>
-            </div>
-        }
+        <div class="harmfulcontentbanner">
+            Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgment of Harmful Content</a>
+        </div>
         @Html.Action("_AlertMessage", "Partial")
         <div id="main">
             <nav id="content-nav">

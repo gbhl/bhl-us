@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="stylesheet" href="/css/style.css?v=32" />
+    <link rel="stylesheet" href="/css/style.css?v=33" />
     <link rel="stylesheet" href="/css/socicon.css?v=3" media="all" />
 	<link rel="stylesheet" href="/css/cookieconsent.css" />
     <link title="Biodiversity Heritage Library News [RSS]" href="https://blog.biodiversitylibrary.org/feed" type="application/rss+xml" rel="alternate" />
@@ -118,15 +118,9 @@
                     </span>
                 </div>
             </header>
-            <%if (System.Configuration.ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true") {%>
-            <div class="newfuturebanner" id="newfuturebanner" runat="server">
-	            <%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsBannerText"]%> <a title="survey" target="_blank" href="https://bit.ly/4fpc75D">Take our short user survey.</a>
-            </div>
-            <%} else { %>
             <div class="harmfulcontentbanner" id="harmfulcontentbanner" runat="server">
 	            Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgment of Harmful Content</a>
             </div>
-            <%}%>
             <div id="divAlert" runat="server" visible="false" class="alertbox"><asp:Literal ID="litAlertMessage" runat="server"></asp:Literal></div>
             <div id="main">
                 <asp:ContentPlaceHolder ID="mainContentPlaceHolder" runat="server" />

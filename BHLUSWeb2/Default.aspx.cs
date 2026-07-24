@@ -11,7 +11,6 @@ namespace MOBOT.BHL.Web2
         {
             Master.bodyID = "body-home";
             Master.harmfulContentBannerVisible = false;
-            Master.newFutureBannerVisible = false;
             
             rssFeed.FeedLocation = ConfigurationManager.AppSettings["projectUpdatesFeedLocation"];
 

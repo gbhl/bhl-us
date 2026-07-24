@@ -14,7 +14,7 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="stylesheet" href="/css/bhlaustylereference.css?v=8" />
-    <link rel="stylesheet" href="/css/style.css?v=32" />
+    <link rel="stylesheet" href="/css/style.css?v=33" />
     <link rel="Stylesheet" href="/css/bookviewer.css?v=3" />
     <link rel="stylesheet" href="/css/socicon.css?v=3" media="all" />
 	<link rel="stylesheet" href="/css/cookieconsent.css" />
@@ -115,15 +115,9 @@
                     </div>
                 </div>
             </header>
-        <%if (System.Configuration.ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true") {%>
-        <div class="newfuturebanner">
-	        <%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsBannerText"]%> <a title="survey" target="_blank" href="https://bit.ly/4fpc75D">Take our short user survey.</a>
-        </div>
-        <%} else { %>
         <div class="harmfulcontentbanner">
 	        Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgment of Harmful Content</a>
         </div>
-         <%}%>
         <div id="divAlert" runat="server" visible="false" class="alertbox"><asp:Literal ID="litAlertMessage" runat="server"></asp:Literal></div>
         <asp:ContentPlaceHolder ID="mainContentPlaceHolder" runat="server" />
         <script src="//ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

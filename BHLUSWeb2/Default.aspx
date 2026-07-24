@@ -12,19 +12,11 @@
 <div class="column-wrap" style="position:relative">
 <div id="promo-home">
 <div id="heroimage-home"><img title="<%= homeHeroText %>" alt="<%= homeHeroText %>" src="images/0<%= homeHeroImage %>_home_pic_img.png" /></div>
-<% if (System.Configuration.ConfigurationManager.AppSettings["ShowNewFuture"].ToLower() == "true") { %>
-<div id="newfuturebox-home" class="featurebox-home">
-    <h3>Future of BHL</h3>
-    <p style="margin:10px 0"><%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsText"]%><br><br></p>
-    <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["NewFutureNewsUrl"]%>">Learn More</a>
-</div>
-<%} else { %>
 <div id="promobox-home" class="featurebox-home">
     <h3>Help Support <span>BHL</span></h3>
     <p>BHL's existence depends on the financial support of its patrons. Help us keep this free resource alive!</p>
     <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="<%=System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]%>">Ways to Give</a>
 </div>
-<%}%>
 </div>
 </div>
  <div id="intro-home" class="column-wrap" style="min-height:100px">
