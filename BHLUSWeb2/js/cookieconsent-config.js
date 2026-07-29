@@ -47,9 +47,6 @@ CookieConsent.run({
                     },
                     {
                         name: '_gid',
-                    },
-                    {
-                        name: 'ACOOKIE',
                     }
                 ],
                 reloadPage: true
@@ -62,14 +59,6 @@ CookieConsent.run({
                             name: /^(_ga|_gid)/,
                             domain: location.hostname
                         },
-                    ]
-                },
-                webtrends: {
-                    label: 'WebTrends',
-                    cookies: [
-                        {
-                            name: 'ACOOKIE'
-                        }
                     ]
                 },
                 altmetric: {
@@ -154,11 +143,6 @@ CookieConsent.run({
                                 name: '_gid',
                                 domain: location.hostname,
                                 desc: 'Tracking cookie used by Google Analytics to analyze web traffic.',
-                            },
-                            {
-                                name: 'ACOOKIE',
-                                domain: 'logs1.smithsonian.museum',
-                                desc: 'Tracking cookie used by WebTrends to analyze web traffic.'
                             },
                             {
                                 name: '_ga',
