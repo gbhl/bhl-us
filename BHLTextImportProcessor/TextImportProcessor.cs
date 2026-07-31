@@ -135,7 +135,7 @@ namespace BHL.TextImportProcessor
                                     TextImportTool importTool = new TextImportTool(textImportFileLocalPath);
 
                                     // Validate the file
-                                    int filePageCount = importTool.PageCount();
+                                    int filePageCount = importTool.PageCountAsync().Result;
                                     if (filePageCount == 0) throw new Exception(string.Format("No pages found in {0}", batchFile.Filename));
 
                                     string fileFormat = importTool.GetFileFormat();
@@ -154,10 +154,10 @@ namespace BHL.TextImportProcessor
                                     // Parse the transcriptions from the file
                                     foreach (MOBOT.BHL.DataObjects.PageSummaryView page in pages)
                                     {
-                                        if (importTool.TextAvailable(page.SequenceOrder.ToString()))
+                                        if (importTool.TextAvailableAsync(page.SequenceOrder.ToString()).Result)
                                         {
                                             // Get the new text for the page from the text import file
-                                            string pageText = importTool.GetText(page.SequenceOrder.ToString());
+                                            string pageText = importTool.GetTextAsync(page.SequenceOrder.ToString()).Result;
 
                                             // Write new text file to the correct item path.
                                             // Only write files to final destination if not in debug mode.

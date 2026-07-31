@@ -1,14 +1,12 @@
-﻿using BHL.SiteServiceREST.v1.Client;
-using BHL.TextImportUtility;
+﻿using BHL.TextImportUtility;
 using MOBOT.BHL.AdminWeb.ActionFilters;
 using MOBOT.BHL.AdminWeb.Models;
 using MOBOT.BHL.AdminWeb.MVCServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Net.Security;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -32,7 +30,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
         // POST: /TextImport
         [HttpPost]
-        public RedirectToRouteResult Index(TextImportModel model)
+        public async Task<RedirectToRouteResult> Index(TextImportModel model)
         {
             // Upload and save the file
             for (int x = 0; x < Request.Files.Count; x++)
@@ -47,7 +45,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 fileModel.ItemID = Path.GetFileNameWithoutExtension(hpf.FileName);
                 fileModel.FilePath = savedFilePath;
                 fileModel.FileName = savedFileName;
-                fileModel.FileFormat = new TextImportService().GetFileFormat(savedFilePath);
+                fileModel.FileFormat = await new TextImportService().GetFileFormat(savedFilePath);
                 fileModel.FileFormatName = new TextImportService().GetFileFormatValue(fileModel.FileFormat);
                 model.Files.Add(fileModel);
             }
@@ -136,7 +134,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
         // AJAX method to support /TextImport/Review
         [HttpPost]
-        public ActionResult UpdateFileStatus(int fileID, string originalValue, string value)
+        public async Task<ActionResult> UpdateFileStatus(int fileID, string originalValue, string value)
         {
             int fileStatusID;
             string newStatus = originalValue;
@@ -152,15 +150,15 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
         // AJAX method to support /TextImport/Review
         [HttpGet]
-        public ActionResult GetItemPages(int itemID, string fileName)
+        public async Task<ActionResult> GetItemPages(int itemID, string fileName)
         {
-            List<DataObjects.Page> dbPages = new TextImportFileModel().GetItemPages(itemID);
             List<DataObjects.Page> displayPages = new List<DataObjects.Page>();
+            List<DataObjects.Page> dbPages = new TextImportFileModel().GetItemPages(itemID);
 
-            TextImportTool tiTool = new TextImportTool(Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], fileName));
-            foreach(DataObjects.Page page in dbPages)
+            TextImportTool tiTool = await TextImportTool.CreateAsync(Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], fileName));
+            foreach (DataObjects.Page page in dbPages)
             {
-                if (tiTool.TextAvailable(page.SequenceOrder.ToString())) displayPages.Add(page);
+                if (await tiTool.TextAvailableAsync(page.SequenceOrder.ToString())) displayPages.Add(page);
             }
 
             return Json(displayPages, JsonRequestBehavior.AllowGet);
@@ -180,10 +178,10 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
         // AJAX method to support /TextImport/Review
         [HttpGet]
-        public ActionResult GetNewPageText(string fileName, string seqNo)
+        public async Task<ActionResult> GetNewPageText(string fileName, string seqNo)
         {
-            TextImportTool tiTool = new TextImportTool(Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], fileName));
-            string pageText = HttpUtility.HtmlEncode(tiTool.GetText(seqNo)).Replace("\n", "<br/>");
+            TextImportTool tiTool = await TextImportTool.CreateAsync(Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], fileName));
+            string pageText = HttpUtility.HtmlEncode(await tiTool.GetTextAsync(seqNo)).Replace("\n", "<br/>");
             return Content(pageText);
         }
     }

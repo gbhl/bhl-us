@@ -4,6 +4,7 @@ using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MOBOT.BHL.AdminWeb.MVCServices
 {
@@ -79,9 +80,9 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             return TextImportBatchFileStatuses.Where(s => s.Value == "Error").Select(k => k.Key).First();
         }
 
-        public string GetFileFormat(string savedFileName)
+        public async Task<string> GetFileFormat(string savedFileName)
         {
-            TextImportTool tiTool = new TextImportTool(savedFileName);
+            TextImportTool tiTool = await TextImportTool.CreateAsync(savedFileName);
             return tiTool.GetFileFormat();
         }
 

@@ -4,7 +4,9 @@
     <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesPath"])" type="text/javascript"></script>
     <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryJEditablePath"])" type="text/javascript"></script>
     <script type="text/javascript" charset="utf-8">
-        $(document).ready(function() {
+        $(document).ready(function () {
+            let gettingPages = false;
+
             var oTable = $('#filelist').DataTable( {
                 "processing": true
                 ,"serverSide": true
@@ -63,24 +65,33 @@
                 selectedRow = tr;
                 tr.css("background-color", "#9FC9E6");
 
-                // Get pages and populate list
-                $.ajax({
-                    url: "/textimport/GetItemPages?itemID=" + itemid + "&fileName=" + filename
-                }).done(function (data) {
-                    $("#pageTable > tbody").empty();
+                if (gettingPages || $("#pagelist").is(':visible')) {
+                    return; // Getting pages or pages already visible; don't do anything
+                }
+                else {
+                    gettingPages = true;
 
-                    var tableRows;
-                    data.forEach(function (pageData) {
-                        tableRows += "<tr><td>";
-                        tableRows += "<a href='' id='selectedPageLink" + pageData.PageID + "' data-toggle='modal' data-target='#pageDetailModal' data-pagerecordid='" + pageData.PageID + "' data-pageseqno='" + pageData.SequenceOrder + "' data-filename='" + filename + "' data-pagedesc='" + pageData.WebDisplay.replace("'", "\'") + "'>" + pageData.WebDisplay + "</a>";
-                        tableRows += "</td></tr>";
+                    // Get pages and populate list
+                    $.ajax({
+                        url: "/textimport/GetItemPages?itemID=" + itemid + "&fileName=" + filename
+                    }).done(function (data) {
+                        $("#pageTable > tbody").empty();
+
+                        var tableRows;
+                        data.forEach(function (pageData) {
+                            tableRows += "<tr><td>";
+                            tableRows += "<a href='' id='selectedPageLink" + pageData.PageID + "' data-toggle='modal' data-target='#pageDetailModal' data-pagerecordid='" + pageData.PageID + "' data-pageseqno='" + pageData.SequenceOrder + "' data-filename='" + filename + "' data-pagedesc='" + pageData.WebDisplay.replace("'", "\'") + "'>" + pageData.WebDisplay + "</a>";
+                            tableRows += "</td></tr>";
+                        });
+
+                        $("#pageTable > tbody:last-child").append(tableRows);
+                    }).always(function () {
+                        gettingPages = false;
                     });
 
-                    $("#pageTable > tbody:last-child").append(tableRows);
-                });
-
-                $("#pagelist").show();
-                $("#itemdesc").html(itemdesc);
+                    $("#pagelist").show();
+                    $("#itemdesc").html(itemdesc);
+                }
             });
 
             $('form').submit(function (event) {
