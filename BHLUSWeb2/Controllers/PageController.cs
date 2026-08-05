@@ -48,7 +48,7 @@ namespace MOBOT.BHL.Web2.Controllers
         }
 
         [EnableThrottling]
-        public ActionResult GetPageThumb(int? pageid, int h = 300, int w = 200)
+        public ActionResult GetPageThumb(int? pageid, int h = 225, int w = 150)
         {
             if (!pageid.HasValue)
             {
@@ -75,7 +75,24 @@ namespace MOBOT.BHL.Web2.Controllers
                     }
                     else
                     {
-                        imageUrl = imageUrl.Replace("_full.webp", "_thumb.webp");
+                        var fileSize = "full";
+                        if (w <= 150)
+                        {
+                            fileSize = "thumb";
+                        }
+                        else if (w <= 235)
+                        {
+                            fileSize = "small";
+                        }
+                        else if (w <= 465)
+                        {
+                            fileSize = "medium";
+                        }
+                        else if (w <= 930)
+                        {
+                            fileSize = "large";
+                        }
+                        imageUrl = imageUrl.Replace("_full.webp", "_" + fileSize + ".webp");
                     }
                 }
 
