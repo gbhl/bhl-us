@@ -396,14 +396,14 @@
                             <div class="required">
                                 <label for="tbEmail">Email Address<span class="required">(required)</span></label>
                                 <div class="field-wrap">
-                                    <input class="field required email" type="text" id="tbEmail" name="tbEmail" /><span id="tbEmailErr" style="color:#8a1826; font-size:12px; font-family:Georgia,Times,serif; position:absolute; left:322px; top:6.5px;"></span>
+                                    <input class="field required email" type="text" id="tbEmail" name="tbEmail" /><span id="tbEmailErr" style="color:#8a1826; font-size:12px; font-family:Georgia,'Times New Roman',Times,serif; position:absolute; left:322px; top:6.5px;"></span>
                                 </div>
                             </div>
                             <div class="optional">
                                 <span>Optional</span>
                                 <label for="tbTitle">Article/Chapter Title</label>
                                 <div class="field-wrap">
-                                    <input class="field" type="text" id="tbTitle" name="tbTitle" /><span id="tbTitleErr" style="color:#8a1826; font-size:12px; font-family:Georgia,Times,serif; position:absolute; left:312px; top:6.5px;"></span>
+                                    <input class="field" type="text" id="tbTitle" name="tbTitle" /><span id="tbTitleErr" style="color:#8a1826; font-size:12px; font-family:Georgia,'Times New Roman',Times,serif; position:absolute; left:312px; top:6.5px;"></span>
                                 </div>
                                 <label for="tbAuthors">Author(s)</label>
                                 <div class="field-wrap">
@@ -487,8 +487,8 @@
 
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder"
     runat="server">
-    <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=5" />
-    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=13" />
+    <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=7" />
+    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=15" />
     <link rel="stylesheet" type="text/css" href="/css/nspop.css?v=2" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
@@ -647,7 +647,7 @@
                                     ocrPopUp = window.open('about:blank', '_blank', 'width=650,height=440,scrollbars=yes');
 
                                     var html = '<html><head><title>Text on: ' + br.getPageName(index) + '</title></head>'
-                                    html += '<body><div style="font:14px Georgia, Times, serif;">' + $.trim(data.ocrText).replace(/\n/g, '<br>') + '</div>'
+                                    html += '<body><div style="font:14px Georgia,\'Times New Roman\',Times,serif;">' + $.trim(data.ocrText).replace(/\n/g, '<br>') + '</div>'
                                     html += '</body></html>';
 
                                     ocrPopUp.document.write(html);

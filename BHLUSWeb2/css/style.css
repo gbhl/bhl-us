@@ -127,15 +127,13 @@ ul.text li p
 {
 	font-size:14px;
 }
-body 
-{	
-	color:#2b3c4d;
-	font:14px Georgia, Times, serif;
-	background:#f6ede2 0 110px repeat-x;
-	
-	/* AR: hack to make sure the HEADER/CONTENT/FOOTER don't
+body {
+    color: #2b3c4d;
+    font: 14px Georgia, "Times New Roman", Times, serif;
+    background: #f6ede2 0 110px repeat-x;
+    /* AR: hack to make sure the HEADER/CONTENT/FOOTER don't
     decrease in width when horizontal scrollbars are visible */
-	min-width: 1030px; 
+    min-width: 1030px;
 }
 code
 {
@@ -846,27 +844,26 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
     text-shadow: 0 -1px 1px #315b7e;
 }
 #searchbar a:hover { text-decoration:underline; color: #dff0fb; }
-#searchbar .field 
-{
-    font:16px Georgia, Times, serif;
-    color:#5e88ab;
-    background:#ecf4fa;
-    width:241px;
-    height:18px;
-    padding:7px 17px 7px 8px;
-    position:absolute;
-    top:40px;
-    left:0px;
-    border:0;
-    -webkit-border-top-left-radius:5px;
-    -webkit-border-bottom-left-radius:5px;
-    -moz-border-radius-topleft:5px;
-    -moz-border-radius-bottomleft:5px;
-    border-top-left-radius:5px;
-    border-bottom-left-radius:5px;
-    -webkit-box-sizing:content-box;
-    box-sizing:content-box;
-}
+    #searchbar .field {
+        font: 16px Georgia, "Times New Roman", Times, serif;
+        color: #5e88ab;
+        background: #ecf4fa;
+        width: 241px;
+        height: 18px;
+        padding: 7px 17px 7px 8px;
+        position: absolute;
+        top: 40px;
+        left: 0px;
+        border: 0;
+        -webkit-border-top-left-radius: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        -moz-border-radius-topleft: 5px;
+        -moz-border-radius-bottomleft: 5px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;
+    }
 #searchbar .button
 {
 	background:url(../images/bg_searchbar_button.png) 0 0 no-repeat;
@@ -1024,23 +1021,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 {
     position:relative;
 }
-#searchbox-home .field
-{
-	font:18px Georgia, Times, serif;
-	color:#265F99;
-	width:556px;
-	height:28px;
-	padding:6px 17px;
-	top:76px;	
-	position:absolute;
-	border:0;
-	-webkit-border-top-left-radius:5px;
-	-webkit-border-bottom-left-radius:5px;
-	-moz-border-radius-topleft:5px;
-	-moz-border-radius-bottomleft:5px;
-	border-top-left-radius:5px;
-	border-bottom-left-radius:5px;
-}
+    #searchbox-home .field {
+        font: 18px Georgia, "Times New Roman", Times, serif;
+        color: #265F99;
+        width: 556px;
+        height: 28px;
+        padding: 6px 17px;
+        top: 76px;
+        position: absolute;
+        border: 0;
+        -webkit-border-top-left-radius: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        -moz-border-radius-topleft: 5px;
+        -moz-border-radius-bottomleft: 5px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
 #searchbox-home .button
 {
 	background:url(../images/bg_searchhome_button.png) 0 0 no-repeat;
@@ -2836,7 +2832,7 @@ section .column3 {
     background: -ms-linear-gradient(top, #f2f6fb 0%,#e7eff7 100%); /* IE10+ */
     background: linear-gradient(to bottom, #f2f6fb 0%,#e7eff7 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6fb', endColorstr='#e7eff7',GradientType=0 ); /* IE6-9 */
-    font: 15px/28px Georgia,Times,serif;
+    font: 15px/28px Georgia, "Times New Roman", Times, serif;
     height: 30px;
 }
 
