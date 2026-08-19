@@ -1,7 +1,10 @@
 ﻿Biodiversity Heritage Library
 API v2 Documentation
 Created: April 6, 2010
-Revised: June 12, 2017
+Revised: August 18, 2026
+
+NOTICE:  API Version 2 is scheduled for retirement on December 31, 2026.  Please migrate existing code to the latest API version, 
+documented at https://www.biodiversitylibrary.org/docs/api3.html.
 
 ----------------------------------------------------------------------------------------------------
 
