@@ -35,7 +35,7 @@
         </div>
         <div id="right">
             Created: August 27, 2018<br />
-            Revised: August 20, 2025
+            Revised: August 24, 2026
         </div>
     </div>
     <div>
@@ -96,7 +96,7 @@
         <tr><td><a href="api3/PublicationSearch.html">PublicationSearch</a></td><td>Search for publications.</td></tr>
         <tr><td><a href="api3/PublicationSearchAdvanced.html">PublicationSearchAdvanced</a></td><td>Focused search for publications.</td></tr>
         <tr><td><a href="api3/SubjectSearch.html">SubjectSearch</a></td><td>Search for subjects.</td></tr>
-    </table>   
+    </table>
     <hr />
     <a name="elements"></a>
     <div class="header">*** DATA ELEMENTS *** <a href="#top" class="toplink">Contents</a></div>
@@ -644,6 +644,10 @@
                 <td>The number assigned to the page</td>
             </tr>
             <tr>
+                <td>PageNumber/Implied</td>
+                <td>Indicates whether the page number is implied (1) or explicitly printed on the page (0)</td>
+            </tr>
+            <tr>
                 <td>PageType/PageTypeName</td>
                 <td>
                     One of the following values, which identify the type of a page:<br />
@@ -842,6 +846,11 @@
     <a name="notes"></a>
     <div class="header">*** RELEASE NOTES *** <a href="#top" class="toplink">Contents</a></div>
 
+    <div class="subhead1">August 24, 2026 - version 3.8.0</div>
+    <ul type="disc">
+        <li>Added the &quot;ocr&quot; parameter to the &quot;GetPartMetadata&quot; method.</li>
+        <li>Added the &quot;PageNumber/Implied&quot; field to the metadata returned by &quot;GetPageMetadata&quot;, &quot;GetItemMetadata&quot;, and &quot;GetPartMetadata&quot;.</li>
+    </ul>
     <div class="subhead1">August 20, 2025 - version 3.7.1</div>
     <ul type="disc">
         <li>Added &quot;ia&quot; as a valid &quot;idtype&quot; parameter value for &quot;GetPartMetadata&quot;.</li>

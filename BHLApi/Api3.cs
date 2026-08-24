@@ -224,22 +224,14 @@ namespace MOBOT.BHL.API.BHLApi
                         if (pageNumberTrimmed != string.Empty)
                         {
                             PageNumber number = new PageNumber();
-                            int pos = pageNumberTrimmed.IndexOf('%');
-                            if (pos > 0)
-                            {
-                                number.Prefix = pageNumberTrimmed.Substring(0, pos).Trim();
-                                number.Number = pageNumberTrimmed.Substring(pos+1).Trim();
-                            }
-                            else
-                            {
-                                number.Number = pageNumberTrimmed;
-                            }
-
+                            string[] numParts = pageNumberTrimmed.Split('%');
+                            number.Prefix = numParts[0];
+                            number.Number = numParts[1];
+                            number.Implied = numParts[2];
                             page.PageNumbers.Add(number);
                         }
                     }
                 }
-
 
                 pages.Add(page);
             }
@@ -381,7 +373,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Segment methods
 
-        public List<Part> GetSegmentMetadata(string id, string idType, string includePages, string includeNames)
+        public List<Part> GetSegmentMetadata(string id, string idType, string includePages, string includeOcr, string includeNames)
         {
             List<Part> parts = null;
 
@@ -397,10 +389,12 @@ namespace MOBOT.BHL.API.BHLApi
                 }
             }
 
-            // "t" or "true" are acceptable values for the "includePages" and "includeNames" arguments; 
+            // "t" or "true" are acceptable values for the includePages/includeOcr/includeNames arguments; 
             // anything else is considered a value of "false"
             includePages = (includePages ?? "");
             bool pages = (includePages.ToLower() == "t" || includePages.ToLower() == "true");
+            includeOcr = (includeOcr ?? "");
+            bool ocr = (includeOcr.ToLower() == "t" || includeOcr.ToLower() == "true");
             includeNames = (includeNames ?? "");
             bool names = (includeNames.ToLower() == "t" || includeNames.ToLower() == "true");
 
@@ -434,6 +428,13 @@ namespace MOBOT.BHL.API.BHLApi
                 part.Identifiers = dal.SegmentIdentifierSelectBySegmentID(null, null, part.PartID);
                 part.Subjects = dal.SubjectSelectBySegmentID(null, null, part.PartID);
                 if (pages) part.Pages = this.GetSegmentPages(part.PartID);
+                if (ocr)
+                {
+                    foreach (Page page in part.Pages)
+                    {
+                        page.OcrText = this.GetPageOcrText(page.PageID.ToString());
+                    }
+                }
                 part.RelatedParts = dal.SegmentSelectRelated(null, null, part.PartID);
                 foreach (Part relatedPart in part.RelatedParts)
                 {
@@ -498,17 +499,10 @@ namespace MOBOT.BHL.API.BHLApi
                         if (pageNumberTrimmed != string.Empty)
                         {
                             PageNumber number = new PageNumber();
-                            int pos = pageNumberTrimmed.IndexOf('%');
-                            if (pos > 0)
-                            {
-                                number.Prefix = pageNumberTrimmed.Substring(0, pos).Trim();
-                                number.Number = pageNumberTrimmed.Substring(pos+1).Trim();
-                            }
-                            else
-                            {
-                                number.Number = pageNumberTrimmed;
-                            }
-
+                            string[] numParts = pageNumberTrimmed.Split('%');
+                            number.Prefix = numParts[0];
+                            number.Number = numParts[1];
+                            number.Implied = numParts[2];
                             page.PageNumbers.Add(number);
                         }
                     }

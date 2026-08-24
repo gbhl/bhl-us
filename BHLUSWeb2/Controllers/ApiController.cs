@@ -77,9 +77,10 @@ namespace MOBOT.BHL.Web2.Controllers
                     string id = Request.QueryString["id"];
                     string idType = Request.QueryString["idType"];
                     string includePages = Request.QueryString["pages"] ?? "f";
+                    string includeOcr = Request.QueryString["ocr"] ?? "f";
                     string includeNames = Request.QueryString["names"] ?? "f";
                     ServiceResponse<List<API.BHLApiDataObjects3.Part>> serviceResponse = new ServiceResponse<List<API.BHLApiDataObjects3.Part>>();
-                    serviceResponse.Result = this.Api3_GetPartMetadata(id, idType, includePages, includeNames, key);
+                    serviceResponse.Result = this.Api3_GetPartMetadata(id, idType, includePages, includeOcr, includeNames, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -315,11 +316,12 @@ namespace MOBOT.BHL.Web2.Controllers
             return api.GetTitleMetadata(id, idType, includeItems);
         }
 
-        private List<API.BHLApiDataObjects3.Part> Api3_GetPartMetadata(string id, string idType, string includePages, string includeNames, string apiKey)
+        private List<API.BHLApiDataObjects3.Part> Api3_GetPartMetadata(string id, string idType, string includePages, string includeOcr, string includeNames, string apiKey)
         {
-            Api3_ValidateUser(Api3.APIRequestType.GetPartMetadata, apiKey, id + "|" + idType + "|" + includePages + "|" + includeNames);
+            Api3_ValidateUser(Api3.APIRequestType.GetPartMetadata, apiKey, id + "|" + idType + "|" + includePages + "|" + includeOcr + "|" + includeNames);
             Api3 api = new Api3();
-            return api.GetSegmentMetadata(id, idType, includePages, includeNames);
+            api.SiteServiceUrl = ConfigurationManager.AppSettings["SiteServicesURL"];
+            return api.GetSegmentMetadata(id, idType, includePages, includeOcr, includeNames);
         }
 
         private List<API.BHLApiDataObjects3.Subject> Api3_SubjectSearch(string subject, bool fullText, string apiKey)

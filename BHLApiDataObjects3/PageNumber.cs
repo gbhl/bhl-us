@@ -21,6 +21,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             _Number = number;
         }
 
+        public PageNumber(string prefix, string number, string implied)
+        {
+            _Prefix = prefix;
+            _Number = number;
+            _Implied = implied;
+        }
+
         #endregion Constructors
 
         #region Properties
@@ -47,6 +54,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             }
         }
 
+        private string _Implied = null;
+        public string Implied
+        {
+            get { return _Implied; }
+            set { _Implied = value; }
+        }
+
         #endregion Properties
 
         #region ISetValues Members
@@ -65,6 +79,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "PageNumber":
                         {
                             _Number = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "Implied":
+                        {
+                            _Implied = (column.Value == null) ? (string)null : ((bool)column.Value ? 1 : 0).ToString();
                             break;
                         }
                 }

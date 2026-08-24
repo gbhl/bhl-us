@@ -9,8 +9,7 @@ BEGIN
 	DECLARE @IndicatedPageString nvarchar(max)
 
 	SELECT @IndicatedPageString = STUFF((
-	
-		SELECT '|' + ip.PagePrefix + (CASE WHEN ISNULL(ip.PageNumber, '') = '' THEN ip.PageNumber ELSE '%' + ip.PageNumber END)
+		SELECT '|' + ip.PagePrefix + (CASE WHEN ISNULL(ip.PageNumber, '') = '' THEN ip.PageNumber ELSE '%' + ip.PageNumber END) + '%' + CONVERT(NCHAR(1), ip.Implied)
 		FROM Page p
 		INNER JOIN IndicatedPage ip ON (p.PageID = ip.PageID)
 		WHERE p.PageID = @PageID
