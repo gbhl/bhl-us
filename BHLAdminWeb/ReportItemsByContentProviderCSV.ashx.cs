@@ -44,6 +44,7 @@ namespace MOBOT.BHL.AdminWeb
                     record.Add("Item ID", book.BookID.ToString());
                     record.Add("IA Identifier", book.BarCode);
                     record.Add("Title ID", book.PrimaryTitleID);
+                    record.Add("DOI", book.TitleDoi);
                     record.Add("Title", (book.TitleName ?? string.Empty));
                     record.Add("Volume", (book.Volume ?? String.Empty));
                     record.Add("Year", (book.StartYear ?? String.Empty));

@@ -56,6 +56,7 @@ namespace MOBOT.BHL.DataObjects
         private string _scandataFilename;
         private string _ocrFolderShare = string.Empty;
         private int? _primaryTitleID;
+        private string _titleDoi;
         private string _fileRootFolder;
         private string _itemDescription;
         private int _itemSourceID;
@@ -208,6 +209,11 @@ namespace MOBOT.BHL.DataObjects
             set { this._primaryTitleID = value; }
         }
 
+        public string TitleDoi
+        {
+            get { return this._titleDoi; }
+            set { this._titleDoi = value; }
+        }
         public string FileRootFolder
         {
             get { return this._fileRootFolder; }
@@ -620,6 +626,11 @@ namespace MOBOT.BHL.DataObjects
                     case "PrimaryTitleID":
                         {
                             _primaryTitleID = (int?)column.Value;
+                            break;
+                        }
+                    case "TitleDOI":
+                        {
+                            _titleDoi = Utility.EmptyIfNull(column.Value);
                             break;
                         }
                     case "FileRootFolder":
