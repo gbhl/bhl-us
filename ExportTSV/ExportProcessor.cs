@@ -173,7 +173,7 @@ namespace BHL.Export.TSV
 
         public void WritePageHeader(string filePath)
         {
-            File.AppendAllText(filePath, "PageID\tItemID\tSequenceOrder\tYear\tVolume\tIssue\tPagePrefix\tPageNumber\tPageTypeName\tCreationDate" + Environment.NewLine, Encoding.UTF8);
+            File.AppendAllText(filePath, "PageID\tItemID\tSequenceOrder\tYear\tVolume\tIssue\tPagePrefix\tPageNumber\tPageTypeName\tCreationDate\tImplied" + Environment.NewLine, Encoding.UTF8);
         }
 
         public void WritePageNameHeader(string filePath)
@@ -263,6 +263,16 @@ namespace BHL.Export.TSV
             return columnValue;
         }
 
+        private string GetDBBoolean(SqlDataReader reader, string columnName)
+        {
+            string columnValue = string.Empty;
+            if (!reader.IsDBNull(reader.GetOrdinal(columnName)))
+            {
+                columnValue = reader.GetBoolean(reader.GetOrdinal(columnName)) ? "1" : "0";
+            }
+            return columnValue;
+        }
+
         private string GetDBDateTime(SqlDataReader reader, string columnName)
         {
             return reader.IsDBNull(reader.GetOrdinal(columnName)) ? string.Empty : reader.GetDateTime(reader.GetOrdinal(columnName)).ToString("yyyy-MM-dd HH:mm:ss.fffffff");
@@ -341,8 +351,9 @@ namespace BHL.Export.TSV
             string pageNumber = GetDBString(reader, "PageNumber");
             string pageTypeName = GetDBString(reader, "PageTypeName");
             string creationDate = GetDBString(reader, "CreationDate");
-            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}", pageID, itemID, sequenceOrder,
-                year, volume, issue, pagePrefix, pageNumber, pageTypeName, creationDate);
+            string implied = GetDBBoolean(reader, "Implied");
+            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}", pageID, itemID, sequenceOrder,
+                year, volume, issue, pagePrefix, pageNumber, pageTypeName, creationDate, implied);
         }
 
         public string GetPageNameRow(SqlDataReader reader, string statType)
