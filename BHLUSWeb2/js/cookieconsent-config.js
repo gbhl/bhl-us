@@ -86,7 +86,7 @@ CookieConsent.run({
                     acceptAllBtn: 'Accept all',
                     acceptNecessaryBtn: 'Reject all',
                     showPreferencesBtn: 'Customize',
-                    footer: '<a href="https://www.si.edu/Privacy" target="_blank">Privacy Policy</a>',
+                    footer: '<a href="https://about.biodiversitylibrary.org/privacy-policy/" target="_blank">Privacy Policy</a>',
                 },
                 preferencesModal: {
                     title: 'Manage cookie preferences',

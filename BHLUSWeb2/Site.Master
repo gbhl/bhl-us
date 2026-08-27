@@ -41,7 +41,7 @@
 </head>
 
 <body id="<%= bodyID %>">
-    <script type="module" src="/js/cookieconsent-config.js?v=4"></script>
+    <script type="module" src="/js/cookieconsent-config.js?v=5"></script>
     <script type="text/javascript" data-category="necessary">
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -165,9 +165,9 @@
                     <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageDataDisclaimer"] %>">Data Disclaimer</a> |
                     <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageDeveloper"] %>">Developer and Data Tools</a> |
 		            <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageMembers"] %>">Partners</a> |
-                    <a href="http://si.edu/Privacy">Privacy</a> |
+                    <a href="https://about.biodiversitylibrary.org/privacy-policy/">Privacy</a> |
                     <a data-cc="show-preferencesModal" href="#">Cookies</a> |
-                    <a href="http://si.edu/Termsofuse">Terms of Use</a>	            
+                    <a href="https://about.biodiversitylibrary.org/terms-of-use/">Terms of Use</a>	            
                 </div>
             </nav>
             <nav>
