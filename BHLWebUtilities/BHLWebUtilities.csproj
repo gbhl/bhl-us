@@ -6,10 +6,7 @@
     <TargetFramework>net48</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="BibTeX.cs" />
     <Compile Remove="BrowserUtility.cs" />
-    <Compile Remove="RequestLog.cs" />
-    <Compile Remove="RIS.cs" />
     <Compile Remove="RssFeedControl.cs" />
     <Compile Remove="RssFeedControlVersion2.cs" />
     <Compile Remove="UrlRewriterFormWriter.cs" />

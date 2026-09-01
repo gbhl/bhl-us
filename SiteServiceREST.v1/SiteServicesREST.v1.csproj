@@ -41,7 +41,6 @@
     <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj" />
     <ProjectReference Include="..\BHLServer\BHLServer.csproj" />
     <ProjectReference Include="..\BHLUtility\BHLUtility.csproj" />
-    <ProjectReference Include="..\BHLWebUtilities\BHLWebUtilities.csproj" />
     <ProjectReference Include="..\QueueUtility\QueueUtility.csproj" />
   </ItemGroup>
 
