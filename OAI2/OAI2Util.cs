@@ -382,22 +382,22 @@ namespace MOBOT.BHL.OAI2
 
                 if (idSplit[0] == OAI2Util.IDPrefix.ITEM)
                 {
-                    // Validate ITEM identifier
-                    Item item = provider.ItemSelectAuto(idInt);
-                    if (item == null)
+                    // Validate ITEM (BOOK) identifier
+                    Book book = provider.BookSelectByBarcodeOrItemID(idInt, null);
+                    if (book == null)
                     {
                         errorMessage = @"<error code=""idDoesNotExist"">identifier '" + HttpUtility.HtmlEncode(identifier) + "' not found.</error>";
                     }
-                    else if (item.ItemStatusID != 40)
+                    else if (book.ItemStatusID != 40)
                     {
                         errorMessage = @"<error code=""idDoesNotExist"">identifier '" + HttpUtility.HtmlEncode(identifier) + "' not found.</error>";
                     }
                     else 
                     {
-                        // Found an item, so get the last modified date
-                        if (item.LastModifiedDate != null)
+                        // Found an book, so get the last modified date
+                        if (book.LastModifiedDate != null)
                         {
-                            DateTime lastModDateTime = (DateTime)item.LastModifiedDate;
+                            DateTime lastModDateTime = (DateTime)book.LastModifiedDate;
                             lastModDate = lastModDateTime.ToString("u");
                         }
                     }

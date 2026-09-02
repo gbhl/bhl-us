@@ -1,9 +1,19 @@
-﻿using MOBOT.BHL.DataObjects;
+﻿using Countersoft.Gemini.Commons.Entity.SLA;
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.OAI2;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
+using MvcThrottle;
+using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace MOBOT.BHL.Web2.Controllers
 {
@@ -241,6 +251,156 @@ namespace MOBOT.BHL.Web2.Controllers
             }
 
             return cslData;
+        }
+
+        [EnableThrottling]
+        public ActionResult OAIResolver()
+        {
+            OAI2Publisher oai = new OAI2Publisher(
+                ConfigurationManager.AppSettings["OAIBaseUrl"],
+                ConfigurationManager.AppSettings["OAIRepositoryName"],
+                ConfigurationManager.AppSettings["OAIAdminEmail"],
+                ConfigurationManager.AppSettings["OAIIdentifierNamespace"],
+                ConfigurationManager.AppSettings["OAIMetadataFormats"],
+                ConfigurationManager.AppSettings["OAIMaxListSets"],
+                ConfigurationManager.AppSettings["OAIMaxListIdentifiers"],
+                ConfigurationManager.AppSettings["OAIMaxListRecords"]
+                );
+
+            Response.ContentType = "text/xml";
+            Response.AddHeader("pragma", "no-cache");
+            Response.AddHeader("cache-control", "private");
+
+            return Content(oai.Request(Request.QueryString), "text/xml");
+        }
+
+        public ActionResult GeneratePDF()
+        {
+            bool isSuccess = false;
+            PDF pdf = null;
+            int parsedId;
+            if (int.TryParse(Request["itemId"], out parsedId))
+            {
+                int itemId = int.Parse(Request["itemId"]);
+                List<int> pageIds = Request["pages"].Split(',').Select(x => int.Parse(x)).ToList();
+                string email = Request["email"];
+                string title = Request["title"] ?? string.Empty;
+                string authors = Request["authors"] ?? string.Empty;
+                string subjects = Request["subjects"] ?? string.Empty;
+                bool imagesOnly = Request["imagesOnly"] != null;
+
+                BHLProvider bhlProvider = new BHLProvider();
+
+                try
+                {
+                    if (pageIds.Count > 0 && !string.IsNullOrWhiteSpace(email) &&
+                        (string.IsNullOrWhiteSpace(title + authors + subjects) || (!string.IsNullOrWhiteSpace(title))))
+                    {
+                        pdf = bhlProvider.AddNewPdf(itemId, email, string.Empty, imagesOnly, title, authors, subjects, pageIds);
+                        isSuccess = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ExceptionUtility.LogException(ex, "ServiceController.GeneratePDF");
+                }
+            }
+
+            Dictionary<string, object> responseData = new Dictionary<string, object>();
+            responseData.Add("isSuccess", isSuccess);
+            responseData.Add("pdfId", (pdf != null) ? pdf.PdfID : 0);
+            return Json(responseData, "application/json", JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult PageSummary()
+        {
+            object response;
+
+            // Clean up inputs
+            string pageID = Request.QueryString["pageID"] as string;
+            pageID = string.IsNullOrEmpty(pageID) ? "0" : pageID;
+
+            switch (Request.QueryString["op"])
+            {
+                case "GetPageNameList":
+                    {
+                        response = this.GetPageNameList(Convert.ToInt32(pageID));
+                        break;
+                    }
+                case "GetPageOcrText":
+                    {
+                        response = GetPageOcrText(Convert.ToInt32(pageID));
+                        break;
+                    }
+                default:
+                    {
+                        response = null;
+                        break;
+                    }
+            }
+
+            //Response.ContentType = "application/json";
+            //Response.Write(response);
+            return Json(response, "application/json", JsonRequestBehavior.AllowGet);
+        }
+
+        private Dictionary<string, object> GetPageOcrText(int pageID)
+        {
+            Dictionary<string, object> responseData = new Dictionary<string, object>();
+            //JavaScriptSerializer js = new JavaScriptSerializer();
+            try
+            {
+                string ocrText;
+
+                using (WebClient client = new WebClient())
+                {
+                    client.Encoding = System.Text.Encoding.UTF8;
+                    // Set a user-agent header to avoid 403 errors
+                    client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36");
+                    string textUrl = string.Format("{0}/pagetext/{1}", ConfigurationManager.AppSettings["BaseUrl"], pageID);
+                    ocrText = Server.HtmlEncode(client.DownloadString(textUrl));
+                }
+
+                if (string.IsNullOrWhiteSpace(ocrText))
+                {
+                    responseData.Add("ocrText", "Text unavailable for this page.");
+                    responseData.Add("success", false);
+                    //js.Serialize(new { ocrText = "Text unavailable for this page.", success = false });
+                }
+                else
+                {
+                    responseData.Add("ocrText", ocrText);
+                    responseData.Add("success", true);
+                }
+
+                return responseData;
+            }
+            catch (Exception ex)
+            {
+                if (HttpContext.IsDebuggingEnabled) ExceptionUtility.LogException(ex, "ServiceController.GetPageOcrText)");
+                //return js.Serialize(new { ocrText = "Text unavailable for this page.", success = false });
+                responseData.Add("ocrText", "Text unavailable for this page.");
+                responseData.Add("success", false);
+                return responseData;
+            }
+        }
+
+        private List<NameResolved> GetPageNameList(int pageID)
+        {
+            List<NameResolved> namePageList = new BHLProvider().NameResolvedSelectByPageID(pageID);
+            List<NameResolved> returnList = new List<NameResolved>();
+            foreach (NameResolved namePage in namePageList)
+            {
+                if (!string.IsNullOrEmpty(namePage.ResolvedNameString))
+                {
+                    namePage.UrlName = namePage.ResolvedNameString.Replace(' ', '_').Replace('.', '$').Replace('?', '^').Replace('&', '~');
+                    returnList.Add(namePage);
+                }
+            }
+
+            //JavaScriptSerializer js = new JavaScriptSerializer();
+            //return js.Serialize(returnList);
+            return returnList;
         }
     }
 }

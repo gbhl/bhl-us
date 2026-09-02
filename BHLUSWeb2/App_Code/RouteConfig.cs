@@ -1,7 +1,4 @@
-﻿using MOBOT.BHL.Web.Utilities;
-using MOBOT.BHL.Web2.services;
-using MOBOT.BHL.Web2.Services;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -28,7 +25,9 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("API2-http", "api2/httpQuery.ashx", new { controller = "Api", action = "Api2Handler" });
             routes.MapRoute("API2", "api2", new { controller = "Api", action = "Api2Handler" });
 
-            routes.Add("OAI", new Route("oai", new HttpHandlerRouteHandler<oai2>()));
+            routes.MapRoute("OAI", "oai", new { controller = "Service", action = "OAIResolver" });
+            routes.MapRoute("GeneratePdf", "generatepdf", new { controller = "Service", action = "GeneratePDF" });
+            routes.MapRoute("PageSummary", "pagesummary", new { controller = "Service", action = "PageSummary" });
 
             routes.MapRoute("ServiceDefault", "service/{action}", new { controller = "Service" });
 
@@ -54,8 +53,6 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("NameList", "namelist", new { controller = "Name", action = "NameList" });
             routes.MapRoute("NameListDownload", "namelistdownload", new { controller = "Name", action = "NameListDownload" });
             routes.MapRoute("NameDetail", "namedetail/{name}", new { controller = "NameDetail", action = "Index" });
-
-            routes.Add("PageSummary", new Route("pagesummary", new HttpHandlerRouteHandler<PageSummaryService1>()));
 
             routes.MapPageRoute("IA", "ia/{iabarcode}", "~/TitlePage.aspx");
 
@@ -116,12 +113,9 @@ namespace MOBOT.BHL.Web2
 
             routes.MapRoute("CSLDownload", "csldownload/{type}/{id}", new { controller = "Download", action = "CSL" });
 
-            //routes.Add("PDF", new Route("pdf{folder}/{filename}", new HttpHandlerRouteHandler<PDFDownload>()));
             routes.MapRoute("PDF", "pdf{folder}/{filename}", new { controller = "Download", action = "PDF" });
 
             routes.MapPageRoute("Item-Detail", "itemdetails/{itemid}", "~/ItemPage.aspx");
-
-            routes.Add("GeneratePdf", new Route("generatepdf", new HttpHandlerRouteHandler<GeneratePdf>()));
 
             routes.MapPageRoute("Recent", "recent/{top}/{lang}/{inst}", "~/recent.aspx", false, new RouteValueDictionary { { "top", "100" }, { "lang", "" }, { "inst", "" } });
             routes.MapPageRoute("RecentRSS", "recentrss/{top}/{lang}/{inst}", "~/recentrss.aspx", false, new RouteValueDictionary { { "top", "100" }, { "lang", "" }, { "inst", "" } });
