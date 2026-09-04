@@ -52,7 +52,7 @@ namespace MOBOT.BHL.AdminWeb
                 catch (Exception ex)
                 {
                     string message = "<br/>An error occurred while retreiving the MARC record for this item.  Please try again later, or review the associated title information.<br/><br/>The title information may include an identifier -- such as OCLC or ISSN -- that can be used to search for additional MARC data in other bibliographic databases.";
-                    if (new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request))
+                    if (new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Request.QueryString))
                     {
                         message += "<br/><br/>" + ex.Message;
                         if (ex.StackTrace != null) message += "<br/><br/>" + ex.StackTrace;

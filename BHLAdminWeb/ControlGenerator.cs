@@ -1,9 +1,7 @@
-using System;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 
-namespace MOBOT.BHL.Web.Utilities
+namespace MOBOT.BHL.AdminWeb
 {
     public class ControlGenerator
     {

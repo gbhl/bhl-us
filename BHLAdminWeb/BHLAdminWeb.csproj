@@ -261,6 +261,7 @@
       <DependentUpon>CollectionEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="ContentPanel.cs" />
+    <Compile Include="ControlGenerator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CitationImportController.cs" />

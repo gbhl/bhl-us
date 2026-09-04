@@ -31,7 +31,7 @@ namespace MOBOT.BHL.AdminWeb
                 catch (Exception ex)
                 {
                     string message = "<error_details><error>Error retrieving File.</error>";
-                    if (new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request))
+                    if (new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Request.QueryString))
                     {
                         message += "<message>" + ex.Message + "</message>";
                         if (ex.StackTrace != null) message += "<stack_trace>" + ex.StackTrace + "</stack_trace>";

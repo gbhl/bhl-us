@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>MOBOT.BHL.Web.Utilities</RootNamespace>
     <AssemblyName>MOBOT.BHL.Web.Utilities</AssemblyName>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="BrowserUtility.cs" />
@@ -11,6 +11,9 @@
     <Compile Remove="RssFeedControlVersion2.cs" />
     <Compile Remove="UrlRewriterFormWriter.cs" />
     <Compile Remove="WebServiceRouteHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Configuration" />

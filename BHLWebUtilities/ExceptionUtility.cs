@@ -1,4 +1,5 @@
-﻿using System;
+﻿//using Microsoft.AspNetCore.Http;
+using System;
 using System.Configuration;
 using System.IO;
 using System.Text;
@@ -60,9 +61,9 @@ namespace MOBOT.BHL.Web.Utilities
                     sb.AppendLine();
 
                     // Get the absolute path to the log file
-                    string logFile = string.Format("/logs/{0}-ExceptionLog-{1}.log", HttpContext.Current.Server.MachineName,
+                    string logFile = string.Format("logs/{0}-ExceptionLog-{1}.log", Environment.MachineName,
                         DateTime.Now.ToString("yyyyMMdd"));
-                    logFile = HttpContext.Current.Server.MapPath(logFile);
+                    logFile = Path.Combine(AppContext.BaseDirectory, logFile);
 
                     // Open the log file for append and write the log entry
                     FileStream fs = new FileStream(logFile, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);

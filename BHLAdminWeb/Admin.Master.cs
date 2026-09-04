@@ -17,7 +17,7 @@ namespace MOBOT.BHL.AdminWeb
 	{
 		protected void Page_Load( object sender, EventArgs e )
 		{
-            bool debugMode = new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request);
+            bool debugMode = new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Request.QueryString);
             if (debugMode) Page.Title = "***DEBUG MODE*** " + Page.Title;
 
 			// Make sure user is logged in
