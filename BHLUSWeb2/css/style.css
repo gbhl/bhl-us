@@ -2620,41 +2620,6 @@ ul.creator-titles li
     width: 260px; /* force the width for IE */
 }
 
-/* /search.aspx */
-.searchtitlelinks
-{
-    text-decoration:none;
-    text-align:center;
-    margin-right: 5px;
-    margin-left: 15px;
-    border:1px solid #0d274a;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
-    border-radius: 5px;
-    font: 12px Georgia;
-    padding:3px 10px;
-    color:#fff;
-    background: #124c8c;
-    background: -moz-linear-gradient(top,  #124c8c 1%, #224778 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#124c8c), color-stop(100%,#224778));
-    background: -webkit-linear-gradient(top,  #124c8c 1%,#224778 100%);
-    background: -o-linear-gradient(top,  #124c8c 1%,#224778 100%);
-    background: -ms-linear-gradient(top,  #124c8c 1%,#224778 100%);
-    background: linear-gradient(to bottom,  #124c8c 1%,#224778 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#124c8c', endColorstr='#224778',GradientType=0 );
-}
-.searchtitlelinks:hover 
-{
-    background: #154179;
-    background: -moz-linear-gradient(top,  #154179 1%, #1f3d68 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#154179), color-stop(100%,#1f3d68));
-    background: -webkit-linear-gradient(top,  #154179 1%,#1f3d68 100%);
-    background: -o-linear-gradient(top,  #154179 1%,#1f3d68 100%);
-    background: -ms-linear-gradient(top,  #154179 1%,#1f3d68 100%);
-    background: linear-gradient(to bottom,  #154179 1%,#1f3d68 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#154179', endColorstr='#1f3d68',GradientType=0 );
-}
-
 /* /search */
 .searchResultLabel {
     font-size: 16px;

@@ -517,7 +517,6 @@
     <Content Include="js\plugins.js" />
     <Content Include="js\script.js" />
     <Content Include="libs\countersoft\Newtonsoft.Json.dll" />
-    <Content Include="Monitor.aspx" />
     <Content Include="OpenUrlHelp.aspx" />
     <Content Include="OpenURLMultiple.aspx" />
     <Content Include="OpenURLNone.aspx" />
@@ -772,13 +771,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Models\SearchModel.cs" />
-    <Compile Include="Monitor.aspx.cs">
-      <DependentUpon>Monitor.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Monitor.aspx.designer.cs">
-      <DependentUpon>Monitor.aspx</DependentUpon>
-    </Compile>
     <Compile Include="MVCServices\SearchService.cs" />
     <Compile Include="OpenUrlHelp.aspx.cs">
       <DependentUpon>OpenUrlHelp.aspx</DependentUpon>

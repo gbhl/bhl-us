@@ -102,10 +102,6 @@ namespace MOBOT.BHL.Web2.Controllers
             model.NamePage = startPage;
             model.ItemSort = psort ?? "rd"; // Default to Relevance Descending
 
-            // For annotation searches, use the non-elasticsearch search page
-            // Annotation searches removed Jan 2026
-            //if (model.Params.SearchCategory == "O") return new RedirectResult("~/search.aspx?" + Request.QueryString);
-
             // Add facets to the search
             List<Tuple<SearchField, string>> limits = null;
             if (facet != null)
