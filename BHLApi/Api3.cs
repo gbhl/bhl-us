@@ -1775,7 +1775,7 @@ namespace MOBOT.BHL.API.BHLApi
         #region Validation methods
 
         // Numeric values assigned to the enum values should correspond to the values
-        // in the RequestTypeID column of the MOBOTAdmin.dbo.RequestType database table
+        // in the RequestTypeID column of the BHL.reqlog.RequestType database table
         public enum APIRequestType
         {
             GetTitleMetadata = 400,
@@ -1805,7 +1805,8 @@ namespace MOBOT.BHL.API.BHLApi
             PageSearch = 475,
             GetLanguages = 480,
             GetInstitutions = 481,
-            GetCollections = 482
+            GetCollections = 482,
+            GetStats = 490
         }
 
         /// <summary>
@@ -1869,5 +1870,16 @@ namespace MOBOT.BHL.API.BHLApi
         }
 
         #endregion Validation methods
+
+        #region Stats methods
+
+        public Stats GetStats()
+        {
+            Api3DAL dal = new Api3DAL();
+            Stats stats = dal.StatsSelect(null, null);
+            return stats;
+        }
+
+        #endregion Stats methods
     }
 }

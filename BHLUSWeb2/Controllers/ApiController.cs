@@ -1,6 +1,7 @@
 ﻿using MOBOT.BHL.API.BHLApi;
 using MOBOT.BHL.Web.Utilities;
 using MvcThrottle;
+using Nest;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -116,6 +117,15 @@ namespace MOBOT.BHL.Web2.Controllers
                     string id = Request.QueryString["id"];
                     ServiceResponse<List<API.BHLApiDataObjects3.Name>> serviceResponse = new ServiceResponse<List<API.BHLApiDataObjects3.Name>>();
                     serviceResponse.Result = this.Api3_GetNameMetadata(nameConfirmed, idType, id, key);
+                    response = serviceResponse.Serialize(outputType);
+                }
+
+                // ------- Stats operations -------
+
+                if (string.Compare(operation, "GetStats", true) == 0)
+                {
+                    ServiceResponse<API.BHLApiDataObjects3.Stats> serviceResponse = new ServiceResponse<API.BHLApiDataObjects3.Stats>();
+                    serviceResponse.Result = this.Api3_GetStats(key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -322,6 +332,13 @@ namespace MOBOT.BHL.Web2.Controllers
             Api3 api = new Api3();
             api.SiteServiceUrl = ConfigurationManager.AppSettings["SiteServicesURL"];
             return api.GetSegmentMetadata(id, idType, includePages, includeOcr, includeNames);
+        }
+
+        private API.BHLApiDataObjects3.Stats Api3_GetStats(string apiKey)
+        {
+            Api3_ValidateUser(Api3.APIRequestType.GetStats, apiKey, string.Empty);
+            Api3 api = new Api3();
+            return api.GetStats();
         }
 
         private List<API.BHLApiDataObjects3.Subject> Api3_SubjectSearch(string subject, bool fullText, string apiKey)

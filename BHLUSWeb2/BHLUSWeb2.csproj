@@ -184,6 +184,7 @@
     <Content Include="css\nspop.css" />
     <Content Include="css\socicon.css" />
     <Content Include="Docs\api3.html" />
+    <Content Include="Docs\api3\GetStats.html" />
     <Content Include="Docs\api3\NameSearch.html" />
     <Content Include="Docs\api3\AuthorSearch.html" />
     <Content Include="Docs\api3\SubjectSearch.html" />

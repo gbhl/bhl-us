@@ -24,6 +24,9 @@
         .codeblock .indent4 { padding:0px; margin-left:2.25in; }
         .codeblock .indent5 { padding:0px; margin-left:2.625in; }
         .codeblock .indent6 { padding:0px; margin-left:3.0in; }
+        .auto-style1 {
+            width: 34%;
+        }
     </style>
 </head>
 <body>
@@ -35,7 +38,7 @@
         </div>
         <div id="right">
             Created: August 27, 2018<br />
-            Revised: August 24, 2026
+            Revised: September 8, 2026
         </div>
     </div>
     <div>
@@ -71,14 +74,15 @@
     <div class="header">*** METHODS *** <a href="#top" class="toplink">Contents</a></div>
     <div class="subhead1">Metadata Retrival</div>
     <table class="methodlist">
-        <tr><th class="methodname">Method</th><th>Description</th></tr>
-        <tr><td><a href="api3/GetAuthorMetadata.html">GetAuthorMetadata</a></td><td>Get metadata about an author.</td></tr>
-        <tr><td><a href="api3/GetItemMetadata.html">GetItemMetadata</a></td><td>Get metadata about an item.</td></tr>
-        <tr><td><a href="api3/GetNameMetadata.html">GetNameMetadata</a></td><td>Get metadata about a scientific name.</td></tr>
-        <tr><td><a href="api3/GetPageMetadata.html">GetPageMetadata</a></td><td>Get metadata about a page.</td></tr>
-        <tr><td><a href="api3/GetPartMetadata.html">GetPartMetadata</a></td><td>Get metadata about a part.</td></tr>
-        <tr><td><a href="api3/GetSubjectMetadata.html">GetSubjectMetadata</a></td><td>Get metadata about a subject.</td></tr>
-        <tr><td><a href="api3/GetTitleMetadata.html">GetTitleMetadata</a></td><td>Get metadata about a title.</td></tr>
+        <tr><th class="auto-style1">Method</th><th>Description</th></tr>
+        <tr><td class="auto-style1"><a href="api3/GetAuthorMetadata.html">GetAuthorMetadata</a></td><td>Get metadata about an author.</td></tr>
+        <tr><td class="auto-style1"><a href="api3/GetItemMetadata.html">GetItemMetadata</a></td><td>Get metadata about an item.</td></tr>
+        <tr><td class="auto-style1"><a href="api3/GetNameMetadata.html">GetNameMetadata</a></td><td>Get metadata about a scientific name.</td></tr>
+        <tr><td class="auto-style1"><a href="api3/GetPageMetadata.html">GetPageMetadata</a></td><td>Get metadata about a page.</td></tr>
+        <tr><td class="auto-style1"><a href="api3/GetPartMetadata.html">GetPartMetadata</a></td><td>Get metadata about a part.</td></tr>
+        <tr><td class="auto-style1"><a href="api3/GetSubjectMetadata.html">GetSubjectMetadata</a></td><td>Get metadata about a subject.</td></tr>
+        <tr><td class="auto-style1"><a href="api3/GetTitleMetadata.html">GetTitleMetadata</a></td><td>Get metadata about a title.</td></tr>
+        <tr><td class="auto-style1"><a href="api3/GetStats.html">GetStats</a></td><td>Get the numbers of Titles, Items, Pages, and Parts currently in BHL.</td></tr>
     </table>
     <div class="subhead1">Lists</div>
     <table class="methodlist">
@@ -839,6 +843,22 @@
                 <td>Language/LanguageName</td>
                 <td>The name of the language</td>
             </tr>
+            <tr>
+                <td>TitleCount</td>
+                <td>Number of Titles in BHL</td>
+            </tr>
+            <tr>
+                <td>ItemCount</td>
+                <td>Number of Items in BHL</td>
+            </tr>
+            <tr>
+                <td>PageCount</td>
+                <td>Number of Pages in BHL</td>
+            </tr>
+            <tr>
+                <td>PartCount</td>
+                <td>Number of Parts in BHL</td>
+            </tr>
         </table>
     </div>
     <div></div>
@@ -846,6 +866,10 @@
     <a name="notes"></a>
     <div class="header">*** RELEASE NOTES *** <a href="#top" class="toplink">Contents</a></div>
 
+    <div class="subhead1">September 8, 2026 - version 3.9.0</div>
+    <ul type="disc">
+        <li>Added the &quot;GetStats&quot; method.</li>
+    </ul>
     <div class="subhead1">August 24, 2026 - version 3.8.0</div>
     <ul type="disc">
         <li>Added the &quot;ocr&quot; parameter to the &quot;GetPartMetadata&quot; method.</li>
