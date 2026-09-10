@@ -518,9 +518,6 @@
     <Content Include="js\plugins.js" />
     <Content Include="js\script.js" />
     <Content Include="libs\countersoft\Newtonsoft.Json.dll" />
-    <Content Include="OpenUrlHelp.aspx" />
-    <Content Include="OpenURLMultiple.aspx" />
-    <Content Include="OpenURLNone.aspx" />
     <Content Include="Recent.aspx" />
     <Content Include="RecentRss.aspx" />
     <Content Include="packages.config" />
@@ -583,6 +580,9 @@
     <Content Include="Views\AuthorNotFound\Index.cshtml" />
     <Content Include="Views\ItemUnavailable\Index.cshtml" />
     <Content Include="Views\TitleUnavailable\Index.cshtml" />
+    <Content Include="Views\OpenUrl\Help.cshtml" />
+    <Content Include="Views\OpenUrl\None.cshtml" />
+    <Content Include="Views\OpenUrl\Multiple.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -773,27 +773,6 @@
     </Compile>
     <Compile Include="Models\SearchModel.cs" />
     <Compile Include="MVCServices\SearchService.cs" />
-    <Compile Include="OpenUrlHelp.aspx.cs">
-      <DependentUpon>OpenUrlHelp.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OpenUrlHelp.aspx.designer.cs">
-      <DependentUpon>OpenUrlHelp.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OpenURLMultiple.aspx.cs">
-      <DependentUpon>OpenURLMultiple.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OpenURLMultiple.aspx.designer.cs">
-      <DependentUpon>OpenURLMultiple.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OpenURLNone.aspx.cs">
-      <DependentUpon>OpenURLNone.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OpenURLNone.aspx.designer.cs">
-      <DependentUpon>OpenURLNone.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Recent.aspx.cs">
       <DependentUpon>Recent.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -828,7 +807,6 @@
     <Folder Include="Views\Api\" />
     <Folder Include="Views\Download\" />
     <Folder Include="Views\OAI\" />
-    <Folder Include="Views\OpenUrl\" />
     <Folder Include="Views\PDF\" />
     <Folder Include="Views\Redirect\" />
     <Folder Include="Views\Service\" />

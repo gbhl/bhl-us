@@ -18,8 +18,12 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("AboutRedirect", "about", new { controller = "Redirect", action = "About" });
 
             routes.MapRoute("OpenUrl", "openurl", new { controller = "OpenUrl", action = "OpenUrlResolver" });
-            routes.MapPageRoute("OpenUrl-None", "openurlnone", "~/OpenUrlNone.aspx");
-            routes.MapPageRoute("OpenUrl-Multiple", "openurlmultiple", "~/OpenUrlMultiple.aspx");
+            routes.MapRoute("OpenUrl-Help-Legacy", "openurlhelp.aspx", new { controller = "OpenUrl", action = "Help" });
+            routes.MapRoute("OpenUrl-Help", "openurlhelp", new { controller = "OpenUrl", action = "Help" });
+            routes.MapRoute("OpenUrl-None-Legacy", "openurlnone.aspx", new { controller = "OpenUrl", action = "None" });
+            routes.MapRoute("OpenUrl-None", "openurlnone", new { controller = "OpenUrl", action = "None" });
+            routes.MapRoute("OpenUrl-Multiple-Legacy", "openurlmultiple.aspx", new { controller = "OpenUrl", action = "Multiple" });
+            routes.MapRoute("OpenUrl-Multiple", "openurlmultiple", new { controller = "OpenUrl", action = "Multiple" });
 
             routes.MapRoute("API3", "api3", new { controller = "Api", action = "Api3Handler" });
             routes.MapRoute("API2-http", "api2/httpQuery.ashx", new { controller = "Api", action = "Api2Handler" });

@@ -1,6 +1,9 @@
-﻿using MOBOT.OpenUrl.Utilities;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using MOBOT.OpenUrl.Utilities;
 using MvcThrottle;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Web;
 using System.Web.Mvc;
@@ -9,6 +12,107 @@ namespace MOBOT.BHL.Web2.Controllers
 {
     public class OpenUrlController : Controller
     {
+        [EnableThrottling]
+        // GET: Help
+        public ActionResult Help()
+        {
+            return View();
+        }
+
+        [EnableThrottling]
+        // GET: None
+        public ActionResult None()
+        {
+            return View();
+        }
+
+        protected IList<Segment> SegmentList { get; set; }
+        protected IList<OpenUrlBookResult> BookList { get; set; }
+
+
+        [EnableThrottling]
+        // GET: Multiple
+        public ActionResult Multiple()
+        {
+            // Show the citations that were found
+            int id;
+            string idList = Request.QueryString["id"];
+
+            SegmentList = new List<Segment>();
+            BookList = new List<OpenUrlBookResult>();
+
+            if (idList != null)
+            {
+                string[] idStrings = idList.Split('|');
+                foreach (string idString in idStrings)
+                {
+                    if (idString.Length > 1)
+                    {
+                        if (idString.Substring(0, 1) == "p")
+                        {
+                            if (Int32.TryParse(idString.Substring(1), out id))
+                            {
+                                Page page = new BHLProvider().PageMetadataSelectByPageID(id);
+                                OpenUrlBookResult book = new OpenUrlBookResult();
+                                book.Url = string.Format(ConfigurationManager.AppSettings["PagePageUrl"], page.PageID.ToString());
+                                book.Title = page.ShortTitle;
+                                book.Volume = page.Volume;
+                                book.Issue = page.Issue;
+                                book.Year = page.Year;
+                                book.Pages = page.IndicatedPages;
+                                BookList.Add(book);
+                            }
+                        }
+                        else if (idString.Substring(0, 1) == "i")
+                        {
+                            if (Int32.TryParse(idString.Substring(1), out id))
+                            {
+                                PageSummaryView psv = new BHLProvider().PageSummarySelectByItemId(id, true);
+                                OpenUrlBookResult book = new OpenUrlBookResult();
+                                book.Url = string.Format(ConfigurationManager.AppSettings["ItemPageUrl"], psv.BookID.ToString());
+                                book.Title = psv.ShortTitle;
+                                book.Volume = psv.Volume;
+                                BookList.Add(book);
+                            }
+                        }
+                        else if (idString.Substring(0, 1) == "t")
+                        {
+                            if (Int32.TryParse(idString.Substring(1), out id))
+                            {
+                                Title title = new BHLProvider().TitleSelect(id);
+                                OpenUrlBookResult book = new OpenUrlBookResult();
+                                book.Url = string.Format(ConfigurationManager.AppSettings["BibPageUrl"], title.TitleID.ToString());
+                                book.Title = title.ShortTitle;
+                                BookList.Add(book);
+                            }
+                        }
+                        else if (idString.Substring(0, 1) == "s")
+                        {
+                            if (Int32.TryParse(idString.Substring(1), out id))
+                            {
+                                Segment segment = new BHLProvider().SegmentSelectAuto(id);
+                                SegmentList.Add(segment);
+                            }
+                        }
+                    }
+                }
+            }
+
+            ViewBag.SegmentList = SegmentList;
+            ViewBag.BookList = BookList;
+            return View();
+        }
+
+        public class OpenUrlBookResult
+        {
+            public string Url;
+            public string Title;
+            public string Volume;
+            public string Issue;
+            public string Year;
+            public string Pages;
+        }
+
         [EnableThrottling]
         // GET: OpenUrl
         public ActionResult OpenUrlResolver()
@@ -55,7 +159,7 @@ namespace MOBOT.BHL.Web2.Controllers
 
                     if (ouResponse.Status == ResponseStatus.Error || ouResponse.Status == ResponseStatus.Undefined)
                     {
-                        response = "/openurlhelp.aspx";
+                        response = "/openurlhelp";
                         break;
                     }
                     else
@@ -63,7 +167,7 @@ namespace MOBOT.BHL.Web2.Controllers
                         switch (ouResponse.citations.Count)
                         {
                             case 0:
-                                response = "/openurlnone.aspx";
+                                response = "/openurlnone";
                                 break;
                             case 1:
                                 response = (ouResponse.citations[0].Url != String.Empty ?
@@ -118,7 +222,7 @@ namespace MOBOT.BHL.Web2.Controllers
                                 }
                                 else
                                 {
-                                    response = "/openurlmultiple.aspx?id=" + matches;
+                                    response = "/openurlmultiple?id=" + matches;
                                 }
                                 break;
                         }

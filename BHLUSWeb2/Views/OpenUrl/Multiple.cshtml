@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "OpenURL Results - Biodiversity Heritage Library";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div id="page-title">
+    <h1 class="column-wrap">
+        OpenUrl Results
+    </h1>
+</div>
+<div id="content" class="column-wrap clearfix">
+    <section>
+        <p class="header">Select one of the items below to find the desired citation.</p>
+        @if (ViewBag.BookList != null && ViewBag.BookList.Count > 0) {
+            <h3>Books/Journals</h3>
+            <ol class="data">
+                @foreach (var book in ViewBag.BookList) {
+                    <li>
+                        <a href="@book.Url">@book.Title</a>
+                        @if (!string.IsNullOrEmpty(book.Volume)) { 
+                            <div>Volume: @book.Volume</div>
+                        }
+                        @if (!string.IsNullOrEmpty(book.Issue)) { 
+                            <div>Issue: @book.Issue</div>
+                        }
+                        @if (!string.IsNullOrEmpty(book.Year)) {
+                            <div>Year: @book.Year</div>
+                        }
+                        @if (!string.IsNullOrEmpty(book.Pages)) { 
+                            <div>Pages: @book.Pages</div>
+                        }
+                    </li>
+                }
+            </ol>
+        }
+
+        @if (ViewBag.SegmentList != null && ViewBag.SegmentList.Count > 0) {
+            <h3>Articles/Chapters/Treatments</h3>
+            <ol class="data">
+                @foreach (var segment in ViewBag.SegmentList) {
+                    <li>
+                        <a href="/part/@segment.SegmentID">@segment.Title</a>
+                    </li>
+                }
+            </ol>
+        }
+    </section>
+    <aside>
+        @Html.Action("_DonateFeature", "Partial")
+        @Html.Action("_CollectionFeature", "Partial")
+    </aside>
+</div>
