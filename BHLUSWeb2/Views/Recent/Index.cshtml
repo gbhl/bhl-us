@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div id="page-title">
+    <h1 class="column-wrap" style="color: #CEE4F2;">
+        Recent Additions
+        @ViewBag.NumberDisplayedText
+        @ViewBag.LanguageText
+        @ViewBag.ContributorText
+    </h1>
+    <div id="content" class="column-wrap clearfix">
+        <div>
+            Show &nbsp; &nbsp;
+            <a href="/recent/25" id="lnkRecent25" title="Last 25" href="@ViewBag.RecentLink">Last 25</a> |
+            <a href="/recent/50" id="lnkRecent50" title="Last 50" href="@ViewBag.RecentLink">Last 50</a> |
+            <a href="/recent/100" id="lnkRecent100" title="Last 100" href="@ViewBag.RecentLink">Last 100</a> |
+            <a href="/recent/250" id="lnkRecent250" title="Last 250" href="@ViewBag.RecentLink">Last 250</a> |
+            <a href="/recent/500" id="lnkRecent500" title="Last 500" href="@ViewBag.RecentLink">Last 500</a> |
+            <a href="/recent/1000" id="lnkRecent1000" title="Last 1000" href="@ViewBag.RecentLink">Last 1000</a>
+        </div>
+
+        <p>
+            RSS Feed location:
+            <a id="rssFeedLink" title="RSS" href="@ViewBag.RssRecentLink">@ViewBag.RssRecentLink</a>&nbsp;&nbsp;&nbsp;<a id="rssFeedImageLink" href="@ViewBag.RssRecentLink"><img src="/images/rss.png" alt="RSS" style="vertical-align: middle;" /></a>
+        </p>
+
+        <section class="recentfeed">
+            <ol>
+                @foreach (var book in ViewBag.BookList) {
+                    <li>
+                        <a target = "@(string.IsNullOrWhiteSpace(book.ExternalUrl.ToString()) ? "_self" : "_blank")" @(string.IsNullOrWhiteSpace(book.ExternalUrl.ToString()) ? "" : "rel=\"noopener noreferrer\"") href = "/item/@book.ItemID" class="booktitle@(string.IsNullOrWhiteSpace(book.ExternalUrl.ToString()) ? "" : " ExtLink")" title="Book">@book.FullTitleExtended @book.Volume</a>
+                        &nbsp; (added: @string.Format("{0:MM/dd/yyyy}", book.CreationDate))
+                    </li>
+                }
+            </ol>
+        </section>
+
+    </div>
+</div>

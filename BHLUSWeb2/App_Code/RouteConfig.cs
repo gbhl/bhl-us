@@ -18,12 +18,15 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("AboutRedirect", "about", new { controller = "Redirect", action = "About" });
 
             routes.MapRoute("OpenUrl", "openurl", new { controller = "OpenUrl", action = "OpenUrlResolver" });
-            routes.MapRoute("OpenUrl-Help-Legacy", "openurlhelp.aspx", new { controller = "OpenUrl", action = "Help" });
-            routes.MapRoute("OpenUrl-Help", "openurlhelp", new { controller = "OpenUrl", action = "Help" });
-            routes.MapRoute("OpenUrl-None-Legacy", "openurlnone.aspx", new { controller = "OpenUrl", action = "None" });
-            routes.MapRoute("OpenUrl-None", "openurlnone", new { controller = "OpenUrl", action = "None" });
-            routes.MapRoute("OpenUrl-Multiple-Legacy", "openurlmultiple.aspx", new { controller = "OpenUrl", action = "Multiple" });
-            routes.MapRoute("OpenUrl-Multiple", "openurlmultiple", new { controller = "OpenUrl", action = "Multiple" });
+            routes.MapRoute("OpenUrl-Help-aspx", "openurlhelp.aspx", new { controller = "OpenUrl", action = "Help" });
+            routes.MapRoute("OpenUrl-Help-Legacy", "openurlhelp", new { controller = "OpenUrl", action = "Help" });
+            routes.MapRoute("OpenUrl-Help", "openurl/help", new { controller = "OpenUrl", action = "Help" });
+            routes.MapRoute("OpenUrl-None-aspx", "openurlnone.aspx", new { controller = "OpenUrl", action = "None" });
+            routes.MapRoute("OpenUrl-None-Legacy", "openurlnone", new { controller = "OpenUrl", action = "None" });
+            routes.MapRoute("OpenUrl-None", "openurl/none", new { controller = "OpenUrl", action = "None" });
+            routes.MapRoute("OpenUrl-Multiple-aspx", "openurlmultiple.aspx", new { controller = "OpenUrl", action = "Multiple" });
+            routes.MapRoute("OpenUrl-Multiple-Legacy", "openurlmultiple", new { controller = "OpenUrl", action = "Multiple" });
+            routes.MapRoute("OpenUrl-Multiple", "openurl/multiple", new { controller = "OpenUrl", action = "Multiple" });
 
             routes.MapRoute("API3", "api3", new { controller = "Api", action = "Api3Handler" });
             routes.MapRoute("API2-http", "api2/httpQuery.ashx", new { controller = "Api", action = "Api2Handler" });
@@ -119,10 +122,12 @@ namespace MOBOT.BHL.Web2
 
             routes.MapRoute("PDF", "pdf{folder}/{filename}", new { controller = "Download", action = "PDF" });
 
-            routes.MapPageRoute("Item-Detail", "itemdetails/{itemid}", "~/ItemPage.aspx");
+            routes.MapRoute("Item-Detail-Legacy", "itemdetails/{itemid}", new { controller = "Item", action = "Parts" });
+            routes.MapRoute("Item-Detail", "item/{itemid}/parts", new { controller = "Item", action = "Parts" });
 
-            routes.MapPageRoute("Recent", "recent/{top}/{lang}/{inst}", "~/recent.aspx", false, new RouteValueDictionary { { "top", "100" }, { "lang", "" }, { "inst", "" } });
-            routes.MapPageRoute("RecentRSS", "recentrss/{top}/{lang}/{inst}", "~/recentrss.aspx", false, new RouteValueDictionary { { "top", "100" }, { "lang", "" }, { "inst", "" } });
+            routes.MapRoute("Recent", "recent/{top}/{lang}/{inst}", new {controller = "Recent", action = "Index", top = "100", lang = "", inst = "" });
+            routes.MapRoute("RecentRSS-Legacy", "recentrss/{top}/{lang}/{inst}", new {controller = "Recent", action = "Rss", top = "100", lang = "", inst = "" });
+            routes.MapRoute("RecentRSS", "recent/rss/{top}/{lang}/{inst}", new { controller = "Recent", action = "Rss", top = "100", lang = "", inst = "" });
 
             routes.MapRoute("BrowseCreator", "creator/{creatorid}/{sort}", new { controller = "Creator", action = "Index", sort = "title" });
             routes.MapRoute("BrowseSubject", "subject/{subject}/{sort}", new { controller = "Subject", action = "Index", sort = "title" });

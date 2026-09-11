@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div id="page-title">
+    <h1 class="ellipsis column-wrap">@ViewBag.BhlTitle.ShortTitle @ViewBag.BhlBook.Volume</h1>
+</div>
+<div id="content" class="column-wrap clearfix">
+    <section>
+        <h2>Parts</h2>
+        <div class="data titles">
+            <ol>
+                @foreach (var segment in ViewBag.SegmentList) {
+                    <li>
+                        <div style="display:inline-block; width:620px">
+                            <div style="float:left">
+                                @if (segment.StartPageID == null && (segment.Url ?? string.Empty) == string.Empty) { @segment.Title }
+                                @if (segment.StartPageID != null) { <a class="title" href="/page/@segment.StartPageID">@segment.Title</a> }
+                                @if (segment.StartPageID == null && segment.Url.ToString() != string.Empty) { 
+                                    <a target="_blank" rel="noopener noreferrer" class="title ExtLinkBrowse" href="@segment.Url.ToString()">@segment.Title.ToString()</a> 
+                                }
+                            </div>
+                            <div style="float:right">
+                                <a class="titleviewbook" href="/part/@segment.SegmentID">View Metadata</a>
+                            </div>
+                        </div>
+                        @if (segment.Authors != string.Empty) {
+                            <div class="titledetails">By: @segment.Authors.ToString().Replace("|", " - ")</div>
+                        }
+                        @if (segment.GenreName != string.Empty) {
+                            <div class="titledetails">Type: @segment.GenreName.ToString()</div>
+                        }
+                        @if (segment.ContainerTitle != string.Empty) {
+                            <div class="titledetails">In: @segment.ContainerTitleExtended.ToString()</div>
+                        }
+                        @if (segment.Volume != string.Empty) {
+                            <div class="titledetails">Volume: @segment.Volume</div>
+                        }
+                        @if (segment.Series != string.Empty) {
+                            <div class="titledetails">Series: @segment.Series</div>
+                        }
+                        @if (segment.Issue != string.Empty) {
+                            <div class="titledetails">Issue: @segment.Issue</div>
+                        }
+                        @if (segment.Date != string.Empty) {
+                            <div class="titledetails">Date: @segment.Date</div>
+                        }
+                        @if (segment.PageRange != string.Empty) {
+                            <div class="titledetails">Page Range: @segment.PageRange</div>
+                        }
+                        @if (segment.PublicationDetails != string.Empty) {
+                            <div class="titledetails">Publication info: @segment.PublicationDetails</div>
+                        }
+                    </li>
+                }
+            </ol>
+        </div>
+    </section>
+    <aside>
+        @Html.Action("_DonateFeature", "Partial")
+        @Html.Action("_CollectionFeature", "Partial")
+    </aside>
+</div>

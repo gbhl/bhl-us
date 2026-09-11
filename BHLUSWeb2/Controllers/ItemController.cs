@@ -5,6 +5,7 @@ using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
 using MvcThrottle;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Net;
 using System.Net.Http;
@@ -14,6 +15,36 @@ namespace MOBOT.BHL.Web2.Controllers
 {
     public class ItemController : Controller
     {
+        [EnableThrottling]
+        // GET: /Item/Parts
+        public ActionResult Parts()
+        {
+            DataObjects.Book BhlBook = new DataObjects.Book();
+            Title BhlTitle = new Title();
+            int itemID = 0;
+            BHLProvider bhlProvider = new BHLProvider();
+
+            if (!int.TryParse((string)RouteData.Values["itemid"], out itemID))
+            {
+                Response.Redirect("~/pagenotfound");
+            }
+
+            ViewBag.BhlBook = bhlProvider.BookSelectByBarcodeOrItemID(itemID, null);
+            if (ViewBag.BhlBook == null)
+            {
+                Response.Redirect("~/pagenotfound");
+            }
+            else
+            {
+                ViewBag.BhlTitle = bhlProvider.TitleSelect((int)ViewBag.BhlBook.PrimaryTitleID);
+                List<Segment> segments = bhlProvider.SegmentSelectByBookID(ViewBag.BhlBook.BookID);
+                if (!(segments == null)) ViewBag.SegmentList = segments;
+            }
+
+            return View();
+        }
+
+
         [EnableThrottling]
         public ActionResult GetItemText(int? itemid)
         {

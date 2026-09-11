@@ -456,7 +456,6 @@
     <Content Include="images\twitter-icon-over.png" />
     <Content Include="images\up.gif" />
     <Content Include="images\view_page.gif" />
-    <Content Include="ItemPage.aspx" />
     <Content Include="js\citation-js\bhl-citation-js.js" />
     <Content Include="js\citation-js\citation-js%400.6.4.js" />
     <Content Include="js\citation-js\plugins\american-medical-association-11th.js" />
@@ -518,8 +517,6 @@
     <Content Include="js\plugins.js" />
     <Content Include="js\script.js" />
     <Content Include="libs\countersoft\Newtonsoft.Json.dll" />
-    <Content Include="Recent.aspx" />
-    <Content Include="RecentRss.aspx" />
     <Content Include="packages.config" />
     <Content Include="Docs\BHL Permissions Form.pdf" />
     <Content Include="Docs\BHL Permissions Questionnaire.pdf" />
@@ -583,6 +580,9 @@
     <Content Include="Views\OpenUrl\Help.cshtml" />
     <Content Include="Views\OpenUrl\None.cshtml" />
     <Content Include="Views\OpenUrl\Multiple.cshtml" />
+    <Content Include="Views\Recent\Index.cshtml" />
+    <Content Include="Views\Recent\Rss.cshtml" />
+    <Content Include="Views\Item\Parts.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -624,6 +624,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\AuthorNotFoundController.cs" />
+    <Compile Include="Controllers\RecentController.cs" />
     <Compile Include="Controllers\TitleNotFoundController.cs" />
     <Compile Include="Controllers\NameController.cs" />
     <Compile Include="Controllers\NameDetailController.cs" />
@@ -754,13 +755,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="ItemPage.aspx.cs">
-      <DependentUpon>ItemPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ItemPage.aspx.designer.cs">
-      <DependentUpon>ItemPage.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Models\AuthorsBrowseModel.cs" />
     <Compile Include="Models\CollectionBrowseModel.cs" />
     <Compile Include="Models\ContributorBrowseModel.cs" />
@@ -773,20 +767,6 @@
     </Compile>
     <Compile Include="Models\SearchModel.cs" />
     <Compile Include="MVCServices\SearchService.cs" />
-    <Compile Include="Recent.aspx.cs">
-      <DependentUpon>Recent.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Recent.aspx.designer.cs">
-      <DependentUpon>Recent.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="RecentRss.aspx.cs">
-      <DependentUpon>RecentRss.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="RecentRss.aspx.designer.cs">
-      <DependentUpon>RecentRss.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

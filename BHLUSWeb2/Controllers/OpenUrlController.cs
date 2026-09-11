@@ -159,7 +159,7 @@ namespace MOBOT.BHL.Web2.Controllers
 
                     if (ouResponse.Status == ResponseStatus.Error || ouResponse.Status == ResponseStatus.Undefined)
                     {
-                        response = "/openurlhelp";
+                        response = "/openurl/help";
                         break;
                     }
                     else
@@ -167,7 +167,7 @@ namespace MOBOT.BHL.Web2.Controllers
                         switch (ouResponse.citations.Count)
                         {
                             case 0:
-                                response = "/openurlnone";
+                                response = "/openurl/none";
                                 break;
                             case 1:
                                 response = (ouResponse.citations[0].Url != String.Empty ?
@@ -222,7 +222,7 @@ namespace MOBOT.BHL.Web2.Controllers
                                 }
                                 else
                                 {
-                                    response = "/openurlmultiple?id=" + matches;
+                                    response = "/openurl/multiple?id=" + matches;
                                 }
                                 break;
                         }
