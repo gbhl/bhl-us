@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div id="page-title">
+    <h1 class="column-wrap">
+        All @ViewBag.NumContributors <span class="highlight">Contributors</span>
+    </h1>
+</div>
+
+<div id="content" class="column-wrap clearfix">
+    <section>
+        <p>
+            The following contributors have cooperated to digitize content from their collections for free and
+            open access via the BHL and the <a href="https://archive.org" target="_blank" rel="noopener noreferrer">Internet Archive</a>.
+            For a list of licensors who have generously provided permission to include in-copyright titles in
+            the BHL, please see our <a href="@System.Configuration.ConfigurationManager.AppSettings["WikiPagePermissions"]" target="_blank" rel="noopener noreferrer">Permissions page</a>.
+        </p>
+        <h2>BHL Participating Contributors</h2>
+        <table id="Members" cellspacing="0" role="presentation" border="0" style="width:100%;border-collapse:collapse;">
+            <tbody>
+                @foreach (var contributor in ViewBag.Members)
+                {
+                    <tr>
+                        <td>
+                            <div style="margin-bottom:14px">
+                                <a href='/browse/contributor/@contributor.InstitutionCode'>@contributor.InstitutionName</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <h2>Other Contributors</h2>
+        <table id="NonMembers" cellspacing="0" role="presentation" border="0" style="width:100%;border-collapse:collapse;">
+            <tbody>
+                @for (int x = 0; x < (int)Math.Ceiling((double)ViewBag.NonMembers.Count/2.0); x++) {
+                    <tr>
+                        <td>
+                            <div style="margin-bottom:14px; margin-right:14px">
+                                <a href='/browse/contributor/@ViewBag.NonMembers[x].InstitutionCode'>@ViewBag.NonMembers[x].InstitutionName</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-bottom:14px">
+                                @if (Math.Ceiling((double)(ViewBag.NonMembers.Count/2.0)) + x < ViewBag.NonMembers.Count)
+                                {
+                                    <a href='/browse/contributor/@ViewBag.NonMembers[(int)Math.Ceiling((double)(ViewBag.NonMembers.Count/2.0)) + x].InstitutionCode'>@ViewBag.NonMembers[(int)Math.Ceiling((double)(ViewBag.NonMembers.Count/2.0)) + x].InstitutionName</a>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+    <aside>
+        @Html.Action("_DonateFeature", "Partial")
+        @Html.Action("_CollectionFeature", "Partial")
+    </aside>
+</div>

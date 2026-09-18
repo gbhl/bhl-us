@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div id="page-title">
+    <h1 class="column-wrap">
+        @Html.Raw(ViewBag.Header)
+    </h1>
+</div>
+<div id="content" class="column-wrap">
+    <section>
+        @Html.Raw(ViewBag.Pages)
+    </section>
+    <aside>
+        @Html.Action("_DonateFeature", "Partial")
+        @Html.Action("_CollectionFeature", "Partial")
+    </aside>
+</div>
+

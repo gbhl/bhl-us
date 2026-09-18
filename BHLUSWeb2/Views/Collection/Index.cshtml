@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div id="content" class="column-wrap">
+    <section>
+        @Html.Raw(ViewBag.HtmlContent)
+    </section>
+    <aside class="collection-info">
+        @Html.Action("_DonateFeature", "Partial")
+        @Html.Action("_CollectionFeature", "Partial")
+    </aside>
+</div>

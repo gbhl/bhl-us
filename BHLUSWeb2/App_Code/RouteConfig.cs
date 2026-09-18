@@ -10,8 +10,6 @@ namespace MOBOT.BHL.Web2
         {
             routes.MapPageRoute("Default", "", "~/default.aspx");
 
-            routes.MapPageRoute("Browse-Default", "browse", "~/default.aspx");
-
             routes.MapPageRoute("Contact", "contact", "~/Feedback.aspx");
 
             routes.MapRoute("PermissionsRedirect", "permissions", new { controller = "Redirect", action = "Permissions" });
@@ -27,6 +25,11 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("OpenUrl-Multiple-aspx", "openurlmultiple.aspx", new { controller = "OpenUrl", action = "Multiple" });
             routes.MapRoute("OpenUrl-Multiple-Legacy", "openurlmultiple", new { controller = "OpenUrl", action = "Multiple" });
             routes.MapRoute("OpenUrl-Multiple", "openurl/multiple", new { controller = "OpenUrl", action = "Multiple" });
+
+            routes.MapRoute("DarwinLibraryConcepts-Legacy", "dlconcepts.aspx", new { controller = "DL", action = "Concepts" });
+            routes.MapRoute("DarwinLibraryConcepts", "dl/concepts", new { controller = "DL", action = "Concepts" });
+            routes.MapRoute("DarwinLibraryIndexBrowse-Legacy", "dlindexbrowse.aspx", new { controller = "DL", action = "IndexBrowse" });
+            routes.MapRoute("DarwinLibraryIndexBrowse", "dl/indexbrowse", new { controller = "DL", action = "IndexBrowse" });
 
             routes.MapRoute("API3", "api3", new { controller = "Api", action = "Api3Handler" });
             routes.MapRoute("API2-http", "api2/httpQuery.ashx", new { controller = "Api", action = "Api2Handler" });
@@ -49,12 +52,12 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("BrowseTitles", "browse/titles/{start}/{sort}", new { controller = "Browse", action = "Titles", start = "a", sort="title" });
             routes.MapRoute("BrowseAuthors", "browse/authors/{start}", new { controller = "Browse", action = "Authors", start = "a" });
             routes.MapRoute("BrowseYear", "browse/year/{start}/{end}/{sort}", new { controller = "Browse", action = "Year", start = 1450, end = 1580, sort = "title" });
+            routes.MapRoute("BrowseCollections", "browse/collections", new { controller = "Browse", action = "Collections" });
             routes.MapRoute("BrowseCollection", "browse/collection/{id}/{start}/{sort}", new { controller = "Browse", action = "Collection", start = "all", sort = "title" });
+            routes.MapRoute("BrowseContributors", "browse/contributors", new { controller = "Browse", action = "Contributors" });
             routes.MapRoute("BrowseContributor", "browse/contributor/{id}/{start}/{sort}", new { controller = "Browse", action = "Contributor", start = "all", sort = "title" });
 
-            routes.MapPageRoute("Browse-ContributorList", "browse/contributors", "~/BrowseContributors.aspx");
-            routes.MapPageRoute("Browse-CollectionList", "browse/collections", "~/BrowseCollections.aspx");
-            routes.MapPageRoute("Collection-details", "collection/{collectionid}", "~/CollectionDetails.aspx");
+            routes.MapRoute("Collection-details", "collection/{collectionid}", new { controller = "Collection", action = "Index" });
 
             routes.MapRoute("Name", "name/{name}", new { controller = "Name", action = "Index" });
             routes.MapRoute("NameList", "namelist", new { controller = "Name", action = "NameList" });

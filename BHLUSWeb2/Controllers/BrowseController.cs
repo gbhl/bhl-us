@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
+using System.Web.Caching;
 using System.Web.Mvc;
 
 namespace MOBOT.BHL.Web2.Controllers
@@ -32,6 +33,18 @@ namespace MOBOT.BHL.Web2.Controllers
             model.AuthorResults = authorResults.Item2;
 
             return View(model);
+        }
+
+        // GET: Browse/Collections
+        [EnableThrottling]
+        [BrowseOutputCache(VaryByParam = "*")]
+        public ActionResult Collections()
+        {
+            List<Collection> collections = new BHLProvider().CollectionSelectActive();
+            ViewBag.NumCollections = collections.Count.ToString();
+            ViewBag.Collections = collections;
+
+            return View();
         }
 
         // GET: Browse/Collection
@@ -117,6 +130,91 @@ namespace MOBOT.BHL.Web2.Controllers
             }
 
             return list;
+        }
+
+        // GET: Browse/Contributors
+        [EnableThrottling]
+        [BrowseOutputCache(VaryByParam = "*")]
+        public ActionResult Contributors()
+        {
+            List<Institution> allInstitutions = null;
+
+            String cacheKey = "contributorBrowse";
+            if (HttpContext.Cache[cacheKey] != null)
+            {
+                // Use cached version
+                allInstitutions = (List<Institution>)HttpContext.Cache[cacheKey];
+            }
+            else
+            {
+                // Refresh cache
+
+                // Get the list of all institutions
+                allInstitutions = GetInstitutions();
+
+                // Cache the list
+                HttpContext.Cache.Add(cacheKey, allInstitutions, null, DateTime.Now.AddMinutes(
+                    Convert.ToDouble(ConfigurationManager.AppSettings["BrowseQueryCacheTime"])),
+                    System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+            }
+
+            ViewBag.NumContributors = allInstitutions.Count.ToString();
+
+            // Separate the institutions into separate lists of BHL members and non-members
+            List<Institution> members = new List<Institution>();
+            List<Institution> nonMembers = new List<Institution>();
+            foreach (Institution institution in allInstitutions)
+            {
+                institution.InstitutionName = institution.InstitutionName.Replace("(archive.org)", "").Trim();
+
+                if (institution.BHLMemberLibrary)
+                    members.Add(institution);
+                else
+                    nonMembers.Add(institution);
+            }
+
+            // Display the institution lists
+            ViewBag.Members = members;
+            ViewBag.NonMembers = nonMembers;
+
+            return View();
+        }
+
+        /// <summary>
+        /// Get a list of all institutions that have contributed either books or segments
+        /// </summary>
+        /// <returns></returns>
+        private List<Institution> GetInstitutions()
+        {
+            BHLProvider provider = new BHLProvider();
+            List<Institution> institutions = new List<Institution>();
+            List<Institution> contributors = provider.InstitutionSelectWithPublishedItems(false, "Holding Institution");
+            List<Institution> contributorsWithSegments = provider.InstitutionSelectWithPublishedSegments(false, "Contributor");
+            List<Institution> rightsHolders = provider.InstitutionSelectWithPublishedItems(false, "Rights Holder");
+            List<Institution> rightsHoldersWithSegments = provider.InstitutionSelectWithPublishedSegments(false, "Rights Holder");
+
+            BuildInstitutionList(contributors, institutions);
+            BuildInstitutionList(contributorsWithSegments, institutions);
+            BuildInstitutionList(rightsHolders, institutions);
+            BuildInstitutionList(rightsHoldersWithSegments, institutions);
+
+            InstitutionNameComparer comp = new InstitutionNameComparer();
+            institutions.Sort(comp);
+
+            return institutions;
+        }
+
+        private void BuildInstitutionList(List<Institution> source, List<Institution> target)
+        {
+            foreach (Institution newInstitution in source)
+            {
+                bool exists = false;
+                foreach (Institution institution in target)
+                {
+                    if (institution.InstitutionCode == newInstitution.InstitutionCode) { exists = true; break; }
+                }
+                if (!exists) target.Add(newInstitution);
+            }
         }
 
         // GET: Browse/Contributor

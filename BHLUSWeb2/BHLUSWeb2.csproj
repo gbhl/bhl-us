@@ -203,12 +203,7 @@
     <Content Include="Docs\api3\GetPageMetadata.html" />
     <Content Include="apikeymsg.txt" />
     <Content Include="bot_list.txt" />
-    <Content Include="BrowseCollections.aspx" />
-    <Content Include="BrowseContributors.aspx" />
-    <Content Include="CollectionDetails.aspx" />
     <Content Include="controls\COinSControl.ascx" />
-    <Content Include="controls\CollectionListControl.ascx" />
-    <Content Include="controls\ContributorListControl.ascx" />
     <Content Include="controls\NavBar.ascx" />
     <Content Include="controls\ucFeatureBox.ascx" />
     <Content Include="css\bhlaustylereference.css">
@@ -239,8 +234,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="css\ui.jqgrid.css" />
-    <Content Include="dlconcepts.aspx" />
-    <Content Include="dlindexbrowse.aspx" />
     <Content Include="Feedback.aspx" />
     <Content Include="feedbackmsg.txt" />
     <Content Include="flickrthumbs.txt" />
@@ -583,6 +576,11 @@
     <Content Include="Views\Recent\Index.cshtml" />
     <Content Include="Views\Recent\Rss.cshtml" />
     <Content Include="Views\Item\Parts.cshtml" />
+    <Content Include="Views\DL\Concepts.cshtml" />
+    <Content Include="Views\DL\IndexBrowse.cshtml" />
+    <Content Include="Views\Browse\Contributors.cshtml" />
+    <Content Include="Views\Browse\Collections.cshtml" />
+    <Content Include="Views\Collection\Index.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -620,6 +618,8 @@
     <Compile Include="App_Code\FilterConfig.cs" />
     <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Controllers\BibliographyController.cs" />
+    <Compile Include="Controllers\CollectionController.cs" />
+    <Compile Include="Controllers\DLController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
@@ -653,28 +653,7 @@
     <Compile Include="Book.Master.designer.cs">
       <DependentUpon>Book.Master</DependentUpon>
     </Compile>
-    <Compile Include="BrowseCollections.aspx.cs">
-      <DependentUpon>BrowseCollections.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="BrowseCollections.aspx.designer.cs">
-      <DependentUpon>BrowseCollections.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="BrowseContributors.aspx.cs">
-      <DependentUpon>BrowseContributors.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="BrowseContributors.aspx.designer.cs">
-      <DependentUpon>BrowseContributors.aspx</DependentUpon>
-    </Compile>
     <Compile Include="BrowseOutputCacheAttribute.cs" />
-    <Compile Include="CollectionDetails.aspx.cs">
-      <DependentUpon>CollectionDetails.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CollectionDetails.aspx.designer.cs">
-      <DependentUpon>CollectionDetails.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\BrowseController.cs" />
     <Compile Include="Controllers\CreatorController.cs" />
     <Compile Include="Controllers\IIIFController.cs" />
@@ -688,20 +667,6 @@
     </Compile>
     <Compile Include="controls\COinSControl.ascx.designer.cs">
       <DependentUpon>COinSControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="controls\CollectionListControl.ascx.cs">
-      <DependentUpon>CollectionListControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="controls\CollectionListControl.ascx.designer.cs">
-      <DependentUpon>CollectionListControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="controls\ContributorListControl.ascx.cs">
-      <DependentUpon>ContributorListControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="controls\ContributorListControl.ascx.designer.cs">
-      <DependentUpon>ContributorListControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="controls\NavBar.ascx.cs">
       <DependentUpon>NavBar.ascx</DependentUpon>
@@ -723,20 +688,6 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="dlconcepts.aspx.cs">
-      <DependentUpon>dlconcepts.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="dlconcepts.aspx.designer.cs">
-      <DependentUpon>dlconcepts.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="dlindexbrowse.aspx.cs">
-      <DependentUpon>dlindexbrowse.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="dlindexbrowse.aspx.designer.cs">
-      <DependentUpon>dlindexbrowse.aspx</DependentUpon>
     </Compile>
     <Compile Include="Feedback.aspx.cs">
       <DependentUpon>Feedback.aspx</DependentUpon>

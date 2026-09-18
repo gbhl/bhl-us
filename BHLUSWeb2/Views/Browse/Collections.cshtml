@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div id="page-title">
+    <h1 class="column-wrap">
+        All @ViewBag.NumCollections <span class="highlight">Collections</span>
+    </h1>
+</div>
+<div id="content" class="column-wrap clearfix">
+    <section>
+        <p>
+            These thematic sub-collections of BHL content have been curated to help users take a closer look into biodiversity related topics of interest.<br /><br />
+        </p>
+        <ul class="data collections">
+            @foreach (var collection in ViewBag.Collections)
+            {
+                <li>
+                    <a class="collectiontitle" href="/browse/collection/@(collection.CollectionURL==string.Empty ? collection.CollectionID.ToString() : collection.CollectionURL)" title="Books">
+                        @collection.CollectionName
+                    </a>
+                    <p class="collectiondescription">
+                        @(collection.CollectionDescription==string.Empty ? "" : collection.CollectionDescription)
+                    </p>
+                    @if (collection.HtmlContent != string.Empty)
+                    {
+                        <a class="collectionfurtherinfo" href='/collection/@(collection.CollectionURL == string.Empty ? collection.CollectionID : collection.CollectionURL)' title='Collection'>Further information</a>
+                    }
+                </li>
+            }
+        </ul>
+    </section>
+    <aside>
+        @Html.Action("_DonateFeature", "Partial")
+        @Html.Action("_CollectionFeature", "Partial")
+    </aside>
+</div>
+
