@@ -37,6 +37,7 @@ namespace MOBOT.BHLImport.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.ItemPublishToProductionIA", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, false, barCode)))
             {
+                command.CommandTimeout = 300;   // Set timeout to 5 minutes to be sure it has enough time to complete the operation
                 List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                 if (list.Count > 0)
                 {
