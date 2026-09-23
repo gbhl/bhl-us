@@ -204,7 +204,6 @@
     <Content Include="apikeymsg.txt" />
     <Content Include="bot_list.txt" />
     <Content Include="controls\COinSControl.ascx" />
-    <Content Include="controls\NavBar.ascx" />
     <Content Include="controls\ucFeatureBox.ascx" />
     <Content Include="css\bhlaustylereference.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -234,10 +233,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="css\ui.jqgrid.css" />
-    <Content Include="Feedback.aspx" />
     <Content Include="feedbackmsg.txt" />
     <Content Include="flickrthumbs.txt" />
-    <Content Include="GetApiKey.aspx" />
     <Content Include="images\01_home_pic_img.png" />
     <Content Include="images\02_home_pic_img.png" />
     <Content Include="images\03_home_pic_img.png" />
@@ -581,6 +578,8 @@
     <Content Include="Views\Browse\Contributors.cshtml" />
     <Content Include="Views\Browse\Collections.cshtml" />
     <Content Include="Views\Collection\Index.cshtml" />
+    <Content Include="Views\Api\GetKey.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -619,6 +618,7 @@
     <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Controllers\BibliographyController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\DLController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -636,8 +636,10 @@
     <Compile Include="Controllers\RedirectController.cs" />
     <Compile Include="Controllers\ItemUnavailableController.cs" />
     <Compile Include="Controllers\TitleUnavailableController.cs" />
+    <Compile Include="Models\ApiKeyModel.cs" />
     <Compile Include="Models\BibliographyModel.cs" />
     <Compile Include="Models\COinSModel.cs" />
+    <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\NameDetailModel.cs" />
     <Compile Include="Models\NameModel.cs" />
     <Compile Include="Models\PartModel.cs" />
@@ -668,13 +670,6 @@
     <Compile Include="controls\COinSControl.ascx.designer.cs">
       <DependentUpon>COinSControl.ascx</DependentUpon>
     </Compile>
-    <Compile Include="controls\NavBar.ascx.cs">
-      <DependentUpon>NavBar.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="controls\NavBar.ascx.designer.cs">
-      <DependentUpon>NavBar.ascx</DependentUpon>
-    </Compile>
     <Compile Include="controls\ucFeatureBox.ascx.cs">
       <DependentUpon>ucFeatureBox.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -688,20 +683,6 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Feedback.aspx.cs">
-      <DependentUpon>Feedback.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Feedback.aspx.designer.cs">
-      <DependentUpon>Feedback.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="GetApiKey.aspx.cs">
-      <DependentUpon>GetApiKey.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="GetApiKey.aspx.designer.cs">
-      <DependentUpon>GetApiKey.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -735,7 +716,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Api\" />
     <Folder Include="Views\Download\" />
     <Folder Include="Views\OAI\" />
     <Folder Include="Views\PDF\" />

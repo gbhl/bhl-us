@@ -3,96 +3,53 @@ using BHL.SiteServicesREST.v1;
 using Countersoft.Gemini.Api;
 using Countersoft.Gemini.Commons.Dto;
 using Countersoft.Gemini.Commons.Entity;
-using Countersoft.Gemini.Commons.Entity.ProjectTemplates;
-using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using Nest;
+using MOBOT.BHL.Web2.Models;
+using MvcThrottle;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Net;
 using System.Text;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Web.Mvc;
 
-namespace MOBOT.BHL.Web2
+namespace MOBOT.BHL.Web2.Controllers
 {
-    public partial class Feedback : BasePage
+    public class ContactController : Controller
     {
-        protected void Page_Load(object sender, EventArgs e)
+        // GET: Contact
+        [EnableThrottling]
+        [HttpGet]
+        public ActionResult Index()
         {
-            if (!IsPostBack)
-            {
-                fillCombos();
+            ContactModel model = new ContactModel();
+            BHLProvider bp = new BHLProvider();
 
-                if (Page.PreviousPage != null)
-                {
-                    string previousPageName = Page.PreviousPage.AppRelativeVirtualPath.ToLower();
-                    if (previousPageName.Contains("bibliography"))
-                    {
-                        HiddenField titleIDField = (HiddenField)this.myFindControl(Page.PreviousPage.Controls, "hidTitleID");
-                        if (titleIDField.Value != string.Empty) ViewState["TitleID"] = titleIDField.Value;
-                    }
-                    else if (previousPageName.Contains("titlepage"))
-                    {
-                        HiddenField pageIDField = (HiddenField)this.myFindControl(Page.PreviousPage.Controls, "hidPageID");
-                        if (pageIDField.Value != string.Empty) ViewState["PageID"] = pageIDField.Value;
-                    }
-                }
-
-                ViewState["FeedbackRefererURL"] = (Request.UrlReferrer != null) ? Request.UrlReferrer.AbsoluteUri : "/";
-
-                string page = Request.QueryString["page"];
-                if (page != null) ViewState["PageID"] = page;
-
-                Page.Title = String.Format(ConfigurationManager.AppSettings["PageTitle"], "Feedback");
-            }
+            List<DataObjects.Language> languages = bp.LanguageSelectAll();
+            model.LanguageList = new SelectList(languages, "LanguageCode", "LanguageName");
+            model.SelectedLanguage = "";
+            model.FeedbackRefererURL = (Request.UrlReferrer != null) ? Request.UrlReferrer.AbsoluteUri : "/";
+            ViewBag.Title = string.Format(ConfigurationManager.AppSettings["PageTitle"], "Feedback");
+            return View(model);
         }
 
-        private void fillCombos()
+        [EnableThrottling]
+        [HttpPost]
+        public ActionResult Index(ContactModel model)
         {
             BHLProvider bp = new BHLProvider();
             List<DataObjects.Language> languages = bp.LanguageSelectAll();
-
-            srLanguageList.DataSource = languages;
-            srLanguageList.DataTextField = "LanguageName";
-            srLanguageList.DataValueField = "LanguageCode";
-            srLanguageList.DataBind();
-
-            srLanguageList.Items.Insert(0, new ListItem("", ""));
-        }
-
-        /// <summary>
-        /// Replaces the built-in "FindControl" method by doing a "contains" search instead
-        /// of an exact match.
-        /// </summary>
-        /// <param name="controls"></param>
-        /// <param name="searchTerm"></param>
-        /// <returns></returns>
-        protected Control myFindControl(ControlCollection controls, string searchTerm)
-        {
-            Control found = null;
-
-            foreach (Control control in controls)
+            model.LanguageList = new SelectList(languages, "LanguageCode", "LanguageName");
+            foreach(var language in languages)
             {
-                if ((control.ID == null ? "" : control.ID).Contains(searchTerm))
+                if (language.LanguageCode == model.SelectedLanguage)
                 {
-                    found = control;
+                    model.SelectedLanguageName = language.LanguageName;
+                    break;
                 }
-                else
-                {
-                    if (control.Controls != null) found = this.myFindControl(control.Controls, searchTerm);
-                }
-                if (found != null) break;
             }
 
-            return found;
-        }
-
-        protected void submitButton_Click(object sender, EventArgs e)
-        {
-            errorPanel.Visible = false;
             string issueLongDesc = string.Empty;
 
             // Get Gemini data from web.config file
@@ -120,18 +77,18 @@ namespace MOBOT.BHL.Web2
             UserDto user = serviceManager.Admin.WhoAmI();
             Issue data = new Issue();
 
-            if (subjectScanReq.Checked)
+            if (model.Subject == 60)    // 60=Scanning Request
             {
                 // Scanning request
-                if (srTitleTextBox.Text.Trim().Length > 0)
+                if (model.srTitle != null && model.srTitle.Trim().Length > 0)
                 {
-                    issueSummary = srTitleTextBox.Text.Trim();
+                    issueSummary = model.srTitle.Trim();
                 }
                 else
                 {
                     issueSummary = "Scan Request";
                 }
-                issueLongDesc = getScanRequest();
+                issueLongDesc = getScanRequest(model);
 
                 //data.AddComponent(scanReqComponentId);  // Collections
                 data.ProjectId = scanProjectId;
@@ -141,14 +98,14 @@ namespace MOBOT.BHL.Web2
             else
             {
                 // Feedback
-                if (!string.IsNullOrWhiteSpace(emailTextBox.Text)) issueSummary = emailTextBox.Text.Trim();
-                issueLongDesc = getComment();
+                if (!string.IsNullOrWhiteSpace(model.Email)) issueSummary = model.Email.Trim();
+                issueLongDesc = getComment(model);
 
                 data.AddComponent(feedbackComponentId);  // Web-Other
                 data.ProjectId = projectId;
-                if (subjectTech.Checked) data.TypeId = techFeedTypeId;    // 22=Tech Issue
-                if (subjectSuggest.Checked) data.TypeId = suggestTypeId;    // 36=Suggestion
-                if (subjectBibIssue.Checked) data.TypeId = bibIssueTypeId;    // 55=Bib Issue
+                if (model.Subject == 22) data.TypeId = techFeedTypeId;    // 22=Tech Issue
+                if (model.Subject == 36) data.TypeId = suggestTypeId;    // 36=Suggestion
+                if (model.Subject == 55) data.TypeId = bibIssueTypeId;    // 55=Bib Issue
             }
 
             data.Description = issueLongDesc;
@@ -164,29 +121,30 @@ namespace MOBOT.BHL.Web2
             {
                 // Ignore spam from kelev.biz and email.tst.
                 // Only a bot can fill Foo with a value, so ignore that as well.
-                if (!emailTextBox.Text.Trim().ToLower().Contains("kelev.biz") &&
-                    !emailTextBox.Text.Trim().ToLower().Contains("email.tst") &&
-                    string.IsNullOrWhiteSpace(fooTextBox.Text.Trim()) &&
+                if (!(model.Email ?? string.Empty).Trim().ToLower().Contains("kelev.biz") &&
+                    !(model.Email ?? string.Empty).Trim().ToLower().Contains("email.tst") &&
+                    string.IsNullOrWhiteSpace(model.Foo) &&
                     ValidateCaptcha(Request.Form["g-recaptcha-response"]))
                 {
                     IssueDto newIssue = serviceManager.Item.Create(data);
-                    AddScanRequestCustomFields(serviceManager, newIssue, user.Entity.Id);
+                    AddScanRequestCustomFields(model, serviceManager, newIssue, user.Entity.Id);
 
                     string subject = "BHL Feedback (# " + newIssue.Id.ToString() + ") Received";
-                    if (subjectScanReq.Checked) subject = "BHL Scanning Request (# " + newIssue.Id.ToString() + ") Received";
-                    if (emailTextBox.Text.Trim().Length > 0) this.SendEmail(emailTextBox.Text, subject, Server.HtmlDecode(issueLongDesc));
-                    this.ShowConfirmationMessage(subject, Server.HtmlDecode(issueLongDesc));
+                    if (model.Subject == 60) subject = "BHL Scanning Request (# " + newIssue.Id.ToString() + ") Received";
+                    if ((model.Email ?? string.Empty).Trim().Length > 0) this.SendEmail(model.Email, subject, Server.HtmlDecode(issueLongDesc));
+                    this.ShowConfirmationMessage(model, subject, Server.HtmlDecode(issueLongDesc));
 
-                    if (subjectScanReq.Checked)
+                    if (model.Subject == 60)
                     {
                         try
                         {
-                            var type = typeBook.Checked ? typeBook.Value : typeJournal.Checked ? typeJournal.Value : typeUnsure.Value;
-                            new BHLProvider().ScanRequestInsertAuto(newIssue.Id, srTitleTextBox.Text.Trim(),
-                                srYearTextBox.Text.Trim(), type, srVolumeTextBox.Text.Trim(),
-                                srEditionTextBox.Text.Trim(), srOCLCTextBox.Text.Trim(), srISBNTextBox.Text.Trim(),
-                                srISSNTextBox.Text.Trim(), srAuthorTextBox.Text.Trim(), srPublisherTextBox.Text.Trim(),
-                                srLanguageList.SelectedItem.Text, srNoteTextBox.Text.Trim());
+                            var type = model.srType == "Book" ? "Book" : model.srType == "Journal" ? "Journal" : "Unsure";
+                            new BHLProvider().ScanRequestInsertAuto(newIssue.Id, (model.srTitle ?? string.Empty).Trim(),
+                                (model.srYear ?? string.Empty).Trim(), type, (model.srVolume ?? string.Empty).Trim(),
+                                (model.srEdition ?? string.Empty).Trim(), (model.srOCLC ?? string.Empty).Trim(), 
+                                (model.srISBN ?? string.Empty).Trim(), (model.srISSN ?? string.Empty).Trim(), 
+                                (model.srAuthor ?? string.Empty).Trim(), (model.srPublisher ?? string.Empty).Trim(),
+                                (model.SelectedLanguageName ?? string.Empty), (model.srNote ?? string.Empty).Trim());
                         }
                         catch
                         {
@@ -197,28 +155,28 @@ namespace MOBOT.BHL.Web2
                 }
                 else
                 {
-                    errorPanel.Visible = true;
-                    errorLabel.Text = "There was a problem sending your comment. Please try again.";
+                    model.ErrorText = "There was a problem sending your comment. Please try again.";
                 }
             }
             catch
             {
-                errorPanel.Visible = true;
-                errorLabel.Text = "There was a problem sending your comment. Your feedback is important to us, we apologize.";
+                model.ErrorText = "There was a problem sending your comment. Your feedback is important to us, we apologize.";
             }
+
+            return View(model);
         }
 
-        private void AddScanRequestCustomFields(ServiceManager serviceManager, IssueDto issue, int userId)
+        private void AddScanRequestCustomFields(ContactModel model, ServiceManager serviceManager, IssueDto issue, int userId)
         {
             int customFieldOclc = int.Parse(ConfigurationManager.AppSettings["GeminiScanCustomFieldIdOCLC"]);
             int customFieldYearStart = int.Parse(ConfigurationManager.AppSettings["GeminiScanCustomFieldIdYearStart"]);
 
-            if (subjectScanReq.Checked)
+            if (model.Subject == 60) // 60 is the subject ID for Scan Requests
             {
-                if (!string.IsNullOrWhiteSpace(srOCLCTextBox.Text))
-                    serviceManager.Item.CustomFieldDataCreate(GetCustomFieldData(issue, userId, customFieldOclc, srOCLCTextBox.Text.Trim()));
-                if (!string.IsNullOrWhiteSpace(srYearTextBox.Text))
-                    serviceManager.Item.CustomFieldDataCreate(GetCustomFieldData(issue, userId, customFieldYearStart, srYearTextBox.Text.Trim()));
+                if (!string.IsNullOrWhiteSpace(model.srOCLC))
+                    serviceManager.Item.CustomFieldDataCreate(GetCustomFieldData(issue, userId, customFieldOclc, model.srOCLC));
+                if (!string.IsNullOrWhiteSpace(model.srYear))
+                    serviceManager.Item.CustomFieldDataCreate(GetCustomFieldData(issue, userId, customFieldYearStart, model.srYear));
             }
         }
 
@@ -268,121 +226,107 @@ namespace MOBOT.BHL.Web2
             return isValid;
         }
 
-        private string getComment()
+        private string getComment(ContactModel model)
         {
             StringBuilder sb = new StringBuilder();
 
-            if (nameTextBox.Text.Trim().Length > 0)
+            if (model.Name != null && model.Name.Trim().Length > 0)
             {
                 sb.Append("<b>Name: </b>");
-                sb.Append(Server.HtmlEncode(nameTextBox.Text.Trim()));
+                sb.Append(Server.HtmlEncode(model.Name.Trim()));
             }
-            if (emailTextBox.Text.Trim() != string.Empty)
+            if (model.Email != null && model.Email.Trim() != string.Empty)
             {
                 if (sb.Length > 0) sb.Append("<br>");
                 sb.Append("<b>Email: </b>");
-                sb.Append(Server.HtmlEncode(emailTextBox.Text.Trim()));
+                sb.Append(Server.HtmlEncode(model.Email.Trim()));
             }
-            if (!string.IsNullOrWhiteSpace((string)ViewState["FeedbackRefererURL"]))
+            if (!string.IsNullOrWhiteSpace(model.FeedbackRefererURL))
             {
                 if (sb.Length > 0) sb.Append("<br>");
                 sb.Append("<b>URL: </b>");
-                sb.Append(ViewState["FeedbackRefererURL"].ToString());
-            }
-
-            if (ViewState["PageID"] != null)
-            {
-                if (sb.Length > 0) sb.Append("<br>");
-                sb.Append("<b>Viewed Page: </b>");
-                sb.Append(ViewState["PageID"].ToString());
-            }
-
-            if (ViewState["TitleID"] != null)
-            {
-                if (sb.Length > 0) sb.Append("<br>");
-                sb.Append("<b>Viewed Title:</b>");
-                sb.Append(ViewState["TitleID"].ToString());
+                sb.Append(model.FeedbackRefererURL);
             }
 
             if (sb.Length > 0) sb.Append("<br><br>");
-            sb.Append(Server.HtmlEncode(commentTextBox.Text.Trim()));
+            sb.Append(Server.HtmlEncode(model.Comment.Trim()));
 
             return sb.ToString();
         }
 
-        private string getScanRequest()
+        private string getScanRequest(ContactModel model)
         {
             StringBuilder sb = new StringBuilder();
 
-            if (nameTextBox.Text.Trim() != string.Empty)
+            if (model.Name != null && model.Name.Trim() != string.Empty)
             {
                 sb.Append("<b>Name: </b>");
-                sb.Append(Server.HtmlEncode(nameTextBox.Text.Trim()));
+                sb.Append(Server.HtmlEncode(model.Name.Trim()));
             }
-            if (emailTextBox.Text.Trim() != string.Empty)
+            if (model.Email != null && model.Email.Trim() != string.Empty)
             {
                 if (sb.Length > 0) sb.Append("<br>");
                 sb.Append("<b>Email: </b>");
-                sb.Append(Server.HtmlEncode(emailTextBox.Text.Trim()));
+                sb.Append(Server.HtmlEncode(model.Email.Trim()));
             }
-            if (!string.IsNullOrWhiteSpace((string)ViewState["FeedbackRefererURL"]))
+            if (!string.IsNullOrWhiteSpace(model.FeedbackRefererURL))
             {
                 sb.Append("<br>");
                 sb.Append("<b>URL: </b>");
-                sb.Append(ViewState["FeedbackRefererURL"].ToString());
+                sb.Append(model.FeedbackRefererURL);
             }
 
             if (sb.Length > 0) sb.Append("<br><br>");
             sb.Append("<b>Type: </b>");
-            sb.Append(typeBook.Checked ? typeBook.Value : typeJournal.Checked ? typeJournal.Value : typeUnsure.Value);
+            sb.Append(model.srType == "Book" ? "Book" : model.srType == "Journal" ? "Journal" : "Not Sure");
             sb.Append("<br><b>Title: </b>");
-            sb.Append(Server.HtmlEncode(srTitleTextBox.Text.Trim()));
+            sb.Append(Server.HtmlEncode(model.srTitle.Trim()));
             sb.Append("<br><b>Year: </b>");
-            sb.Append(Server.HtmlEncode(srYearTextBox.Text.Trim()));
-            if (srVolumeTextBox.Text.Trim() != String.Empty)
+            sb.Append(Server.HtmlEncode(model.srYear.Trim()));
+            if (model.srVolume != null && model.srVolume.Trim() != String.Empty)
             {
                 sb.Append("<br><b>Volume: </b>");
-                sb.Append(Server.HtmlEncode(srVolumeTextBox.Text.Trim()));
+                sb.Append(Server.HtmlEncode(model.srVolume.Trim()));
             }
-            if (srEditionTextBox.Text.Trim() != String.Empty)
+            if (model.srEdition != null && model.srEdition.Trim() != String.Empty)
             {
                 sb.Append("<br><b>Edition: </b>");
-                sb.Append(Server.HtmlEncode(srEditionTextBox.Text.Trim()));
+                sb.Append(Server.HtmlEncode(model.srEdition.Trim()));
             }
-            if (srOCLCTextBox.Text.Trim() != String.Empty)
+            if (model.srOCLC != null && model.srOCLC.Trim() != String.Empty)
             {
                 sb.Append("<br><b>OCLC: </b>");
-                sb.Append(Server.HtmlEncode(srOCLCTextBox.Text.Trim()));
+                sb.Append(Server.HtmlEncode(model.srOCLC.Trim()));
             }
-            if (srISBNTextBox.Text.Trim() != String.Empty)
+            if (model.srISBN != null && model.srISBN.Trim() != String.Empty)
             {
                 sb.Append("<br><b>ISBN: </b>");
-                sb.Append(Server.HtmlEncode(srISBNTextBox.Text.Trim()));
+                sb.Append(Server.HtmlEncode(model.srISBN.Trim()));
             }
-            if (srISSNTextBox.Text.Trim() != String.Empty)
+            if (model.srISSN != null && model.srISSN.Trim() != String.Empty)
             {
                 sb.Append("<br><b>ISSN: </b>");
-                sb.Append(Server.HtmlEncode(srISSNTextBox.Text.Trim()));
+                sb.Append(Server.HtmlEncode(model.srISSN.Trim()));
             }
-            if (srAuthorTextBox.Text.Trim() != String.Empty)
+            if (model.srAuthor != null && model.srAuthor.Trim() != String.Empty)
             {
                 sb.Append("<br><b>Author: </b>");
-                sb.Append(Server.HtmlEncode(srAuthorTextBox.Text.Trim()));
+                sb.Append(Server.HtmlEncode(model.srAuthor.Trim()));
             }
-            if (srPublisherTextBox.Text.Trim() != String.Empty)
+            if (model.srPublisher != null && model.srPublisher.Trim() != String.Empty)
             {
                 sb.Append("<br><b>Publisher: </b>");
-                sb.Append(Server.HtmlEncode(srPublisherTextBox.Text.Trim()));
+                sb.Append(Server.HtmlEncode(model.srPublisher.Trim()));
             }
-            if (srLanguageList.SelectedValue != String.Empty)
+            if (model.SelectedLanguage != null && model.SelectedLanguage.Trim() != String.Empty)
             {
                 sb.Append("<br><b>Language: </b>");
-                sb.Append(srLanguageList.SelectedItem.Text);
+                sb.Append(model.SelectedLanguage.Trim());
             }
-            if (srNoteTextBox.Text.Trim() != String.Empty)
+            if (model.srNote != null && model.srNote.Trim() != String.Empty)
             {
                 sb.Append("<br><br><b>Note: </b>");
-                sb.Append(Server.HtmlEncode(srNoteTextBox.Text.Trim()));
+                sb.Append(Server.HtmlEncode(model.srNote.Trim()));
             }
 
             return sb.ToString();
@@ -439,13 +383,11 @@ namespace MOBOT.BHL.Web2
             }
         }
 
-        private void ShowConfirmationMessage(string subject, string feedbackReceived)
+        private void ShowConfirmationMessage(ContactModel model, string subject, string feedbackReceived)
         {
-            divSubmit.Visible = false;
-            divConfirm.Visible = true;
-            litConfirmationSubject.Text = subject;
-            litConfirmationText.Text = feedbackReceived;
+            model.Submitted = true;
+            model.ConfirmationSubject = subject;
+            model.ConfirmationText = feedbackReceived;
         }
-
     }
 }

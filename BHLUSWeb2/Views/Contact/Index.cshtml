@@ -1,0 +1,244 @@
+﻿@model MOBOT.BHL.Web2.Models.ContactModel
+@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+@section Javascript {
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+}
+
+<div id="page-title">
+    <h1 class="column-wrap">Questions / Comments / Scanning Requests</h1>
+</div>
+
+<div id="content" class="column-wrap clearfix">
+    <form id="feedbackForm" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" id="FeedbackRefererURL" name="FeedbackRefererURL" value="@Model.FeedbackRefererURL" />
+            <section class="search" style="width:745px">
+                <div class="ui-tabs">
+                    <div class="ui-tabs-panel">
+                    @if (!Model.Submitted)
+                    {
+                        <div>
+                            <div style="display:none; margin-top:15px; margin-left:11px; margin-right:11px;" id="rcvdMsg">
+                                <div style="background-color:#3E90C8;color:white; padding-left:22px; padding-top:5px; padding-bottom:5px; padding-right:22px;">Thank you for submitting your feedback.  If necessary, a staff member will contact you shortly.</div>
+                            </div>
+                            <div class="hidden">Leave this empty<input type="text" id="fooTextBox" name="fooTextBox" /></div>
+                            <p></p>
+                            <div>
+                                <p id="spanErrorText" class="ErrorText" style="margin-left:160px;display:block !important"></p>
+                            </div>
+                            <div>
+                                <p>Thank you for your feedback! BHL is voluntarily staffed by our <a href="@System.Configuration.ConfigurationManager.AppSettings["WikiPageMembers"]">Partner Libraries</a> and we are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information.</p>
+                                <br />
+                            </div>
+                            <div style="margin-bottom:10px;">
+                                <label class="caption" for="nameTextBox">Name:</label>
+                                @Html.TextBoxFor(m => m.Name, new { id = "nameTextBox", name = "nameTextBox", style = "width:300px", @class = "field" })<span style="font-style:italic"> (optional)</span>
+                            </div>
+                            <div style="margin-bottom:30px;">
+                                <label class="caption" for="emailTextBox">Email:</label>
+                                @Html.TextBoxFor(m => m.Email, new { id = "emailTextBox", name = "emailTextBox", style = "width:300px", @class = "field", type = "email" })<span style="font-style:italic"> (optional)</span>
+                            </div>
+                            <div style="margin-bottom:30px;">
+                                <label class="caption" for="Subject">Subject:</label>
+                                <input type="radio" name="Subject" ID="subjectTech" value="22" checked="@((Model.Subject ?? 22) == 22)" />Technical Issue
+                                <input type="radio" name="Subject" ID="subjectBibIssue" value="55" checked="@((Model.Subject ?? 55) == 55)" />Bibliographic Issue
+                                <input type="radio" name="Subject" ID="subjectSuggest" value="36" checked="@((Model.Subject ?? 36) == 36)" />Suggestion
+                                <input type="radio" name="Subject" ID="subjectScanReq" value="60" checked="@((Model.Subject ?? 60) == 60)" />Scanning Request
+                            </div>
+                            <!-- Feedback Form -->
+                            <div id="FeedbackForm" style="display:none; margin-top:5px;">
+                                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Try our <a href="@System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"]" target="_blank" rel="noopener noreferrer" title="Help">FAQ</a> page for answers to common questions.</p></div>
+                                <div style="margin-bottom:10px;">
+                                    <label class="caption" for="commentTextBox">Comment:</label>
+                                    @Html.TextAreaFor(m => m.Comment, new { id = "commentTextBox", name = "commentTextBox", rows = 7, cols = 40 })
+                                </div>
+                            </div>
+                            <!-- End Feedback Form -->
+                            <!-- Scanning Request Form -->
+                            <div id="ScanRequestForm" style="display:none; margin-top:5px">
+                                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Please see our <a href="@System.Configuration.ConfigurationManager.AppSettings["WikiPageSubmissionGuide"]" target="_blank" rel="noopener noreferrer" title="Guidelines">guidelines</a> for submitting requests.</p></div>
+                                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Search for your title in <a href="http://www.worldcat.org/" target="_blank" rel="noopener noreferrer" title="WorldCat">WorldCat</a> (recommended)</p></div>
+                                <div style="margin-bottom:10px;">
+                                    <label class="caption" for="srOCLCTextBox">OCLC:</label>
+                                    @Html.TextBoxFor(m => m.srOCLC, new { id = "srOCLCTextBox", name = "srOCLCTextBox", style = "width:200px", maxlength = 30 })<span style="font-style:italic"> (optional)</span>
+                                </div>
+                                <div style="margin-bottom:10px;">
+                                    <label class="caption" for="srTitleTextBox">Book Title:</label>
+                                    @Html.TextBoxFor(m => m.srTitle, new { id = "srTitleTextBox", name = "srTitleTextBox", style = "width:400px", maxlength = 500 })
+                                </div>
+                                <div style="margin-bottom:1px;">
+                                    <label class="caption" for="srYearTextBox">Year:</label>
+                                    @Html.TextBoxFor(m => m.srYear, new { id = "srYearTextBox", name = "srYearTextBox", style = "width:50px !important", maxlength = 20 })
+                                </div>
+                                <div style="margin-bottom:10px;">
+                                    <label class="caption" for="srYearMsg"></label>
+                                    <textarea id="srYearMsg" name="srYearMsg" rows="3" cols="55" disabled="true" style="color:#000000;background-color:#FFFFFF;font-style:italic;border:none;overflow: auto;outline: none;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;resize: none;">(Materials must be in the public domain or legally permitted. For U.S. © compliance, public domain = current year minus 95 years.</textarea>
+                                </div>
+                                <div style="margin-bottom:10px;">
+                                    <label class="caption" for="srType">Subject:</label>
+                                    <input type="radio" name="srType" ID="typeBook" value="Book" checked='@((Model.srType ?? "Book") == "Book")' /> Book
+                                    <input type="radio" name="srType" ID="typeJournal" value="Journal" checked='@((Model.srType ?? "Journal") == "Journal")' />Journal
+                                    <input type="radio" name="srType" ID="typeUnsure" value="Not Sure" checked='@((Model.srType ?? "Not Sure") == "Not Sure")' />Not Sure
+
+                                </div>
+                                <div style="margin-bottom:10px;">
+                                    <label class="caption" for="srVolumeTextBox">Volume:</label>
+                                    @Html.TextBoxFor(m => m.srVolume, new { id = "srVolumeTextBox", name = "srVolumeTextBox", style = "width:200px", maxlength = 100, @class = "inlinetextbox" })<span style="font-style:italic"> (journals only)</span>
+                                </div>
+                                <div style="margin-bottom:10px;">
+                                    <label class="caption" for="srEditionTextBox">Edition:</label>
+                                    @Html.TextBoxFor(m => m.srEdition, new { id = "srEditionTextBox", name = "srEditionTextBox", style = "width:200px", maxlength = 100, @class = "inlinetextbox" })<span style="font-style:italic"> (optional)</span>
+                                </div>
+                                <div style="margin-bottom:10px;">
+                                    <label class="caption" for="srISBNTextBox">ISBN:</label>
+                                    @Html.TextBoxFor(m => m.srISBN, new { id = "srISBNTextBox", name = "srISBNTextBox", style = "width:200px", maxlength = 30, @class = "inlinetextbox" })<span style="font-style:italic"> (optional)</span>
+                                </div>
+                                <div style="margin-bottom:10px;">
+                                    <label class="caption" for="srISSNTextBox">ISSN:</label>
+                                    @Html.TextBoxFor(m => m.srISSN, new { id = "srISSNTextBox", name = "srISSNTextBox", style = "width:200px", maxlength = 30, @class = "inlinetextbox" })<span style="font-style:italic"> (optional)</span>
+                                </div>
+                                <div style="margin-bottom:10px;">
+                                    <label class="caption" for="srAuthorTextBox">Author:</label>
+                                    @Html.TextBoxFor(m => m.srAuthor, new { id = "srAuthorTextBox", name = "srAuthorTextBox", style = "width:400px", maxlength = 200, @class = "inlinetextbox" })<span style="font-style:italic"> (optional)</span>
+                                </div>
+                                <div style="margin-bottom:10px;">
+                                    <label class="caption" for="srPublisherTextBox">Publisher:</label>
+                                    @Html.TextBoxFor(m => m.srPublisher, new { id = "srPublisherTextBox", name = "srPublisherTextBox", style = "width:400px", maxlength = 200, @class = "inlinetextbox" })<span style="font-style:italic"> (optional)</span>
+                                </div>
+                                <div style="margin-bottom:10px;">
+                                    @Html.LabelFor(m => m.SelectedLanguage, "Language:", new { @class = "caption" })
+                                    @Html.DropDownListFor(m => m.SelectedLanguage, Model.LanguageList, "-- Select a Language --")<span style="font-style:italic"> (optional)</span>
+                                </div>
+                                <div style="margin-bottom:10px;">
+                                    <label class="caption" for="srNoteTextBox">Note:</label>
+                                    <span style="float:right; padding-right:45px;"><span style="font-style:italic"> (optional)</span></span>
+                                    @Html.TextAreaFor(m => m.srNote, new { id = "srNoteTextBox", name = "srNoteTextBox", rows = 6, cols = 50 })
+                                </div>
+                            </div>
+                            <!-- End Scanning Request Form -->
+
+                            <div style="margin-left:164px;">
+                                <div class="g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["ReCaptchaSiteKey"]"></div>
+                            </div>
+                            <div>
+                                <label class="caption">&nbsp;</label><input type="button" id="submitButton" name="submitButton" value="Submit" onclick="submitClick();" />
+                            </div>
+
+                        </div>
+                    }
+                    @if (Model.Submitted)
+                    {
+                        <div>
+                            <div style="text-align:center">
+                                <a href="/" title="Return to BHL" id="lnkReturn" style="font-size:11px;text-decoration:none">Return to BHL</a>
+                            </div>
+                            <div style="border-bottom:1px;border-style:solid;">
+                                <h3>@Html.Raw(Model.ConfirmationSubject)</h3>
+                                <div id="showhideDetailsDiv"><p><a id="showhideDetailsLink" href="#"><span id="showhideText">Show</span> Submitted Feedback</a></p></div>
+                                <div id="feedbackDetails" style="display:none">
+                                    <p>@Html.Raw(Model.ConfirmationText)</p>
+                                </div>
+                            </div>
+                            <div style="border-bottom:1px;border-style:solid;">
+                                <div style="float:left;margin:0;width:50%">
+                                    <h3>Join Our Mailing List</h3>
+                                    <p>Sign up to receive the latest BHL news, content highlights, and promotions.</p>
+                                    <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" rel="noopener noreferrer" href="@System.Configuration.ConfigurationManager.AppSettings["NewsletterSignupUrl"]">Subscribe</a>
+                                </div>
+                                <div style="float:left;margin:0;width:50%">
+                                    <h3>Help Support <span>BHL</span></h3>
+                                    <p>BHL depends on the financial support of its patrons. Help us keep BHL alive!</p>
+                                    <a class="featurebutton-home" title="Donate" target="_blank" rel="noopener noreferrer" href="@System.Configuration.ConfigurationManager.AppSettings["DonateUrl"]">Ways to Give</a>
+                                </div>
+                                <div>&nbsp;</div>
+                            </div>
+                        </div>
+                    }
+                    </div>
+                </div>
+                <br />
+                @if (!string.IsNullOrWhiteSpace(Model.ErrorText))
+                {
+                    <span id="errorLabel" contextmenu="errorLabel" style="color:red">@Html.Raw(Model.ErrorText)</span>
+                }
+            </section>
+        <aside></aside>
+    </form>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (!location.hash || location.hash == "#/comments") {
+                showFeedbackForm();
+            } else {
+                showScanReqForm();
+            }
+        });
+
+        $("#subjectTech").click(function () { showFeedbackForm(); });
+        $("#subjectBibIssue").click(function () { showFeedbackForm(); });
+        $("#subjectSuggest").click(function () { showFeedbackForm(); });
+        $("#subjectScanReq").click(function () { showScanReqForm(); });
+
+        function showFeedbackForm() {
+            $("#spanErrorText").html("");
+            var divComments = $("#FeedbackForm");
+            var divRequest = $("#ScanRequestForm");
+            divComments.show();
+            divRequest.hide();
+            $("#subjectScanReq").attr("checked", false);
+            location.hash = "#/comments";
+        }
+
+        function showScanReqForm() {
+            $("#spanErrorText").html("");
+            var divComments = $("#FeedbackForm");
+            var divRequest = $("#ScanRequestForm");
+            divComments.hide();
+            divRequest.show();
+            $("#subjectScanReq").attr("checked", true);
+            location.hash = "#/request";
+        }
+
+        var formSubmit = false;
+
+        function submitClick() {
+            formSubmit = true;
+            $('#feedbackForm').submit();
+        }
+
+        $("form").submit(function () {
+            if (formSubmit) {
+                formSubmit = false;
+                return validateForm();
+            }
+        });
+
+        function validateForm() {
+            var errMsg = "";
+
+            if ($("#subjectScanReq").attr("checked")) {
+                if ($("#srTitleTextBox").val() == "") errMsg = errMsg + "Please supply the book title.<br>";
+                if ($("#srYearTextBox").val() == "") errMsg = errMsg + "Please supply the year of publication.<br>";
+                if ($("#srVolumeTextBox").val() == "" && $("#typeJournal").is(":checked")) errMsg = errMsg + "Please supply the volume.<br>";
+            }
+            else {
+                if ($("#commentTextBox").val() == "") errMsg = errMsg + "Please supply a comment.<br>";
+            }
+
+            if (errMsg != "") $("#spanErrorText").html(errMsg);
+            return (errMsg == "");
+        }
+
+        $("#showhideDetailsDiv").click(function () {
+            var showHide = $("#showhideText").text();
+            if (showHide == "Show") showHide = "Hide"; else showHide = "Show";
+            $("#showhideText").text(showHide);
+            $("#feedbackDetails").toggle();
+        });
+    </script>
+}

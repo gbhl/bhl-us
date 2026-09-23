@@ -10,7 +10,8 @@ namespace MOBOT.BHL.Web2
         {
             routes.MapPageRoute("Default", "", "~/default.aspx");
 
-            routes.MapPageRoute("Contact", "contact", "~/Feedback.aspx");
+            routes.MapRoute("Contact-Legacy", "feedback.aspx", new { controller = "Contact", action = "Index" });
+            routes.MapRoute("Contact", "contact", new { controller = "Contact", action = "Index" });
 
             routes.MapRoute("PermissionsRedirect", "permissions", new { controller = "Redirect", action = "Permissions" });
             routes.MapRoute("AboutRedirect", "about", new { controller = "Redirect", action = "About" });
@@ -34,6 +35,8 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("API3", "api3", new { controller = "Api", action = "Api3Handler" });
             routes.MapRoute("API2-http", "api2/httpQuery.ashx", new { controller = "Api", action = "Api2Handler" });
             routes.MapRoute("API2", "api2", new { controller = "Api", action = "Api2Handler" });
+            routes.MapRoute("ApiGetKey-Legacy", "GetApiKey.aspx", new { controller = "Api", action = "GetKey" });
+            routes.MapRoute("ApiGetKey", "api/getkey", new { controller = "Api", action = "GetKey" });
 
             routes.MapRoute("OAI", "oai", new { controller = "Service", action = "OAIResolver" });
             routes.MapRoute("GeneratePdf", "generatepdf", new { controller = "Service", action = "GeneratePDF" });

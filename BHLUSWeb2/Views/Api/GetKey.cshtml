@@ -1,0 +1,55 @@
+﻿@model MOBOT.BHL.Web2.Models.ApiKeyModel
+@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div id="page-title">
+    <h1 class="column-wrap">Get an API Key</h1>
+</div>
+<div id="content" class="column-wrap clearfix">
+    <form method="post">
+        @Html.AntiForgeryToken()
+        <section class="search">
+            @if (!Model.Success)
+            {
+            <div class="ui-tabs">
+                <div id="FeedbackForm" style="display:block" class="ui-tabs-panel">
+                    <p>
+                        To obtain a key for use when calling the BHL API methods, please submit your name and email address.  A new API key
+                        will be generated and emailed to the address that you provide.  This key must be included in each call to the BHL API.
+                    </p>
+                    <p>
+                        <u>If you have lost your key</u>, please re-submit your name and email address (you must use the same email address
+                        that was used when the key was obtained).
+                    </p>
+                    <ol>
+                        <div class="tabbed">
+                        <li><span id="ErrorText" name="ErrorText" class="ErrorText" style="display:block !important">@Html.Raw(Model.ErrorText)</span></li>
+                        </div>
+                        <li>
+                            <label class="caption">Contact Name:</label><input type="text" width="400" class="field" id="ContactName" name="ContactName" value="@Model.ContactName" />
+                        </li>
+                        <li>
+                            <label class="caption">Email Address:</label><input type="email" width="400" class="field" id="EmailAddress" name="EmailAddress" value="@Model.EmailAddress" />
+                        </li>
+                    </ol>
+                    <div class="tabbed">
+                        <input type="submit" id="btnGetApiKey" value="Get API Key" />
+                    </div>
+                </div>
+            </div>
+            }
+            @if (Model.Success)
+            {
+            <div id="divDone" class="ui-tabs-panel">
+                <p>
+                    Your API key has been mailed to @Model.EmailAddress.  Please check your email and
+                    then refer to the <a href="@System.Configuration.ConfigurationManager.AppSettings["WikiPageAPI"]">API documentation</a> to learn how to
+                    begin using the BHL API.
+                </p>
+            </div>
+            }
+        </section>
+    </form>
+</div>
+<aside></aside>

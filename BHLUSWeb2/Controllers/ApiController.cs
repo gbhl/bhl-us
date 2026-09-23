@@ -1,7 +1,11 @@
-﻿using MOBOT.BHL.API.BHLApi;
+﻿using BHL.SiteServiceREST.v1.Client;
+using BHL.SiteServicesREST.v1;
+using MOBOT.BHL.API.BHLApi;
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHL.Web2.Models;
 using MvcThrottle;
-using Nest;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,6 +16,97 @@ namespace MOBOT.BHL.Web2.Controllers
     public class ApiController : Controller
     {
         #region API3
+
+        // GET: Api/GeteKey
+        [EnableThrottling]
+        [HttpGet]
+        public ActionResult GetKey()
+        {
+            ApiKeyModel model = new ApiKeyModel();
+            return View(model);
+        }
+
+        [EnableThrottling]
+        [HttpPost]
+        public ActionResult GetKey(ApiKeyModel model)
+        {
+            model.ErrorText = String.Empty;
+
+            if (validateInput(model))
+            {
+                String apiKeyValue = String.Empty;
+
+                // Get the key value
+                apiKeyValue = "testkeyvalue";
+                APIKey apiKey = new BHLProvider().GetApiKey(model.ContactName, model.EmailAddress);
+                apiKeyValue = apiKey.ApiKeyValue.ToString();
+
+                // Email the key value
+                this.SendEmail(model.EmailAddress, apiKeyValue, model.ContactName);
+
+                // Display feedback to user
+                model.ContactName = apiKey.ContactName;
+                model.EmailAddress = apiKey.EmailAddress;
+                model.ApiKeyValue = apiKey.ApiKeyValue.ToString();
+                model.Success = true;
+            }
+
+            return View(model);
+        }
+
+        private bool validateInput(ApiKeyModel model)
+        {
+            bool isValid = true;
+
+            if (String.IsNullOrWhiteSpace(model.ContactName))
+            {
+                isValid = false;
+                model.ErrorText = "Please supply a Contact Name.<br/>";
+            }
+
+            if (String.IsNullOrWhiteSpace(model.EmailAddress))
+            {
+                isValid = false;
+                model.ErrorText += "Please supply an Email Address.<br/>";
+            }
+
+            return isValid;
+        }
+
+        private void SendEmail(String recipient, String apiKey, String contactName)
+        {
+            // Don't catch errors here... if the email doesn't go, we want the user to know 
+            // that something went wrong
+            string message = this.GetEmailMessage(apiKey, contactName);
+            if (message != String.Empty)
+            {
+                Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
+                MailRequestModel mailRequest = new MailRequestModel();
+                mailRequest.From = ConfigurationManager.AppSettings["EmailFromAddress"];
+                mailRequest.To = new List<string>();
+                mailRequest.To.Add(recipient);
+                mailRequest.Subject = "BHL API Key";
+                mailRequest.Body = message;
+                client.SendEmail(mailRequest);
+            }
+        }
+
+        private string GetEmailMessage(String apiKey, String contactName)
+        {
+            string message = String.Empty;
+
+            try
+            {
+                message = System.IO.File.ReadAllText(Request.PhysicalApplicationPath + "\\apikeymsg.txt").Replace("{key}", apiKey).Replace("{contact}", contactName);
+            }
+            catch
+            {
+                // If file missing, just return a simple message
+                message = String.Format("Your BHL API key is: {0}", apiKey);
+            }
+
+            return message;
+        }
 
         [EnableThrottling]
         public ActionResult Api3Handler()
