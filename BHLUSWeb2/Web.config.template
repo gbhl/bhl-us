@@ -142,10 +142,9 @@
     <add key="TwitterConsumerSecret" value="your twitter consumer secret goes here"/>
     <add key="BHLTwitterFeedUrl" value="https://api.twitter.com/1.1/search/tweets.json?q=from:biodivlibrary&amp;count=3&amp;include_entities=true"/>
 
-    <!--<add key="DonateUrl" value="https://ancrywkv.donorsupport.co/page/BHLDonations"/>-->
     <add key="DonateUrl" value="https://about.biodiversitylibrary.org/get-involved/donate/"/>
 
-    <add key="NewsletterSignupUrl" value="https://lp.constantcontactpages.com/sl/YKrBfqY/BHLsignup"/>
+    <add key="NewsletterSignupUrl" value="https://gsforms.net/GSN-353142-U/903c09cb-9e9d-4884-9280-90156ea799a7"/>
 
     <add key="WikiPageAbout" value="https://about.biodiversitylibrary.org"/>
     <add key="WikiPagePermissions" value="https://about.biodiversitylibrary.org/copyright-and-reuse/permissions/"/>

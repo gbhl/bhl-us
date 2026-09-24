@@ -364,6 +364,8 @@ namespace MOBOT.BHL.Web2.Controllers
                 string faqLink = ConfigurationManager.AppSettings["WikiPageFAQ"];
                 message = message.Replace("[FAQLink]", faqLink);
                 message = message.Replace("[Feedback]", this.CleanStringForEmail(feedbackReceived));
+                message = message.Replace("[NewsletterLink]", ConfigurationManager.AppSettings["NewsletterSignupUrl"]);
+                message = message.Replace("[DonateLink]", ConfigurationManager.AppSettings["DonateUrl"]);
 
                 if (message != String.Empty)
                 {
