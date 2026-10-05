@@ -8,6 +8,8 @@ namespace MOBOT.BHL.Web2
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
             routes.MapPageRoute("Default", "", "~/default.aspx");
 
             routes.MapRoute("Contact-Legacy", "feedback.aspx", new { controller = "Contact", action = "Index" });
@@ -67,16 +69,12 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("NameListDownload", "namelistdownload", new { controller = "Name", action = "NameListDownload" });
             routes.MapRoute("NameDetail", "namedetail/{name}", new { controller = "NameDetail", action = "Index" });
 
-            routes.MapPageRoute("IA", "ia/{iabarcode}", "~/TitlePage.aspx");
-
-            routes.MapPageRoute("Title", "title/{titleid}", "~/TitlePage.aspx");
-
-            routes.MapPageRoute("Segment", "segment/{segmentid}", "~/TitlePage.aspx");
+            routes.MapRoute("IA", "ia/{id}", new { controller = "Item", action = "Index", idtype = "ia" });
 
             if (ConfigurationManager.AppSettings["IIIFState"] == "off") // IIIF disabled
             {
-                routes.MapPageRoute("Item", "item/{itemid}", "~/TitlePage.aspx");
-                routes.MapPageRoute("Page", "page/{pageid}", "~/TitlePage.aspx");
+                routes.MapRoute("Item", "item/{id}", new { controller = "Item", action = "Index", idtype = "item" });
+                routes.MapRoute("Page", "page/{id}", new { controller = "Item", action = "Index", idtype = "page" });
             }
             else if (ConfigurationManager.AppSettings["IIIFState"] == "on")  // IIIF enabled
             {
@@ -93,8 +91,8 @@ namespace MOBOT.BHL.Web2
                 routes.MapRoute("IIIFNameManifest", "iiif/{itemId}/names/{pageSeq}", new { controller = "IIIF", action = "NameManifest" });
                 routes.MapRoute("IIIFItem", "iiif/item/{itemId}", new { controller = "IIIF", action = "Item" });
                 routes.MapRoute("IIIFPage", "iiif/page/{pageId}", new { controller = "IIIF", action = "Page" });
-                routes.MapPageRoute("Item", "item/{itemid}", "~/TitlePage.aspx");
-                routes.MapPageRoute("Page", "page/{pageid}", "~/TitlePage.aspx");
+                routes.MapRoute("Item", "item/{id}", new { controller = "Item", action = "Index", idtype = "item" });
+                routes.MapRoute("Page", "page/{id}", new { controller = "Item", action = "Index", idtype = "page" });
             }
 
             routes.MapRoute("PageThumb", "pagethumb/{pageid},{w},{h}", new { controller = "Page", action = "GetPageThumb" });
@@ -146,6 +144,8 @@ namespace MOBOT.BHL.Web2
             routes.MapRoute("Error-PageNotFound", "pagenotfound", new { controller = "PageNotFound", action = "Index"});
             routes.MapRoute("Error-General", "error", new { controller = "Error", action = "Index" });
 
+            // Default route
+            //routes.MapRoute("Default", "{controller}/{action}/{id}", new { controller = "Home", action = "Index", id = UrlParameter.Optional });
             routes.MapRoute("CatchAll", "{*url}", new { controller = "PageNotFound", action = "Index" });
         }
     }

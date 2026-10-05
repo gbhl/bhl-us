@@ -580,6 +580,7 @@
     <Content Include="Views\Collection\Index.cshtml" />
     <Content Include="Views\Api\GetKey.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Item\Index.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -643,6 +644,7 @@
     <Compile Include="Models\NameDetailModel.cs" />
     <Compile Include="Models\NameModel.cs" />
     <Compile Include="Models\PartModel.cs" />
+    <Compile Include="Models\ViewerModel.cs" />
     <Compile Include="MVCServices\MvcThrottleLogger.cs" />
     <Compile Include="App_Code\RouteConfig.cs" />
     <Compile Include="BasePage.cs">
