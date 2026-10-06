@@ -203,7 +203,6 @@
     <Content Include="Docs\api3\GetPageMetadata.html" />
     <Content Include="apikeymsg.txt" />
     <Content Include="bot_list.txt" />
-    <Content Include="controls\COinSControl.ascx" />
     <Content Include="controls\ucFeatureBox.ascx" />
     <Content Include="css\bhlaustylereference.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -595,7 +594,6 @@
     </None>
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="TitlePage.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -650,13 +648,6 @@
     <Compile Include="BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Book.Master.cs">
-      <DependentUpon>Book.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Book.Master.designer.cs">
-      <DependentUpon>Book.Master</DependentUpon>
-    </Compile>
     <Compile Include="BrowseOutputCacheAttribute.cs" />
     <Compile Include="Controllers\BrowseController.cs" />
     <Compile Include="Controllers\CreatorController.cs" />
@@ -665,13 +656,6 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
-    <Compile Include="controls\COinSControl.ascx.cs">
-      <DependentUpon>COinSControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="controls\COinSControl.ascx.designer.cs">
-      <DependentUpon>COinSControl.ascx</DependentUpon>
-    </Compile>
     <Compile Include="controls\ucFeatureBox.ascx.cs">
       <DependentUpon>ucFeatureBox.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -707,13 +691,6 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
-    </Compile>
-    <Compile Include="TitlePage.aspx.cs">
-      <DependentUpon>TitlePage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TitlePage.aspx.designer.cs">
-      <DependentUpon>TitlePage.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -824,9 +801,6 @@
       <Project>{aefe2bdb-bea0-4dce-b12d-57f1e1335bab}</Project>
       <Name>SiteServicesREST.v1.Client</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Book.Master" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

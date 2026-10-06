@@ -1,5 +1,6 @@
 ﻿using BHL.SiteServiceREST.v1.Client;
 using BHL.SiteServicesREST.v1;
+using Countersoft.Gemini.Commons.Entity;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.DataObjects.Enum;
@@ -54,11 +55,20 @@ namespace MOBOT.BHL.Web2.Controllers
             // Get the publication details
             model = GetPublicationDetail(model, pageSummary);
 
+            ViewBag.COinS = @"<span class=""Z3988"" title=""" + model.COinS.GetCOinS() + "\"></span>";
+
             // Make sure the item is published
             if (model.Status != 30 && model.Status != 40) Response.Redirect("~/itemunavailable");
 
             // IIIF toggle action
             if (ViewerRedirect()) Response.Redirect("/iiif" + Request.Url.AbsolutePath);
+
+            // Set up for IIIF toggle
+            ViewBag.IIIFLinkText = "Use the IIIF Book Viewer";
+            if (model.Type == ItemType.Book)
+                ViewBag.IIIFLinkTarget = "/iiif/item/" + model.ID + "?iiif=1";
+            else if (model.Type == ItemType.Segment)
+                ViewBag.IIIFLinkTarget = "/iiif/page/" + model.StartPageID + "?iiif=1";
 
             if (getFirstPage)
             {

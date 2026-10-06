@@ -17,22 +17,24 @@
     <link rel="stylesheet" href="/css/socicon.css?v=3" media="all" />
     <link rel="stylesheet" href="/css/cookieconsent.css" />
     <script src="/js/libs/modernizr-custom.js"></script>
-    <link href="~/css/BookReader.css?v=5" rel="stylesheet" type="text/css" />
-    <link href="~/css/bookviewer_extra.css?v=13" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=5" />
+    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=13" />
+    <link rel="stylesheet" type="text/css" href="/css/nspop.css?v=2" />
+
     <!-- Fundraise Up: the new standard for online giving -->
     <script>
-        (function (w, d, s, n, a) {
-            if (!w[n]) {
-                var l = 'call,catch,on,once,set,then,track,openCheckout'
-                    .split(','), i, o = function (n) {
-                        return 'function' == typeof n ? o.l.push([arguments]) && o
-                            : function () { return o.l.push([n, arguments]) && o }
-                    }, t = d.getElementsByTagName(s)[0],
-                    j = d.createElement(s); j.async = !0; j.src = 'https://cdn.fundraiseup.com/widget/' + a + '';
-                t.parentNode.insertBefore(j, t); o.s = Date.now(); o.v = 5; o.h = w.location.href; o.l = [];
-                for (i = 0; i < 8; i++)o[l[i]] = o(l[i]); w[n] = o
-            }
-        })(window, document, 'script', 'FundraiseUp', 'ANCRYWKV');
+                (function (w, d, s, n, a) {
+                    if (!w[n]) {
+                        var l = 'call,catch,on,once,set,then,track,openCheckout'
+                            .split(','), i, o = function (n) {
+                                return 'function' == typeof n ? o.l.push([arguments]) && o
+                                    : function () { return o.l.push([n, arguments]) && o }
+                            }, t = d.getElementsByTagName(s)[0],
+                            j = d.createElement(s); j.async = !0; j.src = 'https://cdn.fundraiseup.com/widget/' + a + '';
+                        t.parentNode.insertBefore(j, t); o.s = Date.now(); o.v = 5; o.h = w.location.href; o.l = [];
+                        for (i = 0; i < 8; i++)o[l[i]] = o(l[i]); w[n] = o
+                    }
+                })(window, document, 'script', 'FundraiseUp', 'ANCRYWKV');
     </script>
     <!-- End Fundraise Up -->
     @RenderSection("Javascript", required: false)
@@ -88,7 +90,7 @@
                                 }
                         </style>
                         <div id="iiifLink" style="float:right; margin-top:30px;">
-                            <a href="@ViewBag.IIIFLinkTarget?iiif=0">Use the "Classic" Book Viewer</a>
+                            <a href="@ViewBag.IIIFLinkTarget">@ViewBag.IIIFLinkText</a>
                         </div>
                     }
                 </form>
@@ -99,17 +101,15 @@
         Please read BHL&apos;s <a title="harmful content" href="https://about.biodiversitylibrary.org/about/harmful-content">Acknowledgment of Harmful Content</a>
     </div>
     @Html.Action("_AlertMessage", "Partial")
-    <div id="main">
-        @RenderBody()
-    </div>
-    <!--</div>-->
+    @RenderBody()
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>!window.jQuery && document.write(unescape('%3Cscript src="/js/libs/jquery-3.7.1.min.js"%3E%3C/script%3E'))</script>
+
+    @RenderSection("scripts", required: false)
+
     <script src="/js/plugins.js?v=3"></script>
     <script src="/js/script.js?v=9"></script>
     <script type="text/plain" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js" data-category="analytics" data-service="altmetric"></script>
-
-    @RenderSection("scripts", required: false)
 
     <script type="text/javascript" data-category="necessary">
         window.dataLayer = window.dataLayer || [];

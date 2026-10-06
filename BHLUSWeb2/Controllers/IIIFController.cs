@@ -31,7 +31,8 @@ namespace MOBOT.BHL.Web2.Controllers
             // Get the details of the first page to display
             Page firstPage = provider.PageSelectFirstPageForItem(page.ItemID);
 
-            ViewBag.IIIFLinkTarget = "/item/" + itemId; // Used for IIIF toggle
+            ViewBag.IIIFLinkText = "Use the \"Classic\" Book Viewer";
+            ViewBag.IIIFLinkTarget = "/item/" + itemId + "?iiif=0"; // Used for IIIF toggle
             ViewBag.ItemID = itemId;
             ViewBag.PageSequence = (firstPage == null ? 1 : firstPage.SequenceOrder);
             ViewBag.Title = string.Format(ConfigurationManager.AppSettings["PageTitle"], (String.IsNullOrEmpty(page.Volume) ? String.Empty : page.Volume + " - ") + page.ShortTitle);
