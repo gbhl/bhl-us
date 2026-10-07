@@ -205,7 +205,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             {
                 Client client = new Client(ConfigurationManager.AppSettings["SiteServicesURL"]);
                 List<string> queueMsg = new List<string>();
-                queueMsg.Add(string.Format("{0}|{1}|{2}", this.AWSItemType, this.AWSItemID, this.AWSIAID));
+                queueMsg.Add(string.Format("{0}|{1}|{2}|true", this.AWSItemType, this.AWSItemID, this.AWSIAID));
                 
                 bool messageAdded = client.PutQueueMessages(this.UpdatedItemsQueueName, queueMsg);
 
