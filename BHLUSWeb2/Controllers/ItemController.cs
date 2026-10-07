@@ -1,6 +1,5 @@
 ﻿using BHL.SiteServiceREST.v1.Client;
 using BHL.SiteServicesREST.v1;
-using Countersoft.Gemini.Commons.Entity;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.DataObjects.Enum;
@@ -17,7 +16,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Web.Mvc;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace MOBOT.BHL.Web2.Controllers
@@ -35,22 +33,25 @@ namespace MOBOT.BHL.Web2.Controllers
             int pageid = int.MinValue;
             string qsTitleID = (string)Request.QueryString["t"];
 
+            PageSummaryResult result = new PageSummaryResult();
             if (idtype == "page" && !string.IsNullOrWhiteSpace(id))
             {
                 getFirstPage = false;
-                pageSummary = GetPageSummaryForPageID(model, id, qsTitleID);
+                result = GetPageSummaryForPageID(model, id, qsTitleID);
             }
             else if (idtype == "item" && !string.IsNullOrWhiteSpace(id))
             {
-                pageSummary = GetPageSummaryForItemID(model, id, qsTitleID);
+                result = GetPageSummaryForItemID(model, id, qsTitleID);
             }
             else if (idtype == "ia" && !string.IsNullOrWhiteSpace(id))
             {
-                pageSummary = GetPageSummaryForBarcode(id, qsTitleID);
+                result = GetPageSummaryForBarcode(id, qsTitleID);
             }
+            pageSummary = result.PageSummary;
 
-            // Make sure something was found
-            if (pageSummary == null) Response.Redirect("~/itemnotfound");
+            // Make sure something was found and that we don't need to redirect to another item
+            if (!string.IsNullOrWhiteSpace(result.RedirectUrl)) return Redirect(result.RedirectUrl);
+            if (pageSummary == null) return Redirect("~/itemnotfound");
 
             // Get the publication details
             model = GetPublicationDetail(model, pageSummary);
@@ -58,10 +59,10 @@ namespace MOBOT.BHL.Web2.Controllers
             ViewBag.COinS = @"<span class=""Z3988"" title=""" + model.COinS.GetCOinS() + "\"></span>";
 
             // Make sure the item is published
-            if (model.Status != 30 && model.Status != 40) Response.Redirect("~/itemunavailable");
+            if (model.Status != 30 && model.Status != 40) return Redirect("~/itemunavailable");
 
             // IIIF toggle action
-            if (ViewerRedirect()) Response.Redirect("/iiif" + Request.Url.AbsolutePath);
+            if (ViewerRedirect()) return Redirect("/iiif" + Request.Url.AbsolutePath);
 
             // Set up for IIIF toggle
             ViewBag.IIIFLinkText = "Use the IIIF Book Viewer";
@@ -72,7 +73,7 @@ namespace MOBOT.BHL.Web2.Controllers
 
             if (getFirstPage)
             {
-                DataObjects.Page firstPage = bhlProvider.PageSelectFirstPageForItem(model.ItemID);
+                Page firstPage = bhlProvider.PageSelectFirstPageForItem(model.ItemID);
                 model.PageSequence = firstPage.SequenceOrder ?? model.PageSequence;
                 pageid = firstPage.PageID;
             }
@@ -80,18 +81,18 @@ namespace MOBOT.BHL.Web2.Controllers
             ViewBag.Title = string.Format(ConfigurationManager.AppSettings["PageTitle"], (String.IsNullOrEmpty(model.Volume) ? String.Empty : model.Volume + " - ") + model.ShortTitle);
 
             // Set Volume drop down list
-            List<DataObjects.Book> books = bhlProvider
+            List<Book> books = bhlProvider
                 .BookSelectByTitleId(model.TitleID)
                 .ToList();
 
             int selectedIndex = 0;
             int bookIndex = 0;
-            foreach (DataObjects.Book book in books)
+            foreach (Book book in books)
             {
                 //if (PublicationDetail.ItemID == book.ItemID) CurrentBook = book;
                 if (string.IsNullOrWhiteSpace(book.Volume)) book.Volume = "Volume details";
 
-                model.Volumes.Add(book.DisplayedShortVolume, book.IsVirtual.ToString() + "|" + book.BookID.ToString() + "|" + book.FirstSegmentStartPageID.ToString());
+                model.Volumes.Add(new KeyValuePair<string, string>(book.DisplayedShortVolume, book.IsVirtual.ToString() + "|" + book.BookID.ToString() + "|" + book.FirstSegmentStartPageID.ToString()));
 
                 if (book.IsVirtual == 1 && book.BookID == model.ContainerID) selectedIndex = bookIndex;
                 else if (book.IsVirtual == 0 && book.BookID == model.ID) selectedIndex = bookIndex;
@@ -490,69 +491,78 @@ Append("</a>").
             return redirect;
         }
 
-        private PageSummaryView GetPageSummaryForPageID(ViewerModel model, string pageID, string titleID)
+        private PageSummaryResult GetPageSummaryForPageID(ViewerModel model, string pageID, string titleID)
         {
             BHLProvider bhlProvider = new BHLProvider();
-            PageSummaryView psv = null;
+            PageSummaryResult result = new PageSummaryResult();
 
             if (int.TryParse(pageID, out int pageid))
             {
                 int? titleid = int.TryParse(titleID, out int tmp) ? (int?)tmp : null;
 
                 Page page = bhlProvider.PageSelectAuto(pageid);
-                if (page == null) Response.Redirect("~/pagenotfound");  // Page ID does not exist
-
-                DataObjects.Book book = bhlProvider.BookSelectByPageID(pageid);
-
-                // Get the data for book/segment.  If book/segment has been replaced, redirect to the target book/segment.  That will
-                // not find the correct page, but at least puts the user in the correct book/segment... better than "not found".
-                if (book != null)
+                if (page == null)
                 {
-                    if (!page.Active)   // Page ID exists, but is inactive
-                    {
-                        if (book.RedirectBookID != null)
-                            Response.Redirect("~/item/" + book.RedirectBookID); // Follow container item redirect
-                        else
-                            Response.Redirect("~/item/" + book.BookID + (string.IsNullOrWhiteSpace(titleID) ? "" : "?t=" + titleID));     // Show container item
-                    }
-
-                    model.Type = ItemType.Book;
-                    psv = bhlProvider.PageSummarySelectByPageId(pageid, titleid);
-                    if (psv != null)
-                    {
-                        // Page active, but container item redirected
-                        if (psv.RedirectBookID != null) Response.Redirect("~/item/" + psv.RedirectBookID);
-                    }
+                    result.RedirectUrl = "~/pagenotfound";  // Page ID does not exist
                 }
                 else
                 {
-                    Segment segment = bhlProvider.SegmentSelectByPageID(pageid);
+                    Book book = bhlProvider.BookSelectByPageID(pageid);
 
-                    if (!page.Active)   // Page ID exists, but is inactive
+                    // Get the data for book/segment.  If book/segment has been replaced, redirect to the target book/segment.  That will
+                    // not find the correct page, but at least puts the user in the correct book/segment... better than "not found".
+                    if (book != null)
                     {
-                        if (segment.RedirectSegmentID != null)
-                            Response.Redirect("~/part/" + segment.RedirectSegmentID); // Follow container item redirect to landing page
+                        if (!page.Active)   // Page ID exists, but is inactive
+                        {
+                            if (book.RedirectBookID != null)
+                                result.RedirectUrl = "~/item/" + book.RedirectBookID; // Follow container item redirect
+                            else
+                                result.RedirectUrl = "~/item/" + book.BookID + (string.IsNullOrWhiteSpace(titleID) ? "" : "?t=" + titleID);     // Show container item
+                        }
                         else
-                            Response.Redirect("~/part/" + segment.SegmentID);     // Show container item landing page
+                        {
+                            model.Type = ItemType.Book;
+                            result.PageSummary = bhlProvider.PageSummarySelectByPageId(pageid, titleid);
+                            if (result.PageSummary != null)
+                            {
+                                // Page active, but container item redirected
+                                if (result.PageSummary.RedirectBookID != null) result.RedirectUrl = "~/item/" + result.PageSummary.RedirectBookID;
+                            }
+                        }
                     }
-
-                    model.Type = ItemType.Segment;
-                    psv = bhlProvider.PageSummarySegmentSelectByPageID(pageid, titleid);
-                    if (psv != null)
+                    else
                     {
-                        // Page active, but container item redirected
-                        if (psv.RedirectBookID != null) Response.Redirect("~/part/" + psv.RedirectBookID);
+                        Segment segment = bhlProvider.SegmentSelectByPageID(pageid);
+
+                        if (!page.Active)   // Page ID exists, but is inactive
+                        {
+                            if (segment.RedirectSegmentID != null)
+                                result.RedirectUrl = "~/part/" + segment.RedirectSegmentID; // Follow container item redirect to landing page
+                            else
+                                result.RedirectUrl = "~/part/" + segment.SegmentID;     // Show container item landing page
+                        }
+                        else
+                        {
+                            model.Type = ItemType.Segment;
+                            result.PageSummary = bhlProvider.PageSummarySegmentSelectByPageID(pageid, titleid);
+                            if (result.PageSummary != null)
+                            {
+                                // Page active, but container item redirected
+                                if (result.PageSummary.RedirectBookID != null) result.RedirectUrl = "~/part/" + result.PageSummary.RedirectBookID;
+                            }
+                        }
                     }
                 }
             }
 
-            return psv;
+            return result;
         }
 
-        private PageSummaryView GetPageSummaryForItemID(ViewerModel model, string itemID, string titleID)
+        private PageSummaryResult GetPageSummaryForItemID(ViewerModel model, string itemID, string titleID)
         {
             BHLProvider bhlProvider = new BHLProvider();
-            PageSummaryView psv = null;
+            PageSummaryResult result = new PageSummaryResult();
 
             model.Type = ItemType.Book;
             int itemid;
@@ -575,76 +585,52 @@ Append("</a>").
                 }
 
                 int? titleid = qsTitleId ?? refererTitleId;
-                psv = bhlProvider.PageSummarySelectByItemId(itemid, titleid);
+                result.PageSummary = bhlProvider.PageSummarySelectByItemId(itemid, titleid);
 
                 // Check to make sure this item hasn't been replaced.  If it has, redirect to the appropriate itemid.
-                if (psv != null)
+                if (result.PageSummary != null)
                 {
-                    if (psv.RedirectBookID != null) Response.Redirect("~/item/" + psv.RedirectBookID);
+                    if (result.PageSummary.RedirectBookID != null) result.RedirectUrl = "~/item/" + result.PageSummary.RedirectBookID;
                 }
                 else
                 {
                     // If no pages then see if this is a virtual item (redirect to itemdetails) or 
                     // an external item (redirect to the external url)
-                    DataObjects.Book book = bhlProvider.BookSelectAuto(itemid);
+                    Book book = bhlProvider.BookSelectAuto(itemid);
                     if (book != null)
                     {
-                        if (book.IsVirtual == 1) Response.Redirect("~/itemdetails/" + book.BookID);
-                        if (!string.IsNullOrWhiteSpace(book.ExternalUrl)) Response.Redirect(book.ExternalUrl);
+                        if (book.IsVirtual == 1) result.RedirectUrl = "~/itemdetails/" + book.BookID;
+                        if (!string.IsNullOrWhiteSpace(book.ExternalUrl)) result.RedirectUrl = book.ExternalUrl;
                     }
                 }
             }
 
-            return psv;
+            return result;
         }
 
-        private PageSummaryView GetPageSummaryForSegmentID(ViewerModel model, string segmentID, string titleID)
+        private PageSummaryResult GetPageSummaryForBarcode(string barcode, string titleID)
         {
             BHLProvider bhlProvider = new BHLProvider();
-            PageSummaryView psv = null; ;
+            PageSummaryResult result = new PageSummaryResult();
 
-            model.Type = ItemType.Segment;
-            if (int.TryParse(segmentID, out int segmentid))
-            {
-                int? titleid = int.TryParse(titleID, out int tmp) ? (int?)tmp : null;
-
-                psv = bhlProvider.PageSummarySegmentSelectBySegmentID(segmentid, titleid);
-                if (psv == null)
-                {
-                    // If no pages then see if this is an external segment (redirect to the url)
-                    Segment segment = bhlProvider.SegmentSelectAuto(segmentid);
-                    if (segment != null)
-                    {
-                        if (!string.IsNullOrWhiteSpace(segment.Url)) Response.Redirect(segment.Url);
-                    }
-                }
-                else if (psv.IsVirtual == 0)
-                {
-                    // Associated with a non-virtual item, so redirect to the start page
-                    Response.Redirect("~/page/" + psv.PageID.ToString() + (string.IsNullOrWhiteSpace(titleID) ? "" : "?t=" + titleID));
-                }
-            }
-
-            return psv;
-        }
-
-        private PageSummaryView GetPageSummaryForBarcode(string barcode, string titleID)
-        {
-            BHLProvider bhlProvider = new BHLProvider();
-            PageSummaryView psv = null;
-
-            DataObjects.Book book = bhlProvider.BookSelectByBarcodeOrItemID(null, barcode);
+            Book book = bhlProvider.BookSelectByBarcodeOrItemID(null, barcode);
             if (book != null)
             {
-                Response.Redirect("~/item/" + book.BookID + (string.IsNullOrWhiteSpace(titleID) ? "" : "?t=" + titleID));
+                result.RedirectUrl = "~/item/" + book.BookID + (string.IsNullOrWhiteSpace(titleID) ? "" : "?t=" + titleID);
             }
             else
             {
                 Segment segment = bhlProvider.SegmentSelectByBarCode(barcode);
-                if (segment != null) Response.Redirect("~/page/" + segment.StartPageID + (string.IsNullOrWhiteSpace(titleID) ? "" : "?t=" + titleID));
+                if (segment != null) result.RedirectUrl = "~/page/" + segment.StartPageID + (string.IsNullOrWhiteSpace(titleID) ? "" : "?t=" + titleID);
             }
 
-            return psv;
+            return result;
+        }
+
+        class PageSummaryResult
+        {
+            public PageSummaryView PageSummary { get; set; } = null;
+            public string RedirectUrl { get; set; } = string.Empty;
         }
 
         private ViewerModel GetPublicationDetail(ViewerModel publicationDetail, PageSummaryView pageSummary)
@@ -668,7 +654,7 @@ Append("</a>").
             if (publicationDetail.Type == ItemType.Book)
             {
                 // Get Details
-                DataObjects.Book book = bhlProvider.BookSelectByBarcodeOrItemID(publicationDetail.ID, null);
+                Book book = bhlProvider.BookSelectByBarcodeOrItemID(publicationDetail.ID, null);
                 publicationDetail.StartYear = book.StartYear;
                 publicationDetail.EndYear = book.EndYear;
                 publicationDetail.Description = book.ItemDescription;
@@ -678,8 +664,8 @@ Append("</a>").
                 publicationDetail.CopyrightStatus = book.CopyrightStatus;
 
                 // Get Authors
-                List<DataObjects.Author> authorList = bhlProvider.AuthorSelectByTitleId(publicationDetail.TitleID);
-                foreach (DataObjects.Author author in authorList)
+                List<Author> authorList = bhlProvider.AuthorSelectByTitleId(publicationDetail.TitleID);
+                foreach (Author author in authorList)
                 {
                     if (author.AuthorRoleID >= 1 && author.AuthorRoleID <= 3)
                     {
@@ -796,7 +782,7 @@ Append("</a>").
             // If this is a segment, then add institutions related to the container
             if (publicationDetail.Type == ItemType.Segment && publicationDetail.ContainerID != null)
             {
-                DataObjects.Book book = bhlProvider.BookSelectAuto((int)publicationDetail.ContainerID);
+                Book book = bhlProvider.BookSelectAuto((int)publicationDetail.ContainerID);
                 institutions.AddRange(bhlProvider.InstitutionSelectByItemID(book.ItemID));
             }
 
@@ -831,20 +817,20 @@ Append("</a>").
         // GET: /Item/Parts
         public ActionResult Parts()
         {
-            DataObjects.Book BhlBook = new DataObjects.Book();
+            Book BhlBook = new Book();
             Title BhlTitle = new Title();
             int itemID = 0;
             BHLProvider bhlProvider = new BHLProvider();
 
             if (!int.TryParse((string)RouteData.Values["itemid"], out itemID))
             {
-                Response.Redirect("~/pagenotfound");
+                return Redirect("~/pagenotfound");
             }
 
             ViewBag.BhlBook = bhlProvider.BookSelectByBarcodeOrItemID(itemID, null);
             if (ViewBag.BhlBook == null)
             {
-                Response.Redirect("~/pagenotfound");
+                return Redirect("~/pagenotfound");
             }
             else
             {
@@ -920,7 +906,7 @@ Append("</a>").
         public ActionResult GetItemPdf(int itemid)
         {
             BHLProvider provider = new BHLProvider();
-            DataObjects.Item item = provider.ItemSelectFilenames(ItemType.Book, itemid);
+            Item item = provider.ItemSelectFilenames(ItemType.Book, itemid);
 
             if (!string.IsNullOrWhiteSpace(item.PdfFilename))
             {
@@ -968,7 +954,7 @@ Append("</a>").
         public ActionResult GetItemImages(int itemid)
         {
             BHLProvider provider = new BHLProvider();
-            DataObjects.Item item = provider.ItemSelectFilenames(ItemType.Book, itemid);
+            Item item = provider.ItemSelectFilenames(ItemType.Book, itemid);
 
             if (!string.IsNullOrWhiteSpace(item.ImagesFilename))
             {

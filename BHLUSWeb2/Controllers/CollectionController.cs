@@ -23,7 +23,7 @@ namespace MOBOT.BHL.Web2.Controllers
             {
                 if (!int.TryParse((string)RouteData.Values["collectionid"], out collectionID))
                 {
-                    Response.Redirect("~/collectionnotfound");
+                    return Redirect("~/collectionnotfound");
                 }
             }
 

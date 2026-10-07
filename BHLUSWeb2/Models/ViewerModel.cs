@@ -46,7 +46,7 @@ namespace MOBOT.BHL.Web2.Models
         public string PageSequenceString { get; set; } = string.Empty;
         public List<Tuple<string, string>> PageList = new List<Tuple<string, string>>();
         public List<Tuple<string, string>> SegmentList = new List<Tuple<string, string>>();
-        public Dictionary<string, string> Volumes { get; set; } = new Dictionary<string, string>();
+        public List<KeyValuePair<string, string>> Volumes { get; set; } = new List<KeyValuePair<string, string>>();
         public List<KeyValuePair<string, string>> ScholarTags { get; set; } = new List<KeyValuePair<string, string>>();
         public int VolumeSelectedIndex { get; set; } = 0;
         public List<Author> Authors { get; set; } = new List<Author>();
