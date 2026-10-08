@@ -295,7 +295,8 @@ namespace BHL.IIIF
         private string GetCanvas(int itemId, string barCode, Page page, int count, int height = 800, int width = 600)
         {
             string iiifRootAddress = _rootUrl + "/iiif/" + itemId.ToString() + "$" + count.ToString();
-            string imageRootAddress = "https://iiif.archivelab.org/iiif/" + barCode + "$" + count.ToString();
+            string imageRootAddress = "https://iiif.archive.org/iiif/" + barCode + "$" + count.ToString();
+            string imagePath = "/full/full/0/default.jpg";
             string metadataFlickr = string.Empty;
             if (!string.IsNullOrWhiteSpace(page.FlickrURL)) { metadataFlickr = ", " + GetMetadataSingleValue("Flickr", page.FlickrURL);  }
 
@@ -316,7 +317,7 @@ namespace BHL.IIIF
                       "\"motivation\": \"sc:painting\"," +
                       "\"on\": \"" + iiifRootAddress + "/canvas\"," +
                       "\"resource\": {" +
-                        "\"@id\": \"" + imageRootAddress + "/full/full/0/default.jpg\"," +
+                        "\"@id\": \"" + imageRootAddress + imagePath + "\"," +
                         "\"@type\": \"dctypes:Image\"," +
                         "\"format\": \"image/jpeg\"," +
                         "\"height\": " + height.ToString() + "," +

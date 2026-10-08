@@ -54,14 +54,24 @@ namespace BHL.IIIF
                     {
 
                         string textUrl = _rootUrl + "/pagetext/" + pages[pageCount].PageID.ToString();
-                        StreamReader sr = new StreamReader(new WebClient().OpenRead(textUrl), System.Text.Encoding.Default);
-                        int resourceCount = 1;
-                        while (sr.Peek() >= 0)
+                        try
                         {
-                            if (resourceCount > 1) resources += ",";
-                            string text = sr.ReadLine();
-                            resources += GetResource(itemId, leafNum, resourceCount, text);
-                            resourceCount++;
+                            StreamReader sr = new StreamReader(new WebClient().OpenRead(textUrl), System.Text.Encoding.Default);
+                            int resourceCount = 1;
+                            while (sr.Peek() >= 0)
+                            {
+                                if (resourceCount > 1) resources += ",";
+                                string text = sr.ReadLine();
+                                resources += GetResource(itemId, leafNum, resourceCount, text);
+                                resourceCount++;
+                            }
+                        }
+                        catch (WebException ex)
+                        {
+                            // If the text file is not found, just return an empty resource list
+                            if (ex.Response is HttpWebResponse response && response.StatusCode != HttpStatusCode.NotFound) {
+                                throw; // Rethrow the exception if it's not a 404
+                            }
                         }
                         break;
                     }
