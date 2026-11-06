@@ -5,7 +5,7 @@
 #		Valid values include Policy, Ip, Endpoint, and UserAgent
 #			Policy - global rate limit settings
 #			Ip - rate limit settings for a specific IP address or IP range
-#			Endpoint - rate limit settings for a specific website endpoint, for example Books/Index
+#			Endpoint - rate limit settings for a specific website endpoint, specified as Controller/Action (for example Books/Index or Page/GetPageThumb)
 #			UserAgent - rate limit settings for a specific User Agent string
 #
 #	Part 2: Label - Identifier or value to which these rate limits apply.  For example, an IP Address or User Agent.  Not required for Policy level limits.
@@ -24,6 +24,6 @@ Policy||5|60|3600|86400
 Ip|192.168.1.1|2|||
 Ip|192.168.2.0/24||30|1800|43200
 Ip|192.168.0.0-192.168.0.255|1|||
-Endpoint|/books|5|30|1800|43200
-Endpoint|/journals/index|5|30|1800|43200
+Endpoint|books/index|5|30|1800|43200
+Endpoint|journals/index|5|30|1800|43200
 UserAgent|ClaudeBot/1.0;+claudebot@anthropic.com|1|||

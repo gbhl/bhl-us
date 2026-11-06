@@ -4,7 +4,7 @@
 #
 #		Valid values include Ip, Endpoint, and UserAgent
 #			Ip - a specific IP address or IP range to whitelist
-#			Endpoint - a specific website endpoint to whitelist, for example /Books/Index
+#			Endpoint - a specific website endpoint to whitelist, specified as Controller/Action (for example Books/Index)
 #			UserAgent - a specific User Agent string to whitelist
 #
 #	Part 2: Value - Identifier or value to whitelist.  For example, an IP Address or User Agent
@@ -12,7 +12,7 @@
 # Note: Lines starting with # are regarded as comments and are skipped.
 #
 Ip|127.0.0.1
-Endpoint|/book
-Endpoint|/journal
+Endpoint|books/index
+Endpoint|journals/index
 UserAgent|Googlebot
 UserAgent|Bingbot

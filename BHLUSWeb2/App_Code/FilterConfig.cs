@@ -90,7 +90,7 @@ namespace MOBOT.BHL.Web2
                         IpWhitelist = ipWhitelistConfig,
                         IpRules = GetRateLimitRules(ipConfig),
                         EndpointThrottling = true,
-                        EndpointType = EndpointThrottlingType.AbsolutePath,
+                        EndpointType = EndpointThrottlingType.ControllerAndAction,  // EndpointThrottlingType.AbsolutePath,
                         EndpointWhitelist = endpointWhitelistConfig,
                         EndpointRules = GetRateLimitRules(endpointConfig),
                         UserAgentThrottling = true,
