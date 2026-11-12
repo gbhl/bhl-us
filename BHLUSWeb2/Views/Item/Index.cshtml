@@ -1617,7 +1617,7 @@
 
                 var BRtoolbar = $("#BRtoolbar").detach();
                 BRtoolbar.appendTo("#BRtoolbarwrapper");
-                $('.BRtoolbar-container').append("<div id='BRtoolbar-extra'><a class='BRicon page_print' title='Print'>Print</a><a id='showSearchButton' title='Search Inside' class='BRButton BRButtonFeatured'>Search Inside</a><a id='showInfoButton' title='Show Info' class='BRButton'>Show<br/>Info</a><a id='showAnnotationsButton' class='BRButton' title='Show Annotations'>Show<br/>Annotations</a><a id='showOCRButton' class='BRButton' title='Show Text'>Show<br/>Text</a> </div>");
+                $('.BRtoolbar-container').append("<div id='BRtoolbar-extra'><a class='BRicon page_download' title='Download'>Download</a><a class='BRicon page_print' title='Print'>Print</a><a id='showSearchButton' title='Search Inside' class='BRButton BRButtonFeatured'>Search Inside</a><a id='showInfoButton' title='Show Info' class='BRButton'>Show<br/>Info</a><a id='showAnnotationsButton' class='BRButton' title='Show Annotations'>Show<br/>Annotations</a><a id='showOCRButton' class='BRButton' title='Show Text'>Show<br/>Text</a> </div>");
                 var PDFtoolbar = $("#toolbar-top").detach();
                 PDFtoolbar.prependTo("#BRtoolbar");
                 $('#BRtoolbar').prepend("<div><a id='showPagesButton' class='BRicon book_leftmost' style='display: block;' title='Hide Pages'>Hide Pages</a></div>");
@@ -1625,6 +1625,42 @@
                 AnnotationBox.appendTo("#right-panel-content");
 
                 if (!@(System.Configuration.ConfigurationManager.AppSettings["SearchProviders"].ToLower().Contains("bhl.search.elastic").ToString().ToLower())) $("#showSearchButton").hide();
+
+                // Download page
+                var dlPageButton = $('.page_download');
+                dlPageButton.on("click", function () {
+
+                    var pgId = pages[br.currentIndex()].PageID
+                    var imageUrl = "@(Request.Url.GetLeftPart(UriPartial.Authority))/pageimage/" + pgId;
+
+                    // Fetch the image data using .then() chains
+                    fetch(imageUrl)
+                        .then((response) => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            return response.blob();
+                        })
+                        .then((imageBlob) => {
+                            // Create a temporary local URL for the Blob
+                            const blobUrl = URL.createObjectURL(imageBlob);
+
+                            // Create a hidden link, set the download attribute, and click it
+                            const link = document.createElement('a');
+                            link.href = blobUrl;
+                            link.download = "Page" + pgId + ".jpg";
+                            document.body.appendChild(link);
+                            link.click();
+
+                            // Clean up the DOM and release memory
+                            document.body.removeChild(link);
+                            URL.revokeObjectURL(blobUrl);
+                        })
+                        .catch((error) => {
+                            alert('Could not download the image. Please use the Feedback link at the top of the page to let us know.');
+                        });
+
+                });
 
                 // Print page
                 var printPageButton = $('.page_print');

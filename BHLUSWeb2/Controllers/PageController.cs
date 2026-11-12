@@ -116,8 +116,18 @@ namespace MOBOT.BHL.Web2.Controllers
                 // Make sure we found an active page
                 if (page != null)
                 {
-                    // Use the IA URL to get a JPG from the JP2
-                    imageUrl = page.AltExternalURL.Replace(".jp2", ".jpg");
+                    imageUrl = page.AltExternalURL;
+                    if (imageUrl.Contains("archive.org"))
+                    {
+                        // Use the IA URL to get a JPG from the JP2
+                        imageUrl = imageUrl.Replace(".jp2", ".jpg");
+                    }
+                    else
+                    {
+                        // Return the JPG version of this page from AWS S3
+                        imageUrl = imageUrl.Replace("/web/", "/jpg/");
+                        imageUrl = imageUrl.Replace("_full.webp", ".jpg");
+                    }
                 }
 
                 if (imageUrl == String.Empty) imageUrl = ConfigurationManager.AppSettings["ImageNotFoundPath"];
