@@ -344,6 +344,17 @@
               </conditions>
               <action type="Redirect" url="https://www.biodiversitylibrary.org/{R:1}" appendQueryString="true" redirectType="Permanent" />
             </rule>
+            <rule name="Set HTTPS from X-Forwarded-Proto" stopProcessing="false">
+              <match url="(.*)" />
+              <conditions>
+                <add input="{HTTP_X_FORWARDED_PROTO}" pattern="^https$" ignoreCase="true" />
+              </conditions>
+              <serverVariables>
+                <!-- In IIS, under URL Rewrite > View Server Variables..., add "HTTPS" as an allowed server variable -->
+                <set name="HTTPS" value="on" />
+              </serverVariables>
+              <action type="None" />
+            </rule>
           </rules>
           <outboundRules>
             <rule name="CORS Allow Origin" enabled="true">

@@ -1629,9 +1629,8 @@
                 // Download page
                 var dlPageButton = $('.page_download');
                 dlPageButton.on("click", function () {
-
                     var pgId = pages[br.currentIndex()].PageID
-                    var imageUrl = "@(Request.Url.GetLeftPart(UriPartial.Authority))/pageimage/" + pgId;
+					var imageUrl = "@(System.Configuration.ConfigurationManager.AppSettings["BaseUrl"])/pageimage/" + pgId;
 
                     // Fetch the image data using .then() chains
                     fetch(imageUrl)
@@ -1659,7 +1658,6 @@
                         .catch((error) => {
                             alert('Could not download the image. Please use the Feedback link at the top of the page to let us know.');
                         });
-
                 });
 
                 // Print page
