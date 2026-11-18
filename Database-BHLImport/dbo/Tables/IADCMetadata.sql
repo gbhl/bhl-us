@@ -22,3 +22,7 @@ CREATE NONCLUSTERED INDEX [IX_IADCMetadata_ItemIDSource]
     ON [dbo].[IADCMetadata]([ItemID] ASC, [Source] ASC)
     INCLUDE([DCMetadataID]);
 
+GO
+CREATE NONCLUSTERED INDEX [IX_IADCMetadata_ItemID_Element_Source]
+    ON [dbo].[IADCMetadata] ([ItemID] ASC, [DCElementName] ASC, [Source] ASC)
+    INCLUDE ([DCElementValue]);

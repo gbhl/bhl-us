@@ -1,354 +1,143 @@
 ﻿CREATE PROCEDURE [dbo].[IAItemSelectByStatus]
+    @ItemStatusID  int            = -1,
+    @IAIdentifier  nvarchar(200)  = '',
+    @NumRows       int            = 100,
+    @PageNum       int            = 1,
+    @SortColumn    nvarchar(150)  = 'IAIdentifier',
+    @SortDirection nvarchar(4)    = 'ASC'
+AS
+BEGIN
+    SET NOCOUNT ON;
 
-@ItemStatusID int,
-@IAIdentifier nvarchar(200) = '',
-@NumRows int = 100,
-@PageNum int = 1,
-@SortColumn nvarchar(150) = 'IAIdentifier',
-@SortDirection nvarchar(4) = 'ASC'
+    BEGIN TRY
+        IF @NumRows  < 1 SET @NumRows = 100;
+        IF @PageNum  < 1 SET @PageNum = 1;
 
-AS 
+        DECLARE @Offset      int           = (@PageNum - 1) * @NumRows;
+        DECLARE @UpperBound  bigint        = CONVERT(bigint, @Offset) + @NumRows;
+        DECLARE @Pattern     nvarchar(201) = @IAIdentifier + N'%';
+        DECLARE @Dir         nvarchar(4)   = CASE WHEN LOWER(@SortDirection) = N'desc' THEN N'DESC' ELSE N'ASC' END;
 
-SET NOCOUNT ON
+        ------------------------------------------------------------------
+        -- Reusable SQL fragments
+        ------------------------------------------------------------------
+        DECLARE @ScanDateExpr nvarchar(max) = N'ISNULL(CASE
+                WHEN LEN(i.ScanDate) = 14 THEN SUBSTRING(i.ScanDate, 1, 4) + ''-'' + SUBSTRING(i.ScanDate, 5, 2) + ''-'' + SUBSTRING(i.ScanDate, 7, 2) + '' '' +
+                                               SUBSTRING(i.ScanDate, 9, 2) + '':'' + SUBSTRING(i.ScanDate, 11, 2) + '':'' + SUBSTRING(i.ScanDate, 13, 2)
+                WHEN LEN(i.ScanDate) = 8  THEN SUBSTRING(i.ScanDate, 1, 4) + ''-'' + SUBSTRING(i.ScanDate, 5, 2) + ''-'' + SUBSTRING(i.ScanDate, 7, 2)
+                WHEN LEN(i.ScanDate) = 0  THEN NULL
+                ELSE i.ScanDate
+            END, N'''')';
 
-DECLARE @TotalItems INT
+        DECLARE @HoldApply nvarchar(max) = N'
+            OUTER APPLY (SELECT TOP (1) m.DCElementValue AS v
+                         FROM dbo.IADCMetadata m
+                         WHERE m.ItemID = i.ItemID AND m.DCElementName = N''contributor'' AND m.[Source] = N''META''
+                         ORDER BY m.DCMetadataID) mm
+            OUTER APPLY (SELECT TOP (1) m.DCElementValue AS v
+                         FROM dbo.IADCMetadata m
+                         WHERE m.ItemID = i.ItemID AND m.DCElementName = N''contributor'' AND m.[Source] = N''DC''
+                         ORDER BY m.DCMetadataID) md';
 
-CREATE TABLE #Step1
+        DECLARE @HoldExpr nvarchar(max) = N'ISNULL(COALESCE(NULLIF(mm.v, N''''), md.v), N'''')';
+
+        DECLARE @StatusJoin nvarchar(max) = N'
+            INNER JOIN dbo.IAItemStatus s ON i.ItemStatusID = s.ItemStatusID';
+        DECLARE @UserJoin nvarchar(max) = N'
+            LEFT JOIN dbo.BHLAspNetUsers uc ON i.CreatedUserID = uc.Id
+            LEFT JOIN dbo.BHLAspNetUsers um ON i.LastModifiedUserID = um.Id';
+
+        ------------------------------------------------------------------
+        -- Sort whitelist: expression + the joins that expression needs
+        ------------------------------------------------------------------
+        DECLARE @SortExpr nvarchar(max), @SortJoin nvarchar(max) = N'';
+
+        IF      @SortColumn = N'ExternalStatus'         SET @SortExpr = N'i.ExternalStatus';
+        ELSE IF @SortColumn = N'Status'                 SELECT @SortExpr = N's.[Status]', @SortJoin = @StatusJoin;
+        ELSE IF @SortColumn = N'HoldingInstitution'     SELECT @SortExpr = @HoldExpr,     @SortJoin = @HoldApply;
+        ELSE IF @SortColumn = N'IAAddedDate'            SET @SortExpr = N'i.IAAddedDate';
+        ELSE IF @SortColumn = N'ScanDate'               SET @SortExpr = @ScanDateExpr;
+        ELSE IF @SortColumn = N'IADateStamp'            SET @SortExpr = N'i.IADateStamp';
+        ELSE IF @SortColumn = N'LastXMLDataHarvestDate' SET @SortExpr = N'i.LastXMLDataHarvestDate';
+        ELSE IF @SortColumn = N'LastProductionDate'     SET @SortExpr = N'i.LastProductionDate';
+        ELSE IF @SortColumn = N'CreatedDate'            SET @SortExpr = N'i.CreatedDate';
+        ELSE IF @SortColumn = N'LastModifiedDate'       SET @SortExpr = N'i.LastModifiedDate';
+        ELSE IF @SortColumn = N'CreatedUser'            SELECT @SortExpr = N'LTRIM(uc.FirstName + N'' '' + uc.LastName)', @SortJoin = @UserJoin;
+        ELSE IF @SortColumn = N'LastModifiedUser'       SELECT @SortExpr = N'LTRIM(um.FirstName + N'' '' + um.LastName)', @SortJoin = @UserJoin;
+        ELSE                                            SET @SortExpr = N'i.IAIdentifier';   -- default / IAIdentifier
+
+        ------------------------------------------------------------------
+        -- Optional predicates (only added when the parameter is in use)
+        ------------------------------------------------------------------
+        DECLARE @Where nvarchar(max) = N'1 = 1';
+        IF @ItemStatusID <> -1 SET @Where += N' AND i.ItemStatusID = @ItemStatusID';
+        IF @IAIdentifier <> N'' SET @Where += N' AND i.IAIdentifier LIKE @Pattern';
+
+        ------------------------------------------------------------------
+        -- Final statement
+        ------------------------------------------------------------------
+        DECLARE @Sql nvarchar(max) = N'
+;WITH Paged AS
 (
-	ItemID int NOT NULL
+    -- Narrow stage: filter + sort + number on keys only
+    SELECT  i.ItemID,
+            ROW_NUMBER() OVER (ORDER BY ' + @SortExpr + N' ' + @Dir + N', i.ItemID) AS RowNumber,
+            COUNT(*) OVER ()                                                       AS TotalItems
+    FROM    dbo.IAItem i' + @SortJoin + N'
+    WHERE   ' + @Where + N'
 )
+-- Wide stage: only for the rows on the requested page
+SELECT  i.ItemID
+       ,i.IAIdentifier
+       ,ISNULL(i.ExternalStatus, '''')              AS ExternalStatus
+       ,s.[Status]
+       ,ISNULL(i.ShortTitle, '''')                  AS ShortTitle
+       ,ISNULL(i.Volume, '''')                      AS Volume
+       ,i.[Year]
+       ,i.ImageCount
+       ,' + @HoldExpr + N'                         AS HoldingInstitution
+       ,ISNULL(i.Sponsor, '''')                     AS Sponsor
+       ,ISNULL(i.ScanningInstitution, '''')         AS ScanningInstitution
+       ,ISNULL(i.RightsHolder, '''')                AS RightsHolder
+       ,ISNULL(i.Note, '''')                        AS Note
+       ,ISNULL(i.LicenseUrl, '''')                  AS LicenseUrl
+       ,ISNULL(i.Rights, '''')                      AS Rights
+       ,ISNULL(i.DueDiligence, '''')                AS DueDiligence
+       ,ISNULL(i.PossibleCopyrightStatus, '''')     AS PossibleCopyrightStatus
+       ,i.VirtualTitleID
+       ,i.VirtualVolume
+       ,i.IAAddedDate
+       ,' + @ScanDateExpr + N'                     AS ScanDate
+       ,i.IADateStamp
+       ,i.LastXMLDataHarvestDate
+       ,i.LastProductionDate
+       ,i.CreatedDate
+       ,i.LastModifiedDate
+       ,LTRIM(uc.FirstName + N'' '' + uc.LastName)   AS CreatedUser
+       ,LTRIM(um.FirstName + N'' '' + um.LastName)   AS LastModifiedUser
+       ,p.TotalItems
+FROM    Paged p
+        INNER JOIN dbo.IAItem i       ON p.ItemID = i.ItemID
+        INNER JOIN dbo.IAItemStatus s ON i.ItemStatusID = s.ItemStatusID' + @HoldApply + N'
+        LEFT JOIN dbo.BHLAspNetUsers uc  ON i.CreatedUserID = uc.Id
+        LEFT JOIN dbo.BHLAspNetUsers um  ON i.LastModifiedUserID = um.Id
+WHERE   p.RowNumber >  @Offset
+AND     p.RowNumber <= @UpperBound
+ORDER BY p.RowNumber;';
 
--- Get the initial data set
-INSERT #Step1
-SELECT	i.ItemID
-FROM	dbo.IAItem i
-WHERE	(i.ItemStatusID = @ItemStatusID OR @ItemStatusID = -1)
-AND		(i.IAIdentifier LIKE @IAIdentifier + '%' OR @IAIdentifier = '')
+        EXEC sys.sp_executesql
+              @Sql
+            , N'@ItemStatusID int, @Pattern nvarchar(201), @Offset int, @UpperBound bigint'
+            , @ItemStatusID = @ItemStatusID
+            , @Pattern      = @Pattern
+            , @Offset       = @Offset
+            , @UpperBound   = @UpperBound;
 
--- Create a temp table for the second step
--- Create a temp table for the second step
-CREATE TABLE #Step2
-	(
-	ItemID int NOT NULL
-	,RowNumber INT NOT NULL
-	)
-
--- Add a row number to the data set, first sorting by the specified field
-IF (@SortColumn = 'IAIdentifier' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY i.IAIdentifier)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
+        RETURN 0;
+    END TRY
+    BEGIN CATCH
+        -- Re-throws the original error (original proc returned 9 / RAISERROR)
+        THROW;
+    END CATCH
 END
-IF (@SortColumn = 'IAIdentifier' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY i.IAIdentifier DESC)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'ExternalStatus' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY ExternalStatus)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'ExternalStatus' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY ExternalStatus DESC)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'Status' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY [Status])
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-			INNER JOIN dbo.IAItemStatus s ON i.ItemStatusID = s.ItemStatusID
-END
-IF (@SortColumn = 'Status' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY [Status] DESC)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-			INNER JOIN dbo.IAItemStatus s ON i.ItemStatusID = s.ItemStatusID
-END
-IF (@SortColumn = 'HoldingInstitution' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY ISNULL(COALESCE(mm.DCElementValue, md.DCElementValue), ''))
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-			LEFT JOIN dbo.IADCMetadata md ON i.ItemID = md.ItemID AND md.DCElementName = 'contributor' AND md.[Source] = 'DC'
-			LEFT JOIN dbo.IADCMetadata mm ON i.ItemID = mm.ItemID AND mm.DCElementName = 'contributor' AND mm.[Source] = 'META'
-END
-IF (@SortColumn = 'HoldingInstitution' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY ISNULL(COALESCE(mm.DCElementValue, md.DCElementValue), '') DESC)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-			LEFT JOIN dbo.IADCMetadata md ON i.ItemID = md.ItemID AND md.DCElementName = 'contributor' AND md.[Source] = 'DC'
-			LEFT JOIN dbo.IADCMetadata mm ON i.ItemID = mm.ItemID AND mm.DCElementName = 'contributor' AND mm.[Source] = 'META'
-END
-IF (@SortColumn = 'IAAddedDate' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY IAAddedDate)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'IAAddedDate' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY IAAddedDate DESC)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'ScanDate' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY 
-				ISNULL(
-					CASE 
-						WHEN LEN(ScanDate) = 14 THEN SUBSTRING(ScanDate, 1, 4) + '-' + SUBSTRING(ScanDate, 5, 2) + '-' + SUBSTRING(ScanDate, 7, 2) + ' ' + 
-							SUBSTRING(ScanDate, 9, 2) + ':' + SUBSTRING(ScanDate, 11, 2) + ':' + SUBSTRING(ScanDate, 13, 2)
-						WHEN LEN(ScanDate) = 8 THEN SUBSTRING(ScanDate, 1, 4) + '-' + SUBSTRING(ScanDate, 5, 2) + '-' + SUBSTRING(ScanDate, 7, 2) 
-						WHEN LEN(ScanDate) = 0 THEN NULL
-						ELSE ScanDate
-					END, '')
-				)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'ScanDate' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY
-				ISNULL(
-					CASE 
-						WHEN LEN(ScanDate) = 14 THEN SUBSTRING(ScanDate, 1, 4) + '-' + SUBSTRING(ScanDate, 5, 2) + '-' + SUBSTRING(ScanDate, 7, 2) + ' ' + 
-							SUBSTRING(ScanDate, 9, 2) + ':' + SUBSTRING(ScanDate, 11, 2) + ':' + SUBSTRING(ScanDate, 13, 2)
-						WHEN LEN(ScanDate) = 8 THEN SUBSTRING(ScanDate, 1, 4) + '-' + SUBSTRING(ScanDate, 5, 2) + '-' + SUBSTRING(ScanDate, 7, 2) 
-						WHEN LEN(ScanDate) = 0 THEN NULL
-						ELSE ScanDate
-					END, '') DESC
-				)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i on t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'IADateStamp' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY IADateStamp)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'IADateStamp' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY IADateStamp DESC)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'LastXMLDataHarvestDate' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY LastXMLDataHarvestDate)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'LastXMLDataHarvestDate' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY LastXMLDataHarvestDate DESC)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'LastProductionDate' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY LastProductionDate)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'LastProductionDate' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY LastProductionDate DESC)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'CreatedDate' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY CreatedDate)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'CreatedDate' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY CreatedDate DESC)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'LastModifiedDate' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY LastModifiedDate)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'LastModifiedDate' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY LastModifiedDate DESC)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-END
-IF (@SortColumn = 'CreatedUser' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY CreatedUser)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-			LEFT JOIN dbo.BHLAspNetUsers uc ON i.CreatedUserID = uc.Id
-			LEFT JOIN dbo.BHLAspNetUsers um ON i.LastModifiedUserID = um.Id
-END
-IF (@SortColumn = 'CreatedUser' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY CreatedUser DESC)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-			LEFT JOIN dbo.BHLAspNetUsers uc ON i.CreatedUserID = uc.Id
-			LEFT JOIN dbo.BHLAspNetUsers um ON i.LastModifiedUserID = um.Id
-END
-IF (@SortColumn = 'LastModifiedUser' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY LastModifiedUser)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-			LEFT JOIN dbo.BHLAspNetUsers uc ON i.CreatedUserID = uc.Id
-			LEFT JOIN dbo.BHLAspNetUsers um ON i.LastModifiedUserID = um.Id
-END
-IF (@SortColumn = 'LastModifiedUser' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	t.*, ROW_NUMBER() OVER (ORDER BY LastModifiedUser DESC)
-	FROM	#Step1 t
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-			LEFT JOIN dbo.BHLAspNetUsers uc ON i.CreatedUserID = uc.Id
-			LEFT JOIN dbo.BHLAspNetUsers um ON i.LastModifiedUserID = um.Id
-END
-
--- Count the total number of pages
-SELECT @TotalItems = COUNT(*) FROM #Step2
-
--- Return the final result set
-SELECT TOP (@NumRows) 
-		t.ItemID
-		,i.IAIdentifier
-		,ISNULL(i.ExternalStatus, '') AS ExternalStatus
-		,s.[Status]
-		,ISNULL(i.ShortTitle, '') AS ShortTitle
-		,ISNULL(i.Volume, '') AS Volume
-		,i.Year
-		,i.ImageCount
-		,ISNULL(mm.DCElementValue, '') AS HoldingInstitution
-		--,CONVERT(nvarchar(500), '') AS HoldingInstitution
-		,ISNULL(i.Sponsor, '') AS Sponsor
-		,ISNULL(i.ScanningInstitution, '') AS ScanningInstitution
-		,ISNULL(i.RightsHolder, '') AS RightsHolder
-		,ISNULL(i.Note, '') AS Note
-		,ISNULL(i.LicenseUrl, '') AS LicenseUrl
-		,ISNULL(i.Rights, '') AS Rights
-		,ISNULL(i.DueDiligence, '') AS DueDiligence
-		,ISNULL(i.PossibleCopyrightStatus, '') AS PossibleCopyrightStatus
-		,i.VirtualTitleID
-		,i.VirtualVolume
-		,i.IAAddedDate
-		,ISNULL(
-			CASE 
-				WHEN LEN(ScanDate) = 14 THEN SUBSTRING(ScanDate, 1, 4) + '-' + SUBSTRING(ScanDate, 5, 2) + '-' + SUBSTRING(ScanDate, 7, 2) + ' ' + 
-					SUBSTRING(ScanDate, 9, 2) + ':' + SUBSTRING(ScanDate, 11, 2) + ':' + SUBSTRING(ScanDate, 13, 2)
-				WHEN LEN(ScanDate) = 8 THEN SUBSTRING(ScanDate, 1, 4) + '-' + SUBSTRING(ScanDate, 5, 2) + '-' + SUBSTRING(ScanDate, 7, 2) 
-				WHEN LEN(ScanDate) = 0 THEN NULL
-				ELSE ScanDate
-			END, '') AS ScanDate
-		,i.IADateStamp
-		,i.LastXMLDataHarvestDate
-		,i.LastProductionDate
-		,i.CreatedDate
-		,i.LastModifiedDate
-		,LTRIM(uc.FirstName + ' ' + uc.LastName) AS CreatedUser
-		,LTRIM(um.FirstName + ' ' + um.LastName) AS LastModifiedUser
-		,@TotalItems AS TotalItems
-		,RowNumber
-INTO	#Step3
-FROM	#Step2 t
-		INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
-		INNER JOIN dbo.IAItemStatus s ON i.ItemStatusID = s.ItemStatusID
-		LEFT JOIN dbo.IADCMetadata mm ON t.ItemID = mm.ItemID AND mm.DCElementName = 'contributor' AND mm.[Source] = 'META'
-		LEFT JOIN dbo.BHLAspNetUsers uc ON i.CreatedUserID = uc.Id
-		LEFT JOIN dbo.BHLAspNetUsers um ON i.LastModifiedUserID = um.Id
-WHERE	RowNumber > (@PageNum - 1) * @NumRows
-ORDER BY 
-		RowNumber
-
-UPDATE	t
-SET		HoldingInstitution = ISNULL(md.DCElementValue, '')
-FROM	#Step3 t
-		INNER JOIN dbo.IADCMetadata md ON t.ItemID = md.ItemID AND md.DCElementName = 'contributor' AND md.[Source] = 'DC'
-WHERE	t.HoldingInstitution = ''
-
-SELECT	ItemID
-		,IAIdentifier
-		,ExternalStatus
-		,[Status]
-		,ShortTitle
-		,Volume
-		,Year
-		,ImageCount
-		,HoldingInstitution
-		,Sponsor
-		,ScanningInstitution
-		,RightsHolder
-		,Note
-		,LicenseUrl
-		,Rights
-		,DueDiligence
-		,PossibleCopyrightStatus
-		,VirtualTitleID
-		,VirtualVolume
-		,IAAddedDate
-		,ScanDate
-		,IADateStamp
-		,LastXMLDataHarvestDate
-		,LastProductionDate
-		,CreatedDate
-		,LastModifiedDate
-		,CreatedUser
-		,LastModifiedUser
-		,TotalItems
-FROM	#Step3
-ORDER BY RowNumber
-
-IF @@ERROR <> 0
-BEGIN
-	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure IAItemSelectByStatus. No information was selected.', 16, 1)
-	RETURN 9 -- error occurred
-END
-ELSE BEGIN
-	RETURN -- select successful
-END
-
 GO

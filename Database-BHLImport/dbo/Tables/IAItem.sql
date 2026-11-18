@@ -78,3 +78,6 @@ CREATE NONCLUSTERED INDEX [IX_IAItem_ItemStatus]
 INCLUDE ([IAAddedDate], [CreatedDate]);
 GO
 
+CREATE NONCLUSTERED INDEX [IX_IAItem_ItemStatusSortCols]
+	ON [dbo].[IAItem] ([ItemStatusID])
+	INCLUDE ([IAIdentifier],[ExternalStatus],[IAAddedDate],[ScanDate],[IADateStamp],[LastXMLDataHarvestDate],[LastProductionDate],[CreatedDate],[LastModifiedDate]);
