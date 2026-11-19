@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -123,6 +124,66 @@ namespace MOBOT.BHL.Utility
             }
 
             return data;
+        }
+
+        /// <summary>
+        /// Creates a writer that streams CSV rows to the specified stream as they are written, rather than
+        /// building the entire CSV in memory.  The BOM (if IncludeBOM is true) is written once, immediately.
+        /// Disposing the returned writer flushes it but does NOT close the underlying stream.
+        /// </summary>
+        public CSVStreamWriter CreateStreamWriter(Stream output)
+        {
+            return new CSVStreamWriter(output, _cultureInfo, _includeBOM);
+        }
+    }
+
+    /// <summary>
+    /// Incremental CSV writer.  Hides CsvHelper from callers.
+    /// </summary>
+    public sealed class CSVStreamWriter : IDisposable
+    {
+        private readonly StreamWriter _writer;
+        private readonly CsvWriter _csv;
+
+        internal CSVStreamWriter(Stream output, CultureInfo cultureInfo, bool includeBOM)
+        {
+            if (includeBOM)
+            {
+                byte[] bom = Encoding.UTF8.GetPreamble();
+                output.Write(bom, 0, bom.Length);
+            }
+
+            // UTF8Encoding(false): the BOM (if any) was already written above, so don't emit a second one.
+            // leaveOpen: true so disposing this object doesn't close the caller's stream (e.g. Response.OutputStream).
+            _writer = new StreamWriter(output, new UTF8Encoding(false), 4096, true);
+            _csv = new CsvWriter(_writer, cultureInfo, true);
+        }
+
+        /// <summary>Write a header row.</summary>
+        public void WriteHeader(IEnumerable<string> columns)
+        {
+            foreach (string column in columns) _csv.WriteField(column);
+            _csv.NextRecord();
+        }
+
+        /// <summary>Write one data row.  Null values are written as empty fields.</summary>
+        public void WriteRow(IEnumerable<object> values)
+        {
+            foreach (object value in values) _csv.WriteField(value);
+            _csv.NextRecord();
+        }
+
+        /// <summary>Push everything written so far into the underlying stream.</summary>
+        public void Flush()
+        {
+            _csv.Flush();
+            _writer.Flush();
+        }
+
+        public void Dispose()
+        {
+            _csv.Dispose();     // flushes
+            _writer.Dispose();  // flushes; underlying stream stays open
         }
     }
 }

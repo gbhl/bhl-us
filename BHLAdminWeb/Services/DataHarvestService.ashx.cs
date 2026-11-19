@@ -1,13 +1,10 @@
 ﻿using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
 using MOBOT.BHL.Utility;
 using MOBOT.BHLImport.DataObjects;
 using MOBOT.BHLImport.Server;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Dynamic;
-using System.Net.Mime;
 using System.Security;
 using System.Text;
 using System.Web;
@@ -20,6 +17,16 @@ namespace MOBOT.BHL.AdminWeb.Services
     /// </summary>
     public class DataHarvestService : IHttpHandler
     {
+        private const int PageSize = 5000;
+
+        private static readonly string[] IADownloadColumns =
+        {
+            "IAIdentifier", "IAStatus", "BHLStatus", "Title", "Volume", "Year", "ImageCount",
+            "HoldingInstitution", "Sponsor", "ScanningInstitution", "RightsHolder", "LicenseUrl",
+            "Rights", "DueDiligence", "CopyrightStatus", "VirtualTitleID", "VirtualVolume",
+            "IACreated", "IAScanned", "IALastModified", "BHLCreated", "BHLLastDownload",
+            "BHLProduction", "BHLLastModified", "CreatedUser", "LastModifiedUser"
+        };
 
         public void ProcessRequest(HttpContext context)
         {
@@ -85,6 +92,33 @@ namespace MOBOT.BHL.AdminWeb.Services
             }
         }
 
+        /*
+        public void ProcessRequest(HttpContext context)
+        {
+            // Clean up inputs
+            string itemStatusId = context.Request.QueryString["id"];
+            string iaId = context.Request.QueryString["iaid"];
+            string download = context.Request.QueryString["dl"];
+            string type = context.Request.QueryString["type"];
+
+            // Make sure itemStatusId is a valid integer value
+            int statusId;
+            if (!Int32.TryParse(itemStatusId, out statusId)) statusId = 0;
+
+            switch (type)
+            {
+                case "iastatus":
+                default:
+                    if (download == "1")
+                    {
+                        DoIAHarvestDownload(context, statusId, iaId);
+                    }
+                    break;
+            }
+        }
+        */
+
+        /*
         private void DoIAHarvestDownload(HttpContext context, int statusId, string iaId)
         {
             List<IAItem> searchResult = null;
@@ -155,6 +189,79 @@ namespace MOBOT.BHL.AdminWeb.Services
             byte[] csvBytes = new CSV().FormatCSVData(data);
             context.Response.Write(Encoding.UTF8.GetString(csvBytes, 0, csvBytes.Length));
             context.Response.Flush();
+        }
+        */
+
+        private void DoIAHarvestDownload(HttpContext context, int statusId, string iaId)
+        {
+            HttpResponse response = context.Response;
+
+            response.Clear();
+            response.ClearHeaders();
+            response.BufferOutput = false;
+            response.ContentType = "text/csv";
+            response.AddHeader("Cache-Control", "no-cache, no-store");
+
+            try
+            {
+                using (CSVStreamWriter csv = new CSV().CreateStreamWriter(response.OutputStream))
+                {
+                    // Header row goes out immediately, before the first database call
+                    csv.WriteHeader(IADownloadColumns);
+                    csv.Flush();
+                    response.Flush();
+
+                    BHLImportProvider provider = new BHLImportProvider();
+                    int page = 1;
+
+                    while (response.IsClientConnected)
+                    {
+                        List<IAItem> items = provider.IAItemSelectByStatus(statusId, iaId, PageSize, page, "IAIdentifier", "asc");
+
+                        if (items == null || items.Count == 0) break;
+
+                        foreach (IAItem item in items) csv.WriteRow(GetIADownloadRow(item));
+
+                        csv.Flush();
+                        response.Flush();   // push this page downstream
+
+                        if (items.Count < PageSize) break;
+                        page++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Headers already sent; can't change the status code.
+                // Logger.Error(ex);
+                if (response.IsClientConnected)
+                {
+                    byte[] err = Encoding.UTF8.GetBytes("\r\n#ERROR: export failed or was truncated\r\n");
+                    response.OutputStream.Write(err, 0, err.Length);
+                }
+            }
+            finally
+            {
+                try { if (response.IsClientConnected) response.Flush(); } catch (HttpException) { }
+                context.ApplicationInstance.CompleteRequest();
+            }
+        }
+
+        // Same order as IADownloadColumns. Dates keep the original's .ToString(); other values are passed through as-is
+        // and formatted by the CSV class (InvariantCulture by default), as before.
+        private static object[] GetIADownloadRow(IAItem item)
+        {
+            return new object[]
+            {
+                item.IAIdentifier, item.ExternalStatus, item.Status, item.ShortTitle, item.Volume,
+                item.Year, item.ImageCount, item.HoldingInstitution, item.Sponsor,
+                item.ScanningInstitution, item.RightsHolder, item.LicenseUrl, item.Rights,
+                item.DueDiligence, item.PossibleCopyrightStatus, item.VirtualTitleID, item.VirtualVolume,
+                item.IAAddedDate.ToString(), item.ScanDate, item.IADateStamp.ToString(),
+                item.CreatedDate.ToString(), item.LastXMLDataHarvestDate.ToString(),
+                item.LastProductionDate.ToString(), item.LastModifiedDate.ToString(),
+                item.CreatedUser, item.LastModifiedUser
+            };
         }
 
         /// <summary>

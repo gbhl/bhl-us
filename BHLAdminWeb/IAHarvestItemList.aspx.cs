@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
@@ -81,6 +82,7 @@ namespace MOBOT.BHL.AdminWeb
             litUpdateResult.Text = string.Empty;
         }
 
+        /*
         protected void btnDownload_Click(object sender, EventArgs e)
         {
             string msg = string.Empty;
@@ -109,6 +111,84 @@ namespace MOBOT.BHL.AdminWeb
             else
             {
                 litDisplayed.Text = string.Format(_MsgFormat, msg);
+            }
+        }
+        */
+
+        // Reuse one HttpClient for the app lifetime (avoids socket exhaustion)
+        private static readonly HttpClient _http = new HttpClient
+        {
+            Timeout = TimeSpan.FromMinutes(30)   // upstream/overall limit, adjust as needed
+        };
+
+        protected void btnDownload_Click(object sender, EventArgs e)
+        {
+            string msg = string.Empty;
+            if (!this.Validate(out msg))
+            {
+                litDisplayed.Text = string.Format(_MsgFormat, msg);
+                return;
+            }
+
+            Uri url = Request.Url;
+            string absoluteUri = string.Format(
+                "{0}://{1}:{2}/services/dataharvestservice.ashx?dl=1&id={3}&iaid={4}",
+                url.Scheme, url.Host, url.Port,
+                Uri.EscapeDataString(ddlStatusView.SelectedValue),
+                Uri.EscapeDataString(txtIAIdentifier.Text));
+
+            // Make sure nothing buffers or alters the stream
+            Response.Clear();
+            Response.BufferOutput = false;
+            Response.ContentType = "text/csv";
+            Response.AddHeader("Content-Disposition", "attachment; filename=IAHarvestItemList.csv");
+            Response.AddHeader("Cache-Control", "no-cache, no-store");
+            Response.AddHeader("X-Accel-Buffering", "no");   // harmless; helps if an nginx hop exists
+            Server.ScriptTimeout = 60 * 30;                   // only honored if debug="false"; also see executionTimeout
+
+            // Send status + headers to Cloudflare NOW, before any upstream work
+            Response.Flush();
+
+            try
+            {
+                using (var req = new HttpRequestMessage(HttpMethod.Get, absoluteUri))
+                // ResponseHeadersRead = return as soon as headers arrive, don't buffer the body
+                using (var resp = _http.SendAsync(req, HttpCompletionOption.ResponseHeadersRead)
+                                      .GetAwaiter().GetResult())
+                {
+                    resp.EnsureSuccessStatusCode();
+
+                    using (var upstream = resp.Content.ReadAsStreamAsync().GetAwaiter().GetResult())
+                    {
+                        var buffer = new byte[16 * 1024];
+                        int read;
+                        while ((read = upstream.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            if (!Response.IsClientConnected) break;   // user cancelled
+                            Response.OutputStream.Write(buffer, 0, read);
+                            Response.Flush();                          // push chunk to the client
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Headers are already sent, so we can't change the status code.
+                // Log it; optionally append a marker row so the file isn't silently truncated.
+                // Logger.Error(ex);
+                if (Response.IsClientConnected)
+                {
+                    var err = Encoding.UTF8.GetBytes("\r\n#ERROR: export failed or was truncated\r\n");
+                    Response.OutputStream.Write(err, 0, err.Length);
+                }
+            }
+            finally
+            {
+                try { if (Response.IsClientConnected) Response.Flush(); } catch (HttpException) { }
+
+                // Page.Render will still run after this event handler returns; discard anything it writes
+                Response.SuppressContent = true;
+                HttpContext.Current.ApplicationInstance.CompleteRequest();
             }
         }
 
