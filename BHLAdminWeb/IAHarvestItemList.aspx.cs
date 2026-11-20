@@ -1,13 +1,10 @@
-﻿using MOBOT.BHL.Web.Utilities;
-using MOBOT.BHLImport.DataObjects;
+﻿using MOBOT.BHLImport.DataObjects;
 using MOBOT.BHLImport.Server;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -81,39 +78,6 @@ namespace MOBOT.BHL.AdminWeb
             iaId = txtIAIdentifier.Text;
             litUpdateResult.Text = string.Empty;
         }
-
-        /*
-        protected void btnDownload_Click(object sender, EventArgs e)
-        {
-            string msg = string.Empty;
-            if (this.Validate(out msg))
-            {
-                HttpClient hc = new HttpClient();
-                hc.Timeout = TimeSpan.FromMinutes(10);
-                Uri url = Request.Url;
-                string absoluteUri = string.Format("{0}://{1}:{2}/services/dataharvestservice.ashx?dl=1&id={3}&iaid={4}", 
-                    url.Scheme, url.Host, url.Port, ddlStatusView.SelectedValue, txtIAIdentifier.Text);
-                string data = hc.GetStringAsync(absoluteUri).Result;
-
-                try
-                {
-                    Response.Buffer = true;
-                    Response.ContentType = "text/csv";
-                    Response.AddHeader("Content-Disposition", "attachment; filename=IAHarvestItemList.csv");
-                    Response.Write(data);
-                    Response.Flush();
-                }
-                finally
-                {
-                    Response.End();
-                }
-            }
-            else
-            {
-                litDisplayed.Text = string.Format(_MsgFormat, msg);
-            }
-        }
-        */
 
         // Reuse one HttpClient for the app lifetime (avoids socket exhaustion)
         private static readonly HttpClient _http = new HttpClient
