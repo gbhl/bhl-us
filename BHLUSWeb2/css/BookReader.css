@@ -388,6 +388,11 @@
 .BRicon.page_print:active, .BRicon.page_print.active:active { background-position:-510px -60px; }
 .BRicon.page_print.active { background-position:-510px -90px; }
 
+.BRicon.page_download { background-position:-570px 0; }
+.BRicon.page_download:hover, .BRicon.page_download.active:hover { background-position:-570px -30px; }
+.BRicon.page_download:active, .BRicon.page_download.active:active { background-position:-570px -60px; }
+.BRicon.page_download.active { background-position:-570px -90px; }
+
 .BRicon.pop_ocr { background-position:-540px 0; }
 .BRicon.pop_ocr:hover { background-position:-540px -30px; }
 .BRicon.pop_ocr:active { background-position:-540px -60px; }
