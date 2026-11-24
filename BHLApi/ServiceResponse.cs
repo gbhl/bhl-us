@@ -46,6 +46,19 @@ namespace MOBOT.BHL.API.BHLApi
             }
         }
 
+        private long _TotalResults = 0;
+        public long TotalResults
+        {
+            get
+            {
+                return _TotalResults;
+            }
+            set
+            {
+                _TotalResults = value;
+            }
+        }
+
         private T _Result = default(T);
         public T Result
         {

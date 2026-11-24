@@ -917,8 +917,9 @@ namespace MOBOT.BHL.API.BHLApi
         #region Search methods
 
         public List<Publication> SearchPublication(string searchTerm, string searchType, 
-            string page, string pageSize, bool sqlFullText)
+            string page, string pageSize, bool sqlFullText, out long totalResults)
         {
+            totalResults = 0;
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
@@ -981,7 +982,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             List<Publication> pubs = new List<Publication>();
-            pubs = SearchPublicationGlobal(searchTerm, searchType, pageInt, pageSizeInt);
+            pubs = SearchPublicationGlobal(searchTerm, searchType, pageInt, pageSizeInt, out totalResults);            
 
             return pubs;
         }
@@ -989,8 +990,10 @@ namespace MOBOT.BHL.API.BHLApi
         public List<Publication> SearchPublication(string title, string titleOp, 
             string authorName, string year, string subject, string languageCode, string collectionID, 
             string notes, string notesOp, string text, string textOp, string page, string pageSize, 
-            bool sqlFullText)
+            bool sqlFullText, out long totalResults)
         {
+            totalResults = 0;
+
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(title) && string.IsNullOrWhiteSpace(authorName) && 
                 string.IsNullOrWhiteSpace(collectionID))
@@ -1105,7 +1108,7 @@ namespace MOBOT.BHL.API.BHLApi
 
             List<Publication> pubs = new List<Publication>();
             pubs = SearchPublicationAdvanced(title, titleOp, authorName, year, subject, languageCode,
-                collectionID, notes, notesOp, text, textOp, pageInt, pageSizeInt);
+                collectionID, notes, notesOp, text, textOp, pageInt, pageSizeInt, out totalResults);
 
             return pubs;
         }
@@ -1129,8 +1132,10 @@ namespace MOBOT.BHL.API.BHLApi
         /// <returns></returns>
         private List<Publication> SearchPublicationAdvanced(string title, string titleOp,
             string authorName, string year, string subject, string languageCode, string collectionID, 
-            string notes, string notesOp, string text, string textOp, int page, int pageSize)
+            string notes, string notesOp, string text, string textOp, int page, int pageSize, out long totalResults)
         {
+            totalResults = 0;
+
             // Build the language and collection parameters
             Tuple<string, string> languageParam = null;
             Tuple<string, string> collectionParam = null;
@@ -1164,6 +1169,7 @@ namespace MOBOT.BHL.API.BHLApi
                     (notesOp == "A" ? SearchStringParamOperator.And : SearchStringParamOperator.Phrase)),
                 new SearchStringParam(text, 
                     (textOp == "A" ? SearchStringParamOperator.And : SearchStringParamOperator.Phrase)));
+            totalResults = result.TotalHits;
 
             // Build the list of results
             List<Publication> pubs = BuildPublicationList(result);
@@ -1177,8 +1183,10 @@ namespace MOBOT.BHL.API.BHLApi
         /// <param name="searchTerm"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        private List<Publication> SearchPublicationGlobal(string searchTerm, string searchType, int page, int pageSize)
+        private List<Publication> SearchPublicationGlobal(string searchTerm, string searchType, int page, int pageSize, out long totalResults)
         {
+            totalResults = 0;
+
             // Submit the request to ElasticSearch
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
             search.StartPage = page;
@@ -1197,6 +1205,7 @@ namespace MOBOT.BHL.API.BHLApi
                 // Catalog search
                 result = search.SearchCatalog(searchTerm);
             }
+            totalResults = result.TotalHits;
 
             // Build the list of results
             List<Publication> pubs = BuildPublicationList(result);
@@ -1598,9 +1607,10 @@ namespace MOBOT.BHL.API.BHLApi
             return parts;
         }
 
-        public List<Subject> SubjectSearch(string subject, bool sqlFullText)
+        public List<Subject> SubjectSearch(string subject, bool sqlFullText, out long totalResults)
         {
             List<Subject> subjects = new List<Subject>();
+            totalResults = 0;
 
             // Submit the request to the search engine
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
@@ -1608,6 +1618,7 @@ namespace MOBOT.BHL.API.BHLApi
             search.NumResults = 10000;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["KeywordResultDefaultSort"]);
             ISearchResult result = search.SearchKeyword(subject);
+            totalResults = result.TotalHits;
 
             // Build the list of results
             foreach (KeywordHit hit in result.Keywords)
@@ -1618,9 +1629,10 @@ namespace MOBOT.BHL.API.BHLApi
             return subjects;
         }
 
-        public List<Author> AuthorSearch(string name, bool sqlFullText)
+        public List<Author> AuthorSearch(string name, bool sqlFullText, out long totalResults)
         {
             List<Author> creators = new List<Author>();
+            totalResults = 0;
 
             // Submit the request to the search engine
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
@@ -1628,6 +1640,7 @@ namespace MOBOT.BHL.API.BHLApi
             search.NumResults = 10000;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["AuthorResultDefaultSort"]);
             ISearchResult result = search.SearchAuthor(name);
+            totalResults = result.TotalHits;
 
             // Build the list of results
             List<int> creatorIds = new List<int>();
@@ -1645,8 +1658,9 @@ namespace MOBOT.BHL.API.BHLApi
             return creators;
         }
 
-        public List<Name> NameSearch(string name)
+        public List<Name> NameSearch(string name, out long totalResults)
         {
+            totalResults = 0;
             if (name == String.Empty)
             {
                 throw new InvalidApiParamException("Please supply a name for which to search.");
@@ -1660,6 +1674,7 @@ namespace MOBOT.BHL.API.BHLApi
             search.NumResults = 10000;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["NameResultDefaultSort"]);
             ISearchResult result = search.SearchName(name);
+            totalResults = result.TotalHits;
 
             // Build the list of results
             foreach (NameHit hit in result.Names)
@@ -1670,8 +1685,9 @@ namespace MOBOT.BHL.API.BHLApi
             return names;
         }
 
-        public List<Page> PageSearch(string entityType, string entityID, string text)
+        public List<Page> PageSearch(string entityType, string entityID, string text, out long totalResults)
         {
+            totalResults = 0;
             // Validate the parameters
             int entityIDint;
             if (entityType.ToUpper() != "ITEM" && entityType.ToUpper() != "PART")
@@ -1713,6 +1729,7 @@ namespace MOBOT.BHL.API.BHLApi
             Tuple<SearchField, string> itemLimit = new Tuple<SearchField, string>(SearchField.ItemID, itemID.ToString());
             limits.Add(itemLimit);
             ISearchResult result = search.SearchPage(text ?? "", limits, true);
+            totalResults = result.TotalHits;
 
             // Build the list of results
             foreach (PageHit hit in result.Pages)
